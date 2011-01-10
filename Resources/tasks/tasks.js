@@ -24,7 +24,7 @@ xhr.onload = function(e) {
     var data = [];
     var i = 0;
     each(myData.payload, function( item ) {
-        var data = { hasChild:true,title:item.title, fontSize:10 };
+        var data = { hasChild:true,title:item.title, deadline:item.deadline, distance:item.distance, fontSize:10 };
         tableview.appendRow(data);
         i++;
     });
@@ -35,7 +35,9 @@ xhr.onload = function(e) {
     {
     	var win = Titanium.UI.createWindow({
     		url:'task_details.js',
-    		title:e.rowData.title
+    		title:e.rowData.title,
+    		deadline:e.rowData.deadline,
+    		distance:e.rowData.distance
     	});
     	win.title = e.rowData.title;
     	Titanium.UI.currentTab.open(win,{animated:true});
