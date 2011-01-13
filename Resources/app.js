@@ -17,7 +17,7 @@ var win1 = Titanium.UI.createWindow({
 });
 var tab1 = Titanium.UI.createTab({  
     icon:'KS_nav_views.png',
-    title:'Tasks',
+    title:'List',
     window:win1
 });
 
@@ -31,7 +31,7 @@ var win2 = Titanium.UI.createWindow({
 });
 var tab2 = Titanium.UI.createTab({  
     icon:'KS_nav_ui.png',
-    title:'Tab 2',
+    title:'Map',
     window:win2
 });
 

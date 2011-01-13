@@ -1,5 +1,5 @@
 var win = Titanium.UI.currentWindow;
-
+win.barColor = '#000000';
 
 
 var label2 = Titanium.UI.createLabel({

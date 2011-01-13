@@ -7,7 +7,7 @@
 <url>http://www.coffeeandpower.com</url>
 <description>No description provided</description>
 <copyright>2011 by Lovemachine LLC</copyright>
-<icon>cap.png</icon>
+<icon>default_app_logo.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
     <statusbar-style>default</statusbar-style>
@@ -15,7 +15,7 @@
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-<guid>42a417f9-e35c-4ad7-a933-eb2712889283</guid>
+    <guid>42a417f9-e35c-4ad7-a933-eb2712889283</guid>
 	<iphone>
 		<orientations device="iphone">
 			<orientation>Ti.UI.PORTRAIT</orientation>
