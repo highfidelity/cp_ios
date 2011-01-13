@@ -94,9 +94,13 @@ function loadListFromCache(){
 }
 
 xhr.onload = function(e) {
-    tableview.setData(data);
     //handle response
-    myData = JSON.parse(this.responseText);
+    try{
+        myData = JSON.parse(this.responseText);
+    } catch(e){
+        Titanium.API.info(this.responseText);
+        return;
+    }
     deleteDb();
     setTableData(myData.payload);
 };
