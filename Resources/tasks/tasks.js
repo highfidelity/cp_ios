@@ -146,7 +146,7 @@ else
         }
     }
 
-    Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_NEAREST_TEN_METERS;
+    Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
 
     Titanium.Geolocation.distanceFilter = 10;
 
@@ -161,6 +161,17 @@ else
         latitude = e.coords.latitude;
 
         loadList();
+    });
+    
+    Titanium.Geolocation.addEventListener('location',function(e)
+    {
+        longitude = e.coords.longitude;
+        latitude = e.coords.latitude;
+        setTimeout(function()
+        {
+            loadList();
+        },1000);
+        
     });
 }
 
