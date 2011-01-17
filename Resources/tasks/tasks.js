@@ -54,7 +54,7 @@ function setTableData(myData, cache){
         row.add(title_lbl);
         var distance_lbl = Ti.UI.createLabel({text:parseFloat(item.distance).toFixed(2)+' miles', font:{fontSize:12}, color:'#888', right:25, top:30, textAlign: 'right'});
         row.add(distance_lbl);
-        //Titanium.API.info(item.title + ' ' +strtotime(item.deadline));
+        //Titanium.API.info(item.title + ' ' +item.distance);
         var tmpdate = prettyDate(strtotime(item.deadline));
         if(tmpdate != 'Overdue'){
             tmpdate = "expires in " + tmpdate;
@@ -150,7 +150,7 @@ else
 
     Titanium.Geolocation.distanceFilter = 10;
 
-    Titanium.Geolocation.getCurrentPosition(function(e)
+    /*Titanium.Geolocation.getCurrentPosition(function(e)
     {
         if (!e.success || e.error)
         {
@@ -160,8 +160,8 @@ else
         longitude = e.coords.longitude;
         latitude = e.coords.latitude;
 
-        loadList();
-    });
+        //loadList();
+    });*/
     
     Titanium.Geolocation.addEventListener('location',function(e)
     {
@@ -171,7 +171,7 @@ else
         {
             loadList();
         },1000);
-        
+        Titanium.API.log('eventlistener GEO');
     });
 }
 
@@ -202,7 +202,7 @@ if(isAndroid()){
     win.add(view);
 }
 
-// add table view to the window
-win.add(tableview);
 
 loadListFromCache();
+// add table view to the window
+win.add(tableview);
