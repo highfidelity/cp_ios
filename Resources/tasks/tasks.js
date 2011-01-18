@@ -22,6 +22,52 @@ var tableview = Titanium.UI.createTableView({
     data:data
 });
 
+function showIndicator()
+{
+	// window container
+	indWin = Titanium.UI.createWindow({
+		height:150,
+		width:150
+	});
+
+	// black view
+	var indView = Titanium.UI.createView({
+		height:150,
+		width:150,
+		backgroundColor:'#000',
+		borderRadius:10,
+		opacity:0.8
+	});
+	indWin.add(indView);
+
+	// loading indicator
+	actInd = Titanium.UI.createActivityIndicator({
+		style:Titanium.UI.iPhone.ActivityIndicatorStyle.BIG,
+		height:30,
+		width:30
+	});
+	indWin.add(actInd);
+
+	// message
+	var message = Titanium.UI.createLabel({
+		text:'Loading',
+		color:'#fff',
+		width:'auto',
+		height:'auto',
+		font:{fontSize:20,fontWeight:'bold'},
+		bottom:20
+	});
+	indWin.add(message);
+	indWin.open();
+	actInd.show();
+
+};
+
+function hideIndicator()
+{
+	actInd.hide();
+	indWin.close({opacity:0,duration:1000});
+};
 
 function openDb(){
     db = Titanium.Database.open('candp');
@@ -104,7 +150,7 @@ xhr.onload = function(e) {
     deleteDb();
     setTableData(myData.payload);
 };
-
+xhr.onerror = function(){Ti.API.info('error in api request');};
 
 // create table view event listener
 tableview.addEventListener('click', function(e)
@@ -125,7 +171,6 @@ tableview.addEventListener('click', function(e)
 if (Titanium.Geolocation.locationServicesEnabled==false)
 {
     Titanium.UI.createAlertDialog({title:'Coffee and Power', message:'Your device has geo turned off - turn it on.'}).show();
-    Ti.API.log('foo');
 }
 else
 {
@@ -146,33 +191,27 @@ else
         }
     }
 
-    Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
+    Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_NEAREST_TEN_METERS;
 
-    Titanium.Geolocation.distanceFilter = 10;
+    Titanium.Geolocation.distanceFilter = 50;
 
-    /*Titanium.Geolocation.getCurrentPosition(function(e)
-    {
-        if (!e.success || e.error)
+    function getLocationAndReload(){
+        showIndicator();
+        Titanium.Geolocation.getCurrentPosition(function(e)
         {
-            alert('Your system has disallowed Coffee and Power from running geolocation services.');
-            return;
-        }
-        longitude = e.coords.longitude;
-        latitude = e.coords.latitude;
+            if (!e.success || e.error)
+            {
+                alert('Your system has disallowed Coffee and Power from running geolocation services.');
+                return;
+            }
+            longitude = e.coords.longitude;
+            latitude = e.coords.latitude;
 
-        //loadList();
-    });*/
-    
-    Titanium.Geolocation.addEventListener('location',function(e)
-    {
-        longitude = e.coords.longitude;
-        latitude = e.coords.latitude;
-        setTimeout(function()
-        {
             loadList();
-        },1000);
-        Titanium.API.log('eventlistener GEO');
-    });
+        });
+        hideIndicator();
+    }
+    getLocationAndReload();
 }
 
 var refresh = Titanium.UI.createButton({
@@ -180,8 +219,9 @@ var refresh = Titanium.UI.createButton({
 });
 refresh.addEventListener('click', function(e)
 {
+    Titanium.API.info('reload');
     tableview.setData([]);
-    loadList();
+    getLocationAndReload();
 });
 
 
@@ -206,3 +246,8 @@ if(isAndroid()){
 loadListFromCache();
 // add table view to the window
 win.add(tableview);
+
+Ti.App.addEventListener('resumed',function(e){
+	Ti.API.info("app has resumed from the background");
+	getLocationAndReload();
+});
