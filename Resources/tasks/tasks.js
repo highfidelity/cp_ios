@@ -65,6 +65,7 @@ function showIndicator()
 
 function hideIndicator()
 {
+    Titanium.API.info('hide');
 	actInd.hide();
 	indWin.close({opacity:0,duration:1000});
 };
@@ -202,6 +203,7 @@ else
             if (!e.success || e.error)
             {
                 alert('Your system has disallowed Coffee and Power from running geolocation services.');
+                hideIndicator();
                 return;
             }
             longitude = e.coords.longitude;

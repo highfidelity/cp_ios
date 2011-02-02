@@ -26,8 +26,9 @@ var tab1 = Titanium.UI.createTab({
 // create controls tab and root window
 //
 var win2 = Titanium.UI.createWindow({  
-    title:'Tab 2',
-    backgroundColor:'#fff'
+    title:'Map',
+    backgroundColor:'#fff',
+    url:'tasks/map.js'
 });
 var tab2 = Titanium.UI.createTab({  
     icon:'KS_nav_ui.png',
