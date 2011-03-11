@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-<id>com.coffeeandpower</id>
-<name>Coffee and Power</name>
+<id>com.singinghorsestudio.candp</id>
+<name>candp</name>
 <version>1.0</version>
-<publisher>schoash</publisher>
+<publisher>Love Machine Inc</publisher>
 <url>http://www.coffeeandpower.com</url>
-<description>No description provided</description>
-<copyright>2011 by Lovemachine LLC</copyright>
+<description> </description>
+<copyright>(c) Copyright Love Machine Inc. 2011 All Rights Reserved</copyright>
 <icon>default_app_logo.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
@@ -15,16 +15,13 @@
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>42a417f9-e35c-4ad7-a933-eb2712889283</guid>
+<guid>67278d28-0243-4bdf-97df-a7680e7734d8</guid>
 	<iphone>
 		<orientations device="iphone">
 			<orientation>Ti.UI.PORTRAIT</orientation>
 		</orientations>
 		<orientations device="ipad">
 			<orientation>Ti.UI.PORTRAIT</orientation>
-			<orientation>Ti.UI.UPSIDE_PORTRAIT</orientation>
-			<orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
-			<orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
 		</orientations>
 	</iphone>
 	<android xmlns:android="http://schemas.android.com/apk/res/android">

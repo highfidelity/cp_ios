@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<string name="app_name">CandP</string>
+	<string name="coffee_and_power">coffee&amp;power</string>
+
+	<string name="login">Login</string>
+	<string name="logout">Logout</string>
+	<string name="username">Username</string>
+	<string name="password">Password</string>
+
+    <string name="title_missionlist">Mission List</string>
+    <string name="title_missiondetails">Mission Details</string>
+    <string name="title_userprofile">User Profile</string>
+    <string name="title_chat">1:1 Chat</string>
+    <string name="title_login">Login</string>
+
+    <string name="buttonbar_public_chat">Public Chat</string>
+    <string name="buttonbar_people">People</string>
+    <string name="buttonbar_missions">Missions</string>
+    <string name="buttonbar_notifications">Notifications</string>
+
+	<string name="ok">OK</string>
+	<string name="error">Error</string>	
+	<string name="error_network_connection">There has been a problem connecting to the Coffee and Power server.  Please wait a while and try again later.</string>	
+	<string name="error_network_request">There has been a problem sending your request to the Coffee and Power server.  Please wait a while and try again later.</string>	
+</resources>

@@ -1,1 +1,0 @@
-var API_URL = 'http://dev.sendlove.us/~schoash/candpweb/api.php';
