@@ -1,5 +1,5 @@
 /*
- * @copyright (c) Copyright Coffee And Power Inc. 2011 All Rights Reserved. 
+ * @copyright Copyright (c) Coffee And Power Inc. 2011 All Rights Reserved. 
  * http://www.coffeeandpower.com
  * @author H <h@singinghorsestudio.com>
  * 
@@ -19,7 +19,7 @@
     candp.view.createSpacerRow = function() {
         return Ti.UI.createTableViewRow($$.spacerRow);
     };
-	
+    
     // shortcut for alert dialog
     candp.view.alert = function(title, message) {
         Ti.UI.createAlertDialog({
@@ -27,6 +27,54 @@
             message: message,
             buttonNames: [L('ok')]
         }).show();
+    };
+
+    // function for sliding a view
+    candp.view.slide = function(view, slideDirection, complete, start) {
+        var m;
+
+        // helper function
+        function _createAnimation(m, callback) {
+            var a;
+			a = Ti.UI.createAnimation();
+			a.duration = 500; 
+			a.transform = m;
+		    if (typeof callback === 'function') {
+			    a.addEventListener('complete', complete);
+		    }
+		    if (typeof start === 'function') {
+			    a.addEventListener('start', start);
+		    }
+            return a;
+        }
+
+        switch(slideDirection) {
+            case 'up':
+            	m = Ti.UI.create2DMatrix().translate(0, -($$.platformHeight)); 
+		        view.animate(_createAnimation(m, complete, start));
+                break;
+
+            case 'down':
+            	m = Ti.UI.create2DMatrix().translate(0, $$.platformHeight); 	
+		        view.animate(_createAnimation(m, complete, start));
+                break;
+
+            case 'left':
+            	m = Ti.UI.create2DMatrix().translate(-$$.platformWidth, 0); 	
+		        view.animate(_createAnimation(m, complete, start));
+                break;
+
+            case 'right':
+            	m = Ti.UI.create2DMatrix().translate($$.platformWidth, 0); 	
+		        view.animate(_createAnimation(m, complete, start));
+                break;
+
+            case 'leftslide':
+                m = Ti.UI.createAnimation();
+                m.duration = 500;
+                m.left = -Ti.Platform.displayCaps.platformWidth;
+                view.animate(m);
+        }
     };
 })();
 

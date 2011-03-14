@@ -6,7 +6,7 @@
 <publisher>Love Machine Inc</publisher>
 <url>http://www.coffeeandpower.com</url>
 <description> </description>
-<copyright>(c) Copyright Love Machine Inc. 2011 All Rights Reserved</copyright>
+<copyright>Copyright (c) Love Machine Inc. 2011 All Rights Reserved</copyright>
 <icon>default_app_logo.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
@@ -28,4 +28,5 @@
 	</android>
 	<modules>
 	</modules>
+<property name="ti.android.threadstacksize" type="int">65536</property>
 </ti:app>

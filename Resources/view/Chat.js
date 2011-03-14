@@ -1,5 +1,5 @@
 /*
- * @copyright (c) Copyright Coffee And Power Inc. 2011 All Rights Reserved. 
+ * @copyright Copyright (c) Coffee And Power Inc. 2011 All Rights Reserved. 
  * http://www.coffeeandpower.com
  * @author H <h@singinghorsestudio.com>
  * 
@@ -14,7 +14,7 @@
         }));
 
         chatView.add(Ti.UI.createLabel(candp.combine($$.headerText, {
-			top: 80,
+            top: 80,
             text: L('title_chat')
         })));
 

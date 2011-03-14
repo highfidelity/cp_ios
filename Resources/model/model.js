@@ -1,5 +1,5 @@
 /*
- * @copyright (c) Copyright Coffee And Power Inc. 2011 All Rights Reserved. 
+ * @copyright Copyright (c) Coffee And Power Inc. 2011 All Rights Reserved. 
  * http://www.coffeeandpower.com
  * @author H <h@singinghorsestudio.com>
  * 
@@ -8,11 +8,12 @@
  */
 
 (function() {
-	candp.model = {
-		dbname: 'candp'
-	};
-	
-	candp.model.xhr = function(url, method, payload, callback) {
+    candp.model = {
+        dbname: 'candp'
+    };
+    
+    candp.model.xhr = function(url, method, payload, callback) {
+
         // helper function for getting the PHP session Id cookie
         function _getPHPSESSID(cookie) {
             var cookieTokens = cookie.split(';');
@@ -30,6 +31,7 @@
             if (sessionCookie) {
                 candp.sessionId = _getPHPSESSID(sessionCookie);
                 Ti.App.Properties.setString('sessionId', candp.sessionId);
+                Ti.API.info('New session id received = ' + candp.sessionId);
             }
 
             // finally trigger the callback
@@ -49,6 +51,13 @@
             xhr.setRequestHeader('Cookie', 'PHPSESSID=' + candp.sessionId);
         }
         xhr.send(payload);
-	};
+    };
+
 
 })();
+
+Ti.include(
+    '/model/HeaderBar.js',
+    '/model/Login.js',
+    '/model/MissionList.js'
+);

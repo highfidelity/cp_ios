@@ -1,5 +1,5 @@
 /*
- * @copyright (c) Copyright Coffee And Power Inc. 2011 All Rights Reserved. 
+ * @copyright Copyright (c) Coffee And Power Inc. 2011 All Rights Reserved. 
  * http://www.coffeeandpower.com
  * @author H <h@singinghorsestudio.com>
  * 
@@ -8,14 +8,14 @@
  */
 
 (function() {
-	var baseUrl = 'http://www.coffeeandpower.com/';
+    var baseUrl = 'http://www.coffeeandpower.com/';
 
-	candp.config = {
+    candp.config = {
         // CandP server URL endpoints
-		baseUrl: baseUrl,
+        baseUrl: baseUrl,
         loginUrl: baseUrl + 'login.php',
         logoutUrl: baseUrl + 'logout.php',
         actionServerUrl: baseUrl + 'ActionServer.php',
         missionsUrl: baseUrl + 'missions.php'
-	};
+    };
 })();
