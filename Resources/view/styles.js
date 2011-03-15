@@ -58,8 +58,6 @@
             backgroundColor: '#FFFFFF'
         },
         tableViewRow: {
-            // the following is currently inconsistent between iPhone and Android.  Ho hum.
-            selectedBackgroundColor: candp.view.theme.darkBlue, 
             backgroundSelectedColor: candp.view.theme.darkBlue,
             // height:110,
             className:'tvRow'
@@ -90,18 +88,30 @@
             backgroundImage: 'images/ruff.png'
         },
         
-        ImageView: {
-            defaultImage: 'images/ruff.png',
-            borderColor: '#ffffff',
-            borderRadius: 5,
-            borderWidth: 2,
-            canScale: false
+        imageView: {
+            canScale: true,
+            height: 100,
+            width: 100
         },
 
         // we use these as JS-based 'style classes'
         animationDuration: 500,
         stretch: {
             top:0,bottom:0,left:0,right:0
+        },
+        contained: {
+            top: candp.config.headerHeight,
+            bottom: candp.config.footerHeight,
+            left: 0,
+            right: 0,
+            backgroundImage: 'images/default_background.png',
+            zIndex: 10
+        },
+        containerView: {
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0
         },
         variableTopRightButton: {
             top:5,
@@ -142,15 +152,32 @@
                 fontWeight:'bold'
             }
         },
+        largeText: {
+            height:'auto',
+            textAlign:'left',
+            color:candp.view.theme.textColor,
+            width: 'auto',
+            font: {
+                fontFamily:candp.view.theme.fontFamily,
+                fontSize:25,
+                fontWeight:'bold'
+            }
+        },
+        smallText: {
+            color:candp.view.theme.grayTextColor,
+            font: {
+                fontFamily:candp.view.theme.fontFamily,
+                fontSize:10
+            },
+            height:'auto'
+        },
         smallSizeView: {
             width: Ti.Platform.displayCaps.platformWidth * 6 / 7,
             height: Ti.Platform.displayCaps.platformHeight / 2
         },
         footerView: {
             backgroundImage:'images/buttonbar_bg.png',
-            // 49 points is the iPhone standard footer
-            // *FIXME: change the magic number into a named constant
-            height: 49, 
+            height: candp.config.footerHeight, 
             left: 0,
             right: 0,
             bottom:0,
@@ -162,9 +189,7 @@
         },
         headerView: {
             backgroundImage:'images/header_bg.png',
-            // 44 points is the iPhone standard header size
-            // *FIXME: change the magic number into a named constant
-            height: 44, 
+            height: candp.config.headerHeight, 
             left: 0,
             right: 0,
             top: 0,
@@ -179,18 +204,16 @@
                 fontWeight:'bold'
             }
         },
-        smallText: {
-            color:candp.view.theme.grayTextColor,
-            font: {
-                fontFamily:candp.view.theme.fontFamily,
-                fontSize:10
-            },
-            height:'auto'
-        },
         spacerRow: {
             backgroundImage:'images/spacer_row.png',
             height:30,
             className:'spacerRow'
+        },
+        spacerLine: {
+            backgroundImage: 'images/spacer_line.png',
+            height: 1,
+            left: 20,
+            right: 20
         }
     };
 })();

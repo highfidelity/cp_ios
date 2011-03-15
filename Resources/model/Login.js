@@ -27,7 +27,7 @@ var loginModel = {};
 	                Ti.App.fireEvent('app:headerBar.changeState', {
 	                    newState: 'loggedIn'
 	                });
-                    
+
                     // save the details for future
                     Ti.App.Properties.setString('username', username);
                 } else {

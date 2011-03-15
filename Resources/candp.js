@@ -82,7 +82,7 @@ var candp = {};
 
 // include our other namespaces -- view, model, and our configuration
 Ti.include(
+    '/config/config.js',
     '/view/view.js',
-    '/model/model.js',
-    '/config/config.js'
+    '/model/model.js'
 );

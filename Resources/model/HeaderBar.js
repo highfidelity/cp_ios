@@ -51,7 +51,16 @@ var headerBarModel = {};
                         Ti.API.info('logged = ' + logged);
                         
                         if (logged === 'true') {
-                            // we're logged in, so we can get the nickname and balance etc
+                            // we're logged in, so 
+                            // *TODO: Get GPS lat&long and register at the server
+
+                            // candp.location = applicationModel.getGPS();
+
+
+		                    // ... collect the missions now that we've logged in
+			                Ti.App.fireEvent('app:missionList.getMissions');
+                    
+                            // ... and we can get the nickname and balance etc
                             Ti.App.fireEvent('headerBar:loginButton.changeText', {
                                  newText: L('logout')
                             });

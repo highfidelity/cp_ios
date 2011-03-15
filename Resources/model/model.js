@@ -57,7 +57,9 @@
 })();
 
 Ti.include(
+    '/model/ApplicationWindow.js',
     '/model/HeaderBar.js',
     '/model/Login.js',
-    '/model/MissionList.js'
+    '/model/MissionList.js',
+    '/model/UserProfile.js'
 );

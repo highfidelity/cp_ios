@@ -11,18 +11,16 @@
 
 (function() {
     candp.view.createLoginView = function (args) {
-        var loginView = Ti.UI.createView(candp.combine($$.stretch, {
+        var loginView = Ti.UI.createView(candp.combine($$.contained, {
             visible: false,
             // *TODO: investigate problems with Android detecting view visiblity
             showing: false,
-            backgroundImage: 'images/default_background.png',
-            zIndex: 10
         }));
 
 
         // use a dialog container
         var containerView = Ti.UI.createView(candp.combine($$.smallSizeView, {
-            top: 60,
+            top: 20,
             backgroundColor: '#DDDDDD',
             borderRadius: 15
         }));
@@ -46,6 +44,10 @@
             returnKeyType: Titanium.UI.RETURNKEY_DONE,
             value: Ti.App.Properties.getString('username', '')
         }));
+       
+        emailText.addEventListener('return', function() {
+            passwordText.focus();
+        });
         containerView.add(emailText);
 
 
@@ -67,6 +69,11 @@
             keyboardType: Titanium.UI.KEYBOARD_EMAIL,
             returnKeyType: Titanium.UI.RETURNKEY_GO
         }));
+
+        passwordText.addEventListener('return', function() {
+            passwordText.blur();
+            loginButton.fireEvent('click');
+        });
         containerView.add(passwordText);
 
 

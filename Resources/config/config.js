@@ -16,6 +16,13 @@
         loginUrl: baseUrl + 'login.php',
         logoutUrl: baseUrl + 'logout.php',
         actionServerUrl: baseUrl + 'ActionServer.php',
-        missionsUrl: baseUrl + 'missions.php'
+        missionsUrl: baseUrl + 'missions.php',
+        apiUrl: baseUrl + 'api.php',
+
+        // 44 points is the iPhone standard header size
+        headerHeight: 44,
+
+        // 49 points is the iPhone standard footer
+        footerHeight: 49
     };
 })();

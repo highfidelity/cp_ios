@@ -20,7 +20,7 @@
         // application framework level views
         var buttonBarView = candp.view.createButtonBarView();
         var headerBarView = candp.view.createHeaderBarView({backgroundImage: 'images/buttonbar_bg.png'});
-        var containerView = Ti.UI.createView(candp.combine($$.stretch, {}));
+        var containerView = Ti.UI.createView($$.containerView);
 
         // add the framework level views to our top level window
         win.add(containerView);
@@ -29,7 +29,8 @@
 
         // global views
         candp.view.views.missionDetails = candp.view.createMissionDetailsView();
-        candp.view.views.chat = candp.view.createChatView();
+        // candp.view.views.chat = candp.view.createChatView();
+        candp.view.views.chat = candp.view.createUserProfileView();
         candp.view.views.missionList = candp.view.createMissionListView();
         candp.view.views.loginView = candp.view.createLoginView();
 
@@ -39,7 +40,8 @@
         }
 
         // keep track of our currenly active view
-        candp.view.currentActiveView = 'missionList';       
+        // candp.view.currentActiveView = 'missionList';       
+        candp.view.currentActiveView = 'chat';
 
         // set our initial start screen 
         win.addEventListener('open', function() {
@@ -59,33 +61,15 @@
             }).show();
         }
         
-        // *TODO: check to see if we have a logged in  account saved in the properties
-        // e.g. Ti.App.Properties.hasProperty('session_id') etc
-        // if so, then login and populate our header bar
-        // if not, then wait until the user presses the login button to log in
-
+        // We need to check our current GPS location, using our last known location 
+        // as a backup but we can't do a check for GPS location on the android here, as 
+        // Titanium will cancel it straight away (as a battery preservation technique!).  
+        // As such we have our GPS checking done in the MissionList view.  Yeah, I know, 
+        // it's a pain :-(
 
         // check our current session id, and see if we're still logged in
         candp.sessionId = Ti.App.Properties.getString('sessionId', '');
-        candp.model.xhr(
-            candp.config.actionServerUrl,
-            'POST',
-            {
-                action: 'isLoggedIn'
-            },
-            function(e) {
-                var params = JSON.parse(e.response).params;
-                var logged = params.logged;
-                
-                Ti.API.info('logged = ' + logged);
-                if (logged === 'true') {
-                    // we're logged in, so change our shown state
-                    Ti.App.fireEvent('app:headerBar.changeState', {
-                        newState: 'loggedIn'
-                    });
-                }
-            }
-        );
+        applicationModel.checkLoggedIn();
 
 
         // respond to the top level footer/header button presses
