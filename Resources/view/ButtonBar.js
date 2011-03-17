@@ -37,9 +37,10 @@
                 imageOff: 'images/buttonbar_people_off.png',
                 imageOn: 'images/buttonbar_people_on.png',
                 onClick: function(clickedButtonIndex, previousButtonIndex) {
-                    // *FIXME: mission details  for testing, but it ought to be people
+                    // *FIXME: user profile for testing, but it ought to be people
                     // however, we'll need a stub created as this isn't MVP
-                    _fireEvent('missionDetails', clickedButtonIndex, previousButtonIndex);
+                    _fireEvent('userProfile', clickedButtonIndex, previousButtonIndex);
+                    Ti.App.fireEvent('app:userProfile.getUserProfile');
                 }
             },
             {
@@ -101,6 +102,14 @@
 
             buttonBarView.add(button[index]);
         }
+
+        Ti.App.addEventListener('app:buttonBar.clicked', function(e) {
+            switch(e.button_name) {
+                case 'userProfile':
+                    button[1].fireEvent('click', e);
+                    break;
+            }
+        });
 
         return buttonBarView;
     };

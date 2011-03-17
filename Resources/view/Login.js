@@ -15,6 +15,7 @@
             visible: false,
             // *TODO: investigate problems with Android detecting view visiblity
             showing: false,
+            zIndex: 25
         }));
 
 

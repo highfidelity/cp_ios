@@ -89,5 +89,21 @@ var headerBarModel = {};
         }    
     };
 
+    headerBarModel.getUserBalance = function(callback) {
+        candp.model.xhr(
+            candp.config.actionServerUrl,
+            'POST',
+            {
+                action: 'getUserBalance'
+            },
+            function(e) {
+                var response = JSON.parse(e.response);
+                if (response.params.balance) {
+                    callback(response.params.balance);                    
+                }
+            }
+        );
+    };
+
 
 })();

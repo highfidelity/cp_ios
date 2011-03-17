@@ -50,12 +50,12 @@
 
         switch(slideDirection) {
             case 'up':
-            	m = Ti.UI.create2DMatrix().translate(0, -($$.platformHeight)); 
+            	m = Ti.UI.create2DMatrix().translate(0, -($$.platformHeight + candp.config.headerHeight)); 
 		        view.animate(_createAnimation(m, complete, start));
                 break;
 
             case 'down':
-            	m = Ti.UI.create2DMatrix().translate(0, $$.platformHeight); 	
+            	m = Ti.UI.create2DMatrix().translate(0, $$.platformHeight + candp.config.headerHeight); 	
 		        view.animate(_createAnimation(m, complete, start));
                 break;
 

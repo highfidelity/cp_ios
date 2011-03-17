@@ -23,6 +23,9 @@
         headerHeight: 44,
 
         // 49 points is the iPhone standard footer
-        footerHeight: 49
+        footerHeight: 49,
+
+        // how often should we get the user's balance (in milliseconds)
+        getBalanceTime: 30000 // every 30 seconds
     };
 })();

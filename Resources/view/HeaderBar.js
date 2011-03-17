@@ -84,6 +84,14 @@
             headerBarModel.changeState(e);
         });
 
+        // let's go get our balance every x minutes
+        setInterval(function() {
+            headerBarModel.getUserBalance(function(balance) {
+                Ti.App.fireEvent('headerBar:headerBarBalance.changeText', {
+                    newText: '$' + balance
+                });
+            });
+        }, candp.config.getBalanceTime);
         
 
         // *TODO: Add refresh button on left hand side of the header bar

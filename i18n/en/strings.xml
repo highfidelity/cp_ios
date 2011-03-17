@@ -36,4 +36,8 @@
 
     <string name="make_offer">Make Offer</string>
     <string name="chat1_1">Chat 1:1</string>
+
+    <string name="id_verified">ID verified</string>
+    <string name="users_have_favorited">%s users have favorited</string>
+    <string name="reviews">%s reviews</string>
 </resources>

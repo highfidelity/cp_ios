@@ -63,9 +63,11 @@ var missionsModel = {};
                         longitude: e.coords.longitude
                     };
         
-                    candp.view.alert('we are at ...', JSON.stringify(candp.location));
                     Ti.App.Properties.setString('location', JSON.stringify(candp.location));
                     Ti.API.info('candp.location = ' + JSON.stringify(candp.location));
+                    
+                    // *TODO: send updated location to the candp server
+                    Ti.App.fireEvent('app:applicationWindow.setLocation', candp.location);
                 }
             });
         }

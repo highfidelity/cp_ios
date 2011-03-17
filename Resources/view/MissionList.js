@@ -13,6 +13,7 @@
     candp.view.createMissionListView = function (args) {
 
         var data = [];
+        var missions_data = [];
 
 	    function formatTimeDiff(secs) {	    
 	        var hours = Math.floor(secs / (60 * 60)); 
@@ -39,11 +40,19 @@
             bottom: 50,
             data: data
         }));
+        tableView.addEventListener('click', function(e) {
+            Ti.API.info('Row = ' + JSON.stringify(missions_data[e.index]));
+            Ti.App.fireEvent('app:missionDetail.show', missions_data[e.index]);
+        });
+
+
         missionListView.add(tableView);
 
 
         Ti.App.addEventListener('app:missionList.getMissions', function(e) {
             missionsModel.getMissionList(e, function(missions) {
+                missions_data = missions;
+
                 // fill in the table with missions
                 for (var mission in missions) {
                     var row = Ti.UI.createTableViewRow(candp.combine($$.tableViewRow, {
@@ -62,7 +71,6 @@
 						text: missions[mission].title
                     });
                     row.add(missionTitle);
-
 
                     var formattedTimeDiff = formatTimeDiff(missions[mission].time_diff);
                     var missionExpires = Ti.UI.createLabel({
@@ -88,6 +96,7 @@
 						clickName:'missionDistance',
 						text: parseFloat(missions[mission].distance).toFixed(1) + ' ' + L('miles')
                     });
+
                     row.add(missionDistance);
                     data.push(row);
                 }

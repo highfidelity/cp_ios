@@ -26,6 +26,8 @@
         var xhr = Ti.Network.createHTTPClient();
 
         xhr.onload = function(e) {
+            Ti.API.info('xhr response = ' + this.responseText);
+
             // we want to store any session cookie we get back ...
             var sessionCookie = this.getResponseHeader('Set-Cookie');
             if (sessionCookie) {
@@ -39,6 +41,7 @@
         };
 
         xhr.onerror = function(e) {
+            Ti.API.info('Error in xhr = ' + JSON.stringify(e));
             callback({response: this.error, status: this.status});
         };
 
@@ -50,6 +53,7 @@
         if (candp.sessionId !== '') {
             xhr.setRequestHeader('Cookie', 'PHPSESSID=' + candp.sessionId);
         }
+        Ti.API.info('*****>>>><<<<<**** payload = ' + JSON.stringify(payload));
         xhr.send(payload);
     };
 
@@ -61,5 +65,6 @@ Ti.include(
     '/model/HeaderBar.js',
     '/model/Login.js',
     '/model/MissionList.js',
-    '/model/UserProfile.js'
+    '/model/UserProfile.js',
+    '/model/MissionDetails.js'
 );

@@ -10,41 +10,69 @@
 var userProfileModel = {};
 
 (function() {
+    userProfileModel.last_user_id = 69;
+
     userProfileModel.getUserProfile = function(e, callback) {
+        userProfileModel.last_user_id = e.user_id;
         candp.model.xhr(
-            candp.config.actionServerUrl,
+            candp.config.apiUrl,
             'POST',
             {
                 // *FIXME: use the profile id as passed in
-                action: 'getUserData',
-                user_id: 78 // this is H :-)
+                action: 'userdetail',
+                id:  e.user_id || userProfileModel.last_user_id
             }, 
             function(e) {
                 var response = JSON.parse(e.response);
-                if (response.params.userData) {
+                if (response.payload) {
                     Ti.API.info(e.response);
-                    callback(response.params.userData);
+                    callback(response.payload);
                 }
             }
         );
     };
 
     userProfileModel.getUserImage = function(e, callback) {
+        if (e.image_id == 0) {
+            callback('images/no_picture.jpg');
+        } else {
+            candp.model.xhr(
+                candp.config.actionServerUrl,
+                'POST',
+                {
+                    action: 'getPhotoFileWithId',
+                    photo: e.image_id
+                }, 
+                function(e) {
+                    var response = JSON.parse(e.response);
+                    if (response.params && response.succeeded === true) {
+                        callback(candp.config.baseUrl + response.params);
+                    }
+                }
+            );
+        }
+    };
+
+
+    userProfileModel.makeOffer = function(e, callback) {
         candp.model.xhr(
-            candp.config.actionServerUrl,
+            candp.config.offersUrl,
             'POST',
             {
-                action: 'getPhotoFileWithId',
-                photo: e.image_id
+                action: 'makeOffer',
+                title: 'an offer title',
+                amount: 1,
+                receiver_user_id: 196,
+                offer_id: 123,
+                mission_id: 341
             }, 
             function(e) {
                 var response = JSON.parse(e.response);
                 if (response.params && response.succeeded === true) {
-                    callback(response.params);
+                    callback(candp.config.baseUrl + response.params);
                 }
             }
         );
     };
-
 
 })();

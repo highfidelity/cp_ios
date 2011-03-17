@@ -32,4 +32,19 @@ var applicationModel = {};
         );
     };
 
+    applicationModel.setLocation = function(e) {
+       candp.model.xhr(
+           candp.config.actionServerUrl,
+           'POST',
+           {
+               action: 'setUserLocation',
+               lat: e.latitude,
+               'long': e.longitude
+           },
+           function(e) {
+               var params = JSON.parse(e.response).params;
+           }
+       );
+    };
+
 })();

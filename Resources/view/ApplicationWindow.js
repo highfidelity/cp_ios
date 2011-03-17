@@ -29,8 +29,8 @@
 
         // global views
         candp.view.views.missionDetails = candp.view.createMissionDetailsView();
-        // candp.view.views.chat = candp.view.createChatView();
-        candp.view.views.chat = candp.view.createUserProfileView();
+        candp.view.views.chat = candp.view.createChatView();
+        candp.view.views.userProfile = candp.view.createUserProfileView();
         candp.view.views.missionList = candp.view.createMissionListView();
         candp.view.views.loginView = candp.view.createLoginView();
 
@@ -41,7 +41,7 @@
 
         // keep track of our currenly active view
         // candp.view.currentActiveView = 'missionList';       
-        candp.view.currentActiveView = 'chat';
+        candp.view.currentActiveView = 'missionList';
 
         // set our initial start screen 
         win.addEventListener('open', function() {
@@ -82,7 +82,11 @@
 		            candp.view.views[e.nextViewToShow].show();
                     break;
                 case 'iphone':
-		            // make the current view slide out, and the new view slide in
+		            candp.view.views[candp.view.currentActiveView].hide();
+		            candp.view.views[e.nextViewToShow].show();
+
+		            // *FIXME: make the current view slide out, and the new view slide in
+                    /*
 		            candp.view.views[e.nextViewToShow].left = $$.platformWidth;
 		            candp.view.views[e.nextViewToShow].show();
 		               
@@ -91,9 +95,10 @@
 		            }, function() {
 		                candp.view.slide(candp.view.views[e.nextViewToShow], 'left');                
 		            });
+                    */
 		            break;
             }
-
+                                    
             candp.view.currentActiveView = e.nextViewToShow;
 
             // and as we've pressed a button bar button, we need to 
@@ -101,6 +106,11 @@
             Ti.App.fireEvent('app:login.hide');
         });
 
+
+        // make sure we update the candp server with our location when we get a GPS signal
+        Ti.App.addEventListener('app:applicationWindow.setLocation', function(e) {
+            applicationModel.setLocation(e);
+        });
         return win;
     };
 })();

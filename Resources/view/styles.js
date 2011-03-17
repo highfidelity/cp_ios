@@ -152,6 +152,15 @@
                 fontWeight:'bold'
             }
         },
+        titleText: {
+            color: candp.view.theme.textColor,
+            font: {
+                fontFamily:candp.view.theme.fontFamily,
+                fontSize:16,
+                fontWeight: 'bold'
+            },
+            height:'auto'
+        },
         largeText: {
             height:'auto',
             textAlign:'left',
@@ -162,6 +171,14 @@
                 fontSize:25,
                 fontWeight:'bold'
             }
+        },
+        mediumText: {
+            color: candp.view.theme.textColor,
+            font: {
+                fontFamily:candp.view.theme.fontFamily,
+                fontSize:14
+            },
+            height:'auto'
         },
         smallText: {
             color:candp.view.theme.grayTextColor,
