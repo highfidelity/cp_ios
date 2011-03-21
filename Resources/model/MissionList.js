@@ -15,18 +15,17 @@ var missionsModel = {};
 
     missionsModel.getMissionList = function(e, callback) {
         // go grab our current position
-        candp.location = missionsModel.getGPS();
+        missionsModel.getGPS();
 
         candp.model.xhr(
             candp.config.missionsUrl,
             'POST',
             {
-                // *FIXME: use the gps to get the real position
                 action: 'getMissions',  
-                sw_lat: 37.757144, 
-                sw_lng: -122.44606,
-                ne_lat: 37.807885,
-                ne_lng: -122.408981,
+                sw_lat: candp.location.latitude - 0.05, 
+                sw_lng: candp.location.longitude - 0.05,
+                ne_lat: candp.location.latitude + 0.05,
+                ne_lng: candp.location.longitude + 0.05,
                 SkillsIDList: ''
             }, 
             function(e) {
@@ -65,8 +64,8 @@ var missionsModel = {};
         
                     Ti.App.Properties.setString('location', JSON.stringify(candp.location));
                     Ti.API.info('candp.location = ' + JSON.stringify(candp.location));
-                    
-                    // *TODO: send updated location to the candp server
+
+                    // send an update to the server of our current location
                     Ti.App.fireEvent('app:applicationWindow.setLocation', candp.location);
                 }
             });

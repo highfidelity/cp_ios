@@ -122,6 +122,15 @@
         }));
         containerView.add(makeOfferButton);
 
+        makeOfferButton.addEventListener('click', function(e) {
+            missionDetailsModel.makeOffer(e, function(offer_id) {
+               candp.view.alert('Our offer id ...' + offer_id);
+            });
+            //userProfileModel.makeOffer(e, function(response) {
+            //    candp.view.alert('offer made ...', response);
+            //});
+        });
+
         // get chatting 1:1 with the user
         var initiateChatButton = Ti.UI.createButton(candp.combine($$.button, {
             title: L('chat1_1'),

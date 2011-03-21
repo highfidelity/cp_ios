@@ -8,6 +8,8 @@
 	<string name="username">Username</string>
 	<string name="password">Password</string>
     <string name="email">Email</string>
+    <string name="back"> Back</string>
+    <string name="refresh"> Refresh</string>
 
     <string name="title_missionlist">Mission List</string>
     <string name="title_missiondetails">Mission Details</string>

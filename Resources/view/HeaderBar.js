@@ -13,11 +13,19 @@
 
         // helper function for centering the two header text sections
         function _centerText(firstLabel, secondLabel) {
-            // *TODO: investigate why this centering code doesn't work reliably
+            firstLabel.visible = false;
+            secondLabel.visible = false;
+
+            headerBarView.remove(firstLabel);
+            headerBarView.add(firstLabel);
+
+            headerBarView.remove(secondLabel);
+            headerBarView.add(secondLabel);
+
             var label1size = firstLabel.toImage().width;
             Ti.API.info('Label1 (' + firstLabel.text + ') size = ' + label1size);
 
-            var label2size = firstLabel.toImage().width;
+            var label2size = secondLabel.toImage().width;
             Ti.API.info('Label2 (' + secondLabel.text + ')size = ' + label2size);
 
             var firstLabelLeft = ($$.platformWidth/2) - ((label1size + label2size)/2);
@@ -27,8 +35,8 @@
             firstLabel.left = firstLabelLeft;
             secondLabel.left = secondLabelLeft;
 
-            firstLabel.top = oldTop;
-            secondLabel.top = oldTop;
+            firstLabel.visible = true;
+            secondLabel.visible = true;
         }
 
         // container for our main header bar view
@@ -43,8 +51,9 @@
 
         Ti.App.addEventListener('headerBar:headerBarNickname.changeText', function(e) {
             headerBarNickname.text = e.newText;
+            _centerText(headerBarNickname, headerBarBalance);
         });
-
+        headerBarView.add(headerBarNickname);
 
         // label for our balance when logged in, or blank when logged out
         var headerBarBalance = Ti.UI.createLabel(candp.combine($$.headerText, {
@@ -56,7 +65,12 @@
 
         Ti.App.addEventListener('headerBar:headerBarBalance.changeText', function(e) {
             headerBarBalance.text = e.newText;
+            _centerText(headerBarNickname, headerBarBalance);
         });
+        headerBarView.add(headerBarBalance);
+
+        // center the first display of 'coffee&power'
+        _centerText(headerBarNickname, headerBarBalance);
 
  
         // button to allow us to login or logout
@@ -71,12 +85,14 @@
         Ti.App.addEventListener('headerBar:loginButton.changeText', function(e) {
             loginButton.title = e.newText;
         });
-
-
-        // assemble  our header bar
-        headerBarView.add(headerBarNickname);
-        headerBarView.add(headerBarBalance);
         headerBarView.add(loginButton);
+
+
+        // generic back/refresh button
+        var refreshButton = Ti.UI.createButton(candp.combine($$.refreshTopLeftButton, {
+            title: L('back')
+        }));
+        headerBarView.add(refreshButton);
 
 
         // respond to login/logout state changes
@@ -84,40 +100,23 @@
             headerBarModel.changeState(e);
         });
 
-        // let's go get our balance every x minutes
-        setInterval(function() {
-            headerBarModel.getUserBalance(function(balance) {
-                Ti.App.fireEvent('headerBar:headerBarBalance.changeText', {
-                    newText: '$' + balance
-                });
-            });
-        }, candp.config.getBalanceTime);
-        
 
-        // *TODO: Add refresh button on left hand side of the header bar
+        // respond to swipe down/up to display the logged in status bar
+        headerBarView.addEventListener('touchstart', function(e) {
+            headerBarView.touchStart = e.y;
+        });
+        headerBarView.addEventListener('touchend', function(e) {
+            headerBarView.touchEnd = e.y;
 
+            if (headerBarView.touchEnd > headerBarView.touchStart + 10) {
+                Ti.API.info('app:loggedInBar.show');
+            }
+            if (headerBarView.touchEnd < headerBarView.touchStart - 10) {
+                Ti.API.info('app:loggedInBar.hide');
+            }
 
-
-/*
-        // *FIXME: Remove this label when we go live!
-        // Keep a check on our memory usage while we work
-        var memoryCheck = Ti.UI.createLabel(candp.combine($$.headerText, {
-            left: 5,
-            height: 20,
-            width: 100,
-            font: {
-                fontSize:10,
-                fontWeight:'bold'
-            },
-            text: String.format('%5.2f', Ti.Platform.availableMemory)
-        }));
-        headerBarView.add(memoryCheck);
-
-        // *FIXME: Remove this callback when we go live!
-        setInterval(function() {
-            memoryCheck.text = String.format('%5.2f', Ti.Platform.availableMemory);            
-        }, 1000);
-*/
+            headerBarView.touchStart = $$.platformHeight;
+        });
 
 
         return headerBarView;

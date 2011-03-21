@@ -118,12 +118,6 @@
             right:5,
             height:30,
             width: 60,
-            /*
-            width: candp.os({
-                iphone:60,
-                android:'auto'
-            }),
-            */
             color:'#ffffff',
             font: {
                 fontSize:12,
@@ -131,6 +125,20 @@
             },
             backgroundImage:'images/button_30_off.png',
             backgroundSelectedImage:'images/button_30_on.png',
+            borderStyle: Titanium.UI.BUTTON_BORDERSTYLE_ROUNDED
+        },
+        refreshTopLeftButton: {
+            top:6,
+            left:3,
+            height:32,
+            width: 63,
+            color:'#ffffff',
+            font: {
+                fontSize:12,
+                fontWeight:'bold'
+            },
+            backgroundImage:'images/back_button_black_off.png',
+            backgroundSelectedImage:'images/back_button_black_on.png',
             borderStyle: Titanium.UI.BUTTON_BORDERSTYLE_ROUNDED
         },
         topRightButton: {

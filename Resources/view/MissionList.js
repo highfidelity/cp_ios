@@ -11,7 +11,6 @@
 
 (function() {
     candp.view.createMissionListView = function (args) {
-
         var data = [];
         var missions_data = [];
 
@@ -51,6 +50,7 @@
 
         Ti.App.addEventListener('app:missionList.getMissions', function(e) {
             missionsModel.getMissionList(e, function(missions) {
+                data = [];
                 missions_data = missions;
 
                 // fill in the table with missions

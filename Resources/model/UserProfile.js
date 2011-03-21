@@ -60,17 +60,16 @@ var userProfileModel = {};
             'POST',
             {
                 action: 'makeOffer',
-                title: 'an offer title',
+                title: 'an offer title .. made from the iphone app',
                 amount: 1,
                 receiver_user_id: 196,
-                offer_id: 123,
-                mission_id: 341
+                offer_id: 556,
+                mission_id: 341,
+                pay_me: 1
             }, 
             function(e) {
                 var response = JSON.parse(e.response);
-                if (response.params && response.succeeded === true) {
-                    callback(candp.config.baseUrl + response.params);
-                }
+                callback(response);
             }
         );
     };

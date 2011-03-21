@@ -35,6 +35,15 @@ var headerBarModel = {};
     };
 
     headerBarModel.changeState = function(e) {
+        // helper function to be used in the setInterval
+        function _getUserBalance() {
+            headerBarModel.getUserBalance(function(balance) {
+                Ti.App.fireEvent('headerBar:headerBarBalance.changeText', {
+                    newText: '$' + balance
+                });
+            });            
+        }
+
         switch(e.newState) {
             case 'loggedIn':
                 // let's check that we're really logged in
@@ -52,11 +61,6 @@ var headerBarModel = {};
                         
                         if (logged === 'true') {
                             // we're logged in, so 
-                            // *TODO: Get GPS lat&long and register at the server
-
-                            // candp.location = applicationModel.getGPS();
-
-
 		                    // ... collect the missions now that we've logged in
 			                Ti.App.fireEvent('app:missionList.getMissions');
                     
@@ -70,6 +74,9 @@ var headerBarModel = {};
                             Ti.App.fireEvent('headerBar:headerBarBalance.changeText', {
                                  newText: '$' + params.userData.balance
                             });
+
+                            // let's go get our balance every x minutes
+                            headerBarModel.getUserBalanceIntervalId = setInterval(_getUserBalance, candp.config.getBalanceTime);
                         }
                     }
                 );
@@ -85,6 +92,9 @@ var headerBarModel = {};
 	            Ti.App.fireEvent('headerBar:headerBarBalance.changeText', {
 	                 newText: ' '
 	            });
+
+                // stop collecting our balance
+                clearInterval(headerBarModel.getUserBalanceIntervalId);
                 break;
         }    
     };

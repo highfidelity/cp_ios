@@ -9,15 +9,25 @@
 
 (function() {
     candp.view.createChatView = function (args) {
-        var chatView = Ti.UI.createView(candp.combine($$.stretch, {
+        var chatView = Ti.UI.createView(candp.combine($$.contained, {
+            backgroundImage: 'images/transparent.png',
             visible: false
         }));
 
         chatView.add(Ti.UI.createLabel(candp.combine($$.headerText, {
-            top: 80,
-            text: L('title_chat')
+            top: 20,
+            text: "TESTING FOR CHAT"
         })));
 
+
+        chatView.addEventListener('click', function(e) {
+            // get the csrf_token
+            chatModel.chatLogin(e, function(csrf_token) {
+                candp.view.alert('we connected ..', csrf_token);
+            });
+        });
+
+	
         return chatView;
     };
 })();

@@ -15,7 +15,6 @@ var missionDetailsModel = {};
             candp.config.apiUrl,
             'POST',
             {
-                // *FIXME: use the profile id as passed in
                 action: 'missiondetail',
                 id: e.id
             }, 
@@ -28,4 +27,49 @@ var missionDetailsModel = {};
             }
         );        
     };
+
+    missionDetailsModel.makeOffer = function(e, callback) {
+        candp.model.xhr(
+            candp.config.offersUrl,
+            'POST',
+            {
+                action: 'getView',
+                receiver_user_id: 196,
+                already_created: 'N',
+                offer_id: '',
+                mission_id: 341
+            },
+            function(e) {
+                // we've now got an offer id
+                missionDetailsModel.offer_id = e.response.split('data-offer-id="')[1].split('"')[0];
+                missionDetailsModel.finaliseOffer({
+                    offer_id: e.response.split('data-offer-id="')[1].split('"')[0]
+                }, function(e) {
+                    callback(e);
+                });
+            }
+        );
+    };
+
+    missionDetailsModel.finaliseOffer = function(e, callback) {
+        var now = new Date();
+        candp.model.xhr(
+            candp.config.offersUrl,
+            'POST',
+            {
+                action: 'makeOffer',
+                title: 'an offer title .. made from the iphone app' + now,
+                amount: 1,
+                receiver_user_id: 196,
+                offer_id: e.offer_id,
+                mission_id: 341,
+                pay_me: 1
+            },
+            function(e) {
+                // we've pushed an offer to the server for this mission
+                callback(e.response);
+            }
+        );
+    };
+
 })();

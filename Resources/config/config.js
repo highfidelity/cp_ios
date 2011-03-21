@@ -18,6 +18,9 @@
         actionServerUrl: baseUrl + 'ActionServer.php',
         missionsUrl: baseUrl + 'missions.php',
         apiUrl: baseUrl + 'api.php',
+        offersUrl: baseUrl + 'offers.php',
+        chatIndexUrl: baseUrl + 'chat/indexcandp.php',
+        chatUrl: baseUrl + 'chat/aj.php',
 
         // 44 points is the iPhone standard header size
         headerHeight: 44,
