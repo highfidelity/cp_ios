@@ -23,6 +23,7 @@
     <string name="buttonbar_notifications">Notifications</string>
 
 	<string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 	<string name="error">Error</string>	
 	<string name="error_network_connection">There has been a problem connecting to the Coffee and Power server.  Please wait a while and try again later.</string>	
 	<string name="error_network_request">There has been a problem sending your request to the Coffee and Power server.  Please wait a while and try again later.</string>	
@@ -32,7 +33,14 @@
 
     <string name="overdue">overdue</string>
     <string name="expires_in">expires in</string>
+    <string name="never_expires">never expires</string>
     <string name="miles">miles</string>
+    <string name="mission_is">Mission is</string>
+    <string name="i_will_pay">I will pay $</string>
+    <string name="i_want_pay">I want $</string>
+    <string name="i_want">I want</string>
+    <string name="i_will">I will</string>
+    <string name="offer_for">Offer for</string>
 
     <string name="GPS_turned_off">There has been a problem finding your exact GPS location.  To have a more personalized experience of Coffee and Power, please make sure GPS service is turned on.</string>
 

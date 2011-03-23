@@ -15,31 +15,37 @@ var missionsModel = {};
 
     missionsModel.getMissionList = function(e, callback) {
         // go grab our current position
-        missionsModel.getGPS();
-
-        candp.model.xhr(
-            candp.config.missionsUrl,
-            'POST',
-            {
-                action: 'getMissions',  
-                sw_lat: candp.location.latitude - 0.05, 
-                sw_lng: candp.location.longitude - 0.05,
-                ne_lat: candp.location.latitude + 0.05,
-                ne_lng: candp.location.longitude + 0.05,
-                SkillsIDList: ''
-            }, 
-            function(e) {
-                var response = JSON.parse(e.response);
-                if (response.params.listOfMissions) {
-                    callback(response.params.listOfMissions);
+        missionsModel.getGPS(function(e) {
+            candp.model.xhr(
+                candp.config.missionsUrl,
+                'POST',
+                {
+                    action: 'getMissions',  
+                    sw_lat: candp.location.latitude - 0.1, 
+                    sw_lng: candp.location.longitude - 0.1,
+                    ne_lat: candp.location.latitude + 0.1,
+                    ne_lng: candp.location.longitude + 0.1,
+                    SkillsIDList: ''
+                }, 
+                function(e) {
+                    var response = JSON.parse(e.response);
+                    if (response.params.listOfMissions) {
+                        callback(response.params.listOfMissions);
+                    }
                 }
-            }
-        );
+            );
+        });
     };
 
-    missionsModel.getGPS = function() {
-        // get our last known good GPS location
-        candp.location = JSON.parse(Ti.App.Properties.getString('location', '{}'));
+    missionsModel.getGPS = function(callback) {
+        // get our last known good GPS location -- by default we use a location in San Francisco
+        candp.location = JSON.parse(Ti.App.Properties.getString('location', JSON.stringify({latitude: 37.792083, longitude: -122.409196})));
+        if (candp.location === {}) {
+            candp.location = {
+                latitude: 37.792083, 
+                longitude: -122.409196
+            };
+        }
 
         Ti.Geolocation.purpose = "Coffee and Power Missions List";
         Ti.Geolocation.preferredProvider = Titanium.Geolocation.PROVIDER_GPS;
@@ -47,6 +53,7 @@ var missionsModel = {};
         // do we have GPS turned on?
         if (Ti.Geolocation.locationServicesEnabled == false) {
             candp.view.alert(L('error'), L('GPS_turned_off'));
+            callback(null);
         } else {
             // ok, so grab a 'close enough' location
             Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_HUNDRED_METERS;
@@ -55,7 +62,7 @@ var missionsModel = {};
             Ti.Geolocation.getCurrentPosition(function(e) {
                 if (e.error) {
                     candp.view.alert(L('error'), L('GPS_turned_off'));
-                    return;
+                    callback(e);
                 } else {
                     candp.location = {
                         latitude: e.coords.latitude,
@@ -67,6 +74,8 @@ var missionsModel = {};
 
                     // send an update to the server of our current location
                     Ti.App.fireEvent('app:applicationWindow.setLocation', candp.location);
+
+                    callback(e);
                 }
             });
         }

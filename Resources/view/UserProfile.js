@@ -41,7 +41,8 @@
         var userImage = Ti.UI.createImageView(candp.combine($$.imageView, {
             defaultImage: 'images/no_picture.jpg',
             top: 55,
-            left: 20
+            left: 20,
+            canScale: true
         }));
         containerView.add(userImage);
 
@@ -149,7 +150,8 @@
 
         Ti.App.addEventListener('app:userProfile.show', function(e) {
             Ti.App.fireEvent('app:buttonBar.click', {
-                nextViewToShow: 'userProfile'
+                nextViewToShow: 'userProfile',
+                clickedButtonIndex: 1
             });
             userProfileView.show();
         });

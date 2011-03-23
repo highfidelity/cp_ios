@@ -88,5 +88,6 @@ Ti.include(
     '/view/Chat.js',
     '/view/Login.js',
     '/view/ButtonBar.js',
-    '/view/HeaderBar.js'
+    '/view/HeaderBar.js',
+    '/view/MakeOffer.js'
 );

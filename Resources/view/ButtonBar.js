@@ -13,6 +13,7 @@
     candp.view.createButtonBarView = function (args) {
         // helper function
         function _fireEvent(nextViewToShow, clickedButtonIndex, previousButtonIndex) {
+            Ti.API.info('firing event app:buttonBar.click ' + clickedButtonIndex);
             Ti.App.fireEvent('app:buttonBar.click', {
                 nextViewToShow: nextViewToShow, 
                 clickedButtonIndex: clickedButtonIndex,

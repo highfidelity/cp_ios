@@ -23,14 +23,9 @@
             headerBarView.add(secondLabel);
 
             var label1size = firstLabel.toImage().width;
-            Ti.API.info('Label1 (' + firstLabel.text + ') size = ' + label1size);
-
             var label2size = secondLabel.toImage().width;
-            Ti.API.info('Label2 (' + secondLabel.text + ')size = ' + label2size);
-
             var firstLabelLeft = ($$.platformWidth/2) - ((label1size + label2size)/2);
             var secondLabelLeft = label1size + firstLabelLeft;
-            Ti.API.info('first = ' + firstLabelLeft + ' second = ' + secondLabelLeft);
 
             firstLabel.left = firstLabelLeft;
             secondLabel.left = secondLabelLeft;
@@ -39,8 +34,17 @@
             secondLabel.visible = true;
         }
 
+        // where should our back button go to?
+        var backButtonDestination = {
+            destinationView: 'missionList',
+            destinationIndex: 2
+        };
+
         // container for our main header bar view
-        var headerBarView = Ti.UI.createView(candp.combine($$.headerView, options));
+        var headerBarView = Ti.UI.createView(candp.combine($$.headerView, {
+            backgroundImage: 'images/buttonbar_bg.png',
+            zIndex: 30
+        }));
 
         // label for our nickname when logged in, or the app title when logged out
         var headerBarNickname = Ti.UI.createLabel(candp.combine($$.headerText, {
@@ -88,11 +92,53 @@
         headerBarView.add(loginButton);
 
 
-        // generic back/refresh button
-        var refreshButton = Ti.UI.createButton(candp.combine($$.refreshTopLeftButton, {
-            title: L('back')
+        // generic back button
+        var backButton = Ti.UI.createButton(candp.combine($$.backTopLeftButton, {
+            title: L('back'),
+            visible: false
         }));
+        backButton.addEventListener('click', function(e) {
+            Ti.App.fireEvent('app:buttonBar.click', {
+                nextViewToShow: backButtonDestination.destinationView,
+                clickedButtonIndex: backButtonDestination.destinationIndex
+            });
+            Ti.App.fireEvent('headerBar:backButton.hide');
+        });
+        headerBarView.add(backButton);
+        
+        // generic refresh button
+        var refreshButton = Ti.UI.createButton(candp.combine($$.refreshTopLeftButton, {
+            image: 'images/refresh.png',
+            visible: true
+        }));
+        refreshButton.addEventListener('click', function(e) {
+            Ti.App.fireEvent('app:missionList.getMissions');
+        });
         headerBarView.add(refreshButton);
+
+        // handle the showing and hiding of the two back/refresh buttons
+        Ti.App.addEventListener('headerBar:backButton.show', function(e) {
+            if (e.destinationView && e.destinationIndex) {
+                backButtonDestination = {
+                    destinationView: e.destinationView,
+                    destinationIndex: e.destinationIndex
+                };
+            }
+            backButton.show();
+            refreshButton.hide();
+        });
+        Ti.App.addEventListener('headerBar:backButton.hide', function(e) {
+            backButton.hide();
+            refreshButton.show();
+        });
+        Ti.App.addEventListener('headerBar:refreshButton.show', function(e) {
+            refreshButton.show();
+            backButton.hide();
+        });
+        Ti.App.addEventListener('headerBar:refreshButton.hide', function(e) {
+            refreshButton.hide();
+            backButton.show();
+        });
 
 
         // respond to login/logout state changes

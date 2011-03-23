@@ -40,8 +40,13 @@
             data: data
         }));
         tableView.addEventListener('click', function(e) {
-            Ti.API.info('Row = ' + JSON.stringify(missions_data[e.index]));
+            // *FIXME: there's a naming clash on mission.type
+            missions_data[e.index].mission_type = missions_data[e.index].type;
             Ti.App.fireEvent('app:missionDetail.show', missions_data[e.index]);
+            Ti.App.fireEvent('headerBar:backButton.show', {
+                destinationView: 'missionList',
+                destinationIndex: 2
+            });
         });
 
 
@@ -68,7 +73,7 @@
 						height: 25,
 						right:50,
 						clickName:'missionTitle',
-						text: missions[mission].title
+						text: (missions[mission].type === 'want') ? 'I want ' + missions[mission].title : 'I will ' + missions[mission].title
                     });
                     row.add(missionTitle);
 
@@ -81,7 +86,7 @@
 						height:20,
 						width: 'auto',
 						clickName:'missionExpires',
-						text: formattedTimeDiff == '0 min' ? L('overdue') : L('expires_in') + ' ' + formattedTimeDiff
+						text: (formattedTimeDiff === '0 min') ? L('overdue') : (formattedTimeDiff === '-1 min') ? L('never_expires') : L('expires_in') + ' ' + formattedTimeDiff
                     });
                     row.add(missionExpires);
 

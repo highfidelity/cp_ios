@@ -70,17 +70,14 @@
             borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
             color:'#000000'
         },
-        TextArea: {
+        textArea: {
             borderRadius:10,
-            backgroundColor:'#efefef',
-            // gradient only works on iPhone
-            backgroundGradient:{
-                type:'linear',
-                colors:[
-                    {color:'#efefef',position:0.0},
-                    {color:'#cdcdcd',position:0.50},
-                    {color:'#efefef',position:1.0}
-                ]
+            borderColor: '#000000',
+            borderWidth: 1,
+            backgroundColor:'#FFFFFF',
+            font: {
+                fontFamily:candp.view.theme.fontFamily,
+                fontSize:14
             }
         },
         WebView: {
@@ -128,6 +125,20 @@
             borderStyle: Titanium.UI.BUTTON_BORDERSTYLE_ROUNDED
         },
         refreshTopLeftButton: {
+            top:5,
+            left:5,
+            height:30,
+            width: 45,
+            color:'#ffffff',
+            font: {
+                fontSize:12,
+                fontWeight:'bold'
+            },
+            backgroundImage:'images/button_30_off.png',
+            backgroundSelectedImage:'images/button_30_on.png',
+            borderStyle: Titanium.UI.BUTTON_BORDERSTYLE_ROUNDED
+        },
+        backTopLeftButton: {
             top:6,
             left:3,
             height:32,
@@ -185,6 +196,15 @@
             font: {
                 fontFamily:candp.view.theme.fontFamily,
                 fontSize:14
+            },
+            height:'auto'
+        },
+        mediumBoldText: {
+            color: candp.view.theme.textColor,
+            font: {
+                fontFamily:candp.view.theme.fontFamily,
+                fontSize:12,
+                fontWeight: 'bold'
             },
             height:'auto'
         },

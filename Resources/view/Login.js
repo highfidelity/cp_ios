@@ -10,7 +10,7 @@
  */
 
 (function() {
-    candp.view.createLoginView = function (args) {
+    candp.view.createLoginView = function () {
         var loginView = Ti.UI.createView(candp.combine($$.contained, {
             visible: false,
             // *TODO: investigate problems with Android detecting view visiblity
@@ -120,7 +120,6 @@
                     break;
 
                 case 'iphone':
-		            var a, m;
 		            switch(loginView.visible) {
 		                case false:
 				            loginView.top = -$$.platformHeight;
