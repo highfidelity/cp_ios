@@ -47,4 +47,52 @@ var applicationModel = {};
        );
     };
 
+    applicationModel.registerDeviceToken = function(deviceToken, callback) {
+        candp.model.xhr(
+           candp.config.registerAPNTokenUrl,
+           'POST',
+           {
+               APNToken: deviceToken
+           },
+           function(e) {
+               callback(e.response);
+           }
+        );
+    };
+
+    applicationModel.registerForPushNotifications = function(e) {
+        Titanium.Network.registerForPushNotifications({
+            types: [
+                Titanium.Network.NOTIFICATION_TYPE_BADGE,
+                Titanium.Network.NOTIFICATION_TYPE_ALERT,
+                Titanium.Network.NOTIFICATION_TYPE_SOUND
+            ],
+
+            success: function(e) {
+                // send the deviceToken to the candp server
+                applicationModel.registerDeviceToken(e.deviceToken, function(e) {
+                });
+            },
+
+            error: function(e) {
+                // oops, we don't have push notifications enabled
+                candp.view.alert(L('error'), L('error_push_notifications_disabled'));
+            },
+
+            callback: function(e) {
+                // we've received a push notification from the server
+                // so open up the mision details screen
+                Ti.App.fireEvent('app:missionDetail.getById', {
+                    id: e.data.payload.mission_id
+                });
+                Ti.App.fireEvent('headerBar:backButton.show', {
+                    destinationView: 'missionList',
+                    destinationIndex: 2
+                });
+                
+            }
+
+        });
+    };
+
 })();

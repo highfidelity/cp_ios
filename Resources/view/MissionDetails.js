@@ -131,10 +131,7 @@
             });
             makeOfferView.open({transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT});
             makeOfferView.show();
- 
-            //missionDetailsModel.makeOffer(e, function(offer_id) {
-            //   candp.view.alert('Our offer id ...' + offer_id);
-            //});
+            Ti.App.fireEvent('headerBar:refreshButton.hideBoth');
         });
 
         // get chatting 1:1 with the user
@@ -147,8 +144,14 @@
         }));
         buttonsContainer.add(initiateChatButton);
 
-        
+        // respond to mission details from push notifications (i.e. get the mission by its id)
+        Ti.App.addEventListener('app:missionDetail.getById', function(mission) {
+            missionDetailsModel.getMissionById(mission, function(mission) {
+                Ti.App.fireEvent('app:missionDetail.show', mission);
+            });
+        });
 
+        // respond to showing mission details to the user
         Ti.App.addEventListener('app:missionDetail.show', function(mission) {
             userId = mission.author_id;
             missionId = mission.id;
@@ -172,17 +175,6 @@
                 authorImage.image = image;
             });
         });
-
-        // *TODO: Add mission detail label
-        // *TODO: Add mission detail due date label
-        // *TODO: Add mission detail due date as words label
-        // *TODO: Add mission detail posted by image
-        // *TODO: Add mission detail posted by label
-        // *TODO: Add mission detail user profile button (arrow)
-        // *TODO: Add mission detail make offer button
-        // *TODO: Add mission detail initiate 1:1 chat button
-        // *TODO: Add event listener for make offer button
-        // *TODO: Add event listener for initiate 1:1 chat button
 
         return missionDetailsView;
     };

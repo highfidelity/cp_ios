@@ -136,6 +136,14 @@
             });
         });
 
+        // make sure we respond to APN register for push notifications
+        Ti.App.addEventListener('app:applicationWindow.registerForPushNotifications', function(e) {
+            applicationModel.registerForPushNotifications();
+
+            // *FIXME: THIS SHOULDN'T BE HERE
+            chatModel.chatLogin(null, function(e) {});
+        });
+
         // make sure we update the candp server with our location when we get a GPS signal
         Ti.App.addEventListener('app:applicationWindow.setLocation', function(e) {
             applicationModel.setLocation(e);

@@ -19,14 +19,25 @@
             text: "TESTING FOR CHAT"
         })));
 
-
+        
         chatView.addEventListener('click', function(e) {
-            // get the csrf_token
-            chatModel.chatLogin(e, function(csrf_token) {
-                candp.view.alert('we connected ..', csrf_token);
+            chatModel.sendChatMessage(196, 'This time, sponsored by SHS, is ' + new Date(), function(e) {
+                Ti.API.info('We sent a message to 196, and we got back ' + e.response);
+
             });
+
+            setTimeout(10000, getWaitingMessages());
         });
 
+
+        function getWaitingMessages() {
+            chatModel.getWaitingMessage(function(e) {
+                Ti.API.info('GET WAITING MESSAGES RESPONDED WITH ...>>>' + e.response);
+                setTimeout(10000, getWaitingMessages());
+            });
+        }
+
+        
 	
         return chatView;
     };

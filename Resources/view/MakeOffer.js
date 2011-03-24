@@ -77,6 +77,9 @@
                missionId: options.missionId,
                payMe: 1
             }, function(e) {
+                // *TODO: look at the response and show the user that their update was
+                // successful or otherwise
+                Ti.App.fireEvent('headerBar:backButton.show');
                 makeOfferView.close({transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT});
             });
         });
@@ -90,6 +93,7 @@
             width: 130
         }));
         cancelButton.addEventListener('click', function(e) {
+            Ti.App.fireEvent('headerBar:backButton.show');
             makeOfferView.close({transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT});
         });
         containerView.add(cancelButton);

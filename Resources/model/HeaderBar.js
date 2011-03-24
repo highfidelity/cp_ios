@@ -64,6 +64,11 @@ var headerBarModel = {};
 		                    // ... collect the missions now that we've logged in
 			                Ti.App.fireEvent('app:missionList.getMissions');
                     
+                            // ... and register for APN (Apple Push Notifications)
+                            if (candp.osname === 'iphone') {
+                                Ti.App.fireEvent('app:applicationWindow.registerForPushNotifications');
+                            }
+
                             // ... and we can get the nickname and balance etc
                             Ti.App.fireEvent('headerBar:loginButton.changeText', {
                                  newText: L('logout')

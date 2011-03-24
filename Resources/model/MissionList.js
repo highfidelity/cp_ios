@@ -10,9 +10,6 @@
 var missionsModel = {};
 
 (function() {
-    missionsModel.getMissionDetail = function(e) {
-    };
-
     missionsModel.getMissionList = function(e, callback) {
         // go grab our current position
         missionsModel.getGPS(function(e) {

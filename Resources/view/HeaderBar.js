@@ -139,7 +139,11 @@
             refreshButton.hide();
             backButton.show();
         });
-
+        Ti.App.addEventListener('headerBar:refreshButton.hideBoth', function(e) {
+            refreshButton.hide();
+            backButton.hide();
+        });
+        
 
         // respond to login/logout state changes
         Ti.App.addEventListener('app:headerBar.changeState', function(e) {

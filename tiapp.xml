@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-<id>com.singinghorsestudio.candp</id>
+<id>com.singinghorsestudio.internal.testnotify</id>
 <name>candp</name>
 <version>1.0</version>
 <publisher>Love Machine Inc</publisher>

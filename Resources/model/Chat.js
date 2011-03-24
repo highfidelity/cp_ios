@@ -12,6 +12,10 @@ var chatModel = {};
 
 (function() {
     chatModel.csrf_token = '';
+    chatModel.lastid = null;
+    chatModel.lasttouched = null;
+    chatModel.lastprivate = null;
+    chatModel.sampled = null;
 
     chatModel.chatLogin = function(e, callback) {         
         var xhr = Ti.Network.createHTTPClient();
@@ -28,7 +32,7 @@ var chatModel = {};
 
             // send a heartbeat
             chatModel.sendHeartBeat(function(e) {
-                callback(chatModel.csrf_token);
+                callback(e);
             });
         };
    
@@ -60,9 +64,70 @@ var chatModel = {};
         );
     };
 
+	chatModel.sendChatMessage = function(recipient_id, message, callback) {
+        candp.model.xhr(
+            candp.config.chatUrl,
+            'POST',
+            {
+                what: 'send',
+                message: message,
+                tries: 1,
+                lastid: chatModel.lastid,
+                lasttouched: chatModel.lasttouched,
+                filter: null,
+                last_private: chatModel.lastprivate,
+                csrf_token: chatModel.csrf_token,
+                sampled: chatModel.sampled,
+                receiving_user_id: recipient_id,
+                entry_lat: candp.location.latitude,
+                entry_lng: candp.location.longitude,
+                entry_skills_id: null,
+                sw_lat: candp.location.latitude - 0.1,
+                sw_lng: candp.location.longitude - 0.1,
+                ne_lat: candp.location.latitude + 0.1,
+                ne_lng: candp.location.longitude + 0.1
+            },
+            function(e) {
+                var response = JSON.parse(e.response);
+                chatModel.lastid = response.lastId;
+                chatModel.lasttouched = response.lasttouched;
+                chatModel.lastprivate = response.last_private;
+                chatModel.sampled = response.newentries[0].sampled;
 
-	chatModel.sendChatMessage = function(recipient_id, message) {
-        
+                // *TODO: what do we do about
+                //    parent.CandpSocket.notifyChat1to1(journal.receiving_user_id, retryMessage);
+
+                callback(e);
+            }
+        );
+    };
+
+    chatModel.getWaitingMessage = function(callback) {
+        candp.model.xhr(
+            candp.config.chatUrl,
+            'POST',
+            {
+                what: 'latest_longpoll',
+                opt: '1', //'3', //'1',
+                timeout: 5,
+                lastid: chatModel.lastid,
+                lasttouched: chatModel.lasttouched,
+                csrf_token: chatModel.csrf_token,
+                filter: null,
+                last_private: chatModel.lastprivate,
+                receiving_user_id: 196, // 1329, // 196,
+                sw_lat: candp.location.latitude - 0.1,
+                sw_lng: candp.location.longitude - 0.1,
+                ne_lat: candp.location.latitude + 0.1,
+                ne_lng: candp.location.longitude + 0.1,
+                entry_skill_ids: null
+            },
+            function(e) {
+                var response = JSON.parse(e.response);
+                chatModel.lasttouched = response.lasttouched;
+                callback(e);
+            }
+        );
     };
 
 })();

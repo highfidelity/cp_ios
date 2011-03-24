@@ -18,6 +18,7 @@
         actionServerUrl: baseUrl + 'ActionServer.php',
         missionsUrl: baseUrl + 'missions.php',
         apiUrl: baseUrl + 'api.php',
+        registerAPNTokenUrl: baseUrl + 'registerApnToken.php',
         offersUrl: baseUrl + 'offers.php',
         chatIndexUrl: baseUrl + 'chat/indexcandp.php',
         chatUrl: baseUrl + 'chat/aj.php',
