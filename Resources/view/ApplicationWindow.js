@@ -38,13 +38,14 @@
 
         // global views
         candp.view.views.chat = candp.view.createChatView();
-        candp.view.views.userProfile = candp.view.createUserProfileView();
+        //candp.view.views.userProfile = candp.view.createUserProfileView();
+        candp.view.views.userList = candp.view.createUserListView();
         candp.view.views.missionList = candp.view.createMissionListView();
         candp.view.views.missionDetails = candp.view.createMissionDetailsView();
 
         if (candp.osname === 'iphone') {
             containerView = Ti.UI.createScrollableView(candp.combine($$.containerView, {
-                views: [candp.view.views.chat, candp.view.views.userProfile, candp.view.views.missionList, candp.view.views.missionDetails],
+                views: [candp.view.views.chat, candp.view.views.userList, candp.view.views.missionList, candp.view.views.missionDetails],
                 showPagingControl: true,
                 currentPage: 2
             }));

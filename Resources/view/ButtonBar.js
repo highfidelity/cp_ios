@@ -40,8 +40,8 @@
                 onClick: function(clickedButtonIndex, previousButtonIndex) {
                     // *FIXME: user profile for testing, but it ought to be people
                     // however, we'll need a stub created as this isn't MVP
-                    _fireEvent('userProfile', clickedButtonIndex, previousButtonIndex);
-                    Ti.App.fireEvent('app:userProfile.getUserProfile');
+                    _fireEvent('userList', clickedButtonIndex, previousButtonIndex);
+                    Ti.App.fireEvent('app:userList.getUsers');
                 }
             },
             {

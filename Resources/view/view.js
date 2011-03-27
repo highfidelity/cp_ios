@@ -85,6 +85,7 @@ Ti.include(
     '/view/MissionList.js',
     '/view/MissionDetails.js',
     '/view/UserProfile.js',
+    '/view/UserList.js',
     '/view/Chat.js',
     '/view/Login.js',
     '/view/ButtonBar.js',
