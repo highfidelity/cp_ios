@@ -41,6 +41,7 @@ var headerBarModel = {};
                 Ti.App.fireEvent('headerBar:headerBarBalance.changeText', {
                     newText: '$' + balance
                 });
+                Ti.App.fireEvent('app:chat.refreshUrl', {});
             });            
         }
 
@@ -79,6 +80,9 @@ var headerBarModel = {};
                             Ti.App.fireEvent('headerBar:headerBarBalance.changeText', {
                                  newText: '$' + params.userData.balance
                             });
+
+                            // ... and reload the chat page
+                            Ti.App.fireEvent('app:Chat.refreshUrl');
 
                             // let's go get our balance every x minutes
                             headerBarModel.getUserBalanceIntervalId = setInterval(_getUserBalance, candp.config.getBalanceTime);

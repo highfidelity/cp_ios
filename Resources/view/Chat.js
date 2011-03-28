@@ -14,6 +14,7 @@
             visible: false
         }));
 
+/*
         chatView.add(Ti.UI.createLabel(candp.combine($$.headerText, {
             top: 20,
             text: "TESTING FOR CHAT"
@@ -28,16 +29,28 @@
 
             setTimeout(10000, getWaitingMessages());
         });
+*/
+        var url = 'http://www.coffeeandpower.com/chat/index1to1.php?receiving_user_id=196&PHPSESSID=' + candp.sessionId; 
+        Ti.API.info('url is ' + url);
+        var webView = Ti.UI.createWebView({
+            url: url,
+            scalesPageToFit: false
+        });
+        chatView.add(webView);
 
-
+/*
         function getWaitingMessages() {
             chatModel.getWaitingMessage(function(e) {
                 Ti.API.info('GET WAITING MESSAGES RESPONDED WITH ...>>>' + e.response);
                 setTimeout(10000, getWaitingMessages());
             });
         }
-
-        
+*/
+        Ti.App.addEventListener('app:chat.refreshUrl', function(e) {
+            webView.url = 'http://www.coffeeandpower.com/chat/index1to1.php?receiving_user_id=196&PHPSESSID=' + candp.sessionId;
+            Ti.API.info('webview.url = ' + webView.url);
+            webView.reload();
+        });
 	
         return chatView;
     };

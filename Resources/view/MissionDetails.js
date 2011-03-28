@@ -43,7 +43,7 @@
             left: 20
         }));
         authorImage.addEventListener('click', function(e) {
-            Ti.App.fireEvent('app:buttonBar.clicked', {button_name: 'userProfile'});
+            Ti.App.fireEvent('app:buttonBar.clicked', {button_name: 'userProfile', clickedButtonIndex: 1});
             setTimeout(function() {
                 missionDetailsView.hide();
                 Ti.App.fireEvent('app:userProfile.getUserProfile', {

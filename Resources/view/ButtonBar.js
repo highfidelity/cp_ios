@@ -38,8 +38,7 @@
                 imageOff: 'images/buttonbar_people_off.png',
                 imageOn: 'images/buttonbar_people_on.png',
                 onClick: function(clickedButtonIndex, previousButtonIndex) {
-                    // *FIXME: user profile for testing, but it ought to be people
-                    // however, we'll need a stub created as this isn't MVP
+                    // show a list of nearby users
                     _fireEvent('userList', clickedButtonIndex, previousButtonIndex);
                     Ti.App.fireEvent('app:userList.getUsers');
                 }
@@ -83,10 +82,11 @@
                 // we need to keep track of the previously selected button
                 // for aesthetic reasons (i.e. page transition animations!)
                 var previousButtonIndex = null;
+                var clickedButtonIndex = (e.source.index === undefined) ? e.clickedButtonIndex : e.source.index;
 
                 // change the status of all the buttons to off, except the one we've just clicked
                 for (var i=0, len=button.length; i<len; i++) {
-                    if (e.source.index != i) {
+                    if (clickedButtonIndex != i) {
                         previousButtonIndex = button[i].on ? i : previousButtonIndex; 
                         button[i].on = false;
                         button[i].image = buttons[i].imageOff;                      
@@ -94,11 +94,14 @@
                 }
 
                 // set our clicked button on
-                e.source.on = true;
-                e.source.image = buttons[e.source.index].imageOn;
+                button[clickedButtonIndex].on = true;
+                button[clickedButtonIndex].image = buttons[clickedButtonIndex].imageOn;
+
+                //e.source.on = true;
+                //e.source.image = buttons[e.source.index].imageOn;
 
                 // trigger the button's onClick callback
-                buttons[e.source.index].onClick(e.source.index, previousButtonIndex);
+                buttons[clickedButtonIndex].onClick(clickedButtonIndex, previousButtonIndex);
             });
 
             buttonBarView.add(button[index]);

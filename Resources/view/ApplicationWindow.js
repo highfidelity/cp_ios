@@ -38,14 +38,14 @@
 
         // global views
         candp.view.views.chat = candp.view.createChatView();
-        //candp.view.views.userProfile = candp.view.createUserProfileView();
         candp.view.views.userList = candp.view.createUserListView();
         candp.view.views.missionList = candp.view.createMissionListView();
         candp.view.views.missionDetails = candp.view.createMissionDetailsView();
+        candp.view.views.userProfile = candp.view.createUserProfileView();
 
         if (candp.osname === 'iphone') {
             containerView = Ti.UI.createScrollableView(candp.combine($$.containerView, {
-                views: [candp.view.views.chat, candp.view.views.userList, candp.view.views.missionList, candp.view.views.missionDetails],
+                views: [candp.view.views.chat, candp.view.views.userList, candp.view.views.missionList, candp.view.views.missionDetails, candp.view.views.userProfile],
                 showPagingControl: true,
                 currentPage: 2
             }));
@@ -142,7 +142,9 @@
             applicationModel.registerForPushNotifications();
 
             // *FIXME: THIS SHOULDN'T BE HERE
-            chatModel.chatLogin(null, function(e) {});
+            // chatModel.chatLogin(null, function(e) {
+    
+            // });
         });
 
         // make sure we update the candp server with our location when we get a GPS signal

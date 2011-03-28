@@ -65,8 +65,8 @@ Ti.include(
     '/model/HeaderBar.js',
     '/model/Login.js',
     '/model/MissionList.js',
-    '/model/UserList.js',
     '/model/UserProfile.js',
+    '/model/UserList.js',
     '/model/MissionDetails.js',
     '/model/Chat.js'
 );
