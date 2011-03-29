@@ -75,7 +75,7 @@
         }
 
 
-        // keep track of our currenly active view
+        // keep track of our currently active view
         candp.view.currentActiveView = 'missionList';
 
         // set our initial start screen 
