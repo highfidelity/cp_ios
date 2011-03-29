@@ -10,7 +10,6 @@
 
 (function() {
     candp.view.createHeaderBarView = function (options) {
-
         // helper function for centering the two header text sections
         function _centerText(firstLabel, secondLabel) {
             firstLabel.visible = false;
@@ -98,19 +97,27 @@
             visible: false
         }));
         backButton.addEventListener('click', function(e) {
-            Ti.App.fireEvent('app:buttonBar.click', {
+            Ti.App.fireEvent('app:buttonBar.clicked', {
                 nextViewToShow: backButtonDestination.destinationView,
-                clickedButtonIndex: backButtonDestination.destinationIndex
+                clickedButtonIndex: backButtonDestination.destinationIndex,
+                button_name: backButtonDestination.destinationView
             });
             Ti.App.fireEvent('headerBar:backButton.hide');
         });
         headerBarView.add(backButton);
         
         // generic refresh button
-        var refreshButton = Ti.UI.createButton(candp.combine($$.refreshTopLeftButton, {
-            image: 'images/refresh.png',
-            visible: true
-        }));
+        var refreshButton;
+        if (candp.osname === 'iphone') {
+            refreshButton = Ti.UI.createButton(candp.combine($$.refreshTopLeftButton, {
+                image: 'images/refresh.png',
+                visible: true
+            }));
+        } else {
+            refreshButton = Ti.UI.createButton(candp.combine($$.refreshTopLeftButton, {
+                visible: true
+            }));            
+        }
         refreshButton.addEventListener('click', function(e) {
             Ti.App.fireEvent('app:missionList.getMissions');
         });
@@ -159,10 +166,10 @@
             headerBarView.touchEnd = e.y;
 
             if (headerBarView.touchEnd > headerBarView.touchStart + 10) {
-                Ti.API.info('app:loggedInBar.show');
+                Ti.App.fireEvent('app:loggedInBar.show');
             }
             if (headerBarView.touchEnd < headerBarView.touchStart - 10) {
-                Ti.API.info('app:loggedInBar.hide');
+                Ti.App.fireEvent('app:loggedInBar.hide');
             }
 
             headerBarView.touchStart = $$.platformHeight;

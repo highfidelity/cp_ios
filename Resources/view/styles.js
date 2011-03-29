@@ -28,38 +28,51 @@
         platformHeight: Ti.Platform.displayCaps.platformHeight,
         
         // default components
-        button: {
+        androidLoginButton: {
             backgroundImage:'images/button_off.png',
             backgroundSelectedImage:'images/button_on.png',
             borderStyle: Titanium.UI.BUTTON_BORDERSTYLE_ROUNDED,
             height:50,
-            color:'#FFF',
+            color:'#FFFFFF',
             font: {
                 fontSize:18,
                 fontWeight:'bold'
             }
         },
-        label: {
-            color:candp.view.theme.textColor,
+        button: {
+            backgroundImage: candp.os({
+                iphone: 'images/button_capped_off.png',
+                android: 'images/button_130_off.png'
+            }),
+            backgroundSelectedImage: candp.os({
+                iphone: 'images/button_capped_on.png',
+                android: 'images/button_130_on.png'
+            }),
+            borderStyle: Titanium.UI.BUTTON_BORDERSTYLE_ROUNDED,
+            backgroundLeftCap: 4,
+            backgroundRightCap: 4,
+            backgroundTopCap: 14,
+            backgroundBottomCap: 14,
+            height:50,
+            color:'#FFFFFF',
             font: {
-                fontFamily:candp.view.theme.fontFamily,
-                fontSize:12
-            },
-            height:'auto'
+                fontSize: candp.os({
+                    iphone: 18,
+                    android: 14
+                }),
+                fontWeight:'bold'
+            }
         },
         Window: {
-            backgroundImage:'images/ruff.png',
             navBarHidden:true,
             fullscreen: true,
             softInputMode:(Ti.UI.Android) ? Ti.UI.Android.SOFT_INPUT_ADJUST_RESIZE : ''
         },
         tableView: {
-            // separatorStyle:Ti.UI.iPhone.TableViewSeparatorStyle.NONE
             backgroundColor: '#FFFFFF'
         },
         tableViewRow: {
             backgroundSelectedColor: candp.view.theme.darkBlue,
-            // height:110,
             className:'tvRow'
         },
         textField: {
@@ -68,7 +81,7 @@
                 android: 40
             }),
             borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
-            color:'#000000'
+            color: candp.view.theme.textColor
         },
         textArea: {
             borderRadius:10,
@@ -80,21 +93,10 @@
                 fontSize:14
             }
         },
-        WebView: {
-            scalesPageToFit: false,
-            backgroundImage: 'images/ruff.png'
-        },
-        
         imageView: {
             canScale: true,
             height: 100,
             width: 100
-        },
-
-        // we use these as JS-based 'style classes'
-        animationDuration: 500,
-        stretch: {
-            top:0,bottom:0,left:0,right:0
         },
         contained: {
             top: candp.config.headerHeight,
@@ -115,7 +117,7 @@
             right:5,
             height:30,
             width: 60,
-            color:'#ffffff',
+            color:'#FFFFFF',
             font: {
                 fontSize:12,
                 fontWeight:'bold'
@@ -129,13 +131,13 @@
             left:5,
             height:30,
             width: 45,
-            color:'#ffffff',
+            color:'#FFFFFF',
             font: {
                 fontSize:12,
                 fontWeight:'bold'
             },
-            backgroundImage:'images/button_30_off.png',
-            backgroundSelectedImage:'images/button_30_on.png',
+            backgroundImage: (candp.osname === 'iphone') ? 'images/button_30_off.png' : 'images/android_back_button_off.png',
+            backgroundSelectedImage: (candp.osname === 'iphone') ? 'images/button_30_on.png' : 'images/android_back_button_on.png',
             borderStyle: Titanium.UI.BUTTON_BORDERSTYLE_ROUNDED
         },
         backTopLeftButton: {
@@ -143,7 +145,7 @@
             left:3,
             height:32,
             width: 63,
-            color:'#ffffff',
+            color:'#FFFFFF',
             font: {
                 fontSize:12,
                 fontWeight:'bold'
@@ -152,17 +154,10 @@
             backgroundSelectedImage:'images/back_button_black_on.png',
             borderStyle: Titanium.UI.BUTTON_BORDERSTYLE_ROUNDED
         },
-        topRightButton: {
-            top:5,
-            right:5,
-            height:30,
-            width:38
-        },
         headerText: {
             top:8,
             height:'auto',
             textAlign:'center',
-            // color:candp.view.theme.headerColor,
             width: 'auto',
             color: '#FFFFFF',
             font: {
@@ -239,15 +234,6 @@
             right: 0,
             top: 0,
             zIndex: 20
-        },
-        boldHeaderText: {
-            height:'auto',
-            color:'#000000',
-            font: {
-                fontFamily:candp.view.theme.fontFamily,
-                fontSize:14,
-                fontWeight:'bold'
-            }
         },
         spacerRow: {
             backgroundImage:'images/spacer_row.png',

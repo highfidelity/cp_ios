@@ -58,22 +58,6 @@
             	m = Ti.UI.create2DMatrix().translate(0, $$.platformHeight + candp.config.headerHeight); 	
 		        view.animate(_createAnimation(m, complete, start));
                 break;
-
-            case 'left':
-            	m = Ti.UI.create2DMatrix().translate(-$$.platformWidth, 0); 	
-		        view.animate(_createAnimation(m, complete, start));
-                break;
-
-            case 'right':
-            	m = Ti.UI.create2DMatrix().translate($$.platformWidth, 0); 	
-		        view.animate(_createAnimation(m, complete, start));
-                break;
-
-            case 'leftslide':
-                m = Ti.UI.createAnimation();
-                m.duration = 500;
-                m.left = -Ti.Platform.displayCaps.platformWidth;
-                view.animate(m);
         }
     };
 })();
@@ -90,5 +74,7 @@ Ti.include(
     '/view/Login.js',
     '/view/ButtonBar.js',
     '/view/HeaderBar.js',
-    '/view/MakeOffer.js'
+    '/view/MakeOffer.js',
+    '/view/Notifications.js',
+    '/view/Spinner.js'
 );

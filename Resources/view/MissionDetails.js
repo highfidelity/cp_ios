@@ -43,10 +43,9 @@
             left: 20
         }));
         authorImage.addEventListener('click', function(e) {
-            Ti.App.fireEvent('app:buttonBar.clicked', {button_name: 'userProfile', clickedButtonIndex: 1});
             setTimeout(function() {
                 missionDetailsView.hide();
-                Ti.App.fireEvent('app:userProfile.getUserProfile', {
+                Ti.App.fireEvent('app:userProfile.show', {
                     user_id: userId
                 });
             }, 100);
@@ -111,15 +110,14 @@
             right: -15,
             height: 37
         });
-        layoutContainer.add(buttonsContainer);
 
         // make an offer to the user
         var makeOfferButton = Ti.UI.createButton(candp.combine($$.button, {
             title: L('make_offer'),
             top: 0,                                                                   
             height: 37,
-            left: 0,
-            width: 130
+            left: (candp.osname === 'iphone') ? 0 : 20,
+            width: (candp.osname === 'iphone') ? 130 : 110
         }));
         buttonsContainer.add(makeOfferButton);
 
@@ -139,10 +137,24 @@
             title: L('chat1_1'),
             top: 0,
             height: 37,
-            right: 0,
-            width: 130
+            right: (candp.osname === 'iphone') ? 0 : 20,
+            width: (candp.osname === 'iphone') ? 130 : 110
         }));
         buttonsContainer.add(initiateChatButton);
+
+        initiateChatButton.addEventListener('click', function(e) {
+            Ti.App.fireEvent('app:chat.initiateChat', {userId: userId} );
+            setTimeout(function() {
+                Ti.App.fireEvent('app:buttonBar.clicked',{
+                    nextViewToShow: 'chat',
+                    clickedButtonIndex: 0,
+                    button_name: 'chat'
+                });
+            }, 100);
+        });
+
+        layoutContainer.add(buttonsContainer);
+
 
         // respond to mission details from push notifications (i.e. get the mission by its id)
         Ti.App.addEventListener('app:missionDetail.getById', function(mission) {
@@ -155,7 +167,11 @@
         Ti.App.addEventListener('app:missionDetail.show', function(mission) {
             userId = mission.author_id;
             missionId = mission.id;
+
+            // supress JSLint errors because mission.long conflicts in the Javascript language
+            /*jslint sub:true */
             mapImage.image = 'http://maps.google.com/maps/api/staticmap?markers=color:red%7Clabel:M|' + mission.lat + ',' + mission['long'] + '&zoom=16&size=300x160&sensor=false';
+            /*jslint sub:false */
 
             // fill in the details of the mission
             missionTitle.text = (mission.mission_type === 'want') ? L('i_want') + ' ' + mission.title : L('i_will') + ' ' + mission.title;

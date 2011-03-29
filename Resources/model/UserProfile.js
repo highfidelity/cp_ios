@@ -10,7 +10,8 @@
 var userProfileModel = {};
 
 (function() {
-    userProfileModel.last_user_id = 69;
+    // set a last_user_id for comparison later
+    userProfileModel.last_user_id = 0;
 
     userProfileModel.getUserProfile = function(e, callback) {
         userProfileModel.last_user_id = e.user_id;
@@ -18,14 +19,12 @@ var userProfileModel = {};
             candp.config.apiUrl,
             'POST',
             {
-                // *FIXME: use the profile id as passed in
                 action: 'userdetail',
                 id:  e.user_id || userProfileModel.last_user_id
             }, 
             function(e) {
                 var response = JSON.parse(e.response);
                 if (response.payload) {
-                    Ti.API.info(e.response);
                     callback(response.payload);
                 }
             }
@@ -51,27 +50,6 @@ var userProfileModel = {};
                 }
             );
         }
-    };
-
-
-    userProfileModel.makeOffer = function(e, callback) {
-        candp.model.xhr(
-            candp.config.offersUrl,
-            'POST',
-            {
-                action: 'makeOffer',
-                title: 'an offer title .. made from the iphone app',
-                amount: 1,
-                receiver_user_id: 196,
-                offer_id: 556,
-                mission_id: 341,
-                pay_me: 1
-            }, 
-            function(e) {
-                var response = JSON.parse(e.response);
-                callback(response);
-            }
-        );
     };
 
 })();

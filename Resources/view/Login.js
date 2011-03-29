@@ -79,12 +79,22 @@
 
 
         // now for our login button!
-        var loginButton = Ti.UI.createButton(candp.combine($$.button, {
-            bottom: 15,
-            left: 50,
-            right: 50,
-            title: L('login')
-        }));
+        var loginButton;
+        if (candp.osname === 'iphone') {
+            loginButton = Ti.UI.createButton(candp.combine($$.button, {
+                bottom: 15,
+                left: 50,
+                right: 50,
+                title: L('login')
+            }));                
+        } else {
+            loginButton = Ti.UI.createButton(candp.combine($$.androidLoginButton, {
+                bottom: 15,
+                left: 50,
+                right: 50,
+                title: L('login')
+            }));            
+        }
 
         loginButton.addEventListener('click', function(e) {
             loginModel.loginButton(e, emailText.value, passwordText.value);
@@ -154,9 +164,6 @@
                     break;
             }
         });
-
-
-        // *TODO: Find out if we require a "forgot password" link
 
         return loginView;
     };

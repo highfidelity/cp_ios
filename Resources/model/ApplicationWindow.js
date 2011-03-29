@@ -21,7 +21,6 @@ var applicationModel = {};
                 var params = JSON.parse(e.response).params;
                 var logged = params.logged;
                 
-                Ti.API.info('logged = ' + logged);
                 if (logged === 'true') {
                     // we're logged in, so change our shown state
                     Ti.App.fireEvent('app:headerBar.changeState', {

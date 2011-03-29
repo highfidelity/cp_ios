@@ -30,6 +30,7 @@ var loginModel = {};
 
                     // save the details for future
                     Ti.App.Properties.setString('username', username);
+                    Ti.App.Properties.setString('password', password);
                 } else {
                     // let's be nice to the user and allow them to
                     // re-try their login

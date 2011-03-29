@@ -40,7 +40,8 @@
             data: data
         }));
         tableView.addEventListener('click', function(e) {
-            // *FIXME: there's a naming clash on mission.type
+            // There's a naming clash on mission.type because Titanium framework adds a 'type' 
+            // property to describe the type of object that sent the event
             missions_data[e.index].mission_type = missions_data[e.index].type;
             Ti.App.fireEvent('app:missionDetail.show', missions_data[e.index]);
             Ti.App.fireEvent('headerBar:backButton.show', {
@@ -60,56 +61,56 @@
 
                 // fill in the table with missions
                 for (var mission in missions) {
-                    var row = Ti.UI.createTableViewRow(candp.combine($$.tableViewRow, {
-                        height: 60,
-                        hasChild: true
-                    }));
-
-                    var missionTitle = Ti.UI.createLabel({
-						color:'#333333',
-						font:{fontSize:16,fontWeight:'bold', fontFamily:'Arial'},
-						left:10,
-						top:5,
-						height: 25,
-						right:50,
-						clickName:'missionTitle',
-						text: (missions[mission].type === 'want') ? 'I want ' + missions[mission].title : 'I will ' + missions[mission].title
-                    });
-                    row.add(missionTitle);
-
-                    var formattedTimeDiff = formatTimeDiff(missions[mission].time_diff);
-                    var missionExpires = Ti.UI.createLabel({
-						color:'#333399',
-						font:{fontSize:12, fontFamily:'Arial-ItalicMT'},
-						left:10,
-						bottom:4,
-						height:20,
-						width: 'auto',
-						clickName:'missionExpires',
-						text: (formattedTimeDiff === '0 min') ? L('overdue') : (formattedTimeDiff === '-1 min') ? L('never_expires') : L('expires_in') + ' ' + formattedTimeDiff
-                    });
-                    row.add(missionExpires);
-
-
-                    var missionDistance = Ti.UI.createLabel({
-						color:'#333399',
-						font:{fontSize:12, fontFamily:'Arial'},
-						right:10,
-						bottom:4,
-						height:20,
-						width: 'auto',
-						clickName:'missionDistance',
-						text: parseFloat(missions[mission].distance).toFixed(1) + ' ' + L('miles')
-                    });
-
-                    row.add(missionDistance);
-                    data.push(row);
+                    if (missions.hasOwnProperty(mission)) {
+                        var row = Ti.UI.createTableViewRow(candp.combine($$.tableViewRow, {
+                            height: 60,
+                            hasChild: true
+                        }));
+    
+                        var missionTitle = Ti.UI.createLabel({
+    						color:'#333333',
+    						font:{fontSize:16,fontWeight:'bold', fontFamily:'Arial'},
+    						left:10,
+    						top:5,
+    						height: 25,
+    						right:50,
+    						clickName:'missionTitle',
+    						text: (missions[mission].type === 'want') ? L('i_want') + ' ' + missions[mission].title : L('i_will') + ' ' + missions[mission].title
+                        });
+                        row.add(missionTitle);
+    
+                        var formattedTimeDiff = formatTimeDiff(missions[mission].time_diff);
+                        var missionExpires = Ti.UI.createLabel({
+    						color:'#333399',
+    						font:{fontSize:12, fontFamily:'Arial-ItalicMT'},
+    						left:10,
+    						bottom:4,
+    						height:20,
+    						width: 'auto',
+    						clickName:'missionExpires',
+    						text: (formattedTimeDiff === '0 min') ? L('overdue') : (formattedTimeDiff === '-1 min') ? L('never_expires') : L('expires_in') + ' ' + formattedTimeDiff
+                        });
+                        row.add(missionExpires);
+    
+    
+                        var missionDistance = Ti.UI.createLabel({
+    						color:'#333399',
+    						font:{fontSize:12, fontFamily:'Arial'},
+    						right:10,
+    						bottom:4,
+    						height:20,
+    						width: 'auto',
+    						clickName:'missionDistance',
+    						text: parseFloat(missions[mission].distance).toFixed(1) + ' ' + L('miles')
+                        });
+    
+                        row.add(missionDistance);
+                        data.push(row);
+                    }
                 }
                 tableView.setData(data);
             });
         });
-
-        // *TODO: Add eventListener that opens up the individual mission detail view
 
         return missionListView;
     };

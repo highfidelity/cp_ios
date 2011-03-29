@@ -41,7 +41,6 @@ var headerBarModel = {};
                 Ti.App.fireEvent('headerBar:headerBarBalance.changeText', {
                     newText: '$' + balance
                 });
-                Ti.App.fireEvent('app:chat.refreshUrl', {});
             });            
         }
 
@@ -57,8 +56,6 @@ var headerBarModel = {};
                     function(e) {
                         var params = JSON.parse(e.response).params;
                         var logged = params.logged;
-                        
-                        Ti.API.info('logged = ' + logged);
                         
                         if (logged === 'true') {
                             // we're logged in, so 
@@ -78,11 +75,11 @@ var headerBarModel = {};
                                  newText: params.userData.nickname + ' - '
                             });
                             Ti.App.fireEvent('headerBar:headerBarBalance.changeText', {
-                                 newText: '$' + params.userData.balance
+                                 newText: '$' + parseFloat(params.userData.balance).toFixed(2)
                             });
 
                             // ... and reload the chat page
-                            Ti.App.fireEvent('app:Chat.refreshUrl');
+                            Ti.App.fireEvent('app:chat.initiateChat');
 
                             // let's go get our balance every x minutes
                             headerBarModel.getUserBalanceIntervalId = setInterval(_getUserBalance, candp.config.getBalanceTime);
@@ -101,6 +98,9 @@ var headerBarModel = {};
 	            Ti.App.fireEvent('headerBar:headerBarBalance.changeText', {
 	                 newText: ' '
 	            });
+
+                // ... and reload the chat page, but not logged in so it has to be group chat
+                Ti.App.fireEvent('app:chat.loadGroupChat');
 
                 // stop collecting our balance
                 clearInterval(headerBarModel.getUserBalanceIntervalId);

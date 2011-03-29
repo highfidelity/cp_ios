@@ -10,6 +10,9 @@
 
 (function() {
     candp.view.createUserProfileView = function (args) {
+        // keep track of the user id, used for the chat initiation
+        var userId;
+
         var userProfileView = Ti.UI.createView(candp.combine($$.contained, {
             backgroundImage: 'images/default_background.png',
             visible: false
@@ -124,13 +127,18 @@
         containerView.add(makeOfferButton);
 
         makeOfferButton.addEventListener('click', function(e) {
-            missionDetailsModel.makeOffer(e, function(offer_id) {
-               candp.view.alert('Our offer id ...' + offer_id);
+            // *TODO: How do we make an offer without a MissionId?
+            // ... so should this really be a "pay" button?
+            var makeOfferView = candp.view.createMakeOfferView({
+                missionTitle: L('make_offer_title'),
+                receiverUserId: userId,
+                missionId: null
             });
-            //userProfileModel.makeOffer(e, function(response) {
-            //    candp.view.alert('offer made ...', response);
-            //});
+            makeOfferView.open({transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT});
+            makeOfferView.show();
+            Ti.App.fireEvent('headerBar:refreshButton.hideBoth');
         });
+
 
         // get chatting 1:1 with the user
         var initiateChatButton = Ti.UI.createButton(candp.combine($$.button, {
@@ -142,17 +150,20 @@
         }));
         containerView.add(initiateChatButton);
 
-
-        // *TODO: Add profile user other profile info label
-        // *TODO: Add event listener for make offer button
-        // *TODO: Add event listener for initiate 1:1 chat button
+        initiateChatButton.addEventListener('click', function(e) {
+            Ti.App.fireEvent('app:chat.initiateChat', {userId: userId} );
+            setTimeout(function() {
+                Ti.App.fireEvent('app:buttonBar.clicked',{
+                    nextViewToShow: 'chat',
+                    clickedButtonIndex: 0,
+                    button_name: 'chat'
+                });
+            }, 100);
+        });
 
 
         Ti.App.addEventListener('app:userProfile.show', function(e) {
-            Ti.App.fireEvent('app:buttonBar.click', {
-                nextViewToShow: 'userProfile',
-                clickedButtonIndex: 1
-            });
+            Ti.App.fireEvent('app:userProfile.getUserProfile', e);
             userProfileView.show();
         });
 
@@ -161,10 +172,10 @@
                 userProfileModel.getUserImage({
                     image_id: profile.photo
                 }, function(image) {
-                    Ti.API.info('image = ' + image);
                     userImage.image = image;
                 });
 
+                userId = profile.id;
                 userNameLabel.text = profile.nickname;
                 skillsLabel.text = profile.skill_list;
 
@@ -176,7 +187,7 @@
                     verifiedIdImage.visible = false;
                 }
 
-                if (parseInt(profile.reviews_count) > 0) {
+                if (parseInt(profile.reviews_count, 10) > 0) {
                     reviewsStarImage.visible = true;
                     reviewsLabel.text = String.format(L('reviews'), profile.reviews_count.toString());
                     reviewsLabel.visible = true;
@@ -185,7 +196,7 @@
                     reviewsLabel.visible = false;
                 }
 
-                if (parseInt(profile.favorite_count) > 0) {
+                if (parseInt(profile.favorite_count, 10) > 0) {
                     favoritedStarImage.visible = true;
                     favoritedLabel.text = String.format(L('users_have_favorited'), profile.favorite_count.toString());
                     favoritedLabel.visible = true;

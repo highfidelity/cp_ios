@@ -12,7 +12,6 @@
 
     //create the main application window
     candp.view.createApplicationWindow = function(args) {
-        // unfortunately, we need to differentiate between android and iphone
         var containerView;
 
         var win = Ti.UI.createWindow(candp.combine($$.Window, {
@@ -20,11 +19,17 @@
             orientationModes:[Ti.UI.PORTRAIT]
         }));
 
+        // whilst we're waiting for things to happen, get that activity indicator showing
+        var spinnerView = candp.view.createSpinnerView();
+        win.add(spinnerView);
+        Ti.App.fireEvent('app:spinner.show');
+
         // application framework level views
         var buttonBarView = candp.view.createButtonBarView();
         var headerBarView = candp.view.createHeaderBarView();
         var loginView = candp.view.createLoginView();
 
+        // Unfortunately, we need to differentiate between android and iphone
         // if we're android, we want to add a simple container view
         if (candp.osname === 'android') {
             containerView = Ti.UI.createView(candp.combine($$.containerView, {}));
@@ -40,23 +45,33 @@
         candp.view.views.chat = candp.view.createChatView();
         candp.view.views.userList = candp.view.createUserListView();
         candp.view.views.missionList = candp.view.createMissionListView();
+        candp.view.views.notifications = candp.view.createNotificationsView();
         candp.view.views.missionDetails = candp.view.createMissionDetailsView();
         candp.view.views.userProfile = candp.view.createUserProfileView();
 
         if (candp.osname === 'iphone') {
             containerView = Ti.UI.createScrollableView(candp.combine($$.containerView, {
-                views: [candp.view.views.chat, candp.view.views.userList, candp.view.views.missionList, candp.view.views.missionDetails, candp.view.views.userProfile],
-                showPagingControl: true,
+                views: [
+                    candp.view.views.chat, 
+                    candp.view.views.userList, 
+                    candp.view.views.missionList, 
+                    candp.view.views.notifications,
+                    candp.view.views.missionDetails, 
+                    candp.view.views.userProfile
+                ],
+                showPagingControl: false,
                 currentPage: 2
             }));
             win.add(containerView);
         }
 
         for (var view in candp.view.views) {
-            candp.os({
-                android: function() { containerView.add(candp.view.views[view]); },
-                iphone: function() { candp.view.views[view].visible = true; }
-             });
+            if (candp.view.views.hasOwnProperty(view)) {
+                candp.os({
+                    android: function() { containerView.add(candp.view.views[view]); },
+                    iphone: function() { candp.view.views[view].visible = true; }
+                });
+            }
         }
 
 
@@ -75,18 +90,6 @@
             });
         });
 
-    
-        // check for network connection and make sure we let people know if it's not available
-        // Apple make us check this every time we make a connection out
-        // *FIXME: put this code in a better place; it doesn't belong here!
-        if (Ti.Network.online == false) {
-            // *FIXME: use the alert shortcut we've created
-            // *FIXME: create i18n strings for these messages
-            Ti.UI.createAlertDialog({
-                title: 'No Network Connection', 
-                message: 'Sorry, but we couldn\'t detect a connection to the internet so functionality will be limited.'
-            }).show();
-        }
         
         // We need to check our current GPS location, using our last known location 
         // as a backup but we can't do a check for GPS location on the android here, as 
@@ -104,7 +107,6 @@
 
         // respond to the top level footer/header button presses
         Ti.App.addEventListener('app:buttonBar.click', function(e) {
-            Ti.API.info('is the button bar click being called?');
             switch (candp.osname) {
                case 'android':
                     // *TODO: investigate the problems with Android animations
@@ -132,25 +134,34 @@
                     candp.view.currentActiveView = 'missionDetails';
                 },
                 iphone: function() {
-                    containerView.scrollToView(3);                
+                    containerView.scrollToView(4);                
                 }         
+            });
+        });
+
+        // as we have the container view here, we want to scroll to the
+        // user profile detail screen when it gets shown
+        Ti.App.addEventListener('app:userProfile.show', function() {
+            candp.os({
+                android: function() {
+                    candp.view.currentActiveView = 'userProfile';
+                },
+                iphone: function() {
+                    containerView.scrollToView(5);   
+                }
             });
         });
 
         // make sure we respond to APN register for push notifications
         Ti.App.addEventListener('app:applicationWindow.registerForPushNotifications', function(e) {
             applicationModel.registerForPushNotifications();
-
-            // *FIXME: THIS SHOULDN'T BE HERE
-            // chatModel.chatLogin(null, function(e) {
-    
-            // });
         });
 
         // make sure we update the candp server with our location when we get a GPS signal
         Ti.App.addEventListener('app:applicationWindow.setLocation', function(e) {
             applicationModel.setLocation(e);
         });
+
         return win;
     };
 })();

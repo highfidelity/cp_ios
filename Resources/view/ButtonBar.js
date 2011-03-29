@@ -13,7 +13,6 @@
     candp.view.createButtonBarView = function (args) {
         // helper function
         function _fireEvent(nextViewToShow, clickedButtonIndex, previousButtonIndex) {
-            Ti.API.info('firing event app:buttonBar.click ' + clickedButtonIndex);
             Ti.App.fireEvent('app:buttonBar.click', {
                 nextViewToShow: nextViewToShow, 
                 clickedButtonIndex: clickedButtonIndex,
@@ -28,8 +27,8 @@
                 imageOff: 'images/buttonbar_chat_off.png',
                 imageOn: 'images/buttonbar_chat_on.png',
                 onClick: function(clickedButtonIndex, previousButtonIndex) {
-                    // *FIXME: one on one chat for testing, but it ought to be public chat
-                    // however, we'll need a stub created as this isn't MVP
+                    // one on one chat for MVP, 
+                    // but it ought to be public chat in a fully released app
                     _fireEvent('chat', clickedButtonIndex, previousButtonIndex);
                 }
             },
@@ -49,6 +48,7 @@
                 imageOn: 'images/buttonbar_missions_on.png',
                 on: true,
                 onClick: function(clickedButtonIndex, previousButtonIndex) {
+                    // show the missions in the nearby vicinity
                     _fireEvent('missionList', clickedButtonIndex, previousButtonIndex);
                 }
             },
@@ -57,9 +57,8 @@
                 imageOff: 'images/buttonbar_notifications_off.png',
                 imageOn: 'images/buttonbar_notifications_on.png',
                 onClick: function(clickedButtonIndex, previousButtonIndex) {
-                    // *FIXME: login for testing, but it ought to be notifications
-                    // however, we'll need a stub created as this isn't MVP (must check this with Ryan)
-                    _fireEvent('login', clickedButtonIndex, previousButtonIndex);
+                    // stub for notifications as this isn't MVP
+                    _fireEvent('notifications', clickedButtonIndex, previousButtonIndex);
                 }
             }
         ];
@@ -97,9 +96,6 @@
                 button[clickedButtonIndex].on = true;
                 button[clickedButtonIndex].image = buttons[clickedButtonIndex].imageOn;
 
-                //e.source.on = true;
-                //e.source.image = buttons[e.source.index].imageOn;
-
                 // trigger the button's onClick callback
                 buttons[clickedButtonIndex].onClick(clickedButtonIndex, previousButtonIndex);
             });
@@ -109,8 +105,14 @@
 
         Ti.App.addEventListener('app:buttonBar.clicked', function(e) {
             switch(e.button_name) {
+                case 'chat':
+                    button[0].fireEvent('click', e);
+                    break;
                 case 'userProfile':
                     button[1].fireEvent('click', e);
+                    break;
+                case 'missionList':
+                    button[2].fireEvent('click', e);
                     break;
             }
         });

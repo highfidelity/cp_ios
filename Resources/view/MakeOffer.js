@@ -42,8 +42,15 @@
             left: 15,
             right: 15,
             height: 80,
+            keyboardType: Titanium.UI.KEYBOARD_DEFAULT,
+            autocapitalization: Titanium.UI.TEXT_AUTOCAPITALIZATION_SENTENCES,
             returnKeyType: Titanium.UI.RETURNKEY_NEXT
         }));
+
+        offerTitleText.addEventListener('return', function() {
+            offerAmount.focus();
+        });
+
         containerView.add(offerTitleText);
 
         var offerAmountLabel = Ti.UI.createLabel(candp.combine($$.headerText, {
@@ -58,18 +65,29 @@
             top: 160,
             left: 40,
             width: 80,
+            keyboardType: Titanium.UI.KEYBOARD_NUMBERS_PUNCTUATION,
+            autocapitalization: Titanium.UI.TEXT_AUTOCAPITALIZATION_NONE,
             returnKeyType: Titanium.UI.RETURNKEY_DONE
         }));
+
+        offerAmount.addEventListener('return', function() {
+            offerAmount.blur();
+            makeOfferButton.fireEvent('click');
+        });
+
         containerView.add(offerAmount);
 
         var makeOfferButton = Ti.UI.createButton(candp.combine($$.button, {
             title: L('make_offer'),
             top: 220,
             height: 37,
-            left: 5,
-            width: 130
+            left: (candp.osname === 'iphone') ? 5 : 20,
+            width: (candp.osname === 'iphone') ? 130 : 110
         }));
         makeOfferButton.addEventListener('click', function(e) {
+            offerAmount.blur();
+            offerTitleText.blur();
+
             missionDetailsModel.makeOffer({
                offerTitle: offerTitleText.value,
                offerAmount: offerAmount.value,
@@ -89,10 +107,13 @@
             title: L('cancel'),
             top: 220,
             height: 37,
-            right: 5,
-            width: 130
+            right: (candp.osname === 'iphone') ? 0 : 20,
+            width: (candp.osname === 'iphone') ? 130 : 110
         }));
         cancelButton.addEventListener('click', function(e) {
+            offerAmount.blur();
+            offerTitleText.blur();
+                                                      
             Ti.App.fireEvent('headerBar:backButton.show');
             makeOfferView.close({transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT});
         });

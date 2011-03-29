@@ -21,7 +21,8 @@
         registerAPNTokenUrl: baseUrl + 'registerApnToken.php',
         offersUrl: baseUrl + 'offers.php',
         chatIndexUrl: baseUrl + 'chat/indexcandp.php',
-        chatUrl: baseUrl + 'chat/aj.php',
+        chatHeartbeatUrl: baseUrl + 'chat/aj.php', 
+        chatUrl: baseUrl + 'chat/index1to1.php',
 
         // 44 points is the iPhone standard header size
         headerHeight: 44,

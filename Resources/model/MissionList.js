@@ -44,7 +44,7 @@ var missionsModel = {};
             };
         }
 
-        Ti.Geolocation.purpose = "Coffee and Power Missions List";
+        Ti.Geolocation.purpose = L('geolocation_purpose');
         Ti.Geolocation.preferredProvider = Titanium.Geolocation.PROVIDER_GPS;
 
         // do we have GPS turned on?
@@ -66,8 +66,8 @@ var missionsModel = {};
                         longitude: e.coords.longitude
                     };
         
+                    // save our location for later
                     Ti.App.Properties.setString('location', JSON.stringify(candp.location));
-                    Ti.API.info('candp.location = ' + JSON.stringify(candp.location));
 
                     // send an update to the server of our current location
                     Ti.App.fireEvent('app:applicationWindow.setLocation', candp.location);

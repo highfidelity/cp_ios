@@ -8,12 +8,9 @@
  */
 
 (function() {
-    candp.model = {
-        dbname: 'candp'
-    };
+    candp.model = {};
     
     candp.model.xhr = function(url, method, payload, callback) {
-
         // helper function for getting the PHP session Id cookie
         function _getPHPSESSID(cookie) {
             var cookieTokens = cookie.split(';');
@@ -22,42 +19,43 @@
 
         // We're going to be calling out over the network
         // so make sure we test first (as per Apple's preferred style)
-        // *FIXME: erm, how about we do that test then, eh? :-)
-        var xhr = Ti.Network.createHTTPClient();
+        if (Ti.Network.online === false) {
+            candp.view.alert(L('error'), L('error_network_request'));
+        } else {
+            // ok, so we're connected.  Let's make our network call ...
+            // network call might be a long running action, so show the spinner
+            Ti.App.fireEvent('app:spinner.show');
 
-        xhr.onload = function(e) {
-            Ti.API.info('xhr response = ' + this.responseText);
+            var xhr = Ti.Network.createHTTPClient();
+    
+            xhr.onload = function(e) {
+                // we want to store any session cookie we get back ...
+                var sessionCookie = this.getResponseHeader('Set-Cookie');
+                if (sessionCookie) {
+                    candp.sessionId = _getPHPSESSID(sessionCookie);
+                    Ti.App.Properties.setString('sessionId', candp.sessionId);
+                }
 
-            // we want to store any session cookie we get back ...
-            var sessionCookie = this.getResponseHeader('Set-Cookie');
-            if (sessionCookie) {
-                candp.sessionId = _getPHPSESSID(sessionCookie);
-                Ti.App.Properties.setString('sessionId', candp.sessionId);
-                Ti.API.info('New session id received = ' + candp.sessionId);
+                // finally trigger the callback
+                callback({response: this.responseText, sessionId: candp.sessionId, status: this.status});
+                Ti.App.fireEvent('app:spinner.hide');
+            };
+    
+            xhr.onerror = function(e) {
+                callback({response: this.error, status: this.status});
+                Ti.App.fireEvent('app:spinner.hide');
+            };
+    
+            xhr.open(method, url);
+    
+            // send a cookie if we have one
+            if (candp.sessionId !== '') {
+                xhr.setRequestHeader('Cookie', 'PHPSESSID=' + candp.sessionId);
             }
 
-            // finally trigger the callback
-            callback({response: this.responseText, sessionId: candp.sessionId, status: this.status});
-        };
-
-        xhr.onerror = function(e) {
-            Ti.API.info('Error in xhr = ' + JSON.stringify(e));
-            callback({response: this.error, status: this.status});
-        };
-
-        // *TODO: open an animated spinner as feedback to
-        // the user that we're doing something
-        xhr.open(method, url);
-
-        // send a cookie if we have one
-        if (candp.sessionId !== '') {
-            xhr.setRequestHeader('Cookie', 'PHPSESSID=' + candp.sessionId);
+            xhr.send(payload);
         }
-        Ti.API.info('*****>>>><<<<<**** payload = ' + JSON.stringify(payload));
-        xhr.send(payload);
     };
-
-
 })();
 
 Ti.include(
@@ -67,6 +65,5 @@ Ti.include(
     '/model/MissionList.js',
     '/model/UserProfile.js',
     '/model/UserList.js',
-    '/model/MissionDetails.js',
-    '/model/Chat.js'
+    '/model/MissionDetails.js'
 );
