@@ -48,7 +48,7 @@
     <string name="intentionally_blank">Notifications</string>
 
     <string name="GPS_turned_off">There has been a problem finding your exact GPS location.  To have a more personalized experience of Coffee and Power, please make sure GPS service is turned on.</string>
-    <string name="geolocation_purpose">to collect Coffee and Power missions in you vicinity</string>
+    <string name="geolocation_purpose">to collect Coffee and Power missions in your vicinity</string>
 
     <string name="make_offer">Make Offer</string>
     <string name="chat1_1">Chat 1:1</string>
