@@ -14,48 +14,50 @@ var candp = {};
     // such as the current app window, for instance, which is created in app.js
     candp.app = {};
 
-    // *FIXME: this code needs attention -- it's poor layout and bad variable names!
     // extend an object with the properties from another 
     // as per Dojo - http://docs.dojocampus.org/dojo/mixin
     var empty = {};
     function mixin(target, source) {
         var name, s, i;
         for (name in source) {
-            s = source[name];
-            if(!(name in target) || (target[name] !== s && (!(name in empty) || empty[name] !== s))) {
-                target[name] = s;
+            if (source.hasOwnProperty(name)) {
+                s = source[name];
+                if (!(name in target) || (target[name] !== s && (!(name in empty) || empty[name] !== s))) {
+                    target[name] = s;
+                }
             }
         }
         return target;
     };
-    candp.mixin = function(/*Object*/ obj, /*Object...*/ props){
-        if(!obj){ obj = {}; }
-        for(var i=1, l=arguments.length; i<l; i++){
-            mixin(obj, arguments[i]);
+    candp.mixin = function(object){
+        if (!object) { 
+            object = {}; 
         }
-        return obj; // Object
+
+        for (var i=1, l=arguments.length; i<l; i++) {
+            mixin(object, arguments[i]);
+        }
+        return object;
     };
+
     // create a new object, combining the properties of the passed objects 
     // with the last arguments having priority over the first ones
-    candp.combine = function(/*Object*/ obj, /*Object...*/ props) {
-        var newObj = {};
-        for(var i=0, l=arguments.length; i<l; i++){
-            mixin(newObj, arguments[i]);
+    candp.combine = function() {
+        var newObject = {};
+        for (var i=0, l=arguments.length; i<l; i++) {
+            mixin(newObject, arguments[i]);
         }
-        return newObj;
+        return newObject;
     };
-
-
-    
+   
     // locale and os specific branching helpers adapted from the Helium library
     // for Titanium: http://github.com/kwhinnery/Helium
     var locale = Ti.Platform.locale;
     var osname = Ti.Platform.osname;
     candp.osname = osname;
-
-    // *FIXME: this code needs attention -- it's poor layout and bad variable names!
-    candp.locale = function(/*Object*/ map) {
-        var def = map.def||null; //default function or value
+    candp.locale = function(map) {
+        //default function or value
+        var def = map.def || null; 
         if (map[locale]) {
             if (typeof map[locale] == 'function') { return map[locale](); }
             else { return map[locale]; }
@@ -66,8 +68,9 @@ var candp = {};
         }
     };
 
-    candp.os = function(/*Object*/ map) {
-        var def = map.def||null; //default function or value
+    candp.os = function(map) {
+        //default function or value
+        var def = map.def || null; 
         if (map[osname]) {
             if (typeof map[osname] == 'function') { return map[osname](); }
             else { return map[osname]; }

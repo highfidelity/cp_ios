@@ -11,3 +11,5 @@ Ti.include('candp.js');
 
 candp.app.mainWindow = candp.view.createApplicationWindow();
 candp.app.mainWindow.open();
+
+Ti.App.fireEvent('app:spinner.hide');
