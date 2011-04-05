@@ -31,6 +31,9 @@
         footerHeight: 49,
 
         // how often should we get the user's balance (in milliseconds)
-        getBalanceTime: 30000 // every 30 seconds
+        getBalanceTime: 30000, // every 30 seconds
+
+        // validation types
+        validationPositiveNumeric: 1
     };
 })();

@@ -17,7 +17,7 @@
             backgroundImage: 'images/transparent.png',
             visible: false
         }));
-
+/*
         var url = candp.config.chatIndexUrl;
         var webView = Ti.UI.createWebView({
             url: url,
@@ -69,7 +69,7 @@
             // open the group chat url
             webView.url = candp.config.chatIndexUrl;
         });
-	
+*/	
         return chatView;
     };
 })();

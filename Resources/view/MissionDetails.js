@@ -122,13 +122,12 @@
         buttonsContainer.add(makeOfferButton);
 
         makeOfferButton.addEventListener('click', function(e) {
-            var makeOfferView = candp.view.createMakeOfferView({
+            var makeOfferViewOptions = {
                 missionTitle: missionTitle.text,
                 receiverUserId: userId,
                 missionId: missionId
-            });
-            makeOfferView.open({transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT});
-            makeOfferView.show();
+            };
+            Ti.App.fireEvent('app:makeOffer.show', makeOfferViewOptions);
             Ti.App.fireEvent('headerBar:refreshButton.hideBoth');
         });
 

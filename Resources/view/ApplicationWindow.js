@@ -28,6 +28,8 @@
         var buttonBarView = candp.view.createButtonBarView();
         var headerBarView = candp.view.createHeaderBarView();
         var loginView = candp.view.createLoginView();
+        var makeOfferView = candp.view.createMakeOfferView();
+
 
         // Unfortunately, we need to differentiate between android and iphone
         // if we're android, we want to add a simple container view
@@ -40,6 +42,7 @@
         win.add(buttonBarView);
         win.add(headerBarView);
         win.add(loginView);
+        win.add(makeOfferView);
 
         // global views
         candp.view.views.chat = candp.view.createChatView();
@@ -123,6 +126,9 @@
             // and as we've pressed a button bar button, we need to 
             // hide the login screen if it's showing
             Ti.App.fireEvent('app:login.hide');
+
+            // and same thing with a make offer page if it's showing
+            Ti.App.fireEvent('app:makeOffer.hide', {show: 'refreshButton'});
         });
 
 

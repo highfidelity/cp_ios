@@ -132,7 +132,7 @@
             var makeOfferView = candp.view.createMakeOfferView({
                 missionTitle: L('make_offer_title'),
                 receiverUserId: userId,
-                missionId: null
+                missionId: 0
             });
             makeOfferView.open({transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT});
             makeOfferView.show();

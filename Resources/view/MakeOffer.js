@@ -10,11 +10,13 @@
 
 (function() {
     candp.view.createMakeOfferView = function (options) {
+        var viewOptions = options || {};
+
         var makeOfferView = Ti.UI.createWindow(candp.combine($$.contained, {
             visible: false,
             // *TODO: investigate problems with Android detecting view visiblity
             showing: false,
-            zIndex: 25
+            zIndex: 8
         }));
 
         // use a dialog container
@@ -27,15 +29,16 @@
             borderRadius: 15
         }));
 
-        // offer detail
-        containerView.add(Ti.UI.createLabel(candp.combine($$.titleText, {
+        // offer details
+        var missionTitle = Ti.UI.createLabel(candp.combine($$.titleText, {
             top: 15,
             left: 15,
             right: 15,
             textAlign: 'left',
             color: '#000000',
-            text: L('offer_for') + ' : ' + options.missionTitle
-        })));
+            text: L('offer_for') + ' : ' + viewOptions.missionTitle
+        }));
+        containerView.add(missionTitle);
 
         var offerTitleText = Ti.UI.createTextArea(candp.combine($$.textArea, {
             top: 70,
@@ -87,19 +90,37 @@
         makeOfferButton.addEventListener('click', function(e) {
             offerAmount.blur();
             offerTitleText.blur();
+            
+            // validate our input and then send off an offer
+            if (!candp.model.validateInput(offerAmount.value, candp.config.validationPositiveNumeric)) {
+                // at least make sure you have an amount put in, eh?
+                candp.view.alert(L('error'), L('mission_fill_in_amount'));
+            } else if (!candp.model.validateNotEmpty(offerTitleText.value)) {
+                // don't you want to say something nice to your mission co-ordinator?
+                candp.view.alert(L('error'), L('mission_fill_in_title'));
+            } else {
+                Ti.API.info('mission id = ' + viewOptions.missionId);
 
-            missionDetailsModel.makeOffer({
-               offerTitle: offerTitleText.value,
-               offerAmount: offerAmount.value,
-               receiverUserId: options.receiverUserId,
-               missionId: options.missionId,
-               payMe: 1
-            }, function(e) {
-                // *TODO: look at the response and show the user that their update was
-                // successful or otherwise
-                Ti.App.fireEvent('headerBar:backButton.show');
-                makeOfferView.close({transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT});
-            });
+                // ok, we can send the offer
+                missionDetailsModel.makeOffer({
+                   offerTitle: offerTitleText.value,
+                   offerAmount: offerAmount.value,
+                   receiverUserId: viewOptions.receiverUserId,
+                   missionId: viewOptions.missionId,
+                   payMe: 1
+                }, function(e) {
+                    Ti.API.info(e);
+                    if (e.succeeded) {
+                        // yay, it worked out just fine
+                        candp.view.alert(L('offer_made'), L('offer_success'));
+
+                        Ti.App.fireEvent('app:makeOffer.hide', {show: 'backButton'});
+                    } else {
+                        // boo, something went wrong
+                        candp.view.alert(L('error'), L('mission_fill_in_title'));
+                    }
+                });
+            }
         });
         containerView.add(makeOfferButton);
 
@@ -107,17 +128,57 @@
             title: L('cancel'),
             top: 220,
             height: 37,
-            right: (candp.osname === 'iphone') ? 0 : 20,
+            right: (candp.osname === 'iphone') ? 5 : 20,
             width: (candp.osname === 'iphone') ? 130 : 110
         }));
         cancelButton.addEventListener('click', function(e) {
             offerAmount.blur();
             offerTitleText.blur();
                                                       
-            Ti.App.fireEvent('headerBar:backButton.show');
-            makeOfferView.close({transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT});
+            Ti.App.fireEvent('app:makeOffer.hide', {show: 'backButton'});
         });
         containerView.add(cancelButton);
+
+
+        Ti.App.addEventListener('app:makeOffer.show', function(options) {
+            viewOptions = options || {};
+
+            // set up mission text, clear fields, etc
+            missionTitle.text = L('offer_for') + ' : ' + viewOptions.missionTitle;
+            offerTitleText.value = '';
+            offerAmount.value = '';
+
+            switch (candp.osname) {
+                case 'android':
+                    // *TODO: investiate the problems with Android animations
+                    makeOfferView.show();
+                    makeOfferView.showing = true;
+                    break;
+                case 'iphone':
+                    makeOfferView.top = -$$.platformHeight;
+				    makeOfferView.show();
+                    candp.view.slide(makeOfferView, 'down', null, null);
+                    break;
+            }
+
+        });
+
+        Ti.App.addEventListener('app:makeOffer.hide', function(e) {
+            Ti.App.fireEvent('headerBar:' + e.show + '.show');
+
+            switch (candp.osname) {
+                case 'android':
+                    // *TODO: investigate the problems with Android animations
+                    makeOfferView.hide();
+                    makeOfferView.showing = false;
+                    break;
+                case 'iphone':
+	                candp.view.slide(makeOfferView, 'up', function() {
+	                    makeOfferView.hide();
+	                }, null);
+                    break;
+            }
+        });
 
 
         makeOfferView.add(containerView);

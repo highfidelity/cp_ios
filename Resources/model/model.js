@@ -56,6 +56,25 @@
             xhr.send(payload);
         }
     };
+
+    candp.model.isUndefined = function(value) {
+        return (value == null && value !== null);
+    };
+
+    candp.model.validateNotEmpty = function(value) {
+        return (!candp.model.isUndefined(value) && value.length != 0);
+    };
+
+    candp.model.validateInput = function(value, validationType) {
+        switch(validationType) {
+            case candp.config.validationPositiveNumeric:
+                return !(isNaN(value) || value <= 0.0);
+                break;
+            default:
+                return false;
+        }
+    };
+
 })();
 
 Ti.include(
