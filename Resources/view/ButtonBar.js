@@ -34,12 +34,8 @@
             },
             {
                 title: L('buttonbar_people'),
-/*
                 imageOff: 'images/buttonbar_people_off.png',
                 imageOn: 'images/buttonbar_people_on.png',
-*/
-                imageOff: 'images/low_res_people_off.png',
-                imageOn: 'images/low_res_people_on.png',
                 onClick: function(clickedButtonIndex, previousButtonIndex) {
                     // show a list of nearby users
                     _fireEvent('userList', clickedButtonIndex, previousButtonIndex);

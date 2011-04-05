@@ -129,13 +129,13 @@
         makeOfferButton.addEventListener('click', function(e) {
             // *TODO: How do we make an offer without a MissionId?
             // ... so should this really be a "pay" button?
-            var makeOfferView = candp.view.createMakeOfferView({
+            var makeOfferViewOptions = {
                 missionTitle: L('make_offer_title'),
                 receiverUserId: userId,
                 missionId: 0
-            });
-            makeOfferView.open({transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT});
-            makeOfferView.show();
+            };
+
+            Ti.App.fireEvent('app:makeOffer.show', makeOfferViewOptions);
             Ti.App.fireEvent('headerBar:refreshButton.hideBoth');
         });
 

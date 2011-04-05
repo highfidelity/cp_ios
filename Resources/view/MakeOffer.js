@@ -10,9 +10,13 @@
 
 (function() {
     candp.view.createMakeOfferView = function (options) {
-        var viewOptions = options || {};
+        var viewOptions = options || {
+            missionTitle: '',
+            receiverUserId: 0,
+            missionId: 0           
+        };
 
-        var makeOfferView = Ti.UI.createWindow(candp.combine($$.contained, {
+        var makeOfferView = Ti.UI.createView(candp.combine($$.contained, {
             visible: false,
             // *TODO: investigate problems with Android detecting view visiblity
             showing: false,
@@ -94,10 +98,10 @@
             // validate our input and then send off an offer
             if (!candp.model.validateInput(offerAmount.value, candp.config.validationPositiveNumeric)) {
                 // at least make sure you have an amount put in, eh?
-                candp.view.alert(L('error'), L('mission_fill_in_amount'));
+                candp.view.alert(L('error'), L('make_offer_fill_in_amount'));
             } else if (!candp.model.validateNotEmpty(offerTitleText.value)) {
                 // don't you want to say something nice to your mission co-ordinator?
-                candp.view.alert(L('error'), L('mission_fill_in_title'));
+                candp.view.alert(L('error'), L('make_offer_fill_in_title'));
             } else {
                 Ti.API.info('mission id = ' + viewOptions.missionId);
 
@@ -109,15 +113,13 @@
                    missionId: viewOptions.missionId,
                    payMe: 1
                 }, function(e) {
-                    Ti.API.info(e);
                     if (e.succeeded) {
                         // yay, it worked out just fine
-                        candp.view.alert(L('offer_made'), L('offer_success'));
-
                         Ti.App.fireEvent('app:makeOffer.hide', {show: 'backButton'});
+                        candp.view.alert(L('make_offer_made'), L('make_offer_success'));
                     } else {
                         // boo, something went wrong
-                        candp.view.alert(L('error'), L('mission_fill_in_title'));
+                        candp.view.alert(L('error'), L('make_offer_generic_error'));
                     }
                 });
             }
@@ -141,7 +143,11 @@
 
 
         Ti.App.addEventListener('app:makeOffer.show', function(options) {
-            viewOptions = options || {};
+            viewOptions = options || {
+                missionTitle: '',
+                receiverUserId: 0,
+                missionId: 0           
+            };
 
             // set up mission text, clear fields, etc
             missionTitle.text = L('offer_for') + ' : ' + viewOptions.missionTitle;

@@ -44,6 +44,11 @@
     <string name="i_will">I will</string>
     <string name="offer_for">Offer for</string>
     <string name="make_offer_title">I want to make an offer to you ...</string>
+    <string name="make_offer_fill_in_amount">Please make sure the amount you are offering is filled in correctly</string>
+    <string name="make_offer_fill_in_title">Please make sure you fill in some details about the offer you are making</string>
+    <string name="make_offer_generic_error">There was a problem making your offer.  Please try again later</string>
+    <string name="make_offer_made">Offer Sent</string>
+    <string name="make_offer_success">Your offer has been successfully sent to the mission owner</string>
 
     <string name="intentionally_blank">Notifications</string>
 
