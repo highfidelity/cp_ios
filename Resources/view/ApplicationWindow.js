@@ -19,17 +19,11 @@
             orientationModes:[Ti.UI.PORTRAIT]
         }));
 
-        // whilst we're waiting for things to happen, get that activity indicator showing
-        var spinnerView = candp.view.createSpinnerView();
-        win.add(spinnerView);
-        Ti.App.fireEvent('app:spinner.show');
-
         // application framework level views
         var buttonBarView = candp.view.createButtonBarView();
         var headerBarView = candp.view.createHeaderBarView();
         var loginView = candp.view.createLoginView();
         var makeOfferView = candp.view.createMakeOfferView();
-
 
         // Unfortunately, we need to differentiate between android and iphone
         // if we're android, we want to add a simple container view
@@ -44,6 +38,9 @@
         win.add(headerBarView);
         win.add(loginView);
         win.add(makeOfferView);
+
+        // now that we have a header bar, we can start our spinner off
+        Ti.App.fireEvent('app:spinner.show');
 
         // global views
         candp.view.views.chat = candp.view.createChatView();
@@ -69,16 +66,14 @@
             win.add(containerView);
         }
 
-        for (var view in candp.view.views) {
-            if (candp.view.views.hasOwnProperty(view)) {
-                candp.os({
-                    // android: function() { containerView.add(candp.view.views[view]); },
-                    android: function() {},
-                    iphone: function() { candp.view.views[view].visible = true; }
-                });
+        // we only want our iphone views to be visible at this point in time
+        if (candp.osname === 'iphone') {
+            for (var view in candp.view.views) {
+                if (candp.view.views.hasOwnProperty(view)) {
+                    candp.view.views[view].visible = true;
+                }
             }
         }
-
 
         // keep track of our currently active view
         candp.view.currentActiveView = 'missionList';
@@ -87,6 +82,7 @@
         win.addEventListener('open', function() {
             candp.os({
                 android: function() {
+                    // with Android we're doing JIT view creation
                     containerView.add(candp.view.views[candp.view.currentActiveView]);
                     candp.view.views[candp.view.currentActiveView].show(); 
                 },
@@ -98,7 +94,7 @@
 
         
         // We need to check our current GPS location, using our last known location 
-        // as a backup but we can't do a check for GPS location on the android here, as 
+        // as a backup but we can't do a check for GPS location on the Android here, as 
         // Titanium will cancel it straight away (as a battery preservation technique!).  
         // As such we have our GPS checking done in the MissionList view.  Yeah, I know, 
         // it's a pain :-(
@@ -118,6 +114,7 @@
                     // *TODO: investigate the problems with Android animations
 		            candp.view.views[candp.view.currentActiveView].hide();
 
+                    // Android JIT view creation means we need to remove the previous view
                     containerView.remove(candp.view.views[candp.view.currentActiveView]);
                     containerView.add(candp.view.views[e.nextViewToShow]);
 

@@ -103,8 +103,6 @@
                 // don't you want to say something nice to your mission co-ordinator?
                 candp.view.alert(L('error'), L('make_offer_fill_in_title'));
             } else {
-                Ti.API.info('mission id = ' + viewOptions.missionId);
-
                 // ok, we can send the offer
                 missionDetailsModel.makeOffer({
                    offerTitle: offerTitleText.value,
@@ -113,7 +111,6 @@
                    missionId: viewOptions.missionId,
                    payMe: 1
                 }, function(e) {
-                    Ti.API.info(e);
                     if (e.succeeded) {
                         // yay, it worked out just fine
                         candp.view.alert(L('make_offer_made'), L('make_offer_success'));
@@ -144,6 +141,10 @@
 
 
         Ti.App.addEventListener('app:makeOffer.show', function(options) {
+            // disable any spinner/activity indicator actions
+            // whilst we're here
+            candp.view.spinnerIsEnabled = false;
+
             viewOptions = options || {
                 missionTitle: '',
                 receiverUserId: 0,
@@ -171,6 +172,10 @@
         });
 
         Ti.App.addEventListener('app:makeOffer.hide', function(e) {
+            // re-enable spinner/activity indicator actions
+            candp.view.spinnerIsEnabled = true;
+
+            // and show any header bar buttons we might have also vanished
             Ti.App.fireEvent('headerBar:' + e.show + '.show');
 
             switch (candp.osname) {

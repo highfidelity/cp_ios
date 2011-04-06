@@ -91,13 +91,65 @@
         headerBarView.add(loginButton);
 
 
+        // keep track of which button is showing so that we 
+        // know which one to restore after we've finished
+        // with the spinner
+        var whichButtonIsShowing = 'refreshButton';
+
+        // now to create our spinner/activity indicator
+        candp.view.spinnerIsEnabled = true;
+        var activityIndicator;
+        if (candp.osname === 'iphone') {
+            activityIndicator = Titanium.UI.createActivityIndicator({
+                height:30,
+                width:30,
+                top: 5,
+                left: 13
+            });
+        } else {
+            var images = [];
+            for (var i=1; i<12; i++) {
+                images.push('images/wait30trans_neg_' + ((i<10)?'00'+i:'0'+i)+'.gif');
+            }
+
+            activityIndicator = Titanium.UI.createImageView({
+                height:30,
+                width:30,
+                top: 5,
+                left: 13,
+                duration: 150,
+                repeatCount: 0,
+                images: images
+            });
+
+            activityIndicator.addEventListener('load', function(e) {
+                activityIndicator.start();
+            });
+        }
+        headerBarView.add(activityIndicator);
+
+        Ti.App.addEventListener('app:spinner.show', function() {
+            if (candp.view.spinnerIsEnabled) {
+                Ti.App.fireEvent('headerBar:refreshButton.hideBoth');
+                activityIndicator.show();
+            }
+        });
+
+        Ti.App.addEventListener('app:spinner.hide', function() {
+            if (candp.view.spinnerIsEnabled) {
+                activityIndicator.hide();
+                Ti.App.fireEvent('headerBar:' + whichButtonIsShowing + '.show');
+            }
+        });
+
+
         // generic back button
         var backButton = Ti.UI.createButton(candp.combine($$.backTopLeftButton, {
             title: L('back'),
             visible: false
         }));
         backButton.addEventListener('click', function(e) {
-            Ti.App.fireEvent('app:buttonBar.clicked', {
+            Ti.App.fireEvent('app:buttonBar.click', {
                 nextViewToShow: backButtonDestination.destinationView,
                 clickedButtonIndex: backButtonDestination.destinationIndex,
                 button_name: backButtonDestination.destinationView
@@ -105,26 +157,30 @@
             Ti.App.fireEvent('headerBar:backButton.hide');
         });
         headerBarView.add(backButton);
+
         
         // generic refresh button
         var refreshButton;
-        if (candp.osname === 'iphone') {
-            refreshButton = Ti.UI.createButton(candp.combine($$.refreshTopLeftButton, {
-                image: 'images/refresh.png',
-                visible: true
-            }));
-        } else {
-            refreshButton = Ti.UI.createButton(candp.combine($$.refreshTopLeftButton, {
-                visible: true
-            }));            
-        }
+        refreshButton = Ti.UI.createButton(candp.combine($$.refreshTopLeftButton, {
+            visible: true
+        }));
         refreshButton.addEventListener('click', function(e) {
-            Ti.App.fireEvent('app:missionList.getMissions');
+            // refresh button should determine which action to do
+            // based on what's currently showing on the screen
+            switch(candp.view.currentActiveView) {
+                case 'missionList' :
+                    Ti.App.fireEvent('app:missionList.getMissions');
+                    break;
+                case 'userList' :
+                    Ti.App.fireEvent('app:userList.getUsers');
+                    break;
+            }
         });
         headerBarView.add(refreshButton);
 
         // handle the showing and hiding of the two back/refresh buttons
         Ti.App.addEventListener('headerBar:backButton.show', function(e) {
+            whichButtonIsShowing = 'backButton';
             if (e.destinationView && e.destinationIndex) {
                 backButtonDestination = {
                     destinationView: e.destinationView,
@@ -135,14 +191,17 @@
             refreshButton.hide();
         });
         Ti.App.addEventListener('headerBar:backButton.hide', function(e) {
+            whichButtonIsShowing = 'refreshButton';
             backButton.hide();
             refreshButton.show();
         });
         Ti.App.addEventListener('headerBar:refreshButton.show', function(e) {
+            whichButtonIsShowing = 'refreshButton';
             refreshButton.show();
             backButton.hide();
         });
         Ti.App.addEventListener('headerBar:refreshButton.hide', function(e) {
+            whichButtonIsShowing = 'backButton';
             refreshButton.hide();
             backButton.show();
         });

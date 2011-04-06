@@ -10,9 +10,52 @@
  */
 
 (function() {
+    Date.prototype.toRelativeTime = function(now_threshold) {
+        var delta = new Date() - this;
+
+        now_threshold = parseInt(now_threshold, 10);       
+        if (isNaN(now_threshold)) {
+            now_threshold = 0;
+        }
+       
+        if (delta <= now_threshold) {
+            return L('just_now');
+        }
+       
+        var units = null;
+        var conversions = {
+            millisecond: 1, // ms    -> ms
+            second: 1000,   // ms    -> sec
+            minute: 60,     // sec   -> min
+            hour: 60,     // min   -> hour
+            day: 24,     // hour  -> day
+            month: 30,     // day   -> month (roughly)
+            year: 12      // month -> year
+        };
+       
+        for (var key in conversions) {
+            if (delta < conversions[key]) {
+                break;
+            } else {
+                units = key; // keeps track of the selected key over the iteration
+                delta = delta / conversions[key];
+            }
+        }
+       
+        // pluralize a unit when the difference is greater than 1.
+        delta = Math.floor(delta);
+        if (delta !== 1) { 
+            units += "s"; 
+        }
+        return [L('last_updated'), delta, units, L('ago')].join(' ');
+    };
+
+
+
     candp.view.createMissionListView = function (args) {
         var data = [];
         var missions_data = [];
+        var lastUpdated;
 
 	    function formatTimeDiff(secs) {	    
 	        var hours = Math.floor(secs / (60 * 60)); 
@@ -32,11 +75,25 @@
         }));
 
 
+        var headerLabel = Ti.UI.createLabel({
+            backgroundImage: 'images/header_bg.png',
+            color: '#FFFFFF',
+            font: { 
+                fontSize: 16, 
+                fontWeight: 'bold' 
+            },
+            text: '',
+            textAlign: 'center',
+            height: 44,
+            width: $$.platformWidth
+        });
+
         var tableView = Ti.UI.createTableView(candp.combine($$.tableView, {
             top: 50,
             left: 0,
             right: 0,
             bottom: 50,
+            headerView: headerLabel,
             data: data
         }));
         tableView.addEventListener('click', function(e) {
@@ -55,6 +112,8 @@
 
 
         Ti.App.addEventListener('app:missionList.getMissions', function(e) {
+            lastUpdated = new Date();
+
             missionsModel.getMissionList(e, function(missions) {
                 data = [];
                 missions_data = missions;
@@ -109,9 +168,17 @@
                         data.push(row);
                     }
                 }
+                headerLabel.text = lastUpdated.toRelativeTime(60000);
                 tableView.setData(data);
             });
         });
+
+        function _setHeaderLabel() {
+            headerLabel.text = lastUpdated.toRelativeTime(60000);
+            setTimeout(_setHeaderLabel, 30000);
+        }
+
+        setTimeout(_setHeaderLabel, 30000);
 
         return missionListView;
     };

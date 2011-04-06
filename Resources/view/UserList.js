@@ -31,6 +31,7 @@
         userListView.add(tableView);
 
         Ti.App.addEventListener('app:userList.getUsers', function(e) {
+            Ti.API.info('getting user list');
             usersModel.getUsersList(e, function(users) {
                 data = [];
                 users_data = users;

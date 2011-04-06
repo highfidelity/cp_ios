@@ -71,12 +71,14 @@ var headerBarModel = {};
                             Ti.App.fireEvent('headerBar:loginButton.changeText', {
                                  newText: L('logout')
                             });
+
+                            // we need the user's balance right now
+                            _getUserBalance();
+
                             Ti.App.fireEvent('headerBar:headerBarNickname.changeText', {
                                  newText: params.userData.nickname + ' - '
                             });
-                            Ti.App.fireEvent('headerBar:headerBarBalance.changeText', {
-                                 newText: '$' + parseFloat(params.userData.balance).toFixed(2)
-                            });
+
 
                             // ... and reload the chat page
                             Ti.App.fireEvent('app:chat.initiateChat');

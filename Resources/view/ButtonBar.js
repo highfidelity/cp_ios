@@ -67,6 +67,7 @@
                 onClick: function(clickedButtonIndex, previousButtonIndex) {
                     // show the missions in the nearby vicinity
                     _fireEvent('missionList', clickedButtonIndex, previousButtonIndex);
+                    Ti.App.fireEvent('app:missionList.getMissions');
                 }
             },
             {

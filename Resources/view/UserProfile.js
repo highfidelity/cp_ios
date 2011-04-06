@@ -167,8 +167,19 @@
             if (candp.osname === 'android') {
                 candp.view.containerView.add(userProfileView);
             }
-            Ti.App.fireEvent('app:userProfile.getUserProfile', e);
 
+            // clean up from the previous display of the profile
+            userImage.image = 'images/no_picture.jpg'; 
+            userNameLabel.text = '';
+            skillsLabel.text = '';
+            verifiedIdLabel.visible = false;
+            verifiedIdImage.visible = false;
+            reviewsStarImage.visible = false;
+            reviewsLabel.visible = false;
+            favoritedStarImage.visible = false;
+            favoritedLabel.visible = false;
+
+            Ti.App.fireEvent('app:userProfile.getUserProfile', e);
             userProfileView.show();
         });
 

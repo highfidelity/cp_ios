@@ -38,6 +38,9 @@
     <string name="expires">Expires:</string>
     <string name="never_expires">never expires</string>
     <string name="miles">miles</string>
+    <string name="just_now">Missions from just now</string>
+    <string name="last_updated">Missions from about</string>
+    <string name="ago">ago</string>
 
     <string name="mission_title">Mission:</string>
     <string name="mission_description">Description:</string>

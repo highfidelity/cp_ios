@@ -14,7 +14,7 @@
         grayTextColor:'#888888',
         headerColor:'#333333',
         lightBlue:'#006cb1',
-        darkBlue:'#93caed',
+        darkBlue: '#93caed',
         fontFamily: candp.os({
             iphone:'Helvetica Neue',
             android:'Droid Sans'
@@ -116,14 +116,19 @@
             top:5,
             right:5,
             height:30,
-            width: 60,
+            width: 63, //60,
             color:'#FFFFFF',
             font: {
                 fontSize:12,
                 fontWeight:'bold'
             },
+            backgroundImage:'images/blank_button_off.png',
+            backgroundSelectedImage:'images/blank_button_on.png',
+
+/*
             backgroundImage:'images/button_30_off.png',
             backgroundSelectedImage:'images/button_30_on.png',
+*/
             borderStyle: Titanium.UI.BUTTON_BORDERSTYLE_ROUNDED
         },
         refreshTopLeftButton: {
@@ -136,22 +141,35 @@
                 fontSize:12,
                 fontWeight:'bold'
             },
+            backgroundImage: 'images/refresh_button_off.png',
+            backgroundSelectedImage: 'images/refresh_button_on.png',
+
+/*
             backgroundImage: (candp.osname === 'iphone') ? 'images/button_30_off.png' : 'images/android_back_button_off.png',
             backgroundSelectedImage: (candp.osname === 'iphone') ? 'images/button_30_on.png' : 'images/android_back_button_on.png',
+*/
+
+
             borderStyle: Titanium.UI.BUTTON_BORDERSTYLE_ROUNDED
         },
         backTopLeftButton: {
-            top:6,
-            left:3,
-            height:32,
+            top: 5, //6,
+            left:5, //3,
+            height:30, //32,
             width: 63,
             color:'#FFFFFF',
             font: {
                 fontSize:12,
                 fontWeight:'bold'
             },
+
+            backgroundImage:'images/back_button_off.png',
+            backgroundSelectedImage:'images/back_button_on.png',
+
+/*
             backgroundImage:'images/back_button_black_off.png',
             backgroundSelectedImage:'images/back_button_black_on.png',
+*/
             borderStyle: Titanium.UI.BUTTON_BORDERSTYLE_ROUNDED
         },
         headerText: {

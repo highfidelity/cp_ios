@@ -195,11 +195,12 @@
             missionCreatorRow.add(postedByLabel);
 
             missionCreatorRow.addEventListener('click', function(e) {
+                Ti.App.fireEvent('app:userProfile.show', {
+                    user_id: userId
+                });
+
                 setTimeout(function() {
                     missionDetailsView.hide();
-                    Ti.App.fireEvent('app:userProfile.show', {
-                        user_id: userId
-                    });
                 }, 100);
             });
             data.push(missionCreatorRow);
