@@ -35,6 +35,7 @@
         // if we're android, we want to add a simple container view
         if (candp.osname === 'android') {
             containerView = Ti.UI.createView(candp.combine($$.containerView, {}));
+            candp.view.containerView = containerView;
             win.add(containerView);
         }
         
@@ -71,7 +72,8 @@
         for (var view in candp.view.views) {
             if (candp.view.views.hasOwnProperty(view)) {
                 candp.os({
-                    android: function() { containerView.add(candp.view.views[view]); },
+                    // android: function() { containerView.add(candp.view.views[view]); },
+                    android: function() {},
                     iphone: function() { candp.view.views[view].visible = true; }
                 });
             }
@@ -84,7 +86,8 @@
         // set our initial start screen 
         win.addEventListener('open', function() {
             candp.os({
-                android: function() { 
+                android: function() {
+                    containerView.add(candp.view.views[candp.view.currentActiveView]);
                     candp.view.views[candp.view.currentActiveView].show(); 
                 },
                 iphone: function() { 
@@ -114,6 +117,10 @@
                case 'android':
                     // *TODO: investigate the problems with Android animations
 		            candp.view.views[candp.view.currentActiveView].hide();
+
+                    containerView.remove(candp.view.views[candp.view.currentActiveView]);
+                    containerView.add(candp.view.views[e.nextViewToShow]);
+
 		            candp.view.views[e.nextViewToShow].show();
                     break;
                 case 'iphone':

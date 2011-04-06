@@ -14,100 +14,30 @@
     candp.view.createMissionDetailsView = function(args) {
         var userId;
         var missionId;
+        var missionTitle;
 
-        var missionDetailsView = Ti.UI.createScrollView(candp.combine($$.contained, {
+        var data = [];
+
+        var missionDetailsView = Ti.UI.createView(candp.combine($$.contained, {
             backgroundColor: '#FFFFFF',
-            contentHeight: 'auto',
-            contentWidth: $$.platformWidth,
-            showHorizontalScrollIndicator: false,
             visible: false
         }));
 
-        // use a dialog container
-        var containerView = Ti.UI.createView({
-            top: 20,
-            left:20,
-            right: 20,
-            // *FIXME: + 30 is a hack to get a longer screen, but we really want the size
-            // to adjust automatically.  It *is* possible
-            height: $$.platformHeight + 30,
-            backgroundColor: '#FFFFFF',
-            borderRadius: 15
-        });
-        missionDetailsView.add(containerView);
-
-
-        var authorImage = Ti.UI.createImageView(candp.combine($$.imageView, {
-            defaultImage: 'images/no_picture.jpg',
-            top: 20,
-            left: 20
-        }));
-        authorImage.addEventListener('click', function(e) {
-            setTimeout(function() {
-                missionDetailsView.hide();
-                Ti.App.fireEvent('app:userProfile.show', {
-                    user_id: userId
-                });
-            }, 100);
-        });
-        containerView.add(authorImage);
-
-        var missionTitle = Ti.UI.createLabel(candp.combine($$.titleText, {
-            top: 20,
-            left: 130,
-            right: 20
-        }));
-        containerView.add(missionTitle);
-
-        var byWhenLabel = Ti.UI.createLabel(candp.combine($$.smallText, {
-            left: 130,
-            top: 110,
-            right: 20
-        }));
-        containerView.add(byWhenLabel);
-
-
-
-        // put the rest of the content in a vertical layout view
-        var layoutContainer = Ti.UI.createView({
-            top: 125,
+        var missionDetailsTable = Ti.UI.createTableView(candp.combine($$.tableView, {
+            top: 30,
             left: 20,
             right: 20,
-            layout: 'vertical'
-        });
-        containerView.add(layoutContainer);
-
-        // show the details of the mission
-        var missionDetails = Ti.UI.createLabel(candp.combine($$.mediumText, {
-            top: 0,
-            left: 0,
-            right: 0
+            bottom: 75,
+            borderRadius: 15
         }));
-        layoutContainer.add(missionDetails);
-
-        var howMuchLabel = Ti.UI.createLabel(candp.combine($$.mediumBoldText, {
-            left: 0,
-            top: 10,
-            right: 0
-        }));
-        layoutContainer.add(howMuchLabel);
-
-        // where is this mission based?
-        var mapImage = Ti.UI.createImageView(candp.combine($$.imageView, {
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 'auto',
-            width: $$.platformWidth * 2 / 3,
-            canScale: false
-        }));
-        layoutContainer.add(mapImage);
+        missionDetailsView.add(missionDetailsTable);
+    
 
         // keep the buttons nice and contained
         var buttonsContainer = Ti.UI.createView({
-            top: 0,
-            left: -15,
-            right: -15,
+            bottom: 20,
+            left: 0,
+            right: 0,
             height: 37
         });
 
@@ -116,14 +46,14 @@
             title: L('make_offer'),
             top: 0,                                                                   
             height: 37,
-            left: (candp.osname === 'iphone') ? 0 : 20,
+            left: (candp.osname === 'iphone') ? 20 : 20,
             width: (candp.osname === 'iphone') ? 130 : 110
         }));
         buttonsContainer.add(makeOfferButton);
 
         makeOfferButton.addEventListener('click', function(e) {
             var makeOfferViewOptions = {
-                missionTitle: missionTitle.text,
+                missionTitle: missionTitle,
                 receiverUserId: userId,
                 missionId: missionId
             };
@@ -136,7 +66,7 @@
             title: L('chat1_1'),
             top: 0,
             height: 37,
-            right: (candp.osname === 'iphone') ? 0 : 20,
+            right: (candp.osname === 'iphone') ? 20 : 20,
             width: (candp.osname === 'iphone') ? 130 : 110
         }));
         buttonsContainer.add(initiateChatButton);
@@ -152,7 +82,7 @@
             }, 100);
         });
 
-        layoutContainer.add(buttonsContainer);
+        missionDetailsView.add(buttonsContainer);
 
 
         // respond to mission details from push notifications (i.e. get the mission by its id)
@@ -166,29 +96,156 @@
         Ti.App.addEventListener('app:missionDetail.show', function(mission) {
             userId = mission.author_id;
             missionId = mission.id;
+            missionTitle = mission.title;
 
-            // supress JSLint errors because mission.long conflicts in the Javascript language
-            /*jslint sub:true */
-            mapImage.image = 'http://maps.google.com/maps/api/staticmap?markers=color:red%7Clabel:M|' + mission.lat + ',' + mission['long'] + '&zoom=16&size=300x160&sensor=false';
-            /*jslint sub:false */
+            data = [];
 
-            // fill in the details of the mission
-            missionTitle.text = (mission.mission_type === 'want') ? L('i_want') + ' ' + mission.title : L('i_will') + ' ' + mission.title;
-            missionDetails.text = mission.description;
-            byWhenLabel.text = mission.deadline_formatted;
-            var howMuchText = (mission.mission_type === 'want') ? L('i_will_pay') + mission.proposed_price : L('i_want_pay') + mission.proposed_price; 
-            howMuchLabel.text = howMuchText + ' (' + L('mission_is') + ' ' + mission.status + ')';
-
-            // make sure we start at the top of the page if someone has
-            // left us scrolled to the bottom on the previous viewing
-            missionDetailsView.scrollTo(0, 0);
-            missionDetailsView.show();
-
-            userProfileModel.getUserImage({
-                image_id: mission.photo
-            }, function(image) {
-                authorImage.image = image;
+            // mission title related info
+            var missionTitleRow = Ti.UI.createTableViewRow(candp.combine($$.tableRow, {
+                height: 'auto',
+                selectedBackgroundColor: '#FFFFFF'
+            }));
+    
+            var missionTitleHeader = Ti.UI.createLabel({
+    			color:'#333333',
+    			font:{fontSize:16,fontWeight:'bold', fontFamily:'Arial'},
+    			left:10,
+    			top:5,
+    			height: 25,
+    			clickName:'missionTitle',
+    			text: L('mission_title')          
             });
+            missionTitleRow.add(missionTitleHeader);
+            
+            var missionTitleLabel = Ti.UI.createLabel({
+    			color:'#333333',
+    			font:{fontSize:14,fontWeight:'normal', fontFamily:'Arial'},
+    			left:10,
+    			top:35,
+    			height: 'auto',
+                bottom: 10,
+    			right:10,
+    			clickName:'missionTitle',
+                text: (mission.mission_type === 'want') ? L('i_want') + ' ' + mission.title : L('i_will') + ' ' + mission.title
+            });
+            missionTitleRow.add(missionTitleLabel);
+            data.push(missionTitleRow);
+
+
+            // mission description related info
+            var missionDescriptionRow = Ti.UI.createTableViewRow(candp.combine($$.tableRow, {
+                height: 'auto',
+                selectedBackgroundColor: '#FFFFFF',
+                layout: 'vertical'
+            }));
+
+            var missionDescriptionLabel = Ti.UI.createLabel({
+    			color:'#333333',
+    			font:{fontSize:16,fontWeight:'bold', fontFamily:'Arial'},
+    			left:10,
+    			top:5,
+    			height: 25,
+    			clickName:'missionDescription',
+    			text: L('mission_description')            
+            });
+            missionDescriptionRow.add(missionDescriptionLabel);
+            
+            var missionDescription = Ti.UI.createLabel({
+    			color:'#333333',
+    			font:{fontSize:14,fontWeight:'normal', fontFamily:'Arial'},
+    			left:10,
+    			top: 0,
+    			height: 'auto',
+    			right:10,
+                bottom: 5,
+    			clickName:'missionDescription',
+                text: mission.description
+            });
+            missionDescriptionRow.add(missionDescription);
+            data.push(missionDescriptionRow);
+
+
+            // mission creator related info
+            var missionCreatorRow = Ti.UI.createTableViewRow(candp.combine($$.tableRow, {
+                height: 'auto',
+                hasChild: true
+            }));
+
+            var missionCreatorPhoto = Ti.UI.createImageView(candp.combine($$.imageView, {
+                defaultImage: 'images/no_picture.jpg',
+                top: 10,
+                left: 10,
+                width: 75,
+                height: 75,
+                bottom: 10,
+                image: (mission.filename) ? candp.config.baseUrl + mission.filename : 'images/no_picture.jpg'
+            }));
+            missionCreatorRow.add(missionCreatorPhoto);
+           
+            var postedByLabel = Ti.UI.createLabel({
+    			color:'#333333',
+    			font:{fontSize:14,fontWeight:'normal', fontFamily:'Arial'},
+    			left:95,
+    			top: 10,
+    			height: 'auto',
+    			right:10,
+    			clickName:'postebBy',
+                text: L('posted_by') + ' ' + mission.nickname 
+            });
+            missionCreatorRow.add(postedByLabel);
+
+            missionCreatorRow.addEventListener('click', function(e) {
+                setTimeout(function() {
+                    missionDetailsView.hide();
+                    Ti.App.fireEvent('app:userProfile.show', {
+                        user_id: userId
+                    });
+                }, 100);
+            });
+            data.push(missionCreatorRow);
+
+
+            // pay/expires related info
+            var missionPayRow = Ti.UI.createTableViewRow(candp.combine($$.tableRow, {
+                height: 'auto',
+                selectedBackgroundColor: '#FFFFFF'
+            }));
+
+            var howMuchText = (mission.mission_type === 'want') ? L('i_will_pay') + mission.proposed_price : L('i_want_pay') + mission.proposed_price; 
+            var iWillPayLabel = Ti.UI.createLabel({
+    			color:'#333333',
+    			font:{fontSize:13,fontWeight:'normal', fontFamily:'Arial'},
+    			left:10,
+    			top: 10,
+    			width: 'auto',
+                height: 'auto',
+                bottom: 10,
+    			clickName:'iwillpay',
+                text: howMuchText
+            });
+            missionPayRow.add(iWillPayLabel);
+
+            var expiresLabel = Ti.UI.createLabel({
+    			color:'#333333',
+    			font:{fontSize:13,fontWeight:'normal', fontFamily:'Arial'},
+    			right:10,
+    			top: 10,
+    			width: 'auto',
+                height: 'auto',
+                bottom: 10,
+    			clickName:'expires',
+                text: L('expires') + ' ' + ((mission.formattedTimeDiff === '0 min') ? L('overdue') : (mission.formattedTimeDiff === '-1 min') ? L('never_expires') : mission.formattedTimeDiff)
+            });
+            missionPayRow.add(expiresLabel);
+            data.push(missionPayRow);
+
+            missionDetailsTable.setData(data);
+
+            // For Android we're using JITViewing                         
+            if (candp.osname === 'android') {
+                candp.view.containerView.add(missionDetailsView);
+            }
+            missionDetailsView.show();
         });
 
         return missionDetailsView;

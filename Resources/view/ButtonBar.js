@@ -24,8 +24,14 @@
         var buttons = [
             {
                 title: L('buttonbar_public_chat'),
+
+                imageOff: 'images/chat_closed.png',
+                imageOn: 'images/chat_open.png',
+
+/*
                 imageOff: 'images/buttonbar_chat_off.png',
                 imageOn: 'images/buttonbar_chat_on.png',
+*/
                 onClick: function(clickedButtonIndex, previousButtonIndex) {
                     // one on one chat for MVP, 
                     // but it ought to be public chat in a fully released app
@@ -34,8 +40,13 @@
             },
             {
                 title: L('buttonbar_people'),
+
+                imageOff: 'images/contacts-closed.png',
+                imageOn: 'images/contacts_open.png',
+/*
                 imageOff: 'images/buttonbar_people_off.png',
                 imageOn: 'images/buttonbar_people_on.png',
+*/
                 onClick: function(clickedButtonIndex, previousButtonIndex) {
                     // show a list of nearby users
                     _fireEvent('userList', clickedButtonIndex, previousButtonIndex);
@@ -44,8 +55,14 @@
             },
             {
                 title: L('buttonbar_missions'),
+
+                imageOff: 'images/mission_closed.png',
+                imageOn: 'images/mission_open.png',
+
+/*
                 imageOff: 'images/buttonbar_missions_off.png',
                 imageOn: 'images/buttonbar_missions_on.png',
+*/
                 on: true,
                 onClick: function(clickedButtonIndex, previousButtonIndex) {
                     // show the missions in the nearby vicinity
@@ -54,8 +71,14 @@
             },
             {
                 title: L('buttonbar_notifications'),
+
+                imageOff: 'images/flag_closed.png',
+                imageOn: 'images/flag_open.png',
+
+/*
                 imageOff: 'images/buttonbar_notifications_off.png',
                 imageOn: 'images/buttonbar_notifications_on.png',
+*/
                 onClick: function(clickedButtonIndex, previousButtonIndex) {
                     // stub for notifications as this isn't MVP
                     _fireEvent('notifications', clickedButtonIndex, previousButtonIndex);

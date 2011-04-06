@@ -35,11 +35,18 @@
 
     <string name="overdue">overdue</string>
     <string name="expires_in">expires in</string>
+    <string name="expires">Expires:</string>
     <string name="never_expires">never expires</string>
     <string name="miles">miles</string>
+
+    <string name="mission_title">Mission:</string>
+    <string name="mission_description">Description:</string>
     <string name="mission_is">Mission is</string>
-    <string name="i_will_pay">I will pay $</string>
-    <string name="i_want_pay">I want $</string>
+    <string name="i_will_pay">I will pay: C$</string>
+    <string name="i_want_pay">I want: C$</string>
+    <string name="posted_by">posted by</string>
+
+
     <string name="i_want">I want</string>
     <string name="i_will">I will</string>
     <string name="offer_for">Offer for</string>

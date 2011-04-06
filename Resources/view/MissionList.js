@@ -80,6 +80,7 @@
                         row.add(missionTitle);
     
                         var formattedTimeDiff = formatTimeDiff(missions[mission].time_diff);
+                        missions_data[mission].formattedTimeDiff = formattedTimeDiff;
                         var missionExpires = Ti.UI.createLabel({
     						color:'#333399',
     						font:{fontSize:12, fontFamily:'Arial-ItalicMT'},

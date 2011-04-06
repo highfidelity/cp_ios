@@ -113,10 +113,11 @@
                    missionId: viewOptions.missionId,
                    payMe: 1
                 }, function(e) {
+                    Ti.API.info(e);
                     if (e.succeeded) {
                         // yay, it worked out just fine
-                        Ti.App.fireEvent('app:makeOffer.hide', {show: 'backButton'});
                         candp.view.alert(L('make_offer_made'), L('make_offer_success'));
+                        Ti.App.fireEvent('app:makeOffer.hide', {show: 'backButton'});
                     } else {
                         // boo, something went wrong
                         candp.view.alert(L('error'), L('make_offer_generic_error'));

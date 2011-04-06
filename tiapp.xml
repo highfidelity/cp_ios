@@ -25,6 +25,12 @@
 		</orientations>
 	</iphone>
 	<android xmlns:android="http://schemas.android.com/apk/res/android">
+        <supports-screens
+           android:smallScreens="false"
+           android:normalScreens="true"
+           android:largeScreens="true"
+           android:anyDensity="true"
+        /> 
 	</android>
 	<modules>
 	</modules>

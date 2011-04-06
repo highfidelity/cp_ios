@@ -163,18 +163,18 @@
 
 
         Ti.App.addEventListener('app:userProfile.show', function(e) {
+            // For Android we're using JITViewing                         
+            if (candp.osname === 'android') {
+                candp.view.containerView.add(userProfileView);
+            }
             Ti.App.fireEvent('app:userProfile.getUserProfile', e);
+
             userProfileView.show();
         });
 
         Ti.App.addEventListener('app:userProfile.getUserProfile', function(e) {
             userProfileModel.getUserProfile(e, function(profile) {
-                userProfileModel.getUserImage({
-                    image_id: profile.photo
-                }, function(image) {
-                    userImage.image = image;
-                });
-
+                userImage.image = (profile.photourl) ? candp.config.baseUrl + profile.photourl : 'images/no_picture.jpg'; 
                 userId = profile.id;
                 userNameLabel.text = profile.nickname;
                 skillsLabel.text = profile.skill_list;
@@ -206,6 +206,7 @@
                 }
 
             });
+
         });
 
         return userProfileView;
