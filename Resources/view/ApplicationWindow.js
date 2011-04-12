@@ -100,7 +100,9 @@
         // it's a pain :-(
 
         // go get the latest set of missions, even before we've logged in
+        Ti.App.fireEvent('app:spinner.show');
         Ti.App.fireEvent('app:missionList.getMissions');
+
 
         // check our current session id, and see if we're still logged in
         candp.sessionId = Ti.App.Properties.getString('sessionId', '');

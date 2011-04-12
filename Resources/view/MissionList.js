@@ -10,15 +10,18 @@
  */
 
 (function() {
-    Date.prototype.toRelativeTime = function(now_threshold) {
+    // helper function amendment to the Date object
+    // that gives us a "Missions from about 10 minutes ago" style
+    // message
+    Date.prototype.toRelativeTime = function(nowThreshold) {
         var delta = new Date() - this;
 
-        now_threshold = parseInt(now_threshold, 10);       
-        if (isNaN(now_threshold)) {
-            now_threshold = 0;
+        nowThreshold = parseInt(nowThreshold, 10);       
+        if (isNaN(nowThreshold)) {
+            nowThreshold = 0;
         }
        
-        if (delta <= now_threshold) {
+        if (delta <= nowThreshold) {
             return L('just_now');
         }
        
@@ -29,25 +32,28 @@
             minute: 60,     // sec   -> min
             hour: 60,     // min   -> hour
             day: 24,     // hour  -> day
-            month: 30,     // day   -> month (roughly)
+            month: 30,     // day   -> month (roughly!)
             year: 12      // month -> year
         };
        
         for (var key in conversions) {
-            if (delta < conversions[key]) {
-                break;
-            } else {
-                units = key; // keeps track of the selected key over the iteration
-                delta = delta / conversions[key];
+            if (conversions.hasOwnProperty(key)) {
+                if (delta < conversions[key]) {
+                    break;
+                } else {
+                    units = key; // keeps track of the selected key over the iteration
+                    delta = delta / conversions[key];
+                }
             }
         }
        
-        // pluralize a unit when the difference is greater than 1.
+        // pluralise a unit when the difference is greater than 1
         delta = Math.floor(delta);
         if (delta !== 1) { 
             units += "s"; 
         }
-        return [L('last_updated'), delta, units, L('ago')].join(' ');
+        // *TODO: create this using string formatting rather than building it piecemeal
+        return [L('last_updated'), delta, L(units), L('ago')].join(' ');
     };
 
 
@@ -56,6 +62,7 @@
         var data = [];
         var missions_data = [];
         var lastUpdated;
+        var getLastUpdatedIntervalId;
 
 	    function formatTimeDiff(secs) {	    
 	        var hours = Math.floor(secs / (60 * 60)); 
@@ -75,6 +82,7 @@
         }));
 
 
+        // let's have a label that shows us when we last collected data
         var headerLabel = Ti.UI.createLabel({
             backgroundImage: 'images/header_bg.png',
             color: '#FFFFFF',
@@ -109,7 +117,6 @@
 
 
         missionListView.add(tableView);
-
 
         Ti.App.addEventListener('app:missionList.getMissions', function(e) {
             lastUpdated = new Date();
@@ -152,7 +159,6 @@
                         });
                         row.add(missionExpires);
     
-    
                         var missionDistance = Ti.UI.createLabel({
     						color:'#333399',
     						font:{fontSize:12, fontFamily:'Arial'},
@@ -168,17 +174,26 @@
                         data.push(row);
                     }
                 }
-                headerLabel.text = lastUpdated.toRelativeTime(60000);
+
+
+                // helper function for the iphone interval to update the header
+                function _setHeaderLabel() {
+                    headerLabel.text = lastUpdated.toRelativeTime(60000);
+                }
+        
+                candp.os({
+                    android: function() {
+                        lastUpdated = new Date();
+                        headerLabel.text = 'Last collected at ' + lastUpdated.toLocaleTimeString();
+                    },
+                    iphone: function() {
+                        setInterval(_setHeaderLabel, candp.config.getLastUpdatedTime);
+                    }
+                });
+
                 tableView.setData(data);
             });
         });
-
-        function _setHeaderLabel() {
-            headerLabel.text = lastUpdated.toRelativeTime(60000);
-            setTimeout(_setHeaderLabel, 30000);
-        }
-
-        setTimeout(_setHeaderLabel, 30000);
 
         return missionListView;
     };

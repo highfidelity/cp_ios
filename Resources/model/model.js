@@ -66,12 +66,10 @@
     };
 
     candp.model.validateInput = function(value, validationType) {
-        switch(validationType) {
-            case candp.config.validationPositiveNumeric:
-                return !(isNaN(value) || value <= 0.0);
-                break;
-            default:
-                return false;
+        if (validationType === candp.config.validationPositiveNumeric) {
+            return !(isNaN(value) || value <= 0.0);            
+        } else {
+            return false;
         }
     };
 

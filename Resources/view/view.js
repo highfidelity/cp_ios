@@ -75,6 +75,5 @@ Ti.include(
     '/view/ButtonBar.js',
     '/view/HeaderBar.js',
     '/view/MakeOffer.js',
-    '/view/Notifications.js',
-    '/view/Spinner.js'
+    '/view/Notifications.js'
 );

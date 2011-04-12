@@ -108,9 +108,16 @@
             });
         } else {
             var images = [];
-            for (var i=1; i<12; i++) {
-                images.push('images/wait30trans_neg_' + ((i<10)?'00'+i:'0'+i)+'.gif');
-            }
+//            for (var i=1; i<12; i++) {
+//                images.push('images/wait30trans_neg_' + ((i<10)?'00'+i:'0'+i)+'.gif');
+//            }
+
+            images.push('images/wait30trans_neg_001.gif');
+            images.push('images/wait30trans_neg_003.gif');
+            images.push('images/wait30trans_neg_005.gif');
+            images.push('images/wait30trans_neg_007.gif');
+            images.push('images/wait30trans_neg_009.gif');
+            images.push('images/wait30trans_neg_011.gif');
 
             activityIndicator = Titanium.UI.createImageView({
                 height:30,
@@ -233,7 +240,6 @@
 
             headerBarView.touchStart = $$.platformHeight;
         });
-
 
         return headerBarView;
     };

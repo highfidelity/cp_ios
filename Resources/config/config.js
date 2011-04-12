@@ -33,6 +33,9 @@
         // how often should we get the user's balance (in milliseconds)
         getBalanceTime: 30000, // every 30 seconds
 
+        // how often should we update our last updated message 
+        getLastUpdatedTime: 3000, // every 30 seconds
+
         // validation types
         validationPositiveNumeric: 1
     };
