@@ -52,14 +52,17 @@
         if (delta !== 1) { 
             units += "s"; 
         }
-        // *TODO: create this using string formatting rather than building it piecemeal
+        // *TODO: use string interpolation (rather than .join) to create the i18n string
         return [L('last_updated'), delta, L(units), L('ago')].join(' ');
     };
 
 
 
     candp.view.createMissionListView = function (args) {
-        var data = [];
+        var data = [
+                {title: L('loading_missions')}
+        ];
+
         var missions_data = [];
         var lastUpdated;
         var getLastUpdatedIntervalId;
@@ -69,6 +72,7 @@
 	        var divisor_for_minutes = secs % (60 * 60);
 	        var minutes = Math.floor(divisor_for_minutes / 60);
 	        var returnString = '';
+            // *TODO: convert the hr/min/s to i18n strings
 	        if (hours > 0) {
 	            returnString = hours + ' hr' + (hours > 1 ? 's' : '') + ', ';
 	        }
@@ -184,9 +188,11 @@
                 candp.os({
                     android: function() {
                         lastUpdated = new Date();
-                        headerLabel.text = 'Last collected at ' + lastUpdated.toLocaleTimeString();
+                        // *TODO: use string interpolation (rather than concatenation) with the i18n string
+                        headerLabel.text = L('last_collected_at') + ' ' + lastUpdated.toLocaleTimeString();
                     },
                     iphone: function() {
+                        _setHeaderLabel();
                         setInterval(_setHeaderLabel, candp.config.getLastUpdatedTime);
                     }
                 });

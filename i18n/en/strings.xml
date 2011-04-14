@@ -63,7 +63,8 @@
     <string name="i_will_pay">I will pay: C$</string>
     <string name="i_want_pay">I want: C$</string>
     <string name="posted_by">posted by</string>
-
+    <string name="last_collected_at">Last collected at</string>
+    <string name="loading_missions">Loading missions ...</string>
 
     <string name="i_want">I want</string>
     <string name="i_will">I will</string>

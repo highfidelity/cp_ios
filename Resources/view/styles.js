@@ -29,8 +29,9 @@
         
         // default components
         androidLoginButton: {
-            backgroundImage:'images/button_off.png',
-            backgroundSelectedImage:'images/button_on.png',
+            backgroundImage:'images/blank_android_button_off.png',
+            backgroundSelectedImage:'images/blank_android_button_on.png',
+
             borderStyle: Titanium.UI.BUTTON_BORDERSTYLE_ROUNDED,
             height:50,
             color:'#FFFFFF',
@@ -42,11 +43,11 @@
         button: {
             backgroundImage: candp.os({
                 iphone: 'images/button_capped_off.png',
-                android: 'images/button_130_off.png'
+                android: 'images/blank_android_button_off.png'
             }),
             backgroundSelectedImage: candp.os({
                 iphone: 'images/button_capped_on.png',
-                android: 'images/button_130_on.png'
+                android: 'images/blank_android_button_on.png'
             }),
             borderStyle: Titanium.UI.BUTTON_BORDERSTYLE_ROUNDED,
             backgroundLeftCap: 4,
@@ -116,7 +117,7 @@
             top:5,
             right:5,
             height:30,
-            width: 63, //60,
+            width: 63,
             color:'#FFFFFF',
             font: {
                 fontSize:12,
@@ -124,11 +125,6 @@
             },
             backgroundImage:'images/blank_button_off.png',
             backgroundSelectedImage:'images/blank_button_on.png',
-
-/*
-            backgroundImage:'images/button_30_off.png',
-            backgroundSelectedImage:'images/button_30_on.png',
-*/
             borderStyle: Titanium.UI.BUTTON_BORDERSTYLE_ROUNDED
         },
         refreshTopLeftButton: {
@@ -143,19 +139,12 @@
             },
             backgroundImage: 'images/refresh_button_off.png',
             backgroundSelectedImage: 'images/refresh_button_on.png',
-
-/*
-            backgroundImage: (candp.osname === 'iphone') ? 'images/button_30_off.png' : 'images/android_back_button_off.png',
-            backgroundSelectedImage: (candp.osname === 'iphone') ? 'images/button_30_on.png' : 'images/android_back_button_on.png',
-*/
-
-
             borderStyle: Titanium.UI.BUTTON_BORDERSTYLE_ROUNDED
         },
         backTopLeftButton: {
-            top: 5, //6,
-            left:5, //3,
-            height:30, //32,
+            top: 5,
+            left:5,
+            height:30,
             width: 63,
             color:'#FFFFFF',
             font: {
@@ -165,11 +154,6 @@
 
             backgroundImage:'images/back_button_off.png',
             backgroundSelectedImage:'images/back_button_on.png',
-
-/*
-            backgroundImage:'images/back_button_black_off.png',
-            backgroundSelectedImage:'images/back_button_black_on.png',
-*/
             borderStyle: Titanium.UI.BUTTON_BORDERSTYLE_ROUNDED
         },
         headerText: {
