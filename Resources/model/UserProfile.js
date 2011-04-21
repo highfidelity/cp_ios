@@ -20,7 +20,7 @@ var userProfileModel = {};
             'POST',
             {
                 action: 'userdetail',
-                id:  e.user_id || userProfileModel.last_user_id
+                id:  e.user_id || userProfileModel.last_user_id || e.id
             }, 
             function(e) {
                 var response = JSON.parse(e.response);

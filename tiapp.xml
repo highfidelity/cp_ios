@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-<id>com.singinghorsestudio.internal.testnotify</id>
-<name>candp</name>
+<id>com.lovemachineinc.coffeeandpower</id>
+<name>Coffee and Power</name>
 <version>1.0</version>
-<publisher>Love Machine Inc</publisher>
+<publisher>schoash</publisher>
 <url>http://www.coffeeandpower.com</url>
-<description> </description>
-<copyright>Copyright (c) Love Machine Inc. 2011 All Rights Reserved</copyright>
+<description>No description provided</description>
+<copyright>2011 by Lovemachine LLC</copyright>
 <icon>default_app_logo.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>

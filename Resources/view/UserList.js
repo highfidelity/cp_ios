@@ -27,6 +27,16 @@
             data: data
         }));
 
+        tableView.addEventListener('click', function(e) {
+            // There's a naming clash on mission.type because Titanium framework adds a 'type' 
+            // property to describe the type of object that sent the event
+            //missions_data[e.index].mission_type = missions_data[e.index].type;
+            Ti.App.fireEvent('app:userProfile.show', users_data[e.index]);
+            Ti.App.fireEvent('headerBar:backButton.show', {
+                destinationView: 'userList',
+                destinationIndex: 1
+            });
+        });
 
         userListView.add(tableView);
 
@@ -58,7 +68,7 @@
                         font:{fontSize:16,fontWeight:'bold', fontFamily:'Arial'},
                         left:65,
                         top:5,
-                        height: 15,
+                        height: 22,
                         right:50,
                         text: users[user].nickname
                     });
@@ -68,8 +78,8 @@
                         color: '#333333',
                         font:{fontSize:12, fontWeight:'bold', fontFamily:'Arial-ItalicMT'},
                         left:65,
-                        top:20,
-                        height:15,
+                        top:28,
+                        height:17,
                         width: 'auto',
                         text: users[user].skills
                     });
@@ -79,9 +89,9 @@
                         color: '#3D00FF',
                         font:{fontSize:12,fontWeight:'bold', fontFamily:'Arial'},
                         left: 65,
-                        top: 35,
+                        top: 45,
                         height: 15,
-                        text: users[user].ratings + ' ' + L('Reviews')
+                        text: String.format(L('reviews'), users[user].ratings.toString())
                     });
                     row.add(reviews);
 

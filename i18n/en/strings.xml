@@ -27,7 +27,7 @@
     <string name="cancel">Cancel</string>
 	<string name="error">Error</string>	
 	<string name="error_network_connection">There has been a problem connecting to the Coffee and Power server.  Please wait a while and try again later.</string>	
-	<string name="error_network_request">Sorry, but we couldn't detect a connection to the Internet, so functionality will be limited.  Please enable network connectivity to continue using the Coffee and Power mobile application</string>
+	<string name="error_network_request">Sorry, but we couldn\'t detect a connection to the Internet, so functionality will be limited.  Please enable network connectivity to continue using the Coffee and Power mobile application</string>
     <string name="error_push_notifications_disabled">There has been a problem connecting to the Coffee and Power server to enable Push Notifications.  If you wish to be notified of new missions, please enable Push Notifications in your settings.</string>
 
     <string name="logged_out">Logged Out</string>
