@@ -102,6 +102,7 @@
         // go get the latest set of missions, even before we've logged in
         Ti.App.fireEvent('app:spinner.show');
         Ti.App.fireEvent('app:missionList.getMissions');
+        Ti.App.fireEvent('app:notificationsList.getMissions');
 
 
         // check our current session id, and see if we're still logged in

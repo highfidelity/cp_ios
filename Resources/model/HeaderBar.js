@@ -61,6 +61,7 @@ var headerBarModel = {};
                             // we're logged in, so 
 		                    // ... collect the missions now that we've logged in
 			                Ti.App.fireEvent('app:missionList.getMissions');
+			                Ti.App.fireEvent('app:notificationsList.getMissions');
                     
                             // ... and register for APN (Apple Push Notifications)
                             if (candp.osname === 'iphone') {

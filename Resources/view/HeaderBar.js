@@ -177,6 +177,9 @@
                 case 'userList' :
                     Ti.App.fireEvent('app:userList.getUsers');
                     break;
+                case 'notifications' :
+                    Ti.App.fireEvent('app:notificationsList.getMissions');
+                    break;
             }
         });
         headerBarView.add(refreshButton);

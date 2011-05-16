@@ -16,12 +16,15 @@ var loginModel = {};
             candp.config.loginUrl,
             'POST',
             {
-                action: 'login',
+                action: 'loginTitanium',
                 username: username,
                 password: password
             }, 
             function(e) {
                 var response = JSON.parse(e.response);
+                
+                Titanium.API.log('Login: ' + response.params); 
+                
                 if (response.params) {
                     // we have successfully logged in
 	                Ti.App.fireEvent('app:headerBar.changeState', {

@@ -52,6 +52,7 @@
                 on: true,
                 onClick: function(clickedButtonIndex, previousButtonIndex) {
                     // show the missions in the nearby vicinity
+                    candp.view.currentActiveView = 'missionList';
                     _fireEvent('missionList', clickedButtonIndex, previousButtonIndex);
                     Ti.App.fireEvent('app:missionList.getMissions');
                 }
@@ -63,7 +64,9 @@
                 imageOn: 'images/flag_open.png',
                 onClick: function(clickedButtonIndex, previousButtonIndex) {
                     // stub for notifications as this isn't MVP
+                    candp.view.currentActiveView = 'notifications';
                     _fireEvent('notifications', clickedButtonIndex, previousButtonIndex);
+                    Ti.App.fireEvent('app:notificationsList.getMissions');
                 }
             }
         ];
@@ -118,6 +121,9 @@
                     break;
                 case 'missionList':
                     button[2].fireEvent('click', e);
+                    break;
+                case 'notifications':
+                    button[3].fireEvent('click', e);
                     break;
             }
         });

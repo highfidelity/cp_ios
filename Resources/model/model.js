@@ -82,5 +82,6 @@ Ti.include(
     '/model/MissionList.js',
     '/model/UserProfile.js',
     '/model/UserList.js',
-    '/model/MissionDetails.js'
+    '/model/MissionDetails.js',
+    '/model/NotificationList.js'
 );

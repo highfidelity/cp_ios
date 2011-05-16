@@ -17,6 +17,8 @@
     <string name="title_userprofile">User Profile</string>
     <string name="title_chat">1:1 Chat</string>
     <string name="title_login">Login</string>
+    
+    <string name="my_missions">My missions</string>
 
     <string name="buttonbar_public_chat">Public Chat</string>
     <string name="buttonbar_people">People</string>

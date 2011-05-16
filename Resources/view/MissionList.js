@@ -124,6 +124,8 @@
 
         Ti.App.addEventListener('app:missionList.getMissions', function(e) {
             lastUpdated = new Date();
+            
+            Titanium.API.log('Missions list event added');
 
             missionsModel.getMissionList(e, function(missions) {
                 data = [];

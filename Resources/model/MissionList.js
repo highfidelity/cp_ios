@@ -22,7 +22,8 @@ var missionsModel = {};
                     sw_lng: candp.location.longitude - 0.1,
                     ne_lat: candp.location.latitude + 0.1,
                     ne_lng: candp.location.longitude + 0.1,
-                    SkillsIDList: ''
+                    SkillsIDList: '',
+                    statusFilter: ''
                 }, 
                 function(e) {
                     var response = JSON.parse(e.response);
