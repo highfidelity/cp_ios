@@ -68,7 +68,7 @@
 			Ti.App.fireEvent('app:missionDetail.show', missions_data[e.index]);
 			Ti.App.fireEvent('headerBar:backButton.show', {
 				destinationView: 'notifications',
-				destinationIndex: 2
+				destinationIndex: 3
 			});
 		});
 		notificationListView.add(tableView);
