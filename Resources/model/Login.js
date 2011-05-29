@@ -23,7 +23,7 @@ var loginModel = {};
             function(e) {
                 var response = JSON.parse(e.response);
                 
-                Titanium.API.log('Login: ' + response.params); 
+                //Titanium.API.log('Login: ' + response.params); 
                 
                 if (response.params) {
                     // we have successfully logged in

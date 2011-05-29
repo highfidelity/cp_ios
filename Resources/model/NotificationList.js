@@ -19,7 +19,7 @@ var notificationsModel = {};
                 action: 'getMyMissionsJSON'
             }, 
             function(e) {
-                Titanium.API.log('Received: ' + e.response);
+                //Titanium.API.log('Received: ' + e.response);
                 var response = JSON.parse(e.response);
                 if(response.params == null){
                 	callback(null);

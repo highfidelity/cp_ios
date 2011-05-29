@@ -10,7 +10,7 @@
 
 (function() {
 	candp.view.createNotificationsView = function (args) {
-		Titanium.API.log('Creating notifications view!');
+		//Titanium.API.log('Creating notifications view!');
 
 		var data = [{
 			title: L('loading_missions')
@@ -76,7 +76,7 @@
 		Ti.App.addEventListener('app:notificationsList.getMissions', function(e) {
 			lastUpdated = new Date();
 
-			Titanium.API.log('Notifications event added');
+			//Titanium.API.log('Notifications event added');
 
 			notificationsModel.getNotificationsList(e, function(missions) {
 				if(missions == null) {
@@ -102,7 +102,7 @@
 					row.add(missionTitle);
 					data.push(row);
 					
-					Titanium.API.log('CURRENT VIEW: ' + candp.view.currentActiveView);
+					//Titanium.API.log('CURRENT VIEW: ' + candp.view.currentActiveView);
 					
 					if(candp.view.currentActiveView == 'notifications')
 					   Ti.App.fireEvent('app:login.toggle');
@@ -110,7 +110,7 @@
 					data = [];
 					missions_data = missions;
 
-					Titanium.API.log('Getting missions: ' + missions);
+					//Titanium.API.log('Getting missions: ' + missions);
 
 					// fill in the table with missions
 					for (var mission in missions) {

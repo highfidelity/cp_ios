@@ -8,8 +8,7 @@
  */
 
 (function() {
-    //var baseUrl = 'http://staging.coffeeandpower.com/';
-    var baseUrl = 'http://dev.sendlove.us/~pedrodias/candpweb/web/';
+    var baseUrl = 'http://staging.coffeeandpower.com/';
 
     candp.config = {
         // CandP server URL endpoints
