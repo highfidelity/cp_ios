@@ -23,6 +23,8 @@
 		87729239140D964400E3A8FD /* candpwrapperappTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 87729238140D964400E3A8FD /* candpwrapperappTests.m */; };
 		87729245140D970400E3A8FD /* WebWrapperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87729243140D970400E3A8FD /* WebWrapperView.m */; };
 		87729246140D970400E3A8FD /* WebWrapperView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87729244140D970400E3A8FD /* WebWrapperView.xib */; };
+		8772924C140D9C7800E3A8FD /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8772924B140D9C7800E3A8FD /* Default@2x.png */; };
+		8772924E140D9D6A00E3A8FD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8772924D140D9D6A00E3A8FD /* Default.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,8 @@
 		87729242140D970400E3A8FD /* WebWrapperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebWrapperView.h; sourceTree = "<group>"; };
 		87729243140D970400E3A8FD /* WebWrapperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebWrapperView.m; sourceTree = "<group>"; };
 		87729244140D970400E3A8FD /* WebWrapperView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebWrapperView.xib; sourceTree = "<group>"; };
+		8772924B140D9C7800E3A8FD /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		8772924D140D9D6A00E3A8FD /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,8 @@
 		877291F9140D964300E3A8FD = {
 			isa = PBXGroup;
 			children = (
+				8772924D140D9D6A00E3A8FD /* Default.png */,
+				8772924B140D9C7800E3A8FD /* Default@2x.png */,
 				8772920E140D964300E3A8FD /* candpwrapperapp */,
 				87729230140D964400E3A8FD /* candpwrapperappTests */,
 				87729207140D964300E3A8FD /* Frameworks */,
@@ -230,6 +236,8 @@
 				87729213140D964400E3A8FD /* InfoPlist.strings in Resources */,
 				8772921C140D964400E3A8FD /* MainWindow.xib in Resources */,
 				87729246140D970400E3A8FD /* WebWrapperView.xib in Resources */,
+				8772924C140D9C7800E3A8FD /* Default@2x.png in Resources */,
+				8772924E140D9D6A00E3A8FD /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
