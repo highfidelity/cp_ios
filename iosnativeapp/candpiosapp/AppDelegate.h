@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Settings.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, readonly) Settings *settings;
 
+-(void)saveSettings;
++(AppDelegate*)instance;
 @end

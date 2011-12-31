@@ -45,6 +45,8 @@
 		871EFBBA14AF97130030658B /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 871EFB9A14AF97130030658B /* SVProgressHUD.bundle */; };
 		871EFBBB14AF97130030658B /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 871EFB9C14AF97130030658B /* SVProgressHUD.m */; };
 		871EFBBF14AF987B0030658B /* MapTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871EFBBE14AF987B0030658B /* MapTabController.m */; };
+		87F5EF4614AFA68900EB83F7 /* MyWebTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F5EF4514AFA68800EB83F7 /* MyWebTabController.m */; };
+		87F5EF4F14AFAAC500EB83F7 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F5EF4E14AFAAC500EB83F7 /* Settings.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +130,10 @@
 		871EFB9C14AF97130030658B /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		871EFBBD14AF987B0030658B /* MapTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapTabController.h; sourceTree = "<group>"; };
 		871EFBBE14AF987B0030658B /* MapTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapTabController.m; sourceTree = "<group>"; };
+		87F5EF4414AFA68800EB83F7 /* MyWebTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWebTabController.h; sourceTree = "<group>"; };
+		87F5EF4514AFA68800EB83F7 /* MyWebTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWebTabController.m; sourceTree = "<group>"; };
+		87F5EF4D14AFAAC500EB83F7 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
+		87F5EF4E14AFAAC500EB83F7 /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +200,7 @@
 				871EFB1A14AE9C820030658B /* AppDelegate.m */,
 				871EFBBC14AF987B0030658B /* Views */,
 				871EFB1C14AE9C820030658B /* MainStoryboard_iPhone.storyboard */,
+				87F5EF4C14AFAAC500EB83F7 /* SupportingClasses */,
 				871EFB1114AE9C820030658B /* Supporting Files */,
 			);
 			path = candpiosapp;
@@ -315,8 +322,19 @@
 			children = (
 				871EFBBD14AF987B0030658B /* MapTabController.h */,
 				871EFBBE14AF987B0030658B /* MapTabController.m */,
+				87F5EF4414AFA68800EB83F7 /* MyWebTabController.h */,
+				87F5EF4514AFA68800EB83F7 /* MyWebTabController.m */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		87F5EF4C14AFAAC500EB83F7 /* SupportingClasses */ = {
+			isa = PBXGroup;
+			children = (
+				87F5EF4D14AFAAC500EB83F7 /* Settings.h */,
+				87F5EF4E14AFAAC500EB83F7 /* Settings.m */,
+			);
+			path = SupportingClasses;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -453,6 +471,8 @@
 				871EFBB714AF97130030658B /* SBJsonWriter.m in Sources */,
 				871EFBBB14AF97130030658B /* SVProgressHUD.m in Sources */,
 				871EFBBF14AF987B0030658B /* MapTabController.m in Sources */,
+				87F5EF4614AFA68900EB83F7 /* MyWebTabController.m in Sources */,
+				87F5EF4F14AFAAC500EB83F7 /* Settings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,13 +8,25 @@
 
 #import "AppDelegate.h"
 
+@interface AppDelegate(Internal)
+-(void)loadSettings;
++(NSString*)settingsFilepath;
+@end
+
 @implementation AppDelegate
+@synthesize settings;
++(AppDelegate*)instance
+{
+	return (AppDelegate*)[UIApplication sharedApplication].delegate;
+}
 
 @synthesize window = _window;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+	[self loadSettings];  
+
     return YES;
 }
 							
@@ -56,5 +68,46 @@
 	 See also applicationDidEnterBackground:.
 	 */
 }
+
+
+
++(NSString*)settingsFilepath
+{
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES /*expandTilde?*/);
+	NSString *documentsDirectory = [paths objectAtIndex:0];
+	return [documentsDirectory stringByAppendingPathComponent:@"SettingsFile" ];
+	
+}
+
+-(void) loadSettings
+{	
+	// load the new settings
+	@try 
+	{
+		// load our settings
+		Settings *newSettings = [NSKeyedUnarchiver unarchiveObjectWithFile:[AppDelegate settingsFilepath]];
+		if(newSettings) {
+			settings  = newSettings;
+		}
+		else {
+			settings = [[Settings alloc]init];
+		}
+	}
+	@catch (NSException * e) 
+	{
+		// if we couldn't load the file, go ahead and delete the file
+		[[NSFileManager defaultManager] removeItemAtPath:[AppDelegate settingsFilepath] error:nil];
+		settings = [[Settings alloc]init];
+		
+	}
+	
+}
+-(void)saveSettings
+{
+	// save the new settings object
+	[NSKeyedArchiver archiveRootObject:settings toFile:[AppDelegate settingsFilepath]];
+	
+}
+
 
 @end
