@@ -39,7 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		871EFB0614AE9C820030658B /* candpiosapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = candpiosapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		871EFB0614AE9C820030658B /* candpiosapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = candpiosapp.app; path = candp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		871EFB0A14AE9C820030658B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		871EFB0C14AE9C820030658B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		871EFB0E14AE9C820030658B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -217,7 +217,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0420;
-				ORGANIZATIONNAME = "Mindful Bear Apps";
+				ORGANIZATIONNAME = "Coffee and Power Inc";
 			};
 			buildConfigurationList = 871EFB0014AE9C810030658B /* Build configuration list for PBXProject "candpiosapp" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -466,6 +466,7 @@
 				871EFB4914AE9C820030658B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		871EFB4A14AE9C820030658B /* Build configuration list for PBXNativeTarget "candpiosappTests" */ = {
 			isa = XCConfigurationList;
@@ -474,6 +475,7 @@
 				871EFB4C14AE9C820030658B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
