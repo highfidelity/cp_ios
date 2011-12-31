@@ -14,7 +14,6 @@
 		871EFB1714AE9C820030658B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 871EFB1614AE9C820030658B /* main.m */; };
 		871EFB1B14AE9C820030658B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 871EFB1A14AE9C820030658B /* AppDelegate.m */; };
 		871EFB1E14AE9C820030658B /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871EFB1C14AE9C820030658B /* MainStoryboard_iPhone.storyboard */; };
-		871EFB2114AE9C820030658B /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871EFB1F14AE9C820030658B /* MainStoryboard_iPad.storyboard */; };
 		871EFB2414AE9C820030658B /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871EFB2314AE9C820030658B /* FirstViewController.m */; };
 		871EFB2614AE9C820030658B /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 871EFB2514AE9C820030658B /* first.png */; };
 		871EFB2814AE9C820030658B /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 871EFB2714AE9C820030658B /* first@2x.png */; };
@@ -26,6 +25,8 @@
 		871EFB3914AE9C820030658B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871EFB0C14AE9C820030658B /* Foundation.framework */; };
 		871EFB4114AE9C820030658B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 871EFB3F14AE9C820030658B /* InfoPlist.strings */; };
 		871EFB4414AE9C820030658B /* candpiosappTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 871EFB4314AE9C820030658B /* candpiosappTests.m */; };
+		871EFB5C14AEB1EB0030658B /* MapTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871EFB5B14AEB1EB0030658B /* MapTabController.m */; };
+		871EFB5F14AEB4950030658B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871EFB5E14AEB4950030658B /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		871EFB0614AE9C820030658B /* candpiosapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = candpiosapp.app; path = candp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		871EFB0614AE9C820030658B /* candp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = candp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		871EFB0A14AE9C820030658B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		871EFB0C14AE9C820030658B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		871EFB0E14AE9C820030658B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -50,7 +51,6 @@
 		871EFB1914AE9C820030658B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		871EFB1A14AE9C820030658B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		871EFB1D14AE9C820030658B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		871EFB2014AE9C820030658B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		871EFB2214AE9C820030658B /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
 		871EFB2314AE9C820030658B /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		871EFB2514AE9C820030658B /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
@@ -65,6 +65,9 @@
 		871EFB4014AE9C820030658B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		871EFB4214AE9C820030658B /* candpiosappTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = candpiosappTests.h; sourceTree = "<group>"; };
 		871EFB4314AE9C820030658B /* candpiosappTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = candpiosappTests.m; sourceTree = "<group>"; };
+		871EFB5A14AEB1EB0030658B /* MapTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapTabController.h; sourceTree = "<group>"; };
+		871EFB5B14AEB1EB0030658B /* MapTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapTabController.m; sourceTree = "<group>"; };
+		871EFB5E14AEB4950030658B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				871EFB5F14AEB4950030658B /* MapKit.framework in Frameworks */,
 				871EFB0B14AE9C820030658B /* UIKit.framework in Frameworks */,
 				871EFB0D14AE9C820030658B /* Foundation.framework in Frameworks */,
 				871EFB0F14AE9C820030658B /* CoreGraphics.framework in Frameworks */,
@@ -94,6 +98,7 @@
 		871EFAFB14AE9C810030658B = {
 			isa = PBXGroup;
 			children = (
+				871EFB5E14AEB4950030658B /* MapKit.framework */,
 				871EFB1014AE9C820030658B /* candpiosapp */,
 				871EFB3C14AE9C820030658B /* candpiosappTests */,
 				871EFB0914AE9C820030658B /* Frameworks */,
@@ -104,7 +109,7 @@
 		871EFB0714AE9C820030658B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				871EFB0614AE9C820030658B /* candpiosapp.app */,
+				871EFB0614AE9C820030658B /* candp.app */,
 				871EFB3514AE9C820030658B /* candpiosappTests.octest */,
 			);
 			name = Products;
@@ -127,7 +132,6 @@
 				871EFB1914AE9C820030658B /* AppDelegate.h */,
 				871EFB1A14AE9C820030658B /* AppDelegate.m */,
 				871EFB1C14AE9C820030658B /* MainStoryboard_iPhone.storyboard */,
-				871EFB1F14AE9C820030658B /* MainStoryboard_iPad.storyboard */,
 				871EFB2214AE9C820030658B /* FirstViewController.h */,
 				871EFB2314AE9C820030658B /* FirstViewController.m */,
 				871EFB2514AE9C820030658B /* first.png */,
@@ -137,6 +141,8 @@
 				871EFB2C14AE9C820030658B /* second.png */,
 				871EFB2E14AE9C820030658B /* second@2x.png */,
 				871EFB1114AE9C820030658B /* Supporting Files */,
+				871EFB5A14AEB1EB0030658B /* MapTabController.h */,
+				871EFB5B14AEB1EB0030658B /* MapTabController.m */,
 			);
 			path = candpiosapp;
 			sourceTree = "<group>";
@@ -188,7 +194,7 @@
 			);
 			name = candp;
 			productName = candpiosapp;
-			productReference = 871EFB0614AE9C820030658B /* candpiosapp.app */;
+			productReference = 871EFB0614AE9C820030658B /* candp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		871EFB3414AE9C820030658B /* candpiosappTests */ = {
@@ -244,7 +250,6 @@
 			files = (
 				871EFB1514AE9C820030658B /* InfoPlist.strings in Resources */,
 				871EFB1E14AE9C820030658B /* MainStoryboard_iPhone.storyboard in Resources */,
-				871EFB2114AE9C820030658B /* MainStoryboard_iPad.storyboard in Resources */,
 				871EFB2614AE9C820030658B /* first.png in Resources */,
 				871EFB2814AE9C820030658B /* first@2x.png in Resources */,
 				871EFB2D14AE9C820030658B /* second.png in Resources */,
@@ -287,6 +292,7 @@
 				871EFB1B14AE9C820030658B /* AppDelegate.m in Sources */,
 				871EFB2414AE9C820030658B /* FirstViewController.m in Sources */,
 				871EFB2B14AE9C820030658B /* SecondViewController.m in Sources */,
+				871EFB5C14AEB1EB0030658B /* MapTabController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,14 +329,6 @@
 				871EFB1D14AE9C820030658B /* en */,
 			);
 			name = MainStoryboard_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		871EFB1F14AE9C820030658B /* MainStoryboard_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				871EFB2014AE9C820030658B /* en */,
-			);
-			name = MainStoryboard_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		871EFB3F14AE9C820030658B /* InfoPlist.strings */ = {
