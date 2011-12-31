@@ -1,0 +1,481 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		871EFB0B14AE9C820030658B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871EFB0A14AE9C820030658B /* UIKit.framework */; };
+		871EFB0D14AE9C820030658B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871EFB0C14AE9C820030658B /* Foundation.framework */; };
+		871EFB0F14AE9C820030658B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871EFB0E14AE9C820030658B /* CoreGraphics.framework */; };
+		871EFB1514AE9C820030658B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 871EFB1314AE9C820030658B /* InfoPlist.strings */; };
+		871EFB1714AE9C820030658B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 871EFB1614AE9C820030658B /* main.m */; };
+		871EFB1B14AE9C820030658B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 871EFB1A14AE9C820030658B /* AppDelegate.m */; };
+		871EFB1E14AE9C820030658B /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871EFB1C14AE9C820030658B /* MainStoryboard_iPhone.storyboard */; };
+		871EFB2114AE9C820030658B /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871EFB1F14AE9C820030658B /* MainStoryboard_iPad.storyboard */; };
+		871EFB2414AE9C820030658B /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871EFB2314AE9C820030658B /* FirstViewController.m */; };
+		871EFB2614AE9C820030658B /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 871EFB2514AE9C820030658B /* first.png */; };
+		871EFB2814AE9C820030658B /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 871EFB2714AE9C820030658B /* first@2x.png */; };
+		871EFB2B14AE9C820030658B /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871EFB2A14AE9C820030658B /* SecondViewController.m */; };
+		871EFB2D14AE9C820030658B /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 871EFB2C14AE9C820030658B /* second.png */; };
+		871EFB2F14AE9C820030658B /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 871EFB2E14AE9C820030658B /* second@2x.png */; };
+		871EFB3714AE9C820030658B /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871EFB3614AE9C820030658B /* SenTestingKit.framework */; };
+		871EFB3814AE9C820030658B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871EFB0A14AE9C820030658B /* UIKit.framework */; };
+		871EFB3914AE9C820030658B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871EFB0C14AE9C820030658B /* Foundation.framework */; };
+		871EFB4114AE9C820030658B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 871EFB3F14AE9C820030658B /* InfoPlist.strings */; };
+		871EFB4414AE9C820030658B /* candpiosappTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 871EFB4314AE9C820030658B /* candpiosappTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		871EFB3A14AE9C820030658B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 871EFAFD14AE9C810030658B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 871EFB0514AE9C820030658B;
+			remoteInfo = candpiosapp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		871EFB0614AE9C820030658B /* candpiosapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = candpiosapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		871EFB0A14AE9C820030658B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		871EFB0C14AE9C820030658B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		871EFB0E14AE9C820030658B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		871EFB1214AE9C820030658B /* candpiosapp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "candpiosapp-Info.plist"; sourceTree = "<group>"; };
+		871EFB1414AE9C820030658B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		871EFB1614AE9C820030658B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		871EFB1814AE9C820030658B /* candpiosapp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "candpiosapp-Prefix.pch"; sourceTree = "<group>"; };
+		871EFB1914AE9C820030658B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		871EFB1A14AE9C820030658B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		871EFB1D14AE9C820030658B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		871EFB2014AE9C820030658B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		871EFB2214AE9C820030658B /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		871EFB2314AE9C820030658B /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		871EFB2514AE9C820030658B /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
+		871EFB2714AE9C820030658B /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
+		871EFB2914AE9C820030658B /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		871EFB2A14AE9C820030658B /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		871EFB2C14AE9C820030658B /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
+		871EFB2E14AE9C820030658B /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		871EFB3514AE9C820030658B /* candpiosappTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = candpiosappTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		871EFB3614AE9C820030658B /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		871EFB3E14AE9C820030658B /* candpiosappTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "candpiosappTests-Info.plist"; sourceTree = "<group>"; };
+		871EFB4014AE9C820030658B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		871EFB4214AE9C820030658B /* candpiosappTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = candpiosappTests.h; sourceTree = "<group>"; };
+		871EFB4314AE9C820030658B /* candpiosappTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = candpiosappTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		871EFB0314AE9C820030658B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				871EFB0B14AE9C820030658B /* UIKit.framework in Frameworks */,
+				871EFB0D14AE9C820030658B /* Foundation.framework in Frameworks */,
+				871EFB0F14AE9C820030658B /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		871EFB3114AE9C820030658B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				871EFB3714AE9C820030658B /* SenTestingKit.framework in Frameworks */,
+				871EFB3814AE9C820030658B /* UIKit.framework in Frameworks */,
+				871EFB3914AE9C820030658B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		871EFAFB14AE9C810030658B = {
+			isa = PBXGroup;
+			children = (
+				871EFB1014AE9C820030658B /* candpiosapp */,
+				871EFB3C14AE9C820030658B /* candpiosappTests */,
+				871EFB0914AE9C820030658B /* Frameworks */,
+				871EFB0714AE9C820030658B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		871EFB0714AE9C820030658B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				871EFB0614AE9C820030658B /* candpiosapp.app */,
+				871EFB3514AE9C820030658B /* candpiosappTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		871EFB0914AE9C820030658B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				871EFB0A14AE9C820030658B /* UIKit.framework */,
+				871EFB0C14AE9C820030658B /* Foundation.framework */,
+				871EFB0E14AE9C820030658B /* CoreGraphics.framework */,
+				871EFB3614AE9C820030658B /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		871EFB1014AE9C820030658B /* candpiosapp */ = {
+			isa = PBXGroup;
+			children = (
+				871EFB1914AE9C820030658B /* AppDelegate.h */,
+				871EFB1A14AE9C820030658B /* AppDelegate.m */,
+				871EFB1C14AE9C820030658B /* MainStoryboard_iPhone.storyboard */,
+				871EFB1F14AE9C820030658B /* MainStoryboard_iPad.storyboard */,
+				871EFB2214AE9C820030658B /* FirstViewController.h */,
+				871EFB2314AE9C820030658B /* FirstViewController.m */,
+				871EFB2514AE9C820030658B /* first.png */,
+				871EFB2714AE9C820030658B /* first@2x.png */,
+				871EFB2914AE9C820030658B /* SecondViewController.h */,
+				871EFB2A14AE9C820030658B /* SecondViewController.m */,
+				871EFB2C14AE9C820030658B /* second.png */,
+				871EFB2E14AE9C820030658B /* second@2x.png */,
+				871EFB1114AE9C820030658B /* Supporting Files */,
+			);
+			path = candpiosapp;
+			sourceTree = "<group>";
+		};
+		871EFB1114AE9C820030658B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				871EFB1214AE9C820030658B /* candpiosapp-Info.plist */,
+				871EFB1314AE9C820030658B /* InfoPlist.strings */,
+				871EFB1614AE9C820030658B /* main.m */,
+				871EFB1814AE9C820030658B /* candpiosapp-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		871EFB3C14AE9C820030658B /* candpiosappTests */ = {
+			isa = PBXGroup;
+			children = (
+				871EFB4214AE9C820030658B /* candpiosappTests.h */,
+				871EFB4314AE9C820030658B /* candpiosappTests.m */,
+				871EFB3D14AE9C820030658B /* Supporting Files */,
+			);
+			path = candpiosappTests;
+			sourceTree = "<group>";
+		};
+		871EFB3D14AE9C820030658B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				871EFB3E14AE9C820030658B /* candpiosappTests-Info.plist */,
+				871EFB3F14AE9C820030658B /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		871EFB0514AE9C820030658B /* candp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 871EFB4714AE9C820030658B /* Build configuration list for PBXNativeTarget "candp" */;
+			buildPhases = (
+				871EFB0214AE9C820030658B /* Sources */,
+				871EFB0314AE9C820030658B /* Frameworks */,
+				871EFB0414AE9C820030658B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = candp;
+			productName = candpiosapp;
+			productReference = 871EFB0614AE9C820030658B /* candpiosapp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		871EFB3414AE9C820030658B /* candpiosappTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 871EFB4A14AE9C820030658B /* Build configuration list for PBXNativeTarget "candpiosappTests" */;
+			buildPhases = (
+				871EFB3014AE9C820030658B /* Sources */,
+				871EFB3114AE9C820030658B /* Frameworks */,
+				871EFB3214AE9C820030658B /* Resources */,
+				871EFB3314AE9C820030658B /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				871EFB3B14AE9C820030658B /* PBXTargetDependency */,
+			);
+			name = candpiosappTests;
+			productName = candpiosappTests;
+			productReference = 871EFB3514AE9C820030658B /* candpiosappTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		871EFAFD14AE9C810030658B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Mindful Bear Apps";
+			};
+			buildConfigurationList = 871EFB0014AE9C810030658B /* Build configuration list for PBXProject "candpiosapp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 871EFAFB14AE9C810030658B;
+			productRefGroup = 871EFB0714AE9C820030658B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				871EFB0514AE9C820030658B /* candp */,
+				871EFB3414AE9C820030658B /* candpiosappTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		871EFB0414AE9C820030658B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				871EFB1514AE9C820030658B /* InfoPlist.strings in Resources */,
+				871EFB1E14AE9C820030658B /* MainStoryboard_iPhone.storyboard in Resources */,
+				871EFB2114AE9C820030658B /* MainStoryboard_iPad.storyboard in Resources */,
+				871EFB2614AE9C820030658B /* first.png in Resources */,
+				871EFB2814AE9C820030658B /* first@2x.png in Resources */,
+				871EFB2D14AE9C820030658B /* second.png in Resources */,
+				871EFB2F14AE9C820030658B /* second@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		871EFB3214AE9C820030658B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				871EFB4114AE9C820030658B /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		871EFB3314AE9C820030658B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		871EFB0214AE9C820030658B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				871EFB1714AE9C820030658B /* main.m in Sources */,
+				871EFB1B14AE9C820030658B /* AppDelegate.m in Sources */,
+				871EFB2414AE9C820030658B /* FirstViewController.m in Sources */,
+				871EFB2B14AE9C820030658B /* SecondViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		871EFB3014AE9C820030658B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				871EFB4414AE9C820030658B /* candpiosappTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		871EFB3B14AE9C820030658B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 871EFB0514AE9C820030658B /* candp */;
+			targetProxy = 871EFB3A14AE9C820030658B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		871EFB1314AE9C820030658B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				871EFB1414AE9C820030658B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		871EFB1C14AE9C820030658B /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				871EFB1D14AE9C820030658B /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		871EFB1F14AE9C820030658B /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				871EFB2014AE9C820030658B /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		871EFB3F14AE9C820030658B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				871EFB4014AE9C820030658B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		871EFB4514AE9C820030658B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		871EFB4614AE9C820030658B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		871EFB4814AE9C820030658B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "candpiosapp/candpiosapp-Prefix.pch";
+				INFOPLIST_FILE = "candpiosapp/candpiosapp-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		871EFB4914AE9C820030658B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "candpiosapp/candpiosapp-Prefix.pch";
+				INFOPLIST_FILE = "candpiosapp/candpiosapp-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		871EFB4B14AE9C820030658B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/candpiosapp.app/candpiosapp";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "candpiosapp/candpiosapp-Prefix.pch";
+				INFOPLIST_FILE = "candpiosappTests/candpiosappTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		871EFB4C14AE9C820030658B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/candpiosapp.app/candpiosapp";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "candpiosapp/candpiosapp-Prefix.pch";
+				INFOPLIST_FILE = "candpiosappTests/candpiosappTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		871EFB0014AE9C810030658B /* Build configuration list for PBXProject "candpiosapp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				871EFB4514AE9C820030658B /* Debug */,
+				871EFB4614AE9C820030658B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		871EFB4714AE9C820030658B /* Build configuration list for PBXNativeTarget "candp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				871EFB4814AE9C820030658B /* Debug */,
+				871EFB4914AE9C820030658B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		871EFB4A14AE9C820030658B /* Build configuration list for PBXNativeTarget "candpiosappTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				871EFB4B14AE9C820030658B /* Debug */,
+				871EFB4C14AE9C820030658B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 871EFAFD14AE9C810030658B /* Project object */;
+}
