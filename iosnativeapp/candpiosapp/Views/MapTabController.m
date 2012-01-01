@@ -10,54 +10,8 @@
 #import "AFHTTPClient.h"
 #import "AFJSONRequestOperation.h"
 #import "UIImageView+WebCache.h"
-
-@interface Mission : NSObject< MKAnnotation >
-{
-	
-}
-@property (nonatomic,assign) double lat;
-@property (nonatomic,assign) double lon;
-@property (nonatomic, copy) NSString *title;
-@property (nonatomic, copy) NSString *description;
-@property (nonatomic, copy) NSString *nickname;
-@property (nonatomic, copy) NSString *imageUrl;
--(id)initFromDictionary:(NSDictionary*)jsonDict;
-
-
-@end
-@implementation Mission
-@synthesize lat,lon;
-@synthesize title,description,nickname,imageUrl;
--(id)initFromDictionary:(NSDictionary*)jsonDict
-{
-	self=[super init];
-	if(self)
-	{
-		lat = [[jsonDict objectForKey:@"lat"]doubleValue];
-		lon = [[jsonDict objectForKey:@"lng"] doubleValue];
-		title = [jsonDict objectForKey:@"title"];
-		description = [jsonDict objectForKey:@"description"];
-		nickname = [jsonDict objectForKey:@"nickname"];
-		id imageUrlObj = [jsonDict objectForKey:@"filename"];
-		if(imageUrlObj && imageUrlObj != [NSNull null])
-			imageUrl = imageUrlObj;
-		else
-		{
-			int z = 0;
-		}
-	}
-	return self;
-}
-// for MKAnnotation protocol
-// @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
-//
--(CLLocationCoordinate2D) coordinate
-{
-	return CLLocationCoordinate2DMake(lat, lon);
-}
-
-
-@end
+#import "MissionAnnotation.h"
+#import "UserAnnotation.h"
 
 @implementation MapTabController
 @synthesize mapView;
@@ -96,7 +50,70 @@
 {
     [super viewDidLoad];
 	
+	
+					
+
+	NSOperationQueue *queue = [NSOperationQueue mainQueue];
+	//NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+	//BOOL wasSuspended = queue.isSuspended;
+	[queue setSuspended: NO];
+}
+
+- (void)viewDidUnload
+{
+	[self setMapView:nil];
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	
 	// kick off a request to load the map items near the given lat & lon
+	// http://www.coffeeandpower.com/api.php?action=userlist
+	//	{
+	//	error: false,
+	//	payload: [
+	//		{
+	//		distance: "0",
+	//		online: "1",
+	//			id: "5872",
+	//		nickname: "Charlie White",
+	//		status_text: "",
+	//		photo: "11105",
+	//		filename: "http://coffeeandpower-prod.s3.amazonaws.com/image/profile/5872_1325441007_256.jpg",
+	//		lat: "0.000000",
+	//		lng: "0.000000",
+	//		APNToken: null,
+	//		active: "Y",
+	//		favorite_enabled: "0",
+	//		video_chat: "1",
+	//		ratings: "0",
+	//		skills: null
+	//		},
+	//		{
+	//		distance: "4948.15104391205",
+	//		online: "1",
+	//			id: "5852",
+	//		nickname: "Greg Beaver",
+	//		status_text: "",
+	//		photo: "11065",
+	//		filename: "http://coffeeandpower-prod.s3.amazonaws.com/image/profile/5852_1325274001_256.jpg",
+	//		lat: "44.631891",
+	//		lng: "-63.577996",
+	//		APNToken: null,
+	//		active: "Y",
+	//		favorite_enabled: "0",
+	//		video_chat: "0",
+	//		ratings: "0",
+	//		skills: null
+	//		},
+	//   ]
+	// }
+	
+	
+	
 	// http://www.coffeeandpower.com/api.php?action=mission&lat=36&lon=-122
 	// response is in the form:
 	//	{
@@ -143,27 +160,26 @@
 	//		...
 	//	  ]
 	//	}
-	//		
-					
-
-	NSOperationQueue *queue = [NSOperationQueue mainQueue];
-	//NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-	BOOL wasSuspended = queue.isSuspended;
-	[queue setSuspended: NO];
-	int zsda = 99;
-}
-
-- (void)viewDidUnload
-{
-	[self setMapView:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
--(void)viewDidAppear:(BOOL)animated
-{
-	[super viewDidAppear:animated];
+	//	
+#if 1
 	
+	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.coffeeandpower.com/api.php?action=userlist&lat=36&lon=-122"]];
+	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+		NSArray *payloadArray = [JSON objectForKey:@"payload"];
+		NSLog(@"Got %d users.", [payloadArray count]);
+		for(NSDictionary *userDict in payloadArray)
+		{
+			//NSLog(@"Mission %d: %@", )
+			UserAnnotation *user = [[UserAnnotation alloc]initFromDictionary:userDict];
+			[missions addObject:user];
+			[mapView addAnnotation:user];
+		}
+		//[mapView addAnnotations:missions];
+	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+		int z = 99;
+	}];
+
+#else
 	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.coffeeandpower.com/api.php?action=mission&lat=36&lon=-122"]];
 	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 		NSArray *payloadArray = [JSON objectForKey:@"payload"];
@@ -172,7 +188,7 @@
 		{
 			//NSLog(@"Mission %d: %@", )
 			int z = 0;
-			Mission *mission = [[Mission alloc]initFromDictionary:missionDict];
+			MissionAnnotation *mission = [[MissionAnnotation alloc]initFromDictionary:missionDict];
 			[missions addObject:mission];
 			[mapView addAnnotation:mission];
 		}
@@ -180,6 +196,7 @@
 	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
 		int z = 99;
 	}];
+#endif
 	
 	NSOperationQueue *queue = [NSOperationQueue mainQueue];
 	//NSOperationQueue *queue = [[NSOperationQueue alloc] init];
@@ -199,8 +216,10 @@
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
 	MKAnnotationView *pinToReturn = nil;
-	if([annotation isKindOfClass:[Mission class]])
+	if([annotation isKindOfClass:[CandPAnnotation class]])
 	{
+		CandPAnnotation *candpanno = (CandPAnnotation*)annotation;
+
 		MKPinAnnotationView *pin = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: @"asdf"];
 		if (pin == nil)
 		{
@@ -213,11 +232,10 @@
 		pin.pinColor = MKPinAnnotationColorRed;
 		pin.animatesDrop = NO;
 		pin.canShowCallout = YES;
-		Mission *mission = (Mission*)annotation;
-		if(mission.imageUrl)
+		if(candpanno.imageUrl)
 		{
 			UIImageView *leftCallout = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
-			[leftCallout setImageWithURL:[NSURL URLWithString:mission.imageUrl]
+			[leftCallout setImageWithURL:[NSURL URLWithString:candpanno.imageUrl]
 						   placeholderImage:[UIImage imageNamed:@"63-runner.png"]];
 			pin.leftCalloutAccessoryView = 	leftCallout;
 		}
