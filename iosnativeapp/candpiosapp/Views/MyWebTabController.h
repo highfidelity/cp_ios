@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MapKit/MapKit.h>
 
-@interface MyWebTabController : UIViewController< MKMapViewDelegate >
+@interface MyWebTabController : UIViewController
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 @end

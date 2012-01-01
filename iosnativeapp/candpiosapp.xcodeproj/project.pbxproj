@@ -45,6 +45,7 @@
 		871EFBBA14AF97130030658B /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 871EFB9A14AF97130030658B /* SVProgressHUD.bundle */; };
 		871EFBBB14AF97130030658B /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 871EFB9C14AF97130030658B /* SVProgressHUD.m */; };
 		871EFBBF14AF987B0030658B /* MapTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871EFBBE14AF987B0030658B /* MapTabController.m */; };
+		8726C6C414B00245004E4872 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8726C6C314B00245004E4872 /* CoreLocation.framework */; };
 		87F5EF4614AFA68900EB83F7 /* MyWebTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F5EF4514AFA68800EB83F7 /* MyWebTabController.m */; };
 		87F5EF4F14AFAAC500EB83F7 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F5EF4E14AFAAC500EB83F7 /* Settings.m */; };
 /* End PBXBuildFile section */
@@ -130,6 +131,7 @@
 		871EFB9C14AF97130030658B /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		871EFBBD14AF987B0030658B /* MapTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapTabController.h; sourceTree = "<group>"; };
 		871EFBBE14AF987B0030658B /* MapTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapTabController.m; sourceTree = "<group>"; };
+		8726C6C314B00245004E4872 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		87F5EF4414AFA68800EB83F7 /* MyWebTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWebTabController.h; sourceTree = "<group>"; };
 		87F5EF4514AFA68800EB83F7 /* MyWebTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWebTabController.m; sourceTree = "<group>"; };
 		87F5EF4D14AFAAC500EB83F7 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8726C6C414B00245004E4872 /* CoreLocation.framework in Frameworks */,
 				871EFB5F14AEB4950030658B /* MapKit.framework in Frameworks */,
 				871EFB0B14AE9C820030658B /* UIKit.framework in Frameworks */,
 				871EFB0D14AE9C820030658B /* Foundation.framework in Frameworks */,
@@ -183,6 +186,7 @@
 		871EFB0914AE9C820030658B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8726C6C314B00245004E4872 /* CoreLocation.framework */,
 				871EFB5E14AEB4950030658B /* MapKit.framework */,
 				871EFB0A14AE9C820030658B /* UIKit.framework */,
 				871EFB0C14AE9C820030658B /* Foundation.framework */,
