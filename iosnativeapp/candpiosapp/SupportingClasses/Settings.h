@@ -13,5 +13,5 @@
 
 @property (nonatomic, assign) bool flag;
 @property (nonatomic, assign) bool hasLocation;
-@property (nonatomic, strong) CLLocation *lastKnownLocation;
+@property (nonatomic, copy) CLLocation *lastKnownLocation;
 @end

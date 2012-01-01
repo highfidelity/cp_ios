@@ -16,7 +16,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="1pt-yI-hCV" kind="relationship" relationship="viewControllers" id="qaA-ym-ulO"/>
+                        <segue destination="86X-eE-gGo" kind="relationship" relationship="viewControllers" id="qaA-ym-ulO"/>
                         <segue destination="PRZ-uJ-8ey" kind="relationship" relationship="viewControllers" id="Rfq-Vz-3Pd"/>
                         <segue destination="4LL-8u-LgC" kind="relationship" relationship="viewControllers" id="Eaz-y2-cr5"/>
                     </connections>
@@ -36,7 +36,7 @@
                     <tabBarItem key="tabBarItem" title="List" id="OdT-ix-bRR"/>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="510" y="515"/>
+            <point key="canvasLocation" x="766" y="559"/>
         </scene>
         <scene sceneID="aWK-mS-5Nb">
             <objects>
@@ -60,18 +60,18 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="536" y="1144"/>
+            <point key="canvasLocation" x="728" y="1210"/>
         </scene>
         <scene sceneID="Q7p-8T-DVG">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WIW-bY-l8z" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="1pt-yI-hCV" customClass="MapTabController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c8H-RK-Bhe">
-                        <rect key="frame" x="0.0" y="20" width="320" height="411"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" id="fm6-PX-4Yv">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="411"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="1pt-yI-hCV" id="JOY-im-aEb"/>
@@ -80,13 +80,55 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Nearby" id="mXd-OI-Wox"/>
+                    <navigationItem key="navigationItem" id="mZs-pB-Rfc"/>
                     <connections>
                         <outlet property="mapView" destination="fm6-PX-4Yv" id="Dvs-wL-oEc"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="499" y="-66"/>
+            <point key="canvasLocation" x="1269" y="-146"/>
+        </scene>
+        <scene sceneID="X1z-oT-wPh">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="flw-Jh-D1t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController id="86X-eE-gGo" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Nearby" id="mXd-OI-Wox"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="US3-0t-kpP">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="1pt-yI-hCV" kind="relationship" relationship="rootViewController" id="dgS-EI-3PU"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="743" y="-146"/>
+        </scene>
+        <scene sceneID="Bep-d1-ne3">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hhh-rN-f8E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="WebViewOfCandPUser" id="CO2-qf-eVG" customClass="MyWebTabController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6dc-PE-Sxz">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" id="440-gQ-xnJ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="My C&amp;P" id="3Hp-FH-sgH"/>
+                    <connections>
+                        <outlet property="webView" destination="440-gQ-xnJ" id="idW-n1-NKJ"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1888" y="-78"/>
         </scene>
     </scenes>
     <classes>

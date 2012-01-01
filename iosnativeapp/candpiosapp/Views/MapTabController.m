@@ -14,9 +14,11 @@
 #import "UserAnnotation.h"
 #import "AppDelegate.h"
 #import "SVProgressHUD.h"
+#import "MyWebTabController.h"
 
 @interface MapTabController(Internal)
 -(void)zoomTo:(CLLocationCoordinate2D)loc;
+-(void)accessoryButtonTapped:(UIButton*)sender;
 @end
 @implementation MapTabController
 @synthesize mapView;
@@ -174,6 +176,7 @@
 	//	  ]
 	//	}
 	//	
+	missions = [NSMutableArray array];
 #if 1
 	
 	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.coffeeandpower.com/api.php?action=userlist&lat=36&lon=-122"]];
@@ -251,19 +254,37 @@
 		if(candpanno.imageUrl)
 		{
 			UIImageView *leftCallout = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
+			leftCallout.contentMode = UIViewContentModeScaleAspectFill;
 			[leftCallout setImageWithURL:[NSURL URLWithString:candpanno.imageUrl]
 						   placeholderImage:[UIImage imageNamed:@"63-runner.png"]];
 			pin.leftCalloutAccessoryView = 	leftCallout;
 		}
 		UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 		button.frame =CGRectMake(0, 0, 32, 32);
+		button.tag = [missions indexOfObject:candpanno];
 		pin.rightCalloutAccessoryView = button;
+		[button addTarget:self action:@selector(accessoryButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 		
 		pinToReturn = pin;
 	}
 
 	return pinToReturn;
 }
+
+-(void)accessoryButtonTapped:(UIButton*)sender
+{
+	// figure out which element was tapped, and open the page
+	int index = sender.tag;
+	if(index < [missions count])
+	{
+		CandPAnnotation *tappedObj = [missions objectAtIndex:index];
+		// 
+		MyWebTabController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"WebViewOfCandPUser"];
+	    [self.navigationController pushViewController:controller animated:YES];
+	}
+}
+
+////// map delegate
 
 - (void)mapViewWillStartLocatingUser:(MKMapView *)mapView
 {
