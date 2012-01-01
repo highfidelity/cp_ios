@@ -9,6 +9,7 @@
 #import "MapTabController.h"
 #import "AFHTTPClient.h"
 #import "AFJSONRequestOperation.h"
+#import "UIImageView+WebCache.h"
 
 @interface Mission : NSObject< MKAnnotation >
 {
@@ -19,13 +20,14 @@
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *description;
 @property (nonatomic, copy) NSString *nickname;
+@property (nonatomic, copy) NSString *imageUrl;
 -(id)initFromDictionary:(NSDictionary*)jsonDict;
 
 
 @end
 @implementation Mission
 @synthesize lat,lon;
-@synthesize title,description,nickname;
+@synthesize title,description,nickname,imageUrl;
 -(id)initFromDictionary:(NSDictionary*)jsonDict
 {
 	self=[super init];
@@ -36,6 +38,13 @@
 		title = [jsonDict objectForKey:@"title"];
 		description = [jsonDict objectForKey:@"description"];
 		nickname = [jsonDict objectForKey:@"nickname"];
+		id imageUrlObj = [jsonDict objectForKey:@"filename"];
+		if(imageUrlObj && imageUrlObj != [NSNull null])
+			imageUrl = imageUrlObj;
+		else
+		{
+			int z = 0;
+		}
 	}
 	return self;
 }
@@ -189,17 +198,36 @@
 // For MapKit provided annotations (eg. MKUserLocation) return nil to use the MapKit provided annotation view.
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
-	MKPinAnnotationView *pin = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: @"asdf"];
-	if (pin == nil)
+	MKAnnotationView *pinToReturn = nil;
+	if([annotation isKindOfClass:[Mission class]])
 	{
-		pin = [[MKPinAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: @"asdf"];
+		MKPinAnnotationView *pin = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: @"asdf"];
+		if (pin == nil)
+		{
+			pin = [[MKPinAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: @"asdf"];
+		}
+		else
+		{
+			pin.annotation = annotation;
+		}
+		pin.pinColor = MKPinAnnotationColorRed;
+		pin.animatesDrop = NO;
+		pin.canShowCallout = YES;
+		Mission *mission = (Mission*)annotation;
+		if(mission.imageUrl)
+		{
+			UIImageView *leftCallout = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
+			[leftCallout setImageWithURL:[NSURL URLWithString:mission.imageUrl]
+						   placeholderImage:[UIImage imageNamed:@"63-runner.png"]];
+			pin.leftCalloutAccessoryView = 	leftCallout;
+		}
+		UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+		button.frame =CGRectMake(0, 0, 32, 32);
+		pin.rightCalloutAccessoryView = button;
+		
+		pinToReturn = pin;
 	}
-	else
-	{
-		pin.annotation = annotation;
-	}
-	pin.pinColor = MKPinAnnotationColorRed;
-	pin.animatesDrop = NO;
-	return pin;
+
+	return pinToReturn;
 }
 @end
