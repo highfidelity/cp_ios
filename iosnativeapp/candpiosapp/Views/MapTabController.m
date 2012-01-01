@@ -12,7 +12,12 @@
 #import "UIImageView+WebCache.h"
 #import "MissionAnnotation.h"
 #import "UserAnnotation.h"
+#import "AppDelegate.h"
+#import "SVProgressHUD.h"
 
+@interface MapTabController(Internal)
+-(void)zoomTo:(CLLocationCoordinate2D)loc;
+@end
 @implementation MapTabController
 @synthesize mapView;
 @synthesize missions;
@@ -37,6 +42,7 @@
 
 #pragma mark - View lifecycle
 
+
 /*
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView
@@ -50,8 +56,13 @@
 {
     [super viewDidLoad];
 	
+	// center on the last known user location
+	if([AppDelegate instance].settings.hasLocation)
+	{
+		//[mapView setCenterCoordinate:[AppDelegate instance].settings.lastKnownLocation.coordinate];
+		[self zoomTo: [AppDelegate instance].settings.lastKnownLocation.coordinate];
+	}
 	
-					
 
 	NSOperationQueue *queue = [NSOperationQueue mainQueue];
 	//NSOperationQueue *queue = [[NSOperationQueue alloc] init];
@@ -70,6 +81,8 @@
 {
 	[super viewDidAppear:animated];
 	
+	[SVProgressHUD showWithStatus:@"Loading..."];
+
 	// kick off a request to load the map items near the given lat & lon
 	// http://www.coffeeandpower.com/api.php?action=userlist
 	//	{
@@ -175,8 +188,11 @@
 			[mapView addAnnotation:user];
 		}
 		//[mapView addAnnotations:missions];
+		
+		[SVProgressHUD dismiss];
+
 	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-		int z = 99;
+		//int z = 99;
 	}];
 
 #else
@@ -248,4 +264,40 @@
 
 	return pinToReturn;
 }
+
+- (void)mapViewWillStartLocatingUser:(MKMapView *)mapView
+{
+	NSLog(@"mapViewWillStartLocatingUser");
+}
+- (void)mapViewDidStopLocatingUser:(MKMapView *)mapView
+{
+	NSLog(@"mapViewDidStopLocatingUser");
+	
+}
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+		
+	// save the location for the next time
+	[AppDelegate instance].settings.hasLocation= true;
+	[AppDelegate instance].settings.lastKnownLocation = userLocation.location;
+	[[AppDelegate instance] saveSettings];
+	// zoom to it
+	[self zoomTo:userLocation.location.coordinate];
+}
+- (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
+{
+	[SVProgressHUD dismiss];
+
+}
+
+// zoom to the location; on initial load & after updaing their pos
+-(void)zoomTo:(CLLocationCoordinate2D)loc
+{
+	// zoom to a region 15km across
+	MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(loc, 15000.0, 0);
+
+	[mapView setRegion:viewRegion];
+	
+}
+
 @end

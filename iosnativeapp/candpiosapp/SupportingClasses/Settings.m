@@ -9,8 +9,9 @@
 #import "Settings.h"
 
 @implementation Settings
-@synthesize  flag;
-
+@synthesize flag;
+@synthesize hasLocation;
+@synthesize lastKnownLocation;
 
 //=========================================================== 
 // - (id)init
@@ -31,12 +32,16 @@
 - (void)encodeWithCoder:(NSCoder *)encoder 
 {
     [encoder encodeBool:flag forKey:@"flag"];
+    [encoder encodeBool:hasLocation forKey:@"hasLocation"];
+    [encoder encodeObject:lastKnownLocation forKey:@"lastKnownLocation"];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder 
 {
     if ((self = [super init])) {
         flag = [decoder decodeBoolForKey:@"flag"];
+        hasLocation = [decoder decodeBoolForKey:@"hasLocation"];
+        lastKnownLocation = [decoder decodeObjectForKey:@"lastKnownLocation"];
     }
     return self;
 }

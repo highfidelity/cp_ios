@@ -7,8 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface Settings : NSObject< NSCoding, NSCopying >
 
 @property (nonatomic, assign) bool flag;
+@property (nonatomic, assign) bool hasLocation;
+@property (nonatomic, strong) CLLocation *lastKnownLocation;
 @end
