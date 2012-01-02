@@ -101,7 +101,7 @@
 	
 	[SVProgressHUD showWithStatus:@"Loading..."];
 	
-	 http://www.coffeeandpower.com/api.php?action=userdetail?id=5872
+	// http://www.coffeeandpower.com/api.php?action=userdetail?id=5872
 
 	// kick off a request to load the map items near the given lat & lon
 	// http://www.coffeeandpower.com/api.php?action=userlist
