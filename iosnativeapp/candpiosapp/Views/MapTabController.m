@@ -19,7 +19,7 @@
 #import "CalloutMapAnnotationView.h"
 #import "UserSubview.h"
 
-#define qCustomCallout	1
+#define qCustomCallout	0
 
 @interface MapTabController()
 -(void)zoomTo:(CLLocationCoordinate2D)loc;
@@ -244,7 +244,8 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
+    //return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 // called just before a controller pops us
@@ -384,6 +385,8 @@
 		CandPAnnotation *tappedObj = [missions objectAtIndex:index];
 		// 
 		MyWebTabController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"WebViewOfCandPUser"];
+		NSString *url = [NSString stringWithFormat:@"http://www.coffeeandpower.com/profile.php?u=%@", tappedObj.objectId];
+		controller.urlToLoad = url;
 	    [self.navigationController pushViewController:controller animated:YES];
 	}
 }

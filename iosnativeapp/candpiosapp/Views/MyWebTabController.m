@@ -52,7 +52,7 @@
 	else
 	{
 		// load the default page
-		[ NSURL URLWithString:@"https://coffeeandpower.com/m"];
+		mobileUrl = [ NSURL URLWithString:@"http://www.coffeeandpower.com/m/"];
 	}
 	NSURLRequest *mobileLoginRequest = [NSURLRequest requestWithURL:mobileUrl];
 	[webView loadRequest:mobileLoginRequest];
@@ -69,7 +69,30 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
+    //return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+	NSLog(@"webView shouldStartLoadWithRequest");
+	return YES;
+}
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+	NSLog(@"webViewDidStartLoad");
+	
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+	NSLog(@"webViewDidFinishLoad");
+	
+}
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+	NSLog(@"didFailLoadWithError (%@)", [error localizedDescription]);
+	
 }
 
 @end
