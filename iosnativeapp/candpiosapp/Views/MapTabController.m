@@ -15,14 +15,28 @@
 #import "AppDelegate.h"
 #import "SVProgressHUD.h"
 #import "MyWebTabController.h"
+#import "CalloutMapAnnotation.h"
+#import "CalloutMapAnnotationView.h"
+#import "UserSubview.h"
 
-@interface MapTabController(Internal)
+#define qCustomCallout	1
+
+@interface MapTabController()
 -(void)zoomTo:(CLLocationCoordinate2D)loc;
+#if qCustomCallout
+@property (nonatomic, strong) CalloutMapAnnotation *calloutAnnotation;
+@property (nonatomic, strong) MKAnnotationView *selectedAnnotationView;
+#else
 -(void)accessoryButtonTapped:(UIButton*)sender;
+#endif
 @end
+
 @implementation MapTabController
 @synthesize mapView;
 @synthesize missions;
+#if qCustomCallout
+@synthesize calloutAnnotation, selectedAnnotationView;
+#endif
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -58,6 +72,8 @@
 {
     [super viewDidLoad];
 	
+	self.navigationController.delegate = self;
+
 	// center on the last known user location
 	if([AppDelegate instance].settings.hasLocation)
 	{
@@ -84,6 +100,8 @@
 	[super viewDidAppear:animated];
 	
 	[SVProgressHUD showWithStatus:@"Loading..."];
+	
+	 http://www.coffeeandpower.com/api.php?action=userdetail?id=5872
 
 	// kick off a request to load the map items near the given lat & lon
 	// http://www.coffeeandpower.com/api.php?action=userlist
@@ -229,6 +247,23 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+// called just before a controller pops us
+- (void)navigationController:(UINavigationController *)navigationControllerArg willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+	if(viewController == self)
+	{
+		// we're about to be revealed
+		// (happens after a pop back, but also on initial appearance)
+		navigationControllerArg.navigationBarHidden = YES;
+	}
+	else
+	{
+		navigationControllerArg.navigationBarHidden = NO;
+	}
+	
+}
+
+
 // mapView:viewForAnnotation: provides the view for each annotation.
 // This method may be called for all or some of the added annotations.
 // For MapKit provided annotations (eg. MKUserLocation) return nil to use the MapKit provided annotation view.
@@ -239,6 +274,7 @@
 	{
 		CandPAnnotation *candpanno = (CandPAnnotation*)annotation;
 
+		
 		MKPinAnnotationView *pin = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: @"asdf"];
 		if (pin == nil)
 		{
@@ -248,29 +284,92 @@
 		{
 			pin.annotation = annotation;
 		}
+		pinToReturn = pin;
 		pin.pinColor = MKPinAnnotationColorRed;
 		pin.animatesDrop = NO;
+#if qCustomCallout
+		pin.canShowCallout = NO;
+#else
 		pin.canShowCallout = YES;
+		
+		// make the left callout image view
+		UIImageView *leftCallout = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
+		
+		leftCallout.contentMode = UIViewContentModeScaleAspectFill;
 		if(candpanno.imageUrl)
 		{
-			UIImageView *leftCallout = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
-			leftCallout.contentMode = UIViewContentModeScaleAspectFill;
 			[leftCallout setImageWithURL:[NSURL URLWithString:candpanno.imageUrl]
 						   placeholderImage:[UIImage imageNamed:@"63-runner.png"]];
-			pin.leftCalloutAccessoryView = 	leftCallout;
 		}
+		else
+		{
+			leftCallout.image = [UIImage imageNamed:@"63-runner.png"];			
+		}
+		pin.leftCalloutAccessoryView = 	leftCallout;
+		// make the right callout
 		UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 		button.frame =CGRectMake(0, 0, 32, 32);
 		button.tag = [missions indexOfObject:candpanno];
 		pin.rightCalloutAccessoryView = button;
 		[button addTarget:self action:@selector(accessoryButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-		
-		pinToReturn = pin;
+#endif
 	}
+#if qCustomCallout
+	else if(annotation == self.calloutAnnotation)
+	{
+		// Remember, this callout is itself an annotation!
+		// (the selected annotation is the source of it's data, though)
+		CandPAnnotation *candpanno = (CandPAnnotation*)self.selectedAnnotationView.annotation;
 
+//		CalloutMapAnnotationView *calloutMapAnnotationView = (CalloutMapAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:@"CalloutAnnotation"];
+//		if (!calloutMapAnnotationView) {
+			CalloutMapAnnotationView * calloutMapAnnotationView = [[CalloutMapAnnotationView alloc] initWithAnnotation:annotation 
+																			 reuseIdentifier:@"CalloutAnnotation"];
+			UserSubview *innerView = [[UserSubview alloc]initWithFrame:CGRectMake(0, 0, 300, 88)];
+			__weak MapTabController *weakSelf = self;
+			[innerView setup:candpanno.imageUrl	name:candpanno.title buttonTapped:^{
+				
+				MyWebTabController *controller = [weakSelf.storyboard instantiateViewControllerWithIdentifier:@"WebViewOfCandPUser"];
+				[weakSelf.navigationController pushViewController:controller animated:YES];
+
+			} ];
+			[calloutMapAnnotationView.contentView addSubview:innerView];
+			
+//		}
+		pinToReturn = calloutMapAnnotationView;
+		calloutMapAnnotationView.parentAnnotationView = self.selectedAnnotationView;
+		calloutMapAnnotationView.mapView = self.mapView;
+		
+	}
+#endif
+	
 	return pinToReturn;
 }
 
+#if qCustomCallout
+// Handle the annotation selection & deselection
+// (The 'callout view' itself is an annotation, but it isn't what is selected.  It's the owning CandPAnnotation that is selected)
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+	if([view.annotation isKindOfClass:[CandPAnnotation class]])
+	{
+		if (self.calloutAnnotation == nil) {
+			self.calloutAnnotation = [[CalloutMapAnnotation alloc] initWithLatitude:view.annotation.coordinate.latitude
+																	   andLongitude:view.annotation.coordinate.longitude];
+		} else {
+			self.calloutAnnotation.latitude = view.annotation.coordinate.latitude;
+			self.calloutAnnotation.longitude = view.annotation.coordinate.longitude;
+		}
+		[self.mapView addAnnotation:self.calloutAnnotation];
+		self.selectedAnnotationView = view;
+	}
+}
+
+- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
+	if (self.calloutAnnotation /*&& view.annotation == self.customAnnotation*/) {
+		[self.mapView removeAnnotation: self.calloutAnnotation];
+	}
+}
+#else
 -(void)accessoryButtonTapped:(UIButton*)sender
 {
 	// figure out which element was tapped, and open the page
@@ -283,7 +382,7 @@
 	    [self.navigationController pushViewController:controller animated:YES];
 	}
 }
-
+#endif
 ////// map delegate
 
 - (void)mapViewWillStartLocatingUser:(MKMapView *)mapView

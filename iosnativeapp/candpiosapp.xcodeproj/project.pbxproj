@@ -59,6 +59,9 @@
 		87F657FE14B0DC1F00F4AB6C /* UserAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F657FD14B0DC1F00F4AB6C /* UserAnnotation.m */; };
 		87F6580114B0DC2D00F4AB6C /* MissionAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F6580014B0DC2D00F4AB6C /* MissionAnnotation.m */; };
 		87F6580414B0DDFD00F4AB6C /* CandPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F6580314B0DDFC00F4AB6C /* CandPAnnotation.m */; };
+		87F6580714B11F7500F4AB6C /* CalloutMapAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F6580614B11F7400F4AB6C /* CalloutMapAnnotationView.m */; };
+		87F6581314B1235900F4AB6C /* CalloutMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F6581214B1235800F4AB6C /* CalloutMapAnnotation.m */; };
+		87F6581614B127CE00F4AB6C /* UserSubview.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F6581514B127CD00F4AB6C /* UserSubview.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,6 +175,12 @@
 		87F6580014B0DC2D00F4AB6C /* MissionAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MissionAnnotation.m; sourceTree = "<group>"; };
 		87F6580214B0DDFC00F4AB6C /* CandPAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CandPAnnotation.h; sourceTree = "<group>"; };
 		87F6580314B0DDFC00F4AB6C /* CandPAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CandPAnnotation.m; sourceTree = "<group>"; };
+		87F6580514B11F7400F4AB6C /* CalloutMapAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalloutMapAnnotationView.h; sourceTree = "<group>"; };
+		87F6580614B11F7400F4AB6C /* CalloutMapAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalloutMapAnnotationView.m; sourceTree = "<group>"; };
+		87F6581114B1235800F4AB6C /* CalloutMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalloutMapAnnotation.h; sourceTree = "<group>"; };
+		87F6581214B1235800F4AB6C /* CalloutMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalloutMapAnnotation.m; sourceTree = "<group>"; };
+		87F6581414B127CD00F4AB6C /* UserSubview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSubview.h; sourceTree = "<group>"; };
+		87F6581514B127CD00F4AB6C /* UserSubview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSubview.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -381,6 +390,12 @@
 				87F6580014B0DC2D00F4AB6C /* MissionAnnotation.m */,
 				87F6580214B0DDFC00F4AB6C /* CandPAnnotation.h */,
 				87F6580314B0DDFC00F4AB6C /* CandPAnnotation.m */,
+				87F6581114B1235800F4AB6C /* CalloutMapAnnotation.h */,
+				87F6581214B1235800F4AB6C /* CalloutMapAnnotation.m */,
+				87F6580514B11F7400F4AB6C /* CalloutMapAnnotationView.h */,
+				87F6580614B11F7400F4AB6C /* CalloutMapAnnotationView.m */,
+				87F6581414B127CD00F4AB6C /* UserSubview.h */,
+				87F6581514B127CD00F4AB6C /* UserSubview.m */,
 			);
 			path = SupportingClasses;
 			sourceTree = "<group>";
@@ -565,6 +580,9 @@
 				87F657FE14B0DC1F00F4AB6C /* UserAnnotation.m in Sources */,
 				87F6580114B0DC2D00F4AB6C /* MissionAnnotation.m in Sources */,
 				87F6580414B0DDFD00F4AB6C /* CandPAnnotation.m in Sources */,
+				87F6580714B11F7500F4AB6C /* CalloutMapAnnotationView.m in Sources */,
+				87F6581314B1235900F4AB6C /* CalloutMapAnnotation.m in Sources */,
+				87F6581614B127CE00F4AB6C /* UserSubview.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,7 @@
 #import <MapKit/MapKit.h>
 
 
-@interface MapTabController : UIViewController< MKMapViewDelegate >
+@interface MapTabController : UIViewController< MKMapViewDelegate, UINavigationControllerDelegate >
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, readonly, strong) NSMutableArray *missions;
 @end
