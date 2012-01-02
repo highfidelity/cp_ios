@@ -11,6 +11,7 @@
 @implementation CandPAnnotation
 @synthesize lat,lon;
 @synthesize title,imageUrl;
+@synthesize objectId;
 -(id)initFromDictionary:(NSDictionary*)jsonDict
 {
 	self=[super init];
@@ -18,12 +19,13 @@
 	{
 		lat = [[jsonDict objectForKey:@"lat"]doubleValue];
 		lon = [[jsonDict objectForKey:@"lng"] doubleValue];
+		objectId = [[jsonDict objectForKey:@"id"] copy];
 		//title = [jsonDict objectForKey:@"title"];
 		//description = [jsonDict objectForKey:@"description"];
 		//nickname = [jsonDict objectForKey:@"nickname"];
 		id imageUrlObj = [jsonDict objectForKey:@"filename"];
 		if(imageUrlObj && imageUrlObj != [NSNull null])
-			imageUrl = imageUrlObj;
+			imageUrl = [imageUrlObj copy];
 	}
 	return self;
 }

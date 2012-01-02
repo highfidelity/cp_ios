@@ -10,6 +10,7 @@
 
 @implementation MyWebTabController
 @synthesize webView;
+@synthesize urlToLoad;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,7 +43,17 @@
 {
     [super viewDidLoad];
 	
-	NSURL *mobileUrl =[ NSURL URLWithString:@"https://coffeeandpower.com/m"];
+	//
+	NSURL *mobileUrl = nil;
+	if(urlToLoad)
+	{
+		mobileUrl = [NSURL URLWithString:urlToLoad];
+	}
+	else
+	{
+		// load the default page
+		[ NSURL URLWithString:@"https://coffeeandpower.com/m"];
+	}
 	NSURLRequest *mobileLoginRequest = [NSURLRequest requestWithURL:mobileUrl];
 	[webView loadRequest:mobileLoginRequest];
 }

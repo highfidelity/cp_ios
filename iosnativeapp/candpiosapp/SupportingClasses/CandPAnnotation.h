@@ -14,6 +14,7 @@
 @property (nonatomic,assign) double lon;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *imageUrl;
+@property (nonatomic, copy) NSString *objectId;
 -(id)initFromDictionary:(NSDictionary*)jsonDict;
 
 @end

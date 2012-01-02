@@ -327,9 +327,14 @@
 																			 reuseIdentifier:@"CalloutAnnotation"];
 			UserSubview *innerView = [[UserSubview alloc]initWithFrame:CGRectMake(0, 0, 300, 88)];
 			__weak MapTabController *weakSelf = self;
+			NSString *url = [NSString stringWithFormat:@"http://www.coffeeandpower.com/profile.php?u=%@", candpanno.objectId];
 			[innerView setup:candpanno.imageUrl	name:candpanno.title buttonTapped:^{
 				
+				// send them to view the page:
+				// http://www.coffeeandpower.com/profile.php?u=5872
+				
 				MyWebTabController *controller = [weakSelf.storyboard instantiateViewControllerWithIdentifier:@"WebViewOfCandPUser"];
+				controller.urlToLoad = url;
 				[weakSelf.navigationController pushViewController:controller animated:YES];
 
 			} ];
