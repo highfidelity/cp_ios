@@ -43,13 +43,23 @@
 	[self addSubview:leftCallout];
 	
 	// add the text label
-	UILabel *textLabel = [[UILabel alloc]initWithFrame:CGRectMake(kImageHeight+ 12, 0, 200, 30)];
-	textLabel.text = name;
-	textLabel.font = [UIFont boldSystemFontOfSize:18.0];
-	textLabel.opaque = NO;
-	textLabel.textColor = [UIColor whiteColor];
-	textLabel.backgroundColor = [UIColor clearColor];
-	[self addSubview:textLabel];
+	UILabel *textLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(kImageHeight+ 12, 6, 200, 24)];
+	textLabel1.text = name;
+	textLabel1.font = [UIFont boldSystemFontOfSize:18.0];
+	textLabel1.opaque = NO;
+	textLabel1.textColor = [UIColor whiteColor];
+	textLabel1.backgroundColor = [UIColor clearColor];
+	[self addSubview:textLabel1];
+	
+	// add the subtitle
+	UILabel *textLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(kImageHeight+ 12, 34, 200, 24*2)];
+	textLabel2.numberOfLines = 2;
+	textLabel2.text = name;
+	textLabel2.font = [UIFont boldSystemFontOfSize:14.0];
+	textLabel2.opaque = NO;
+	textLabel2.textColor = [UIColor lightGrayColor];
+	textLabel2.backgroundColor = [UIColor clearColor];
+	[self addSubview:textLabel2];
 	
 	// make the right callout
 	UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];

@@ -14,6 +14,7 @@
 	
 }
 @property (nonatomic, copy) NSString *nickname;
+@property (nonatomic, copy) NSString *skills;
 -(id)initFromDictionary:(NSDictionary*)jsonDict;
 
 @end

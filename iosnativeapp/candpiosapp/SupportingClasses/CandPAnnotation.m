@@ -10,8 +10,9 @@
 
 @implementation CandPAnnotation
 @synthesize lat,lon;
-@synthesize title,imageUrl;
+@synthesize title, subtitle, imageUrl;
 @synthesize objectId;
+
 -(id)initFromDictionary:(NSDictionary*)jsonDict
 {
 	self=[super init];

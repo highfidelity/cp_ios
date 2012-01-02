@@ -57,7 +57,7 @@
 	CalloutMapAnnotationViewBottomShadowBufferSize -
 	self.offsetFromParent.y;
 	
-	frame.size = CGSizeMake(self.mapView.frame.size.width, height);
+	frame.size = CGSizeMake(MIN(self.mapView.frame.size.width, 320), height);
 	self.frame = frame;
 }
 

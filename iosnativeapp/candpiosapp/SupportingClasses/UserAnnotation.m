@@ -9,7 +9,7 @@
 #import "UserAnnotation.h"
 
 @implementation UserAnnotation
-@synthesize nickname;
+@synthesize nickname, skills;
 
 -(id)initFromDictionary:(NSDictionary *)jsonDict
 {
@@ -18,6 +18,9 @@
 	{
 		nickname = [jsonDict objectForKey:@"nickname"];
 		self.title = nickname;
+		skills = [jsonDict objectForKey:@"skills"];
+		if(skills && (skills != [NSNull null]))
+			self.subtitle = skills;
 
 	}
 	return self;
