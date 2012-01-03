@@ -73,11 +73,13 @@
     [super viewDidLoad];
 	
 	self.navigationController.delegate = self;
+	hasUpdatedUserLocation = false;
 
 	// center on the last known user location
 	if([AppDelegate instance].settings.hasLocation)
 	{
 		//[mapView setCenterCoordinate:[AppDelegate instance].settings.lastKnownLocation.coordinate];
+		NSLog(@"MapTab: viewDidLoad zoomto (lat %f, lon %f)", [AppDelegate instance].settings.lastKnownLocation.coordinate.latitude, [AppDelegate instance].settings.lastKnownLocation.coordinate.longitude);
 		[self zoomTo: [AppDelegate instance].settings.lastKnownLocation.coordinate];
 	}
 	
@@ -409,8 +411,14 @@
 	[AppDelegate instance].settings.hasLocation= true;
 	[AppDelegate instance].settings.lastKnownLocation = userLocation.location;
 	[[AppDelegate instance] saveSettings];
-	// zoom to it
-	[self zoomTo:userLocation.location.coordinate];
+	
+	// zoom to it, but only the first time
+	if(!hasUpdatedUserLocation)
+	{
+		NSLog(@"MapTab: didUpdateUserLocation a zoomto (lat %f, lon %f)", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
+		[self zoomTo:userLocation.location.coordinate];
+		hasUpdatedUserLocation = true;
+	}
 }
 - (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
 {

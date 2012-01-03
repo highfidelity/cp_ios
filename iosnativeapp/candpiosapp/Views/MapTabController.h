@@ -11,6 +11,9 @@
 
 
 @interface MapTabController : UIViewController< MKMapViewDelegate, UINavigationControllerDelegate >
+{
+	bool hasUpdatedUserLocation;
+}
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, readonly, strong) NSMutableArray *missions;
 @end
