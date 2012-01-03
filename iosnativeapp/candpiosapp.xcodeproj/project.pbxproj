@@ -52,6 +52,7 @@
 		872E1C9D14B291C400408DC6 /* cap-ipad-72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = 872E1C9C14B291C400408DC6 /* cap-ipad-72x72.png */; };
 		872E1C9F14B291DC00408DC6 /* cap.png in Resources */ = {isa = PBXBuildFile; fileRef = 872E1C9E14B291DC00408DC6 /* cap.png */; };
 		872E1CA114B291EC00408DC6 /* cap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 872E1CA014B291EC00408DC6 /* cap@2x.png */; };
+		872E1CA214B2C91B00408DC6 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 872E1C8A14B28DCD00408DC6 /* Default-Portrait~ipad.png */; };
 		87701C4B14B2613E00102A77 /* EmptyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87701C4A14B2613E00102A77 /* EmptyController.m */; };
 		87F5EF4614AFA68900EB83F7 /* MyWebTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F5EF4514AFA68800EB83F7 /* MyWebTabController.m */; };
 		87F5EF4F14AFAAC500EB83F7 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F5EF4E14AFAAC500EB83F7 /* Settings.m */; };
@@ -539,6 +540,7 @@
 				872E1C9D14B291C400408DC6 /* cap-ipad-72x72.png in Resources */,
 				872E1C9F14B291DC00408DC6 /* cap.png in Resources */,
 				872E1CA114B291EC00408DC6 /* cap@2x.png in Resources */,
+				872E1CA214B2C91B00408DC6 /* Default-Portrait~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
