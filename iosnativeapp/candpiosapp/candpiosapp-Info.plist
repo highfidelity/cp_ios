@@ -52,6 +52,16 @@
 				<string>fb278566002200147</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>FacebookProduction</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb230528896971048</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>4</string>

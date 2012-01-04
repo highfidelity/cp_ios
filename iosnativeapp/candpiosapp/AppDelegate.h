@@ -10,8 +10,9 @@
 #import "Settings.h"
 #import "Facebook.h"
 
-// CandP Dev is "278566002200147"
-#define kFacebookAppId		@"278566002200147"
+// CandP Dev is			"278566002200147"
+// CandP web release is "230528896971048"
+#define kFacebookAppId		@"230528896971048"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, FBSessionDelegate>
 

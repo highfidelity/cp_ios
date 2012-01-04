@@ -77,7 +77,8 @@
 	self.navigationController.delegate = self;
 	hasUpdatedUserLocation = false;
 	
-	if([AppDelegate instance].settings.candpLoginToken)
+	if([AppDelegate instance].settings.candpLoginToken ||
+	   [[AppDelegate instance].facebook isSessionValid])
 	{
 		self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc]initWithTitle:@"Logout"
 																				  style:UIBarButtonItemStylePlain
@@ -326,8 +327,10 @@
 			case 0: 
 				// handle facebook login
 				if (![[AppDelegate instance].facebook isSessionValid]) {
-					[[AppDelegate instance].facebook authorize:nil];
+					[[AppDelegate instance].facebook authorize:[NSArray arrayWithObjects:@"offline_access", nil]];
 				}
+				self.navigationItem.rightBarButtonItem.title = @"Logout";
+				self.navigationItem.rightBarButtonItem.action = @selector(logoutButtonTapped);
 				break;
 				
 			case 1:
@@ -349,12 +352,21 @@
 	// logout of *all* accounts
 	
 	// facebook
-	[[AppDelegate instance].facebook logout];
+	if([[AppDelegate instance].facebook isSessionValid])
+	{
+		[[AppDelegate instance].facebook logout];
+		[AppDelegate instance].settings.facebookExpirationDate = nil;
+		[AppDelegate instance].settings.facebookAccessToken = nil;
+	}
 	
 	// and email
-	[AppDelegate instance].settings.candpLoginToken = nil;
+	if([AppDelegate instance].settings.candpLoginToken)
+		[AppDelegate instance].settings.candpLoginToken = nil;
 	
 	[[AppDelegate instance] saveSettings];
+	
+	self.navigationItem.rightBarButtonItem.title = @"Login...";
+	self.navigationItem.rightBarButtonItem.action = @selector(loginButtonTapped);
 	
 }
 
@@ -497,6 +509,7 @@
 }
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
+	NSLog(@"MapTab: didUpdateUserLocation (lat %f, lon %f)", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
 		
 	// save the location for the next time
 	[AppDelegate instance].settings.hasLocation= true;
