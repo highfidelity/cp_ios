@@ -15,6 +15,8 @@
 
 @implementation AppDelegate
 @synthesize settings;
+@synthesize facebook;
+
 +(AppDelegate*)instance
 {
 	return (AppDelegate*)[UIApplication sharedApplication].delegate;
@@ -26,6 +28,11 @@
 {
     // Override point for customization after application launch.
 	[self loadSettings];  
+	
+	// load the facebook api
+	facebook = [[Facebook alloc] initWithAppId:kFacebookAppId andDelegate:self];
+	facebook.accessToken = settings.facebookAccessToken;
+	facebook.expirationDate = settings.facebookExpirationDate;
 
     return YES;
 }
@@ -69,6 +76,32 @@
 	 */
 }
 
+// For 4.2+ support
+- (BOOL)application:(UIApplication *)application
+			openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+		 annotation:(id)annotation 
+{
+    return [facebook handleOpenURL:url]; 
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+// implement the Facebook Delegate
+- (void)fbDidLogin 
+{
+    settings.facebookAccessToken = [facebook accessToken];
+    settings.facebookExpirationDate = [facebook expirationDate];
+	[self saveSettings];
+	
+}
+- (void)fbDidLogout
+{
+    settings.facebookAccessToken = nil ;
+    settings.facebookExpirationDate = nil ;
+	[self saveSettings];
+	
+}
+////////////////////////////////////////////////////////////////////////////////////
 
 
 +(NSString*)settingsFilepath

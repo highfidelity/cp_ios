@@ -13,6 +13,7 @@
 @synthesize hasLocation;
 @synthesize lastKnownLocation;
 @synthesize candpLoginToken;
+@synthesize facebookAccessToken, facebookExpirationDate;
 
 //=========================================================== 
 // - (id)init
@@ -36,6 +37,8 @@
     [encoder encodeBool:hasLocation forKey:@"hasLocation"];
     [encoder encodeObject:lastKnownLocation forKey:@"lastKnownLocation"];
 	[encoder encodeObject:candpLoginToken forKey:@"candpLoginToken"];
+	[encoder encodeObject:facebookAccessToken forKey:@"facebookAccessToken"];
+	[encoder encodeObject:facebookExpirationDate forKey:@"facebookExpirationDate"];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder 
@@ -45,6 +48,9 @@
         hasLocation = [decoder decodeBoolForKey:@"hasLocation"];
         lastKnownLocation = [decoder decodeObjectForKey:@"lastKnownLocation"];
 		candpLoginToken = [decoder decodeObjectForKey:@"candpLoginToken"];
+		
+		facebookAccessToken = [decoder decodeObjectForKey:@"facebookAccessToken"];
+		facebookExpirationDate = [decoder decodeObjectForKey:@"facebookExpirationDate"];
     }
     return self;
 }

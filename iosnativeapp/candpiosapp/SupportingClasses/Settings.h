@@ -15,6 +15,8 @@
 @property (nonatomic, assign) bool hasLocation;
 @property (nonatomic, copy) CLLocation *lastKnownLocation;
 
-@property (nonatomic, assign) NSString *candpLoginToken;
+@property (nonatomic, copy) NSString *candpLoginToken;
+@property (nonatomic, copy) NSString *facebookAccessToken;
+@property (nonatomic, copy) NSDate *facebookExpirationDate;
 
 @end

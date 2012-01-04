@@ -325,7 +325,9 @@
 				
 			case 0: 
 				// handle facebook login
-				
+				if (![[AppDelegate instance].facebook isSessionValid]) {
+					[[AppDelegate instance].facebook authorize:nil];
+				}
 				break;
 				
 			case 1:
@@ -344,7 +346,14 @@
 
 -(void)logoutButtonTapped
 {
+	// logout of *all* accounts
+	
+	// facebook
+	[[AppDelegate instance].facebook logout];
+	
+	// and email
 	[AppDelegate instance].settings.candpLoginToken = nil;
+	
 	[[AppDelegate instance] saveSettings];
 	
 }

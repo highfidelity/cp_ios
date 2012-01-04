@@ -19,7 +19,7 @@
 		nickname = [jsonDict objectForKey:@"nickname"];
 		self.title = nickname;
 		skills = [jsonDict objectForKey:@"skills"];
-		if(skills && (skills != [NSNull null]))
+		if(skills && ((NSNull*)skills != [NSNull null]))
 			self.subtitle = skills;
 
 	}
