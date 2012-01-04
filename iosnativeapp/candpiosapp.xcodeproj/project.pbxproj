@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		870835D714B3DEA200439431 /* SA_ActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835D514B3DEA200439431 /* SA_ActionSheet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		870835F814B3E1AC00439431 /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E014B3E1AB00439431 /* Facebook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		870835F914B3E1AC00439431 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 870835E314B3E1AB00439431 /* FBDialog.bundle */; };
+		870835FA14B3E1AC00439431 /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E514B3E1AB00439431 /* FBDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		870835FB14B3E1AC00439431 /* FBLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E714B3E1AB00439431 /* FBLoginDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		870835FC14B3E1AC00439431 /* FBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E914B3E1AB00439431 /* FBRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		871EFB0B14AE9C820030658B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871EFB0A14AE9C820030658B /* UIKit.framework */; };
 		871EFB0D14AE9C820030658B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871EFB0C14AE9C820030658B /* Foundation.framework */; };
 		871EFB0F14AE9C820030658B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871EFB0E14AE9C820030658B /* CoreGraphics.framework */; };
@@ -83,6 +89,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		870835D414B3DEA200439431 /* SA_ActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SA_ActionSheet.h; sourceTree = "<group>"; };
+		870835D514B3DEA200439431 /* SA_ActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SA_ActionSheet.m; sourceTree = "<group>"; };
+		870835DF14B3E1AB00439431 /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
+		870835E014B3E1AB00439431 /* Facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Facebook.m; sourceTree = "<group>"; };
+		870835E214B3E1AB00439431 /* FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBConnect.h; sourceTree = "<group>"; };
+		870835E314B3E1AB00439431 /* FBDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FBDialog.bundle; sourceTree = "<group>"; };
+		870835E414B3E1AB00439431 /* FBDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBDialog.h; sourceTree = "<group>"; };
+		870835E514B3E1AB00439431 /* FBDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBDialog.m; sourceTree = "<group>"; };
+		870835E614B3E1AB00439431 /* FBLoginDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBLoginDialog.h; sourceTree = "<group>"; };
+		870835E714B3E1AB00439431 /* FBLoginDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLoginDialog.m; sourceTree = "<group>"; };
+		870835E814B3E1AB00439431 /* FBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBRequest.h; sourceTree = "<group>"; };
+		870835E914B3E1AB00439431 /* FBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBRequest.m; sourceTree = "<group>"; };
 		871EFB0614AE9C820030658B /* candp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = candp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		871EFB0A14AE9C820030658B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		871EFB0C14AE9C820030658B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -154,13 +172,13 @@
 		871EFBBD14AF987B0030658B /* MapTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapTabController.h; sourceTree = "<group>"; };
 		871EFBBE14AF987B0030658B /* MapTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapTabController.m; sourceTree = "<group>"; };
 		8726C6C314B00245004E4872 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		872E1C8514B28DB900408DC6 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		872E1C8814B28DBD00408DC6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		872E1C8A14B28DCD00408DC6 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
-		872E1C8C14B28DD600408DC6 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
-		872E1C9C14B291C400408DC6 /* cap-ipad-72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cap-ipad-72x72.png"; sourceTree = "<group>"; };
-		872E1C9E14B291DC00408DC6 /* cap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cap.png; sourceTree = "<group>"; };
-		872E1CA014B291EC00408DC6 /* cap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cap@2x.png"; sourceTree = "<group>"; };
+		872E1C8514B28DB900408DC6 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../../Default@2x.png"; sourceTree = "<group>"; };
+		872E1C8814B28DBD00408DC6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../../Default.png; sourceTree = "<group>"; };
+		872E1C8A14B28DCD00408DC6 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "../../Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		872E1C8C14B28DD600408DC6 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "../../Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		872E1C9C14B291C400408DC6 /* cap-ipad-72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cap-ipad-72x72.png"; path = "../../cap-ipad-72x72.png"; sourceTree = "<group>"; };
+		872E1C9E14B291DC00408DC6 /* cap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cap.png; path = ../../cap.png; sourceTree = "<group>"; };
+		872E1CA014B291EC00408DC6 /* cap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cap@2x.png"; path = "../../cap@2x.png"; sourceTree = "<group>"; };
 		87701C4914B2613D00102A77 /* EmptyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyController.h; sourceTree = "<group>"; };
 		87701C4A14B2613E00102A77 /* EmptyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyController.m; sourceTree = "<group>"; };
 		87F5EF4414AFA68800EB83F7 /* MyWebTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWebTabController.h; sourceTree = "<group>"; };
@@ -226,16 +244,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		870835D214B3DEA200439431 /* SA_ActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				870835D414B3DEA200439431 /* SA_ActionSheet.h */,
+				870835D514B3DEA200439431 /* SA_ActionSheet.m */,
+			);
+			path = SA_ActionSheet;
+			sourceTree = "<group>";
+		};
+		870835DE14B3E1AB00439431 /* facebook-ios-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				870835DF14B3E1AB00439431 /* Facebook.h */,
+				870835E014B3E1AB00439431 /* Facebook.m */,
+				870835E214B3E1AB00439431 /* FBConnect.h */,
+				870835E314B3E1AB00439431 /* FBDialog.bundle */,
+				870835E414B3E1AB00439431 /* FBDialog.h */,
+				870835E514B3E1AB00439431 /* FBDialog.m */,
+				870835E614B3E1AB00439431 /* FBLoginDialog.h */,
+				870835E714B3E1AB00439431 /* FBLoginDialog.m */,
+				870835E814B3E1AB00439431 /* FBRequest.h */,
+				870835E914B3E1AB00439431 /* FBRequest.m */,
+			);
+			path = "facebook-ios-sdk";
+			sourceTree = "<group>";
+		};
 		871EFAFB14AE9C810030658B = {
 			isa = PBXGroup;
 			children = (
-				872E1CA014B291EC00408DC6 /* cap@2x.png */,
-				872E1C9E14B291DC00408DC6 /* cap.png */,
-				872E1C9C14B291C400408DC6 /* cap-ipad-72x72.png */,
-				872E1C8C14B28DD600408DC6 /* Default-Landscape~ipad.png */,
-				872E1C8A14B28DCD00408DC6 /* Default-Portrait~ipad.png */,
-				872E1C8814B28DBD00408DC6 /* Default.png */,
-				872E1C8514B28DB900408DC6 /* Default@2x.png */,
 				871EFB1014AE9C820030658B /* candpiosapp */,
 				871EFB3C14AE9C820030658B /* candpiosappTests */,
 				871EFB0914AE9C820030658B /* Frameworks */,
@@ -313,6 +350,8 @@
 		871EFB6014AF97130030658B /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
+				870835DE14B3E1AB00439431 /* facebook-ios-sdk */,
+				870835D214B3DEA200439431 /* SA_ActionSheet */,
 				87F657D414B0D0C800F4AB6C /* SDWebImage */,
 				871EFB6114AF97130030658B /* AFNetworking */,
 				871EFB7A14AF97130030658B /* SBJson */,
@@ -454,6 +493,13 @@
 		87F657F314B0D2D000F4AB6C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				872E1CA014B291EC00408DC6 /* cap@2x.png */,
+				872E1C9E14B291DC00408DC6 /* cap.png */,
+				872E1C9C14B291C400408DC6 /* cap-ipad-72x72.png */,
+				872E1C8C14B28DD600408DC6 /* Default-Landscape~ipad.png */,
+				872E1C8A14B28DCD00408DC6 /* Default-Portrait~ipad.png */,
+				872E1C8814B28DBD00408DC6 /* Default.png */,
+				872E1C8514B28DB900408DC6 /* Default@2x.png */,
 				87F657F414B0D2D100F4AB6C /* 63-runner.png */,
 			);
 			path = images;
@@ -541,6 +587,7 @@
 				872E1C9F14B291DC00408DC6 /* cap.png in Resources */,
 				872E1CA114B291EC00408DC6 /* cap@2x.png in Resources */,
 				872E1CA214B2C91B00408DC6 /* Default-Portrait~ipad.png in Resources */,
+				870835F914B3E1AC00439431 /* FBDialog.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,6 +664,11 @@
 				87F6581314B1235900F4AB6C /* CalloutMapAnnotation.m in Sources */,
 				87F6581614B127CE00F4AB6C /* UserSubview.m in Sources */,
 				87701C4B14B2613E00102A77 /* EmptyController.m in Sources */,
+				870835D714B3DEA200439431 /* SA_ActionSheet.m in Sources */,
+				870835F814B3E1AC00439431 /* Facebook.m in Sources */,
+				870835FA14B3E1AC00439431 /* FBDialog.m in Sources */,
+				870835FB14B3E1AC00439431 /* FBLoginDialog.m in Sources */,
+				870835FC14B3E1AC00439431 /* FBRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

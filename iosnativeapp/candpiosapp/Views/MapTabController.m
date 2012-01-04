@@ -18,12 +18,14 @@
 #import "CalloutMapAnnotation.h"
 #import "CalloutMapAnnotationView.h"
 #import "UserSubview.h"
+#import "SA_ActionSheet.h"
 
-#define qCustomCallout	0
+#define qUseCustomCallout						0
+#define qHideTopNavigationBarOnMapView		0
 
 @interface MapTabController()
 -(void)zoomTo:(CLLocationCoordinate2D)loc;
-#if qCustomCallout
+#if qUseCustomCallout
 @property (nonatomic, strong) CalloutMapAnnotation *calloutAnnotation;
 @property (nonatomic, strong) MKAnnotationView *selectedAnnotationView;
 #else
@@ -34,7 +36,7 @@
 @implementation MapTabController
 @synthesize mapView;
 @synthesize missions;
-#if qCustomCallout
+#if qUseCustomCallout
 @synthesize calloutAnnotation, selectedAnnotationView;
 #endif
 
@@ -74,6 +76,23 @@
 	
 	self.navigationController.delegate = self;
 	hasUpdatedUserLocation = false;
+	
+	if([AppDelegate instance].settings.candpLoginToken)
+	{
+		self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc]initWithTitle:@"Logout"
+																				  style:UIBarButtonItemStylePlain
+																				 target:self 
+																				 action:@selector(logoutButtonTapped)];
+		
+	}
+	else
+	{
+		self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc]initWithTitle:@"Login..."
+																				  style:UIBarButtonItemStylePlain
+																				 target:self 
+																				 action:@selector(loginButtonTapped)];
+	}
+	self.navigationItem.title = @"C&P";
 
 	// center on the last known user location
 	if([AppDelegate instance].settings.hasLocation)
@@ -276,6 +295,7 @@
 // called just before a controller pops us
 - (void)navigationController:(UINavigationController *)navigationControllerArg willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
+#if qHideTopNavigationBarOnMapView
 	if(viewController == self)
 	{
 		// we're about to be revealed
@@ -286,9 +306,48 @@
 	{
 		navigationControllerArg.navigationBarHidden = NO;
 	}
+#endif
 	
 }
 
+-(void)loginButtonTapped
+{
+	// show the actionsheet
+	SA_ActionSheet  *actionSheet= [[SA_ActionSheet alloc] initWithTitle:@"Login with:"
+																delegate:nil 
+													   cancelButtonTitle:@"Cancel" 
+												  destructiveButtonTitle:nil 
+													   otherButtonTitles: @"Facebook", @"Email", nil];
+	
+	[actionSheet showInView:self.view  buttonBlock:^(int buttonIndex) {
+		NSLog(@"Button tapped: %d", buttonIndex);
+		switch (buttonIndex) {
+				
+			case 0: 
+				// handle facebook login
+				
+				break;
+				
+			case 1:
+				// handle email login
+				// include Forgot option (but not create for now)
+				break;
+			
+			case 2:
+				// handle cancel
+				break;
+			default:
+				break;
+		}
+	}];
+}
+
+-(void)logoutButtonTapped
+{
+	[AppDelegate instance].settings.candpLoginToken = nil;
+	[[AppDelegate instance] saveSettings];
+	
+}
 
 // mapView:viewForAnnotation: provides the view for each annotation.
 // This method may be called for all or some of the added annotations.
@@ -313,7 +372,7 @@
 		pinToReturn = pin;
 		pin.pinColor = MKPinAnnotationColorRed;
 		pin.animatesDrop = NO;
-#if qCustomCallout
+#if qUseCustomCallout
 		pin.canShowCallout = NO;
 #else
 		pin.canShowCallout = YES;
@@ -340,7 +399,7 @@
 		[button addTarget:self action:@selector(accessoryButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 #endif
 	}
-#if qCustomCallout
+#if qUseCustomCallout
 	else if(annotation == self.calloutAnnotation)
 	{
 		// Remember, this callout is itself an annotation!
@@ -377,7 +436,7 @@
 	return pinToReturn;
 }
 
-#if qCustomCallout
+#if qUseCustomCallout
 // Handle the annotation selection & deselection
 // (The 'callout view' itself is an annotation, but it isn't what is selected.  It's the owning CandPAnnotation that is selected)
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {

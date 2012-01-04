@@ -12,6 +12,7 @@
 @synthesize flag;
 @synthesize hasLocation;
 @synthesize lastKnownLocation;
+@synthesize candpLoginToken;
 
 //=========================================================== 
 // - (id)init
@@ -34,6 +35,7 @@
     [encoder encodeBool:flag forKey:@"flag"];
     [encoder encodeBool:hasLocation forKey:@"hasLocation"];
     [encoder encodeObject:lastKnownLocation forKey:@"lastKnownLocation"];
+	[encoder encodeObject:candpLoginToken forKey:@"candpLoginToken"];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder 
@@ -42,6 +44,7 @@
         flag = [decoder decodeBoolForKey:@"flag"];
         hasLocation = [decoder decodeBoolForKey:@"hasLocation"];
         lastKnownLocation = [decoder decodeObjectForKey:@"lastKnownLocation"];
+		candpLoginToken = [decoder decodeObjectForKey:@"candpLoginToken"];
     }
     return self;
 }

@@ -18,6 +18,4 @@ typedef void (^ButtonActionBlock)(NSDictionary* cellConfig);
 
 -(void)setup:(NSString*)imageUrl name:(NSString*)name buttonTapped:(void (^)(void))tapAction;
 
--(void)setImageUrl:(NSString*)url;
--(void)setName:(NSString*)name;
 @end
