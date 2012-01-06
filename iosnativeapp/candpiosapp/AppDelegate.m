@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "FacebookLoginSequence.h"
 
 @interface AppDelegate(Internal)
 -(void)loadSettings;
@@ -16,6 +17,7 @@
 @implementation AppDelegate
 @synthesize settings;
 @synthesize facebook;
+@synthesize loginSequence;
 
 +(AppDelegate*)instance
 {
@@ -89,9 +91,8 @@
 // implement the Facebook Delegate
 - (void)fbDidLogin 
 {
-    settings.facebookAccessToken = [facebook accessToken];
-    settings.facebookExpirationDate = [facebook expirationDate];
-	[self saveSettings];
+	if(loginSequence)
+		[loginSequence handleResponseFromFacebookLogin];
 	
 }
 - (void)fbDidLogout

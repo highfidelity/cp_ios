@@ -19,6 +19,7 @@
 #import "CalloutMapAnnotationView.h"
 #import "UserSubview.h"
 #import "SA_ActionSheet.h"
+#import "FacebookLoginSequence.h"
 
 #define qUseCustomCallout						0
 #define qHideTopNavigationBarOnMapView		0
@@ -326,9 +327,9 @@
 				
 			case 0: 
 				// handle facebook login
-				if (![[AppDelegate instance].facebook isSessionValid]) {
-					[[AppDelegate instance].facebook authorize:[NSArray arrayWithObjects:@"offline_access", nil]];
-				}
+				// the facebook login object will handle the sequence that follows
+				[AppDelegate instance].loginSequence = [[FacebookLoginSequence alloc]init ];
+				[[AppDelegate instance].loginSequence initiateLogin];
 				self.navigationItem.rightBarButtonItem.title = @"Logout";
 				self.navigationItem.rightBarButtonItem.action = @selector(logoutButtonTapped);
 				break;
