@@ -329,7 +329,7 @@
 				// handle facebook login
 				// the facebook login object will handle the sequence that follows
 				[AppDelegate instance].loginSequence = [[FacebookLoginSequence alloc]init ];
-				[[AppDelegate instance].loginSequence initiateLogin];
+				[[AppDelegate instance].loginSequence initiateLogin:self];
 				self.navigationItem.rightBarButtonItem.title = @"Logout";
 				self.navigationItem.rightBarButtonItem.action = @selector(logoutButtonTapped);
 				break;

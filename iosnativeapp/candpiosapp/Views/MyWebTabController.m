@@ -7,10 +7,11 @@
 //
 
 #import "MyWebTabController.h"
+#import "NSMutableURLRequestAdditions.h"
 
 @implementation MyWebTabController
 @synthesize webView;
-@synthesize urlToLoad;
+@synthesize urlToLoad, urlRequestToLoad;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,18 +45,22 @@
     [super viewDidLoad];
 	
 	//
-	NSURL *mobileUrl = nil;
+	NSMutableURLRequest *request;
 	if(urlToLoad)
 	{
-		mobileUrl = [NSURL URLWithString:urlToLoad];
+		request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: urlToLoad]];
+	}
+	else if (urlRequestToLoad)
+	{
+		request = urlRequestToLoad;
 	}
 	else
 	{
 		// load the default page
-		mobileUrl = [ NSURL URLWithString:@"http://www.coffeeandpower.com/m/"];
+		NSURL *mobileUrl = [ NSURL URLWithString:@"http://www.coffeeandpower.com/m/"];
+		request = [NSMutableURLRequest requestWithURL:mobileUrl];
 	}
-	NSURLRequest *mobileLoginRequest = [NSURLRequest requestWithURL:mobileUrl];
-	[webView loadRequest:mobileLoginRequest];
+	[webView loadRequest:request];
 }
 
 - (void)viewDidUnload

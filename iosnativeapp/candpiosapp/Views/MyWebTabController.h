@@ -11,4 +11,5 @@
 @interface MyWebTabController : UIViewController< UIWebViewDelegate >
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (nonatomic, copy) NSString *urlToLoad;
+@property (nonatomic, copy) NSMutableURLRequest *urlRequestToLoad;
 @end

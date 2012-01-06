@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface FacebookLoginSequence : NSObject
--(void)initiateLogin;
+
+-(void)initiateLogin:(UIViewController*)mapViewController;
 -(void)handleResponseFromFacebookLogin;
 -(void)handleResponseFromCandP;
 

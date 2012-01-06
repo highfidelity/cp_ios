@@ -61,6 +61,8 @@
 		872E1C9F14B291DC00408DC6 /* cap.png in Resources */ = {isa = PBXBuildFile; fileRef = 872E1C9E14B291DC00408DC6 /* cap.png */; };
 		872E1CA114B291EC00408DC6 /* cap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 872E1CA014B291EC00408DC6 /* cap@2x.png */; };
 		872E1CA214B2C91B00408DC6 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 872E1C8A14B28DCD00408DC6 /* Default-Portrait~ipad.png */; };
+		8745448D14B799C100D96134 /* NSDictionaryAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8745448814B799C100D96134 /* NSDictionaryAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8745448E14B799C100D96134 /* NSMutableURLRequestAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8745448A14B799C100D96134 /* NSMutableURLRequestAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		87701C4B14B2613E00102A77 /* EmptyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87701C4A14B2613E00102A77 /* EmptyController.m */; };
 		879381E414B4E659000EBCED /* Facebook+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 879381E314B4E659000EBCED /* Facebook+Blocks.m */; };
 		87F5EF4614AFA68900EB83F7 /* MyWebTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F5EF4514AFA68800EB83F7 /* MyWebTabController.m */; };
@@ -186,6 +188,10 @@
 		872E1C9C14B291C400408DC6 /* cap-ipad-72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cap-ipad-72x72.png"; path = "../../cap-ipad-72x72.png"; sourceTree = "<group>"; };
 		872E1C9E14B291DC00408DC6 /* cap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cap.png; path = ../../cap.png; sourceTree = "<group>"; };
 		872E1CA014B291EC00408DC6 /* cap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cap@2x.png"; path = "../../cap@2x.png"; sourceTree = "<group>"; };
+		8745448714B799C100D96134 /* NSDictionaryAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDictionaryAdditions.h; sourceTree = "<group>"; };
+		8745448814B799C100D96134 /* NSDictionaryAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionaryAdditions.m; sourceTree = "<group>"; };
+		8745448914B799C100D96134 /* NSMutableURLRequestAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMutableURLRequestAdditions.h; sourceTree = "<group>"; };
+		8745448A14B799C100D96134 /* NSMutableURLRequestAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMutableURLRequestAdditions.m; sourceTree = "<group>"; };
 		87701C4914B2613D00102A77 /* EmptyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyController.h; sourceTree = "<group>"; };
 		87701C4A14B2613E00102A77 /* EmptyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyController.m; sourceTree = "<group>"; };
 		879381E214B4E659000EBCED /* Facebook+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Facebook+Blocks.h"; sourceTree = "<group>"; };
@@ -370,6 +376,7 @@
 		871EFB6014AF97130030658B /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
+				8745448514B799C000D96134 /* TapkuLibrary-subset */,
 				8708361B14B4DEB900439431 /* Facebook-with-blocks */,
 				870835DE14B3E1AB00439431 /* facebook-ios-sdk */,
 				870835D214B3DEA200439431 /* SA_ActionSheet */,
@@ -463,6 +470,17 @@
 				87701C4A14B2613E00102A77 /* EmptyController.m */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		8745448514B799C000D96134 /* TapkuLibrary-subset */ = {
+			isa = PBXGroup;
+			children = (
+				8745448714B799C100D96134 /* NSDictionaryAdditions.h */,
+				8745448814B799C100D96134 /* NSDictionaryAdditions.m */,
+				8745448914B799C100D96134 /* NSMutableURLRequestAdditions.h */,
+				8745448A14B799C100D96134 /* NSMutableURLRequestAdditions.m */,
+			);
+			path = "TapkuLibrary-subset";
 			sourceTree = "<group>";
 		};
 		87F5EF4C14AFAAC500EB83F7 /* SupportingClasses */ = {
@@ -695,6 +713,8 @@
 				8708361A14B4BF4B00439431 /* FacebookLoginSequence.m in Sources */,
 				8708361E14B4DEBB00439431 /* FBRequestOperation.m in Sources */,
 				879381E414B4E659000EBCED /* Facebook+Blocks.m in Sources */,
+				8745448D14B799C100D96134 /* NSDictionaryAdditions.m in Sources */,
+				8745448E14B799C100D96134 /* NSMutableURLRequestAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
