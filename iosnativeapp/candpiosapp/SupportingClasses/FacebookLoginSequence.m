@@ -68,6 +68,7 @@
 		[loginParams setObject:@"loginFacebook" forKey:@"action"];
 		[loginParams setObject:facebookId forKey:@"login_fb_id"];
 		[loginParams setObject:[NSNumber numberWithInt:1] forKey:@"login_fb_connect"];
+		[loginParams setObject:[NSNumber numberWithInt:1] forKey:@"mobile"];
 		
 #if 1
 		NSURL *requestUrl = [NSURL URLWithString:@"https://coffeeandpower.com/login.php"];
