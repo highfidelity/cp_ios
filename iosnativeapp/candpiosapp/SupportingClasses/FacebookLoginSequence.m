@@ -27,7 +27,7 @@
 	self = [super init];
 	if(self)
 	{
-		httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://coffeeandpower.com/"]];
+		httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://staging.coffeeandpower.com/"]];
 	}
 	return self;
 }
@@ -71,7 +71,7 @@
 		[loginParams setObject:[NSNumber numberWithInt:1] forKey:@"mobile"];
 		
 #if 1
-		NSURL *requestUrl = [NSURL URLWithString:@"https://coffeeandpower.com/login.php"];
+		NSURL *requestUrl = [NSURL URLWithString:@"https://staging.coffeeandpower.com/login.php"];
 		NSMutableURLRequest *request = [NSMutableURLRequest POSTrequestWithURL:requestUrl dictionary:loginParams];
 		
 
@@ -84,18 +84,37 @@
 		}
 #else
 		NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
-		AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
+		AFXMLRequestOperation *postOperation = [AFXMLRequestOperation XMLParserRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
 			
-			NSLog(@"Name: %@ %@", [json valueForKeyPath:@"first_name"], [json valueForKeyPath:@"last_name"]);
-			NSLog(@"Result code: %d", [response statusCode] );
-			[self handleResponseFromCandP];
+			NSLog(@"Result code: %d (%@)", [response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]] );
 			
-		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON){
+			NSLog(@"Header fields:" );
+			[[response allHeaderFields] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+				NSLog(@"     %@ : '%@'", key, obj );
+				
+			}];
+			//[self handleResponseFromCandP];
+			
+		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser){
 			
 			// handle error
+			int z = 0;
 			
 		}];
-		[[NSOperationQueue mainQueue]  addOperation:operation];
+		// 
+		NSBlockOperation *dumpContents = [NSBlockOperation blockOperationWithBlock:^{
+			// 
+			NSString *responseString = postOperation.responseString;
+			NSLog(@"Response was:");
+			NSLog(@"-----------------------------------------------");
+			NSLog(@"%@", responseString);
+			NSLog(@"-----------------------------------------------");
+		}];
+		[dumpContents addDependency:postOperation];
+		[[NSOperationQueue mainQueue]  addOperation:postOperation];
+		[[NSOperationQueue mainQueue]  addOperation:dumpContents];
+		
+		
 #endif
 		
 		

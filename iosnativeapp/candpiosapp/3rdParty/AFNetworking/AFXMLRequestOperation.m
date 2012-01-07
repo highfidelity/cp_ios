@@ -103,7 +103,7 @@ static dispatch_queue_t xml_request_operation_processing_queue() {
 #endif
 
 + (NSSet *)defaultAcceptableContentTypes {
-    return [NSSet setWithObjects:@"application/xml", @"text/xml", nil];
+    return [NSSet setWithObjects:@"application/xml", @"text/xml",@"text/html", nil];
 }
 
 + (NSSet *)defaultAcceptablePathExtensions {
