@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "FacebookLoginSequence.h"
+#import "BaseViewController.h"
 
 @interface AppDelegate(Internal)
 -(void)loadSettings;
@@ -29,6 +30,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
 	[self loadSettings];  
 	
 	// load the facebook api

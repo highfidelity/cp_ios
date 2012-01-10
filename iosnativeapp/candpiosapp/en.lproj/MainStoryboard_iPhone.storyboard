@@ -8,7 +8,7 @@
         <scene sceneID="15">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="14" sceneMemberID="firstResponder"/>
-                <tabBarController id="4" sceneMemberID="viewController">
+                <tabBarController id="4" customClass="BaseViewController" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="5">
                         <rect key="frame" x="0.0" y="431" width="320" height="49"/>
@@ -33,7 +33,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="List" id="OdT-ix-bRR"/>
+                    <tabBarItem key="tabBarItem" title="Check In" id="OdT-ix-bRR"/>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="766" y="559"/>
@@ -138,6 +138,9 @@
         </scene>
     </scenes>
     <classes>
+        <class className="BaseViewController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BaseViewController.h"/>
+        </class>
         <class className="EmptyController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EmptyController.h"/>
         </class>

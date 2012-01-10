@@ -7,6 +7,7 @@
 //
 
 #import "EmptyController.h"
+#import "CheckInListTableViewController.h"
 
 @implementation EmptyController
 
@@ -36,13 +37,12 @@
 }
 */
 
-/*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 }
-*/
+
 
 - (void)viewDidUnload
 {

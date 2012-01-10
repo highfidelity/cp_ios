@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32FF63D414BB935100E99F55 /* CheckInListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */; };
+		32FF63DC14BBE71B00E99F55 /* CheckInDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF63DA14BBE71A00E99F55 /* CheckInDetailsViewController.m */; };
+		32FF63DD14BBE71B00E99F55 /* CheckInDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FF63DB14BBE71B00E99F55 /* CheckInDetailsViewController.xib */; };
+		32FF63E414BBFAE300E99F55 /* CPPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF63E314BBFAE300E99F55 /* CPPlace.m */; };
+		32FF63EB14BC050000E99F55 /* checkin.png in Resources */ = {isa = PBXBuildFile; fileRef = 32FF63E914BC050000E99F55 /* checkin.png */; };
+		32FF63EC14BC050000E99F55 /* checkin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32FF63EA14BC050000E99F55 /* checkin@2x.png */; };
+		32FF63F714BC0BF700E99F55 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF63F614BC0BF700E99F55 /* BaseViewController.m */; };
 		870835D714B3DEA200439431 /* SA_ActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835D514B3DEA200439431 /* SA_ActionSheet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		870835F814B3E1AC00439431 /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E014B3E1AB00439431 /* Facebook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		870835F914B3E1AC00439431 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 870835E314B3E1AB00439431 /* FBDialog.bundle */; };
@@ -94,6 +101,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		32FF63D214BB935100E99F55 /* CheckInListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckInListTableViewController.h; sourceTree = "<group>"; };
+		32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInListTableViewController.m; sourceTree = "<group>"; };
+		32FF63D914BBE71A00E99F55 /* CheckInDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckInDetailsViewController.h; sourceTree = "<group>"; };
+		32FF63DA14BBE71A00E99F55 /* CheckInDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInDetailsViewController.m; sourceTree = "<group>"; };
+		32FF63DB14BBE71B00E99F55 /* CheckInDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckInDetailsViewController.xib; sourceTree = "<group>"; };
+		32FF63E214BBFAE300E99F55 /* CPPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPPlace.h; sourceTree = "<group>"; };
+		32FF63E314BBFAE300E99F55 /* CPPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPPlace.m; sourceTree = "<group>"; };
+		32FF63E914BC050000E99F55 /* checkin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkin.png; path = candpiosapp/images/checkin.png; sourceTree = SOURCE_ROOT; };
+		32FF63EA14BC050000E99F55 /* checkin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "checkin@2x.png"; path = "candpiosapp/images/checkin@2x.png"; sourceTree = SOURCE_ROOT; };
+		32FF63F514BC0BF700E99F55 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		32FF63F614BC0BF700E99F55 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		870835D414B3DEA200439431 /* SA_ActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SA_ActionSheet.h; sourceTree = "<group>"; };
 		870835D514B3DEA200439431 /* SA_ActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SA_ActionSheet.m; sourceTree = "<group>"; };
 		870835DF14B3E1AB00439431 /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
@@ -468,6 +486,11 @@
 				87F5EF4514AFA68800EB83F7 /* MyWebTabController.m */,
 				87701C4914B2613D00102A77 /* EmptyController.h */,
 				87701C4A14B2613E00102A77 /* EmptyController.m */,
+				32FF63D214BB935100E99F55 /* CheckInListTableViewController.h */,
+				32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */,
+				32FF63D914BBE71A00E99F55 /* CheckInDetailsViewController.h */,
+				32FF63DA14BBE71A00E99F55 /* CheckInDetailsViewController.m */,
+				32FF63DB14BBE71B00E99F55 /* CheckInDetailsViewController.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -502,6 +525,10 @@
 				87F6581514B127CD00F4AB6C /* UserSubview.m */,
 				8708361814B4BF4A00439431 /* FacebookLoginSequence.h */,
 				8708361914B4BF4B00439431 /* FacebookLoginSequence.m */,
+				32FF63E214BBFAE300E99F55 /* CPPlace.h */,
+				32FF63E314BBFAE300E99F55 /* CPPlace.m */,
+				32FF63F514BC0BF700E99F55 /* BaseViewController.h */,
+				32FF63F614BC0BF700E99F55 /* BaseViewController.m */,
 			);
 			path = SupportingClasses;
 			sourceTree = "<group>";
@@ -542,6 +569,8 @@
 				872E1C8814B28DBD00408DC6 /* Default.png */,
 				872E1C8514B28DB900408DC6 /* Default@2x.png */,
 				87F657F414B0D2D100F4AB6C /* 63-runner.png */,
+				32FF63E914BC050000E99F55 /* checkin.png */,
+				32FF63EA14BC050000E99F55 /* checkin@2x.png */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -629,6 +658,9 @@
 				872E1CA114B291EC00408DC6 /* cap@2x.png in Resources */,
 				872E1CA214B2C91B00408DC6 /* Default-Portrait~ipad.png in Resources */,
 				870835F914B3E1AC00439431 /* FBDialog.bundle in Resources */,
+				32FF63DD14BBE71B00E99F55 /* CheckInDetailsViewController.xib in Resources */,
+				32FF63EB14BC050000E99F55 /* checkin.png in Resources */,
+				32FF63EC14BC050000E99F55 /* checkin@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -715,6 +747,10 @@
 				879381E414B4E659000EBCED /* Facebook+Blocks.m in Sources */,
 				8745448D14B799C100D96134 /* NSDictionaryAdditions.m in Sources */,
 				8745448E14B799C100D96134 /* NSMutableURLRequestAdditions.m in Sources */,
+				32FF63D414BB935100E99F55 /* CheckInListTableViewController.m in Sources */,
+				32FF63DC14BBE71B00E99F55 /* CheckInDetailsViewController.m in Sources */,
+				32FF63E414BBFAE300E99F55 /* CPPlace.m in Sources */,
+				32FF63F714BC0BF700E99F55 /* BaseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
