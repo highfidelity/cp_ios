@@ -68,6 +68,7 @@
 		872E1C9F14B291DC00408DC6 /* cap.png in Resources */ = {isa = PBXBuildFile; fileRef = 872E1C9E14B291DC00408DC6 /* cap.png */; };
 		872E1CA114B291EC00408DC6 /* cap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 872E1CA014B291EC00408DC6 /* cap@2x.png */; };
 		872E1CA214B2C91B00408DC6 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 872E1C8A14B28DCD00408DC6 /* Default-Portrait~ipad.png */; };
+		8733311114BCC36B001BF4DB /* EmailLoginSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = 8733311014BCC36A001BF4DB /* EmailLoginSequence.m */; };
 		8745448D14B799C100D96134 /* NSDictionaryAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8745448814B799C100D96134 /* NSDictionaryAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8745448E14B799C100D96134 /* NSMutableURLRequestAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8745448A14B799C100D96134 /* NSMutableURLRequestAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		87701C4B14B2613E00102A77 /* EmptyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87701C4A14B2613E00102A77 /* EmptyController.m */; };
@@ -206,6 +207,8 @@
 		872E1C9C14B291C400408DC6 /* cap-ipad-72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cap-ipad-72x72.png"; path = "../../cap-ipad-72x72.png"; sourceTree = "<group>"; };
 		872E1C9E14B291DC00408DC6 /* cap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cap.png; path = ../../cap.png; sourceTree = "<group>"; };
 		872E1CA014B291EC00408DC6 /* cap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cap@2x.png"; path = "../../cap@2x.png"; sourceTree = "<group>"; };
+		8733310F14BCC36A001BF4DB /* EmailLoginSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailLoginSequence.h; sourceTree = "<group>"; };
+		8733311014BCC36A001BF4DB /* EmailLoginSequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailLoginSequence.m; sourceTree = "<group>"; };
 		8745448714B799C100D96134 /* NSDictionaryAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDictionaryAdditions.h; sourceTree = "<group>"; };
 		8745448814B799C100D96134 /* NSDictionaryAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionaryAdditions.m; sourceTree = "<group>"; };
 		8745448914B799C100D96134 /* NSMutableURLRequestAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMutableURLRequestAdditions.h; sourceTree = "<group>"; };
@@ -525,6 +528,8 @@
 				87F6581514B127CD00F4AB6C /* UserSubview.m */,
 				8708361814B4BF4A00439431 /* FacebookLoginSequence.h */,
 				8708361914B4BF4B00439431 /* FacebookLoginSequence.m */,
+				8733310F14BCC36A001BF4DB /* EmailLoginSequence.h */,
+				8733311014BCC36A001BF4DB /* EmailLoginSequence.m */,
 				32FF63E214BBFAE300E99F55 /* CPPlace.h */,
 				32FF63E314BBFAE300E99F55 /* CPPlace.m */,
 				32FF63F514BC0BF700E99F55 /* BaseViewController.h */,
@@ -751,6 +756,7 @@
 				32FF63DC14BBE71B00E99F55 /* CheckInDetailsViewController.m in Sources */,
 				32FF63E414BBFAE300E99F55 /* CPPlace.m in Sources */,
 				32FF63F714BC0BF700E99F55 /* BaseViewController.m in Sources */,
+				8733311114BCC36B001BF4DB /* EmailLoginSequence.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
