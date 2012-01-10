@@ -27,13 +27,19 @@
 	self = [super init];
 	if(self)
 	{
-		httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://staging.coffeeandpower.com/"]];
+		 
+		httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://dev.worklist.net/~stojce/candpfix/web/"]];
+		//httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://staging.coffeeandpower.com/"]];
 	}
 	return self;
 }
 -(void)initiateLogin:(UIViewController*)mapViewControllerArg;
 {
 	mapViewController = mapViewControllerArg;
+	
+	// set a liberal cookie policy
+	[[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy: NSHTTPCookieAcceptPolicyAlways];
+
 	if (![[AppDelegate instance].facebook isSessionValid]) {
 		[[AppDelegate instance].facebook authorize:[NSArray arrayWithObjects:@"offline_access", nil]];
 	}
@@ -45,6 +51,8 @@
     [AppDelegate instance].settings.facebookExpirationDate = [[AppDelegate instance].facebook expirationDate];
 	[[AppDelegate instance] saveSettings];
 	
+	
+
 	// get the user's facebook id (via facebook 'me' object)
 	FBRequestOperation *getMe = [[AppDelegate instance].facebook requestWithGraphPath:@"me" andCompletionHandler:^(FBRequestOperation *op, id json, NSError *err) {
 	//FBRequestOperation *getMe = [FBRequestOperation getPath:@"me" withParams:nil completionHandler:^(FBRequestOperation *op, id json, NSError *err) {
@@ -68,10 +76,13 @@
 		[loginParams setObject:@"loginFacebook" forKey:@"action"];
 		[loginParams setObject:facebookId forKey:@"login_fb_id"];
 		[loginParams setObject:[NSNumber numberWithInt:1] forKey:@"login_fb_connect"];
-		[loginParams setObject:[NSNumber numberWithInt:1] forKey:@"mobile"];
-		
-#if 1
-		NSURL *requestUrl = [NSURL URLWithString:@"https://staging.coffeeandpower.com/login.php"];
+		[loginParams setObject:@"json" forKey:@"type"];
+		//[loginParams setObject:[NSNumber numberWithInt:1] forKey:@"mobile"];
+	
+		// https://dev.worklist.net/~stojce/candpfix/web/login.php?action=loginFacebook&login_fb_id=1&login_fb_connect=1&type=json		
+#if 0
+		NSURL *requestUrl = [NSURL URLWithString:@"https://dev.worklist.net/~stojce/candpfix/web/login.php"];
+		//NSURL *requestUrl = [NSURL URLWithString:@"https://staging.coffeeandpower.com/login.php"];
 		NSMutableURLRequest *request = [NSMutableURLRequest POSTrequestWithURL:requestUrl dictionary:loginParams];
 		
 
@@ -83,24 +94,34 @@
 			[mapViewController.navigationController pushViewController:controller animated:YES];
 		}
 #else
+
 		NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
-		AFXMLRequestOperation *postOperation = [AFXMLRequestOperation XMLParserRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
+		//NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
+		AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 			
 			NSLog(@"Result code: %d (%@)", [response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]] );
-			
+
+
 			NSLog(@"Header fields:" );
 			[[response allHeaderFields] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 				NSLog(@"     %@ : '%@'", key, obj );
 				
 			}];
-			//[self handleResponseFromCandP];
 			
-		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser){
+			NSLog(@"Json fields:" );
+			[json enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+				NSLog(@"     %@ : '%@'", key, obj );
+				
+			}];
+
+			[self handleResponseFromCandP:json];
 			
+		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
 			// handle error
-			int z = 0;
+			NSLog(@"AFJSONRequestOperation error: %@", [error localizedDescription] );
 			
-		}];
+		} ];
+		
 		// 
 		NSBlockOperation *dumpContents = [NSBlockOperation blockOperationWithBlock:^{
 			// 
@@ -114,7 +135,7 @@
 		[[NSOperationQueue mainQueue]  addOperation:postOperation];
 		[[NSOperationQueue mainQueue]  addOperation:dumpContents];
 		
-		
+
 #endif
 		
 		
@@ -126,7 +147,8 @@
 	
 
 }
--(void)handleResponseFromCandP
+								 
+-(void)handleResponseFromCandP:(NSDictionary*)json
 {
 	
 }
