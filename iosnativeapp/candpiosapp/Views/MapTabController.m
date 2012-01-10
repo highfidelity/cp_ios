@@ -20,6 +20,7 @@
 #import "UserSubview.h"
 #import "SA_ActionSheet.h"
 #import "FacebookLoginSequence.h"
+#import "EmailLoginSequence.h"
 
 #define qUseCustomCallout						0
 #define qHideTopNavigationBarOnMapView		0
@@ -335,9 +336,16 @@
 				break;
 				
 			case 1:
+			{
 				// handle email login
 				// include Forgot option (but not create for now)
+				EmailLoginSequence *emailLogin = [[EmailLoginSequence alloc]init ];
+				//[emailLogin handleEmailCreate:@"david@mindfulbear.com" password:@"mindmind2012" nickname:@"DavidTest2012" ];
+				//[emailLogin handleForgotEmailLogin:@"dmojdehi@mac.com"];
+				//[emailLogin handleEmailLogin: @"candptest+5@gmail.com" password:@"abc123"];
+				//[emailLogin handleEmailLogin: @"dmojdehi@mac.com" password:@""];
 				break;
+			}
 			
 			case 2:
 				// handle cancel

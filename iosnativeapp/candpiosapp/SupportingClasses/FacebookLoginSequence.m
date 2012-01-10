@@ -12,6 +12,7 @@
 #import "Facebook+Blocks.h"
 #import "NSMutableURLRequestAdditions.h"
 #import "MyWebTabController.h"
+#import "EmailLoginSequence.h"
 
 @interface FacebookLoginSequence()
 @property (nonatomic, strong) AFHTTPClient *httpClient;
@@ -28,8 +29,7 @@
 	if(self)
 	{
 		 
-		httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://dev.worklist.net/~stojce/candpfix/web/"]];
-		//httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://staging.coffeeandpower.com/"]];
+		httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
 	}
 	return self;
 }
@@ -77,23 +77,7 @@
 		[loginParams setObject:facebookId forKey:@"login_fb_id"];
 		[loginParams setObject:[NSNumber numberWithInt:1] forKey:@"login_fb_connect"];
 		[loginParams setObject:@"json" forKey:@"type"];
-		//[loginParams setObject:[NSNumber numberWithInt:1] forKey:@"mobile"];
 	
-		// https://dev.worklist.net/~stojce/candpfix/web/login.php?action=loginFacebook&login_fb_id=1&login_fb_connect=1&type=json		
-#if 0
-		NSURL *requestUrl = [NSURL URLWithString:@"https://dev.worklist.net/~stojce/candpfix/web/login.php"];
-		//NSURL *requestUrl = [NSURL URLWithString:@"https://staging.coffeeandpower.com/login.php"];
-		NSMutableURLRequest *request = [NSMutableURLRequest POSTrequestWithURL:requestUrl dictionary:loginParams];
-		
-
-		// open a web view with the given url
-		if(mapViewController)
-		{
-			MyWebTabController *controller = [mapViewController.storyboard instantiateViewControllerWithIdentifier:@"WebViewOfCandPUser"];
-			controller.urlRequestToLoad = request;
-			[mapViewController.navigationController pushViewController:controller animated:YES];
-		}
-#else
 
 		NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
 		//NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
@@ -135,8 +119,6 @@
 		[[NSOperationQueue mainQueue]  addOperation:postOperation];
 		[[NSOperationQueue mainQueue]  addOperation:dumpContents];
 		
-
-#endif
 		
 		
 		
