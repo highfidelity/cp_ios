@@ -13,7 +13,7 @@
 @synthesize hasLocation;
 @synthesize lastKnownLocation;
 @synthesize registeredForApnsSuccessfully;
-@synthesize candpLoginToken;
+@synthesize candpLoginToken, candpUserId;
 @synthesize facebookAccessToken, facebookExpirationDate;
 @synthesize userEmailAddress, userNickname, userPassword;
 
@@ -41,6 +41,7 @@
 	
     [encoder encodeObject:lastKnownLocation forKey:@"lastKnownLocation"];
 	[encoder encodeObject:candpLoginToken forKey:@"candpLoginToken"];
+	[encoder encodeObject:candpUserId forKey:@"candpUserId"];
 	[encoder encodeObject:facebookAccessToken forKey:@"facebookAccessToken"];
 	[encoder encodeObject:facebookExpirationDate forKey:@"facebookExpirationDate"];
 	[encoder encodeObject:userEmailAddress	forKey:@"userEmailAddress"];
@@ -56,6 +57,7 @@
         registeredForApnsSuccessfully = [decoder decodeBoolForKey:@"registeredForApnsSuccessfully"];
         lastKnownLocation = [decoder decodeObjectForKey:@"lastKnownLocation"];
 		candpLoginToken = [decoder decodeObjectForKey:@"candpLoginToken"];
+		candpUserId = [decoder decodeObjectForKey:@"candpUserId"];
 		
 		facebookAccessToken = [decoder decodeObjectForKey:@"facebookAccessToken"];
 		facebookExpirationDate = [decoder decodeObjectForKey:@"facebookExpirationDate"];

@@ -22,6 +22,10 @@
 		870835FC14B3E1AC00439431 /* FBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E914B3E1AB00439431 /* FBRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8708361A14B4BF4B00439431 /* FacebookLoginSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708361914B4BF4B00439431 /* FacebookLoginSequence.m */; };
 		8708361E14B4DEBB00439431 /* FBRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708361D14B4DEBB00439431 /* FBRequestOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		871C446714BD7293003B720F /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 871C446514BD7293003B720F /* button.png */; };
+		871C446814BD7293003B720F /* button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 871C446614BD7293003B720F /* button@2x.png */; };
+		871C446C14BD72FC003B720F /* button_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 871C446A14BD72FC003B720F /* button_disabled.png */; };
+		871C446D14BD72FC003B720F /* button_disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 871C446B14BD72FC003B720F /* button_disabled@2x.png */; };
 		871EFB0B14AE9C820030658B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871EFB0A14AE9C820030658B /* UIKit.framework */; };
 		871EFB0D14AE9C820030658B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871EFB0C14AE9C820030658B /* Foundation.framework */; };
 		871EFB0F14AE9C820030658B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871EFB0E14AE9C820030658B /* CoreGraphics.framework */; };
@@ -133,6 +137,10 @@
 		8708361914B4BF4B00439431 /* FacebookLoginSequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookLoginSequence.m; sourceTree = "<group>"; };
 		8708361C14B4DEBB00439431 /* FBRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBRequestOperation.h; sourceTree = "<group>"; };
 		8708361D14B4DEBB00439431 /* FBRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBRequestOperation.m; sourceTree = "<group>"; };
+		871C446514BD7293003B720F /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
+		871C446614BD7293003B720F /* button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button@2x.png"; sourceTree = "<group>"; };
+		871C446A14BD72FC003B720F /* button_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_disabled.png; sourceTree = "<group>"; };
+		871C446B14BD72FC003B720F /* button_disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_disabled@2x.png"; sourceTree = "<group>"; };
 		871EFB0614AE9C820030658B /* candp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = candp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		871EFB0A14AE9C820030658B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		871EFB0C14AE9C820030658B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -592,6 +600,10 @@
 		87F657F314B0D2D000F4AB6C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				871C446A14BD72FC003B720F /* button_disabled.png */,
+				871C446B14BD72FC003B720F /* button_disabled@2x.png */,
+				871C446514BD7293003B720F /* button.png */,
+				871C446614BD7293003B720F /* button@2x.png */,
 				872E1CA014B291EC00408DC6 /* cap@2x.png */,
 				872E1C9E14B291DC00408DC6 /* cap.png */,
 				872E1C9C14B291C400408DC6 /* cap-ipad-72x72.png */,
@@ -693,6 +705,10 @@
 				32FF63EB14BC050000E99F55 /* checkin.png in Resources */,
 				32FF63EC14BC050000E99F55 /* checkin@2x.png in Resources */,
 				8733312714BCFB0D001BF4DB /* CreateEmailAccountController.xib in Resources */,
+				871C446714BD7293003B720F /* button.png in Resources */,
+				871C446814BD7293003B720F /* button@2x.png in Resources */,
+				871C446C14BD72FC003B720F /* button_disabled.png in Resources */,
+				871C446D14BD72FC003B720F /* button_disabled@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

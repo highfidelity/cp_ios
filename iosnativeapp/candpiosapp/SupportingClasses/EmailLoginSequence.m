@@ -18,11 +18,14 @@
 @interface EmailLoginSequence()
 @property (nonatomic, strong) AFHTTPClient *httpClient;
 @property (nonatomic, weak) UIViewController	*mapViewController;
+@property (nonatomic, weak) UIViewController	*createOrLoginController;
+-(void)loginButtonPressed:(id)sender;
+-(void)createButtonPressed:(id)sender;
 @end
 
 @implementation EmailLoginSequence
 
-@synthesize httpClient,mapViewController;
+@synthesize httpClient,mapViewController,createOrLoginController;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(id)init
@@ -64,13 +67,13 @@
 		[footerView addSubview:footerButton];
 		group.footerView = footerView;
 		
-		[footerButton setTitle:@"Create Account" forState:UIControlStateNormal];
-		
-		UIImage *buttonBgDisabled = [UIImage imageNamed:@"bttn_gray_lrg"];
-		UIImage *buttonBgEnabled = [UIImage imageNamed:@"bttn_blue_lrg"];
+		[footerButton setTitle:@"Login" forState:UIControlStateNormal];
+		footerButton.enabled = NO;
+		UIImage *buttonBgDisabled = [UIImage imageNamed:@"button_disabled"];
+		UIImage *buttonBgEnabled = [UIImage imageNamed:@"button"];
 		[footerButton setBackgroundImage:buttonBgDisabled forState:UIControlStateDisabled];
 		[footerButton setBackgroundImage:buttonBgEnabled forState:UIControlStateNormal];
-		[footerButton addTarget:self action:@selector(createButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+		[footerButton addTarget:self action:@selector(loginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 		[footerButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateHighlighted];
 		
 		
@@ -84,7 +87,7 @@
 		//email.customKeyObject = [iWallpaperAppDelegate instance].settings;
 		email.textFieldWillChange = ^ BOOL (UITextField *field){
 			// enable the button if there's text
-			if([field.text rangeOfString:@"@"].length >0 && [settings.userNickname length] > 0)
+			if([field.text rangeOfString:@"@"].length >0 && [settings.userPassword length] > 0)
 				footerButton.enabled = YES;
 			else
 				footerButton.enabled = NO;
@@ -102,7 +105,7 @@
 		//email.customKeyObject = [iWallpaperAppDelegate instance].settings;
 		password.textFieldWillChange = ^ BOOL (UITextField *field){
 			// enable the button if there's text
-			if(field.text.length >0 && [settings.userNickname length] > 0)
+			if(field.text.length >0 && [settings.userEmailAddress length] > 0)
 				footerButton.enabled = YES;
 			else
 				footerButton.enabled = NO;
@@ -113,6 +116,7 @@
 		[controller.cellConfigs addObject:group];
 
 	}
+	createOrLoginController = controller;
 	[hostController.navigationController pushViewController:controller animated:YES];
 
 }
@@ -144,11 +148,12 @@
 		
 		[footerButton setTitle:@"Create Account" forState:UIControlStateNormal];
 		
-		UIImage *buttonBgDisabled = [UIImage imageNamed:@"bttn_gray_lrg"];
-		UIImage *buttonBgEnabled = [UIImage imageNamed:@"bttn_blue_lrg"];
+		footerButton.enabled = NO;
+		UIImage *buttonBgDisabled = [UIImage imageNamed:@"button_disabled"];
+		UIImage *buttonBgEnabled = [UIImage imageNamed:@"button"];
 		[footerButton setBackgroundImage:buttonBgDisabled forState:UIControlStateDisabled];
 		[footerButton setBackgroundImage:buttonBgEnabled forState:UIControlStateNormal];
-		[footerButton addTarget:self action:@selector(createButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+		[footerButton addTarget:self action:@selector(createButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 		[footerButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateHighlighted];
 		
 		
@@ -228,10 +233,30 @@
 		[controller.cellConfigs addObject:group];
 	}
 	
-	
+	createOrLoginController = controller;
 	[hostController.navigationController pushViewController:controller animated:YES];
 }
 
+-(void)loginButtonPressed:(id)sender
+{
+	// force all fields to commit
+	[createOrLoginController.view endEditing:YES];
+	[[AppDelegate instance] saveSettings];
+
+	NSString *userEmail = [AppDelegate instance].settings.userEmailAddress;
+	NSString *password = [AppDelegate instance].settings.userPassword;
+	[self handleEmailLogin:userEmail password:password];
+	
+}
+
+-(void)createButtonPressed:(id)sender
+{
+	// force all fields to commit
+	[createOrLoginController.view endEditing:YES];
+	[[AppDelegate instance] saveSettings];
+	
+	
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -266,6 +291,7 @@
 			
 		}];
 		
+
 		//[self handleResponseFromCandP:json];
 		
 	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
@@ -319,6 +345,26 @@
 			NSLog(@"     %@ : '%@'", key, obj );
 			
 		}];
+		
+		// currently, we only a success=0 field if it fails
+		// (if it succeeds, it's just the user data)
+		NSNumber *successNum = [jsonDict objectForKey:@"succeeded"];
+		if(successNum && [successNum intValue] == 0)
+		{
+			NSString *errorMessage = [jsonDict objectForKey:@"message"];
+			// we get here if we failed to login
+			UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unable to login" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+			[alert show];
+		}
+		else
+		{
+			// remember that we're logged in!
+			NSString *userId = [jsonDict objectForKey:@"user_id"];
+			[AppDelegate instance].settings.candpUserId = userId;
+			
+			// 
+			[mapViewController.navigationController popViewControllerAnimated:YES];
+		}
 		
 		//[self handleResponseFromCandP:json];
 		

@@ -122,8 +122,8 @@
 // implement the Facebook Delegate
 - (void)fbDidLogin 
 {
-	if(loginSequence)
-		[loginSequence handleResponseFromFacebookLogin];
+	if(loginSequence && [loginSequence respondsToSelector:@selector( handleResponseFromFacebookLogin)])
+		[(FacebookLoginSequence*) loginSequence handleResponseFromFacebookLogin];
 	
 }
 - (void)fbDidLogout

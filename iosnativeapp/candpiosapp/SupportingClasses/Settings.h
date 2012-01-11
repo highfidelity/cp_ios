@@ -17,6 +17,8 @@
 @property (nonatomic, copy) CLLocation *lastKnownLocation;
 
 @property (nonatomic, copy) NSString *candpLoginToken;
+@property (nonatomic, copy) NSString *candpUserId;
+
 @property (nonatomic, copy) NSString *facebookAccessToken;
 @property (nonatomic, copy) NSDate *facebookExpirationDate;
 
@@ -24,5 +26,6 @@
 @property (nonatomic, copy) NSString *userEmailAddress;
 @property (nonatomic, copy) NSString *userNickname;
 @property (nonatomic, copy) NSString *userPassword;
+
 
 @end

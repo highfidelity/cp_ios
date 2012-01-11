@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface EmailLoginSequence : NSObject
+@interface EmailLoginSequence : NSObject< UIAlertViewDelegate >
 
 -(void)initiateLogin:(UIViewController*)mapViewControllerArg;
 -(void)initiateAccountCreation:(UIViewController*)hostController;

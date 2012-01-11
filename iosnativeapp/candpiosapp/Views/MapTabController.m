@@ -331,10 +331,11 @@
 			{
 				// handle facebook login
 				// the facebook login object will handle the sequence that follows
-				[AppDelegate instance].loginSequence = [[FacebookLoginSequence alloc]init ];
-				[[AppDelegate instance].loginSequence initiateLogin:self];
+				FacebookLoginSequence *facebookLogin = [[FacebookLoginSequence alloc]init ];
+				[facebookLogin initiateLogin:self];
 				self.navigationItem.rightBarButtonItem.title = @"Logout";
 				self.navigationItem.rightBarButtonItem.action = @selector(logoutButtonTapped);
+				[AppDelegate instance].loginSequence = facebookLogin;
 				break;
 			}
 				
@@ -348,6 +349,8 @@
 				//[emailLogin handleForgotEmailLogin:@"dmojdehi@mac.com"];
 				//[emailLogin handleEmailLogin: @"candptest+5@gmail.com" password:@"abc123"];
 				//[emailLogin handleEmailLogin: @"dmojdehi@mac.com" password:@""];
+				[AppDelegate instance].loginSequence = emailLogin;
+
 				break;
 			}
 				

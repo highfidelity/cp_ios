@@ -26,7 +26,7 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, readonly) Settings *settings;
 @property (strong, readonly) Facebook *facebook;
-@property (strong, nonatomic) FacebookLoginSequence *loginSequence;
+@property (strong, nonatomic) NSObject *loginSequence;
 
 -(void)saveSettings;
 +(AppDelegate*)instance;
