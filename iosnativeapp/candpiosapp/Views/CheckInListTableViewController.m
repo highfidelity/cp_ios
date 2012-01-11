@@ -2,6 +2,7 @@
 #import "AppDelegate.h"
 #import "CheckInDetailsViewController.h"
 #import "CPPlace.h"
+#import "SVProgressHUD.h"
 
 @implementation CheckInListTableViewController
 
@@ -51,14 +52,14 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-    // Load the list of nearby venues
-    [self refreshLocations];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
+    // Load the list of nearby venues
+    [self refreshLocations];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -77,6 +78,7 @@
 }
 
 - (void)refreshLocations {
+	[SVProgressHUD showWithStatus:@"Loading nearby places..."];
 
     // Reset the Places array
     
@@ -124,6 +126,8 @@
     place.foursquareID = @"0";
     
     [places addObject:place];
+
+    [SVProgressHUD dismiss];
     
     [self.tableView reloadData];    
 }
