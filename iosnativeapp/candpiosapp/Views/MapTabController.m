@@ -21,6 +21,7 @@
 #import "SA_ActionSheet.h"
 #import "FacebookLoginSequence.h"
 #import "EmailLoginSequence.h"
+#import "CreateEmailAccountController.h"
 
 #define qUseCustomCallout						0
 #define qHideTopNavigationBarOnMapView		0
@@ -320,13 +321,14 @@
 																delegate:nil 
 													   cancelButtonTitle:@"Cancel" 
 												  destructiveButtonTitle:nil 
-													   otherButtonTitles: @"Facebook", @"Email", nil];
+													   otherButtonTitles: @"Facebook", @"Email", @"Create Account", nil];
 	
 	[actionSheet showInView:self.view  buttonBlock:^(int buttonIndex) {
 		NSLog(@"Button tapped: %d", buttonIndex);
 		switch (buttonIndex) {
 				
 			case 0: 
+			{
 				// handle facebook login
 				// the facebook login object will handle the sequence that follows
 				[AppDelegate instance].loginSequence = [[FacebookLoginSequence alloc]init ];
@@ -334,22 +336,35 @@
 				self.navigationItem.rightBarButtonItem.title = @"Logout";
 				self.navigationItem.rightBarButtonItem.action = @selector(logoutButtonTapped);
 				break;
+			}
 				
 			case 1:
 			{
 				// handle email login
 				// include Forgot option (but not create for now)
 				EmailLoginSequence *emailLogin = [[EmailLoginSequence alloc]init ];
+				[emailLogin initiateLogin:self];
 				//[emailLogin handleEmailCreate:@"david@mindfulbear.com" password:@"mindmind2012" nickname:@"DavidTest2012" ];
 				//[emailLogin handleForgotEmailLogin:@"dmojdehi@mac.com"];
 				//[emailLogin handleEmailLogin: @"candptest+5@gmail.com" password:@"abc123"];
 				//[emailLogin handleEmailLogin: @"dmojdehi@mac.com" password:@""];
 				break;
 			}
-			
+				
 			case 2:
+			{
+				
+				// handle create (via email)
+				EmailLoginSequence *emailLogin = [[EmailLoginSequence alloc]init ];
+				[emailLogin initiateAccountCreation:self];
+
+				break;
+			}
+			
+			case 3:
 				// handle cancel
 				break;
+				
 			default:
 				break;
 		}

@@ -12,8 +12,10 @@
 @synthesize flag;
 @synthesize hasLocation;
 @synthesize lastKnownLocation;
+@synthesize registeredForApnsSuccessfully;
 @synthesize candpLoginToken;
 @synthesize facebookAccessToken, facebookExpirationDate;
+@synthesize userEmailAddress, userNickname, userPassword;
 
 //=========================================================== 
 // - (id)init
@@ -35,10 +37,15 @@
 {
     [encoder encodeBool:flag forKey:@"flag"];
     [encoder encodeBool:hasLocation forKey:@"hasLocation"];
+    [encoder encodeBool:registeredForApnsSuccessfully forKey:@"registeredForApnsSuccessfully"];
+	
     [encoder encodeObject:lastKnownLocation forKey:@"lastKnownLocation"];
 	[encoder encodeObject:candpLoginToken forKey:@"candpLoginToken"];
 	[encoder encodeObject:facebookAccessToken forKey:@"facebookAccessToken"];
 	[encoder encodeObject:facebookExpirationDate forKey:@"facebookExpirationDate"];
+	[encoder encodeObject:userEmailAddress	forKey:@"userEmailAddress"];
+	[encoder encodeObject:userNickname	forKey:@"userNickname"];
+	[encoder encodeObject:userPassword	forKey:@"userPassword"];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder 
@@ -46,11 +53,15 @@
     if ((self = [super init])) {
         flag = [decoder decodeBoolForKey:@"flag"];
         hasLocation = [decoder decodeBoolForKey:@"hasLocation"];
+        registeredForApnsSuccessfully = [decoder decodeBoolForKey:@"registeredForApnsSuccessfully"];
         lastKnownLocation = [decoder decodeObjectForKey:@"lastKnownLocation"];
 		candpLoginToken = [decoder decodeObjectForKey:@"candpLoginToken"];
 		
 		facebookAccessToken = [decoder decodeObjectForKey:@"facebookAccessToken"];
 		facebookExpirationDate = [decoder decodeObjectForKey:@"facebookExpirationDate"];
+		userEmailAddress = [decoder decodeObjectForKey:@"userEmailAddress"];
+		userNickname = [decoder decodeObjectForKey:@"userNickname"];
+		userPassword = [decoder decodeObjectForKey:@"userPassword"];
     }
     return self;
 }

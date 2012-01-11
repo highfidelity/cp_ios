@@ -12,8 +12,8 @@
 #import "AFJSONRequestOperation.h"
 #import "NSMutableURLRequestAdditions.h"
 #import "MyWebTabController.h"
-
-
+#import "CreateEmailAccountController.h"
+#import "TableCellHelper.h"
 
 @interface EmailLoginSequence()
 @property (nonatomic, strong) AFHTTPClient *httpClient;
@@ -24,6 +24,7 @@
 
 @synthesize httpClient,mapViewController;
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(id)init
 {
 	self = [super init];
@@ -34,17 +35,206 @@
 	}
 	return self;
 }
--(void)initiateLogin:(UIViewController*)mapViewControllerArg;
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-(void)initiateLogin:(UIViewController*)hostController;
 {
-	mapViewController = mapViewControllerArg;
+	mapViewController = hostController;
 	
 	// set a liberal cookie policy
 	[[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy: NSHTTPCookieAcceptPolicyAlways];
 	
 	// show the login/create/forgot screen
-	
+	CreateEmailAccountController *controller = [[CreateEmailAccountController alloc] initWithNibName:@"CreateEmailAccountController" bundle:nil];
+	controller.title = @"Login";
+
+	if(true)
+	{
+		Settings *settings = [AppDelegate instance].settings;
+		
+		TableCellGroup *group = [[TableCellGroup alloc]init];
+		group.headerText = @"Login to Coffee and Power";
+		
+		//////////////////
+		// make the custom footer button
+		UIView *footerView = [[UIView alloc] init];
+		UIButton *footerButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, 300, 44)];
+		footerView.autoresizesSubviews = NO;
+		[footerView addSubview:footerButton];
+		group.footerView = footerView;
+		
+		[footerButton setTitle:@"Create Account" forState:UIControlStateNormal];
+		
+		UIImage *buttonBgDisabled = [UIImage imageNamed:@"bttn_gray_lrg"];
+		UIImage *buttonBgEnabled = [UIImage imageNamed:@"bttn_blue_lrg"];
+		[footerButton setBackgroundImage:buttonBgDisabled forState:UIControlStateDisabled];
+		[footerButton setBackgroundImage:buttonBgEnabled forState:UIControlStateNormal];
+		[footerButton addTarget:self action:@selector(createButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+		[footerButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateHighlighted];
+		
+		
+		//////////////////
+		// add the email field
+		TableCellTextField *email = [[TableCellTextField alloc]initWithLabel:@"Email"
+															 placeholderText:@"joe@example.com"
+																   kvoObject:settings
+																  kvoKeyName:@"userEmailAddress" ];
+		email.labelFont = [UIFont boldSystemFontOfSize:14.0];
+		//email.customKeyObject = [iWallpaperAppDelegate instance].settings;
+		email.textFieldWillChange = ^ BOOL (UITextField *field){
+			// enable the button if there's text
+			if([field.text rangeOfString:@"@"].length >0 && [settings.userNickname length] > 0)
+				footerButton.enabled = YES;
+			else
+				footerButton.enabled = NO;
+			return YES;
+		};
+		[group addCell:email];
+		
+		//////////////////
+		// add the password field
+		TableCellTextField *password = [[TableCellTextField alloc]initWithLabel:@"Password"
+																placeholderText:@"password"
+																	  kvoObject:settings
+																	 kvoKeyName:@"userPassword" ];
+		password.labelFont = [UIFont boldSystemFontOfSize:14.0];
+		//email.customKeyObject = [iWallpaperAppDelegate instance].settings;
+		password.textFieldWillChange = ^ BOOL (UITextField *field){
+			// enable the button if there's text
+			if(field.text.length >0 && [settings.userNickname length] > 0)
+				footerButton.enabled = YES;
+			else
+				footerButton.enabled = NO;
+			return YES;
+		};
+		[group addCell:password];
+		
+		[controller.cellConfigs addObject:group];
+
+	}
+	[hostController.navigationController pushViewController:controller animated:YES];
+
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-(void)initiateAccountCreation:(UIViewController*)hostController;
+{
+	mapViewController = hostController;
+	
+	CreateEmailAccountController *controller = [[CreateEmailAccountController alloc] initWithNibName:@"CreateEmailAccountController" bundle:nil];
+	
+	controller.title = @"Create Account";
+	
+	
+	if(true)
+	{
+		Settings *settings = [AppDelegate instance].settings;
+		
+		TableCellGroup *group = [[TableCellGroup alloc]init];
+		group.headerText = @"Create your Coffee and Power Account";
+		
+		//////////////////
+		// make the custom footer button
+		UIView *footerView = [[UIView alloc] init];
+		UIButton *footerButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, 300, 44)];
+		footerView.autoresizesSubviews = NO;
+		[footerView addSubview:footerButton];
+		group.footerView = footerView;
+		
+		[footerButton setTitle:@"Create Account" forState:UIControlStateNormal];
+		
+		UIImage *buttonBgDisabled = [UIImage imageNamed:@"bttn_gray_lrg"];
+		UIImage *buttonBgEnabled = [UIImage imageNamed:@"bttn_blue_lrg"];
+		[footerButton setBackgroundImage:buttonBgDisabled forState:UIControlStateDisabled];
+		[footerButton setBackgroundImage:buttonBgEnabled forState:UIControlStateNormal];
+		[footerButton addTarget:self action:@selector(createButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+		[footerButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateHighlighted];
+		
+		
+		
+		//////////////////
+		// add the first name field
+		TableCellTextField *firstname = [[TableCellTextField alloc]initWithLabel:@"Nickname"
+																 placeholderText:@"Joe"
+																	   kvoObject:settings
+																	  kvoKeyName:@"userNickname" ];
+		firstname.labelFont = [UIFont boldSystemFontOfSize:14.0];
+		//firstname.customKeyObject = settings;
+		firstname.textFieldWillChange = ^BOOL (UITextField *field){
+			// enable the button if there's text
+			// enable the button if there's text
+			if([field.text length]>0 && settings.userEmailAddress && [settings.userEmailAddress rangeOfString:@"@"].length > 0)
+				footerButton.enabled = YES;
+			else
+				footerButton.enabled = NO;
+			return YES;
+		};
+		[group addCell:firstname];
+		
+		//////////////////
+		// add the email field
+		TableCellTextField *email = [[TableCellTextField alloc]initWithLabel:@"Email"
+															 placeholderText:@"joe@example.com"
+																   kvoObject:settings
+																  kvoKeyName:@"userEmailAddress" ];
+		email.labelFont = [UIFont boldSystemFontOfSize:14.0];
+		//email.customKeyObject = [iWallpaperAppDelegate instance].settings;
+		email.textFieldWillChange = ^ BOOL (UITextField *field){
+			// enable the button if there's text
+			if([field.text rangeOfString:@"@"].length >0 && [settings.userNickname length] > 0)
+				footerButton.enabled = YES;
+			else
+				footerButton.enabled = NO;
+			return YES;
+		};
+		[group addCell:email];
+		
+		//////////////////
+		// add the password field
+		TableCellTextField *password = [[TableCellTextField alloc]initWithLabel:@"Password"
+																placeholderText:@"password"
+																	  kvoObject:settings
+																	 kvoKeyName:@"userPassword" ];
+		password.labelFont = [UIFont boldSystemFontOfSize:14.0];
+		//email.customKeyObject = [iWallpaperAppDelegate instance].settings;
+		password.textFieldWillChange = ^ BOOL (UITextField *field){
+			// enable the button if there's text
+			if(field.text.length >0 && [settings.userNickname length] > 0)
+				footerButton.enabled = YES;
+			else
+				footerButton.enabled = NO;
+			return YES;
+		};
+		[group addCell:password];
+		
+		// 
+		TableCellTextField *password2 = [[TableCellTextField alloc]initWithLabel:@"Password"
+																 placeholderText:@"confirm password"
+																	   kvoObject:settings
+																	  kvoKeyName:@"userPassword" ];
+		password2.labelFont = [UIFont boldSystemFontOfSize:14.0];
+		//email.customKeyObject = [iWallpaperAppDelegate instance].settings;
+		password2.textFieldWillChange = ^ BOOL (UITextField *field){
+			// enable the button if there's text
+			if(field.text.length >0 && [settings.userNickname length] > 0)
+				footerButton.enabled = YES;
+			else
+				footerButton.enabled = NO;
+			return YES;
+		};
+		[group addCell:password2];
+		
+		[controller.cellConfigs addObject:group];
+	}
+	
+	
+	[hostController.navigationController pushViewController:controller animated:YES];
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(void)handleEmailCreate:(NSString*)username password:(NSString*)password nickname:(NSString*)nickname
 {	
 	//http://dev.worklist.net/~stojce/candpfix/web/signup.php?action=signup&signupUsername=USERNAME3@example.com&signupPassword=PASSWORD&signupConfirm=PASSWORD&signupAcceptTerms=1&signupNickname=NICKNAME3&type=json
@@ -100,6 +290,7 @@
 	
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(void)handleEmailLogin:(NSString*)username password:(NSString*)password
 {	
 			
@@ -153,6 +344,7 @@
 	
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(void)handleForgotEmailLogin:(NSString*)username
 {
 	
