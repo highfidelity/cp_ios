@@ -10,8 +10,13 @@
 #import "Settings.h"
 #import "Facebook.h"
 
-// CandP web release is "230528896971048"
-// CandP Dev is			"278566002200147"
+
+#define kCandPWebServiceUrl		@"http://dev.worklist.net/~stojce/candpfix/web/"
+//#define kCandPWebServiceUrl		@"https://staging.coffeeandpower.com"
+//#define kCandPWebServiceUrl		@"https://coffeeandpower.com"
+
+// CandP staging:			"230528896971048"
+// CandP Dev (alternate)	"278566002200147"
 #define kFacebookAppId		@"230528896971048"
 
 @class FacebookLoginSequence;

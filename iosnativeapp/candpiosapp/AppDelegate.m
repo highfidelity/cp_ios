@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "FacebookLoginSequence.h"
+#import "NSMutableURLRequestAdditions.h"
+#import "AFHTTPClient.h"
 #import "BaseViewController.h"
 
 @interface AppDelegate(Internal)
@@ -38,6 +40,10 @@
 	facebook.accessToken = settings.facebookAccessToken;
 	facebook.expirationDate = settings.facebookExpirationDate;
 
+	// register for push 
+	// TODO: put this as part of the login procedure
+	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert)];
+	
     return YES;
 }
 							
@@ -87,6 +93,29 @@
 		 annotation:(id)annotation 
 {
     return [facebook handleOpenURL:url]; 
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken 
+{
+    settings.registeredForApnsSuccessfully = YES;
+    const unsigned char *devTokenBytes = [devToken bytes];
+	// 
+	NSMutableString * devTokenHexEncoded=[NSMutableString stringWithCapacity:([devToken length] * 2)];
+	for (int i = 0; i < [devToken length]; ++i) {
+		[devTokenHexEncoded appendFormat:@"%02X", (unsigned long)devTokenBytes[i]];
+	}
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://go.urbanairship.com/api/device_tokens/%@", devTokenHexEncoded]];
+	NSMutableURLRequest *registerTokenAtUrbanAirship = [NSMutableURLRequest requestWithURL:url ];
+	registerTokenAtUrbanAirship.HTTPMethod = @"PUT";
+	//	[AFHTTPClient 
+}
+
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err 
+{
+    settings.registeredForApnsSuccessfully = NO;
+    //NSLog(@"Error in registration. Error: %@", err);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
