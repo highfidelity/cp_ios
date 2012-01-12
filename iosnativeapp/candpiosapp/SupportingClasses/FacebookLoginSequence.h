@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LoginSequenceBase.h"
 
-@interface FacebookLoginSequence : NSObject
+@interface FacebookLoginSequence : LoginSequenceBase<UIAlertViewDelegate>
 
 -(void)initiateLogin:(UIViewController*)mapViewController;
 -(void)handleResponseFromFacebookLogin;

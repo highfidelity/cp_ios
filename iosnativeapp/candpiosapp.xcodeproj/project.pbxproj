@@ -85,6 +85,7 @@
 		879381E414B4E659000EBCED /* Facebook+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 879381E314B4E659000EBCED /* Facebook+Blocks.m */; };
 		87DC9A3914BEB92200BA3907 /* SignupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DC9A3714BEB92200BA3907 /* SignupController.m */; };
 		87DC9A3A14BEB92200BA3907 /* SignupController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87DC9A3814BEB92200BA3907 /* SignupController.xib */; };
+		87DC9A4214BECB6F00BA3907 /* LoginSequenceBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DC9A4114BECB6F00BA3907 /* LoginSequenceBase.m */; };
 		87F5EF4614AFA68900EB83F7 /* MyWebTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F5EF4514AFA68800EB83F7 /* MyWebTabController.m */; };
 		87F5EF4F14AFAAC500EB83F7 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F5EF4E14AFAAC500EB83F7 /* Settings.m */; };
 		87F657EB14B0D0C800F4AB6C /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F657D814B0D0C800F4AB6C /* SDImageCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -245,6 +246,8 @@
 		87DC9A3614BEB92200BA3907 /* SignupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupController.h; sourceTree = "<group>"; };
 		87DC9A3714BEB92200BA3907 /* SignupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupController.m; sourceTree = "<group>"; };
 		87DC9A3814BEB92200BA3907 /* SignupController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupController.xib; sourceTree = "<group>"; };
+		87DC9A4014BECB6F00BA3907 /* LoginSequenceBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginSequenceBase.h; sourceTree = "<group>"; };
+		87DC9A4114BECB6F00BA3907 /* LoginSequenceBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginSequenceBase.m; sourceTree = "<group>"; };
 		87F5EF4414AFA68800EB83F7 /* MyWebTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWebTabController.h; sourceTree = "<group>"; };
 		87F5EF4514AFA68800EB83F7 /* MyWebTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWebTabController.m; sourceTree = "<group>"; };
 		87F5EF4D14AFAAC500EB83F7 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
@@ -572,6 +575,8 @@
 				87F6580614B11F7400F4AB6C /* CalloutMapAnnotationView.m */,
 				87F6581414B127CD00F4AB6C /* UserSubview.h */,
 				87F6581514B127CD00F4AB6C /* UserSubview.m */,
+				87DC9A4014BECB6F00BA3907 /* LoginSequenceBase.h */,
+				87DC9A4114BECB6F00BA3907 /* LoginSequenceBase.m */,
 				8708361814B4BF4A00439431 /* FacebookLoginSequence.h */,
 				8708361914B4BF4B00439431 /* FacebookLoginSequence.m */,
 				8733310F14BCC36A001BF4DB /* EmailLoginSequence.h */,
@@ -821,6 +826,7 @@
 				8733311D14BCFAAB001BF4DB /* TableViewControllerHelper.m in Sources */,
 				8733312614BCFB0D001BF4DB /* CreateEmailAccountController.m in Sources */,
 				87DC9A3914BEB92200BA3907 /* SignupController.m in Sources */,
+				87DC9A4214BECB6F00BA3907 /* LoginSequenceBase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

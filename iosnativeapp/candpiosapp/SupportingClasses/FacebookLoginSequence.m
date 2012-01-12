@@ -15,27 +15,14 @@
 #import "EmailLoginSequence.h"
 
 @interface FacebookLoginSequence()
-@property (nonatomic, strong) AFHTTPClient *httpClient;
-@property (nonatomic, weak) UIViewController	*mapViewController;
 @end
 
 @implementation FacebookLoginSequence
 
-@synthesize httpClient,mapViewController;
 
--(id)init
-{
-	self = [super init];
-	if(self)
-	{
-		 
-		httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
-	}
-	return self;
-}
 -(void)initiateLogin:(UIViewController*)mapViewControllerArg;
 {
-	mapViewController = mapViewControllerArg;
+	self.mapViewController = mapViewControllerArg;
 	
 	// set a liberal cookie policy
 	[[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy: NSHTTPCookieAcceptPolicyAlways];
@@ -54,7 +41,7 @@
 	
 
 	// get the user's facebook id (via facebook 'me' object)
-	FBRequestOperation *getMe = [[AppDelegate instance].facebook requestWithGraphPath:@"me" andCompletionHandler:^(FBRequestOperation *op, id json, NSError *err) {
+	FBRequestOperation *getMe = [[AppDelegate instance].facebook requestWithGraphPath:@"me" andCompletionHandler:^(FBRequestOperation *op, id fbJson, NSError *err) {
 	//FBRequestOperation *getMe = [FBRequestOperation getPath:@"me" withParams:nil completionHandler:^(FBRequestOperation *op, id json, NSError *err) {
 		
 		// 'me' example result:
@@ -68,7 +55,7 @@
 		//      ...
 		//	}
 			
-		NSString *facebookId = [json objectForKey:@"id"];
+		NSString *facebookId = [fbJson objectForKey:@"id"];
 		NSLog(@"Got facebook user id: %@", facebookId);
 		// we have succes!
 		// kick off the request to the candp server
@@ -79,9 +66,9 @@
 		[loginParams setObject:@"json" forKey:@"type"];
 	
 
-		NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
+		NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
 		//NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
-		AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+		AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id candpJson) {
 			
 			NSLog(@"Result code: %d (%@)", [response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]] );
 
@@ -93,12 +80,53 @@
 			}];
 			
 			NSLog(@"Json fields:" );
-			[json enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+			[candpJson enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 				NSLog(@"     %@ : '%@'", key, obj );
 				
 			}];
+			
+			// if the user hasn't created an account, we get:
+			//			{
+			//				message = Error;
+			//				params =     {
+			//					message = "No valid session";
+			//				};
+			//				"seo_data" =     {
+			//					description = "";
+			//					title = "";
+			//				};
+			//				succeeded = 0;
+			//			}
+			NSString *message = [candpJson objectForKey:@"message"];
+			if(message && [message compare:@"Error"] == 0)
+			{
+				// they haven't created an account
+				// so do it now
+#if 1
+				UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unable to login" message:@"You must create an account with Facebook first" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+				[alert show];
+#else
+				[self handleFacebookCreate:facebookId completion:^(NSError *error, id JSON) {
+					
+				}];
+#endif
+			}
+			else
+			{
+				// we got in!
+				// so remember the success!
+				NSDictionary *userInfo = [[candpJson objectForKey:@"params"]objectForKey:@"user"];
+				
+				NSNumber *userId = [userInfo objectForKey:@"id"];
+				NSString  *nickname = [userInfo objectForKey:@"nickname"];
+				
+				// extract some user info
+				[AppDelegate instance].settings.candpUserId = userId;
+				[AppDelegate instance].settings.userNickname = nickname;
+				[[AppDelegate instance] saveSettings];
 
-			[self handleResponseFromCandP:json];
+				[self.mapViewController.navigationController popToRootViewControllerAnimated:YES];
+			}
 			
 		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
 			// handle error
@@ -106,18 +134,7 @@
 			
 		} ];
 		
-		// 
-		NSBlockOperation *dumpContents = [NSBlockOperation blockOperationWithBlock:^{
-			// 
-			NSString *responseString = postOperation.responseString;
-			NSLog(@"Response was:");
-			NSLog(@"-----------------------------------------------");
-			NSLog(@"%@", responseString);
-			NSLog(@"-----------------------------------------------");
-		}];
-		[dumpContents addDependency:postOperation];
 		[[NSOperationQueue mainQueue]  addOperation:postOperation];
-		[[NSOperationQueue mainQueue]  addOperation:dumpContents];
 		
 		
 		

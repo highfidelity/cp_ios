@@ -7,15 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LoginSequenceBase.h"
 
 
-@interface EmailLoginSequence : NSObject< UIAlertViewDelegate >
+@interface EmailLoginSequence : LoginSequenceBase< UIAlertViewDelegate >
 
 -(void)initiateLogin:(UIViewController*)mapViewControllerArg;
 -(void)initiateAccountCreation:(UIViewController*)hostController;
 
--(void)handleEmailCreate:(NSString*)username password:(NSString*)password nickname:(NSString*)nickname;
 -(void)handleEmailLogin:(NSString*)username password:(NSString*)password;
 -(void)handleForgotEmailLogin:(NSString*)username;
+
 
 @end

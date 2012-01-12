@@ -16,34 +16,22 @@
 #import "TableCellHelper.h"
 
 @interface EmailLoginSequence()
-@property (nonatomic, strong) AFHTTPClient *httpClient;
-@property (nonatomic, weak) UIViewController	*mapViewController;
 @property (nonatomic, weak) UIViewController	*createOrLoginController;
 -(void)loginButtonPressed:(id)sender;
 -(void)createButtonPressed:(id)sender;
+
 @end
 
 @implementation EmailLoginSequence
 
-@synthesize httpClient,mapViewController,createOrLoginController;
+@synthesize createOrLoginController;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
--(id)init
-{
-	self = [super init];
-	if(self)
-	{
-		
-		httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
-	}
-	return self;
-}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(void)initiateLogin:(UIViewController*)hostController;
 {
-	mapViewController = hostController;
+	self.mapViewController = hostController;
 	
 	// set a liberal cookie policy
 	[[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy: NSHTTPCookieAcceptPolicyAlways];
@@ -125,7 +113,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(void)initiateAccountCreation:(UIViewController*)hostController;
 {
-	mapViewController = hostController;
+	self.mapViewController = hostController;
 	
 	CreateEmailAccountController *controller = [[CreateEmailAccountController alloc] initWithNibName:@"CreateEmailAccountController" bundle:nil];
 	
@@ -259,64 +247,6 @@
 	
 }
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
--(void)handleEmailCreate:(NSString*)username password:(NSString*)password nickname:(NSString*)nickname
-{	
-	//http://dev.worklist.net/~stojce/candpfix/web/signup.php?action=signup&signupUsername=USERNAME3@example.com&signupPassword=PASSWORD&signupConfirm=PASSWORD&signupAcceptTerms=1&signupNickname=NICKNAME3&type=json
-	// kick off the request to the candp server
-	NSMutableDictionary *loginParams = [NSMutableDictionary dictionary];
-	[loginParams setObject:@"signup" forKey:@"action"];
-	[loginParams setObject:username forKey:@"signupUsername"];
-	[loginParams setObject:password forKey:@"signupPassword"];
-	[loginParams setObject:password forKey:@"signupConfirm"];
-	[loginParams setObject:nickname forKey:@"signupNickname"];
-	[loginParams setObject:[NSNumber numberWithInt:1] forKey:@"signupAcceptTerms"];
-	[loginParams setObject:@"json" forKey:@"type"];
-	
-	NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
-	AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
-		NSDictionary *jsonDict = json;
-		NSLog(@"Result code: %d (%@)", [response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]] );
-		
-		
-		NSLog(@"Header fields:" );
-		[[response allHeaderFields] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-			NSLog(@"     %@ : '%@'", key, obj );
-			
-		}];
-		
-		NSLog(@"Json fields:" );
-		[jsonDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-			NSLog(@"     %@ : '%@'", key, obj );
-			
-		}];
-		
-
-		//[self handleResponseFromCandP:json];
-		
-	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-		// handle error
-		NSLog(@"AFJSONRequestOperation error: %@", [error localizedDescription] );
-		
-	} ];
-	
-	// 
-	NSBlockOperation *dumpContents = [NSBlockOperation blockOperationWithBlock:^{
-		// 
-		NSString *responseString = postOperation.responseString;
-		NSLog(@"Response was:");
-		NSLog(@"-----------------------------------------------");
-		NSLog(@"%@", responseString);
-		NSLog(@"-----------------------------------------------");
-	}];
-	[dumpContents addDependency:postOperation];
-	[[NSOperationQueue mainQueue]  addOperation:postOperation];
-	[[NSOperationQueue mainQueue]  addOperation:dumpContents];
-	
-	
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(void)handleEmailLogin:(NSString*)username password:(NSString*)password
 {	
@@ -328,7 +258,7 @@
 	[loginParams setObject:password forKey:@"password"];
 	[loginParams setObject:@"json" forKey:@"type"];
 	
-	NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
+	NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
 	//NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
 	AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
 		NSDictionary *jsonDict = json;
@@ -515,7 +445,7 @@
 			
 			// 
 			//[mapViewController.navigationController popViewControllerAnimated:YES];
-			[mapViewController.navigationController popToRootViewControllerAnimated:YES];
+			[self.mapViewController.navigationController popToRootViewControllerAnimated:YES];
 		}
 		
 		//[self handleResponseFromCandP:json];
@@ -557,7 +487,7 @@
 	//[loginParams setObject:@"json" forKey:@"type"];
 	
 	
-	NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
+	NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
 	//NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
 	AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
 		NSDictionary *jsonDict = json;
