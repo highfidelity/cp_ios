@@ -83,6 +83,8 @@
 		8745448E14B799C100D96134 /* NSMutableURLRequestAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8745448A14B799C100D96134 /* NSMutableURLRequestAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		87701C4B14B2613E00102A77 /* EmptyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87701C4A14B2613E00102A77 /* EmptyController.m */; };
 		879381E414B4E659000EBCED /* Facebook+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 879381E314B4E659000EBCED /* Facebook+Blocks.m */; };
+		87DC9A3914BEB92200BA3907 /* SignupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DC9A3714BEB92200BA3907 /* SignupController.m */; };
+		87DC9A3A14BEB92200BA3907 /* SignupController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87DC9A3814BEB92200BA3907 /* SignupController.xib */; };
 		87F5EF4614AFA68900EB83F7 /* MyWebTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F5EF4514AFA68800EB83F7 /* MyWebTabController.m */; };
 		87F5EF4F14AFAAC500EB83F7 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F5EF4E14AFAAC500EB83F7 /* Settings.m */; };
 		87F657EB14B0D0C800F4AB6C /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F657D814B0D0C800F4AB6C /* SDImageCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -240,6 +242,9 @@
 		87701C4A14B2613E00102A77 /* EmptyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyController.m; sourceTree = "<group>"; };
 		879381E214B4E659000EBCED /* Facebook+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Facebook+Blocks.h"; sourceTree = "<group>"; };
 		879381E314B4E659000EBCED /* Facebook+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Facebook+Blocks.m"; sourceTree = "<group>"; };
+		87DC9A3614BEB92200BA3907 /* SignupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupController.h; sourceTree = "<group>"; };
+		87DC9A3714BEB92200BA3907 /* SignupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupController.m; sourceTree = "<group>"; };
+		87DC9A3814BEB92200BA3907 /* SignupController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupController.xib; sourceTree = "<group>"; };
 		87F5EF4414AFA68800EB83F7 /* MyWebTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWebTabController.h; sourceTree = "<group>"; };
 		87F5EF4514AFA68800EB83F7 /* MyWebTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWebTabController.m; sourceTree = "<group>"; };
 		87F5EF4D14AFAAC500EB83F7 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
@@ -518,6 +523,9 @@
 				32FF63D914BBE71A00E99F55 /* CheckInDetailsViewController.h */,
 				32FF63DA14BBE71A00E99F55 /* CheckInDetailsViewController.m */,
 				32FF63DB14BBE71B00E99F55 /* CheckInDetailsViewController.xib */,
+				87DC9A3614BEB92200BA3907 /* SignupController.h */,
+				87DC9A3714BEB92200BA3907 /* SignupController.m */,
+				87DC9A3814BEB92200BA3907 /* SignupController.xib */,
 				8733312314BCFB0D001BF4DB /* CreateEmailAccountController.h */,
 				8733312414BCFB0D001BF4DB /* CreateEmailAccountController.m */,
 				8733312514BCFB0D001BF4DB /* CreateEmailAccountController.xib */,
@@ -715,6 +723,7 @@
 				871C446814BD7293003B720F /* button@2x.png in Resources */,
 				871C446C14BD72FC003B720F /* button_disabled.png in Resources */,
 				871C446D14BD72FC003B720F /* button_disabled@2x.png in Resources */,
+				87DC9A3A14BEB92200BA3907 /* SignupController.xib in Resources */,
 				32C762EF14BEAD1D00FE25E4 /* refresh.png in Resources */,
 				32C762F014BEAD1D00FE25E4 /* refresh@2x.png in Resources */,
 			);
@@ -811,6 +820,7 @@
 				8733311C14BCFAAB001BF4DB /* TableCellHelper.m in Sources */,
 				8733311D14BCFAAB001BF4DB /* TableViewControllerHelper.m in Sources */,
 				8733312614BCFB0D001BF4DB /* CreateEmailAccountController.m in Sources */,
+				87DC9A3914BEB92200BA3907 /* SignupController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,6 +22,7 @@
 #import "FacebookLoginSequence.h"
 #import "EmailLoginSequence.h"
 #import "CreateEmailAccountController.h"
+#import "SignupController.h"
 
 #define qUseCustomCallout						0
 #define qHideTopNavigationBarOnMapView		0
@@ -344,6 +345,10 @@
 
 -(void)loginButtonTapped
 {
+#if 1
+	SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
+	[self.navigationController pushViewController:controller animated:YES];
+#else
 	// show the actionsheet
 	SA_ActionSheet  *actionSheet= [[SA_ActionSheet alloc] initWithTitle:@"Login with:"
 																delegate:nil 
@@ -400,7 +405,7 @@
 		[self updateLoginButton];
 
 	}];
-	
+#endif
 }
 
 -(void)logoutButtonTapped

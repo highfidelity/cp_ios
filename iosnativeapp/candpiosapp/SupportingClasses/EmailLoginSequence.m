@@ -502,6 +502,7 @@
 		else
 		{
 			// remember that we're logged in!
+			// (it's really the persistent cookie that tracks our login, but we need a superficial indicator, too)
 			NSDictionary *userInfo = [[jsonDict objectForKey:@"params"]objectForKey:@"user"];
 			
 			NSNumber *userId = [userInfo objectForKey:@"id"];
@@ -513,7 +514,8 @@
 			[[AppDelegate instance] saveSettings];
 			
 			// 
-			[mapViewController.navigationController popViewControllerAnimated:YES];
+			//[mapViewController.navigationController popViewControllerAnimated:YES];
+			[mapViewController.navigationController popToRootViewControllerAnimated:YES];
 		}
 		
 		//[self handleResponseFromCandP:json];
