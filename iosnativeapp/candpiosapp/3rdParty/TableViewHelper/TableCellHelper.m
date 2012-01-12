@@ -452,7 +452,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @implementation TableCellTextField
-@synthesize placeholderText;
+@synthesize placeholderText,secureTextEntry;
 -(id)initWithLabel:(NSString *)label placeholderText:(NSString *)placeholderTextArg kvoObject:(NSObject*)kvoObj kvoKeyName:(NSString*)kvoKey
 {
 	self = [super initWithLabel:label kvoObject:kvoObj kvoKeyName:kvoKey];
@@ -470,7 +470,8 @@
 	textField.adjustsFontSizeToFitWidth = YES;
 	textField.textColor = [UIColor blackColor];
 	textField.placeholder = self.placeholderText;
-	
+	if(secureTextEntry)
+		textField.secureTextEntry = YES;
 	// try to set the text!
 		
 	textField.text = [self getKvoValue];

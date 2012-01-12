@@ -16,8 +16,8 @@
 @property (nonatomic, assign) bool registeredForApnsSuccessfully;
 @property (nonatomic, copy) CLLocation *lastKnownLocation;
 
-@property (nonatomic, copy) NSString *candpLoginToken;
-@property (nonatomic, copy) NSString *candpUserId;
+//@property (nonatomic, copy) NSString *candpLoginToken;
+@property (nonatomic, copy) NSNumber *candpUserId;
 
 @property (nonatomic, copy) NSString *facebookAccessToken;
 @property (nonatomic, copy) NSDate *facebookExpirationDate;

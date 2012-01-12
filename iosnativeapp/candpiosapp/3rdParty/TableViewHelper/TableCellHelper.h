@@ -117,6 +117,7 @@ typedef void (^TextFieldDidCommitBlock)(UITextField *textField);
 	TextFieldDidCommitBlock mTextFieldDidCommitBlock;
 }
 @property (nonatomic, copy) NSString *placeholderText;
+@property (nonatomic, assign) bool secureTextEntry;
 @property (nonatomic, copy) TextFieldWillChangeBlock textFieldWillChange;
 @property (nonatomic, copy) TextFieldDidCommitBlock textFieldDidCommit;
 -(id)initWithLabel:(NSString *)label placeholderText:(NSString *)placeholderTextArg kvoObject:(NSObject*)kvoObj kvoKeyName:(NSString*)kvoKey;

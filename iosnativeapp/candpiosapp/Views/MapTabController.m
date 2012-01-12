@@ -28,6 +28,8 @@
 
 @interface MapTabController()
 -(void)zoomTo:(CLLocationCoordinate2D)loc;
+-(void)updateLoginButton;
+
 #if qUseCustomCallout
 @property (nonatomic, strong) CalloutMapAnnotation *calloutAnnotation;
 @property (nonatomic, strong) MKAnnotationView *selectedAnnotationView;
@@ -80,7 +82,7 @@
 	self.navigationController.delegate = self;
 	hasUpdatedUserLocation = false;
 	
-	if([AppDelegate instance].settings.candpLoginToken ||
+	if([AppDelegate instance].settings.candpUserId ||
 	   [[AppDelegate instance].facebook isSessionValid])
 	{
 		self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc]initWithTitle:@"Logout"
@@ -131,6 +133,8 @@
 		hasShownLoadingScreen = true;
 	}
 	
+	[self updateLoginButton];
+
 	// http://www.coffeeandpower.com/api.php?action=userdetail?id=5872
 
 	// kick off a request to load the map items near the given lat & lon
@@ -333,8 +337,6 @@
 				// the facebook login object will handle the sequence that follows
 				FacebookLoginSequence *facebookLogin = [[FacebookLoginSequence alloc]init ];
 				[facebookLogin initiateLogin:self];
-				self.navigationItem.rightBarButtonItem.title = @"Logout";
-				self.navigationItem.rightBarButtonItem.action = @selector(logoutButtonTapped);
 				[AppDelegate instance].loginSequence = facebookLogin;
 				break;
 			}
@@ -371,29 +373,54 @@
 			default:
 				break;
 		}
+		[self updateLoginButton];
+
 	}];
+	
 }
 
 -(void)logoutButtonTapped
 {
 	// logout of *all* accounts
 	
+	// clear out the cookies
+	NSArray *httpscookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:@"https://coffeeandpower.com"]];
+	[httpscookies enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+		NSHTTPCookie *cookie = (NSHTTPCookie*)obj;
+		[[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+	}];
+
 	// facebook
 	if([[AppDelegate instance].facebook isSessionValid])
 	{
 		[[AppDelegate instance].facebook logout];
-		[AppDelegate instance].settings.facebookExpirationDate = nil;
-		[AppDelegate instance].settings.facebookAccessToken = nil;
 	}
+	[AppDelegate instance].settings.facebookExpirationDate = nil;
+	[AppDelegate instance].settings.facebookAccessToken = nil;
 	
-	// and email
-	if([AppDelegate instance].settings.candpLoginToken)
-		[AppDelegate instance].settings.candpLoginToken = nil;
+	// and email credentials
+	// (note that we keep the username & password)
+	[AppDelegate instance].settings.candpUserId = nil;
+	[AppDelegate instance].settings.userNickname = nil;
+	
 	
 	[[AppDelegate instance] saveSettings];
+	[self updateLoginButton];
 	
-	self.navigationItem.rightBarButtonItem.title = @"Login...";
-	self.navigationItem.rightBarButtonItem.action = @selector(loginButtonTapped);
+}
+-(void)updateLoginButton
+{
+	if([AppDelegate instance].settings.facebookAccessToken ||
+	   [AppDelegate instance].settings.candpUserId)
+	{
+		self.navigationItem.rightBarButtonItem.title = @"Logout";
+		self.navigationItem.rightBarButtonItem.action = @selector(logoutButtonTapped);
+	}
+	else
+	{	
+		self.navigationItem.rightBarButtonItem.title = @"Login...";
+		self.navigationItem.rightBarButtonItem.action = @selector(loginButtonTapped);
+	}
 	
 }
 
