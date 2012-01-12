@@ -78,9 +78,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
+
+    UIButton *refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *refreshImage = [UIImage imageNamed:@"refresh"];
+    [refreshButton setImage:refreshImage forState:UIControlStateNormal];
+    [refreshButton addTarget:self action:@selector(refreshLocations) forControlEvents:UIControlEventTouchUpInside];
+    refreshButton.frame = CGRectMake(0, 0, 120, 60);
+    refreshButton.center = CGPointMake(self.view.frame.size.width / 2.0, self.tabBarController.tabBar.frame.origin.y - 100.0);
+    [self.view addSubview:refreshButton];
+
 	self.navigationController.delegate = self;
 	hasUpdatedUserLocation = false;
+
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"List"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self 
+                                                                           action:@selector(listButtonTapped)];
 	
 	if([AppDelegate instance].settings.candpUserId ||
 	   [[AppDelegate instance].facebook isSessionValid])
@@ -228,76 +241,82 @@
 	//	  ]
 	//	}
 	//	
-	
-
-#if 1
-	
-	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.coffeeandpower.com/api.php?action=userlist&lat=36&lon=-122"]];
-	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-		
-		// clear out all the old annotations
-		// TODO: update the existing elements instead of removing them all
-		// 
-		
-		
-		// for now, just remove all the old missions/users
-		// TODO: handle the updates individually
-		[mapView removeAnnotations:missions];
-
-		// start with a new list
-		missions = [NSMutableArray array];
-
-		NSArray *payloadArray = [JSON objectForKey:@"payload"];
-		NSLog(@"Got %d users.", [payloadArray count]);
-		for(NSDictionary *userDict in payloadArray)
-		{
-			//NSLog(@"Mission %d: %@", )
-			UserAnnotation *user = [[UserAnnotation alloc]initFromDictionary:userDict];
-			
-			// add (or update) the new pin
-			[missions addObject:user];
-			
-		}
-		// and the (potential) pin, too
-		[mapView addAnnotations:missions];
-		
-		[SVProgressHUD dismiss];
-
-	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-		//int z = 99;
-	}];
-
-#else
-	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.coffeeandpower.com/api.php?action=mission&lat=36&lon=-122"]];
-	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-		missions = [NSMutableArray array];
-		NSArray *payloadArray = [JSON objectForKey:@"payload"];
-		NSLog(@"Got %d missions.", [payloadArray count]);
-		for(NSDictionary *missionDict in payloadArray)
-		{
-			//NSLog(@"Mission %d: %@", )
-			int z = 0;
-			MissionAnnotation *mission = [[MissionAnnotation alloc]initFromDictionary:missionDict];
-			[missions addObject:mission];
-			[mapView addAnnotation:mission];
-		}
-		//[mapView addAnnotations:missions];
-	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-		int z = 99;
-	}];
-#endif
-	
-	NSOperationQueue *queue = [NSOperationQueue mainQueue];
-	//NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-	[queue addOperation:operation];
-
-	
+    
+    [self refreshLocations];
 }
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
     return YES;
     //return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)refreshLocations {
+    #if 1
+        
+        CLLocationCoordinate2D currentLocation = [AppDelegate instance].settings.lastKnownLocation.coordinate;
+    
+        NSString *urlString = [NSString stringWithFormat:@"http://www.coffeeandpower.com/api.php?action=userlist&lat=%f&lon=%f", currentLocation.latitude, currentLocation.longitude];
+    
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            
+            // clear out all the old annotations
+            // TODO: update the existing elements instead of removing them all
+            // 
+            
+            
+            // for now, just remove all the old missions/users
+            // TODO: handle the updates individually
+            [mapView removeAnnotations:missions];
+            
+            // start with a new list
+            missions = [NSMutableArray array];
+            
+            NSArray *payloadArray = [JSON objectForKey:@"payload"];
+            NSLog(@"Got %d users.", [payloadArray count]);
+            for(NSDictionary *userDict in payloadArray)
+            {
+                //NSLog(@"Mission %d: %@", )
+                UserAnnotation *user = [[UserAnnotation alloc]initFromDictionary:userDict];
+                
+                // add (or update) the new pin
+                [missions addObject:user];
+                
+            }
+            // and the (potential) pin, too
+            [mapView addAnnotations:missions];
+            
+            [SVProgressHUD dismiss];
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+            //int z = 99;
+        }];
+        
+    #else
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.coffeeandpower.com/api.php?action=mission&lat=36&lon=-122"]];
+        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            missions = [NSMutableArray array];
+            NSArray *payloadArray = [JSON objectForKey:@"payload"];
+            NSLog(@"Got %d missions.", [payloadArray count]);
+            for(NSDictionary *missionDict in payloadArray)
+            {
+                //NSLog(@"Mission %d: %@", )
+                int z = 0;
+                MissionAnnotation *mission = [[MissionAnnotation alloc]initFromDictionary:missionDict];
+                [missions addObject:mission];
+                [mapView addAnnotation:mission];
+            }
+            //[mapView addAnnotations:missions];
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+            int z = 99;
+        }];
+    #endif
+	
+	NSOperationQueue *queue = [NSOperationQueue mainQueue];
+	//NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+	[queue addOperation:operation];    
 }
 
 // called just before a controller pops us
@@ -316,6 +335,11 @@
 	}
 #endif
 	
+}
+
+-(void)listButtonTapped
+{
+    NSLog(@"Coming soon");
 }
 
 -(void)loginButtonTapped
