@@ -11,6 +11,7 @@
 #import "NSMutableURLRequestAdditions.h"
 #import "AFHTTPClient.h"
 #import "BaseViewController.h"
+#import "AFHTTPRequestOperation.h"
 
 @interface AppDelegate(Internal)
 -(void)loadSettings;
@@ -21,6 +22,7 @@
 @synthesize settings;
 @synthesize facebook;
 @synthesize loginSequence;
+@synthesize urbanAirshipClient;
 
 +(AppDelegate*)instance
 {
@@ -39,6 +41,9 @@
 	facebook = [[Facebook alloc] initWithAppId:kFacebookAppId andDelegate:self];
 	facebook.accessToken = settings.facebookAccessToken;
 	facebook.expirationDate = settings.facebookExpirationDate;
+	
+	
+	urbanAirshipClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://go.urbanairship.com/api"]];
 
 	// register for push 
 	// TODO: put this as part of the login procedure
@@ -99,17 +104,44 @@
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken 
 {
-    settings.registeredForApnsSuccessfully = YES;
+	// We get here if the user has allowed Push Notifications
+	
+	// We need to get our authorization token and send it to our servers
+	
+	
+
+	// first, encode the the push authorization token
     const unsigned char *devTokenBytes = [devToken bytes];
-	// 
 	NSMutableString * devTokenHexEncoded=[NSMutableString stringWithCapacity:([devToken length] * 2)];
 	for (int i = 0; i < [devToken length]; ++i) {
 		[devTokenHexEncoded appendFormat:@"%02X", (unsigned long)devTokenBytes[i]];
 	}
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://go.urbanairship.com/api/device_tokens/%@", devTokenHexEncoded]];
-	NSMutableURLRequest *registerTokenAtUrbanAirship = [NSMutableURLRequest requestWithURL:url ];
-	registerTokenAtUrbanAirship.HTTPMethod = @"PUT";
-	//	[AFHTTPClient 
+	
+	//---------------------
+	// Now, create the http request to upload it
+	// create the username & password fields
+	[urbanAirshipClient setAuthorizationHeaderWithUsername:kUrbanAirshipApplicationKey password:kUrbanAirshipApplicationSecret];
+	NSString *path = [NSString stringWithFormat:@"/api/device_tokens/%@", devTokenHexEncoded];
+	NSMutableURLRequest *registerTokenAtUrbanAirship = [urbanAirshipClient requestWithMethod:@"PUT" path:path parameters:nil];
+
+	
+	AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:registerTokenAtUrbanAirship];
+	__weak AFHTTPRequestOperation *weakOp = operation;
+	operation.completionBlock = ^ {
+		if ([weakOp hasAcceptableStatusCode]) {
+			NSLog(@"Push notification credentials sent");
+			
+			// remember that it's succeeded
+			settings.registeredForApnsSuccessfully = YES;
+			[self saveSettings];
+
+		} else {
+			NSLog(@"[Error]: (%@ %@) %@", [weakOp.request HTTPMethod], [[weakOp.request URL] relativePath], weakOp.error);
+		}
+	};
+	
+	NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+	[queue addOperation:operation];
 }
 
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err 
