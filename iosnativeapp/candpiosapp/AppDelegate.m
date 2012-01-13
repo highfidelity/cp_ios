@@ -160,13 +160,50 @@
 }
 - (void)fbDidLogout
 {
-    settings.facebookAccessToken = nil ;
-    settings.facebookExpirationDate = nil ;
-	[self saveSettings];
+	// we should have already cleared these out
+//    settings.facebookAccessToken = nil ;
+//    settings.facebookExpirationDate = nil ;
+//	[self saveSettings];
 	
 }
 ////////////////////////////////////////////////////////////////////////////////////
 
+-(void)logoutEverything
+{
+	// clear out the cookies
+	//NSArray *httpscookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:@"https://coffeeandpower.com"]];
+	//NSArray *httpscookies2 = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:@"https://staging.coffeeandpower.com"]];
+	NSArray *httpscookies3 = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:kCandPWebServiceUrl]];
+	
+	[httpscookies3 enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+		NSHTTPCookie *cookie = (NSHTTPCookie*)obj;
+		[[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+	}];
+#if DEBUG
+	// check they're all gone
+	NSArray *httpscookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:@"https://coffeeandpower.com"]];
+#endif
+	
+	// facebook
+	if(facebook && [facebook isSessionValid])
+	{
+		[facebook logout];
+	}
+	settings.facebookExpirationDate = nil;
+	settings.facebookAccessToken = nil;
+	
+	// and email credentials
+	// (note that we keep the username & password)
+	settings.candpUserId = nil;
+	settings.userNickname = nil;
+	
+	
+	[[AppDelegate instance] saveSettings];
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////
 
 +(NSString*)settingsFilepath
 {

@@ -411,36 +411,13 @@
 -(void)logoutButtonTapped
 {
 	// logout of *all* accounts
-	
-	// clear out the cookies
-	NSArray *httpscookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:@"https://coffeeandpower.com"]];
-	[httpscookies enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-		NSHTTPCookie *cookie = (NSHTTPCookie*)obj;
-		[[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
-	}];
-
-	// facebook
-	if([[AppDelegate instance].facebook isSessionValid])
-	{
-		[[AppDelegate instance].facebook logout];
-	}
-	[AppDelegate instance].settings.facebookExpirationDate = nil;
-	[AppDelegate instance].settings.facebookAccessToken = nil;
-	
-	// and email credentials
-	// (note that we keep the username & password)
-	[AppDelegate instance].settings.candpUserId = nil;
-	[AppDelegate instance].settings.userNickname = nil;
-	
-	
-	[[AppDelegate instance] saveSettings];
+	[[AppDelegate instance] logoutEverything];
 	[self updateLoginButton];
 	
 }
 -(void)updateLoginButton
-{
-	if([AppDelegate instance].settings.facebookAccessToken ||
-	   [AppDelegate instance].settings.candpUserId)
+{	
+	if([AppDelegate instance].settings.candpUserId)
 	{
 		self.navigationItem.rightBarButtonItem.title = @"Logout";
 		self.navigationItem.rightBarButtonItem.action = @selector(logoutButtonTapped);

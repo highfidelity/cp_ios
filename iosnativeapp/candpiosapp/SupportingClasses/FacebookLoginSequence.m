@@ -13,6 +13,7 @@
 #import "NSMutableURLRequestAdditions.h"
 #import "MyWebTabController.h"
 #import "EmailLoginSequence.h"
+#import "SVProgressHUD.h"
 
 @interface FacebookLoginSequence()
 @end
@@ -27,8 +28,15 @@
 	// set a liberal cookie policy
 	[[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy: NSHTTPCookieAcceptPolicyAlways];
 
+	[[AppDelegate instance] logoutEverything];
+	
 	if (![[AppDelegate instance].facebook isSessionValid]) {
 		[[AppDelegate instance].facebook authorize:[NSArray arrayWithObjects:@"offline_access", nil]];
+	}
+	else
+	{
+		// we have a facebook session, so just get our info & set it with c&p
+		[self handleResponseFromFacebookLogin];
 	}
 }
 
@@ -38,7 +46,7 @@
     [AppDelegate instance].settings.facebookExpirationDate = [[AppDelegate instance].facebook expirationDate];
 	[[AppDelegate instance] saveSettings];
 	
-	
+	[SVProgressHUD showWithStatus:@"Logging in"];
 
 	// get the user's facebook id (via facebook 'me' object)
 	FBRequestOperation *getMe = [[AppDelegate instance].facebook requestWithGraphPath:@"me" andCompletionHandler:^(FBRequestOperation *op, id fbJson, NSError *err) {
@@ -85,6 +93,8 @@
 				
 			}];
 			
+			[SVProgressHUD dismiss];
+
 			// if the user hasn't created an account, we get:
 			//			{
 			//				message = Error;
@@ -102,8 +112,14 @@
 			{
 				// they haven't created an account
 				// so do it now
+				NSString *errorDetail = [[candpJson objectForKey:@"params"]objectForKey:@"message"];
 #if 1
-				UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unable to login" message:@"You must create an account with Facebook first" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+				NSString *displayMessage = [NSString stringWithFormat:@"You must create an account with Facebook first. Detail: %@",errorDetail];
+				UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unable to login"
+															   message:displayMessage
+															  delegate:self 
+													 cancelButtonTitle:@"OK"
+													 otherButtonTitles: nil];
 				[alert show];
 #else
 				[self handleFacebookCreate:facebookId completion:^(NSError *error, id JSON) {
@@ -131,7 +147,8 @@
 		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
 			// handle error
 			NSLog(@"AFJSONRequestOperation error: %@", [error localizedDescription] );
-			
+			[SVProgressHUD dismissWithError:[error localizedDescription]];
+
 		} ];
 		
 		[[NSOperationQueue mainQueue]  addOperation:postOperation];

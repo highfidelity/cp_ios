@@ -14,6 +14,7 @@
 #import "MyWebTabController.h"
 #import "CreateEmailAccountController.h"
 #import "TableCellHelper.h"
+#import "SVProgressHUD.h"
 
 @interface EmailLoginSequence()
 @property (nonatomic, weak) UIViewController	*createOrLoginController;
@@ -231,7 +232,12 @@
 	// force all fields to commit
 	[createOrLoginController.view endEditing:YES];
 	[[AppDelegate instance] saveSettings];
+	
+	// make sure we logout (clear any old sessions)
+	[[AppDelegate instance] logoutEverything];
 
+	[SVProgressHUD showWithStatus:@"Logging in"];
+	
 	NSString *userEmail = [AppDelegate instance].settings.userEmailAddress;
 	NSString *password = [AppDelegate instance].settings.userPassword;
 	[self handleEmailLogin:userEmail password:password];
@@ -416,12 +422,14 @@
 		//					"zoom_level" = 0;
 		//				};
 		
-		
+		[SVProgressHUD dismiss];
+
 		// currently, we only a success=0 field if it fails
 		// (if it succeeds, it's just the user data)
 		NSNumber *successNum = [jsonDict objectForKey:@"succeeded"];
 		if(successNum && [successNum intValue] == 0)
 		{
+
 			NSString *outerErrorMessage = [jsonDict objectForKey:@"message"];// often just 'error'
 			NSString *serverErrorMessage = [[jsonDict objectForKey:@"params"] objectForKey:@"message"];
 			NSString *errorMessage = [NSString stringWithFormat:@"The error was:%@", serverErrorMessage];
@@ -455,6 +463,8 @@
 #if DEBUG
 		NSLog(@"AFJSONRequestOperation error: %@", [error localizedDescription] );
 #endif
+		[SVProgressHUD dismissWithError:[error localizedDescription]];
+
 		
 	} ];
 	
