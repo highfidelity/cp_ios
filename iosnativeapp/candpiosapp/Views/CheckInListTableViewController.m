@@ -109,6 +109,8 @@
                           
                           options:kNilOptions 
                           error:&error];
+
+    // Do error checking here, in case Foursquare is down
     
     NSArray *itemsArray = [[[[json valueForKey:@"response"] valueForKey:@"groups"] valueForKey:@"items"] objectAtIndex:0];
 

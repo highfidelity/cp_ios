@@ -17,6 +17,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        NSLog(@"INIT");
         // Custom initialization
     }
     return self;
@@ -43,11 +44,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
+        NSLog(@"INIT2");	
 	//
 	NSMutableURLRequest *request;
 	if(urlToLoad)
 	{
+        NSLog(@"init3");
 		request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: urlToLoad]];
 	}
 	else if (urlRequestToLoad)

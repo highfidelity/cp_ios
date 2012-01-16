@@ -22,6 +22,7 @@
 #import "FacebookLoginSequence.h"
 #import "EmailLoginSequence.h"
 #import "CreateEmailAccountController.h"
+#import "UserListTableViewController.h"
 #import "SignupController.h"
 
 #define qUseCustomCallout						0
@@ -340,7 +341,9 @@
 
 -(void)listButtonTapped
 {
-    NSLog(@"Coming soon");
+    UserListTableViewController *userListTableViewController = [[UserListTableViewController alloc] init];
+    userListTableViewController.missions = missions;
+    [self.navigationController pushViewController:userListTableViewController animated:YES];
 }
 
 -(void)loginButtonTapped
