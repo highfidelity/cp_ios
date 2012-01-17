@@ -86,6 +86,7 @@
 		8733312714BCFB0D001BF4DB /* CreateEmailAccountController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8733312514BCFB0D001BF4DB /* CreateEmailAccountController.xib */; };
 		8745448D14B799C100D96134 /* NSDictionaryAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8745448814B799C100D96134 /* NSDictionaryAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8745448E14B799C100D96134 /* NSMutableURLRequestAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8745448A14B799C100D96134 /* NSMutableURLRequestAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		875CB8F414C5DC8C00AD4F6E /* MapDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 875CB8F314C5DC8C00AD4F6E /* MapDataSet.m */; };
 		87701C4B14B2613E00102A77 /* EmptyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87701C4A14B2613E00102A77 /* EmptyController.m */; };
 		879381E414B4E659000EBCED /* Facebook+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 879381E314B4E659000EBCED /* Facebook+Blocks.m */; };
 		87DC9A3914BEB92200BA3907 /* SignupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DC9A3714BEB92200BA3907 /* SignupController.m */; };
@@ -252,6 +253,8 @@
 		8745448814B799C100D96134 /* NSDictionaryAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionaryAdditions.m; sourceTree = "<group>"; };
 		8745448914B799C100D96134 /* NSMutableURLRequestAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMutableURLRequestAdditions.h; sourceTree = "<group>"; };
 		8745448A14B799C100D96134 /* NSMutableURLRequestAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMutableURLRequestAdditions.m; sourceTree = "<group>"; };
+		875CB8F214C5DC8C00AD4F6E /* MapDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapDataSet.h; sourceTree = "<group>"; };
+		875CB8F314C5DC8C00AD4F6E /* MapDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapDataSet.m; sourceTree = "<group>"; };
 		87701C4914B2613D00102A77 /* EmptyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyController.h; sourceTree = "<group>"; };
 		87701C4A14B2613E00102A77 /* EmptyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyController.m; sourceTree = "<group>"; };
 		879381E214B4E659000EBCED /* Facebook+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Facebook+Blocks.h"; sourceTree = "<group>"; };
@@ -606,6 +609,8 @@
 				32E3CD8D14C3AAA5001EA2AB /* WebView.xib */,
 				32E3CD8E14C3AAA5001EA2AB /* WebViewController.h */,
 				32E3CD8F14C3AAA5001EA2AB /* WebViewController.m */,
+				875CB8F214C5DC8C00AD4F6E /* MapDataSet.h */,
+				875CB8F314C5DC8C00AD4F6E /* MapDataSet.m */,
 			);
 			path = SupportingClasses;
 			sourceTree = "<group>";
@@ -853,6 +858,7 @@
 				87DC9A4214BECB6F00BA3907 /* LoginSequenceBase.m in Sources */,
 				32E3CD8614C39B94001EA2AB /* UserTableViewCell.m in Sources */,
 				32E3CD9114C3AAA5001EA2AB /* WebViewController.m in Sources */,
+				875CB8F414C5DC8C00AD4F6E /* MapDataSet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

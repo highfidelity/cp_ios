@@ -24,9 +24,10 @@
 #import "CreateEmailAccountController.h"
 #import "UserListTableViewController.h"
 #import "SignupController.h"
+#import "MapDataSet.h"
 
 #define qUseCustomCallout						0
-#define qHideTopNavigationBarOnMapView		0
+#define qHideTopNavigationBarOnMapView			0
 
 @interface MapTabController()
 -(void)zoomTo:(CLLocationCoordinate2D)loc;
@@ -42,7 +43,12 @@
 
 @implementation MapTabController
 @synthesize mapView;
+#if qUseDataSets
+@synthesize dataset;
+#else
 @synthesize missions;
+#endif
+
 #if qUseCustomCallout
 @synthesize calloutAnnotation, selectedAnnotationView;
 #endif
@@ -52,7 +58,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+#if !qUseDataSets
 		missions = [NSMutableArray array];
+#endif
     }
     return self;
 }
@@ -255,6 +263,28 @@
 }
 
 - (void)refreshLocations {
+	
+#if qUseDataSets
+	[MapDataSet beginLoadingNewDataset:[AppDelegate instance].settings.lastKnownLocation.coordinate
+							radiusInKm:5.0 completion:^(MapDataSet *newDataset, NSError *error) {
+								
+								if(newDataset)
+								{
+									// remove the old pins
+									if(dataset)
+										[mapView removeAnnotations:dataset.annotations];
+									
+									// add new the new ones
+									[mapView addAnnotations:newDataset.annotations];
+									
+									dataset = newDataset;
+								}
+								
+								[SVProgressHUD dismiss];
+
+
+							}];
+#else
     #if 1
         
         CLLocationCoordinate2D currentLocation = [AppDelegate instance].settings.lastKnownLocation.coordinate;
@@ -319,6 +349,7 @@
 	NSOperationQueue *queue = [NSOperationQueue mainQueue];
 	//NSOperationQueue *queue = [[NSOperationQueue alloc] init];
 	[queue addOperation:operation];    
+#endif
 }
 
 // called just before a controller pops us
@@ -342,7 +373,12 @@
 -(void)listButtonTapped
 {
     UserListTableViewController *userListTableViewController = [[UserListTableViewController alloc] init];
+#if qUseDataSets
+    userListTableViewController.missions = dataset.annotations;
+	
+#else
     userListTableViewController.missions = missions;
+#endif
     [self.navigationController pushViewController:userListTableViewController animated:YES];
 }
 
@@ -478,7 +514,11 @@
 		// make the right callout
 		UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 		button.frame =CGRectMake(0, 0, 32, 32);
+#if qUseDataSets
+		button.tag = [dataset.annotations indexOfObject:candpanno];
+#else
 		button.tag = [missions indexOfObject:candpanno];
+#endif
 		pin.rightCalloutAccessoryView = button;
 		[button addTarget:self action:@selector(accessoryButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 #endif
@@ -548,9 +588,14 @@
 {
 	// figure out which element was tapped, and open the page
 	int index = sender.tag;
-	if(index < [missions count])
+	#if qUseDataSets
+		NSArray *annotations = dataset.annotations;
+	#else
+		NSArray *annotations = missions;
+	#endif
+	if(index < [annotations count])
 	{
-		CandPAnnotation *tappedObj = [missions objectAtIndex:index];
+		CandPAnnotation *tappedObj = [annotations objectAtIndex:index];
 		// 
 		MyWebTabController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"WebViewOfCandPUser"];
 		NSString *url = [NSString stringWithFormat:@"http://www.coffeeandpower.com/profile.php?u=%@", tappedObj.objectId];
