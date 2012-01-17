@@ -127,9 +127,9 @@
 		32E3CD8314C39B94001EA2AB /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTableViewCell.h; sourceTree = "<group>"; };
 		32E3CD8414C39B94001EA2AB /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTableViewCell.m; sourceTree = "<group>"; };
 		32E3CD8514C39B94001EA2AB /* UserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserTableViewCell.xib; sourceTree = "<group>"; };
-		32E3CD8D14C3AAA5001EA2AB /* WebView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WebView.xib; path = ../../../../sled/Classes/WebView.xib; sourceTree = "<group>"; };
-		32E3CD8E14C3AAA5001EA2AB /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = ../../../../sled/Classes/WebViewController.h; sourceTree = "<group>"; };
-		32E3CD8F14C3AAA5001EA2AB /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = ../../../../sled/Classes/WebViewController.m; sourceTree = "<group>"; };
+		32E3CD8D14C3AAA5001EA2AB /* WebView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebView.xib; sourceTree = "<group>"; };
+		32E3CD8E14C3AAA5001EA2AB /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		32E3CD8F14C3AAA5001EA2AB /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		32FF63D214BB935100E99F55 /* CheckInListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckInListTableViewController.h; sourceTree = "<group>"; };
 		32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInListTableViewController.m; sourceTree = "<group>"; };
 		32FF63D914BBE71A00E99F55 /* CheckInDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckInDetailsViewController.h; sourceTree = "<group>"; };
