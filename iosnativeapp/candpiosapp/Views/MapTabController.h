@@ -9,11 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-#define qUseDataSets							1
 
-#if qUseDataSets
 @class MapDataSet;
-#endif
+
 @interface MapTabController : UIViewController< MKMapViewDelegate, UINavigationControllerDelegate >
 {
 	bool hasUpdatedUserLocation;
@@ -21,11 +19,7 @@
 }
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-#if qUseDataSets
 @property (nonatomic, readonly, strong) MapDataSet *dataset;
-#else
-@property (nonatomic, readonly, strong) NSMutableArray *missions;
-#endif
 
 - (void)listButtonTapped;
 - (void)refreshLocations;

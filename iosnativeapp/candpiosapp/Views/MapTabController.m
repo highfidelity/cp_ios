@@ -43,11 +43,7 @@
 
 @implementation MapTabController
 @synthesize mapView;
-#if qUseDataSets
 @synthesize dataset;
-#else
-@synthesize missions;
-#endif
 
 #if qUseCustomCallout
 @synthesize calloutAnnotation, selectedAnnotationView;
@@ -58,9 +54,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-#if !qUseDataSets
-		missions = [NSMutableArray array];
-#endif
     }
     return self;
 }
@@ -264,13 +257,14 @@
 
 - (void)refreshLocations {
 	
-#if qUseDataSets
 	[MapDataSet beginLoadingNewDataset:[AppDelegate instance].settings.lastKnownLocation.coordinate
 							radiusInKm:5.0 completion:^(MapDataSet *newDataset, NSError *error) {
+								
 								
 								if(newDataset)
 								{
 									// remove the old pins
+									// TODO: update/merge existing elements instead of removing them all
 									if(dataset)
 										[mapView removeAnnotations:dataset.annotations];
 									
@@ -284,72 +278,7 @@
 
 
 							}];
-#else
-    #if 1
-        
-        CLLocationCoordinate2D currentLocation = [AppDelegate instance].settings.lastKnownLocation.coordinate;
-    
-        NSString *urlString = [NSString stringWithFormat:@"http://www.coffeeandpower.com/api.php?action=userlist&lat=%f&lon=%f", currentLocation.latitude, currentLocation.longitude];
-    
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-            
-            // clear out all the old annotations
-            // TODO: update the existing elements instead of removing them all
-            // 
-            
-            
-            // for now, just remove all the old missions/users
-            // TODO: handle the updates individually
-            [mapView removeAnnotations:missions];
-            
-            // start with a new list
-            missions = [NSMutableArray array];
-            
-            NSArray *payloadArray = [JSON objectForKey:@"payload"];
-            NSLog(@"Got %d users.", [payloadArray count]);
-            for(NSDictionary *userDict in payloadArray)
-            {
-                //NSLog(@"Mission %d: %@", )
-                UserAnnotation *user = [[UserAnnotation alloc]initFromDictionary:userDict];
-                
-                // add (or update) the new pin
-                [missions addObject:user];
-                
-            }
-            // and the (potential) pin, too
-            [mapView addAnnotations:missions];
-            
-            [SVProgressHUD dismiss];
-            
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-            //int z = 99;
-        }];
-        
-    #else
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.coffeeandpower.com/api.php?action=mission&lat=36&lon=-122"]];
-        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-            missions = [NSMutableArray array];
-            NSArray *payloadArray = [JSON objectForKey:@"payload"];
-            NSLog(@"Got %d missions.", [payloadArray count]);
-            for(NSDictionary *missionDict in payloadArray)
-            {
-                //NSLog(@"Mission %d: %@", )
-                int z = 0;
-                MissionAnnotation *mission = [[MissionAnnotation alloc]initFromDictionary:missionDict];
-                [missions addObject:mission];
-                [mapView addAnnotation:mission];
-            }
-            //[mapView addAnnotations:missions];
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-            int z = 99;
-        }];
-    #endif
-	
-	NSOperationQueue *queue = [NSOperationQueue mainQueue];
-	//NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-	[queue addOperation:operation];    
-#endif
+
 }
 
 // called just before a controller pops us
@@ -373,78 +302,14 @@
 -(void)listButtonTapped
 {
     UserListTableViewController *userListTableViewController = [[UserListTableViewController alloc] init];
-#if qUseDataSets
     userListTableViewController.missions = dataset.annotations;
-	
-#else
-    userListTableViewController.missions = missions;
-#endif
     [self.navigationController pushViewController:userListTableViewController animated:YES];
 }
 
 -(void)loginButtonTapped
 {
-#if 1
 	SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
 	[self.navigationController pushViewController:controller animated:YES];
-#else
-	// show the actionsheet
-	SA_ActionSheet  *actionSheet= [[SA_ActionSheet alloc] initWithTitle:@"Login with:"
-																delegate:nil 
-													   cancelButtonTitle:@"Cancel" 
-												  destructiveButtonTitle:nil 
-													   otherButtonTitles: @"Facebook", @"Email", @"Create Account", nil];
-	
-	[actionSheet showInView:self.view  buttonBlock:^(int buttonIndex) {
-		NSLog(@"Button tapped: %d", buttonIndex);
-		switch (buttonIndex) {
-				
-			case 0: 
-			{
-				// handle facebook login
-				// the facebook login object will handle the sequence that follows
-				FacebookLoginSequence *facebookLogin = [[FacebookLoginSequence alloc]init ];
-				[facebookLogin initiateLogin:self];
-				[AppDelegate instance].loginSequence = facebookLogin;
-				break;
-			}
-				
-			case 1:
-			{
-				// handle email login
-				// include Forgot option (but not create for now)
-				EmailLoginSequence *emailLogin = [[EmailLoginSequence alloc]init ];
-				[emailLogin initiateLogin:self];
-				//[emailLogin handleEmailCreate:@"david@mindfulbear.com" password:@"mindmind2012" nickname:@"DavidTest2012" ];
-				//[emailLogin handleForgotEmailLogin:@"dmojdehi@mac.com"];
-				//[emailLogin handleEmailLogin: @"candptest+5@gmail.com" password:@"abc123"];
-				//[emailLogin handleEmailLogin: @"dmojdehi@mac.com" password:@""];
-				[AppDelegate instance].loginSequence = emailLogin;
-
-				break;
-			}
-				
-			case 2:
-			{
-				
-				// handle create (via email)
-				EmailLoginSequence *emailLogin = [[EmailLoginSequence alloc]init ];
-				[emailLogin initiateAccountCreation:self];
-
-				break;
-			}
-			
-			case 3:
-				// handle cancel
-				break;
-				
-			default:
-				break;
-		}
-		[self updateLoginButton];
-
-	}];
-#endif
 }
 
 -(void)logoutButtonTapped
@@ -514,11 +379,7 @@
 		// make the right callout
 		UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 		button.frame =CGRectMake(0, 0, 32, 32);
-#if qUseDataSets
 		button.tag = [dataset.annotations indexOfObject:candpanno];
-#else
-		button.tag = [missions indexOfObject:candpanno];
-#endif
 		pin.rightCalloutAccessoryView = button;
 		[button addTarget:self action:@selector(accessoryButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 #endif
@@ -588,11 +449,7 @@
 {
 	// figure out which element was tapped, and open the page
 	int index = sender.tag;
-	#if qUseDataSets
-		NSArray *annotations = dataset.annotations;
-	#else
-		NSArray *annotations = missions;
-	#endif
+	NSArray *annotations = dataset.annotations;
 	if(index < [annotations count])
 	{
 		CandPAnnotation *tappedObj = [annotations objectAtIndex:index];
