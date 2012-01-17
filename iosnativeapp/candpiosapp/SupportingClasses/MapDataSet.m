@@ -32,7 +32,7 @@
 	CLLocationDistance diameter = [zeroLocation distanceFromLocation:deltaAsLocation]; // in meters
 
     
-	NSString *urlString = [NSString stringWithFormat:@"http://www.coffeeandpower.com/api.php?action=userlist&lat=%.7f&lon=%.7f&radius=%.7f", currentLocation.latitude, currentLocation.longitude, diameter / 2.0];
+	NSString *urlString = [NSString stringWithFormat:@"http://www.coffeeandpower.com/api.php?action=userlist&lat=%.7f&lon=%.7f&radius=%.1f", currentLocation.latitude, currentLocation.longitude, diameter / 2.0];
 #if DEBUG
 	NSLog(@"Loading datapoints from: %@", urlString);
 #endif
