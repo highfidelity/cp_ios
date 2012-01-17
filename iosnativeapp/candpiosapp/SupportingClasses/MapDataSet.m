@@ -33,7 +33,9 @@
 
     
 	NSString *urlString = [NSString stringWithFormat:@"http://www.coffeeandpower.com/api.php?action=userlist&lat=%.7f&lon=%.7f&radius=%.7f", currentLocation.latitude, currentLocation.longitude, diameter / 2.0];
-    
+#if DEBUG
+	NSLog(@"Loading datapoints from: %@", urlString);
+#endif
 	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
 	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 		

@@ -32,6 +32,8 @@
 
 -(void)accessoryButtonTapped:(UIButton*)sender;
 @property (nonatomic, strong) NSTimer *reloadTimer;
+-(void)refreshLocationsIfNeeded;
+
 @end
 
 @implementation MapTabController
@@ -88,7 +90,7 @@
 	// (the data invalidates every 2 minutes, but we check more often)
 	reloadTimer = [NSTimer scheduledTimerWithTimeInterval:10.0
 												   target:self
-												 selector:@selector(refreshLocations)
+												 selector:@selector(refreshLocationsIfNeeded)
 												 userInfo:nil
 												  repeats:YES];
 	
@@ -246,7 +248,7 @@
 	//	}
 	//	
     
-    [self refreshLocations];
+    [self refreshLocationsIfNeeded];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -256,17 +258,20 @@
     //return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+-(void)refreshLocationsIfNeeded
+{
+	MKMapRect mapRect = mapView.visibleMapRect;
+
+	if(!dataset || ![dataset isValidFor:mapRect])
+	{
+		[self refreshLocations];
+	}
+		
+
+}
 - (void)refreshLocations 
 {
 	MKMapRect mapRect = mapView.visibleMapRect;
-	if(dataset && [dataset isValidFor:mapRect])
-	{
-		
-	}
-	else
-	{
-		
-		
 		[MapDataSet beginLoadingNewDataset:mapRect
 								completion:^(MapDataSet *newDataset, NSError *error) {
 									
@@ -288,7 +293,6 @@
 									
 									
 								}];
-	}
 
 
 }
@@ -416,7 +420,7 @@
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
-	[self refreshLocations];
+	[self refreshLocationsIfNeeded];
 }
 
 - (void)mapViewWillStartLocatingUser:(MKMapView *)mapView
@@ -431,18 +435,21 @@
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
 	NSLog(@"MapTab: didUpdateUserLocation (lat %f, lon %f)", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
-		
-	// save the location for the next time
-	[AppDelegate instance].settings.hasLocation= true;
-	[AppDelegate instance].settings.lastKnownLocation = userLocation.location;
-	[[AppDelegate instance] saveSettings];
 	
-	// zoom to it, but only the first time
-	if(!hasUpdatedUserLocation)
+	if(userLocation.location.coordinate.latitude != 0 && userLocation.location.coordinate.longitude != 0)
 	{
-		NSLog(@"MapTab: didUpdateUserLocation a zoomto (lat %f, lon %f)", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
-		[self zoomTo:userLocation.location.coordinate];
-		hasUpdatedUserLocation = true;
+		// save the location for the next time
+		[AppDelegate instance].settings.hasLocation= true;
+		[AppDelegate instance].settings.lastKnownLocation = userLocation.location;
+		[[AppDelegate instance] saveSettings];
+		
+		// zoom to it, but only the first time
+		if(!hasUpdatedUserLocation)
+		{
+			NSLog(@"MapTab: didUpdateUserLocation a zoomto (lat %f, lon %f)", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
+			[self zoomTo:userLocation.location.coordinate];
+			hasUpdatedUserLocation = true;
+		}
 	}
 }
 - (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
