@@ -13,11 +13,11 @@
 @interface MapDataSet : NSObject
 @property (nonatomic, readonly, strong) NSMutableArray *annotations;
 @property (nonatomic, strong) NSDate *dateLoaded;
-@property (nonatomic, assign) MKCoordinateRegion regionCovered;
+@property (nonatomic, assign) MKMapRect regionCovered;
 
-+(void)beginLoadingNewDataset:(CLLocationCoordinate2D)currentLocation
-				   radiusInKm:(double)radiusInKm
-				  completion:(void (^)(MapDataSet *set, NSError *error))completion;
++(void)beginLoadingNewDataset:(MKMapRect)mapRect
+				   completion:(void (^)(MapDataSet *set, NSError *error))completion;
 
+-(bool)isValidFor:(MKMapRect)newRegion;
 
 @end

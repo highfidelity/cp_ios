@@ -39,11 +39,13 @@
 #else
 -(void)accessoryButtonTapped:(UIButton*)sender;
 #endif
+@property (nonatomic, strong) NSTimer *reloadTimer;
 @end
 
 @implementation MapTabController
 @synthesize mapView;
 @synthesize dataset;
+@synthesize reloadTimer;
 
 #if qUseCustomCallout
 @synthesize calloutAnnotation, selectedAnnotationView;
@@ -92,7 +94,15 @@
 
 	self.navigationController.delegate = self;
 	hasUpdatedUserLocation = false;
-
+	
+	// every 10 seconds, see if it's time to refresh the data
+	// (the data invalidates every 2 minutes, but we check more often)
+	reloadTimer = [NSTimer scheduledTimerWithTimeInterval:10.0
+												   target:self
+												 selector:@selector(refreshLocations)
+												 userInfo:nil
+												  repeats:YES];
+	
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"List"
                                                                             style:UIBarButtonItemStylePlain
                                                                            target:self 
@@ -135,6 +145,8 @@
 {
 	[self setMapView:nil];
     [super viewDidUnload];
+	[reloadTimer invalidate];
+	reloadTimer = nil;
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
@@ -255,29 +267,40 @@
     //return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)refreshLocations {
-	
-	[MapDataSet beginLoadingNewDataset:[AppDelegate instance].settings.lastKnownLocation.coordinate
-							radiusInKm:5.0 completion:^(MapDataSet *newDataset, NSError *error) {
-								
-								
-								if(newDataset)
-								{
-									// remove the old pins
-									// TODO: update/merge existing elements instead of removing them all
-									if(dataset)
-										[mapView removeAnnotations:dataset.annotations];
+- (void)refreshLocations 
+{
+	MKMapRect mapRect = mapView.visibleMapRect;
+	if(dataset && [dataset isValidFor:mapRect])
+	{
+		
+	}
+	else
+	{
+		
+		
+		[MapDataSet beginLoadingNewDataset:mapRect
+								completion:^(MapDataSet *newDataset, NSError *error) {
 									
-									// add new the new ones
-									[mapView addAnnotations:newDataset.annotations];
 									
-									dataset = newDataset;
-								}
-								
-								[SVProgressHUD dismiss];
+									if(newDataset)
+									{
+										// remove the old pins
+										// TODO: update/merge existing elements instead of removing them all
+										if(dataset)
+											[mapView removeAnnotations:dataset.annotations];
+										
+										// add new the new ones
+										[mapView addAnnotations:newDataset.annotations];
+										
+										dataset = newDataset;
+									}
+									
+									[SVProgressHUD dismiss];
+									
+									
+								}];
+	}
 
-
-							}];
 
 }
 
@@ -462,6 +485,11 @@
 }
 #endif
 ////// map delegate
+
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+{
+	[self refreshLocations];
+}
 
 - (void)mapViewWillStartLocatingUser:(MKMapView *)mapView
 {

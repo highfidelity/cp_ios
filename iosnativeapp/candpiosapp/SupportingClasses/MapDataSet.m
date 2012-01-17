@@ -20,20 +20,26 @@
 @synthesize regionCovered;
 
 
-+(void)beginLoadingNewDataset:(CLLocationCoordinate2D)currentLocation
-				   radiusInKm:(double)radiusInKm
++(void)beginLoadingNewDataset:(MKMapRect)mapRect
 					 completion:(void (^)(MapDataSet *set, NSError *error))completion
-
 {
+	// get the center of the view
+	MKCoordinateRegion region = MKCoordinateRegionForMapRect(mapRect);
+	CLLocationCoordinate2D currentLocation = region.center;
+	// calculate the size of the view
+	CLLocation * zeroLocation = [[CLLocation alloc] initWithLatitude: 0.0 longitude:0.0];
+	CLLocation * deltaAsLocation = [[CLLocation alloc] initWithLatitude:region.span.latitudeDelta longitude:region.span.longitudeDelta];
+	CLLocationDistance diameter = [zeroLocation distanceFromLocation:deltaAsLocation]; // in meters
+
     
-	NSString *urlString = [NSString stringWithFormat:@"http://www.coffeeandpower.com/api.php?action=userlist&lat=%f&lon=%f", currentLocation.latitude, currentLocation.longitude];
+	NSString *urlString = [NSString stringWithFormat:@"http://www.coffeeandpower.com/api.php?action=userlist&lat=%.7f&lon=%.7f&radius=%.7f", currentLocation.latitude, currentLocation.longitude, diameter / 2.0];
     
 	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
 	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 		
 		MapDataSet *dataSet = [[MapDataSet alloc]initFromJson:JSON];
-		MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(currentLocation, radiusInKm, radiusInKm);
-		dataSet.regionCovered = region;
+		dataSet.regionCovered = mapRect;
+		dataSet.dateLoaded = [NSDate date];
 		//dataSet.regionCovered = [[CLRegion alloc]initCircularRegionWithCenter:currentLocation radius:radiusInKm identifier:nil];
 		
 		if(completion)
@@ -67,6 +73,32 @@
 		
 	}
 	return self;
+}
+
+// called by the mapview after scrolling & zooming
+// 
+-(bool)isValidFor:(MKMapRect)newRegion
+{
+	const double kTwoMinutesAgo = - 2 * 60;
+	
+	// if the data is old, we need to reload anyway
+	double age = [dateLoaded timeIntervalSinceNow];
+	if(dateLoaded && age < kTwoMinutesAgo)
+	{
+		return false;
+	}
+	
+	// 
+	if(MKMapRectContainsRect(regionCovered, newRegion))
+	{
+		// we get here if the new region is *entirely* within our dataset
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	
 }
 
 @end
