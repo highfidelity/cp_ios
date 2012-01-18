@@ -10,6 +10,7 @@
 #import "AFHTTPClient.h"
 #import "AFJSONRequestOperation.h"
 #import "UserAnnotation.h"
+#import "AppDelegate.h"
 
 @interface MapDataSet()
 -(id)initFromJson:(NSDictionary*)json;
@@ -19,41 +20,61 @@
 @synthesize dateLoaded;
 @synthesize regionCovered;
 
+static NSOperationQueue *sMapQueue = nil;
 
 +(void)beginLoadingNewDataset:(MKMapRect)mapRect
 					 completion:(void (^)(MapDataSet *set, NSError *error))completion
 {
-	// get the center of the view
-	MKCoordinateRegion region = MKCoordinateRegionForMapRect(mapRect);
-	CLLocationCoordinate2D currentLocation = region.center;
-	// calculate the size of the view
-	CLLocation * zeroLocation = [[CLLocation alloc] initWithLatitude: 0.0 longitude:0.0];
-	CLLocation * deltaAsLocation = [[CLLocation alloc] initWithLatitude:region.span.latitudeDelta longitude:region.span.longitudeDelta];
-	CLLocationDistance diameter = [zeroLocation distanceFromLocation:deltaAsLocation]; // in meters
-
-    
-	NSString *urlString = [NSString stringWithFormat:@"http://www.coffeeandpower.com/api.php?action=userlist&lat=%.7f&lon=%.7f&radius=%.1f", currentLocation.latitude, currentLocation.longitude, diameter / 2.0];
-#if DEBUG
-	NSLog(@"Loading datapoints from: %@", urlString);
-#endif
-	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-		
-		MapDataSet *dataSet = [[MapDataSet alloc]initFromJson:JSON];
-		dataSet.regionCovered = mapRect;
-		dataSet.dateLoaded = [NSDate date];
-		//dataSet.regionCovered = [[CLRegion alloc]initCircularRegionWithCenter:currentLocation radius:radiusInKm identifier:nil];
-		
-		if(completion)
-			completion(dataSet, nil); 
-		
-	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-		//int z = 99;
-		if(completion)
-			completion(nil, error);
-	}];
+	if(!sMapQueue)
+	{
+		sMapQueue = [[NSOperationQueue alloc]init];
+		[sMapQueue setSuspended:NO];
+		// serialize requests, please
+		[sMapQueue setMaxConcurrentOperationCount:1];
+	}
 	
-	[[NSOperationQueue mainQueue] addOperation:operation];
+	// TODO:  if we're already busy, cancel the old one and issue the new one
+	if([sMapQueue operationCount] == 0)
+	{
+		// get the center of the view
+		MKCoordinateRegion region = MKCoordinateRegionForMapRect(mapRect);
+		CLLocationCoordinate2D currentLocation = region.center;
+		// calculate the size of the view
+		CLLocation * zeroLocation = [[CLLocation alloc] initWithLatitude: 0.0 longitude:0.0];
+		CLLocation * deltaAsLocation = [[CLLocation alloc] initWithLatitude:region.span.latitudeDelta longitude:region.span.longitudeDelta];
+		CLLocationDistance diameter = [zeroLocation distanceFromLocation:deltaAsLocation]; // in meters
+
+		
+		NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=userlist&lat=%.7f&lon=%.7f&maxusers=99&radius=%.1f", kCandPWebServiceUrl, currentLocation.latitude, currentLocation.longitude, diameter / 2.0];
+	#if DEBUG
+		NSLog(@"Loading datapoints from: %@", urlString);
+	#endif
+		NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+		AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+			
+			MapDataSet *dataSet = [[MapDataSet alloc]initFromJson:JSON];
+			dataSet.regionCovered = mapRect;
+			dataSet.dateLoaded = [NSDate date];
+			//dataSet.regionCovered = [[CLRegion alloc]initCircularRegionWithCenter:currentLocation radius:radiusInKm identifier:nil];
+			
+			if(completion)
+				completion(dataSet, nil); 
+			
+		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+			//int z = 99;
+			if(completion)
+				completion(nil, error);
+		}];
+		
+		[sMapQueue addOperation:operation];
+	}
+	else
+	{
+		if(completion)
+			completion(nil, [NSError errorWithDomain:@"Busy" code:999 userInfo:nil]);
+		
+	}
+	
 }
 
 -(id)initFromJson:(NSDictionary*)json
@@ -87,6 +108,7 @@
 	double age = [dateLoaded timeIntervalSinceNow];
 	if(dateLoaded && age < kTwoMinutesAgo)
 	{
+		NSLog(@".... data was too old (%.2f seconds old)", age);
 		return false;
 	}
 	

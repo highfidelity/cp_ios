@@ -12,8 +12,8 @@
 
 ////////////////////////////////////////////////
 //#define kCandPWebServiceUrl		@"http://dev.worklist.net/~stojce/candpfix/web/"
-#define kCandPWebServiceUrl			@"https://staging.coffeeandpower.com"
-//#define kCandPWebServiceUrl		@"https://coffeeandpower.com"
+#define kCandPWebServiceUrl			@"https://staging.coffeeandpower.com/"
+//#define kCandPWebServiceUrl		@"https://coffeeandpower.com/"
 
 ////////////////////////////////////////////////
 // CandP staging:			"230528896971048"
