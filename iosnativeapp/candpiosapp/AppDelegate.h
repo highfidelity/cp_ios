@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Settings.h"
 #import "Facebook.h"
+#import "BaseViewController.h"
 
 ////////////////////////////////////////////////
 //#define kCandPWebServiceUrl		@"http://dev.worklist.net/~stojce/candpfix/web/"
@@ -35,11 +36,13 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate, FBSessionDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) BaseViewController *tabBarController;
 @property (strong, readonly) Settings *settings;
 @property (strong, readonly) Facebook *facebook;
 @property (strong, nonatomic) NSObject *loginSequence;
 @property (strong, nonatomic, readonly) AFHTTPClient *urbanAirshipClient;
 
+-(void)loadCheckinScreen;
 -(void)saveSettings;
 +(AppDelegate*)instance;
 -(void)logoutEverything;

@@ -10,8 +10,8 @@
 #import "FacebookLoginSequence.h"
 #import "NSMutableURLRequestAdditions.h"
 #import "AFHTTPClient.h"
-#import "BaseViewController.h"
 #import "AFHTTPRequestOperation.h"
+#import "CheckInListTableViewController.h"
 
 @interface AppDelegate(Internal)
 -(void)loadSettings;
@@ -23,6 +23,7 @@
 @synthesize facebook;
 @synthesize loginSequence;
 @synthesize urbanAirshipClient;
+@synthesize tabBarController;
 
 +(AppDelegate*)instance
 {
@@ -48,8 +49,31 @@
 	// register for push 
 	// TODO: put this as part of the login procedure
 	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert)];
+
+
+    UILocalNotification *localNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    
+    if (localNotif) {
+        NSLog(@"*** local notification received in didFinish");
+        [self loadCheckinScreen];
+    }
+
 	
     return YES;
+}
+
+- (void)application:(UIApplication *)app didReceiveLocalNotification:(UILocalNotification *)notif {
+    NSLog(@"*** Local notification received!");
+    [self loadCheckinScreen];
+}
+
+- (void)loadCheckinScreen {
+    CheckInListTableViewController *checkInListTableViewController = [[CheckInListTableViewController alloc] init];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:checkInListTableViewController];
+    
+    // TODO: Need to add reference to loaded BaseViewController (TabBarController) from storyboard but not working right now?
+    [self.tabBarController presentModalViewController:navigationController animated:NO];
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application
