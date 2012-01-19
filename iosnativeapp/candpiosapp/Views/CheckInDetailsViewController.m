@@ -2,6 +2,7 @@
 #import "SVProgressHUD.h"
 #import "AppDelegate.h"
 #import "AFJSONRequestOperation.h"
+#import "SignupController.h"
 
 @implementation CheckInDetailsViewController
 
@@ -106,6 +107,9 @@
     else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You must be logged in to C&P in order to check in." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Okay", nil];
         [alertView show];
+
+        SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
+        [self.navigationController pushViewController:controller animated:YES];
     }
 }
 
