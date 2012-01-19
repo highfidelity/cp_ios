@@ -1,5 +1,7 @@
 #import "CheckInDetailsViewController.h"
 #import "SVProgressHUD.h"
+#import "AppDelegate.h"
+#import "AFJSONRequestOperation.h"
 
 @implementation CheckInDetailsViewController
 
@@ -55,6 +57,20 @@
     
 	[SVProgressHUD showWithStatus:@"Checking In..."];
 
+    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@", kCandPWebServiceUrl, place.lat, place.lng, checkInTime, checkOutTime, foursquareID];
+
+//    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@", @"http://dev.worklist.net/~emcro/candpweb/web/", place.lat, place.lng, checkInTime, checkOutTime, foursquareID];
+
+    NSURL *locationURL = [NSURL URLWithString:urlString];
+    
+    dispatch_async(dispatch_get_global_queue(
+                                             DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData* data = [NSData dataWithContentsOfURL: 
+                        locationURL];
+        [self performSelectorOnMainThread:@selector(fetchedData:) 
+                               withObject:data waitUntilDone:YES];
+    });   
+
     // Fire a notification 5 minutes before checkout time
     NSInteger minutesBefore = 5;
     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
@@ -66,10 +82,31 @@
 //        localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkInTime + 10)];
         localNotif.timeZone = [NSTimeZone defaultTimeZone];
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
-    }
+    }    
+}
+
+
+- (void)fetchedData:(NSData *)responseData {
+    //parse out the json data
+    NSError* error;
+    NSDictionary* json = [NSJSONSerialization 
+                          JSONObjectWithData:responseData
+                          
+                          options:kNilOptions 
+                          error:&error];
     
+
+    NSLog(@"json: %@, data: %@", json, responseData);
+
     [SVProgressHUD dismiss];
-    [self dismissModalViewControllerAnimated:YES];
+    
+    if ([[json objectForKey:@"reponse"] isEqualToString:@"1"]) {
+        [self dismissModalViewControllerAnimated:YES];
+    }
+    else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You must be logged in to C&P in order to check in." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Okay", nil];
+        [alertView show];
+    }
 }
 
 - (void)sliderMoved:(id)sender {

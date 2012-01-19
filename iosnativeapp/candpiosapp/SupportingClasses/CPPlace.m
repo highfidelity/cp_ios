@@ -2,6 +2,6 @@
 
 @implementation CPPlace
 
-@synthesize name, icon, foursquareID;
+@synthesize name, icon, foursquareID, lat, lng;
 
 @end

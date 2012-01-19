@@ -111,6 +111,17 @@
                           error:&error];
 
     // Do error checking here, in case Foursquare is down
+
+    CPPlace *place = [[CPPlace alloc] init];
+    place.name = @"<Location Not Listed>";
+    place.foursquareID = @"0";
+    
+    CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
+    
+    place.lat = location.coordinate.latitude;
+    place.lng = location.coordinate.longitude;
+    
+    [places addObject:place];
     
     NSArray *itemsArray = [[[[json valueForKey:@"response"] valueForKey:@"groups"] valueForKey:@"items"] objectAtIndex:0];
 
@@ -120,14 +131,10 @@
         CPPlace *place = [[CPPlace alloc] init];
         place.name = [item valueForKey:@"name"];
         place.foursquareID = [item valueForKey:@"id"];
+        place.lat = [[[item valueForKey:@"location"] valueForKey:@"lat"] floatValue];
+        place.lng = [[[item valueForKey:@"location"] valueForKey:@"lng"] floatValue];
         [places addObject:place];
     }
-
-    CPPlace *place = [[CPPlace alloc] init];
-    place.name = @"Location Not Listed";
-    place.foursquareID = @"0";
-    
-    [places addObject:place];
 
     [SVProgressHUD dismiss];
     

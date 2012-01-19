@@ -14,6 +14,7 @@
 ////////////////////////////////////////////////
 //#define kCandPWebServiceUrl		@"http://dev.worklist.net/~stojce/candpfix/web/"
 #define kCandPWebServiceUrl			@"https://staging.coffeeandpower.com/"
+//#define kCandPWebServiceUrl			@"http://dev.worklist.net/~emcro/candpweb/web/"
 //#define kCandPWebServiceUrl		@"https://coffeeandpower.com/"
 
 ////////////////////////////////////////////////
