@@ -11,8 +11,8 @@
 @class AFHTTPClient;
 
 @interface LoginSequenceBase : NSObject
-@property (nonatomic, strong) AFHTTPClient *httpClient;
-@property (nonatomic, weak) UIViewController	*mapViewController;
+@property (nonatomic, strong)   AFHTTPClient        *httpClient;
+@property (nonatomic, weak)     UIViewController    *mapViewController;
 
 -(void)handleEmailCreate:(NSString*)username 
 				password:(NSString*)password

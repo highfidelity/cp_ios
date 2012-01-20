@@ -36,12 +36,17 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
--(void)handleEmailCreate:(NSString*)username password:(NSString*)password nickname:(NSString*)nickname completion:(void (^)(NSError *error, id JSON))completion
+-(void)handleEmailCreate:(NSString*)username
+                password:(NSString*)password
+                nickname:(NSString*)nickname
+              completion:(void (^)(NSError *error, id JSON))completion
 {
 	[self handleCommonCreate:username password:password nickname:nickname facebookId:nil completion:completion];
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
--(void)handleFacebookCreate:(NSString*)username facebookId:(NSString*)facebookId completion:(void (^)(NSError *error, id JSON))completion
+-(void)handleFacebookCreate:(NSString*)username
+                 facebookId:(NSString*)facebookId
+                 completion:(void (^)(NSError *error, id JSON))completion
 {
 	[self handleCommonCreate:username password:nil nickname:nil facebookId:facebookId completion:completion];
 	

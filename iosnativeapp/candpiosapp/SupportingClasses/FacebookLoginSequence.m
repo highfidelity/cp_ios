@@ -42,7 +42,9 @@
 
 -(void)handleResponseFromFacebookLogin
 {
-	[AppDelegate instance].settings.facebookAccessToken = [[AppDelegate instance].facebook accessToken];
+    NSLog(@"Facebook access token: %@", [[AppDelegate instance].facebook accessToken]);
+	
+    [AppDelegate instance].settings.facebookAccessToken = [[AppDelegate instance].facebook accessToken];
     [AppDelegate instance].settings.facebookExpirationDate = [[AppDelegate instance].facebook expirationDate];
 	[[AppDelegate instance] saveSettings];
 	
@@ -50,7 +52,6 @@
 
 	// get the user's facebook id (via facebook 'me' object)
 	FBRequestOperation *getMe = [[AppDelegate instance].facebook requestWithGraphPath:@"me" andCompletionHandler:^(FBRequestOperation *op, id fbJson, NSError *err) {
-	//FBRequestOperation *getMe = [FBRequestOperation getPath:@"me" withParams:nil completionHandler:^(FBRequestOperation *op, id json, NSError *err) {
 		
 		// 'me' example result:
 		//	{
@@ -72,10 +73,10 @@
 		[loginParams setObject:facebookId forKey:@"login_fb_id"];
 		[loginParams setObject:[NSNumber numberWithInt:1] forKey:@"login_fb_connect"];
 		[loginParams setObject:@"json" forKey:@"type"];
-	
+        [loginParams setObject:[AppDelegate instance].settings.facebookAccessToken forKey: @"fb_access_token"];
 
 		NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
-		//NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
+		
 		AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id candpJson) {
 			
 			NSLog(@"Result code: %d (%@)", [response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]] );
