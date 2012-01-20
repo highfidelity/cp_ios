@@ -81,7 +81,6 @@
 			
 			NSLog(@"Result code: %d (%@)", [response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]] );
 
-
 			NSLog(@"Header fields:" );
 			[[response allHeaderFields] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 				NSLog(@"     %@ : '%@'", key, obj );
