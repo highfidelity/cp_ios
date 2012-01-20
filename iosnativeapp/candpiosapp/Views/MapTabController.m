@@ -107,6 +107,7 @@
 																				 target:self 
 																				 action:@selector(logoutButtonTapped)];
 		
+		self.navigationItem.title = [AppDelegate instance].settings.userNickname;
 	}
 	else
 	{
@@ -114,8 +115,9 @@
 																				  style:UIBarButtonItemStylePlain
 																				 target:self 
 																				 action:@selector(loginButtonTapped)];
+        
+		self.navigationItem.title = @"C&P";
 	}
-	self.navigationItem.title = @"C&P";
 
 	// center on the last known user location
 	if([AppDelegate instance].settings.hasLocation)
@@ -341,11 +343,13 @@
 	{
 		self.navigationItem.rightBarButtonItem.title = @"Logout";
 		self.navigationItem.rightBarButtonItem.action = @selector(logoutButtonTapped);
+		self.navigationItem.title = [AppDelegate instance].settings.userNickname;
 	}
 	else
 	{	
 		self.navigationItem.rightBarButtonItem.title = @"Login...";
 		self.navigationItem.rightBarButtonItem.action = @selector(loginButtonTapped);
+		self.navigationItem.title = @"C&P";
 	}
 	
 }
