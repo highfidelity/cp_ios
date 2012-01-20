@@ -50,18 +50,18 @@
 
 - (void)checkInPressed:(id)sender {
     // send the server your lat/lon, checkin_time (now), checkout_time (now + duration from slider), and the venue data from the place. 
-
+    
     // checkOutTime is equal to the slider value (represented in hours) * 60 minutes * 60 seconds to normalize the units into seconds
     NSInteger checkInTime = [[NSDate date] timeIntervalSince1970];
     NSInteger checkOutTime = checkInTime + slider.value * 3600;
     NSString *foursquareID = place.foursquareID;
     
 	[SVProgressHUD showWithStatus:@"Checking In..."];
-
+    
     NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@", kCandPWebServiceUrl, place.lat, place.lng, checkInTime, checkOutTime, foursquareID];
-
-//    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@", @"http://dev.worklist.net/~emcro/candpweb/web/", place.lat, place.lng, checkInTime, checkOutTime, foursquareID];
-
+    
+    //    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@", @"http://dev.worklist.net/~emcro/candpweb/web/", place.lat, place.lng, checkInTime, checkOutTime, foursquareID];
+    
     NSURL *locationURL = [NSURL URLWithString:urlString];
     
     dispatch_async(dispatch_get_global_queue(
@@ -71,16 +71,16 @@
         [self performSelectorOnMainThread:@selector(fetchedData:) 
                                withObject:data waitUntilDone:YES];
     });   
-
+    
     // Fire a notification 5 minutes before checkout time
     NSInteger minutesBefore = 5;
     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
     if (localNotif) {
         localNotif.alertBody = @"You will be automatically checked out of C&P in 5 min and your listings will not be visible until you checkin again.";
         localNotif.alertAction = @"Check In";
-
+        
         localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkOutTime - minutesBefore * 60)];
-//        localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkInTime + 10)];
+        //        localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkInTime + 10)];
         localNotif.timeZone = [NSTimeZone defaultTimeZone];
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
     }    
@@ -96,18 +96,16 @@
                           options:kNilOptions 
                           error:&error];
     
-
-    NSLog(@"json: %@, data: %@", json, responseData);
-
+    
     [SVProgressHUD dismiss];
     
-    if ([[json objectForKey:@"reponse"] isEqualToString:@"1"]) {
+    if ([[json objectForKey:@"response"] intValue] == 1) {
         [self dismissModalViewControllerAnimated:YES];
     }
     else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You must be logged in to C&P in order to check in." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Okay", nil];
         [alertView show];
-
+        
         SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
         [self.navigationController pushViewController:controller animated:YES];
     }
@@ -115,7 +113,7 @@
 
 - (void)sliderMoved:(id)sender {
     UISlider *thisSlider = (UISlider *)sender;
-
+    
     // Only allow choices for 30 minutes, 1, 2, 4 and 8 hours
     
     float val = thisSlider.value;
