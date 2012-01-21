@@ -76,6 +76,9 @@
     NSInteger minutesBefore = 5;
     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
     if (localNotif) {
+        // Cancel all old local notifications
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
+        
         localNotif.alertBody = @"You will be automatically checked out of C&P in 5 min and your listings will not be visible until you checkin again.";
         localNotif.alertAction = @"Check In";
         
