@@ -12,17 +12,17 @@
     <string name="refresh"> Refresh</string>
     <string name="activity_indicator">Connecting to Coffee and Power server ...</string>
 
-    <string name="title_missionlist">Mission List</string>
-    <string name="title_missiondetails">Mission Details</string>
+    <string name="title_missionlist">Listings</string>
+    <string name="title_missiondetails">Listing Details</string>
     <string name="title_userprofile">User Profile</string>
     <string name="title_chat">1:1 Chat</string>
     <string name="title_login">Login</string>
     
-    <string name="my_missions">My missions</string>
+    <string name="my_missions">My listings</string>
 
     <string name="buttonbar_public_chat">Public Chat</string>
     <string name="buttonbar_people">People</string>
-    <string name="buttonbar_missions">Missions</string>
+    <string name="buttonbar_missions">Listings</string>
     <string name="buttonbar_notifications">Notifications</string>
 
 	<string name="ok">OK</string>
@@ -30,7 +30,7 @@
 	<string name="error">Error</string>	
 	<string name="error_network_connection">There has been a problem connecting to the Coffee and Power server.  Please wait a while and try again later.</string>	
 	<string name="error_network_request">Sorry, but we couldn\'t detect a connection to the Internet, so functionality will be limited.  Please enable network connectivity to continue using the Coffee and Power mobile application</string>
-    <string name="error_push_notifications_disabled">There has been a problem connecting to the Coffee and Power server to enable Push Notifications.  If you wish to be notified of new missions, please enable Push Notifications in your settings.</string>
+    <string name="error_push_notifications_disabled">There has been a problem connecting to the Coffee and Power server to enable Push Notifications.  If you wish to be notified of new listings, please enable Push Notifications in your settings.</string>
 
     <string name="logged_out">Logged Out</string>
     <string name="logged_out_message">You have been logged out</string>
@@ -40,8 +40,8 @@
     <string name="expires">Expires:</string>
     <string name="never_expires">never expires</string>
     <string name="miles">miles</string>
-    <string name="just_now">Missions from just now</string>
-    <string name="last_updated">Missions from about</string>
+    <string name="just_now">Listings from just now</string>
+    <string name="last_updated">Listings from about</string>
     <string name="ago">ago</string>
 
     <string name="millisecond">millisecond</string>
@@ -59,14 +59,14 @@
     <string name="year">year</string>
     <string name="years">years</string>
 
-    <string name="mission_title">Mission:</string>
+    <string name="mission_title">Listing:</string>
     <string name="mission_description">Description:</string>
-    <string name="mission_is">Mission is</string>
+    <string name="mission_is">Listing is</string>
     <string name="i_will_pay">I will pay: C$</string>
     <string name="i_want_pay">I want: C$</string>
     <string name="posted_by">posted by</string>
     <string name="last_collected_at">Last collected at</string>
-    <string name="loading_missions">Loading missions ...</string>
+    <string name="loading_missions">Loading listings ...</string>
 
     <string name="i_want">I want</string>
     <string name="i_will">I will</string>
@@ -76,12 +76,12 @@
     <string name="make_offer_fill_in_title">Please make sure you fill in some details about the offer you are making</string>
     <string name="make_offer_generic_error">There was a problem making your offer.  Please try again later</string>
     <string name="make_offer_made">Offer Sent</string>
-    <string name="make_offer_success">Your offer has been successfully sent to the mission owner</string>
+    <string name="make_offer_success">Your offer has been successfully sent to the listing owner</string>
 
     <string name="intentionally_blank">Notifications</string>
 
     <string name="GPS_turned_off">There has been a problem finding your exact GPS location.  To have a more personalized experience of Coffee and Power, please make sure GPS service is turned on.</string>
-    <string name="geolocation_purpose">to collect Coffee and Power missions in your vicinity</string>
+    <string name="geolocation_purpose">to collect Coffee and Power listings in your vicinity</string>
 
     <string name="make_offer">Make Offer</string>
     <string name="chat1_1">Chat 1:1</string>
