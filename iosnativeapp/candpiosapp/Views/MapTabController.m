@@ -465,8 +465,8 @@
 // zoom to the location; on initial load & after updaing their pos
 -(void)zoomTo:(CLLocationCoordinate2D)loc
 {
-	// zoom to a region 15km across
-	MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(loc, 15000.0, 0);
+	// zoom to a region 2km across
+	MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(loc, 1000, 1000);
 
 	[mapView setRegion:viewRegion];
 	
