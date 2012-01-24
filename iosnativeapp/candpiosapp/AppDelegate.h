@@ -35,7 +35,6 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate, FBSessionDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) BaseViewController *tabBarController;
 @property (strong, readonly) Settings *settings;
 @property (strong, readonly) Facebook *facebook;
 @property (strong, nonatomic) NSObject *loginSequence;

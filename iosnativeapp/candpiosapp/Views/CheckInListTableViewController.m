@@ -39,6 +39,7 @@
 }
 
 - (void)closeWindow:(id)sender {
+    [SVProgressHUD dismiss];
     [self dismissModalViewControllerAnimated:YES];
 }
 
