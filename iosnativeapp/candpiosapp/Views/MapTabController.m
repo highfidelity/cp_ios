@@ -414,7 +414,7 @@
 		CandPAnnotation *tappedObj = [annotations objectAtIndex:index];
 		// 
 		MyWebTabController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"WebViewOfCandPUser"];
-		NSString *url = [NSString stringWithFormat:@"http://www.coffeeandpower.com/profile.php?u=%@", tappedObj.objectId];
+		NSString *url = [NSString stringWithFormat:@"%@profile.php?u=%@", kCandPWebServiceUrl, tappedObj.objectId];
 		controller.urlToLoad = url;
 	    [self.navigationController pushViewController:controller animated:YES];
 	}
