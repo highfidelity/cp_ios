@@ -81,6 +81,7 @@
         
         localNotif.alertBody = @"You will be automatically checked out of C&P in 5 min and your listings will not be visible until you checkin again.";
         localNotif.alertAction = @"Check In";
+        localNotif.soundName = UILocalNotificationDefaultSoundName;
         
         localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkOutTime - minutesBefore * 60)];
         //        localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkInTime + 10)];
