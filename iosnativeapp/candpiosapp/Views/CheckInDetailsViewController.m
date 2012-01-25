@@ -8,6 +8,8 @@
 
 @synthesize slider, place;
 
+NSMutableArray *timeIntervals;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -30,15 +32,50 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    timeIntervals = [[NSMutableArray alloc] initWithCapacity:5];
+
+    NSArray *intervalArray = [NSArray arrayWithObjects:
+                              [NSNumber numberWithInteger:1],
+                              [NSNumber numberWithInteger:3],                              
+                              [NSNumber numberWithInteger:5],
+                              [NSNumber numberWithInteger:8],
+                              nil];
+
+    for (NSNumber *x in intervalArray) {
+        NSInteger time = [x integerValue];
+        
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              x, @"interval", 
+                              [NSString stringWithFormat:@"%d hr%@", time, (time > 1) ? @"s" : @""], @"text",
+                              nil];
+        [timeIntervals addObject:dict];
+    }
+    
+
+    // Draw the labels for each time interval
+    NSInteger labelNumber = 0;
+    NSInteger labelWidth = 70;
+    
+    for (NSDictionary *dict in timeIntervals) {
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20 + labelWidth * labelNumber, 30, labelWidth, 20)];
+        label.font = [UIFont systemFontOfSize:10.0];
+        label.text = [dict objectForKey:@"text"];
+        label.textAlignment = UITextAlignmentCenter;
+        labelNumber++;
+        [self.view addSubview:label];
+    }
+    
+    
+    // Add the slider + check in button to the view
     CGFloat margin = 40;
     CGFloat width = 320 - margin * 2;
-    
+
     slider = [[UISlider alloc] initWithFrame:CGRectMake(margin, margin, width, 40)];
     [slider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
     slider.continuous = NO;
-    slider.minimumValue = 0.5;
-    slider.maximumValue = 8;
-    slider.value = 2;
+    slider.minimumValue = 0;
+    slider.maximumValue = timeIntervals.count - 1;
+    slider.value = 0;
     [self.view addSubview:slider];
     
     UIButton *checkInButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -53,7 +90,8 @@
     
     // checkOutTime is equal to the slider value (represented in hours) * 60 minutes * 60 seconds to normalize the units into seconds
     NSInteger checkInTime = [[NSDate date] timeIntervalSince1970];
-    NSInteger checkOutTime = checkInTime + slider.value * 3600;
+    NSInteger checkInDuration = [[(NSDictionary *)[timeIntervals objectAtIndex:slider.value] objectForKey:@"interval"] integerValue];    
+    NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
     NSString *foursquareID = place.foursquareID;
     
 	[SVProgressHUD showWithStatus:@"Checking In..."];
@@ -118,25 +156,10 @@
 - (void)sliderMoved:(id)sender {
     UISlider *thisSlider = (UISlider *)sender;
     
-    // Only allow choices for 30 minutes, 1, 2, 4 and 8 hours
-    
+    // Only allow full hour choices    
     float val = thisSlider.value;
     
-    if (val > 0.5 && val < 0.75) {
-        thisSlider.value = 0.5;
-    }
-    else if (val >= 0.75 && val < 1.5) {
-        thisSlider.value = 1;
-    }
-    else if (val >= 1.5 && val < 3) {
-        thisSlider.value = 2;
-    }
-    else if (val >= 3 && val < 6) {
-        thisSlider.value = 4;
-    }
-    else if (val >= 6) {
-        thisSlider.value = 8;
-    }
+    thisSlider.value = roundf(val);
 }
 
 - (void)viewDidUnload
