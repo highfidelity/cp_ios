@@ -84,7 +84,7 @@
     [self.view addSubview:refreshButton];
 
 	self.navigationController.delegate = self;
-	hasUpdatedUserLocation = false;
+	hasSetInitialZoom = false;
 	
 	// every 10 seconds, see if it's time to refresh the data
 	// (the data invalidates every 2 minutes, but we check more often)
@@ -447,13 +447,11 @@
 		[AppDelegate instance].settings.lastKnownLocation = userLocation.location;
 		[[AppDelegate instance] saveSettings];
 		
-		// zoom to it, but only the first time
-		if(!hasUpdatedUserLocation)
-		{
-			NSLog(@"MapTab: didUpdateUserLocation a zoomto (lat %f, lon %f)", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
-			[self zoomTo:userLocation.location.coordinate];
-			hasUpdatedUserLocation = true;
-		}
+        NSLog(@"MapTab: didUpdateUserLocation a zoomto (lat %f, lon %f)", 
+              userLocation.location.coordinate.latitude, 
+              userLocation.location.coordinate.longitude);
+        [self zoomTo:userLocation.location.coordinate];
+
 	}
 }
 - (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
@@ -465,11 +463,15 @@
 // zoom to the location; on initial load & after updaing their pos
 -(void)zoomTo:(CLLocationCoordinate2D)loc
 {
-	// zoom to a region 2km across
-	MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(loc, 1000, 1000);
-
-	[mapView setRegion:viewRegion];
-	
+    if (!hasSetInitialZoom) {
+        // zoom to a region 2km across, but only the first time
+        MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(loc, 1000, 1000);
+        [mapView setRegion:viewRegion animated:TRUE];
+        hasSetInitialZoom = true;
+    } else {
+        [mapView setCenterCoordinate:loc animated:TRUE];
+    }
+    
 }
 
 @end
