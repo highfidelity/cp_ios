@@ -202,8 +202,8 @@
 
     WebViewController *controller = [[WebViewController alloc] initWithNibName:@"WebView" bundle:nil];
 //    MyWebTabController *controller = [[MyWebTabController alloc] init];
-//    MyWebTabController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"WebViewOfCandPUser"];
-    NSString *url = [NSString stringWithFormat:@"http://www.coffeeandpower.com/profile.php?u=%@", annotation.objectId];
+//    MyWebTabController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"WebViewOfCandPUser"]
+    NSString *url = [NSString stringWithFormat:@"%@profile.php?u=%@", kCandPWebServiceUrl, annotation.objectId];
     controller.urlAddress = url;
     controller.title = [[missions objectAtIndex:indexPath.row] nickname];
     [self.navigationController pushViewController:controller animated:YES];
