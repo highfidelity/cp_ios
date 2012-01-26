@@ -106,6 +106,8 @@
 		87F6580114B0DC2D00F4AB6C /* MissionAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F6580014B0DC2D00F4AB6C /* MissionAnnotation.m */; };
 		87F6580414B0DDFD00F4AB6C /* CandPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F6580314B0DDFC00F4AB6C /* CandPAnnotation.m */; };
 		87F6581614B127CE00F4AB6C /* UserSubview.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F6581514B127CD00F4AB6C /* UserSubview.m */; };
+		E41B95CA14D211B800A1CD80 /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = E41B95C814D211B700A1CD80 /* location.png */; };
+		E41B95CB14D211B800A1CD80 /* location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E41B95C914D211B700A1CD80 /* location@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -293,6 +295,8 @@
 		87F6580314B0DDFC00F4AB6C /* CandPAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CandPAnnotation.m; sourceTree = "<group>"; };
 		87F6581414B127CD00F4AB6C /* UserSubview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSubview.h; sourceTree = "<group>"; };
 		87F6581514B127CD00F4AB6C /* UserSubview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSubview.m; sourceTree = "<group>"; };
+		E41B95C814D211B700A1CD80 /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location.png; sourceTree = "<group>"; };
+		E41B95C914D211B700A1CD80 /* location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "location@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -633,6 +637,8 @@
 		87F657F314B0D2D000F4AB6C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				E41B95C814D211B700A1CD80 /* location.png */,
+				E41B95C914D211B700A1CD80 /* location@2x.png */,
 				871C446A14BD72FC003B720F /* button_disabled.png */,
 				871C446B14BD72FC003B720F /* button_disabled@2x.png */,
 				871C446514BD7293003B720F /* button.png */,
@@ -749,6 +755,8 @@
 				32C762F014BEAD1D00FE25E4 /* refresh@2x.png in Resources */,
 				32E3CD8714C39B94001EA2AB /* UserTableViewCell.xib in Resources */,
 				32E3CD9014C3AAA5001EA2AB /* WebView.xib in Resources */,
+				E41B95CA14D211B800A1CD80 /* location.png in Resources */,
+				E41B95CB14D211B800A1CD80 /* location@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

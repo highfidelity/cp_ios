@@ -14,7 +14,7 @@
 
 @interface MapTabController : UIViewController< MKMapViewDelegate, UINavigationControllerDelegate >
 {
-	bool hasSetInitialZoom;
+	bool hasUpdatedUserLocation;
 	bool hasShownLoadingScreen;
 }
 
@@ -23,6 +23,7 @@
 
 - (void)listButtonTapped;
 - (void)refreshLocations;
+- (void)locateMe;
 
 @end
 

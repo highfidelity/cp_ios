@@ -79,12 +79,20 @@
     UIImage *refreshImage = [UIImage imageNamed:@"refresh"];
     [refreshButton setImage:refreshImage forState:UIControlStateNormal];
     [refreshButton addTarget:self action:@selector(refreshLocations) forControlEvents:UIControlEventTouchUpInside];
-    refreshButton.frame = CGRectMake(0, 0, 120, 60);
-    refreshButton.center = CGPointMake(self.view.frame.size.width / 2.0, self.tabBarController.tabBar.frame.origin.y - 100.0);
+    refreshButton.frame = CGRectMake(0, 0, 40, 30);
+    refreshButton.center = CGPointMake((self.view.frame.size.width / 2.0) + 20, self.tabBarController.tabBar.frame.origin.y - 100.0);
     [self.view addSubview:refreshButton];
+    
+    UIButton *locateMeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *locateMeImage = [UIImage imageNamed:@"location"];
+    [locateMeButton setImage:locateMeImage forState:UIControlStateNormal];
+    [locateMeButton addTarget:self action:@selector(locateMe) forControlEvents:UIControlEventTouchUpInside];
+    locateMeButton.frame = CGRectMake(0, 0, 40, 30);
+    locateMeButton.center = CGPointMake((self.view.frame.size.width / 2.0) - 20, self.tabBarController.tabBar.frame.origin.y - 100.0);
+    [self.view addSubview:locateMeButton];
 
 	self.navigationController.delegate = self;
-	hasSetInitialZoom = false;
+	hasUpdatedUserLocation = false;
 	
 	// every 10 seconds, see if it's time to refresh the data
 	// (the data invalidates every 2 minutes, but we check more often)
@@ -299,6 +307,11 @@
 
 }
 
+- (void)locateMe
+{
+    [self zoomTo: [[mapView userLocation] coordinate]];
+}
+
 // called just before a controller pops us
 - (void)navigationController:(UINavigationController *)navigationControllerArg willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
@@ -447,10 +460,11 @@
 		[AppDelegate instance].settings.lastKnownLocation = userLocation.location;
 		[[AppDelegate instance] saveSettings];
 		
-        NSLog(@"MapTab: didUpdateUserLocation a zoomto (lat %f, lon %f)", 
-              userLocation.location.coordinate.latitude, 
-              userLocation.location.coordinate.longitude);
-        [self zoomTo:userLocation.location.coordinate];
+        if (!hasUpdatedUserLocation) {
+            NSLog(@"MapTab: didUpdateUserLocation a zoomto (lat %f, lon %f)", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
+            [self zoomTo:userLocation.location.coordinate];   
+            hasUpdatedUserLocation = true;
+        }
 
 	}
 }
@@ -463,15 +477,9 @@
 // zoom to the location; on initial load & after updaing their pos
 -(void)zoomTo:(CLLocationCoordinate2D)loc
 {
-    if (!hasSetInitialZoom) {
-        // zoom to a region 2km across, but only the first time
-        MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(loc, 1000, 1000);
-        [mapView setRegion:viewRegion animated:TRUE];
-        hasSetInitialZoom = true;
-    } else {
-        [mapView setCenterCoordinate:loc animated:TRUE];
-    }
-    
+    // zoom to a region 2km across
+    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(loc, 1000, 1000);
+    [mapView setRegion:viewRegion animated:TRUE];    
 }
 
 @end
