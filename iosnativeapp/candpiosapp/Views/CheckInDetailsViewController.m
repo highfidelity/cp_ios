@@ -1,17 +1,20 @@
+#import <QuartzCore/QuartzCore.h>
 #import "CheckInDetailsViewController.h"
 #import "SVProgressHUD.h"
 #import "AppDelegate.h"
 #import "AFJSONRequestOperation.h"
 #import "SignupController.h"
 #import "UserTableViewCell.h"
-#import <QuartzCore/QuartzCore.h>
 #import "WebViewController.h"
+#import "UIImageView+WebCache.h"
 
 @implementation CheckInDetailsViewController
 
 @synthesize slider, place;
 
 NSMutableArray *timeIntervals;
+UITextField *statusTextField;
+NSMutableArray *usersCheckedIn;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -40,6 +43,22 @@ NSMutableArray *timeIntervals;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
+    usersCheckedIn = [[NSMutableArray alloc] init];
+    
+    // Check for any other checked in users
+    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=getUsersCheckedIn&foursquare=%@&lat=%.7f&lng=%.7f", kCandPWebServiceUrl, place.foursquareID, place.lat, place.lng];
+    
+    NSURL *locationURL = [NSURL URLWithString:urlString];
+    
+    dispatch_async(dispatch_get_global_queue(
+                                             DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData* data = [NSData dataWithContentsOfURL: 
+                        locationURL];
+        [self performSelectorOnMainThread:@selector(processUsersCheckedIn:) 
+                               withObject:data waitUntilDone:YES];
+    });   
+
+    
     self.title = [NSString stringWithFormat:@"Welcome, %@", [AppDelegate instance].settings.userNickname];
 
     UIBarButtonItem *logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStyleBordered target:self action:@selector(logoutButtonAction:)];
@@ -103,23 +122,23 @@ NSMutableArray *timeIntervals;
     // Set up the statusView
     statusView.backgroundColor = [UIColor colorWithRed:(0x79 / 255.0) green:(0x79 / 255.0) blue:(0x79 / 255.0) alpha:1.0];
 
-    UITextField *textFieldRounded = [[UITextField alloc] initWithFrame:CGRectMake(15, 15, 290, 40)];
-    textFieldRounded.borderStyle = UITextBorderStyleRoundedRect;
-    textFieldRounded.textColor = [UIColor blackColor];
-    textFieldRounded.font = [UIFont systemFontOfSize:13.0];
-    textFieldRounded.placeholder = @"What are you available to do?";
-    textFieldRounded.backgroundColor = [UIColor whiteColor];
-//    textFieldRounded.textAlignment = UITextAlignmentCenter;
-    textFieldRounded.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    statusTextField = [[UITextField alloc] initWithFrame:CGRectMake(15, 15, 290, 40)];
+    statusTextField.borderStyle = UITextBorderStyleRoundedRect;
+    statusTextField.textColor = [UIColor blackColor];
+    statusTextField.font = [UIFont systemFontOfSize:13.0];
+    statusTextField.placeholder = @"What are you available to do?";
+    statusTextField.backgroundColor = [UIColor whiteColor];
+//    statusTextField.textAlignment = UITextAlignmentCenter;
+    statusTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     
-    textFieldRounded.keyboardType = UIKeyboardTypeDefault;
-    textFieldRounded.returnKeyType = UIReturnKeyDone;
+    statusTextField.keyboardType = UIKeyboardTypeDefault;
+    statusTextField.returnKeyType = UIReturnKeyDone;
     
-    textFieldRounded.clearButtonMode = UITextFieldViewModeWhileEditing;
+    statusTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
-    textFieldRounded.delegate = self;
+    statusTextField.delegate = self;
     
-    [statusView addSubview:textFieldRounded];
+    [statusView addSubview:statusTextField];
     
     UILabel *durationHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 70, headerView.frame.size.width, 20)];
     durationHeaderLabel.textColor = [UIColor whiteColor];
@@ -212,7 +231,7 @@ NSMutableArray *timeIntervals;
     
 	[SVProgressHUD showWithStatus:@"Checking In..."];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@", kCandPWebServiceUrl, place.lat, place.lng, checkInTime, checkOutTime, foursquareID];
+    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@&status=%@", kCandPWebServiceUrl, place.lat, place.lng, checkInTime, checkOutTime, foursquareID, [statusTextField.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
     
     //    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@", @"http://dev.worklist.net/~emcro/candpweb/web/", place.lat, place.lng, checkInTime, checkOutTime, foursquareID];
     
@@ -269,6 +288,27 @@ NSMutableArray *timeIntervals;
     }
 }
 
+- (void)processUsersCheckedIn:(NSData *)responseData {
+    //parse out the json data
+    NSError* error;
+    NSDictionary* json = [NSJSONSerialization 
+                          JSONObjectWithData:responseData
+                          
+                          options:kNilOptions 
+                          error:&error];
+
+    if (json == NULL) {
+        return;
+    }
+    else {
+        usersCheckedIn = [json objectForKey:@"usersAtCheckin"];
+//        NSLog(@"json: %@", json);
+//        NSLog(@"usersCheckedIn: %@", usersCheckedIn);
+
+        [self.tableView reloadData];
+    }
+}
+
 - (void)sliderMoved:(id)sender {
     UISlider *thisSlider = (UISlider *)sender;
     
@@ -292,8 +332,16 @@ NSMutableArray *timeIntervals;
     headerLabel.numberOfLines = 1;
 	headerLabel.font = [UIFont systemFontOfSize:12.0];
     headerLabel.textAlignment = UITextAlignmentCenter;
+
+    NSString *title;
     
-    NSString *title = [NSString stringWithFormat:@"Also @ %@", place.name];
+    if ([place.foursquareID isEqualToString:@"0"]) {
+        title = @"Also Near Here";
+    }
+    else {
+        title = [NSString stringWithFormat:@"Also @ %@", place.name];
+    }
+    
 	headerLabel.text = title;
 
     // Resize label, then make full width to be centered correctly
@@ -320,11 +368,18 @@ NSMutableArray *timeIntervals;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
+//    
+//    if (usersCheckedIn.count > 0) {
+//        return 1;
+//    }
+//    else {
+//        return 0;
+//    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return usersCheckedIn.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -345,34 +400,25 @@ NSMutableArray *timeIntervals;
     
 //    cell.backgroundColor = [UIColor whiteColor];
 //    cell.backgroundView.backgroundColor = [UIColor whiteColor];
+
+    cell.nicknameLabel.text = [[usersCheckedIn objectAtIndex:indexPath.row] objectForKey:@"nickname"];
+    cell.skillsLabel.text = [[usersCheckedIn objectAtIndex:indexPath.row] objectForKey:@"status_text"];
+
+    NSString *imageUrl = [[usersCheckedIn objectAtIndex:indexPath.row] objectForKey:@"imageUrl"];
     
-    // Configure the cell...
-    
-//    UserAnnotation *annotation = [missions objectAtIndex:indexPath.row];
-    //    cell.textLabel.text = [NSString stringWithFormat:@"%@, %@, %f", [annotation nickname], [annotation skills], [annotation distance]];
-    
-//    cell.nicknameLabel.text = annotation.nickname;
-//    if (annotation.skills != [NSNull null]) {
-//        cell.skillsLabel.text = annotation.skills;
-//    }
-//    cell.distanceLabel.text = [NSString stringWithFormat:@"%.1f meters", annotation.distance];
-    
-//    if (annotation.imageUrl) {
-//        UIImageView *leftCallout = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
-//		
-//		leftCallout.contentMode = UIViewContentModeScaleAspectFill;
-//        
-//        [leftCallout setImageWithURL:[NSURL URLWithString:annotation.imageUrl]
-//                    placeholderImage:[UIImage imageNamed:@"63-runner.png"]];
-//        
-//        cell.imageView.image = leftCallout.image;
-    if (1 == 0) {
+    if (imageUrl != [NSNull null]) {
+        UIImageView *leftCallout = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
+		
+		leftCallout.contentMode = UIViewContentModeScaleAspectFill;
+        
+        [leftCallout setImageWithURL:[NSURL URLWithString:imageUrl]
+                    placeholderImage:[UIImage imageNamed:@"63-runner.png"]];
+        
+        cell.imageView.image = leftCallout.image;
+
     }
     else
-    {
-        cell.nicknameLabel.text = @"Test User";
-        cell.skillsLabel.text = @"I will do something..";
-        
+    {        
         cell.imageView.image = [UIImage imageNamed:@"63-runner.png"];			
     }
     
@@ -384,9 +430,9 @@ NSMutableArray *timeIntervals;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     WebViewController *controller = [[WebViewController alloc] initWithNibName:@"WebView" bundle:nil];
-    NSString *url = [NSString stringWithFormat:@"%@profile.php?u=%@", kCandPWebServiceUrl, @"1"];
+    NSString *url = [NSString stringWithFormat:@"%@profile.php?u=%@", kCandPWebServiceUrl, [[usersCheckedIn objectAtIndex:indexPath.row] objectForKey:@"id"]];
     controller.urlAddress = url;
-//    controller.title = [[missions objectAtIndex:indexPath.row] nickname];
+    controller.title = [[usersCheckedIn objectAtIndex:indexPath.row] objectForKey:@"nickname"];
     [self.navigationController pushViewController:controller animated:YES];
 }
 

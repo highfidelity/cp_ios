@@ -128,7 +128,7 @@
     NSArray *itemsArray = [[[[json valueForKey:@"response"] valueForKey:@"groups"] valueForKey:@"items"] objectAtIndex:0];
 
     for (NSMutableDictionary *item in itemsArray) {
-        NSLog(@"ITEM FULL: %@", item);
+//        NSLog(@"ITEM FULL: %@", item);
 
         CPPlace *place = [[CPPlace alloc] init];
         place.name = [item valueForKey:@"name"];
