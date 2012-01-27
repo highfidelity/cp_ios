@@ -117,7 +117,7 @@ NSMutableArray *timeIntervals;
         // Cancel all old local notifications
         [[UIApplication sharedApplication] cancelAllLocalNotifications];
         
-        localNotif.alertBody = @"You will be automatically checked out of C&P in 5 min and your listings will not be visible until you checkin again.";
+        localNotif.alertBody = @"You will be checked out of C&P in 5 min and will no longer be shown on the map.";
         localNotif.alertAction = @"Check In";
         localNotif.soundName = UILocalNotificationDefaultSoundName;
         
