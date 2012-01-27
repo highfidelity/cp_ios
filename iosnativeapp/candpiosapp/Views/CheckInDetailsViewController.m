@@ -3,6 +3,7 @@
 #import "AppDelegate.h"
 #import "AFJSONRequestOperation.h"
 #import "SignupController.h"
+#import "UserTableViewCell.h"
 
 @implementation CheckInDetailsViewController
 
@@ -10,9 +11,9 @@
 
 NSMutableArray *timeIntervals;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithStyle:(UITableViewStyle)style
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
     }
@@ -27,10 +28,106 @@ NSMutableArray *timeIntervals;
 
 #pragma mark - View lifecycle
 
+- (void)logoutButtonAction:(id)sender {
+    [[AppDelegate instance] logoutEverything];
+    [self dismissModalViewControllerAnimated:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+
+    self.title = [NSString stringWithFormat:@"Welcome, %@", [AppDelegate instance].settings.userNickname];
+
+    UIBarButtonItem *logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStyleBordered target:self action:@selector(logoutButtonAction:)];
+    
+    self.navigationItem.rightBarButtonItem = logoutButton;
+
+    
+    self.tableView.backgroundColor = [UIColor colorWithRed:(0xF1 / 255.0) green:(0xF1 / 255.0) blue:(0xF1 / 255.0) alpha:1.0];
+    
+//    [UIColor colorWithRed:(0x79 / 255.0) green:(0x79 / 255.0) blue:(0x79 / 255.0) alpha:1.0];
+    
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 290)];
+
+    UIView *locationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerView.frame.size.width, 70)];
+    UIView *statusView = [[UIView alloc] initWithFrame:CGRectMake(0, locationView.frame.size.height, headerView.frame.size.width, 145)];
+    UIView *checkinView = [[UIView alloc] initWithFrame:CGRectMake(0, statusView.frame.origin.y + statusView.frame.size.height, headerView.frame.size.width, 75)];
+
+    
+    // Set up the locationView
+    UILabel *placeNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 225, 18)];
+    placeNameLabel.backgroundColor = [UIColor clearColor];
+    placeNameLabel.text = place.name;
+    placeNameLabel.font = [UIFont boldSystemFontOfSize:13.0];
+    [locationView addSubview:placeNameLabel];
+
+    UILabel *placeAddressLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, placeNameLabel.frame.origin.y + placeNameLabel.frame.size.height, 225, 40)];
+    placeAddressLabel.backgroundColor = [UIColor clearColor];
+    placeAddressLabel.numberOfLines = 2;
+    placeAddressLabel.text = [NSString stringWithFormat:@"%@%@%@%@%@%@%@", 
+                              (place.address) ? place.address : @"", 
+                              (place.address) ? @"\n" : @"", 
+                              (place.city) ? place.city : @"", 
+                              (place.state) ? @", " : @" ", 
+                              (place.state) ? place.state : @"", 
+                              (place.zip) ? @"  " : @"", 
+                              (place.zip) ? place.zip : @""];
+    
+    placeAddressLabel.font = [UIFont systemFontOfSize:13.0];
+    [locationView addSubview:placeAddressLabel];
+
+    UIView *mapViewSmall = [[UIView alloc] initWithFrame:CGRectMake(250, 10, 50, 50)];
+    mapViewSmall.clipsToBounds = YES;
+    
+    
+    MKMapView *mapView = [[MKMapView alloc] initWithFrame:CGRectMake(-25, -25, 100, 100)];        
+    MKCoordinateRegion newRegion;
+    
+    newRegion.center.latitude = place.lat;
+    newRegion.center.longitude = place.lng;
+
+    newRegion.span.latitudeDelta = 0.01;
+    newRegion.span.longitudeDelta = 0.01;
+    
+    [mapView setRegion:newRegion animated:NO];
+    mapView.userInteractionEnabled = NO;
+    
+    [mapViewSmall addSubview:mapView];
+    [locationView addSubview:mapViewSmall];
+    
+    
+    // Set up the statusView
+    statusView.backgroundColor = [UIColor colorWithRed:(0x79 / 255.0) green:(0x79 / 255.0) blue:(0x79 / 255.0) alpha:1.0];
+
+    UITextField *textFieldRounded = [[UITextField alloc] initWithFrame:CGRectMake(15, 15, 290, 40)];
+    textFieldRounded.borderStyle = UITextBorderStyleRoundedRect;
+    textFieldRounded.textColor = [UIColor blackColor];
+    textFieldRounded.font = [UIFont systemFontOfSize:13.0];
+    textFieldRounded.placeholder = @"What are you available to do?";
+    textFieldRounded.backgroundColor = [UIColor whiteColor];
+//    textFieldRounded.textAlignment = UITextAlignmentCenter;
+    textFieldRounded.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    
+    textFieldRounded.keyboardType = UIKeyboardTypeDefault;
+    textFieldRounded.returnKeyType = UIReturnKeyDone;
+    
+    textFieldRounded.clearButtonMode = UITextFieldViewModeWhileEditing;
+
+    textFieldRounded.delegate = self;
+    
+    [statusView addSubview:textFieldRounded];
+    
+    UILabel *durationHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 70, headerView.frame.size.width, 20)];
+    durationHeaderLabel.textColor = [UIColor whiteColor];
+    durationHeaderLabel.backgroundColor = [UIColor clearColor];
+    durationHeaderLabel.font = [UIFont boldSystemFontOfSize:13.0];
+    durationHeaderLabel.text = @"For how long?";
+    durationHeaderLabel.shadowColor = [UIColor blackColor];
+    durationHeaderLabel.shadowOffset = CGSizeMake(1, 1);
+    
+    [statusView addSubview:durationHeaderLabel];
     
     timeIntervals = [[NSMutableArray alloc] initWithCapacity:5];
 
@@ -57,32 +154,39 @@ NSMutableArray *timeIntervals;
     NSInteger labelWidth = 70;
     
     for (NSDictionary *dict in timeIntervals) {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20 + labelWidth * labelNumber, 30, labelWidth, 20)];
-        label.font = [UIFont systemFontOfSize:10.0];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20 + labelWidth * labelNumber, 90, labelWidth, 20)];
+        label.backgroundColor = [UIColor clearColor];
+        label.font = [UIFont boldSystemFontOfSize:10.0];
         label.text = [dict objectForKey:@"text"];
         label.textAlignment = UITextAlignmentCenter;
         labelNumber++;
-        [self.view addSubview:label];
+        [statusView addSubview:label];
     }
     
     
     // Add the slider + check in button to the view
-    CGFloat margin = 40;
+    CGFloat margin = 30;
     CGFloat width = 320 - margin * 2;
 
-    slider = [[UISlider alloc] initWithFrame:CGRectMake(margin, margin, width, 40)];
+    slider = [[UISlider alloc] initWithFrame:CGRectMake(margin, 100, width, 40)];
     [slider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
     slider.continuous = NO;
     slider.minimumValue = 0;
     slider.maximumValue = timeIntervals.count - 1;
     slider.value = 0;
-    [self.view addSubview:slider];
+    [statusView addSubview:slider];
     
     UIButton *checkInButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [checkInButton addTarget:self action:@selector(checkInPressed:) forControlEvents:UIControlEventTouchDown];
     [checkInButton setTitle:@"Check In" forState:UIControlStateNormal];
-    checkInButton.frame = CGRectMake(margin, margin * 3, width, 40);
-    [self.view addSubview:checkInButton];
+    checkInButton.frame = CGRectMake(margin, 15, width, 45);
+    [checkinView addSubview:checkInButton];
+
+    [headerView addSubview:locationView];
+    [headerView addSubview:statusView];
+    [headerView addSubview:checkinView];
+
+    self.tableView.tableHeaderView = headerView;
 }
 
 - (void)checkInPressed:(id)sender {
@@ -160,6 +264,124 @@ NSMutableArray *timeIntervals;
     float val = thisSlider.value;
     
     thisSlider.value = roundf(val);
+}
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
+{
+	// create the parent view that will hold header Label
+	UIView* customView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, 20.0)];
+	customView.backgroundColor = [UIColor colorWithRed:(0x69 / 255.0) green:(0x84 / 255.0) blue:(0x9F / 255.0) alpha:1.0];
+	
+	// create the button object
+	UILabel * headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    headerLabel.backgroundColor = [UIColor clearColor];
+	headerLabel.textColor = [UIColor whiteColor];
+    headerLabel.numberOfLines = 1;
+	headerLabel.font = [UIFont systemFontOfSize:12.0];
+    headerLabel.textAlignment = UITextAlignmentCenter;
+    
+    NSString *title = [NSString stringWithFormat:@"Also @ %@", place.name];
+	headerLabel.text = title;
+
+    // Resize label, then make full width to be centered correctly
+    [headerLabel sizeToFit];
+//    headerLabel.center = CGPointMake(customView.frame.size.width / 2, customView.frame.size.height / 2);
+	headerLabel.frame = CGRectMake(0.0, 0.0, customView.frame.size.width, headerLabel.frame.size.height);
+
+	[customView addSubview:headerLabel];
+    
+	return customView;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 17;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *title = [NSString stringWithFormat:@"Also @ %@", self.title];
+    return title;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 60;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    
+    UserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UserTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+        
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    
+//    cell.backgroundColor = [UIColor whiteColor];
+//    cell.backgroundView.backgroundColor = [UIColor whiteColor];
+    
+    // Configure the cell...
+    
+//    UserAnnotation *annotation = [missions objectAtIndex:indexPath.row];
+    //    cell.textLabel.text = [NSString stringWithFormat:@"%@, %@, %f", [annotation nickname], [annotation skills], [annotation distance]];
+    
+//    cell.nicknameLabel.text = annotation.nickname;
+//    if (annotation.skills != [NSNull null]) {
+//        cell.skillsLabel.text = annotation.skills;
+//    }
+//    cell.distanceLabel.text = [NSString stringWithFormat:@"%.1f meters", annotation.distance];
+    
+//    if (annotation.imageUrl) {
+//        UIImageView *leftCallout = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
+//		
+//		leftCallout.contentMode = UIViewContentModeScaleAspectFill;
+//        
+//        [leftCallout setImageWithURL:[NSURL URLWithString:annotation.imageUrl]
+//                    placeholderImage:[UIImage imageNamed:@"63-runner.png"]];
+//        
+//        cell.imageView.image = leftCallout.image;
+    if (1 == 0) {
+    }
+    else
+    {
+        cell.imageView.image = [UIImage imageNamed:@"63-runner.png"];			
+    }
+    
+    return cell;
+}
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    MissionAnnotation *annotation = [missions objectAtIndex:indexPath.row];
+//    
+//    WebViewController *controller = [[WebViewController alloc] initWithNibName:@"WebView" bundle:nil];
+//    //    MyWebTabController *controller = [[MyWebTabController alloc] init];
+//    //    MyWebTabController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"WebViewOfCandPUser"]
+//    NSString *url = [NSString stringWithFormat:@"%@profile.php?u=%@", kCandPWebServiceUrl, annotation.objectId];
+//    controller.urlAddress = url;
+//    controller.title = [[missions objectAtIndex:indexPath.row] nickname];
+//    [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
 }
 
 - (void)viewDidUnload

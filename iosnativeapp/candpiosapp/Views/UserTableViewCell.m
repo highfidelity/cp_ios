@@ -21,18 +21,21 @@
         [nicknameLabel setFont:[UIFont boldSystemFontOfSize:14.0]];
         [nicknameLabel setTextColor:[UIColor blackColor]];
         [nicknameLabel setHighlightedTextColor:[UIColor whiteColor]];
+        nicknameLabel.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:nicknameLabel];
 
         skillsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [skillsLabel setFont:[UIFont systemFontOfSize:12.0]];
         [skillsLabel setTextColor:[UIColor darkGrayColor]];
         [skillsLabel setHighlightedTextColor:[UIColor whiteColor]];
+        skillsLabel.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:skillsLabel];
 
         distanceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [distanceLabel setFont:[UIFont systemFontOfSize:12.0]];
         [distanceLabel setTextColor:[UIColor darkGrayColor]];
         [distanceLabel setHighlightedTextColor:[UIColor whiteColor]];
+        distanceLabel.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:distanceLabel];
 
 //        imageView = [[UIImageView alloc] initWithFrame:CGRectZero];

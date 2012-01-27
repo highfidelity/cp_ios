@@ -1,7 +1,8 @@
 #import <UIKit/UIKit.h>
+#import "MapKit/MapKit.h"
 #import "CPPlace.h"
 
-@interface CheckInDetailsViewController : UIViewController {
+@interface CheckInDetailsViewController : UITableViewController <UITextFieldDelegate, MKMapViewDelegate> {
     UISlider *slider;
     CPPlace *place;
 }

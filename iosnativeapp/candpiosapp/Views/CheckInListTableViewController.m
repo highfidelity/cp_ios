@@ -3,6 +3,7 @@
 #import "CheckInDetailsViewController.h"
 #import "CPPlace.h"
 #import "SVProgressHUD.h"
+#import "SignupController.h"
 
 @implementation CheckInListTableViewController
 
@@ -127,11 +128,16 @@
     NSArray *itemsArray = [[[[json valueForKey:@"response"] valueForKey:@"groups"] valueForKey:@"items"] objectAtIndex:0];
 
     for (NSMutableDictionary *item in itemsArray) {
-//        NSLog(@"ITEM FULL: %@", item);
+        NSLog(@"ITEM FULL: %@", item);
 
         CPPlace *place = [[CPPlace alloc] init];
         place.name = [item valueForKey:@"name"];
         place.foursquareID = [item valueForKey:@"id"];
+        place.address = [[item valueForKey:@"location"] valueForKey:@"address"];
+        place.city = [[item valueForKey:@"location"] valueForKey:@"city"];
+        place.state = [[item valueForKey:@"location"] valueForKey:@"state"];
+        place.zip = [[item valueForKey:@"location"] valueForKey:@"postalCode"];
+        
         place.lat = [[[item valueForKey:@"location"] valueForKey:@"lat"] floatValue];
         place.lng = [[[item valueForKey:@"location"] valueForKey:@"lng"] floatValue];
         [places addObject:place];
@@ -177,10 +183,20 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CheckInDetailsViewController *detailViewController = [[CheckInDetailsViewController alloc] init];
-    detailViewController.title = [[places objectAtIndex:indexPath.row] name];
-    detailViewController.place = [places objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:detailViewController animated:YES];
+
+    if ([AppDelegate instance].settings.candpUserId) {
+        CheckInDetailsViewController *detailViewController = [[CheckInDetailsViewController alloc] init];
+        detailViewController.title = [[places objectAtIndex:indexPath.row] name];
+        detailViewController.place = [places objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:detailViewController animated:YES];        
+    }
+    else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You must be logged in to C&P in order to check in." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Okay", nil];
+        [alertView show];
+        
+        SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 
 @end
