@@ -5,6 +5,7 @@
 #import "SignupController.h"
 #import "UserTableViewCell.h"
 #import <QuartzCore/QuartzCore.h>
+#import "WebViewController.h"
 
 @implementation CheckInDetailsViewController
 
@@ -382,15 +383,11 @@ NSMutableArray *timeIntervals;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    MissionAnnotation *annotation = [missions objectAtIndex:indexPath.row];
-//    
-//    WebViewController *controller = [[WebViewController alloc] initWithNibName:@"WebView" bundle:nil];
-//    //    MyWebTabController *controller = [[MyWebTabController alloc] init];
-//    //    MyWebTabController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"WebViewOfCandPUser"]
-//    NSString *url = [NSString stringWithFormat:@"%@profile.php?u=%@", kCandPWebServiceUrl, annotation.objectId];
-//    controller.urlAddress = url;
+    WebViewController *controller = [[WebViewController alloc] initWithNibName:@"WebView" bundle:nil];
+    NSString *url = [NSString stringWithFormat:@"%@profile.php?u=%@", kCandPWebServiceUrl, @"1"];
+    controller.urlAddress = url;
 //    controller.title = [[missions objectAtIndex:indexPath.row] nickname];
-//    [self.navigationController pushViewController:controller animated:YES];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
