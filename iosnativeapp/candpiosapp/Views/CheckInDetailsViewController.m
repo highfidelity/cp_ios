@@ -4,6 +4,7 @@
 #import "AFJSONRequestOperation.h"
 #import "SignupController.h"
 #import "UserTableViewCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation CheckInDetailsViewController
 
@@ -88,8 +89,8 @@ NSMutableArray *timeIntervals;
     newRegion.center.latitude = place.lat;
     newRegion.center.longitude = place.lng;
 
-    newRegion.span.latitudeDelta = 0.01;
-    newRegion.span.longitudeDelta = 0.01;
+    newRegion.span.latitudeDelta = 0.003;
+    newRegion.span.longitudeDelta = 0.003;
     
     [mapView setRegion:newRegion animated:NO];
     mapView.userInteractionEnabled = NO;
@@ -179,7 +180,17 @@ NSMutableArray *timeIntervals;
     UIButton *checkInButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [checkInButton addTarget:self action:@selector(checkInPressed:) forControlEvents:UIControlEventTouchDown];
     [checkInButton setTitle:@"Check In" forState:UIControlStateNormal];
+    [checkInButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    checkInButton.titleLabel.font = [UIFont boldSystemFontOfSize:22.0];
     checkInButton.frame = CGRectMake(margin, 15, width, 45);
+
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = checkInButton.bounds;
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor grayColor] CGColor], nil];
+    [checkInButton.layer insertSublayer:gradient atIndex:0];
+    checkInButton.layer.cornerRadius = 5;
+    checkInButton.clipsToBounds = YES;
+
     [checkinView addSubview:checkInButton];
 
     [headerView addSubview:locationView];
@@ -358,6 +369,9 @@ NSMutableArray *timeIntervals;
     }
     else
     {
+        cell.nicknameLabel.text = @"Test User";
+        cell.skillsLabel.text = @"I will do something..";
+        
         cell.imageView.image = [UIImage imageNamed:@"63-runner.png"];			
     }
     

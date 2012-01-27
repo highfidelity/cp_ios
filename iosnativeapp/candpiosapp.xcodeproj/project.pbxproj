@@ -10,6 +10,7 @@
 		32C762EF14BEAD1D00FE25E4 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C762ED14BEAD1D00FE25E4 /* refresh.png */; };
 		32C762F014BEAD1D00FE25E4 /* refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C762EE14BEAD1D00FE25E4 /* refresh@2x.png */; };
 		32C762F814BEB48500FE25E4 /* UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C762F714BEB48500FE25E4 /* UserListTableViewController.m */; };
+		32CE875214D27FFF002D391B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CE875114D27FFF002D391B /* QuartzCore.framework */; };
 		32E3CD8614C39B94001EA2AB /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E3CD8414C39B94001EA2AB /* UserTableViewCell.m */; };
 		32E3CD8714C39B94001EA2AB /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E3CD8514C39B94001EA2AB /* UserTableViewCell.xib */; };
 		32E3CD9014C3AAA5001EA2AB /* WebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E3CD8D14C3AAA5001EA2AB /* WebView.xib */; };
@@ -125,6 +126,7 @@
 		32C762EE14BEAD1D00FE25E4 /* refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refresh@2x.png"; sourceTree = "<group>"; };
 		32C762F614BEB48500FE25E4 /* UserListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListTableViewController.h; sourceTree = "<group>"; };
 		32C762F714BEB48500FE25E4 /* UserListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListTableViewController.m; sourceTree = "<group>"; };
+		32CE875114D27FFF002D391B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		32E3CD8314C39B94001EA2AB /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTableViewCell.h; sourceTree = "<group>"; };
 		32E3CD8414C39B94001EA2AB /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTableViewCell.m; sourceTree = "<group>"; };
 		32E3CD8514C39B94001EA2AB /* UserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserTableViewCell.xib; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32CE875214D27FFF002D391B /* QuartzCore.framework in Frameworks */,
 				8726C6C414B00245004E4872 /* CoreLocation.framework in Frameworks */,
 				871EFB5F14AEB4950030658B /* MapKit.framework in Frameworks */,
 				871EFB0B14AE9C820030658B /* UIKit.framework in Frameworks */,
@@ -384,6 +387,7 @@
 		871EFB0914AE9C820030658B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				32CE875114D27FFF002D391B /* QuartzCore.framework */,
 				8726C6C314B00245004E4872 /* CoreLocation.framework */,
 				871EFB5E14AEB4950030658B /* MapKit.framework */,
 				871EFB0A14AE9C820030658B /* UIKit.framework */,
