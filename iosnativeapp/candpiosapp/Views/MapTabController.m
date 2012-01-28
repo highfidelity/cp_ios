@@ -377,18 +377,47 @@
 	{
 		CandPAnnotation *candpanno = (CandPAnnotation*)annotation;
 
+		NSString *reuseId =  @"user-pin";
+		if (candpanno.checkedIn) {
+			reuseId = [NSString stringWithFormat: @"pin-@%", candpanno.objectId];
+		}
 		
-		MKPinAnnotationView *pin = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: @"asdf"];
+		MKPinAnnotationView *pin = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
 		if (pin == nil)
 		{
-			pin = [[MKPinAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: @"asdf"];
+			pin = [[MKPinAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: reuseId];
 		}
 		else
 		{
 			pin.annotation = annotation;
 		}
 		pinToReturn = pin;
-		pin.pinColor = MKPinAnnotationColorRed;
+        
+		if (candpanno.checkedIn) 
+		{
+			UIImage *pinImage = nil;
+			if (candpanno.imageUrl == nil) 
+			{
+				pinImage = [UIImage imageNamed:@"defaultAvatar50.png"];
+			} 
+			else 
+			{
+				UIImage *frame = [UIImage imageNamed:@"pin-frame"];
+				UIImage *profileImage  = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString: candpanno.imageUrl]]];
+                
+				UIGraphicsBeginImageContext(CGSizeMake(38, 43));
+				[profileImage drawInRect:CGRectMake(3, 3, 32, 32)];
+				[frame drawInRect: CGRectMake(0, 0, 38, 43)];
+				pinImage = UIGraphicsGetImageFromCurrentImageContext();
+			}
+            
+			pin.image = pinImage;
+		} 
+		else
+		{
+			pin.pinColor = MKPinAnnotationColorRed;
+		}
+        
 		pin.animatesDrop = NO;
 		pin.canShowCallout = YES;
 		

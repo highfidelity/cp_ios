@@ -12,6 +12,7 @@
 @synthesize lat,lon;
 @synthesize title, subtitle, imageUrl;
 @synthesize objectId;
+@synthesize checkedIn;
 
 -(id)initFromDictionary:(NSDictionary*)jsonDict
 {
@@ -21,6 +22,7 @@
 		lat = [[jsonDict objectForKey:@"lat"]doubleValue];
 		lon = [[jsonDict objectForKey:@"lng"] doubleValue];
 		objectId = [[jsonDict objectForKey:@"id"] copy];
+		checkedIn = [[jsonDict objectForKey:@"checked_in"] boolValue];
 		//title = [jsonDict objectForKey:@"title"];
 		//description = [jsonDict objectForKey:@"description"];
 		//nickname = [jsonDict objectForKey:@"nickname"];

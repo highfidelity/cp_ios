@@ -12,6 +12,7 @@
 @interface CandPAnnotation : NSObject< MKAnnotation >
 @property (nonatomic,assign) double lat;
 @property (nonatomic,assign) double lon;
+@property (nonatomic, assign) bool checkedIn;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subtitle;
 @property (nonatomic, copy) NSString *imageUrl;

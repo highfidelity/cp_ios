@@ -107,6 +107,8 @@
 		87F6580114B0DC2D00F4AB6C /* MissionAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F6580014B0DC2D00F4AB6C /* MissionAnnotation.m */; };
 		87F6580414B0DDFD00F4AB6C /* CandPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F6580314B0DDFC00F4AB6C /* CandPAnnotation.m */; };
 		87F6581614B127CE00F4AB6C /* UserSubview.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F6581514B127CD00F4AB6C /* UserSubview.m */; };
+		E402DB6314D43C1700BC82E8 /* defaultAvatar50.png in Resources */ = {isa = PBXBuildFile; fileRef = E402DB6214D43C1700BC82E8 /* defaultAvatar50.png */; };
+		E402DB6614D43C2B00BC82E8 /* pin-frame.png in Resources */ = {isa = PBXBuildFile; fileRef = E402DB6514D43C2B00BC82E8 /* pin-frame.png */; };
 		E41B95CA14D211B800A1CD80 /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = E41B95C814D211B700A1CD80 /* location.png */; };
 		E41B95CB14D211B800A1CD80 /* location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E41B95C914D211B700A1CD80 /* location@2x.png */; };
 /* End PBXBuildFile section */
@@ -297,6 +299,8 @@
 		87F6580314B0DDFC00F4AB6C /* CandPAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CandPAnnotation.m; sourceTree = "<group>"; };
 		87F6581414B127CD00F4AB6C /* UserSubview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSubview.h; sourceTree = "<group>"; };
 		87F6581514B127CD00F4AB6C /* UserSubview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSubview.m; sourceTree = "<group>"; };
+		E402DB6214D43C1700BC82E8 /* defaultAvatar50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultAvatar50.png; sourceTree = "<group>"; };
+		E402DB6514D43C2B00BC82E8 /* pin-frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-frame.png"; sourceTree = "<group>"; };
 		E41B95C814D211B700A1CD80 /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location.png; sourceTree = "<group>"; };
 		E41B95C914D211B700A1CD80 /* location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "location@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -401,14 +405,14 @@
 		871EFB1014AE9C820030658B /* candpiosapp */ = {
 			isa = PBXGroup;
 			children = (
-				87F657F314B0D2D000F4AB6C /* images */,
 				871EFB6014AF97130030658B /* 3rdParty */,
 				871EFB1914AE9C820030658B /* AppDelegate.h */,
 				871EFB1A14AE9C820030658B /* AppDelegate.m */,
-				871EFBBC14AF987B0030658B /* Views */,
+				87F657F314B0D2D000F4AB6C /* images */,
 				871EFB1C14AE9C820030658B /* MainStoryboard_iPhone.storyboard */,
-				87F5EF4C14AFAAC500EB83F7 /* SupportingClasses */,
 				871EFB1114AE9C820030658B /* Supporting Files */,
+				87F5EF4C14AFAAC500EB83F7 /* SupportingClasses */,
+				871EFBBC14AF987B0030658B /* Views */,
 			);
 			path = candpiosapp;
 			sourceTree = "<group>";
@@ -533,25 +537,25 @@
 		871EFBBC14AF987B0030658B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				32FF63D914BBE71A00E99F55 /* CheckInDetailsViewController.h */,
+				32FF63DA14BBE71A00E99F55 /* CheckInDetailsViewController.m */,
+				32FF63DB14BBE71B00E99F55 /* CheckInDetailsViewController.xib */,
+				32FF63D214BB935100E99F55 /* CheckInListTableViewController.h */,
+				32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */,
+				8733312314BCFB0D001BF4DB /* CreateEmailAccountController.h */,
+				8733312414BCFB0D001BF4DB /* CreateEmailAccountController.m */,
+				8733312514BCFB0D001BF4DB /* CreateEmailAccountController.xib */,
+				87701C4914B2613D00102A77 /* EmptyController.h */,
+				87701C4A14B2613E00102A77 /* EmptyController.m */,
 				871EFBBD14AF987B0030658B /* MapTabController.h */,
 				871EFBBE14AF987B0030658B /* MapTabController.m */,
 				87F5EF4414AFA68800EB83F7 /* MyWebTabController.h */,
 				87F5EF4514AFA68800EB83F7 /* MyWebTabController.m */,
-				87701C4914B2613D00102A77 /* EmptyController.h */,
-				87701C4A14B2613E00102A77 /* EmptyController.m */,
-				32C762F614BEB48500FE25E4 /* UserListTableViewController.h */,
-				32C762F714BEB48500FE25E4 /* UserListTableViewController.m */,
-				32FF63D214BB935100E99F55 /* CheckInListTableViewController.h */,
-				32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */,
-				32FF63D914BBE71A00E99F55 /* CheckInDetailsViewController.h */,
-				32FF63DA14BBE71A00E99F55 /* CheckInDetailsViewController.m */,
-				32FF63DB14BBE71B00E99F55 /* CheckInDetailsViewController.xib */,
 				87DC9A3614BEB92200BA3907 /* SignupController.h */,
 				87DC9A3714BEB92200BA3907 /* SignupController.m */,
 				87DC9A3814BEB92200BA3907 /* SignupController.xib */,
-				8733312314BCFB0D001BF4DB /* CreateEmailAccountController.h */,
-				8733312414BCFB0D001BF4DB /* CreateEmailAccountController.m */,
-				8733312514BCFB0D001BF4DB /* CreateEmailAccountController.xib */,
+				32C762F614BEB48500FE25E4 /* UserListTableViewController.h */,
+				32C762F714BEB48500FE25E4 /* UserListTableViewController.m */,
 				32E3CD8314C39B94001EA2AB /* UserTableViewCell.h */,
 				32E3CD8414C39B94001EA2AB /* UserTableViewCell.m */,
 				32E3CD8514C39B94001EA2AB /* UserTableViewCell.xib */,
@@ -584,31 +588,31 @@
 		87F5EF4C14AFAAC500EB83F7 /* SupportingClasses */ = {
 			isa = PBXGroup;
 			children = (
+				32FF63F514BC0BF700E99F55 /* BaseViewController.h */,
+				32FF63F614BC0BF700E99F55 /* BaseViewController.m */,
+				87F6580214B0DDFC00F4AB6C /* CandPAnnotation.h */,
+				87F6580314B0DDFC00F4AB6C /* CandPAnnotation.m */,
+				32FF63E214BBFAE300E99F55 /* CPPlace.h */,
+				32FF63E314BBFAE300E99F55 /* CPPlace.m */,
+				8733310F14BCC36A001BF4DB /* EmailLoginSequence.h */,
+				8733311014BCC36A001BF4DB /* EmailLoginSequence.m */,
+				8708361814B4BF4A00439431 /* FacebookLoginSequence.h */,
+				8708361914B4BF4B00439431 /* FacebookLoginSequence.m */,
+				87DC9A4014BECB6F00BA3907 /* LoginSequenceBase.h */,
+				87DC9A4114BECB6F00BA3907 /* LoginSequenceBase.m */,
+				875CB8F214C5DC8C00AD4F6E /* MapDataSet.h */,
+				875CB8F314C5DC8C00AD4F6E /* MapDataSet.m */,
+				87F657FF14B0DC2D00F4AB6C /* MissionAnnotation.h */,
+				87F6580014B0DC2D00F4AB6C /* MissionAnnotation.m */,
 				87F5EF4D14AFAAC500EB83F7 /* Settings.h */,
 				87F5EF4E14AFAAC500EB83F7 /* Settings.m */,
 				87F657FC14B0DC1F00F4AB6C /* UserAnnotation.h */,
 				87F657FD14B0DC1F00F4AB6C /* UserAnnotation.m */,
-				87F657FF14B0DC2D00F4AB6C /* MissionAnnotation.h */,
-				87F6580014B0DC2D00F4AB6C /* MissionAnnotation.m */,
-				87F6580214B0DDFC00F4AB6C /* CandPAnnotation.h */,
-				87F6580314B0DDFC00F4AB6C /* CandPAnnotation.m */,
 				87F6581414B127CD00F4AB6C /* UserSubview.h */,
 				87F6581514B127CD00F4AB6C /* UserSubview.m */,
-				87DC9A4014BECB6F00BA3907 /* LoginSequenceBase.h */,
-				87DC9A4114BECB6F00BA3907 /* LoginSequenceBase.m */,
-				8708361814B4BF4A00439431 /* FacebookLoginSequence.h */,
-				8708361914B4BF4B00439431 /* FacebookLoginSequence.m */,
-				8733310F14BCC36A001BF4DB /* EmailLoginSequence.h */,
-				8733311014BCC36A001BF4DB /* EmailLoginSequence.m */,
-				32FF63E214BBFAE300E99F55 /* CPPlace.h */,
-				32FF63E314BBFAE300E99F55 /* CPPlace.m */,
-				32FF63F514BC0BF700E99F55 /* BaseViewController.h */,
-				32FF63F614BC0BF700E99F55 /* BaseViewController.m */,
 				32E3CD8D14C3AAA5001EA2AB /* WebView.xib */,
 				32E3CD8E14C3AAA5001EA2AB /* WebViewController.h */,
 				32E3CD8F14C3AAA5001EA2AB /* WebViewController.m */,
-				875CB8F214C5DC8C00AD4F6E /* MapDataSet.h */,
-				875CB8F314C5DC8C00AD4F6E /* MapDataSet.m */,
 			);
 			path = SupportingClasses;
 			sourceTree = "<group>";
@@ -641,6 +645,8 @@
 		87F657F314B0D2D000F4AB6C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				E402DB6514D43C2B00BC82E8 /* pin-frame.png */,
+				E402DB6214D43C1700BC82E8 /* defaultAvatar50.png */,
 				E41B95C814D211B700A1CD80 /* location.png */,
 				E41B95C914D211B700A1CD80 /* location@2x.png */,
 				871C446A14BD72FC003B720F /* button_disabled.png */,
@@ -761,6 +767,8 @@
 				32E3CD9014C3AAA5001EA2AB /* WebView.xib in Resources */,
 				E41B95CA14D211B800A1CD80 /* location.png in Resources */,
 				E41B95CB14D211B800A1CD80 /* location@2x.png in Resources */,
+				E402DB6314D43C1700BC82E8 /* defaultAvatar50.png in Resources */,
+				E402DB6614D43C2B00BC82E8 /* pin-frame.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
