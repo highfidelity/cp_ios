@@ -46,7 +46,7 @@ NSMutableArray *usersCheckedIn;
     usersCheckedIn = [[NSMutableArray alloc] init];
     
     // Check for any other checked in users
-    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=getUsersCheckedIn&foursquare=%@&lat=%.7f&lng=%.7f", kCandPWebServiceUrl, place.foursquareID, place.lat, place.lng];
+    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=getUsersCheckedIn&foursquare=%@&lat=%.7f&lng=%.7f&distance=5", kCandPWebServiceUrl, place.foursquareID, place.lat, place.lng];
     
     NSURL *locationURL = [NSURL URLWithString:urlString];
     
@@ -232,9 +232,11 @@ NSMutableArray *usersCheckedIn;
 	[SVProgressHUD showWithStatus:@"Checking In..."];
     
     NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@&status=%@", kCandPWebServiceUrl, place.lat, place.lng, checkInTime, checkOutTime, foursquareID, [statusTextField.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-    
-    //    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@", @"http://dev.worklist.net/~emcro/candpweb/web/", place.lat, place.lng, checkInTime, checkOutTime, foursquareID];
-    
+
+//    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@&status=%@", @"http://dev.worklist.net/~emcro/candpweb/web/", place.lat, place.lng, checkInTime, checkOutTime, foursquareID, [statusTextField.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+
+//    NSLog(@"string: %@", urlString);
+
     NSURL *locationURL = [NSURL URLWithString:urlString];
     
     dispatch_async(dispatch_get_global_queue(
