@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		320604A414D5BBA40035A88D /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 320604A314D5BBA40035A88D /* libFlurryAnalytics.a */; };
 		32C762EF14BEAD1D00FE25E4 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C762ED14BEAD1D00FE25E4 /* refresh.png */; };
 		32C762F014BEAD1D00FE25E4 /* refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C762EE14BEAD1D00FE25E4 /* refresh@2x.png */; };
 		32C762F814BEB48500FE25E4 /* UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C762F714BEB48500FE25E4 /* UserListTableViewController.m */; };
@@ -124,6 +125,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		320604A214D5BBA40035A88D /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
+		320604A314D5BBA40035A88D /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
 		32C762ED14BEAD1D00FE25E4 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
 		32C762EE14BEAD1D00FE25E4 /* refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refresh@2x.png"; sourceTree = "<group>"; };
 		32C762F614BEB48500FE25E4 /* UserListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListTableViewController.h; sourceTree = "<group>"; };
@@ -316,6 +319,7 @@
 				871EFB0B14AE9C820030658B /* UIKit.framework in Frameworks */,
 				871EFB0D14AE9C820030658B /* Foundation.framework in Frameworks */,
 				871EFB0F14AE9C820030658B /* CoreGraphics.framework in Frameworks */,
+				320604A414D5BBA40035A88D /* libFlurryAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +336,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		320604A114D5BBA40035A88D /* FlurryAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				320604A214D5BBA40035A88D /* FlurryAnalytics.h */,
+				320604A314D5BBA40035A88D /* libFlurryAnalytics.a */,
+			);
+			path = FlurryAnalytics;
+			sourceTree = "<group>";
+		};
 		870835D214B3DEA200439431 /* SA_ActionSheet */ = {
 			isa = PBXGroup;
 			children = (
@@ -454,6 +467,7 @@
 				8745448514B799C000D96134 /* TapkuLibrary-subset */,
 				8708361B14B4DEB900439431 /* Facebook-with-blocks */,
 				870835DE14B3E1AB00439431 /* facebook-ios-sdk */,
+				320604A114D5BBA40035A88D /* FlurryAnalytics */,
 				870835D214B3DEA200439431 /* SA_ActionSheet */,
 				87F657D414B0D0C800F4AB6C /* SDWebImage */,
 				871EFB6114AF97130030658B /* AFNetworking */,
@@ -970,6 +984,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "candpiosapp/candpiosapp-Prefix.pch";
 				INFOPLIST_FILE = "candpiosapp/candpiosapp-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/candpiosapp/3rdParty/FlurryAnalytics\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -983,6 +1001,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "candpiosapp/candpiosapp-Prefix.pch";
 				INFOPLIST_FILE = "candpiosapp/candpiosapp-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/candpiosapp/3rdParty/FlurryAnalytics\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;

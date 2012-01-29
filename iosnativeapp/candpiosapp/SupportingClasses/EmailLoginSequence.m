@@ -15,6 +15,7 @@
 #import "CreateEmailAccountController.h"
 #import "TableCellHelper.h"
 #import "SVProgressHUD.h"
+#import "FlurryAnalytics.h"
 
 @interface EmailLoginSequence()
 @property (nonatomic, weak) UIViewController	*createOrLoginController;
@@ -450,6 +451,11 @@
 			[AppDelegate instance].settings.candpUserId = userId;
 			[AppDelegate instance].settings.userNickname = nickname;
 			[[AppDelegate instance] saveSettings];
+            
+            [FlurryAnalytics logEvent:@"login_email"];
+            
+            // userId isn't actually an NSNumber it's an NSString!?
+            [FlurryAnalytics setUserID:(NSString *)userId];
 			
 			// 
 			//[mapViewController.navigationController popViewControllerAnimated:YES];

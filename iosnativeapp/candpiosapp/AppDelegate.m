@@ -12,6 +12,7 @@
 #import "AFHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
 #import "CheckInListTableViewController.h"
+#import "FlurryAnalytics.h"
 
 @interface AppDelegate(Internal)
 -(void)loadSettings;
@@ -36,6 +37,8 @@
     // Override point for customization after application launch.
     
 	[self loadSettings];  
+
+    [FlurryAnalytics startSession:@"BI59BJPSZZTIFB5H87HQ"];
 	
 	// load the facebook api
 	facebook = [[Facebook alloc] initWithAppId:kFacebookAppId andDelegate:self];

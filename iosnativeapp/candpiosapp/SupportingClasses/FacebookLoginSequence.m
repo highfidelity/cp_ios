@@ -14,6 +14,7 @@
 #import "MyWebTabController.h"
 #import "EmailLoginSequence.h"
 #import "SVProgressHUD.h"
+#import "FlurryAnalytics.h"
 
 @interface FacebookLoginSequence()
 @end
@@ -141,6 +142,11 @@
 				[AppDelegate instance].settings.userNickname = nickname;
 				[[AppDelegate instance] saveSettings];
 
+                [FlurryAnalytics logEvent:@"login_facebook"];
+
+                // userId isn't actually an NSNumber it's an NSString!?
+                [FlurryAnalytics setUserID:(NSString *)userId];
+                
 				[self.mapViewController.navigationController popToRootViewControllerAnimated:YES];
 			}
 			
