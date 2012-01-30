@@ -15,6 +15,7 @@
 }
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *skills;
+@property (nonatomic, copy) NSString *status;
 @property (nonatomic) double distance;
 
 -(id)initFromDictionary:(NSDictionary*)jsonDict;

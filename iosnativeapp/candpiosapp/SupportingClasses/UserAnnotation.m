@@ -9,19 +9,24 @@
 #import "UserAnnotation.h"
 
 @implementation UserAnnotation
-@synthesize nickname, skills, distance;
+@synthesize nickname, status, skills, distance;
 
 -(id)initFromDictionary:(NSDictionary *)jsonDict
 {
 	self = [super initFromDictionary:jsonDict];
 	if(self)
 	{
-		nickname = [jsonDict objectForKey:@"nickname"];
+        nickname = [jsonDict objectForKey:@"nickname"];
 		self.title = nickname;
 		skills = [jsonDict objectForKey:@"skills"];
-		if(skills && ((NSNull*)skills != [NSNull null]))
-			self.subtitle = skills;
-
+        status = [jsonDict objectForKey:@"status_text"];
+        if (status && [status length] > 0) {
+            self.subtitle = [NSString stringWithFormat:@"\"%@\"", status];
+        } else {
+            if(skills && ((NSNull*)skills != [NSNull null])) {
+                self.subtitle = skills;
+            }            
+        }
 	}
 	return self;
 }
