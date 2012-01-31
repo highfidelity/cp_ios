@@ -40,6 +40,7 @@
 @synthesize mapView;
 @synthesize dataset;
 @synthesize reloadTimer;
+@synthesize mapHasLoaded;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -74,6 +75,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.mapHasLoaded = NO;
 
     UIButton *refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *refreshImage = [UIImage imageNamed:@"refresh"];
@@ -154,7 +156,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-	
+	self.mapHasLoaded = YES;
 	// show the loading screen but only the first time
 	if(!hasShownLoadingScreen)
 	{
@@ -272,13 +274,13 @@
 {
 	MKMapRect mapRect = mapView.visibleMapRect;
 
-	if(!dataset || ![dataset isValidFor:mapRect])
+    // prevent the refresh of locations when we have a valid dataset or the map is not yet loaded
+	if(self.mapHasLoaded && (!dataset || ![dataset isValidFor:mapRect]))
 	{
 		[self refreshLocations];
 	}
-		
-
 }
+
 - (void)refreshLocations 
 {
 	MKMapRect mapRect = mapView.visibleMapRect;
