@@ -456,7 +456,10 @@
             
             // userId isn't actually an NSNumber it's an NSString!?
             [FlurryAnalytics setUserID:(NSString *)userId];
-			
+            
+            // Set alias of push token to userId for easy push notifications from the server
+            [[UAPush shared] setAlias:(NSString *)userId];
+
 			// 
 			//[mapViewController.navigationController popViewControllerAnimated:YES];
 			[self.mapViewController.navigationController popToRootViewControllerAnimated:YES];
