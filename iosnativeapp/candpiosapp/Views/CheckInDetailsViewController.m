@@ -228,8 +228,17 @@ NSMutableArray *usersCheckedIn;
     NSInteger checkInDuration = [[(NSDictionary *)[timeIntervals objectAtIndex:slider.value] objectForKey:@"interval"] integerValue];    
     NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
     NSString *foursquareID = place.foursquareID;
-    NSString *statusText = [statusTextField.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-    NSString *venueName = [place.name stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+    NSString *statusText = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                        (__bridge CFStringRef) statusTextField.text,
+                                                                                        NULL,
+                                                                                        (CFStringRef) @"!*'();:@&=+$,/?%#[]",
+                                                                                        kCFStringEncodingUTF8);
+    
+    NSString *venueName = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                              (__bridge CFStringRef) place.name,
+                                                                              NULL,
+                                                                              (CFStringRef) @"!*'();:@&=+$,/?%#[]",
+                                                                              kCFStringEncodingUTF8);
 
     if (statusText == NULL) {
         statusText = @"";
