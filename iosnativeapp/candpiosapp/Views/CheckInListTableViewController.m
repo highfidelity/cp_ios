@@ -7,7 +7,7 @@
 
 @implementation CheckInListTableViewController
 
-@synthesize places;
+@synthesize places, refreshLocationsNow;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -32,6 +32,8 @@
 {
     [super viewDidLoad];
 
+    refreshLocationsNow = YES;
+    
     self.title = @"Places";
     
     UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(closeWindow:)];
@@ -61,7 +63,10 @@
     [super viewDidAppear:animated];
 
     // Load the list of nearby venues
-    [self refreshLocations];
+    if (refreshLocationsNow) {
+        [self refreshLocations];
+        refreshLocationsNow = NO;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated

@@ -70,6 +70,7 @@
 
 - (void)pressCenterButton {
     CheckInListTableViewController *checkInListTableViewController = [[CheckInListTableViewController alloc] init];
+    checkInListTableViewController.refreshLocationsNow = YES;
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:checkInListTableViewController];
     [self presentModalViewController:navigationController animated:YES];

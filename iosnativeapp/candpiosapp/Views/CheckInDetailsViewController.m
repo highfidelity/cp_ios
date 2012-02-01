@@ -229,7 +229,7 @@ NSMutableArray *usersCheckedIn;
     NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
     NSString *foursquareID = place.foursquareID;
     NSString *statusText = [statusTextField.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-    NSString *venueName = place.name;
+    NSString *venueName = [place.name stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
 
     if (statusText == NULL) {
         statusText = @"";

@@ -5,6 +5,8 @@
 }
 
 @property (nonatomic, retain) NSMutableArray *places;
+@property BOOL refreshLocationsNow;
+
 - (void)refreshLocations;
 
 @end
