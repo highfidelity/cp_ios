@@ -148,7 +148,7 @@
                 [FlurryAnalytics setUserID:(NSString *)userId];
 
                 // Set alias of push token to userId for easy push notifications from the server
-                [[UAPush shared] setAlias:(NSString *)userId];
+                [[UAPush shared] updateAlias:(NSString *)userId];
 
 				[self.mapViewController.navigationController popToRootViewControllerAnimated:YES];
 			}

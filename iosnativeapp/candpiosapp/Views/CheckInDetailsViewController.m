@@ -229,6 +229,7 @@ NSMutableArray *usersCheckedIn;
     NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
     NSString *foursquareID = place.foursquareID;
     NSString *statusText = [statusTextField.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+    NSString *venueName = place.name;
 
     if (statusText == NULL) {
         statusText = @"";
@@ -236,7 +237,7 @@ NSMutableArray *usersCheckedIn;
 
 	[SVProgressHUD showWithStatus:@"Checking In..."];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@&status=%@", kCandPWebServiceUrl, place.lat, place.lng, checkInTime, checkOutTime, foursquareID, statusText];
+    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@&status=%@&venue_name=%@", kCandPWebServiceUrl, place.lat, place.lng, checkInTime, checkOutTime, foursquareID, statusText, venueName];
 
 //    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@&status=%@", @"http://dev.worklist.net/~emcro/candpweb/web/", place.lat, place.lng, checkInTime, checkOutTime, foursquareID, [statusTextField.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 

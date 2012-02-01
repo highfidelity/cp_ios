@@ -133,14 +133,13 @@
 	// We get here if the user has allowed Push Notifications
 	
 	// We need to get our authorization token and send it to our servers
-
     [[UAPush shared] registerDeviceToken:devToken];
 }
 
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err 
 {
     settings.registeredForApnsSuccessfully = NO;
-    //NSLog(@"Error in registration. Error: %@", err);
+//NSLog(@"Error in registration. Error: %@", err);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////

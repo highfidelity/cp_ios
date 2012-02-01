@@ -25,8 +25,9 @@
 
 ////////////////////////////////////////////////
 // urban airship
-#define kUrbanAirshipApplicationKey			@"wa_ouebsSr6KZfqEDiH4qA"
-#define kUrbanAirshipApplicationSecret		@"_0L5-MnZTQaB4G821jl8qg"
+// Configured in AirshipConfig.plist, not here anymore
+//#define kUrbanAirshipApplicationKey			@"wa_ouebsSr6KZfqEDiH4qA"
+//#define kUrbanAirshipApplicationSecret		@"_0L5-MnZTQaB4G821jl8qg"
 
 
 
