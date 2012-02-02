@@ -42,9 +42,7 @@
 }
 
 -(void)handleResponseFromFacebookLogin
-{
-    NSLog(@"Facebook access token: %@", [[AppDelegate instance].facebook accessToken]);
-	
+{	
     [AppDelegate instance].settings.facebookAccessToken = [[AppDelegate instance].facebook accessToken];
     [AppDelegate instance].settings.facebookExpirationDate = [[AppDelegate instance].facebook expirationDate];
 	[[AppDelegate instance] saveSettings];
@@ -79,9 +77,12 @@
 		NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
 		
 		AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id candpJson) {
+            
+            [self checkLoginCookieStatus];
 			
 			NSLog(@"Result code: %d (%@)", [response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]] );
 
+            /*
 			NSLog(@"Header fields:" );
 			[[response allHeaderFields] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 				NSLog(@"     %@ : '%@'", key, obj );
@@ -93,6 +94,7 @@
 				NSLog(@"     %@ : '%@'", key, obj );
 				
 			}];
+             */
 			
 			[SVProgressHUD dismiss];
 
@@ -135,7 +137,7 @@
 				NSDictionary *userInfo = [[candpJson objectForKey:@"params"]objectForKey:@"user"];
 				
 				NSNumber *userId = [userInfo objectForKey:@"id"];
-				NSString  *nickname = [userInfo objectForKey:@"nickname"];
+				NSString *nickname = [userInfo objectForKey:@"nickname"];
 				
 				// extract some user info
 				[AppDelegate instance].settings.candpUserId = userId;
@@ -158,13 +160,10 @@
 			NSLog(@"AFJSONRequestOperation error: %@", [error localizedDescription] );
 			[SVProgressHUD dismissWithError:[error localizedDescription]];
 
-		} ];
+		}];
 		
-		[[NSOperationQueue mainQueue]  addOperation:postOperation];
-		
-		
-		
-		
+		[[NSOperationQueue mainQueue] addOperation:postOperation];
+        
 	}];
 	
 	[[NSOperationQueue mainQueue] addOperation:getMe];

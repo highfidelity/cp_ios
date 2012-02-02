@@ -14,6 +14,8 @@
 @property (nonatomic, strong)   AFHTTPClient        *httpClient;
 @property (nonatomic, weak)     UIViewController    *mapViewController;
 
+-(void)checkLoginCookieStatus;
+
 -(void)handleEmailCreate:(NSString*)username 
 				password:(NSString*)password
 				nickname:(NSString*)nickname

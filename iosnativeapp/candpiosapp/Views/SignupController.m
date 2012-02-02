@@ -55,10 +55,9 @@
 {
 	// handle facebook login
 	// the facebook login object will handle the sequence that follows
-	FacebookLoginSequence *facebookLogin = [[FacebookLoginSequence alloc]init ];
+	FacebookLoginSequence *facebookLogin = [[FacebookLoginSequence alloc] init];
 	[facebookLogin initiateLogin:self];
 	[AppDelegate instance].loginSequence = facebookLogin;
-	
 }
 
 - (IBAction)loginWithEmailTapped:(id)sender 

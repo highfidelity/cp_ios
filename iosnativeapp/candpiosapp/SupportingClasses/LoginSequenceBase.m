@@ -52,6 +52,40 @@
 	
 }
 
+-(void)checkLoginCookieStatus
+{
+    NSHTTPCookie *cookie;
+    NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    
+    for (cookie in [cookieJar cookies]) {
+        NSLog(@"%@", cookie);
+        if (cookie.name == @"PHPSESSID") {
+            NSLog(@"updating exipire date on PHPSESSID cookie");
+            NSArray *keys = [NSArray arrayWithObjects:
+                             NSHTTPCookieDomain, 
+                             NSHTTPCookieName, 
+                             NSHTTPCookiePath, 
+                             NSHTTPCookieValue, 
+                             NSHTTPCookieExpires, 
+                             nil];
+
+            NSArray *objects = [NSArray arrayWithObjects: 
+                                cookie.domain,
+                                cookie.name,
+                                cookie.path,
+                                cookie.value , 
+                                @"2015-01-01 00:00:00",     // Set to soemthing way in the future!
+                                nil];
+            
+            NSDictionary *properties = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
+            NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:properties];
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];    
+        }
+    }
+    
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(void)handleCommonCreate:(NSString*)username
 				 password:(NSString*)password
