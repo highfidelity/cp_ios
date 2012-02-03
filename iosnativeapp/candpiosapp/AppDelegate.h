@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "Settings.h"
 #import "Facebook.h"
-#import "BaseViewController.h"
 #import "UAirship.h"
 #import "UAPush.h"
 

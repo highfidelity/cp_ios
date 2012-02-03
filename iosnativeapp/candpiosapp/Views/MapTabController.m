@@ -23,6 +23,8 @@
 #import "UserListTableViewController.h"
 #import "SignupController.h"
 #import "MapDataSet.h"
+#import "UserProfileCheckedInViewController.h"
+#import "User.h"
 
 #define qHideTopNavigationBarOnMapView			0
 
@@ -82,7 +84,7 @@
     [refreshButton setImage:refreshImage forState:UIControlStateNormal];
     [refreshButton addTarget:self action:@selector(refreshLocations) forControlEvents:UIControlEventTouchUpInside];
     refreshButton.frame = CGRectMake(0, 0, 40, 30);
-    refreshButton.center = CGPointMake((self.view.frame.size.width / 2.0) + 20, self.tabBarController.tabBar.frame.origin.y - 100.0);
+    refreshButton.center = CGPointMake((self.view.frame.size.width / 2.0) + 20, self.view.frame.size.height - 100.0);
     [self.view addSubview:refreshButton];
     
     UIButton *locateMeButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -90,7 +92,7 @@
     [locateMeButton setImage:locateMeImage forState:UIControlStateNormal];
     [locateMeButton addTarget:self action:@selector(locateMe) forControlEvents:UIControlEventTouchUpInside];
     locateMeButton.frame = CGRectMake(0, 0, 40, 30);
-    locateMeButton.center = CGPointMake((self.view.frame.size.width / 2.0) - 20, self.tabBarController.tabBar.frame.origin.y - 100.0);
+    locateMeButton.center = CGPointMake((self.view.frame.size.width / 2.0) - 20, self.view.frame.size.height - 100.0);
     [self.view addSubview:locateMeButton];
 
 	self.navigationController.delegate = self;
@@ -103,12 +105,7 @@
 												 selector:@selector(refreshLocationsIfNeeded)
 												 userInfo:nil
 												  repeats:YES];
-	
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"List"
-                                                                            style:UIBarButtonItemStylePlain
-                                                                           target:self 
-                                                                           action:@selector(listButtonTapped)];
-	
+		
 	if([AppDelegate instance].settings.candpUserId ||
 	   [[AppDelegate instance].facebook isSessionValid])
 	{
@@ -332,13 +329,6 @@
 	
 }
 
--(void)listButtonTapped
-{
-    UserListTableViewController *userListTableViewController = [[UserListTableViewController alloc] init];
-    userListTableViewController.missions = dataset.annotations;
-    [self.navigationController pushViewController:userListTableViewController animated:YES];
-}
-
 -(void)loginButtonTapped
 {
 	SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
@@ -450,18 +440,34 @@
 
 -(void)accessoryButtonTapped:(UIButton*)sender
 {
-	// figure out which element was tapped, and open the page
-	int index = sender.tag;
-	NSArray *annotations = dataset.annotations;
-	if(index < [annotations count])
-	{
-		CandPAnnotation *tappedObj = [annotations objectAtIndex:index];
-		// 
-		MyWebTabController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"WebViewOfCandPUser"];
-		NSString *url = [NSString stringWithFormat:@"%@profile.php?u=%@", kCandPWebServiceUrl, tappedObj.objectId];
-		controller.urlToLoad = url;
-	    [self.navigationController pushViewController:controller animated:YES];
-	}
+    [self performSegueWithIdentifier:@"ShowUserProfileCheckedIn" sender:sender];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender 
+{
+    if ([[segue identifier] isEqualToString:@"ShowUserProfileCheckedIn"]) {
+        // figure out which element was tapped
+        UIButton *accessory = sender;
+        int index = accessory.tag;
+        NSArray *annotations = dataset.annotations;
+        if(index < [annotations count])
+        {
+            UserAnnotation *tappedObj = [annotations objectAtIndex:index];
+            // setup a user object with the info we have from the pin and callout
+            // so that this information can already be in the resume without having to load it
+            User *selectedUser = [[User alloc] init];
+            selectedUser.nickname = tappedObj.nickname;
+            selectedUser.userID = [tappedObj.objectId intValue];
+            selectedUser.location = CLLocationCoordinate2DMake(tappedObj.lat, tappedObj.lon);
+            selectedUser.status = tappedObj.status;
+            selectedUser.skills = tappedObj.skills;   
+            // set the user object on the UserProfileCheckedInVC to the user we just created
+            [[segue destinationViewController] setUser:selectedUser];
+        }    
+    }
+    else if ([[segue identifier] isEqualToString:@"ShowUserListTable"]) {
+        [[segue destinationViewController] setMissions: dataset.annotations];
+    }
 }
 
 ////// map delegate

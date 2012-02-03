@@ -13,6 +13,7 @@
 #import "UserAnnotation.h"
 #import "AppDelegate.h"
 #import "UserTableViewCell.h"
+#import "UserProfileCheckedInViewController.h"
 
 @implementation UserListTableViewController
 
@@ -200,12 +201,8 @@
 {
     MissionAnnotation *annotation = [missions objectAtIndex:indexPath.row];
 
-    WebViewController *controller = [[WebViewController alloc] initWithNibName:@"WebView" bundle:nil];
-//    MyWebTabController *controller = [[MyWebTabController alloc] init];
-//    MyWebTabController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"WebViewOfCandPUser"]
-    NSString *url = [NSString stringWithFormat:@"%@profile.php?u=%@", kCandPWebServiceUrl, annotation.objectId];
-    controller.urlAddress = url;
-    controller.title = [[missions objectAtIndex:indexPath.row] nickname];
+    UserProfileCheckedInViewController *controller = [self.navigationController.storyboard instantiateViewControllerWithIdentifier:@"UserProfileCheckedIn"];
+    
     [self.navigationController pushViewController:controller animated:YES];
 }
 
