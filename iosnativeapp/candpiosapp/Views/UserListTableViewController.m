@@ -199,11 +199,27 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MissionAnnotation *annotation = [missions objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"ShowUserProfileCheckedInFromList" sender:self];
+}
 
-    UserProfileCheckedInViewController *controller = [self.navigationController.storyboard instantiateViewControllerWithIdentifier:@"UserProfileCheckedIn"];
-    
-    [self.navigationController pushViewController:controller animated:YES];
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"ShowUserProfileCheckedInFromList"]) {
+        
+        NSIndexPath *path = [self.tableView indexPathForSelectedRow];
+        UserAnnotation *annotation = [missions objectAtIndex:path.row];
+        
+        // setup a user object with the info we have from the pin and callout
+        // so that this information can already be in the resume without having to load it
+        User *selectedUser = [[User alloc] init];
+        selectedUser.nickname = annotation.nickname;
+        selectedUser.status = annotation.status;
+        selectedUser.skills = annotation.skills;   
+        selectedUser.userID = [annotation.objectId intValue];
+        selectedUser.location = CLLocationCoordinate2DMake(annotation.lat, annotation.lon);
+        // set the user object on the UserProfileCheckedInVC to the user we just created
+        [[segue destinationViewController] setUser:selectedUser];
+    }
 }
 
 @end

@@ -40,6 +40,10 @@
 		53A5419314DB494C0060D0DA /* checked-in~iphone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A5419214DB494C0060D0DA /* checked-in~iphone@2x.png */; };
 		53A5419E14DB4FCA0060D0DA /* checked-in~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A5419D14DB4FCA0060D0DA /* checked-in~iphone.png */; };
 		53A541A114DB50820060D0DA /* RootNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A541A014DB50820060D0DA /* RootNavigationController.m */; };
+		53A541A414DB62A70060D0DA /* map-locate~iphone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A541A214DB62A70060D0DA /* map-locate~iphone@2x.png */; };
+		53A541A514DB62A70060D0DA /* map-refresh~iphone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A541A314DB62A70060D0DA /* map-refresh~iphone@2x.png */; };
+		53A541A814DB779E0060D0DA /* map-locate~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A541A614DB779E0060D0DA /* map-locate~iphone.png */; };
+		53A541A914DB779E0060D0DA /* map-refresh~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A541A714DB779E0060D0DA /* map-refresh~iphone.png */; };
 		870835D714B3DEA200439431 /* SA_ActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835D514B3DEA200439431 /* SA_ActionSheet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		870835F814B3E1AC00439431 /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E014B3E1AB00439431 /* Facebook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		870835F914B3E1AC00439431 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 870835E314B3E1AB00439431 /* FBDialog.bundle */; };
@@ -233,6 +237,10 @@
 		53A5419D14DB4FCA0060D0DA /* checked-in~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked-in~iphone.png"; sourceTree = "<group>"; };
 		53A5419F14DB50820060D0DA /* RootNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootNavigationController.h; path = candpiosapp/RootNavigationController.h; sourceTree = SOURCE_ROOT; };
 		53A541A014DB50820060D0DA /* RootNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootNavigationController.m; path = candpiosapp/RootNavigationController.m; sourceTree = SOURCE_ROOT; };
+		53A541A214DB62A70060D0DA /* map-locate~iphone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-locate~iphone@2x.png"; sourceTree = "<group>"; };
+		53A541A314DB62A70060D0DA /* map-refresh~iphone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-refresh~iphone@2x.png"; sourceTree = "<group>"; };
+		53A541A614DB779E0060D0DA /* map-locate~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-locate~iphone.png"; sourceTree = "<group>"; };
+		53A541A714DB779E0060D0DA /* map-refresh~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-refresh~iphone.png"; sourceTree = "<group>"; };
 		870835D414B3DEA200439431 /* SA_ActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SA_ActionSheet.h; sourceTree = "<group>"; };
 		870835D514B3DEA200439431 /* SA_ActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SA_ActionSheet.m; sourceTree = "<group>"; };
 		870835DF14B3E1AB00439431 /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
@@ -900,6 +908,10 @@
 		87F657F314B0D2D000F4AB6C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				53A541A614DB779E0060D0DA /* map-locate~iphone.png */,
+				53A541A714DB779E0060D0DA /* map-refresh~iphone.png */,
+				53A541A214DB62A70060D0DA /* map-locate~iphone@2x.png */,
+				53A541A314DB62A70060D0DA /* map-refresh~iphone@2x.png */,
 				5390190D14DA0D850052100B /* paper-texture.jpg */,
 				E402DB6514D43C2B00BC82E8 /* pin-frame.png */,
 				E402DB6214D43C1700BC82E8 /* defaultAvatar50.png */,
@@ -1033,6 +1045,10 @@
 				5390190E14DA0D850052100B /* paper-texture.jpg in Resources */,
 				53A5419314DB494C0060D0DA /* checked-in~iphone@2x.png in Resources */,
 				53A5419E14DB4FCA0060D0DA /* checked-in~iphone.png in Resources */,
+				53A541A414DB62A70060D0DA /* map-locate~iphone@2x.png in Resources */,
+				53A541A514DB62A70060D0DA /* map-refresh~iphone@2x.png in Resources */,
+				53A541A814DB779E0060D0DA /* map-locate~iphone.png in Resources */,
+				53A541A914DB779E0060D0DA /* map-refresh~iphone.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

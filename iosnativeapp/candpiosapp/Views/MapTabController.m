@@ -79,23 +79,7 @@
     [super viewDidLoad];
     self.mapHasLoaded = NO;
 
-    UIButton *refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *refreshImage = [UIImage imageNamed:@"refresh"];
-    [refreshButton setImage:refreshImage forState:UIControlStateNormal];
-    [refreshButton addTarget:self action:@selector(refreshLocations) forControlEvents:UIControlEventTouchUpInside];
-    refreshButton.frame = CGRectMake(0, 0, 40, 30);
-    refreshButton.center = CGPointMake((self.view.frame.size.width / 2.0) + 20, self.view.frame.size.height - 100.0);
-    [self.view addSubview:refreshButton];
-    
-    UIButton *locateMeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *locateMeImage = [UIImage imageNamed:@"location"];
-    [locateMeButton setImage:locateMeImage forState:UIControlStateNormal];
-    [locateMeButton addTarget:self action:@selector(locateMe) forControlEvents:UIControlEventTouchUpInside];
-    locateMeButton.frame = CGRectMake(0, 0, 40, 30);
-    locateMeButton.center = CGPointMake((self.view.frame.size.width / 2.0) - 20, self.view.frame.size.height - 100.0);
-    [self.view addSubview:locateMeButton];
-
-	self.navigationController.delegate = self;
+    self.navigationController.delegate = self;
 	hasUpdatedUserLocation = false;
 	
 	// every 10 seconds, see if it's time to refresh the data
@@ -267,6 +251,11 @@
     //return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (IBAction)refreshButtonClicked:(id)sender
+{
+    [self refreshLocations];
+}
+
 -(void)refreshLocationsIfNeeded
 {
 	MKMapRect mapRect = mapView.visibleMapRect;
@@ -278,35 +267,33 @@
 	}
 }
 
-- (void)refreshLocations 
+-(void)refreshLocations
 {
-	MKMapRect mapRect = mapView.visibleMapRect;
-		[MapDataSet beginLoadingNewDataset:mapRect
-								completion:^(MapDataSet *newDataset, NSError *error) {
-									
-									
-									if(newDataset)
-									{
-										// remove the old pins
-										// TODO: update/merge existing elements instead of removing them all
-										if(dataset)
-											[mapView removeAnnotations:dataset.annotations];
-										
-										// add new the new ones
-										[mapView addAnnotations:newDataset.annotations];
-										
-										dataset = newDataset;
-									}
-									
-									[SVProgressHUD dismiss];
-									
-									
-								}];
-
-
+    MKMapRect mapRect = mapView.visibleMapRect;
+    [MapDataSet beginLoadingNewDataset:mapRect
+                            completion:^(MapDataSet *newDataset, NSError *error) {
+                                
+                                
+                                if(newDataset)
+                                {
+                                    // remove the old pins
+                                    // TODO: update/merge existing elements instead of removing them all
+                                    if(dataset)
+                                        [mapView removeAnnotations:dataset.annotations];
+                                    
+                                    // add new the new ones
+                                    [mapView addAnnotations:newDataset.annotations];
+                                    
+                                    dataset = newDataset;
+                                }
+                                
+                                [SVProgressHUD dismiss];
+                                
+                                
+                            }];
 }
 
-- (void)locateMe
+- (IBAction)locateMe:(id)sender
 {
     [self zoomTo: [[mapView userLocation] coordinate]];
 }
@@ -440,12 +427,12 @@
 
 -(void)accessoryButtonTapped:(UIButton*)sender
 {
-    [self performSegueWithIdentifier:@"ShowUserProfileCheckedIn" sender:sender];
+    [self performSegueWithIdentifier:@"ShowUserProfileCheckedInFromMap" sender:sender];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender 
 {
-    if ([[segue identifier] isEqualToString:@"ShowUserProfileCheckedIn"]) {
+    if ([[segue identifier] isEqualToString:@"ShowUserProfileCheckedInFromMap"]) {
         // figure out which element was tapped
         UIButton *accessory = sender;
         int index = accessory.tag;

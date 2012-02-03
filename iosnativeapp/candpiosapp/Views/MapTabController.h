@@ -27,7 +27,9 @@
 @property (nonatomic) BOOL mapHasLoaded;
 
 - (void)refreshLocations;
-- (void)locateMe;
+- (IBAction)refreshButtonClicked:(id)sender;
+- (IBAction)locateMe:(id)sender;
+
 
 @end
 
