@@ -7,24 +7,16 @@
 //
 
 #import "MapTabController.h"
-#import "AFHTTPClient.h"
-#import "AFJSONRequestOperation.h"
 #import "UIImageView+WebCache.h"
 #import "MissionAnnotation.h"
 #import "UserAnnotation.h"
 #import "AppDelegate.h"
 #import "SVProgressHUD.h"
-#import "MyWebTabController.h"
-#import "UserSubview.h"
-#import "SA_ActionSheet.h"
-#import "FacebookLoginSequence.h"
-#import "EmailLoginSequence.h"
-#import "CreateEmailAccountController.h"
 #import "UserListTableViewController.h"
 #import "SignupController.h"
 #import "MapDataSet.h"
 #import "UserProfileCheckedInViewController.h"
-#import "User.h"
+#import "ClusterAnnotation.h"
 
 #define qHideTopNavigationBarOnMapView			0
 
@@ -117,7 +109,6 @@
 		NSLog(@"MapTab: viewDidLoad zoomto (lat %f, lon %f)", [AppDelegate instance].settings.lastKnownLocation.coordinate.latitude, [AppDelegate instance].settings.lastKnownLocation.coordinate.longitude);
 		[self zoomTo: [AppDelegate instance].settings.lastKnownLocation.coordinate];
 	}
-	
 
 	NSOperationQueue *queue = [NSOperationQueue mainQueue];
 	//NSOperationQueue *queue = [[NSOperationQueue alloc] init];
@@ -145,102 +136,7 @@
 		hasShownLoadingScreen = true;
 	}
 	
-	[self updateLoginButton];
-
-	// http://www.coffeeandpower.com/api.php?action=userdetail?id=5872
-
-	// kick off a request to load the map items near the given lat & lon
-	// http://www.coffeeandpower.com/api.php?action=userlist
-	//	{
-	//	error: false,
-	//	payload: [
-	//		{
-	//		distance: "0",
-	//		online: "1",
-	//			id: "5872",
-	//		nickname: "Charlie White",
-	//		status_text: "",
-	//		photo: "11105",
-	//		filename: "http://coffeeandpower-prod.s3.amazonaws.com/image/profile/5872_1325441007_256.jpg",
-	//		lat: "0.000000",
-	//		lng: "0.000000",
-	//		APNToken: null,
-	//		active: "Y",
-	//		favorite_enabled: "0",
-	//		video_chat: "1",
-	//		ratings: "0",
-	//		skills: null
-	//		},
-	//		{
-	//		distance: "4948.15104391205",
-	//		online: "1",
-	//			id: "5852",
-	//		nickname: "Greg Beaver",
-	//		status_text: "",
-	//		photo: "11065",
-	//		filename: "http://coffeeandpower-prod.s3.amazonaws.com/image/profile/5852_1325274001_256.jpg",
-	//		lat: "44.631891",
-	//		lng: "-63.577996",
-	//		APNToken: null,
-	//		active: "Y",
-	//		favorite_enabled: "0",
-	//		video_chat: "0",
-	//		ratings: "0",
-	//		skills: null
-	//		},
-	//   ]
-	// }
-	
-	
-	
-	// http://www.coffeeandpower.com/api.php?action=mission&lat=36&lon=-122
-	// response is in the form:
-	//	{
-	//		"error": false,
-	//		"payload": [{
-	//			"distance": "124.727576005202",
-	//			"id": "3761",
-	//			"author_id": "476",
-	//			"author_phone": "",
-	//			"author_email": "secondlife@coffeeandpower.com",
-	//			"title": "you to place a C&P kiosk in Second Life",
-	//			"description": "Calling all SL Avatars! \n\nWe need your help to spread the word about C&P inside Second Life. Earn some extra C$ to spend on real life services by placing a C&P kiosk on your land and bonus C$ for getting avatars to click on it.\n\nHow It works:\n1. Go inworld to: http:\/\/maps.secondlife.com\/secondlife\/P%20Squared\/53\/147\/92 and pick up a Coffee & Power Kiosk (click the button below the screen to get your copy) \n2. Set the kiosk out on your land\n3. Make an offer on this mission, be sure to include your SL Name and Kiosk location for verification\n4. C&P will pay you C$5 for each kiosk you set up (you can place up to 3 kiosks)\n5. Bonus: C&P will pay you C$2.50 for every 25 unique avatar clicks you get to the kiosk (up to C$20)\n\nNOTE: Don't forget to include your SL name in your offer. This is a limited time promotion, so don't delay! ",
-	//			"type": "want",
-	//			"status": "On",
-	//			"proposed_price": "5.00",
-	//			"create_date": "2011-11-16 20:35:28",
-	//			"deadline": "2011-12-29 22:22:15",
-	//			"location_text": null,
-	//			"lat": "37.771119",
-	//			"lng": "-122.423889",
-	//			"is_deleted": "0",
-	//			"deleted_by_user_id": "0",
-	//			"video": "",
-	//			"has_invite_list": "0",
-	//			"invite_favorites": "0",
-	//			"is_private": "0",
-	//			"skill_id": "34",
-	//			"read_status_agent": "read",
-	//			"read_status_client": "read",
-	//			"updated": null,
-	//			"hit_count": "215",
-	//			"last_switched_on": "2011-12-28 22:22:15",
-	//			"expenses_c_dollars": "No",
-	//			"expenses_us_dollars": "No",
-	//			"expenses_credit_card": "No",
-	//			"expenses_other": "",
-	//			"fb_likes": "4",
-	//			"is_on_top": "1",
-	//			"is_giftable": "0",
-	//			"nickname": "JeskaD",
-	//			"photo": "1096",
-	//			"filename": "http:\/\/coffeeandpower-prod.s3.amazonaws.com\/image\/profile\/476_1318241551_256.jpg"
-	//		},
-	//		...
-	//	  ]
-	//	}
-	//	
-    
+	[self updateLoginButton];    
     [self refreshLocationsIfNeeded];
 }
 
@@ -253,6 +149,7 @@
 
 - (IBAction)refreshButtonClicked:(id)sender
 {
+    [mapView removeAnnotations: mapView.annotations];
     [self refreshLocations];
 }
 
@@ -272,25 +169,20 @@
     MKMapRect mapRect = mapView.visibleMapRect;
     [MapDataSet beginLoadingNewDataset:mapRect
                             completion:^(MapDataSet *newDataset, NSError *error) {
-                                
-                                
                                 if(newDataset)
                                 {
-                                    // remove the old pins
-                                    // TODO: update/merge existing elements instead of removing them all
-                                    if(dataset)
-                                        [mapView removeAnnotations:dataset.annotations];
-                                    
-                                    // add new the new ones
-                                    [mapView addAnnotations:newDataset.annotations];
-                                    
+                                    for (CandPAnnotation *ann in [newDataset annotations]) {
+                                        if (![[mapView annotations] containsObject: ann]) {
+                                            [mapView addAnnotation: ann];
+                                        }
+                                    }
+
                                     dataset = newDataset;
                                 }
                                 
                                 [SVProgressHUD dismiss];
-                                
-                                
                             }];
+    
 }
 
 - (IBAction)locateMe:(id)sender
@@ -346,21 +238,43 @@
 	
 }
 
+- (void) mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
+    for (MKAnnotationView *view in views) {
+        if ([[view annotation] isKindOfClass:[CandPAnnotation class]]) {
+            CandPAnnotation *ann = (CandPAnnotation *)view.annotation;
+            if (ann.checkedIn) {   
+                [[view superview] bringSubviewToFront:view];
+            } else {
+                [[view superview] sendSubviewToBack:view];
+            }
+        }
+    }
+}
+
 // mapView:viewForAnnotation: provides the view for each annotation.
 // This method may be called for all or some of the added annotations.
 // For MapKit provided annotations (eg. MKUserLocation) return nil to use the MapKit provided annotation view.
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
+    if ([annotation isKindOfClass:[OCAnnotation class]]) {
+        
+        OCAnnotation *clusterAnnotation = (OCAnnotation *)annotation;
+        NSString *reuseId = @"cluster-pin";
+		ClusterAnnotation *pin = (ClusterAnnotation *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
+        if (!pin) {
+            pin = [[ClusterAnnotation alloc] initWithAnnotation:annotation reuseIdentifier: reuseId];
+            pin.image = [UIImage imageNamed:@"cluster.png"];
+        }
+        [pin setClusterText: [NSString stringWithFormat:@"%d", [clusterAnnotation.annotationsInCluster count]]];
+        return pin;
+    }
+    
 	MKAnnotationView *pinToReturn = nil;
 	if([annotation isKindOfClass:[CandPAnnotation class]])
-	{
+	{ 
 		CandPAnnotation *candpanno = (CandPAnnotation*)annotation;
+        NSString *reuseId = [NSString stringWithFormat: @"pin-%d", candpanno.checkinId];
 
-		NSString *reuseId =  @"user-pin";
-		if (candpanno.checkedIn) {
-			reuseId = [NSString stringWithFormat: @"pin-@%", candpanno.objectId];
-		}
-		
 		MKPinAnnotationView *pin = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
 		if (pin == nil)
 		{
@@ -374,8 +288,8 @@
         
 		if (candpanno.checkedIn) 
 		{
-			UIImage *pinImage = nil;
-			if (candpanno.imageUrl == nil) 
+			UIImage *pinImage;
+            if (candpanno.imageUrl == nil)
 			{
 				pinImage = [UIImage imageNamed:@"defaultAvatar50.png"];
 			} 
@@ -462,6 +376,7 @@
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
 	[self refreshLocationsIfNeeded];
+    [[self mapView] doClustering];
 }
 
 - (void)mapViewWillStartLocatingUser:(MKMapView *)mapView

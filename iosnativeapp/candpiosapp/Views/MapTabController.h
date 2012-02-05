@@ -8,17 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-
+#import "OCMapView.h"
 
 @class MapDataSet;
 
 @interface MapTabController : UIViewController< MKMapViewDelegate, UINavigationControllerDelegate >
 {
+    OCMapView *mapView;
 	bool hasUpdatedUserLocation;
 	bool hasShownLoadingScreen;
 }
 
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (nonatomic, retain) IBOutlet OCMapView *mapView;
 @property (nonatomic, readonly, strong) MapDataSet *dataset;
 
 // State to prevent querying userlist (with bad region) before the map has appeared

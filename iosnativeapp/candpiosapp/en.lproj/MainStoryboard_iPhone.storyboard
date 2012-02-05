@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11C74" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2166" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
     <dependencies>
         <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1166"/>
     </dependencies>
     <scenes>
+        <!--User List Table View Controller-->
         <scene sceneID="1mX-pB-Ub5">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pIh-oL-BFt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -37,6 +38,7 @@
             </objects>
             <point key="canvasLocation" x="713" y="-628"/>
         </scene>
+        <!--Map Tab Controller-->
         <scene sceneID="Q7p-8T-DVG">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WIW-bY-l8z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -45,7 +47,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" id="fm6-PX-4Yv">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" id="fm6-PX-4Yv" customClass="OCMapView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <connections>
@@ -101,6 +103,7 @@
             </objects>
             <point key="canvasLocation" x="379" y="-36"/>
         </scene>
+        <!--Check In List Table View Controller - Places-->
         <scene sceneID="A3v-gP-kYR">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A2n-ak-jSV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -117,7 +120,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5XM-TA-OWu">
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" id="5XM-TA-OWu">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
@@ -144,6 +147,7 @@
             </objects>
             <point key="canvasLocation" x="962" y="635"/>
         </scene>
+        <!--User Profile Checked In View Controller-->
         <scene sceneID="jZa-Lm-4za">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ySL-Md-ewH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -225,6 +229,7 @@
             </objects>
             <point key="canvasLocation" x="971" y="2"/>
         </scene>
+        <!--Root Navigation Controller - Nearby-->
         <scene sceneID="X1z-oT-wPh">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flw-Jh-D1t" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -244,6 +249,7 @@
             </objects>
             <point key="canvasLocation" x="-43" y="14"/>
         </scene>
+        <!--Navigation Controller-->
         <scene sceneID="3mV-Fb-MBc">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lzg-tm-OqG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -266,40 +272,6 @@
         <image name="map-locate~iphone.png" width="42" height="42"/>
         <image name="map-refresh~iphone.png" width="42" height="42"/>
     </resources>
-    <classes>
-        <class className="BusinessCard" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BusinessCard.h"/>
-            <relationships>
-                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="nickname" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="status" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CheckInListTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInListTableViewController.h"/>
-        </class>
-        <class className="MapTabController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapTabController.h"/>
-            <relationships>
-                <relationship kind="action" name="locateMe:"/>
-                <relationship kind="action" name="refreshButtonClicked:"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-            </relationships>
-        </class>
-        <class className="RootNavigationController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RootNavigationController.h"/>
-        </class>
-        <class className="UserListTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserListTableViewController.h"/>
-        </class>
-        <class className="UserProfileCheckedInViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserProfileCheckedInViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="userCard" candidateClass="BusinessCard"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

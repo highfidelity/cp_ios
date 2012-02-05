@@ -12,11 +12,15 @@
 @interface CandPAnnotation : NSObject< MKAnnotation >
 @property (nonatomic,assign) double lat;
 @property (nonatomic,assign) double lon;
+@property (nonatomic, assign) int checkinId;
 @property (nonatomic, assign) bool checkedIn;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subtitle;
 @property (nonatomic, copy) NSString *imageUrl;
 @property (nonatomic, copy) NSString *objectId;
 -(id)initFromDictionary:(NSDictionary*)jsonDict;
+
+- (BOOL)isEqual:(id)other;
+- (BOOL)isEqualToUserAnnotation:(CandPAnnotation *)annotation;
 
 @end

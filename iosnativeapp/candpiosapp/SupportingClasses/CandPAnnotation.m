@@ -13,6 +13,8 @@
 @synthesize title, subtitle, imageUrl;
 @synthesize objectId;
 @synthesize checkedIn;
+@synthesize checkinId;
+
 
 -(id)initFromDictionary:(NSDictionary*)jsonDict
 {
@@ -23,6 +25,7 @@
 		lon = [[jsonDict objectForKey:@"lng"] doubleValue];
 		objectId = [[jsonDict objectForKey:@"id"] copy];
 		checkedIn = [[jsonDict objectForKey:@"checked_in"] boolValue];
+        checkinId = [[jsonDict objectForKey:@"checkin_id"] intValue];
 		//title = [jsonDict objectForKey:@"title"];
 		//description = [jsonDict objectForKey:@"description"];
 		//nickname = [jsonDict objectForKey:@"nickname"];
@@ -32,6 +35,28 @@
 	}
 	return self;
 }
+
+- (BOOL)isEqual:(id)other {
+    if (other == self) {
+        return YES;   
+    }
+    if (!other || ![other isKindOfClass:[self class]]) {
+        return NO;
+    }
+    return [self isEqualToUserAnnotation: other];
+}
+
+- (BOOL)isEqualToUserAnnotation:(CandPAnnotation *)annotation {
+    if (self == annotation) {
+        return YES;
+    }
+    
+    if ([self checkinId] == [annotation checkinId]) {
+        return YES;        
+    }  
+    return NO;
+}
+
 // for MKAnnotation protocol
 // @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 //

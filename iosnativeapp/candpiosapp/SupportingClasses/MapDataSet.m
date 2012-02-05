@@ -36,16 +36,17 @@ static NSOperationQueue *sMapQueue = nil;
 	// TODO:  if we're already busy, cancel the old one and issue the new one
 	if([sMapQueue operationCount] == 0)
 	{
-		// get the center of the view
-		MKCoordinateRegion region = MKCoordinateRegionForMapRect(mapRect);
-		CLLocationCoordinate2D currentLocation = region.center;
-		// calculate the size of the view
-		CLLocation * zeroLocation = [[CLLocation alloc] initWithLatitude: 0.0 longitude:0.0];
-		CLLocation * deltaAsLocation = [[CLLocation alloc] initWithLatitude:region.span.latitudeDelta longitude:region.span.longitudeDelta];
-		CLLocationDistance diameter = [zeroLocation distanceFromLocation:deltaAsLocation]; // in meters
-
-		
-		NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=userlist&lat=%.7f&lon=%.7f&maxusers=99&radius=%.1f", kCandPWebServiceUrl, currentLocation.latitude, currentLocation.longitude, diameter / 2.0];
+        MKMapPoint neMapPoint = MKMapPointMake(mapRect.origin.x + mapRect.size.width, mapRect.origin.y + mapRect.size.height);
+        MKMapPoint swMapPoint = MKMapPointMake(mapRect.origin.x, mapRect.origin.y);
+        CLLocationCoordinate2D swCoord = MKCoordinateForMapPoint(swMapPoint);
+        CLLocationCoordinate2D neCoord = MKCoordinateForMapPoint(neMapPoint);
+        
+		NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=getCheckedInBounds&sw_lat=%f&sw_lng=%f&ne_lat=%f&ne_lng=%f", 
+                               kCandPWebServiceUrl,
+                               swCoord.latitude,
+                               swCoord.longitude,
+                               neCoord.latitude,
+                               neCoord.longitude];
 	#if DEBUG
 		NSLog(@"Loading datapoints from: %@", urlString);
 	#endif
@@ -62,6 +63,7 @@ static NSOperationQueue *sMapQueue = nil;
 			
 		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
 			//int z = 99;
+            NSLog(@"%@", error);
 			if(completion)
 				completion(nil, error);
 		}];
@@ -88,12 +90,12 @@ static NSOperationQueue *sMapQueue = nil;
 		{
 			//NSLog(@"Mission %d: %@", )
 			UserAnnotation *user = [[UserAnnotation alloc]initFromDictionary:userDict];
-			
+
 			// add (or update) the new pin
 			[annotations addObject:user];
-			
+
 		}
-		
+
 	}
 	return self;
 }
