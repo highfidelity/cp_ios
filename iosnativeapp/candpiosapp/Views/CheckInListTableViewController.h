@@ -7,6 +7,7 @@
 @property (nonatomic, retain) NSMutableArray *places;
 @property BOOL refreshLocationsNow;
 
+- (IBAction)closeWindow:(id)sender;
 - (void)refreshLocations;
 
 @end

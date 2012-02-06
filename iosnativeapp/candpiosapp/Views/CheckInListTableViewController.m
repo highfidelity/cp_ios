@@ -31,17 +31,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     refreshLocationsNow = YES;
-    
-    self.title = @"Places";
-    
-    UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(closeWindow:)];
-
-    self.navigationItem.leftBarButtonItem = closeButton;
 }
 
-- (void)closeWindow:(id)sender {
+- (IBAction)closeWindow:(id)sender {
     [SVProgressHUD dismiss];
     [self dismissModalViewControllerAnimated:YES];
 }
@@ -172,7 +165,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCell"];
     if (cell == nil) {
         // let's crash here if the identifier is incorrect
-        // we'd catch that on build time
+        // we'd catch that at build time
     }
     cell.textLabel.text = [[places objectAtIndex:indexPath.row] name];
     
