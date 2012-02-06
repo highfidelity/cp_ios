@@ -186,8 +186,8 @@
                                                 <rect key="frame" x="100" y="10" width="176" height="76"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="NICKNAME" lineBreakMode="wordWrap" minimumFontSize="14" id="DNz-1R-UVe">
-                                                        <rect key="frame" x="0.0" y="30" width="176" height="36"/>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Nickname" lineBreakMode="wordWrap" minimumFontSize="14" id="DNz-1R-UVe">
+                                                        <rect key="frame" x="0.0" y="29" width="176" height="36"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.0" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="26"/>
@@ -227,7 +227,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="971" y="2"/>
+            <point key="canvasLocation" x="962" y="35"/>
         </scene>
         <scene sceneID="X1z-oT-wPh">
             <objects>

@@ -54,7 +54,7 @@
     CLLocationCoordinate2D coordinate = [self.mapView convertPoint:rightAndUp toCoordinateFromView:self.mapView];
     [self.mapView setCenterCoordinate:coordinate animated:NO];
     
-    self.userCard.nickname.text = [self.user.nickname uppercaseString];
+    self.userCard.nickname.text = self.user.nickname;
     self.userCard.status.text = self.user.status;
     
     // pull up SVProgressHUD so we can load the user data
@@ -69,6 +69,12 @@
             [SVProgressHUD dismissWithError:[error localizedDescription]];
         }
     }];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // hide the progress HUD if the user is going back and it's still loading
+    [SVProgressHUD dismiss];
 }
 
 - (void)viewDidUnload

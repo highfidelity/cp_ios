@@ -363,38 +363,33 @@
 		button.frame =CGRectMake(0, 0, 32, 32);
 		button.tag = [dataset.annotations indexOfObject:candpanno];
 		pin.rightCalloutAccessoryView = button;
-		[button addTarget:self action:@selector(accessoryButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 	}
 	
 	return pinToReturn;
 }
 
--(void)accessoryButtonTapped:(UIButton*)sender
-{
-    [self performSegueWithIdentifier:@"ShowUserProfileCheckedInFromMap" sender:sender];
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    [self performSegueWithIdentifier:@"ShowUserProfileCheckedInFromMap" sender:view];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender 
 {
     if ([[segue identifier] isEqualToString:@"ShowUserProfileCheckedInFromMap"]) {
         // figure out which element was tapped
-        UIButton *accessory = sender;
-        int index = accessory.tag;
-        NSArray *annotations = dataset.annotations;
-        if(index < [annotations count])
-        {
-            UserAnnotation *tappedObj = [annotations objectAtIndex:index];
-            // setup a user object with the info we have from the pin and callout
-            // so that this information can already be in the resume without having to load it
-            User *selectedUser = [[User alloc] init];
-            selectedUser.nickname = tappedObj.nickname;
-            selectedUser.userID = [tappedObj.objectId intValue];
-            selectedUser.location = CLLocationCoordinate2DMake(tappedObj.lat, tappedObj.lon);
-            selectedUser.status = tappedObj.status;
-            selectedUser.skills = tappedObj.skills;   
-            // set the user object on the UserProfileCheckedInVC to the user we just created
-            [[segue destinationViewController] setUser:selectedUser];
-        }    
+        UserAnnotation *tappedObj = [sender annotation];
+        // setup a user object with the info we have from the pin and callout
+        // so that this information can already be in the resume without having to load it
+        User *selectedUser = [[User alloc] init];
+        selectedUser.nickname = tappedObj.nickname;
+        selectedUser.userID = [tappedObj.objectId intValue];
+        selectedUser.location = CLLocationCoordinate2DMake(tappedObj.lat, tappedObj.lon);
+        selectedUser.status = tappedObj.status;
+        selectedUser.skills = tappedObj.skills;   
+#if DEBUG
+        NSLog(@"Showing resume for user with ID: %d", selectedUser.userID);
+#endif
+        // set the user object on the UserProfileCheckedInVC to the user we just created
+        [[segue destinationViewController] setUser:selectedUser];
     }
     else if ([[segue identifier] isEqualToString:@"ShowUserListTable"]) {
         [[segue destinationViewController] setMissions: dataset.annotations];
