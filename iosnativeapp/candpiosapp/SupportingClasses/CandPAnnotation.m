@@ -51,7 +51,7 @@
         return YES;
     }
     
-    if ([self checkinId] == [annotation checkinId]) {
+    if ([self checkinId] == [annotation checkinId] && [self checkedIn] == [annotation checkedIn]) {
         return YES;        
     }  
     return NO;

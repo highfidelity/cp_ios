@@ -42,7 +42,7 @@
     allAnnotations = [[NSMutableSet alloc] init];
     annotationsToIgnore = [[NSMutableSet alloc] init];
     clusteringMethod = OCClusteringMethodBubble;
-    clusterSize = 0.2;
+    clusterSize = 0.05;
     minLongitudeDeltaToCluster = 0.0018;
     clusteringEnabled = YES;
     backgroundClusterQueue = dispatch_queue_create("com.OCMapView.clustering", NULL);  

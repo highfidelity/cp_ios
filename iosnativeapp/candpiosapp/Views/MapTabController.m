@@ -171,12 +171,37 @@
                             completion:^(MapDataSet *newDataset, NSError *error) {
                                 if(newDataset)
                                 {
-                                    for (CandPAnnotation *ann in [newDataset annotations]) {
-                                        if (![[mapView annotations] containsObject: ann]) {
-                                            [mapView addAnnotation: ann];
+                                    NSSet *visiblePins = [mapView 
+                                                          annotationsInMapRect: mapView.visibleMapRect];
+                                    
+                                    NSLog(@"Visible pins: %d", [visiblePins count]);
+
+                                    for (CandPAnnotation *ann in visiblePins) {
+                                        if ([ann isKindOfClass: [OCAnnotation class]]) {
+                                            BOOL validCluster = YES;
+                                            for (CandPAnnotation *cann in [(OCAnnotation *)ann annotationsInCluster]) {
+                                                if (![[newDataset annotations] containsObject: cann]) {
+                                                    validCluster = NO;
+                                                    break;
+                                                }
+                                            }
+                                            
+                                            if(!validCluster) {
+                                                [mapView removeAnnotation:ann];
+                                            } else {
+                                                [[newDataset annotations] removeObjectsInArray: [(OCAnnotation *)ann annotationsInCluster]];
+                                            }
+                                            
+                                        } else {
+                                            if ([[newDataset annotations] containsObject: ann]) {
+                                                [[newDataset annotations] removeObject: ann];
+                                            } else {
+                                                [mapView removeAnnotation:ann];
+                                            }
                                         }
                                     }
-
+                                    
+                                    [mapView addAnnotations: [newDataset annotations]];
                                     dataset = newDataset;
                                 }
                                 
@@ -275,6 +300,11 @@
 		CandPAnnotation *candpanno = (CandPAnnotation*)annotation;
         NSString *reuseId = [NSString stringWithFormat: @"pin-%d", candpanno.checkinId];
 
+		if (!candpanno.checkedIn) 
+		{
+            reuseId = @"pin";
+        }
+        
 		MKPinAnnotationView *pin = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
 		if (pin == nil)
 		{
