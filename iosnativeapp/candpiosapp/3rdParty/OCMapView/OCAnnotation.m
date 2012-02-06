@@ -63,8 +63,10 @@
 - (void)addAnnotation:(id < MKAnnotation >)annotation{
     [annotation retain];
     
-    // Add annotation to the cluster
-    [annotationsInCluster addObject:annotation];
+    if (![annotationsInCluster containsObject :annotation]) {
+        // Add annotation to the cluster
+        [annotationsInCluster addObject:annotation];   
+    }
     [annotation release];
 }
 

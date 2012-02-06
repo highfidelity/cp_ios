@@ -178,26 +178,16 @@
 
                                     for (CandPAnnotation *ann in visiblePins) {
                                         if ([ann isKindOfClass: [OCAnnotation class]]) {
-                                            BOOL validCluster = YES;
-                                            for (CandPAnnotation *cann in [(OCAnnotation *)ann annotationsInCluster]) {
-                                                if (![[newDataset annotations] containsObject: cann]) {
-                                                    validCluster = NO;
-                                                    break;
-                                                }
-                                            }
+                                            [mapView removeAnnotation: ann];
                                             
-                                            if(!validCluster) {
-                                                [mapView removeAnnotation:ann];
-                                            } else {
-                                                [[newDataset annotations] removeObjectsInArray: [(OCAnnotation *)ann annotationsInCluster]];
-                                            }
-                                            
+                                        }
+                                    }
+                                    
+                                    for (CandPAnnotation *ann in visiblePins) {
+                                        if ([[newDataset annotations] containsObject: ann]) {
+                                            [[newDataset annotations] removeObject: ann];
                                         } else {
-                                            if ([[newDataset annotations] containsObject: ann]) {
-                                                [[newDataset annotations] removeObject: ann];
-                                            } else {
-                                                [mapView removeAnnotation:ann];
-                                            }
+                                            [mapView removeAnnotation:ann];
                                         }
                                     }
                                     
