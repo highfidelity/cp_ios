@@ -26,6 +26,7 @@
 {
 	self.mapViewController = mapViewControllerArg;
 	
+    
 	// set a liberal cookie policy
 	[[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy: NSHTTPCookieAcceptPolicyAlways];
 
@@ -39,6 +40,7 @@
 		// we have a facebook session, so just get our info & set it with c&p
 		[self handleResponseFromFacebookLogin];
 	}
+    
 }
 
 -(void)handleResponseFromFacebookLogin
@@ -78,11 +80,9 @@
 		
 		AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id candpJson) {
             
-            [self checkLoginCookieStatus];
-			
-			NSLog(@"Result code: %d (%@)", [response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]] );
-
             /*
+			NSLog(@"Result code: %d (%@)", [response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]] );
+            
 			NSLog(@"Header fields:" );
 			[[response allHeaderFields] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 				NSLog(@"     %@ : '%@'", key, obj );
@@ -167,9 +167,6 @@
 	}];
 	
 	[[NSOperationQueue mainQueue] addOperation:getMe];
-	
-	
-
 }
 								 
 -(void)handleResponseFromCandP:(NSDictionary*)json

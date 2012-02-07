@@ -44,6 +44,8 @@
 		53A541A114DB50820060D0DA /* RootNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A541A014DB50820060D0DA /* RootNavigationController.m */; };
 		53A541A814DB779E0060D0DA /* map-locate~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A541A614DB779E0060D0DA /* map-locate~iphone.png */; };
 		53A541A914DB779E0060D0DA /* map-refresh~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A541A714DB779E0060D0DA /* map-refresh~iphone.png */; };
+		6F5EB26C14DB51E40000294E /* OneOnOneChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5EB26B14DB51E40000294E /* OneOnOneChatViewController.m */; };
+		6FEEDFFC14E103F400861CA1 /* CPapi.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FEEDFFB14E103F400861CA1 /* CPapi.m */; };
 		870835D714B3DEA200439431 /* SA_ActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835D514B3DEA200439431 /* SA_ActionSheet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		870835F814B3E1AC00439431 /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E014B3E1AB00439431 /* Facebook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		870835F914B3E1AC00439431 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 870835E314B3E1AB00439431 /* FBDialog.bundle */; };
@@ -248,6 +250,10 @@
 		53A541A014DB50820060D0DA /* RootNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootNavigationController.m; path = candpiosapp/RootNavigationController.m; sourceTree = SOURCE_ROOT; };
 		53A541A614DB779E0060D0DA /* map-locate~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-locate~iphone.png"; sourceTree = "<group>"; };
 		53A541A714DB779E0060D0DA /* map-refresh~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-refresh~iphone.png"; sourceTree = "<group>"; };
+		6F5EB26A14DB51E30000294E /* OneOnOneChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OneOnOneChatViewController.h; path = ../OneOnOneChatViewController.h; sourceTree = "<group>"; };
+		6F5EB26B14DB51E40000294E /* OneOnOneChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OneOnOneChatViewController.m; path = ../OneOnOneChatViewController.m; sourceTree = "<group>"; };
+		6FEEDFFA14E103F400861CA1 /* CPapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPapi.h; sourceTree = "<group>"; };
+		6FEEDFFB14E103F400861CA1 /* CPapi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPapi.m; sourceTree = "<group>"; };
 		870835D414B3DEA200439431 /* SA_ActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SA_ActionSheet.h; sourceTree = "<group>"; };
 		870835D514B3DEA200439431 /* SA_ActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SA_ActionSheet.m; sourceTree = "<group>"; };
 		870835DF14B3E1AB00439431 /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
@@ -819,6 +825,8 @@
 		871EFBBC14AF987B0030658B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6F5EB26A14DB51E30000294E /* OneOnOneChatViewController.h */,
+				6F5EB26B14DB51E40000294E /* OneOnOneChatViewController.m */,
 				32FF63D914BBE71A00E99F55 /* CheckInDetailsViewController.h */,
 				32FF63DA14BBE71A00E99F55 /* CheckInDetailsViewController.m */,
 				32FF63DB14BBE71B00E99F55 /* CheckInDetailsViewController.xib */,
@@ -872,6 +880,8 @@
 			isa = PBXGroup;
 			children = (
 				87F6580214B0DDFC00F4AB6C /* CandPAnnotation.h */,
+				6FEEDFFA14E103F400861CA1 /* CPapi.h */,
+				6FEEDFFB14E103F400861CA1 /* CPapi.m */,
 				87F6580314B0DDFC00F4AB6C /* CandPAnnotation.m */,
 				E4D3929014DEE61900C4E0F0 /* ClusterAnnotation.h */,
 				E4D3929114DEE61900C4E0F0 /* ClusterAnnotation.m */,
@@ -1186,6 +1196,7 @@
 				32E3CD8614C39B94001EA2AB /* UserTableViewCell.m in Sources */,
 				32E3CD9114C3AAA5001EA2AB /* WebViewController.m in Sources */,
 				875CB8F414C5DC8C00AD4F6E /* MapDataSet.m in Sources */,
+				6F5EB26C14DB51E40000294E /* OneOnOneChatViewController.m in Sources */,
 				539018F914D9CCE20052100B /* UserProfileCheckedInViewController.m in Sources */,
 				5390190514D9D9AF0052100B /* User.m in Sources */,
 				5390190814D9FA5D0052100B /* BusinessCard.m in Sources */,
@@ -1195,6 +1206,7 @@
 				E468E2FC14DE9DD00087D50C /* OCDistance.m in Sources */,
 				E468E2FD14DE9DD00087D50C /* OCMapView.m in Sources */,
 				E4D3929214DEE61900C4E0F0 /* ClusterAnnotation.m in Sources */,
+				6FEEDFFC14E103F400861CA1 /* CPapi.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,12 +16,14 @@
 		nickname:(NSString*)nickname
 		facebookId:(NSString*)facebookId
 		completion:(void (^)(NSError *error, id JSON))completion;
-
 @end
-@implementation LoginSequenceBase
-@synthesize httpClient,mapViewController;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+@implementation LoginSequenceBase
+
+@synthesize httpClient;
+@synthesize mapViewController;
+
+////////////////////////////////////////////////////////////////////////////////////////
 -(id)init
 {
 	self = [super init];
@@ -33,9 +35,7 @@
 	return self;
 }
 
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 -(void)handleEmailCreate:(NSString*)username
                 password:(NSString*)password
                 nickname:(NSString*)nickname
@@ -43,7 +43,8 @@
 {
 	[self handleCommonCreate:username password:password nickname:nickname facebookId:nil completion:completion];
 }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////
 -(void)handleFacebookCreate:(NSString*)username
                  facebookId:(NSString*)facebookId
                  completion:(void (^)(NSError *error, id JSON))completion
@@ -52,41 +53,8 @@
 	
 }
 
--(void)checkLoginCookieStatus
-{
-    NSHTTPCookie *cookie;
-    NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    
-    for (cookie in [cookieJar cookies]) {
-        NSLog(@"%@", cookie);
-        if (cookie.name == @"PHPSESSID") {
-            NSLog(@"updating exipire date on PHPSESSID cookie");
-            NSArray *keys = [NSArray arrayWithObjects:
-                             NSHTTPCookieDomain, 
-                             NSHTTPCookieName, 
-                             NSHTTPCookiePath, 
-                             NSHTTPCookieValue, 
-                             NSHTTPCookieExpires, 
-                             nil];
 
-            NSArray *objects = [NSArray arrayWithObjects: 
-                                cookie.domain,
-                                cookie.name,
-                                cookie.path,
-                                cookie.value , 
-                                @"2015-01-01 00:00:00",     // Set to soemthing way in the future!
-                                nil];
-            
-            NSDictionary *properties = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
-            NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:properties];
-            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
-            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];    
-        }
-    }
-    
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 -(void)handleCommonCreate:(NSString*)username
 				 password:(NSString*)password
 				 nickname:(NSString*)nickname
@@ -116,7 +84,6 @@
 		NSDictionary *jsonDict = json;
 		NSLog(@"Result code: %d (%@)", [response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]] );
 		
-		
 		NSLog(@"Header fields:" );
 		[[response allHeaderFields] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 			NSLog(@"     %@ : '%@'", key, obj );
@@ -138,8 +105,7 @@
 		
 	} ];
 	
-	[[NSOperationQueue mainQueue]  addOperation:postOperation];
-	
+	[[NSOperationQueue mainQueue] addOperation:postOperation];
 }
 
 @end

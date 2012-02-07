@@ -40,6 +40,7 @@
 {
     [super viewDidLoad];
     [self addCheckInButton];
+
 }
 
 - (void)viewDidUnload

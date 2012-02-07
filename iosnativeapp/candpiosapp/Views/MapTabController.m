@@ -81,7 +81,8 @@
 												 selector:@selector(refreshLocationsIfNeeded)
 												 userInfo:nil
 												  repeats:YES];
-		
+    
+    // Check to see if our login is valid
 	if([AppDelegate instance].settings.candpUserId ||
 	   [[AppDelegate instance].facebook isSessionValid])
 	{
@@ -91,9 +92,7 @@
 																				 action:@selector(logoutButtonTapped)];
 		
 		self.navigationItem.title = [AppDelegate instance].settings.userNickname;
-	}
-	else
-	{
+	} else {
 		self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc]initWithTitle:@"Login..."
 																				  style:UIBarButtonItemStylePlain
 																				 target:self 
@@ -125,6 +124,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
+
 -(void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
@@ -391,7 +391,8 @@
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
 	[self refreshLocationsIfNeeded];
-    [[self mapView] doClustering];
+    // Causing an exception - 2012-02-04 alexi
+    //[[self mapView] doClustering];
 }
 
 - (void)mapViewWillStartLocatingUser:(MKMapView *)mapView
