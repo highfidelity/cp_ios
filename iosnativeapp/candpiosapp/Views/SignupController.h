@@ -10,6 +10,7 @@
 
 @interface SignupController : UIViewController
 - (IBAction)loginWithFacebookTapped:(id)sender;
+- (IBAction)loginWithLinkedInTapped:(id)sender;
 - (IBAction)loginWithEmailTapped:(id)sender;
 - (IBAction)signupTapped:(id)sender;
 

@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "EmailLoginSequence.h"
 #import "FacebookLoginSequence.h"
+#import "LinkedInLoginSequence.h"
 
 @implementation SignupController
 
@@ -20,6 +21,12 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    UIView *checkedInButton = [self.navigationController.view viewWithTag:901];
+    checkedInButton.userInteractionEnabled = NO;
+    checkedInButton.alpha = 0;
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,6 +65,19 @@
 	FacebookLoginSequence *facebookLogin = [[FacebookLoginSequence alloc] init];
 	[facebookLogin initiateLogin:self];
 	[AppDelegate instance].loginSequence = facebookLogin;
+}
+
+- (IBAction)loginWithLinkedInTapped:(id)sender 
+{
+	// Handle LinkedIn login
+	// The LinkedIn login object will handle the sequence that follows
+
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"LinkedIn Coming Soon" message:nil delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+//    [alert show];
+    
+	LinkedInLoginSequence *linkedInLogin = [[LinkedInLoginSequence alloc] init];
+	[linkedInLogin initiateLogin:self];
+	[AppDelegate instance].loginSequence = linkedInLogin;
 }
 
 - (IBAction)loginWithEmailTapped:(id)sender 

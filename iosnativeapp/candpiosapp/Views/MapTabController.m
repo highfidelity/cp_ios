@@ -86,14 +86,16 @@
 	if([AppDelegate instance].settings.candpUserId ||
 	   [[AppDelegate instance].facebook isSessionValid])
 	{
-		self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc]initWithTitle:@"Logout"
+		self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc]initWithTitle:@"Log Out"
 																				  style:UIBarButtonItemStylePlain
 																				 target:self 
 																				 action:@selector(logoutButtonTapped)];
 		
 		self.navigationItem.title = [AppDelegate instance].settings.userNickname;
-	} else {
-		self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc]initWithTitle:@"Login..."
+	}
+	else
+	{
+		self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc]initWithTitle:@"Log In..."
 																				  style:UIBarButtonItemStylePlain
 																				 target:self 
 																				 action:@selector(loginButtonTapped)];
@@ -135,6 +137,13 @@
 		[SVProgressHUD showWithStatus:@"Loading..."];
 		hasShownLoadingScreen = true;
 	}
+
+    // Re-show the Checked In button on load if currently hidden
+    UIView *checkedInButton = [self.navigationController.view viewWithTag:901];
+    if (checkedInButton.alpha == 0) {
+        checkedInButton.userInteractionEnabled = YES;
+        checkedInButton.alpha = 1;
+    }
 	
 	[self updateLoginButton];    
     [self refreshLocationsIfNeeded];
@@ -240,13 +249,13 @@
 {	
 	if([AppDelegate instance].settings.candpUserId)
 	{
-		self.navigationItem.rightBarButtonItem.title = @"Logout";
+		self.navigationItem.rightBarButtonItem.title = @"Log Out";
 		self.navigationItem.rightBarButtonItem.action = @selector(logoutButtonTapped);
 		self.navigationItem.title = [AppDelegate instance].settings.userNickname;
 	}
 	else
 	{	
-		self.navigationItem.rightBarButtonItem.title = @"Login...";
+		self.navigationItem.rightBarButtonItem.title = @"Log In...";
 		self.navigationItem.rightBarButtonItem.action = @selector(loginButtonTapped);
 		self.navigationItem.title = @"C&P";
 	}

@@ -62,7 +62,8 @@
     checkInButton.backgroundColor = [UIColor clearColor];
     checkInButton.frame = CGRectMake(235, 395, 75, 75);
     [checkInButton addTarget:self action:@selector(checkInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [checkInButton setImage:[UIImage imageNamed:@"checked-in.png"] forState:UIControlStateNormal];    
+    [checkInButton setImage:[UIImage imageNamed:@"checked-in.png"] forState:UIControlStateNormal];
+    checkInButton.tag = 901;
     [self.view addSubview:checkInButton];    
 }
 

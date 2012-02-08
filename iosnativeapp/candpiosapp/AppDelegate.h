@@ -22,6 +22,9 @@
 // CandP Dev (alternate)	"278566002200147"
 #define kFacebookAppId		@"230528896971048"
 
+#define kLinkedInKey @"dj7n9nz3bj65"
+#define kLinkedInSecret @"Hnt0m2JuooWM29OW"
+
 ////////////////////////////////////////////////
 // urban airship
 // Configured in AirshipConfig.plist, not here anymore

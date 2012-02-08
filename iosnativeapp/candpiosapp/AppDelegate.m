@@ -13,6 +13,7 @@
 #import "AFHTTPRequestOperation.h"
 #import "CheckInListTableViewController.h"
 #import "FlurryAnalytics.h"
+#import "OAuthConsumer.h"
 
 @interface AppDelegate(Internal)
 -(void)loadSettings;
@@ -123,7 +124,71 @@
   sourceApplication:(NSString *)sourceApplication
 		 annotation:(id)annotation 
 {
-    return [facebook handleOpenURL:url]; 
+    BOOL succeeded;
+
+    NSString *urlString = [NSString stringWithFormat:@"%@", url];
+    
+    NSRange textRange;
+    textRange = [urlString rangeOfString:@"candp://linkedin"];
+    
+    if (textRange.location != NSNotFound)
+    {
+
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              urlString, @"url",
+                              nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"linkedInCredentials" object:self userInfo:dict];
+        
+        succeeded = YES;
+    }
+    else {
+        succeeded = [facebook handleOpenURL:url]; 
+    }
+    
+    return succeeded;
+}
+
+- (void)requestTokenTicket:(OAServiceTicket *)ticket didFinishWithAccessToken:(NSData *)data {
+    NSString *responseBody = [[NSString alloc] initWithData:data
+                                                   encoding:NSUTF8StringEncoding];
+
+    if (ticket.didSucceed) {
+        NSLog(@"responseBody: %@", responseBody);
+
+        return;
+        NSMutableDictionary* pairs = [NSMutableDictionary dictionary] ;
+        NSScanner* scanner = [[NSScanner alloc] initWithString:responseBody] ;
+        NSCharacterSet* delimiterSet = [NSCharacterSet characterSetWithCharactersInString:@"&"];
+        
+        while (![scanner isAtEnd]) {
+            NSString* pairString ;
+            [scanner scanUpToCharactersFromSet:delimiterSet
+                                    intoString:&pairString] ;
+            [scanner scanCharactersFromSet:delimiterSet intoString:NULL] ;
+            NSArray* kvPair = [pairString componentsSeparatedByString:@"="] ;
+            if ([kvPair count] == 2) {
+                NSString* key = [kvPair objectAtIndex:0];
+                NSString* value = [kvPair objectAtIndex:1];
+                [pairs setObject:value forKey:key] ;
+            }
+        }
+        
+        NSString *token = [pairs objectForKey:@"oauth_token"];
+        NSString *secret = [pairs objectForKey:@"oauth_token_secret"];
+        
+        // Store auth token + secret
+        [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"linkedin_token"];
+        [[NSUserDefaults standardUserDefaults] setObject:secret forKey:@"linkedin_secret"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+//        [singleton addService:@"LinkedIn" id:2 accessToken:token accessSecret:secret expirationDate:nil];
+        
+//        [self loadLinkedInConnections];
+    }
+    else {
+        NSLog(@"ERROR responseBody: %@", responseBody);
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////

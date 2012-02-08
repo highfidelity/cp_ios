@@ -61,7 +61,7 @@ NSMutableArray *usersCheckedIn;
     
     self.title = [NSString stringWithFormat:@"Welcome, %@", [AppDelegate instance].settings.userNickname];
 
-    UIBarButtonItem *logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStyleBordered target:self action:@selector(logoutButtonAction:)];
+    UIBarButtonItem *logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Log Out" style:UIBarButtonItemStyleBordered target:self action:@selector(logoutButtonAction:)];
     
     self.navigationItem.rightBarButtonItem = logoutButton;
 
