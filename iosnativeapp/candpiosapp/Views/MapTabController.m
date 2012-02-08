@@ -183,8 +183,6 @@
                                     NSSet *visiblePins = [mapView 
                                                           annotationsInMapRect: mapView.visibleMapRect];
                                     
-                                    NSLog(@"Visible pins: %d", [visiblePins count]);
-
                                     for (CandPAnnotation *ann in visiblePins) {
                                         if ([ann isKindOfClass: [OCAnnotation class]]) {
                                             [mapView removeAnnotation: ann];
@@ -400,8 +398,7 @@
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
 	[self refreshLocationsIfNeeded];
-    // Causing an exception - 2012-02-04 alexi
-    //[[self mapView] doClustering];
+    [[self mapView] doClustering];
 }
 
 - (void)mapViewWillStartLocatingUser:(MKMapView *)mapView
