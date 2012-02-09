@@ -16,6 +16,7 @@
 #import "TableCellHelper.h"
 #import "SVProgressHUD.h"
 #import "FlurryAnalytics.h"
+#import "SSKeychain.h"
 
 @interface EmailLoginSequence()
 @property (nonatomic, weak) UIViewController	*createOrLoginController;
@@ -77,7 +78,8 @@
 		//email.customKeyObject = [iWallpaperAppDelegate instance].settings;
 		email.textFieldWillChange = ^ BOOL (UITextField *field){
 			// enable the button if there's text
-			if([field.text rangeOfString:@"@"].length >0 && [settings.userPassword length] > 0)
+			if([field.text rangeOfString:@"@"].length >0 && [[SSKeychain passwordForService:@"email" account:@"candp"]
+ length] > 0)
 				footerButton.enabled = YES;
 			else
 				footerButton.enabled = NO;
@@ -89,19 +91,24 @@
 		// add the password field
 		TableCellTextField *password = [[TableCellTextField alloc]initWithLabel:@"Password"
 																placeholderText:@"password"
-																	  kvoObject:settings
-																	 kvoKeyName:@"userPassword" ];
+																	  kvoObject:nil
+																	 kvoKeyName:nil];
 		password.labelFont = [UIFont boldSystemFontOfSize:14.0];
 		password.secureTextEntry = true;
 		//email.customKeyObject = [iWallpaperAppDelegate instance].settings;
 		password.textFieldWillChange = ^ BOOL (UITextField *field){
 			// enable the button if there's text
-			if(field.text.length >0 && [settings.userEmailAddress length] > 0)
+			if(field.text.length >0)
 				footerButton.enabled = YES;
 			else
 				footerButton.enabled = NO;
 			return YES;
 		};
+        
+        password.textFieldDidCommit = ^ void (UITextField *field){
+            [SSKeychain setPassword:field.text forService:@"email" account:@"candp"];
+        };
+
 		[group addCell:password];
 		
 		[controller.cellConfigs addObject:group];
@@ -190,9 +197,10 @@
 		// add the password field
 		TableCellTextField *password = [[TableCellTextField alloc]initWithLabel:@"Password"
 																placeholderText:@"password"
-																	  kvoObject:settings
-																	 kvoKeyName:@"userPassword" ];
+																	  kvoObject:nil
+																	 kvoKeyName:nil];
 		password.labelFont = [UIFont boldSystemFontOfSize:14.0];
+		password.secureTextEntry = true;
 		//email.customKeyObject = [iWallpaperAppDelegate instance].settings;
 		password.textFieldWillChange = ^ BOOL (UITextField *field){
 			// enable the button if there's text
@@ -202,14 +210,20 @@
 				footerButton.enabled = NO;
 			return YES;
 		};
+
+        password.textFieldDidCommit = ^ void (UITextField *field){
+            [SSKeychain setPassword:field.text forService:@"email" account:@"candp"];
+        };
+
 		[group addCell:password];
 		
 		// 
 		TableCellTextField *password2 = [[TableCellTextField alloc]initWithLabel:@"Password"
 																 placeholderText:@"confirm password"
-																	   kvoObject:settings
-																	  kvoKeyName:@"userPassword" ];
+																	   kvoObject:nil
+																	  kvoKeyName:nil];
 		password2.labelFont = [UIFont boldSystemFontOfSize:14.0];
+		password2.secureTextEntry = true;
 		//email.customKeyObject = [iWallpaperAppDelegate instance].settings;
 		password2.textFieldWillChange = ^ BOOL (UITextField *field){
 			// enable the button if there's text
@@ -240,9 +254,9 @@
 	[SVProgressHUD showWithStatus:@"Logging in"];
 	
 	NSString *userEmail = [AppDelegate instance].settings.userEmailAddress;
-	NSString *password = [AppDelegate instance].settings.userPassword;
+	NSString *password = [SSKeychain passwordForService:@"email" account:@"candp"];
 	[self handleEmailLogin:userEmail password:password];
-	
+
 }
 
 -(void)createButtonPressed:(id)sender
