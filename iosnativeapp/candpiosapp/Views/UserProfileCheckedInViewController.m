@@ -7,6 +7,7 @@
 //
 
 #import "UserProfileCheckedInViewController.h"
+#import "OneOnOneChatViewController.h"
 #import "SVProgressHUD.h"
 #import "AFHTTPClient.h"
 #import "UIImageView+WebCache.h"
@@ -88,6 +89,16 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+	if ([segue.identifier isEqualToString:@"OneOnOneChatSegue"])
+	{
+        // Tell the OneOnOneChatViewController what user they're going to be
+        // chatting with.
+        [[segue destinationViewController] setUser:self.user];
+    }
 }
 
 @end

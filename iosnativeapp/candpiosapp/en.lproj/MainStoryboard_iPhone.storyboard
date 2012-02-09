@@ -227,7 +227,7 @@
                     <navigationItem key="navigationItem" id="qQm-9o-9ZY">
                         <barButtonItem key="rightBarButtonItem" title="Chat" id="rOz-Nk-mPV">
                             <connections>
-                                <segue destination="Jrc-qA-DTJ" kind="push" id="VnC-yQ-Yff"/>
+                                <segue destination="OLQ-qv-XM7" kind="push" identifier="OneOnOneChatSegue" id="Z1g-eN-qXb"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -238,6 +238,42 @@
                 </viewController>
             </objects>
             <point key="canvasLocation" x="962" y="35"/>
+        </scene>
+        <scene sceneID="Gpr-rQ-sxK">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="leF-PD-H2k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="OLQ-qv-XM7" customClass="OneOnOneChatViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UBf-qa-QaN">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" id="Ipx-BS-qou" customClass="TPKeyboardAvoidingScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type to chat" minimumFontSize="17" id="BT3-qU-mXI">
+                                        <rect key="frame" x="20" y="365" width="280" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
+                                    </textField>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" bouncesZoom="NO" id="2rU-gU-hvI">
+                                        <rect key="frame" x="20" y="20" width="280" height="337"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </scrollView>
+                                </subviews>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="hN7-aM-QWP"/>
+                    <connections>
+                        <outlet property="chatContents" destination="2rU-gU-hvI" id="AFp-A0-cEf"/>
+                        <outlet property="chatEntryField" destination="BT3-qU-mXI" id="GsN-ZG-Ef2"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1421" y="35"/>
         </scene>
         <!--Root Navigation Controller - Nearby-->
         <scene sceneID="X1z-oT-wPh">
@@ -277,46 +313,6 @@
             </objects>
             <point key="canvasLocation" x="436" y="635"/>
         </scene>
-        <!--One On One Chat View Controller-->
-        <scene sceneID="yyw-Kg-745">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pc0-qS-LiY" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="Jrc-qA-DTJ" customClass="OneOnOneChatViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="S6K-TD-7ct">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="894-KZ-GTW">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type to chat" minimumFontSize="17" clearButtonMode="unlessEditing" id="stP-PW-ORN">
-                                        <rect key="frame" x="20" y="365" width="280" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <action selector="sendChat:" destination="Jrc-qA-DTJ" eventType="valueChanged" id="9fQ-VT-YeF"/>
-                                            <action selector="sendChat:forEvent:" destination="Jrc-qA-DTJ" eventType="editingChanged" id="H7e-wt-QSd"/>
-                                            <action selector="sendChat:forEvent:" destination="Jrc-qA-DTJ" eventType="editingDidEndOnExit" id="cZ0-Le-0rl"/>
-                                            <action selector="sendChat:forEvent:" destination="Jrc-qA-DTJ" eventType="editingDidBegin" id="lWC-y4-DmK"/>
-                                            <action selector="sendChat:forEvent:" destination="Jrc-qA-DTJ" eventType="editingDidEnd" id="xTf-Ei-9xL"/>
-                                        </connections>
-                                    </textField>
-                                </subviews>
-                            </scrollView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="GjG-uo-P6W"/>
-                    <connections>
-                        <outlet property="chatDisplay" destination="894-KZ-GTW" id="v2S-zQ-dmf"/>
-                        <outlet property="chatEntry" destination="stP-PW-ORN" id="uqg-dK-YjV"/>
-                    </connections>
-                </viewController>
-            </objects>
-            <point key="canvasLocation" x="1421" y="2"/>
-        </scene>
     </scenes>
     <resources>
         <image name="map-locate.png" width="16" height="16"/>
@@ -348,13 +344,15 @@
         <class className="OneOnOneChatViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/OneOnOneChatViewController.h"/>
             <relationships>
-                <relationship kind="action" name="sendChat:forEvent:" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="chatDisplay" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="chatEntry" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="chatContents" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="chatEntryField" candidateClass="UITextField"/>
             </relationships>
         </class>
         <class className="RootNavigationController" superclassName="UINavigationController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/RootNavigationController.h"/>
+        </class>
+        <class className="TPKeyboardAvoidingScrollView" superclassName="UIScrollView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TPKeyboardAvoidingScrollView.h"/>
         </class>
         <class className="UserListTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UserListTableViewController.h"/>

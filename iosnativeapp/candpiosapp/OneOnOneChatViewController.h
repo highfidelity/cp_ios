@@ -7,13 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User.h"
 
-@interface OneOnOneChatViewController : UIViewController
+extern float const CHAT_PADDING_Y;
+extern float const CHAT_PADDING_X;
+extern float const CHAT_BOX_HEIGHT;
+extern float const CHAT_BOX_WIDTH;
 
-@property (weak, nonatomic) IBOutlet UIScrollView *chatDisplay;
-@property (weak, nonatomic) IBOutlet UITextField *chatEntry;
-@property (strong) UITextField *activeField;
+@interface OneOnOneChatViewController : UIViewController <UITextFieldDelegate> {
+    UITextField *chatEntryField;
+    CGRect      nextChatBoxRect;
+}
 
--(IBAction)sendChat:(UITextField *)sender forEvent:(UIEvent *)event;
+@property (strong) User *user;
+@property (assign) CGRect nextChatBoxRect;
+@property (weak, nonatomic) IBOutlet UITextField *chatEntryField;
+@property (weak, nonatomic) IBOutlet UIScrollView *chatContents;
+
+-(void)receiveChatMessage:(NSString *)message;
 
 @end
