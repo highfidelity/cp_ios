@@ -16,7 +16,6 @@
 #import "SignupController.h"
 #import "MapDataSet.h"
 #import "UserProfileCheckedInViewController.h"
-#import "ClusterAnnotation.h"
 
 #define qHideTopNavigationBarOnMapView			0
 
@@ -180,15 +179,7 @@
                             completion:^(MapDataSet *newDataset, NSError *error) {
                                 if(newDataset)
                                 {
-                                    NSSet *visiblePins = [mapView 
-                                                          annotationsInMapRect: mapView.visibleMapRect];
-                                    
-                                    for (CandPAnnotation *ann in visiblePins) {
-                                        if ([ann isKindOfClass: [OCAnnotation class]]) {
-                                            [mapView removeAnnotation: ann];
-                                            
-                                        }
-                                    }
+                                    NSSet *visiblePins = [mapView annotationsInMapRect: mapView.visibleMapRect];
                                     
                                     for (CandPAnnotation *ann in visiblePins) {
                                         if ([[newDataset annotations] containsObject: ann]) {
@@ -277,20 +268,7 @@
 // This method may be called for all or some of the added annotations.
 // For MapKit provided annotations (eg. MKUserLocation) return nil to use the MapKit provided annotation view.
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
-{
-    if ([annotation isKindOfClass:[OCAnnotation class]]) {
-        
-        OCAnnotation *clusterAnnotation = (OCAnnotation *)annotation;
-        NSString *reuseId = @"cluster-pin";
-		ClusterAnnotation *pin = (ClusterAnnotation *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
-        if (!pin) {
-            pin = [[ClusterAnnotation alloc] initWithAnnotation:annotation reuseIdentifier: reuseId];
-            pin.image = [UIImage imageNamed:@"cluster.png"];
-        }
-        [pin setClusterText: [NSString stringWithFormat:@"%d", [clusterAnnotation.annotationsInCluster count]]];
-        return pin;
-    }
-    
+{   
 	MKAnnotationView *pinToReturn = nil;
 	if([annotation isKindOfClass:[CandPAnnotation class]])
 	{ 
@@ -315,23 +293,21 @@
         
 		if (candpanno.checkedIn) 
 		{
-			UIImage *pinImage;
+            UIImage *frame = [UIImage imageNamed:@"pin-frame"];
+            UIImage *profileImage;
+            
             if (candpanno.imageUrl == nil)
 			{
-				pinImage = [UIImage imageNamed:@"defaultAvatar50.png"];
+				profileImage = [UIImage imageNamed:@"defaultAvatar50.png"];
 			} 
 			else 
-			{
-				UIImage *frame = [UIImage imageNamed:@"pin-frame"];
-				UIImage *profileImage  = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString: candpanno.imageUrl]]];
-                
-				UIGraphicsBeginImageContext(CGSizeMake(38, 43));
-				[profileImage drawInRect:CGRectMake(3, 3, 32, 32)];
-				[frame drawInRect: CGRectMake(0, 0, 38, 43)];
-				pinImage = UIGraphicsGetImageFromCurrentImageContext();
-			}
-            
-			pin.image = pinImage;
+			{  profileImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString: candpanno.imageUrl]]];
+            }
+            UIGraphicsBeginImageContext(CGSizeMake(38, 43));
+            [profileImage drawInRect:CGRectMake(3, 3, 32, 32)];
+            [frame drawInRect: CGRectMake(0, 0, 38, 43)];
+            pin.image = UIGraphicsGetImageFromCurrentImageContext();
+			
 		} 
 		else
 		{
@@ -398,7 +374,6 @@
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
 	[self refreshLocationsIfNeeded];
-    [[self mapView] doClustering];
 }
 
 - (void)mapViewWillStartLocatingUser:(MKMapView *)mapView
