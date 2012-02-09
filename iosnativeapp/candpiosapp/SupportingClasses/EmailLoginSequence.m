@@ -264,8 +264,9 @@
 	// force all fields to commit
 	[createOrLoginController.view endEditing:YES];
 	[[AppDelegate instance] saveSettings];
-	
-	
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Coming Soon" message:@".. we promise!" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    [alert show];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
