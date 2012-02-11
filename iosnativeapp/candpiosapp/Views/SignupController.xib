@@ -168,8 +168,8 @@
 						<reference key="NSNextKeyView" ref="380308852"/>
 						<string key="NSReuseIdentifierKey">_NS:190</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MSAwAA</bytes>
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC41OTQ4OTA1MTA5IDEgMSAwAA</bytes>
 						</object>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
@@ -183,7 +183,7 @@
 				<reference key="NSNextKeyView" ref="474549456"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">2</int>
-					<bytes key="NSRGB">MC4wNjY2NjY2NzAxNCAwIDAuMzA1ODgyMzY0NQA</bytes>
+					<bytes key="NSRGB">MC4wMzUyOTQxMTc2NSAwLjEzNzI1NDkwMiAwLjMyOTQxMTc2NDcAA</bytes>
 				</object>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 				<object class="IBUISimulatedNavigationBarMetrics" key="IBUISimulatedTopBarMetrics">
