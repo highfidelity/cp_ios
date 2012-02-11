@@ -18,4 +18,7 @@
 +(void)verifyLoginStatusWithBlock:(void(^)(void))successBlock
                      failureBlock:(void(^)(void))failureBlock;
 
++(void)sendOneOnOneChatMessage:(NSString *)message
+                        toUser:(int) userId;
+
 @end

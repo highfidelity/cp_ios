@@ -54,7 +54,6 @@
 	facebook.accessToken = settings.facebookAccessToken;
 	facebook.expirationDate = settings.facebookExpirationDate;
 	
-	
 	urbanAirshipClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://go.urbanairship.com/api"]];
 
 	// register for push 

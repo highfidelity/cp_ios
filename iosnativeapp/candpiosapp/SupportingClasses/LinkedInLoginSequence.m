@@ -128,8 +128,7 @@
         NSString *responseBody = [[NSString alloc] initWithData:data
                                                        encoding:NSUTF8StringEncoding];
         self.requestToken = [[OAToken alloc] initWithHTTPResponseBody:responseBody];
-//        NSLog(@"*** Response: %@", responseBody);
-        
+        // NSLog(@"*** Response: %@", responseBody);
         
         NSString *authorizationURL = [NSString stringWithFormat:@"https://www.linkedin.com/uas/oauth/authorize?oauth_token=%@", requestToken.key];
         
@@ -139,10 +138,12 @@
         [self.mapViewController.navigationController presentModalViewController:myWebView animated:YES];
     }
     else {
+        /* For debugging
         NSString *responseBody = [[NSString alloc] initWithData:data
                                                        encoding:NSUTF8StringEncoding];
 
-//        NSLog(@"data: %@", responseBody);
+        NSLog(@"data: %@", responseBody);
+        */
     }
 }
 
@@ -309,8 +310,8 @@
             // userId isn't actually an NSNumber it's an NSString!?
             [FlurryAnalytics setUserID:(NSString *)userId];
             
-            // Set alias of push token to userId for easy push notifications from the server
-            [[UAPush shared] updateAlias:(NSString *)userId];
+            // Perform common post-login operations
+            [self finishLogin];
             
             [self.mapViewController.navigationController dismissModalViewControllerAnimated:YES];
             [self.mapViewController.navigationController popToRootViewControllerAnimated:YES];

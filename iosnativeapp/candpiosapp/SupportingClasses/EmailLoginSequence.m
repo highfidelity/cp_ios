@@ -446,7 +446,8 @@
 		if(successNum && [successNum intValue] == 0)
 		{
 
-			NSString *outerErrorMessage = [jsonDict objectForKey:@"message"];// often just 'error'
+            // This is often just 'error'. Currently unused, commenting out - alexi
+			//NSString *outerErrorMessage = [jsonDict objectForKey:@"message"];
 			NSString *serverErrorMessage = [[jsonDict objectForKey:@"params"] objectForKey:@"message"];
 			NSString *errorMessage = [NSString stringWithFormat:@"The error was:%@", serverErrorMessage];
 			// we get here if we failed to login
@@ -472,10 +473,9 @@
             // userId isn't actually an NSNumber it's an NSString!?
             [FlurryAnalytics setUserID:(NSString *)userId];
             
-            // Set alias of push token to userId for easy push notifications from the server
-            [[UAPush shared] updateAlias:(NSString *)userId];
+            // Perform common login operations
+            [self finishLogin];
 
-			// 
 			//[mapViewController.navigationController popViewControllerAnimated:YES];
 			[self.mapViewController.navigationController popToRootViewControllerAnimated:YES];
 		}

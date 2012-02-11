@@ -259,7 +259,8 @@ NSMutableArray *usersCheckedIn;
         NSData* data = [NSData dataWithContentsOfURL: 
                         locationURL];
         [self performSelectorOnMainThread:@selector(fetchedData:) 
-                               withObject:data waitUntilDone:YES];
+                               withObject:data
+                            waitUntilDone:YES];
     });   
     
     // Fire a notification 5 minutes before checkout time

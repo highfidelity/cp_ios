@@ -9,6 +9,7 @@
 #import "LoginSequenceBase.h"
 #import "AppDelegate.h"
 #import "AFNetworking.h"
+#import "UAPush.h"
 
 @interface LoginSequenceBase()
 -(void)handleCommonCreate:(NSString*)username
@@ -35,6 +36,7 @@
 	return self;
 }
 
+
 ////////////////////////////////////////////////////////////////////////////////////////
 -(void)handleEmailCreate:(NSString*)username
                 password:(NSString*)password
@@ -44,6 +46,7 @@
 	[self handleCommonCreate:username password:password nickname:nickname facebookId:nil completion:completion];
 }
 
+
 ////////////////////////////////////////////////////////////////////////////////////////
 -(void)handleFacebookCreate:(NSString*)username
                  facebookId:(NSString*)facebookId
@@ -51,6 +54,15 @@
 {
 	[self handleCommonCreate:username password:nil nickname:nil facebookId:facebookId completion:completion];
 	
+}
+
+
+// Things to do once a user logs in via any method
+-(void)finishLogin {
+    // Set my UserID as an UrbanAirship alias for push notifications
+    NSString *userid = (NSString *)[AppDelegate instance].settings.candpUserId;
+    NSLog(@"Pushing aliases to UrbanAirship: %@", userid);
+    [[UAPush shared] updateAlias:userid];
 }
 
 

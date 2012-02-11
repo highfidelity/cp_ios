@@ -7,22 +7,25 @@
 //
 
 #import "OneOnOneChatViewController.h"
+#import "CPapi.h"
 
 float const CHAT_PADDING_Y = 5.0f;
 float const CHAT_PADDING_X = 5.0f;
+// TODO: make this determined by the amount of text in the chat
 float const CHAT_BOX_HEIGHT = 30.0f;
-float const CHAT_BOX_WIDTH = 200.0f;
+// TODO: make this determined by the containing view's width
+float const CHAT_BOX_WIDTH = 250.0f;
 
 @interface OneOnOneChatViewController()
 
 -(void)sendChatMessage:(NSString *)message;
--(void)addChatMessageToView:(NSString *)message;
+-(void)addChatMessageToView:(NSString *)message
+                   sentByMe:(BOOL)myMessage;
 
 @end
 
 @implementation OneOnOneChatViewController
 
-//@synthesize chatDisplay = _chatDisplay;
 @synthesize user = _user;
 @synthesize nextChatBoxRect = _nextChatBoxRect;
 @synthesize chatEntryField = _chatEntryField;
@@ -70,14 +73,22 @@ float const CHAT_BOX_WIDTH = 200.0f;
     [self.chatContents addSubview:newChatEntry];
     
     // Increase size of scroll view if necessary
-    float nextChatBoxBottom = nextChatBoxRect.origin.y + nextChatBoxRect.size.height;
-    NSLog(@"Should we resize? chatContents = h(%f) w(%f)",
+    float nextChatBoxBottom = self.nextChatBoxRect.origin.y + self.nextChatBoxRect.size.height;
+    NSLog(@"Should we resize? chatContents = h(%f) and nextChatBoxBottom = %f",
           self.chatContents.contentSize.height,
-          self.chatContents.contentSize.width);
+          nextChatBoxBottom);
+    
     if (self.chatContents.contentSize.height < nextChatBoxBottom) {
         CGSize newSize = CGSizeMake(self.chatContents.contentSize.width,
                                     nextChatBoxBottom + CHAT_PADDING_Y);
         self.chatContents.contentSize = newSize;
+        // Scroll to bottom of the chat window
+        CGPoint bottomOffset = CGPointMake(0.0f,
+                                           self.chatContents.contentSize.height -
+                                           self.chatContents.bounds.size.height);
+        [self.chatContents setContentOffset: bottomOffset
+                                   animated:NO];
+        
     }
     
     // Update the lastChatBoxPosition
@@ -97,6 +108,7 @@ float const CHAT_BOX_WIDTH = 200.0f;
 
 -(void)sendChatMessage:(NSString *)message {
     // Send message via UrbanAirship push notification
+    [CPapi sendOneOnOneChatMessage:message toUser:self.user.userID];
     
     [self addChatMessageToView:message sentByMe:YES];
     

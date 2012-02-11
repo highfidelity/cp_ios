@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "User.h"
 
 @class AFHTTPClient;
 
 @interface LoginSequenceBase : NSObject
 @property (nonatomic, strong)   AFHTTPClient        *httpClient;
 @property (nonatomic, weak)     UIViewController    *mapViewController;
-
 
 -(void)handleEmailCreate:(NSString*)username 
 				password:(NSString*)password
@@ -23,5 +23,7 @@
 -(void)handleFacebookCreate:(NSString*)username
 				 facebookId:(NSString*)facebookId
 				 completion:(void (^)(NSError *error, id JSON))completion;
+
+-(void)finishLogin;
 
 @end

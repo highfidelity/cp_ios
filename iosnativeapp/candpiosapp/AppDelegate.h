@@ -14,33 +14,36 @@
 
 
 ////////////////////////////////////////////////
-#define kCandPWebServiceUrl			@"https://staging.coffeeandpower.com/"
-//#define kCandPWebServiceUrl		@"https://coffeeandpower.com/"
+// Production vs. Staging variables
+//#define PRODUCTION 1
 
-////////////////////////////////////////////////
-// CandP staging:			"230528896971048"
-// CandP Dev (alternate)	"278566002200147"
-#define kFacebookAppId		@"230528896971048"
+#ifdef PRODUCTION
 
+// ** We should probably not put production API keys in this public repo :) **
+// -alexi
+#define kCandPWebServiceUrl		@"https://coffeeandpower.com/"
+// Facebook
+#define kFacebookAppId          @""
+// LinkedIn
+#define kLinkedInKey            @"0"
+#define kLinkedInSecret         @"0"
+#error "You're running in production mode. Are you sure you wanna do this?"
+
+#else
+
+#define kCandPWebServiceUrl		@"https://staging.coffeeandpower.com/"
+// Facebook
+#define kFacebookAppId          @"230528896971048" // Alternate: "278566002200147"
+// LinkedIn
+#define kLinkedInKey            @"4xkfzpnvuc72"
+#define kLinkedInSecret         @"mxgFhH1i1PbPlWjq"
 // Emcro-created LI:
-//#define kLinkedInKey @"dj7n9nz3bj65"
-//#define kLinkedInSecret @"Hnt0m2JuooWM29OW"
-
-// Dev LinkedIn:
-#define kLinkedInKey @"4xkfzpnvuc72"
-#define kLinkedInSecret @"mxgFhH1i1PbPlWjq"
-
-// Prod LinkedIn:
-//#define kLinkedInKey @"0"
-//#define kLinkedInSecret @"0"
-
-
-////////////////////////////////////////////////
-// urban airship
+//#define kLinkedInKey          @"dj7n9nz3bj65"
+//#define kLinkedInSecret       @"Hnt0m2JuooWM29OW"
+// Urban Airship
 // Configured in AirshipConfig.plist, not here anymore
-//#define kUrbanAirshipApplicationKey			@"wa_ouebsSr6KZfqEDiH4qA"
-//#define kUrbanAirshipApplicationSecret		@"_0L5-MnZTQaB4G821jl8qg"
 
+#endif
 
 
 ////////////////////////////////////////////////

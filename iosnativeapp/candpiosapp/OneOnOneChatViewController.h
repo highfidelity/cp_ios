@@ -19,8 +19,8 @@ extern float const CHAT_BOX_WIDTH;
     CGRect      nextChatBoxRect;
 }
 
-@property (strong) User *user;
-@property (assign) CGRect nextChatBoxRect;
+@property (strong)          User     *user;
+@property (assign)          CGRect   nextChatBoxRect;
 @property (weak, nonatomic) IBOutlet UITextField *chatEntryField;
 @property (weak, nonatomic) IBOutlet UIScrollView *chatContents;
 
