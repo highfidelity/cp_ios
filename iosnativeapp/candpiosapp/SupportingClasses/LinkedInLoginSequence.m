@@ -253,20 +253,20 @@
     NSMutableDictionary *loginParams = [NSMutableDictionary dictionary];
 
     [loginParams setObject:fullName forKey:@"signupNickname"];
-    [loginParams setObject:linkedinID forKey:@"login_linkedin_id"];
-    [loginParams setObject:@"1" forKey:@"login_linkedin_connect"];
+    [loginParams setObject:linkedinID forKey:@"linkedin_id"];
+    [loginParams setObject:@"1" forKey:@"linkedin_connect"];
     [loginParams setObject:email forKey:@"signupUsername"];
     [loginParams setObject:oauthToken forKey:@"oauth_token"];
     [loginParams setObject:oauthSecret forKey:@"oauth_secret"];
     [loginParams setObject:password forKey:@"signupPassword"];
     [loginParams setObject:password forKey:@"signupConfirm"];
-    [loginParams setObject:@"loginLinkedin" forKey:@"action"];
+    [loginParams setObject:@"signup" forKey:@"action"];
     [loginParams setObject:@"json" forKey:@"type"];
 
 //    AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"http://dev.worklist.net/~emcro/candpweb/web/"]];
-//    NSMutableURLRequest *request = [client requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
+//    NSMutableURLRequest *request = [client requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
     
-	NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
+	NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 #if DEBUG
 //        NSLog(@"JSON Returned for user resume: %@", JSON);
@@ -277,13 +277,12 @@
 
 		if(succeeded == 0)
 		{
-            
 			NSString *outerErrorMessage = [JSON objectForKey:@"message"];// often just 'error'
-			NSString *serverErrorMessage;
+//			NSString *serverErrorMessage;
             
-            if ([JSON objectForKey:@"params"]) {
-                serverErrorMessage = [[JSON objectForKey:@"params"] objectForKey:@"message"];
-            }
+//            if ([JSON objectForKey:@"params"]) {
+//                serverErrorMessage = [[JSON objectForKey:@"params"] objectForKey:@"message"];
+//            }
             
 			NSString *errorMessage = [NSString stringWithFormat:@"The error was:%@", outerErrorMessage];
 			// we get here if we failed to login
@@ -296,7 +295,7 @@
 		{
 			// remember that we're logged in!
 			// (it's really the persistent cookie that tracks our login, but we need a superficial indicator, too)
-			NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"user"];
+			NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"params"];
 			
 			NSNumber *userId = [userInfo objectForKey:@"id"];
 			NSString  *nickname = [userInfo objectForKey:@"nickname"];
@@ -320,120 +319,12 @@
         
         // Remove NSNotification as it's no longer needed once logged in
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"linkedInCredentials" object:nil];
-
-        
-//        if(completion)
-//            completion(self, nil); 
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-//        if(completion)
-//            completion(nil, error);
     }];
     
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    [queue addOperation:operation];
-    
-
-    /*
-//    NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"GET" path:@"signup.php" parameters:loginParams];
-
-
-	NSMutableURLRequest *request = [client requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
-	AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
-		NSDictionary *jsonDict = json;
-#if DEBUG
-		NSLog(@"Result code: %d (%@)", [response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]] );
-		
-		
-		NSLog(@"Header fields:" );
-		[[response allHeaderFields] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-			NSLog(@"     %@ : '%@'", key, obj );
-			
-		}];
-		
-		NSLog(@"Json fields:" );
-		[jsonDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-			NSLog(@"     %@ : '%@'", key, obj );
-			
-		}];
-#endif
-		[SVProgressHUD dismiss];
-        
-		// currently, we only a success=0 field if it fails
-		// (if it succeeds, it's just the user data)
-		NSNumber *successNum = [jsonDict objectForKey:@"succeeded"];
-		if(successNum && [successNum intValue] == 0)
-		{
-            
-			NSString *outerErrorMessage = [jsonDict objectForKey:@"message"];// often just 'error'
-			NSString *serverErrorMessage = [[jsonDict objectForKey:@"params"] objectForKey:@"message"];
-			NSString *errorMessage = [NSString stringWithFormat:@"The error was:%@", serverErrorMessage];
-			// we get here if we failed to login
-			UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unable to login" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-			[alert show];
-		}
-		else
-		{
-			// remember that we're logged in!
-			// (it's really the persistent cookie that tracks our login, but we need a superficial indicator, too)
-			NSDictionary *userInfo = [[jsonDict objectForKey:@"params"]objectForKey:@"user"];
-			
-			NSNumber *userId = [userInfo objectForKey:@"id"];
-			NSString  *nickname = [userInfo objectForKey:@"nickname"];
-			
-			// extract some user info
-			[AppDelegate instance].settings.candpUserId = userId;
-			[AppDelegate instance].settings.userNickname = nickname;
-			[[AppDelegate instance] saveSettings];
-            
-            [FlurryAnalytics logEvent:@"login_email"];
-            
-            // userId isn't actually an NSNumber it's an NSString!?
-            [FlurryAnalytics setUserID:(NSString *)userId];
-            
-            // Set alias of push token to userId for easy push notifications from the server
-            [[UAPush shared] updateAlias:(NSString *)userId];
-            
-			// 
-			//[mapViewController.navigationController popViewControllerAnimated:YES];
-			[self.mapViewController.navigationController popToRootViewControllerAnimated:YES];
-		}
-		
-		//[self handleResponseFromCandP:json];
-		
-	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-		// handle error
-#if DEBUG
-		NSLog(@"AFJSONRequestOperation error: %@", [error localizedDescription] );
-#endif
-		[SVProgressHUD dismissWithError:[error localizedDescription]];
-        
-		
-	} ];
-	
-	// 
-	NSBlockOperation *dumpContents = [NSBlockOperation blockOperationWithBlock:^{
-		// 
-#if DEBUG
-		NSString *responseString = postOperation.responseString;
-		NSLog(@"Response was:");
-		NSLog(@"-----------------------------------------------");
-		NSLog(@"%@", responseString);
-		NSLog(@"-----------------------------------------------");
-#endif
-	}];
-	[dumpContents addDependency:postOperation];
-	[[NSOperationQueue mainQueue]  addOperation:postOperation];
-	[[NSOperationQueue mainQueue]  addOperation:dumpContents];
-*/
-//UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hello! Your name is..." message:friendListName delegate:self cancelButtonTitle:@"Yep!" otherButtonTitles:nil];
-//[alert show];
-
-// Remove NSNotification as it's no longer needed once logged in
-//[[NSNotificationCenter defaultCenter] removeObserver:self name:@"linkedInCredentials" object:nil];
-//
-//[self.mapViewController.navigationController dismissModalViewControllerAnimated:YES];
-//[self.mapViewController.navigationController popToRootViewControllerAnimated:YES];
+    [queue addOperation:operation];    
 }
 
 - (void)loadLinkedInConnectionsResult:(OAServiceTicket *)ticket didFail:(NSData *)error 
