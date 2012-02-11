@@ -284,6 +284,7 @@ NSMutableArray *usersCheckedIn;
 
 - (void)fetchedData:(NSData *)responseData {
     //parse out the json data
+    
     NSError* error;
     NSDictionary* json = [NSJSONSerialization 
                           JSONObjectWithData:responseData

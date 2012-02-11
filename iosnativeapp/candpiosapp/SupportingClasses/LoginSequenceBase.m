@@ -93,6 +93,7 @@
 	[loginParams setObject:@"json" forKey:@"type"];
 	NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
 	AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
+#if DEBUG        
 		NSDictionary *jsonDict = json;
 		NSLog(@"Result code: %d (%@)", [response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]] );
 		
@@ -107,13 +108,15 @@
 			NSLog(@"     %@ : '%@'", key, obj );
 			
 		}];
-		
+#endif		
+        completion(nil, json);
 		
 		//[self handleResponseFromCandP:json];
 		
 	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
 		// handle error
 		NSLog(@"AFJSONRequestOperation error: %@", [error localizedDescription] );
+        completion(error, nil);
 		
 	} ];
 	

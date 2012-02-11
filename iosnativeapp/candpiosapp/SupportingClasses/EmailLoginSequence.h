@@ -11,12 +11,20 @@
 
 
 @interface EmailLoginSequence : LoginSequenceBase< UIAlertViewDelegate >
+{
+ @private
+    NSString *signupNickname_;
+    NSString *signupEmalAddress_;
+    NSString *signupPassword_;
+    NSString *signupConfirmPassword_;
+}
 
 -(void)initiateLogin:(UIViewController*)mapViewControllerArg;
 -(void)initiateAccountCreation:(UIViewController*)hostController;
 
 -(void)handleEmailLogin:(NSString*)username password:(NSString*)password;
 -(void)handleForgotEmailLogin:(NSString*)username;
+
 
 
 @end

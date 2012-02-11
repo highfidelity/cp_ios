@@ -95,8 +95,8 @@
 - (IBAction)signupTapped:(id)sender 
 {
 	// handle create (via email)
-	EmailLoginSequence *emailLogin = [[EmailLoginSequence alloc]init ];
-	[emailLogin initiateAccountCreation:self];
+	EmailLoginSequence *emailLogin = [[EmailLoginSequence alloc] init];
+	[emailLogin initiateAccountCreation: self];
 	[AppDelegate instance].loginSequence = emailLogin;
 }
 @end
