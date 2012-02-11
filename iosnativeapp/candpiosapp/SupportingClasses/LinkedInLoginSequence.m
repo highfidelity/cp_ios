@@ -238,9 +238,10 @@
     
     linkedinId = [json objectForKey:@"id"];
 
-    // Need to generate a random password
-    password = @"jibe3[inputs";
+    // Generate truly random password
+    password = [NSString stringWithFormat:@"%d-%@", [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]], [[NSProcessInfo processInfo] globallyUniqueString]];
 
+    // Assign an identifying email address (prompt user in the future?)
     email = [NSString stringWithFormat:@"%@@linkedin.com", linkedinId];
     
     email = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
@@ -249,8 +250,8 @@
                                                                          (CFStringRef) @"!*'();:@&=+$,/?%#[]",
                                                                          kCFStringEncodingUTF8);
     
-    oauthToken = @"999f54ca-d9c2-4629-8c4b-e088176e647c";
-    oauthSecret = @"3532aec8-03e2-45fa-a414-ffe5911b3425";
+    oauthToken = self.requestToken.key;
+    oauthSecret = self.requestToken.secret;
     
     // Now that we have the user's basic information, log them in with their new/existing account
 
@@ -259,31 +260,10 @@
 
 - (void)handleLinkedInLogin:(NSString*)fullName linkedinID:(NSString *)linkedinID password:(NSString*)password email:(NSString *)email oauthToken:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret {
     // kick off the request to the candp server
-	NSMutableDictionary *loginParams = [NSMutableDictionary dictionary];
-
-//    action=signup&type=json&signupNickname=Emmanuel%20Crouvisier
-//    &linkedin_id=21460346
-//    &linkedin_connect=1
-//    &signupUsername=21460346%40linkedin.com
-//    &oauth_token=999f54ca-d9c2-4629-8c4b-e088176e647c
-//    &oauth_secret=3532aec8-03e2-45fa-a414-ffe5911b3425
-//    &signupPassword=123456
-//    &signupConfirm=123456
-
-    [loginParams setObject:fullName forKey:@"signupNickname"];
-    [loginParams setObject:linkedinID forKey:@"linkedin_id"];
-    [loginParams setObject:@"1" forKey:@"linkedin_connect"];
-    [loginParams setObject:email forKey:@"signupUsername"];
-    [loginParams setObject:oauthToken forKey:@"oauth_token"];
-    [loginParams setObject:oauthSecret forKey:@"oauth_secret"];
-    [loginParams setObject:password forKey:@"signupPassword"];
-    [loginParams setObject:password forKey:@"signupConfirm"];
-    [loginParams setObject:@"signup" forKey:@"action"];
-    [loginParams setObject:@"json" forKey:@"type"];
 
     NSString *urlString = [NSString stringWithFormat:@"%@signup.php?action=signup&type=json&signupNickname=%@&linkedin_id=%@&linkedin_connect=1&signupUsername=%@&oauth_token=%@&oauth_secret=%@&signupPassword=%@&signupConfirm=%@", 
-                           @"http://dev.worklist.net/~emcro/candpweb/web/",
-//                           kCandPWebServiceUrl, 
+//                           @"http://dev.worklist.net/~emcro/candpweb/web/",
+                           kCandPWebServiceUrl, 
                            fullName,
                            linkedinID,
                            email,
@@ -292,11 +272,9 @@
                            password,
                            password];
 #if DEBUG
-    NSLog(@"Logging in via: %@", urlString);
+//    NSLog(@"Logging in via: %@", urlString);
 #endif
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-//    AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"http://dev.worklist.net/~emcro/candpweb/web/"]];
-//	NSMutableURLRequest *request = [client requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
 
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         
