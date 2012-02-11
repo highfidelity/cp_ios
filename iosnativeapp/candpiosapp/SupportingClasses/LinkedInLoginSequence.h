@@ -14,5 +14,6 @@
 
 - (void)linkedInLogin;
 - (void)loadLinkedInConnections;
+- (void)handleLinkedInLogin:(NSString*)fullName linkedinID:(NSString *)linkedinID password:(NSString*)password email:(NSString *)email oauthToken:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret;
 
 @end

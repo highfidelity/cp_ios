@@ -22,8 +22,18 @@
 // CandP Dev (alternate)	"278566002200147"
 #define kFacebookAppId		@"230528896971048"
 
-#define kLinkedInKey @"dj7n9nz3bj65"
-#define kLinkedInSecret @"Hnt0m2JuooWM29OW"
+// Emcro-created LI:
+//#define kLinkedInKey @"dj7n9nz3bj65"
+//#define kLinkedInSecret @"Hnt0m2JuooWM29OW"
+
+// Dev LinkedIn:
+#define kLinkedInKey @"4xkfzpnvuc72"
+#define kLinkedInSecret @"mxgFhH1i1PbPlWjq"
+
+// Prod LinkedIn:
+//#define kLinkedInKey @"0"
+//#define kLinkedInSecret @"0"
+
 
 ////////////////////////////////////////////////
 // urban airship

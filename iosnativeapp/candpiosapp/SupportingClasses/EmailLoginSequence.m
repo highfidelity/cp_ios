@@ -41,14 +41,14 @@
 	
 	// show the login/create/forgot screen
 	CreateEmailAccountController *controller = [[CreateEmailAccountController alloc] initWithNibName:@"CreateEmailAccountController" bundle:nil];
-	controller.title = @"Login";
+	controller.title = @"Log In";
 
 	if(true)
 	{
 		Settings *settings = [AppDelegate instance].settings;
 		
 		TableCellGroup *group = [[TableCellGroup alloc]init];
-		group.headerText = @"Login to Coffee and Power";
+		group.headerText = @"Log In to Coffee and Power";
 		
 		//////////////////
 		// make the custom footer button
@@ -58,7 +58,7 @@
 		[footerView addSubview:footerButton];
 		group.footerView = footerView;
 		
-		[footerButton setTitle:@"Login" forState:UIControlStateNormal];
+		[footerButton setTitle:@"Log In" forState:UIControlStateNormal];
 		footerButton.enabled = NO;
 		UIImage *buttonBgDisabled = [UIImage imageNamed:@"button_disabled"];
 		UIImage *buttonBgEnabled = [UIImage imageNamed:@"button"];

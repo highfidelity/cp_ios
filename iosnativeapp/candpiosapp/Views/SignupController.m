@@ -62,6 +62,7 @@
 {
 	// handle facebook login
 	// the facebook login object will handle the sequence that follows
+
 	FacebookLoginSequence *facebookLogin = [[FacebookLoginSequence alloc] init];
 	[facebookLogin initiateLogin:self];
 	[AppDelegate instance].loginSequence = facebookLogin;
@@ -71,9 +72,6 @@
 {
 	// Handle LinkedIn login
 	// The LinkedIn login object will handle the sequence that follows
-
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"LinkedIn Coming Soon" message:nil delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-//    [alert show];
     
 	LinkedInLoginSequence *linkedInLogin = [[LinkedInLoginSequence alloc] init];
 	[linkedInLogin initiateLogin:self];
