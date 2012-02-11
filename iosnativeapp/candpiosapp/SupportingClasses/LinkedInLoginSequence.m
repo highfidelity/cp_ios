@@ -253,20 +253,21 @@
     NSMutableDictionary *loginParams = [NSMutableDictionary dictionary];
 
     [loginParams setObject:fullName forKey:@"signupNickname"];
-    [loginParams setObject:linkedinID forKey:@"linkedin_id"];
-    [loginParams setObject:@"1" forKey:@"linkedin_connect"];
+    [loginParams setObject:linkedinID forKey:@"login_linkedin_id"];
+    [loginParams setObject:@"1" forKey:@"login_linkedin_connect"];
     [loginParams setObject:email forKey:@"signupUsername"];
     [loginParams setObject:oauthToken forKey:@"oauth_token"];
     [loginParams setObject:oauthSecret forKey:@"oauth_secret"];
     [loginParams setObject:password forKey:@"signupPassword"];
     [loginParams setObject:password forKey:@"signupConfirm"];
-    [loginParams setObject:@"signup" forKey:@"action"];
+    [loginParams setObject:@"loginLinkedin" forKey:@"action"];
     [loginParams setObject:@"json" forKey:@"type"];
 
-	NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
-
+//    AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"http://dev.worklist.net/~emcro/candpweb/web/"]];
+//    NSMutableURLRequest *request = [client requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
+    
+	NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
 #if DEBUG
 //        NSLog(@"JSON Returned for user resume: %@", JSON);
 #endif
@@ -278,11 +279,11 @@
 		{
             
 			NSString *outerErrorMessage = [JSON objectForKey:@"message"];// often just 'error'
-//			NSString *serverErrorMessage;
-//            
-//            if ([JSON objectForKey:@"params"]) {
-//                serverErrorMessage = [[JSON objectForKey:@"params"] objectForKey:@"message"];
-//            }
+			NSString *serverErrorMessage;
+            
+            if ([JSON objectForKey:@"params"]) {
+                serverErrorMessage = [[JSON objectForKey:@"params"] objectForKey:@"message"];
+            }
             
 			NSString *errorMessage = [NSString stringWithFormat:@"The error was:%@", outerErrorMessage];
 			// we get here if we failed to login
@@ -295,7 +296,7 @@
 		{
 			// remember that we're logged in!
 			// (it's really the persistent cookie that tracks our login, but we need a superficial indicator, too)
-			NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"params"];
+			NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"user"];
 			
 			NSNumber *userId = [userInfo objectForKey:@"id"];
 			NSString  *nickname = [userInfo objectForKey:@"nickname"];
