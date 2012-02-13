@@ -330,15 +330,33 @@
 }
 
 - (NSString *)htmlStringWithResumeText {
+    NSMutableArray *resumeHtml = [NSMutableArray array];
     // beginning of the string is styling info
-    NSString *html = @"<style type='text/css'>body {font-family: Helvetica; font-size: 15px; color: rgb(68,68,68); padding: 5px 5px;}</style>\n";
+    [resumeHtml addObject:@"<style type='text/css'>body {font-family: Helvetica; font-size: 11pt; color: rgb(68,68,68); padding: 5pt 5pt; word-wrap: break-word;} .listing {width: 150pt; padding: 5pt 5pt 5pt 0pt; border-right: 1pt solid #C1C1C1;} .price {padding-left: 5pt;} table {font-size: 11pt; border-collapse: collapse;} th {text-align: left; padding-bottom: 5pt;} td {border-top: 1pt solid #C1C1C1;} </style>\n"];
+    
+    [resumeHtml addObject:[NSString stringWithFormat:@"<p><b>Joined:</b> %@</p>", self.user.join_date]];
     // add the bio if we have it
     if (self.user.bio.length > 0) {
-        html = [html stringByAppendingString:[NSString stringWithFormat:@"<p><b>Bio:</b> %@</p>", self.user.bio]];
+        [resumeHtml addObject:[NSString stringWithFormat:@"<p><b>Bio:</b> %@</p>", self.user.bio]];
     }
-    html = [html stringByAppendingString:[NSString stringWithFormat:@"<p><b>Trusted by %d people</b></p>", self.user.trusted_by]];
-    html = [html stringByAppendingString:[NSString stringWithFormat:@"<p><b>Joined:</b> %@</p>", self.user.join_date]];
-    return html;
+    [resumeHtml addObject:[NSString stringWithFormat:@"<p><b>Trusted by %d people</b></p>", self.user.trusted_by]];
+    if (self.user.listingsAsAgent.count > 0) {
+        [resumeHtml addObject:@"<table><tr><th>Listing as Agent</th><th>Price</th></tr>"];
+        for (NSDictionary *agentListing in self.user.listingsAsAgent) {
+            [resumeHtml addObject:[NSString stringWithFormat:@"<tr><td class='listing'>\"%@\"</td>", [agentListing objectForKey:@"listing"]]];
+            [resumeHtml addObject:[NSString stringWithFormat:@"<td class='price'>$%@</td></tr>", [agentListing objectForKey:@"price"]]];
+        }
+        [resumeHtml addObject:@"</table></br>"];
+    }
+    if (self.user.listingsAsClient.count > 0) {
+        [resumeHtml addObject:@"<table><tr><th>Listing as Client</th><th>Price</th></tr>"];
+        for (NSDictionary *clientListing in self.user.listingsAsClient) {
+            [resumeHtml addObject:[NSString stringWithFormat:@"<tr><td class='listing'>\"%@\"</td>", [clientListing objectForKey:@"listing"]]];
+            [resumeHtml addObject:[NSString stringWithFormat:@"<td class='price'>$%@</td></tr>", [clientListing objectForKey:@"price"]]];
+        }
+        [resumeHtml addObject:@"</table></br>"];
+    }
+    return [resumeHtml componentsJoinedByString:@""];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)aWebView {

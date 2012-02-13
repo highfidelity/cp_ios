@@ -31,6 +31,8 @@
 @synthesize checkoutEpoch = _checkoutEpoch;
 @synthesize join_date = _join_date;
 @synthesize trusted_by = _trusted_by;
+@synthesize listingsAsClient = _listingsAsClient;
+@synthesize listingsAsAgent = _listingsAsAgent;
 
 -(id)init
 {
@@ -43,26 +45,33 @@
 }
 
 -(void)loadUserResumeData:(void (^)(User *user, NSError *error))completion {
+    // url hitting api.php to getResume
     NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=getResume&user_id=%d", kCandPWebServiceUrl, self.userID];
 #if DEBUG
         NSLog(@"Requesting resume data for user with ID:%d", self.userID);
 #endif
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    
+    // make an AFJSONRequestOperation with the NSURLRequest
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         
 #if DEBUG
         NSLog(@"JSON Returned for user resume: %@", JSON);
 #endif
         
+        // set the user's photo url        
         self.urlPhoto = [JSON objectForKey:@"urlPhoto"];
         
+        // set the booleans if the user is facebook/linkedin verified
         self.facebookVerified = [[JSON valueForKeyPath:@"verified.facebook.verified"] boolValue];
         self.linkedInVerified = [[JSON valueForKeyPath:@"verified.linkedin.verified"] boolValue];
         
+        // get the users hourly_billing_rate if it isn't null
         if ([[JSON objectForKey:@"hourly_billing_rate"] isKindOfClass:[NSString class]]) {
             self.hourlyRate = [JSON objectForKey:@"hourly_billing_rate"];
         }        
         
+        // set the rest of the user info based on information in the JSON
         self.totalEarned = [[JSON valueForKeyPath:@"stats.totalEarned"] doubleValue];
         self.totalSpent = [[JSON valueForKeyPath:@"stats.totalSpent"] doubleValue];
         
@@ -70,12 +79,16 @@
         self.join_date = [JSON objectForKey:@"joined"];
         self.trusted_by = [[JSON objectForKey:@"trusted"] intValue];
         
+        self.listingsAsClient = [JSON objectForKey:@"listingsAsClient"];
+        self.listingsAsAgent = [JSON objectForKey:@"listingsAsAgent"];
+        
         // user checkin data
         self.placeCheckedIn = [[CPPlace alloc] init];
         self.placeCheckedIn.foursquareID = [JSON valueForKeyPath:@"checkin_data.foursquare"];
         self.placeCheckedIn.othersHere = [[JSON valueForKeyPath:@"checkin_data.others_here"] intValue];
         self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[JSON valueForKeyPath:@"checkin_data.checkout"] intValue]]; 
         
+        // call the completion block passed by the caller
         if(completion)
             completion(self, nil); 
         

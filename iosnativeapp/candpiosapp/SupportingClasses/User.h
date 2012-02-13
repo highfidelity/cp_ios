@@ -31,6 +31,8 @@
 @property (nonatomic, strong) NSDate *checkoutEpoch;
 @property (nonatomic, strong) NSString *join_date;
 @property (nonatomic, assign) int trusted_by;
+@property (nonatomic, strong) NSDictionary *listingsAsClient;
+@property (nonatomic, strong) NSDictionary *listingsAsAgent;
 
 -(void)loadUserResumeData:(void (^)(User *user, NSError *error))completion;
 
