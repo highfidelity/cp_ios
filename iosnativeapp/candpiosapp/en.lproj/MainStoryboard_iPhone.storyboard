@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11C74" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
     <dependencies>
         <development defaultVersion="4200" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
@@ -436,7 +436,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="qQm-9o-9ZY">
-                        <barButtonItem key="rightBarButtonItem" title="Chat" id="rOz-Nk-mPV">
+                        <barButtonItem key="rightBarButtonItem" title="SuperChat 3000" id="rOz-Nk-mPV">
                             <connections>
                                 <segue destination="Jrc-qA-DTJ" kind="push" id="VnC-yQ-Yff"/>
                             </connections>
@@ -630,6 +630,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="sCE-rt-LRg"/>
+        <segue reference="yDr-h5-PWB"/>
     </inferredMetricsTieBreakers>
 </document>
