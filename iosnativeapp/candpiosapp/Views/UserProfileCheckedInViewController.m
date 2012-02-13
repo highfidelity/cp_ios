@@ -13,7 +13,6 @@
 #import "LocalizedDistanceCalculator.h"
 #import "FoursquareAPIRequest.h"
 #import "AFJSONRequestOperation.h"
-#import "VenueInfoView.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface UserProfileCheckedInViewController() <UIWebViewDelegate>
