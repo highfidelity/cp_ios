@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2166" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
     <dependencies>
         <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1166"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
     </dependencies>
     <scenes>
-        <!--User List Table View Controller-->
         <scene sceneID="1mX-pB-Ub5">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pIh-oL-BFt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -38,7 +37,6 @@
             </objects>
             <point key="canvasLocation" x="709" y="-668"/>
         </scene>
-        <!--Map Tab Controller-->
         <scene sceneID="Q7p-8T-DVG">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WIW-bY-l8z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -103,7 +101,6 @@
             </objects>
             <point key="canvasLocation" x="379" y="-36"/>
         </scene>
-        <!--Check In List Table View Controller - Places-->
         <scene sceneID="A3v-gP-kYR">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A2n-ak-jSV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -151,7 +148,6 @@
             </objects>
             <point key="canvasLocation" x="962" y="635"/>
         </scene>
-        <!--User Profile Checked In View Controller-->
         <scene sceneID="jZa-Lm-4za">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ySL-Md-ewH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -160,38 +156,35 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="JEK-1P-ZoL">
-                                <rect key="frame" x="-20" y="-20" width="360" height="500"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="JEK-1P-ZoL">
+                                <rect key="frame" x="0.0" y="0.0" width="360" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" id="zVx-ux-49n">
-                                        <rect key="frame" x="20" y="20" width="320" height="460"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="360" height="416"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </mapView>
-                                    <view alpha="0.50000000000000011" contentMode="scaleToFill" id="Xvf-ye-4U4">
-                                        <rect key="frame" x="20" y="20" width="320" height="460"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.66666666666666663" green="0.82745098039215681" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
-                                    </view>
-                                    <view contentMode="scaleToFill" id="EPm-IJ-ENc" customClass="BusinessCard">
-                                        <rect key="frame" x="30" y="36" width="300" height="96"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <view contentMode="scaleToFill" id="EPm-IJ-ENc">
+                                        <rect key="frame" x="10" y="16" width="300" height="96"/>
+                                        <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" id="TkQ-h1-igV">
                                                 <rect key="frame" x="10" y="10" width="76" height="76"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="9nq-Yf-nrG">
+                                                        <rect key="frame" x="0.0" y="0.0" width="76" height="76"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    </imageView>
+                                                </subviews>
                                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                             </view>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="9nq-Yf-nrG">
-                                                <rect key="frame" x="10" y="10" width="76" height="76"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            </imageView>
                                             <view contentMode="scaleToFill" id="mmq-eb-nyE">
                                                 <rect key="frame" x="100" y="10" width="176" height="76"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Nickname" lineBreakMode="wordWrap" minimumFontSize="14" id="DNz-1R-UVe">
-                                                        <rect key="frame" x="0.0" y="29" width="176" height="36"/>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.75" contentMode="left" text="Nickname" lineBreakMode="wordWrap" minimumFontSize="14" id="DNz-1R-UVe">
+                                                        <rect key="frame" x="0.0" y="37" width="176" height="36"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.0" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="26"/>
@@ -200,11 +193,11 @@
                                                         <color key="shadowColor" red="1" green="1" blue="1" alpha="0.51000000000000001" colorSpace="calibratedRGB"/>
                                                         <size key="shadowOffset" width="1" height="1"/>
                                                     </label>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="clip" numberOfLines="2" minimumFontSize="10" id="aaY-q0-hdP">
-                                                        <rect key="frame" x="0.0" y="0.0" width="156" height="33"/>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" id="aaY-q0-hdP">
+                                                        <rect key="frame" x="0.0" y="0.0" width="160" height="38"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -213,11 +206,229 @@
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <outlet property="imageView" destination="9nq-Yf-nrG" id="MXS-ZN-k3C"/>
-                                            <outlet property="nickname" destination="DNz-1R-UVe" id="SSj-S6-sZH"/>
-                                            <outlet property="status" destination="aaY-q0-hdP" id="0tX-UR-OvM"/>
-                                        </connections>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="k7u-43-Y9x">
+                                        <rect key="frame" x="10" y="120" width="145" height="130"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" id="ixz-S2-h2A">
+                                                <rect key="frame" x="0.0" y="0.0" width="145" height="31"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="CHECKED IN" lineBreakMode="tailTruncation" minimumFontSize="10" id="EUa-JU-b4k">
+                                                        <rect key="frame" x="7" y="4" width="124" height="24"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" red="0.94901960784313721" green="0.94509803921568625" blue="0.92156862745098034" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" text="." lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="pMn-1f-fNm">
+                                                        <rect key="frame" x="85" y="6" width="4" height="20"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <color key="textColor" red="0.94901960780000005" green="0.94509803920000002" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" text="." lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="xd1-sF-X6c">
+                                                        <rect key="frame" x="90" y="6" width="4" height="20"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <color key="textColor" red="0.94901960780000005" green="0.94509803920000002" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" text="." lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="iPB-v5-t8e">
+                                                        <rect key="frame" x="95" y="6" width="4" height="20"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <color key="textColor" red="0.94901960780000005" green="0.94509803920000002" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                                            </view>
+                                            <view alpha="0.0" contentMode="scaleToFill" id="NlA-aR-p8W">
+                                                <rect key="frame" x="0.0" y="32" width="145" height="54"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="checked-in-location.png" id="nN2-w2-QQW">
+                                                        <rect key="frame" x="10" y="7" width="13" height="8"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    </imageView>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" minimumFontSize="10" id="cuo-qo-Lxa">
+                                                        <rect key="frame" x="27" y="-1" width="111" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                                        <color key="textColor" red="0.94901960780000005" green="0.94509803920000002" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" minimumFontSize="10" id="Wum-GD-Teo">
+                                                        <rect key="frame" x="10" y="14" width="128" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                        <color key="textColor" red="0.94901960780000005" green="0.94509803920000002" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="others-at-venue.png" id="Vy1-1g-JFN">
+                                                        <rect key="frame" x="10" y="37" width="11" height="9"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    </imageView>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" minimumFontSize="10" id="USN-JE-xyh">
+                                                        <rect key="frame" x="25" y="30" width="109" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                        <color key="textColor" red="0.94901960780000005" green="0.94509803920000002" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                            </view>
+                                            <view alpha="0.0" contentMode="scaleToFill" id="2cC-3b-cxP">
+                                                <rect key="frame" x="0.0" y="87" width="145" height="43"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="available-for-icon.png" id="WDk-UF-VKB">
+                                                        <rect key="frame" x="10" y="8" width="9" height="9"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    </imageView>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="AVAILABLE FOR:" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="bOK-8P-Hn7">
+                                                        <rect key="frame" x="22" y="2" width="109" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="JFU-Jj-MZe">
+                                                        <rect key="frame" x="10" y="18" width="46" height="23"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                                        <color key="textColor" red="0.94901960784313721" green="0.94509803921568625" blue="0.92156862745098034" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="VL7-c7-C9a">
+                                                        <rect key="frame" x="61" y="18" width="72" height="23"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                        <color key="textColor" red="0.94901960780000005" green="0.94509803920000002" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="map-marker.png" id="0Sk-M4-JHD">
+                                        <rect key="frame" x="221" y="171" width="41" height="41"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="bJz-jG-dyS">
+                                        <rect key="frame" x="186" y="147" width="110" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
+                                    </label>
+                                    <view alpha="0.0" contentMode="scaleToFill" id="I6X-e7-zqf">
+                                        <rect key="frame" x="10" y="263" width="300" height="108"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.75" contentMode="left" text="RESUME" lineBreakMode="tailTruncation" minimumFontSize="10" id="o28-BY-NCw">
+                                                <rect key="frame" x="10" y="10" width="73" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view alpha="0.75" contentMode="scaleToFill" id="Loq-12-C5m">
+                                                <rect key="frame" x="0.0" y="41" width="300" height="42"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" id="Psp-ok-hYr">
+                                                        <rect key="frame" x="0.0" y="1" width="99" height="41"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <subviews>
+                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="RATE:" lineBreakMode="tailTruncation" minimumFontSize="10" id="eEI-j6-p9q">
+                                                                <rect key="frame" x="11" y="0.0" width="42" height="21"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                                <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="N/A" lineBreakMode="tailTruncation" minimumFontSize="10" id="ogr-c7-cbr">
+                                                                <rect key="frame" x="11" y="18" width="59" height="21"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                                <color key="textColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" id="Efe-dz-snY">
+                                                        <rect key="frame" x="100" y="1" width="100" height="41"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <subviews>
+                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="EARNED:" lineBreakMode="tailTruncation" minimumFontSize="10" id="bKd-6H-ezy">
+                                                                <rect key="frame" x="11" y="0.0" width="54" height="21"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0" lineBreakMode="tailTruncation" minimumFontSize="10" id="dH1-gE-4GK">
+                                                                <rect key="frame" x="11" y="17" width="81" height="22"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                                <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" id="jPc-2f-Qns">
+                                                        <rect key="frame" x="201" y="1" width="99" height="41"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <subviews>
+                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="SPENT" lineBreakMode="tailTruncation" minimumFontSize="10" id="fcY-jn-vm7">
+                                                                <rect key="frame" x="11" y="0.0" width="54" height="21"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0" lineBreakMode="tailTruncation" minimumFontSize="10" id="BZf-Y3-LMC">
+                                                                <rect key="frame" x="11" y="17" width="79" height="22"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                                <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.75686274509803919" green="0.75686274509803919" blue="0.75686274509803919" alpha="1" colorSpace="calibratedRGB"/>
+                                            </view>
+                                            <imageView userInteractionEnabled="NO" alpha="0.70000000000000007" contentMode="scaleToFill" image="verified-facebook.png" id="erz-gP-HID">
+                                                <rect key="frame" x="258" y="14" width="13" height="13"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="scaleToFill" image="verified-linked-in.png" id="eSK-dL-UoJ">
+                                                <rect key="frame" x="276" y="14" width="13" height="13"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <webView contentMode="scaleToFill" id="b0G-FA-LgU">
+                                                <rect key="frame" x="0.0" y="83" width="300" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </webView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
                             </scrollView>
@@ -227,55 +438,44 @@
                     <navigationItem key="navigationItem" id="qQm-9o-9ZY">
                         <barButtonItem key="rightBarButtonItem" title="Chat" id="rOz-Nk-mPV">
                             <connections>
-                                <segue destination="OLQ-qv-XM7" kind="push" identifier="OneOnOneChatSegue" id="Z1g-eN-qXb"/>
+                                <segue destination="Jrc-qA-DTJ" kind="push" id="VnC-yQ-Yff"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="availabilityView" destination="2cC-3b-cxP" id="Hs8-D4-roW"/>
+                        <outlet property="cardImage" destination="9nq-Yf-nrG" id="qYJ-Xf-PW1"/>
+                        <outlet property="cardNickname" destination="DNz-1R-UVe" id="d2r-bZ-xlu"/>
+                        <outlet property="cardStatus" destination="aaY-q0-hdP" id="wUM-yh-LHI"/>
+                        <outlet property="checkedIn" destination="EUa-JU-b4k" id="FR7-Hl-cfN"/>
+                        <outlet property="distanceLabel" destination="bJz-jG-dyS" id="Kb0-ZN-AOf"/>
+                        <outlet property="facebookVerified" destination="erz-gP-HID" id="GHV-ri-P6B"/>
+                        <outlet property="hoursAvailable" destination="JFU-Jj-MZe" id="Kwk-si-mLr"/>
+                        <outlet property="linkedinVerified" destination="eSK-dL-UoJ" id="bgf-5S-zxc"/>
+                        <outlet property="loadingPt1" destination="pMn-1f-fNm" id="nJy-gn-g2x"/>
+                        <outlet property="loadingPt2" destination="xd1-sF-X6c" id="rVa-xf-cyr"/>
+                        <outlet property="loadingPt3" destination="iPB-v5-t8e" id="jVz-Vy-ATq"/>
                         <outlet property="mapView" destination="zVx-ux-49n" id="twh-GR-uxA"/>
-                        <outlet property="userCard" destination="EPm-IJ-ENc" id="MI8-Re-24i"/>
+                        <outlet property="minutesAvailable" destination="VL7-c7-C9a" id="8A7-xQ-L8j"/>
+                        <outlet property="resumeEarned" destination="dH1-gE-4GK" id="xMe-5f-tPU"/>
+                        <outlet property="resumeLabel" destination="o28-BY-NCw" id="lI9-he-gKj"/>
+                        <outlet property="resumeRate" destination="ogr-c7-cbr" id="910-be-Qpx"/>
+                        <outlet property="resumeSpent" destination="BZf-Y3-LMC" id="5Vu-gQ-HKH"/>
+                        <outlet property="resumeView" destination="I6X-e7-zqf" id="LDi-py-HjC"/>
+                        <outlet property="resumeWebView" destination="b0G-FA-LgU" id="DjX-Py-qAU"/>
+                        <outlet property="scrollView" destination="JEK-1P-ZoL" id="s9z-VK-rtV"/>
+                        <outlet property="userCard" destination="EPm-IJ-ENc" id="DQI-7K-F22"/>
+                        <outlet property="venueAddress" destination="Wum-GD-Teo" id="ejQ-la-HKT"/>
+                        <outlet property="venueIcon" destination="nN2-w2-QQW" id="gDg-iv-dGb"/>
+                        <outlet property="venueName" destination="cuo-qo-Lxa" id="6yB-0J-nwU"/>
+                        <outlet property="venueOthers" destination="USN-JE-xyh" id="oZM-YO-yD1"/>
+                        <outlet property="venueOthersIcon" destination="Vy1-1g-JFN" id="TfA-Lo-amB"/>
+                        <outlet property="venueView" destination="NlA-aR-p8W" id="xuV-nC-SKa"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="962" y="35"/>
+            <point key="canvasLocation" x="1472" y="-717"/>
         </scene>
-        <scene sceneID="Gpr-rQ-sxK">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="leF-PD-H2k" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="OLQ-qv-XM7" customClass="OneOnOneChatViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="UBf-qa-QaN">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" id="Ipx-BS-qou" customClass="TPKeyboardAvoidingScrollView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type to chat" minimumFontSize="17" id="BT3-qU-mXI">
-                                        <rect key="frame" x="20" y="365" width="280" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
-                                    </textField>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" bouncesZoom="NO" id="2rU-gU-hvI">
-                                        <rect key="frame" x="20" y="20" width="280" height="337"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    </scrollView>
-                                </subviews>
-                            </scrollView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="hN7-aM-QWP"/>
-                    <connections>
-                        <outlet property="chatContents" destination="2rU-gU-hvI" id="AFp-A0-cEf"/>
-                        <outlet property="chatEntryField" destination="BT3-qU-mXI" id="GsN-ZG-Ef2"/>
-                    </connections>
-                </viewController>
-            </objects>
-            <point key="canvasLocation" x="1421" y="35"/>
-        </scene>
-        <!--Root Navigation Controller - Nearby-->
         <scene sceneID="X1z-oT-wPh">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flw-Jh-D1t" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -295,7 +495,6 @@
             </objects>
             <point key="canvasLocation" x="-43" y="14"/>
         </scene>
-        <!--Navigation Controller-->
         <scene sceneID="3mV-Fb-MBc">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lzg-tm-OqG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -313,20 +512,57 @@
             </objects>
             <point key="canvasLocation" x="436" y="635"/>
         </scene>
+        <scene sceneID="yyw-Kg-745">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pc0-qS-LiY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="Jrc-qA-DTJ" customClass="OneOnOneChatViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="S6K-TD-7ct">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="894-KZ-GTW">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type to chat" minimumFontSize="17" clearButtonMode="unlessEditing" id="stP-PW-ORN">
+                                        <rect key="frame" x="20" y="365" width="280" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="sendChat:" destination="Jrc-qA-DTJ" eventType="valueChanged" id="9fQ-VT-YeF"/>
+                                            <action selector="sendChat:forEvent:" destination="Jrc-qA-DTJ" eventType="editingChanged" id="H7e-wt-QSd"/>
+                                            <action selector="sendChat:forEvent:" destination="Jrc-qA-DTJ" eventType="editingDidEndOnExit" id="cZ0-Le-0rl"/>
+                                            <action selector="sendChat:forEvent:" destination="Jrc-qA-DTJ" eventType="editingDidBegin" id="lWC-y4-DmK"/>
+                                            <action selector="sendChat:forEvent:" destination="Jrc-qA-DTJ" eventType="editingDidEnd" id="xTf-Ei-9xL"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="GjG-uo-P6W"/>
+                    <connections>
+                        <outlet property="chatDisplay" destination="894-KZ-GTW" id="v2S-zQ-dmf"/>
+                        <outlet property="chatEntry" destination="stP-PW-ORN" id="uqg-dK-YjV"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="907" y="91"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="available-for-icon.png" width="16" height="16"/>
+        <image name="checked-in-location.png" width="16" height="16"/>
         <image name="map-locate.png" width="16" height="16"/>
+        <image name="map-marker.png" width="16" height="16"/>
         <image name="map-refresh.png" width="16" height="16"/>
+        <image name="others-at-venue.png" width="16" height="16"/>
+        <image name="verified-facebook.png" width="16" height="16"/>
+        <image name="verified-linked-in.png" width="16" height="16"/>
     </resources>
     <classes>
-        <class className="BusinessCard" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BusinessCard.h"/>
-            <relationships>
-                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="nickname" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="status" candidateClass="UILabel"/>
-            </relationships>
-        </class>
         <class className="CheckInListTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInListTableViewController.h"/>
             <relationships>
@@ -338,7 +574,7 @@
             <relationships>
                 <relationship kind="action" name="locateMe:"/>
                 <relationship kind="action" name="refreshButtonClicked:"/>
-                <relationship kind="outlet" name="mapView" candidateClass="OCMapView"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
             </relationships>
         </class>
         <class className="OneOnOneChatViewController" superclassName="UIViewController">
@@ -351,17 +587,40 @@
         <class className="RootNavigationController" superclassName="UINavigationController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/RootNavigationController.h"/>
         </class>
-        <class className="TPKeyboardAvoidingScrollView" superclassName="UIScrollView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TPKeyboardAvoidingScrollView.h"/>
-        </class>
         <class className="UserListTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UserListTableViewController.h"/>
         </class>
         <class className="UserProfileCheckedInViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UserProfileCheckedInViewController.h"/>
             <relationships>
+                <relationship kind="outlet" name="availabilityView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="cardImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="cardNickname" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="cardStatus" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="checkedIn" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="distanceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="facebookVerified" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="hoursAvailable" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="linkedinVerified" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="loadingPt1" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="loadingPt2" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="loadingPt3" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="userCard" candidateClass="BusinessCard"/>
+                <relationship kind="outlet" name="minutesAvailable" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="resumeEarned" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="resumeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="resumeRate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="resumeSpent" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="resumeView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="resumeWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="userCard" candidateClass="UIView"/>
+                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueIcon" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueOthers" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueOthersIcon" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="venueView" candidateClass="UIView"/>
             </relationships>
         </class>
     </classes>

@@ -18,8 +18,19 @@
 @synthesize status = _status;
 @synthesize location = _location;
 @synthesize bio = _bio;
+@synthesize facebookVerified = _facebookVerified;
+@synthesize linkedInVerified = _linkedInVerified;
+@synthesize hourlyRate = _hourlyRate;
+@synthesize totalEarned = _totalEarned;
+@synthesize totalSpent = _totalSpent;
 @synthesize urlPhoto = _urlPhoto;
 @synthesize skills = _skills;
+@synthesize distance = _distance;
+@synthesize checkedIn = _checkedIn;
+@synthesize placeCheckedIn = _placeCheckedIn;
+@synthesize checkoutEpoch = _checkoutEpoch;
+@synthesize join_date = _join_date;
+@synthesize trusted_by = _trusted_by;
 
 -(id)init
 {
@@ -43,8 +54,27 @@
         NSLog(@"JSON Returned for user resume: %@", JSON);
 #endif
         
-        self.bio = [JSON objectForKey:@"bio"];
         self.urlPhoto = [JSON objectForKey:@"urlPhoto"];
+        
+        self.facebookVerified = [[JSON valueForKeyPath:@"verified.facebook.verified"] boolValue];
+        self.linkedInVerified = [[JSON valueForKeyPath:@"verified.linkedin.verified"] boolValue];
+        
+        if ([[JSON objectForKey:@"hourly_billing_rate"] isKindOfClass:[NSString class]]) {
+            self.hourlyRate = [JSON objectForKey:@"hourly_billing_rate"];
+        }        
+        
+        self.totalEarned = [[JSON valueForKeyPath:@"stats.totalEarned"] doubleValue];
+        self.totalSpent = [[JSON valueForKeyPath:@"stats.totalSpent"] doubleValue];
+        
+        self.bio = [JSON objectForKey:@"bio"];
+        self.join_date = [JSON objectForKey:@"joined"];
+        self.trusted_by = [[JSON objectForKey:@"trusted"] intValue];
+        
+        // user checkin data
+        self.placeCheckedIn = [[CPPlace alloc] init];
+        self.placeCheckedIn.foursquareID = [JSON valueForKeyPath:@"checkin_data.foursquare"];
+        self.placeCheckedIn.othersHere = [[JSON valueForKeyPath:@"checkin_data.others_here"] intValue];
+        self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[JSON valueForKeyPath:@"checkin_data.checkout"] intValue]]; 
         
         if(completion)
             completion(self, nil); 

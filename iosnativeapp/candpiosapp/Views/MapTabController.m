@@ -19,17 +19,16 @@
 
 #define qHideTopNavigationBarOnMapView			0
 
-@interface MapTabController()
+@interface MapTabController() 
 -(void)zoomTo:(CLLocationCoordinate2D)loc;
 -(void)updateLoginButton;
 
--(void)accessoryButtonTapped:(UIButton*)sender;
 @property (nonatomic, strong) NSTimer *reloadTimer;
 -(void)refreshLocationsIfNeeded;
 
 @end
 
-@implementation MapTabController
+@implementation MapTabController 
 @synthesize mapView;
 @synthesize dataset;
 @synthesize reloadTimer;
@@ -203,6 +202,11 @@
     [self zoomTo: [[mapView userLocation] coordinate]];
 }
 
+- (MKUserLocation *)currentUserLocationInMapView
+{
+    return mapView.userLocation;
+}
+
 // called just before a controller pops us
 - (void)navigationController:(UINavigationController *)navigationControllerArg willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
@@ -357,10 +361,9 @@
         selectedUser.userID = [tappedObj.objectId intValue];
         selectedUser.location = CLLocationCoordinate2DMake(tappedObj.lat, tappedObj.lon);
         selectedUser.status = tappedObj.status;
-        selectedUser.skills = tappedObj.skills;   
-#if DEBUG
-        NSLog(@"Showing resume for user with ID: %d", selectedUser.userID);
-#endif
+        selectedUser.skills = tappedObj.skills;
+        selectedUser.checkedIn = tappedObj.checkedIn;
+        
         // set the user object on the UserProfileCheckedInVC to the user we just created
         [[segue destinationViewController] setUser:selectedUser];
     }

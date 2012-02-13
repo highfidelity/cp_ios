@@ -10,11 +10,9 @@
 #import <MapKit/MapKit.h>
 
 #import "User.h"
-#import "BusinessCard.h"
 
 @interface UserProfileCheckedInViewController : UIViewController
 
 @property (nonatomic, strong) User *user;
-@property (nonatomic, strong) IBOutlet BusinessCard *userCard;
 
 @end

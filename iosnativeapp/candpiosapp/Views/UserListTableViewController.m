@@ -217,6 +217,7 @@
         selectedUser.skills = annotation.skills;   
         selectedUser.userID = [annotation.objectId intValue];
         selectedUser.location = CLLocationCoordinate2DMake(annotation.lat, annotation.lon);
+        selectedUser.checkedIn = annotation.checkedIn;
         // set the user object on the UserProfileCheckedInVC to the user we just created
         [[segue destinationViewController] setUser:selectedUser];
     }
