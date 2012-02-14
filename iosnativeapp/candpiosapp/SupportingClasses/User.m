@@ -33,6 +33,8 @@
 @synthesize trusted_by = _trusted_by;
 @synthesize listingsAsClient = _listingsAsClient;
 @synthesize listingsAsAgent = _listingsAsAgent;
+@synthesize workInformation = _workInformation;
+@synthesize educationInformation  = _educationInformation;
 
 -(id)init
 {
@@ -58,7 +60,7 @@
 #if DEBUG
         NSLog(@"JSON Returned for user resume: %@", JSON);
 #endif
-        
+        JSON = [JSON objectForKey:@"payload"];
         // set the user's photo url        
         self.urlPhoto = [JSON objectForKey:@"urlPhoto"];
         
@@ -75,12 +77,18 @@
         self.totalEarned = [[JSON valueForKeyPath:@"stats.totalEarned"] doubleValue];
         self.totalSpent = [[JSON valueForKeyPath:@"stats.totalSpent"] doubleValue];
         
+        // bio, join date, number of users trusted by
         self.bio = [JSON objectForKey:@"bio"];
         self.join_date = [JSON objectForKey:@"joined"];
         self.trusted_by = [[JSON objectForKey:@"trusted"] intValue];
         
+        // listings information
         self.listingsAsClient = [JSON objectForKey:@"listingsAsClient"];
         self.listingsAsAgent = [JSON objectForKey:@"listingsAsAgent"];
+        
+        // work and education
+        self.workInformation = [JSON objectForKey:@"work"];
+        self.educationInformation = [JSON objectForKey:@"education"];        
         
         // user checkin data
         self.placeCheckedIn = [[CPPlace alloc] init];

@@ -33,6 +33,8 @@
 @property (nonatomic, assign) int trusted_by;
 @property (nonatomic, strong) NSDictionary *listingsAsClient;
 @property (nonatomic, strong) NSDictionary *listingsAsAgent;
+@property (nonatomic, strong) NSArray *workInformation;
+@property (nonatomic, strong) NSArray *educationInformation;
 
 -(void)loadUserResumeData:(void (^)(User *user, NSError *error))completion;
 

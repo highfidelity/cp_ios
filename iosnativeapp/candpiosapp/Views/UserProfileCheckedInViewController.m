@@ -243,9 +243,6 @@
             
             // load html into the bottom of the resume view for all the user data
             [self.resumeWebView loadHTMLString:[self htmlStringWithResumeText] baseURL:nil];
-                        
-            // show the resume now that all the data is there
-            [UIView animateWithDuration:0.4 animations:^{self.resumeView.alpha = 1.0;}];
             
             // request using the FoursquareAPIRequest class to get the venue data
             [FoursquareAPIRequest dictForVenueWithFoursquareID:self.user.placeCheckedIn.foursquareID :^(NSDictionary *fsDict, NSError *error) {
@@ -339,7 +336,73 @@
     if (self.user.bio.length > 0) {
         [resumeHtml addObject:[NSString stringWithFormat:@"<p><b>Bio:</b> %@</p>", self.user.bio]];
     }
+    
+    // user work information
+    if (self.user.workInformation.count > 0) {
+        // add the title
+        [resumeHtml addObject:@"<p><b>Work</b></p>"];
+        // go through each position in the workInformation array
+        for (NSDictionary *position in self.user.workInformation) {
+            // setup the div for each position
+            [resumeHtml addObject:@"<div>"];
+            // show the title beside the company if we have it
+            if (![[position objectForKey:@"title"] isKindOfClass:[NSNull class]]) {
+                [resumeHtml addObject:[NSString stringWithFormat:@"%@ at %@", [position objectForKey:@"title"], [position objectForKey:@"company"]]];
+            } else {
+                // otherwise just the company
+                [resumeHtml addObject:[position objectForKey:@"company"]];
+            }
+            // if we have a start date show it alongside the end date
+            if (![[position objectForKey:@"startDate"] isKindOfClass:[NSNull class]]) {
+                [resumeHtml addObject:[NSString stringWithFormat:@" from %@ to %@", [position objectForKey:@"startDate"], [position objectForKey:@"endDate"]]];
+            }
+            // close the div
+            [resumeHtml addObject:@"</div>"];
+        }
+    }
+    
+    // user education
+    if (self.user.educationInformation.count > 0) {
+        // add the title
+        [resumeHtml addObject:@"<p><b>Education</b></p>"];
+        // go through each school in educationInformation array (in reverse for the right chronological order)
+        for (NSDictionary *school in [self.user.educationInformation reverseObjectEnumerator]) {
+            // setup the div for each school
+            [resumeHtml addObject:@"<div>"];
+            // put the school name
+            [resumeHtml addObject:[school objectForKey:@"school"]];
+            // if we have an end date show it
+            if (![[school objectForKey:@"endDate"] isKindOfClass:[NSNull class]]) {
+                // show it with the start date if we have it
+                if (![[school objectForKey:@"startDate"] isKindOfClass:[NSNull class]]) {
+                    [resumeHtml addObject:[NSString stringWithFormat:@", %@-%@", [school objectForKey:@"startDate"], [school objectForKey:@"endDate"]]];
+                } else {
+                    // otherwise show it by itself
+                    [resumeHtml addObject:[NSString stringWithFormat:@", %@", [school objectForKey:@"endDate"]]];
+                }
+            }
+            // show the degree if we have it
+            if (![[school objectForKey:@"degree"] isKindOfClass:[NSNull class]]) {
+                // show it with the concentrations if we have them
+                if (![[school objectForKey:@"concentrations"] isKindOfClass:[NSNull class]]) {
+                    [resumeHtml addObject:[NSString stringWithFormat:@"</br>%@, %@", [school objectForKey:@"degree"], [school objectForKey:@"concentrations"]]];
+                } else {
+                    [resumeHtml addObject:[NSString stringWithFormat:@"</br>%@", [school objectForKey:@"degree"]]];
+                }
+            }
+            // otherwise check if we just have the concentration
+            else if (![[school objectForKey:@"concentrations"] isKindOfClass:[NSNull class]]) {
+                [resumeHtml addObject:[NSString stringWithFormat:@"</br>%@", [school objectForKey:@"concentrations"]]];
+            }
+            // close the div
+            [resumeHtml addObject:@"</div>"];
+        }
+    }
+    
+    // add user trust information
     [resumeHtml addObject:[NSString stringWithFormat:@"<p><b>Trusted by %d people</b></p>", self.user.trusted_by]];
+    
+    // show listings as Agent in a table
     if (self.user.listingsAsAgent.count > 0) {
         [resumeHtml addObject:@"<table><tr><th>Listing as Agent</th><th>Price</th></tr>"];
         for (NSDictionary *agentListing in self.user.listingsAsAgent) {
@@ -348,6 +411,8 @@
         }
         [resumeHtml addObject:@"</table></br>"];
     }
+    
+    // show listings as Client in a table
     if (self.user.listingsAsClient.count > 0) {
         [resumeHtml addObject:@"<table><tr><th>Listing as Client</th><th>Price</th></tr>"];
         for (NSDictionary *clientListing in self.user.listingsAsClient) {
@@ -356,6 +421,7 @@
         }
         [resumeHtml addObject:@"</table></br>"];
     }
+    // return the HTML by joining the array into a string
     return [resumeHtml componentsJoinedByString:@""];
 }
 
@@ -374,6 +440,8 @@
     UIView *blueOverlayExtend = [[UIView alloc] initWithFrame:CGRectMake(0, 416, 320, self.scrollView.contentSize.height - 416)];
     blueOverlayExtend.backgroundColor = [UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0];
     [self.scrollView insertSubview:blueOverlayExtend atIndex:0];
+    // show the resume now that all the data is there
+    [UIView animateWithDuration:0.4 animations:^{self.resumeView.alpha = 1.0;}];
 }
 
 -(void)animateVenueLoadingPoints
