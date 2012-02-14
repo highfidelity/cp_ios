@@ -78,6 +78,12 @@ static NSOperationQueue *sMapQueue = nil;
 	}
 	
 }
+-(id)init {
+    if (([super init])) {
+        annotations = [NSMutableArray array];
+    }
+    return self;
+}
 
 -(id)initFromJson:(NSDictionary*)json
 {

@@ -20,6 +20,7 @@
 
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
 @property (nonatomic, readonly, strong) MapDataSet *dataset;
+@property (nonatomic, readonly, strong) MapDataSet *fullDataset;
 
 // State to prevent querying userlist (with bad region) before the map has appeared
 // Although there is a delegate method, mapViewDidFinishLoadingMap:, this is not

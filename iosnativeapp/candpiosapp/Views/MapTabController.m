@@ -31,6 +31,7 @@
 @implementation MapTabController 
 @synthesize mapView;
 @synthesize dataset;
+@synthesize fullDataset;
 @synthesize reloadTimer;
 @synthesize mapHasLoaded;
 
@@ -69,6 +70,9 @@
     [super viewDidLoad];
     self.mapHasLoaded = NO;
 
+    // Initialize the fullDataset array to keep track of all checked in users, even outside of current map bounds
+    fullDataset = [[MapDataSet alloc] init];
+    
     self.navigationController.delegate = self;
 	hasUpdatedUserLocation = false;
 	
@@ -190,6 +194,13 @@
                                     
                                     [mapView addAnnotations: [newDataset annotations]];
                                     dataset = newDataset;
+
+                                    // Load all users (even outside of map bounds) into fullDataset for List view
+                                    for (CandPAnnotation *ann2 in newDataset.annotations) {
+                                        if (![fullDataset.annotations containsObject: ann2]) {
+                                            [fullDataset.annotations addObject:ann2];
+                                        }
+                                    }
                                 }
                                 
                                 [SVProgressHUD dismiss];
@@ -368,7 +379,7 @@
         [[segue destinationViewController] setUser:selectedUser];
     }
     else if ([[segue identifier] isEqualToString:@"ShowUserListTable"]) {
-        [[segue destinationViewController] setMissions: dataset.annotations];
+        [[segue destinationViewController] setMissions: fullDataset.annotations];
     }
 }
 
