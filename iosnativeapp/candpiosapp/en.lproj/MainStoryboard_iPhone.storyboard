@@ -35,7 +35,20 @@
                     <navigationItem key="navigationItem" id="6o6-Q6-MT8"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="709" y="-668"/>
+            <point key="canvasLocation" x="450" y="-715"/>
+        </scene>
+        <scene sceneID="N4C-DH-qKm">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="roq-lO-JF8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="PsS-EQ-oIQ" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2rF-2z-3Jj">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="978" y="-910"/>
         </scene>
         <scene sceneID="Q7p-8T-DVG">
             <objects>
@@ -99,7 +112,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="379" y="-36"/>
+            <point key="canvasLocation" x="-76" y="-271"/>
         </scene>
         <scene sceneID="A3v-gP-kYR">
             <objects>
@@ -146,7 +159,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="962" y="635"/>
+            <point key="canvasLocation" x="450" y="455"/>
         </scene>
         <scene sceneID="jZa-Lm-4za">
             <objects>
@@ -475,7 +488,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="1246" y="-679"/>
+            <point key="canvasLocation" x="978" y="-271"/>
         </scene>
         <scene sceneID="X1z-oT-wPh">
             <objects>
@@ -494,7 +507,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-43" y="14"/>
+            <point key="canvasLocation" x="-603" y="-30"/>
         </scene>
         <scene sceneID="3mV-Fb-MBc">
             <objects>
@@ -511,7 +524,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="436" y="635"/>
+            <point key="canvasLocation" x="-76" y="455"/>
         </scene>
         <scene sceneID="yyw-Kg-745">
             <objects>
@@ -547,7 +560,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="1246" y="-21"/>
+            <point key="canvasLocation" x="1386" y="-271"/>
         </scene>
     </scenes>
     <resources>
@@ -560,71 +573,6 @@
         <image name="verified-facebook.png" width="16" height="16"/>
         <image name="verified-linked-in.png" width="16" height="16"/>
     </resources>
-    <classes>
-        <class className="CheckInListTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInListTableViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeWindow:"/>
-            </relationships>
-        </class>
-        <class className="MapTabController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapTabController.h"/>
-            <relationships>
-                <relationship kind="action" name="locateMe:"/>
-                <relationship kind="action" name="refreshButtonClicked:"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-            </relationships>
-        </class>
-        <class className="OneOnOneChatViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/OneOnOneChatViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="chatContents" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="chatEntryField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="RootNavigationController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RootNavigationController.h"/>
-        </class>
-        <class className="TPKeyboardAvoidingScrollView" superclassName="UIScrollView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TPKeyboardAvoidingScrollView.h"/>
-        </class>
-        <class className="UserListTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserListTableViewController.h"/>
-        </class>
-        <class className="UserProfileCheckedInViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserProfileCheckedInViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="availabilityView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="cardImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="cardNickname" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="cardStatus" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="checkedIn" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="distanceLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="facebookVerified" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="hoursAvailable" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="linkedinVerified" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="loadingPt1" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="loadingPt2" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="loadingPt3" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="minutesAvailable" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="resumeEarned" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="resumeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="resumeRate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="resumeSpent" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="resumeView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="resumeWebView" candidateClass="UIWebView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="userCard" candidateClass="UIView"/>
-                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueIcon" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueOthers" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueOthersIcon" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="venueView" candidateClass="UIView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
