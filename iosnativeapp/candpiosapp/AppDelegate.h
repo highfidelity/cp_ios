@@ -63,4 +63,5 @@
 -(void)saveSettings;
 +(AppDelegate*)instance;
 -(void)logoutEverything;
+void uncaughtExceptionHandler(NSException *exception);
 @end

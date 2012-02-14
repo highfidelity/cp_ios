@@ -37,6 +37,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     
 	[self loadSettings];  
 
@@ -334,5 +335,8 @@
 	
 }
 
+void uncaughtExceptionHandler(NSException *exception) {
+    [FlurryAnalytics logError:@"Uncaught" message:@"Crash!" exception:exception];
+}
 
 @end
