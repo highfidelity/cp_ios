@@ -464,4 +464,13 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"ProfileToOneOnOneSegue"]) {
+        NSLog(@"Doing a segue!!11!");
+        [[segue destinationViewController] setUser:self.user];
+    }
+}
+
+
 @end

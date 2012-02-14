@@ -49,9 +49,11 @@
 -(void)loadUserResumeData:(void (^)(User *user, NSError *error))completion {
     // url hitting api.php to getResume
     NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=getResume&user_id=%d", kCandPWebServiceUrl, self.userID];
+
 #if DEBUG
-        NSLog(@"Requesting resume data for user with ID:%d", self.userID);
+    NSLog(@"Requesting resume data for user with ID:%d", self.userID);
 #endif
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
     // make an AFJSONRequestOperation with the NSURLRequest
@@ -61,8 +63,15 @@
         NSLog(@"JSON Returned for user resume: %@", JSON);
 #endif
         JSON = [JSON objectForKey:@"payload"];
+        
+        self.nickname = [JSON objectForKey:@"nickname"];
+        self.status = [JSON objectForKey:@"status_text"];
+        self.bio = [JSON objectForKey:@"bio"];
         // set the user's photo url        
         self.urlPhoto = [JSON objectForKey:@"urlPhoto"];
+        self.location = CLLocationCoordinate2DMake(
+                                                   [(NSString*)[[JSON objectForKey:@"location"] objectForKey:@"lat"] doubleValue],
+                                                   [(NSString*)[[JSON objectForKey:@"location"] objectForKey:@"lng"] doubleValue]);
         
         // set the booleans if the user is facebook/linkedin verified
         self.facebookVerified = [[JSON valueForKeyPath:@"verified.facebook.verified"] boolValue];

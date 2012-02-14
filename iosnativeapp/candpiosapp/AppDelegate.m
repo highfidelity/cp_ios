@@ -11,6 +11,7 @@
 #import "NSMutableURLRequestAdditions.h"
 #import "AFHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
+#import "RootNavigationController.h"
 #import "CheckInListTableViewController.h"
 #import "FlurryAnalytics.h"
 #import "OAuthConsumer.h"
@@ -57,9 +58,19 @@
 	urbanAirshipClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://go.urbanairship.com/api"]];
 
 	// register for push 
-	// TODO: put this as part of the login procedure
     [[UAPush shared] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
+    // Handle the case where we were launched from a PUSH notification
+    if (launchOptions != nil)
+	{
+		NSDictionary* dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+		if (dictionary != nil)
+		{
+			NSLog(@"Launched from push notification: %@", dictionary);
+			//[self addMessageFromRemoteNotification:dictionary updateUI:NO];
+		}
+	}
 
     return YES;
 }
@@ -68,6 +79,29 @@
     [self loadCheckinScreen];
 }
 
+// Handle PUSH notifications while the app is running
+- (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
+{
+	NSLog(@"Received notification: %@", userInfo);
+	NSString* alertValue = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
+    
+    // If we received a chat push notification
+    if ([userInfo valueForKey:@"chat"]) {
+        NSString* sendingUserId = [[userInfo valueForKey:@"chat"]
+                                    valueForKey:@"f"];
+        
+        // Strip the user name out of the alert message (it's the string before the colon)
+        NSMutableArray* parts = [NSMutableArray arrayWithArray:[alertValue componentsSeparatedByString:@": "]];
+        [parts removeObjectAtIndex:0];
+        NSString *message = [parts componentsJoinedByString:@": "];
+        
+        NSLog(@"Received chat message: %@ - %@", sendingUserId, message);
+        
+    }
+}
+
+
+// Called when we receive a local notification about checkin expiring
 - (void)loadCheckinScreen {
     CheckInListTableViewController *checkInListTableViewController = [[CheckInListTableViewController alloc] init];
     
@@ -148,7 +182,8 @@
     return succeeded;
 }
 
-- (void)requestTokenTicket:(OAServiceTicket *)ticket didFinishWithAccessToken:(NSData *)data {
+- (void)requestTokenTicket:(OAServiceTicket *)ticket
+  didFinishWithAccessToken:(NSData *)data {
     NSString *responseBody = [[NSString alloc] initWithData:data
                                                    encoding:NSUTF8StringEncoding];
 
@@ -237,7 +272,7 @@
 	}];
 #if DEBUG
 	// check they're all gone
-	NSArray *httpscookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:kCandPWebServiceUrl]];
+	//NSArray *httpscookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:kCandPWebServiceUrl]];
 #endif
 	
 	// facebook

@@ -85,6 +85,8 @@
 		6F5EB26C14DB51E40000294E /* OneOnOneChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5EB26B14DB51E40000294E /* OneOnOneChatViewController.m */; };
 		6F7BA4DB14E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7BA4D814E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m */; };
 		6F7BA4DC14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7BA4DA14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m */; };
+		6F7DA74514E890C0001BEC19 /* ChatHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7DA74414E890C0001BEC19 /* ChatHistory.m */; };
+		6F7DA74814E890E4001BEC19 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7DA74714E890E4001BEC19 /* ChatMessage.m */; };
 		6FEEDFFC14E103F400861CA1 /* CPapi.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FEEDFFB14E103F400861CA1 /* CPapi.m */; };
 		870835D714B3DEA200439431 /* SA_ActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835D514B3DEA200439431 /* SA_ActionSheet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		870835F814B3E1AC00439431 /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E014B3E1AB00439431 /* Facebook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -314,8 +316,8 @@
 		32FF63D914BBE71A00E99F55 /* CheckInDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckInDetailsViewController.h; sourceTree = "<group>"; };
 		32FF63DA14BBE71A00E99F55 /* CheckInDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInDetailsViewController.m; sourceTree = "<group>"; };
 		32FF63DB14BBE71B00E99F55 /* CheckInDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckInDetailsViewController.xib; sourceTree = "<group>"; };
-		32FF63E214BBFAE300E99F55 /* CPPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPPlace.h; sourceTree = "<group>"; };
-		32FF63E314BBFAE300E99F55 /* CPPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPPlace.m; sourceTree = "<group>"; };
+		32FF63E214BBFAE300E99F55 /* CPPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPlace.h; path = SupportingClasses/CPPlace.h; sourceTree = "<group>"; };
+		32FF63E314BBFAE300E99F55 /* CPPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPlace.m; path = SupportingClasses/CPPlace.m; sourceTree = "<group>"; };
 		32FF63E914BC050000E99F55 /* checkin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkin.png; path = candpiosapp/images/checkin.png; sourceTree = SOURCE_ROOT; };
 		32FF63EA14BC050000E99F55 /* checkin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "checkin@2x.png"; path = "candpiosapp/images/checkin@2x.png"; sourceTree = SOURCE_ROOT; };
 		53319F9D14E066DE00A8978E /* checked-in@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked-in@2x~iphone.png"; sourceTree = "<group>"; };
@@ -323,8 +325,10 @@
 		53319FA214E066EF00A8978E /* map-locate@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-locate@2x~iphone.png"; sourceTree = "<group>"; };
 		539018F614D9CCE10052100B /* UserProfileCheckedInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileCheckedInViewController.h; sourceTree = "<group>"; };
 		539018F714D9CCE10052100B /* UserProfileCheckedInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileCheckedInViewController.m; sourceTree = "<group>"; };
-		5390190314D9D9AF0052100B /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		5390190414D9D9AF0052100B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		5390190314D9D9AF0052100B /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = SupportingClasses/User.h; sourceTree = "<group>"; };
+		5390190414D9D9AF0052100B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = SupportingClasses/User.m; sourceTree = "<group>"; };
+		5390190614D9FA5D0052100B /* BusinessCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessCard.h; sourceTree = "<group>"; };
+		5390190714D9FA5D0052100B /* BusinessCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessCard.m; sourceTree = "<group>"; };
 		5390190D14DA0D850052100B /* paper-texture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "paper-texture.jpg"; sourceTree = "<group>"; };
 		5396E0D714E466C200E33E0E /* LeagueGothic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LeagueGothic.otf; sourceTree = "<group>"; };
 		53A5419D14DB4FCA0060D0DA /* checked-in~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked-in~iphone.png"; sourceTree = "<group>"; };
@@ -354,6 +358,10 @@
 		6F7BA4D814E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		6F7BA4D914E308AF00420AD5 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
 		6F7BA4DA14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
+		6F7DA74314E890C0001BEC19 /* ChatHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatHistory.h; path = ../Models/ChatHistory.h; sourceTree = "<group>"; };
+		6F7DA74414E890C0001BEC19 /* ChatHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatHistory.m; path = ../Models/ChatHistory.m; sourceTree = "<group>"; };
+		6F7DA74614E890E4001BEC19 /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessage.h; sourceTree = "<group>"; };
+		6F7DA74714E890E4001BEC19 /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
 		6FEEDFFA14E103F400861CA1 /* CPapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPapi.h; sourceTree = "<group>"; };
 		6FEEDFFB14E103F400861CA1 /* CPapi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPapi.m; sourceTree = "<group>"; };
 		870835D414B3DEA200439431 /* SA_ActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SA_ActionSheet.h; sourceTree = "<group>"; };
@@ -773,6 +781,17 @@
 			path = SSKeychain;
 			sourceTree = "<group>";
 		};
+		6F57076614E85439009B4053 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				32FF63E214BBFAE300E99F55 /* CPPlace.h */,
+				32FF63E314BBFAE300E99F55 /* CPPlace.m */,
+				5390190314D9D9AF0052100B /* User.h */,
+				5390190414D9D9AF0052100B /* User.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		6F7BA4D614E308AF00420AD5 /* TPKeyboardAvoiding */ = {
 			isa = PBXGroup;
 			children = (
@@ -782,6 +801,20 @@
 				6F7BA4DA14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m */,
 			);
 			path = TPKeyboardAvoiding;
+			sourceTree = "<group>";
+		};
+		6F7DA74914E89471001BEC19 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				6F5EB26A14DB51E30000294E /* OneOnOneChatViewController.h */,
+				6F5EB26B14DB51E40000294E /* OneOnOneChatViewController.m */,
+				6F7DA74614E890E4001BEC19 /* ChatMessage.h */,
+				6F7DA74714E890E4001BEC19 /* ChatMessage.m */,
+				6F7DA74414E890C0001BEC19 /* ChatHistory.m */,
+				6F7DA74314E890C0001BEC19 /* ChatHistory.h */,
+			);
+			name = Chat;
+			path = SupportingClasses;
 			sourceTree = "<group>";
 		};
 		870835D214B3DEA200439431 /* SA_ActionSheet */ = {
@@ -873,6 +906,8 @@
 				53A541A014DB50820060D0DA /* RootNavigationController.m */,
 				871EFB1114AE9C820030658B /* Supporting Files */,
 				87F5EF4C14AFAAC500EB83F7 /* SupportingClasses */,
+				6F7DA74914E89471001BEC19 /* Chat */,
+				6F57076614E85439009B4053 /* Models */,
 				871EFBBC14AF987B0030658B /* Views */,
 			);
 			path = candpiosapp;
@@ -1005,8 +1040,6 @@
 		871EFBBC14AF987B0030658B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				6F5EB26A14DB51E30000294E /* OneOnOneChatViewController.h */,
-				6F5EB26B14DB51E40000294E /* OneOnOneChatViewController.m */,
 				32FF63D914BBE71A00E99F55 /* CheckInDetailsViewController.h */,
 				32FF63DA14BBE71A00E99F55 /* CheckInDetailsViewController.m */,
 				32FF63DB14BBE71B00E99F55 /* CheckInDetailsViewController.xib */,
@@ -1063,8 +1096,6 @@
 				87F6580314B0DDFC00F4AB6C /* CandPAnnotation.m */,
 				E4D3929014DEE61900C4E0F0 /* ClusterAnnotation.h */,
 				E4D3929114DEE61900C4E0F0 /* ClusterAnnotation.m */,
-				32FF63E214BBFAE300E99F55 /* CPPlace.h */,
-				32FF63E314BBFAE300E99F55 /* CPPlace.m */,
 				8733310F14BCC36A001BF4DB /* EmailLoginSequence.h */,
 				8733311014BCC36A001BF4DB /* EmailLoginSequence.m */,
 				8708361814B4BF4A00439431 /* FacebookLoginSequence.h */,
@@ -1082,8 +1113,6 @@
 				3222128014E1EB2800C5471B /* ModalWebView.xib */,
 				87F5EF4D14AFAAC500EB83F7 /* Settings.h */,
 				87F5EF4E14AFAAC500EB83F7 /* Settings.m */,
-				5390190314D9D9AF0052100B /* User.h */,
-				5390190414D9D9AF0052100B /* User.m */,
 				87F657FC14B0DC1F00F4AB6C /* UserAnnotation.h */,
 				87F657FD14B0DC1F00F4AB6C /* UserAnnotation.m */,
 				87F6581414B127CD00F4AB6C /* UserSubview.h */,
@@ -1427,6 +1456,8 @@
 				32B9976814E37B6400713B6E /* SSKeychain.m in Sources */,
 				6F7BA4DB14E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				6F7BA4DC14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m in Sources */,
+				6F7DA74514E890C0001BEC19 /* ChatHistory.m in Sources */,
+				6F7DA74814E890E4001BEC19 /* ChatMessage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

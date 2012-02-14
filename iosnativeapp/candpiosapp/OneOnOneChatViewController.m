@@ -8,6 +8,7 @@
 
 #import "OneOnOneChatViewController.h"
 #import "CPapi.h"
+#import "SVProgressHUD.h"
 
 float const CHAT_PADDING_Y = 5.0f;
 float const CHAT_PADDING_X = 5.0f;
@@ -37,6 +38,28 @@ float const CHAT_BOX_WIDTH = 250.0f;
     if (self) {
         // Custom initialization
     }
+    return self;
+}
+
+- (id)initWithUserId:(NSString *)userId
+          andMessage:(NSString *)message {
+    
+    self = [self init];
+    
+    self.user.userID = [userId intValue];
+    
+    [SVProgressHUD showWithStatus:@"Starting Chat"];
+    [self.user loadUserResumeData:^(User *user, NSError *error) {
+        if (user) {
+            self.user = user;   
+            [SVProgressHUD dismiss];
+        } else {
+            [SVProgressHUD dismissWithError:[error localizedDescription]];
+        }
+    }];
+    
+    [self addChatMessageToView:message sentByMe:NO];
+    
     return self;
 }
 

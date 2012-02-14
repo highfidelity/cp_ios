@@ -263,9 +263,6 @@
     [loginParams setObject:@"signup" forKey:@"action"];
     [loginParams setObject:@"json" forKey:@"type"];
 
-//    AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"http://dev.worklist.net/~emcro/candpweb/web/"]];
-//    NSMutableURLRequest *request = [client requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
-    
 	NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 #if DEBUG
