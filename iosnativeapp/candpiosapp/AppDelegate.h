@@ -23,7 +23,7 @@
 // -alexi
 #define kCandPWebServiceUrl		@"https://coffeeandpower.com/"
 // Facebook
-#define kFacebookAppId          @""
+#define kFacebookAppId          @"" //bind to the fb[app_id]:// URL scheme in .plist
 // LinkedIn
 #define kLinkedInKey            @"0"
 #define kLinkedInSecret         @"0"
@@ -33,7 +33,7 @@
 
 #define kCandPWebServiceUrl		@"https://staging.coffeeandpower.com/"
 // Facebook
-#define kFacebookAppId          @"230528896971048" // Alternate: "278566002200147"
+#define kFacebookAppId          @"278566002200147"
 // LinkedIn
 #define kLinkedInKey            @"4xkfzpnvuc72"
 #define kLinkedInSecret         @"mxgFhH1i1PbPlWjq"

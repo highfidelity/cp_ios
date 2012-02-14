@@ -277,13 +277,13 @@
 #endif
 	
 	// facebook
-	if(facebook && [facebook isSessionValid])
-	{
-		[facebook logout];
-	}
-	settings.facebookExpirationDate = nil;
-	settings.facebookAccessToken = nil;
-	
+//	if (facebook && [facebook isSessionValid])
+//	{
+//		[facebook logout];
+//	}
+//	settings.facebookExpirationDate = nil;
+//	settings.facebookAccessToken = nil;
+
 	// and email credentials
 	// (note that we keep the username & password)
 	settings.candpUserId = nil;

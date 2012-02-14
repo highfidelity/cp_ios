@@ -30,22 +30,38 @@
 	// set a liberal cookie policy
 	[[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy: NSHTTPCookieAcceptPolicyAlways];
 
-	[[AppDelegate instance] logoutEverything];
-	
-	if (![[AppDelegate instance].facebook isSessionValid]) {
-		[[AppDelegate instance].facebook authorize:[NSArray arrayWithObjects:@"offline_access", nil]];
-	}
-	else
-	{
-		// we have a facebook session, so just get our info & set it with c&p
-		[self handleResponseFromFacebookLogin];
-	}
+
+	AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
+    if (![[delegate facebook] isSessionValid]) {   
+        NSArray *extendedPermissions = [[NSArray alloc] 
+                                        initWithObjects:@"offline_access", @"user_about_me", 
+                                        @"user_education_history", @"user_location", @"user_website", @"user_work_history", nil];
+        [[delegate facebook] authorize:extendedPermissions];
+    }
+    else
+    {
+        // we have a facebook session, so just get our info & set it with c&p
+        [self handleResponseFromFacebookLogin];
+    }
 }
 
--(void)handleResponseFromFacebookLogin
-{	
-    [AppDelegate instance].settings.facebookAccessToken = [[AppDelegate instance].facebook accessToken];
+- (void)handleResponseFromFacebookLogin
+{
+    
+    NSString *fbAccessToken = [[[AppDelegate instance] facebook] accessToken];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@userData.php?action=collectFbData&fb_access_token=%@", kCandPWebServiceUrl, fbAccessToken];
+    NSURL *locationURL = [NSURL URLWithString:urlString];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), 
+                   ^{
+                       NSLog(@"collect FB: %@", [NSString stringWithContentsOfURL:locationURL 
+                                                                         encoding:NSUTF8StringEncoding
+                                                                            error:nil]);
+                   }); 
+    
+    [AppDelegate instance].settings.facebookAccessToken = fbAccessToken;
     [AppDelegate instance].settings.facebookExpirationDate = [[AppDelegate instance].facebook expirationDate];
 	[[AppDelegate instance] saveSettings];
 	
@@ -97,6 +113,9 @@
              */
 			
 			[SVProgressHUD dismiss];
+#if DEBUG
+            NSLog(@"login json: %@", candpJson);
+#endif
 
 			// if the user hasn't created an account, we get:
 			//			{
