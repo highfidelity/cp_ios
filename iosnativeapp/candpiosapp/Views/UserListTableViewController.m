@@ -47,15 +47,42 @@
     // Iterate through the passed missions and only show the ones that were within the map bounds, ordered by distance
 
     CLLocation *currentLocation = [AppDelegate instance].settings.lastKnownLocation;
+
+    // Build a list of annotations that should be removed from the list view so that duplicate individuals aren't shown (if they check in several times)
+    NSMutableArray *badAnnotations = [[NSMutableArray alloc] init];
+    NSMutableSet *goodUserIds = [[NSMutableSet alloc] init];
+    NSMutableSet *badUserIds = [[NSMutableSet alloc] init];
     
     for (UserAnnotation *annotation in missions) {
         CLLocation *location = [[CLLocation alloc] initWithLatitude:annotation.lat longitude:annotation.lon];
         annotation.distance = [location distanceFromLocation:currentLocation];
+
+        // Check if this person already has a checkin, and if so, mark the user as needing to clean up old checkins
+        NSNumber *userId = [NSNumber numberWithInteger:annotation.userId];
+        
+        if ([goodUserIds containsObject:userId]) {
+            [badUserIds addObject:userId];
+        }
+        else {
+            [goodUserIds addObject:userId];
+        }        
     }
     
+    // Clean up old checkins
+    for (NSNumber *userId in badUserIds) {
+        NSArray *duplicates = [missions filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"userId == %d", [userId integerValue]]];
+        
+        for (NSInteger i = 0; i < (duplicates.count - 1); i++) {
+            [badAnnotations addObject:[duplicates objectAtIndex:i]];
+        }        
+    }
+    
+    [missions removeObjectsInArray:badAnnotations];
+    
+    // Could sort by checkinId in reverse order to get most recent checkins
     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"distance" ascending:YES];
 
-    [missions sortUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];    
+    [missions sortUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
 }
 
 - (void)viewDidUnload

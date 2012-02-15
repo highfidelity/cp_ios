@@ -198,7 +198,7 @@
                                     // Load all users (even outside of map bounds) into fullDataset for List view
                                     for (CandPAnnotation *ann2 in newDataset.annotations) {
                                         if (![fullDataset.annotations containsObject: ann2]) {
-                                            [fullDataset.annotations addObject:ann2];
+                                            [fullDataset.annotations addObject: ann2];
                                         }
                                     }
                                 }

@@ -9,13 +9,14 @@
 #import "UserAnnotation.h"
 
 @implementation UserAnnotation
-@synthesize nickname, status, skills, distance;
+@synthesize nickname, status, skills, distance, userId;
 
 -(id)initFromDictionary:(NSDictionary *)jsonDict
 {
 	self = [super initFromDictionary:jsonDict];
 	if(self)
 	{
+        userId = [[jsonDict objectForKey:@"id"] integerValue];
         nickname = [jsonDict objectForKey:@"nickname"];
 		self.title = nickname;
 		skills = [jsonDict objectForKey:@"skills"];
