@@ -9,8 +9,6 @@
 @property (nonatomic, retain) OAToken *requestToken;
 
 -(void)initiateLogin:(UIViewController*)mapViewController;
-//-(void)handleResponseFromLinkedInLogin;
-//-(void)handleResponseFromCandP:(NSDictionary*)json;
 
 - (void)linkedInLogin;
 - (void)loadLinkedInConnections;

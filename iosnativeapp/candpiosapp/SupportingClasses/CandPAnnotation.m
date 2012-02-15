@@ -26,9 +26,6 @@
 		objectId = [[jsonDict objectForKey:@"id"] copy];
 		checkedIn = [[jsonDict objectForKey:@"checked_in"] boolValue];
         checkinId = [[jsonDict objectForKey:@"checkin_id"] intValue];
-		//title = [jsonDict objectForKey:@"title"];
-		//description = [jsonDict objectForKey:@"description"];
-		//nickname = [jsonDict objectForKey:@"nickname"];
 		id imageUrlObj = [jsonDict objectForKey:@"filename"];
 		if(imageUrlObj && imageUrlObj != [NSNull null])
 			imageUrl = [imageUrlObj copy];

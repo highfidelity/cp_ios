@@ -9,7 +9,6 @@
 #import "LoginSequenceBase.h"
 #import "AppDelegate.h"
 #import "AFNetworking.h"
-#import "UAPush.h"
 
 @interface LoginSequenceBase()
 -(void)handleCommonCreate:(NSString*)username
@@ -46,17 +45,6 @@
 	[self handleCommonCreate:username password:password nickname:nickname facebookId:nil completion:completion];
 }
 
-
-////////////////////////////////////////////////////////////////////////////////////////
--(void)handleFacebookCreate:(NSString*)username
-                 facebookId:(NSString*)facebookId
-                 completion:(void (^)(NSError *error, id JSON))completion
-{
-	[self handleCommonCreate:username password:nil nickname:nil facebookId:facebookId completion:completion];
-	
-}
-
-
 // Things to do once a user logs in via any method
 -(void)finishLogin {
     // Set my UserID as an UrbanAirship alias for push notifications
@@ -72,8 +60,7 @@
 				 nickname:(NSString*)nickname
 			   facebookId:(NSString*)facebookId
 			   completion:(void (^)(NSError *error, id JSON))completion
-{	
-	//http://dev.worklist.net/~stojce/candpfix/web/signup.php?action=signup&signupUsername=USERNAME3@example.com&signupPassword=PASSWORD&signupConfirm=PASSWORD&signupAcceptTerms=1&signupNickname=NICKNAME3&type=json
+{
 	// kick off the request to the candp server
 	NSMutableDictionary *loginParams = [NSMutableDictionary dictionary];
 	[loginParams setObject:@"signup" forKey:@"action"];
@@ -110,8 +97,6 @@
 		}];
 #endif		
         completion(nil, json);
-		
-		//[self handleResponseFromCandP:json];
 		
 	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
 		// handle error

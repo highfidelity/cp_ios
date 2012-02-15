@@ -10,9 +10,6 @@
 #import "AppDelegate.h"
 #import "AFNetworking.h"
 #import "Facebook+Blocks.h"
-#import "NSMutableURLRequestAdditions.h"
-#import "MyWebTabController.h"
-#import "EmailLoginSequence.h"
 #import "SVProgressHUD.h"
 #import "FlurryAnalytics.h"
 
@@ -69,17 +66,6 @@
 
 	// get the user's facebook id (via facebook 'me' object)
 	FBRequestOperation *getMe = [[AppDelegate instance].facebook requestWithGraphPath:@"me" andCompletionHandler:^(FBRequestOperation *op, id fbJson, NSError *err) {
-		
-		// 'me' example result:
-		//	{
-		//		id: "1012916614",
-		//		name: "David Mojdehi",
-		//		first_name: "David",
-		//		last_name: "Mojdehi",
-		//		link: "http://www.facebook.com/dmojdehi",
-		//		username: "dmojdehi",
-		//      ...
-		//	}
 			
 		NSString *facebookId = [fbJson objectForKey:@"id"];
 		NSLog(@"Got facebook user id: %@", facebookId);
@@ -95,47 +81,19 @@
 		NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
 		
 		AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id candpJson) {
-            
-            /*
-			NSLog(@"Result code: %d (%@)", [response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]] );
-            
-			NSLog(@"Header fields:" );
-			[[response allHeaderFields] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-				NSLog(@"     %@ : '%@'", key, obj );
-				
-			}];
-			
-			NSLog(@"Json fields:" );
-			[candpJson enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-				NSLog(@"     %@ : '%@'", key, obj );
-				
-			}];
-             */
+
 			
 			[SVProgressHUD dismiss];
 #if DEBUG
             NSLog(@"login json: %@", candpJson);
 #endif
 
-			// if the user hasn't created an account, we get:
-			//			{
-			//				message = Error;
-			//				params =     {
-			//					message = "No valid session";
-			//				};
-			//				"seo_data" =     {
-			//					description = "";
-			//					title = "";
-			//				};
-			//				succeeded = 0;
-			//			}
 			NSString *message = [candpJson objectForKey:@"message"];
 			if(message && [message compare:@"Error"] == 0)
 			{
 				// they haven't created an account
 				// so do it now
 				NSString *errorDetail = [[candpJson objectForKey:@"params"]objectForKey:@"message"];
-#if 1
 				NSString *displayMessage = [NSString stringWithFormat:@"You must create an account with Facebook first. Detail: %@",errorDetail];
 				UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unable to login"
 															   message:displayMessage
@@ -143,11 +101,6 @@
 													 cancelButtonTitle:@"OK"
 													 otherButtonTitles: nil];
 				[alert show];
-#else
-				[self handleFacebookCreate:facebookId completion:^(NSError *error, id JSON) {
-					
-				}];
-#endif
 			}
 			else
 			{
@@ -186,11 +139,6 @@
 	}];
 	
 	[[NSOperationQueue mainQueue] addOperation:getMe];
-}
-								 
--(void)handleResponseFromCandP:(NSDictionary*)json
-{
-	
 }
 
 @end

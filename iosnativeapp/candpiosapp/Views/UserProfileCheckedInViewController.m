@@ -282,12 +282,6 @@
             // error checking for load of user 
         }
     }];
-    
-    
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
 }
 
 - (void)viewDidUnload

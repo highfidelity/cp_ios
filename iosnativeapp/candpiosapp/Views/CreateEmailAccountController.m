@@ -7,8 +7,6 @@
 //
 
 #import "CreateEmailAccountController.h"
-#import "TableCellHelper.h"
-#import "AppDelegate.h"
 
 @implementation CreateEmailAccountController
 

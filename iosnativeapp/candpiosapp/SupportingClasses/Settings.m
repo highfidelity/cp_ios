@@ -41,7 +41,6 @@
     [encoder encodeBool:registeredForApnsSuccessfully forKey:@"registeredForApnsSuccessfully"];
 	
     [encoder encodeObject:lastKnownLocation forKey:@"lastKnownLocation"];
-	//[encoder encodeObject:candpLoginToken forKey:@"candpLoginToken"];
 	[encoder encodeObject:candpUserId forKey:@"candpUserId"];
 	[encoder encodeObject:facebookAccessToken forKey:@"facebookAccessToken"];
 	[encoder encodeObject:facebookExpirationDate forKey:@"facebookExpirationDate"];
@@ -57,7 +56,6 @@
         hasLocation = [decoder decodeBoolForKey:@"hasLocation"];
         registeredForApnsSuccessfully = [decoder decodeBoolForKey:@"registeredForApnsSuccessfully"];
         lastKnownLocation = [decoder decodeObjectForKey:@"lastKnownLocation"];
-		//candpLoginToken = [decoder decodeObjectForKey:@"candpLoginToken"];
 		candpUserId = [decoder decodeObjectForKey:@"candpUserId"];
 		
 		facebookAccessToken = [decoder decodeObjectForKey:@"facebookAccessToken"];

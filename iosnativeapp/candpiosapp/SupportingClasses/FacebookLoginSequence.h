@@ -13,6 +13,5 @@
 
 -(void)initiateLogin:(UIViewController*)mapViewController;
 -(void)handleResponseFromFacebookLogin;
--(void)handleResponseFromCandP:(NSDictionary*)json;
 
 @end

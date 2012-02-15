@@ -37,10 +37,6 @@
         [distanceLabel setHighlightedTextColor:[UIColor whiteColor]];
         distanceLabel.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:distanceLabel];
-
-//        imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-//		imageView.contentMode = UIViewContentModeScaleAspectFit;
-//        [self.contentView addSubview:imageView];
         
     }
     

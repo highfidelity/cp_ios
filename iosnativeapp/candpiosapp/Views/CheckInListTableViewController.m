@@ -1,7 +1,6 @@
 #import "CheckInListTableViewController.h"
 #import "AppDelegate.h"
 #import "CheckInDetailsViewController.h"
-#import "CPPlace.h"
 #import "SVProgressHUD.h"
 #import "SignupController.h"
 
@@ -83,8 +82,6 @@
     // Reset the Places array
     
     places = [[NSMutableArray alloc] init];
-
-    // Format: https://api.foursquare.com/v2/venues/search?ll=44.3,37.2&limit=20&oauth_token=BCG410DXRKXSBRWUNM1PPQFSLEFQ5ND4HOUTTTWYUB1PXYC4
 
     CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
     

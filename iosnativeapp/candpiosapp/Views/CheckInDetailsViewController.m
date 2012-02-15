@@ -2,7 +2,6 @@
 #import "CheckInDetailsViewController.h"
 #import "SVProgressHUD.h"
 #import "AppDelegate.h"
-#import "AFJSONRequestOperation.h"
 #import "SignupController.h"
 #import "UserTableViewCell.h"
 #import "WebViewController.h"
@@ -67,9 +66,7 @@ NSMutableArray *usersCheckedIn;
 
     
     self.tableView.backgroundColor = [UIColor colorWithRed:(0xF1 / 255.0) green:(0xF1 / 255.0) blue:(0xF1 / 255.0) alpha:1.0];
-    
-//    [UIColor colorWithRed:(0x79 / 255.0) green:(0x79 / 255.0) blue:(0x79 / 255.0) alpha:1.0];
-    
+
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 290)];
 
     UIView *locationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerView.frame.size.width, 70)];
@@ -128,7 +125,6 @@ NSMutableArray *usersCheckedIn;
     statusTextField.font = [UIFont systemFontOfSize:13.0];
     statusTextField.placeholder = @"What are you available to do?";
     statusTextField.backgroundColor = [UIColor whiteColor];
-//    statusTextField.textAlignment = UITextAlignmentCenter;
     statusTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     
     statusTextField.keyboardType = UIKeyboardTypeDefault;
@@ -248,10 +244,6 @@ NSMutableArray *usersCheckedIn;
     
     NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@&status=%@&venue_name=%@", kCandPWebServiceUrl, place.lat, place.lng, checkInTime, checkOutTime, foursquareID, statusText, venueName];
 
-//    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@&status=%@", @"http://dev.worklist.net/~emcro/candpweb/web/", place.lat, place.lng, checkInTime, checkOutTime, foursquareID, [statusTextField.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-
-//    NSLog(@"string: %@", urlString);
-
     NSURL *locationURL = [NSURL URLWithString:urlString];
     
     dispatch_async(dispatch_get_global_queue(
@@ -321,9 +313,6 @@ NSMutableArray *usersCheckedIn;
     }
     else {
         usersCheckedIn = [json objectForKey:@"usersAtCheckin"];
-//        NSLog(@"json: %@", json);
-//        NSLog(@"usersCheckedIn: %@", usersCheckedIn);
-
         [self.tableView reloadData];
     }
 }
@@ -365,7 +354,6 @@ NSMutableArray *usersCheckedIn;
 
     // Resize label, then make full width to be centered correctly
     [headerLabel sizeToFit];
-//    headerLabel.center = CGPointMake(customView.frame.size.width / 2, customView.frame.size.height / 2);
 	headerLabel.frame = CGRectMake(0.0, 0.0, customView.frame.size.width, headerLabel.frame.size.height);
 
 	[customView addSubview:headerLabel];
@@ -417,9 +405,6 @@ NSMutableArray *usersCheckedIn;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
     
-//    cell.backgroundColor = [UIColor whiteColor];
-//    cell.backgroundView.backgroundColor = [UIColor whiteColor];
-
     cell.nicknameLabel.text = [[usersCheckedIn objectAtIndex:indexPath.row] objectForKey:@"nickname"];
     cell.skillsLabel.text = [[usersCheckedIn objectAtIndex:indexPath.row] objectForKey:@"status_text"];
 

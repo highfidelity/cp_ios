@@ -20,10 +20,6 @@
 				nickname:(NSString*)nickname
 			  completion:(void (^)(NSError *error, id JSON))completion;
 
--(void)handleFacebookCreate:(NSString*)username
-				 facebookId:(NSString*)facebookId
-				 completion:(void (^)(NSError *error, id JSON))completion;
-
 -(void)finishLogin;
 
 @end

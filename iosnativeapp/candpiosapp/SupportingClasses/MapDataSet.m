@@ -56,13 +56,11 @@ static NSOperationQueue *sMapQueue = nil;
 			MapDataSet *dataSet = [[MapDataSet alloc]initFromJson:JSON];
 			dataSet.regionCovered = mapRect;
 			dataSet.dateLoaded = [NSDate date];
-			//dataSet.regionCovered = [[CLRegion alloc]initCircularRegionWithCenter:currentLocation radius:radiusInKm identifier:nil];
 			
 			if(completion)
 				completion(dataSet, nil); 
 			
 		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-			//int z = 99;
             NSLog(@"%@", error);
 			if(completion)
 				completion(nil, error);

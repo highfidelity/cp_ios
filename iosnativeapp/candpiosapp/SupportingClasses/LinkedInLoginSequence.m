@@ -1,11 +1,6 @@
 #import "LinkedInLoginSequence.h"
 #import "AppDelegate.h"
 #import "AFNetworking.h"
-#import "Facebook+Blocks.h"
-#import "NSMutableURLRequestAdditions.h"
-#import "MyWebTabController.h"
-#import "EmailLoginSequence.h"
-#import "SVProgressHUD.h"
 #import "FlurryAnalytics.h"
 #import "ModalWebViewController.h"
 
@@ -45,15 +40,13 @@
     
     // TODO: Probably need to remove requestToken here and use the one passed
     //        OAToken *requestToken = [[OAToken alloc] initWithKey:token secret:nil];
-    
+
     OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://api.linkedin.com/uas/oauth/accessToken"]
                                                                    consumer:consumer
                                                                       token:requestToken
                                                                       realm:@"http://api.linkedin.com/"
                                                                    verifier:verifier
                                                           signatureProvider:nil];
-    
-    //        request.verifier = verifier;
     
     [request setHTTPMethod:@"POST"];
     
@@ -63,8 +56,7 @@
                          delegate:self
                 didFinishSelector:@selector(requestTokenTicket:didFinishWithAccessToken:)
                   didFailSelector:@selector(requestTokenTicket:didFailWithError:)];
-    
-    //        [self.navController.visibleViewController dismissModalViewControllerAnimated:YES];
+
     NSLog(@"Dismiss window");
 
     
@@ -81,20 +73,7 @@
 	
 	// set a liberal cookie policy
 	[[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy: NSHTTPCookieAcceptPolicyAlways];
-    
 	[[AppDelegate instance] logoutEverything];
-
-    /*
-	if (![[AppDelegate instance].facebook isSessionValid]) {
-		[[AppDelegate instance].facebook authorize:[NSArray arrayWithObjects:@"offline_access", nil]];
-	}
-	else
-	{
-		// we have a facebook session, so just get our info & set it with c&p
-		[self handleResponseFromLinkedInLogin];
-	}
-     */
-    
     [self linkedInLogin];
 }
 
@@ -137,14 +116,6 @@
 
         [self.mapViewController.navigationController presentModalViewController:myWebView animated:YES];
     }
-    else {
-        /* For debugging
-        NSString *responseBody = [[NSString alloc] initWithData:data
-                                                       encoding:NSUTF8StringEncoding];
-
-        NSLog(@"data: %@", responseBody);
-        */
-    }
 }
 
 - (void)requestTokenTicket:(OAServiceTicket *)ticket didFinishWithAccessToken:(NSData *)data {    
@@ -177,8 +148,6 @@
         [[NSUserDefaults standardUserDefaults] setObject:secret forKey:@"linkedin_secret"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-//        [singleton addService:@"LinkedIn" id:2 accessToken:token accessSecret:secret expirationDate:nil];
-        
         [self loadLinkedInConnections];
     }
 }
@@ -195,7 +164,6 @@
     NSLog(@"Final token: %@", self.requestToken);
     
     NSURL *url = [NSURL URLWithString:@"https://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,site-standard-profile-request)"];
-//    NSURL *url = [NSURL URLWithString:@"https://api.linkedin.com/v1/people/~/connections"];
     
     OAMutableURLRequest *request = 
     [[OAMutableURLRequest alloc] initWithURL:url
@@ -265,9 +233,6 @@
 
 	NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-#if DEBUG
-//        NSLog(@"JSON Returned for user resume: %@", JSON);
-#endif
 
         NSInteger succeeded = [[JSON objectForKey:@"succeeded"] intValue];
         NSLog(@"success: %d", succeeded);
@@ -275,12 +240,7 @@
 		if(succeeded == 0)
 		{
 			NSString *outerErrorMessage = [JSON objectForKey:@"message"];// often just 'error'
-//			NSString *serverErrorMessage;
-            
-//            if ([JSON objectForKey:@"params"]) {
-//                serverErrorMessage = [[JSON objectForKey:@"params"] objectForKey:@"message"];
-//            }
-            
+
 			NSString *errorMessage = [NSString stringWithFormat:@"The error was:%@", outerErrorMessage];
 			// we get here if we failed to login
 			UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unable to log in" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];

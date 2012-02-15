@@ -12,6 +12,5 @@
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 
 -(IBAction)goBack:(id)sender;
-//-(IBAction)buttonPressed:(id)sender;
 
 @end

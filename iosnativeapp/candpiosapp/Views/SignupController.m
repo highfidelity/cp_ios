@@ -84,10 +84,6 @@
 	// include Forgot option (but not create for now)
 	EmailLoginSequence *emailLogin = [[EmailLoginSequence alloc]init ];
 	[emailLogin initiateLogin:self];
-	//[emailLogin handleEmailCreate:@"david@mindfulbear.com" password:@"mindmind2012" nickname:@"DavidTest2012" ];
-	//[emailLogin handleForgotEmailLogin:@"dmojdehi@mac.com"];
-	//[emailLogin handleEmailLogin: @"candptest+5@gmail.com" password:@"abc123"];
-	//[emailLogin handleEmailLogin: @"dmojdehi@mac.com" password:@""];
 	[AppDelegate instance].loginSequence = emailLogin;
 	
 }

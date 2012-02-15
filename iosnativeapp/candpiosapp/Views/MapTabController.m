@@ -55,15 +55,6 @@
 
 #pragma mark - View lifecycle
 
-
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
-{
-}
-*/
-
-
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
@@ -333,13 +324,12 @@
 		pin.canShowCallout = YES;
 		
 		// make the left callout image view
-		UIImageView *leftCallout = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
-		
+		UIImageView *leftCallout = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
 		leftCallout.contentMode = UIViewContentModeScaleAspectFill;
-		if(candpanno.imageUrl)
+		if (candpanno.imageUrl)
 		{
 			[leftCallout setImageWithURL:[NSURL URLWithString:candpanno.imageUrl]
-						   placeholderImage:[UIImage imageNamed:@"63-runner.png"]];
+                        placeholderImage:[UIImage imageNamed:@"63-runner.png"]];
 		}
 		else
 		{

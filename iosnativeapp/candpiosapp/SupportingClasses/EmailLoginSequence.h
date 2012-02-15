@@ -23,8 +23,5 @@
 -(void)initiateAccountCreation:(UIViewController*)hostController;
 
 -(void)handleEmailLogin:(NSString*)username password:(NSString*)password;
--(void)handleForgotEmailLogin:(NSString*)username;
-
-
 
 @end

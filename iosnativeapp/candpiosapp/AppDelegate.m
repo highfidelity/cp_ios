@@ -8,10 +8,7 @@
 
 #import "AppDelegate.h"
 #import "FacebookLoginSequence.h"
-#import "NSMutableURLRequestAdditions.h"
 #import "AFHTTPClient.h"
-#import "AFHTTPRequestOperation.h"
-#import "RootNavigationController.h"
 #import "CheckInListTableViewController.h"
 #import "FlurryAnalytics.h"
 #import "OAuthConsumer.h"
@@ -250,14 +247,7 @@
 		[(FacebookLoginSequence*) loginSequence handleResponseFromFacebookLogin];
 	
 }
-- (void)fbDidLogout
-{
-	// we should have already cleared these out
-//    settings.facebookAccessToken = nil ;
-//    settings.facebookExpirationDate = nil ;
-//	[self saveSettings];
-	
-}
+
 ////////////////////////////////////////////////////////////////////////////////////
 
 -(void)logoutEverything

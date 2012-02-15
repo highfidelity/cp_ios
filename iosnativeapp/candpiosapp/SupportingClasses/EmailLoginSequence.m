@@ -9,9 +9,6 @@
 #import "EmailLoginSequence.h"
 #import "AppDelegate.h"
 #import "AFNetworking.h"
-#import "AFJSONRequestOperation.h"
-#import "NSMutableURLRequestAdditions.h"
-#import "MyWebTabController.h"
 #import "CreateEmailAccountController.h"
 #import "TableCellHelper.h"
 #import "SVProgressHUD.h"
@@ -357,6 +354,7 @@
 	//NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
 	AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
 		NSDictionary *jsonDict = json;
+
 #if DEBUG
 		NSLog(@"Result code: %d (%@)", [response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]] );
 		
@@ -373,144 +371,6 @@
 			
 		}];
 #endif
-		
-		// Successful login will return:
-		//		{
-		//			message = "Logged in";
-		//			params =     {
-		//				user =         {
-		//					"SMS_forward_chat" = 1;
-		//					"SMS_forward_mission_comments" = 1;
-		//					"SMS_forward_new_missions" = 0;
-		//					"SMS_forward_offers" = 1;
-		//					"SMS_forward_payments" = 1;
-		//					"SMS_grant_code_datetime" = "0000-00-00 00:00:00";
-		//					"SMS_grant_confirm_code" = "";
-		//					about = "";
-		//					active = Y;
-		//					"audio_anyonechat" = 0;
-		//					"audio_commentorbidchat" = 1;
-		//					"audio_levelup" = 1;
-		//					"audio_matchingmission" = 1;
-		//					"audio_newmission" = 1;
-		//					"audio_offerchanged" = 1;
-		//					"audio_one2onechat" = 1;
-		//					"audio_paidchat" = 1;
-		//					"audio_pingchat" = 1;
-		//					awesomeness = "0.00000";
-		//					balance = "<null>";
-		//					"blocked_until" = "<null>";
-		//					"can_delete_missions" = "<null>";
-		//					"can_purchase_currency" = 1;
-		//					"can_verify_id" = 0;
-		//					"confirm_flag" = Y;
-		//					"confirm_string" = "<null>";
-		//					country = "<null>";
-		//					"deletion_reason" = "<null>";
-		//					email = "<null>";
-		//					"email_forward_chat" = 1;
-		//					"email_forward_iwant_keywords" = "<null>";
-		//					"email_forward_iwill_keywords" = "<null>";
-		//					"email_forward_mission_comments" = 1;
-		//					"email_forward_new_iwant_missions_category" = "-1";
-		//					"email_forward_new_iwill_missions_category" = "-1";
-		//					"email_forward_new_missions" = 0;
-		//					"email_forward_offers" = 1;
-		//					"email_forward_payments" = 1;
-		//					"email_news_and_updates" = 1;
-		//					"email_weekly_updates" = 1;
-		//					"fb_connect" = "<null>";
-		//					"fb_id" = "<null>";
-		//					"forgot_expire" = "0000-00-00 00:00:00";
-		//					"forgot_hash" = "<null>";
-		//					"gift_count" = 0;
-		//					"got_SMS_grant" = "<null>";
-		//					id = 6249;
-		//					"int_code" = "<null>";
-		//					"inviter_id" = 0;
-		//					"is_admin" = "<null>";
-		//					"join_date" = "2012-01-10 20:08:37";
-		//					"last_ip_address" = "<null>";
-		//					"last_location_update" = "0000-00-00 00:00:00";
-		//					"last_status_text_update" = "0000-00-00 00:00:00";
-		//					lat = "0.000000";
-		//					"linkedin_connect" = "<null>";
-		//					"linkedin_id" = "<null>";
-		//					"linkedin_public_profile_url" = "<null>";
-		//					lng = "0.000000";
-		//					"logged_in" = 1;
-		//					"master_link" =             {
-		//						"affected_rows" = "<null>";
-		//						"client_info" = "<null>";
-		//						"client_version" = "<null>";
-		//						"connect_errno" = "<null>";
-		//						"connect_error" = "<null>";
-		//						errno = "<null>";
-		//						error = "<null>";
-		//						"field_count" = "<null>";
-		//						"host_info" = "<null>";
-		//						info = "<null>";
-		//						"insert_id" = "<null>";
-		//						"protocol_version" = "<null>";
-		//						"server_info" = "<null>";
-		//						"server_version" = "<null>";
-		//						sqlstate = "<null>";
-		//						"thread_id" = "<null>";
-		//						"warning_count" = "<null>";
-		//					};
-		//					nickname = DavidTest2012;
-		//					notCol =             {
-		//						join =                 {
-		//							userSkills =                     {
-		//								joinFields = "rel_users_skillsskill_id AS skillsList ";
-		//								joinSQL = " LEFT JOIN rel_users_skills ON users.id = rel_users_skillsuser_id ";
-		//								useIt = 0;
-		//							};
-		//						};
-		//					};
-		//					password = "<null>";
-		//					phone = "<null>";
-		//					"phone_confirmed" = N;
-		//					photo = 0;
-		//					"photo_original" = 0;
-		//					"photo_thumbnail" = 0;
-		//					"profile_video" = "<null>";
-		//					provider = "<null>";
-		//					"slave_link" =             {
-		//						"affected_rows" = "<null>";
-		//						"client_info" = "<null>";
-		//						"client_version" = "<null>";
-		//						"connect_errno" = "<null>";
-		//						"connect_error" = "<null>";
-		//						errno = "<null>";
-		//						error = "<null>";
-		//						"field_count" = "<null>";
-		//						"host_info" = "<null>";
-		//						info = "<null>";
-		//						"insert_id" = "<null>";
-		//						"protocol_version" = "<null>";
-		//						"server_info" = "<null>";
-		//						"server_version" = "<null>";
-		//						sqlstate = "<null>";
-		//						"thread_id" = "<null>";
-		//						"warning_count" = "<null>";
-		//					};
-		//					"sms_forward_iwant_keywords" = "<null>";
-		//					"sms_forward_iwill_keywords" = "<null>";
-		//					"sms_forward_new_iwant_missions_category" = "-1";
-		//					"sms_forward_new_iwill_missions_category" = "-1";
-		//					smsaddr = "<null>";
-		//					"special_code" = "<null>";
-		//					status = Ready;
-		//					"status_text" = "";
-		//					"table_name" = users;
-		//					"tos_accepted" = "2012-01-10 20:08:37";
-		//					"url_video" = "";
-		//					"video_chat" = 1;
-		//					"visual_notification" = 1;
-		//					"zoom_level" = 0;
-		//				};
-		
 		[SVProgressHUD dismiss];
 
 		// currently, we only a success=0 field if it fails
@@ -553,21 +413,16 @@
 			[self.mapViewController.navigationController popToRootViewControllerAnimated:YES];
 		}
 		
-		//[self handleResponseFromCandP:json];
-		
 	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
 		// handle error
 #if DEBUG
 		NSLog(@"AFJSONRequestOperation error: %@", [error localizedDescription] );
 #endif
 		[SVProgressHUD dismissWithError:[error localizedDescription]];
-
-		
 	} ];
-	
-	// 
+
 	NSBlockOperation *dumpContents = [NSBlockOperation blockOperationWithBlock:^{
-		// 
+
 #if DEBUG
 		NSString *responseString = postOperation.responseString;
 		NSLog(@"Response was:");
@@ -579,67 +434,7 @@
 	[dumpContents addDependency:postOperation];
 	[[NSOperationQueue mainQueue]  addOperation:postOperation];
 	[[NSOperationQueue mainQueue]  addOperation:dumpContents];
-		
-	
-}
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
--(void)handleForgotEmailLogin:(NSString*)username
-{
-	
-	// kick off the request to the candp server
-	NSMutableDictionary *loginParams = [NSMutableDictionary dictionary];
-	[loginParams setObject:@"forgot" forKey:@"action"];
-	[loginParams setObject:username forKey:@"username"];
-	//[loginParams setObject:@"json" forKey:@"type"];
-	
-	
-	NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
-	//NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
-	AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
-		NSDictionary *jsonDict = json;
-		NSLog(@"Result code: %d (%@)", [response statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[response statusCode]] );
-		
-		
-		NSLog(@"Header fields:" );
-		[[response allHeaderFields] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-			NSLog(@"     %@ : '%@'", key, obj );
-			
-		}];
-		
-		NSLog(@"Json fields:" );
-		[jsonDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-			NSLog(@"     %@ : '%@'", key, obj );
-			
-		}];
-		
-		//[self handleResponseFromCandP:json];
-		
-	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-		// handle error
-		NSLog(@"AFJSONRequestOperation error: %@", [error localizedDescription] );
-		
-	} ];
-	
-	// 
-	NSBlockOperation *dumpContents = [NSBlockOperation blockOperationWithBlock:^{
-		// 
-		NSString *responseString = postOperation.responseString;
-		NSLog(@"Response was:");
-		NSLog(@"-----------------------------------------------");
-		NSLog(@"%@", responseString);
-		NSLog(@"-----------------------------------------------");
-	}];
-	[dumpContents addDependency:postOperation];
-	[[NSOperationQueue mainQueue]  addOperation:postOperation];
-	[[NSOperationQueue mainQueue]  addOperation:dumpContents];
-	
-
-}
-
--(void)handleResponseFromCandP:(NSDictionary*)json
-{
-	
 }
 
 @end

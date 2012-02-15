@@ -7,7 +7,6 @@
 //
 
 #import "MyWebTabController.h"
-#import "NSMutableURLRequestAdditions.h"
 
 @implementation MyWebTabController
 @synthesize webView;
