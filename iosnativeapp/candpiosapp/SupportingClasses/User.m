@@ -35,6 +35,7 @@
 @synthesize listingsAsAgent = _listingsAsAgent;
 @synthesize workInformation = _workInformation;
 @synthesize educationInformation  = _educationInformation;
+@synthesize jobTitle;
 
 -(id)init
 {
@@ -67,6 +68,10 @@
         self.nickname = [JSON objectForKey:@"nickname"];
         self.status = [JSON objectForKey:@"status_text"];
         self.bio = [JSON objectForKey:@"bio"];
+        
+        if ([[JSON objectForKey:@"job_title"] isKindOfClass:[NSString class]]) {
+            self.jobTitle = [JSON objectForKey:@"job_title"];
+        }
         // set the user's photo url        
         self.urlPhoto = [JSON objectForKey:@"urlPhoto"];
         self.location = CLLocationCoordinate2DMake(

@@ -23,6 +23,7 @@
 @property (nonatomic, weak) IBOutlet UIImageView *cardImage;
 @property (nonatomic, weak) IBOutlet UILabel *cardStatus;
 @property (nonatomic, weak) IBOutlet UILabel *cardNickname;
+@property (nonatomic, weak) IBOutlet UILabel *cardJobPosition;
 @property (nonatomic, weak) IBOutlet UIView *venueView;
 @property (nonatomic, weak) IBOutlet UIImageView *venueIcon;
 @property (nonatomic, weak) IBOutlet UILabel *venueName;
@@ -81,7 +82,7 @@
 @synthesize loadingPt1 = _loadingPt1;
 @synthesize loadingPt2 = _loadingPt2;
 @synthesize loadingPt3 = _loadingPt3;
-
+@synthesize cardJobPosition;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -190,7 +191,8 @@
     // get a user object with resume data
     [self.user loadUserResumeData:^(User *user, NSError *error) {
         if (!error) {
-            self.user = user;  
+            self.user = user;
+            self.cardJobPosition.text = user.jobTitle;
             // set the card image to the user's profile image
             [self.cardImage  setImageWithURL:self.user.urlPhoto];
                         
