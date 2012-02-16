@@ -24,9 +24,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    UIView *checkedInButton = [self.navigationController.view viewWithTag:901];
-    checkedInButton.userInteractionEnabled = NO;
-    checkedInButton.alpha = 0;
+    [[AppDelegate instance] hideGoAndCheckInButtons];
 }
 
 - (void)didReceiveMemoryWarning

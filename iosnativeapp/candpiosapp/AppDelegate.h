@@ -63,5 +63,7 @@
 -(void)saveSettings;
 +(AppDelegate*)instance;
 -(void)logoutEverything;
+-(void)hideGoAndCheckInButtons;
+-(void)showGoAndCheckInButtons;
 void uncaughtExceptionHandler(NSException *exception);
 @end

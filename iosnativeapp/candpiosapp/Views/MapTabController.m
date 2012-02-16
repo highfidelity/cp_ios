@@ -130,15 +130,10 @@
 		[SVProgressHUD showWithStatus:@"Loading..."];
 		hasShownLoadingScreen = true;
 	}
+    
+    [[AppDelegate instance] showGoAndCheckInButtons];
 
-    // Re-show the Checked In button on load if currently hidden
-    UIView *checkedInButton = [self.navigationController.view viewWithTag:901];
-    if (checkedInButton.alpha == 0) {
-        checkedInButton.userInteractionEnabled = YES;
-        checkedInButton.alpha = 1;
-    }
-	
-	[self updateLoginButton];    
+    [self updateLoginButton];    
     [self refreshLocationsIfNeeded];
 }
 

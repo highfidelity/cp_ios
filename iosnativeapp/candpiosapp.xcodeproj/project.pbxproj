@@ -54,17 +54,18 @@
 		32FF63DD14BBE71B00E99F55 /* CheckInDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FF63DB14BBE71B00E99F55 /* CheckInDetailsViewController.xib */; };
 		32FF63E414BBFAE300E99F55 /* CPPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF63E314BBFAE300E99F55 /* CPPlace.m */; };
 		53319F9E14E066DE00A8978E /* checked-in@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53319F9D14E066DE00A8978E /* checked-in@2x~iphone.png */; };
-		53319FA114E066E800A8978E /* map-refresh@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53319FA014E066E800A8978E /* map-refresh@2x~iphone.png */; };
-		53319FA314E066EF00A8978E /* map-locate@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53319FA214E066EF00A8978E /* map-locate@2x~iphone.png */; };
 		5390190514D9D9AF0052100B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390190414D9D9AF0052100B /* User.m */; };
 		5390190E14DA0D850052100B /* paper-texture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5390190D14DA0D850052100B /* paper-texture.jpg */; };
 		5396E0D814E466C200E33E0E /* LeagueGothic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5396E0D714E466C200E33E0E /* LeagueGothic.otf */; };
 		53A5419E14DB4FCA0060D0DA /* checked-in~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A5419D14DB4FCA0060D0DA /* checked-in~iphone.png */; };
-		53A541A114DB50820060D0DA /* RootNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A541A014DB50820060D0DA /* RootNavigationController.m */; };
-		53A541A814DB779E0060D0DA /* map-locate~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A541A614DB779E0060D0DA /* map-locate~iphone.png */; };
-		53A541A914DB779E0060D0DA /* map-refresh~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A541A714DB779E0060D0DA /* map-refresh~iphone.png */; };
 		53BC266D14E4624200D16D4B /* others-at-venue@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BC266B14E4624200D16D4B /* others-at-venue@2x~iphone.png */; };
 		53BC266E14E4624200D16D4B /* others-at-venue~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BC266C14E4624200D16D4B /* others-at-venue~iphone.png */; };
+		53DC035C14EDA15B0064D880 /* map-locate@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DC035814EDA15B0064D880 /* map-locate@2x~iphone.png */; };
+		53DC035D14EDA15B0064D880 /* map-locate~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DC035914EDA15B0064D880 /* map-locate~iphone.png */; };
+		53DC035E14EDA15B0064D880 /* map-refresh@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DC035A14EDA15B0064D880 /* map-refresh@2x~iphone.png */; };
+		53DC035F14EDA15B0064D880 /* map-refresh~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DC035B14EDA15B0064D880 /* map-refresh~iphone.png */; };
+		53DC036214EDA16F0064D880 /* go-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DC036014EDA16F0064D880 /* go-button@2x~iphone.png */; };
+		53DC036314EDA16F0064D880 /* go-button~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DC036114EDA16F0064D880 /* go-button~iphone.png */; };
 		53DC695F14E48DB700D64175 /* verified-facebook@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DC695B14E48DB700D64175 /* verified-facebook@2x~iphone.png */; };
 		53DC696014E48DB700D64175 /* verified-facebook~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DC695C14E48DB700D64175 /* verified-facebook~iphone.png */; };
 		53DC696114E48DB700D64175 /* verified-linked-in@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DC695D14E48DB700D64175 /* verified-linked-in@2x~iphone.png */; };
@@ -307,19 +308,19 @@
 		32FF63E214BBFAE300E99F55 /* CPPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPlace.h; path = SupportingClasses/CPPlace.h; sourceTree = "<group>"; };
 		32FF63E314BBFAE300E99F55 /* CPPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPlace.m; path = SupportingClasses/CPPlace.m; sourceTree = "<group>"; };
 		53319F9D14E066DE00A8978E /* checked-in@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked-in@2x~iphone.png"; sourceTree = "<group>"; };
-		53319FA014E066E800A8978E /* map-refresh@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-refresh@2x~iphone.png"; sourceTree = "<group>"; };
-		53319FA214E066EF00A8978E /* map-locate@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-locate@2x~iphone.png"; sourceTree = "<group>"; };
 		5390190314D9D9AF0052100B /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = SupportingClasses/User.h; sourceTree = "<group>"; };
 		5390190414D9D9AF0052100B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = SupportingClasses/User.m; sourceTree = "<group>"; };
 		5390190D14DA0D850052100B /* paper-texture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "paper-texture.jpg"; sourceTree = "<group>"; };
 		5396E0D714E466C200E33E0E /* LeagueGothic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LeagueGothic.otf; sourceTree = "<group>"; };
 		53A5419D14DB4FCA0060D0DA /* checked-in~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked-in~iphone.png"; sourceTree = "<group>"; };
-		53A5419F14DB50820060D0DA /* RootNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootNavigationController.h; path = candpiosapp/RootNavigationController.h; sourceTree = SOURCE_ROOT; };
-		53A541A014DB50820060D0DA /* RootNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootNavigationController.m; path = candpiosapp/RootNavigationController.m; sourceTree = SOURCE_ROOT; };
-		53A541A614DB779E0060D0DA /* map-locate~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-locate~iphone.png"; sourceTree = "<group>"; };
-		53A541A714DB779E0060D0DA /* map-refresh~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-refresh~iphone.png"; sourceTree = "<group>"; };
 		53BC266B14E4624200D16D4B /* others-at-venue@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "others-at-venue@2x~iphone.png"; sourceTree = "<group>"; };
 		53BC266C14E4624200D16D4B /* others-at-venue~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "others-at-venue~iphone.png"; sourceTree = "<group>"; };
+		53DC035814EDA15B0064D880 /* map-locate@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-locate@2x~iphone.png"; sourceTree = "<group>"; };
+		53DC035914EDA15B0064D880 /* map-locate~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-locate~iphone.png"; sourceTree = "<group>"; };
+		53DC035A14EDA15B0064D880 /* map-refresh@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-refresh@2x~iphone.png"; sourceTree = "<group>"; };
+		53DC035B14EDA15B0064D880 /* map-refresh~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-refresh~iphone.png"; sourceTree = "<group>"; };
+		53DC036014EDA16F0064D880 /* go-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "go-button@2x~iphone.png"; sourceTree = "<group>"; };
+		53DC036114EDA16F0064D880 /* go-button~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "go-button~iphone.png"; sourceTree = "<group>"; };
 		53DC695B14E48DB700D64175 /* verified-facebook@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "verified-facebook@2x~iphone.png"; sourceTree = "<group>"; };
 		53DC695C14E48DB700D64175 /* verified-facebook~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "verified-facebook~iphone.png"; sourceTree = "<group>"; };
 		53DC695D14E48DB700D64175 /* verified-linked-in@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "verified-linked-in@2x~iphone.png"; sourceTree = "<group>"; };
@@ -878,8 +879,6 @@
 				871EFB1A14AE9C820030658B /* AppDelegate.m */,
 				87F657F314B0D2D000F4AB6C /* images */,
 				871EFB1C14AE9C820030658B /* MainStoryboard_iPhone.storyboard */,
-				53A5419F14DB50820060D0DA /* RootNavigationController.h */,
-				53A541A014DB50820060D0DA /* RootNavigationController.m */,
 				871EFB1114AE9C820030658B /* Supporting Files */,
 				87F5EF4C14AFAAC500EB83F7 /* SupportingClasses */,
 				6F3651DA14EAE8BB00E9322B /* FaceToFace */,
@@ -1128,6 +1127,12 @@
 		87F657F314B0D2D000F4AB6C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				53DC036014EDA16F0064D880 /* go-button@2x~iphone.png */,
+				53DC036114EDA16F0064D880 /* go-button~iphone.png */,
+				53DC035814EDA15B0064D880 /* map-locate@2x~iphone.png */,
+				53DC035914EDA15B0064D880 /* map-locate~iphone.png */,
+				53DC035A14EDA15B0064D880 /* map-refresh@2x~iphone.png */,
+				53DC035B14EDA15B0064D880 /* map-refresh~iphone.png */,
 				87F657F414B0D2D100F4AB6C /* 63-runner.png */,
 				53FB9E4514E0A81300F4CC7F /* available-for-icon@2x~iphone.png */,
 				53FB9E4614E0A81300F4CC7F /* available-for-icon~iphone.png */,
@@ -1147,12 +1152,8 @@
 				872E1C8814B28DBD00408DC6 /* Default.png */,
 				872E1C8514B28DB900408DC6 /* Default@2x.png */,
 				E402DB6214D43C1700BC82E8 /* defaultAvatar50.png */,
-				53319FA214E066EF00A8978E /* map-locate@2x~iphone.png */,
-				53A541A614DB779E0060D0DA /* map-locate~iphone.png */,
 				53FB9E3314E089BC00F4CC7F /* map-marker@2x~iphone.png */,
 				53FB9E3414E089BC00F4CC7F /* map-marker~iphone.png */,
-				53319FA014E066E800A8978E /* map-refresh@2x~iphone.png */,
-				53A541A714DB779E0060D0DA /* map-refresh~iphone.png */,
 				53BC266B14E4624200D16D4B /* others-at-venue@2x~iphone.png */,
 				53BC266C14E4624200D16D4B /* others-at-venue~iphone.png */,
 				5390190D14DA0D850052100B /* paper-texture.jpg */,
@@ -1264,11 +1265,7 @@
 				3267F66E14D919A700BFFBAA /* AirshipConfig.plist in Resources */,
 				5390190E14DA0D850052100B /* paper-texture.jpg in Resources */,
 				53A5419E14DB4FCA0060D0DA /* checked-in~iphone.png in Resources */,
-				53A541A814DB779E0060D0DA /* map-locate~iphone.png in Resources */,
-				53A541A914DB779E0060D0DA /* map-refresh~iphone.png in Resources */,
 				53319F9E14E066DE00A8978E /* checked-in@2x~iphone.png in Resources */,
-				53319FA114E066E800A8978E /* map-refresh@2x~iphone.png in Resources */,
-				53319FA314E066EF00A8978E /* map-locate@2x~iphone.png in Resources */,
 				53FB9E3514E089BC00F4CC7F /* map-marker@2x~iphone.png in Resources */,
 				53FB9E3614E089BC00F4CC7F /* map-marker~iphone.png in Resources */,
 				53FB9E4914E0A81300F4CC7F /* available-for-icon@2x~iphone.png in Resources */,
@@ -1285,6 +1282,12 @@
 				53DC696014E48DB700D64175 /* verified-facebook~iphone.png in Resources */,
 				53DC696114E48DB700D64175 /* verified-linked-in@2x~iphone.png in Resources */,
 				53DC696214E48DB700D64175 /* verified-linked-in~iphone.png in Resources */,
+				53DC035C14EDA15B0064D880 /* map-locate@2x~iphone.png in Resources */,
+				53DC035D14EDA15B0064D880 /* map-locate~iphone.png in Resources */,
+				53DC035E14EDA15B0064D880 /* map-refresh@2x~iphone.png in Resources */,
+				53DC035F14EDA15B0064D880 /* map-refresh~iphone.png in Resources */,
+				53DC036214EDA16F0064D880 /* go-button@2x~iphone.png in Resources */,
+				53DC036314EDA16F0064D880 /* go-button~iphone.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1381,7 +1384,6 @@
 				875CB8F414C5DC8C00AD4F6E /* MapDataSet.m in Sources */,
 				6F5EB26C14DB51E40000294E /* OneOnOneChatViewController.m in Sources */,
 				5390190514D9D9AF0052100B /* User.m in Sources */,
-				53A541A114DB50820060D0DA /* RootNavigationController.m in Sources */,
 				53FB9E4414E099BB00F4CC7F /* LocalizedDistanceCalculator.m in Sources */,
 				53FB9E4F14E0AE4600F4CC7F /* FoursquareAPIRequest.m in Sources */,
 				6FEEDFFC14E103F400861CA1 /* CPapi.m in Sources */,
