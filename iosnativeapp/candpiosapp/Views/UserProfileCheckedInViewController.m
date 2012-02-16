@@ -137,17 +137,17 @@
     self.resumeWebView.opaque = NO;
     self.resumeWebView.backgroundColor = paper;
     
-    // shadow on business card and resume
-    CGColorRef shadowColor = [[UIColor blackColor] CGColor];
-    CGSize shadowOffset = CGSizeMake(2,2);
-    double shadowRadius = 3;
-    double shadowOpacity = 0.38;
-    for (UIView *needsShadow in [NSArray arrayWithObjects:self.userCard, self.resumeView, nil]) {
-        needsShadow.layer.shadowColor = shadowColor;
-        needsShadow.layer.shadowOffset = shadowOffset;
-        needsShadow.layer.shadowRadius = shadowRadius;
-        needsShadow.layer.shadowOpacity = shadowOpacity;
-    }   
+//    // shadow on business card and resume
+//    CGColorRef shadowColor = [[UIColor blackColor] CGColor];
+//    CGSize shadowOffset = CGSizeMake(2,2);
+//    double shadowRadius = 3;
+//    double shadowOpacity = 0.38;
+//    for (UIView *needsShadow in [NSArray arrayWithObjects:self.userCard, self.resumeView, nil]) {
+//        needsShadow.layer.shadowColor = shadowColor;
+//        needsShadow.layer.shadowOffset = shadowOffset;
+//        needsShadow.layer.shadowRadius = shadowRadius;
+//        needsShadow.layer.shadowOpacity = shadowOpacity;
+//    }   
     
     // make an MKCoordinate region for the zoom level on the map
     MKCoordinateRegion region = MKCoordinateRegionMake(self.user.location, MKCoordinateSpanMake(0.005, 0.005));
