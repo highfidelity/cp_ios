@@ -12,21 +12,21 @@
 		3222126A14E1E17B00C5471B /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222124314E1E17B00C5471B /* NSString+URLEncoding.m */; };
 		3222126B14E1E17B00C5471B /* NSURL+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222124514E1E17B00C5471B /* NSURL+Base.m */; };
 		3222126C14E1E17B00C5471B /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 3222124714E1E17B00C5471B /* Base64Transcoder.c */; };
-		3222126D14E1E17B00C5471B /* hmac.c in Sources */ = {isa = PBXBuildFile; fileRef = 3222124914E1E17B00C5471B /* hmac.c */; };
+		3222126D14E1E17B00C5471B /* hmac.c in Sources */ = {isa = PBXBuildFile; fileRef = 3222124914E1E17B00C5471B /* hmac.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3222126E14E1E17B00C5471B /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 3222124B14E1E17B00C5471B /* sha1.c */; };
 		3222126F14E1E17B00C5471B /* OAAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222124E14E1E17B00C5471B /* OAAttachment.m */; };
-		3222127014E1E17B00C5471B /* OACall.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222125014E1E17B00C5471B /* OACall.m */; };
+		3222127014E1E17B00C5471B /* OACall.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222125014E1E17B00C5471B /* OACall.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3222127114E1E17B00C5471B /* OAConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222125214E1E17B00C5471B /* OAConsumer.m */; };
-		3222127214E1E17B00C5471B /* OADataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222125414E1E17B00C5471B /* OADataFetcher.m */; };
+		3222127214E1E17B00C5471B /* OADataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222125414E1E17B00C5471B /* OADataFetcher.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3222127314E1E17B00C5471B /* OAHMAC_SHA1SignatureProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222125614E1E17B00C5471B /* OAHMAC_SHA1SignatureProvider.m */; };
-		3222127414E1E17B00C5471B /* OAMutableURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222125814E1E17B00C5471B /* OAMutableURLRequest.m */; };
+		3222127414E1E17B00C5471B /* OAMutableURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222125814E1E17B00C5471B /* OAMutableURLRequest.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3222127514E1E17B00C5471B /* OAPlaintextSignatureProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222125A14E1E17B00C5471B /* OAPlaintextSignatureProvider.m */; };
 		3222127614E1E17B00C5471B /* OAProblem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222125C14E1E17B00C5471B /* OAProblem.m */; };
 		3222127714E1E17B00C5471B /* OARequestParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222125E14E1E17B00C5471B /* OARequestParameter.m */; };
 		3222127814E1E17B00C5471B /* OAServiceTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222126014E1E17B00C5471B /* OAServiceTicket.m */; };
 		3222127914E1E17B00C5471B /* OATestServer.rb in Resources */ = {isa = PBXBuildFile; fileRef = 3222126214E1E17B00C5471B /* OATestServer.rb */; };
 		3222127A14E1E17B00C5471B /* OAToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222126414E1E17B00C5471B /* OAToken.m */; };
-		3222127B14E1E17B00C5471B /* OATokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222126614E1E17B00C5471B /* OATokenManager.m */; };
+		3222127B14E1E17B00C5471B /* OATokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222126614E1E17B00C5471B /* OATokenManager.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		3222127C14E1E17B00C5471B /* README in Resources */ = {isa = PBXBuildFile; fileRef = 3222126814E1E17B00C5471B /* README */; };
 		3222127F14E1EA8600C5471B /* ModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222127E14E1EA8600C5471B /* ModalWebViewController.m */; };
 		3222128114E1EB2800C5471B /* ModalWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3222128014E1EB2800C5471B /* ModalWebView.xib */; };
@@ -50,8 +50,6 @@
 		32E3CD9014C3AAA5001EA2AB /* WebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E3CD8D14C3AAA5001EA2AB /* WebView.xib */; };
 		32E3CD9114C3AAA5001EA2AB /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E3CD8F14C3AAA5001EA2AB /* WebViewController.m */; };
 		32FF63D414BB935100E99F55 /* CheckInListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */; };
-		32FF63DC14BBE71B00E99F55 /* CheckInDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF63DA14BBE71A00E99F55 /* CheckInDetailsViewController.m */; };
-		32FF63DD14BBE71B00E99F55 /* CheckInDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32FF63DB14BBE71B00E99F55 /* CheckInDetailsViewController.xib */; };
 		32FF63E414BBFAE300E99F55 /* CPPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF63E314BBFAE300E99F55 /* CPPlace.m */; };
 		4E39305214EDF0B500D27DEA /* accessory-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E39305014EDF0B500D27DEA /* accessory-arrow.png */; };
 		4E39305314EDF0B500D27DEA /* accessory-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E39305114EDF0B500D27DEA /* accessory-arrow@2x.png */; };
@@ -86,6 +84,7 @@
 		53A5419E14DB4FCA0060D0DA /* checked-in~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A5419D14DB4FCA0060D0DA /* checked-in~iphone.png */; };
 		53BC266D14E4624200D16D4B /* others-at-venue@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BC266B14E4624200D16D4B /* others-at-venue@2x~iphone.png */; };
 		53BC266E14E4624200D16D4B /* others-at-venue~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BC266C14E4624200D16D4B /* others-at-venue~iphone.png */; };
+		53D65B4514EEEC2D00801C5E /* CheckInDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D65B4414EEEC2D00801C5E /* CheckInDetailsViewController.m */; };
 		53DC035C14EDA15B0064D880 /* map-locate@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DC035814EDA15B0064D880 /* map-locate@2x~iphone.png */; };
 		53DC035D14EDA15B0064D880 /* map-locate~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DC035914EDA15B0064D880 /* map-locate~iphone.png */; };
 		53DC035E14EDA15B0064D880 /* map-refresh@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DC035A14EDA15B0064D880 /* map-refresh@2x~iphone.png */; };
@@ -107,7 +106,7 @@
 		6F3651DE14EAE90300E9322B /* FaceToFaceInviteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3651DD14EAE90300E9322B /* FaceToFaceInviteController.m */; };
 		6F5EB26C14DB51E40000294E /* OneOnOneChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5EB26B14DB51E40000294E /* OneOnOneChatViewController.m */; };
 		6F7BA4DB14E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7BA4D814E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m */; };
-		6F7BA4DC14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7BA4DA14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m */; };
+		6F7BA4DC14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7BA4DA14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		6F7DA74514E890C0001BEC19 /* ChatHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7DA74414E890C0001BEC19 /* ChatHistory.m */; };
 		6F7DA74814E890E4001BEC19 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7DA74714E890E4001BEC19 /* ChatMessage.m */; };
 		6FEEDFFC14E103F400861CA1 /* CPapi.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FEEDFFB14E103F400861CA1 /* CPapi.m */; };
@@ -326,11 +325,8 @@
 		32E3CD8D14C3AAA5001EA2AB /* WebView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebView.xib; sourceTree = "<group>"; };
 		32E3CD8E14C3AAA5001EA2AB /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		32E3CD8F14C3AAA5001EA2AB /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
-		32FF63D214BB935100E99F55 /* CheckInListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckInListTableViewController.h; sourceTree = "<group>"; };
-		32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInListTableViewController.m; sourceTree = "<group>"; };
-		32FF63D914BBE71A00E99F55 /* CheckInDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckInDetailsViewController.h; sourceTree = "<group>"; };
-		32FF63DA14BBE71A00E99F55 /* CheckInDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInDetailsViewController.m; sourceTree = "<group>"; };
-		32FF63DB14BBE71B00E99F55 /* CheckInDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckInDetailsViewController.xib; sourceTree = "<group>"; };
+		32FF63D214BB935100E99F55 /* CheckInListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckInListTableViewController.h; path = Views/CheckInListTableViewController.h; sourceTree = "<group>"; };
+		32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInListTableViewController.m; path = Views/CheckInListTableViewController.m; sourceTree = "<group>"; };
 		32FF63E214BBFAE300E99F55 /* CPPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPlace.h; path = SupportingClasses/CPPlace.h; sourceTree = "<group>"; };
 		32FF63E314BBFAE300E99F55 /* CPPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPlace.m; path = SupportingClasses/CPPlace.m; sourceTree = "<group>"; };
 		4E39305014EDF0B500D27DEA /* accessory-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "accessory-arrow.png"; sourceTree = "<group>"; };
@@ -367,6 +363,8 @@
 		53A5419D14DB4FCA0060D0DA /* checked-in~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked-in~iphone.png"; sourceTree = "<group>"; };
 		53BC266B14E4624200D16D4B /* others-at-venue@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "others-at-venue@2x~iphone.png"; sourceTree = "<group>"; };
 		53BC266C14E4624200D16D4B /* others-at-venue~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "others-at-venue~iphone.png"; sourceTree = "<group>"; };
+		53D65B4314EEEC2D00801C5E /* CheckInDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckInDetailsViewController.h; path = Views/CheckInDetailsViewController.h; sourceTree = "<group>"; };
+		53D65B4414EEEC2D00801C5E /* CheckInDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInDetailsViewController.m; path = Views/CheckInDetailsViewController.m; sourceTree = "<group>"; };
 		53DC035814EDA15B0064D880 /* map-locate@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-locate@2x~iphone.png"; sourceTree = "<group>"; };
 		53DC035914EDA15B0064D880 /* map-locate~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-locate~iphone.png"; sourceTree = "<group>"; };
 		53DC035A14EDA15B0064D880 /* map-refresh@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-refresh@2x~iphone.png"; sourceTree = "<group>"; };
@@ -810,6 +808,17 @@
 			path = SSKeychain;
 			sourceTree = "<group>";
 		};
+		53D65B4614EEEC3700801C5E /* CheckIn */ = {
+			isa = PBXGroup;
+			children = (
+				53D65B4314EEEC2D00801C5E /* CheckInDetailsViewController.h */,
+				53D65B4414EEEC2D00801C5E /* CheckInDetailsViewController.m */,
+				32FF63D214BB935100E99F55 /* CheckInListTableViewController.h */,
+				32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */,
+			);
+			name = CheckIn;
+			sourceTree = "<group>";
+		};
 		6F3651DA14EAE8BB00E9322B /* FaceToFace */ = {
 			isa = PBXGroup;
 			children = (
@@ -933,6 +942,7 @@
 				871EFB1C14AE9C820030658B /* MainStoryboard_iPhone.storyboard */,
 				6F3651DA14EAE8BB00E9322B /* FaceToFace */,
 				6F7DA74914E89471001BEC19 /* Chat */,
+				53D65B4614EEEC3700801C5E /* CheckIn */,
 				6F57076614E85439009B4053 /* Models */,
 				871EFBBC14AF987B0030658B /* Views */,
 				871EFB1114AE9C820030658B /* Supporting Files */,
@@ -1067,11 +1077,6 @@
 		871EFBBC14AF987B0030658B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				32FF63D914BBE71A00E99F55 /* CheckInDetailsViewController.h */,
-				32FF63DA14BBE71A00E99F55 /* CheckInDetailsViewController.m */,
-				32FF63DB14BBE71B00E99F55 /* CheckInDetailsViewController.xib */,
-				32FF63D214BB935100E99F55 /* CheckInListTableViewController.h */,
-				32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */,
 				8733312314BCFB0D001BF4DB /* CreateEmailAccountController.h */,
 				8733312414BCFB0D001BF4DB /* CreateEmailAccountController.m */,
 				8733312514BCFB0D001BF4DB /* CreateEmailAccountController.xib */,
@@ -1327,7 +1332,6 @@
 				872E1CA114B291EC00408DC6 /* cap@2x.png in Resources */,
 				872E1CA214B2C91B00408DC6 /* Default-Portrait~ipad.png in Resources */,
 				870835F914B3E1AC00439431 /* FBDialog.bundle in Resources */,
-				32FF63DD14BBE71B00E99F55 /* CheckInDetailsViewController.xib in Resources */,
 				8733312714BCFB0D001BF4DB /* CreateEmailAccountController.xib in Resources */,
 				871C446714BD7293003B720F /* button.png in Resources */,
 				871C446814BD7293003B720F /* button@2x.png in Resources */,
@@ -1474,7 +1478,6 @@
 				8745448D14B799C100D96134 /* NSDictionaryAdditions.m in Sources */,
 				8745448E14B799C100D96134 /* NSMutableURLRequestAdditions.m in Sources */,
 				32FF63D414BB935100E99F55 /* CheckInListTableViewController.m in Sources */,
-				32FF63DC14BBE71B00E99F55 /* CheckInDetailsViewController.m in Sources */,
 				32FF63E414BBFAE300E99F55 /* CPPlace.m in Sources */,
 				8733311114BCC36B001BF4DB /* EmailLoginSequence.m in Sources */,
 				8733311C14BCFAAB001BF4DB /* TableCellHelper.m in Sources */,
@@ -1518,6 +1521,7 @@
 				6F7DA74814E890E4001BEC19 /* ChatMessage.m in Sources */,
 				6F3651DE14EAE90300E9322B /* FaceToFaceInviteController.m in Sources */,
 				E4E16DA414DDEF26004E4586 /* UserProfileCheckedInViewController.m in Sources */,
+				53D65B4514EEEC2D00801C5E /* CheckInDetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
