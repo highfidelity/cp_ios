@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *checkInLabel;
 @property (weak, nonatomic) IBOutlet UILabel *placeName;
 @property (weak, nonatomic) IBOutlet UILabel *placeAddress;
+@property (weak, nonatomic) IBOutlet UIView *checkInDetails;
 
 @end
 
@@ -24,6 +25,7 @@
 @synthesize checkInLabel = _checkInLabel;
 @synthesize placeName = _placeName;
 @synthesize placeAddress = _placeAddress;
+@synthesize checkInDetails = _checkInDetails;
 @synthesize place = _place;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -92,10 +94,8 @@
     self.scrollView.backgroundColor = texture;
     
     // set the light diagonal noise texture on the bottom UIView
-    UIColor *texture = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise.png"]];
-    
-    
-    
+    UIColor *lightTexture = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-light.png"]];
+    self.checkInDetails.backgroundColor = lightTexture;    
     
     self.placeName.text = self.place.name;
     self.placeAddress.text = self.place.address;
@@ -108,6 +108,7 @@
     [self setPlaceName:nil];
     [self setPlaceAddress:nil];
     [self setCheckInLabel:nil];
+    [self setCheckInDetails:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

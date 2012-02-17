@@ -413,6 +413,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="bz0-25-e5R"/>
                     <connections>
+                        <outlet property="checkInDetails" destination="qWq-Gn-8ou" id="xry-cg-1Uk"/>
                         <outlet property="checkInLabel" destination="qmb-as-qZ8" id="5yy-az-rO1"/>
                         <outlet property="mapView" destination="MQF-9M-cU0" id="iR6-un-ud3"/>
                         <outlet property="placeAddress" destination="PtD-Uj-ZiF" id="THK-hq-Aq8"/>
@@ -957,6 +958,7 @@
         <class className="CheckInDetailsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInDetailsViewController.h"/>
             <relationships>
+                <relationship kind="outlet" name="checkInDetails" candidateClass="UIView"/>
                 <relationship kind="outlet" name="checkInLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
                 <relationship kind="outlet" name="placeAddress" candidateClass="UILabel"/>
