@@ -18,12 +18,15 @@
 #import "UserProfileCheckedInViewController.h"
 
 #define qHideTopNavigationBarOnMapView			0
+#define logoutMenuIndex 3
+#define menuWidthPercentage 0.8
 
 @interface MapTabController() 
 -(void)zoomTo:(CLLocationCoordinate2D)loc;
--(void)updateLoginButton;
 
 @property (nonatomic, strong) NSTimer *reloadTimer;
+@property (nonatomic, retain) NSArray *menuStringsArray;
+@property (nonatomic, retain) NSArray *menuSegueIdentifiersArray;
 -(void)refreshLocationsIfNeeded;
 
 @end
@@ -34,7 +37,11 @@
 @synthesize fullDataset;
 @synthesize reloadTimer;
 @synthesize mapHasLoaded;
-
+@synthesize isMenuShowing;
+@synthesize menuStringsArray;
+@synthesize menuSegueIdentifiersArray;
+@synthesize mapAndButtonsView;
+@synthesize tableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -55,10 +62,50 @@
 
 #pragma mark - View lifecycle
 
+- (void)initMenu 
+{
+    // Setup the menu strings and seque identifiers
+    self.menuStringsArray = [NSArray arrayWithObjects:
+                             @"Face To Face", 
+                             @"Balance",
+                             @"Settings",
+                             @"Logout",
+                             nil];
+    
+    self.menuSegueIdentifiersArray = [NSArray arrayWithObjects:
+                                      @"ShowFaceToFaceFromMenu", 
+                                      @"ShowBalanceFromMenu",
+                                      @"ShowSettingsFromMenu",
+                                      @"ShowLogoutFromMenu",
+                                      nil];
+    
+}
+
+- (void)addNavigationBarStyle
+{
+    // style the navigaiton bar... add a drop shadow below.
+    UINavigationBar *navigationBar = self.navigationController.navigationBar;
+    navigationBar.barStyle = UIBarStyleBlack;
+    [navigationBar setBackgroundImage:[UIImage imageNamed: @"header.png"] forBarMetrics: UIBarMetricsDefault];
+    UIImageView *shadowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header-shadow.png"]];
+    shadowView.frame = CGRectMake(0,
+                                  navigationBar.frame.origin.y + navigationBar.frame.size.height, 
+                                  shadowView.frame.size.width, 
+                                  shadowView.frame.size.height);
+    [self.navigationController.view addSubview:shadowView];    
+}
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    // Title view styling
+    [self addNavigationBarStyle];
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo.png"]];
+    self.navigationItem.title = @"C&P"; // TODO: Remove once back button with mug logo is added to pushed views
+    
+    [self initMenu];
+    
     self.mapHasLoaded = NO;
 
     // Initialize the fullDataset array to keep track of all checked in users, even outside of current map bounds
@@ -75,27 +122,6 @@
 												 userInfo:nil
 												  repeats:YES];
     
-    // Check to see if our login is valid
-	if([AppDelegate instance].settings.candpUserId ||
-	   [[AppDelegate instance].facebook isSessionValid])
-	{
-		self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc]initWithTitle:@"Log Out"
-																				  style:UIBarButtonItemStylePlain
-																				 target:self 
-																				 action:@selector(logoutButtonTapped)];
-		
-		self.navigationItem.title = [AppDelegate instance].settings.userNickname;
-	}
-	else
-	{
-		self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc]initWithTitle:@"Log In..."
-																				  style:UIBarButtonItemStylePlain
-																				 target:self 
-																				 action:@selector(loginButtonTapped)];
-        
-		self.navigationItem.title = @"C&P";
-	}
-
 	// center on the last known user location
 	if([AppDelegate instance].settings.hasLocation)
 	{
@@ -113,6 +139,8 @@
 - (void)viewDidUnload
 {
 	[self setMapView:nil];
+    [self setMapAndButtonsView:nil];
+    [self setTableView:nil];
     [super viewDidUnload];
 	[reloadTimer invalidate];
 	reloadTimer = nil;
@@ -133,8 +161,9 @@
     
     [[AppDelegate instance] showCheckInButton];
 
-    [self updateLoginButton];    
     [self refreshLocationsIfNeeded];
+    // Update for login name in header field
+    [self.tableView reloadData];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -199,6 +228,30 @@
     [self zoomTo: [[mapView userLocation] coordinate]];
 }
 
+- (void)showMenu:(BOOL)showMenu {
+    // Animate the reveal of the menu
+    [UIView beginAnimations:@"" context:nil];
+    [UIView setAnimationDuration:0.3];
+    
+    float shift = menuWidthPercentage * [UIScreen mainScreen].bounds.size.width;
+    if (showMenu) {
+        // shift to the right, hiding buttons 
+        CGRect menuFrame = CGRectMake(0, 0, shift, CGRectGetHeight(self.view.frame));
+        self.mapAndButtonsView.frame = CGRectOffset(self.view.bounds, CGRectGetWidth(menuFrame), 0);
+        [[AppDelegate instance] hideCheckInButton];
+    } else {
+        // shift to the left, restoring the buttons
+        self.mapAndButtonsView.frame = self.view.frame;
+        [[AppDelegate instance] showCheckInButton];
+    }
+    [UIView commitAnimations];
+    isMenuShowing = showMenu ? 1 : 0;
+}
+
+- (IBAction)revealButtonPressed:(id)sender {
+    [self showMenu: !self.isMenuShowing];
+}
+
 - (MKUserLocation *)currentUserLocationInMapView
 {
     return mapView.userLocation;
@@ -232,23 +285,6 @@
 {
 	// logout of *all* accounts
 	[[AppDelegate instance] logoutEverything];
-	[self updateLoginButton];
-	
-}
--(void)updateLoginButton
-{	
-	if([AppDelegate instance].settings.candpUserId)
-	{
-		self.navigationItem.rightBarButtonItem.title = @"Log Out";
-		self.navigationItem.rightBarButtonItem.action = @selector(logoutButtonTapped);
-		self.navigationItem.title = [AppDelegate instance].settings.userNickname;
-	}
-	else
-	{	
-		self.navigationItem.rightBarButtonItem.title = @"Log In...";
-		self.navigationItem.rightBarButtonItem.action = @selector(loginButtonTapped);
-		self.navigationItem.title = @"C&P";
-	}
 	
 }
 
@@ -347,6 +383,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender 
 {
+    if (self.isMenuShowing) { [self showMenu:NO]; }
     if ([[segue identifier] isEqualToString:@"ShowUserProfileCheckedInFromMap"]) {
         // figure out which element was tapped
         UserAnnotation *tappedObj = [sender annotation];
@@ -415,6 +452,86 @@
     // zoom to a region 2km across
     MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(loc, 1000, 1000);
     [mapView setRegion:viewRegion animated:TRUE];    
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return menuStringsArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        // Style the cell's font and background. clear the background colors so style is not obstructed.
+        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:20.0];
+        cell.textLabel.textColor = [UIColor colorWithRed:169.0/255.0 green:169.0/255.0 blue:169.0/255.0 alpha:1];
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+        cell.backgroundView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"menu-background.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:2.0]];  
+        cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"selected-menu-background.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:2.0]];
+        cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"accessory-arrow.png"]];
+    }
+    cell.textLabel.text = (NSString*)[self.menuStringsArray objectAtIndex:indexPath.row];
+
+    return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    // Check to see if our login is valid, using the user name for the header
+	if([AppDelegate instance].settings.candpUserId ||
+	   [[AppDelegate instance].facebook isSessionValid])
+	{
+		return [AppDelegate instance].settings.userNickname;
+	}
+	else
+	{
+		return @"";
+	}
+}
+
+- (UIView *)tableView:(UITableView *)aTableView viewForHeaderInSection:(NSInteger)section {
+    float tableHeight = [self tableView:aTableView heightForHeaderInSection:section];
+    NSString *headerString = [self tableView:aTableView titleForHeaderInSection:section];
+    CGRect headerRect = CGRectMake(0,0,aTableView.frame.size.width,tableHeight);
+    UIView *headerView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"menu-header-background.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:0.0]];  
+    UILabel *headerLabel = [[UILabel alloc] initWithFrame:headerRect];
+    headerLabel.textAlignment = UITextAlignmentCenter;
+    headerLabel.text = headerString;
+    headerLabel.backgroundColor = [UIColor clearColor];
+    headerLabel.textColor = [UIColor whiteColor];
+    
+    [headerView addSubview:headerLabel];
+    
+    return headerView;
+}
+
+-(float)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return  20.0;
+}
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Handle the selected menu item, closing the menu for when we return
+    if (indexPath.row == logoutMenuIndex) { 
+        //TODO: Merge logout xib with storyboard, adding segue for logout
+        if (self.isMenuShowing) { [self showMenu:NO]; }
+        [self logoutButtonTapped];
+        [self loginButtonTapped];
+    } else { 
+        NSString *segueName = [menuSegueIdentifiersArray objectAtIndex:indexPath.row];
+        [self performSegueWithIdentifier:segueName sender:self];
+    }
 }
 
 @end

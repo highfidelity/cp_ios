@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11C73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
     <dependencies>
         <development defaultVersion="4200" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
     </dependencies>
     <scenes>
+        <scene sceneID="P8B-gs-TKc">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZvI-Kw-LUQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="6R2-Kp-hYj" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="e1e-XA-TCs">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Settings" id="S6Y-yP-5GG"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="385" y="-836"/>
+        </scene>
         <scene sceneID="1mX-pB-Ub5">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pIh-oL-BFt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -35,90 +49,143 @@
                     <navigationItem key="navigationItem" id="6o6-Q6-MT8"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="450" y="-715"/>
+            <point key="canvasLocation" x="960" y="-863"/>
         </scene>
         <scene sceneID="N4C-DH-qKm">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="roq-lO-JF8" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="PsS-EQ-oIQ" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2rF-2z-3Jj">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Balance" id="tMh-Bf-pyd"/>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="978" y="-910"/>
+            <point key="canvasLocation" x="385" y="-1398"/>
         </scene>
         <scene sceneID="Q7p-8T-DVG">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WIW-bY-l8z" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="1pt-yI-hCV" customClass="MapTabController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="c8H-RK-Bhe">
+                    <view key="view" contentMode="scaleToFill" id="HAH-lT-A7G">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" id="fm6-PX-4Yv">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="aS9-eN-C6I">
+                                <rect key="frame" x="0.0" y="0.0" width="256" height="416"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.17647058823529413" green="0.17647058823529413" blue="0.17647058823529413" alpha="1" colorSpace="calibratedRGB"/>
+                                <sections/>
                                 <connections>
-                                    <outlet property="delegate" destination="1pt-yI-hCV" id="JOY-im-aEb"/>
+                                    <outlet property="dataSource" destination="1pt-yI-hCV" id="oWt-gd-Ex5"/>
+                                    <outlet property="delegate" destination="1pt-yI-hCV" id="g6m-kG-e9S"/>
                                 </connections>
-                            </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Q93-hX-DWe">
-                                <rect key="frame" x="118" y="349" width="42" height="42"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" id="a5C-Dc-Jt1">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                                <state key="normal" image="map-locate.png">
-                                    <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="locateMe:" destination="1pt-yI-hCV" eventType="touchUpInside" id="VPc-9u-Xd6"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Gp4-X8-S05">
-                                <rect key="frame" x="160" y="349" width="42" height="42"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                                <state key="normal" image="map-refresh.png">
-                                    <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="refreshButtonClicked:" destination="1pt-yI-hCV" eventType="touchUpInside" id="XEE-dc-xsz"/>
-                                </connections>
-                            </button>
+                                <subviews>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" id="fm6-PX-4Yv">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="1pt-yI-hCV" id="DVG-Mj-0cA"/>
+                                        </connections>
+                                    </mapView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Q93-hX-DWe">
+                                        <rect key="frame" x="228" y="20" width="42" height="42"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" size="button"/>
+                                        <state key="normal" image="map-locate.png">
+                                            <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="locateMe:" destination="1pt-yI-hCV" eventType="touchUpInside" id="VPc-9u-Xd6"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Gp4-X8-S05">
+                                        <rect key="frame" x="268" y="20" width="42" height="42"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" size="button"/>
+                                        <state key="normal" image="map-refresh.png">
+                                            <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="refreshButtonClicked:" destination="1pt-yI-hCV" eventType="touchUpInside" id="XEE-dc-xsz"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="mZs-pB-Rfc">
-                        <barButtonItem key="leftBarButtonItem" title="List" id="4GA-Iv-U6r">
-                            <connections>
-                                <segue destination="OzI-Z3-GtZ" kind="push" identifier="ShowUserListTable" id="YU1-Pn-Jr4"/>
-                            </connections>
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" id="c53-dn-qaF">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cLp-wO-yWX">
+                                <rect key="frame" x="5" y="7" width="42" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="settings-button-3.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="revealButtonPressed:" destination="1pt-yI-hCV" eventType="touchUpInside" id="2lk-WR-kgz"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" id="7Xn-P9-5ba">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="RH8-qT-xPY">
+                                <rect key="frame" x="273" y="5" width="42" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="people-list.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="OzI-Z3-GtZ" kind="push" identifier="ShowUserListTable" id="nvI-gn-DDs"/>
+                                </connections>
+                            </button>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="mapAndButtonsView" destination="a5C-Dc-Jt1" id="Vem-Ei-3In"/>
                         <outlet property="mapView" destination="fm6-PX-4Yv" id="Dvs-wL-oEc"/>
+                        <outlet property="tableView" destination="aS9-eN-C6I" id="Him-iQ-vZZ"/>
                         <segue destination="L0d-87-YTQ" kind="push" identifier="ShowUserProfileCheckedInFromMap" id="sCE-rt-LRg"/>
+                        <segue destination="6R2-Kp-hYj" kind="push" identifier="ShowSettingsFromMenu" id="HyU-DX-nOW"/>
+                        <segue destination="PsS-EQ-oIQ" kind="push" identifier="ShowBalanceFromMenu" id="M7j-3l-uUF"/>
+                        <segue destination="Nwj-Ps-AKv" kind="push" identifier="ShowFaceToFaceFromMenu" id="EFA-Jg-yGN"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-76" y="-271"/>
+            <point key="canvasLocation" x="-34" y="-114"/>
         </scene>
         <scene sceneID="A3v-gP-kYR">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A2n-ak-jSV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController title="Places" id="5Fp-8n-Lfw" customClass="CheckInListTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="HvY-VP-ljG" customClass="CheckInLo">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="HvY-VP-ljG">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -193,11 +260,11 @@
                                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                             </view>
                                             <view contentMode="scaleToFill" id="mmq-eb-nyE">
-                                                <rect key="frame" x="100" y="0.0" width="196" height="96"/>
+                                                <rect key="frame" x="100" y="10" width="196" height="76"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.75" contentMode="left" text="Nickname" lineBreakMode="wordWrap" minimumFontSize="14" id="DNz-1R-UVe">
-                                                        <rect key="frame" x="0.0" y="40" width="176" height="36"/>
+                                                        <rect key="frame" x="0.0" y="26" width="176" height="36"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.0" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="26"/>
@@ -207,7 +274,7 @@
                                                         <size key="shadowOffset" width="1" height="1"/>
                                                     </label>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" id="aaY-q0-hdP">
-                                                        <rect key="frame" x="0.0" y="7" width="196" height="36"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="196" height="29"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -215,9 +282,9 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" id="LdN-DH-gvv">
-                                                        <rect key="frame" x="0.0" y="76" width="196" height="13"/>
+                                                        <rect key="frame" x="0.0" y="59" width="196" height="15"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -653,6 +720,20 @@
             </objects>
             <point key="canvasLocation" x="1386" y="-271"/>
         </scene>
+        <scene sceneID="gtz-5a-hgw">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8HD-fd-1VU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="Nwj-Ps-AKv" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="q4C-DJ-RL2">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Face To Face" id="AKy-WS-7pl"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="385" y="-1966"/>
+        </scene>
     </scenes>
     <resources>
         <image name="available-for-icon.png" width="16" height="16"/>
@@ -667,6 +748,8 @@
         <image name="map-marker.png" width="16" height="16"/>
         <image name="map-refresh.png" width="16" height="16"/>
         <image name="others-at-venue.png" width="16" height="16"/>
+        <image name="people-list.png" width="42" height="29"/>
+        <image name="settings-button-3.png" width="42" height="29"/>
         <image name="verified-facebook.png" width="16" height="16"/>
         <image name="verified-linked-in.png" width="16" height="16"/>
     </resources>
@@ -682,7 +765,10 @@
             <relationships>
                 <relationship kind="action" name="locateMe:"/>
                 <relationship kind="action" name="refreshButtonClicked:"/>
+                <relationship kind="action" name="revealButtonPressed:"/>
+                <relationship kind="outlet" name="mapAndButtonsView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
         </class>
         <class className="OneOnOneChatViewController" superclassName="UIViewController">

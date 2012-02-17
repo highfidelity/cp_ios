@@ -11,7 +11,7 @@
 
 @class MapDataSet;
 
-@interface MapTabController : UIViewController< MKMapViewDelegate, UINavigationControllerDelegate >
+@interface MapTabController : UIViewController< MKMapViewDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource >
 {
     MKMapView *mapView;
 	bool hasUpdatedUserLocation;
@@ -21,6 +21,9 @@
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
 @property (nonatomic, readonly, strong) MapDataSet *dataset;
 @property (nonatomic, readonly, strong) MapDataSet *fullDataset;
+@property (nonatomic) BOOL isMenuShowing;
+@property (weak, nonatomic) IBOutlet UIView *mapAndButtonsView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 // State to prevent querying userlist (with bad region) before the map has appeared
 // Although there is a delegate method, mapViewDidFinishLoadingMap:, this is not
@@ -30,6 +33,8 @@
 - (void)refreshLocations;
 - (IBAction)refreshButtonClicked:(id)sender;
 - (IBAction)locateMe:(id)sender;
+- (IBAction)revealButtonPressed:(id)sender;
+- (void)showMenu:(BOOL)shouldReveal;
 
 
 @end

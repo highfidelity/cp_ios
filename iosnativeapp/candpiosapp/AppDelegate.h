@@ -59,7 +59,6 @@
 @property (strong, nonatomic) NSObject *loginSequence;
 @property (strong, nonatomic, readonly) AFHTTPClient *urbanAirshipClient;
 
--(void)loadCheckinScreen;
 -(void)saveSettings;
 +(AppDelegate*)instance;
 -(void)logoutEverything;
