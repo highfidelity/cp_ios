@@ -21,6 +21,7 @@
 + (void)f2fInviteResponseHandler:(NSData *)response;
 + (void)f2fAcceptResponseHandler:(NSData *)response;
 + (void)f2fDeclineResponseHandler:(NSData *)response;
++ (void)f2fVerifyResponseHandler:(NSData *)response;
 
 @end
 
@@ -311,6 +312,71 @@
             [json objectForKey:@"error"] == nil)
         {
             alertMsg = @"Face to Face declined.";
+        }
+        else
+        {
+            // Otherwise, just show whatever came back in "message"
+            alertMsg = [json objectForKey:@"message"];
+        }
+    }
+    
+    // Show error if we got one
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Face to Face"
+                          message:alertMsg
+                          delegate:self
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles: nil];
+    [alert show];
+}
+
++ (void)sendF2FVerify:(int)userId
+             password:(NSString *)password
+{
+    // Send that shit
+    NSLog(@"Sending F2F password for user id %d", userId);
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setValue:[NSString stringWithFormat:@"%d", userId] forKey:@"greeter_id"];
+    [parameters setValue:[NSString stringWithFormat:@"%@", password] forKey:@"password"];
+    
+    [self makeHTTPRequestWithAction:@"f2fDecline"
+                     withParameters:parameters
+                    responseHandler:@selector(f2fVerifyResponseHandler:)];
+}
+
++ (void)f2fVerifyResponseHandler:(NSData *)response 
+{
+    /** Server side documentation
+     * Confirms a F2F meeting by checking the password
+     * @greeted_id
+     * @password
+     * Error codes:
+     *  1 - User not logged in
+     *  2 - Cannot find other F2F user id
+     *  3 - Secret word is wrong
+     *  4 - unused
+     *  5 - Custom exception, 'message' contains reason
+     */
+    NSError *error;
+    NSDictionary* json = [NSJSONSerialization 
+                          JSONObjectWithData: response
+                          options: kNilOptions
+                          error: &error];
+    
+    NSString *alertMsg = @"";
+    NSLog(@"f2f response: %@", json);
+    
+    if (json == NULL)
+    {
+        alertMsg = @"Error submitting password.";
+    } 
+    else
+    {
+        if ([[json objectForKey:@"error"] isEqualToString:@"0"] ||
+            [json objectForKey:@"error"] == nil)
+        {
+            alertMsg = @"Yay you've met Face to Face!!";
         }
         else
         {

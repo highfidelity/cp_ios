@@ -22,6 +22,7 @@
 + (void)sendF2FInvite:(int) userId;
 + (void)sendF2FAccept:(int) userId;
 + (void)sendF2FDecline:(int) userId;
-
++ (void)sendF2FVerify:(int) userId
+             password:(NSString *) password;
 
 @end

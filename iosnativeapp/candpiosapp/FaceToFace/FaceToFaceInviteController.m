@@ -11,10 +11,15 @@
 #import "CPapi.h"
 
 @implementation FaceToFaceInviteController
-@synthesize greeterNickname = _greeterNickname;
-@synthesize greeterImage = _greeterImage;
+@synthesize userNickname = _userNickname;
+@synthesize userImage = _userImage;
+@synthesize f2fText = _f2fText;
+@synthesize f2fAcceptButton = _f2fAcceptButton;
+@synthesize f2fDeclineButton = _f2fDeclineButton;
+@synthesize f2fActionCaption = _f2fActionCaption;
+@synthesize f2fPassword = _f2fPassword;
 
-@synthesize greeter = _greeter;
+@synthesize user = _user;
 
 /*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -51,18 +56,18 @@
     [super viewDidLoad];
     
     // Look up the user's information
-    if (self.greeter == nil) {
+    if (self.user == nil) {
         [NSException raise:@"Face to Face invite error"
-                    format:@"Greeter's userId is invalid: %d", self.greeter.userID];
+                    format:@"Greeter's userId is invalid: %d", self.user.userID];
     }
 
     [SVProgressHUD showWithStatus:@"Loading request"];
-    [self.greeter loadUserResumeData:^(User *user, NSError *error) {
+    [self.user loadUserResumeData:^(User *user, NSError *error) {
         if (user) {
-            self.greeter = user;
-            self.greeterNickname.text = user.nickname;
+            self.user = user;
+            self.userNickname.text = user.nickname;
             // TODO: Why does UserProfileCheckedInViewController have setImageWithURL but we don't??? -alexi 2012-02-17
-            // [self.greeterImage setImageWithURL:user.urlPhoto];
+            // [self.userImage setImageWithURL:user.urlPhoto];
             [SVProgressHUD dismiss];
         } else {
             [SVProgressHUD dismissWithError:[error localizedDescription]];
@@ -73,8 +78,13 @@
 
 - (void)viewDidUnload
 {
-    [self setGreeterNickname:nil];
-    [self setGreeterImage:nil];
+    [self setUserNickname:nil];
+    [self setUserImage:nil];
+    [self setF2fText:nil];
+    [self setF2fAcceptButton:nil];
+    [self setF2fDeclineButton:nil];
+    [self setF2fActionCaption:nil];
+    [self setF2fPassword:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -90,12 +100,26 @@
 #pragma mark - Actions
 
 - (IBAction)acceptF2F {
-    [CPapi sendF2FAccept:self.greeter.userID];
-    [self dismissModalViewControllerAnimated:YES];
+    [CPapi sendF2FAccept:self.user.userID];
+    self.f2fText.text = [NSString stringWithFormat:@"Ask %@ for the password to confirm!", self.user.nickname];
+    
+    self.f2fAcceptButton.hidden = YES;
+    self.f2fDeclineButton.hidden = YES;
+    self.f2fActionCaption.hidden = YES;
+    self.f2fPassword.hidden = NO;
 }
 
 - (IBAction)declineF2F {
-    [CPapi sendF2FDecline:self.greeter.userID];
+    [CPapi sendF2FDecline:self.user.userID];
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (IBAction)f2fSubmitPassword {
+    // TODO: actually submit the password
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
+    [theTextField resignFirstResponder];
+    return YES;
 }
 @end

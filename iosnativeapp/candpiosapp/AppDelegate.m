@@ -251,16 +251,21 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
     // Chat push notification
     if ([userInfo valueForKey:@"chat"])
     {
-        NSString* sendingUserId = [[userInfo valueForKey:@"chat"]
-                                   valueForKey:@"f"];
+        //NSString* sendingUserId = [[userInfo valueForKey:@"chat"]
+        //                           valueForKey:@"f"];
         
         // Strip the user name out of the alert message (it's the string before the colon)
         NSMutableArray* parts = [NSMutableArray arrayWithArray:[alertValue componentsSeparatedByString:@": "]];
         [parts removeObjectAtIndex:0];
         NSString *message = [parts componentsJoinedByString:@": "];
         
-        NSLog(@"Received chat message: %@ - %@", sendingUserId, message);
-    }
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Incoming Chat"
+                              message:message
+                              delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles: nil];
+        [alert show];    }
     // This is a Face-to-Face invite
     else if ([userInfo valueForKey:@"f2f1"] != nil)
     {
@@ -268,14 +273,37 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
         
         FaceToFaceInviteController *f2fView = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"FaceToFaceInviteView"];
         
-        f2fView.greeter = [[User alloc] init];
-        f2fView.greeter.userID = [userId intValue];
+        f2fView.user = [[User alloc] init];
+        f2fView.user.userID = [userId intValue];
+        f2fView.f2fPassword.hidden = YES;
         
         [self.window.rootViewController presentModalViewController:f2fView animated:YES];
     }
     // Face to Face Accept Invite
-    else if ([userInfo valueForKey:@"f2f2"] != nil) {
+    else if ([userInfo valueForKey:@"f2f2"] != nil)
+    {
+        NSString *userId = [userInfo valueForKey:@"f2f2"];
         
+        FaceToFaceInviteController *f2fView = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"FaceToFaceInviteView"];
+        
+        f2fView.user = [[User alloc] init];
+        f2fView.user.userID = [userId intValue];
+        
+        [self.window.rootViewController presentModalViewController:f2fView animated:YES];
+    }
+    // Face to Face Accept Invite
+    else if ([userInfo valueForKey:@"f2f3"] != nil)
+    {
+        NSString *nickname = [userInfo valueForKey:@"f2f3"];
+        NSString *alertMsg = [NSString stringWithFormat:@"Oh snap! You met %@ Face to Face!", nickname];
+        // Show error if we got one
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Face to Face"
+                              message:alertMsg
+                              delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles: nil];
+        [alert show];
     }
 }
 

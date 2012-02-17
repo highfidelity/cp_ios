@@ -70,19 +70,34 @@
                                 <rect key="frame" x="55" y="62" width="90" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="This user is nearby and wants to meet you!" lineBreakMode="wordWrap" numberOfLines="2" adjustsFontSizeToFit="NO" minimumFontSize="10" id="vwu-j1-cSl">
-                                <rect key="frame" x="55" y="202" width="211" height="56"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="This user is nearby and wants to meet you!" lineBreakMode="wordWrap" numberOfLines="4" adjustsFontSizeToFit="NO" minimumFontSize="10" id="vwu-j1-cSl">
+                                <rect key="frame" x="55" y="207" width="211" height="62"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="F2F Secret Word" minimumFontSize="17" clearButtonMode="always" id="MZa-TP-DeN">
+                                <rect key="frame" x="55" y="168" width="211" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <action selector="f2fSubmitPassword" destination="gzB-xZ-Qm2" eventType="editingDidEnd" id="3K2-xo-cK0"/>
+                                    <outlet property="delegate" destination="gzB-xZ-Qm2" id="XgC-l1-XD3"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="greeterImage" destination="MsU-FD-72F" id="GdC-bK-QtN"/>
-                        <outlet property="greeterNickname" destination="vFv-t2-zjv" id="YHh-tq-nXT"/>
+                        <outlet property="f2fAcceptButton" destination="gMe-tV-gou" id="LsL-Zn-SOy"/>
+                        <outlet property="f2fActionCaption" destination="tJ2-K9-hvS" id="PIx-LN-Epz"/>
+                        <outlet property="f2fDeclineButton" destination="eRS-aD-VwB" id="NMa-oF-ZXO"/>
+                        <outlet property="f2fPassword" destination="MZa-TP-DeN" id="qFx-2E-pdp"/>
+                        <outlet property="f2fText" destination="vwu-j1-cSl" id="fHu-ko-HVY"/>
+                        <outlet property="userImage" destination="MsU-FD-72F" id="Ak8-ax-hAA"/>
+                        <outlet property="userNickname" destination="vFv-t2-zjv" id="I26-Bp-yK8"/>
                     </connections>
                 </viewController>
             </objects>
@@ -840,6 +855,96 @@
         <image name="verified-facebook.png" width="16" height="16"/>
         <image name="verified-linked-in.png" width="16" height="16"/>
     </resources>
+    <classes>
+        <class className="CheckInListTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInListTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="closeWindow:"/>
+            </relationships>
+        </class>
+        <class className="FaceToFaceInviteController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FaceToFaceInviteController.h"/>
+            <relationships>
+                <relationship kind="action" name="acceptF2F"/>
+                <relationship kind="action" name="declineF2F"/>
+                <relationship kind="action" name="f2fSubmitPassword"/>
+                <relationship kind="outlet" name="f2fAcceptButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="f2fActionCaption" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="f2fDeclineButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="f2fPassword" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="f2fText" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="userNickname" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="MapTabController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapTabController.h"/>
+            <relationships>
+                <relationship kind="action" name="locateMe:"/>
+                <relationship kind="action" name="refreshButtonClicked:"/>
+                <relationship kind="action" name="revealButtonPressed:"/>
+                <relationship kind="outlet" name="mapAndButtonsView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="OneOnOneChatViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/OneOnOneChatViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="chatContents" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="chatEntryField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="TPKeyboardAvoidingScrollView" superclassName="UIScrollView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TPKeyboardAvoidingScrollView.h"/>
+        </class>
+        <class className="UserListTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserListTableViewController.h"/>
+        </class>
+        <class className="UserProfileCheckedInViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserProfileCheckedInViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="f2fInvite"/>
+                <relationship kind="action" name="minusButtonPressed:"/>
+                <relationship kind="action" name="plusButtonPressed:"/>
+                <relationship kind="outlet" name="availabilityView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="cardImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="cardJobPosition" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="cardNickname" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="cardStatus" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="chatButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="checkedIn" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="distanceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="f2fButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="facebookVerified" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="goMenuBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="hoursAvailable" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="linkedinVerified" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="loadingPt1" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="loadingPt2" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="loadingPt3" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="minusButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="minutesAvailable" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="payButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="plusButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="resumeEarned" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="resumeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="resumeRate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="resumeSpent" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="resumeView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="resumeWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="userCard" candidateClass="UIView"/>
+                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueIcon" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueOthers" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueOthersIcon" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="venueView" candidateClass="UIView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
