@@ -410,7 +410,7 @@ NSMutableArray *usersCheckedIn;
 
     NSString *imageUrl = [[usersCheckedIn objectAtIndex:indexPath.row] objectForKey:@"imageUrl"];
     
-    if (imageUrl != [NSNull null]) {
+    if (![imageUrl isKindOfClass:[NSNull class]]) {
         UIImageView *leftCallout = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
 		
 		leftCallout.contentMode = UIViewContentModeScaleAspectFill;

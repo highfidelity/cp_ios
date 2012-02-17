@@ -25,8 +25,8 @@
     
     NSMutableArray* my_messages = [self.messages objectForKey:user];
     
-    if (my_messages == nil) {
-        NSMutableArray* my_messages = [NSMutableArray arrayWithObject:message];
+    if (my_messages) {
+        my_messages = [NSMutableArray arrayWithObject:message];
     } else {
         [my_messages addObject:message];
     }
