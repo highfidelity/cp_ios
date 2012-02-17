@@ -92,20 +92,13 @@
 }
 
 - (void)hideCheckInButton {
-    UIButton *goButton = (UIButton *)[self.window.rootViewController.view viewWithTag:900];
     UIButton *checkInButton = (UIButton *)[self.window.rootViewController.view viewWithTag:901];
-    goButton.alpha = 0.0;
-    goButton.userInteractionEnabled = NO;
     checkInButton.alpha = 0.0;
     checkInButton.userInteractionEnabled = NO;
 }
 
 - (void)showCheckInButton {
-    
-    UIButton *goButton = (UIButton *)[self.window.rootViewController.view viewWithTag:900];
     UIButton *checkInButton = (UIButton *)[self.window.rootViewController.view viewWithTag:901];
-    goButton.alpha = 1.0;
-    goButton.userInteractionEnabled = YES;
     checkInButton.alpha = 1.0;
     checkInButton.userInteractionEnabled = YES;
 }

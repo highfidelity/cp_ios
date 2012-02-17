@@ -9,8 +9,8 @@
 @property (nonatomic, strong) NSString *city;
 @property (nonatomic, strong) NSString *state;
 @property (nonatomic, strong) NSString *zip;
-@property (nonatomic, assign) CGFloat lat;
-@property (nonatomic, assign) CGFloat lng;
+@property (nonatomic, assign) double lat;
+@property (nonatomic, assign) double lng;
 @property (nonatomic, assign) int othersHere;
 
 @end

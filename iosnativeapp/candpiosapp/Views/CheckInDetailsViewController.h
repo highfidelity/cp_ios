@@ -1,13 +1,17 @@
+//
+//  CheckInDetailsViewController.h
+//  candpiosapp
+//
+//  Created by Stephen Birarda on 2/17/12.
+//  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
+//
+
 #import <UIKit/UIKit.h>
-#import "MapKit/MapKit.h"
+#import <MapKit/MapKit.h>
 #import "CPPlace.h"
 
-@interface CheckInDetailsViewController : UITableViewController <UITextFieldDelegate, MKMapViewDelegate> {
-    UISlider *slider;
-    CPPlace *place;
-}
+@interface CheckInDetailsViewController : UIViewController
 
-@property (nonatomic, retain) UISlider *slider;
-@property (nonatomic, retain) CPPlace *place;
+@property (nonatomic,strong) CPPlace *place;
 
 @end

@@ -75,8 +75,8 @@
         // set the user's photo url        
         self.urlPhoto = [JSON objectForKey:@"urlPhoto"];
         self.location = CLLocationCoordinate2DMake(
-                                                   [(NSString*)[[JSON objectForKey:@"location"] objectForKey:@"lat"] doubleValue],
-                                                   [(NSString*)[[JSON objectForKey:@"location"] objectForKey:@"lng"] doubleValue]);
+                                                   [[JSON valueForKeyPath:@"location.lat"] doubleValue],
+                                                   [[JSON valueForKeyPath:@"location.lng"] doubleValue]);
         
         // set the booleans if the user is facebook/linkedin verified
         self.facebookVerified = [[JSON valueForKeyPath:@"verified.facebook.verified"] boolValue];

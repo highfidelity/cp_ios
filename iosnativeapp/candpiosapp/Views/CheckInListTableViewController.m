@@ -1,5 +1,6 @@
 #import "CheckInListTableViewController.h"
 #import "AppDelegate.h"
+#import "CPPlace.h"
 #import "CheckInDetailsViewController.h"
 #import "SVProgressHUD.h"
 #import "SignupController.h"
@@ -25,11 +26,28 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (void)addNavigationBarStyle
+{
+    // style the navigaiton bar... add a drop shadow below.
+    UINavigationBar *navigationBar = self.navigationController.navigationBar;
+    navigationBar.barStyle = UIBarStyleBlack;
+    [navigationBar setBackgroundImage:[UIImage imageNamed: @"header.png"] forBarMetrics: UIBarMetricsDefault];
+    UIImageView *shadowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header-shadow.png"]];
+    shadowView.frame = CGRectMake(0,
+                                  navigationBar.frame.origin.y + navigationBar.frame.size.height, 
+                                  navigationBar.frame.size.width, 
+                                  shadowView.frame.size.height);
+    [self.navigationController.view addSubview:shadowView];    
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    // Title view styling
+    [self addNavigationBarStyle];
+    self.title = @"Places";
     refreshLocationsNow = YES;
 }
 
@@ -84,7 +102,7 @@
     places = [[NSMutableArray alloc] init];
 
     CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
-    
+    // TODO: Add this to the FoursquareAPIRequest Code
     NSString *locationString = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?ll=%f,%f&limit=20&oauth_token=BCG410DXRKXSBRWUNM1PPQFSLEFQ5ND4HOUTTTWYUB1PXYC4", location.coordinate.latitude, location.coordinate.longitude];
     
     NSURL *locationURL = [NSURL URLWithString:locationString];
@@ -133,8 +151,9 @@
         place.state = [[item valueForKey:@"location"] valueForKey:@"state"];
         place.zip = [[item valueForKey:@"location"] valueForKey:@"postalCode"];
         
-        place.lat = [[[item valueForKey:@"location"] valueForKey:@"lat"] floatValue];
-        place.lng = [[[item valueForKey:@"location"] valueForKey:@"lng"] floatValue];
+        
+        place.lat = [[item valueForKeyPath:@"location.lat"] doubleValue];
+        place.lng = [[item valueForKeyPath:@"location.lng"] doubleValue];
         [places addObject:place];
     }
 
@@ -175,12 +194,11 @@
 {
 
     if ([AppDelegate instance].settings.candpUserId) {
-        CheckInDetailsViewController *detailViewController = [[CheckInDetailsViewController alloc] init];
-        detailViewController.title = [[places objectAtIndex:indexPath.row] name];
-        detailViewController.place = [places objectAtIndex:indexPath.row];
-        [self.navigationController pushViewController:detailViewController animated:YES];        
+        // segue to CheckInDetailsViewController
+        [self performSegueWithIdentifier:@"ShowCheckInDetailsView" sender:self];
     }
     else {
+        // Tell the user they aren't logged in and show them the Signup Page
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You must be logged in to C&P in order to check in." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Okay", nil];
         [alertView show];
         
@@ -189,4 +207,16 @@
     }
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"ShowCheckInDetailsView"]) {
+        
+        NSIndexPath *path = [self.tableView indexPathForSelectedRow];
+        CPPlace *place = [places objectAtIndex:path.row];
+        
+        // give place info to the CheckInDetailsViewController
+        [[segue destinationViewController] setPlace:place];
+        
+    }
+}
 @end
