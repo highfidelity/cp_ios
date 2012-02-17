@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User.h"
 
 @interface FaceToFaceInviteController : UIViewController
+
+@property (nonatomic, strong) User *greeter;
+
+- (IBAction)acceptF2F;
+- (IBAction)declineF2F;
 
 @end

@@ -5,6 +5,85 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
     </dependencies>
     <scenes>
+        <scene sceneID="nyG-HQ-c1i">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F7V-o4-rhv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="gzB-xZ-Qm2" customClass="FaceToFaceInviteController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ro2-ny-E03">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Face to Face off!" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="eWF-tS-lxR">
+                                <rect key="frame" x="55" y="20" width="211" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <size key="shadowOffset" width="1" height="1"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gMe-tV-gou">
+                                <rect key="frame" x="55" y="277" width="211" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Accept">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="acceptF2F" destination="gzB-xZ-Qm2" eventType="touchUpInside" id="Gcj-PS-Fc0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eRS-aD-VwB">
+                                <rect key="frame" x="55" y="345" width="211" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Decline">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="declineF2F" destination="gzB-xZ-Qm2" eventType="touchUpInside" id="sqt-dx-s8D"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="(We won't tell)" lineBreakMode="tailTruncation" minimumFontSize="10" id="tJ2-K9-hvS">
+                                <rect key="frame" x="106" y="390" width="108" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="USERNAME" lineBreakMode="tailTruncation" minimumFontSize="10" id="vFv-t2-zjv">
+                                <rect key="frame" x="153" y="96" width="97" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="63-runner.png" id="MsU-FD-72F">
+                                <rect key="frame" x="55" y="62" width="90" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="This user is nearby and wants to meet you!" lineBreakMode="wordWrap" numberOfLines="2" adjustsFontSizeToFit="NO" minimumFontSize="10" id="vwu-j1-cSl">
+                                <rect key="frame" x="55" y="202" width="211" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-76" y="-836"/>
+        </scene>
         <scene sceneID="P8B-gs-TKc">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZvI-Kw-LUQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -179,7 +258,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-34" y="-114"/>
+            <point key="canvasLocation" x="-76" y="-114"/>
         </scene>
         <scene sceneID="A3v-gP-kYR">
             <objects>
@@ -665,6 +744,7 @@
                     <connections>
                         <segue destination="1pt-yI-hCV" kind="relationship" relationship="rootViewController" id="dgS-EI-3PU"/>
                         <segue destination="czS-xI-sIH" kind="modal" identifier="ShowCheckInListTable" id="iJ2-qI-DoO"/>
+                        <segue destination="gzB-xZ-Qm2" kind="modal" id="Wpp-8B-mOw"/>
                     </connections>
                 </navigationController>
             </objects>
@@ -739,6 +819,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="63-runner.png" width="18" height="25"/>
         <image name="available-for-icon.png" width="16" height="16"/>
         <image name="checked-in-location.png" width="16" height="16"/>
         <image name="go-button.png" width="16" height="16"/>
@@ -756,12 +837,94 @@
         <image name="verified-facebook.png" width="16" height="16"/>
         <image name="verified-linked-in.png" width="16" height="16"/>
     </resources>
+    <classes>
+        <class className="CheckInListTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInListTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="closeWindow:"/>
+            </relationships>
+        </class>
+        <class className="FaceToFaceInviteController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FaceToFaceInviteController.h"/>
+            <relationships>
+                <relationship kind="action" name="acceptF2F"/>
+                <relationship kind="action" name="declineF2F"/>
+            </relationships>
+        </class>
+        <class className="MapTabController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapTabController.h"/>
+            <relationships>
+                <relationship kind="action" name="locateMe:"/>
+                <relationship kind="action" name="refreshButtonClicked:"/>
+                <relationship kind="action" name="revealButtonPressed:"/>
+                <relationship kind="outlet" name="mapAndButtonsView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="OneOnOneChatViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/OneOnOneChatViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="chatContents" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="chatEntryField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="TPKeyboardAvoidingScrollView" superclassName="UIScrollView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TPKeyboardAvoidingScrollView.h"/>
+        </class>
+        <class className="UserListTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserListTableViewController.h"/>
+        </class>
+        <class className="UserProfileCheckedInViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserProfileCheckedInViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="f2fInvite"/>
+                <relationship kind="action" name="minusButtonPressed:"/>
+                <relationship kind="action" name="plusButtonPressed:"/>
+                <relationship kind="outlet" name="availabilityView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="cardImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="cardJobPosition" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="cardNickname" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="cardStatus" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="chatButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="checkedIn" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="distanceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="f2fButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="facebookVerified" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="goMenuBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="hoursAvailable" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="linkedinVerified" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="loadingPt1" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="loadingPt2" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="loadingPt3" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="minusButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="minutesAvailable" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="payButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="plusButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="resumeEarned" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="resumeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="resumeRate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="resumeSpent" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="resumeView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="resumeWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="userCard" candidateClass="UIView"/>
+                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueIcon" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueOthers" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueOthersIcon" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="venueView" candidateClass="UIView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="yDr-h5-PWB"/>
+        <segue reference="sCE-rt-LRg"/>
     </inferredMetricsTieBreakers>
 </document>

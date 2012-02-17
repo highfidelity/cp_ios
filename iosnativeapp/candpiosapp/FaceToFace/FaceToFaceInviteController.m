@@ -10,6 +10,8 @@
 
 @implementation FaceToFaceInviteController
 
+@synthesize greeter = _greeter;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -36,13 +38,11 @@
 }
 */
 
-/*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 }
-*/
 
 - (void)viewDidUnload
 {
@@ -57,4 +57,11 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark - Actions
+
+- (IBAction)acceptF2F {
+}
+
+- (IBAction)declineF2F {
+}
 @end
