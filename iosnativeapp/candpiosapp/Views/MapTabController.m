@@ -90,7 +90,7 @@
     UIImageView *shadowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header-shadow.png"]];
     shadowView.frame = CGRectMake(0,
                                   navigationBar.frame.origin.y + navigationBar.frame.size.height, 
-                                  shadowView.frame.size.width, 
+                                  navigationBar.frame.size.width, 
                                   shadowView.frame.size.height);
     [self.navigationController.view addSubview:shadowView];    
 }
