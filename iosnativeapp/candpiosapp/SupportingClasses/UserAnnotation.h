@@ -23,4 +23,5 @@
 
 -(id)initFromDictionary:(NSDictionary*)jsonDict;
 
+
 @end

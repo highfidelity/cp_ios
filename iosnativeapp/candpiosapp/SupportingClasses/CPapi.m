@@ -13,11 +13,12 @@
 
 @interface CPapi()
 
-+(void)makeHTTPRequestWithAction:(NSString *)action
++ (void)makeHTTPRequestWithAction:(NSString *)action
                   withParameters:(NSMutableDictionary *)parameters
                  responseHandler:(SEL)selector;
 
-+(void)OneOnOneChatResponseHandler:(NSData *)response;
++ (void)OneOnOneChatResponseHandler:(NSData *)response;
++ (void)f2fInviteResponseHandler:(NSData *)response;
 
 @end
 
@@ -26,9 +27,10 @@
 @synthesize httpClient;
 
 // Private method to perform HTTP requests to the C&P API
-+(void)makeHTTPRequestWithAction:(NSString *)action
-                  withParameters:(NSMutableDictionary *)parameters
-                 responseHandler:(SEL)selector {
++ (void)makeHTTPRequestWithAction:(NSString *)action
+                   withParameters:(NSMutableDictionary *)parameters
+                  responseHandler:(SEL)selector
+{
     
     NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=%@",
                            kCandPWebServiceUrl, action];
@@ -67,8 +69,8 @@
 // If we are, execute successBlock
 // If not, execute failureBlock
 // TODO: Make sure this stuff actually works. 2012-02-07 alexi
-+(void)verifyLoginStatusWithBlock:(void (^)(void))successBlock
-                     failureBlock:(void (^)(void))failureBlock
++ (void)verifyLoginStatusWithBlock:(void (^)(void))successBlock
+                      failureBlock:(void (^)(void))failureBlock
 {
     AFHTTPClient *httpClient;
     NSMutableDictionary *requestParams = [NSMutableDictionary dictionary];
@@ -101,8 +103,12 @@
     [[NSOperationQueue mainQueue] addOperation:postOperation];
 }
 
-+(void)sendOneOnOneChatMessage:(NSString *)message
-                        toUser:(int)userId {
+
+#pragma mark - One-on-One Chat
+
++ (void)sendOneOnOneChatMessage:(NSString *)message
+                        toUser:(int)userId
+{
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setValue:message forKey:@"message"];
@@ -113,9 +119,69 @@
                     responseHandler:@selector(OneOnOneChatResponseHandler:)];
 }
 
-+(void)OneOnOneChatResponseHandler:(NSData *)response {
++ (void)OneOnOneChatResponseHandler:(NSData *)response
+{
     NSLog(@"One on one chat sent, or something: %@", response);
 }
 
+
+#pragma mark - Face-to-Face
+
++ (void)sendF2FInvite:(int)userId {
+    // Send that shit
+    NSLog(@"Sending F2F invite request to user id %d", userId);
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setValue:[NSString stringWithFormat:@"%d", userId] forKey:@"greeted_id"];
+    
+    [self makeHTTPRequestWithAction:@"f2fInvite"
+                     withParameters:parameters
+                    responseHandler:@selector(f2fInviteResponseHandler:)];    
+}
+
++ (void)f2fInviteResponseHandler:(NSData *)response
+{
+    NSError *error;
+    NSDictionary* json = [NSJSONSerialization 
+                          JSONObjectWithData: response
+                          options: kNilOptions
+                          error: &error];
+    
+    NSString *alertMsg = @"";
+    NSLog(@"f2f response: %@", json);
+    
+    if (json == NULL)
+    {
+        alertMsg = @"Error sending invite.";
+    } 
+    else
+    {
+        if ([[json objectForKey:@"error"] isEqualToString:@"0"] ||
+            [json objectForKey:@"error"] == nil)
+        {
+            alertMsg = @"Invite sent!";
+        }
+        else if ([[json objectForKey:@"error"] isEqualToString:@"4"])
+        {
+            // Error code #4 means F2F is already in progress. "message"
+            // contains the password. Do we want to show this to the greeter?
+            alertMsg = @"Invite already sent";
+        }
+        else
+        {
+            // Otherwise, just show whatever came back in "message"
+            alertMsg = [[json objectForKey:@"message"] string];
+        }
+    }
+    
+    // Show error if we got one
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Face to Face"
+                          message:alertMsg
+                          delegate:self
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles: nil];
+    [alert show];
+}
 
 @end

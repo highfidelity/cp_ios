@@ -219,6 +219,9 @@
         selectedUser.checkedIn = annotation.checkedIn;
         // set the user object on the UserProfileCheckedInVC to the user we just created
         [[segue destinationViewController] setUser:selectedUser];
+    } else if ([[segue identifier] isEqualToString:@"ProfileToFace2FaceInvite"]) {
+        // We're going to make a F2F invite!
+        
     }
 }
 

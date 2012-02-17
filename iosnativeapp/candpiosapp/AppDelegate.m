@@ -77,30 +77,7 @@
     return YES;
 }
 
-- (void)application:(UIApplication *)app didReceiveLocalNotification:(UILocalNotification *)notif {
-    [self.window.rootViewController performSegueWithIdentifier:@"ShowCheckInListTable" sender:self];
-}
-
-// Handle PUSH notifications while the app is running
-- (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
-{
-	NSLog(@"Received notification: %@", userInfo);
-	NSString* alertValue = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
-    
-    // If we received a chat push notification
-    if ([userInfo valueForKey:@"chat"]) {
-        NSString* sendingUserId = [[userInfo valueForKey:@"chat"]
-                                    valueForKey:@"f"];
-        
-        // Strip the user name out of the alert message (it's the string before the colon)
-        NSMutableArray* parts = [NSMutableArray arrayWithArray:[alertValue componentsSeparatedByString:@": "]];
-        [parts removeObjectAtIndex:0];
-        NSString *message = [parts componentsJoinedByString:@": "];
-        
-        NSLog(@"Received chat message: %@ - %@", sendingUserId, message);
-        
-    }
-}
+# pragma mark - Check-in Button
 
 - (void)addCheckInButton 
 {
@@ -136,7 +113,10 @@
 {
     [self.window.rootViewController performSegueWithIdentifier:@"ShowCheckInListTable" sender:self];
 }
-							
+
+
+#pragma mark - View Lifecycle
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
 	/*
@@ -251,9 +231,42 @@
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////////
 
-- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken 
+# pragma mark - Push Notifications
+
+- (void)application:(UIApplication *)app
+didReceiveLocalNotification:(UILocalNotification *)notif
+{
+    [self.window.rootViewController performSegueWithIdentifier:@"ShowCheckInListTable" sender:self];
+}
+
+// Handle PUSH notifications while the app is running
+- (void)application:(UIApplication*)application
+didReceiveRemoteNotification:(NSDictionary*)userInfo
+{
+	NSLog(@"Received notification: %@", userInfo);
+	NSString* alertValue = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
+    
+    // If we received a chat push notification
+    if ([userInfo valueForKey:@"chat"]) {
+        NSString* sendingUserId = [[userInfo valueForKey:@"chat"]
+                                   valueForKey:@"f"];
+        
+        // Strip the user name out of the alert message (it's the string before the colon)
+        NSMutableArray* parts = [NSMutableArray arrayWithArray:[alertValue componentsSeparatedByString:@": "]];
+        [parts removeObjectAtIndex:0];
+        NSString *message = [parts componentsJoinedByString:@": "];
+        
+        NSLog(@"Received chat message: %@ - %@", sendingUserId, message);
+    } else if ([userInfo valueForKey:@"f2f1"] != nil) {
+        // This is a Face-to-Face invite
+        NSString *userId = [userInfo valueForKey:@"f2f1"];
+        NSLog(@"I got invited to a face-to-face by %@", userId);
+    }
+}
+
+- (void)application:(UIApplication *)app
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken 
 {
 	// We get here if the user has allowed Push Notifications
 	
@@ -261,22 +274,25 @@
     [[UAPush shared] registerDeviceToken:devToken];
 }
 
-- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err 
+- (void)application:(UIApplication *)app
+didFailToRegisterForRemoteNotificationsWithError:(NSError *)err 
 {
     settings.registeredForApnsSuccessfully = NO;
-//NSLog(@"Error in registration. Error: %@", err);
+    //NSLog(@"Error in registration. Error: %@", err);
 }
 
-////////////////////////////////////////////////////////////////////////////////////
+
+#pragma mark - Login Stuff
+
 // implement the Facebook Delegate
 - (void)fbDidLogin 
 {
-	if(loginSequence && [loginSequence respondsToSelector:@selector( handleResponseFromFacebookLogin)])
+	if (loginSequence &&
+        [loginSequence respondsToSelector:@selector( handleResponseFromFacebookLogin)])
+    {
 		[(FacebookLoginSequence*) loginSequence handleResponseFromFacebookLogin];
-	
+    }
 }
-
-////////////////////////////////////////////////////////////////////////////////////
 
 -(void)logoutEverything
 {
@@ -313,14 +329,13 @@
 }
 
 
-////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - User Settings
 
 +(NSString*)settingsFilepath
 {
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES /*expandTilde?*/);
 	NSString *documentsDirectory = [paths objectAtIndex:0];
 	return [documentsDirectory stringByAppendingPathComponent:@"SettingsFile" ];
-	
 }
 
 -(void) loadSettings
@@ -342,10 +357,9 @@
 		// if we couldn't load the file, go ahead and delete the file
 		[[NSFileManager defaultManager] removeItemAtPath:[AppDelegate settingsFilepath] error:nil];
 		settings = [[Settings alloc]init];
-		
 	}
-	
 }
+
 -(void)saveSettings
 {
 	// save the new settings object

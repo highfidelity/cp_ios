@@ -15,10 +15,11 @@
 
 @property (nonatomic, strong) AFHTTPClient *httpClient;
 
-+(void)verifyLoginStatusWithBlock:(void(^)(void))successBlock
++ (void)verifyLoginStatusWithBlock:(void(^)(void))successBlock
                      failureBlock:(void(^)(void))failureBlock;
-
-+(void)sendOneOnOneChatMessage:(NSString *)message
++ (void)sendOneOnOneChatMessage:(NSString *)message
                         toUser:(int) userId;
++ (void)sendF2FInvite:(int) userId;
+
 
 @end

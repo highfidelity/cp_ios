@@ -14,5 +14,6 @@
 @interface UserProfileCheckedInViewController : UIViewController
 
 @property (nonatomic, strong) User *user;
+- (IBAction)f2fInvite;
 
 @end

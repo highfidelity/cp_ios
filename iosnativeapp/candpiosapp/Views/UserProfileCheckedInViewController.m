@@ -14,8 +14,9 @@
 #import "FoursquareAPIRequest.h"
 #import "AFJSONRequestOperation.h"
 #import <QuartzCore/QuartzCore.h>
+#import "CPapi.h"
 
-@interface UserProfileCheckedInViewController() <UIWebViewDelegate>
+@interface UserProfileCheckedInViewController() <UIWebViewDelegate, UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UILabel *checkedIn;
 @property (nonatomic, weak) IBOutlet MKMapView *mapView;
@@ -529,5 +530,24 @@
     }
 }
 
+- (IBAction)f2fInvite {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:@"Send Face to Face invite?"
+                                  delegate:self
+                                  cancelButtonTitle:@"Cancel"
+                                  destructiveButtonTitle:@"Send"
+                                  otherButtonTitles: nil
+                                  ];
+    [actionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if ([actionSheet title] == @"Send Face to Face invite?") {
+        [self minusButtonPressed:nil];
+        if (buttonIndex != [actionSheet cancelButtonIndex]) {
+            [CPapi sendF2FInvite:self.user.userID];
+        }
+    }
+}
 
 @end
