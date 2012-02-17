@@ -12,7 +12,10 @@
 @interface FaceToFaceInviteController : UIViewController
 
 @property (nonatomic, strong) User *greeter;
+@property (weak, nonatomic) IBOutlet UILabel *greeterNickname;
+@property (weak, nonatomic) IBOutlet UIImageView *greeterImage;
 
+- (void)loadUser:(int)userId;
 - (IBAction)acceptF2F;
 - (IBAction)declineF2F;
 

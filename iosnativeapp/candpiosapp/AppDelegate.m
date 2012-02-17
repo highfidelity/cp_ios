@@ -10,6 +10,7 @@
 #import "FacebookLoginSequence.h"
 #import "AFHTTPClient.h"
 #import "CheckInListTableViewController.h"
+#import "FaceToFaceInviteController.h"
 #import "FlurryAnalytics.h"
 #import "OAuthConsumer.h"
 
@@ -247,8 +248,9 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
 	NSLog(@"Received notification: %@", userInfo);
 	NSString* alertValue = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
     
-    // If we received a chat push notification
-    if ([userInfo valueForKey:@"chat"]) {
+    // Chat push notification
+    if ([userInfo valueForKey:@"chat"])
+    {
         NSString* sendingUserId = [[userInfo valueForKey:@"chat"]
                                    valueForKey:@"f"];
         
@@ -258,10 +260,22 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
         NSString *message = [parts componentsJoinedByString:@": "];
         
         NSLog(@"Received chat message: %@ - %@", sendingUserId, message);
-    } else if ([userInfo valueForKey:@"f2f1"] != nil) {
-        // This is a Face-to-Face invite
+    }
+    // This is a Face-to-Face invite
+    else if ([userInfo valueForKey:@"f2f1"] != nil)
+    {
         NSString *userId = [userInfo valueForKey:@"f2f1"];
-        NSLog(@"I got invited to a face-to-face by %@", userId);
+        
+        FaceToFaceInviteController *f2fView = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"FaceToFaceInviteView"];
+        
+        f2fView.greeter = [[User alloc] init];
+        f2fView.greeter.userID = [userId intValue];
+        
+        [self.window.rootViewController presentModalViewController:f2fView animated:YES];
+    }
+    // Face to Face Accept Invite
+    else if ([userInfo valueForKey:@"f2f2"] != nil) {
+        
     }
 }
 
