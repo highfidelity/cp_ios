@@ -21,7 +21,7 @@
         // set up a number formatter
         NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
         formatter.numberStyle = NSNumberFormatterDecimalStyle;
-        formatter.maximumFractionDigits = 1;
+        formatter.maximumFractionDigits = 0;
         // if we're on a device using the metric system
         if ([[[NSLocale currentLocale] objectForKey:NSLocaleUsesMetricSystem] boolValue]) {
             // if the person is more than 100m away show it in km

@@ -18,6 +18,7 @@
 @property (nonatomic, copy) NSString *status;
 @property (nonatomic) NSInteger userId;
 @property (nonatomic) double distance;
+@property (nonatomic, strong) NSString *distanceTo;
 
 -(id)initFromDictionary:(NSDictionary*)jsonDict;
 

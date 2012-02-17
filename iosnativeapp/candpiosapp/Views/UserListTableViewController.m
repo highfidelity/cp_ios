@@ -55,8 +55,11 @@
     
     for (UserAnnotation *annotation in missions) {
         CLLocation *location = [[CLLocation alloc] initWithLatitude:annotation.lat longitude:annotation.lon];
+        
         annotation.distance = [location distanceFromLocation:currentLocation];
 
+        annotation.distanceTo = [LocalizedDistanceCalculator localizedDistanceBetweenLocationA: currentLocation andLocationB:location];
+        
         // Check if this person already has a checkin, and if so, mark the user as needing to clean up old checkins
         NSNumber *userId = [NSNumber numberWithInteger:annotation.userId];
         
@@ -160,11 +163,12 @@
 //    cell.textLabel.text = [NSString stringWithFormat:@"%@, %@, %f", [annotation nickname], [annotation skills], [annotation distance]];
 
     cell.nicknameLabel.text = annotation.nickname;
-    if (annotation.skills != [NSNull null]) {
-        cell.skillsLabel.text = annotation.skills;
-    }
-    cell.distanceLabel.text = [NSString stringWithFormat:@"%.1f meters", annotation.distance];
-    
+    cell.statusLabel.text = annotation.status;
+    //if (annotation.skills != [NSNull null]) {
+    //    cell.skillsLabel.text = annotation.skills;
+    //}
+    cell.distanceLabel.text = annotation.distanceTo;
+        
     if (annotation.imageUrl) {
         UIImageView *leftCallout = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
 		

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LocalizedDistanceCalculator.h"
 
 @interface UserListTableViewController : UITableViewController {
     NSMutableArray *missions;

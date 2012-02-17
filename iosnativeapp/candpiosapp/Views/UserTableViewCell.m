@@ -10,7 +10,7 @@
 
 @implementation UserTableViewCell
 
-@synthesize nicknameLabel, skillsLabel, distanceLabel;
+@synthesize nicknameLabel, statusLabel, distanceLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     
@@ -24,12 +24,12 @@
         nicknameLabel.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:nicknameLabel];
 
-        skillsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [skillsLabel setFont:[UIFont systemFontOfSize:12.0]];
-        [skillsLabel setTextColor:[UIColor darkGrayColor]];
-        [skillsLabel setHighlightedTextColor:[UIColor whiteColor]];
-        skillsLabel.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:skillsLabel];
+        statusLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [statusLabel setFont:[UIFont systemFontOfSize:12.0]];
+        [statusLabel setTextColor:[UIColor darkGrayColor]];
+        [statusLabel setHighlightedTextColor:[UIColor whiteColor]];
+        statusLabel.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:statusLabel];
 
         distanceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [distanceLabel setFont:[UIFont systemFontOfSize:12.0]];
@@ -51,7 +51,7 @@
     [super layoutSubviews];
 	
     [nicknameLabel setFrame:CGRectMake(65, 0, 230, 20)];
-    [skillsLabel setFrame:CGRectMake(65, 20, 230, 20)];
+    [statusLabel setFrame:CGRectMake(65, 20, 230, 20)];
     [distanceLabel setFrame:CGRectMake(65, 40, 230, 20)];
 }
 

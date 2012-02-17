@@ -123,7 +123,7 @@ NSMutableArray *usersCheckedIn;
     statusTextField.borderStyle = UITextBorderStyleRoundedRect;
     statusTextField.textColor = [UIColor blackColor];
     statusTextField.font = [UIFont systemFontOfSize:13.0];
-    statusTextField.placeholder = @"What are you available to do?";
+    statusTextField.placeholder = @"What do you need or want to do?";
     statusTextField.backgroundColor = [UIColor whiteColor];
     statusTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     
@@ -406,7 +406,7 @@ NSMutableArray *usersCheckedIn;
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
     
     cell.nicknameLabel.text = [[usersCheckedIn objectAtIndex:indexPath.row] objectForKey:@"nickname"];
-    cell.skillsLabel.text = [[usersCheckedIn objectAtIndex:indexPath.row] objectForKey:@"status_text"];
+    cell.statusLabel.text = [[usersCheckedIn objectAtIndex:indexPath.row] objectForKey:@"status_text"];
 
     NSString *imageUrl = [[usersCheckedIn objectAtIndex:indexPath.row] objectForKey:@"imageUrl"];
     

@@ -10,12 +10,12 @@
 
 @interface UserTableViewCell : UITableViewCell {
     UILabel *nickameLabel;
-    UILabel *skillsLabel;
+    UILabel *statusLabel;
     UILabel *distanceLabel;
 }
 
 @property (nonatomic, retain) UILabel *nicknameLabel;
-@property (nonatomic, retain) UILabel *skillsLabel;
+@property (nonatomic, retain) UILabel *statusLabel;
 @property (nonatomic, retain) UILabel *distanceLabel;
 
 @end
