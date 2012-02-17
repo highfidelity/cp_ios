@@ -931,12 +931,12 @@
 				871EFB1A14AE9C820030658B /* AppDelegate.m */,
 				87F657F314B0D2D000F4AB6C /* images */,
 				871EFB1C14AE9C820030658B /* MainStoryboard_iPhone.storyboard */,
-				871EFB1114AE9C820030658B /* Supporting Files */,
-				87F5EF4C14AFAAC500EB83F7 /* SupportingClasses */,
 				6F3651DA14EAE8BB00E9322B /* FaceToFace */,
 				6F7DA74914E89471001BEC19 /* Chat */,
 				6F57076614E85439009B4053 /* Models */,
 				871EFBBC14AF987B0030658B /* Views */,
+				871EFB1114AE9C820030658B /* Supporting Files */,
+				87F5EF4C14AFAAC500EB83F7 /* SupportingClasses */,
 			);
 			path = candpiosapp;
 			sourceTree = "<group>";
@@ -1119,6 +1119,8 @@
 			children = (
 				87F6580214B0DDFC00F4AB6C /* CandPAnnotation.h */,
 				87F6580314B0DDFC00F4AB6C /* CandPAnnotation.m */,
+				87F657FC14B0DC1F00F4AB6C /* UserAnnotation.h */,
+				87F657FD14B0DC1F00F4AB6C /* UserAnnotation.m */,
 				6FEEDFFA14E103F400861CA1 /* CPapi.h */,
 				6FEEDFFB14E103F400861CA1 /* CPapi.m */,
 				8733310F14BCC36A001BF4DB /* EmailLoginSequence.h */,
@@ -1142,8 +1144,6 @@
 				3222127E14E1EA8600C5471B /* ModalWebViewController.m */,
 				87F5EF4D14AFAAC500EB83F7 /* Settings.h */,
 				87F5EF4E14AFAAC500EB83F7 /* Settings.m */,
-				87F657FC14B0DC1F00F4AB6C /* UserAnnotation.h */,
-				87F657FD14B0DC1F00F4AB6C /* UserAnnotation.m */,
 				32E3CD8D14C3AAA5001EA2AB /* WebView.xib */,
 				32E3CD8E14C3AAA5001EA2AB /* WebViewController.h */,
 				32E3CD8F14C3AAA5001EA2AB /* WebViewController.m */,

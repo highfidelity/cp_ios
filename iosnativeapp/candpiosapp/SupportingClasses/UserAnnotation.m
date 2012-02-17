@@ -9,7 +9,7 @@
 #import "UserAnnotation.h"
 
 @implementation UserAnnotation
-@synthesize nickname, status, skills, userId, distance, distanceTo;
+@synthesize nickname, status, skills, userId, distance, distanceTo, haveMet;
 
 -(id)initFromDictionary:(NSDictionary *)jsonDict
 {
@@ -28,6 +28,12 @@
                 self.subtitle = skills;
             }            
         }
+        if ([[jsonDict objectForKey:@"met"] isEqualToNumber:[NSNumber numberWithInt:1]]) {
+            haveMet = YES;
+        } else {
+            haveMet = NO;
+        }
+
 	}
 	return self;
 }

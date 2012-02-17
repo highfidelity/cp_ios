@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11C73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
     <dependencies>
         <development defaultVersion="4200" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
@@ -49,7 +49,21 @@
                     <navigationItem key="navigationItem" id="6o6-Q6-MT8"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="960" y="-863"/>
+            <point key="canvasLocation" x="844" y="-836"/>
+        </scene>
+        <scene sceneID="eHu-7N-DhB">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="33E-2P-Q0o" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="N4F-2c-DXm" customClass="FaceToFaceInviteController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aHM-2B-dDq">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="6Ag-zb-fOm"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1386" y="-836"/>
         </scene>
         <scene sceneID="N4C-DH-qKm">
             <objects>
@@ -566,6 +580,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="N4F-2c-DXm" kind="push" id="pZ1-Wb-Lm5"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="08D-Ff-ucH">
                                 <rect key="frame" x="10" y="331" width="75" height="75"/>
@@ -646,7 +663,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="978" y="-271"/>
+            <point key="canvasLocation" x="1386" y="-114"/>
         </scene>
         <scene sceneID="X1z-oT-wPh">
             <objects>
@@ -718,7 +735,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="1386" y="-271"/>
+            <point key="canvasLocation" x="1794" y="-114"/>
         </scene>
         <scene sceneID="gtz-5a-hgw">
             <objects>
@@ -759,6 +776,9 @@
             <relationships>
                 <relationship kind="action" name="closeWindow:"/>
             </relationships>
+        </class>
+        <class className="FaceToFaceInviteController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FaceToFaceInviteController.h"/>
         </class>
         <class className="MapTabController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MapTabController.h"/>
@@ -833,6 +853,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="sCE-rt-LRg"/>
+        <segue reference="yDr-h5-PWB"/>
     </inferredMetricsTieBreakers>
 </document>

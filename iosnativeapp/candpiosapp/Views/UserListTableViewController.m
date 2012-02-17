@@ -160,14 +160,20 @@
     // Configure the cell...
     
     UserAnnotation *annotation = [missions objectAtIndex:indexPath.row];
-//    cell.textLabel.text = [NSString stringWithFormat:@"%@, %@, %f", [annotation nickname], [annotation skills], [annotation distance]];
 
-    cell.nicknameLabel.text = annotation.nickname;
+    // Add FaceToFace information
+    NSString* haveMet = @"";
+    if (annotation.haveMet) {
+        haveMet = @" (F2F)";
+    }
+    
+    cell.nicknameLabel.text = [annotation.nickname stringByAppendingString:haveMet];
     cell.statusLabel.text = annotation.status;
+    cell.distanceLabel.text = annotation.distanceTo;
+    
     //if (annotation.skills != [NSNull null]) {
     //    cell.skillsLabel.text = annotation.skills;
     //}
-    cell.distanceLabel.text = annotation.distanceTo;
         
     if (annotation.imageUrl) {
         UIImageView *leftCallout = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];

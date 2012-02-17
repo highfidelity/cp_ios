@@ -19,6 +19,7 @@
 @property (nonatomic) NSInteger userId;
 @property (nonatomic) double distance;
 @property (nonatomic, strong) NSString *distanceTo;
+@property (nonatomic) BOOL haveMet;
 
 -(id)initFromDictionary:(NSDictionary*)jsonDict;
 
