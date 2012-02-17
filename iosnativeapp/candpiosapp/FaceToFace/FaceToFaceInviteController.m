@@ -8,6 +8,7 @@
 
 #import "FaceToFaceInviteController.h"
 #import "SVProgressHUD.h"
+#import "CPapi.h"
 
 @implementation FaceToFaceInviteController
 @synthesize greeterNickname = _greeterNickname;
@@ -89,12 +90,12 @@
 #pragma mark - Actions
 
 - (IBAction)acceptF2F {
-    // TODO: send the accept command
+    [CPapi sendF2FAccept:self.greeter.userID];
     [self dismissModalViewControllerAnimated:YES];
 }
 
 - (IBAction)declineF2F {
-    // TODO: send the decline command
+    [CPapi sendF2FDecline:self.greeter.userID];
     [self dismissModalViewControllerAnimated:YES];
 }
 @end

@@ -19,6 +19,8 @@
 
 + (void)OneOnOneChatResponseHandler:(NSData *)response;
 + (void)f2fInviteResponseHandler:(NSData *)response;
++ (void)f2fAcceptResponseHandler:(NSData *)response;
++ (void)f2fDeclineResponseHandler:(NSData *)response;
 
 @end
 
@@ -127,7 +129,8 @@
 
 #pragma mark - Face-to-Face
 
-+ (void)sendF2FInvite:(int)userId {
++ (void)sendF2FInvite:(int)userId
+{
     // Send that shit
     NSLog(@"Sending F2F invite request to user id %d", userId);
     
@@ -136,11 +139,25 @@
     
     [self makeHTTPRequestWithAction:@"f2fInvite"
                      withParameters:parameters
-                    responseHandler:@selector(f2fInviteResponseHandler:)];    
+                    responseHandler:@selector(f2fInviteResponseHandler:)];
 }
 
 + (void)f2fInviteResponseHandler:(NSData *)response
 {
+    /** Server side documentation:
+     * Invite a user to Face2Face
+     * @greeted_id - the user you want to do F2F with
+     * @venue_name - the foursquare venue ID or something? need to figure this out
+     * Error codes:
+     *  0 - no error
+     *  1 - User not logged in
+     *  2 - Cannot find this user id
+     *  3 - Error writing F2F to Db
+     *  4 - F2F already in progress (password included)
+     *  5 - Other
+     *  6 - F2F already in progress (no password)
+     */
+
     NSError *error;
     NSDictionary* json = [NSJSONSerialization 
                           JSONObjectWithData: response
@@ -163,14 +180,17 @@
         }
         else if ([[json objectForKey:@"error"] isEqualToString:@"4"])
         {
-            // Error code #4 means F2F is already in progress. "message"
-            // contains the password. Do we want to show this to the greeter?
+            alertMsg = [NSString stringWithFormat:@"Invite pending with password: %@",
+                        [json objectForKey:@"message"]];
+        }
+        else if ([[json objectForKey:@"error"] isEqualToString:@"6"])
+        {
             alertMsg = @"Invite already sent";
         }
         else
         {
             // Otherwise, just show whatever came back in "message"
-            alertMsg = [[json objectForKey:@"message"] string];
+            alertMsg = [json objectForKey:@"message"];
         }
     }
     
@@ -183,5 +203,131 @@
                           otherButtonTitles: nil];
     [alert show];
 }
+
++ (void)sendF2FAccept:(int)userId
+{
+    // Send that shit
+    NSLog(@"Sending F2F accept to user id %d", userId);
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setValue:[NSString stringWithFormat:@"%d", userId] forKey:@"greeter_id"];
+    
+    [self makeHTTPRequestWithAction:@"f2fAccept"
+                     withParameters:parameters
+                    responseHandler:@selector(f2fAcceptResponseHandler:)];
+
+}
+
++ (void)f2fAcceptResponseHandler:(NSData *)response
+{
+    /** Documentation from candpweb/web/api.php
+     * @greeter_id - the user whose F2F invite you're accepting
+     * Error codes:
+     *  1 - Not logged in
+     *  2 - Invalid greeter user id
+     *  3 - DB error accepting F2f
+     *  4 - [undefined]
+     *  5 - Other (message from exception)
+     */
+
+    NSError *error;
+    NSDictionary* json = [NSJSONSerialization 
+                          JSONObjectWithData: response
+                          options: kNilOptions
+                          error: &error];
+    
+    NSString *alertMsg = @"";
+    NSLog(@"f2f response: %@", json);
+    
+    if (json == NULL)
+    {
+        alertMsg = @"Error accepting invite.";
+    } 
+    else
+    {
+        if ([[json objectForKey:@"error"] isEqualToString:@"0"] ||
+            [json objectForKey:@"error"] == nil)
+        {
+            alertMsg = @"Face to Face accepted!";
+        }
+        else
+        {
+            // Otherwise, just show whatever came back in "message"
+            alertMsg = [json objectForKey:@"message"];
+        }
+    }
+    
+    // Show error if we got one
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Face to Face"
+                          message:alertMsg
+                          delegate:self
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles: nil];
+    [alert show];
+}
+
++ (void)sendF2FDecline:(int)userId
+{
+    // Send that shit
+    NSLog(@"Sending F2F decline to user id %d", userId);
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setValue:[NSString stringWithFormat:@"%d", userId] forKey:@"greeter_id"];
+    
+    [self makeHTTPRequestWithAction:@"f2fDecline"
+                     withParameters:parameters
+                    responseHandler:@selector(f2fDeclineResponseHandler:)];
+}
+
++ (void)f2fDeclineResponseHandler:(NSData *)response
+{
+    /** Documentation from candpweb/web/api.php
+     * @greeter_id - the user whose F2F invite you're accepting
+     * Error codes:
+     *  1 - Not logged in
+     *  2 - Invalid greeter user id
+     *  3 - DB error accepting F2f
+     *  4 - [undefined]
+     *  5 - Other (message from exception)
+     */
+    
+    NSError *error;
+    NSDictionary* json = [NSJSONSerialization 
+                          JSONObjectWithData: response
+                          options: kNilOptions
+                          error: &error];
+    
+    NSString *alertMsg = @"";
+    NSLog(@"f2f response: %@", json);
+    
+    if (json == NULL)
+    {
+        alertMsg = @"Error accepting invite.";
+    } 
+    else
+    {
+        if ([[json objectForKey:@"error"] isEqualToString:@"0"] ||
+            [json objectForKey:@"error"] == nil)
+        {
+            alertMsg = @"Face to Face declined.";
+        }
+        else
+        {
+            // Otherwise, just show whatever came back in "message"
+            alertMsg = [json objectForKey:@"message"];
+        }
+    }
+    
+    // Show error if we got one
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Face to Face"
+                          message:alertMsg
+                          delegate:self
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles: nil];
+    [alert show];
+}
+
 
 @end
