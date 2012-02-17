@@ -58,6 +58,7 @@
 -(NSString *)htmlStringWithResumeText;
 -(IBAction)plusButtonPressed:(id)sender;
 -(IBAction)minusButtonPressed:(id)sender;
+-(void)addShadowToView:(UIView *)theView;
 @end
 
 @implementation UserProfileCheckedInViewController
@@ -152,17 +153,7 @@
     self.resumeWebView.opaque = NO;
     self.resumeWebView.backgroundColor = paper;
     
-//    // shadow on business card and resume
-//    CGColorRef shadowColor = [[UIColor blackColor] CGColor];
-//    CGSize shadowOffset = CGSizeMake(2,2);
-//    double shadowRadius = 3;
-//    double shadowOpacity = 0.38;
-//    for (UIView *needsShadow in [NSArray arrayWithObjects:self.userCard, self.resumeView, nil]) {
-//        needsShadow.layer.shadowColor = shadowColor;
-//        needsShadow.layer.shadowOffset = shadowOffset;
-//        needsShadow.layer.shadowRadius = shadowRadius;
-//        needsShadow.layer.shadowOpacity = shadowOpacity;
-//    }   
+    [self addShadowToView:self.userCard];
     
     // make an MKCoordinate region for the zoom level on the map
     MKCoordinateRegion region = MKCoordinateRegionMake(self.user.location, MKCoordinateSpanMake(0.005, 0.005));
@@ -170,10 +161,9 @@
     
     // this will always be the point on iPhones up to iPhone4
     // if this needs to be used on iPad we'll need to do this programatically or use an if-else
-    CGPoint rightAndUp = CGPointMake(123, 230);
+    CGPoint rightAndUp = CGPointMake(124, 232);
     CLLocationCoordinate2D coordinate = [self.mapView convertPoint:rightAndUp toCoordinateFromView:self.mapView];
     [self.mapView setCenterCoordinate:coordinate animated:NO];
-    
     
     if (!self.user.checkedIn) {
         // change the label since the user isn't here anymore
@@ -451,8 +441,14 @@
     frame.size = fittingSize;
     aWebView.frame = frame;
     
+    CGRect resumeFrame = self.resumeView.frame;
+    resumeFrame.size.height = self.resumeWebView.frame.origin.y + fittingSize.height;
+    self.resumeView.frame = resumeFrame;
+    
+    [self addShadowToView:self.resumeView];
+    
     // set the content size on the scrollview so we can actually scroll
-    self.scrollView.contentSize = CGSizeMake(320, self.resumeView.frame.origin.y + self.resumeWebView.frame.origin.y + fittingSize.height + 50);
+    self.scrollView.contentSize = CGSizeMake(320, self.resumeView.frame.origin.y + self.resumeView.frame.size.height + 50);
     // add the blue overlay where the gradient ends
     UIView *blueOverlayExtend = [[UIView alloc] initWithFrame:CGRectMake(0, 416, 320, self.scrollView.contentSize.height - 416)];
     blueOverlayExtend.backgroundColor = [UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0];
@@ -514,6 +510,19 @@
         self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, 0);
     } completion:NULL];
     
+}
+
+-(void)addShadowToView:(UIView *)theView {
+    // shadow on business card and resume
+    CGColorRef shadowColor = [[UIColor blackColor] CGColor];
+    CGSize shadowOffset = CGSizeMake(2,2);
+    double shadowRadius = 3;
+    double shadowOpacity = 0.38;
+    theView.layer.shadowColor = shadowColor;
+    theView.layer.shadowOffset = shadowOffset;
+    theView.layer.shadowRadius = shadowRadius;
+    theView.layer.shadowOpacity = shadowOpacity;
+    theView.layer.shadowPath = [UIBezierPath bezierPathWithRect:theView.bounds].CGPath;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
