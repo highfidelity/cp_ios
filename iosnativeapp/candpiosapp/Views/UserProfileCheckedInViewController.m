@@ -45,10 +45,18 @@
 @property (weak, nonatomic) IBOutlet UIWebView *resumeWebView;
 @property (weak, nonatomic) IBOutlet UIImageView *facebookVerified;
 @property (weak, nonatomic) IBOutlet UIImageView *linkedinVerified;
+@property (weak, nonatomic) IBOutlet UIButton *plusButton;
+@property (weak, nonatomic) IBOutlet UIButton *minusButton;
+@property (weak, nonatomic) IBOutlet UIButton *f2fButton;
+@property (weak, nonatomic) IBOutlet UIButton *chatButton;
+@property (weak, nonatomic) IBOutlet UIButton *payButton;
+@property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
 
 -(void)animateVenueLoadingPoints;
 -(void)stopAnimatingVenueLoadingPoints;
 -(NSString *)htmlStringWithResumeText;
+-(IBAction)plusButtonPressed:(id)sender;
+-(IBAction)minusButtonPressed:(id)sender;
 @end
 
 @implementation UserProfileCheckedInViewController
@@ -79,6 +87,12 @@
 @synthesize resumeWebView = _resumeWebView;
 @synthesize facebookVerified = _facebookVerified;
 @synthesize linkedinVerified = _linkedinVerified;
+@synthesize plusButton = _plusButton;
+@synthesize minusButton = _minusButton;
+@synthesize f2fButton = _f2fButton;
+@synthesize chatButton = _chatButton;
+@synthesize payButton = _payButton;
+@synthesize goMenuBackground = _goMenuBackground;
 @synthesize loadingPt1 = _loadingPt1;
 @synthesize loadingPt2 = _loadingPt2;
 @synthesize loadingPt3 = _loadingPt3;
@@ -317,6 +331,12 @@
     [self setLinkedinVerified:nil];
     [self setScrollView:nil];
     [self setResumeWebView:nil];
+    [self setPlusButton:nil];
+    [self setMinusButton:nil];
+    [self setF2fButton:nil];
+    [self setChatButton:nil];
+    [self setPayButton:nil];
+    [self setGoMenuBackground:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -452,6 +472,47 @@
     [self.loadingPt1.layer removeAllAnimations];
     [self.loadingPt2.layer removeAllAnimations];
     [self.loadingPt3.layer removeAllAnimations];
+}
+
+-(IBAction)plusButtonPressed:(id)sender {
+    // animate the spinning of the plus button and replacement by the minus button
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{ 
+        self.plusButton.transform = CGAffineTransformMakeRotation(M_PI); 
+        self.minusButton.transform = CGAffineTransformMakeRotation(M_PI);
+        self.minusButton.alpha = 1.0;
+    } completion: NULL];
+    // alpha transition on the plus button so there isn't a gap where we see the background
+    [UIView animateWithDuration:0.3 delay:0.2 options:UIViewAnimationCurveEaseInOut animations:^{
+        self.plusButton.alpha = 0.0;
+    } completion:NULL];
+    // animation of menu buttons shooting out
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
+        self.f2fButton.transform = CGAffineTransformMakeTranslation(0, -165);
+        self.chatButton.transform = CGAffineTransformMakeTranslation(0, -110);
+        self.payButton.transform = CGAffineTransformMakeTranslation(0, -55);
+        self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, -165);
+    } completion:NULL];
+}
+
+-(IBAction)minusButtonPressed:(id)sender {
+    // animate the spinning of the minus button and replacement by the plus button
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{ 
+        self.minusButton.transform = CGAffineTransformMakeRotation((M_PI*2)-0.0001); 
+        self.plusButton.transform = CGAffineTransformMakeRotation((M_PI*2)-0.0001);
+        self.plusButton.alpha = 1.0;
+    } completion: NULL];
+    // alpha transition on the minus button so there isn't a gap where we see the background
+    [UIView animateWithDuration:0.3 delay:0.2 options:UIViewAnimationCurveEaseInOut animations:^{
+        self.minusButton.alpha = 0.0;
+    } completion:NULL];
+    // animation of menu buttons being sucked back in
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
+        self.f2fButton.transform = CGAffineTransformMakeTranslation(0, 0);
+        self.chatButton.transform = CGAffineTransformMakeTranslation(0, 0);
+        self.payButton.transform = CGAffineTransformMakeTranslation(0, 0);
+        self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, 0);
+    } completion:NULL];
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

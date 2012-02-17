@@ -24,7 +24,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [[AppDelegate instance] hideGoAndCheckInButtons];
+    [[AppDelegate instance] hideCheckInButton];
 }
 
 - (void)didReceiveMemoryWarning

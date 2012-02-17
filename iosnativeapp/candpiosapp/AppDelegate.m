@@ -71,8 +71,7 @@
 			//[self addMessageFromRemoteNotification:dictionary updateUI:NO];
 		}
 	}
-    
-    [self addGoButton];
+
     [self addCheckInButton];
 
     return YES;
@@ -103,16 +102,6 @@
     }
 }
 
-- (void)addGoButton
-{
-    UIButton *goButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    goButton.backgroundColor = [UIColor clearColor];
-    goButton.frame = CGRectMake(10, 395, 75, 75);
-    [goButton setImage:[UIImage imageNamed:@"go-button.png"] forState:UIControlStateNormal];
-    goButton.tag = 900;
-    [self.window.rootViewController.view addSubview:goButton];
-}
-
 - (void)addCheckInButton 
 {
     UIButton *checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -121,10 +110,10 @@
     [checkInButton addTarget:self action:@selector(checkInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [checkInButton setImage:[UIImage imageNamed:@"checked-in.png"] forState:UIControlStateNormal];
     checkInButton.tag = 901;
-    [self.window.rootViewController.view addSubview:checkInButton];    
+    [self.window.rootViewController.view addSubview:checkInButton];
 }
 
-- (void)hideGoAndCheckInButtons {
+- (void)hideCheckInButton {
     UIButton *goButton = (UIButton *)[self.window.rootViewController.view viewWithTag:900];
     UIButton *checkInButton = (UIButton *)[self.window.rootViewController.view viewWithTag:901];
     goButton.alpha = 0.0;
@@ -133,7 +122,7 @@
     checkInButton.userInteractionEnabled = NO;
 }
 
-- (void)showGoAndCheckInButtons {
+- (void)showCheckInButton {
     
     UIButton *goButton = (UIButton *)[self.window.rootViewController.view viewWithTag:900];
     UIButton *checkInButton = (UIButton *)[self.window.rootViewController.view viewWithTag:901];

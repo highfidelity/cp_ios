@@ -131,7 +131,7 @@
 		hasShownLoadingScreen = true;
 	}
     
-    [[AppDelegate instance] showGoAndCheckInButtons];
+    [[AppDelegate instance] showCheckInButton];
 
     [self updateLoginButton];    
     [self refreshLocationsIfNeeded];
