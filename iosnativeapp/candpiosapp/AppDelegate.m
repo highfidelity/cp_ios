@@ -248,7 +248,8 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
         //                           valueForKey:@"f"];
         
         // Strip the user name out of the alert message (it's the string before the colon)
-        NSMutableArray* parts = [NSMutableArray arrayWithArray:[alertValue componentsSeparatedByString:@": "]];
+        NSMutableArray* parts = [NSMutableArray arrayWithArray:
+                                 [alertValue componentsSeparatedByString:@": "]];
         [parts removeObjectAtIndex:0];
         NSString *message = [parts componentsJoinedByString:@": "];
         
@@ -258,7 +259,8 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
                               delegate:self
                               cancelButtonTitle:@"OK"
                               otherButtonTitles: nil];
-        [alert show];    }
+        [alert show];
+    }
     // This is a Face-to-Face invite
     else if ([userInfo valueForKey:@"f2f1"] != nil)
     {

@@ -337,10 +337,12 @@
     NSLog(@"Sending F2F password for user id %d", userId);
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:[NSString stringWithFormat:@"%d", userId] forKey:@"greeter_id"];
-    [parameters setValue:[NSString stringWithFormat:@"%@", password] forKey:@"password"];
+    [parameters setValue:[NSString stringWithFormat:@"%d", userId]
+                  forKey:@"greeter_id"];
+    [parameters setValue:[NSString stringWithString: password]
+                  forKey:@"password"];
     
-    [self makeHTTPRequestWithAction:@"f2fDecline"
+    [self makeHTTPRequestWithAction:@"f2fVerify"
                      withParameters:parameters
                     responseHandler:@selector(f2fVerifyResponseHandler:)];
 }
@@ -377,6 +379,10 @@
             [json objectForKey:@"error"] == nil)
         {
             alertMsg = @"Yay you've met Face to Face!!";
+        }
+        else if ([[json objectForKey:@"error"] isEqualToString:@"3"])
+        {
+            alertMsg = @"Password was incorrect :(";
         }
         else
         {

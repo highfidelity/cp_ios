@@ -129,7 +129,9 @@
 }
 
 - (IBAction)f2fSubmitPassword {
-    // TODO: actually submit the password
+    [CPapi sendF2FVerify:self.user.userID
+                password:self.f2fPassword.text];
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
