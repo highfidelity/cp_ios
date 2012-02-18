@@ -15,6 +15,7 @@
 #import "UserListTableViewController.h"
 #import "SignupController.h"
 #import "MapDataSet.h"
+#import "CPUIHelper.h"
 #import "UserProfileCheckedInViewController.h"
 
 #define qHideTopNavigationBarOnMapView			0
@@ -81,26 +82,12 @@
     
 }
 
-- (void)addNavigationBarStyle
-{
-    // style the navigaiton bar... add a drop shadow below.
-    UINavigationBar *navigationBar = self.navigationController.navigationBar;
-    navigationBar.barStyle = UIBarStyleBlack;
-    [navigationBar setBackgroundImage:[UIImage imageNamed: @"header.png"] forBarMetrics: UIBarMetricsDefault];
-    UIImageView *shadowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header-shadow.png"]];
-    shadowView.frame = CGRectMake(0,
-                                  navigationBar.frame.origin.y + navigationBar.frame.size.height, 
-                                  navigationBar.frame.size.width, 
-                                  shadowView.frame.size.height);
-    [self.navigationController.view addSubview:shadowView];    
-}
-
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Title view styling
-    [self addNavigationBarStyle];
+    [CPUIHelper addDarkNavigationBarStyleToViewController:self];
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo.png"]];
     self.navigationItem.title = @"C&P"; // TODO: Remove once back button with mug logo is added to pushed views
     

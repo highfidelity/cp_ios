@@ -7,25 +7,38 @@
 //
 
 #import "CheckInDetailsViewController.h"
-#import <QuartzCore/QuartzCore.h>
+#import "SVProgressHUD.h"
+#import "CPUIHelper.h"
+#import "SignupController.h"
+#import "AppDelegate.h"
 
-@interface CheckInDetailsViewController()
+@interface CheckInDetailsViewController() <UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UIView *blueOverlay;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UILabel *checkInLabel;
 @property (weak, nonatomic) IBOutlet UILabel *placeName;
 @property (weak, nonatomic) IBOutlet UILabel *placeAddress;
 @property (weak, nonatomic) IBOutlet UIView *checkInDetails;
+@property (weak, nonatomic) IBOutlet UILabel *willLabel;
+@property (weak, nonatomic) IBOutlet UILabel *orLabel;
+@property (weak, nonatomic) IBOutlet UILabel *wantLabel;
+@property (weak, nonatomic) IBOutlet UITextField *statusTextField;
 
 @end
 
 @implementation CheckInDetailsViewController
+@synthesize blueOverlay = _blueOverlay;
 @synthesize mapView = _mapView;
 @synthesize scrollView = _scrollView;
 @synthesize checkInLabel = _checkInLabel;
 @synthesize placeName = _placeName;
 @synthesize placeAddress = _placeAddress;
 @synthesize checkInDetails = _checkInDetails;
+@synthesize willLabel = _willLabel;
+@synthesize orLabel = _orLabel;
+@synthesize wantLabel = _wantLabel;
+@synthesize statusTextField = _statusTextField;
 @synthesize place = _place;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -72,22 +85,12 @@
     
     // set LeagueGothic font where applicable
     UIFont *gothic = [UIFont fontWithName:@"LeagueGothic" size:26.f];
-    for (UILabel *labelNeedsGothic in [NSArray arrayWithObjects:self.checkInLabel, nil]) {
+    for (UILabel *labelNeedsGothic in [NSArray arrayWithObjects:self.checkInLabel, self.willLabel, self.orLabel, self.wantLabel, nil]) {
         labelNeedsGothic.font = gothic;
     }
     
-    // shadow on business card and resume
-    CGColorRef shadowColor = [[UIColor blackColor] CGColor];
-    CGSize shadowOffset = CGSizeMake(0,2);
-    double shadowRadius = 3;
-    double shadowOpacity = 1.0;
-    for (UIView *needsShadow in [NSArray arrayWithObjects:self.mapView, nil]) {
-        needsShadow.layer.shadowColor = shadowColor;
-        needsShadow.layer.shadowOffset = shadowOffset;
-        needsShadow.layer.shadowRadius = shadowRadius;
-        needsShadow.layer.shadowOpacity = shadowOpacity;
-        needsShadow.layer.shadowPath = [UIBezierPath bezierPathWithRect:needsShadow.bounds].CGPath;
-    } 
+    [CPUIHelper addShadowToView:self.checkInDetails color:[UIColor blackColor] offset:CGSizeMake(0, -2) radius:3 opacity:0.24];
+    [CPUIHelper addShadowToView:self.blueOverlay color:[UIColor blackColor] offset:CGSizeMake(0,2) radius:3 opacity:0.24];
     
     // set the diagonal noise texture on the horizontal scrollview
     UIColor *texture = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise.png"]];
@@ -95,7 +98,9 @@
     
     // set the light diagonal noise texture on the bottom UIView
     UIColor *lightTexture = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-light.png"]];
-    self.checkInDetails.backgroundColor = lightTexture;    
+    self.checkInDetails.backgroundColor = lightTexture; 
+    
+    self.statusTextField.delegate = self;
     
     self.placeName.text = self.place.name;
     self.placeAddress.text = self.place.address;
@@ -109,6 +114,11 @@
     [self setPlaceAddress:nil];
     [self setCheckInLabel:nil];
     [self setCheckInDetails:nil];
+    [self setBlueOverlay:nil];
+    [self setWillLabel:nil];
+    [self setOrLabel:nil];
+    [self setWantLabel:nil];
+    [self setStatusTextField:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -118,6 +128,94 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (IBAction)checkInPressed:(id)sender {
+    // send the server your lat/lon, checkin_time (now), checkout_time (now + duration from slider), and the venue data from the place. 
+    // checkOutTime is equal to the slider value (represented in hours) * 60 minutes * 60 seconds to normalize the units into seconds
+    
+    NSInteger checkInTime = [[NSDate date] timeIntervalSince1970];
+    NSInteger checkInDuration = 5;    
+    NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
+    NSString *foursquareID = self.place.foursquareID;
+    NSString *statusText = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                        (__bridge CFStringRef) self.statusTextField.text,
+                                                                                        NULL,
+                                                                                        (CFStringRef) @"!*'();:@&=+$,/?%#[]",
+                                                                                        kCFStringEncodingUTF8);
+    
+    NSString *venueName = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                       (__bridge CFStringRef) self.place.name,
+                                                                                       NULL,
+                                                                                       (CFStringRef) @"!*'();:@&=+$,/?%#[]",
+                                                                                       kCFStringEncodingUTF8);
+    
+    if (statusText == NULL) {
+        statusText = @"";
+    }
+    
+    [SVProgressHUD showWithStatus:@"Checking In..."];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@&status=%@&venue_name=%@", kCandPWebServiceUrl, self.place.lat, self.place.lng, checkInTime, checkOutTime, foursquareID, statusText, venueName];
+    
+    NSURL *locationURL = [NSURL URLWithString:urlString];
+    
+    dispatch_async(dispatch_get_global_queue(
+                                             DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData* data = [NSData dataWithContentsOfURL: 
+                        locationURL];
+        [self performSelectorOnMainThread:@selector(fetchedData:) 
+                               withObject:data
+                            waitUntilDone:YES];
+    });   
+    
+    // Fire a notification 5 minutes before checkout time
+    NSInteger minutesBefore = 5;
+    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+    if (localNotif) {
+        // Cancel all old local notifications
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
+        
+        localNotif.alertBody = @"You will be checked out of C&P in 5 min and will no longer be shown on the map.";
+        localNotif.alertAction = @"Check In";
+        localNotif.soundName = UILocalNotificationDefaultSoundName;
+        
+        localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkOutTime - minutesBefore * 60)];
+        //        localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkInTime + 10)];
+        localNotif.timeZone = [NSTimeZone defaultTimeZone];
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+    }    
+}
+
+- (void)fetchedData:(NSData *)responseData {
+    //parse out the json data
+    
+    NSError* error;
+    NSDictionary* json = [NSJSONSerialization 
+                          JSONObjectWithData:responseData
+                          
+                          options:kNilOptions 
+                          error:&error];
+    
+    
+    [SVProgressHUD dismiss];
+    
+    if ([[json objectForKey:@"response"] intValue] == 1) {
+        [self dismissModalViewControllerAnimated:YES];
+    }
+    else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You must be logged in to C&P in order to check in." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Okay", nil];
+        [alertView show];
+        
+        SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 
 @end

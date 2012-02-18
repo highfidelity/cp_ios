@@ -13,7 +13,7 @@
 #import "LocalizedDistanceCalculator.h"
 #import "FoursquareAPIRequest.h"
 #import "AFJSONRequestOperation.h"
-#import <QuartzCore/QuartzCore.h>
+#import "CPUIHelper.h"
 #import "CPapi.h"
 
 @interface UserProfileCheckedInViewController() <UIWebViewDelegate, UIActionSheetDelegate>
@@ -153,7 +153,7 @@
     self.resumeWebView.opaque = NO;
     self.resumeWebView.backgroundColor = paper;
     
-    [self addShadowToView:self.userCard];
+    [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     
     // make an MKCoordinate region for the zoom level on the map
     MKCoordinateRegion region = MKCoordinateRegionMake(self.user.location, MKCoordinateSpanMake(0.005, 0.005));
@@ -480,7 +480,7 @@
     resumeFrame.size.height = self.resumeWebView.frame.origin.y + fittingSize.height;
     self.resumeView.frame = resumeFrame;
     
-    [self addShadowToView:self.resumeView];
+    [CPUIHelper addShadowToView:self.resumeView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     
     // set the content size on the scrollview so we can actually scroll
     self.scrollView.contentSize = CGSizeMake(320, self.resumeView.frame.origin.y + self.resumeView.frame.size.height + 50);
@@ -545,19 +545,6 @@
         self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, 0);
     } completion:NULL];
     
-}
-
--(void)addShadowToView:(UIView *)theView {
-    // shadow on business card and resume
-    CGColorRef shadowColor = [[UIColor blackColor] CGColor];
-    CGSize shadowOffset = CGSizeMake(2,2);
-    double shadowRadius = 3;
-    double shadowOpacity = 0.38;
-    theView.layer.shadowColor = shadowColor;
-    theView.layer.shadowOffset = shadowOffset;
-    theView.layer.shadowRadius = shadowRadius;
-    theView.layer.shadowOpacity = shadowOpacity;
-    theView.layer.shadowPath = [UIBezierPath bezierPathWithRect:theView.bounds].CGPath;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

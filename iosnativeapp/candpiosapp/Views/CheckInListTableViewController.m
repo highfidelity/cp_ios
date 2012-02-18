@@ -2,6 +2,7 @@
 #import "AppDelegate.h"
 #import "CPPlace.h"
 #import "CheckInDetailsViewController.h"
+#import "CPUIHelper.h"
 #import "SVProgressHUD.h"
 #import "SignupController.h"
 
@@ -26,27 +27,13 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)addNavigationBarStyle
-{
-    // style the navigaiton bar... add a drop shadow below.
-    UINavigationBar *navigationBar = self.navigationController.navigationBar;
-    navigationBar.barStyle = UIBarStyleBlack;
-    [navigationBar setBackgroundImage:[UIImage imageNamed: @"header.png"] forBarMetrics: UIBarMetricsDefault];
-    UIImageView *shadowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header-shadow.png"]];
-    shadowView.frame = CGRectMake(0,
-                                  navigationBar.frame.origin.y + navigationBar.frame.size.height, 
-                                  navigationBar.frame.size.width, 
-                                  shadowView.frame.size.height);
-    [self.navigationController.view addSubview:shadowView];    
-}
-
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Title view styling
-    [self addNavigationBarStyle];
+    [CPUIHelper addDarkNavigationBarStyleToViewController:self];
     self.title = @"Places";
     refreshLocationsNow = YES;
 }
