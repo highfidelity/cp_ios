@@ -221,15 +221,19 @@
     [UIView setAnimationDuration:0.3];
     
     float shift = menuWidthPercentage * [UIScreen mainScreen].bounds.size.width;
+    CGRect menuFrame = CGRectMake(0, 0, shift, CGRectGetHeight(self.view.frame));
     if (showMenu) {
         // shift to the right, hiding buttons 
-        CGRect menuFrame = CGRectMake(0, 0, shift, CGRectGetHeight(self.view.frame));
         self.mapAndButtonsView.frame = CGRectOffset(self.view.bounds, CGRectGetWidth(menuFrame), 0);
+        self.navigationController.navigationBar.frame = CGRectOffset(self.navigationController.navigationBar.frame, CGRectGetWidth(menuFrame), 0);
         [[AppDelegate instance] hideCheckInButton];
+        self.mapAndButtonsView.userInteractionEnabled = NO;
     } else {
         // shift to the left, restoring the buttons
         self.mapAndButtonsView.frame = self.view.frame;
+        self.navigationController.navigationBar.frame = CGRectOffset(self.navigationController.navigationBar.frame, -CGRectGetWidth(menuFrame), 0);
         [[AppDelegate instance] showCheckInButton];
+        self.mapAndButtonsView.userInteractionEnabled = YES;
     }
     [UIView commitAnimations];
     isMenuShowing = showMenu ? 1 : 0;

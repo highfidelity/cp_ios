@@ -24,6 +24,12 @@
     UINavigationBar *navigationBar = viewController.navigationController.navigationBar;
     navigationBar.barStyle = UIBarStyleBlack;
     [navigationBar setBackgroundImage:[UIImage imageNamed: @"header.png"] forBarMetrics: UIBarMetricsDefault];
+    // The dark underside of the nav bar, visible when the settings menu slides open
+    UIImageView *underBarImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"header.png"]];
+    underBarImageView.frame = navigationBar.frame;
+    underBarImageView.alpha = 0.75;
+    [viewController.navigationController.view insertSubview:underBarImageView atIndex:0];
+    // Drop shadow
     UIImageView *shadowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header-shadow.png"]];
     shadowView.frame = CGRectMake(0,
                                   navigationBar.frame.origin.y + navigationBar.frame.size.height, 
