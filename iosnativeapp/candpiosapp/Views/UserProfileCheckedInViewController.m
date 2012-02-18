@@ -58,7 +58,6 @@
 -(NSString *)htmlStringWithResumeText;
 -(IBAction)plusButtonPressed:(id)sender;
 -(IBAction)minusButtonPressed:(id)sender;
--(void)addShadowToView:(UIView *)theView;
 @end
 
 @implementation UserProfileCheckedInViewController

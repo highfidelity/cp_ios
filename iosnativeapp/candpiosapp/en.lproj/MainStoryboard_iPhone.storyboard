@@ -441,21 +441,71 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="K5e-Td-4Dl">
-                                                <rect key="frame" x="219" y="79" width="101" height="101"/>
+                                            <view autoresizesSubviews="NO" contentMode="scaleToFill" id="oGr-2L-5oG" customClass="CheckInDetailsFrame">
+                                                <rect key="frame" x="14" y="79" width="286" height="84"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <state key="normal" image="check-in-big.png">
-                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <state key="highlighted">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="checkInPressed:" destination="Hui-QQ-OPh" eventType="touchUpInside" id="LC5-qU-PR7"/>
-                                                </connections>
-                                            </button>
+                                                <subviews>
+                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="7" continuous="NO" id="WXJ-T8-1gt">
+                                                        <rect key="frame" x="15" y="55" width="171" height="23"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <connections>
+                                                            <action selector="sliderChanged:" destination="Hui-QQ-OPh" eventType="valueChanged" id="Wte-MB-ekl"/>
+                                                        </connections>
+                                                    </slider>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1001" contentMode="left" text="1" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="Y4a-op-9xb">
+                                                        <rect key="frame" x="10" y="31" width="30" height="25"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                                                        <color key="textColor" red="0.25882352939999997" green="0.50980392159999999" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1003" contentMode="left" text="3" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="nQY-G5-vYa">
+                                                        <rect key="frame" x="60" y="31" width="30" height="25"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1005" contentMode="left" text="5" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="cIO-Fy-mHC">
+                                                        <rect key="frame" x="111" y="31" width="30" height="25"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="3 hours" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="G3n-Dz-x2c">
+                                                        <rect key="frame" x="194" y="4" width="101" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                        <color key="textColor" red="0.25882352941176467" green="0.50980392156862742" blue="0.5490196078431373" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="K5e-Td-4Dl">
+                                                        <rect key="frame" x="195" y="6" width="101" height="101"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                        <state key="normal" image="check-in-big.png">
+                                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <state key="highlighted">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="checkInPressed:" destination="Hui-QQ-OPh" eventType="touchUpInside" id="LC5-qU-PR7"/>
+                                                        </connections>
+                                                    </button>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1007" contentMode="left" text="7" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="chT-HL-sYR">
+                                                        <rect key="frame" x="161" y="31" width="30" height="25"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
@@ -469,12 +519,14 @@
                         <outlet property="blueOverlay" destination="cVB-g4-3MG" id="c2A-bs-Gue"/>
                         <outlet property="checkInDetails" destination="qWq-Gn-8ou" id="xry-cg-1Uk"/>
                         <outlet property="checkInLabel" destination="qmb-as-qZ8" id="5yy-az-rO1"/>
+                        <outlet property="durationString" destination="G3n-Dz-x2c" id="YTh-QE-lWL"/>
                         <outlet property="mapView" destination="MQF-9M-cU0" id="iR6-un-ud3"/>
                         <outlet property="orLabel" destination="VYL-ZT-wRz" id="D2x-lc-UaB"/>
                         <outlet property="placeAddress" destination="PtD-Uj-ZiF" id="THK-hq-Aq8"/>
                         <outlet property="placeName" destination="a2d-yI-7Oz" id="8zr-fy-4iB"/>
                         <outlet property="scrollView" destination="TF0-4o-hEC" id="rW7-c4-Skc"/>
                         <outlet property="statusTextField" destination="41Q-Mq-N3C" id="YES-9v-v6u"/>
+                        <outlet property="timeSlider" destination="WXJ-T8-1gt" id="0Xb-Ha-vfx"/>
                         <outlet property="wantLabel" destination="TKZ-pk-IRu" id="d5F-UG-VnU"/>
                         <outlet property="willLabel" destination="zI2-Ae-Iwy" id="3jT-Q8-9OV"/>
                     </connections>
@@ -1015,18 +1067,24 @@
         <image name="verified-linked-in.png" width="16" height="16"/>
     </resources>
     <classes>
+        <class className="CheckInDetailsFrame" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInDetailsFrame.h"/>
+        </class>
         <class className="CheckInDetailsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInDetailsViewController.h"/>
             <relationships>
+                <relationship kind="action" name="sliderChanged:"/>
                 <relationship kind="outlet" name="blueOverlay" candidateClass="UIView"/>
                 <relationship kind="outlet" name="checkInDetails" candidateClass="UIView"/>
                 <relationship kind="outlet" name="checkInLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="durationString" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
                 <relationship kind="outlet" name="orLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="placeAddress" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="placeName" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="statusTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="timeSlider" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="wantLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="willLabel" candidateClass="UILabel"/>
             </relationships>

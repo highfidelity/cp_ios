@@ -24,6 +24,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *orLabel;
 @property (weak, nonatomic) IBOutlet UILabel *wantLabel;
 @property (weak, nonatomic) IBOutlet UITextField *statusTextField;
+@property (weak, nonatomic) IBOutlet UISlider *timeSlider;
+@property (assign, nonatomic) int checkInDuration;
+@property (weak, nonatomic) IBOutlet UILabel *durationString;
+
+-(IBAction)sliderChanged:(id)sender;
 
 @end
 
@@ -39,7 +44,10 @@
 @synthesize orLabel = _orLabel;
 @synthesize wantLabel = _wantLabel;
 @synthesize statusTextField = _statusTextField;
+@synthesize timeSlider = _timeSlider;
 @synthesize place = _place;
+@synthesize checkInDuration = _checkInDuration;
+@synthesize durationString = _durationString;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -56,6 +64,12 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+}
+
+-(void)setCheckInDuration:(int)checkInDuration
+{
+    self.durationString.text = [NSString stringWithFormat:@"%d hours", checkInDuration];
+    _checkInDuration = checkInDuration;
 }
 
 #pragma mark - View lifecycle
@@ -104,6 +118,9 @@
     
     self.placeName.text = self.place.name;
     self.placeAddress.text = self.place.address;
+    
+    [self.timeSlider setThumbImage:[UIImage imageNamed:@"check-in-slider-handle.png"] forState:UIControlStateNormal];
+    self.checkInDuration = self.timeSlider.value;
 }
 
 - (void)viewDidUnload
@@ -119,6 +136,8 @@
     [self setOrLabel:nil];
     [self setWantLabel:nil];
     [self setStatusTextField:nil];
+    [self setTimeSlider:nil];
+    [self setDurationString:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -141,7 +160,7 @@
     // checkOutTime is equal to the slider value (represented in hours) * 60 minutes * 60 seconds to normalize the units into seconds
     
     NSInteger checkInTime = [[NSDate date] timeIntervalSince1970];
-    NSInteger checkInDuration = 5;    
+    NSInteger checkInDuration = self.checkInDuration;    
     NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
     NSString *foursquareID = self.place.foursquareID;
     NSString *statusText = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
@@ -216,6 +235,31 @@
         SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
         [self.navigationController pushViewController:controller animated:YES];
     }
+}
+
+-(IBAction)sliderChanged:(id)sender
+{
+    float value = self.timeSlider.value;
+    if (value < 2) {
+        value = 1;
+    } else if (value < 4) {
+        value = 3;
+    } else if (value < 6) {
+        value = 5;
+    } else {
+        value = 7;
+    }
+    
+    UILabel *previousSelectedValueLabel = (UILabel *)[self.view viewWithTag:(1000 + self.checkInDuration)];
+    previousSelectedValueLabel.textColor = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1.0];
+    previousSelectedValueLabel.font = [UIFont boldSystemFontOfSize:20.0];
+    
+    UILabel *selectedValueLabel = (UILabel *)[self.view viewWithTag:(1000 + value)];
+    selectedValueLabel.textColor = self.durationString.textColor;
+    selectedValueLabel.font = [UIFont boldSystemFontOfSize:28.0];
+    
+    [self.timeSlider setValue:value animated:YES];
+    self.checkInDuration = value;
 }
 
 @end
