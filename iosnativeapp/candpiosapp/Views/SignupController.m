@@ -25,6 +25,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [[AppDelegate instance] hideCheckInButton];
+    [self.navigationItem setHidesBackButton:YES animated:YES];
+    self.title = @"Log In";
 }
 
 - (void)didReceiveMemoryWarning
