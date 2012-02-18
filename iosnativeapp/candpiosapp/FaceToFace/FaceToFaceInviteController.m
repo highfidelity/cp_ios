@@ -20,6 +20,7 @@
 @synthesize f2fPassword = _f2fPassword;
 
 @synthesize user = _user;
+@synthesize passwordMode = _passwordMode;
 
 /*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -56,20 +57,33 @@
     [super viewDidLoad];
     
     // Look up the user's information
-    if (self.user == nil) {
+    if (self.user == nil)
+    {
         [NSException raise:@"Face to Face invite error"
                     format:@"Greeter's userId is invalid: %d", self.user.userID];
     }
+    
+    if (self.passwordMode != nil)
+    {
+        self.f2fAcceptButton.hidden = YES;
+        self.f2fDeclineButton.hidden = YES;
+        self.f2fActionCaption.hidden = YES;
+        self.f2fText.text = [NSString stringWithFormat:@"The password is: %@", self.passwordMode];
+    }
 
     [SVProgressHUD showWithStatus:@"Loading request"];
-    [self.user loadUserResumeData:^(User *user, NSError *error) {
-        if (user) {
+    [self.user loadUserResumeData:^(User *user, NSError *error)
+    {
+        if (user)
+        {
             self.user = user;
             self.userNickname.text = user.nickname;
             // TODO: Why does UserProfileCheckedInViewController have setImageWithURL but we don't??? -alexi 2012-02-17
             // [self.userImage setImageWithURL:user.urlPhoto];
             [SVProgressHUD dismiss];
-        } else {
+        }
+        else
+        {
             [SVProgressHUD dismissWithError:[error localizedDescription]];
         }
     }];

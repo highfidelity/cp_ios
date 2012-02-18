@@ -268,7 +268,6 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
         
         f2fView.user = [[User alloc] init];
         f2fView.user.userID = [userId intValue];
-        f2fView.f2fPassword.hidden = YES;
         
         [self.window.rootViewController presentModalViewController:f2fView animated:YES];
     }
@@ -276,11 +275,13 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
     else if ([userInfo valueForKey:@"f2f2"] != nil)
     {
         NSString *userId = [userInfo valueForKey:@"f2f2"];
+        NSString *password = [userInfo valueForKey:@"password"];
         
         FaceToFaceInviteController *f2fView = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"FaceToFaceInviteView"];
         
         f2fView.user = [[User alloc] init];
         f2fView.user.userID = [userId intValue];
+        f2fView.passwordMode = [NSString stringWithString:password];
         
         [self.window.rootViewController presentModalViewController:f2fView animated:YES];
     }

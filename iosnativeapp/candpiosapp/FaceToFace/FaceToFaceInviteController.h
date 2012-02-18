@@ -12,6 +12,7 @@
 @interface FaceToFaceInviteController : UIViewController
 
 @property (nonatomic, strong) User *user;
+@property (nonatomic, strong) NSString *passwordMode;
 @property (weak, nonatomic) IBOutlet UILabel *userNickname;
 @property (weak, nonatomic) IBOutlet UIImageView *userImage;
 @property (weak, nonatomic) IBOutlet UILabel *f2fText;
