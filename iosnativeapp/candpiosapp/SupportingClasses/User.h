@@ -36,6 +36,7 @@
 @property (nonatomic, strong) NSDictionary *listingsAsAgent;
 @property (nonatomic, strong) NSArray *workInformation;
 @property (nonatomic, strong) NSArray *educationInformation;
+@property (nonatomic, strong) NSDictionary *reviews;
 
 -(void)loadUserResumeData:(void (^)(User *user, NSError *error))completion;
 

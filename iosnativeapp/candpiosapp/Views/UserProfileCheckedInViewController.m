@@ -249,7 +249,9 @@
             self.resumeSpent.text = [@"$" stringByAppendingString:[decimalFormatter stringFromNumber:[NSNumber numberWithDouble:self.user.totalSpent]]];
             
             // load html into the bottom of the resume view for all the user data
-            [self.resumeWebView loadHTMLString:[self htmlStringWithResumeText] baseURL:nil];
+            NSString *path = [[NSBundle mainBundle] bundlePath];
+            NSURL *baseURL = [NSURL fileURLWithPath:path];
+            [self.resumeWebView loadHTMLString:[self htmlStringWithResumeText] baseURL:baseURL];
             
             // request using the FoursquareAPIRequest class to get the venue data
             [FoursquareAPIRequest dictForVenueWithFoursquareID:self.user.placeCheckedIn.foursquareID :^(NSDictionary *fsDict, NSError *error) {
@@ -336,7 +338,7 @@
 - (NSString *)htmlStringWithResumeText {
     NSMutableArray *resumeHtml = [NSMutableArray array];
     // beginning of the string is styling info
-    [resumeHtml addObject:@"<style type='text/css'>body {font-family: Helvetica; font-size: 11pt; color: rgb(68,68,68); padding: 5pt 5pt; word-wrap: break-word;} .listing {width: 150pt; padding: 5pt 5pt 5pt 0pt; border-right: 1pt solid #C1C1C1;} .price {padding-left: 5pt;} table {font-size: 11pt; border-collapse: collapse;} th {text-align: left; padding-bottom: 5pt;} td {border-top: 1pt solid #C1C1C1;} </style>\n"];
+    [resumeHtml addObject:@"<style type='text/css'>body {font-family: Helvetica; font-size: 11pt; color: rgb(68,68,68); padding: 5pt 5pt; word-wrap: break-word;} .listing {width: 150pt; padding: 5pt 5pt 5pt 0pt; border-right: 1pt solid #C1C1C1;} .price {padding-left: 5pt;} table {font-size: 11pt; border-collapse: collapse;} th {text-align: left; padding-bottom: 5pt;} td {border-top: 1pt solid #C1C1C1;} a {color: #333;} #more_reviews a {display:inline-block; width: 100%; text-align: center} #more_reviews {padding: 0;margin: 0 0 15px;} </style>\n"];
     
     [resumeHtml addObject:[NSString stringWithFormat:@"<p><b>Joined:</b> %@</p>", self.user.join_date]];
     // add the bio if we have it
@@ -408,6 +410,39 @@
     
     // add user trust information
     [resumeHtml addObject:[NSString stringWithFormat:@"<p><b>Trusted by %d people</b></p>", self.user.trusted_by]];
+    
+    //reviews
+    int total_reviews = [[[[self user] reviews] objectForKey:@"records"] intValue];
+    if (total_reviews > 0) {
+        [resumeHtml addObject:@"<p><b>Reviews</b></p>"];
+        
+        int review_row = 0;
+        
+        for (NSDictionary *review in [[[self user] reviews] objectForKey:@"rows"]) {
+            review_row++;
+            
+            if (review_row == 6) {
+                NSString *more_link = @"<p id='more_reviews'><a href='javascript:document.getElementById(\"more_reviews\").style.display=\"none\";document.getElementById(\"extra_reviews\").style.display=\"block\";'>more reviews</a></p>";
+                [resumeHtml addObject: more_link];
+                [resumeHtml addObject: @"<div style='display: none;' id='extra_reviews'>"];
+            }
+            
+            NSString *ratingImg = @"thumbup.png";
+            
+            if ([[review objectForKey:@"rating"] intValue] == -1) {
+                ratingImg = @"thumbdown.png";
+            }
+            
+            [resumeHtml addObject:[NSString 
+                                   stringWithFormat:@"<p><img src='%@'/> \"%@\"</p>", ratingImg, [review objectForKey:@"review"]]];
+        }
+        
+        if (review_row > 5) {
+            [resumeHtml addObject: @"</div>"];
+        }
+        
+        [resumeHtml addObject: @"<br/>"];
+    }
     
     // show listings as Agent in a table
     if (self.user.listingsAsAgent.count > 0) {

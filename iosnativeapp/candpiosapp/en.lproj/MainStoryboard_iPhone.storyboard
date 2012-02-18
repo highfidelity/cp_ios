@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2177" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
     <dependencies>
         <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1173"/>
     </dependencies>
     <scenes>
+        <!--Face To Face Invite Controller-->
         <scene sceneID="nyG-HQ-c1i">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F7V-o4-rhv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -13,7 +14,7 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Face to Face off!" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" minimumFontSize="10" id="eWF-tS-lxR">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Face to Face off!" lineBreakMode="tailTruncation" minimumFontSize="10" id="eWF-tS-lxR">
                                 <rect key="frame" x="55" y="20" width="211" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
@@ -70,7 +71,7 @@
                                 <rect key="frame" x="55" y="62" width="90" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="This user is nearby and wants to meet you!" lineBreakMode="wordWrap" numberOfLines="4" adjustsFontSizeToFit="NO" minimumFontSize="10" id="vwu-j1-cSl">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="This user is nearby and wants to meet you!" lineBreakMode="wordWrap" numberOfLines="4" minimumFontSize="10" id="vwu-j1-cSl">
                                 <rect key="frame" x="55" y="207" width="211" height="62"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -103,6 +104,7 @@
             </objects>
             <point key="canvasLocation" x="-76" y="1132"/>
         </scene>
+        <!--View Controller - Settings-->
         <scene sceneID="P8B-gs-TKc">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZvI-Kw-LUQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -117,6 +119,7 @@
             </objects>
             <point key="canvasLocation" x="385" y="-836"/>
         </scene>
+        <!--User List Table View Controller-->
         <scene sceneID="1mX-pB-Ub5">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pIh-oL-BFt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -149,6 +152,7 @@
             </objects>
             <point key="canvasLocation" x="844" y="-836"/>
         </scene>
+        <!--View Controller - Balance-->
         <scene sceneID="N4C-DH-qKm">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="roq-lO-JF8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -163,6 +167,7 @@
             </objects>
             <point key="canvasLocation" x="385" y="-1398"/>
         </scene>
+        <!--Map Tab Controller-->
         <scene sceneID="Q7p-8T-DVG">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WIW-bY-l8z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -279,6 +284,7 @@
             </objects>
             <point key="canvasLocation" x="-76" y="-114"/>
         </scene>
+        <!--Check In List Table View Controller - Places-->
         <scene sceneID="A3v-gP-kYR">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A2n-ak-jSV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -329,6 +335,7 @@
             </objects>
             <point key="canvasLocation" x="450" y="455"/>
         </scene>
+        <!--Check In Details View Controller-->
         <scene sceneID="5iv-uJ-C8R">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FrM-U4-07M" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -424,6 +431,7 @@
             </objects>
             <point key="canvasLocation" x="875" y="466"/>
         </scene>
+        <!--User Profile Checked In View Controller-->
         <scene sceneID="jZa-Lm-4za">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ySL-Md-ewH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -705,7 +713,7 @@
                                                 <rect key="frame" x="276" y="14" width="13" height="13"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </imageView>
-                                            <webView userInteractionEnabled="NO" contentMode="scaleToFill" id="b0G-FA-LgU">
+                                            <webView contentMode="scaleToFill" id="b0G-FA-LgU">
                                                 <rect key="frame" x="0.0" y="83" width="300" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -847,6 +855,7 @@
             </objects>
             <point key="canvasLocation" x="1386" y="-114"/>
         </scene>
+        <!--Navigation Controller - Nearby-->
         <scene sceneID="X1z-oT-wPh">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flw-Jh-D1t" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -867,6 +876,7 @@
             </objects>
             <point key="canvasLocation" x="-603" y="-30"/>
         </scene>
+        <!--Navigation Controller-->
         <scene sceneID="3mV-Fb-MBc">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lzg-tm-OqG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -884,6 +894,7 @@
             </objects>
             <point key="canvasLocation" x="-76" y="455"/>
         </scene>
+        <!--One On One Chat View Controller-->
         <scene sceneID="yyw-Kg-745">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pc0-qS-LiY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -920,6 +931,7 @@
             </objects>
             <point key="canvasLocation" x="1794" y="-114"/>
         </scene>
+        <!--View Controller - Face To Face-->
         <scene sceneID="gtz-5a-hgw">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8HD-fd-1VU" userLabel="First Responder" sceneMemberID="firstResponder"/>

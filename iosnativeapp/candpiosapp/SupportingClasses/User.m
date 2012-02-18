@@ -35,7 +35,8 @@
 @synthesize listingsAsAgent = _listingsAsAgent;
 @synthesize workInformation = _workInformation;
 @synthesize educationInformation  = _educationInformation;
-@synthesize jobTitle;
+@synthesize jobTitle, reviews;
+
 
 -(id)init
 {
@@ -99,6 +100,8 @@
         // listings information
         self.listingsAsClient = [JSON objectForKey:@"listingsAsClient"];
         self.listingsAsAgent = [JSON objectForKey:@"listingsAsAgent"];
+        
+        self.reviews = [JSON objectForKey:@"reviews"];
         
         // work and education
         self.workInformation = [JSON objectForKey:@"work"];
