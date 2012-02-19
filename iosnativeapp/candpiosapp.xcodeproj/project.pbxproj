@@ -209,6 +209,8 @@
 		87F6580414B0DDFD00F4AB6C /* CandPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F6580314B0DDFC00F4AB6C /* CandPAnnotation.m */; };
 		E402DB6314D43C1700BC82E8 /* defaultAvatar50.png in Resources */ = {isa = PBXBuildFile; fileRef = E402DB6214D43C1700BC82E8 /* defaultAvatar50.png */; };
 		E402DB6614D43C2B00BC82E8 /* pin-frame.png in Resources */ = {isa = PBXBuildFile; fileRef = E402DB6514D43C2B00BC82E8 /* pin-frame.png */; };
+		E48C631B14EFCA1F00AC2979 /* PayUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E48C631A14EFCA1F00AC2979 /* PayUserViewController.m */; };
+		E4C35C4114F1323A009B6DBF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C35C4014F1323A009B6DBF /* AudioToolbox.framework */; };
 		E4CC0D6914EF1FB2000CB8F8 /* thumbdown.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CC0D6714EF1FB2000CB8F8 /* thumbdown.png */; };
 		E4CC0D6A14EF1FB2000CB8F8 /* thumbup.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CC0D6814EF1FB2000CB8F8 /* thumbup.png */; };
 		E4E16DA414DDEF26004E4586 /* UserProfileCheckedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E16DA414DDEF26004E4585 /* UserProfileCheckedInViewController.m */; };
@@ -582,6 +584,9 @@
 		87F6580314B0DDFC00F4AB6C /* CandPAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CandPAnnotation.m; sourceTree = "<group>"; };
 		E402DB6214D43C1700BC82E8 /* defaultAvatar50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultAvatar50.png; sourceTree = "<group>"; };
 		E402DB6514D43C2B00BC82E8 /* pin-frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-frame.png"; sourceTree = "<group>"; };
+		E48C631914EFCA1F00AC2979 /* PayUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayUserViewController.h; sourceTree = "<group>"; };
+		E48C631A14EFCA1F00AC2979 /* PayUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayUserViewController.m; sourceTree = "<group>"; };
+		E4C35C4014F1323A009B6DBF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		E4CC0D6714EF1FB2000CB8F8 /* thumbdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbdown.png; sourceTree = "<group>"; };
 		E4CC0D6814EF1FB2000CB8F8 /* thumbup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbup.png; sourceTree = "<group>"; };
 		E4E16DA414DDEF26004E4584 /* UserProfileCheckedInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileCheckedInViewController.h; sourceTree = "<group>"; };
@@ -608,6 +613,7 @@
 				871EFB0F14AE9C820030658B /* CoreGraphics.framework in Frameworks */,
 				320604A414D5BBA40035A88D /* libFlurryAnalytics.a in Frameworks */,
 				3267F60A14D9196800BFFBAA /* libUAirship-1.1.3.a in Frameworks */,
+				E4C35C4114F1323A009B6DBF /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -963,20 +969,21 @@
 		871EFB0914AE9C820030658B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E4C35C4014F1323A009B6DBF /* AudioToolbox.framework */,
+				3267F66F14D919FE00BFFBAA /* CFNetwork.framework */,
+				871EFB0E14AE9C820030658B /* CoreGraphics.framework */,
+				8726C6C314B00245004E4872 /* CoreLocation.framework */,
+				3267F67B14D91A3600BFFBAA /* CoreTelephony.framework */,
+				871EFB0C14AE9C820030658B /* Foundation.framework */,
 				3267F67914D91A2E00BFFBAA /* libsqlite3.dylib */,
 				3267F67714D91A2600BFFBAA /* libz.dylib */,
-				3267F67B14D91A3600BFFBAA /* CoreTelephony.framework */,
-				3267F67514D91A1900BFFBAA /* SystemConfiguration.framework */,
-				3267F67314D91A1300BFFBAA /* Security.framework */,
-				3267F67114D91A0B00BFFBAA /* MobileCoreServices.framework */,
-				3267F66F14D919FE00BFFBAA /* CFNetwork.framework */,
-				32CE875114D27FFF002D391B /* QuartzCore.framework */,
-				8726C6C314B00245004E4872 /* CoreLocation.framework */,
 				871EFB5E14AEB4950030658B /* MapKit.framework */,
-				871EFB0A14AE9C820030658B /* UIKit.framework */,
-				871EFB0C14AE9C820030658B /* Foundation.framework */,
-				871EFB0E14AE9C820030658B /* CoreGraphics.framework */,
+				3267F67114D91A0B00BFFBAA /* MobileCoreServices.framework */,
+				32CE875114D27FFF002D391B /* QuartzCore.framework */,
+				3267F67314D91A1300BFFBAA /* Security.framework */,
 				871EFB3614AE9C820030658B /* SenTestingKit.framework */,
+				3267F67514D91A1900BFFBAA /* SystemConfiguration.framework */,
+				871EFB0A14AE9C820030658B /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1143,6 +1150,8 @@
 				E4E16DA414DDEF26004E4585 /* UserProfileCheckedInViewController.m */,
 				32E3CD8314C39B94001EA2AB /* UserTableViewCell.h */,
 				32E3CD8414C39B94001EA2AB /* UserTableViewCell.m */,
+				E48C631914EFCA1F00AC2979 /* PayUserViewController.h */,
+				E48C631A14EFCA1F00AC2979 /* PayUserViewController.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1604,6 +1613,7 @@
 				53D65B4514EEEC2D00801C5E /* CheckInDetailsViewController.m in Sources */,
 				534FC97F14EF1E77008C87B9 /* CPUIHelper.m in Sources */,
 				534FC98A14EF2E8C008C87B9 /* CheckInDetailsFrame.m in Sources */,
+				E48C631B14EFCA1F00AC2979 /* PayUserViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1706,6 +1716,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "candpiosapp/candpiosapp-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
@@ -1726,6 +1740,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "candpiosapp/candpiosapp-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;

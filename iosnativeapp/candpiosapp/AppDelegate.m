@@ -9,10 +9,10 @@
 #import "AppDelegate.h"
 #import "FacebookLoginSequence.h"
 #import "AFHTTPClient.h"
-#import "CheckInListTableViewController.h"
 #import "FaceToFaceInviteController.h"
 #import "FlurryAnalytics.h"
 #import "OAuthConsumer.h"
+#import "UserProfileCheckedInViewController.h"
 
 @interface AppDelegate(Internal)
 -(void)loadSettings;
@@ -301,6 +301,18 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
                               otherButtonTitles: nil];
         [alert show];
     }
+    // Received payment
+    else if ([userInfo valueForKey:@"payment_received"] != nil)
+    {
+        NSString *userId = [userInfo valueForKey:@"payment_received"];
+        
+        UserProfileCheckedInViewController *profileView = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"UserProfileCheckedInViewController"];
+        
+        profileView.user = [[User alloc] init];
+        profileView.user.userID = [userId intValue];
+        
+        [self.window.rootViewController presentModalViewController:profileView animated:YES];
+    }
 }
 
 - (void)application:(UIApplication *)app
@@ -360,8 +372,8 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 	// (note that we keep the username & password)
 	settings.candpUserId = nil;
 	settings.userNickname = nil;
-	
-	
+
+
 	[[AppDelegate instance] saveSettings];
 
 }

@@ -554,9 +554,11 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"ProfileToOneOnOneSegue"]) {
+    if ([[segue identifier] isEqualToString:@"ProfileToOneOnOneSegue"] ||
+        [[segue identifier] isEqualToString:@"ProfileToPayUserSegue"]) {
         NSLog(@"Doing a segue!!11!");
         [[segue destinationViewController] setUser:self.user];
+        [self minusButtonPressed:nil];
     }
 }
 
