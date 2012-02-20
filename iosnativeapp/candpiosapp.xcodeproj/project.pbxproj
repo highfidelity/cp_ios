@@ -128,6 +128,7 @@
 		6F7DA74514E890C0001BEC19 /* ChatHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7DA74414E890C0001BEC19 /* ChatHistory.m */; };
 		6F7DA74814E890E4001BEC19 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7DA74714E890E4001BEC19 /* ChatMessage.m */; };
 		6FEEDFFC14E103F400861CA1 /* CPapi.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FEEDFFB14E103F400861CA1 /* CPapi.m */; };
+		6FFDBB0314EF30040054F9A8 /* FaceToFaceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FFDBB0214EF30040054F9A8 /* FaceToFaceHelper.m */; };
 		870835F814B3E1AC00439431 /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E014B3E1AB00439431 /* Facebook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		870835F914B3E1AC00439431 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 870835E314B3E1AB00439431 /* FBDialog.bundle */; };
 		870835FA14B3E1AC00439431 /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E514B3E1AB00439431 /* FBDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -438,6 +439,8 @@
 		6F7DA74714E890E4001BEC19 /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
 		6FEEDFFA14E103F400861CA1 /* CPapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPapi.h; sourceTree = "<group>"; };
 		6FEEDFFB14E103F400861CA1 /* CPapi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPapi.m; sourceTree = "<group>"; };
+		6FFDBB0114EF30040054F9A8 /* FaceToFaceHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FaceToFaceHelper.h; path = FaceToFace/FaceToFaceHelper.h; sourceTree = "<group>"; };
+		6FFDBB0214EF30040054F9A8 /* FaceToFaceHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FaceToFaceHelper.m; path = FaceToFace/FaceToFaceHelper.m; sourceTree = "<group>"; };
 		870835DF14B3E1AB00439431 /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
 		870835E014B3E1AB00439431 /* Facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Facebook.m; sourceTree = "<group>"; };
 		870835E214B3E1AB00439431 /* FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBConnect.h; sourceTree = "<group>"; };
@@ -879,6 +882,8 @@
 			children = (
 				6F3651DC14EAE90300E9322B /* FaceToFaceInviteController.h */,
 				6F3651DD14EAE90300E9322B /* FaceToFaceInviteController.m */,
+				6FFDBB0114EF30040054F9A8 /* FaceToFaceHelper.h */,
+				6FFDBB0214EF30040054F9A8 /* FaceToFaceHelper.m */,
 			);
 			name = FaceToFace;
 			sourceTree = "<group>";
@@ -1612,6 +1617,7 @@
 				E4E16DA414DDEF26004E4586 /* UserProfileCheckedInViewController.m in Sources */,
 				53D65B4514EEEC2D00801C5E /* CheckInDetailsViewController.m in Sources */,
 				534FC97F14EF1E77008C87B9 /* CPUIHelper.m in Sources */,
+				6FFDBB0314EF30040054F9A8 /* FaceToFaceHelper.m in Sources */,
 				534FC98A14EF2E8C008C87B9 /* CheckInDetailsFrame.m in Sources */,
 				E48C631B14EFCA1F00AC2979 /* PayUserViewController.m in Sources */,
 			);
@@ -1669,6 +1675,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1685,6 +1692,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1696,6 +1704,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1706,6 +1715,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1715,7 +1725,7 @@
 		871EFB4814AE9C820030658B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: David Mojdehi (VNNFZ4WWSJ)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1731,7 +1741,7 @@
 					"\"$(SRCROOT)/candpiosapp/3rdParty/Airship\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "0C508DD8-13C6-4241-B145-2F41EC03C103";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1739,7 +1749,7 @@
 		871EFB4914AE9C820030658B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: David Mojdehi (VNNFZ4WWSJ)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1755,7 +1765,7 @@
 					"\"$(SRCROOT)/candpiosapp/3rdParty/Airship\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "0C508DD8-13C6-4241-B145-2F41EC03C103";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

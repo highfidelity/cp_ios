@@ -27,6 +27,7 @@
 // LinkedIn
 #define kLinkedInKey            @"0"
 #define kLinkedInSecret         @"0"
+#define flurryAnalytics         @""
 #error "You're running in production mode. Are you sure you wanna do this?"
 
 #else
@@ -37,6 +38,7 @@
 // LinkedIn
 #define kLinkedInKey            @"4xkfzpnvuc72"
 #define kLinkedInSecret         @"mxgFhH1i1PbPlWjq"
+#define flurryAnalytics         @"BI59BJPSZZTIFB5H87HQ"
 // Emcro-created LI:
 //#define kLinkedInKey          @"dj7n9nz3bj65"
 //#define kLinkedInSecret       @"Hnt0m2JuooWM29OW"

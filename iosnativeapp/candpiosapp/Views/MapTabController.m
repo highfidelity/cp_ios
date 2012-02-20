@@ -407,16 +407,21 @@
 {
 	NSLog(@"mapViewWillStartLocatingUser");
 }
+
 - (void)mapViewDidStopLocatingUser:(MKMapView *)mapView
 {
 	NSLog(@"mapViewDidStopLocatingUser");
 	
 }
+
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-	NSLog(@"MapTab: didUpdateUserLocation (lat %f, lon %f)", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
+	NSLog(@"MapTab: didUpdateUserLocation (lat %f, lon %f)",
+          userLocation.location.coordinate.latitude,
+          userLocation.location.coordinate.longitude);
 	
-	if(userLocation.location.coordinate.latitude != 0 && userLocation.location.coordinate.longitude != 0)
+	if(userLocation.location.coordinate.latitude != 0 &&
+       userLocation.location.coordinate.longitude != 0)
 	{
 		// save the location for the next time
 		[AppDelegate instance].settings.hasLocation= true;
@@ -424,7 +429,9 @@
 		[[AppDelegate instance] saveSettings];
 		
         if (!hasUpdatedUserLocation) {
-            NSLog(@"MapTab: didUpdateUserLocation a zoomto (lat %f, lon %f)", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
+            NSLog(@"MapTab: didUpdateUserLocation a zoomto (lat %f, lon %f)",
+                  userLocation.location.coordinate.latitude,
+                  userLocation.location.coordinate.longitude);
             [self zoomTo:userLocation.location.coordinate];   
             hasUpdatedUserLocation = true;
         }

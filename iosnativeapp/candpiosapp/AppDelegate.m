@@ -9,7 +9,9 @@
 #import "AppDelegate.h"
 #import "FacebookLoginSequence.h"
 #import "AFHTTPClient.h"
-#import "FaceToFaceInviteController.h"
+#import "CheckInListTableViewController.h"
+#import "FaceToFaceInviteController.h" // TODO: replace with F2FHelper
+#import "FaceToFaceHelper.h"
 #import "FlurryAnalytics.h"
 #import "OAuthConsumer.h"
 #import "UserProfileCheckedInViewController.h"
@@ -34,49 +36,6 @@
 
 @synthesize window = _window;
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    // Override point for customization after application launch.
-    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
-    
-	[self loadSettings];  
-
-    [FlurryAnalytics startSession:@"BI59BJPSZZTIFB5H87HQ"];
-
-    //Init Airship launch options
-    NSMutableDictionary *takeOffOptions = [[NSMutableDictionary alloc] init];
-    [takeOffOptions setValue:launchOptions forKey:UAirshipTakeOffOptionsLaunchOptionsKey];
-    
-    // Create Airship singleton that's used to talk to Urban Airship servers.
-    // Please populate AirshipConfig.plist with your info from http://go.urbanairship.com
-    [UAirship takeOff:takeOffOptions];
-
-	// load the facebook api
-	facebook = [[Facebook alloc] initWithAppId:kFacebookAppId andDelegate:self];
-	facebook.accessToken = settings.facebookAccessToken;
-	facebook.expirationDate = settings.facebookExpirationDate;
-	
-	urbanAirshipClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://go.urbanairship.com/api"]];
-
-	// register for push 
-    [[UAPush shared] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-    
-    // Handle the case where we were launched from a PUSH notification
-    if (launchOptions != nil)
-	{
-		NSDictionary* dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-		if (dictionary != nil)
-		{
-			NSLog(@"Launched from push notification: %@", dictionary);
-			//[self addMessageFromRemoteNotification:dictionary updateUI:NO];
-		}
-	}
-
-    [self addCheckInButton];
-
-    return YES;
-}
 
 # pragma mark - Check-in Button
 
@@ -111,6 +70,54 @@
 
 #pragma mark - View Lifecycle
 
+- (BOOL)application:(UIApplication *)application
+didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    // Override point for customization after application launch.
+    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    
+	[self loadSettings];  
+    
+    [FlurryAnalytics startSession:flurryAnalytics];
+    
+    // Init Airship launch options
+    NSMutableDictionary *takeOffOptions = [[NSMutableDictionary alloc] init];
+    [takeOffOptions setValue:launchOptions forKey:UAirshipTakeOffOptionsLaunchOptionsKey];
+    
+    // Create Airship singleton that's used to talk to Urban Airship servers.
+    // Please populate AirshipConfig.plist with your info from http://go.urbanairship.com
+    [UAirship takeOff:takeOffOptions];
+    
+    urbanAirshipClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://go.urbanairship.com/api"]];
+    
+	// register for push 
+    [[UAPush shared] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
+    
+	// load the facebook api
+	facebook = [[Facebook alloc] initWithAppId:kFacebookAppId andDelegate:self];
+	facebook.accessToken = settings.facebookAccessToken;
+	facebook.expirationDate = settings.facebookExpirationDate;
+	
+    
+    // Handle the case where we were launched from a PUSH notification
+    if (launchOptions != nil)
+	{
+		NSDictionary* dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+		if (dictionary != nil)
+		{
+			NSLog(@"Launched from push notification: %@", dictionary);
+			//[self addMessageFromRemoteNotification:dictionary updateUI:NO];
+		}
+	}
+    
+    [self addCheckInButton];
+    
+    return YES;
+}
+
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
 	/*
@@ -143,12 +150,13 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    [UAirship land];
 	/*
 	 Called when the application is about to terminate.
 	 Save data if appropriate.
 	 See also applicationDidEnterBackground:.
 	 */
+    
+    [UAirship land];
 }
 
 // For 4.2+ support
@@ -244,18 +252,20 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
     // Chat push notification
     if ([userInfo valueForKey:@"chat"])
     {
-        //NSString* sendingUserId = [[userInfo valueForKey:@"chat"]
-        //                           valueForKey:@"f"];
+        /*NSString* sendingUserId = [[userInfo valueForKey:@"chat"]
+                                     valueForKey:@"f"];
         
         // Strip the user name out of the alert message (it's the string before the colon)
         NSMutableArray* parts = [NSMutableArray arrayWithArray:
                                  [alertValue componentsSeparatedByString:@": "]];
         [parts removeObjectAtIndex:0];
         NSString *message = [parts componentsJoinedByString:@": "];
+        */
         
+        // Until we have something cooler, just show chats in an alert popup
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle:@"Incoming Chat"
-                              message:message
+                              message:alertValue
                               delegate:self
                               cancelButtonTitle:@"OK"
                               otherButtonTitles: nil];
@@ -264,42 +274,28 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
     // This is a Face-to-Face invite
     else if ([userInfo valueForKey:@"f2f1"] != nil)
     {
-        NSString *userId = [userInfo valueForKey:@"f2f1"];
+        int userId = [[userInfo valueForKey:@"f2f1"] intValue];
         
-        FaceToFaceInviteController *f2fView = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"FaceToFaceInviteView"];
-        
-        f2fView.user = [[User alloc] init];
-        f2fView.user.userID = [userId intValue];
-        
-        [self.window.rootViewController presentModalViewController:f2fView animated:YES];
+        [FaceToFaceHelper presentF2FInviteFromUser:userId
+                                          fromView:self.window.rootViewController];
     }
     // Face to Face Accept Invite
     else if ([userInfo valueForKey:@"f2f2"] != nil)
     {
-        NSString *userId = [userInfo valueForKey:@"f2f2"];
+        int userId = [[userInfo valueForKey:@"f2f2"] intValue];
         NSString *password = [userInfo valueForKey:@"password"];
         
-        FaceToFaceInviteController *f2fView = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"FaceToFaceInviteView"];
-        
-        f2fView.user = [[User alloc] init];
-        f2fView.user.userID = [userId intValue];
-        f2fView.passwordMode = [NSString stringWithString:password];
-        
-        [self.window.rootViewController presentModalViewController:f2fView animated:YES];
+        [FaceToFaceHelper presentF2FAcceptFromUser:userId
+                                      withPassword:password
+                                          fromView:self.window.rootViewController];        
     }
     // Face to Face Accept Invite
     else if ([userInfo valueForKey:@"f2f3"] != nil)
     {
         NSString *nickname = [userInfo valueForKey:@"f2f3"];
-        NSString *alertMsg = [NSString stringWithFormat:@"Oh snap! You met %@ Face to Face!", nickname];
-        // Show error if we got one
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:@"Face to Face"
-                              message:alertMsg
-                              delegate:self
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles: nil];
-        [alert show];
+        
+        [FaceToFaceHelper presentF2FSuccessFrom:nickname 
+                                       fromView:self.window.rootViewController];
     }
     // Received payment
     else if ([userInfo valueForKey:@"payment_received"] != nil)
@@ -319,8 +315,9 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken 
 {
 	// We get here if the user has allowed Push Notifications
-	
 	// We need to get our authorization token and send it to our servers
+    
+    NSLog(@"This is my device token: %@", devToken);
     [[UAPush shared] registerDeviceToken:devToken];
 }
 
@@ -328,7 +325,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
 didFailToRegisterForRemoteNotificationsWithError:(NSError *)err 
 {
     settings.registeredForApnsSuccessfully = NO;
-    //NSLog(@"Error in registration. Error: %@", err);
+    NSLog(@"Error in registration. Error: %@", err);
 }
 
 
