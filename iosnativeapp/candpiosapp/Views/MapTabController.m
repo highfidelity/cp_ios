@@ -28,8 +28,12 @@
 @property (nonatomic, strong) NSTimer *reloadTimer;
 @property (nonatomic, retain) NSArray *menuStringsArray;
 @property (nonatomic, retain) NSArray *menuSegueIdentifiersArray;
--(void)refreshLocationsIfNeeded;
+@property (nonatomic) CGPoint panStartLocation;
+@property (strong, nonatomic) UITapGestureRecognizer *menuCloseGestureRecognizer;
+@property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanGestureRecognizer;
+@property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanFromNavbarGestureRecognizer;
 
+-(void)refreshLocationsIfNeeded;
 @end
 
 @implementation MapTabController 
@@ -43,6 +47,10 @@
 @synthesize menuSegueIdentifiersArray;
 @synthesize mapAndButtonsView;
 @synthesize tableView;
+@synthesize menuCloseGestureRecognizer;
+@synthesize menuClosePanGestureRecognizer;
+@synthesize menuClosePanFromNavbarGestureRecognizer;
+@synthesize panStartLocation;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -215,6 +223,39 @@
     [self zoomTo: [[mapView userLocation] coordinate]];
 }
 
+- (void)menuClosePan:(UIPanGestureRecognizer*) sender {
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        // record the start location
+        panStartLocation = [sender locationInView:self.view];
+    } else if (sender.state == UIGestureRecognizerStateChanged ||
+               sender.state == UIGestureRecognizerStateEnded) {
+        CGPoint location = [sender locationInView:self.view];
+        CGFloat dx = location.x - panStartLocation.x;
+        CGFloat menuWidth = menuWidthPercentage * [UIScreen mainScreen].bounds.size.width;
+        if (sender.state == UIGestureRecognizerStateChanged) { 
+            // move the map
+            if (dx < -menuWidth) {
+                dx = -menuWidth;
+            } else if (dx > 0) {
+                dx = 0;
+            }
+            self.mapAndButtonsView.frame = CGRectOffset(self.view.bounds, menuWidth + dx, 0);
+            self.navigationController.navigationBar.frame = CGRectOffset(self.navigationController.navigationBar.bounds, menuWidth + dx, self.navigationController.navigationBar.frame.origin.y);            
+        } else if (sender.state == UIGestureRecognizerStateEnded) {
+            // test the drop point and set the menu state accordingly        
+            if (dx < -0.2 * menuWidth) { 
+                [self showMenu:NO];
+            } else {
+                [self showMenu:YES];
+            }
+        }        
+    }
+}
+
+- (void)closeMenu {
+    [self showMenu:NO];
+}
+
 - (void)showMenu:(BOOL)showMenu {
     // Animate the reveal of the menu
     [UIView beginAnimations:@"" context:nil];
@@ -225,15 +266,42 @@
     if (showMenu) {
         // shift to the right, hiding buttons 
         self.mapAndButtonsView.frame = CGRectOffset(self.view.bounds, CGRectGetWidth(menuFrame), 0);
-        self.navigationController.navigationBar.frame = CGRectOffset(self.navigationController.navigationBar.frame, CGRectGetWidth(menuFrame), 0);
+        self.navigationController.navigationBar.frame = CGRectOffset(self.navigationController.navigationBar.bounds, 
+                                                                     CGRectGetWidth(menuFrame), 
+                                                                     self.navigationController.navigationBar.frame.origin.y);
         [[AppDelegate instance] hideCheckInButton];
-        self.mapAndButtonsView.userInteractionEnabled = NO;
+        self.mapView.scrollEnabled = NO;
+        if (!self.menuCloseGestureRecognizer) {
+            // Tap to close gesture recognizer
+            self.menuCloseGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeMenu)];
+            self.menuCloseGestureRecognizer.numberOfTapsRequired = 1;
+            [self.mapView addGestureRecognizer:self.menuCloseGestureRecognizer];
+        }
+        if (!self.menuClosePanGestureRecognizer) { 
+            // Pan to close gesture recognizer
+            self.menuClosePanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(menuClosePan:)];
+            [self.mapView addGestureRecognizer:self.menuClosePanGestureRecognizer];
+        }
+        if (!self.menuClosePanFromNavbarGestureRecognizer) { 
+            // Pan to close from navbar
+            self.menuClosePanFromNavbarGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(menuClosePan:)];
+            [self.navigationController.navigationBar addGestureRecognizer:menuClosePanFromNavbarGestureRecognizer];            
+        }
     } else {
         // shift to the left, restoring the buttons
         self.mapAndButtonsView.frame = self.view.frame;
-        self.navigationController.navigationBar.frame = CGRectOffset(self.navigationController.navigationBar.frame, -CGRectGetWidth(menuFrame), 0);
+        self.navigationController.navigationBar.frame = CGRectOffset(self.navigationController.navigationBar.bounds, 
+                                                                     0, 
+                                                                     self.navigationController.navigationBar.frame.origin.y);
         [[AppDelegate instance] showCheckInButton];
-        self.mapAndButtonsView.userInteractionEnabled = YES;
+        self.mapView.scrollEnabled = YES;                                   
+        // remove gesture recognizers
+        [self.mapView removeGestureRecognizer:self.menuCloseGestureRecognizer];
+        self.menuCloseGestureRecognizer = nil;
+        [self.mapView removeGestureRecognizer:self.menuClosePanGestureRecognizer];
+        self.menuClosePanGestureRecognizer = nil;
+        [self.navigationController.navigationBar removeGestureRecognizer:self.menuClosePanFromNavbarGestureRecognizer];
+        self.menuClosePanFromNavbarGestureRecognizer = nil;
     }
     [UIView commitAnimations];
     isMenuShowing = showMenu ? 1 : 0;

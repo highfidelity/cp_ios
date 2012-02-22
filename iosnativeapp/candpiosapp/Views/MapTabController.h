@@ -35,7 +35,7 @@
 - (IBAction)locateMe:(id)sender;
 - (IBAction)revealButtonPressed:(id)sender;
 - (void)showMenu:(BOOL)shouldReveal;
-
+- (void)closeMenu;
 
 @end
 
