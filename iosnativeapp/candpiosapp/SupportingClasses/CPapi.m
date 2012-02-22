@@ -16,6 +16,8 @@
 + (void)makeHTTPRequestWithAction:(NSString *)action
                   withParameters:(NSMutableDictionary *)parameters
                  responseHandler:(SEL)selector;
++ (void)makeHTTPRequestWithAction:(NSString *)action withParameters:(NSMutableDictionary *)parameters 
+                       completion:(void(^)(NSDictionary *json, NSError *error))completion;
 
 + (void)OneOnOneChatResponseHandler:(NSData *)response;
 + (void)f2fInviteResponseHandler:(NSData *)response;
@@ -67,6 +69,45 @@
                        }
                    });
 }
+
+// Private method to perform HTTP Requests to the C&P API
+// Uses the AFJSONRequestOperation which seems to be the easiest way to pass around
+// completion blocks
+
++ (void)makeHTTPRequestWithAction:(NSString *)action withParameters:(NSMutableDictionary *)parameters completion:(void (^)(NSDictionary *, NSError *))completion
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=%@",
+                           kCandPWebServiceUrl, action];
+    if (parameters) {
+        for (NSString *key in parameters) {
+            id value = [parameters valueForKey: key];
+            
+            NSString *encodedParams = [NSString stringWithFormat:@"&%@=%@",
+                                       [key stringByAddingPercentEscapesUsingEncoding:
+                                        NSASCIIStringEncoding],
+                                       [value stringByAddingPercentEscapesUsingEncoding:
+                                        NSASCIIStringEncoding]];
+            
+            urlString = [urlString stringByAppendingString:encodedParams];
+        }
+    }
+    
+#if DEBUG
+    NSLog(@"Sending request to URL: %@", urlString);
+#endif
+    
+    NSURLRequest *request =  [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        completion(JSON, nil);
+    }
+    failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        completion(JSON, error);
+    }];
+    
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [queue addOperation:operation];
+}
+
 
 // See if we're actually logged in.
 // If we are, execute successBlock
@@ -401,5 +442,8 @@
     [alert show];
 }
 
-
++ (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID :(void (^)(NSDictionary *, NSError *))completion
+{
+    [self makeHTTPRequestWithAction:@"getUsersCheckedIn" withParameters:[NSDictionary dictionaryWithObject:foursquareID forKey:@"foursquare"] completion:completion];
+}
 @end

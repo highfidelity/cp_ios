@@ -24,5 +24,7 @@
 + (void)sendF2FDecline:(int) userId;
 + (void)sendF2FVerify:(int) userId
              password:(NSString *) password;
++ (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID
+                                       :(void(^)(NSDictionary *json, NSError *error))completion; 
 
 @end
