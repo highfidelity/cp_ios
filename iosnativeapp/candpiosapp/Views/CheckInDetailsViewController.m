@@ -181,7 +181,15 @@
     
     [SVProgressHUD showWithStatus:@"Checking In..."];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@&status=%@&venue_name=%@", kCandPWebServiceUrl, self.place.lat, self.place.lng, checkInTime, checkOutTime, foursquareID, statusText, venueName];
+    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@&status=%@&venue_name=%@",
+                           kCandPWebServiceUrl,
+                           self.place.lat,
+                           self.place.lng,
+                           checkInTime,
+                           checkOutTime,
+                           foursquareID,
+                           statusText,
+                           venueName];
     
     NSURL *locationURL = [NSURL URLWithString:urlString];
     

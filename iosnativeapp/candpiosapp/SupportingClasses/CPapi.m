@@ -16,7 +16,9 @@
 + (void)makeHTTPRequestWithAction:(NSString *)action
                   withParameters:(NSMutableDictionary *)parameters
                  responseHandler:(SEL)selector;
-+ (void)makeHTTPRequestWithAction:(NSString *)action withParameters:(NSMutableDictionary *)parameters 
+
++ (void)makeHTTPRequestWithAction:(NSString *)action
+                   withParameters:(NSMutableDictionary *)parameters 
                        completion:(void(^)(NSDictionary *json, NSError *error))completion;
 
 + (void)OneOnOneChatResponseHandler:(NSData *)response;
@@ -46,16 +48,16 @@
             id value = [parameters valueForKey: key];
             
             NSString *encodedParams = [NSString stringWithFormat:@"&%@=%@",
-                                                                 [key stringByAddingPercentEscapesUsingEncoding:
-                                                                    NSASCIIStringEncoding],
-                                                                 [value stringByAddingPercentEscapesUsingEncoding:
-                                                                    NSASCIIStringEncoding]];
+                                                                 [self urlEncode:key],
+                                                                 [self urlEncode:value]];
 
             urlString = [urlString stringByAppendingString:encodedParams];
         }
     }
     
+#if DEBUG
     NSLog(@"Sending request to URL: %@", urlString);
+#endif
     
     NSURL *locationURL = [NSURL URLWithString:urlString];
     
@@ -74,7 +76,9 @@
 // Uses the AFJSONRequestOperation which seems to be the easiest way to pass around
 // completion blocks
 
-+ (void)makeHTTPRequestWithAction:(NSString *)action withParameters:(NSMutableDictionary *)parameters completion:(void (^)(NSDictionary *, NSError *))completion
++ (void)makeHTTPRequestWithAction:(NSString *)action 
+                   withParameters:(NSMutableDictionary *)parameters 
+                       completion:(void (^)(NSDictionary *, NSError *))completion
 {
     NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=%@",
                            kCandPWebServiceUrl, action];
@@ -83,10 +87,8 @@
             id value = [parameters valueForKey: key];
             
             NSString *encodedParams = [NSString stringWithFormat:@"&%@=%@",
-                                       [key stringByAddingPercentEscapesUsingEncoding:
-                                        NSASCIIStringEncoding],
-                                       [value stringByAddingPercentEscapesUsingEncoding:
-                                        NSASCIIStringEncoding]];
+                                       [self urlEncode:key],
+                                       [self urlEncode:value]];
             
             urlString = [urlString stringByAppendingString:encodedParams];
         }
@@ -108,6 +110,27 @@
     [queue addOperation:operation];
 }
 
+
+#pragma mark - Helper functions
+
+// Stolen from http://cybersam.com/ios-dev/proper-url-percent-encoding-in-ios
++ (NSString *)urlEncode:(NSString *)string {
+    return (__bridge NSString *) 
+        CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                (__bridge CFStringRef) string,
+                                                NULL,
+                                                (CFStringRef) @"!*'();:@&=+$,/?%#[]",
+                                                kCFStringEncodingUTF8);
+}
+
+// Stolen from http://cybersam.com/ios-dev/proper-url-percent-encoding-in-ios
++ (NSString *)urlDecode:(NSString *)string {
+    return (__bridge NSString *)
+        CFURLCreateStringByReplacingPercentEscapesUsingEncoding(NULL,
+                                                                (__bridge CFStringRef) string,
+                                                                CFSTR(""),
+                                                                kCFStringEncodingUTF8);
+}
 
 // See if we're actually logged in.
 // If we are, execute successBlock
@@ -442,8 +465,41 @@
     [alert show];
 }
 
-+ (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID :(void (^)(NSDictionary *, NSError *))completion
+
+#pragma mark - CheckIn
+
++ (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID 
+                                       :(void (^)(NSDictionary *, NSError *))completion
 {
-    [self makeHTTPRequestWithAction:@"getUsersCheckedIn" withParameters:[NSDictionary dictionaryWithObject:foursquareID forKey:@"foursquare"] completion:completion];
+    [self makeHTTPRequestWithAction:@"getUsersCheckedIn"
+                     withParameters:[NSDictionary dictionaryWithObject:foursquareID
+                                                                forKey:@"foursquare"]
+                         completion:completion];
 }
+
++ (void)checkInToLocation:(CPPlace *)place
+              checkInTime:(NSInteger)checkInTime
+             checkOutTime:(NSInteger)checkOutTime
+             foursquareID:(NSString *)foursquareID
+               statusText:(NSString *)stausText
+          completionBlock:(void (^)(NSDictionary *, NSError *))completion
+{        
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setValue:[NSString stringWithFormat:@"%.7", place.lat]
+                  forKey:@"lat"];
+    [parameters setValue:[NSString stringWithFormat:@"%.7", place.lng]
+                  forKey:@"lng"];
+    [parameters setValue:place.name forKey:@"venue_name"];
+    [parameters setValue:[NSString stringWithFormat:@"%d", checkInTime]
+                  forKey:@"checkin"];
+    [parameters setValue:[NSString stringWithFormat:@"%d", checkOutTime]
+                  forKey:@"checkout"];
+    [parameters setValue:foursquareID forKey:@"foursquare"];
+    [parameters setValue:stausText forKey:@"status"];
+    
+    [self makeHTTPRequestWithAction:@"checkin"
+                     withParameters:parameters
+                         completion:completion];
+}
+
 @end

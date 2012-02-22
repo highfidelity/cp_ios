@@ -89,6 +89,13 @@
                                     <outlet property="delegate" destination="gzB-xZ-Qm2" id="XgC-l1-XD3"/>
                                 </connections>
                             </textField>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="bxi-og-dZU">
+                                <rect key="frame" x="0.0" y="416" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Get me outa here" width="307" id="aJT-RX-0Ks"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -338,7 +345,7 @@
                     </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="450" y="455"/>
+            <point key="canvasLocation" x="385" y="455"/>
         </scene>
         <!--Check In Details View Controller-->
         <scene sceneID="5iv-uJ-C8R">
@@ -540,7 +547,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="875" y="466"/>
+            <point key="canvasLocation" x="844" y="455"/>
         </scene>
         <!--User Profile Checked In View Controller-->
         <scene sceneID="jZa-Lm-4za">
@@ -872,6 +879,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="Jrc-qA-DTJ" kind="push" identifier="ProfileToOneOnOneSegue" id="TdT-aU-aoj"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ULI-P9-atM">
                                 <rect key="frame" x="9" y="331" width="75" height="75"/>
@@ -921,13 +931,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="qQm-9o-9ZY">
-                        <barButtonItem key="rightBarButtonItem" title="SuperChat 3000" id="rOz-Nk-mPV">
-                            <connections>
-                                <segue destination="Jrc-qA-DTJ" kind="push" identifier="ProfileToOneOnOneSegue" id="VnC-yQ-Yff"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="qQm-9o-9ZY"/>
                     <connections>
                         <outlet property="availabilityView" destination="2cC-3b-cxP" id="Hs8-D4-roW"/>
                         <outlet property="cardImage" destination="9nq-Yf-nrG" id="qYJ-Xf-PW1"/>
