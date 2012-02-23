@@ -160,7 +160,7 @@
             </objects>
             <point key="canvasLocation" x="844" y="-836"/>
         </scene>
-        <!--Balance View Controller - Balance-->
+        <!--Balance View Controller - Wallet-->
         <scene sceneID="N4C-DH-qKm">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="roq-lO-JF8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -186,7 +186,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Balance" id="tMh-Bf-pyd"/>
+                    <navigationItem key="navigationItem" title="Wallet" id="tMh-Bf-pyd"/>
                     <connections>
                         <outlet property="userBalance" destination="GFk-sd-COI" id="3gy-pE-g9d"/>
                     </connections>

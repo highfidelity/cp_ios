@@ -1198,8 +1198,6 @@
 			children = (
 				87F6580214B0DDFC00F4AB6C /* CandPAnnotation.h */,
 				87F6580314B0DDFC00F4AB6C /* CandPAnnotation.m */,
-				87F657FC14B0DC1F00F4AB6C /* UserAnnotation.h */,
-				87F657FD14B0DC1F00F4AB6C /* UserAnnotation.m */,
 				6FEEDFFA14E103F400861CA1 /* CPapi.h */,
 				6FEEDFFB14E103F400861CA1 /* CPapi.m */,
 				8733310F14BCC36A001BF4DB /* EmailLoginSequence.h */,
@@ -1221,6 +1219,8 @@
 				3222127E14E1EA8600C5471B /* ModalWebViewController.m */,
 				87F5EF4D14AFAAC500EB83F7 /* Settings.h */,
 				87F5EF4E14AFAAC500EB83F7 /* Settings.m */,
+				87F657FC14B0DC1F00F4AB6C /* UserAnnotation.h */,
+				87F657FD14B0DC1F00F4AB6C /* UserAnnotation.m */,
 				32E3CD8D14C3AAA5001EA2AB /* WebView.xib */,
 				32E3CD8E14C3AAA5001EA2AB /* WebViewController.h */,
 				32E3CD8F14C3AAA5001EA2AB /* WebViewController.m */,

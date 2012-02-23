@@ -7,6 +7,7 @@
 //
 
 #import "BalanceViewController.h"
+#import "AppDelegate.h"
 #import "SVProgressHUD.h"
 #import "CPapi.h"
 #import "SignupController.h"
@@ -25,6 +26,11 @@
         // Custom initialization
     }
     return self;
+}
+
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[AppDelegate instance] hideCheckInButton];
 }
 
 - (void)viewDidLoad

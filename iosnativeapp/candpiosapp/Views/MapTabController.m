@@ -78,7 +78,7 @@
     // Setup the menu strings and seque identifiers
     self.menuStringsArray = [NSArray arrayWithObjects:
                              @"Face To Face", 
-                             @"Balance",
+                             @"Wallet",
                              @"Settings",
                              @"Logout",
                              nil];
