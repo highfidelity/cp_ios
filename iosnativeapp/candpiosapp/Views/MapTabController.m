@@ -34,6 +34,8 @@
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanFromNavbarGestureRecognizer;
 
 -(void)refreshLocationsIfNeeded;
+-(void)setMapAndButtonsViewXOffset:(CGFloat)xOffset;
+
 @end
 
 @implementation MapTabController 
@@ -233,14 +235,13 @@
         CGFloat dx = location.x - panStartLocation.x;
         CGFloat menuWidth = menuWidthPercentage * [UIScreen mainScreen].bounds.size.width;
         if (sender.state == UIGestureRecognizerStateChanged) { 
-            // move the map
+            // move the map, buttons and shadow
             if (dx < -menuWidth) {
                 dx = -menuWidth;
             } else if (dx > 0) {
                 dx = 0;
             }
-            self.mapAndButtonsView.frame = CGRectOffset(self.view.bounds, menuWidth + dx, 0);
-            self.navigationController.navigationBar.frame = CGRectOffset(self.navigationController.navigationBar.bounds, menuWidth + dx, self.navigationController.navigationBar.frame.origin.y);            
+            [self setMapAndButtonsViewXOffset:menuWidth + dx];            
         } else if (sender.state == UIGestureRecognizerStateEnded) {
             // test the drop point and set the menu state accordingly        
             if (dx < -0.2 * menuWidth) { 
@@ -256,19 +257,25 @@
     [self showMenu:NO];
 }
 
+- (void)setMapAndButtonsViewXOffset:(CGFloat)xOffset {
+    UIImageView *shadowView = (UIImageView *)[self.view.window.rootViewController.view viewWithTag:991];
+    self.mapAndButtonsView.frame = CGRectOffset(self.view.bounds, xOffset, 0);
+    self.navigationController.navigationBar.frame = CGRectOffset(self.navigationController.navigationBar.bounds, 
+                                                                 xOffset, 
+                                                                 self.navigationController.navigationBar.frame.origin.y);
+    shadowView.frame = CGRectOffset(shadowView.bounds, xOffset, shadowView.frame.origin.y);    
+}
+
 - (void)showMenu:(BOOL)showMenu {
     // Animate the reveal of the menu
     [UIView beginAnimations:@"" context:nil];
     [UIView setAnimationDuration:0.3];
     
     float shift = menuWidthPercentage * [UIScreen mainScreen].bounds.size.width;
-    CGRect menuFrame = CGRectMake(0, 0, shift, CGRectGetHeight(self.view.frame));
     if (showMenu) {
         // shift to the right, hiding buttons 
-        self.mapAndButtonsView.frame = CGRectOffset(self.view.bounds, CGRectGetWidth(menuFrame), 0);
-        self.navigationController.navigationBar.frame = CGRectOffset(self.navigationController.navigationBar.bounds, 
-                                                                     CGRectGetWidth(menuFrame), 
-                                                                     self.navigationController.navigationBar.frame.origin.y);
+        [self setMapAndButtonsViewXOffset:shift];
+
         [[AppDelegate instance] hideCheckInButton];
         self.mapView.scrollEnabled = NO;
         if (!self.menuCloseGestureRecognizer) {
@@ -289,10 +296,7 @@
         }
     } else {
         // shift to the left, restoring the buttons
-        self.mapAndButtonsView.frame = self.view.frame;
-        self.navigationController.navigationBar.frame = CGRectOffset(self.navigationController.navigationBar.bounds, 
-                                                                     0, 
-                                                                     self.navigationController.navigationBar.frame.origin.y);
+        [self setMapAndButtonsViewXOffset:0];
         [[AppDelegate instance] showCheckInButton];
         self.mapView.scrollEnabled = YES;                                   
         // remove gesture recognizers
