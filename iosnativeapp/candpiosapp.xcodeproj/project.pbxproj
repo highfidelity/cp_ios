@@ -121,12 +121,13 @@
 		53FB9E4B14E0A81300F4CC7F /* checked-in-location@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FB9E4714E0A81300F4CC7F /* checked-in-location@2x~iphone.png */; };
 		53FB9E4C14E0A81300F4CC7F /* checked-in-location~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FB9E4814E0A81300F4CC7F /* checked-in-location~iphone.png */; };
 		53FB9E4F14E0AE4600F4CC7F /* FoursquareAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FB9E4E14E0AE4600F4CC7F /* FoursquareAPIRequest.m */; };
+		6F0B453914F6BCD10074DBD9 /* ChatHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453814F6BCD10074DBD9 /* ChatHelper.m */; };
+		6F0B453C14F6BD560074DBD9 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453B14F6BD560074DBD9 /* ChatMessage.m */; };
+		6F0B453F14F6BD850074DBD9 /* ChatHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453E14F6BD850074DBD9 /* ChatHistory.m */; };
 		6F3651DE14EAE90300E9322B /* FaceToFaceInviteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3651DD14EAE90300E9322B /* FaceToFaceInviteController.m */; };
 		6F5EB26C14DB51E40000294E /* OneOnOneChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5EB26B14DB51E40000294E /* OneOnOneChatViewController.m */; };
 		6F7BA4DB14E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7BA4D814E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m */; };
 		6F7BA4DC14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7BA4DA14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		6F7DA74514E890C0001BEC19 /* ChatHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7DA74414E890C0001BEC19 /* ChatHistory.m */; };
-		6F7DA74814E890E4001BEC19 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7DA74714E890E4001BEC19 /* ChatMessage.m */; };
 		6FEEDFFC14E103F400861CA1 /* CPapi.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FEEDFFB14E103F400861CA1 /* CPapi.m */; };
 		6FFDBB0314EF30040054F9A8 /* FaceToFaceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FFDBB0214EF30040054F9A8 /* FaceToFaceHelper.m */; };
 		870835F814B3E1AC00439431 /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E014B3E1AB00439431 /* Facebook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -426,6 +427,12 @@
 		53FB9E4814E0A81300F4CC7F /* checked-in-location~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked-in-location~iphone.png"; sourceTree = "<group>"; };
 		53FB9E4D14E0AE4600F4CC7F /* FoursquareAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoursquareAPIRequest.h; sourceTree = "<group>"; };
 		53FB9E4E14E0AE4600F4CC7F /* FoursquareAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoursquareAPIRequest.m; sourceTree = "<group>"; };
+		6F0B453714F6BCC50074DBD9 /* ChatHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatHelper.h; path = candpiosapp/Chat/ChatHelper.h; sourceTree = SOURCE_ROOT; };
+		6F0B453814F6BCD10074DBD9 /* ChatHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatHelper.m; path = candpiosapp/Chat/ChatHelper.m; sourceTree = SOURCE_ROOT; };
+		6F0B453A14F6BD560074DBD9 /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatMessage.h; path = candpiosapp/Chat/ChatMessage.h; sourceTree = SOURCE_ROOT; };
+		6F0B453B14F6BD560074DBD9 /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatMessage.m; path = candpiosapp/Chat/ChatMessage.m; sourceTree = SOURCE_ROOT; };
+		6F0B453D14F6BD850074DBD9 /* ChatHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatHistory.h; path = candpiosapp/Chat/ChatHistory.h; sourceTree = SOURCE_ROOT; };
+		6F0B453E14F6BD850074DBD9 /* ChatHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatHistory.m; path = candpiosapp/Chat/ChatHistory.m; sourceTree = SOURCE_ROOT; };
 		6F3651DC14EAE90300E9322B /* FaceToFaceInviteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FaceToFaceInviteController.h; path = FaceToFace/FaceToFaceInviteController.h; sourceTree = "<group>"; };
 		6F3651DD14EAE90300E9322B /* FaceToFaceInviteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FaceToFaceInviteController.m; path = FaceToFace/FaceToFaceInviteController.m; sourceTree = "<group>"; };
 		6F5EB26A14DB51E30000294E /* OneOnOneChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OneOnOneChatViewController.h; path = ../OneOnOneChatViewController.h; sourceTree = "<group>"; };
@@ -434,10 +441,6 @@
 		6F7BA4D814E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		6F7BA4D914E308AF00420AD5 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
 		6F7BA4DA14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
-		6F7DA74314E890C0001BEC19 /* ChatHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatHistory.h; path = ../Models/ChatHistory.h; sourceTree = "<group>"; };
-		6F7DA74414E890C0001BEC19 /* ChatHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatHistory.m; path = ../Models/ChatHistory.m; sourceTree = "<group>"; };
-		6F7DA74614E890E4001BEC19 /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessage.h; sourceTree = "<group>"; };
-		6F7DA74714E890E4001BEC19 /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
 		6FEEDFFA14E103F400861CA1 /* CPapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPapi.h; sourceTree = "<group>"; };
 		6FEEDFFB14E103F400861CA1 /* CPapi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPapi.m; sourceTree = "<group>"; };
 		6FFDBB0114EF30040054F9A8 /* FaceToFaceHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FaceToFaceHelper.h; path = FaceToFace/FaceToFaceHelper.h; sourceTree = "<group>"; };
@@ -916,10 +919,12 @@
 		6F7DA74914E89471001BEC19 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				6F7DA74314E890C0001BEC19 /* ChatHistory.h */,
-				6F7DA74414E890C0001BEC19 /* ChatHistory.m */,
-				6F7DA74614E890E4001BEC19 /* ChatMessage.h */,
-				6F7DA74714E890E4001BEC19 /* ChatMessage.m */,
+				6F0B453D14F6BD850074DBD9 /* ChatHistory.h */,
+				6F0B453E14F6BD850074DBD9 /* ChatHistory.m */,
+				6F0B453714F6BCC50074DBD9 /* ChatHelper.h */,
+				6F0B453814F6BCD10074DBD9 /* ChatHelper.m */,
+				6F0B453A14F6BD560074DBD9 /* ChatMessage.h */,
+				6F0B453B14F6BD560074DBD9 /* ChatMessage.m */,
 				6F5EB26A14DB51E30000294E /* OneOnOneChatViewController.h */,
 				6F5EB26B14DB51E40000294E /* OneOnOneChatViewController.m */,
 			);
@@ -1616,8 +1621,6 @@
 				32B9976814E37B6400713B6E /* SSKeychain.m in Sources */,
 				6F7BA4DB14E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				6F7BA4DC14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m in Sources */,
-				6F7DA74514E890C0001BEC19 /* ChatHistory.m in Sources */,
-				6F7DA74814E890E4001BEC19 /* ChatMessage.m in Sources */,
 				6F3651DE14EAE90300E9322B /* FaceToFaceInviteController.m in Sources */,
 				E4E16DA414DDEF26004E4586 /* UserProfileCheckedInViewController.m in Sources */,
 				53D65B4514EEEC2D00801C5E /* CheckInDetailsViewController.m in Sources */,
@@ -1626,6 +1629,9 @@
 				534FC98A14EF2E8C008C87B9 /* CheckInDetailsFrame.m in Sources */,
 				E48C631B14EFCA1F00AC2979 /* PayUserViewController.m in Sources */,
 				E4B21B2514F5B8FF00144348 /* BalanceViewController.m in Sources */,
+				6F0B453914F6BCD10074DBD9 /* ChatHelper.m in Sources */,
+				6F0B453C14F6BD560074DBD9 /* ChatMessage.m in Sources */,
+				6F0B453F14F6BD850074DBD9 /* ChatHistory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
