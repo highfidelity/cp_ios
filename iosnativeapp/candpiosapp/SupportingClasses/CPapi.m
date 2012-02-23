@@ -502,4 +502,12 @@
                          completion:completion];
 }
 
++ (void)getUserProfileWithCompletionBlock:(void (^)(NSDictionary *, NSError *))completion
+{
+    [self makeHTTPRequestWithAction:@"getUserData"
+                         withParameters:nil
+                             completion:completion];
+}
+
+
 @end

@@ -46,6 +46,14 @@
 
 - (void)viewDidUnload
 {
+    paymentAmount = nil;
+    paymentNote = nil;
+    responseText = nil;
+    charsLeft = nil;
+    payTo = nil;
+    messageView = nil;
+    paymentView = nil; 
+    
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

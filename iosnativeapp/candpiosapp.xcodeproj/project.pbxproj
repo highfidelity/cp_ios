@@ -211,6 +211,7 @@
 		E402DB6314D43C1700BC82E8 /* defaultAvatar50.png in Resources */ = {isa = PBXBuildFile; fileRef = E402DB6214D43C1700BC82E8 /* defaultAvatar50.png */; };
 		E402DB6614D43C2B00BC82E8 /* pin-frame.png in Resources */ = {isa = PBXBuildFile; fileRef = E402DB6514D43C2B00BC82E8 /* pin-frame.png */; };
 		E48C631B14EFCA1F00AC2979 /* PayUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E48C631A14EFCA1F00AC2979 /* PayUserViewController.m */; };
+		E4B21B2514F5B8FF00144348 /* BalanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B21B2414F5B8FF00144348 /* BalanceViewController.m */; };
 		E4C35C4114F1323A009B6DBF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C35C4014F1323A009B6DBF /* AudioToolbox.framework */; };
 		E4CC0D6914EF1FB2000CB8F8 /* thumbdown.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CC0D6714EF1FB2000CB8F8 /* thumbdown.png */; };
 		E4CC0D6A14EF1FB2000CB8F8 /* thumbup.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CC0D6814EF1FB2000CB8F8 /* thumbup.png */; };
@@ -589,6 +590,8 @@
 		E402DB6514D43C2B00BC82E8 /* pin-frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-frame.png"; sourceTree = "<group>"; };
 		E48C631914EFCA1F00AC2979 /* PayUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayUserViewController.h; sourceTree = "<group>"; };
 		E48C631A14EFCA1F00AC2979 /* PayUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayUserViewController.m; sourceTree = "<group>"; };
+		E4B21B2314F5B8FF00144348 /* BalanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalanceViewController.h; sourceTree = "<group>"; };
+		E4B21B2414F5B8FF00144348 /* BalanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BalanceViewController.m; sourceTree = "<group>"; };
 		E4C35C4014F1323A009B6DBF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		E4CC0D6714EF1FB2000CB8F8 /* thumbdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbdown.png; sourceTree = "<group>"; };
 		E4CC0D6814EF1FB2000CB8F8 /* thumbup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbup.png; sourceTree = "<group>"; };
@@ -1139,6 +1142,8 @@
 		871EFBBC14AF987B0030658B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E4B21B2314F5B8FF00144348 /* BalanceViewController.h */,
+				E4B21B2414F5B8FF00144348 /* BalanceViewController.m */,
 				8733312314BCFB0D001BF4DB /* CreateEmailAccountController.h */,
 				8733312414BCFB0D001BF4DB /* CreateEmailAccountController.m */,
 				8733312514BCFB0D001BF4DB /* CreateEmailAccountController.xib */,
@@ -1146,6 +1151,8 @@
 				871EFBBE14AF987B0030658B /* MapTabController.m */,
 				87F5EF4414AFA68800EB83F7 /* MyWebTabController.h */,
 				87F5EF4514AFA68800EB83F7 /* MyWebTabController.m */,
+				E48C631914EFCA1F00AC2979 /* PayUserViewController.h */,
+				E48C631A14EFCA1F00AC2979 /* PayUserViewController.m */,
 				87DC9A3614BEB92200BA3907 /* SignupController.h */,
 				87DC9A3714BEB92200BA3907 /* SignupController.m */,
 				87DC9A3814BEB92200BA3907 /* SignupController.xib */,
@@ -1155,8 +1162,6 @@
 				E4E16DA414DDEF26004E4585 /* UserProfileCheckedInViewController.m */,
 				32E3CD8314C39B94001EA2AB /* UserTableViewCell.h */,
 				32E3CD8414C39B94001EA2AB /* UserTableViewCell.m */,
-				E48C631914EFCA1F00AC2979 /* PayUserViewController.h */,
-				E48C631A14EFCA1F00AC2979 /* PayUserViewController.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1620,6 +1625,7 @@
 				6FFDBB0314EF30040054F9A8 /* FaceToFaceHelper.m in Sources */,
 				534FC98A14EF2E8C008C87B9 /* CheckInDetailsFrame.m in Sources */,
 				E48C631B14EFCA1F00AC2979 /* PayUserViewController.m in Sources */,
+				E4B21B2514F5B8FF00144348 /* BalanceViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
