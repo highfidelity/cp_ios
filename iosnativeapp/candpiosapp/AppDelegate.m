@@ -12,6 +12,7 @@
 #import "CheckInListTableViewController.h"
 #import "FaceToFaceInviteController.h" // TODO: replace with F2FHelper
 #import "FaceToFaceHelper.h"
+#import "OneOnOneChatViewController.h"
 #import "FlurryAnalytics.h"
 #import "OAuthConsumer.h"
 #import "UserProfileCheckedInViewController.h"
@@ -239,37 +240,53 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 - (void)application:(UIApplication *)app
 didReceiveLocalNotification:(UILocalNotification *)notif
 {
-    [self.window.rootViewController performSegueWithIdentifier:@"ShowCheckInListTable" sender:self];
+    [self.window.rootViewController performSegueWithIdentifier:@"ShowCheckInListTable"
+                                                        sender:self];
 }
 
 // Handle PUSH notifications while the app is running
 - (void)application:(UIApplication*)application
 didReceiveRemoteNotification:(NSDictionary*)userInfo
 {
+#if DEBUG
 	NSLog(@"Received notification: %@", userInfo);
+#endif
 	NSString* alertValue = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
     
     // Chat push notification
     if ([userInfo valueForKey:@"chat"])
-    {
-        /*NSString* sendingUserId = [[userInfo valueForKey:@"chat"]
-                                     valueForKey:@"f"];
-        
-        // Strip the user name out of the alert message (it's the string before the colon)
-        NSMutableArray* parts = [NSMutableArray arrayWithArray:
-                                 [alertValue componentsSeparatedByString:@": "]];
-        [parts removeObjectAtIndex:0];
-        NSString *message = [parts componentsJoinedByString:@": "];
-        */
-        
-        // Until we have something cooler, just show chats in an alert popup
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:@"Incoming Chat"
-                              message:alertValue
-                              delegate:self
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles: nil];
-        [alert show];
+    {         
+         // Strip the user name out of the alert message (it's the string before the colon)
+         NSMutableArray* chatParts = [NSMutableArray arrayWithArray:
+                                      [alertValue componentsSeparatedByString:@": "]];
+         [chatParts removeObjectAtIndex:0];
+         NSString *message = [chatParts componentsJoinedByString:@": "];
+
+        // If the person is in the chat window AND is talking with the user that sent the chat
+        // send the message straight to the chat window
+        if ([[self.window.rootViewController.childViewControllers lastObject]
+                isKindOfClass:[OneOnOneChatViewController class]]) {
+            
+            OneOnOneChatViewController *chatView = (OneOnOneChatViewController *) 
+                [self.window.rootViewController.childViewControllers lastObject];
+            
+            /* TODO: make it so we only show incoming chat in the window for the correct user
+             if (chatView.user.userID == [[userInfo valueForKey:@"chat"] intValue])
+             */
+            
+            [chatView receiveChatMessage:message];
+        }
+        // Otherwise send the message as a popup alert or something
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle:@"Incoming Chat"
+                                  message:alertValue
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles: nil];
+            [alert show];
+        }
     }
     // This is a Face-to-Face invite
     else if ([userInfo valueForKey:@"f2f1"] != nil)

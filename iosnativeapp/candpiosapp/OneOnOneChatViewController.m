@@ -71,9 +71,10 @@ float const CHAT_BOX_WIDTH = 250.0f;
     // Release any cached data, images, etc that aren't in use.
 }
 
+
 #pragma mark - Chat Logic functions
 
--(void)addChatMessageToView:(NSString *)message sentByMe:(BOOL)myMessage{
+- (void)addChatMessageToView:(NSString *)message sentByMe:(BOOL)myMessage{
     NSLog(@"Inserting new chat box at (%f, %f) w(%f) h(%f)",
           self.nextChatBoxRect.origin.x,
           self.nextChatBoxRect.origin.y,
@@ -123,13 +124,13 @@ float const CHAT_BOX_WIDTH = 250.0f;
                                       CHAT_BOX_HEIGHT);
 }
 
--(void)receiveChatMessage:(NSString *)message {
+- (void)receiveChatMessage:(NSString *)message {
     [self addChatMessageToView:message sentByMe:NO];
     
     NSLog(@"Chat entry received: %@", message);
 }
 
--(void)sendChatMessage:(NSString *)message {
+- (void)sendChatMessage:(NSString *)message {
     // Send message via UrbanAirship push notification
     [CPapi sendOneOnOneChatMessage:message toUser:self.user.userID];
     
@@ -140,7 +141,7 @@ float const CHAT_BOX_WIDTH = 250.0f;
 
 #pragma mark - Delegate & Outlet functions
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField {    
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {    
     if (textField == self.chatEntryField) {
         if (textField.text == @"") {
             // Don't do squat on empty chat entries
