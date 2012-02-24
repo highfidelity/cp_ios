@@ -17,6 +17,7 @@
 #import "MapDataSet.h"
 #import "CPUIHelper.h"
 #import "UserProfileCheckedInViewController.h"
+#import "OCAnnotation.h"
 
 #define qHideTopNavigationBarOnMapView			0
 #define logoutMenuIndex 3
@@ -113,6 +114,7 @@
 	
 	// every 10 seconds, see if it's time to refresh the data
 	// (the data invalidates every 2 minutes, but we check more often)
+
 	reloadTimer = [NSTimer scheduledTimerWithTimeInterval:10.0
 												   target:self
 												 selector:@selector(refreshLocationsIfNeeded)
@@ -351,7 +353,7 @@
 	
 }
 
-- (void) mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
+- (void) mapView:(CPMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     for (MKAnnotationView *view in views) {
         if ([[view annotation] isKindOfClass:[CandPAnnotation class]]) {
             CandPAnnotation *ann = (CandPAnnotation *)view.annotation;
@@ -367,10 +369,38 @@
 // mapView:viewForAnnotation: provides the view for each annotation.
 // This method may be called for all or some of the added annotations.
 // For MapKit provided annotations (eg. MKUserLocation) return nil to use the MapKit provided annotation view.
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+- (MKAnnotationView *)mapView:(CPMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {   
+//    NSLog(@"class: %@", [annotation class]);
 	MKAnnotationView *pinToReturn = nil;
-	if([annotation isKindOfClass:[CandPAnnotation class]])
+
+    if ([annotation isKindOfClass:[OCAnnotation class]]) {
+        NSString *reuseId = @"cluster1";
+        
+        MKPinAnnotationView *pin = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
+
+        if (pin == nil)
+		{
+			pin = [[MKPinAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: reuseId];
+		}
+		else
+		{
+			pin.annotation = annotation;
+		}
+
+        pin.pinColor = MKPinAnnotationColorPurple;
+        pin.enabled = YES;
+        pin.canShowCallout = YES;
+        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+		button.frame = CGRectMake(0, 0, 32, 32);
+//		button.tag = [dataset.annotations indexOfObject:candpanno];
+		pin.rightCalloutAccessoryView = button;
+
+        pinToReturn = pin;
+        // create your custom cluster annotationView here!  
+    }  
+	else if ([annotation isKindOfClass:[CandPAnnotation class]])
 	{ 
 		CandPAnnotation *candpanno = (CandPAnnotation*)annotation;
         NSString *reuseId = [NSString stringWithFormat: @"pin-%d", candpanno.checkinId];
@@ -440,8 +470,23 @@
 	return pinToReturn;
 }
 
-- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-    [self performSegueWithIdentifier:@"ShowUserProfileCheckedInFromMap" sender:view];
+- (void)mapView:(CPMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+
+    if ([view.annotation isKindOfClass:[OCAnnotation class]]) {
+        
+        for (OCAnnotation *ann in ((OCAnnotation *)[view annotation]).annotationsInCluster) {
+            NSLog(@"Found: %@", ann.title);
+        }
+
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Coming Soon" message:nil delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+//        [alert show];
+
+      [self performSegueWithIdentifier:@"ShowUserClusterTable" sender:view];
+//        [self performSegueWithIdentifier:@"ShowUserListTable" sender:view];
+    }
+    else {
+        [self performSegueWithIdentifier:@"ShowUserProfileCheckedInFromMap" sender:view];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender 
@@ -466,27 +511,33 @@
     else if ([[segue identifier] isEqualToString:@"ShowUserListTable"]) {
         [[segue destinationViewController] setMissions: fullDataset.annotations];
     }
+    else if ([[segue identifier] isEqualToString:@"ShowUserClusterTable"]) {
+        OCAnnotation *tappedObj = [sender annotation];
+        NSArray *annotations = tappedObj.annotationsInCluster;
+        [[segue destinationViewController] setMissions: [annotations mutableCopy]];
+
+//        [[segue destinationViewController] setMissions: fullDataset.annotations];
+    }
 }
 
 ////// map delegate
 
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+- (void)mapView:(CPMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
 	[self refreshLocationsIfNeeded];
 }
 
-- (void)mapViewWillStartLocatingUser:(MKMapView *)mapView
+- (void)mapViewWillStartLocatingUser:(CPMapView *)mapView
 {
 	NSLog(@"mapViewWillStartLocatingUser");
 }
 
-- (void)mapViewDidStopLocatingUser:(MKMapView *)mapView
+- (void)mapViewDidStopLocatingUser:(CPMapView *)mapView
 {
 	NSLog(@"mapViewDidStopLocatingUser");
 	
 }
-
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+- (void)mapView:(CPMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
 	NSLog(@"MapTab: didUpdateUserLocation (lat %f, lon %f)",
           userLocation.location.coordinate.latitude,
@@ -510,10 +561,14 @@
 
 	}
 }
-- (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
+- (void)mapView:(CPMapView *)mapView didFailToLocateUserWithError:(NSError *)error
 {
 	[SVProgressHUD dismiss];
 
+}
+
+- (void)mapView:(CPMapView *)thisMapView regionWillChangeAnimated:(BOOL)animated {
+    [thisMapView doClustering];
 }
 
 // zoom to the location; on initial load & after updaing their pos

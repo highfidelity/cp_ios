@@ -14,7 +14,7 @@
 @synthesize objectId;
 @synthesize checkedIn;
 @synthesize checkinId;
-
+@synthesize _groupTag;
 
 -(id)initFromDictionary:(NSDictionary*)jsonDict
 {
@@ -29,6 +29,10 @@
 		id imageUrlObj = [jsonDict objectForKey:@"filename"];
 		if(imageUrlObj && imageUrlObj != [NSNull null])
 			imageUrl = [imageUrlObj copy];
+        
+        id foursquareObj = [jsonDict objectForKey:@"foursquare"];
+        if (foursquareObj && foursquareObj != [NSNull null] && ![foursquareObj isEqualToString:@"0"])
+            _groupTag = foursquareObj;
 	}
 	return self;
 }
@@ -61,5 +65,14 @@
 {
 	return CLLocationCoordinate2DMake(lat, lon);
 }
+
+- (NSString *)groupTag{
+    return _groupTag;
+}
+
+- (void)setGroupTag:(NSString *)tag{
+    _groupTag = tag;
+}
+
 
 @end

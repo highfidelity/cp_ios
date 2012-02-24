@@ -8,17 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "CPMapView.h"
 
 @class MapDataSet;
 
 @interface MapTabController : UIViewController< MKMapViewDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource >
 {
-    MKMapView *mapView;
+    CPMapView *mapView;
 	bool hasUpdatedUserLocation;
 	bool hasShownLoadingScreen;
 }
 
-@property (nonatomic, retain) IBOutlet MKMapView *mapView;
+@property (nonatomic, retain) IBOutlet CPMapView *mapView;
 @property (nonatomic, readonly, strong) MapDataSet *dataset;
 @property (nonatomic, readonly, strong) MapDataSet *fullDataset;
 @property (nonatomic) BOOL isMenuShowing;

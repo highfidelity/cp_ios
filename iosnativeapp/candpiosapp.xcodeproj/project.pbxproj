@@ -30,6 +30,10 @@
 		3222127C14E1E17B00C5471B /* README in Resources */ = {isa = PBXBuildFile; fileRef = 3222126814E1E17B00C5471B /* README */; };
 		3222127F14E1EA8600C5471B /* ModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222127E14E1EA8600C5471B /* ModalWebViewController.m */; };
 		3222128114E1EB2800C5471B /* ModalWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3222128014E1EB2800C5471B /* ModalWebView.xib */; };
+		3241E8E614EDA5B6006B81C2 /* CPMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3241E8E514EDA5B6006B81C2 /* CPMapView.m */; };
+		3241E8EF14EDA6C4006B81C2 /* OCAlgorithms.m in Sources */ = {isa = PBXBuildFile; fileRef = 3241E8E914EDA6C3006B81C2 /* OCAlgorithms.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3241E8F014EDA6C4006B81C2 /* OCAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3241E8EB14EDA6C3006B81C2 /* OCAnnotation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3241E8F114EDA6C4006B81C2 /* OCDistance.m in Sources */ = {isa = PBXBuildFile; fileRef = 3241E8ED14EDA6C3006B81C2 /* OCDistance.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3267F60914D9196800BFFBAA /* CHANGELOG in Resources */ = {isa = PBXBuildFile; fileRef = 3267F51114D9196800BFFBAA /* CHANGELOG */; };
 		3267F60A14D9196800BFFBAA /* libUAirship-1.1.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F56814D9196800BFFBAA /* libUAirship-1.1.3.a */; };
 		3267F60B14D9196800BFFBAA /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 3267F56914D9196800BFFBAA /* LICENSE */; };
@@ -276,6 +280,15 @@
 		3222127D14E1EA8600C5471B /* ModalWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalWebViewController.h; sourceTree = "<group>"; };
 		3222127E14E1EA8600C5471B /* ModalWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModalWebViewController.m; sourceTree = "<group>"; };
 		3222128014E1EB2800C5471B /* ModalWebView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModalWebView.xib; sourceTree = "<group>"; };
+		3241E8E414EDA5B6006B81C2 /* CPMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPMapView.h; sourceTree = "<group>"; };
+		3241E8E514EDA5B6006B81C2 /* CPMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPMapView.m; sourceTree = "<group>"; };
+		3241E8E814EDA6C3006B81C2 /* OCAlgorithms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCAlgorithms.h; sourceTree = "<group>"; };
+		3241E8E914EDA6C3006B81C2 /* OCAlgorithms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCAlgorithms.m; sourceTree = "<group>"; };
+		3241E8EA14EDA6C3006B81C2 /* OCAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCAnnotation.h; sourceTree = "<group>"; };
+		3241E8EB14EDA6C3006B81C2 /* OCAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCAnnotation.m; sourceTree = "<group>"; };
+		3241E8EC14EDA6C3006B81C2 /* OCDistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCDistance.h; sourceTree = "<group>"; };
+		3241E8ED14EDA6C3006B81C2 /* OCDistance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCDistance.m; sourceTree = "<group>"; };
+		3241E8EE14EDA6C4006B81C2 /* OCGrouping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCGrouping.h; sourceTree = "<group>"; };
 		3267F51114D9196800BFFBAA /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
 		3267F51314D9196800BFFBAA /* UAAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAnalytics.h; sourceTree = "<group>"; };
 		3267F51414D9196800BFFBAA /* UAAnalyticsDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAnalyticsDBManager.h; sourceTree = "<group>"; };
@@ -1205,6 +1218,15 @@
 				87F6580314B0DDFC00F4AB6C /* CandPAnnotation.m */,
 				6FEEDFFA14E103F400861CA1 /* CPapi.h */,
 				6FEEDFFB14E103F400861CA1 /* CPapi.m */,
+				3241E8E414EDA5B6006B81C2 /* CPMapView.h */,
+				3241E8E514EDA5B6006B81C2 /* CPMapView.m */,
+				3241E8E814EDA6C3006B81C2 /* OCAlgorithms.h */,
+				3241E8E914EDA6C3006B81C2 /* OCAlgorithms.m */,
+				3241E8EA14EDA6C3006B81C2 /* OCAnnotation.h */,
+				3241E8EB14EDA6C3006B81C2 /* OCAnnotation.m */,
+				3241E8EC14EDA6C3006B81C2 /* OCDistance.h */,
+				3241E8ED14EDA6C3006B81C2 /* OCDistance.m */,
+				3241E8EE14EDA6C4006B81C2 /* OCGrouping.h */,
 				8733310F14BCC36A001BF4DB /* EmailLoginSequence.h */,
 				8733311014BCC36A001BF4DB /* EmailLoginSequence.m */,
 				8708361814B4BF4A00439431 /* FacebookLoginSequence.h */,
@@ -1638,6 +1660,10 @@
 				6F0B453C14F6BD560074DBD9 /* ChatMessage.m in Sources */,
 				6F0B453F14F6BD850074DBD9 /* ChatHistory.m in Sources */,
 				6F0B454214F6CEE40074DBD9 /* CPAlertView.m in Sources */,
+				3241E8E614EDA5B6006B81C2 /* CPMapView.m in Sources */,
+				3241E8EF14EDA6C4006B81C2 /* OCAlgorithms.m in Sources */,
+				3241E8F014EDA6C4006B81C2 /* OCAnnotation.m in Sources */,
+				3241E8F114EDA6C4006B81C2 /* OCDistance.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
