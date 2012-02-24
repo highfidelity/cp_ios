@@ -30,6 +30,8 @@
 @synthesize facebook;
 @synthesize loginSequence;
 @synthesize urbanAirshipClient;
+@synthesize settingsMenuController;
+@synthesize rootNavigationController;
 
 +(AppDelegate*)instance
 {
@@ -45,28 +47,28 @@
 {
     UIButton *checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
     checkInButton.backgroundColor = [UIColor clearColor];
-    checkInButton.frame = CGRectMake(235, 395, 75, 75);
+    checkInButton.frame = CGRectMake(235, 375, 75, 75);
     [checkInButton addTarget:self action:@selector(checkInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [checkInButton setImage:[UIImage imageNamed:@"checked-in.png"] forState:UIControlStateNormal];
     checkInButton.tag = 901;
-    [self.window.rootViewController.view addSubview:checkInButton];
+    [self.rootNavigationController.view addSubview:checkInButton];
 }
 
 - (void)hideCheckInButton {
-    UIButton *checkInButton = (UIButton *)[self.window.rootViewController.view viewWithTag:901];
+    UIButton *checkInButton = (UIButton *)[self.rootNavigationController.view viewWithTag:901];
     checkInButton.alpha = 0.0;
     checkInButton.userInteractionEnabled = NO;
 }
 
 - (void)showCheckInButton {
-    UIButton *checkInButton = (UIButton *)[self.window.rootViewController.view viewWithTag:901];
+    UIButton *checkInButton = (UIButton *)[self.rootNavigationController.view viewWithTag:901];
     checkInButton.alpha = 1.0;
     checkInButton.userInteractionEnabled = YES;
 }
 
 - (void)checkInButtonPressed:(id)sender
 {
-    [self.window.rootViewController performSegueWithIdentifier:@"ShowCheckInListTable" sender:self];
+    [self.rootNavigationController performSegueWithIdentifier:@"ShowCheckInListTable" sender:self];
 }
 
 
@@ -113,9 +115,18 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 			//[self addMessageFromRemoteNotification:dictionary updateUI:NO];
 		}
 	}
-    
+        
+    // Switch out the UINavigationController in the rootviewcontroller for the SettingsMenuController
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
+    self.settingsMenuController = (SettingsMenuController*)[mainStoryboard instantiateViewControllerWithIdentifier:@"SettingsMenu"];
+    self.rootNavigationController = (UINavigationController*)self.window.rootViewController;
+    self.settingsMenuController.frontViewController = self.rootNavigationController;
+    [settingsMenuController.view addSubview:self.rootNavigationController.view];
+    [settingsMenuController addChildViewController:self.rootNavigationController];
+    self.window.rootViewController = settingsMenuController;
+
     [self addCheckInButton];
-    
+
     return YES;
 }
 
@@ -241,7 +252,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 - (void)application:(UIApplication *)app
 didReceiveLocalNotification:(UILocalNotification *)notif
 {
-    [self.window.rootViewController performSegueWithIdentifier:@"ShowCheckInListTable"
+    [self.rootNavigationController performSegueWithIdentifier:@"ShowCheckInListTable"
                                                         sender:self];
 }
 
@@ -270,38 +281,38 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
         [ChatHelper respondToIncomingChatNotification:message
                                          fromNickname:nickname
                                            fromUserId:userId
-                                         withRootView:self.window.rootViewController];
+                                         withRootView:self.rootNavigationController];
     }
     // This is a Face-to-Face invite ("f2f1" = [user id])
     else if ([userInfo valueForKey:@"f2f1"] != nil)
     {        
         [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:@"f2f1"] intValue]
-                                          fromView:self.window.rootViewController];
+                                          fromView:self.rootNavigationController];
     }
     // Face to Face Accept Invite ("f2f2" = [userId], "password" = [f2f password])
     else if ([userInfo valueForKey:@"f2f2"] != nil)
     {        
         [FaceToFaceHelper presentF2FAcceptFromUser:[[userInfo valueForKey:@"f2f2"] intValue]
                                       withPassword:[userInfo valueForKey:@"password"]
-                                          fromView:self.window.rootViewController];        
+                                          fromView:self.rootNavigationController];        
     }
     // Face to Face Accept Invite ("f2f3" = [user nickname])
     else if ([userInfo valueForKey:@"f2f3"] != nil)
     {        
         [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"f2f3"] 
-                                       fromView:self.window.rootViewController];
+                                       fromView:self.rootNavigationController];
     }
     // Received payment
     else if ([userInfo valueForKey:@"payment_received"] != nil)
     {
         NSString *userId = [userInfo valueForKey:@"payment_received"];
         
-        UserProfileCheckedInViewController *profileView = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"UserProfileCheckedIn"];
+        UserProfileCheckedInViewController *profileView = [self.rootNavigationController.storyboard instantiateViewControllerWithIdentifier:@"UserProfileCheckedIn"];
         
         profileView.user = [[User alloc] init];
         profileView.user.userID = [userId intValue];
         
-        [self.window.rootViewController presentModalViewController:profileView animated:YES];
+        [self.rootNavigationController presentModalViewController:profileView animated:YES];
     }
 }
 
