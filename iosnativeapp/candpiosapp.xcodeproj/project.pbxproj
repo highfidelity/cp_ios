@@ -124,6 +124,7 @@
 		6F0B453914F6BCD10074DBD9 /* ChatHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453814F6BCD10074DBD9 /* ChatHelper.m */; };
 		6F0B453C14F6BD560074DBD9 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453B14F6BD560074DBD9 /* ChatMessage.m */; };
 		6F0B453F14F6BD850074DBD9 /* ChatHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453E14F6BD850074DBD9 /* ChatHistory.m */; };
+		6F0B454214F6CEE40074DBD9 /* CPAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B454114F6CEE40074DBD9 /* CPAlertView.m */; };
 		6F3651DE14EAE90300E9322B /* FaceToFaceInviteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3651DD14EAE90300E9322B /* FaceToFaceInviteController.m */; };
 		6F5EB26C14DB51E40000294E /* OneOnOneChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5EB26B14DB51E40000294E /* OneOnOneChatViewController.m */; };
 		6F7BA4DB14E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7BA4D814E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m */; };
@@ -433,6 +434,8 @@
 		6F0B453B14F6BD560074DBD9 /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatMessage.m; path = candpiosapp/Chat/ChatMessage.m; sourceTree = SOURCE_ROOT; };
 		6F0B453D14F6BD850074DBD9 /* ChatHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatHistory.h; path = candpiosapp/Chat/ChatHistory.h; sourceTree = SOURCE_ROOT; };
 		6F0B453E14F6BD850074DBD9 /* ChatHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatHistory.m; path = candpiosapp/Chat/ChatHistory.m; sourceTree = SOURCE_ROOT; };
+		6F0B454014F6CEE40074DBD9 /* CPAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPAlertView.h; path = Utils/CPAlertView.h; sourceTree = "<group>"; };
+		6F0B454114F6CEE40074DBD9 /* CPAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPAlertView.m; path = Utils/CPAlertView.m; sourceTree = "<group>"; };
 		6F3651DC14EAE90300E9322B /* FaceToFaceInviteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FaceToFaceInviteController.h; path = FaceToFace/FaceToFaceInviteController.h; sourceTree = "<group>"; };
 		6F3651DD14EAE90300E9322B /* FaceToFaceInviteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FaceToFaceInviteController.m; path = FaceToFace/FaceToFaceInviteController.m; sourceTree = "<group>"; };
 		6F5EB26A14DB51E30000294E /* OneOnOneChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OneOnOneChatViewController.h; path = ../OneOnOneChatViewController.h; sourceTree = "<group>"; };
@@ -862,6 +865,8 @@
 		534FC97C14EF1E53008C87B9 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				6F0B454014F6CEE40074DBD9 /* CPAlertView.h */,
+				6F0B454114F6CEE40074DBD9 /* CPAlertView.m */,
 				53FB9E4214E099BA00F4CC7F /* LocalizedDistanceCalculator.h */,
 				53FB9E4314E099BA00F4CC7F /* LocalizedDistanceCalculator.m */,
 				534FC97D14EF1E77008C87B9 /* CPUIHelper.h */,
@@ -1004,12 +1009,10 @@
 		871EFB1014AE9C820030658B /* candpiosapp */ = {
 			isa = PBXGroup;
 			children = (
-				534FC97C14EF1E53008C87B9 /* Utils */,
-				871EFB6014AF97130030658B /* 3rdParty */,
 				871EFB1914AE9C820030658B /* AppDelegate.h */,
 				871EFB1A14AE9C820030658B /* AppDelegate.m */,
-				87F657F314B0D2D000F4AB6C /* images */,
 				871EFB1C14AE9C820030658B /* MainStoryboard_iPhone.storyboard */,
+				534FC97C14EF1E53008C87B9 /* Utils */,
 				6F3651DA14EAE8BB00E9322B /* FaceToFace */,
 				6F7DA74914E89471001BEC19 /* Chat */,
 				53D65B4614EEEC3700801C5E /* CheckIn */,
@@ -1017,6 +1020,8 @@
 				871EFBBC14AF987B0030658B /* Views */,
 				871EFB1114AE9C820030658B /* Supporting Files */,
 				87F5EF4C14AFAAC500EB83F7 /* SupportingClasses */,
+				87F657F314B0D2D000F4AB6C /* images */,
+				871EFB6014AF97130030658B /* 3rdParty */,
 			);
 			path = candpiosapp;
 			sourceTree = "<group>";
@@ -1632,6 +1637,7 @@
 				6F0B453914F6BCD10074DBD9 /* ChatHelper.m in Sources */,
 				6F0B453C14F6BD560074DBD9 /* ChatMessage.m in Sources */,
 				6F0B453F14F6BD850074DBD9 /* ChatHistory.m in Sources */,
+				6F0B454214F6CEE40074DBD9 /* CPAlertView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
