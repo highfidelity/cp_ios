@@ -100,7 +100,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     
     
 	// load the facebook api
-	facebook = [[Facebook alloc] initWithAppId:kFacebookAppId andDelegate:self];
+	facebook = [[Facebook alloc] initWithAppId:kFacebookAppId 
+                                   andDelegate:self];
 	facebook.accessToken = settings.facebookAccessToken;
 	facebook.expirationDate = settings.facebookExpirationDate;
 	

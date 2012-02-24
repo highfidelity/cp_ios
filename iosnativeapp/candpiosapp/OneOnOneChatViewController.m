@@ -33,6 +33,11 @@ float const CHAT_BOX_WIDTH = 250.0f;
 @synthesize chatContents = _chatContents;
 
 
+- (void)closeModalView
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
 #pragma mark - Chat Logic functions
 
 - (void)addChatMessageToView:(NSString *)message sentByMe:(BOOL)myMessage{

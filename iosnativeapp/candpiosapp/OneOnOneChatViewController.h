@@ -30,4 +30,6 @@ extern float const CHAT_BOX_WIDTH;
 - (void)receiveChatMessage:(NSString *)message;
 - (IBAction)sendChat;
 
+- (void)closeModalView;
+
 @end
