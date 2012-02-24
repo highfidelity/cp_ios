@@ -32,45 +32,6 @@ float const CHAT_BOX_WIDTH = 250.0f;
 @synthesize chatEntryField = _chatEntryField;
 @synthesize chatContents = _chatContents;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (id)initWithUserId:(NSString *)userId
-          andMessage:(NSString *)message {
-    
-    self = [self init];
-    
-    self.user.userID = [userId intValue];
-    
-    [SVProgressHUD showWithStatus:@"Starting Chat"];
-    [self.user loadUserResumeData:^(User *user, NSError *error) {
-        if (user) {
-            self.user = user;   
-            [SVProgressHUD dismiss];
-        } else {
-            [SVProgressHUD dismissWithError:[error localizedDescription]];
-        }
-    }];
-    
-    [self addChatMessageToView:message sentByMe:NO];
-    
-    return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
 
 #pragma mark - Chat Logic functions
 
@@ -119,7 +80,7 @@ float const CHAT_BOX_WIDTH = 250.0f;
     self.nextChatBoxRect = CGRectMake(newChatEntry.frame.origin.x,
                                       newChatEntry.frame.origin.y +
                                         newChatEntry.bounds.size.height +
-                                        CHAT_PADDING_Y,
+                                      CHAT_PADDING_Y,
                                       CHAT_BOX_WIDTH,
                                       CHAT_BOX_HEIGHT);
 }
@@ -128,6 +89,15 @@ float const CHAT_BOX_WIDTH = 250.0f;
     [self addChatMessageToView:message sentByMe:NO];
     
     NSLog(@"Chat entry received: %@", message);
+}
+
+- (IBAction)sendChat {
+    if (self.chatEntryField.text == @"") {
+        // Don't do squat on empty chat entries
+    } else {
+        [self sendChatMessage:self.chatEntryField.text];
+        self.chatEntryField.text = @"";
+    }
 }
 
 - (void)sendChatMessage:(NSString *)message {
@@ -139,22 +109,11 @@ float const CHAT_BOX_WIDTH = 250.0f;
     NSLog(@"Chat entry made: %@", message);
 }
 
+
 #pragma mark - Delegate & Outlet functions
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {    
-    if (textField == self.chatEntryField) {
-        if (textField.text == @"") {
-            // Don't do squat on empty chat entries
-            return YES;
-        }
-        
-        [self sendChatMessage:textField.text];
-        textField.text = @"";
-                
-        // Remove the keyboard.. probably not good UX to do so.
-        //[textField resignFirstResponder];
-    }
-    
+    [textField resignFirstResponder];
     return YES;
 }
 
@@ -201,5 +160,45 @@ float const CHAT_BOX_WIDTH = 250.0f;
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+- (void)didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil
+               bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)loadWithUserId:(NSString *)userId
+            andMessage:(NSString *)message {
+    
+    self.user.userID = [userId intValue];
+    
+    [SVProgressHUD showWithStatus:@"Starting Chat"];
+    
+    [self.user loadUserResumeData:^(User *user, NSError *error) {
+        NSLog(@"We're in here doing something...");
+        if (!error) {
+            self.user = user;   
+            [SVProgressHUD dismiss];
+        } else {
+            [SVProgressHUD dismissWithError:[error localizedDescription]];
+        }
+    }];
+    
+    [self addChatMessageToView:message
+                      sentByMe:NO];
+}
+
 
 @end

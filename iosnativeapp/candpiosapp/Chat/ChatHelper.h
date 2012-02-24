@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ChatHelper : NSObject
+@interface ChatHelper : NSObject <UIAlertViewDelegate>
+
+
++ (void)respondToIncomingChatNotification:(NSString *)message
+                             fromNickname:(NSString *)nickname
+                               fromUserId:(NSInteger)userId
+                             withRootView:(UIViewController *)rootView;
 
 @end

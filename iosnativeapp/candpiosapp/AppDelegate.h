@@ -53,7 +53,8 @@
 @class FacebookLoginSequence;
 @class AFHTTPClient;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, FBSessionDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,
+                                      FBSessionDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, readonly) Settings *settings;
@@ -62,7 +63,7 @@
 @property (strong, nonatomic, readonly) AFHTTPClient *urbanAirshipClient;
 
 -(void)saveSettings;
-+(AppDelegate*)instance;
++(AppDelegate *)instance;
 -(void)logoutEverything;
 -(void)hideCheckInButton;
 -(void)showCheckInButton;

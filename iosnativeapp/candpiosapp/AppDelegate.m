@@ -10,8 +10,9 @@
 #import "FacebookLoginSequence.h"
 #import "AFHTTPClient.h"
 #import "CheckInListTableViewController.h"
-#import "FaceToFaceInviteController.h" // TODO: replace with F2FHelper
+//#import "FaceToFaceInviteController.h" // TODO: replace with F2FHelper
 #import "FaceToFaceHelper.h"
+#import "ChatHelper.h"
 #import "OneOnOneChatViewController.h"
 #import "FlurryAnalytics.h"
 #import "OAuthConsumer.h"
@@ -251,67 +252,43 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
 #if DEBUG
 	NSLog(@"Received notification: %@", userInfo);
 #endif
-	NSString* alertValue = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
+    
+    NSString *alertMessage = (NSString *)[[userInfo objectForKey:@"aps"]
+                                          objectForKey:@"alert"];
     
     // Chat push notification
     if ([userInfo valueForKey:@"chat"])
-    {         
-         // Strip the user name out of the alert message (it's the string before the colon)
-         NSMutableArray* chatParts = [NSMutableArray arrayWithArray:
-                                      [alertValue componentsSeparatedByString:@": "]];
-         [chatParts removeObjectAtIndex:0];
-         NSString *message = [chatParts componentsJoinedByString:@": "];
-
-        // If the person is in the chat window AND is talking with the user that sent the chat
-        // send the message straight to the chat window
-        if ([[self.window.rootViewController.childViewControllers lastObject]
-                isKindOfClass:[OneOnOneChatViewController class]]) {
-            
-            OneOnOneChatViewController *chatView = (OneOnOneChatViewController *) 
-                [self.window.rootViewController.childViewControllers lastObject];
-            
-            /* TODO: make it so we only show incoming chat in the window for the correct user
-             if (chatView.user.userID == [[userInfo valueForKey:@"chat"] intValue])
-             */
-            
-            [chatView receiveChatMessage:message];
-        }
-        // Otherwise send the message as a popup alert or something
-        else
-        {
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:@"Incoming Chat"
-                                  message:alertValue
-                                  delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles: nil];
-            [alert show];
-        }
-    }
-    // This is a Face-to-Face invite
-    else if ([userInfo valueForKey:@"f2f1"] != nil)
     {
-        int userId = [[userInfo valueForKey:@"f2f1"] intValue];
+        // Strip the user name out of the alert message (it's the string before the colon)
+        NSMutableArray* chatParts = [NSMutableArray arrayWithArray:
+         [alertMessage componentsSeparatedByString:@": "]];
+        NSString *nickname = [chatParts objectAtIndex:0];
+         [chatParts removeObjectAtIndex:0];
+        NSString *message = [chatParts componentsJoinedByString:@": "];
+        NSInteger userId = [[userInfo valueForKey:@"chat"] intValue];
         
-        [FaceToFaceHelper presentF2FInviteFromUser:userId
+        [ChatHelper respondToIncomingChatNotification:message
+                                         fromNickname:nickname
+                                           fromUserId:userId
+                                         withRootView:self.window.rootViewController];
+    }
+    // This is a Face-to-Face invite ("f2f1" = [user id])
+    else if ([userInfo valueForKey:@"f2f1"] != nil)
+    {        
+        [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:@"f2f1"] intValue]
                                           fromView:self.window.rootViewController];
     }
-    // Face to Face Accept Invite
+    // Face to Face Accept Invite ("f2f2" = [userId], "password" = [f2f password])
     else if ([userInfo valueForKey:@"f2f2"] != nil)
-    {
-        int userId = [[userInfo valueForKey:@"f2f2"] intValue];
-        NSString *password = [userInfo valueForKey:@"password"];
-        
-        [FaceToFaceHelper presentF2FAcceptFromUser:userId
-                                      withPassword:password
+    {        
+        [FaceToFaceHelper presentF2FAcceptFromUser:[[userInfo valueForKey:@"f2f2"] intValue]
+                                      withPassword:[userInfo valueForKey:@"password"]
                                           fromView:self.window.rootViewController];        
     }
-    // Face to Face Accept Invite
+    // Face to Face Accept Invite ("f2f3" = [user nickname])
     else if ([userInfo valueForKey:@"f2f3"] != nil)
-    {
-        NSString *nickname = [userInfo valueForKey:@"f2f3"];
-        
-        [FaceToFaceHelper presentF2FSuccessFrom:nickname 
+    {        
+        [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"f2f3"] 
                                        fromView:self.window.rootViewController];
     }
     // Received payment
@@ -319,7 +296,7 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
     {
         NSString *userId = [userInfo valueForKey:@"payment_received"];
         
-        UserProfileCheckedInViewController *profileView = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"UserProfileCheckedInViewController"];
+        UserProfileCheckedInViewController *profileView = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"UserProfileCheckedIn"];
         
         profileView.user = [[User alloc] init];
         profileView.user.userID = [userId intValue];
@@ -334,7 +311,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
 	// We get here if the user has allowed Push Notifications
 	// We need to get our authorization token and send it to our servers
     
-    NSLog(@"This is my device token: %@", devToken);
     [[UAPush shared] registerDeviceToken:devToken];
 }
 

@@ -24,8 +24,10 @@ extern float const CHAT_BOX_WIDTH;
 @property (weak, nonatomic) IBOutlet UITextField *chatEntryField;
 @property (weak, nonatomic) IBOutlet UIScrollView *chatContents;
 
-- (id)initWithUserId:(NSString *)userId
-          andMessage:(NSString *)message;
+- (void)loadWithUserId:(NSString *)userId
+            andMessage:(NSString *)message;
+
 - (void)receiveChatMessage:(NSString *)message;
+- (IBAction)sendChat;
 
 @end
