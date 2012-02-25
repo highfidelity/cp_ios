@@ -11,11 +11,16 @@
 #import "CPUIHelper.h"
 #import "SignupController.h"
 #import "AppDelegate.h"
+#import "CPapi.h"
+#import "TPKeyboardAvoidingScrollView.h"
+#import "NSString+HTML.h"
 
-@interface CheckInDetailsViewController() <UITextFieldDelegate>
+@interface CheckInDetailsViewController() <UITextFieldDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *blueOverlay;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIScrollView *otherUsersScrollView;
+@property (weak, nonatomic) IBOutlet UIView *venueInfo;
 @property (weak, nonatomic) IBOutlet UILabel *checkInLabel;
 @property (weak, nonatomic) IBOutlet UILabel *placeName;
 @property (weak, nonatomic) IBOutlet UILabel *placeAddress;
@@ -27,8 +32,19 @@
 @property (weak, nonatomic) IBOutlet UISlider *timeSlider;
 @property (assign, nonatomic) int checkInDuration;
 @property (weak, nonatomic) IBOutlet UILabel *durationString;
+@property (assign, nonatomic) BOOL sliderButtonPressed;
+@property (weak, nonatomic) IBOutlet UIButton *checkInButton;
+@property (weak, nonatomic) IBOutlet UILabel *durationHeader;
+@property (weak, nonatomic) IBOutlet UIView *userInfoBubble;
+@property (weak, nonatomic) IBOutlet UILabel *infoBubbleNickname;
+@property (weak, nonatomic) IBOutlet UILabel *infoBubbleStatus;
+@property (strong, nonatomic) NSMutableArray *userArray;
+@property (assign, nonatomic) int userArrayIndex;
+@property (weak, nonatomic) UIImageView *infoBubbleArrow;
 
 -(IBAction)sliderChanged:(id)sender;
+-(void)showUserInfoBubbleForUserIndex:(int)userIndex andButton:(UIButton *)userImageButton;
+-(void)hideUserInfoBubble;
 
 @end
 
@@ -36,6 +52,8 @@
 @synthesize blueOverlay = _blueOverlay;
 @synthesize mapView = _mapView;
 @synthesize scrollView = _scrollView;
+@synthesize otherUsersScrollView = _otherUsersScrollView;
+@synthesize venueInfo = _venueInfo;
 @synthesize checkInLabel = _checkInLabel;
 @synthesize placeName = _placeName;
 @synthesize placeAddress = _placeAddress;
@@ -48,6 +66,15 @@
 @synthesize place = _place;
 @synthesize checkInDuration = _checkInDuration;
 @synthesize durationString = _durationString;
+@synthesize sliderButtonPressed = _sliderButtonPressed;
+@synthesize checkInButton = _checkInButton;
+@synthesize durationHeader = _durationHeader;
+@synthesize userInfoBubble = _userInfoBubble;
+@synthesize infoBubbleNickname = _infoBubbleNickname;
+@synthesize infoBubbleStatus = _infoBubbleStatus;
+@synthesize userArray = _userArray;
+@synthesize userArrayIndex = _userArrayIndex;
+@synthesize infoBubbleArrow = _infoBubbleArrow;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -72,6 +99,21 @@
     _checkInDuration = checkInDuration;
 }
 
+// customer getter for infoBubbleArrow
+// lazily instantiates it if it's not on the screen yet
+-(UIImageView *)infoBubbleArrow
+{
+    if (!_infoBubbleArrow) {
+        UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.userInfoBubble.frame.size.height, 25, 15)];
+        arrowImageView.image = [UIImage imageNamed:@"check-in-status-arrow.png"];
+        _infoBubbleArrow = arrowImageView;
+        [self.userInfoBubble addSubview:_infoBubbleArrow];
+        return _infoBubbleArrow;
+    } else {
+        return _infoBubbleArrow;
+    }
+}
+
 #pragma mark - View lifecycle
 
 /*
@@ -81,52 +123,71 @@
 }
 */
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    // set the title of the nav controller to the place name
     self.title = self.place.name;
     
+    // get the other users that are checked in
+    [self processOtherCheckedInUsers];
+    
+    // custom slider images for the track
+    UIImage *sliderMinimum = [[UIImage imageNamed:@"check-in-slider-grooves-light.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
+    [self.timeSlider setMinimumTrackImage:sliderMinimum forState:UIControlStateNormal];
+    UIImage *sliderMaximum = [[UIImage imageNamed:@"check-in-slider-grooves-dark.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
+    [self.timeSlider setMaximumTrackImage:sliderMaximum forState:UIControlStateNormal];
+    
+    // custom slider image for the handle
+    [self.timeSlider setThumbImage:[UIImage imageNamed:@"check-in-slider-handle.png"] forState:UIControlStateNormal];
+    self.checkInDuration = self.timeSlider.value;
+    
+    // add these targets so we can change the font for the number that is selected
+    [self.timeSlider addTarget:self action:@selector(sliderTouchDownAction:) forControlEvents:UIControlEventTouchDown];
+    [self.timeSlider addTarget:self action:@selector(sliderTouchUpInsideAction:) forControlEvents:UIControlEventTouchUpInside];
+    
     // make an MKCoordinate region for the zoom level on the map
-    MKCoordinateRegion region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(self.place.lat, self.place.lng), MKCoordinateSpanMake(0.003, 0.003));
+    MKCoordinateRegion region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(self.place.lat, self.place.lng), MKCoordinateSpanMake(0.006, 0.006));
     [self.mapView setRegion:region];
     
     // this will always be the point on iPhones up to iPhone4
     // if this needs to be used on iPad we'll need to do this programatically or use an if-else
-    CGPoint moveRight = CGPointMake(71, 58);
+    CGPoint moveRight = CGPointMake(71, 136);
     CLLocationCoordinate2D coordinate = [self.mapView convertPoint:moveRight toCoordinateFromView:self.mapView];
     [self.mapView setCenterCoordinate:coordinate animated:NO];
     
     // set LeagueGothic font where applicable
     UIFont *gothic = [UIFont fontWithName:@"LeagueGothic" size:26.f];
-    for (UILabel *labelNeedsGothic in [NSArray arrayWithObjects:self.checkInLabel, self.willLabel, self.orLabel, self.wantLabel, nil]) {
+    for (UILabel *labelNeedsGothic in [NSArray arrayWithObjects:self.checkInLabel, self.willLabel, self.orLabel, self.wantLabel, self.durationHeader, nil]) {
         labelNeedsGothic.font = gothic;
     }
-    
-    [CPUIHelper addShadowToView:self.checkInDetails color:[UIColor blackColor] offset:CGSizeMake(0, -2) radius:3 opacity:0.24];
-    [CPUIHelper addShadowToView:self.blueOverlay color:[UIColor blackColor] offset:CGSizeMake(0,2) radius:3 opacity:0.24];
+
+    // add a shadow on the top of the checkInDetails View, the VenueInfo box and the user info bubble
+    [CPUIHelper addShadowToView:self.checkInDetails color:[UIColor blackColor] offset:CGSizeMake(0,-2) radius:3 opacity:0.24];
+    [CPUIHelper addShadowToView:self.venueInfo color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
+    [CPUIHelper addShadowToView:self.userInfoBubble color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     
     // set the diagonal noise texture on the horizontal scrollview
     UIColor *texture = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise.png"]];
-    self.scrollView.backgroundColor = texture;
+    self.otherUsersScrollView.backgroundColor = texture;
     
     // set the light diagonal noise texture on the bottom UIView
     UIColor *lightTexture = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-light.png"]];
     self.checkInDetails.backgroundColor = lightTexture; 
     
+    // set the delegates for the textField and the otherUsersScrollView
     self.statusTextField.delegate = self;
+    self.otherUsersScrollView.delegate = self;
     
+    // set the labels for the venue name and address
     self.placeName.text = self.place.name;
     self.placeAddress.text = self.place.address;
-    
-    [self.timeSlider setThumbImage:[UIImage imageNamed:@"check-in-slider-handle.png"] forState:UIControlStateNormal];
-    self.checkInDuration = self.timeSlider.value;
 }
 
 - (void)viewDidUnload
 {
     [self setMapView:nil];
-    [self setScrollView:nil];
+    [self setOtherUsersScrollView:nil];
     [self setPlaceName:nil];
     [self setPlaceAddress:nil];
     [self setCheckInLabel:nil];
@@ -138,6 +199,13 @@
     [self setStatusTextField:nil];
     [self setTimeSlider:nil];
     [self setDurationString:nil];
+    [self setCheckInButton:nil];
+    [self setDurationHeader:nil];
+    [self setScrollView:nil];
+    [self setVenueInfo:nil];
+    [self setUserInfoBubble:nil];
+    [self setInfoBubbleNickname:nil];
+    [self setInfoBubbleStatus:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -156,97 +224,181 @@
 }
 
 - (IBAction)checkInPressed:(id)sender {
-    // send the server your lat/lon, checkin_time (now), checkout_time (now + duration from slider), and the venue data from the place. 
-    // checkOutTime is equal to the slider value (represented in hours) * 60 minutes * 60 seconds to normalize the units into seconds
     
+    // send the server your lat/lon, checkin_time (now), checkout_time (now + duration from slider), and the venue data from the place. 
+    // url encode the appropriate values using the functions in CPapi
     NSInteger checkInTime = [[NSDate date] timeIntervalSince1970];
     NSInteger checkInDuration = self.checkInDuration;    
     NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
     NSString *foursquareID = self.place.foursquareID;
-    NSString *statusText = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
-                                                                                        (__bridge CFStringRef) self.statusTextField.text,
-                                                                                        NULL,
-                                                                                        (CFStringRef) @"!*'();:@&=+$,/?%#[]",
-                                                                                        kCFStringEncodingUTF8);
-    
-    NSString *venueName = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
-                                                                                       (__bridge CFStringRef) self.place.name,
-                                                                                       NULL,
-                                                                                       (CFStringRef) @"!*'();:@&=+$,/?%#[]",
-                                                                                       kCFStringEncodingUTF8);
-    
-    if (statusText == NULL) {
-        statusText = @"";
+    NSString *statusText = @"";
+    if (self.statusTextField.text) {
+        statusText = self.statusTextField.text;
     }
-    
+            
+    // show the progressHUD to show the user that we're doing something
     [SVProgressHUD showWithStatus:@"Checking In..."];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=checkin&lat=%.7f&lng=%.7f&checkin=%d&checkout=%d&foursquare=%@&status=%@&venue_name=%@",
-                           kCandPWebServiceUrl,
-                           self.place.lat,
-                           self.place.lng,
-                           checkInTime,
-                           checkOutTime,
-                           foursquareID,
-                           statusText,
-                           venueName];
-    
-    NSURL *locationURL = [NSURL URLWithString:urlString];
-    
-    dispatch_async(dispatch_get_global_queue(
-                                             DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData* data = [NSData dataWithContentsOfURL: 
-                        locationURL];
-        [self performSelectorOnMainThread:@selector(fetchedData:) 
-                               withObject:data
-                            waitUntilDone:YES];
-    });   
-    
-    // Fire a notification 5 minutes before checkout time
-    NSInteger minutesBefore = 5;
-    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-    if (localNotif) {
-        // Cancel all old local notifications
-        [[UIApplication sharedApplication] cancelAllLocalNotifications];
-        
-        localNotif.alertBody = @"You will be checked out of C&P in 5 min and will no longer be shown on the map.";
-        localNotif.alertAction = @"Check In";
-        localNotif.soundName = UILocalNotificationDefaultSoundName;
-        
-        localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkOutTime - minutesBefore * 60)];
-        //        localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkInTime + 10)];
-        localNotif.timeZone = [NSTimeZone defaultTimeZone];
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
-    }    
+    // use CPapi to checkin
+    [CPapi checkInToLocation:self.place checkInTime:checkInTime checkOutTime:checkOutTime foursquareID:foursquareID statusText:statusText completionBlock:^(NSDictionary *json, NSError *error){
+        // hide the SVProgressHUD
+        [SVProgressHUD dismiss];
+        if (!error) {
+            if ([[json objectForKey:@"response"] intValue] == 1) {
+                
+                // Fire a notification 5 minutes before checkout time
+                NSInteger minutesBefore = 5;
+                UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+                if (localNotif) {
+                    // Cancel all old local notifications
+                    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+                    
+                    localNotif.alertBody = @"You will be checked out of C&P in 5 min and will no longer be shown on the map.";
+                    localNotif.alertAction = @"Check In";
+                    localNotif.soundName = UILocalNotificationDefaultSoundName;
+                    
+                    localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkOutTime - minutesBefore * 60)];
+                    //        localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkInTime + 10)];
+                    localNotif.timeZone = [NSTimeZone defaultTimeZone];
+                    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+                } 
+                // hide the checkin screen, we're checked in
+                [self dismissModalViewControllerAnimated:YES];
+            }
+            else {
+                // show an alertView if the user isn't checked in
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You must be logged in to C&P in order to check in." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Okay", nil];
+                [alertView show];
+                
+                SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
+                [self.navigationController pushViewController:controller animated:YES];
+            }
+        } else {
+            // TODO: error checking
+        }
+    }];      
 }
 
-- (void)fetchedData:(NSData *)responseData {
-    //parse out the json data
-    
-    NSError* error;
-    NSDictionary* json = [NSJSONSerialization 
-                          JSONObjectWithData:responseData
-                          
-                          options:kNilOptions 
-                          error:&error];
-    
-    
-    [SVProgressHUD dismiss];
-    
-    if ([[json objectForKey:@"response"] intValue] == 1) {
-        [self dismissModalViewControllerAnimated:YES];
-    }
-    else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You must be logged in to C&P in order to check in." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Okay", nil];
-        [alertView show];
-        
-        SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
-        [self.navigationController pushViewController:controller animated:YES];
+- (void)processOtherCheckedInUsers
+{
+    // call the function in CPApi to get the other users at this venue
+    [CPapi getUsersCheckedInAtFoursquareID:self.place.foursquareID :^(NSDictionary *json, NSError *error) {   
+        int count = [[json valueForKeyPath:@"payload.count"] intValue];
+        // check if we had an error or nobody else is here
+        if (!error && count != 0) {
+#if DEBUG
+            NSLog(@"JSON returned for other users at venue: %@", [json description]);
+#endif
+            
+            // add a view above the scrollview so we can have a shadow along the top
+            UIView *shadowMaker = [[UIView alloc] initWithFrame:CGRectMake(0, self.otherUsersScrollView.frame.origin.y - 5, 320, 5)];
+            [CPUIHelper addShadowToView:shadowMaker color:[UIColor blackColor] offset:CGSizeMake(0, 2) radius:3 opacity:0.24];
+            int indexOfUserScrollView = [self.scrollView.subviews indexOfObject:self.otherUsersScrollView];
+            [self.scrollView insertSubview:shadowMaker atIndex:indexOfUserScrollView + 1];
+            
+            // bring up the gray scrollView bar which holds users
+            [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
+                self.otherUsersScrollView.transform = CGAffineTransformMakeTranslation(0, -self.otherUsersScrollView.frame.size.height);
+                shadowMaker.transform = CGAffineTransformMakeTranslation(0, -self.otherUsersScrollView.frame.size.height);
+                self.venueInfo.transform = CGAffineTransformMakeTranslation(0, -28);
+            } completion:NULL];
+            
+            // setup integer variable left offset to keep track of where we are putting user images
+            int leftOffset = 10;
+            
+            // setup the array of user nickname + statuses so we can put info into it
+            self.userArray = [NSMutableArray arrayWithCapacity:count];
+            
+            // iterate through the users we've gotten back to add them to the scrollview
+            for (NSDictionary *user in [json valueForKeyPath:@"payload.users"]) {
+                
+                // add this user's nickname and status to the user array
+                // this is how we put the user's info in the info bubble later
+                [self.userArray addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[user objectForKey:@"nickname"], [user objectForKey:@"status_text"], nil] forKeys:[NSArray arrayWithObjects:@"nickname", @"status", nil]]];
+                
+                
+                UIButton *userImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                userImageButton.frame = CGRectMake(leftOffset, 14, 50, 50);
+                [userImageButton addTarget:self action:@selector(userImageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                
+                // alloc and init an imageview for the user image
+                UIImageView *userImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+                
+                // alloc and init a spinner to put where the image will be, to show while the image is loading
+                UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+                // put the spinner in the middle of that imageview
+                spinner.frame = CGRectMake((userImage.frame.size.width / 2) - (spinner.frame.size.width / 2), (userImage.frame.size.height / 2) - (spinner.frame.size.height / 2), spinner.frame.size.width, spinner.frame.size.height);
+                
+                // add a shadow to the imageview
+                [CPUIHelper addShadowToView:userImage color:[UIColor blackColor] offset:CGSizeMake(1, 1) radius:3 opacity:0.40];
+                
+                // add the spinner and spin it
+                [userImage addSubview:spinner];
+                [spinner startAnimating];
+                
+                // add the imageview to the button
+                [userImageButton addSubview:userImage];
+                // add the button to the scrollview
+                [self.otherUsersScrollView addSubview:userImageButton];
+                
+                // setup the request for the user's image, use AFNetworking to grab it
+                NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[user objectForKey:@"imageUrl"]]];
+                [userImage setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
+                    [spinner stopAnimating];
+                }
+                failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error){
+                    // TODO: revisit the handling of errors here, we likely want to show that there was supposed to be a thumbnail there and still allow
+                    // the click event to see the user info
+                    [spinner stopAnimating];                    
+                }];
+                
+                // increase the leftOffset so the next image is in the right spot
+                leftOffset = leftOffset + 62;
+            }
+            
+            // add the "Who's here now?" text
+            UILabel *whosHere = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset + 18, 0, 0, 78)];
+            whosHere.backgroundColor = [UIColor clearColor];
+            whosHere.textAlignment = UITextAlignmentCenter;
+            whosHere.font = [UIFont systemFontOfSize:18.0];
+            whosHere.textColor = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:0.7];
+            whosHere.text = @"Who's here now?";
+            [whosHere sizeToFit];
+            whosHere.frame = CGRectMake(whosHere.frame.origin.x, whosHere.frame.origin.y, whosHere.frame.size.width, self.otherUsersScrollView.frame.size.height);
+            [self.otherUsersScrollView addSubview:whosHere];
+            
+            // make the scroll view content size accomodate all the users that are checked in
+            // it must be at least 320pts wide
+            // the extra 177 in content size is for "Who's here now?"
+            CGSize contentSize = CGSizeMake(10 + (count*12 - 12) + (count*50) + whosHere.frame.size.width + 30 + 20, 78);
+            self.otherUsersScrollView.contentSize = contentSize;
+            
+        } else {
+            // remove the scrollview (although we can't see it anyways)
+            [self.otherUsersScrollView removeFromSuperview];
+        }
+    }];
+}
+
+// action when user presses slider handle
+- (IBAction)sliderTouchDownAction:(id)sender {
+    self.sliderButtonPressed = YES;
+    // don't let the user accidentally checkin while sliding
+    self.checkInButton.userInteractionEnabled = NO;
+}
+
+// action when user is done pressing slider handle
+- (IBAction)sliderTouchUpInsideAction:(id)sender {    
+    if (self.sliderButtonPressed) {
+        self.sliderButtonPressed = NO;
+        // let the user checkin now that they are done sliding
+        self.checkInButton.userInteractionEnabled = YES;
     }
 }
 
 -(IBAction)sliderChanged:(id)sender
 {
+    // get the value of the slider and set it to one of the accepted values
     float value = self.timeSlider.value;
     if (value < 2) {
         value = 1;
@@ -258,16 +410,130 @@
         value = 7;
     }
     
+    // remove the font change to the previous selected value
     UILabel *previousSelectedValueLabel = (UILabel *)[self.view viewWithTag:(1000 + self.checkInDuration)];
     previousSelectedValueLabel.textColor = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1.0];
     previousSelectedValueLabel.font = [UIFont boldSystemFontOfSize:20.0];
     
+    // change the font on the new selected value
     UILabel *selectedValueLabel = (UILabel *)[self.view viewWithTag:(1000 + value)];
     selectedValueLabel.textColor = self.durationString.textColor;
     selectedValueLabel.font = [UIFont boldSystemFontOfSize:28.0];
     
+    // set the slider to the accepted value
     [self.timeSlider setValue:value animated:YES];
+    // set the checkInDuration to the accepted value
     self.checkInDuration = value;
+}
+
+-(void)userImageButtonPressed:(UIButton *)sender
+{        
+    // get the index of the user in the userArray (based on button index)
+    int userIndex = [self.otherUsersScrollView.subviews indexOfObject:sender];
+      
+    // check if the info bubble isn't already on screen
+    if (self.userInfoBubble.alpha == 0) {
+        // the bubble is hidden so it's time to show it
+        // with the data from userArray
+        [self showUserInfoBubbleForUserIndex:userIndex andButton:sender];
+    }
+    else {
+        // the bubble is on screen 
+        // we're either showing a different bubble or hiding this one
+        // check if the same button was clicked on again
+        // hide it if that's the case
+        if (userIndex == self.userArrayIndex) {
+            [self hideUserInfoBubble];
+        } else {
+            // we need to show a different info bubble
+            self.userArrayIndex = userIndex;
+            [self showUserInfoBubbleForUserIndex:userIndex andButton:sender];
+        }        
+    }
+}
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    // the user dragged the scrollview so hide the info bubble
+    [self hideUserInfoBubble];
+}
+
+-(void)showUserInfoBubbleForUserIndex:(int)userIndex andButton:(UIButton *)userImageButton
+{
+    
+    // set the nickname and status on the info bubble
+    // decode the HTML entities
+    self.infoBubbleNickname.text = [[[self.userArray objectAtIndex:userIndex] objectForKey:@"nickname"] stringByDecodingHTMLEntities];
+    NSString *status = [[[self.userArray objectAtIndex:userIndex] objectForKey:@"status"] stringByDecodingHTMLEntities];
+    if (status.length > 0) {
+        self.infoBubbleStatus.text = [NSString stringWithFormat:@"\"%@\"", status];
+    } else {
+        self.infoBubbleStatus.text = @"No status set...";
+    }
+    
+    // vertically the status text so it's at the top if it's one line
+    CGSize sizeToFit = [self.infoBubbleStatus.text sizeWithFont:self.infoBubbleStatus.font constrainedToSize:CGSizeMake(169, 42) lineBreakMode:self.infoBubbleStatus.lineBreakMode];
+    CGRect textFrame = self.infoBubbleStatus.frame;
+    textFrame.size.height = sizeToFit.height;
+    self.infoBubbleStatus.frame = textFrame;
+    
+        
+    CGPoint newOffset = self.otherUsersScrollView.contentOffset;
+    // figure out if the user image is on the edge and scroll it back to the left edge if that is the case
+    if (self.otherUsersScrollView.contentOffset.x > userImageButton.frame.origin.x - 10) {
+        newOffset = CGPointMake(userImageButton.frame.origin.x - 10, 0);
+    }   
+    // move the user image back into the scrollview if it's on the right edge
+    else if (self.otherUsersScrollView.contentOffset.x + self.otherUsersScrollView.frame.size.width < userImageButton.frame.origin.x + userImageButton.frame.size.width + 10) {
+        newOffset = CGPointMake(userImageButton.frame.origin.x + userImageButton.frame.size.width + 10 - self.otherUsersScrollView.frame.size.width, 0);
+    }
+    
+    // animate the changing of the scrollview offset (should it need to be changed)
+    [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
+        [self.otherUsersScrollView setContentOffset:newOffset];
+    } completion:^(BOOL finished){
+        if (finished) {
+            // this is all called once the scrollview has moved
+            
+            
+            // move the little arrow to be centered on this userImage
+            CGRect moveInfoBubble = self.userInfoBubble.frame;
+            CGRect moveArrow = self.infoBubbleArrow.frame;
+            moveArrow.origin.x = userImageButton.frame.origin.x - self.otherUsersScrollView.contentOffset.x + (userImageButton.frame.size.width / 2) - (moveArrow.size.width / 2) - 10;
+            
+            // move the info bubble to the left or right edge depending on which user image was tapped
+            if (userImageButton.frame.origin.x + userImageButton.frame.size.width - self.otherUsersScrollView.contentOffset.x > 10 + self.userInfoBubble.frame.size.width) {        
+                moveInfoBubble.origin.x = self.view.frame.size.width - moveInfoBubble.size.width - 10;
+                moveArrow.origin.x = moveArrow.origin.x - moveInfoBubble.origin.x + 10;
+            } else {
+                moveInfoBubble.origin.x = 10;
+            }
+            
+            // fade in the userInfoBubble if it's hidden
+            if (self.userInfoBubble.alpha == 0) {
+                // place it in the right spot before fading it in
+                self.userInfoBubble.frame = moveInfoBubble;
+                self.infoBubbleArrow.frame = moveArrow;
+                [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationTransitionNone animations:^{
+                    self.userInfoBubble.alpha = 1.0;
+                } completion:NULL];
+            } else {
+                // animate moving of info bubble and arrow
+                [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
+                    self.userInfoBubble.frame = moveInfoBubble;
+                    self.infoBubbleArrow.frame = moveArrow;
+                } completion:NULL]; 
+            }
+        }        
+    }];   
+}
+
+-(void)hideUserInfoBubble
+{
+    // fade out the userInfoBubble
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationTransitionNone animations:^{
+        self.userInfoBubble.alpha = 0.0;
+    } completion:NULL];
 }
 
 @end

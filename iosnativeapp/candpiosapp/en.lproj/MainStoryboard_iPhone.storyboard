@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2177" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
     <dependencies>
         <deployment version="1280" identifier="iOS"/>
         <development version="4200" defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1173"/>
     </dependencies>
     <scenes>
+        <!--Face To Face Invite Controller-->
         <scene sceneID="nyG-HQ-c1i">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F7V-o4-rhv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -111,6 +112,7 @@
             </objects>
             <point key="canvasLocation" x="-76" y="1132"/>
         </scene>
+        <!--View Controller - Settings-->
         <scene sceneID="P8B-gs-TKc">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZvI-Kw-LUQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -125,6 +127,7 @@
             </objects>
             <point key="canvasLocation" x="385" y="-836"/>
         </scene>
+        <!--User List Table View Controller-->
         <scene sceneID="1mX-pB-Ub5">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pIh-oL-BFt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -157,6 +160,7 @@
             </objects>
             <point key="canvasLocation" x="844" y="-1038"/>
         </scene>
+        <!--Balance View Controller - Wallet-->
         <scene sceneID="N4C-DH-qKm">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="roq-lO-JF8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -190,6 +194,7 @@
             </objects>
             <point key="canvasLocation" x="385" y="-1398"/>
         </scene>
+        <!--Map Tab Controller-->
         <scene sceneID="Q7p-8T-DVG">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WIW-bY-l8z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -299,6 +304,7 @@
             </objects>
             <point key="canvasLocation" x="-76" y="-114"/>
         </scene>
+        <!--Check In List Table View Controller - Places-->
         <scene sceneID="A3v-gP-kYR">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A2n-ak-jSV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -349,6 +355,7 @@
             </objects>
             <point key="canvasLocation" x="385" y="455"/>
         </scene>
+        <!--Check In Details View Controller-->
         <scene sceneID="5iv-uJ-C8R">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FrM-U4-07M" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -361,19 +368,15 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="TF0-4o-hEC">
-                                        <rect key="frame" x="0.0" y="151" width="320" height="78"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    </scrollView>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="MQF-9M-cU0">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="151"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="229"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </mapView>
                                     <view contentMode="scaleToFill" id="cVB-g4-3MG">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="151"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="229"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oor-fS-TpG">
+                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oor-fS-TpG">
                                                 <rect key="frame" x="234" y="55" width="41" height="41"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -386,7 +389,7 @@
                                                 </state>
                                             </button>
                                             <view contentMode="scaleToFill" id="hOO-0F-CUC">
-                                                <rect key="frame" x="10" y="35" width="173" height="75"/>
+                                                <rect key="frame" x="10" y="38" width="173" height="75"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="CHECK IN AT..." lineBreakMode="tailTruncation" minimumFontSize="10" id="qmb-as-qZ8">
@@ -421,12 +424,38 @@
                                         </subviews>
                                         <color key="backgroundColor" red="0.40392156862745099" green="0.62352941176470589" blue="0.63921568627450975" alpha="0.5" colorSpace="calibratedRGB"/>
                                     </view>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="TF0-4o-hEC">
+                                        <rect key="frame" x="0.0" y="229" width="320" height="78"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </scrollView>
+                                    <view alpha="0.0" contentMode="scaleToFill" id="EM0-cl-p71">
+                                        <rect key="frame" x="10" y="94" width="193" height="65"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="&quot;This is the user's status&quot;" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" id="1v1-h6-bpt">
+                                                <rect key="frame" x="14" y="23" width="169" height="42"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="btest1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="aZi-4n-3zY">
+                                                <rect key="frame" x="14" y="4" width="42" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
                                     <view contentMode="scaleToFill" id="qWq-Gn-8ou">
-                                        <rect key="frame" x="0.0" y="229" width="320" height="187"/>
+                                        <rect key="frame" x="0.0" y="229" width="320" height="188"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="34" contentMode="left" text="I WILL..." lineBreakMode="tailTruncation" minimumFontSize="10" id="zI2-Ae-Iwy">
-                                                <rect key="frame" x="20" y="13" width="75" height="22"/>
+                                                <rect key="frame" x="20" y="14" width="75" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -434,7 +463,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="35" contentMode="left" text="-OR-" lineBreakMode="tailTruncation" minimumFontSize="10" id="VYL-ZT-wRz">
-                                                <rect key="frame" x="80" y="13" width="42" height="22"/>
+                                                <rect key="frame" x="80" y="14" width="42" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -442,7 +471,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="36" contentMode="left" text="I WANT..." lineBreakMode="tailTruncation" minimumFontSize="10" id="TKZ-pk-IRu">
-                                                <rect key="frame" x="120" y="13" width="101" height="22"/>
+                                                <rect key="frame" x="120" y="14" width="101" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -450,19 +479,19 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="This is what others see..." minimumFontSize="17" clearButtonMode="whileEditing" id="41Q-Mq-N3C">
-                                                <rect key="frame" x="15" y="40" width="285" height="31"/>
+                                                <rect key="frame" x="15" y="41" width="285" height="31"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert" returnKeyType="done"/>
                                             </textField>
                                             <view autoresizesSubviews="NO" contentMode="scaleToFill" id="oGr-2L-5oG" customClass="CheckInDetailsFrame">
-                                                <rect key="frame" x="14" y="79" width="286" height="84"/>
+                                                <rect key="frame" x="14" y="80" width="286" height="94"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
                                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="7" continuous="NO" id="WXJ-T8-1gt">
-                                                        <rect key="frame" x="15" y="55" width="171" height="23"/>
+                                                        <rect key="frame" x="15" y="58" width="171" height="23"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <connections>
@@ -470,21 +499,21 @@
                                                         </connections>
                                                     </slider>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1001" contentMode="left" text="1" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="Y4a-op-9xb">
-                                                        <rect key="frame" x="10" y="31" width="30" height="25"/>
+                                                        <rect key="frame" x="15" y="31" width="30" height="25"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                                         <color key="textColor" red="0.25882352939999997" green="0.50980392159999999" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1003" contentMode="left" text="3" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="nQY-G5-vYa">
-                                                        <rect key="frame" x="60" y="31" width="30" height="25"/>
+                                                        <rect key="frame" x="63" y="31" width="30" height="25"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1005" contentMode="left" text="5" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="cIO-Fy-mHC">
-                                                        <rect key="frame" x="111" y="31" width="30" height="25"/>
+                                                        <rect key="frame" x="110" y="31" width="30" height="25"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -498,7 +527,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="K5e-Td-4Dl">
-                                                        <rect key="frame" x="195" y="6" width="101" height="101"/>
+                                                        <rect key="frame" x="195" y="11" width="101" height="101"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                         <state key="normal" image="check-in-big.png">
@@ -513,9 +542,17 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1007" contentMode="left" text="7" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="chT-HL-sYR">
-                                                        <rect key="frame" x="161" y="31" width="30" height="25"/>
+                                                        <rect key="frame" x="157" y="31" width="30" height="25"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="34" contentMode="left" text="FOR HOW LONG?" lineBreakMode="tailTruncation" minimumFontSize="10" id="mzo-bH-IoF">
+                                                        <rect key="frame" x="4" y="2" width="154" height="22"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -523,7 +560,7 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
                             </scrollView>
@@ -533,16 +570,23 @@
                     <navigationItem key="navigationItem" id="bz0-25-e5R"/>
                     <connections>
                         <outlet property="blueOverlay" destination="cVB-g4-3MG" id="c2A-bs-Gue"/>
+                        <outlet property="checkInButton" destination="K5e-Td-4Dl" id="hOh-I3-NAy"/>
                         <outlet property="checkInDetails" destination="qWq-Gn-8ou" id="xry-cg-1Uk"/>
                         <outlet property="checkInLabel" destination="qmb-as-qZ8" id="5yy-az-rO1"/>
+                        <outlet property="durationHeader" destination="mzo-bH-IoF" id="yq6-su-WkA"/>
                         <outlet property="durationString" destination="G3n-Dz-x2c" id="YTh-QE-lWL"/>
+                        <outlet property="infoBubbleNickname" destination="aZi-4n-3zY" id="TmH-CX-bcd"/>
+                        <outlet property="infoBubbleStatus" destination="1v1-h6-bpt" id="bVc-8a-1ck"/>
                         <outlet property="mapView" destination="MQF-9M-cU0" id="iR6-un-ud3"/>
                         <outlet property="orLabel" destination="VYL-ZT-wRz" id="D2x-lc-UaB"/>
+                        <outlet property="otherUsersScrollView" destination="TF0-4o-hEC" id="22K-kX-aa5"/>
                         <outlet property="placeAddress" destination="PtD-Uj-ZiF" id="THK-hq-Aq8"/>
                         <outlet property="placeName" destination="a2d-yI-7Oz" id="8zr-fy-4iB"/>
-                        <outlet property="scrollView" destination="TF0-4o-hEC" id="rW7-c4-Skc"/>
+                        <outlet property="scrollView" destination="eHy-bY-Qma" id="kmA-uu-eEx"/>
                         <outlet property="statusTextField" destination="41Q-Mq-N3C" id="YES-9v-v6u"/>
                         <outlet property="timeSlider" destination="WXJ-T8-1gt" id="0Xb-Ha-vfx"/>
+                        <outlet property="userInfoBubble" destination="EM0-cl-p71" id="4N9-aH-ZJu"/>
+                        <outlet property="venueInfo" destination="hOO-0F-CUC" id="ziH-Qe-VhG"/>
                         <outlet property="wantLabel" destination="TKZ-pk-IRu" id="d5F-UG-VnU"/>
                         <outlet property="willLabel" destination="zI2-Ae-Iwy" id="3jT-Q8-9OV"/>
                     </connections>
@@ -550,6 +594,7 @@
             </objects>
             <point key="canvasLocation" x="844" y="455"/>
         </scene>
+        <!--User Profile Checked In View Controller-->
         <scene sceneID="jZa-Lm-4za">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ySL-Md-ewH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -973,6 +1018,7 @@
             </objects>
             <point key="canvasLocation" x="1386" y="-114"/>
         </scene>
+        <!--Settings Menu Controller-->
         <scene sceneID="ijm-S8-mQj">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yHQ-HS-SaI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1005,6 +1051,7 @@
             </objects>
             <point key="canvasLocation" x="-608" y="-601"/>
         </scene>
+        <!--Navigation Controller - Nearby-->
         <scene sceneID="X1z-oT-wPh">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flw-Jh-D1t" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1025,6 +1072,7 @@
             </objects>
             <point key="canvasLocation" x="-603" y="-30"/>
         </scene>
+        <!--Navigation Controller-->
         <scene sceneID="3mV-Fb-MBc">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lzg-tm-OqG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1042,6 +1090,7 @@
             </objects>
             <point key="canvasLocation" x="-76" y="455"/>
         </scene>
+        <!--One On One Chat View Controller-->
         <scene sceneID="yyw-Kg-745">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pc0-qS-LiY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1093,6 +1142,7 @@
             </objects>
             <point key="canvasLocation" x="1910" y="-298"/>
         </scene>
+        <!--Pay User View Controller-->
         <scene sceneID="DEn-4Y-o5w">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T77-Ar-WSs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1238,6 +1288,7 @@
             </objects>
             <point key="canvasLocation" x="1910" y="280"/>
         </scene>
+        <!--View Controller - Face To Face-->
         <scene sceneID="gtz-5a-hgw">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8HD-fd-1VU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1252,6 +1303,7 @@
             </objects>
             <point key="canvasLocation" x="385" y="-1966"/>
         </scene>
+        <!--User List Table View Controller-->
         <scene sceneID="YQP-0z-9N9">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OQD-E9-dVA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1283,6 +1335,19 @@
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="844" y="-458"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="kl2-1p-wyD">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aW2-vj-98v" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="YDM-Pf-fgE" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="N8a-jL-nnI">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+            </objects>
         </scene>
     </scenes>
     <resources>
@@ -1324,16 +1389,23 @@
             <relationships>
                 <relationship kind="action" name="sliderChanged:"/>
                 <relationship kind="outlet" name="blueOverlay" candidateClass="UIView"/>
+                <relationship kind="outlet" name="checkInButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="checkInDetails" candidateClass="UIView"/>
                 <relationship kind="outlet" name="checkInLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="durationHeader" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="durationString" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="infoBubbleNickname" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="infoBubbleStatus" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
                 <relationship kind="outlet" name="orLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="otherUsersScrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="placeAddress" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="placeName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="TPKeyboardAvoidingScrollView"/>
                 <relationship kind="outlet" name="statusTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="timeSlider" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="userInfoBubble" candidateClass="UIView"/>
+                <relationship kind="outlet" name="venueInfo" candidateClass="UIView"/>
                 <relationship kind="outlet" name="wantLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="willLabel" candidateClass="UILabel"/>
             </relationships>
