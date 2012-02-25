@@ -492,7 +492,7 @@
 		871C446614BD7293003B720F /* button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button@2x.png"; sourceTree = "<group>"; };
 		871C446A14BD72FC003B720F /* button_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_disabled.png; sourceTree = "<group>"; };
 		871C446B14BD72FC003B720F /* button_disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_disabled@2x.png"; sourceTree = "<group>"; };
-		871EFB0614AE9C820030658B /* C&P.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "C&P.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		871EFB0614AE9C820030658B /* candp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = candp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		871EFB0A14AE9C820030658B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		871EFB0C14AE9C820030658B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		871EFB0E14AE9C820030658B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1015,7 +1015,7 @@
 		871EFB0714AE9C820030658B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				871EFB0614AE9C820030658B /* C&P.app */,
+				871EFB0614AE9C820030658B /* candp.app */,
 				871EFB3514AE9C820030658B /* candpiosappTests.octest */,
 			);
 			name = Products;
@@ -1411,7 +1411,7 @@
 			);
 			name = candp;
 			productName = candpiosapp;
-			productReference = 871EFB0614AE9C820030658B /* C&P.app */;
+			productReference = 871EFB0614AE9C820030658B /* candp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		871EFB3414AE9C820030658B /* candpiosappTests */ = {
@@ -1820,7 +1820,7 @@
 					"\"$(SRCROOT)/candpiosapp/3rdParty/FlurryAnalytics\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/Airship\"",
 				);
-				PRODUCT_NAME = "C&P";
+				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1845,7 +1845,7 @@
 					"\"$(SRCROOT)/candpiosapp/3rdParty/FlurryAnalytics\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/Airship\"",
 				);
-				PRODUCT_NAME = "C&P";
+				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
