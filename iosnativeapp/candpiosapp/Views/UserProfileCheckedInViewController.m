@@ -124,6 +124,13 @@
     // set the webview delegate to this VC so we can resize it based on the contents
     self.resumeWebView.delegate = self;
     
+    // hide the go menu if this profile is current user's profile
+    if (self.user.userID == [[[AppDelegate instance].settings candpUserId] intValue]) {
+        for (NSNumber *viewID in [NSArray arrayWithObjects:[NSNumber numberWithInt:1005], [NSNumber numberWithInt:1006], [NSNumber numberWithInt:1007], [NSNumber numberWithInt:1008], [NSNumber numberWithInt:1009], nil]) {
+            [[self.view viewWithTag:[viewID intValue]] removeFromSuperview];
+        }
+    }
+    
     // add the blue overlay gradient in front of the map
     UIView *blueOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 416)];
     CAGradientLayer *gradient = [CAGradientLayer layer];
