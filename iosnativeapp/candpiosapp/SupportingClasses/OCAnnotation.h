@@ -16,6 +16,7 @@
  */
 @interface OCAnnotation : NSObject <MKAnnotation, OCGrouping>{
     NSMutableArray *annotationsInCluster;
+    NSMutableArray *userIdsInCluster;
     NSString *title;
     NSString *subtitle;
     NSString *_groupTag;
@@ -35,11 +36,13 @@
 /** Returns all annotations in the cluster.
  READONLY
  */
-@property(nonatomic, readonly) NSArray *annotationsInCluster;
+@property(nonatomic, readonly) NSMutableArray *annotationsInCluster;
+@property(nonatomic, readonly) NSMutableArray *userIdsInCluster;
 //
 /// List of annotations in the cluster.
 /** @See annotationsInCluster property*/
 - (NSArray *)annotationsInCluster;
+- (NSArray *)userIdsInCluster;
 
 //
 // manipulate cluster

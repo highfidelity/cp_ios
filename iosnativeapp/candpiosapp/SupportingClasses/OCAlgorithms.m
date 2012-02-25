@@ -17,18 +17,57 @@
 #pragma mark - bubbleClustering
 
 // Bubble clustering with iteration
-+ (NSArray*) bubbleClusteringWithAnnotations:(NSArray *)annotationsToCluster andClusterRadius:(CLLocationDistance)radius grouped:(BOOL)grouped {
++ (NSArray*) bubbleClusteringWithAnnotations:(NSMutableArray *)annotationsToCluster andClusterRadius:(CLLocationDistance)radius grouped:(BOOL)grouped {
     
     // memory
     [annotationsToCluster retain];
     
     // return array
     NSMutableArray *clusteredAnnotations = [[NSMutableArray alloc] init];
+    NSMutableArray *removeAnnotations = [[NSMutableArray alloc] init];
+    
+    BOOL addAnnotationNow;
+
+    for (id <MKAnnotation> annotation in annotationsToCluster) {
+        if ([annotation isKindOfClass:[OCAnnotation class]]) {
+            [clusteredAnnotations addObject:annotation];
+        }
+    }
+   
+    // Iterate through all previous clusters to remove any that no longer have an annotation close to them
+    for (id <MKAnnotation> annotation in clusteredAnnotations) {
+//        BOOL removeAnnotation = NO;
+        
+        if (clusteredAnnotations.count > 0) {
+            for (OCAnnotation *clusterAnnotation in [(OCAnnotation *)annotation annotationsInCluster]) {
+                if (!isLocationNearToOtherLocation([annotation coordinate], [clusterAnnotation coordinate], radius) && clusterAnnotation != annotation) {
+                    [removeAnnotations addObject:annotation];
+                }
+            }            
+        }
+    }
+
+    // Iterate through all clusters and remove any that are too close to another cluster
+    for (id <MKAnnotation> annotation in clusteredAnnotations) {
+        //        BOOL removeAnnotation = NO;
+
+        for (OCAnnotation *clusterAnnotation in clusteredAnnotations) {
+            // If the annotation is in range of the Cluster add it to it
+            if (isLocationNearToOtherLocation([annotation coordinate], [clusterAnnotation coordinate], radius) && clusterAnnotation != annotation) {
+                [removeAnnotations addObject:annotation];
+                [removeAnnotations addObject:clusterAnnotation];
+            }
+        }
+    }
+
+    if (removeAnnotations.count > 0) {            
+        [clusteredAnnotations removeObjectsInArray:removeAnnotations];
+    }
+    
     
 	// Clustering
 	for (id <MKAnnotation> annotation in annotationsToCluster) {
         if ([annotation isKindOfClass:[OCAnnotation class]]) {
-            NSLog(@"clustered, skip!");
             continue;
         }
 		// flag for cluster
@@ -47,19 +86,49 @@
             [newCluster release];
 		}
 		else {
+            BOOL removeAnnotation = NO;
+            
             for (OCAnnotation *clusterAnnotation in clusteredAnnotations) {
+                
                 // If the annotation is in range of the Cluster add it to it
-                if (isLocationNearToOtherLocation([annotation coordinate], [clusterAnnotation coordinate], radius) && !([clusterAnnotation.annotationsInCluster containsObject:annotation] && clusterAnnotation.annotationsInCluster.count == 1)) {
+                if (isLocationNearToOtherLocation([annotation coordinate], [clusterAnnotation coordinate], radius)) {
 
-                    clusterAnnotation.title = [NSString stringWithFormat:@"%d people checked in", clusterAnnotation.annotationsInCluster.count + 1];
-                    clusterAnnotation.subtitle = @"";
-
-//                    NSLog(@"** %@ near to %@", annotation.title, clusterAnnotation.title);
+                    // Check for duplicate user ID's, and don't re-add to a cluster if the user already belongs to it
+                    if ([annotation isKindOfClass:[CandPAnnotation class]]) {
+                        if (![clusterAnnotation.userIdsInCluster containsObject:[(CandPAnnotation *)annotation objectId]]) {
+                            addAnnotationNow = YES;
+                        }
+                        else {
+                            addAnnotationNow = NO;
+                            // TEST
+                            isContaining = YES;
+                        }
+                    }
+                    else if (!([clusterAnnotation.annotationsInCluster containsObject:annotation] && clusterAnnotation.annotationsInCluster.count == 1)) {
+//                        addAnnotationNow = YES;
+                    }
                     
-					isContaining = YES;
-					[clusterAnnotation addAnnotation:annotation];
-					break;
+                    if (addAnnotationNow) {
+                        clusterAnnotation.title = [NSString stringWithFormat:@"%d people checked in", clusterAnnotation.annotationsInCluster.count + 1];
+                        clusterAnnotation.subtitle = @"";
+
+                        isContaining = YES;
+                        [clusterAnnotation addAnnotation:annotation];
+                        break;
+                    }
 				}
+                else {
+                    removeAnnotation = YES;
+                    
+                    // Remove the current annotation from the clusterAnnotation.annotationsInCluster array
+                    [clusterAnnotation.annotationsInCluster removeObject:annotation];
+                    [clusterAnnotation.userIdsInCluster removeObject:[(CandPAnnotation *)annotation objectId]];
+                }
+            }
+
+            if (removeAnnotation) {
+                [clusteredAnnotations removeObject:annotation];
+//                [removeAnnotations addObject:annotation];
             }
             
             // If the annotation is not in a Cluster make it to a new one
@@ -76,7 +145,7 @@
 			}
 		}
 	}
-    
+
     NSMutableArray *returnArray = [[NSMutableArray alloc] init];
     
     // whipe all empty or single annotations

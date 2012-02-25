@@ -170,7 +170,6 @@
                                             [mapView removeAnnotation:ann];
                                         }
                                     }
-                                    
                                     [mapView addAnnotations: [newDataset annotations]];
                                     dataset = newDataset;
 
@@ -237,6 +236,8 @@
 
 - (void) mapView:(CPMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     for (MKAnnotationView *view in views) {
+        NSLog(@"didAdd: %@", view.annotation.title);
+        
         if ([[view annotation] isKindOfClass:[CandPAnnotation class]]) {
             CandPAnnotation *ann = (CandPAnnotation *)view.annotation;
             if (ann.checkedIn) {   
@@ -405,9 +406,10 @@
 
 ////// map delegate
 
-- (void)mapView:(CPMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+- (void)mapView:(CPMapView *)thisMapView regionDidChangeAnimated:(BOOL)animated
 {
-	[self refreshLocationsIfNeeded];
+//	[self refreshLocationsIfNeeded];
+    [thisMapView doClustering];
 }
 
 - (void)mapViewWillStartLocatingUser:(CPMapView *)mapView
@@ -451,7 +453,7 @@
 }
 
 - (void)mapView:(CPMapView *)thisMapView regionWillChangeAnimated:(BOOL)animated {
-    [thisMapView doClustering];
+//    [thisMapView doClustering];
 }
 
 // zoom to the location; on initial load & after updaing their pos

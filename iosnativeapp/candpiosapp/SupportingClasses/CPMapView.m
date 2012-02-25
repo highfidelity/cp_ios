@@ -1,5 +1,6 @@
 #import "CPMapView.h"
 #import "OCAlgorithms.h"
+#import "OCAnnotation.h"
 
 @interface CPMapView (private)
 - (void)initSetUp;
@@ -42,7 +43,6 @@
 }
 
 - (void)initSetUp{
-    NSLog(@"loaded cpmapview");
     allAnnotations = [[NSMutableSet alloc] init];
     annotationsToIgnore = [[NSMutableSet alloc] init];
     clusterSize = 0.01;
@@ -104,29 +104,48 @@
 #pragma mark - Clustering
 
 - (void)doClustering{
-    
     // Remove the annotation which should be ignored
+//    NSMutableArray *bufferArray = [[NSMutableArray alloc] initWithArray:[allAnnotations allObjects]];
     NSMutableArray *bufferArray = [[NSMutableArray alloc] initWithArray:[allAnnotations allObjects]];
-    [bufferArray removeObjectsInArray:[annotationsToIgnore allObjects]];
+    
+//    [bufferArray removeObjectsInArray:[annotationsToIgnore allObjects]];
     NSMutableArray *annotationsToCluster = [[NSMutableArray alloc] initWithArray:[self filterAnnotationsForVisibleMap:bufferArray]];
-
+    
     //calculate cluster radius
     CLLocationDistance clusterRadius = self.region.span.longitudeDelta * clusterSize;
-//    CLLocationDistance clusterRadius = .05;
 
-//    NSLog(@".. dist: %f", clusterRadius);
-    
     // Do clustering
     NSArray *clusteredAnnotations;
     clusteredAnnotations = [[NSArray alloc] initWithArray:[OCAlgorithms bubbleClusteringWithAnnotations:annotationsToCluster andClusterRadius:clusterRadius grouped:self.clusterByGroupTag]];
-    
+
     // Clear map but leave Userlocation
     NSMutableArray *annotationsToRemove = [[NSMutableArray alloc] initWithArray:self.displayedAnnotations];
     [annotationsToRemove removeObject:self.userLocation];
+//    [annotationsToRemove removeObjectsInArray:clusteredAnnotations];
     
     // add clustered and ignored annotations to map
     [super addAnnotations: clusteredAnnotations];
-    [super addAnnotations: [annotationsToIgnore allObjects]];
+//    [allAnnotations addObjectsFromArray:clusteredAnnotations];
+
+    for (id <MKAnnotation> annotation in annotationsToRemove) {
+        if ([annotation isKindOfClass:[OCAnnotation class]]) {
+            [allAnnotations removeObject:annotation];
+        }
+    }
+    
+	for (id <MKAnnotation> annotation in clusteredAnnotations) {
+        if (![allAnnotations containsObject:annotation]) {
+            [allAnnotations addObject:annotation];
+            [annotationsToRemove removeObject:annotation];
+        }
+        else {
+            if ([annotation isKindOfClass:[OCAnnotation class]]) {
+                [allAnnotations removeObject:annotation];
+            }
+        }
+    }
+
+//    [super addAnnotations: [annotationsToIgnore allObjects]];
     
     // fix for flickering
     [annotationsToRemove removeObjectsInArray: clusteredAnnotations];

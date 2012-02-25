@@ -6,6 +6,7 @@
 //
 
 #import "OCAnnotation.h"
+#import "CandPAnnotation.h"
 
 @implementation OCAnnotation
 @synthesize coordinate;
@@ -19,6 +20,7 @@
         _groupTag = title = subtitle = [[NSString stringWithFormat:@""] retain];
         coordinate = CLLocationCoordinate2DMake(0.0, 0.0);
         annotationsInCluster = [[NSMutableArray alloc] init];
+        userIdsInCluster = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -33,6 +35,11 @@
         annotationsInCluster = [[NSMutableArray alloc] init];
         [annotationsInCluster addObject:annotation];
         
+        if ([annotation isKindOfClass:[CandPAnnotation class]]) {
+            userIdsInCluster = [[NSMutableArray alloc] init];
+            [userIdsInCluster addObject:[(CandPAnnotation *)annotation objectId]];
+        }
+        
         title = [annotation.title retain];
         subtitle = [annotation.title retain];
         _groupTag = [[NSString stringWithFormat:@""] retain];
@@ -44,6 +51,7 @@
 
 - (void)dealloc {
     [annotationsInCluster release];
+    [userIdsInCluster release];
     
     [title release];
     [subtitle release];
@@ -59,6 +67,10 @@
     return annotationsInCluster;
 }
 
+- (NSArray *)userIdsInCluster{
+    return userIdsInCluster;
+}
+
 
 //
 // manipulate cluster
@@ -67,6 +79,11 @@
     
     // Add annotation to the cluster
     [annotationsInCluster addObject:annotation];
+    
+    if ([annotation isKindOfClass:[CandPAnnotation class]]) {
+        [userIdsInCluster addObject:[(CandPAnnotation *)annotation objectId]];
+    }
+    
     [annotation release];
 }
 
@@ -83,6 +100,10 @@
     
     // Remove annotation from cluster
     [annotationsInCluster removeObject:annotation];
+
+    if ([annotation isKindOfClass:[CandPAnnotation class]]) {
+        [userIdsInCluster removeObject:[(CandPAnnotation *)annotation objectId]];
+    }
     
     [annotation release];
 }
