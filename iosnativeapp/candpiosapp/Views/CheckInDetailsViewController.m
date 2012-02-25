@@ -45,6 +45,7 @@
 -(IBAction)sliderChanged:(id)sender;
 -(void)showUserInfoBubbleForUserIndex:(int)userIndex andButton:(UIButton *)userImageButton;
 -(void)hideUserInfoBubble;
+-(void)processOtherCheckedInUsers;
 
 @end
 

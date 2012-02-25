@@ -186,7 +186,7 @@
         self.menuCloseGestureRecognizer = nil;
         [mapView removeGestureRecognizer:self.menuClosePanGestureRecognizer];
         self.menuClosePanGestureRecognizer = nil;
-        [self.navigationController.navigationBar removeGestureRecognizer:self.menuClosePanFromNavbarGestureRecognizer];
+        [self.mapTabController.navigationController.navigationBar removeGestureRecognizer:self.menuClosePanFromNavbarGestureRecognizer];
         self.menuClosePanFromNavbarGestureRecognizer = nil;
     }
     [UIView commitAnimations];
