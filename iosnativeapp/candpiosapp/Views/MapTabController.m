@@ -18,6 +18,7 @@
 #import "CPUIHelper.h"
 #import "UserProfileCheckedInViewController.h"
 #import "OCAnnotation.h"
+#import "UIImage+Resize.h"
 
 #define qHideTopNavigationBarOnMapView			0
 
@@ -236,7 +237,7 @@
 
 - (void) mapView:(CPMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     for (MKAnnotationView *view in views) {
-        NSLog(@"didAdd: %@", view.annotation.title);
+//        NSLog(@"didAdd: %@", view.annotation.title);
         
         if ([[view annotation] isKindOfClass:[CandPAnnotation class]]) {
             CandPAnnotation *ann = (CandPAnnotation *)view.annotation;
@@ -249,6 +250,110 @@
     }
 }
 
+- (UIImage *)pinImage:(NSMutableArray *)imageSources {
+    // Re-order imageSources to first show non-empty images
+
+    NSSortDescriptor* sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:NO selector:@selector(localizedCompare:)];
+    imageSources = [[imageSources sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]] copy];
+    
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    
+    CGFloat faceSize = 20;
+    CGFloat rows;
+    CGFloat columns;
+
+    if (imageSources.count == 1) {
+        rows = columns = 1;
+    }
+    else if (imageSources.count == 2) {
+        columns = 2;
+        rows = 1;
+    }
+    else {
+//        columns = floor(imageSources.count / 2) + 1;
+        columns = 2;
+        rows = 2;
+    }
+    
+    CGSize size = CGSizeMake(columns * faceSize, rows * faceSize);
+    UIGraphicsBeginImageContext(size);
+
+    for (NSInteger i = 0; i < imageSources.count; i++) {
+        NSString *imageSource = [imageSources objectAtIndex:i];
+        
+        UIImage *image = nil;
+        
+        // Only show the first 3 faces and a + if more
+        if (i == 3 && imageSources.count > 3) {
+            image = [UIImage imageNamed:@"plusSign"];
+        }
+        else if (i < 3) {
+            // If the passed imageSource is empty don't try to fetch it from the imageCache
+            if (![imageSource isEqualToString:@"empty"]) {
+                image = [manager imageWithURL:[NSURL URLWithString:imageSource]];                
+            }
+                        
+            if (!image) {
+                image = [UIImage imageNamed:@"runner-small-square"];
+            }
+        }
+        else {
+            break;
+        }
+
+        CGFloat x;
+        CGFloat y;
+
+        switch (i) {
+            case 0:
+                x = 0;
+                y = 0;
+                break;
+
+            case 1:
+                x = faceSize;
+                y = 0;
+                break;
+
+            case 2:
+                x = 0;
+                y = faceSize;
+                break;
+
+            case 3:
+                x = faceSize;
+                y = faceSize;
+                break;
+
+            case 4:
+                x = faceSize*2;
+                y = 0;
+                break;
+
+            case 5:
+                x = faceSize*2;
+                y = faceSize;
+                break;
+                
+            default:
+                break;
+        }
+
+        // Resize any images that are larger than minSize
+        if (image.size.width > faceSize || image.size.height > faceSize) {
+            image = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFit bounds:CGSizeMake(faceSize, faceSize) interpolationQuality:kCGInterpolationLow];
+        }
+        
+        CGPoint imagePoint = CGPointMake(x, y);
+        [image drawAtPoint:imagePoint];
+    }
+    
+    UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return result;
+}
+
 // mapView:viewForAnnotation: provides the view for each annotation.
 // This method may be called for all or some of the added annotations.
 // For MapKit provided annotations (eg. MKUserLocation) return nil to use the MapKit provided annotation view.
@@ -258,7 +363,9 @@
 	MKAnnotationView *pinToReturn = nil;
 
     if ([annotation isKindOfClass:[OCAnnotation class]]) {
-        NSString *reuseId = @"cluster1";
+        NSArray *annotationsInCluster = [(OCAnnotation *)annotation annotationsInCluster];
+        
+        NSString *reuseId = [NSString stringWithFormat:@"cluster%d", annotationsInCluster.count];
         
         MKPinAnnotationView *pin = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
 
@@ -271,7 +378,36 @@
 			pin.annotation = annotation;
 		}
 
-        pin.pinColor = MKPinAnnotationColorPurple;
+//        UIImageView *pinView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
+        NSMutableArray *imageSources = [[NSMutableArray alloc] initWithCapacity:annotationsInCluster.count];
+
+        for (id <MKAnnotation> ann in annotationsInCluster) {
+            if ([ann isKindOfClass:[CandPAnnotation class]]) {
+                CandPAnnotation *thisAnn = (CandPAnnotation *)ann;
+                
+//                NSLog(@"** IMAGE: %@", thisAnn.imageUrl);
+                
+                if (thisAnn.imageUrl) {
+                    [imageSources addObject:thisAnn.imageUrl];
+                }
+                else {
+                    [imageSources addObject:@"empty"];
+//                    pinView.image = [UIImage imageNamed:@"63-runner.png"];
+                }
+            }
+        }
+        
+        if (imageSources) {
+            pin.image = [self pinImage:imageSources];
+        }
+        else {
+            pin.pinColor = MKPinAnnotationColorPurple;
+        }
+        
+//        pin.image = pinView.image;
+//        [pin addSubview:pinView];
+        
+//        pin.pinColor = MKPinAnnotationColorPurple;
         pin.enabled = YES;
         pin.canShowCallout = YES;
         
@@ -408,7 +544,7 @@
 
 - (void)mapView:(CPMapView *)thisMapView regionDidChangeAnimated:(BOOL)animated
 {
-//	[self refreshLocationsIfNeeded];
+	[self refreshLocationsIfNeeded];
     [thisMapView doClustering];
 }
 
