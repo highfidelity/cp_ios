@@ -310,7 +310,9 @@
             self.userArray = [NSMutableArray arrayWithCapacity:count];
             
             // iterate through the users we've gotten back to add them to the scrollview
-            for (NSDictionary *user in [json valueForKeyPath:@"payload.users"]) {
+            NSArray *responseArray = [NSArray arrayWithArray:[json valueForKeyPath:@"payload.users"]];
+            // reverse the response so we get latest checkins first
+            for (NSDictionary *user in [responseArray reverseObjectEnumerator]) {
                 
                 // add this user's nickname and status to the user array
                 // this is how we put the user's info in the info bubble later
