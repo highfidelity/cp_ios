@@ -37,6 +37,8 @@
 - (IBAction)revealButtonPressed:(id)sender;
 - (void)loginButtonTapped;
 - (void)logoutButtonTapped;
+- (UIImage *)imageWithBorderFromImage:(UIImage*)source;
+- (UIImage *)pinImage:(NSMutableArray *)imageSources;
 
 @end
 

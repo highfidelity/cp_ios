@@ -239,7 +239,15 @@
 - (void) mapView:(CPMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     for (MKAnnotationView *view in views) {
 //        NSLog(@"didAdd: %@", view.annotation.title);
-        
+
+        // Fade in any new annotations
+        view.alpha = 0;        
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.1];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        view.alpha = 1.0;
+        [UIView commitAnimations];        
+
         if ([[view annotation] isKindOfClass:[CandPAnnotation class]]) {
             CandPAnnotation *ann = (CandPAnnotation *)view.annotation;
             if (ann.checkedIn) {   
@@ -248,7 +256,7 @@
                 [[view superview] sendSubviewToBack:view];
             }
         }
-    }
+    }    
 }
 
 - (UIImage *)imageWithBorderFromImage:(UIImage*)source {
