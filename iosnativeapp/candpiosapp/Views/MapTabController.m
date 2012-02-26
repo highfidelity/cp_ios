@@ -523,17 +523,28 @@
     SettingsMenuController *settingsMenuController = [AppDelegate instance].settingsMenuController;
     if (settingsMenuController.isMenuShowing) { [settingsMenuController showMenu:NO]; }
     if ([[segue identifier] isEqualToString:@"ShowUserProfileCheckedInFromMap"]) {
-        // figure out which element was tapped
-        UserAnnotation *tappedObj = [sender annotation];
+        
         // setup a user object with the info we have from the pin and callout
         // so that this information can already be in the resume without having to load it
         User *selectedUser = [[User alloc] init];
-        selectedUser.nickname = tappedObj.nickname;
-        selectedUser.userID = [tappedObj.objectId intValue];
-        selectedUser.location = CLLocationCoordinate2DMake(tappedObj.lat, tappedObj.lon);
-        selectedUser.status = tappedObj.status;
-        selectedUser.skills = tappedObj.skills;
-        selectedUser.checkedIn = tappedObj.checkedIn;
+        
+        if ([sender isKindOfClass: [MKPinAnnotationView class]]) 
+        {
+            // figure out which element was tapped
+            UserAnnotation *tappedObj = [sender annotation];
+            
+            selectedUser.nickname = tappedObj.nickname;
+            selectedUser.userID = [tappedObj.objectId intValue];
+            selectedUser.location = CLLocationCoordinate2DMake(tappedObj.lat, tappedObj.lon);
+            selectedUser.status = tappedObj.status;
+            selectedUser.skills = tappedObj.skills;
+            selectedUser.checkedIn = tappedObj.checkedIn;
+        } 
+        else if ([sender isKindOfClass: [User class]])
+        {
+            selectedUser = sender;
+        }
+            
         
         // set the user object on the UserProfileCheckedInVC to the user we just created
         [[segue destinationViewController] setUser:selectedUser];

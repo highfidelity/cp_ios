@@ -509,5 +509,18 @@
                              completion:completion];
 }
 
++ (void)getCheckInDataWithUserId:(int)userId
+                   andCompletion:(void (^)(NSDictionary *, NSError *))completion
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setValue:[NSString stringWithFormat:@"%d", userId]
+                  forKey:@"user_id"];
+    
+    [self makeHTTPRequestWithAction:@"getUserCheckInData" 
+                     withParameters:parameters
+                         completion:completion];
+}
+
+
 
 @end

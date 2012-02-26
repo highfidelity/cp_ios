@@ -233,6 +233,7 @@
 		E4CC0D6914EF1FB2000CB8F8 /* thumbdown.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CC0D6714EF1FB2000CB8F8 /* thumbdown.png */; };
 		E4CC0D6A14EF1FB2000CB8F8 /* thumbup.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CC0D6814EF1FB2000CB8F8 /* thumbup.png */; };
 		E4E16DA414DDEF26004E4586 /* UserProfileCheckedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E16DA414DDEF26004E4585 /* UserProfileCheckedInViewController.m */; };
+		E4EFA7F114FA3427004A329D /* CheckInHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFA7F014FA3427004A329D /* CheckInHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -644,6 +645,8 @@
 		E4CC0D6814EF1FB2000CB8F8 /* thumbup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbup.png; sourceTree = "<group>"; };
 		E4E16DA414DDEF26004E4584 /* UserProfileCheckedInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileCheckedInViewController.h; sourceTree = "<group>"; };
 		E4E16DA414DDEF26004E4585 /* UserProfileCheckedInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileCheckedInViewController.m; sourceTree = "<group>"; };
+		E4EFA7EF14FA3427004A329D /* CheckInHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckInHelper.h; path = CheckIn/CheckInHelper.h; sourceTree = "<group>"; };
+		E4EFA7F014FA3427004A329D /* CheckInHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInHelper.m; path = CheckIn/CheckInHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -949,6 +952,8 @@
 				32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */,
 				534FC98814EF2E8C008C87B9 /* CheckInDetailsFrame.h */,
 				534FC98914EF2E8C008C87B9 /* CheckInDetailsFrame.m */,
+				E4EFA7EF14FA3427004A329D /* CheckInHelper.h */,
+				E4EFA7F014FA3427004A329D /* CheckInHelper.m */,
 			);
 			name = CheckIn;
 			sourceTree = "<group>";
@@ -1736,6 +1741,7 @@
 				32A7999314F9867D00A0D4CB /* UIImage+Alpha.m in Sources */,
 				32A7999414F9867D00A0D4CB /* UIImage+Resize.m in Sources */,
 				32A7999514F9867D00A0D4CB /* UIImage+RoundedCorner.m in Sources */,
+				E4EFA7F114FA3427004A329D /* CheckInHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

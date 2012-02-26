@@ -9,14 +9,12 @@
 #import "AppDelegate.h"
 #import "FacebookLoginSequence.h"
 #import "AFHTTPClient.h"
-#import "CheckInListTableViewController.h"
 //#import "FaceToFaceInviteController.h" // TODO: replace with F2FHelper
 #import "FaceToFaceHelper.h"
 #import "ChatHelper.h"
-#import "OneOnOneChatViewController.h"
 #import "FlurryAnalytics.h"
 #import "OAuthConsumer.h"
-#import "UserProfileCheckedInViewController.h"
+#import "CheckInHelper.h"
 
 @interface AppDelegate(Internal)
 -(void)loadSettings;
@@ -306,14 +304,9 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
     // Received payment
     else if ([userInfo valueForKey:@"payment_received"] != nil)
     {
-        NSString *userId = [userInfo valueForKey:@"payment_received"];
-        
-        UserProfileCheckedInViewController *profileView = [self.rootNavigationController.storyboard instantiateViewControllerWithIdentifier:@"UserProfileCheckedIn"];
-        
-        profileView.user = [[User alloc] init];
-        profileView.user.userID = [userId intValue];
-        
-        [self.rootNavigationController presentModalViewController:profileView animated:YES];
+        int user_id = [[userInfo valueForKey:@"payment_received"] intValue];
+        [CheckInHelper showCheckInProfileForUser:user_id
+                                        fromView: [self rootNavigationController]];
     }
 }
 

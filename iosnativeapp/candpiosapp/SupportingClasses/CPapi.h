@@ -48,5 +48,7 @@
 
 //Profile functions
 + (void)getUserProfileWithCompletionBlock:(void(^)(NSDictionary *json, NSError *error))completion;
++ (void)getCheckInDataWithUserId:(int)userId
+                   andCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 @end
