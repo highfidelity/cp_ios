@@ -47,6 +47,7 @@
 		3267F67814D91A2600BFFBAA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F67714D91A2600BFFBAA /* libz.dylib */; };
 		3267F67A14D91A2E00BFFBAA /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F67914D91A2E00BFFBAA /* libsqlite3.dylib */; };
 		3267F67C14D91A3600BFFBAA /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F67B14D91A3600BFFBAA /* CoreTelephony.framework */; };
+		3278800014FAD7070055A991 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 32787FFF14FAD7070055A991 /* MKAnnotationView+WebCache.m */; };
 		3294F13A14E1DE77004590AC /* LinkedInLoginSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = 3294F13914E1DE77004590AC /* LinkedInLoginSequence.m */; };
 		32A7998814F97C0300A0D4CB /* plusSign.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A7998714F97C0300A0D4CB /* plusSign.png */; };
 		32A7999314F9867D00A0D4CB /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A7998E14F9867D00A0D4CB /* UIImage+Alpha.m */; };
@@ -362,6 +363,8 @@
 		3267F67714D91A2600BFFBAA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3267F67914D91A2E00BFFBAA /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		3267F67B14D91A3600BFFBAA /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		32787FFE14FAD7070055A991 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
+		32787FFF14FAD7070055A991 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		3294F13814E1DE77004590AC /* LinkedInLoginSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedInLoginSequence.h; sourceTree = "<group>"; };
 		3294F13914E1DE77004590AC /* LinkedInLoginSequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedInLoginSequence.m; sourceTree = "<group>"; };
 		32A7998714F97C0300A0D4CB /* plusSign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plusSign.png; sourceTree = "<group>"; };
@@ -1319,6 +1322,8 @@
 		87F657D414B0D0C800F4AB6C /* SDWebImage */ = {
 			isa = PBXGroup;
 			children = (
+				32787FFE14FAD7070055A991 /* MKAnnotationView+WebCache.h */,
+				32787FFF14FAD7070055A991 /* MKAnnotationView+WebCache.m */,
 				87F657D714B0D0C800F4AB6C /* SDImageCache.h */,
 				87F657D814B0D0C800F4AB6C /* SDImageCache.m */,
 				87F657D914B0D0C800F4AB6C /* SDImageCacheDelegate.h */,
@@ -1742,6 +1747,7 @@
 				32A7999414F9867D00A0D4CB /* UIImage+Resize.m in Sources */,
 				32A7999514F9867D00A0D4CB /* UIImage+RoundedCorner.m in Sources */,
 				E4EFA7F114FA3427004A329D /* CheckInHelper.m in Sources */,
+				3278800014FAD7070055A991 /* MKAnnotationView+WebCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

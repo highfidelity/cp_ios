@@ -176,18 +176,15 @@
     //}
         
     if (annotation.imageUrl) {
-        UIImageView *leftCallout = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
-		
-		leftCallout.contentMode = UIViewContentModeScaleAspectFill;
+		cell.imageView.frame = CGRectMake(0, 0, 32, 32);
+        cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
         
-        [leftCallout setImageWithURL:[NSURL URLWithString:annotation.imageUrl]
-                    placeholderImage:[UIImage imageNamed:@"63-runner.png"]];
-        
-        cell.imageView.image = leftCallout.image;
+        [cell.imageView setImageWithURL:[NSURL URLWithString:annotation.imageUrl]
+                       placeholderImage:[UIImage imageNamed:@"defaultAvatar50"]];
     }
     else
     {
-        cell.imageView.image = [UIImage imageNamed:@"63-runner.png"];			
+        cell.imageView.image = [UIImage imageNamed:@"defaultAvatar50"];
     }
     
     return cell;

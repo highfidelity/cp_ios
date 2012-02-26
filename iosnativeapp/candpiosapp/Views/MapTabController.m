@@ -19,6 +19,7 @@
 #import "UserProfileCheckedInViewController.h"
 #import "OCAnnotation.h"
 #import "UIImage+Resize.h"
+#import "MKAnnotationView+WebCache.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define qHideTopNavigationBarOnMapView			0
@@ -439,8 +440,8 @@
 		button.frame = CGRectMake(0, 0, 32, 32);
 //		button.tag = [dataset.annotations indexOfObject:candpanno];
 		pin.rightCalloutAccessoryView = button;
-
         pinToReturn = pin;
+
     }  
 	else if ([annotation isKindOfClass:[CandPAnnotation class]])
 	{ 
@@ -460,26 +461,18 @@
 		else
 		{
 			pin.annotation = annotation;
-		}
-		pinToReturn = pin;
-        
-        // Show images for everyone, no more pins per Philip
-        UIImage *frame = [UIImage imageNamed:@"pin-frame"];
-        UIImage *profileImage;
+        }
         
         if (candpanno.imageUrl == nil)
         {
-            profileImage = [UIImage imageNamed:@"defaultAvatar50"];
+            [pin setImage:[UIImage imageNamed:@"defaultAvatar50"] fancy:YES];
         } 
         else 
         {  
-            profileImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString: candpanno.imageUrl]]];
+            // Use custom MKAnnotationView+WebCache to cache images and load asynchronously. Pass fancy to have the fancy white border + frame
+            NSURL *imageURL = [NSURL URLWithString:candpanno.imageUrl];
+            [pin setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"defaultAvatar50"] fancy:YES];
         }
-        
-        UIGraphicsBeginImageContext(CGSizeMake(38, 43));
-        [profileImage drawInRect:CGRectMake(3, 3, 32, 32)];
-        [frame drawInRect: CGRectMake(0, 0, 38, 43)];
-        pin.image = UIGraphicsGetImageFromCurrentImageContext();
         
 		pin.animatesDrop = NO;
 		pin.canShowCallout = YES;
@@ -502,6 +495,8 @@
 		button.frame =CGRectMake(0, 0, 32, 32);
 		button.tag = [dataset.annotations indexOfObject:candpanno];
 		pin.rightCalloutAccessoryView = button;
+        
+        pinToReturn = pin;
 	}
 	
 	return pinToReturn;
