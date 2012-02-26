@@ -19,6 +19,7 @@
 #import "UserProfileCheckedInViewController.h"
 #import "OCAnnotation.h"
 #import "UIImage+Resize.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define qHideTopNavigationBarOnMapView			0
 
@@ -250,6 +251,20 @@
     }
 }
 
+- (UIImage *)imageWithBorderFromImage:(UIImage*)source {
+    CGSize size = [source size];
+    UIGraphicsBeginImageContext(size);
+    CGRect rect = CGRectMake(0, 0, size.width, size.height);
+    [source drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetRGBStrokeColor(context, 0.5, 0.5, 0.5, 1.0);
+    CGContextStrokeRect(context, rect);
+    UIImage *finalImage =  UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return finalImage;
+}
+
 - (UIImage *)pinImage:(NSMutableArray *)imageSources {
     // Re-order imageSources to first show non-empty images
 
@@ -258,7 +273,7 @@
     
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     
-    CGFloat faceSize = 20;
+    CGFloat faceSize = 25;
     CGFloat rows;
     CGFloat columns;
 
@@ -294,7 +309,7 @@
             }
                         
             if (!image) {
-                image = [UIImage imageNamed:@"runner-small-square"];
+                image = [UIImage imageNamed:@"defaultAvatar25"];
             }
         }
         else {
@@ -343,6 +358,8 @@
         if (image.size.width > faceSize || image.size.height > faceSize) {
             image = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFit bounds:CGSizeMake(faceSize, faceSize) interpolationQuality:kCGInterpolationLow];
         }
+
+        image = [self imageWithBorderFromImage:image];
         
         CGPoint imagePoint = CGPointMake(x, y);
         [image drawAtPoint:imagePoint];
@@ -359,7 +376,6 @@
 // For MapKit provided annotations (eg. MKUserLocation) return nil to use the MapKit provided annotation view.
 - (MKAnnotationView *)mapView:(CPMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {   
-//    NSLog(@"class: %@", [annotation class]);
 	MKAnnotationView *pinToReturn = nil;
 
     if ([annotation isKindOfClass:[OCAnnotation class]]) {
@@ -378,21 +394,17 @@
 			pin.annotation = annotation;
 		}
 
-//        UIImageView *pinView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
         NSMutableArray *imageSources = [[NSMutableArray alloc] initWithCapacity:annotationsInCluster.count];
 
         for (id <MKAnnotation> ann in annotationsInCluster) {
             if ([ann isKindOfClass:[CandPAnnotation class]]) {
                 CandPAnnotation *thisAnn = (CandPAnnotation *)ann;
                 
-//                NSLog(@"** IMAGE: %@", thisAnn.imageUrl);
-                
                 if (thisAnn.imageUrl) {
                     [imageSources addObject:thisAnn.imageUrl];
                 }
                 else {
                     [imageSources addObject:@"empty"];
-//                    pinView.image = [UIImage imageNamed:@"63-runner.png"];
                 }
             }
         }
@@ -403,11 +415,15 @@
         else {
             pin.pinColor = MKPinAnnotationColorPurple;
         }
+
+//        pin.layer.borderColor = [[UIColor grayColor] CGColor];
+//        pin.layer.borderWidth = 1.0;
         
-//        pin.image = pinView.image;
-//        [pin addSubview:pinView];
+        pin.layer.shadowColor = [UIColor blackColor].CGColor;
+        pin.layer.shadowOffset = CGSizeMake(3, 3);
+        pin.layer.shadowOpacity = 0.5;
+        pin.layer.shadowRadius = 1.0;
         
-//        pin.pinColor = MKPinAnnotationColorPurple;
         pin.enabled = YES;
         pin.canShowCallout = YES;
         
@@ -417,7 +433,6 @@
 		pin.rightCalloutAccessoryView = button;
 
         pinToReturn = pin;
-        // create your custom cluster annotationView here!  
     }  
 	else if ([annotation isKindOfClass:[CandPAnnotation class]])
 	{ 
@@ -440,28 +455,23 @@
 		}
 		pinToReturn = pin;
         
-		if (candpanno.checkedIn) 
-		{
-            UIImage *frame = [UIImage imageNamed:@"pin-frame"];
-            UIImage *profileImage;
-            
-            if (candpanno.imageUrl == nil)
-			{
-				profileImage = [UIImage imageNamed:@"defaultAvatar50.png"];
-			} 
-			else 
-			{  profileImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString: candpanno.imageUrl]]];
-            }
-            UIGraphicsBeginImageContext(CGSizeMake(38, 43));
-            [profileImage drawInRect:CGRectMake(3, 3, 32, 32)];
-            [frame drawInRect: CGRectMake(0, 0, 38, 43)];
-            pin.image = UIGraphicsGetImageFromCurrentImageContext();
-			
-		} 
-		else
-		{
-			pin.pinColor = MKPinAnnotationColorRed;
-		}
+        // Show images for everyone, no more pins per Philip
+        UIImage *frame = [UIImage imageNamed:@"pin-frame"];
+        UIImage *profileImage;
+        
+        if (candpanno.imageUrl == nil)
+        {
+            profileImage = [UIImage imageNamed:@"defaultAvatar50"];
+        } 
+        else 
+        {  
+            profileImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString: candpanno.imageUrl]]];
+        }
+        
+        UIGraphicsBeginImageContext(CGSizeMake(38, 43));
+        [profileImage drawInRect:CGRectMake(3, 3, 32, 32)];
+        [frame drawInRect: CGRectMake(0, 0, 38, 43)];
+        pin.image = UIGraphicsGetImageFromCurrentImageContext();
         
 		pin.animatesDrop = NO;
 		pin.canShowCallout = YES;
@@ -472,11 +482,11 @@
 		if (candpanno.imageUrl)
 		{
 			[leftCallout setImageWithURL:[NSURL URLWithString:candpanno.imageUrl]
-                        placeholderImage:[UIImage imageNamed:@"63-runner.png"]];
+                        placeholderImage:[UIImage imageNamed:@"63-runner"]];
 		}
 		else
 		{
-			leftCallout.image = [UIImage imageNamed:@"63-runner.png"];			
+			leftCallout.image = [UIImage imageNamed:@"63-runner"];			
 		}
 		pin.leftCalloutAccessoryView = 	leftCallout;
 		// make the right callout
