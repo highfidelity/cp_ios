@@ -13,4 +13,6 @@
 @property (nonatomic, assign) double lng;
 @property (nonatomic, assign) int othersHere;
 
+- (NSComparisonResult)sortByDistanceToUser:(CPPlace *)place;
+
 @end

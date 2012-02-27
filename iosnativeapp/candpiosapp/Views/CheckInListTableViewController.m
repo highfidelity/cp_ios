@@ -5,6 +5,8 @@
 #import "CPUIHelper.h"
 #import "SVProgressHUD.h"
 #import "SignupController.h"
+#import "CheckInListCell.h"
+#import "LocalizedDistanceCalculator.h"
 
 @implementation CheckInListTableViewController
 
@@ -36,6 +38,9 @@
     [CPUIHelper addDarkNavigationBarStyleToViewController:self];
     self.title = @"Places";
     refreshLocationsNow = YES;
+    
+    // change the separator color on the table view (since we have a different background)
+    self.tableView.separatorColor = [UIColor colorWithRed:(68.0/255.0) green:(68.0/255.0) blue:(68.0/255.0) alpha:1.0];
 }
 
 - (IBAction)closeWindow:(id)sender {
@@ -114,22 +119,11 @@
 
     // Do error checking here, in case Foursquare is down
 
-    CPPlace *place = [[CPPlace alloc] init];
-    place.name = @"<Location Not Listed>";
-    place.foursquareID = @"0";
-    
-    CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
-    
-    place.lat = location.coordinate.latitude;
-    place.lng = location.coordinate.longitude;
-    
-    [places addObject:place];
-    
+    // get the array of places that foursquare returned
     NSArray *itemsArray = [[[[json valueForKey:@"response"] valueForKey:@"groups"] valueForKey:@"items"] objectAtIndex:0];
 
+    // iterate through the results and add them to the places array
     for (NSMutableDictionary *item in itemsArray) {
-//        NSLog(@"ITEM FULL: %@", item);
-
         CPPlace *place = [[CPPlace alloc] init];
         place.name = [item valueForKey:@"name"];
         place.foursquareID = [item valueForKey:@"id"];
@@ -143,6 +137,21 @@
         place.lng = [[item valueForKeyPath:@"location.lng"] doubleValue];
         [places addObject:place];
     }
+    
+    // sort the places array by distance from user
+    [places sortUsingSelector:@selector(sortByDistanceToUser:)];
+    
+    // add a custom place so people can checkin if foursquare doesn't have the venue
+    CPPlace *place = [[CPPlace alloc] init];
+    place.name = @"Place not listed...";
+    place.foursquareID = @"0";
+    
+    CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
+    
+    place.lat = location.coordinate.latitude;
+    place.lng = location.coordinate.longitude;
+    
+    [places insertObject:place atIndex:0];
 
     [SVProgressHUD dismiss];
     
@@ -165,13 +174,30 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCell"];
-    if (cell == nil) {
-        // let's crash here if the identifier is incorrect
-        // we'd catch that at build time
+    // note that this code will cause the app to crash if these identifiers don't match what is in the storyboard
+    // we'd catch that before going to the store, but be careful
+    CheckInListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCell"];
+    
+    // if this is the "place not listed" cell then we have a different identifier
+    if (indexPath.row == 0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCellNotListed"];
+    } else {
+        // get a CLLocation for the user and the place so we can get a localized distance between them
+        CLLocation *userLocation = [[AppDelegate instance].settings lastKnownLocation];
+        CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[[places objectAtIndex:indexPath.row] lat] longitude:[[places objectAtIndex:indexPath.row] lng]];
+        cell.distanceString.text = [LocalizedDistanceCalculator localizedDistanceBetweenLocationA:userLocation andLocationB:placeLocation];
+        
+        cell.venueAddress.text = [[[places objectAtIndex:indexPath.row] address] description];
+        if (!cell.venueAddress.text) {
+            // if we don't have an address then move the venuename down
+            cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 19, cell.venueName.frame.size.width, cell.venueName.frame.size.height);
+        } else {
+            // otherwise put it back since we re-use the cells
+            cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 11, cell.venueName.frame.size.width, cell.venueName.frame.size.height);
+        }
     }
-    cell.textLabel.text = [[places objectAtIndex:indexPath.row] name];
-    cell.detailTextLabel.text = [[[places objectAtIndex:indexPath.row] address] description];
+    
+    cell.venueName.text = [[places objectAtIndex:indexPath.row] name];
     
     return cell;
 }
@@ -193,6 +219,16 @@
         SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
         [self.navigationController pushViewController:controller animated:YES];
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // if this is the first row it's the 'place not listed' row so make it smaller
+    if (indexPath.row == 0) {
+        return 40;
+    } else {
+        return 60;
+    }    
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

@@ -195,7 +195,7 @@
     if ([AppDelegate instance].settings.hasLocation) {
         CLLocation *myLocation = [[AppDelegate instance].settings lastKnownLocation];
         CLLocation *otherUserLocation = [[CLLocation alloc] initWithLatitude:self.user.location.latitude longitude:self.user.location.longitude];
-        NSString *distance = [LocalizedDistanceCalculator localizedDistanceBetweenLocationA:myLocation andLocationB:otherUserLocation];
+        NSString *distance = [LocalizedDistanceCalculator localizedDistanceofLocationA:myLocation awayFromLocationB:otherUserLocation];
         self.distanceLabel.text = distance;
     }
     

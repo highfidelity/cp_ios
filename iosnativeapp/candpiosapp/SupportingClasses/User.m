@@ -9,6 +9,7 @@
 #import "User.h"
 #import "AFJSONRequestOperation.h"
 #import "AppDelegate.h"
+#import "NSString+HTML.h"
 
 @implementation User
 
@@ -46,6 +47,18 @@
         
 	}
 	return self;
+}
+
+// override nickname setter to decode html entities
+- (void)setNickname:(NSString *)nickname
+{
+    _nickname = [nickname stringByDecodingHTMLEntities];
+}
+
+// override nickname setter to decode html entities
+- (void)setStatus:(NSString *)status
+{
+    _status = [status stringByDecodingHTMLEntities];
 }
 
 -(void)loadUserResumeData:(void (^)(User *user, NSError *error))completion {

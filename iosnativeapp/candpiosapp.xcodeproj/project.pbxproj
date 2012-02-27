@@ -108,6 +108,9 @@
 		537C268E14EDE98F0073FA70 /* go-menu-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 537C268C14EDE98F0073FA70 /* go-menu-bg@2x.png */; };
 		538432EB14F8714D009780C5 /* go-menu-button-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 538432E914F8714D009780C5 /* go-menu-button-3.png */; };
 		538432EC14F8714D009780C5 /* go-menu-button-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 538432EA14F8714D009780C5 /* go-menu-button-3@2x.png */; };
+		53882B5E14FC13630073058C /* CheckInListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53882B5D14FC13630073058C /* CheckInListCell.m */; };
+		53882B6214FC1B5A0073058C /* list-arrow-dark-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 53882B6014FC1B5A0073058C /* list-arrow-dark-grey.png */; };
+		53882B6314FC1B5A0073058C /* list-arrow-dark-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53882B6114FC1B5A0073058C /* list-arrow-dark-grey@2x.png */; };
 		5390190514D9D9AF0052100B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390190414D9D9AF0052100B /* User.m */; };
 		5390190E14DA0D850052100B /* paper-texture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5390190D14DA0D850052100B /* paper-texture.jpg */; };
 		5396E0D814E466C200E33E0E /* LeagueGothic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5396E0D714E466C200E33E0E /* LeagueGothic.otf */; };
@@ -440,6 +443,10 @@
 		537C268C14EDE98F0073FA70 /* go-menu-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "go-menu-bg@2x.png"; sourceTree = "<group>"; };
 		538432E914F8714D009780C5 /* go-menu-button-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "go-menu-button-3.png"; sourceTree = "<group>"; };
 		538432EA14F8714D009780C5 /* go-menu-button-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "go-menu-button-3@2x.png"; sourceTree = "<group>"; };
+		53882B5C14FC13630073058C /* CheckInListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckInListCell.h; sourceTree = "<group>"; };
+		53882B5D14FC13630073058C /* CheckInListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInListCell.m; sourceTree = "<group>"; };
+		53882B6014FC1B5A0073058C /* list-arrow-dark-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list-arrow-dark-grey.png"; sourceTree = "<group>"; };
+		53882B6114FC1B5A0073058C /* list-arrow-dark-grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list-arrow-dark-grey@2x.png"; sourceTree = "<group>"; };
 		5390190314D9D9AF0052100B /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = SupportingClasses/User.h; sourceTree = "<group>"; };
 		5390190414D9D9AF0052100B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = SupportingClasses/User.m; sourceTree = "<group>"; };
 		5390190D14DA0D850052100B /* paper-texture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "paper-texture.jpg"; sourceTree = "<group>"; };
@@ -957,6 +964,8 @@
 				534FC98914EF2E8C008C87B9 /* CheckInDetailsFrame.m */,
 				E4EFA7EF14FA3427004A329D /* CheckInHelper.h */,
 				E4EFA7F014FA3427004A329D /* CheckInHelper.m */,
+				53882B5C14FC13630073058C /* CheckInListCell.h */,
+				53882B5D14FC13630073058C /* CheckInListCell.m */,
 			);
 			name = CheckIn;
 			sourceTree = "<group>";
@@ -1349,6 +1358,8 @@
 		87F657F314B0D2D000F4AB6C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				53882B6014FC1B5A0073058C /* list-arrow-dark-grey.png */,
+				53882B6114FC1B5A0073058C /* list-arrow-dark-grey@2x.png */,
 				325462F714F9E977000FDD70 /* defaultAvatar25.png */,
 				32A7999614F9882200A0D4CB /* runner-small-square.png */,
 				32A7998714F97C0300A0D4CB /* plusSign.png */,
@@ -1603,6 +1614,8 @@
 				32A7998814F97C0300A0D4CB /* plusSign.png in Resources */,
 				32A7999714F9882200A0D4CB /* runner-small-square.png in Resources */,
 				325462F814F9E977000FDD70 /* defaultAvatar25.png in Resources */,
+				53882B6214FC1B5A0073058C /* list-arrow-dark-grey.png in Resources */,
+				53882B6314FC1B5A0073058C /* list-arrow-dark-grey@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1748,6 +1761,7 @@
 				32A7999514F9867D00A0D4CB /* UIImage+RoundedCorner.m in Sources */,
 				E4EFA7F114FA3427004A329D /* CheckInHelper.m in Sources */,
 				3278800014FAD7070055A991 /* MKAnnotationView+WebCache.m in Sources */,
+				53882B5E14FC13630073058C /* CheckInListCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

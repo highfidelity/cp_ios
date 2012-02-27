@@ -13,5 +13,6 @@
 
 + (NSString *)localizedDistanceBetweenLocationA:(CLLocation *)locationA
     andLocationB:(CLLocation *)locationB;
++ (NSString *)localizedDistanceofLocationA:(CLLocation *)locationA awayFromLocationB:(CLLocation *)locationB;
 
 @end
