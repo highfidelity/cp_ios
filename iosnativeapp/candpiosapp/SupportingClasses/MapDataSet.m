@@ -44,8 +44,7 @@ static NSOperationQueue *sMapQueue = nil;
         CGFloat numberOfDays = 31.0;
         
 		NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=getCheckedInBoundsOverTime&sw_lat=%f&sw_lng=%f&ne_lat=%f&ne_lng=%f&checked_in_since=%f&group_users=1", 
-//                               kCandPWebServiceUrl,
-                               @"http://dev.worklist.net/~emcro/candpweb/web/",
+                               kCandPWebServiceUrl,
                                swCoord.latitude,
                                swCoord.longitude,
                                neCoord.latitude,
