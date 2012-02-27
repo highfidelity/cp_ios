@@ -96,7 +96,8 @@
 
 -(void)setCheckInDuration:(int)checkInDuration
 {
-    self.durationString.text = [NSString stringWithFormat:@"%d hours", checkInDuration];
+    // commenting this out as the label now just says 'check in'
+    // self.durationString.text = [NSString stringWithFormat:@"%d hours", checkInDuration];
     _checkInDuration = checkInDuration;
 }
 
@@ -146,6 +147,28 @@
     // add these targets so we can change the font for the number that is selected
     [self.timeSlider addTarget:self action:@selector(sliderTouchDownAction:) forControlEvents:UIControlEventTouchDown];
     [self.timeSlider addTarget:self action:@selector(sliderTouchUpInsideAction:) forControlEvents:UIControlEventTouchUpInside];
+
+    // add a subview to the userInfoBubble so we show a rounded bubble with white-ish background
+    UIView *bubbleSub = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.userInfoBubble.frame.size.width, self.userInfoBubble.frame.size.height)];
+    bubbleSub.backgroundColor = [UIColor colorWithRed:(224.0/255.0) green:(224.0/255.0) blue:(224.0/255.0) alpha:1.0];
+    
+    // mask the bubble for rounded edges
+    // set the radius
+    CGFloat radius = 5.0;
+    // set the mask frame, and increase the height by the 
+    // corner radius to hide bottom corners
+    CGRect maskFrame = bubbleSub.bounds;
+    // create the mask layer
+    CALayer *maskLayer = [CALayer layer];
+    maskLayer.cornerRadius = radius;
+    maskLayer.backgroundColor = [UIColor blackColor].CGColor;
+    maskLayer.frame = maskFrame;
+    // set the mask
+    bubbleSub.layer.mask = maskLayer;
+    
+    // add bubbleSubview to the userInfoBubble
+    [self.userInfoBubble insertSubview:bubbleSub atIndex:0];    
+    
     
     // make an MKCoordinate region for the zoom level on the map
     MKCoordinateRegion region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(self.place.lat, self.place.lng), MKCoordinateSpanMake(0.006, 0.006));
@@ -301,7 +324,9 @@
             [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
                 self.otherUsersScrollView.transform = CGAffineTransformMakeTranslation(0, -self.otherUsersScrollView.frame.size.height);
                 shadowMaker.transform = CGAffineTransformMakeTranslation(0, -self.otherUsersScrollView.frame.size.height);
+                self.userInfoBubble.transform = CGAffineTransformMakeTranslation(0, -self.otherUsersScrollView.frame.size.height);
                 self.venueInfo.transform = CGAffineTransformMakeTranslation(0, -28);
+            
             } completion:NULL];
             
             // setup integer variable left offset to keep track of where we are putting user images
@@ -312,6 +337,7 @@
             
             // iterate through the users we've gotten back to add them to the scrollview
             NSArray *responseArray = [NSArray arrayWithArray:[json valueForKeyPath:@"payload.users"]];
+            NSInteger index = 0;
             // reverse the response so we get latest checkins first
             for (NSDictionary *user in [responseArray reverseObjectEnumerator]) {
                 
@@ -357,6 +383,14 @@
                 
                 // increase the leftOffset so the next image is in the right spot
                 leftOffset = leftOffset + 62;
+                
+                if (index == 0) {
+                    // show the info bubble for the first user
+                    [self userImageButtonPressed:userImageButton];
+                }
+                
+                // increase the index by 1
+                index += 1;
             }
             
             // add the "Who's here now?" text

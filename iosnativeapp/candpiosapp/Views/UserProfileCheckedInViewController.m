@@ -126,7 +126,7 @@
     
     // hide the go menu if this profile is current user's profile
     if (self.user.userID == [[[AppDelegate instance].settings candpUserId] intValue]) {
-        for (NSNumber *viewID in [NSArray arrayWithObjects:[NSNumber numberWithInt:1005], [NSNumber numberWithInt:1006], [NSNumber numberWithInt:1007], [NSNumber numberWithInt:1008], [NSNumber numberWithInt:1009], nil]) {
+        for (NSNumber *viewID in [NSArray arrayWithObjects:[NSNumber numberWithInt:1005], [NSNumber numberWithInt:1006], [NSNumber numberWithInt:1007], [NSNumber numberWithInt:1008], [NSNumber numberWithInt:1009], [NSNumber numberWithInt:1010], nil]) {
             [[self.view viewWithTag:[viewID intValue]] removeFromSuperview];
         }
     }

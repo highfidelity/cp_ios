@@ -171,6 +171,7 @@
         // we'd catch that at build time
     }
     cell.textLabel.text = [[places objectAtIndex:indexPath.row] name];
+    cell.detailTextLabel.text = [[[places objectAtIndex:indexPath.row] address] description];
     
     return cell;
 }

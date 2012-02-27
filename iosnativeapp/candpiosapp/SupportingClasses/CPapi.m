@@ -485,9 +485,9 @@
           completionBlock:(void (^)(NSDictionary *, NSError *))completion
 {        
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:[NSString stringWithFormat:@"%.7", place.lat]
+    [parameters setValue:[NSString stringWithFormat:@"%.7lf", place.lat]
                   forKey:@"lat"];
-    [parameters setValue:[NSString stringWithFormat:@"%.7", place.lng]
+    [parameters setValue:[NSString stringWithFormat:@"%.7lf", place.lng]
                   forKey:@"lng"];
     [parameters setValue:place.name forKey:@"venue_name"];
     [parameters setValue:[NSString stringWithFormat:@"%d", checkInTime]

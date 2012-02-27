@@ -31,7 +31,7 @@
 		3222127F14E1EA8600C5471B /* ModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222127E14E1EA8600C5471B /* ModalWebViewController.m */; };
 		3222128114E1EB2800C5471B /* ModalWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3222128014E1EB2800C5471B /* ModalWebView.xib */; };
 		3241E8E614EDA5B6006B81C2 /* CPMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3241E8E514EDA5B6006B81C2 /* CPMapView.m */; };
-		3241E8EF14EDA6C4006B81C2 /* OCAlgorithms.m in Sources */ = {isa = PBXBuildFile; fileRef = 3241E8E914EDA6C3006B81C2 /* OCAlgorithms.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3241E8EF14EDA6C4006B81C2 /* OCAlgorithms.m in Sources */ = {isa = PBXBuildFile; fileRef = 3241E8E914EDA6C3006B81C2 /* OCAlgorithms.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
 		3241E8F014EDA6C4006B81C2 /* OCAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3241E8EB14EDA6C3006B81C2 /* OCAnnotation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3241E8F114EDA6C4006B81C2 /* OCDistance.m in Sources */ = {isa = PBXBuildFile; fileRef = 3241E8ED14EDA6C3006B81C2 /* OCDistance.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		325462F814F9E977000FDD70 /* defaultAvatar25.png in Resources */ = {isa = PBXBuildFile; fileRef = 325462F714F9E977000FDD70 /* defaultAvatar25.png */; };
@@ -50,9 +50,9 @@
 		3278800014FAD7070055A991 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 32787FFF14FAD7070055A991 /* MKAnnotationView+WebCache.m */; };
 		3294F13A14E1DE77004590AC /* LinkedInLoginSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = 3294F13914E1DE77004590AC /* LinkedInLoginSequence.m */; };
 		32A7998814F97C0300A0D4CB /* plusSign.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A7998714F97C0300A0D4CB /* plusSign.png */; };
-		32A7999314F9867D00A0D4CB /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A7998E14F9867D00A0D4CB /* UIImage+Alpha.m */; };
-		32A7999414F9867D00A0D4CB /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A7999014F9867D00A0D4CB /* UIImage+Resize.m */; };
-		32A7999514F9867D00A0D4CB /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A7999214F9867D00A0D4CB /* UIImage+RoundedCorner.m */; };
+		32A7999314F9867D00A0D4CB /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A7998E14F9867D00A0D4CB /* UIImage+Alpha.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		32A7999414F9867D00A0D4CB /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A7999014F9867D00A0D4CB /* UIImage+Resize.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		32A7999514F9867D00A0D4CB /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A7999214F9867D00A0D4CB /* UIImage+RoundedCorner.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		32A7999714F9882200A0D4CB /* runner-small-square.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A7999614F9882200A0D4CB /* runner-small-square.png */; };
 		32B9976814E37B6400713B6E /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 32B9976714E37B6400713B6E /* SSKeychain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		32C762F814BEB48500FE25E4 /* UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C762F714BEB48500FE25E4 /* UserListTableViewController.m */; };
