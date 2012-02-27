@@ -102,6 +102,14 @@
 	//NSOperationQueue *queue = [[NSOperationQueue alloc] init];
 	//BOOL wasSuspended = queue.isSuspended;
 	[queue setSuspended: NO];
+    
+    // Drop shadow under navigation bar
+    UIImageView *shadowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header-shadow.png"]];
+    shadowView.frame = CGRectMake(0,
+                                  0, 
+                                  self.view.frame.size.width, 
+                                  shadowView.frame.size.height);
+    [self.view addSubview:shadowView];  
 }
 
 - (void)viewDidUnload

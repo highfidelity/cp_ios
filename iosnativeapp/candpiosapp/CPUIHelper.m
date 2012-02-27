@@ -21,18 +21,10 @@
 
 + (void)addDarkNavigationBarStyleToViewController:(UIViewController *)viewController
 {
-    // style the navigaiton bar... add a drop shadow below.
+    // style the navigation bar
     UINavigationBar *navigationBar = viewController.navigationController.navigationBar;
     navigationBar.barStyle = UIBarStyleBlack;
     [navigationBar setBackgroundImage:[UIImage imageNamed: @"header.png"] forBarMetrics: UIBarMetricsDefault];
-    // Drop shadow
-    UIImageView *shadowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header-shadow.png"]];
-    shadowView.frame = CGRectMake(0,
-                                  navigationBar.frame.origin.y + navigationBar.frame.size.height, 
-                                  navigationBar.frame.size.width, 
-                                  shadowView.frame.size.height);
-    shadowView.tag = navbarShadowTag;
-    [viewController.navigationController.view addSubview:shadowView];    
 }
 
 @end
