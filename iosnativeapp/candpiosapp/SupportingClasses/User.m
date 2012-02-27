@@ -61,6 +61,12 @@
     _status = [status stringByDecodingHTMLEntities];
 }
 
+// override rate setter to decode any html entities
+- (void)setHourlyRate:(NSString *)hourlyRate
+{
+    _hourlyRate = [hourlyRate stringByDecodingHTMLEntities];
+}
+
 -(void)loadUserResumeData:(void (^)(User *user, NSError *error))completion {
     // url hitting api.php to getResume
     NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=getResume&user_id=%d", kCandPWebServiceUrl, self.userID];

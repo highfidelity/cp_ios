@@ -514,17 +514,17 @@
 
 -(IBAction)plusButtonPressed:(id)sender {
     // animate the spinning of the plus button and replacement by the minus button
-    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{ 
+    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{ 
         self.plusButton.transform = CGAffineTransformMakeRotation(M_PI); 
         self.minusButton.transform = CGAffineTransformMakeRotation(M_PI);
         self.minusButton.alpha = 1.0;
     } completion: NULL];
     // alpha transition on the plus button so there isn't a gap where we see the background
-    [UIView animateWithDuration:0.3 delay:0.2 options:UIViewAnimationCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.2 delay:0.2 options:UIViewAnimationCurveEaseInOut animations:^{
         self.plusButton.alpha = 0.0;
     } completion:NULL];
     // animation of menu buttons shooting out
-    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
         self.f2fButton.transform = CGAffineTransformMakeTranslation(0, -165);
         self.chatButton.transform = CGAffineTransformMakeTranslation(0, -110);
         self.payButton.transform = CGAffineTransformMakeTranslation(0, -55);
@@ -534,17 +534,17 @@
 
 -(IBAction)minusButtonPressed:(id)sender {
     // animate the spinning of the minus button and replacement by the plus button
-    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{ 
+    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{ 
         self.minusButton.transform = CGAffineTransformMakeRotation((M_PI*2)-0.0001); 
         self.plusButton.transform = CGAffineTransformMakeRotation((M_PI*2)-0.0001);
         self.plusButton.alpha = 1.0;
     } completion: NULL];
     // alpha transition on the minus button so there isn't a gap where we see the background
-    [UIView animateWithDuration:0.3 delay:0.2 options:UIViewAnimationCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.2 delay:0.2 options:UIViewAnimationCurveEaseInOut animations:^{
         self.minusButton.alpha = 0.0;
     } completion:NULL];
     // animation of menu buttons being sucked back in
-    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
         self.f2fButton.transform = CGAffineTransformMakeTranslation(0, 0);
         self.chatButton.transform = CGAffineTransformMakeTranslation(0, 0);
         self.payButton.transform = CGAffineTransformMakeTranslation(0, 0);
