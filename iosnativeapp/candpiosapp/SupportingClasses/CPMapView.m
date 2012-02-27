@@ -45,7 +45,7 @@
 - (void)initSetUp{
     allAnnotations = [[NSMutableSet alloc] init];
     annotationsToIgnore = [[NSMutableSet alloc] init];
-    clusterSize = 0.01;
+    clusterSize = 0.04;
     minLongitudeDeltaToCluster = 0.1;
     clusteringEnabled = YES;
     clusterByGroupTag = YES;

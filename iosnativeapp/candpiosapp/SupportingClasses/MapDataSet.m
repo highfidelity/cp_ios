@@ -41,18 +41,22 @@ static NSOperationQueue *sMapQueue = nil;
         CLLocationCoordinate2D swCoord = MKCoordinateForMapPoint(swMapPoint);
         CLLocationCoordinate2D neCoord = MKCoordinateForMapPoint(neMapPoint);
         
-		NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=getCheckedInBounds&sw_lat=%f&sw_lng=%f&ne_lat=%f&ne_lng=%f", 
-                               kCandPWebServiceUrl,
+        CGFloat numberOfDays = 31.0;
+        
+		NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=getCheckedInBoundsOverTime&sw_lat=%f&sw_lng=%f&ne_lat=%f&ne_lng=%f&checked_in_since=%f&group_users=1", 
+//                               kCandPWebServiceUrl,
+                               @"http://dev.worklist.net/~emcro/candpweb/web/",
                                swCoord.latitude,
                                swCoord.longitude,
                                neCoord.latitude,
-                               neCoord.longitude];
+                               neCoord.longitude,
+                               [[NSDate date] timeIntervalSince1970] - (86400 * numberOfDays)
+                               ];
 	#if DEBUG
 		NSLog(@"Loading datapoints from: %@", urlString);
 	#endif
 		NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
 		AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-			
 			MapDataSet *dataSet = [[MapDataSet alloc]initFromJson:JSON];
 			dataSet.regionCovered = mapRect;
 			dataSet.dateLoaded = [NSDate date];

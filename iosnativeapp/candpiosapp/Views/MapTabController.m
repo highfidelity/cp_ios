@@ -249,22 +249,15 @@
     for (MKAnnotationView *view in views) {
 //        NSLog(@"didAdd: %@", view.annotation.title);
 
+        CGFloat startingAlpha = view.alpha;
+        
         // Fade in any new annotations
         view.alpha = 0;        
         [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.1];
+        [UIView setAnimationDuration:0.2];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-        view.alpha = 1.0;
-        [UIView commitAnimations];        
-
-        if ([[view annotation] isKindOfClass:[CandPAnnotation class]]) {
-            CandPAnnotation *ann = (CandPAnnotation *)view.annotation;
-            if (ann.checkedIn) {   
-                [[view superview] bringSubviewToFront:view];
-            } else {
-                [[view superview] sendSubviewToBack:view];
-            }
-        }
+        view.alpha = startingAlpha;
+        [UIView commitAnimations];
     }    
 }
 
@@ -394,7 +387,8 @@
 - (MKAnnotationView *)mapView:(CPMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {   
 	MKAnnotationView *pinToReturn = nil;
-
+    BOOL hasCheckedInUsers = NO;
+    
     if ([annotation isKindOfClass:[OCAnnotation class]]) {
         NSArray *annotationsInCluster = [(OCAnnotation *)annotation annotationsInCluster];
         
@@ -423,16 +417,24 @@
                 else {
                     [imageSources addObject:@"empty"];
                 }
+                
+                if (thisAnn.checkedIn) {
+                    hasCheckedInUsers = YES;
+                }
             }
         }
-        
+
+        /*
         if (imageSources) {
             pin.image = [self pinImage:imageSources];
         }
         else {
             pin.pinColor = MKPinAnnotationColorPurple;
         }
-
+         */
+        
+        [pin setNumberedPin:imageSources.count hasCheckins:hasCheckedInUsers];
+        
 //        pin.layer.borderColor = [[UIColor grayColor] CGColor];
 //        pin.layer.borderWidth = 1.0;
         
@@ -473,13 +475,15 @@
         
         if (candpanno.imageUrl == nil)
         {
-            [pin setImage:[UIImage imageNamed:@"defaultAvatar50"] fancy:YES];
+            [pin setNumberedPin:1 hasCheckins:candpanno.checkedIn];
+//            [pin setImage:[UIImage imageNamed:@"pin_small"] fancy:YES];
         } 
         else 
         {  
             // Use custom MKAnnotationView+WebCache to cache images and load asynchronously. Pass fancy to have the fancy white border + frame
             NSURL *imageURL = [NSURL URLWithString:candpanno.imageUrl];
-            [pin setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"defaultAvatar50"] fancy:YES];
+            [pin setNumberedPin:1 hasCheckins:candpanno.checkedIn];
+//            [pin setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"pin_small"] fancy:YES];
         }
         
 		pin.animatesDrop = NO;
