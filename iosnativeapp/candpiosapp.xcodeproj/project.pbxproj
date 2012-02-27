@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3200177C14FC3862008ADA53 /* pin-checkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 3200177814FC3862008ADA53 /* pin-checkedin.png */; };
+		3200177D14FC3862008ADA53 /* pin-checkedin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3200177914FC3862008ADA53 /* pin-checkedin@2x.png */; };
+		3200177E14FC3862008ADA53 /* pin-checkedout.png in Resources */ = {isa = PBXBuildFile; fileRef = 3200177A14FC3862008ADA53 /* pin-checkedout.png */; };
+		3200177F14FC3862008ADA53 /* pin-checkedout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3200177B14FC3862008ADA53 /* pin-checkedout@2x.png */; };
 		320604A414D5BBA40035A88D /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 320604A314D5BBA40035A88D /* libFlurryAnalytics.a */; };
 		3222126914E1E17B00C5471B /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222124114E1E17B00C5471B /* NSMutableURLRequest+Parameters.m */; };
 		3222126A14E1E17B00C5471B /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222124314E1E17B00C5471B /* NSString+URLEncoding.m */; };
@@ -57,11 +61,6 @@
 		32B9976814E37B6400713B6E /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 32B9976714E37B6400713B6E /* SSKeychain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		32C762F814BEB48500FE25E4 /* UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C762F714BEB48500FE25E4 /* UserListTableViewController.m */; };
 		32CE875214D27FFF002D391B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CE875114D27FFF002D391B /* QuartzCore.framework */; };
-		32DA3EF614FC1A430065870B /* pin_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DA3EF514FC1A430065870B /* pin_small.png */; };
-		32DA3EFE14FC34560065870B /* pin-checkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DA3EFA14FC34560065870B /* pin-checkedin.png */; };
-		32DA3EFF14FC34560065870B /* pin-checkedin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DA3EFB14FC34560065870B /* pin-checkedin@2x.png */; };
-		32DA3F0014FC34560065870B /* pin-checkedout.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DA3EFC14FC34560065870B /* pin-checkedout.png */; };
-		32DA3F0114FC34560065870B /* pin-checkedout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DA3EFD14FC34560065870B /* pin-checkedout@2x.png */; };
 		32E3CD8614C39B94001EA2AB /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E3CD8414C39B94001EA2AB /* UserTableViewCell.m */; };
 		32E3CD9014C3AAA5001EA2AB /* WebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E3CD8D14C3AAA5001EA2AB /* WebView.xib */; };
 		32E3CD9114C3AAA5001EA2AB /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E3CD8F14C3AAA5001EA2AB /* WebViewController.m */; };
@@ -256,6 +255,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3200177814FC3862008ADA53 /* pin-checkedin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-checkedin.png"; sourceTree = "<group>"; };
+		3200177914FC3862008ADA53 /* pin-checkedin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-checkedin@2x.png"; sourceTree = "<group>"; };
+		3200177A14FC3862008ADA53 /* pin-checkedout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-checkedout.png"; sourceTree = "<group>"; };
+		3200177B14FC3862008ADA53 /* pin-checkedout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-checkedout@2x.png"; sourceTree = "<group>"; };
 		320604A214D5BBA40035A88D /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
 		320604A314D5BBA40035A88D /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
 		3222124014E1E17B00C5471B /* NSMutableURLRequest+Parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+Parameters.h"; sourceTree = "<group>"; };
@@ -388,11 +391,6 @@
 		32C762F614BEB48500FE25E4 /* UserListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListTableViewController.h; sourceTree = "<group>"; };
 		32C762F714BEB48500FE25E4 /* UserListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListTableViewController.m; sourceTree = "<group>"; };
 		32CE875114D27FFF002D391B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		32DA3EF514FC1A430065870B /* pin_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_small.png; sourceTree = "<group>"; };
-		32DA3EFA14FC34560065870B /* pin-checkedin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-checkedin.png"; sourceTree = "<group>"; };
-		32DA3EFB14FC34560065870B /* pin-checkedin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-checkedin@2x.png"; sourceTree = "<group>"; };
-		32DA3EFC14FC34560065870B /* pin-checkedout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-checkedout.png"; sourceTree = "<group>"; };
-		32DA3EFD14FC34560065870B /* pin-checkedout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-checkedout@2x.png"; sourceTree = "<group>"; };
 		32E3CD8314C39B94001EA2AB /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTableViewCell.h; sourceTree = "<group>"; };
 		32E3CD8414C39B94001EA2AB /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTableViewCell.m; sourceTree = "<group>"; };
 		32E3CD8D14C3AAA5001EA2AB /* WebView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebView.xib; sourceTree = "<group>"; };
@@ -1368,6 +1366,10 @@
 		87F657F314B0D2D000F4AB6C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3200177814FC3862008ADA53 /* pin-checkedin.png */,
+				3200177914FC3862008ADA53 /* pin-checkedin@2x.png */,
+				3200177A14FC3862008ADA53 /* pin-checkedout.png */,
+				3200177B14FC3862008ADA53 /* pin-checkedout@2x.png */,
 				53882B6014FC1B5A0073058C /* list-arrow-dark-grey.png */,
 				53882B6114FC1B5A0073058C /* list-arrow-dark-grey@2x.png */,
 				325462F714F9E977000FDD70 /* defaultAvatar25.png */,
@@ -1626,6 +1628,10 @@
 				325462F814F9E977000FDD70 /* defaultAvatar25.png in Resources */,
 				53882B6214FC1B5A0073058C /* list-arrow-dark-grey.png in Resources */,
 				53882B6314FC1B5A0073058C /* list-arrow-dark-grey@2x.png in Resources */,
+				3200177C14FC3862008ADA53 /* pin-checkedin.png in Resources */,
+				3200177D14FC3862008ADA53 /* pin-checkedin@2x.png in Resources */,
+				3200177E14FC3862008ADA53 /* pin-checkedout.png in Resources */,
+				3200177F14FC3862008ADA53 /* pin-checkedout@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
