@@ -20,7 +20,7 @@
     [newImage drawInRect:CGRectMake(3, 3, 32, 32)];
     [frame drawInRect: CGRectMake(0, 0, 38, 43)];
     
-    NSLog(@"fancy image!");
+    // NSLog(@"fancy image!");
     
     [self setImage:UIGraphicsGetImageFromCurrentImageContext()];
 }
