@@ -13,7 +13,7 @@
 #import "AppDelegate.h"
 #import "CPapi.h"
 #import "TPKeyboardAvoidingScrollView.h"
-#import "NSString+HTML.h"
+#import "User.h"
 
 @interface CheckInDetailsViewController() <UITextFieldDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *blueOverlay;
@@ -341,10 +341,13 @@
             // reverse the response so we get latest checkins first
             for (NSDictionary *user in [responseArray reverseObjectEnumerator]) {
                 
-                // add this user's nickname and status to the user array
-                // this is how we put the user's info in the info bubble later
-                [self.userArray addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[user objectForKey:@"nickname"], [user objectForKey:@"status_text"], nil] forKeys:[NSArray arrayWithObjects:@"nickname", @"status", nil]]];
+                User *checkedInUser = [[User alloc] init];
+                checkedInUser.nickname = [user objectForKey:@"nickname"];
+                checkedInUser.status = [user objectForKey:@"status_text"];
                 
+                // add this user to the user array
+                // this is how we put the user's info in the info bubble later
+                [self.userArray addObject:checkedInUser];
                 
                 UIButton *userImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
                 userImageButton.frame = CGRectMake(leftOffset, 14, 50, 50);
@@ -500,8 +503,8 @@
     
     // set the nickname and status on the info bubble
     // decode the HTML entities
-    self.infoBubbleNickname.text = [[[self.userArray objectAtIndex:userIndex] objectForKey:@"nickname"] stringByDecodingHTMLEntities];
-    NSString *status = [[[self.userArray objectAtIndex:userIndex] objectForKey:@"status"] stringByDecodingHTMLEntities];
+    self.infoBubbleNickname.text = [[self.userArray objectAtIndex:userIndex] nickname];
+    NSString *status = [[self.userArray objectAtIndex:userIndex] status];
     if (status.length > 0) {
         self.infoBubbleStatus.text = [NSString stringWithFormat:@"\"%@\"", status];
     } else {
