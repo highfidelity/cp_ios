@@ -44,10 +44,6 @@
     CGContextAddLineToPoint(context, self.frame.size.width - 1, self.frame.size.height - 1);
     CGContextAddLineToPoint(context, self.frame.size.width - 1, self.frame.size.height - 65);   
     CGContextStrokePath(context);    
-    CGContextClosePath(context);
-    
-    // draw the tick marks for the slider
-    CGContextBeginPath(context);
     CGContextSetRGBStrokeColor(context, 0.2, 0.2, 0.2, 1.0);
     for (NSNumber *point in [NSArray arrayWithObjects:[NSNumber numberWithInt:30], [NSNumber numberWithInt:78], [NSNumber numberWithInt:125], [NSNumber numberWithInt:172], nil]) {
         CGContextMoveToPoint(context, [point floatValue], 68);
