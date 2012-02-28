@@ -89,19 +89,19 @@
             BOOL removeAnnotation = NO;
             
             for (OCAnnotation *clusterAnnotation in clusteredAnnotations) {
-                
+
                 // If the annotation is in range of the Cluster add it to it
                 if (isLocationNearToOtherLocation([annotation coordinate], [clusterAnnotation coordinate], radius)) {
 
-                    // Check for duplicate user ID's, and don't re-add to a cluster if the user already belongs to it
+                    // Check for duplicate annotations, and don't re-add to a cluster if it's already in it
                     if ([annotation isKindOfClass:[CandPAnnotation class]]) {
-                        if (![clusterAnnotation.userIdsInCluster containsObject:[(CandPAnnotation *)annotation objectId]]) {
-                            addAnnotationNow = YES;
+                        if ([clusterAnnotation.annotationsInCluster containsObject:annotation]) {
+//                        if ([clusterAnnotation.userIdsInCluster containsObject:[(CandPAnnotation *)annotation objectId]]) {
+                            addAnnotationNow = NO;
+                            isContaining = YES;
                         }
                         else {
-                            addAnnotationNow = NO;
-                            // TEST
-                            isContaining = YES;
+                            addAnnotationNow = YES;
                         }
                     }
                     else if (!([clusterAnnotation.annotationsInCluster containsObject:annotation] && clusterAnnotation.annotationsInCluster.count == 1)) {
@@ -109,7 +109,7 @@
                     }
                     
                     if (addAnnotationNow) {
-                        clusterAnnotation.title = [NSString stringWithFormat:@"%d people checked in", clusterAnnotation.annotationsInCluster.count + 1];
+                        clusterAnnotation.title = [NSString stringWithFormat:@"%d checkins", clusterAnnotation.annotationsInCluster.count + 1];
                         clusterAnnotation.subtitle = @"";
 
                         isContaining = YES;

@@ -422,19 +422,7 @@
 			pin.annotation = annotation;
 		}
 
-        /*
-        if (imageSources) {
-            pin.image = [self pinImage:imageSources];
-        }
-        else {
-            pin.pinColor = MKPinAnnotationColorPurple;
-        }
-         */
-        
         [pin setNumberedPin:imageSources.count hasCheckins:hasCheckedInUsers];
-        
-//        pin.layer.borderColor = [[UIColor grayColor] CGColor];
-//        pin.layer.borderWidth = 1.0;
         
         pin.layer.shadowColor = [UIColor blackColor].CGColor;
         pin.layer.shadowOffset = CGSizeMake(3, 3);
@@ -522,7 +510,7 @@
     if ([view.annotation isKindOfClass:[OCAnnotation class]]) {
         
         for (OCAnnotation *ann in ((OCAnnotation *)[view annotation]).annotationsInCluster) {
-            NSLog(@"Found: %@", ann.title);
+//            NSLog(@"Found: %@", ann.title);
         }
 
       [self performSegueWithIdentifier:@"ShowUserClusterTable" sender:view];
