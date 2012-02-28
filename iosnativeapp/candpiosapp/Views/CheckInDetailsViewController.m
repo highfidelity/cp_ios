@@ -277,7 +277,7 @@
                     // Cancel all old local notifications
                     [[UIApplication sharedApplication] cancelAllLocalNotifications];
                     
-                    localNotif.alertBody = @"You will be checked out of C&P in 5 min and will no longer be shown on the map.";
+                    localNotif.alertBody = @"You will be checked out of C&P in 5 min.";
                     localNotif.alertAction = @"Check In";
                     localNotif.soundName = UILocalNotificationDefaultSoundName;
                     
