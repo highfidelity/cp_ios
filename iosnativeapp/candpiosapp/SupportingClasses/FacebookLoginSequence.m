@@ -78,7 +78,9 @@
 		[loginParams setObject:@"json" forKey:@"type"];
         [loginParams setObject:[AppDelegate instance].settings.facebookAccessToken forKey: @"fb_access_token"];
 
-		NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"login.php" parameters:loginParams];
+		NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST"
+                                                                     path:@"login.php"
+                                                               parameters:loginParams];
 		
 		AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id candpJson) {
 

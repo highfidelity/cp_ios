@@ -989,6 +989,22 @@
 			name = FaceToFace;
 			sourceTree = "<group>";
 		};
+		6F368D9B14F86F8900CA1A41 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				8733310F14BCC36A001BF4DB /* EmailLoginSequence.h */,
+				8733311014BCC36A001BF4DB /* EmailLoginSequence.m */,
+				8708361814B4BF4A00439431 /* FacebookLoginSequence.h */,
+				8708361914B4BF4B00439431 /* FacebookLoginSequence.m */,
+				3294F13814E1DE77004590AC /* LinkedInLoginSequence.h */,
+				3294F13914E1DE77004590AC /* LinkedInLoginSequence.m */,
+				87DC9A4014BECB6F00BA3907 /* LoginSequenceBase.h */,
+				87DC9A4114BECB6F00BA3907 /* LoginSequenceBase.m */,
+			);
+			name = Login;
+			path = SupportingClasses;
+			sourceTree = "<group>";
+		};
 		6F57076614E85439009B4053 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -1107,6 +1123,7 @@
 				6F7DA74914E89471001BEC19 /* Chat */,
 				53D65B4614EEEC3700801C5E /* CheckIn */,
 				6F57076614E85439009B4053 /* Models */,
+				6F368D9B14F86F8900CA1A41 /* Login */,
 				871EFBBC14AF987B0030658B /* Views */,
 				871EFB1114AE9C820030658B /* Supporting Files */,
 				87F5EF4C14AFAAC500EB83F7 /* SupportingClasses */,
@@ -1308,16 +1325,8 @@
 				3241E8EC14EDA6C3006B81C2 /* OCDistance.h */,
 				3241E8ED14EDA6C3006B81C2 /* OCDistance.m */,
 				3241E8EE14EDA6C4006B81C2 /* OCGrouping.h */,
-				8733310F14BCC36A001BF4DB /* EmailLoginSequence.h */,
-				8733311014BCC36A001BF4DB /* EmailLoginSequence.m */,
-				8708361814B4BF4A00439431 /* FacebookLoginSequence.h */,
-				8708361914B4BF4B00439431 /* FacebookLoginSequence.m */,
 				53FB9E4D14E0AE4600F4CC7F /* FoursquareAPIRequest.h */,
 				53FB9E4E14E0AE4600F4CC7F /* FoursquareAPIRequest.m */,
-				3294F13814E1DE77004590AC /* LinkedInLoginSequence.h */,
-				3294F13914E1DE77004590AC /* LinkedInLoginSequence.m */,
-				87DC9A4014BECB6F00BA3907 /* LoginSequenceBase.h */,
-				87DC9A4114BECB6F00BA3907 /* LoginSequenceBase.m */,
 				875CB8F214C5DC8C00AD4F6E /* MapDataSet.h */,
 				875CB8F314C5DC8C00AD4F6E /* MapDataSet.m */,
 				87F657FF14B0DC2D00F4AB6C /* MissionAnnotation.h */,

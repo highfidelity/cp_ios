@@ -11,11 +11,17 @@
 
 @interface CPUIHelper : NSObject
 
-+(void)addShadowToView:(UIView *)view
-                 color:(UIColor *)color
-                offset:(CGSize)offset
-                radius:(double)radius
-               opacity:(double)opacity;
+// UI elements
++ (void)addShadowToView:(UIView *)view
+                  color:(UIColor *)color
+                 offset:(CGSize)offset
+                 radius:(double)radius
+                opacity:(double)opacity;
 
-+(void)addDarkNavigationBarStyleToViewController:(UIViewController *)viewController;
++ (void)addDarkNavigationBarStyleToViewController:(UIViewController *)viewController;
+
+// C&P Color scheme
++ (UIColor *)cpColorGreen;
++ (UIColor *)cpColorLightGray;
+
 @end

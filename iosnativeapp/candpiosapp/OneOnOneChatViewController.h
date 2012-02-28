@@ -14,6 +14,9 @@ extern float const CHAT_PADDING_X;
 extern float const CHAT_BOX_HEIGHT;
 extern float const CHAT_BOX_WIDTH;
 
+extern UIColor *MY_CHAT_COLOR;
+extern UIColor *THEIR_CHAT_COLOR;
+
 @interface OneOnOneChatViewController : UIViewController <UITextFieldDelegate> {
     UITextField *chatEntryField;
     CGRect      nextChatBoxRect;

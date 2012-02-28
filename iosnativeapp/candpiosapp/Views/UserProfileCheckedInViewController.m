@@ -561,11 +561,16 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"ProfileToOneOnOneSegue"] ||
-        [[segue identifier] isEqualToString:@"ProfileToPayUserSegue"]) {
-        NSLog(@"Doing a segue!!11!");
+    if ([[segue identifier] isEqualToString:@"ProfileToOneOnOneSegue"])
+    {
         [[segue destinationViewController] setUser:self.user];
         [self minusButtonPressed:nil];
+        [[AppDelegate instance] hideCheckInButton];
+    }
+    else if ([[segue identifier] isEqualToString:@"ProfileToPayUserSegue"])
+    {
+        [[segue destinationViewController] setUser:self.user];
+        [self minusButtonPressed:nil];        
     }
 }
 

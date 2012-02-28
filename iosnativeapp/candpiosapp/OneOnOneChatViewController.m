@@ -9,6 +9,8 @@
 #import "OneOnOneChatViewController.h"
 #import "CPapi.h"
 #import "SVProgressHUD.h"
+#import "AppDelegate.h"
+#import "CPUIHelper.h"
 
 float const CHAT_PADDING_Y = 5.0f;
 float const CHAT_PADDING_X = 5.0f;
@@ -16,6 +18,9 @@ float const CHAT_PADDING_X = 5.0f;
 float const CHAT_BOX_HEIGHT = 30.0f;
 // TODO: make this determined by the containing view's width
 float const CHAT_BOX_WIDTH = 250.0f;
+
+UIColor *MY_CHAT_COLOR = nil;
+UIColor *THEIR_CHAT_COLOR = nil;
 
 @interface OneOnOneChatViewController()
 
@@ -40,7 +45,9 @@ float const CHAT_BOX_WIDTH = 250.0f;
 
 #pragma mark - Chat Logic functions
 
-- (void)addChatMessageToView:(NSString *)message sentByMe:(BOOL)myMessage{
+- (void)addChatMessageToView:(NSString *)message
+                    sentByMe:(BOOL)myMessage
+{
     NSLog(@"Inserting new chat box at (%f, %f) w(%f) h(%f)",
           self.nextChatBoxRect.origin.x,
           self.nextChatBoxRect.origin.y,
@@ -51,19 +58,27 @@ float const CHAT_BOX_WIDTH = 250.0f;
     UILabel *newChatEntry = [[UILabel alloc] initWithFrame:self.nextChatBoxRect];
     
     newChatEntry.text = message;
-    
-    if (myMessage) {
-        newChatEntry.backgroundColor = [UIColor greenColor];
+    newChatEntry.textAlignment = UITextAlignmentCenter;
+    newChatEntry.textColor = [UIColor darkTextColor];
+    newChatEntry.numberOfLines = 0;                         // display multiple lines
+    newChatEntry.lineBreakMode = UILineBreakModeWordWrap;        
+    if (myMessage)
+    {
+        newChatEntry.backgroundColor = MY_CHAT_COLOR;
         newChatEntry.textAlignment = UITextAlignmentRight;
-    } else {
-        newChatEntry.backgroundColor = [UIColor redColor];
+    }
+    else
+    {
+        newChatEntry.backgroundColor = THEIR_CHAT_COLOR;
         newChatEntry.textAlignment = UITextAlignmentLeft;
     }
     
     [self.chatContents addSubview:newChatEntry];
     
     // Increase size of scroll view if necessary
-    float nextChatBoxBottom = self.nextChatBoxRect.origin.y + self.nextChatBoxRect.size.height;
+    float nextChatBoxBottom = self.nextChatBoxRect.origin.y +
+                              self.nextChatBoxRect.size.height;
+    
     NSLog(@"Should we resize? chatContents = h(%f) and nextChatBoxBottom = %f",
           self.chatContents.contentSize.height,
           nextChatBoxBottom);
@@ -72,6 +87,7 @@ float const CHAT_BOX_WIDTH = 250.0f;
         CGSize newSize = CGSizeMake(self.chatContents.contentSize.width,
                                     nextChatBoxBottom + CHAT_PADDING_Y);
         self.chatContents.contentSize = newSize;
+        
         // Scroll to bottom of the chat window
         CGPoint bottomOffset = CGPointMake(0.0f,
                                            self.chatContents.contentSize.height -
@@ -137,7 +153,12 @@ float const CHAT_BOX_WIDTH = 250.0f;
 {
     [super viewDidLoad];
     
-    NSLog(@"Preparing to chat with user %@ (id: %d)", self.user.nickname, self.user.userID);
+    [[AppDelegate instance] hideCheckInButton];
+    
+    NSLog(@"Preparing to chat with user %@ (id: %d)",
+          self.user.nickname,
+          self.user.userID);
+    
     self.title = self.user.nickname;
     
     // Set up the chat entry field
@@ -152,6 +173,7 @@ float const CHAT_BOX_WIDTH = 250.0f;
 
 - (void)viewDidUnload
 {
+    [[AppDelegate instance] showCheckInButton];
     //[self setChatDisplay:nil];
     [self setChatEntryField:nil];
     [self setChatContents:nil];
@@ -180,6 +202,8 @@ float const CHAT_BOX_WIDTH = 250.0f;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        MY_CHAT_COLOR = [CPUIHelper cpColorGreen];
+        THEIR_CHAT_COLOR = [CPUIHelper cpColorLightGray];
     }
     return self;
 }
