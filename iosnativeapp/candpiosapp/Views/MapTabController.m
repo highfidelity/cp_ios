@@ -41,6 +41,8 @@
 @synthesize mapHasLoaded;
 @synthesize mapAndButtonsView;
 
+BOOL clusterNow = YES;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -137,6 +139,7 @@
     [[AppDelegate instance] showCheckInButton];
 
     [self refreshLocationsIfNeeded];
+    
     // Update for login name in header field
     [[AppDelegate instance].settingsMenuController.tableView reloadData];
 }
@@ -150,12 +153,14 @@
 
 - (IBAction)refreshButtonClicked:(id)sender
 {
-    [mapView removeAnnotations: mapView.annotations];
+//    [mapView removeAnnotations: mapView.annotations];
     [self refreshLocations];
 }
 
 -(void)refreshLocationsIfNeeded
 {
+    clusterNow = YES;
+    
 	MKMapRect mapRect = mapView.visibleMapRect;
 
     // prevent the refresh of locations when we have a valid dataset or the map is not yet loaded
@@ -163,6 +168,11 @@
 	{
 		[self refreshLocations];
 	}
+    
+    if (clusterNow) {
+        [self.mapView doClustering];
+        clusterNow = NO;
+    }
 }
 
 -(void)refreshLocations
@@ -181,16 +191,20 @@
 //                                            [mapView removeAnnotation:ann];
                                         }
                                     }
-                                    [mapView addAnnotations: [newDataset annotations]];
+                                    
                                     dataset = newDataset;
 
                                     // Load all users (even outside of map bounds) into fullDataset for List view
                                     for (CandPAnnotation *ann2 in newDataset.annotations) {
                                         if (![fullDataset.annotations containsObject: ann2]) {
                                             [fullDataset.annotations addObject: ann2];
+                                            [mapView addAnnotation:ann2];
                                         }
                                     }
                                 }
+
+                                [self.mapView doClustering];
+                                clusterNow = NO;
                                 
                                 [SVProgressHUD dismiss];
                             }];
@@ -423,12 +437,7 @@
 		}
 
         [pin setNumberedPin:imageSources.count hasCheckins:hasCheckedInUsers];
-        
-        pin.layer.shadowColor = [UIColor blackColor].CGColor;
-        pin.layer.shadowOffset = CGSizeMake(3, 3);
-        pin.layer.shadowOpacity = 0.5;
-        pin.layer.shadowRadius = 1.0;
-        
+      
         pin.enabled = YES;
         pin.canShowCallout = YES;
         
@@ -563,7 +572,6 @@
 - (void)mapView:(CPMapView *)thisMapView regionDidChangeAnimated:(BOOL)animated
 {
 	[self refreshLocationsIfNeeded];
-    [thisMapView doClustering];
 }
 
 - (void)mapViewWillStartLocatingUser:(CPMapView *)mapView
@@ -578,9 +586,9 @@
 }
 - (void)mapView:(CPMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-	NSLog(@"MapTab: didUpdateUserLocation (lat %f, lon %f)",
-          userLocation.location.coordinate.latitude,
-          userLocation.location.coordinate.longitude);
+//	NSLog(@"MapTab: didUpdateUserLocation (lat %f, lon %f)",
+//          userLocation.location.coordinate.latitude,
+//          userLocation.location.coordinate.longitude);
 	
 	if(userLocation.location.coordinate.latitude != 0 &&
        userLocation.location.coordinate.longitude != 0)
@@ -607,7 +615,6 @@
 }
 
 - (void)mapView:(CPMapView *)thisMapView regionWillChangeAnimated:(BOOL)animated {
-//    [thisMapView doClustering];
 }
 
 // zoom to the location; on initial load & after updaing their pos

@@ -56,25 +56,31 @@
 #pragma mark MKMapView implementation
 
 - (void)addAnnotation:(id < MKAnnotation >)annotation{
-    [allAnnotations addObject:annotation];
-    [self doClustering];
+    if (![allAnnotations containsObject:annotation]) {
+        [allAnnotations addObject:annotation];
+//        [self doClustering];
+    }
 }
 
 - (void)addAnnotations:(NSArray *)annotations{
-    [allAnnotations addObjectsFromArray:annotations];
-    [self doClustering];
+    for (id<MKAnnotation> annotation in annotations) {
+        [self addAnnotation:annotation];
+    }
+    
+//    [allAnnotations addObjectsFromArray:annotations];
+//    [self doClustering];
 }
 
 - (void)removeAnnotation:(id < MKAnnotation >)annotation{
     [allAnnotations removeObject:annotation];
-    [self doClustering];
+//    [self doClustering];
 }
 
 - (void)removeAnnotations:(NSArray *)annotations{
     for (id<MKAnnotation> annotation in annotations) {
         [allAnnotations removeObject:annotation];
     }
-    [self doClustering];
+//    [self doClustering];
 }
 
 
@@ -106,8 +112,8 @@
 - (void)doClustering{
     // Remove the annotation which should be ignored
 //    NSMutableArray *bufferArray = [[NSMutableArray alloc] initWithArray:[allAnnotations allObjects]];
-    NSMutableArray *bufferArray = [[NSMutableArray alloc] initWithArray:[allAnnotations allObjects]];
-    
+    NSMutableArray *bufferArray = [[NSMutableArray alloc] initWithArray:[allAnnotations allObjects]];    
+   
 //    [bufferArray removeObjectsInArray:[annotationsToIgnore allObjects]];
     NSMutableArray *annotationsToCluster = [[NSMutableArray alloc] initWithArray:[self filterAnnotationsForVisibleMap:bufferArray]];
     
