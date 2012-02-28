@@ -444,11 +444,7 @@ BOOL zoomedOut = NO;
 	MKAnnotationView *pinToReturn = nil;
     BOOL hasCheckedInUsers = NO;
     BOOL smallPin = NO;
-    
-    if (self.mapView.region.span.longitudeDelta > kMinimumDeltaForSmallPins) {
-        smallPin = YES;
-    }
-    
+        
     if ([annotation isKindOfClass:[OCAnnotation class]]) {
         NSArray *annotationsInCluster = [(OCAnnotation *)annotation annotationsInCluster];
         NSMutableArray *imageSources = [[NSMutableArray alloc] initWithCapacity:annotationsInCluster.count];
@@ -472,6 +468,20 @@ BOOL zoomedOut = NO;
                 }
             }
         }
+
+        if (!hasCheckedInUsers) {
+            if (annotationsInCluster.count < 5) {
+                smallPin = YES;
+            }
+            else {
+                smallPin = NO;
+            }            
+        }
+
+        // If zoomed out, force the smallPin
+        if (self.mapView.region.span.longitudeDelta > kMinimumDeltaForSmallPins) {
+            smallPin = YES;
+        }
         
         // Need to set a unique identifier to prevent any weird formatting issues -- use a combination of annotationsInCluster.count + hasCheckedInUsers value + smallPin value
         NSString *reuseId = [NSString stringWithFormat:@"cluster-%d-%d-%d", imageSources.count, hasCheckedInUsers, smallPin];
@@ -490,7 +500,7 @@ BOOL zoomedOut = NO;
         if (hasCheckedInUsers) {
             [pin setNumberedPin:checkedInUsers hasCheckins:hasCheckedInUsers smallPin:NO];
         }
-        else {
+        else {           
             [pin setNumberedPin:imageSources.count hasCheckins:hasCheckedInUsers smallPin:smallPin];
         }
       
@@ -513,7 +523,7 @@ BOOL zoomedOut = NO;
             hasCheckedInUsers = YES;
         }
 
-        [NSString stringWithFormat: @"pin-%d-%d", hasCheckedInUsers, smallPin];
+        [NSString stringWithFormat: @"pin-%d-%d", hasCheckedInUsers, 1];
 
         
 		MKAnnotationView *pin = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
@@ -526,7 +536,7 @@ BOOL zoomedOut = NO;
 			pin.annotation = annotation;
         }
         
-        [pin setNumberedPin:1 hasCheckins:hasCheckedInUsers smallPin:smallPin];
+        [pin setNumberedPin:1 hasCheckins:hasCheckedInUsers smallPin:YES];
         
 		pin.canShowCallout = YES;
 		
