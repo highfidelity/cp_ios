@@ -35,6 +35,7 @@
 /** The array of annotations to remove. Objects in the array must conform to the MKAnnotation protocol.*/
 - (void)removeAnnotations:(NSArray *)annotations;
 
+- (void)removeAllAnnotations;
 
 // ======================================
 // Properties

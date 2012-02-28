@@ -10,6 +10,7 @@
 
 @implementation OCAnnotation
 @synthesize coordinate;
+@synthesize hasCheckins;
 
 
 // Memory
@@ -21,6 +22,7 @@
         coordinate = CLLocationCoordinate2DMake(0.0, 0.0);
         annotationsInCluster = [[NSMutableArray alloc] init];
         userIdsInCluster = [[NSMutableArray alloc] init];
+        hasCheckins = NO;
     }
     
     return self;
@@ -38,6 +40,7 @@
         if ([annotation isKindOfClass:[CandPAnnotation class]]) {
             userIdsInCluster = [[NSMutableArray alloc] init];
             [userIdsInCluster addObject:[(CandPAnnotation *)annotation objectId]];
+            hasCheckins = [(CandPAnnotation *)annotation checkedIn];
         }
         
         title = [annotation.title retain];
@@ -82,6 +85,9 @@
     
     if ([annotation isKindOfClass:[CandPAnnotation class]]) {
         [userIdsInCluster addObject:[(CandPAnnotation *)annotation objectId]];
+        if ([(CandPAnnotation *)annotation checkedIn]) {
+            hasCheckins = YES;
+        }
     }
     
     [annotation release];

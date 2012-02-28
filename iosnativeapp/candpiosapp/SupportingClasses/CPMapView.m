@@ -83,6 +83,10 @@
 //    [self doClustering];
 }
 
+- (void)removeAllAnnotations {
+    [super removeAnnotations:[super annotations]];
+    [allAnnotations removeAllObjects];
+}
 
 // ======================================
 #pragma mark - Properties

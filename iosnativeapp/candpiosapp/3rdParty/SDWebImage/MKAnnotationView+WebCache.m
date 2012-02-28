@@ -13,7 +13,7 @@
 
 @implementation MKAnnotationView(WebCache)
 
-- (void)setNumberedPin:(NSInteger)number hasCheckins:(BOOL)checkins {    
+- (void)setNumberedPin:(NSInteger)number hasCheckins:(BOOL)checkins smallPin:(BOOL)smallPin {
     CGFloat fontSize = 20;
     NSString *imageName;
 
@@ -31,18 +31,23 @@
         fontSize = 12;
     }
     
+    if (smallPin && !checkins) {
+        imageName = @"pin-round";
+    }
+    
     [self setImage:[UIImage imageNamed:imageName]];
     
     // Add number label
-    
-    numberLabel.backgroundColor = [UIColor clearColor];
-    numberLabel.opaque = NO;
-    numberLabel.textColor = [UIColor whiteColor];
-    numberLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:fontSize];
-    numberLabel.textAlignment = UITextAlignmentCenter;
-    
-    numberLabel.text = [NSString stringWithFormat:@"%d", number];
-    [self addSubview:numberLabel];
+    if (!smallPin) {
+        numberLabel.backgroundColor = [UIColor clearColor];
+        numberLabel.opaque = NO;
+        numberLabel.textColor = [UIColor whiteColor];
+        numberLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:fontSize];
+        numberLabel.textAlignment = UITextAlignmentCenter;
+        
+        numberLabel.text = [NSString stringWithFormat:@"%d", number];
+        [self addSubview:numberLabel];
+    }
 }
 
 - (void)setImage:(UIImage *)newImage fancy:(BOOL)fancyImage {

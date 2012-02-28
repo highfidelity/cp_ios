@@ -23,6 +23,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #define qHideTopNavigationBarOnMapView			0
+#define kMinimumDeltaForSmallPins               0.15
 
 @interface MapTabController() 
 -(void)zoomTo:(CLLocationCoordinate2D)loc;
@@ -37,11 +38,15 @@
 @synthesize mapView;
 @synthesize dataset;
 @synthesize fullDataset;
+@synthesize annotationsToRedisplay;
 @synthesize reloadTimer;
 @synthesize mapHasLoaded;
 @synthesize mapAndButtonsView;
 
 BOOL clusterNow = YES;
+BOOL bigZoomLevelChange = NO;
+BOOL zoomedIn = NO;
+BOOL zoomedOut = NO;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -79,6 +84,7 @@ BOOL clusterNow = YES;
 
     // Initialize the fullDataset array to keep track of all checked in users, even outside of current map bounds
     fullDataset = [[MapDataSet alloc] init];
+    annotationsToRedisplay = [[NSMutableSet alloc] init];
     
     self.navigationController.delegate = self;
 	hasUpdatedUserLocation = false;
@@ -153,7 +159,9 @@ BOOL clusterNow = YES;
 
 - (IBAction)refreshButtonClicked:(id)sender
 {
-//    [mapView removeAnnotations: mapView.annotations];
+    fullDataset = nil;    
+    fullDataset = [[MapDataSet alloc] init];
+    [self.mapView removeAllAnnotations];
     [self refreshLocations];
 }
 
@@ -163,12 +171,48 @@ BOOL clusterNow = YES;
     
 	MKMapRect mapRect = mapView.visibleMapRect;
 
+    // If zoom level changed drastically, remove the previously clustered checkedOut pins
+    if (bigZoomLevelChange) {
+        for (id <MKAnnotation> annotation in mapView.annotations) {
+            if ([annotation isKindOfClass:[OCAnnotation class]]) {
+                OCAnnotation *thisAnnotation = (OCAnnotation *)annotation;
+                
+                if (!thisAnnotation.hasCheckins) {
+                    [self.mapView removeAnnotation:annotation];
+                }
+            }
+            
+            if ([annotation isKindOfClass:[CandPAnnotation class]]) {
+                CandPAnnotation *thisAnnotation = (CandPAnnotation *)annotation;
+                
+                if (!thisAnnotation.checkedIn) {
+//                    [fullDataset.annotations removeObject:annotation];
+                    [self.mapView removeAnnotation:annotation];
+                    [annotationsToRedisplay addObject:annotation];
+                }
+            }
+        }
+        
+        bigZoomLevelChange = NO;
+        [self.mapView doClustering];
+    }
+    
     // prevent the refresh of locations when we have a valid dataset or the map is not yet loaded
 	if(self.mapHasLoaded && (!dataset || ![dataset isValidFor:mapRect]))
 	{
 		[self refreshLocations];
 	}
+
+    if (annotationsToRedisplay.count > 0) {
+        for (CandPAnnotation *ann in annotationsToRedisplay) {
+            [mapView addAnnotation:ann];
+        }
     
+        [self.mapView doClustering];
+        clusterNow = NO;
+        [annotationsToRedisplay removeAllObjects];
+    }
+
     if (clusterNow) {
         [self.mapView doClustering];
         clusterNow = NO;
@@ -202,13 +246,12 @@ BOOL clusterNow = YES;
                                         }
                                     }
                                 }
-
+                                
                                 [self.mapView doClustering];
                                 clusterNow = NO;
                                 
                                 [SVProgressHUD dismiss];
-                            }];
-    
+                            }];    
 }
 
 - (IBAction)locateMe:(id)sender
@@ -400,10 +443,17 @@ BOOL clusterNow = YES;
 {   
 	MKAnnotationView *pinToReturn = nil;
     BOOL hasCheckedInUsers = NO;
+    BOOL smallPin = NO;
+    
+    if (self.mapView.region.span.longitudeDelta > kMinimumDeltaForSmallPins) {
+        smallPin = YES;
+    }
     
     if ([annotation isKindOfClass:[OCAnnotation class]]) {
         NSArray *annotationsInCluster = [(OCAnnotation *)annotation annotationsInCluster];
         NSMutableArray *imageSources = [[NSMutableArray alloc] initWithCapacity:annotationsInCluster.count];
+
+        NSInteger checkedInUsers = 0;
         
         for (id <MKAnnotation> ann in annotationsInCluster) {
             if ([ann isKindOfClass:[CandPAnnotation class]]) {
@@ -417,13 +467,14 @@ BOOL clusterNow = YES;
                 }
                 
                 if (thisAnn.checkedIn) {
+                    checkedInUsers++;
                     hasCheckedInUsers = YES;
                 }
             }
         }
         
-        // Need to set a unique identifier to prevent any weird formatting issues -- use a combination of annotationsInCluster.count + hasCheckedInUsers value
-        NSString *reuseId = [NSString stringWithFormat:@"cluster-%d-%d", imageSources.count, hasCheckedInUsers];
+        // Need to set a unique identifier to prevent any weird formatting issues -- use a combination of annotationsInCluster.count + hasCheckedInUsers value + smallPin value
+        NSString *reuseId = [NSString stringWithFormat:@"cluster-%d-%d-%d", imageSources.count, hasCheckedInUsers, smallPin];
         
         MKAnnotationView *pin = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
 
@@ -436,7 +487,12 @@ BOOL clusterNow = YES;
 			pin.annotation = annotation;
 		}
 
-        [pin setNumberedPin:imageSources.count hasCheckins:hasCheckedInUsers];
+        if (hasCheckedInUsers) {
+            [pin setNumberedPin:checkedInUsers hasCheckins:hasCheckedInUsers smallPin:NO];
+        }
+        else {
+            [pin setNumberedPin:imageSources.count hasCheckins:hasCheckedInUsers smallPin:smallPin];
+        }
       
         pin.enabled = YES;
         pin.canShowCallout = YES;
@@ -451,12 +507,14 @@ BOOL clusterNow = YES;
 	else if ([annotation isKindOfClass:[CandPAnnotation class]])
 	{ 
 		CandPAnnotation *candpanno = (CandPAnnotation*)annotation;
-        NSString *reuseId = [NSString stringWithFormat: @"pin-%d", candpanno.checkinId];
+        NSString *reuseId;
 
-		if (!candpanno.checkedIn) 
-		{
-            reuseId = @"pin";
+        if (candpanno.checkedIn) {
+            hasCheckedInUsers = YES;
         }
+
+        [NSString stringWithFormat: @"pin-%d-%d", hasCheckedInUsers, smallPin];
+
         
 		MKAnnotationView *pin = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
 		if (pin == nil)
@@ -468,14 +526,7 @@ BOOL clusterNow = YES;
 			pin.annotation = annotation;
         }
         
-        if (candpanno.imageUrl == nil)
-        {
-            [pin setNumberedPin:1 hasCheckins:candpanno.checkedIn];
-        } 
-        else 
-        {  
-            [pin setNumberedPin:1 hasCheckins:candpanno.checkedIn];
-        }
+        [pin setNumberedPin:1 hasCheckins:hasCheckedInUsers smallPin:smallPin];
         
 		pin.canShowCallout = YES;
 		
@@ -570,7 +621,30 @@ BOOL clusterNow = YES;
 ////// map delegate
 
 - (void)mapView:(CPMapView *)thisMapView regionDidChangeAnimated:(BOOL)animated
-{
+{   
+    if (self.mapView.region.span.longitudeDelta > kMinimumDeltaForSmallPins) {
+        zoomedIn = YES;
+    }
+    
+    if (self.mapView.region.span.longitudeDelta < kMinimumDeltaForSmallPins) {
+        zoomedOut = YES;
+    }
+
+    if (zoomedIn && zoomedOut && !bigZoomLevelChange) {
+        bigZoomLevelChange = YES;
+    }
+    else {
+        bigZoomLevelChange = NO;
+    }
+
+    if (self.mapView.region.span.longitudeDelta > kMinimumDeltaForSmallPins) {
+        zoomedOut = NO;
+    }
+    
+    if (self.mapView.region.span.longitudeDelta < kMinimumDeltaForSmallPins) {
+        zoomedIn = NO;
+    }
+
 	[self refreshLocationsIfNeeded];
 }
 
@@ -612,9 +686,6 @@ BOOL clusterNow = YES;
 {
 	[SVProgressHUD dismiss];
 
-}
-
-- (void)mapView:(CPMapView *)thisMapView regionWillChangeAnimated:(BOOL)animated {
 }
 
 // zoom to the location; on initial load & after updaing their pos

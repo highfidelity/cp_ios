@@ -21,6 +21,7 @@
     NSString *subtitle;
     NSString *_groupTag;
     CLLocationCoordinate2D coordinate;
+    BOOL hasCheckins;
 }
 //
 // Constructors
@@ -85,5 +86,7 @@
 - (CLLocationCoordinate2D)coordinate;
 /// Set the coordinate of the cluster.
 - (void)setCoordinate:(CLLocationCoordinate2D)coord;
+
+@property (nonatomic) BOOL hasCheckins;
 
 @end
