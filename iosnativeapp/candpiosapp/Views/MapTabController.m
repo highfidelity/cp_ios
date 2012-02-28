@@ -178,7 +178,7 @@
                                         if ([[newDataset annotations] containsObject: ann]) {
                                             [[newDataset annotations] removeObject: ann];
                                         } else {
-                                            [mapView removeAnnotation:ann];
+//                                            [mapView removeAnnotation:ann];
                                         }
                                     }
                                     [mapView addAnnotations: [newDataset annotations]];
@@ -247,8 +247,6 @@
 
 - (void) mapView:(CPMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     for (MKAnnotationView *view in views) {
-//        NSLog(@"didAdd: %@", view.annotation.title);
-
         CGFloat startingAlpha = view.alpha;
         
         // Fade in any new annotations
@@ -510,6 +508,11 @@
         
         pinToReturn = pin;
 	}
+
+    // Set up correct offset + callout offset for custom pin images
+    
+    pinToReturn.centerOffset = CGPointMake(-20,0);
+    pinToReturn.calloutOffset = CGPointMake(0,0);
 	
 	return pinToReturn;
 }
@@ -522,11 +525,7 @@
             NSLog(@"Found: %@", ann.title);
         }
 
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Coming Soon" message:nil delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-//        [alert show];
-
       [self performSegueWithIdentifier:@"ShowUserClusterTable" sender:view];
-//        [self performSegueWithIdentifier:@"ShowUserListTable" sender:view];
     }
     else {
         [self performSegueWithIdentifier:@"ShowUserProfileCheckedInFromMap" sender:view];

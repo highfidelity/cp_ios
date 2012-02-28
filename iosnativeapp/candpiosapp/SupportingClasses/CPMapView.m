@@ -133,7 +133,9 @@
         }
     }
     
+    // Make sure that allAnnotations has any new clusteredAnnotations
 	for (id <MKAnnotation> annotation in clusteredAnnotations) {
+        
         if (![allAnnotations containsObject:annotation]) {
             [allAnnotations addObject:annotation];
             [annotationsToRemove removeObject:annotation];
@@ -144,9 +146,8 @@
             }
         }
     }
-
-//    [super addAnnotations: [annotationsToIgnore allObjects]];
     
+//    [super addAnnotations: [annotationsToIgnore allObjects]];
     // fix for flickering
     [annotationsToRemove removeObjectsInArray: clusteredAnnotations];
     [super removeAnnotations:annotationsToRemove];

@@ -15,6 +15,7 @@
 
 - (void)setNumberedPin:(NSInteger)number hasCheckins:(BOOL)checkins {
     UILabel *numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, 93, 20)];
+    
     numberLabel.backgroundColor = [UIColor clearColor];
     numberLabel.opaque = NO;
     numberLabel.textColor = [UIColor whiteColor];
@@ -33,7 +34,7 @@
         [self setImage:[UIImage imageNamed:@"pin-checkedout"]];
 
         self.transform = CGAffineTransformScale(self.transform, 0.6, 0.6);
-    }
+    }    
 }
 
 - (void)setImage:(UIImage *)newImage fancy:(BOOL)fancyImage {
