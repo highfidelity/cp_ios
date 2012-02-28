@@ -13,5 +13,6 @@
 @interface CheckInDetailsViewController : UIViewController
 
 @property (nonatomic,strong) CPPlace *place;
+-(void)userImageButtonPressed:(UIButton *)sender;
 
 @end

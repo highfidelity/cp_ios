@@ -462,14 +462,10 @@
         if (candpanno.imageUrl == nil)
         {
             [pin setNumberedPin:1 hasCheckins:candpanno.checkedIn];
-//            [pin setImage:[UIImage imageNamed:@"pin_small"] fancy:YES];
         } 
         else 
         {  
-            // Use custom MKAnnotationView+WebCache to cache images and load asynchronously. Pass fancy to have the fancy white border + frame
-            NSURL *imageURL = [NSURL URLWithString:candpanno.imageUrl];
             [pin setNumberedPin:1 hasCheckins:candpanno.checkedIn];
-//            [pin setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"pin_small"] fancy:YES];
         }
         
 		pin.animatesDrop = NO;
