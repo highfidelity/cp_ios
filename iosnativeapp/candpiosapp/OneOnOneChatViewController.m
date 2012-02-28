@@ -17,15 +17,14 @@ float const CHAT_PADDING_X = 5.0f;
 // TODO: make this determined by the amount of text in the chat
 float const CHAT_BOX_HEIGHT = 30.0f;
 // TODO: make this determined by the containing view's width
-float const CHAT_BOX_WIDTH = 250.0f;
+float const CHAT_BOX_WIDTH = 280.0f;
 
 UIColor *MY_CHAT_COLOR = nil;
 UIColor *THEIR_CHAT_COLOR = nil;
 
 @interface OneOnOneChatViewController()
 
--(void)sendChatMessage:(NSString *)message;
--(void)addChatMessageToView:(NSString *)message
+- (void)addChatMessageToView:(NSString *)message
                    sentByMe:(BOOL)myMessage;
 
 @end
@@ -36,7 +35,6 @@ UIColor *THEIR_CHAT_COLOR = nil;
 @synthesize nextChatBoxRect = _nextChatBoxRect;
 @synthesize chatEntryField = _chatEntryField;
 @synthesize chatContents = _chatContents;
-
 
 - (void)closeModalView
 {
@@ -56,20 +54,20 @@ UIColor *THEIR_CHAT_COLOR = nil;
     
     // Insert the chat entry as a UI element
     UILabel *newChatEntry = [[UILabel alloc] initWithFrame:self.nextChatBoxRect];
-    
     newChatEntry.text = message;
     newChatEntry.textAlignment = UITextAlignmentCenter;
     newChatEntry.textColor = [UIColor darkTextColor];
     newChatEntry.numberOfLines = 0;                         // display multiple lines
-    newChatEntry.lineBreakMode = UILineBreakModeWordWrap;        
+    newChatEntry.lineBreakMode = UILineBreakModeWordWrap;
+        
     if (myMessage)
     {
-        newChatEntry.backgroundColor = MY_CHAT_COLOR;
+        newChatEntry.backgroundColor = [CPUIHelper cpColorLightGray];
         newChatEntry.textAlignment = UITextAlignmentRight;
     }
     else
     {
-        newChatEntry.backgroundColor = THEIR_CHAT_COLOR;
+        newChatEntry.backgroundColor = [CPUIHelper cpColorGreen];
         newChatEntry.textAlignment = UITextAlignmentLeft;
     }
     
@@ -108,26 +106,22 @@ UIColor *THEIR_CHAT_COLOR = nil;
 
 - (void)receiveChatMessage:(NSString *)message {
     [self addChatMessageToView:message sentByMe:NO];
+}
+
+- (void)deliverChatMessage:(NSString *)message {
+    // Send message via UrbanAirship push notification
+    [CPapi sendOneOnOneChatMessage:message toUser:self.user.userID];
     
-    NSLog(@"Chat entry received: %@", message);
+    [self addChatMessageToView:message sentByMe:YES];
 }
 
 - (IBAction)sendChat {
     if (self.chatEntryField.text == @"") {
         // Don't do squat on empty chat entries
     } else {
-        [self sendChatMessage:self.chatEntryField.text];
+        [self deliverChatMessage:self.chatEntryField.text];
         self.chatEntryField.text = @"";
     }
-}
-
-- (void)sendChatMessage:(NSString *)message {
-    // Send message via UrbanAirship push notification
-    [CPapi sendOneOnOneChatMessage:message toUser:self.user.userID];
-    
-    [self addChatMessageToView:message sentByMe:YES];
-    
-    NSLog(@"Chat entry made: %@", message);
 }
 
 
@@ -155,6 +149,9 @@ UIColor *THEIR_CHAT_COLOR = nil;
     
     [[AppDelegate instance] hideCheckInButton];
     
+    MY_CHAT_COLOR = [CPUIHelper cpColorGreen];
+    THEIR_CHAT_COLOR = [CPUIHelper cpColorLightGray];
+    
     NSLog(@"Preparing to chat with user %@ (id: %d)",
           self.user.nickname,
           self.user.userID);
@@ -169,7 +166,21 @@ UIColor *THEIR_CHAT_COLOR = nil;
                                       self.chatContents.bounds.origin.y + CHAT_PADDING_Y,
                                       CHAT_BOX_WIDTH,
                                       CHAT_BOX_HEIGHT);
+    
 }
+
+- (void)addCloseButton
+{
+    NSLog(@"attempting to add close button");
+    UIBarButtonItem *closeButton = [[UIBarButtonItem alloc]
+                                    initWithTitle:@"Close"
+                                    style:UIBarButtonItemStyleDone
+                                    target:self
+                                    action:@selector(closeModalView)];
+    
+    self.navigationItem.leftBarButtonItem = closeButton;
+}
+
 
 - (void)viewDidUnload
 {
@@ -202,8 +213,6 @@ UIColor *THEIR_CHAT_COLOR = nil;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        MY_CHAT_COLOR = [CPUIHelper cpColorGreen];
-        THEIR_CHAT_COLOR = [CPUIHelper cpColorLightGray];
     }
     return self;
 }

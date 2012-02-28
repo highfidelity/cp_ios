@@ -27,8 +27,11 @@
         chatView = (OneOnOneChatViewController *) [rootView.childViewControllers lastObject];
     }
     // See if we have a modal chat popup
-    else if ([[[[[rootView.childViewControllers lastObject] modalViewController] childViewControllers] lastObject]
-                isKindOfClass:[OneOnOneChatViewController class]])
+    else if ([[[[[rootView.childViewControllers lastObject]
+                 modalViewController]
+                childViewControllers]
+               lastObject] 
+              isKindOfClass:[OneOnOneChatViewController class]])
     {
         chatView = (OneOnOneChatViewController *) [[[[rootView.childViewControllers lastObject] modalViewController] childViewControllers] lastObject];
     }
@@ -76,31 +79,18 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
             NSString *message  = [alertView.context objectForKey:@"message"];
             NSString *nickname = [alertView.context objectForKey:@"nickname"];
             
-
             OneOnOneChatViewController *oneOnOneChat = [alertView.rootView.storyboard instantiateViewControllerWithIdentifier:@"OneOnOneChatView"];
-            
-            //[alertView.rootView presentModalViewController:oneOnOneChat
-            //                                     animated:YES];
-            
-            //OneOnOneChatViewController *oneOnOneChat = [[OneOnOneChatViewController alloc] init];
-            
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:oneOnOneChat];
-            
-            UIBarButtonItem *closeButton = [[UIBarButtonItem alloc]
-                                            initWithTitle:@"Close"
-                                            style:UIBarButtonItemStyleDone
-                                            target:oneOnOneChat
-                                            action:@selector(closeModalView)];
-            
-            navigationController.navigationItem.leftBarButtonItem = closeButton;
-            
-            [alertView.rootView presentViewController:navigationController
+                        
+            UINavigationController *chatNavController = [[UINavigationController alloc] initWithRootViewController:oneOnOneChat];
+                        
+            [alertView.rootView presentViewController:chatNavController
                                              animated:YES
                                            completion:nil];
 
             oneOnOneChat.user = [[User alloc] init];
             oneOnOneChat.user.userID = [userId intValue];
             oneOnOneChat.user.nickname = nickname;
+            [oneOnOneChat addCloseButton];
             [oneOnOneChat receiveChatMessage:message];
         }
     }

@@ -152,6 +152,18 @@
 		6F5EB26C14DB51E40000294E /* OneOnOneChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5EB26B14DB51E40000294E /* OneOnOneChatViewController.m */; };
 		6F7BA4DB14E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7BA4D814E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m */; };
 		6F7BA4DC14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7BA4DA14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		6F8EF74714FD8D2100F9BDC0 /* chat-bubble-left-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF73B14FD8D2100F9BDC0 /* chat-bubble-left-bottom.png */; };
+		6F8EF74814FD8D2100F9BDC0 /* chat-bubble-left-bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF73C14FD8D2100F9BDC0 /* chat-bubble-left-bottom@2x.png */; };
+		6F8EF74914FD8D2100F9BDC0 /* chat-bubble-left-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF73D14FD8D2100F9BDC0 /* chat-bubble-left-middle.png */; };
+		6F8EF74A14FD8D2100F9BDC0 /* chat-bubble-left-middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF73E14FD8D2100F9BDC0 /* chat-bubble-left-middle@2x.png */; };
+		6F8EF74B14FD8D2100F9BDC0 /* chat-bubble-left-top.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF73F14FD8D2100F9BDC0 /* chat-bubble-left-top.png */; };
+		6F8EF74C14FD8D2100F9BDC0 /* chat-bubble-left-top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF74014FD8D2100F9BDC0 /* chat-bubble-left-top@2x.png */; };
+		6F8EF74D14FD8D2100F9BDC0 /* chat-bubble-right-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF74114FD8D2100F9BDC0 /* chat-bubble-right-bottom.png */; };
+		6F8EF74E14FD8D2100F9BDC0 /* chat-bubble-right-bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF74214FD8D2100F9BDC0 /* chat-bubble-right-bottom@2x.png */; };
+		6F8EF74F14FD8D2100F9BDC0 /* chat-bubble-right-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF74314FD8D2100F9BDC0 /* chat-bubble-right-middle.png */; };
+		6F8EF75014FD8D2100F9BDC0 /* chat-bubble-right-middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF74414FD8D2100F9BDC0 /* chat-bubble-right-middle@2x.png */; };
+		6F8EF75114FD8D2100F9BDC0 /* chat-bubble-right-top.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF74514FD8D2100F9BDC0 /* chat-bubble-right-top.png */; };
+		6F8EF75214FD8D2100F9BDC0 /* chat-bubble-right-top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF74614FD8D2100F9BDC0 /* chat-bubble-right-top@2x.png */; };
 		6FEEDFFC14E103F400861CA1 /* CPapi.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FEEDFFB14E103F400861CA1 /* CPapi.m */; };
 		6FFDBB0314EF30040054F9A8 /* FaceToFaceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FFDBB0214EF30040054F9A8 /* FaceToFaceHelper.m */; };
 		870835F814B3E1AC00439431 /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E014B3E1AB00439431 /* Facebook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -504,6 +516,18 @@
 		6F7BA4D814E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		6F7BA4D914E308AF00420AD5 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
 		6F7BA4DA14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
+		6F8EF73B14FD8D2100F9BDC0 /* chat-bubble-left-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-left-bottom.png"; path = "candpiosapp/Chat/images/chat-bubble-left-bottom.png"; sourceTree = SOURCE_ROOT; };
+		6F8EF73C14FD8D2100F9BDC0 /* chat-bubble-left-bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-left-bottom@2x.png"; path = "candpiosapp/Chat/images/chat-bubble-left-bottom@2x.png"; sourceTree = SOURCE_ROOT; };
+		6F8EF73D14FD8D2100F9BDC0 /* chat-bubble-left-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-left-middle.png"; path = "candpiosapp/Chat/images/chat-bubble-left-middle.png"; sourceTree = SOURCE_ROOT; };
+		6F8EF73E14FD8D2100F9BDC0 /* chat-bubble-left-middle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-left-middle@2x.png"; path = "candpiosapp/Chat/images/chat-bubble-left-middle@2x.png"; sourceTree = SOURCE_ROOT; };
+		6F8EF73F14FD8D2100F9BDC0 /* chat-bubble-left-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-left-top.png"; path = "candpiosapp/Chat/images/chat-bubble-left-top.png"; sourceTree = SOURCE_ROOT; };
+		6F8EF74014FD8D2100F9BDC0 /* chat-bubble-left-top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-left-top@2x.png"; path = "candpiosapp/Chat/images/chat-bubble-left-top@2x.png"; sourceTree = SOURCE_ROOT; };
+		6F8EF74114FD8D2100F9BDC0 /* chat-bubble-right-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-right-bottom.png"; path = "candpiosapp/Chat/images/chat-bubble-right-bottom.png"; sourceTree = SOURCE_ROOT; };
+		6F8EF74214FD8D2100F9BDC0 /* chat-bubble-right-bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-right-bottom@2x.png"; path = "candpiosapp/Chat/images/chat-bubble-right-bottom@2x.png"; sourceTree = SOURCE_ROOT; };
+		6F8EF74314FD8D2100F9BDC0 /* chat-bubble-right-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-right-middle.png"; path = "candpiosapp/Chat/images/chat-bubble-right-middle.png"; sourceTree = SOURCE_ROOT; };
+		6F8EF74414FD8D2100F9BDC0 /* chat-bubble-right-middle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-right-middle@2x.png"; path = "candpiosapp/Chat/images/chat-bubble-right-middle@2x.png"; sourceTree = SOURCE_ROOT; };
+		6F8EF74514FD8D2100F9BDC0 /* chat-bubble-right-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-right-top.png"; path = "candpiosapp/Chat/images/chat-bubble-right-top.png"; sourceTree = SOURCE_ROOT; };
+		6F8EF74614FD8D2100F9BDC0 /* chat-bubble-right-top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-right-top@2x.png"; path = "candpiosapp/Chat/images/chat-bubble-right-top@2x.png"; sourceTree = SOURCE_ROOT; };
 		6FEEDFFA14E103F400861CA1 /* CPapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPapi.h; sourceTree = "<group>"; };
 		6FEEDFFB14E103F400861CA1 /* CPapi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPapi.m; sourceTree = "<group>"; };
 		6FFDBB0114EF30040054F9A8 /* FaceToFaceHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FaceToFaceHelper.h; path = FaceToFace/FaceToFaceHelper.h; sourceTree = "<group>"; };
@@ -1030,6 +1054,7 @@
 		6F7DA74914E89471001BEC19 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				6F8EF70514FD85BA00F9BDC0 /* images */,
 				6F0B453D14F6BD850074DBD9 /* ChatHistory.h */,
 				6F0B453E14F6BD850074DBD9 /* ChatHistory.m */,
 				6F0B453714F6BCC50074DBD9 /* ChatHelper.h */,
@@ -1041,6 +1066,25 @@
 			);
 			name = Chat;
 			path = SupportingClasses;
+			sourceTree = "<group>";
+		};
+		6F8EF70514FD85BA00F9BDC0 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				6F8EF73B14FD8D2100F9BDC0 /* chat-bubble-left-bottom.png */,
+				6F8EF73C14FD8D2100F9BDC0 /* chat-bubble-left-bottom@2x.png */,
+				6F8EF73D14FD8D2100F9BDC0 /* chat-bubble-left-middle.png */,
+				6F8EF73E14FD8D2100F9BDC0 /* chat-bubble-left-middle@2x.png */,
+				6F8EF73F14FD8D2100F9BDC0 /* chat-bubble-left-top.png */,
+				6F8EF74014FD8D2100F9BDC0 /* chat-bubble-left-top@2x.png */,
+				6F8EF74114FD8D2100F9BDC0 /* chat-bubble-right-bottom.png */,
+				6F8EF74214FD8D2100F9BDC0 /* chat-bubble-right-bottom@2x.png */,
+				6F8EF74314FD8D2100F9BDC0 /* chat-bubble-right-middle.png */,
+				6F8EF74414FD8D2100F9BDC0 /* chat-bubble-right-middle@2x.png */,
+				6F8EF74514FD8D2100F9BDC0 /* chat-bubble-right-top.png */,
+				6F8EF74614FD8D2100F9BDC0 /* chat-bubble-right-top@2x.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 		870835DE14B3E1AB00439431 /* facebook-ios-sdk */ = {
@@ -1641,6 +1685,18 @@
 				3200177D14FC3862008ADA53 /* pin-checkedin@2x.png in Resources */,
 				3200177E14FC3862008ADA53 /* pin-checkedout.png in Resources */,
 				3200177F14FC3862008ADA53 /* pin-checkedout@2x.png in Resources */,
+				6F8EF74714FD8D2100F9BDC0 /* chat-bubble-left-bottom.png in Resources */,
+				6F8EF74814FD8D2100F9BDC0 /* chat-bubble-left-bottom@2x.png in Resources */,
+				6F8EF74914FD8D2100F9BDC0 /* chat-bubble-left-middle.png in Resources */,
+				6F8EF74A14FD8D2100F9BDC0 /* chat-bubble-left-middle@2x.png in Resources */,
+				6F8EF74B14FD8D2100F9BDC0 /* chat-bubble-left-top.png in Resources */,
+				6F8EF74C14FD8D2100F9BDC0 /* chat-bubble-left-top@2x.png in Resources */,
+				6F8EF74D14FD8D2100F9BDC0 /* chat-bubble-right-bottom.png in Resources */,
+				6F8EF74E14FD8D2100F9BDC0 /* chat-bubble-right-bottom@2x.png in Resources */,
+				6F8EF74F14FD8D2100F9BDC0 /* chat-bubble-right-middle.png in Resources */,
+				6F8EF75014FD8D2100F9BDC0 /* chat-bubble-right-middle@2x.png in Resources */,
+				6F8EF75114FD8D2100F9BDC0 /* chat-bubble-right-top.png in Resources */,
+				6F8EF75214FD8D2100F9BDC0 /* chat-bubble-right-top@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1842,8 +1898,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ryan Karpf (623646E7E3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ryan Karpf (623646E7E3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1859,8 +1915,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "69933AD6-C714-4F45-9C9E-23C9993E3F9C";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "69933AD6-C714-4F45-9C9E-23C9993E3F9C";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1872,8 +1928,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ryan Karpf (623646E7E3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ryan Karpf (623646E7E3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_THUMB_SUPPORT = NO;
@@ -1883,8 +1939,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "69933AD6-C714-4F45-9C9E-23C9993E3F9C";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "69933AD6-C714-4F45-9C9E-23C9993E3F9C";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1894,8 +1950,8 @@
 		871EFB4814AE9C820030658B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ryan Karpf (623646E7E3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ryan Karpf (623646E7E3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1911,8 +1967,8 @@
 					"\"$(SRCROOT)/candpiosapp/3rdParty/Airship\"",
 				);
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "69933AD6-C714-4F45-9C9E-23C9993E3F9C";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "69933AD6-C714-4F45-9C9E-23C9993E3F9C";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1921,8 +1977,8 @@
 		871EFB4914AE9C820030658B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ryan Karpf (623646E7E3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ryan Karpf (623646E7E3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1938,8 +1994,8 @@
 					"\"$(SRCROOT)/candpiosapp/3rdParty/Airship\"",
 				);
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "69933AD6-C714-4F45-9C9E-23C9993E3F9C";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "69933AD6-C714-4F45-9C9E-23C9993E3F9C";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

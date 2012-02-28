@@ -39,10 +39,10 @@
 
 + (UIColor *)cpColorGreen
 {
-    return [UIColor colorWithRed:0.26f
-                           green:0.51f
-                            blue:0.49f
-                           alpha:0.0f];
+    return [UIColor colorWithRed:0.259f
+                           green:0.549f
+                            blue:0.588f
+                           alpha:1.0f];
 }
 
 + (UIColor *)cpColorLightGray
@@ -50,7 +50,7 @@
     return [UIColor colorWithRed:0.47f
                            green:0.47f
                             blue:0.47f
-                           alpha:0.0f];
+                           alpha:1.0f];
 }
 
 

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "User.h"
 
+
 extern float const CHAT_PADDING_Y;
 extern float const CHAT_PADDING_X;
 extern float const CHAT_BOX_HEIGHT;
@@ -30,7 +31,9 @@ extern UIColor *THEIR_CHAT_COLOR;
 - (void)loadWithUserId:(NSString *)userId
             andMessage:(NSString *)message;
 
+- (void)deliverChatMessage:(NSString *)message;
 - (void)receiveChatMessage:(NSString *)message;
+- (void)addCloseButton;
 - (IBAction)sendChat;
 
 - (void)closeModalView;
