@@ -389,22 +389,8 @@
     
     if ([annotation isKindOfClass:[OCAnnotation class]]) {
         NSArray *annotationsInCluster = [(OCAnnotation *)annotation annotationsInCluster];
-        
-        NSString *reuseId = [NSString stringWithFormat:@"cluster%d", annotationsInCluster.count];
-        
-        MKPinAnnotationView *pin = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
-
-        if (pin == nil)
-		{
-			pin = [[MKPinAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: reuseId];
-		}
-		else
-		{
-			pin.annotation = annotation;
-		}
-
         NSMutableArray *imageSources = [[NSMutableArray alloc] initWithCapacity:annotationsInCluster.count];
-
+        
         for (id <MKAnnotation> ann in annotationsInCluster) {
             if ([ann isKindOfClass:[CandPAnnotation class]]) {
                 CandPAnnotation *thisAnn = (CandPAnnotation *)ann;
@@ -421,6 +407,20 @@
                 }
             }
         }
+        
+        // Need to set a unique identifier to prevent any weird formatting issues -- use a combination of annotationsInCluster.count + hasCheckedInUsers value
+        NSString *reuseId = [NSString stringWithFormat:@"cluster-%d-%d", imageSources.count, hasCheckedInUsers];
+        
+        MKPinAnnotationView *pin = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
+
+        if (pin == nil)
+		{
+			pin = [[MKPinAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: reuseId];
+		}
+		else
+		{
+			pin.annotation = annotation;
+		}
 
         /*
         if (imageSources) {
