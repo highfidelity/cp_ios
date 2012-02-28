@@ -411,11 +411,11 @@
         // Need to set a unique identifier to prevent any weird formatting issues -- use a combination of annotationsInCluster.count + hasCheckedInUsers value
         NSString *reuseId = [NSString stringWithFormat:@"cluster-%d-%d", imageSources.count, hasCheckedInUsers];
         
-        MKPinAnnotationView *pin = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
+        MKAnnotationView *pin = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
 
         if (pin == nil)
 		{
-			pin = [[MKPinAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: reuseId];
+			pin = [[MKAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: reuseId];
 		}
 		else
 		{
@@ -449,10 +449,10 @@
             reuseId = @"pin";
         }
         
-		MKPinAnnotationView *pin = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
+		MKAnnotationView *pin = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
 		if (pin == nil)
 		{
-			pin = [[MKPinAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: reuseId];
+			pin = [[MKAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: reuseId];
 		}
 		else
 		{
@@ -468,7 +468,6 @@
             [pin setNumberedPin:1 hasCheckins:candpanno.checkedIn];
         }
         
-		pin.animatesDrop = NO;
 		pin.canShowCallout = YES;
 		
 		// make the left callout image view
@@ -526,7 +525,7 @@
         // so that this information can already be in the resume without having to load it
         User *selectedUser = [[User alloc] init];
         
-        if ([sender isKindOfClass: [MKPinAnnotationView class]]) 
+        if ([sender isKindOfClass: [MKAnnotationView class]]) 
         {
             // figure out which element was tapped
             UserAnnotation *tappedObj = [sender annotation];
