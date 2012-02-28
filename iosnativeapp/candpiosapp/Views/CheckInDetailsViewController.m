@@ -389,7 +389,7 @@
                 
                 if (index == 0) {
                     // show the info bubble for the first user
-//                    [self userImageButtonPressed:userImageButton];
+                    [self userImageButtonPressed:userImageButton];
                 }
                 
                 // increase the index by 1
