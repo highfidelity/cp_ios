@@ -73,6 +73,12 @@ BOOL zoomedOut = NO;
     [super viewDidLoad];
     self.mapView.tag = mapTag;
     [AppDelegate instance].settingsMenuController.mapTabController = self;
+
+    // Register to receive userCheckedIn notification to intitiate map refresh immediately after user checks in
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(refreshLocations) 
+                                                 name:@"userCheckedIn" 
+                                               object:nil];
     
     // Title view styling
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo.png"]];
@@ -126,6 +132,8 @@ BOOL zoomedOut = NO;
     [super viewDidUnload];
 	[reloadTimer invalidate];
 	reloadTimer = nil;
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"userCheckedIn" object:nil];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }

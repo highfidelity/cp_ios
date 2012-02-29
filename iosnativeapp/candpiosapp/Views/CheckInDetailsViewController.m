@@ -285,7 +285,11 @@
                     //        localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkInTime + 10)];
                     localNotif.timeZone = [NSTimeZone defaultTimeZone];
                     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
-                } 
+                }
+                
+                // Post a notification so that the map is reloaded with the user's new checkin
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckedIn" object:nil];
+                
                 // hide the checkin screen, we're checked in
                 [self dismissModalViewControllerAnimated:YES];
             }
