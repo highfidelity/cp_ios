@@ -9,7 +9,7 @@
 #import "MapTabController.h"
 #import "UIImageView+WebCache.h"
 #import "MissionAnnotation.h"
-#import "UserAnnotation.h"
+#import "CPAnnotation.h"
 #import "AppDelegate.h"
 #import "SVProgressHUD.h"
 #import "UserListTableViewController.h"

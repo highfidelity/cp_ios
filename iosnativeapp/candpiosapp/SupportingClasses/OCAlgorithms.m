@@ -69,6 +69,8 @@
     
 	// Clustering
 	for (id <MKAnnotation> annotation in annotationsToCluster) {
+        NSInteger usersCheckedIn = 0;
+
         if ([annotation isKindOfClass:[OCAnnotation class]]) {
             continue;
         }
@@ -79,7 +81,7 @@
 		if([clusteredAnnotations count] == 0 || !allowClustering){
             OCAnnotation *newCluster = [[OCAnnotation alloc] initWithAnnotation:annotation];
             [clusteredAnnotations addObject:newCluster];
-            
+            NSLog(@"new cluster1: %@", newCluster.title);
             // check group
             if (grouped && [annotation respondsToSelector:@selector(groupTag)]) {
                 newCluster.groupTag = ((id <OCGrouping>)annotation).groupTag;
@@ -90,9 +92,7 @@
 		else {
             BOOL removeAnnotation = NO;
             
-            for (OCAnnotation *clusterAnnotation in clusteredAnnotations) {
-                NSInteger usersCheckedIn = 0;
-                
+            for (OCAnnotation *clusterAnnotation in clusteredAnnotations) {                
                 // If the annotation is in range of the Cluster add it to it
                 if (isLocationNearToOtherLocation([annotation coordinate], [clusterAnnotation coordinate], radius)) {
 
@@ -104,7 +104,7 @@
                             isContaining = YES;
                             
                             if ([(CPAnnotation *)annotation checkedIn]) {
-                                usersCheckedIn++;
+                                clusterAnnotation.usersCheckedIn++;
                             }
                         }
                         else {
@@ -139,19 +139,6 @@
 
                         isContaining = YES;
                         [clusterAnnotation addAnnotation:annotation];
-                        
-                        clusterAnnotation.title = @"Venue Name";
-
-                        if (usersCheckedIn > 0) {
-                            clusterAnnotation.hasCheckins = YES;
-                        }
-                        
-                        if (clusterAnnotation.hasCheckins) {
-                            clusterAnnotation.subtitle = [NSString stringWithFormat:@"%d %@ here now", usersCheckedIn, (usersCheckedIn != 1) ? @"people" : @"person"];
-                        }
-                        else {
-                            clusterAnnotation.subtitle = [NSString stringWithFormat:@"%d checkin%@ in the last week", clusterAnnotation.annotationsInCluster.count, (clusterAnnotation.annotationsInCluster.count != 1) ? @"s" : @""];
-                        }
 
                         break;
                     }
@@ -161,8 +148,23 @@
                     
                     // Remove the current annotation from the clusterAnnotation.annotationsInCluster array
                     [clusterAnnotation.annotationsInCluster removeObject:annotation];
-                    [clusterAnnotation.userIdsInCluster removeObject:[(CPAnnotation *)annotation objectId]];
+//                    [clusterAnnotation.userIdsInCluster removeObject:[(CPAnnotation *)annotation objectId]];
                 }
+                
+                clusterAnnotation.title = @"Venue Name";
+                
+                if (clusterAnnotation.usersCheckedIn > 0) {
+                    clusterAnnotation.hasCheckins = YES;
+                }
+                
+                if (clusterAnnotation.usersCheckedIn > 0) {
+                    clusterAnnotation.subtitle = [NSString stringWithFormat:@"%d %@ here now", clusterAnnotation.usersCheckedIn, (clusterAnnotation.usersCheckedIn != 1) ? @"people" : @"person"];
+                }
+                else {
+                    clusterAnnotation.subtitle = [NSString stringWithFormat:@"%d checkin%@ in the last week", clusterAnnotation.annotationsInCluster.count, (clusterAnnotation.annotationsInCluster.count != 1) ? @"s" : @""];
+                }
+                
+//                NSLog(@"New subtitle: %@", clusterAnnotation.subtitle);
             }
 
             if (removeAnnotation) {

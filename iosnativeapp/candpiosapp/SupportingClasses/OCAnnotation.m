@@ -11,6 +11,7 @@
 @implementation OCAnnotation
 @synthesize coordinate;
 @synthesize hasCheckins;
+@synthesize usersCheckedIn;
 
 
 // Memory
@@ -23,6 +24,7 @@
         annotationsInCluster = [[NSMutableArray alloc] init];
         userIdsInCluster = [[NSMutableArray alloc] init];
         hasCheckins = NO;
+        usersCheckedIn = 0;
     }
     
     return self;
@@ -36,11 +38,13 @@
         coordinate = [annotation coordinate];
         annotationsInCluster = [[NSMutableArray alloc] init];
         [annotationsInCluster addObject:annotation];
+        usersCheckedIn = 0;
         
         if ([annotation isKindOfClass:[CPAnnotation class]]) {
             userIdsInCluster = [[NSMutableArray alloc] init];
             [userIdsInCluster addObject:[(CPAnnotation *)annotation objectId]];
             hasCheckins = [(CPAnnotation *)annotation checkedIn];
+            usersCheckedIn++;
         }
         
         title = [annotation.title retain];
@@ -87,6 +91,7 @@
         [userIdsInCluster addObject:[(CPAnnotation *)annotation objectId]];
         if ([(CPAnnotation *)annotation checkedIn]) {
             hasCheckins = YES;
+            usersCheckedIn++;
         }
     }
     
@@ -109,6 +114,13 @@
 
     if ([annotation isKindOfClass:[CPAnnotation class]]) {
         [userIdsInCluster removeObject:[(CPAnnotation *)annotation objectId]];
+        if ([(CPAnnotation *)annotation checkedIn]) {
+            usersCheckedIn--;
+            
+            if (usersCheckedIn == 0) {
+                hasCheckins = NO;
+            }
+        }
     }
     
     [annotation release];
