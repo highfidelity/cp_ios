@@ -479,9 +479,9 @@ BOOL zoomedOut = NO;
         }
 
         // If zoomed out, force the smallPin
-        if (self.mapView.region.span.longitudeDelta > kMinimumDeltaForSmallPins) {
-            smallPin = YES;
-        }
+//        if (self.mapView.region.span.longitudeDelta > kMinimumDeltaForSmallPins) {
+//            smallPin = YES;
+//        }
         
         // Need to set a unique identifier to prevent any weird formatting issues -- use a combination of annotationsInCluster.count + hasCheckedInUsers value + smallPin value
         NSString *reuseId = [NSString stringWithFormat:@"cluster-%d-%d-%d", imageSources.count, hasCheckedInUsers, smallPin];
@@ -564,7 +564,7 @@ BOOL zoomedOut = NO;
 
     // Set up correct offset + callout offset for custom pin images
     
-    pinToReturn.centerOffset = CGPointMake(-20,0);
+    pinToReturn.centerOffset = CGPointMake(0,-25);
     pinToReturn.calloutOffset = CGPointMake(0,0);
 	
 	return pinToReturn;
