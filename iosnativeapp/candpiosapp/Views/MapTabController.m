@@ -203,6 +203,7 @@ BOOL zoomedOut = NO;
 		[self refreshLocations];
 	}
 
+    // Re-add any annotations in annotationsToRedisplay to get the correct pins after big zoom changes
     if (annotationsToRedisplay.count > 0) {
         for (CandPAnnotation *ann in annotationsToRedisplay) {
             [mapView addAnnotation:ann];
@@ -305,7 +306,7 @@ BOOL zoomedOut = NO;
 - (void) mapView:(CPMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     for (MKAnnotationView *view in views) {
         CGFloat startingAlpha = view.alpha;
-        
+
         // Fade in any new annotations
         view.alpha = 0;        
         [UIView beginAnimations:nil context:NULL];
@@ -313,6 +314,21 @@ BOOL zoomedOut = NO;
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         view.alpha = startingAlpha;
         [UIView commitAnimations];
+        
+        // Add any checkedIn pins to a set to bring them to the front
+        if ([view.annotation isKindOfClass:[OCAnnotation class]]) {
+            OCAnnotation *thisAnnotation = (OCAnnotation *)view.annotation;
+            
+            if (thisAnnotation.hasCheckins) {
+                [[view superview] bringSubviewToFront:view];
+            }
+            else {
+                [[view superview] sendSubviewToBack:view];                
+            }
+        }
+        else {
+            [[view superview] sendSubviewToBack:view];
+        }
     }    
 }
 
