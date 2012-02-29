@@ -62,12 +62,12 @@ UIColor *THEIR_CHAT_COLOR = nil;
         
     if (myMessage)
     {
-        newChatEntry.backgroundColor = [CPUIHelper cpColorLightGray];
+        newChatEntry.backgroundColor = [CPUIHelper colorForCPColor:CPColorGrey];
         newChatEntry.textAlignment = UITextAlignmentRight;
     }
     else
     {
-        newChatEntry.backgroundColor = [CPUIHelper cpColorGreen];
+        newChatEntry.backgroundColor = [CPUIHelper colorForCPColor:CPColorGreen];
         newChatEntry.textAlignment = UITextAlignmentLeft;
     }
     
@@ -149,8 +149,8 @@ UIColor *THEIR_CHAT_COLOR = nil;
     
     [[AppDelegate instance] hideCheckInButton];
     
-    MY_CHAT_COLOR = [CPUIHelper cpColorGreen];
-    THEIR_CHAT_COLOR = [CPUIHelper cpColorLightGray];
+    MY_CHAT_COLOR = [CPUIHelper colorForCPColor:CPColorGreen];
+    THEIR_CHAT_COLOR = [CPUIHelper colorForCPColor:CPColorGrey];
     
     NSLog(@"Preparing to chat with user %@ (id: %d)",
           self.user.nickname,

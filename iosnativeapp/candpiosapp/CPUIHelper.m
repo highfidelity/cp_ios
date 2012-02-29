@@ -63,29 +63,25 @@
     switch (buttonColor) {
         case CPButtonTurquoise:
             return [[UIImage imageNamed:@"button-turquoise.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 9, 0, 9)];
-            break;
-        default:
+        case CPButtonGrey:
             return [[UIImage imageNamed:@"button-grey.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 9, 0, 9)];
-            break;
+        default:
+            return nil;
     }
 }
 
 #pragma mark - Color schemes
 
-+ (UIColor *)cpColorGreen
++ (UIColor *)colorForCPColor:(CPColor)cpColor
 {
-    return [UIColor colorWithRed:0.259f
-                           green:0.549f
-                            blue:0.588f
-                           alpha:1.0f];
-}
-
-+ (UIColor *)cpColorLightGray
-{
-    return [UIColor colorWithRed:0.47f
-                           green:0.47f
-                            blue:0.47f
-                           alpha:1.0f];
+    switch (cpColor) {
+        case CPColorGreen:
+            return [UIColor colorWithRed:0.259f green:0.549f blue:0.588f alpha:1.0f];
+        case CPColorGrey:
+            return [UIColor colorWithRed:0.47f green:0.47f blue:0.47f alpha:1.0f];
+        default:
+            return nil;
+    }
 }
 
 @end

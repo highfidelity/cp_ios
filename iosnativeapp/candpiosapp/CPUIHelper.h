@@ -14,6 +14,11 @@ typedef enum {
     CPButtonGrey = 1,
 } CPButtonColor;
 
+typedef enum {
+    CPColorGreen = 0,
+    CPColorGrey = 1,
+} CPColor;
+
 @interface CPUIHelper : NSObject
 
 // UI elements
@@ -30,7 +35,6 @@ typedef enum {
              frame:(CGRect)buttonFrame;
 
 // C&P Color scheme
-+ (UIColor *)cpColorGreen;
-+ (UIColor *)cpColorLightGray;
++ (UIColor *)colorForCPColor:(CPColor)cpColor;
 
 @end
