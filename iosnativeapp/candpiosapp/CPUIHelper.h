@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 
+typedef enum {
+    CPButtonTurquoise = 0,
+    CPButtonGrey = 1,
+} CPButtonColor;
+
 @interface CPUIHelper : NSObject
 
 // UI elements
@@ -19,6 +24,10 @@
                 opacity:(double)opacity;
 
 + (void)addDarkNavigationBarStyleToViewController:(UIViewController *)viewController;
+
++ (UIButton *)CPButtonWithText:(NSString *)buttonText 
+             color:(CPButtonColor)buttonColor
+             frame:(CGRect)buttonFrame;
 
 // C&P Color scheme
 + (UIColor *)cpColorGreen;

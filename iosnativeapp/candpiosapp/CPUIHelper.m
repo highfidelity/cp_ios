@@ -35,6 +35,41 @@
                         forBarMetrics: UIBarMetricsDefault];
 }
 
+// apparently it is a bad idea to subclass UIButton
+// this method will give you a UIButton with C&P styling
++ (UIButton *)CPButtonWithText:(NSString *)buttonText color:(CPButtonColor)buttonColor frame:(CGRect)buttonFrame
+{
+    // get a button with the passed frame
+    UIButton *cpButton = [[UIButton alloc] initWithFrame:buttonFrame];
+    
+    // set the background color using the imageForColorString method
+    [cpButton setBackgroundImage:[self imageForCPColor:buttonColor] forState:UIControlStateNormal];
+    
+    [cpButton setTitle:buttonText forState:UIControlStateNormal];
+    [cpButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    cpButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
+    cpButton.titleLabel.layer.shadowOffset = CGSizeMake(0, -1);
+    cpButton.titleLabel.layer.shadowColor = [[UIColor blackColor] CGColor];
+    cpButton.titleLabel.layer.shadowOpacity = 0.5;
+    cpButton.titleLabel.layer.shadowRadius = 0.0;   
+    
+    return cpButton;
+}
+
+// used by the method above to return a UIImage for the button background
++ (UIImage *)imageForCPColor:(CPButtonColor)buttonColor
+{
+    switch (buttonColor) {
+        case CPButtonTurquoise:
+            return [[UIImage imageNamed:@"button-turquoise.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 9, 0, 9)];
+            break;
+        default:
+            return [[UIImage imageNamed:@"button-grey.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 9, 0, 9)];
+            break;
+    }
+}
+
 #pragma mark - Color schemes
 
 + (UIColor *)cpColorGreen
@@ -52,6 +87,5 @@
                             blue:0.47f
                            alpha:1.0f];
 }
-
 
 @end
