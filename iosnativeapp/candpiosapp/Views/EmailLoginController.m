@@ -25,6 +25,8 @@
 @synthesize emailErrorLabel;
 @synthesize passwordErrorLabel;
 @synthesize loginButton;
+@synthesize signupButton;
+@synthesize forgotPasswordButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,6 +55,8 @@
 #pragma mark - View lifecycle
 
 - (void)viewWillAppear:(BOOL)animated {
+    self.signupButton.alpha = 0;
+    self.forgotPasswordButton.alpha = 0;
     self.navigationItem.rightBarButtonItem = self.loginButton;
     self.title = @"Sign In";
     // Set the Back button for pushed views
@@ -85,6 +89,8 @@
     [self setPasswordField:nil];
     [self setEmailErrorLabel:nil];
     [self setPasswordErrorLabel:nil];
+    [self setSignupButton:nil];
+    [self setForgotPasswordButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

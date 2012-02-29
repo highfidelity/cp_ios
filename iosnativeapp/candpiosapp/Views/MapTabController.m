@@ -130,6 +130,10 @@ BOOL zoomedOut = NO;
     // e.g. self.myOutlet = nil;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];

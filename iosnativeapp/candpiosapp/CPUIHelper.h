@@ -36,5 +36,6 @@ typedef enum {
 
 // C&P Color scheme
 + (UIColor *)colorForCPColor:(CPColor)cpColor;
++ (UIImage *)imageForCPColor:(CPButtonColor)buttonColor;
 
 @end

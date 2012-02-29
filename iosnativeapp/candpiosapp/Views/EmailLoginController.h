@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *emailErrorLabel;
 @property (weak, nonatomic) IBOutlet UILabel *passwordErrorLabel;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *loginButton;
+@property (weak, nonatomic) IBOutlet UIButton *signupButton;
+@property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
 
 - (IBAction)login:(id)sender;
 - (IBAction)signup:(id)sender;

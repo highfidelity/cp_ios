@@ -39,8 +39,8 @@
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIImageView" id="474549456">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{0, -64}, {320, 480}}</string>
+						<int key="NSvFlags">265</int>
+						<string key="NSFrame">{{0, -20}, {320, 480}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="204616921"/>
@@ -59,7 +59,7 @@
 							<object class="IBUIButton" id="380308852">
 								<reference key="NSNextResponder" ref="204616921"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{40, 267}, {65, 65}}</string>
+								<string key="NSFrame">{{40, 298}, {65, 65}}</string>
 								<reference key="NSSuperview" ref="204616921"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="849354162"/>
@@ -98,7 +98,7 @@
 							<object class="IBUIButton" id="849354162">
 								<reference key="NSNextResponder" ref="204616921"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{128, 267}, {65, 65}}</string>
+								<string key="NSFrame">{{128, 298}, {65, 65}}</string>
 								<reference key="NSSuperview" ref="204616921"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="266069831"/>
@@ -124,7 +124,7 @@
 							<object class="IBUIButton" id="266069831">
 								<reference key="NSNextResponder" ref="204616921"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{210, 267}, {65, 65}}</string>
+								<string key="NSFrame">{{210, 298}, {65, 65}}</string>
 								<reference key="NSSuperview" ref="204616921"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="743004694"/>
@@ -150,10 +150,9 @@
 							<object class="IBUIButton" id="743004694">
 								<reference key="NSNextResponder" ref="204616921"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{40, 354}, {240, 36}}</string>
+								<string key="NSFrame">{{40, 385}, {240, 36}}</string>
 								<reference key="NSSuperview" ref="204616921"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:225</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -171,7 +170,7 @@
 								<reference key="IBUIFont" ref="581290329"/>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 416}</string>
+						<string key="NSFrameSize">{320, 460}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="380308852"/>
@@ -186,7 +185,7 @@
 						<bool key="IBUIAlwaysBounceVertical">YES</bool>
 					</object>
 				</array>
-				<string key="NSFrame">{{0, 64}, {320, 416}}</string>
+				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="474549456"/>
@@ -195,9 +194,6 @@
 					<bytes key="NSRGB">MC4wMzUyOTQxMTc2NSAwLjEzNzI1NDkwMiAwLjMyOTQxMTc2NDcAA</bytes>
 				</object>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
-				<object class="IBUISimulatedNavigationBarMetrics" key="IBUISimulatedTopBarMetrics">
-					<bool key="IBUIPrompted">NO</bool>
-				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 		</array>
@@ -210,6 +206,14 @@
 						<reference key="destination" ref="191373211"/>
 					</object>
 					<int key="connectionID">3</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">signupButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="743004694"/>
+					</object>
+					<int key="connectionID">16</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -280,10 +284,10 @@
 						<int key="objectID">4</int>
 						<reference key="object" ref="204616921"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="743004694"/>
-							<reference ref="849354162"/>
 							<reference ref="380308852"/>
+							<reference ref="849354162"/>
 							<reference ref="266069831"/>
+							<reference ref="743004694"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -331,7 +335,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">15</int>
+			<int key="maxID">16</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -362,6 +366,17 @@
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">signupButton</string>
+						<string key="NS.object.0">UIButton</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">signupButton</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">signupButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/SignupController.h</string>

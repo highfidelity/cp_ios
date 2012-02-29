@@ -11,8 +11,10 @@
 #import "EmailLoginSequence.h"
 #import "FacebookLoginSequence.h"
 #import "LinkedInLoginSequence.h"
+#import "CPUIHelper.h"
 
 @implementation SignupController
+@synthesize signupButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,6 +34,17 @@
                                                                              style:UIBarButtonItemStyleDone 
                                                                             target:nil 
                                                                             action:nil];
+    // Style signup button
+    UIButton * button = [CPUIHelper CPButtonWithText:@"Sign Up" color:CPButtonGrey frame:self.signupButton.frame];
+    [button addTarget:self action:@selector(signupTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.signupButton removeFromSuperview];
+    [self.view addSubview:button];
+    self.signupButton = button;
+    [self.navigationController setNavigationBarHidden:YES animated:NO];    
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,6 +65,7 @@
 
 - (void)viewDidUnload
 {
+    [self setSignupButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

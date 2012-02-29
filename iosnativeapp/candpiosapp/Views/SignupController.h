@@ -13,5 +13,6 @@
 - (IBAction)loginWithLinkedInTapped:(id)sender;
 - (IBAction)loginWithEmailTapped:(id)sender;
 - (IBAction)signupTapped:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *signupButton;
 
 @end
