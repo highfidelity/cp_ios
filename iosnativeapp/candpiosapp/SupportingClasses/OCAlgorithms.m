@@ -17,7 +17,7 @@
 #pragma mark - bubbleClustering
 
 // Bubble clustering with iteration
-+ (NSArray*) bubbleClusteringWithAnnotations:(NSMutableArray *)annotationsToCluster andClusterRadius:(CLLocationDistance)radius grouped:(BOOL)grouped {
++ (NSArray*) bubbleClusteringWithAnnotations:(NSMutableArray *)annotationsToCluster andClusterRadius:(CLLocationDistance)radius grouped:(BOOL)grouped clustered:(BOOL)allowClustering {
     
     // memory
     [annotationsToCluster retain];
@@ -28,9 +28,11 @@
     
     BOOL addAnnotationNow;
 
-    for (id <MKAnnotation> annotation in annotationsToCluster) {
-        if ([annotation isKindOfClass:[OCAnnotation class]]) {
-            [clusteredAnnotations addObject:annotation];
+    if (allowClustering) {
+        for (id <MKAnnotation> annotation in annotationsToCluster) {
+            if ([annotation isKindOfClass:[OCAnnotation class]]) {
+                [clusteredAnnotations addObject:annotation];
+            }
         }
     }
    
@@ -74,7 +76,7 @@
 		BOOL isContaining = NO;
 
 		// If it's the first one, add it as new cluster annotation
-		if([clusteredAnnotations count] == 0){
+		if([clusteredAnnotations count] == 0 || !allowClustering){
             OCAnnotation *newCluster = [[OCAnnotation alloc] initWithAnnotation:annotation];
             [clusteredAnnotations addObject:newCluster];
             

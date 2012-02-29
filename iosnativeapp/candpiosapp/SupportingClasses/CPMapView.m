@@ -124,9 +124,16 @@
     //calculate cluster radius
     CLLocationDistance clusterRadius = self.region.span.longitudeDelta * clusterSize;
 
+    BOOL allowClustering = YES;
+    
+    // If zoomed in all the way, disable clustering
+    if (self.region.span.longitudeDelta < 0.001) {
+        allowClustering = NO;
+    }
+    
     // Do clustering
     NSArray *clusteredAnnotations;
-    clusteredAnnotations = [[NSArray alloc] initWithArray:[OCAlgorithms bubbleClusteringWithAnnotations:annotationsToCluster andClusterRadius:clusterRadius grouped:self.clusterByGroupTag]];
+    clusteredAnnotations = [[NSArray alloc] initWithArray:[OCAlgorithms bubbleClusteringWithAnnotations:annotationsToCluster andClusterRadius:clusterRadius grouped:self.clusterByGroupTag clustered:allowClustering]];
 
     // Clear map but leave Userlocation
     NSMutableArray *annotationsToRemove = [[NSMutableArray alloc] initWithArray:self.displayedAnnotations];

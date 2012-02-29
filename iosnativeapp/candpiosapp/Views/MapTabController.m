@@ -315,7 +315,7 @@ BOOL zoomedOut = NO;
         view.alpha = startingAlpha;
         [UIView commitAnimations];
         
-        // Add any checkedIn pins to a set to bring them to the front
+        // Bring any checked in pins to the front of all subviews
         if ([view.annotation isKindOfClass:[OCAnnotation class]]) {
             OCAnnotation *thisAnnotation = (OCAnnotation *)view.annotation;
             
@@ -557,21 +557,21 @@ BOOL zoomedOut = NO;
 		pin.canShowCallout = YES;
 		
 		// make the left callout image view
-		UIImageView *leftCallout = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
-		leftCallout.contentMode = UIViewContentModeScaleAspectFill;
-		if (candpanno.imageUrl)
-		{
-			[leftCallout setImageWithURL:[NSURL URLWithString:candpanno.imageUrl]
-                        placeholderImage:[UIImage imageNamed:@"63-runner"]];
-		}
-		else
-		{
-			leftCallout.image = [UIImage imageNamed:@"63-runner"];			
-		}
-		pin.leftCalloutAccessoryView = 	leftCallout;
+//		UIImageView *leftCallout = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
+//		leftCallout.contentMode = UIViewContentModeScaleAspectFill;
+//		if (candpanno.imageUrl)
+//		{
+//			[leftCallout setImageWithURL:[NSURL URLWithString:candpanno.imageUrl]
+//                        placeholderImage:[UIImage imageNamed:@"63-runner"]];
+//		}
+//		else
+//		{
+//			leftCallout.image = [UIImage imageNamed:@"63-runner"];			
+//		}
+//		pin.leftCalloutAccessoryView = 	leftCallout;
 		// make the right callout
 		UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-		button.frame =CGRectMake(0, 0, 32, 32);
+		button.frame = CGRectMake(0, 0, 32, 32);
 		button.tag = [dataset.annotations indexOfObject:candpanno];
 		pin.rightCalloutAccessoryView = button;
         
@@ -711,8 +711,55 @@ BOOL zoomedOut = NO;
 - (void)mapView:(CPMapView *)mapView didFailToLocateUserWithError:(NSError *)error
 {
 	[SVProgressHUD dismiss];
-
 }
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    if ([view.annotation isKindOfClass:[OCAnnotation class]]) {
+        OCAnnotation *annotation = (OCAnnotation *)view.annotation;
+
+        NSInteger i = 0;
+        
+        NSMutableSet *venues = [[NSMutableSet alloc] init];
+        
+        for (CandPAnnotation *cpAnnotation in annotation.annotationsInCluster) {
+            if (cpAnnotation.checkedIn) i++;
+            if (cpAnnotation.groupTag) {
+                [venues addObject:cpAnnotation.groupTag];
+            }
+        }
+
+        if (venues.count > 1) {
+            annotation.title = @"Zoom In To See Places";
+        }
+        else if (venues.count == 1) {
+            annotation.title = [venues anyObject];
+        }
+        else {
+            annotation.title = @"A Place With No Name";
+        }
+
+        if (annotation.hasCheckins) {
+            annotation.subtitle = [NSString stringWithFormat:@"%d %@ here now", i, (i != 1) ? @"people" : @"person"];
+        }
+        else {
+            annotation.subtitle = [NSString stringWithFormat:@"%d checkin%@ in the last week", annotation.annotationsInCluster.count, (annotation.annotationsInCluster.count != 1) ? @"s" : @""];
+        }
+    }
+    else if ([view.annotation isKindOfClass:[CandPAnnotation class]]) {
+        CandPAnnotation *annotation = (CandPAnnotation *)view.annotation;
+        
+        annotation.title = annotation.groupTag;
+        
+        if (annotation.checkedIn) {
+            annotation.subtitle = @"1 person here now";
+        }
+        else {
+            annotation.subtitle = @"1 checkin in the last week";
+        }
+        
+    }
+}
+
 
 // zoom to the location; on initial load & after updaing their pos
 -(void)zoomTo:(CLLocationCoordinate2D)loc

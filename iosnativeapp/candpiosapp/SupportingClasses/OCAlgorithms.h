@@ -54,6 +54,6 @@ typedef enum {
  @param radius represents the cluster size. 
  
  It iterates through all annotations in the array and compare their distances. If they are near engough, they will be clustered.*/
-+ (NSArray*) bubbleClusteringWithAnnotations:(NSArray *) annotationsToCluster andClusterRadius:(CLLocationDistance)radius grouped:(BOOL) grouped;
++ (NSArray*) bubbleClusteringWithAnnotations:(NSMutableArray *)annotationsToCluster andClusterRadius:(CLLocationDistance)radius grouped:(BOOL)grouped clustered:(BOOL)allowClustering;
 
 @end
