@@ -40,7 +40,7 @@
 					<object class="IBUIImageView" id="474549456">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{0, -130}, {320, 460}}</string>
+						<string key="NSFrame">{{0, -64}, {320, 480}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="204616921"/>
@@ -59,17 +59,16 @@
 							<object class="IBUIButton" id="380308852">
 								<reference key="NSNextResponder" ref="204616921"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{40, 204}, {240, 36}}</string>
+								<string key="NSFrame">{{40, 267}, {65, 65}}</string>
 								<reference key="NSSuperview" ref="204616921"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="849354162"/>
 								<string key="NSReuseIdentifierKey">_NS:225</string>
 								<bool key="IBUIOpaque">NO</bool>
+								<int key="IBUIContentMode">2</int>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<int key="IBUIButtonType">1</int>
-								<string key="IBUINormalTitle">Log In with Facebook</string>
 								<object class="NSColor" key="IBUIHighlightedTitleColor" id="46629030">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
@@ -81,6 +80,10 @@
 								<object class="NSColor" key="IBUINormalTitleShadowColor" id="89770589">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC41AA</bytes>
+								</object>
+								<object class="NSCustomResource" key="IBUINormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">login-facebook.png</string>
 								</object>
 								<object class="IBUIFontDescription" key="IBUIFontDescription" id="398438879">
 									<int key="type">2</int>
@@ -95,46 +98,52 @@
 							<object class="IBUIButton" id="849354162">
 								<reference key="NSNextResponder" ref="204616921"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{40, 254}, {240, 36}}</string>
+								<string key="NSFrame">{{128, 267}, {65, 65}}</string>
 								<reference key="NSSuperview" ref="204616921"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="266069831"/>
 								<string key="NSReuseIdentifierKey">_NS:225</string>
 								<bool key="IBUIOpaque">NO</bool>
+								<int key="IBUIContentMode">2</int>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<int key="IBUIButtonType">1</int>
-								<string key="IBUINormalTitle">Log In with LinkedIn</string>
 								<reference key="IBUIHighlightedTitleColor" ref="46629030"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
 								<reference key="IBUINormalTitleShadowColor" ref="89770589"/>
+								<object class="NSCustomResource" key="IBUINormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">login-linkedin.png</string>
+								</object>
 								<reference key="IBUIFontDescription" ref="398438879"/>
 								<reference key="IBUIFont" ref="581290329"/>
 							</object>
 							<object class="IBUIButton" id="266069831">
 								<reference key="NSNextResponder" ref="204616921"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{40, 304}, {240, 36}}</string>
+								<string key="NSFrame">{{210, 267}, {65, 65}}</string>
 								<reference key="NSSuperview" ref="204616921"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="743004694"/>
 								<string key="NSReuseIdentifierKey">_NS:225</string>
 								<bool key="IBUIOpaque">NO</bool>
+								<int key="IBUIContentMode">2</int>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<int key="IBUIButtonType">1</int>
-								<string key="IBUINormalTitle">Log In with Email</string>
 								<reference key="IBUIHighlightedTitleColor" ref="46629030"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
 								<reference key="IBUINormalTitleShadowColor" ref="89770589"/>
+								<object class="NSCustomResource" key="IBUINormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">login-mail.png</string>
+								</object>
 								<reference key="IBUIFontDescription" ref="398438879"/>
 								<reference key="IBUIFont" ref="581290329"/>
 							</object>
@@ -271,10 +280,10 @@
 						<int key="objectID">4</int>
 						<reference key="object" ref="204616921"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="380308852"/>
-							<reference ref="266069831"/>
 							<reference ref="743004694"/>
 							<reference ref="849354162"/>
+							<reference ref="380308852"/>
+							<reference ref="266069831"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -364,10 +373,12 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">Default.png</string>
-			<string key="NS.object.0">{320, 480}</string>
-		</object>
+		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="Default.png">{320, 480}</string>
+			<string key="login-facebook.png">{65, 65}</string>
+			<string key="login-linkedin.png">{65, 63}</string>
+			<string key="login-mail.png">{63, 48}</string>
+		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">933</string>
 	</data>
 </archive>

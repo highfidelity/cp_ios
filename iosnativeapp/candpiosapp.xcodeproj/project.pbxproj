@@ -86,6 +86,19 @@
 		4E39307014EDF0F900D27DEA /* settings-button-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E39306D14EDF0F900D27DEA /* settings-button-3@2x.png */; };
 		4E500D9614EF4D41007C17E6 /* map-shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E500D9414EF4D41007C17E6 /* map-shadow@2x.png */; };
 		4E500D9714EF4D41007C17E6 /* map-shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E500D9514EF4D41007C17E6 /* map-shadow.png */; };
+		4EBD1D3514FEC19D00E9C0C6 /* login-facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EBD1D2D14FEC19D00E9C0C6 /* login-facebook.png */; };
+		4EBD1D3614FEC19D00E9C0C6 /* login-facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EBD1D2E14FEC19D00E9C0C6 /* login-facebook@2x.png */; };
+		4EBD1D3714FEC19D00E9C0C6 /* login-linkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EBD1D2F14FEC19D00E9C0C6 /* login-linkedin.png */; };
+		4EBD1D3814FEC19E00E9C0C6 /* login-linkedin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EBD1D3014FEC19D00E9C0C6 /* login-linkedin@2x.png */; };
+		4EBD1D3914FEC19E00E9C0C6 /* login-mail-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EBD1D3114FEC19D00E9C0C6 /* login-mail-button@2x.png */; };
+		4EBD1D3A14FEC19E00E9C0C6 /* login-mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EBD1D3214FEC19D00E9C0C6 /* login-mail.png */; };
+		4EBD1D3B14FEC19E00E9C0C6 /* secret-society.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EBD1D3314FEC19D00E9C0C6 /* secret-society.png */; };
+		4EBD1D3C14FEC19E00E9C0C6 /* secret-society@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EBD1D3414FEC19D00E9C0C6 /* secret-society@2x.png */; };
+		4EBD1D4614FEC1C700E9C0C6 /* BaseLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EBD1D3F14FEC1C700E9C0C6 /* BaseLoginController.m */; };
+		4EBD1D4714FEC1C700E9C0C6 /* CreateLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EBD1D4114FEC1C700E9C0C6 /* CreateLoginController.m */; };
+		4EBD1D4814FEC1C700E9C0C6 /* CreateLoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EBD1D4214FEC1C700E9C0C6 /* CreateLoginController.xib */; };
+		4EBD1D4914FEC1C700E9C0C6 /* EmailLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EBD1D4414FEC1C700E9C0C6 /* EmailLoginController.m */; };
+		4EBD1D4A14FEC1C700E9C0C6 /* EmailLoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EBD1D4514FEC1C700E9C0C6 /* EmailLoginController.xib */; };
 		4EC78B0D14F76E8400581F4F /* SettingsMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EC78AFE14F761B300581F4F /* SettingsMenuController.m */; };
 		5319F33C14FC60F30047B6CB /* texture-diagonal-noise-dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5319F33A14FC60F30047B6CB /* texture-diagonal-noise-dark.png */; };
 		5319F33D14FC60F30047B6CB /* texture-diagonal-noise-dark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5319F33B14FC60F30047B6CB /* texture-diagonal-noise-dark@2x.png */; };
@@ -441,6 +454,22 @@
 		4E39306D14EDF0F900D27DEA /* settings-button-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings-button-3@2x.png"; sourceTree = "<group>"; };
 		4E500D9414EF4D41007C17E6 /* map-shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-shadow@2x.png"; sourceTree = "<group>"; };
 		4E500D9514EF4D41007C17E6 /* map-shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-shadow.png"; sourceTree = "<group>"; };
+		4EBD1D2D14FEC19D00E9C0C6 /* login-facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-facebook.png"; sourceTree = "<group>"; };
+		4EBD1D2E14FEC19D00E9C0C6 /* login-facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-facebook@2x.png"; sourceTree = "<group>"; };
+		4EBD1D2F14FEC19D00E9C0C6 /* login-linkedin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-linkedin.png"; sourceTree = "<group>"; };
+		4EBD1D3014FEC19D00E9C0C6 /* login-linkedin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-linkedin@2x.png"; sourceTree = "<group>"; };
+		4EBD1D3114FEC19D00E9C0C6 /* login-mail-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-mail-button@2x.png"; sourceTree = "<group>"; };
+		4EBD1D3214FEC19D00E9C0C6 /* login-mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-mail.png"; sourceTree = "<group>"; };
+		4EBD1D3314FEC19D00E9C0C6 /* secret-society.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "secret-society.png"; sourceTree = "<group>"; };
+		4EBD1D3414FEC19D00E9C0C6 /* secret-society@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "secret-society@2x.png"; sourceTree = "<group>"; };
+		4EBD1D3E14FEC1C700E9C0C6 /* BaseLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseLoginController.h; sourceTree = "<group>"; };
+		4EBD1D3F14FEC1C700E9C0C6 /* BaseLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseLoginController.m; sourceTree = "<group>"; };
+		4EBD1D4014FEC1C700E9C0C6 /* CreateLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateLoginController.h; sourceTree = "<group>"; };
+		4EBD1D4114FEC1C700E9C0C6 /* CreateLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateLoginController.m; sourceTree = "<group>"; };
+		4EBD1D4214FEC1C700E9C0C6 /* CreateLoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateLoginController.xib; sourceTree = "<group>"; };
+		4EBD1D4314FEC1C700E9C0C6 /* EmailLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailLoginController.h; sourceTree = "<group>"; };
+		4EBD1D4414FEC1C700E9C0C6 /* EmailLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailLoginController.m; sourceTree = "<group>"; };
+		4EBD1D4514FEC1C700E9C0C6 /* EmailLoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmailLoginController.xib; sourceTree = "<group>"; };
 		4EC78AFD14F761B300581F4F /* SettingsMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsMenuController.h; sourceTree = "<group>"; };
 		4EC78AFE14F761B300581F4F /* SettingsMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsMenuController.m; sourceTree = "<group>"; };
 		5319F33A14FC60F30047B6CB /* texture-diagonal-noise-dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "texture-diagonal-noise-dark.png"; sourceTree = "<group>"; };
@@ -1322,6 +1351,14 @@
 		871EFBBC14AF987B0030658B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4EBD1D3E14FEC1C700E9C0C6 /* BaseLoginController.h */,
+				4EBD1D3F14FEC1C700E9C0C6 /* BaseLoginController.m */,
+				4EBD1D4014FEC1C700E9C0C6 /* CreateLoginController.h */,
+				4EBD1D4114FEC1C700E9C0C6 /* CreateLoginController.m */,
+				4EBD1D4214FEC1C700E9C0C6 /* CreateLoginController.xib */,
+				4EBD1D4314FEC1C700E9C0C6 /* EmailLoginController.h */,
+				4EBD1D4414FEC1C700E9C0C6 /* EmailLoginController.m */,
+				4EBD1D4514FEC1C700E9C0C6 /* EmailLoginController.xib */,
 				E4B21B2314F5B8FF00144348 /* BalanceViewController.h */,
 				E4B21B2414F5B8FF00144348 /* BalanceViewController.m */,
 				8733312314BCFB0D001BF4DB /* CreateEmailAccountController.h */,
@@ -1434,6 +1471,14 @@
 		87F657F314B0D2D000F4AB6C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				4EBD1D2D14FEC19D00E9C0C6 /* login-facebook.png */,
+				4EBD1D2E14FEC19D00E9C0C6 /* login-facebook@2x.png */,
+				4EBD1D2F14FEC19D00E9C0C6 /* login-linkedin.png */,
+				4EBD1D3014FEC19D00E9C0C6 /* login-linkedin@2x.png */,
+				4EBD1D3114FEC19D00E9C0C6 /* login-mail-button@2x.png */,
+				4EBD1D3214FEC19D00E9C0C6 /* login-mail.png */,
+				4EBD1D3314FEC19D00E9C0C6 /* secret-society.png */,
+				4EBD1D3414FEC19D00E9C0C6 /* secret-society@2x.png */,
 				5319F34914FC6F060047B6CB /* f2f-logo-small.png */,
 				5319F34A14FC6F060047B6CB /* f2f-logo-small@2x.png */,
 				5319F34114FC63F70047B6CB /* button-grey.png */,
@@ -1749,6 +1794,16 @@
 				6F8EF75214FD8D2100F9BDC0 /* chat-bubble-right-top@2x.png in Resources */,
 				3287CE1414FD9ACF00CFA825 /* pin-round.png in Resources */,
 				3287CE1514FD9ACF00CFA825 /* pin-round@2x.png in Resources */,
+				4EBD1D3514FEC19D00E9C0C6 /* login-facebook.png in Resources */,
+				4EBD1D3614FEC19D00E9C0C6 /* login-facebook@2x.png in Resources */,
+				4EBD1D3714FEC19D00E9C0C6 /* login-linkedin.png in Resources */,
+				4EBD1D3814FEC19E00E9C0C6 /* login-linkedin@2x.png in Resources */,
+				4EBD1D3914FEC19E00E9C0C6 /* login-mail-button@2x.png in Resources */,
+				4EBD1D3A14FEC19E00E9C0C6 /* login-mail.png in Resources */,
+				4EBD1D3B14FEC19E00E9C0C6 /* secret-society.png in Resources */,
+				4EBD1D3C14FEC19E00E9C0C6 /* secret-society@2x.png in Resources */,
+				4EBD1D4814FEC1C700E9C0C6 /* CreateLoginController.xib in Resources */,
+				4EBD1D4A14FEC1C700E9C0C6 /* EmailLoginController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1894,6 +1949,9 @@
 				E4EFA7F114FA3427004A329D /* CheckInHelper.m in Sources */,
 				3278800014FAD7070055A991 /* MKAnnotationView+WebCache.m in Sources */,
 				53882B5E14FC13630073058C /* CheckInListCell.m in Sources */,
+				4EBD1D4614FEC1C700E9C0C6 /* BaseLoginController.m in Sources */,
+				4EBD1D4714FEC1C700E9C0C6 /* CreateLoginController.m in Sources */,
+				4EBD1D4914FEC1C700E9C0C6 /* EmailLoginController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

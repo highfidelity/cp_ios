@@ -14,9 +14,12 @@
 #import "SVProgressHUD.h"
 #import "FlurryAnalytics.h"
 #import "SSKeychain.h"
+#import "EmailLoginController.h"
 
 @interface EmailLoginSequence()
 @property (nonatomic, weak) UIViewController	*createOrLoginController;
+@property (nonatomic, strong) EmailLoginController *emailLoginController;
+
 -(void)loginButtonPressed:(id)sender;
 -(void)createButtonPressed:(id)sender;
 
@@ -25,6 +28,7 @@
 @implementation EmailLoginSequence
 
 @synthesize createOrLoginController;
+@synthesize emailLoginController;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(void)initiateLogin:(UIViewController*)hostController;
@@ -40,7 +44,14 @@
 
 	if(true)
 	{
+        
 		Settings *settings = [AppDelegate instance].settings;
+        
+        self.emailLoginController = [[EmailLoginController alloc] initWithNibName:@"EmailLoginController" bundle:nil];
+        self.emailLoginController.emailField.text = [settings valueForKey:@"userEmailAddress"];
+        [self.emailLoginController.emailField becomeFirstResponder];
+        [hostController.navigationController pushViewController:self.emailLoginController animated:YES];
+        return;
 		
 		TableCellGroup *group = [[TableCellGroup alloc]init];
 		group.headerText = @"Log In to Coffee and Power";

@@ -75,7 +75,6 @@ BOOL zoomedOut = NO;
     [AppDelegate instance].settingsMenuController.mapTabController = self;
     
     // Title view styling
-    [CPUIHelper addDarkNavigationBarStyleToViewController:self];
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo.png"]];
     self.navigationItem.title = @"C&P"; // TODO: Remove once back button with mug logo is added to pushed views
     

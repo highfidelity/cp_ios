@@ -25,8 +25,13 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [[AppDelegate instance] hideCheckInButton];
-    [self.navigationItem setHidesBackButton:YES animated:YES];
+    [self.navigationItem setHidesBackButton:YES animated:NO];
     self.title = @"Log In";
+    // Set the back button that will appear in pushed views
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" 
+                                                                             style:UIBarButtonItemStyleDone 
+                                                                            target:nil 
+                                                                            action:nil];
 }
 
 - (void)didReceiveMemoryWarning

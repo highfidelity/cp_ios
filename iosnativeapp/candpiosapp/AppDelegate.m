@@ -15,6 +15,8 @@
 #import "FlurryAnalytics.h"
 #import "OAuthConsumer.h"
 #import "CheckInHelper.h"
+#import "SignupController.h"
+#import "CPUIHelper.h"
 
 @interface AppDelegate(Internal)
 -(void)loadSettings;
@@ -123,12 +125,20 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     [settingsMenuController.view addSubview:self.rootNavigationController.view];
     [settingsMenuController addChildViewController:self.rootNavigationController];
     self.window.rootViewController = settingsMenuController;
+    [CPUIHelper addDarkNavigationBarStyleToViewController:self.rootNavigationController.topViewController];
 
     [self addCheckInButton];
     
     // make the status bar the black style
     application.statusBarStyle = UIStatusBarStyleBlackOpaque;
 
+    if (settings.userNickname == nil) { 
+        // force a login
+        [self logoutEverything];
+        SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
+        [self.rootNavigationController pushViewController:controller animated:NO];        
+    }
+    
     return YES;
 }
 
