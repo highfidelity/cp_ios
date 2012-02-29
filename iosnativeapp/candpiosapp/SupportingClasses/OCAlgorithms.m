@@ -151,27 +151,37 @@
 
     for (OCAnnotation *clusterAnnotation in clusteredAnnotations) {        
         NSInteger usersCheckedIn = 0;
+        NSMutableSet *checkedInVenues = [[NSMutableSet alloc] init];
         NSMutableSet *venues = [[NSMutableSet alloc] init];
+        BOOL hasCheckedIn = NO;
         
         for (id <MKAnnotation> annotation in clusterAnnotation.annotationsInCluster) {
             if ([annotation isKindOfClass:[CPAnnotation class]]) {
                 CPAnnotation *thisAnnotation = annotation;
                 
                 if (thisAnnotation.checkedIn) {
+                    hasCheckedIn = YES;
                     usersCheckedIn++;
                 }
 
                 if (thisAnnotation.groupTag) {
                     [venues addObject:thisAnnotation.groupTag];
+
+                    if (thisAnnotation.checkedIn) {
+                        [checkedInVenues addObject:thisAnnotation.groupTag];
+                    }
                 }
             }
         }
 
-        if (venues.count > 1) {
+        if ((venues.count > 1 && !hasCheckedIn) || (checkedInVenues.count > 1 && hasCheckedIn)) {
             clusterAnnotation.title = @"Zoom In To See Places";
         }
-        else if (venues.count == 1) {
+        else if (venues.count == 1 && !hasCheckedIn) {
             clusterAnnotation.title = [venues anyObject];
+        }
+        else if (checkedInVenues.count == 1 && hasCheckedIn) {
+            clusterAnnotation.title = [checkedInVenues anyObject];
         }
         else {
             clusterAnnotation.title = @"A Place With No Name";

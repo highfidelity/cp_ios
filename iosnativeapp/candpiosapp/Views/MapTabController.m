@@ -555,7 +555,12 @@ BOOL zoomedOut = NO;
 			pin.annotation = annotation;
         }
         
-        [pin setNumberedPin:1 hasCheckins:hasCheckedInUsers smallPin:YES];
+        if (hasCheckedInUsers) {
+            [pin setNumberedPin:1 hasCheckins:YES smallPin:NO];
+        }
+        else {
+            [pin setNumberedPin:1 hasCheckins:NO smallPin:YES];            
+        }
         
 		pin.canShowCallout = YES;
 		

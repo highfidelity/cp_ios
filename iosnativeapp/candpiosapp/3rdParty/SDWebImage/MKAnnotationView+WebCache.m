@@ -16,7 +16,7 @@
 - (void)setNumberedPin:(NSInteger)number hasCheckins:(BOOL)checkins smallPin:(BOOL)smallPin {
     CGFloat fontSize = 20;
     NSString *imageName;
-
+    
     UILabel *numberLabel = [[UILabel alloc] init];
 
     // If no one is currently checked in, use smaller image + font size
