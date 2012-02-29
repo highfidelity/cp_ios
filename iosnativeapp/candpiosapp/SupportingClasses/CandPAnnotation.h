@@ -21,6 +21,15 @@
 @property (nonatomic, copy) NSString *objectId;
 @property (nonatomic, copy) NSString *_groupTag;
 
+@property (nonatomic, copy) NSString *nickname;
+@property (nonatomic, copy) NSString *skills;
+@property (nonatomic, copy) NSString *status;
+@property (nonatomic) NSInteger userId;
+@property (nonatomic) double distance;
+@property (nonatomic, strong) NSString *distanceTo;
+@property (nonatomic) BOOL haveMet;
+
+
 -(id)initFromDictionary:(NSDictionary*)jsonDict;
 
 - (BOOL)isEqual:(id)other;

@@ -95,11 +95,10 @@ static NSOperationQueue *sMapQueue = nil;
 		NSLog(@"Got %d users.", [payloadArray count]);
 		for(NSDictionary *userDict in payloadArray)
 		{
-			UserAnnotation *user = [[UserAnnotation alloc]initFromDictionary:userDict];
+			CandPAnnotation *user = [[CandPAnnotation alloc]initFromDictionary:userDict];
 
 			// add (or update) the new pin
 			[annotations addObject:user];
-
 		}
 
 	}

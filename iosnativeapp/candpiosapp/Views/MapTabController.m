@@ -713,6 +713,7 @@ BOOL zoomedOut = NO;
 	[SVProgressHUD dismiss];
 }
 
+/*
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
     if ([view.annotation isKindOfClass:[OCAnnotation class]]) {
         OCAnnotation *annotation = (OCAnnotation *)view.annotation;
@@ -759,7 +760,7 @@ BOOL zoomedOut = NO;
         
     }
 }
-
+*/
 
 // zoom to the location; on initial load & after updaing their pos
 -(void)zoomTo:(CLLocationCoordinate2D)loc

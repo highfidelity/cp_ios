@@ -91,7 +91,8 @@
             BOOL removeAnnotation = NO;
             
             for (OCAnnotation *clusterAnnotation in clusteredAnnotations) {
-
+                NSInteger usersCheckedIn = 0;
+                
                 // If the annotation is in range of the Cluster add it to it
                 if (isLocationNearToOtherLocation([annotation coordinate], [clusterAnnotation coordinate], radius)) {
 
@@ -101,6 +102,10 @@
 //                        if ([clusterAnnotation.userIdsInCluster containsObject:[(CandPAnnotation *)annotation objectId]]) {
                             addAnnotationNow = NO;
                             isContaining = YES;
+                            
+                            if ([(CandPAnnotation *)annotation checkedIn]) {
+                                usersCheckedIn++;
+                            }
                         }
                         else {
                             addAnnotationNow = YES;
@@ -111,11 +116,43 @@
                     }
                     
                     if (addAnnotationNow) {
-                        clusterAnnotation.title = [NSString stringWithFormat:@"%d checkins", clusterAnnotation.annotationsInCluster.count + 1];
-                        clusterAnnotation.subtitle = @"";
+//                        NSInteger i = 0;
+//                        
+//                        NSMutableSet *venues = [[NSMutableSet alloc] init];
+//                        
+//                        for (CandPAnnotation *cpAnnotation in annotation.annotationsInCluster) {
+//                            if (cpAnnotation.checkedIn) i++;
+//                            if (cpAnnotation.groupTag) {
+//                                [venues addObject:cpAnnotation.groupTag];
+//                            }
+//                        }
+//                        
+//                        if (venues.count > 1) {
+//                            annotation.title = @"Zoom In To See Places";
+//                        }
+//                        else if (venues.count == 1) {
+//                            annotation.title = [venues anyObject];
+//                        }
+//                        else {
+//                            annotation.title = @"A Place With No Name";
+//                        }
 
                         isContaining = YES;
                         [clusterAnnotation addAnnotation:annotation];
+                        
+                        clusterAnnotation.title = @"Venue Name";
+
+                        if (usersCheckedIn > 0) {
+                            clusterAnnotation.hasCheckins = YES;
+                        }
+                        
+                        if (clusterAnnotation.hasCheckins) {
+                            clusterAnnotation.subtitle = [NSString stringWithFormat:@"%d %@ here now", usersCheckedIn, (usersCheckedIn != 1) ? @"people" : @"person"];
+                        }
+                        else {
+                            clusterAnnotation.subtitle = [NSString stringWithFormat:@"%d checkin%@ in the last week", clusterAnnotation.annotationsInCluster.count, (clusterAnnotation.annotationsInCluster.count != 1) ? @"s" : @""];
+                        }
+
                         break;
                     }
 				}
