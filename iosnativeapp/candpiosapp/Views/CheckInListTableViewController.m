@@ -39,8 +39,15 @@
     self.title = @"Places";
     refreshLocationsNow = YES;
     
-    // change the separator color on the table view (since we have a different background)
-    self.tableView.separatorColor = [UIColor colorWithRed:(68.0/255.0) green:(68.0/255.0) blue:(68.0/255.0) alpha:1.0];
+    // don't set the seperator here, add it manually in storyboard
+    // allows us to show a line on the top cell when you are at the top of the table view
+    // self.tableView.separatorColor = [UIColor colorWithRed:(68.0/255.0) green:(68.0/255.0) blue:(68.0/255.0) alpha:1.0];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    // add a line to the top of the table
+    UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
+    topLine.backgroundColor = [UIColor colorWithRed:(68.0/255.0) green:(68.0/255.0) blue:(68.0/255.0) alpha:1.0];
+    [self.view addSubview:topLine];
 }
 
 - (IBAction)closeWindow:(id)sender {
@@ -58,6 +65,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    if (self.navigationItem.rightBarButtonItem) {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -120,46 +130,56 @@
                           
                           options:kNilOptions 
                           error:&error];
-
-    // Do error checking here, in case Foursquare is down
-
-    // get the array of places that foursquare returned
-    NSArray *itemsArray = [[[[json valueForKey:@"response"] valueForKey:@"groups"] valueForKey:@"items"] objectAtIndex:0];
-
-    // iterate through the results and add them to the places array
-    for (NSMutableDictionary *item in itemsArray) {
+    
+    if (!error) {
+        // Do error checking here, in case Foursquare is down
+        
+        // get the array of places that foursquare returned
+        NSArray *itemsArray = [[[[json valueForKey:@"response"] valueForKey:@"groups"] valueForKey:@"items"] objectAtIndex:0];
+        
+        CLLocation *userLocation = [[AppDelegate instance].settings lastKnownLocation];
+        
+        // iterate through the results and add them to the places array
+        for (NSMutableDictionary *item in itemsArray) {
+            CPPlace *place = [[CPPlace alloc] init];
+            place.name = [item valueForKey:@"name"];
+            place.foursquareID = [item valueForKey:@"id"];
+            place.address = [[item valueForKey:@"location"] valueForKey:@"address"];
+            place.city = [[item valueForKey:@"location"] valueForKey:@"city"];
+            place.state = [[item valueForKey:@"location"] valueForKey:@"state"];
+            place.zip = [[item valueForKey:@"location"] valueForKey:@"postalCode"];
+            place.lat = [[item valueForKeyPath:@"location.lat"] doubleValue];
+            place.lng = [[item valueForKeyPath:@"location.lng"] doubleValue];
+            CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:place.lat longitude:place.lng];
+            place.distanceFromUser = [placeLocation distanceFromLocation:userLocation];
+            [places addObject:place];
+        }
+        
+        // sort the places array by distance from user
+        [places sortUsingSelector:@selector(sortByDistanceToUser:)];
+        
+        // add a custom place so people can checkin if foursquare doesn't have the venue
         CPPlace *place = [[CPPlace alloc] init];
-        place.name = [item valueForKey:@"name"];
-        place.foursquareID = [item valueForKey:@"id"];
-        place.address = [[item valueForKey:@"location"] valueForKey:@"address"];
-        place.city = [[item valueForKey:@"location"] valueForKey:@"city"];
-        place.state = [[item valueForKey:@"location"] valueForKey:@"state"];
-        place.zip = [[item valueForKey:@"location"] valueForKey:@"postalCode"];
+        place.name = @"Place not listed...";
+        place.foursquareID = @"0";
         
+        CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
         
-        place.lat = [[item valueForKeyPath:@"location.lat"] doubleValue];
-        place.lng = [[item valueForKeyPath:@"location.lng"] doubleValue];
-        [places addObject:place];
-    }
-    
-    // sort the places array by distance from user
-    [places sortUsingSelector:@selector(sortByDistanceToUser:)];
-    
-    // add a custom place so people can checkin if foursquare doesn't have the venue
-    CPPlace *place = [[CPPlace alloc] init];
-    place.name = @"Place not listed...";
-    place.foursquareID = @"0";
-    
-    CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
-    
-    place.lat = location.coordinate.latitude;
-    place.lng = location.coordinate.longitude;
-    
-    [places insertObject:place atIndex:0];
-
-    [SVProgressHUD dismiss];
-    
-    [self.tableView reloadData];    
+        place.lat = location.coordinate.latitude;
+        place.lng = location.coordinate.longitude;
+        
+        [places insertObject:place atIndex:0];
+        
+        [SVProgressHUD dismiss];
+        
+        [self.tableView reloadData];  
+    } else {
+        // dismiss the progress HUD with an error
+        [SVProgressHUD dismissWithError:@"Oops!\nCouldn't get the data." afterDelay:3];
+        
+        UIBarButtonItem *refresh = [[UIBarButtonItem alloc] initWithTitle:@"Refresh" style:UIBarButtonItemStylePlain target:self action:@selector(refreshLocations)];
+        self.navigationItem.rightBarButtonItem = refresh;
+    }   
 }
 
 #pragma mark - Table view data source
@@ -186,10 +206,9 @@
     if (indexPath.row == 0) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCellNotListed"];
     } else {
-        // get a CLLocation for the user and the place so we can get a localized distance between them
-        CLLocation *userLocation = [[AppDelegate instance].settings lastKnownLocation];
-        CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[[places objectAtIndex:indexPath.row] lat] longitude:[[places objectAtIndex:indexPath.row] lng]];
-        cell.distanceString.text = [LocalizedDistanceCalculator localizedDistanceBetweenLocationA:userLocation andLocationB:placeLocation];
+        // get the localized distance string based on the distance of this venue from the user
+        // which we set when we sort the places
+        cell.distanceString.text = [LocalizedDistanceCalculator localizedDistanceStringForDistance:[[places objectAtIndex:indexPath.row] distanceFromUser]];
         
         cell.venueAddress.text = [[[places objectAtIndex:indexPath.row] address] description];
         if (!cell.venueAddress.text) {

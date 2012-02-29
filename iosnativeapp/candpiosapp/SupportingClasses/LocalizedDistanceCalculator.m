@@ -10,10 +10,9 @@
 
 @implementation LocalizedDistanceCalculator
 
-// returns a string with the localized distance between two CLLocations
-+ (NSString *)localizedDistanceBetweenLocationA:(CLLocation *)locationA
-                                   andLocationB:(CLLocation *)locationB {
-    double distance = [locationA distanceFromLocation:locationB];
+// returns a string with the localized distance given the distance
++ (NSString *)localizedDistanceStringForDistance:(double)distance
+{
     // set up a number formatter
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     formatter.numberStyle = NSNumberFormatterDecimalStyle;
@@ -43,6 +42,14 @@
     }
 }
 
+// returns a string with the localized distance between two CLLocations
++ (NSString *)localizedDistanceBetweenLocationA:(CLLocation *)locationA
+                                   andLocationB:(CLLocation *)locationB {
+    double distance = [locationA distanceFromLocation:locationB];
+    return [self localizedDistanceStringForDistance:distance];
+    
+}
+
 // returns a string with 'away' appended to the distance, used on user profile and on user list
 + (NSString *)localizedDistanceofLocationA:(CLLocation *)locationA awayFromLocationB:(CLLocation *)locationB
 {
@@ -52,7 +59,7 @@
         // this is above our threshold so it's far far away
         return @"Far far away";
     } else {
-        return [NSString stringWithFormat:@"%@ away", [self localizedDistanceBetweenLocationA:locationA andLocationB:locationB]];
+        return [NSString stringWithFormat:@"%@ away", [self localizedDistanceStringForDistance:distance]];
     }
 }
 

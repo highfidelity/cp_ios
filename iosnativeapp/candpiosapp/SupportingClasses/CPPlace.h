@@ -12,6 +12,7 @@
 @property (nonatomic, assign) double lat;
 @property (nonatomic, assign) double lng;
 @property (nonatomic, assign) int othersHere;
+@property (nonatomic, assign) double distanceFromUser;
 
 - (NSComparisonResult)sortByDistanceToUser:(CPPlace *)place;
 
