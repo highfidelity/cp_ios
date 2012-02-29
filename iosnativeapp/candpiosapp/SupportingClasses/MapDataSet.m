@@ -9,7 +9,7 @@
 #import "MapDataSet.h"
 #import "AFHTTPClient.h"
 #import "AFJSONRequestOperation.h"
-#import "UserAnnotation.h"
+#import "CPAnnotation.h"
 #import "AppDelegate.h"
 
 @interface MapDataSet()
@@ -95,7 +95,7 @@ static NSOperationQueue *sMapQueue = nil;
 		NSLog(@"Got %d users.", [payloadArray count]);
 		for(NSDictionary *userDict in payloadArray)
 		{
-			CandPAnnotation *user = [[CandPAnnotation alloc]initFromDictionary:userDict];
+			CPAnnotation *user = [[CPAnnotation alloc]initFromDictionary:userDict];
 
 			// add (or update) the new pin
 			[annotations addObject:user];

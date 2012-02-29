@@ -6,7 +6,7 @@
 //
 
 #import "OCAnnotation.h"
-#import "CandPAnnotation.h"
+#import "CPAnnotation.h"
 
 @implementation OCAnnotation
 @synthesize coordinate;
@@ -37,10 +37,10 @@
         annotationsInCluster = [[NSMutableArray alloc] init];
         [annotationsInCluster addObject:annotation];
         
-        if ([annotation isKindOfClass:[CandPAnnotation class]]) {
+        if ([annotation isKindOfClass:[CPAnnotation class]]) {
             userIdsInCluster = [[NSMutableArray alloc] init];
-            [userIdsInCluster addObject:[(CandPAnnotation *)annotation objectId]];
-            hasCheckins = [(CandPAnnotation *)annotation checkedIn];
+            [userIdsInCluster addObject:[(CPAnnotation *)annotation objectId]];
+            hasCheckins = [(CPAnnotation *)annotation checkedIn];
         }
         
         title = [annotation.title retain];
@@ -83,9 +83,9 @@
     // Add annotation to the cluster
     [annotationsInCluster addObject:annotation];
     
-    if ([annotation isKindOfClass:[CandPAnnotation class]]) {
-        [userIdsInCluster addObject:[(CandPAnnotation *)annotation objectId]];
-        if ([(CandPAnnotation *)annotation checkedIn]) {
+    if ([annotation isKindOfClass:[CPAnnotation class]]) {
+        [userIdsInCluster addObject:[(CPAnnotation *)annotation objectId]];
+        if ([(CPAnnotation *)annotation checkedIn]) {
             hasCheckins = YES;
         }
     }
@@ -107,8 +107,8 @@
     // Remove annotation from cluster
     [annotationsInCluster removeObject:annotation];
 
-    if ([annotation isKindOfClass:[CandPAnnotation class]]) {
-        [userIdsInCluster removeObject:[(CandPAnnotation *)annotation objectId]];
+    if ([annotation isKindOfClass:[CPAnnotation class]]) {
+        [userIdsInCluster removeObject:[(CPAnnotation *)annotation objectId]];
     }
     
     [annotation release];

@@ -10,7 +10,7 @@
 #import "OCDistance.h"
 #import "OCGrouping.h"
 #import <math.h>
-#import "CandPAnnotation.h"
+#import "CPAnnotation.h"
 
 @implementation OCAlgorithms
 
@@ -97,13 +97,13 @@
                 if (isLocationNearToOtherLocation([annotation coordinate], [clusterAnnotation coordinate], radius)) {
 
                     // Check for duplicate annotations, and don't re-add to a cluster if it's already in it
-                    if ([annotation isKindOfClass:[CandPAnnotation class]]) {
+                    if ([annotation isKindOfClass:[CPAnnotation class]]) {
                         if ([clusterAnnotation.annotationsInCluster containsObject:annotation]) {
 //                        if ([clusterAnnotation.userIdsInCluster containsObject:[(CandPAnnotation *)annotation objectId]]) {
                             addAnnotationNow = NO;
                             isContaining = YES;
                             
-                            if ([(CandPAnnotation *)annotation checkedIn]) {
+                            if ([(CPAnnotation *)annotation checkedIn]) {
                                 usersCheckedIn++;
                             }
                         }
@@ -161,7 +161,7 @@
                     
                     // Remove the current annotation from the clusterAnnotation.annotationsInCluster array
                     [clusterAnnotation.annotationsInCluster removeObject:annotation];
-                    [clusterAnnotation.userIdsInCluster removeObject:[(CandPAnnotation *)annotation objectId]];
+                    [clusterAnnotation.userIdsInCluster removeObject:[(CPAnnotation *)annotation objectId]];
                 }
             }
 

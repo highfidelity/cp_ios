@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CandPAnnotation.h"
+#import "CPAnnotation.h"
 
-@interface MissionAnnotation : CandPAnnotation
+@interface MissionAnnotation : CPAnnotation
 {
 	
 }

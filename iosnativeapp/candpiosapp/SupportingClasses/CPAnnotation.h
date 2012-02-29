@@ -10,7 +10,7 @@
 #import <MapKit/MapKit.h>
 #import "OCGrouping.h"
 
-@interface CandPAnnotation : NSObject< MKAnnotation, OCGrouping>
+@interface CPAnnotation : NSObject< MKAnnotation, OCGrouping>
 @property (nonatomic,assign) double lat;
 @property (nonatomic,assign) double lon;
 @property (nonatomic, assign) int checkinId;
@@ -33,7 +33,7 @@
 -(id)initFromDictionary:(NSDictionary*)jsonDict;
 
 - (BOOL)isEqual:(id)other;
-- (BOOL)isEqualToUserAnnotation:(CandPAnnotation *)annotation;
+- (BOOL)isEqualToUserAnnotation:(CPAnnotation *)annotation;
 - (NSString *)groupTag;
 - (void)setGroupTag:(NSString *)tag;
 

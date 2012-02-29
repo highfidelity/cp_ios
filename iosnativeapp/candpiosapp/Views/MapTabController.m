@@ -182,8 +182,8 @@ BOOL zoomedOut = NO;
                 }
             }
             
-            if ([annotation isKindOfClass:[CandPAnnotation class]]) {
-                CandPAnnotation *thisAnnotation = (CandPAnnotation *)annotation;
+            if ([annotation isKindOfClass:[CPAnnotation class]]) {
+                CPAnnotation *thisAnnotation = (CPAnnotation *)annotation;
                 
                 if (!thisAnnotation.checkedIn) {
 //                    [fullDataset.annotations removeObject:annotation];
@@ -205,7 +205,7 @@ BOOL zoomedOut = NO;
 
     // Re-add any annotations in annotationsToRedisplay to get the correct pins after big zoom changes
     if (annotationsToRedisplay.count > 0) {
-        for (CandPAnnotation *ann in annotationsToRedisplay) {
+        for (CPAnnotation *ann in annotationsToRedisplay) {
             [mapView addAnnotation:ann];
         }
     
@@ -229,7 +229,7 @@ BOOL zoomedOut = NO;
                                 {
                                     NSSet *visiblePins = [mapView annotationsInMapRect: mapView.visibleMapRect];
                                     
-                                    for (CandPAnnotation *ann in visiblePins) {
+                                    for (CPAnnotation *ann in visiblePins) {
                                         if ([[newDataset annotations] containsObject: ann]) {
                                             [[newDataset annotations] removeObject: ann];
                                         } else {
@@ -240,7 +240,7 @@ BOOL zoomedOut = NO;
                                     dataset = newDataset;
 
                                     // Load all users (even outside of map bounds) into fullDataset for List view
-                                    for (CandPAnnotation *ann2 in newDataset.annotations) {
+                                    for (CPAnnotation *ann2 in newDataset.annotations) {
                                         if (![fullDataset.annotations containsObject: ann2]) {
                                             [fullDataset.annotations addObject: ann2];
                                             [mapView addAnnotation:ann2];
@@ -468,8 +468,8 @@ BOOL zoomedOut = NO;
         NSInteger checkedInUsers = 0;
         
         for (id <MKAnnotation> ann in annotationsInCluster) {
-            if ([ann isKindOfClass:[CandPAnnotation class]]) {
-                CandPAnnotation *thisAnn = (CandPAnnotation *)ann;
+            if ([ann isKindOfClass:[CPAnnotation class]]) {
+                CPAnnotation *thisAnn = (CPAnnotation *)ann;
                 
                 if (thisAnn.imageUrl) {
                     [imageSources addObject:thisAnn.imageUrl];
@@ -530,9 +530,9 @@ BOOL zoomedOut = NO;
         pinToReturn = pin;
 
     }  
-	else if ([annotation isKindOfClass:[CandPAnnotation class]])
+	else if ([annotation isKindOfClass:[CPAnnotation class]])
 	{ 
-		CandPAnnotation *candpanno = (CandPAnnotation*)annotation;
+		CPAnnotation *candpanno = (CPAnnotation*)annotation;
         NSString *reuseId;
 
         if (candpanno.checkedIn) {
@@ -614,7 +614,7 @@ BOOL zoomedOut = NO;
         if ([sender isKindOfClass: [MKAnnotationView class]]) 
         {
             // figure out which element was tapped
-            UserAnnotation *tappedObj = [sender annotation];
+            CPAnnotation *tappedObj = [sender annotation];
             
             selectedUser.nickname = tappedObj.nickname;
             selectedUser.userID = [tappedObj.objectId intValue];

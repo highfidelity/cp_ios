@@ -10,7 +10,7 @@
 #import "MissionAnnotation.h"
 #import "UIImageView+WebCache.h"
 #import "WebViewController.h"
-#import "UserAnnotation.h"
+#import "CPAnnotation.h"
 #import "AppDelegate.h"
 #import "UserTableViewCell.h"
 #import "UserProfileCheckedInViewController.h"
@@ -53,7 +53,7 @@
     NSMutableSet *goodUserIds = [[NSMutableSet alloc] init];
     NSMutableSet *badUserIds = [[NSMutableSet alloc] init];
     
-    for (UserAnnotation *annotation in missions) {
+    for (CPAnnotation *annotation in missions) {
         CLLocation *location = [[CLLocation alloc] initWithLatitude:annotation.lat longitude:annotation.lon];
         
         annotation.distance = [location distanceFromLocation:currentLocation];
@@ -159,7 +159,7 @@
     
     // Configure the cell...
     
-    UserAnnotation *annotation = [missions objectAtIndex:indexPath.row];
+    CPAnnotation *annotation = [missions objectAtIndex:indexPath.row];
 
     // Add FaceToFace information
     NSString* haveMet = @"";
@@ -203,7 +203,7 @@
     if ([[segue identifier] isEqualToString:@"ShowUserProfileCheckedInFromList"]) {
         
         NSIndexPath *path = [self.tableView indexPathForSelectedRow];
-        UserAnnotation *annotation = [missions objectAtIndex:path.row];
+        CPAnnotation *annotation = [missions objectAtIndex:path.row];
         
         // setup a user object with the info we have from the pin and callout
         // so that this information can already be in the resume without having to load it

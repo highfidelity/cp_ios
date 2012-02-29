@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import "CandPAnnotation.h"
+#import "CPAnnotation.h"
 
-@implementation CandPAnnotation
+@implementation CPAnnotation
 @synthesize lat,lon;
 @synthesize title, subtitle, imageUrl;
 @synthesize objectId;
@@ -80,7 +80,7 @@
     return [self isEqualToUserAnnotation: other];
 }
 
-- (BOOL)isEqualToUserAnnotation:(CandPAnnotation *)annotation {
+- (BOOL)isEqualToUserAnnotation:(CPAnnotation *)annotation {
     if (self == annotation) {
         return YES;
     }
