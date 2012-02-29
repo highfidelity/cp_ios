@@ -125,6 +125,9 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     self.window.rootViewController = settingsMenuController;
 
     [self addCheckInButton];
+    
+    // make the status bar the black style
+    application.statusBarStyle = UIStatusBarStyleBlackOpaque;
 
     return YES;
 }
