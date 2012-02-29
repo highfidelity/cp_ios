@@ -69,8 +69,6 @@
     
 	// Clustering
 	for (id <MKAnnotation> annotation in annotationsToCluster) {
-        NSInteger usersCheckedIn = 0;
-
         if ([annotation isKindOfClass:[OCAnnotation class]]) {
             continue;
         }
@@ -81,7 +79,6 @@
 		if([clusteredAnnotations count] == 0 || !allowClustering){
             OCAnnotation *newCluster = [[OCAnnotation alloc] initWithAnnotation:annotation];
             [clusteredAnnotations addObject:newCluster];
-            NSLog(@"new cluster1: %@", newCluster.title);
             // check group
             if (grouped && [annotation respondsToSelector:@selector(groupTag)]) {
                 newCluster.groupTag = ((id <OCGrouping>)annotation).groupTag;
@@ -102,10 +99,6 @@
 //                        if ([clusterAnnotation.userIdsInCluster containsObject:[(CandPAnnotation *)annotation objectId]]) {
                             addAnnotationNow = NO;
                             isContaining = YES;
-                            
-                            if ([(CPAnnotation *)annotation checkedIn]) {
-                                clusterAnnotation.usersCheckedIn++;
-                            }
                         }
                         else {
                             addAnnotationNow = YES;
@@ -115,28 +108,7 @@
 //                        addAnnotationNow = YES;
                     }
                     
-                    if (addAnnotationNow) {
-//                        NSInteger i = 0;
-//                        
-//                        NSMutableSet *venues = [[NSMutableSet alloc] init];
-//                        
-//                        for (CandPAnnotation *cpAnnotation in annotation.annotationsInCluster) {
-//                            if (cpAnnotation.checkedIn) i++;
-//                            if (cpAnnotation.groupTag) {
-//                                [venues addObject:cpAnnotation.groupTag];
-//                            }
-//                        }
-//                        
-//                        if (venues.count > 1) {
-//                            annotation.title = @"Zoom In To See Places";
-//                        }
-//                        else if (venues.count == 1) {
-//                            annotation.title = [venues anyObject];
-//                        }
-//                        else {
-//                            annotation.title = @"A Place With No Name";
-//                        }
-
+                    if (addAnnotationNow) {                       
                         isContaining = YES;
                         [clusterAnnotation addAnnotation:annotation];
 
@@ -148,29 +120,17 @@
                     
                     // Remove the current annotation from the clusterAnnotation.annotationsInCluster array
                     [clusterAnnotation.annotationsInCluster removeObject:annotation];
+
 //                    [clusterAnnotation.userIdsInCluster removeObject:[(CPAnnotation *)annotation objectId]];
                 }
-                
-                clusterAnnotation.title = @"Venue Name";
-                
-                if (clusterAnnotation.usersCheckedIn > 0) {
-                    clusterAnnotation.hasCheckins = YES;
-                }
-                
-                if (clusterAnnotation.usersCheckedIn > 0) {
-                    clusterAnnotation.subtitle = [NSString stringWithFormat:@"%d %@ here now", clusterAnnotation.usersCheckedIn, (clusterAnnotation.usersCheckedIn != 1) ? @"people" : @"person"];
-                }
-                else {
-                    clusterAnnotation.subtitle = [NSString stringWithFormat:@"%d checkin%@ in the last week", clusterAnnotation.annotationsInCluster.count, (clusterAnnotation.annotationsInCluster.count != 1) ? @"s" : @""];
-                }
-                
-//                NSLog(@"New subtitle: %@", clusterAnnotation.subtitle);
             }
 
             if (removeAnnotation) {
                 [clusteredAnnotations removeObject:annotation];
 //                [removeAnnotations addObject:annotation];
             }
+
+            
             
             // If the annotation is not in a Cluster make it to a new one
 			if (!isContaining){
@@ -188,8 +148,46 @@
 	}
 
     NSMutableArray *returnArray = [[NSMutableArray alloc] init];
+
+    for (OCAnnotation *clusterAnnotation in clusteredAnnotations) {        
+        NSInteger usersCheckedIn = 0;
+        NSMutableSet *venues = [[NSMutableSet alloc] init];
+        
+        for (id <MKAnnotation> annotation in clusterAnnotation.annotationsInCluster) {
+            if ([annotation isKindOfClass:[CPAnnotation class]]) {
+                CPAnnotation *thisAnnotation = annotation;
+                
+                if (thisAnnotation.checkedIn) {
+                    usersCheckedIn++;
+                }
+
+                if (thisAnnotation.groupTag) {
+                    [venues addObject:thisAnnotation.groupTag];
+                }
+            }
+        }
+
+        if (venues.count > 1) {
+            clusterAnnotation.title = @"Zoom In To See Places";
+        }
+        else if (venues.count == 1) {
+            clusterAnnotation.title = [venues anyObject];
+        }
+        else {
+            clusterAnnotation.title = @"A Place With No Name";
+        }
+        
+        if (usersCheckedIn > 0) {
+            clusterAnnotation.hasCheckins = YES;
+            clusterAnnotation.subtitle = [NSString stringWithFormat:@"%d %@ here now", usersCheckedIn, (usersCheckedIn != 1) ? @"people" : @"person"];
+        }
+        else {
+            clusterAnnotation.hasCheckins = NO;
+            clusterAnnotation.subtitle = [NSString stringWithFormat:@"%d checkin%@ in the last week", clusterAnnotation.annotationsInCluster.count, (clusterAnnotation.annotationsInCluster.count != 1) ? @"s" : @""];
+        }
+    }
     
-    // whipe all empty or single annotations
+    // wipe all empty or single annotations
     for (OCAnnotation *anAnnotation in clusteredAnnotations) {
         if ([anAnnotation.annotationsInCluster count] <= 1) {
             [returnArray addObject:[anAnnotation.annotationsInCluster lastObject]];

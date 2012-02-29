@@ -22,7 +22,6 @@
     NSString *_groupTag;
     CLLocationCoordinate2D coordinate;
     BOOL hasCheckins;
-    NSInteger usersCheckedIn;
 }
 //
 // Constructors
@@ -40,7 +39,6 @@
  */
 @property(nonatomic, readonly) NSMutableArray *annotationsInCluster;
 @property(nonatomic, readonly) NSMutableArray *userIdsInCluster;
-@property(nonatomic) NSInteger usersCheckedIn;
 //
 /// List of annotations in the cluster.
 /** @See annotationsInCluster property*/
