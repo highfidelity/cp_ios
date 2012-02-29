@@ -37,24 +37,44 @@
 
 // apparently it is a bad idea to subclass UIButton
 // this method will give you a UIButton with C&P styling
+
+// NOTE: frame.size.height will always be overriden to be 43pts 
+// as the height cannot be resized because it will muck with the 
+// gradient. Grayson has said that CPButtons he designs will always
+// be of that height
 + (UIButton *)CPButtonWithText:(NSString *)buttonText color:(CPButtonColor)buttonColor frame:(CGRect)buttonFrame
 {
     // get a button with the passed frame
     UIButton *cpButton = [[UIButton alloc] initWithFrame:buttonFrame];
     
-    // set the background color using the imageForColorString method
-    [cpButton setBackgroundImage:[self imageForCPColor:buttonColor] forState:UIControlStateNormal];
-    
     [cpButton setTitle:buttonText forState:UIControlStateNormal];
-    [cpButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    cpButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
-    cpButton.titleLabel.layer.shadowOffset = CGSizeMake(0, -1);
-    cpButton.titleLabel.layer.shadowColor = [[UIColor blackColor] CGColor];
-    cpButton.titleLabel.layer.shadowOpacity = 0.5;
-    cpButton.titleLabel.layer.shadowRadius = 0.0;   
+    return [self makeButtonCPButton:cpButton withCPButtonColor:buttonColor];
+}
+
+// method to turn an existing button into a CPButton with a particular color
+// note that this changes the button height to be 43pts as the image we're using
+// for the background forces the button to be of this height
+// CPButtons designed by Grayson will always be of this height
++ (UIButton *)makeButtonCPButton:(UIButton *)button withCPButtonColor:(CPButtonColor)buttonColor
+{
+    // forcing change of button height to 43pts
+    CGRect buttonFrame = button.frame;
+    buttonFrame.size.height = 43;
+    button.frame = buttonFrame;
     
-    return cpButton;
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    // set the background color using the imageForColorString method
+    [button setBackgroundImage:[self imageForCPColor:buttonColor] forState:UIControlStateNormal];
+    
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
+    button.titleLabel.layer.shadowOffset = CGSizeMake(0, -1);
+    button.titleLabel.layer.shadowColor = [[UIColor blackColor] CGColor];
+    button.titleLabel.layer.shadowOpacity = 0.5;
+    button.titleLabel.layer.shadowRadius = 0.0; 
+    
+    return button;
 }
 
 // used by the method above to return a UIImage for the button background

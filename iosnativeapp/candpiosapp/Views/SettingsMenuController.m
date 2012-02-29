@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import "MapTabController.h"
 
-#define logoutMenuIndex 3
+#define logoutMenuIndex 1
 #define menuWidthPercentage 0.8
 
 @interface SettingsMenuController() 
@@ -53,19 +53,35 @@
 - (void)initMenu 
 {
     // Setup the menu strings and seque identifiers
+    // COMMENTING OUT FOR FIRST BUILD
+    // Face To Face and Settings aren't showing anything
+//    self.menuStringsArray = [NSArray arrayWithObjects:
+//                             @"Face To Face", 
+//                             @"Wallet",
+//                             @"Settings",
+//                             @"Logout",
+//                             nil];
+    
+//    self.menuSegueIdentifiersArray = [NSArray arrayWithObjects:
+//                                      @"ShowFaceToFaceFromMenu", 
+//                                      @"ShowBalanceFromMenu",
+//                                      @"ShowSettingsFromMenu",
+//                                      @"ShowLogoutFromMenu",
+//                                      nil];
+    
+    // Setup the menu strings and seque identifiers
     self.menuStringsArray = [NSArray arrayWithObjects:
-                             @"Face To Face", 
                              @"Wallet",
-                             @"Settings",
                              @"Logout",
                              nil];
     
     self.menuSegueIdentifiersArray = [NSArray arrayWithObjects:
-                                      @"ShowFaceToFaceFromMenu", 
                                       @"ShowBalanceFromMenu",
-                                      @"ShowSettingsFromMenu",
                                       @"ShowLogoutFromMenu",
                                       nil];
+    
+    
+    
     
 }
 
@@ -245,7 +261,7 @@
     CGRect headerRect = CGRectMake(0,0,aTableView.frame.size.width,tableHeight);
     UIView *headerView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"menu-header-background.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:0.0]];  
     UILabel *headerLabel = [[UILabel alloc] initWithFrame:headerRect];
-    headerLabel.textAlignment = UITextAlignmentCenter;
+    headerLabel.textAlignment = UITextAlignmentLeft;
     headerLabel.text = headerString;
     headerLabel.backgroundColor = [UIColor clearColor];
     headerLabel.textColor = [UIColor whiteColor];
