@@ -258,13 +258,15 @@
 - (UIView *)tableView:(UITableView *)aTableView viewForHeaderInSection:(NSInteger)section {
     float tableHeight = [self tableView:aTableView heightForHeaderInSection:section];
     NSString *headerString = [self tableView:aTableView titleForHeaderInSection:section];
-    CGRect headerRect = CGRectMake(0,0,aTableView.frame.size.width,tableHeight);
-    UIView *headerView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"menu-header-background.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:0.0]];  
+    CGRect headerRect = CGRectMake(10,0,aTableView.frame.size.width,tableHeight);
+    UIView *headerView = [[UIImageView alloc] initWithFrame:headerRect];  
+    headerView.backgroundColor = [UIColor colorWithRed:(45.0/255.0) green:(45.0/255.0) blue:(45.0/255.0) alpha:1.0];
     UILabel *headerLabel = [[UILabel alloc] initWithFrame:headerRect];
     headerLabel.textAlignment = UITextAlignmentLeft;
     headerLabel.text = headerString;
     headerLabel.backgroundColor = [UIColor clearColor];
-    headerLabel.textColor = [UIColor whiteColor];
+    headerLabel.textColor = [UIColor colorWithRed:(201.0/255.0) green:(201.0/255.0) blue:(201.0/255.0) alpha:1.0];
+    headerLabel.font = [UIFont boldSystemFontOfSize:18.0];
     
     [headerView addSubview:headerLabel];
     
@@ -272,7 +274,7 @@
 }
 
 -(float)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return  20.0;
+    return  40.0;
 }
 #pragma mark - Table view delegate
 
