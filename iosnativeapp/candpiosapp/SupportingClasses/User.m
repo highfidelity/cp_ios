@@ -58,7 +58,11 @@
 // override nickname setter to decode html entities
 - (void)setStatus:(NSString *)status
 {
-    _status = [status stringByDecodingHTMLEntities];
+    NSString *cleanStatus = [status stringByDecodingHTMLEntities];
+    if ([[cleanStatus substringFromIndex:[cleanStatus length] - 1] isEqualToString:@" "]) {
+        cleanStatus = [cleanStatus substringToIndex:[cleanStatus length] - 1];
+    }
+    _status = cleanStatus;
 }
 
 // override rate setter to decode any html entities
