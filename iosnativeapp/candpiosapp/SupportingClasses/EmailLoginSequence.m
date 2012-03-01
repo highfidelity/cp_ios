@@ -15,6 +15,7 @@
 #import "FlurryAnalytics.h"
 #import "SSKeychain.h"
 #import "EmailLoginController.h"
+#import "NSString+StringToNSNumber.h"
 
 @interface EmailLoginSequence()
 @property (nonatomic, weak) UIViewController	*createOrLoginController;
@@ -323,10 +324,10 @@
                              
                              NSDictionary *userInfo = [[jsonDict objectForKey:@"params"] objectForKey:@"params"];
                              
-                             NSNumber *userId = [userInfo objectForKey:@"id"];
+                             NSString *userId = [userInfo objectForKey:@"id"];
                              NSString  *nickname = [userInfo objectForKey:@"nickname"];
                              
-                             [AppDelegate instance].settings.candpUserId = userId;
+                             [AppDelegate instance].settings.candpUserId = [userId numberFromIntString];
                              [AppDelegate instance].settings.userNickname = nickname;
                              [[AppDelegate instance] saveSettings];
                              
@@ -404,11 +405,11 @@
 			// (it's really the persistent cookie that tracks our login, but we need a superficial indicator, too)
 			NSDictionary *userInfo = [[jsonDict objectForKey:@"params"]objectForKey:@"user"];
 			
-			NSNumber *userId = [userInfo objectForKey:@"id"];
+			NSString *userId = [userInfo objectForKey:@"id"];
 			NSString  *nickname = [userInfo objectForKey:@"nickname"];
 			
 			// extract some user info
-			[AppDelegate instance].settings.candpUserId = userId;
+			[AppDelegate instance].settings.candpUserId = [userId numberFromIntString];
 			[AppDelegate instance].settings.userNickname = nickname;
 			[[AppDelegate instance] saveSettings];
             

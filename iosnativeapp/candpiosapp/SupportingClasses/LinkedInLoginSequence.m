@@ -3,6 +3,7 @@
 #import "AFNetworking.h"
 #import "FlurryAnalytics.h"
 #import "ModalWebViewController.h"
+#import "NSString+StringToNSNumber.h"
 
 @implementation LinkedInLoginSequence
 
@@ -254,11 +255,11 @@
 			// (it's really the persistent cookie that tracks our login, but we need a superficial indicator, too)
 			NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"params"];
 			
-			NSNumber *userId = [userInfo objectForKey:@"id"];
+			NSString *userId = [userInfo objectForKey:@"id"];
 			NSString  *nickname = [userInfo objectForKey:@"nickname"];
 
 			// extract some user info
-			[AppDelegate instance].settings.candpUserId = userId;
+			[AppDelegate instance].settings.candpUserId = [userId numberFromIntString];
 			[AppDelegate instance].settings.userNickname = nickname;
 			[[AppDelegate instance] saveSettings];
             

@@ -12,6 +12,7 @@
 #import "Facebook+Blocks.h"
 #import "SVProgressHUD.h"
 #import "FlurryAnalytics.h"
+#import "NSString+StringToNSNumber.h"
 
 @interface FacebookLoginSequence()
 @end
@@ -110,11 +111,11 @@
 				// so remember the success!
 				NSDictionary *userInfo = [[candpJson objectForKey:@"params"]objectForKey:@"user"];
 				
-				NSNumber *userId = [userInfo objectForKey:@"id"];
+				NSString *userId = [userInfo objectForKey:@"id"];
 				NSString *nickname = [userInfo objectForKey:@"nickname"];
 				
 				// extract some user info
-				[AppDelegate instance].settings.candpUserId = userId;
+				[AppDelegate instance].settings.candpUserId = [userId numberFromIntString];
 				[AppDelegate instance].settings.userNickname = nickname;
 				[[AppDelegate instance] saveSettings];
 
