@@ -59,9 +59,11 @@
 - (void)setStatus:(NSString *)status
 {
     NSString *cleanStatus = [status stringByDecodingHTMLEntities];
-    if ([[cleanStatus substringFromIndex:[cleanStatus length] - 1] isEqualToString:@" "]) {
-        cleanStatus = [cleanStatus substringToIndex:[cleanStatus length] - 1];
-    }
+    if ([cleanStatus length] > 0) {
+        if ([[cleanStatus substringFromIndex:[cleanStatus length] - 1] isEqualToString:@" "]) {
+            cleanStatus = [cleanStatus substringToIndex:[cleanStatus length] - 1];
+        }
+    }    
     _status = cleanStatus;
 }
 
