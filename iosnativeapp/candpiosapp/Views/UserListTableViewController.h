@@ -11,10 +11,12 @@
 
 @interface UserListTableViewController : UITableViewController {
     NSMutableArray *missions;
-    NSArray *orderedMissions;
+    NSMutableArray *checkedInMission;
+    NSString *titleForList;
 }
 
 @property (nonatomic, retain) NSMutableArray *missions;
-@property (nonatomic, retain) NSArray *orderedMissions;
+@property (nonatomic, retain) NSMutableArray *checkedInMissions;
+@property (nonatomic, copy) NSString *titleForList;
 
 @end

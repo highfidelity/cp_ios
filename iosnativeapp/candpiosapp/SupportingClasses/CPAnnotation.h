@@ -14,6 +14,7 @@
 @property (nonatomic,assign) double lat;
 @property (nonatomic,assign) double lon;
 @property (nonatomic, assign) int checkinId;
+@property (nonatomic, assign) int checkinCount;
 @property (nonatomic, assign) bool checkedIn;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subtitle;

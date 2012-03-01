@@ -17,7 +17,7 @@
 
 @implementation UserListTableViewController
 
-@synthesize missions, orderedMissions;
+@synthesize missions, checkedInMissions, titleForList;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -42,8 +42,8 @@
 {
     [super viewDidLoad];
 
-    self.title = @"List";
-    
+    self.title = self.titleForList;
+
     // Iterate through the passed missions and only show the ones that were within the map bounds, ordered by distance
 
     CLLocation *currentLocation = [AppDelegate instance].settings.lastKnownLocation;
@@ -70,7 +70,11 @@
             [goodUserIds addObject:userId];
         }        
     }
-    
+
+    // first sort using checkinId so that we dont remove the most resent checkin by the user
+    NSSortDescriptor *d = [[NSSortDescriptor alloc] initWithKey:@"checkinId" ascending:YES];
+    [missions sortUsingDescriptors:[NSArray arrayWithObjects:d,nil]];
+
     // Clean up old checkins
     for (NSNumber *userId in badUserIds) {
         NSArray *duplicates = [missions filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"userId == %d", [userId integerValue]]];
@@ -79,13 +83,23 @@
             [badAnnotations addObject:[duplicates objectAtIndex:i]];
         }        
     }
-    
     [missions removeObjectsInArray:badAnnotations];
+    
+    
+    checkedInMissions = [[NSMutableArray alloc] init];
+    for (CPAnnotation *mission in missions) {
+        if (mission.checkedIn) {
+            [checkedInMissions addObject:mission];
+        }
+    }
+    
+    [missions removeObjectsInArray:checkedInMissions];
     
     // Could sort by checkinId in reverse order to get most recent checkins
     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"distance" ascending:YES];
 
     [missions sortUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
+    [checkedInMissions sortUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
 }
 
 - (void)viewDidUnload
@@ -125,41 +139,56 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return @"Here now";
+    }
+    if (section == 1) {
+        return @"Last 7 days";
+    }
+    
+    return @"";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"Count: %d", [missions count]);
-    return [missions count];
+    if (section == 0) {
+        NSLog(@"Count: %d", [checkedInMissions count]);
+        return [checkedInMissions count];
+    }
+    if (section == 1) {
+        NSLog(@"Count: %d", [missions count]);
+        return [missions count];
+    }
+        
+    NSLog(@"Section %d doesn't exist", section);
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return a slightly taller final cell if more than 5 rows, and on the last row, to compensate for the Check In button cutting into the view
-
-    if ([missions count] > 5 && indexPath.row < ([missions count] - 1)) {
-        return 60;
-    }
-    else {
-        return 70;
-    }
+    return 60;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"UserListCustomCell";
     
     UserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UserTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.selectionStyle = UITableViewCellSelectionStyleGray;
-    
+
     // Configure the cell...
-    
-    CPAnnotation *annotation = [missions objectAtIndex:indexPath.row];
+    CPAnnotation *annotation;
+    if ([indexPath section] == 0) {
+        annotation = [checkedInMissions objectAtIndex:indexPath.row];
+    }
+    else {
+        annotation = [missions objectAtIndex:indexPath.row];
+    }
 
     // Add FaceToFace information
     NSString* haveMet = @"";
@@ -168,23 +197,32 @@
     }
     
     cell.nicknameLabel.text = [annotation.nickname stringByAppendingString:haveMet];
-    cell.statusLabel.text = annotation.status;
+
+    cell.statusLabel.text = @"";
+    if (![annotation.status isEqualToString:@""]) {
+        cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",annotation.status];
+    }
     cell.distanceLabel.text = annotation.distanceTo;
-    
-    //if (annotation.skills != [NSNull null]) {
-    //    cell.skillsLabel.text = annotation.skills;
-    //}
-        
+
+    cell.checkInLabel.text = annotation.venueName;
+    if (annotation.checkinCount == 1) {
+        cell.checkInCountLabel.text = [NSString stringWithFormat:@"%d Checkin",annotation.checkinCount];
+    }
+    else {
+        cell.checkInCountLabel.text = [NSString stringWithFormat:@"%d Checkins",annotation.checkinCount];
+    }
+
+    UIImageView *imageView = cell.profilePictureImageView;
     if (annotation.imageUrl) {
-		cell.imageView.frame = CGRectMake(0, 0, 32, 32);
-        cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
+
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
         
-        [cell.imageView setImageWithURL:[NSURL URLWithString:annotation.imageUrl]
+        [imageView setImageWithURL:[NSURL URLWithString:annotation.imageUrl]
                        placeholderImage:[UIImage imageNamed:@"defaultAvatar50"]];
     }
     else
     {
-        cell.imageView.image = [UIImage imageNamed:@"defaultAvatar50"];
+        imageView.image = [UIImage imageNamed:@"defaultAvatar50"];
     }
     
     return cell;
@@ -193,9 +231,25 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self performSegueWithIdentifier:@"ShowUserProfileCheckedInFromList" sender:self];
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+
+    NSString *title = [self tableView:tableView titleForHeaderInSection:section];
+
+    UIView *theView = [[UIView alloc] init];
+    theView.backgroundColor = RGBA(66, 66, 66, 1);
+
+    UILabel *label = [[UILabel alloc] init];
+    label.text = title;
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
+    [label sizeToFit];
+
+    label.frame = CGRectMake(label.frame.origin.x+10, label.frame.origin.y+1, label.frame.size.width, label.frame.size.height);
+
+    [theView addSubview:label];
+
+    return theView;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -203,7 +257,14 @@
     if ([[segue identifier] isEqualToString:@"ShowUserProfileCheckedInFromList"]) {
         
         NSIndexPath *path = [self.tableView indexPathForSelectedRow];
-        CPAnnotation *annotation = [missions objectAtIndex:path.row];
+        
+        CPAnnotation *annotation;
+        if ([path section] == 0) {
+            annotation = [checkedInMissions objectAtIndex:path.row];
+        }
+        else {
+            annotation = [missions objectAtIndex:path.row];
+        }
         
         // setup a user object with the info we have from the pin and callout
         // so that this information can already be in the resume without having to load it

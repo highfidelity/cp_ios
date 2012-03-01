@@ -654,12 +654,17 @@ BOOL zoomedOut = NO;
         [[segue destinationViewController] setUser:selectedUser];
     }
     else if ([[segue identifier] isEqualToString:@"ShowUserListTable"]) {
+        [[segue destinationViewController] setTitleForList: @"List"];
         [[segue destinationViewController] setMissions: fullDataset.annotations];
     }
     else if ([[segue identifier] isEqualToString:@"ShowUserClusterTable"]) {
         OCAnnotation *tappedObj = [sender annotation];
         NSArray *annotations = tappedObj.annotationsInCluster;
-        NSMutableArray *filteredArray = [[NSMutableArray alloc] init];
+        [[segue destinationViewController] setTitleForList: tappedObj.title];
+        [[segue destinationViewController] setMissions: [annotations mutableCopy]];
+
+//        [[segue destinationViewController] setMissions: fullDataset.annotations];
+/*        NSMutableArray *filteredArray = [[NSMutableArray alloc] init];
         
         for (CPAnnotation *annotation in annotations) {
             if (tappedObj.hasCheckins && annotation.checkedIn) {
@@ -676,6 +681,7 @@ BOOL zoomedOut = NO;
         }
         
         [[segue destinationViewController] setMissions: filteredArray];
+*/
     }
 }
 

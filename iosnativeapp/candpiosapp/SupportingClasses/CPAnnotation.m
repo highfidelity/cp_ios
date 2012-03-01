@@ -14,6 +14,7 @@
 @synthesize objectId;
 @synthesize checkedIn;
 @synthesize checkinId;
+@synthesize checkinCount;
 @synthesize _groupTag;
 @synthesize venueName;
 @synthesize nickname, status, skills, userId, distance, distanceTo, haveMet;
@@ -45,6 +46,7 @@
 		objectId = [[jsonDict objectForKey:@"id"] copy];
 		checkedIn = [[jsonDict objectForKey:@"checked_in"] boolValue];
         checkinId = [[jsonDict objectForKey:@"checkin_id"] intValue];
+        checkinCount = [[jsonDict objectForKey:@"checkin_count"] intValue];
 		id imageUrlObj = [jsonDict objectForKey:@"filename"];
 		if(imageUrlObj && imageUrlObj != [NSNull null])
 			imageUrl = [imageUrlObj copy];

@@ -9,13 +9,20 @@
 #import <UIKit/UIKit.h>
 
 @interface UserTableViewCell : UITableViewCell {
-    UILabel *nickameLabel;
+    UILabel *nicknameLabel;
     UILabel *statusLabel;
     UILabel *distanceLabel;
+    UILabel *checkInLabel;
+    UILabel *checkInCountLabel;
+    UIImageView *profilePictureImageView;
 }
 
-@property (nonatomic, retain) UILabel *nicknameLabel;
-@property (nonatomic, retain) UILabel *statusLabel;
-@property (nonatomic, retain) UILabel *distanceLabel;
+@property (nonatomic, retain) IBOutlet UILabel *nicknameLabel;
+@property (nonatomic, retain) IBOutlet UILabel *statusLabel;
+@property (nonatomic, retain) IBOutlet UILabel *distanceLabel;
+@property (nonatomic, retain) IBOutlet UILabel *checkInLabel;
+@property (nonatomic, retain) IBOutlet UILabel *checkInCountLabel;
+@property (nonatomic, retain) IBOutlet UIImageView *profilePictureImageView;
+
 
 @end
