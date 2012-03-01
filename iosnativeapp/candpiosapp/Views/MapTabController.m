@@ -178,14 +178,7 @@ BOOL zoomedOut = NO;
 
 - (void)refreshLocationsAfterDelay
 {
-    bigZoomLevelChange = YES;
-    
-    NSTimer *refreshTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
-												   target:self
-												 selector:@selector(refreshLocations)
-												 userInfo:nil
-												  repeats:NO];
-    [refreshTimer fire];
+    [self refreshButtonClicked:nil];
 }
 
 -(void)refreshLocationsIfNeeded
