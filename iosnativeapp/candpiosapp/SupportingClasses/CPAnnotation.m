@@ -60,6 +60,10 @@
             self.title = venueName;
         }
         
+        if (!self.title) {
+            self.title = @"A Place With No Name";
+        }
+        
         if (checkedIn) {
             subtitle = @"1 person here now";
         }
