@@ -148,6 +148,7 @@
 		53BC266E14E4624200D16D4B /* others-at-venue~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BC266C14E4624200D16D4B /* others-at-venue~iphone.png */; };
 		53C4A78814FC3E630010801B /* texture-diagonal-noise-light.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C4A78714FC3E630010801B /* texture-diagonal-noise-light.png */; };
 		53C4A78A14FC3E7C0010801B /* texture-diagonal-noise-light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C4A78914FC3E7C0010801B /* texture-diagonal-noise-light@2x.png */; };
+		53D3344D15001B020011EA70 /* NSString+StringToNSNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D3344C15001B020011EA70 /* NSString+StringToNSNumber.m */; };
 		53D65B4514EEEC2D00801C5E /* CheckInDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D65B4414EEEC2D00801C5E /* CheckInDetailsViewController.m */; };
 		53D65B4914EF0D6100801C5E /* texture-diagonal-noise.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D65B4714EF0D6100801C5E /* texture-diagonal-noise.png */; };
 		53D65B4A14EF0D6100801C5E /* texture-diagonal-noise@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D65B4814EF0D6100801C5E /* texture-diagonal-noise@2x.png */; };
@@ -163,7 +164,7 @@
 		53DC696214E48DB700D64175 /* verified-linked-in~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DC695E14E48DB700D64175 /* verified-linked-in~iphone.png */; };
 		53FB9E3514E089BC00F4CC7F /* map-marker@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FB9E3314E089BC00F4CC7F /* map-marker@2x~iphone.png */; };
 		53FB9E3614E089BC00F4CC7F /* map-marker~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FB9E3414E089BC00F4CC7F /* map-marker~iphone.png */; };
-		53FB9E4414E099BB00F4CC7F /* LocalizedDistanceCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FB9E4314E099BA00F4CC7F /* LocalizedDistanceCalculator.m */; };
+		53FB9E4414E099BB00F4CC7F /* CPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FB9E4314E099BA00F4CC7F /* CPUtils.m */; };
 		53FB9E4914E0A81300F4CC7F /* available-for-icon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FB9E4514E0A81300F4CC7F /* available-for-icon@2x~iphone.png */; };
 		53FB9E4A14E0A81300F4CC7F /* available-for-icon~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FB9E4614E0A81300F4CC7F /* available-for-icon~iphone.png */; };
 		53FB9E4B14E0A81300F4CC7F /* checked-in-location@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FB9E4714E0A81300F4CC7F /* checked-in-location@2x~iphone.png */; };
@@ -528,6 +529,8 @@
 		53BC266C14E4624200D16D4B /* others-at-venue~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "others-at-venue~iphone.png"; sourceTree = "<group>"; };
 		53C4A78714FC3E630010801B /* texture-diagonal-noise-light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "texture-diagonal-noise-light.png"; sourceTree = "<group>"; };
 		53C4A78914FC3E7C0010801B /* texture-diagonal-noise-light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "texture-diagonal-noise-light@2x.png"; sourceTree = "<group>"; };
+		53D3344B15001B020011EA70 /* NSString+StringToNSNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+StringToNSNumber.h"; sourceTree = "<group>"; };
+		53D3344C15001B020011EA70 /* NSString+StringToNSNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+StringToNSNumber.m"; sourceTree = "<group>"; };
 		53D65B4314EEEC2D00801C5E /* CheckInDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckInDetailsViewController.h; path = Views/CheckInDetailsViewController.h; sourceTree = "<group>"; };
 		53D65B4414EEEC2D00801C5E /* CheckInDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInDetailsViewController.m; path = Views/CheckInDetailsViewController.m; sourceTree = "<group>"; };
 		53D65B4714EF0D6100801C5E /* texture-diagonal-noise.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "texture-diagonal-noise.png"; sourceTree = "<group>"; };
@@ -544,8 +547,8 @@
 		53DC695E14E48DB700D64175 /* verified-linked-in~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "verified-linked-in~iphone.png"; sourceTree = "<group>"; };
 		53FB9E3314E089BC00F4CC7F /* map-marker@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-marker@2x~iphone.png"; sourceTree = "<group>"; };
 		53FB9E3414E089BC00F4CC7F /* map-marker~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-marker~iphone.png"; sourceTree = "<group>"; };
-		53FB9E4214E099BA00F4CC7F /* LocalizedDistanceCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalizedDistanceCalculator.h; path = SupportingClasses/LocalizedDistanceCalculator.h; sourceTree = "<group>"; };
-		53FB9E4314E099BA00F4CC7F /* LocalizedDistanceCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalizedDistanceCalculator.m; path = SupportingClasses/LocalizedDistanceCalculator.m; sourceTree = "<group>"; };
+		53FB9E4214E099BA00F4CC7F /* CPUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPUtils.h; path = SupportingClasses/CPUtils.h; sourceTree = "<group>"; };
+		53FB9E4314E099BA00F4CC7F /* CPUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPUtils.m; path = SupportingClasses/CPUtils.m; sourceTree = "<group>"; };
 		53FB9E4514E0A81300F4CC7F /* available-for-icon@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "available-for-icon@2x~iphone.png"; sourceTree = "<group>"; };
 		53FB9E4614E0A81300F4CC7F /* available-for-icon~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "available-for-icon~iphone.png"; sourceTree = "<group>"; };
 		53FB9E4714E0A81300F4CC7F /* checked-in-location@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked-in-location@2x~iphone.png"; sourceTree = "<group>"; };
@@ -1036,10 +1039,12 @@
 			children = (
 				6F0B454014F6CEE40074DBD9 /* CPAlertView.h */,
 				6F0B454114F6CEE40074DBD9 /* CPAlertView.m */,
-				53FB9E4214E099BA00F4CC7F /* LocalizedDistanceCalculator.h */,
-				53FB9E4314E099BA00F4CC7F /* LocalizedDistanceCalculator.m */,
+				53FB9E4214E099BA00F4CC7F /* CPUtils.h */,
+				53FB9E4314E099BA00F4CC7F /* CPUtils.m */,
 				534FC97D14EF1E77008C87B9 /* CPUIHelper.h */,
 				534FC97E14EF1E77008C87B9 /* CPUIHelper.m */,
+				53D3344B15001B020011EA70 /* NSString+StringToNSNumber.h */,
+				53D3344C15001B020011EA70 /* NSString+StringToNSNumber.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1923,7 +1928,7 @@
 				875CB8F414C5DC8C00AD4F6E /* MapDataSet.m in Sources */,
 				6F5EB26C14DB51E40000294E /* OneOnOneChatViewController.m in Sources */,
 				5390190514D9D9AF0052100B /* User.m in Sources */,
-				53FB9E4414E099BB00F4CC7F /* LocalizedDistanceCalculator.m in Sources */,
+				53FB9E4414E099BB00F4CC7F /* CPUtils.m in Sources */,
 				53FB9E4F14E0AE4600F4CC7F /* FoursquareAPIRequest.m in Sources */,
 				6FEEDFFC14E103F400861CA1 /* CPapi.m in Sources */,
 				3294F13A14E1DE77004590AC /* LinkedInLoginSequence.m in Sources */,
@@ -1976,6 +1981,7 @@
 				4EBD1D4614FEC1C700E9C0C6 /* BaseLoginController.m in Sources */,
 				4EBD1D4714FEC1C700E9C0C6 /* CreateLoginController.m in Sources */,
 				4EBD1D4914FEC1C700E9C0C6 /* EmailLoginController.m in Sources */,
+				53D3344D15001B020011EA70 /* NSString+StringToNSNumber.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
