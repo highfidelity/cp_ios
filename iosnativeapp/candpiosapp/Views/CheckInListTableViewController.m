@@ -138,7 +138,7 @@
         NSArray *itemsArray = [[[[json valueForKey:@"response"] valueForKey:@"groups"] valueForKey:@"items"] objectAtIndex:0];
         
         CLLocation *userLocation = [[AppDelegate instance].settings lastKnownLocation];
-        
+
         // iterate through the results and add them to the places array
         for (NSMutableDictionary *item in itemsArray) {
             CPPlace *place = [[CPPlace alloc] init];
@@ -150,6 +150,37 @@
             place.zip = [[item valueForKey:@"location"] valueForKey:@"postalCode"];
             place.lat = [[item valueForKeyPath:@"location.lat"] doubleValue];
             place.lng = [[item valueForKeyPath:@"location.lng"] doubleValue];
+            place.phone = [[item valueForKey:@"contact"] valueForKey:@"phone"];
+
+            if ([item valueForKey:@"categories"] && [[item valueForKey:@"categories"] count] > 0) {
+                place.icon = [[[item valueForKey:@"categories"] objectAtIndex:0] valueForKey:@"icon"];
+            }
+            else {
+                place.icon = @"";
+            }
+            
+            // Don't allow any blank fields
+            if (!place.address) {
+                place.address = @"";
+            }
+            
+            if (!place.city) {
+                place.city = @"";
+            }
+            
+            if (!place.state) {
+                place.state = @"";
+            }
+            
+            if (!place.zip) {
+                place.zip = @"";
+            }
+            
+            if (!place.phone) {
+                place.phone = @"";
+            }
+
+
             CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:place.lat longitude:place.lng];
             place.distanceFromUser = [placeLocation distanceFromLocation:userLocation];
             [places addObject:place];

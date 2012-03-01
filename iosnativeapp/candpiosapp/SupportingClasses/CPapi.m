@@ -480,7 +480,6 @@
 + (void)checkInToLocation:(CPPlace *)place
               checkInTime:(NSInteger)checkInTime
              checkOutTime:(NSInteger)checkOutTime
-             foursquareID:(NSString *)foursquareID
                statusText:(NSString *)stausText
           completionBlock:(void (^)(NSDictionary *, NSError *))completion
 {        
@@ -494,9 +493,15 @@
                   forKey:@"checkin"];
     [parameters setValue:[NSString stringWithFormat:@"%d", checkOutTime]
                   forKey:@"checkout"];
-    [parameters setValue:foursquareID forKey:@"foursquare"];
+    [parameters setValue:place.foursquareID forKey:@"foursquare"];
+    [parameters setValue:place.address forKey:@"address"];
+    [parameters setValue:place.city forKey:@"city"];
+    [parameters setValue:place.state forKey:@"state"];
+    [parameters setValue:place.zip forKey:@"zip"];
+    [parameters setValue:place.phone forKey:@"phone"];
+    [parameters setValue:place.icon forKey:@"icon"];
     [parameters setValue:stausText forKey:@"status"];
-    
+        
     [self makeHTTPRequestWithAction:@"checkin"
                      withParameters:parameters
                          completion:completion];

@@ -15,6 +15,7 @@
 @synthesize checkedIn;
 @synthesize checkinId;
 @synthesize _groupTag;
+@synthesize venueName;
 @synthesize nickname, status, skills, userId, distance, distanceTo, haveMet;
 
 -(id)initFromDictionary:(NSDictionary*)jsonDict
@@ -51,11 +52,12 @@
         id foursquareObj = [jsonDict objectForKey:@"foursquare"];
         if (foursquareObj && foursquareObj != [NSNull null] && ![foursquareObj isEqualToString:@"0"]) {
             _groupTag = foursquareObj;
-            self.title = foursquareObj;
         }
 
-        if (!self.title) {
-            self.title = @"Venue Name";
+        id venueObj = [jsonDict objectForKey:@"venue_name"];
+        if (venueObj && venueObj != [NSNull null] && ![venueObj isEqualToString:@""]) {
+            venueName = venueObj;
+            self.title = venueName;
         }
         
         if (checkedIn) {

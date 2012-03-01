@@ -12,6 +12,7 @@
 @synthesize city = _city;
 @synthesize state = _state;
 @synthesize zip = _zip;
+@synthesize phone = _phone;
 @synthesize lat = _lat;
 @synthesize lng = _lng;
 @synthesize othersHere = _othersHere;

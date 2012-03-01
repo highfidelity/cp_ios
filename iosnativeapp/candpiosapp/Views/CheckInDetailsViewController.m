@@ -264,7 +264,7 @@
     [SVProgressHUD showWithStatus:@"Checking In..."];
     
     // use CPapi to checkin
-    [CPapi checkInToLocation:self.place checkInTime:checkInTime checkOutTime:checkOutTime foursquareID:foursquareID statusText:statusText completionBlock:^(NSDictionary *json, NSError *error){
+    [CPapi checkInToLocation:self.place checkInTime:checkInTime checkOutTime:checkOutTime statusText:statusText completionBlock:^(NSDictionary *json, NSError *error){
         // hide the SVProgressHUD
         [SVProgressHUD dismiss];
         if (!error) {

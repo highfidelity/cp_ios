@@ -20,6 +20,7 @@
 @property (nonatomic, copy) NSString *imageUrl;
 @property (nonatomic, copy) NSString *objectId;
 @property (nonatomic, copy) NSString *_groupTag;
+@property (nonatomic, copy) NSString *venueName;
 
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *skills;

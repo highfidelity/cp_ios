@@ -164,11 +164,11 @@
                     usersCheckedIn++;
                 }
 
-                if (thisAnnotation.groupTag) {
-                    [venues addObject:thisAnnotation.groupTag];
+                if (thisAnnotation.venueName) {
+                    [venues addObject:thisAnnotation.venueName];
 
                     if (thisAnnotation.checkedIn) {
-                        [checkedInVenues addObject:thisAnnotation.groupTag];
+                        [checkedInVenues addObject:thisAnnotation.venueName];
                     }
                 }
             }

@@ -42,7 +42,6 @@
 + (void)checkInToLocation:(CPPlace *)place
               checkInTime:(NSInteger)checkInTime
              checkOutTime:(NSInteger)checkOutTime
-             foursquareID:(NSString *)foursquareID
                statusText:(NSString *)stausText
           completionBlock:(void (^)(NSDictionary *, NSError *))completion;
 
