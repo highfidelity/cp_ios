@@ -6,7 +6,7 @@
 #import "SVProgressHUD.h"
 #import "SignupController.h"
 #import "CheckInListCell.h"
-#import "LocalizedDistanceCalculator.h"
+#import "CPUtils.h"
 
 @implementation CheckInListTableViewController
 
@@ -227,7 +227,8 @@
     return [places count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {    
     // note that this code will cause the app to crash if these identifiers don't match what is in the storyboard
     // we'd catch that before going to the store, but be careful
@@ -239,7 +240,7 @@
     } else {
         // get the localized distance string based on the distance of this venue from the user
         // which we set when we sort the places
-        cell.distanceString.text = [LocalizedDistanceCalculator localizedDistanceStringForDistance:[[places objectAtIndex:indexPath.row] distanceFromUser]];
+        cell.distanceString.text = [CPUtils localizedDistanceStringForDistance:[[places objectAtIndex:indexPath.row] distanceFromUser]];
         
         cell.venueAddress.text = [[[places objectAtIndex:indexPath.row] address] description];
         if (!cell.venueAddress.text) {
