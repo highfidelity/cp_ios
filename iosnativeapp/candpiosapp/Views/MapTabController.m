@@ -76,7 +76,7 @@ BOOL zoomedOut = NO;
 
     // Register to receive userCheckedIn notification to intitiate map refresh immediately after user checks in
     [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(refreshLocations) 
+                                             selector:@selector(refreshLocationsAfterDelay) 
                                                  name:@"userCheckedIn" 
                                                object:nil];
     
@@ -174,6 +174,18 @@ BOOL zoomedOut = NO;
     fullDataset = [[MapDataSet alloc] init];
     [self.mapView removeAllAnnotations];
     [self refreshLocations];
+}
+
+- (void)refreshLocationsAfterDelay
+{
+    bigZoomLevelChange = YES;
+    
+    NSTimer *refreshTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
+												   target:self
+												 selector:@selector(refreshLocations)
+												 userInfo:nil
+												  repeats:NO];
+    [refreshTimer fire];
 }
 
 -(void)refreshLocationsIfNeeded
@@ -511,7 +523,7 @@ BOOL zoomedOut = NO;
 //        }
         
         // Need to set a unique identifier to prevent any weird formatting issues -- use a combination of annotationsInCluster.count + hasCheckedInUsers value + smallPin value
-        NSString *reuseId = [NSString stringWithFormat:@"cluster-%d-%d-%d", imageSources.count, hasCheckedInUsers, smallPin];
+        NSString *reuseId = [NSString stringWithFormat:@"cluster-%d-%d-%d", (hasCheckedInUsers) ? checkedInUsers : imageSources.count, hasCheckedInUsers, smallPin];
         
         MKAnnotationView *pin = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
 
