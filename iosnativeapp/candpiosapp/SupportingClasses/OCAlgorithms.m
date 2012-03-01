@@ -35,7 +35,7 @@
             }
         }
     }
-   
+
     // Iterate through all previous clusters to remove any that no longer have an annotation close to them
     for (id <MKAnnotation> annotation in clusteredAnnotations) {
 //        BOOL removeAnnotation = NO;
@@ -55,7 +55,7 @@
 
         for (OCAnnotation *clusterAnnotation in clusteredAnnotations) {
             // If the annotation is in range of the Cluster add it to it
-            if (isLocationNearToOtherLocation([annotation coordinate], [clusterAnnotation coordinate], radius) && clusterAnnotation != annotation) {
+            if (isLocationNearToOtherLocation([annotation coordinate], [clusterAnnotation coordinate], radius) && clusterAnnotation != annotation && allowClustering) {
                 [removeAnnotations addObject:annotation];
                 [removeAnnotations addObject:clusterAnnotation];
             }
@@ -76,7 +76,7 @@
 		BOOL isContaining = NO;
 
 		// If it's the first one, add it as new cluster annotation
-		if([clusteredAnnotations count] == 0 || !allowClustering){
+		if([clusteredAnnotations count] == 0){
             OCAnnotation *newCluster = [[OCAnnotation alloc] initWithAnnotation:annotation];
             [clusteredAnnotations addObject:newCluster];
             // check group
@@ -174,7 +174,7 @@
             }
         }
 
-        if ((venues.count > 1 && !hasCheckedIn) || (checkedInVenues.count > 1 && hasCheckedIn)) {
+        if (((venues.count > 1 && !hasCheckedIn) || (checkedInVenues.count > 1 && hasCheckedIn)) && allowClustering) {
             clusterAnnotation.title = @"Zoom In To See Places";
         }
         else if (venues.count == 1 && !hasCheckedIn) {
