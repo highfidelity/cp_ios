@@ -666,13 +666,16 @@ BOOL zoomedOut = NO;
                 [filteredArray addObject:annotation];
             }
             else if (!tappedObj.hasCheckins) {
-                [filteredArray addObject:annotation];
+                if (![tappedObj.groupTag isEqualToString:@"0"] && [annotation.groupTag isEqualToString:tappedObj.groupTag]) {
+                    [filteredArray addObject:annotation];
+                }
+                else if ([tappedObj.groupTag isEqualToString:@"0"]) {
+                    [filteredArray addObject:annotation];
+                }
             }
         }
         
-        [[segue destinationViewController] setMissions: [annotations mutableCopy]];
-
-//        [[segue destinationViewController] setMissions: fullDataset.annotations];
+        [[segue destinationViewController] setMissions: filteredArray];
     }
 }
 
