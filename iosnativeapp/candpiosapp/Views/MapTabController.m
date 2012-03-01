@@ -662,26 +662,6 @@ BOOL zoomedOut = NO;
         NSArray *annotations = tappedObj.annotationsInCluster;
         [[segue destinationViewController] setTitleForList: tappedObj.title];
         [[segue destinationViewController] setMissions: [annotations mutableCopy]];
-
-//        [[segue destinationViewController] setMissions: fullDataset.annotations];
-/*        NSMutableArray *filteredArray = [[NSMutableArray alloc] init];
-        
-        for (CPAnnotation *annotation in annotations) {
-            if (tappedObj.hasCheckins && annotation.checkedIn) {
-                [filteredArray addObject:annotation];
-            }
-            else if (!tappedObj.hasCheckins) {
-                if (![tappedObj.groupTag isEqualToString:@"0"] && [annotation.groupTag isEqualToString:tappedObj.groupTag]) {
-                    [filteredArray addObject:annotation];
-                }
-                else if ([tappedObj.groupTag isEqualToString:@"0"]) {
-                    [filteredArray addObject:annotation];
-                }
-            }
-        }
-        
-        [[segue destinationViewController] setMissions: filteredArray];
-*/
     }
 }
 
