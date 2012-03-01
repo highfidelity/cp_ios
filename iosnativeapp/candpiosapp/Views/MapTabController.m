@@ -659,6 +659,17 @@ BOOL zoomedOut = NO;
     else if ([[segue identifier] isEqualToString:@"ShowUserClusterTable"]) {
         OCAnnotation *tappedObj = [sender annotation];
         NSArray *annotations = tappedObj.annotationsInCluster;
+        NSMutableArray *filteredArray = [[NSMutableArray alloc] init];
+        
+        for (CPAnnotation *annotation in annotations) {
+            if (tappedObj.hasCheckins && annotation.checkedIn) {
+                [filteredArray addObject:annotation];
+            }
+            else if (!tappedObj.hasCheckins) {
+                [filteredArray addObject:annotation];
+            }
+        }
+        
         [[segue destinationViewController] setMissions: [annotations mutableCopy]];
 
 //        [[segue destinationViewController] setMissions: fullDataset.annotations];
@@ -733,55 +744,6 @@ BOOL zoomedOut = NO;
 {
 	[SVProgressHUD dismiss];
 }
-
-/*
-- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
-    if ([view.annotation isKindOfClass:[OCAnnotation class]]) {
-        OCAnnotation *annotation = (OCAnnotation *)view.annotation;
-
-        NSInteger i = 0;
-        
-        NSMutableSet *venues = [[NSMutableSet alloc] init];
-        
-        for (CandPAnnotation *cpAnnotation in annotation.annotationsInCluster) {
-            if (cpAnnotation.checkedIn) i++;
-            if (cpAnnotation.groupTag) {
-                [venues addObject:cpAnnotation.groupTag];
-            }
-        }
-
-        if (venues.count > 1) {
-            annotation.title = @"Zoom In To See Places";
-        }
-        else if (venues.count == 1) {
-            annotation.title = [venues anyObject];
-        }
-        else {
-            annotation.title = @"A Place With No Name";
-        }
-
-        if (annotation.hasCheckins) {
-            annotation.subtitle = [NSString stringWithFormat:@"%d %@ here now", i, (i != 1) ? @"people" : @"person"];
-        }
-        else {
-            annotation.subtitle = [NSString stringWithFormat:@"%d checkin%@ in the last week", annotation.annotationsInCluster.count, (annotation.annotationsInCluster.count != 1) ? @"s" : @""];
-        }
-    }
-    else if ([view.annotation isKindOfClass:[CandPAnnotation class]]) {
-        CandPAnnotation *annotation = (CandPAnnotation *)view.annotation;
-        
-        annotation.title = annotation.groupTag;
-        
-        if (annotation.checkedIn) {
-            annotation.subtitle = @"1 person here now";
-        }
-        else {
-            annotation.subtitle = @"1 checkin in the last week";
-        }
-        
-    }
-}
-*/
 
 // zoom to the location; on initial load & after updaing their pos
 -(void)zoomTo:(CLLocationCoordinate2D)loc
