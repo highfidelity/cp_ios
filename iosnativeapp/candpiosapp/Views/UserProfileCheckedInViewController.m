@@ -10,7 +10,7 @@
 #import "AFHTTPClient.h"
 #import "UIImageView+WebCache.h"
 #import "AppDelegate.h"
-#import "LocalizedDistanceCalculator.h"
+#import "CPUtils.h"
 #import "FoursquareAPIRequest.h"
 #import "AFJSONRequestOperation.h"
 #import "CPUIHelper.h"
@@ -195,7 +195,7 @@
     if ([AppDelegate instance].settings.hasLocation) {
         CLLocation *myLocation = [[AppDelegate instance].settings lastKnownLocation];
         CLLocation *otherUserLocation = [[CLLocation alloc] initWithLatitude:self.user.location.latitude longitude:self.user.location.longitude];
-        NSString *distance = [LocalizedDistanceCalculator localizedDistanceofLocationA:myLocation awayFromLocationB:otherUserLocation];
+        NSString *distance = [CPUtils localizedDistanceofLocationA:myLocation awayFromLocationB:otherUserLocation];
         self.distanceLabel.text = distance;
     }
     

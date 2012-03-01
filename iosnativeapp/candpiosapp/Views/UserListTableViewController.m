@@ -58,7 +58,7 @@
         
         annotation.distance = [location distanceFromLocation:currentLocation];
 
-        annotation.distanceTo = [LocalizedDistanceCalculator localizedDistanceofLocationA:currentLocation awayFromLocationB:location];
+        annotation.distanceTo = [CPUtils localizedDistanceofLocationA:currentLocation awayFromLocationB:location];
         
         // Check if this person already has a checkin, and if so, mark the user as needing to clean up old checkins
         NSNumber *userId = [NSNumber numberWithInteger:annotation.userId];
