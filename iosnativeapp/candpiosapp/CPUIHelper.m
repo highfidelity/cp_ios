@@ -35,6 +35,12 @@
                         forBarMetrics: UIBarMetricsDefault];
 }
 
++ (void)addDarkToolbarStyleToToolbar:(UIToolbar *)toolbar
+{
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header.png"]];
+    [toolbar insertSubview:imageView atIndex:1];
+}
+
 // apparently it is a bad idea to subclass UIButton
 // this method will give you a UIButton with C&P styling
 

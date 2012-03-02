@@ -1,6 +1,6 @@
 #import "CPPlace.h"
 #import "AppDelegate.h"
-#import "LocalizedDistanceCalculator.h"
+#import "CPUtils.h"
 #import <CoreLocation/CoreLocation.h>
 
 @implementation CPPlace

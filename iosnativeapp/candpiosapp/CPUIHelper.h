@@ -30,6 +30,8 @@ typedef enum {
 
 + (void)addDarkNavigationBarStyleToViewController:(UIViewController *)viewController;
 
++ (void)addDarkToolbarStyleToToolbar:(UIToolbar *)toolbar;
+
 + (UIButton *)CPButtonWithText:(NSString *)buttonText 
              color:(CPButtonColor)buttonColor
              frame:(CGRect)buttonFrame;
