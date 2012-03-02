@@ -30,7 +30,11 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if(self)
 	{
+        // create client for web based logins
 		httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
+        // set a liberal cookie policy
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy: NSHTTPCookieAcceptPolicyAlways];    
+        
 	}
 	return self;
 }

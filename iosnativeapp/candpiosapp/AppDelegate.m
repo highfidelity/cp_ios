@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "FacebookLoginSequence.h"
 #import "AFHTTPClient.h"
+#import "SignupController.h"
 //#import "FaceToFaceInviteController.h" // TODO: replace with F2FHelper
 #import "FaceToFaceHelper.h"
 #import "ChatHelper.h"
@@ -28,7 +28,7 @@
 @implementation AppDelegate
 @synthesize settings;
 @synthesize facebook;
-@synthesize loginSequence;
+@synthesize facebookLoginController;
 @synthesize urbanAirshipClient;
 @synthesize settingsMenuController;
 @synthesize rootNavigationController;
@@ -345,11 +345,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 // implement the Facebook Delegate
 - (void)fbDidLogin 
 {
-	if (loginSequence &&
-        [loginSequence respondsToSelector:@selector( handleResponseFromFacebookLogin)])
-    {
-		[(FacebookLoginSequence*) loginSequence handleResponseFromFacebookLogin];
-    }
+    [facebookLoginController handleResponseFromFacebookLogin];
 }
 
 -(void)logoutEverything

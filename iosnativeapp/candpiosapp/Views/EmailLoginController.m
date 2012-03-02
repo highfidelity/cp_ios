@@ -16,6 +16,7 @@
 #import "AFHTTPClient.h"
 #import "CreateLoginController.h"
 #import "NSString+StringToNSNumber.h"
+#import "CPUIHelper.h"
 
 @interface EmailLoginController ()
 @end
@@ -56,8 +57,8 @@
 #pragma mark - View lifecycle
 
 - (void)viewWillAppear:(BOOL)animated {
-    self.signupButton.alpha = 0;
-    self.forgotPasswordButton.alpha = 0;
+    [CPUIHelper makeButtonCPButton:self.signupButton withCPButtonColor:CPButtonGrey];
+    [CPUIHelper makeButtonCPButton:self.forgotPasswordButton withCPButtonColor:CPButtonGrey];
     self.navigationItem.rightBarButtonItem = self.loginButton;
     self.title = @"Sign In";
     // Set the Back button for pushed views
@@ -225,7 +226,7 @@
     if ([self hasValidEmail]) { 
         self.emailErrorLabel.text = @"";
     } else {
-        self.emailErrorLabel.text = @"You did not enter a valid email address.";
+        self.emailErrorLabel.text = emailNotValidMessage;
     }
 }
 

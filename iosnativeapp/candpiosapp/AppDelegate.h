@@ -52,6 +52,7 @@
 
 @class FacebookLoginSequence;
 @class AFHTTPClient;
+@class SignupController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,
                                       FBSessionDelegate>
@@ -59,7 +60,7 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, readonly) Settings *settings;
 @property (strong, readonly) Facebook *facebook;
-@property (strong, nonatomic) NSObject *loginSequence;
+@property (strong, nonatomic) SignupController *facebookLoginController;
 @property (strong, nonatomic, readonly) AFHTTPClient *urbanAirshipClient;
 @property (strong, nonatomic) SettingsMenuController *settingsMenuController;
 @property (strong, nonatomic) UINavigationController *rootNavigationController;

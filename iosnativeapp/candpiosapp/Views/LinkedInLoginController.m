@@ -1,17 +1,73 @@
-#import "LinkedInLoginSequence.h"
+//
+//  LinkedInLoginController.m
+//  candpiosapp
+//
+//  Created by Andrew Hammond on 3/1/12.
+//  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
+//
+
+#import "LinkedInLoginController.h"
 #import "AppDelegate.h"
 #import "AFNetworking.h"
 #import "FlurryAnalytics.h"
 #import "ModalWebViewController.h"
 #import "NSString+StringToNSNumber.h"
+#import "OAConsumer.h"
+#import "OAMutableURLRequest.h"
+#import "OADataFetcher.h"
 
-@implementation LinkedInLoginSequence
-
+@implementation LinkedInLoginController
+@synthesize myWebView;
 @synthesize requestToken;
+@synthesize activityIndicator;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+}
+
+#pragma mark - View lifecycle
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    
+	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+	self.navigationItem.rightBarButtonItem = button;
+    
+    [self initiateLogin];
+}
+
+- (void)viewDidUnload
+{
+    [self setMyWebView:nil];
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
 
 - (void)linkedInCredentialsCapture:(NSNotification*)notification {
     NSString *urlString = [[notification userInfo] objectForKey:@"url"];
-
+    
     // Process LinkedIn Credentials
     NSMutableDictionary* pairs = [NSMutableDictionary dictionary] ;
     NSScanner* scanner = [[NSScanner alloc] initWithString:urlString] ;
@@ -41,7 +97,7 @@
     
     // TODO: Probably need to remove requestToken here and use the one passed
     //        OAToken *requestToken = [[OAToken alloc] initWithKey:token secret:nil];
-
+    
     OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://api.linkedin.com/uas/oauth/accessToken"]
                                                                    consumer:consumer
                                                                       token:requestToken
@@ -57,23 +113,20 @@
                          delegate:self
                 didFinishSelector:@selector(requestTokenTicket:didFinishWithAccessToken:)
                   didFailSelector:@selector(requestTokenTicket:didFailWithError:)];
-
+    
     NSLog(@"Dismiss window");
-
+    
     
 }
 
--(void)initiateLogin:(UIViewController*)mapViewControllerArg;
+-(void)initiateLogin
 {
-	self.mapViewController = mapViewControllerArg;
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(linkedInCredentialsCapture:)
                                                  name:@"linkedInCredentials"
                                                object:nil];
 	
-	// set a liberal cookie policy
-	[[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy: NSHTTPCookieAcceptPolicyAlways];
 	[[AppDelegate instance] logoutEverything];
     [self linkedInLogin];
 }
@@ -111,11 +164,15 @@
         // NSLog(@"*** Response: %@", responseBody);
         
         NSString *authorizationURL = [NSString stringWithFormat:@"https://www.linkedin.com/uas/oauth/authorize?oauth_token=%@", requestToken.key];
-        
-        ModalWebViewController *myWebView = [[ModalWebViewController alloc] init];
-        myWebView.urlAddress = authorizationURL;
 
-        [self.mapViewController.navigationController presentModalViewController:myWebView animated:YES];
+        NSURL *url = [NSURL URLWithString:authorizationURL];        
+        NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+        self.myWebView.delegate = self;
+        [self.myWebView loadRequest:requestObj];
+        
+//        ModalWebViewController *myWebView = [[ModalWebViewController alloc] init];
+//        myWebView.urlAddress = authorizationURL;
+//        [self.navigationController presentModalViewController:myWebView animated:YES];
     }
 }
 
@@ -123,7 +180,7 @@
     if (ticket.didSucceed) {        
         NSString *responseBody = [[NSString alloc] initWithData:data
                                                        encoding:NSUTF8StringEncoding];
-
+        
         NSMutableDictionary* pairs = [NSMutableDictionary dictionary] ;
         NSScanner* scanner = [[NSScanner alloc] initWithString:responseBody] ;
         NSCharacterSet* delimiterSet = [NSCharacterSet characterSetWithCharactersInString:@"&"];
@@ -161,7 +218,7 @@
     NSString *secret = [[NSUserDefaults standardUserDefaults] objectForKey:@"linkedin_secret"];
     
     self.requestToken = [[OAToken alloc] initWithKey:token secret:secret];
-
+    
     NSLog(@"Final token: %@", self.requestToken);
     
     NSURL *url = [NSURL URLWithString:@"https://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,site-standard-profile-request)"];
@@ -189,22 +246,22 @@
     NSString *responseBody = [[NSString alloc] initWithData:data
                                                    encoding:NSUTF8StringEncoding];
     NSLog(@"Response: %@", responseBody);
-
+    
     NSError* error;
     NSDictionary* json = [NSJSONSerialization 
                           JSONObjectWithData:data                          
                           options:kNilOptions 
                           error:&error];
-
+    
     fullName = [NSString stringWithFormat:@"%@ %@", 
-                                [json objectForKey:@"firstName"],
-                                [json objectForKey:@"lastName"]];
-
+                [json objectForKey:@"firstName"],
+                [json objectForKey:@"lastName"]];
+    
     linkedinId = [json objectForKey:@"id"];
-
+    
     // Generate truly random password
     password = [NSString stringWithFormat:@"%d-%@", [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]], [[NSProcessInfo processInfo] globallyUniqueString]];
-
+    
     // Assign an identifying email address (prompt user in the future?)
     email = [NSString stringWithFormat:@"%@@linkedin.com", linkedinId];
     
@@ -212,15 +269,15 @@
     oauthSecret = self.requestToken.secret;
     
     // Now that we have the user's basic information, log them in with their new/existing account
-
+    
     [self handleLinkedInLogin:fullName linkedinID:linkedinId password:password email:email oauthToken:oauthToken oauthSecret:oauthSecret];
 }
 
 - (void)handleLinkedInLogin:(NSString*)fullName linkedinID:(NSString *)linkedinID password:(NSString*)password email:(NSString *)email oauthToken:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret {
     // kick off the request to the candp server
-
+    
     NSMutableDictionary *loginParams = [NSMutableDictionary dictionary];
-
+    
     [loginParams setObject:fullName forKey:@"signupNickname"];
     [loginParams setObject:linkedinID forKey:@"linkedin_id"];
     [loginParams setObject:@"1" forKey:@"linkedin_connect"];
@@ -231,23 +288,23 @@
     [loginParams setObject:password forKey:@"signupConfirm"];
     [loginParams setObject:@"signup" forKey:@"action"];
     [loginParams setObject:@"json" forKey:@"type"];
-
+    
 	NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-
+        
         NSInteger succeeded = [[JSON objectForKey:@"succeeded"] intValue];
         NSLog(@"success: %d", succeeded);
-
+        
 		if(succeeded == 0)
 		{
 			NSString *outerErrorMessage = [JSON objectForKey:@"message"];// often just 'error'
-
+            
 			NSString *errorMessage = [NSString stringWithFormat:@"The error was:%@", outerErrorMessage];
 			// we get here if we failed to login
 			UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unable to log in" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 			[alert show];
-
-            [self.mapViewController.navigationController dismissModalViewControllerAnimated:YES];
+            
+            [self.navigationController dismissModalViewControllerAnimated:YES];
 		}
 		else
 		{
@@ -257,7 +314,7 @@
 			
 			NSString *userId = [userInfo objectForKey:@"id"];
 			NSString  *nickname = [userInfo objectForKey:@"nickname"];
-
+            
 			// extract some user info
 			[AppDelegate instance].settings.candpUserId = [userId numberFromIntString];
 			[AppDelegate instance].settings.userNickname = nickname;
@@ -269,10 +326,10 @@
             [FlurryAnalytics setUserID:(NSString *)userId];
             
             // Perform common post-login operations
-            [self finishLogin];
+            [self pushAliasUpdate];
             
-            [self.mapViewController.navigationController dismissModalViewControllerAnimated:YES];
-            [self.mapViewController.navigationController popToRootViewControllerAnimated:YES];
+            [self.navigationController dismissModalViewControllerAnimated:YES];
+            [self.navigationController popToRootViewControllerAnimated:YES];
 		}
         
         // Remove NSNotification as it's no longer needed once logged in
@@ -288,6 +345,16 @@
 - (void)loadLinkedInConnectionsResult:(OAServiceTicket *)ticket didFail:(NSData *)error 
 {
     NSLog(@"%@",[error description]);
+}
+
+#pragma mark UIWebViewDelegate methods
+
+-(void)webViewDidFinishLoad:(UIWebView *) webView {
+	[activityIndicator stopAnimating];
+}
+
+-(void)webViewDidStartLoad:(UIWebView *) webView {
+	[activityIndicator startAnimating];
 }
 
 @end

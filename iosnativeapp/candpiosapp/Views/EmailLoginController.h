@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseLoginController.h"
+#define emailNotValidMessage @"You did not enter a valid email address."
 @class EmailLoginSequence;
 
 @interface EmailLoginController : BaseLoginController <UITextFieldDelegate>
