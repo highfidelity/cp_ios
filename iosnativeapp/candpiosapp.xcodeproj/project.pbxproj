@@ -612,7 +612,7 @@
 		871C446614BD7293003B720F /* button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button@2x.png"; sourceTree = "<group>"; };
 		871C446A14BD72FC003B720F /* button_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_disabled.png; sourceTree = "<group>"; };
 		871C446B14BD72FC003B720F /* button_disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_disabled@2x.png"; sourceTree = "<group>"; };
-		871EFB0614AE9C820030658B /* candp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = candp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		871EFB0614AE9C820030658B /* coffeeandpower.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coffeeandpower.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		871EFB0A14AE9C820030658B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		871EFB0C14AE9C820030658B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		871EFB0E14AE9C820030658B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1211,7 +1211,7 @@
 		871EFB0714AE9C820030658B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				871EFB0614AE9C820030658B /* candp.app */,
+				871EFB0614AE9C820030658B /* coffeeandpower.app */,
 				871EFB3514AE9C820030658B /* candpiosappTests.octest */,
 			);
 			name = Products;
@@ -1649,9 +1649,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		871EFB0514AE9C820030658B /* candp */ = {
+		871EFB0514AE9C820030658B /* coffeeandpower */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 871EFB4714AE9C820030658B /* Build configuration list for PBXNativeTarget "candp" */;
+			buildConfigurationList = 871EFB4714AE9C820030658B /* Build configuration list for PBXNativeTarget "coffeeandpower" */;
 			buildPhases = (
 				871EFB0214AE9C820030658B /* Sources */,
 				871EFB0314AE9C820030658B /* Frameworks */,
@@ -1661,9 +1661,9 @@
 			);
 			dependencies = (
 			);
-			name = candp;
+			name = coffeeandpower;
 			productName = candpiosapp;
-			productReference = 871EFB0614AE9C820030658B /* candp.app */;
+			productReference = 871EFB0614AE9C820030658B /* coffeeandpower.app */;
 			productType = "com.apple.product-type.application";
 		};
 		871EFB3414AE9C820030658B /* candpiosappTests */ = {
@@ -1706,7 +1706,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				871EFB0514AE9C820030658B /* candp */,
+				871EFB0514AE9C820030658B /* coffeeandpower */,
 				871EFB3414AE9C820030658B /* candpiosappTests */,
 			);
 		};
@@ -2019,7 +2019,7 @@
 /* Begin PBXTargetDependency section */
 		871EFB3B14AE9C820030658B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 871EFB0514AE9C820030658B /* candp */;
+			target = 871EFB0514AE9C820030658B /* coffeeandpower */;
 			targetProxy = 871EFB3A14AE9C820030658B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -2209,7 +2209,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		871EFB4714AE9C820030658B /* Build configuration list for PBXNativeTarget "candp" */ = {
+		871EFB4714AE9C820030658B /* Build configuration list for PBXNativeTarget "coffeeandpower" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				871EFB4814AE9C820030658B /* Debug */,
