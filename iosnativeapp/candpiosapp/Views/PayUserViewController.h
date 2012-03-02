@@ -26,7 +26,6 @@
 
 - (IBAction)makePayment:(id)sender;
 - (IBAction)descriptionChanged:(id)sender;
-- (IBAction)formatAmount:(id)sender;
 - (IBAction)closeView:(UIButton *)sender;
 
 @end

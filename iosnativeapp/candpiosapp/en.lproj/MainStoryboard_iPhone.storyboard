@@ -1284,15 +1284,12 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="$0.00" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" id="1lG-jk-4Au" userLabel="Payment amount">
-                                        <rect key="frame" x="14" y="64" width="209" height="52"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0.00" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" id="1lG-jk-4Au" userLabel="Payment amount">
+                                        <rect key="frame" x="39" y="64" width="175" height="52"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="textColor" red="0.37254901960784315" green="0.37254901960784315" blue="0.37254901960784315" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="47"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="next"/>
-                                        <connections>
-                                            <action selector="formatAmount:" destination="jFr-bh-Ddh" eventType="editingDidEnd" id="tD8-MZ-egv"/>
-                                        </connections>
                                     </textField>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="WTh-VT-Sud">
                                         <rect key="frame" x="231" y="40" width="76" height="76"/>
@@ -1341,6 +1338,13 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="rcD-WC-fNa">
+                                        <rect key="frame" x="14" y="72" width="26" height="36"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="47"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="deviceRGB"/>
                             </view>
@@ -1566,6 +1570,12 @@
         <class className="CPMapView" superclassName="MKMapView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CPMapView.h"/>
         </class>
+        <class className="ChatMessageCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatMessageCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="chatMessageLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
         <class className="CheckInDetailsFrame" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInDetailsFrame.h"/>
         </class>
@@ -1609,6 +1619,21 @@
                 <relationship kind="action" name="closeWindow:"/>
             </relationships>
         </class>
+        <class className="FaceToFaceInviteController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FaceToFaceInviteController.h"/>
+            <relationships>
+                <relationship kind="action" name="acceptF2F"/>
+                <relationship kind="action" name="declineF2F"/>
+                <relationship kind="action" name="f2fSubmitPassword"/>
+                <relationship kind="outlet" name="f2fAcceptButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="f2fActionCaption" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="f2fDeclineButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="f2fPassword" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="f2fText" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="userNickname" candidateClass="UILabel"/>
+            </relationships>
+        </class>
         <class className="MapTabController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MapTabController.h"/>
             <relationships>
@@ -1623,8 +1648,10 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/OneOnOneChatViewController.h"/>
             <relationships>
                 <relationship kind="action" name="sendChat"/>
-                <relationship kind="outlet" name="chatContents" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="backgroundView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="chatContents" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="chatEntryField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="chatInputs" candidateClass="UIView"/>
             </relationships>
         </class>
         <class className="PayUserViewController" superclassName="UIViewController">
@@ -1632,7 +1659,7 @@
             <relationships>
                 <relationship kind="action" name="closeView:" candidateClass="UIButton"/>
                 <relationship kind="action" name="descriptionChanged:"/>
-                <relationship kind="action" name="formatAmount:"/>
+                <relationship kind="action" name="frmtAmount:" candidateClass="UITextField"/>
                 <relationship kind="action" name="makePayment:"/>
                 <relationship kind="outlet" name="cancelButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="charsLeft" candidateClass="UILabel"/>

@@ -36,7 +36,9 @@
     
     [[self view] setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"perforated-skin.png"]]];
     [paymentAmount becomeFirstResponder];
-    [paymentNote setDelegate: self];
+    
+    [paymentAmount setDelegate:self];
+    [paymentNote setDelegate:self];
 
     descriptionView.layer.borderColor = [UIColor colorWithRed:159.0/255 green:159.0/255 blue:159.0/255 alpha:1.0].CGColor;
     descriptionView.layer.borderWidth = 1.0f;
@@ -212,11 +214,6 @@
     [charsLeft setText: [NSString stringWithFormat:@"%d", chars]];
 }
 
-- (IBAction)formatAmount:(id)sender 
-{
-    [paymentAmount setText:[NSString stringWithFormat:@"$%.2f", [[paymentAmount text] floatValue]]];
-}
-
 - (IBAction)closeView:(UIButton *)sender
 {
     [[self navigationController] popViewControllerAnimated: YES];
@@ -230,4 +227,29 @@
  return YES;
 }
 
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    if (textField != paymentAmount) {
+        return YES;
+    }
+
+    double currentValue = [textField.text doubleValue];
+    double cents = round(currentValue * 100.0f);
+    
+    if ([string length]) {
+        for (size_t i = 0; i < [string length]; i++) {
+            unichar c = [string characterAtIndex:i];
+            if (isnumber(c)) {
+                cents *= 10;
+                cents += c - '0'; 
+            }            
+        }
+    } else {
+        // back Space
+        cents = floor(cents / 10);
+    }
+    
+    textField.text = [NSString stringWithFormat:@"%.2f", cents / 100.0f];
+    return NO;
+}
 @end
