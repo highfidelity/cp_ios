@@ -73,12 +73,27 @@
     _hourlyRate = [hourlyRate stringByDecodingHTMLEntities];
 }
 
+- (NSString *)firstName
+{
+    // if the user has a space in their nickname just use the first part
+    // otherwise use the whole name
+    NSRange spaceRange = [self.nickname rangeOfString:@" "]; 
+    NSString *firstName;
+    
+    if (spaceRange.length > 0) {
+        firstName = [self.nickname substringToIndex:spaceRange.location + 1];
+    } else {
+        firstName = self.nickname;
+    }
+    return firstName;
+}
+
 -(void)loadUserResumeData:(void (^)(User *user, NSError *error))completion {
     // url hitting api.php to getResume
     NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=getResume&user_id=%d", kCandPWebServiceUrl, self.userID];
 
 #if DEBUG
-    NSLog(@"Requesting resume data for user with ID:%d", self.userID);
+    NSLog(@"Requesting resume data for user with ID: %d", self.userID);
 #endif
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];

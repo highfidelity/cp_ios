@@ -14,6 +14,8 @@
 @interface UserProfileCheckedInViewController : UIViewController
 
 @property (nonatomic, strong) User *user;
+@property (assign, nonatomic) BOOL isF2FInvite;
 - (IBAction)f2fInvite;
+- (void)placeUserDataOnProfile;
 
 @end

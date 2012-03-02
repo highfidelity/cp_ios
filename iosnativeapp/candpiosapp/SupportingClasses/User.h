@@ -40,5 +40,7 @@
 
 -(void)loadUserResumeData:(void (^)(User *user, NSError *error))completion;
 
+-(NSString *)firstName;
+
 
 @end

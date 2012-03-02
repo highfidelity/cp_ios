@@ -97,7 +97,8 @@
 @synthesize loadingPt1 = _loadingPt1;
 @synthesize loadingPt2 = _loadingPt2;
 @synthesize loadingPt3 = _loadingPt3;
-@synthesize cardJobPosition;
+@synthesize cardJobPosition = _cardJobPosition;
+@synthesize isF2FInvite = _isF2FInvite;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -121,18 +122,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // set the webview delegate to this VC so we can resize it based on the contents
     self.resumeWebView.delegate = self;
     
     // hide the go menu if this profile is current user's profile
-    if (self.user.userID == [[[AppDelegate instance].settings candpUserId] intValue]) {
+    if (self.user.userID == [[[AppDelegate instance].settings candpUserId] intValue] || self.isF2FInvite) {
         for (NSNumber *viewID in [NSArray arrayWithObjects:[NSNumber numberWithInt:1005], [NSNumber numberWithInt:1006], [NSNumber numberWithInt:1007], [NSNumber numberWithInt:1008], [NSNumber numberWithInt:1009], [NSNumber numberWithInt:1010], nil]) {
             [[self.view viewWithTag:[viewID intValue]] removeFromSuperview];
         }
     }
     
     // add the blue overlay gradient in front of the map
-    UIView *blueOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 416)];
+    UIView *blueOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.mapView.frame.size.width, self.mapView.frame.size.height)];
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = blueOverlay.bounds;
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0.40 green:0.62 blue:0.64 alpha:0.4] CGColor],
@@ -149,9 +151,6 @@
         labelNeedsGothic.font = gothic;
     }
     
-    // set the navigation controller title to the user's nickname
-    self.title = self.user.nickname;
-    
     // set the paper background color where applicable
     UIColor *paper = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paper-texture.jpg"]];
     self.userCard.backgroundColor = paper;
@@ -167,7 +166,7 @@
     
     // this will always be the point on iPhones up to iPhone4
     // if this needs to be used on iPad we'll need to do this programatically or use an if-else
-    CGPoint rightAndUp = CGPointMake(124, 232);
+    CGPoint rightAndUp = CGPointMake(84, 232);
     CLLocationCoordinate2D coordinate = [self.mapView convertPoint:rightAndUp toCoordinateFromView:self.mapView];
     [self.mapView setCenterCoordinate:coordinate animated:NO];
         
@@ -186,117 +185,23 @@
         self.distanceLabel.text = distance;
     }
     
-    // get a user object with resume data
-    [self.user loadUserResumeData:^(User *user, NSError *error) {
-        if (!error) {
-            self.user = user;
-            self.cardJobPosition.text = user.jobTitle;
-            // set the card image to the user's profile image
-            [self.cardImage  setImageWithURL:self.user.urlPhoto];
-                        
-            // if the user is checked in show how much longer they'll be available for
-            if ([self.user.checkoutEpoch timeIntervalSinceNow] > 0) {
-                self.checkedIn.text = @"CHECKED IN";
-                // get the number of seconds until they'll checkout
-                NSTimeInterval secondsToCheckout = [self.user.checkoutEpoch timeIntervalSinceNow];
-                // convert to minutes and then hours + minutes to next our
-                int minutesToCheckout = floor(secondsToCheckout / 60.0);
-                int hoursToCheckout = floor(minutesToCheckout / 60.0);
-                int minutesToHour = minutesToCheckout % 60;
-                
-                // only show hours if there's at least one
-                if (hoursToCheckout > 0) {
-                    self.hoursAvailable.text = [NSString stringWithFormat:@"%d hrs", hoursToCheckout];
-                } else {
-                    // otherwise show just the minutes, move it so it's where hours would be
-                    CGRect minutesFrame = self.minutesAvailable.frame;
-                    minutesFrame.origin = self.hoursAvailable.frame.origin;
-                    self.minutesAvailable.frame = minutesFrame;
-                    self.minutesAvailable.font = [UIFont boldSystemFontOfSize:self.minutesAvailable.font.pointSize];
-                }            
-                self.minutesAvailable.text = [NSString stringWithFormat:@"%d mins", minutesToHour];
+    // check if this is an F2F invite
+    if (self.isF2FInvite) {
+        // we're in an F2F invite
+        [self placeUserDataOnProfile];
+    } else {
+        // set the navigation controller title to the user's nickname
+        self.title = self.user.nickname;
+        // get a user object with resume data
+        [self.user loadUserResumeData:^(User *user, NSError *error) {
+            if (!error) {
+                self.user = user;
+                [self placeUserDataOnProfile];
             } else {
-                // change the label since the user isn't here anymore
-                self.checkedIn.text = @"WAS CHECKED IN";
-                
-                // move the loading points to the right so they're in the right spot
-                NSArray *pts = [NSArray arrayWithObjects:self.loadingPt1, self.loadingPt2, self.loadingPt3, nil];
-                for (UILabel *pt in pts) {
-                    CGRect ptFrame = pt.frame;
-                    ptFrame.origin.x += 33;
-                    pt.frame = ptFrame;    
-                }
-                
-
-                // otherwise don't show the availability view
-                [self.availabilityView removeFromSuperview];
+                // error checking for load of user 
             }
-            
-            // hide the icons for which the user isn't verified
-            if (!self.user.facebookVerified) {
-                [self.facebookVerified removeFromSuperview];
-                if (!self.user.linkedInVerified) {
-                    [self.linkedinVerified removeFromSuperview];
-                }
-            } else if (!self.user.linkedInVerified) {
-                self.facebookVerified.frame = self.linkedinVerified.frame;
-                [self.linkedinVerified removeFromSuperview];
-            }
-            
-            // if the user has an hourly rate then put it, otherwise it comes up as N/A
-            if (self.user.hourlyRate) {
-                self.resumeRate.text = self.user.hourlyRate;
-            }            
-            
-            // show total spent and total earned   
-            NSNumberFormatter *decimalFormatter = [[NSNumberFormatter alloc] init];
-            [decimalFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-            self.resumeEarned.text = [@"$" stringByAppendingString:[decimalFormatter stringFromNumber:[NSNumber numberWithDouble:self.user.totalEarned]]];
-            self.resumeSpent.text = [@"$" stringByAppendingString:[decimalFormatter stringFromNumber:[NSNumber numberWithDouble:self.user.totalSpent]]];
-            
-            // load html into the bottom of the resume view for all the user data
-            NSString *path = [[NSBundle mainBundle] bundlePath];
-            NSURL *baseURL = [NSURL fileURLWithPath:path];
-            [self.resumeWebView loadHTMLString:[self htmlStringWithResumeText] baseURL:baseURL];
-            
-            // request using the FoursquareAPIRequest class to get the venue data
-            [FoursquareAPIRequest dictForVenueWithFoursquareID:self.user.placeCheckedIn.foursquareID :^(NSDictionary *fsDict, NSError *error) {
-                if (!error) {
-                    // show the available for and the venue info, stop animating the ellipsis
-                    [self stopAnimatingVenueLoadingPoints];
-                    
-                    // set the CPPlace data on the user object we're holding
-                    self.user.placeCheckedIn.name = [fsDict valueForKeyPath:@"response.venue.name"];
-                    self.user.placeCheckedIn.address = [fsDict valueForKeyPath:@"response.venue.location.address"];
-                   
-                    // put it on the view
-                    self.venueName.text = self.user.placeCheckedIn.name;
-                    self.venueAddress.text = self.user.placeCheckedIn.address;
-                    if (self.user.placeCheckedIn.othersHere == 0) {
-                        // hide the little man, nobody else is here
-                        [self.venueOthersIcon removeFromSuperview];
-                        
-                        // move the data in the venueView down so it's vertically centered
-                        NSArray *venueInfo = [NSArray arrayWithObjects:self.venueIcon, self.venueName, self.venueAddress, nil];
-                        for (UIView *venueItem in venueInfo) {
-                            CGRect frame = venueItem.frame;
-                            frame.origin.y += 8;
-                            venueItem.frame = frame;
-                        }
-                    } else {
-                        // otherwise put 1 other or x others here now
-                        self.venueOthers.text = [NSString stringWithFormat:@"%d %@ here now", self.user.placeCheckedIn.othersHere, self.user.placeCheckedIn.othersHere == 1 ? @"other" : @"others"];
-                    }           
-                    // animate the display of the venueView and availabilityView
-                    [UIView animateWithDuration:0.4 animations:^{self.venueView.alpha = 1.0; self.availabilityView.alpha = 1.0;}];
-                } else {
-                    // error for load of foursquare data
-                }
-            }];            
-        } else {
-            // error checking for load of user 
-        }
-    }];
+        }];
+    }
 }
 
 - (void)viewDidUnload
@@ -339,6 +244,114 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (void)placeUserDataOnProfile
+{
+    
+    self.cardJobPosition.text = self.user.jobTitle;
+    // set the card image to the user's profile image
+    [self.cardImage  setImageWithURL:self.user.urlPhoto];
+    
+    // if the user is checked in show how much longer they'll be available for
+    if ([self.user.checkoutEpoch timeIntervalSinceNow] > 0) {
+        self.checkedIn.text = @"CHECKED IN";
+        // get the number of seconds until they'll checkout
+        NSTimeInterval secondsToCheckout = [self.user.checkoutEpoch timeIntervalSinceNow];
+        // convert to minutes and then hours + minutes to next our
+        int minutesToCheckout = floor(secondsToCheckout / 60.0);
+        int hoursToCheckout = floor(minutesToCheckout / 60.0);
+        int minutesToHour = minutesToCheckout % 60;
+        
+        // only show hours if there's at least one
+        if (hoursToCheckout > 0) {
+            self.hoursAvailable.text = [NSString stringWithFormat:@"%d hrs", hoursToCheckout];
+        } else {
+            // otherwise show just the minutes, move it so it's where hours would be
+            CGRect minutesFrame = self.minutesAvailable.frame;
+            minutesFrame.origin = self.hoursAvailable.frame.origin;
+            self.minutesAvailable.frame = minutesFrame;
+            self.minutesAvailable.font = [UIFont boldSystemFontOfSize:self.minutesAvailable.font.pointSize];
+        }            
+        self.minutesAvailable.text = [NSString stringWithFormat:@"%d mins", minutesToHour];
+    } else {
+        // change the label since the user isn't here anymore
+        self.checkedIn.text = @"WAS CHECKED IN";
+        
+        // move the loading points to the right so they're in the right spot
+        NSArray *pts = [NSArray arrayWithObjects:self.loadingPt1, self.loadingPt2, self.loadingPt3, nil];
+        for (UILabel *pt in pts) {
+            CGRect ptFrame = pt.frame;
+            ptFrame.origin.x += 33;
+            pt.frame = ptFrame;    
+        }
+        
+        
+        // otherwise don't show the availability view
+        [self.availabilityView removeFromSuperview];
+    }
+    
+    // hide the icons for which the user isn't verified
+    if (!self.user.facebookVerified) {
+        [self.facebookVerified removeFromSuperview];
+        if (!self.user.linkedInVerified) {
+            [self.linkedinVerified removeFromSuperview];
+        }
+    } else if (!self.user.linkedInVerified) {
+        self.facebookVerified.frame = self.linkedinVerified.frame;
+        [self.linkedinVerified removeFromSuperview];
+    }
+    
+    // if the user has an hourly rate then put it, otherwise it comes up as N/A
+    if (self.user.hourlyRate) {
+        self.resumeRate.text = self.user.hourlyRate;
+    }            
+    
+    // show total spent and total earned   
+    NSNumberFormatter *decimalFormatter = [[NSNumberFormatter alloc] init];
+    [decimalFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    self.resumeEarned.text = [@"$" stringByAppendingString:[decimalFormatter stringFromNumber:[NSNumber numberWithDouble:self.user.totalEarned]]];
+    self.resumeSpent.text = [@"$" stringByAppendingString:[decimalFormatter stringFromNumber:[NSNumber numberWithDouble:self.user.totalSpent]]];
+    
+    // load html into the bottom of the resume view for all the user data
+    NSString *path = [[NSBundle mainBundle] bundlePath];
+    NSURL *baseURL = [NSURL fileURLWithPath:path];
+    [self.resumeWebView loadHTMLString:[self htmlStringWithResumeText] baseURL:baseURL];
+    
+    // request using the FoursquareAPIRequest class to get the venue data
+    [FoursquareAPIRequest dictForVenueWithFoursquareID:self.user.placeCheckedIn.foursquareID :^(NSDictionary *fsDict, NSError *error) {
+        if (!error) {
+            // show the available for and the venue info, stop animating the ellipsis
+            [self stopAnimatingVenueLoadingPoints];
+            
+            // set the CPPlace data on the user object we're holding
+            self.user.placeCheckedIn.name = [fsDict valueForKeyPath:@"response.venue.name"];
+            self.user.placeCheckedIn.address = [fsDict valueForKeyPath:@"response.venue.location.address"];
+            
+            // put it on the view
+            self.venueName.text = self.user.placeCheckedIn.name;
+            self.venueAddress.text = self.user.placeCheckedIn.address;
+            if (self.user.placeCheckedIn.othersHere == 0) {
+                // hide the little man, nobody else is here
+                [self.venueOthersIcon removeFromSuperview];
+                
+                // move the data in the venueView down so it's vertically centered
+                NSArray *venueInfo = [NSArray arrayWithObjects:self.venueIcon, self.venueName, self.venueAddress, nil];
+                for (UIView *venueItem in venueInfo) {
+                    CGRect frame = venueItem.frame;
+                    frame.origin.y += 8;
+                    venueItem.frame = frame;
+                }
+            } else {
+                // otherwise put 1 other or x others here now
+                self.venueOthers.text = [NSString stringWithFormat:@"%d %@ here now", self.user.placeCheckedIn.othersHere, self.user.placeCheckedIn.othersHere == 1 ? @"other" : @"others"];
+            }           
+            // animate the display of the venueView and availabilityView
+            [UIView animateWithDuration:0.4 animations:^{self.venueView.alpha = 1.0; self.availabilityView.alpha = 1.0;}];
+        } else {
+            // error for load of foursquare data
+        }
+    }];
 }
 
 - (NSString *)htmlStringWithResumeText {
@@ -488,8 +501,15 @@
     
     [CPUIHelper addShadowToView:self.resumeView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     
-    // set the content size on the scrollview so we can actually scroll
-    self.scrollView.contentSize = CGSizeMake(320, self.resumeView.frame.origin.y + self.resumeView.frame.size.height + 50);
+    // if this is an f2f invite we need some extra height in the scrollview content size
+    double f2fbar = 0;
+    if (self.isF2FInvite) {
+        f2fbar = 125;
+    }
+    
+    // set the scrollview content size to accomodate for the resume data
+    self.scrollView.contentSize = CGSizeMake(320, self.resumeView.frame.origin.y + self.resumeView.frame.size.height + 50 + f2fbar);
+    
     // add the blue overlay where the gradient ends
     UIView *blueOverlayExtend = [[UIView alloc] initWithFrame:CGRectMake(0, 416, 320, self.scrollView.contentSize.height - 416)];
     blueOverlayExtend.backgroundColor = [UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0];
