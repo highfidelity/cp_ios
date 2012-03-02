@@ -13,10 +13,12 @@
     NSMutableArray *missions;
     NSMutableArray *checkedInMission;
     NSString *titleForList;
+    NSInteger listType;
 }
 
 @property (nonatomic, retain) NSMutableArray *missions;
 @property (nonatomic, retain) NSMutableArray *checkedInMissions;
 @property (nonatomic, copy) NSString *titleForList;
+@property (nonatomic) NSInteger listType;
 
 @end

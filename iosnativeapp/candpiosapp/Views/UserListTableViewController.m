@@ -17,7 +17,7 @@
 
 @implementation UserListTableViewController
 
-@synthesize missions, checkedInMissions, titleForList;
+@synthesize missions, checkedInMissions, titleForList, listType;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -42,6 +42,11 @@
 {
     [super viewDidLoad];
 
+    // listType of 1 is used from within an annotation's callouts, otherwise set to 0, default for global list
+    if (!listType) {
+        listType = 0;
+    }
+    
     self.title = self.titleForList;
 
     // Iterate through the passed missions and only show the ones that were within the map bounds, ordered by distance
@@ -94,12 +99,20 @@
     }
     
     [missions removeObjectsInArray:checkedInMissions];
+
+    NSSortDescriptor *descriptor;
     
-    // Could sort by checkinId in reverse order to get most recent checkins
-    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"distance" ascending:YES];
+    if (listType == 0) {
+        // Could sort by checkinId in reverse order to get most recent checkins
+        descriptor = [[NSSortDescriptor alloc] initWithKey:@"distance" ascending:YES];
+    }
+    else {
+         descriptor = [[NSSortDescriptor alloc] initWithKey:@"checkinCount" ascending:NO];
+    }
 
     [missions sortUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
     [checkedInMissions sortUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
+        
 }
 
 - (void)viewDidUnload
@@ -139,33 +152,56 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    if (checkedInMissions.count > 0 && missions.count > 0) {
+        return 2;
+    }
+    else if (checkedInMissions.count > 0 || missions.count > 0) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
-        return @"Here now";
+    NSString *checkedInNow;
+    NSString *lastCheckins = @"Last 7 Days";
+
+    if (listType == 0) {
+        checkedInNow = @"Checked In Now";
     }
-    if (section == 1) {
-        return @"Last 7 days";
+    else {
+        checkedInNow = @"Here Now";
     }
-    
-    return @"";
+
+    if (section == 0 && checkedInMissions.count > 0) {
+        return checkedInNow;
+    }
+    else if (section == 0 && missions.count > 0) {
+        return lastCheckins;
+    }
+    else if (section == 1) {
+        return lastCheckins;
+    }
+    else {
+        return @"";
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        NSLog(@"Count: %d", [checkedInMissions count]);
-        return [checkedInMissions count];
+    if (section == 0 && checkedInMissions.count > 0) {
+        return checkedInMissions.count;
     }
-    if (section == 1) {
-        NSLog(@"Count: %d", [missions count]);
-        return [missions count];
+    else if (section == 0 && missions.count > 0) {
+        return missions.count;
     }
-        
-    NSLog(@"Section %d doesn't exist", section);
-    return 0;
+    else if (section == 1) {
+        return missions.count;
+    }
+    else {
+        return 0;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -183,10 +219,14 @@
 
     // Configure the cell...
     CPAnnotation *annotation;
-    if ([indexPath section] == 0) {
+
+    if (indexPath.section == 0 && checkedInMissions.count > 0) {
         annotation = [checkedInMissions objectAtIndex:indexPath.row];
     }
-    else {
+    else if (indexPath.section == 0 && missions.count > 0) {
+        annotation = [missions objectAtIndex:indexPath.row];
+    }
+    else if (indexPath.section == 1) {
         annotation = [missions objectAtIndex:indexPath.row];
     }
 
