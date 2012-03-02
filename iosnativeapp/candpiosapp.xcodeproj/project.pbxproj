@@ -98,6 +98,7 @@
 		4EFC547A15015CDB00BF51B0 /* login-signup-banner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EFC547815015CDB00BF51B0 /* login-signup-banner@2x.png */; };
 		4EFC5484150161FA00BF51B0 /* logo-login-mug.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EFC54611500629100BF51B0 /* logo-login-mug.png */; };
 		4EFC5485150161FA00BF51B0 /* logo-login-mug@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EFC54621500629100BF51B0 /* logo-login-mug@2x.png */; };
+		4EFC54871501641700BF51B0 /* LinkedInLoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EFC5468150086A100BF51B0 /* LinkedInLoginController.xib */; };
 		5317491E14FEF4EE002E1042 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317491A14FEF4ED002E1042 /* Icon-Small.png */; };
 		5317491F14FEF4EE002E1042 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317491B14FEF4ED002E1042 /* Icon-Small@2x.png */; };
 		5317492014FEF4EE002E1042 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317491C14FEF4EE002E1042 /* Icon.png */; };
@@ -1717,6 +1718,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EFC54871501641700BF51B0 /* LinkedInLoginController.xib in Resources */,
 				4EFC5484150161FA00BF51B0 /* logo-login-mug.png in Resources */,
 				4EFC5485150161FA00BF51B0 /* logo-login-mug@2x.png in Resources */,
 				871EFB1514AE9C820030658B /* InfoPlist.strings in Resources */,
