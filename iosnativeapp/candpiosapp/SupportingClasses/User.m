@@ -138,6 +138,8 @@
         self.placeCheckedIn.othersHere = [[JSON valueForKeyPath:@"checkin_data.others_here"] intValue];
         self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[JSON valueForKeyPath:@"checkin_data.checkout"] intValue]]; 
         
+        
+        
         // call the completion block passed by the caller
         if(completion)
             completion(self, nil); 

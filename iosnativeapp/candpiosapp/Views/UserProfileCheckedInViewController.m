@@ -195,7 +195,7 @@
             [self.cardImage  setImageWithURL:self.user.urlPhoto];
                         
             // if the user is checked in show how much longer they'll be available for
-            if (self.user.checkedIn) {
+            if ([self.user.checkoutEpoch timeIntervalSinceNow] > 0) {
                 self.checkedIn.text = @"CHECKED IN";
                 // get the number of seconds until they'll checkout
                 NSTimeInterval secondsToCheckout = [self.user.checkoutEpoch timeIntervalSinceNow];
