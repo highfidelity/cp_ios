@@ -33,6 +33,9 @@
 @synthesize settingsMenuController;
 @synthesize rootNavigationController;
 
+// TODO: Store what we're storing now in settings in NSUSERDefaults
+// Why make our own class when there's an iOS Api for this?
+
 +(AppDelegate*)instance
 {
 	return (AppDelegate*)[UIApplication sharedApplication].delegate;

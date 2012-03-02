@@ -41,7 +41,7 @@
 
 -(void)pushAliasUpdate {
     // Set my UserID as an UrbanAirship alias for push notifications
-    NSString *userid = (NSString *)[AppDelegate instance].settings.candpUserId;
+    NSString *userid = [[AppDelegate instance].settings.candpUserId stringValue];
     NSLog(@"Pushing aliases to UrbanAirship: %@", userid);
     [[UAPush shared] updateAlias:userid];
 }
