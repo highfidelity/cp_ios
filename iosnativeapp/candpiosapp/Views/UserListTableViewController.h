@@ -14,11 +14,13 @@
     NSMutableArray *checkedInMission;
     NSString *titleForList;
     NSInteger listType;
+    NSString *currentVenue;
 }
 
 @property (nonatomic, retain) NSMutableArray *missions;
 @property (nonatomic, retain) NSMutableArray *checkedInMissions;
 @property (nonatomic, copy) NSString *titleForList;
 @property (nonatomic) NSInteger listType;
+@property (nonatomic, retain) NSString *currentVenue;
 
 @end

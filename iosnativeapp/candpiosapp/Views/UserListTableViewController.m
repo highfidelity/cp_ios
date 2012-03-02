@@ -17,7 +17,7 @@
 
 @implementation UserListTableViewController
 
-@synthesize missions, checkedInMissions, titleForList, listType;
+@synthesize missions, checkedInMissions, titleForList, listType, currentVenue;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -90,12 +90,24 @@
     }
     [missions removeObjectsInArray:badAnnotations];
     
+    NSMutableArray *excludedAnnotations = [[NSMutableArray alloc] init];
     
     checkedInMissions = [[NSMutableArray alloc] init];
     for (CPAnnotation *mission in missions) {
         if (mission.checkedIn) {
-            [checkedInMissions addObject:mission];
+//            NSLog(@"currentVenue: %@", currentVenue);
+//            NSLog(@"Mission's venue: %@", mission.groupTag);
+//            if ((currentVenue && [mission.groupTag isEqualToString:currentVenue]) || !currentVenue) {
+                [checkedInMissions addObject:mission];
+//            }
+//            else {
+//                [excludedAnnotations addObject:mission];
+//            }
         }
+    }
+    
+    if (excludedAnnotations.count > 0) {
+        [missions removeObjectsInArray:excludedAnnotations];
     }
     
     [missions removeObjectsInArray:checkedInMissions];

@@ -656,11 +656,20 @@ BOOL zoomedOut = NO;
     else if ([[segue identifier] isEqualToString:@"ShowUserListTable"]) {
         [[segue destinationViewController] setTitleForList: @"List"];
         [[segue destinationViewController] setListType:0];
+        [[segue destinationViewController] setCurrentVenue:nil];
         [[segue destinationViewController] setMissions: [fullDataset.annotations mutableCopy]];
     }
     else if ([[segue identifier] isEqualToString:@"ShowUserClusterTable"]) {
         OCAnnotation *tappedObj = [sender annotation];
         NSArray *annotations = tappedObj.annotationsInCluster;
+
+        if (tappedObj.hasCheckins && tappedObj.groupTag) {
+            [[segue destinationViewController] setCurrentVenue:tappedObj.groupTag];            
+        }
+        else {
+            [[segue destinationViewController] setCurrentVenue:nil];
+        }
+        
         [[segue destinationViewController] setTitleForList: tappedObj.title];
         [[segue destinationViewController] setListType:1];
         [[segue destinationViewController] setMissions: [annotations mutableCopy]];
