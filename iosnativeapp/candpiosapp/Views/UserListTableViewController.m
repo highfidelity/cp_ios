@@ -14,6 +14,7 @@
 #import "AppDelegate.h"
 #import "UserTableViewCell.h"
 #import "UserProfileCheckedInViewController.h"
+#import "NSString+HTML.h"
 
 @implementation UserListTableViewController
 
@@ -252,7 +253,7 @@
 
     cell.statusLabel.text = @"";
     if (![annotation.status isEqualToString:@""]) {
-        cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",annotation.status];
+        cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",[annotation.status stringByDecodingHTMLEntities]];
     }
     cell.distanceLabel.text = annotation.distanceTo;
 
