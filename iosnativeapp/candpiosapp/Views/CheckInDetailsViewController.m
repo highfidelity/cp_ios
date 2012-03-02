@@ -254,7 +254,6 @@
     NSInteger checkInTime = [[NSDate date] timeIntervalSince1970];
     NSInteger checkInDuration = self.checkInDuration;    
     NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
-    NSString *foursquareID = self.place.foursquareID;
     NSString *statusText = @"";
     if (self.statusTextField.text) {
         statusText = self.statusTextField.text;
