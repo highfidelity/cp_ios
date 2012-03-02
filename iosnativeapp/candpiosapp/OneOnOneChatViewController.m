@@ -11,7 +11,10 @@
 #import "SVProgressHUD.h"
 #import "AppDelegate.h"
 #import "CPUIHelper.h"
+#import "ChatMessage.h"
+#import "ChatMessageCell.h"
 
+float const CHAT_CELL_PADDING_Y = 12.0f;
 float const CHAT_PADDING_Y = 5.0f;
 float const CHAT_PADDING_X = 5.0f;
 // TODO: make this determined by the amount of text in the chat
@@ -19,107 +22,227 @@ float const CHAT_BOX_HEIGHT = 30.0f;
 // TODO: make this determined by the containing view's width
 float const CHAT_BOX_WIDTH = 280.0f;
 
+static CGFloat const FONTSIZE = 14.0;
+static int const DATELABEL_TAG = 1;
+static int const MESSAGELABEL_TAG = 2;
+static int const IMAGEVIEW_TAG_1 = 3;
+static int const IMAGEVIEW_TAG_2 = 4;
+static int const IMAGEVIEW_TAG_3 = 5;
+
 UIColor *MY_CHAT_COLOR = nil;
 UIColor *THEIR_CHAT_COLOR = nil;
 
 @interface OneOnOneChatViewController()
 
-- (void)addChatMessageToView:(NSString *)message
-                   sentByMe:(BOOL)myMessage;
+- (CGFloat)labelHeight:(ChatMessage *)message;
+- (void)scrollToLastChat;
 
 @end
 
 @implementation OneOnOneChatViewController
 
 @synthesize user = _user;
-@synthesize nextChatBoxRect = _nextChatBoxRect;
+@synthesize me = _me;
+@synthesize history = _history;
+
 @synthesize chatEntryField = _chatEntryField;
 @synthesize chatContents = _chatContents;
+@synthesize backgroundView = _backgroundView;
+@synthesize chatInputs = _chatInputs;
+
+
+#pragma mark - Misc Functions
 
 - (void)closeModalView
 {
     [self dismissModalViewControllerAnimated:YES];
 }
 
-#pragma mark - Chat Logic functions
-
-- (void)addChatMessageToView:(NSString *)message
-                    sentByMe:(BOOL)myMessage
+- (void)addCloseButton
 {
-    NSLog(@"Inserting new chat box at (%f, %f) w(%f) h(%f)",
-          self.nextChatBoxRect.origin.x,
-          self.nextChatBoxRect.origin.y,
-          self.nextChatBoxRect.size.width,
-          self.nextChatBoxRect.size.height);
+    NSLog(@"attempting to add close button");
+    UIBarButtonItem *closeButton = [[UIBarButtonItem alloc]
+                                    initWithTitle:@"Close"
+                                    style:UIBarButtonItemStyleDone
+                                    target:self
+                                    action:@selector(closeModalView)];
     
-    // Insert the chat entry as a UI element
-    UILabel *newChatEntry = [[UILabel alloc] initWithFrame:self.nextChatBoxRect];
-    newChatEntry.text = message;
-    newChatEntry.textAlignment = UITextAlignmentCenter;
-    newChatEntry.textColor = [UIColor darkTextColor];
-    newChatEntry.numberOfLines = 0;                         // display multiple lines
-    newChatEntry.lineBreakMode = UILineBreakModeWordWrap;
-        
-    if (myMessage)
+    self.navigationItem.leftBarButtonItem = closeButton;
+}
+
+- (void)scrollToLastChat
+{
+    if ([self.history count] - 1 >= 0) {
+        // Scroll to the bottom of the table view
+        NSIndexPath *lastCell = [NSIndexPath indexPathForRow:[self.history count] - 1
+                                                   inSection:0];
+        [self.chatContents scrollToRowAtIndexPath:lastCell
+                                 atScrollPosition:UITableViewScrollPositionBottom
+                                         animated:NO];
+
+    }
+}
+
+- (void)keyboardWillShow:(NSNotification*)notification
+{
+    CGRect keyboardRect = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    double scrollSpeed = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    // Save original positions
+    originalChatContentsRect = self.chatContents.frame;
+    originalChatInputsRect = self.chatInputs.frame;
+    
+    // Shrink the height of the table view by the # of points that the keyboard
+    // will occupy
+    CGRect newChatContentsRect = CGRectMake(self.chatContents.frame.origin.x,
+                                            self.chatContents.frame.origin.y,
+                                            self.chatContents.frame.size.width, 
+                                            self.chatContents.frame.size.height - keyboardRect.size.height);
+    
+    // Raise the inputs by the # of points that the keyboard will occupy
+    CGRect newChatInputRect = CGRectMake(self.chatInputs.frame.origin.x,
+                                         self.chatInputs.frame.origin.y - keyboardRect.size.height, 
+                                         self.chatInputs.frame.size.width, 
+                                         self.chatInputs.frame.size.height);
+    
+    [UIView animateWithDuration:scrollSpeed
+                          delay:0
+                        options:UIViewAnimationOptionAllowUserInteraction
+                     animations:^{
+                         self.chatContents.frame = newChatContentsRect;
+                         self.chatInputs.frame = newChatInputRect;
+                     }
+                     completion:nil];
+    [self scrollToLastChat];
+}
+
+- (void)keyboardWillHide:(NSNotification*)notification
+{
+    // Return the chatContents and the inputs to their original position
+    [UIView animateWithDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]
+                          delay:0
+                        options:UIViewAnimationOptionAllowUserInteraction
+                     animations:^{
+                         self.chatContents.frame = originalChatContentsRect;
+                         self.chatInputs.frame = originalChatInputsRect;
+                     }
+                     completion:nil];
+    [self scrollToLastChat];
+}
+
+
+#pragma mark - Table View methods
+
+- (NSInteger)tableView:(UITableView *)tableView 
+ numberOfRowsInSection:(NSInteger)section
+{
+    return [self.history count];
+}
+
+// We only have 1 section
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (CGFloat)labelHeight:(ChatMessage *)message
+{
+    CGSize maximumLabelSize = CGSizeMake(CHAT_BOX_WIDTH, 9999);
+    CGSize expectedLabelSize = [message.message sizeWithFont:[UIFont systemFontOfSize: FONTSIZE]
+                                constrainedToSize:maximumLabelSize
+                                    lineBreakMode:UILineBreakModeWordWrap];
+    return expectedLabelSize.height;
+}
+
+//---returns the height for the table view row---
+- (CGFloat)tableView:(UITableView *)tableView
+heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    int labelHeight = [self labelHeight:[self.history
+                                         messageAtIndex:indexPath.row]];
+    
+    // TODO: account for graphics
+    //labelHeight -= bubbleFragment_height;
+    if (labelHeight < 0) labelHeight = 0;
+    
+    //return (bubble_y + bubbleFragment_height * 2 + labelHeight) + 5;
+    return labelHeight + 10;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    ChatMessageCell *cell = [tableView
+                             dequeueReusableCellWithIdentifier:@"MyChatCell"];
+    
+    if (cell == nil)
     {
-        newChatEntry.backgroundColor = [CPUIHelper colorForCPColor:CPColorGrey];
-        newChatEntry.textAlignment = UITextAlignmentRight;
+        // We're making our cell template in the storyboard, so just crash
+        // if we get here.
+        @throw [NSException exceptionWithName:@"Chat Cell ID is incorrect."
+                                       reason:nil
+                                     userInfo:nil];
+    }
+    
+    // Set up the message bubble for the particular message
+    ChatMessage *message = [self.history messageAtIndex:indexPath.row];
+    
+    if (message.fromMe)
+    {
+        cell.chatMessageLabel.textAlignment = UITextAlignmentRight;
+        cell.chatMessageLabel.backgroundColor = MY_CHAT_COLOR;
     }
     else
     {
-        newChatEntry.backgroundColor = [CPUIHelper colorForCPColor:CPColorGreen];
-        newChatEntry.textAlignment = UITextAlignmentLeft;
+        cell.chatMessageLabel.textAlignment = UITextAlignmentLeft;
+        cell.chatMessageLabel.backgroundColor = THEIR_CHAT_COLOR;
     }
     
-    [self.chatContents addSubview:newChatEntry];
+    CGRect labelRect = CGRectMake(cell.chatMessageLabel.frame.origin.x, 
+                                  cell.chatMessageLabel.frame.origin.y,
+                                  cell.chatMessageLabel.frame.size.width,
+                                  [self labelHeight:message]);
+    cell.chatMessageLabel.frame = labelRect;
+    cell.chatMessageLabel.text = message.message;
     
-    // Increase size of scroll view if necessary
-    float nextChatBoxBottom = self.nextChatBoxRect.origin.y +
-                              self.nextChatBoxRect.size.height;
     
-    NSLog(@"Should we resize? chatContents = h(%f) and nextChatBoxBottom = %f",
-          self.chatContents.contentSize.height,
-          nextChatBoxBottom);
-    
-    if (self.chatContents.contentSize.height < nextChatBoxBottom) {
-        CGSize newSize = CGSizeMake(self.chatContents.contentSize.width,
-                                    nextChatBoxBottom + CHAT_PADDING_Y);
-        self.chatContents.contentSize = newSize;
-        
-        // Scroll to bottom of the chat window
-        CGPoint bottomOffset = CGPointMake(0.0f,
-                                           self.chatContents.contentSize.height -
-                                           self.chatContents.bounds.size.height);
-        [self.chatContents setContentOffset: bottomOffset
-                                   animated:NO];
-        
-    }
-    
-    // Update the lastChatBoxPosition
-    self.nextChatBoxRect = CGRectMake(newChatEntry.frame.origin.x,
-                                      newChatEntry.frame.origin.y +
-                                        newChatEntry.bounds.size.height +
-                                      CHAT_PADDING_Y,
-                                      CHAT_BOX_WIDTH,
-                                      CHAT_BOX_HEIGHT);
+    return cell;
 }
 
-- (void)receiveChatMessage:(NSString *)message {
-    [self addChatMessageToView:message sentByMe:NO];
+
+/*********************************************************************/
+#pragma mark - Chat Logic methods
+
+// We received a string of text for the current chat. The far-end
+// user should already be known in our model
+- (void)receiveChatText:(NSString *)messageText {
+    ChatMessage *message = [[ChatMessage alloc] initWithMessage:messageText
+                                                         toUser:self.me
+                                                       fromUser:self.user];
+    [self.history addMessage:message];
+    [self.chatContents reloadData];
+    [self scrollToLastChat];
 }
 
-- (void)deliverChatMessage:(NSString *)message {
-    // Send message via UrbanAirship push notification
-    [CPapi sendOneOnOneChatMessage:message toUser:self.user.userID];
-    
-    [self addChatMessageToView:message sentByMe:YES];
+- (void)deliverChatMessage:(ChatMessage *)message
+{
+    [CPapi sendOneOnOneChatMessage:message.message
+                            toUser:message.toUser.userID];
+    [self.history addMessage:message];
+    [self.chatContents reloadData];
+    [self scrollToLastChat];
 }
 
 - (IBAction)sendChat {
-    if (self.chatEntryField.text == @"") {
+    if (![self.chatEntryField.text isEqualToString:@""]) {
         // Don't do squat on empty chat entries
-    } else {
-        [self deliverChatMessage:self.chatEntryField.text];
+        ChatMessage *message = [[ChatMessage alloc]
+                                initWithMessage:self.chatEntryField.text
+                                         toUser:self.user
+                                       fromUser:self.me];
+        
+        [self deliverChatMessage:message];
+        // Clear chat box text
         self.chatEntryField.text = @"";
     }
 }
@@ -148,46 +271,48 @@ UIColor *THEIR_CHAT_COLOR = nil;
     [super viewDidLoad];
     
     [[AppDelegate instance] hideCheckInButton];
-    
+        
     MY_CHAT_COLOR = [CPUIHelper colorForCPColor:CPColorGreen];
     THEIR_CHAT_COLOR = [CPUIHelper colorForCPColor:CPColorGrey];
+    
+    // Setup the "me" object. It's a wonder why we don't just hae
+    self.me = [[User alloc] init];
+    self.me.userID = [[AppDelegate instance].settings.candpUserId intValue];
+    self.me.nickname = [AppDelegate instance].settings.userNickname;
+
+    self.history = [[ChatHistory alloc] init];
     
     NSLog(@"Preparing to chat with user %@ (id: %d)",
           self.user.nickname,
           self.user.userID);
     
     self.title = self.user.nickname;
+        
+    // Set up the fancy background on view
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-dark.png"]];
     
     // Set up the chat entry field
     self.chatEntryField.delegate = self;
     
-    // Make up the point for the first chat entry
-    self.nextChatBoxRect = CGRectMake(self.chatContents.bounds.origin.x + CHAT_PADDING_X,
-                                      self.chatContents.bounds.origin.y + CHAT_PADDING_Y,
-                                      CHAT_BOX_WIDTH,
-                                      CHAT_BOX_HEIGHT);
+    // Add notifications for keyboard showing / hiding
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
     
 }
-
-- (void)addCloseButton
-{
-    NSLog(@"attempting to add close button");
-    UIBarButtonItem *closeButton = [[UIBarButtonItem alloc]
-                                    initWithTitle:@"Close"
-                                    style:UIBarButtonItemStyleDone
-                                    target:self
-                                    action:@selector(closeModalView)];
-    
-    self.navigationItem.leftBarButtonItem = closeButton;
-}
-
 
 - (void)viewDidUnload
 {
     [[AppDelegate instance] showCheckInButton];
-    //[self setChatDisplay:nil];
     [self setChatEntryField:nil];
     [self setChatContents:nil];
+    [self setBackgroundView:nil];
+    [self setChatInputs:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -217,6 +342,9 @@ UIColor *THEIR_CHAT_COLOR = nil;
     return self;
 }
 
+/* PROBABLY GONNA DELETE THIS, THOUGHT I LIKE THE IDEA.
+   It doesn't seem to work as intended.
+ 
 - (void)loadWithUserId:(NSString *)userId
             andMessage:(NSString *)message {
     
@@ -237,6 +365,6 @@ UIColor *THEIR_CHAT_COLOR = nil;
     [self addChatMessageToView:message
                       sentByMe:NO];
 }
-
+*/
 
 @end

@@ -7,10 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "User.h"
 
 @interface ChatMessage : NSObject
 
-@property (nonatomic, assign) BOOL sentByMe;
-@property (nonatomic, strong) NSString* message;
+@property (nonatomic, assign) BOOL fromMe;
+@property (nonatomic, strong) User *fromUser;
+@property (nonatomic, strong) User *toUser;
+@property (nonatomic, strong) NSString *message;
+@property (nonatomic, strong) NSDate *date;
+
+- (id)initWithMessage:(NSString *)newMessage
+               toUser:(User *)toUser
+             fromUser:(User *)fromUser;
 
 @end

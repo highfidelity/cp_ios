@@ -27,7 +27,7 @@
 
 // Chat functions
 + (void)sendOneOnOneChatMessage:(NSString *)message
-                        toUser:(int) userId;
+                        toUser:(int)userId;
 
 // Face-to-Face functions
 + (void)sendF2FInvite:(int) userId;

@@ -21,7 +21,7 @@
                    withParameters:(NSMutableDictionary *)parameters 
                        completion:(void(^)(NSDictionary *json, NSError *error))completion;
 
-+ (void)OneOnOneChatResponseHandler:(NSData *)response;
++ (void)oneOnOneChatResponseHandler:(NSData *)response;
 + (void)f2fInviteResponseHandler:(NSData *)response;
 + (void)f2fAcceptResponseHandler:(NSData *)response;
 + (void)f2fDeclineResponseHandler:(NSData *)response;
@@ -183,10 +183,10 @@
     
     [self makeHTTPRequestWithAction:@"oneOnOneChatFromMobile"
                      withParameters:parameters
-                    responseHandler:@selector(OneOnOneChatResponseHandler:)];
+                    responseHandler:@selector(oneOnOneChatResponseHandler:)];
 }
 
-+ (void)OneOnOneChatResponseHandler:(NSData *)response
++ (void)oneOnOneChatResponseHandler:(NSData *)response
 {
     NSLog(@"One on one chat sent, or something: %@", response);
 }

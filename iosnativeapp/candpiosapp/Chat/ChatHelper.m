@@ -39,7 +39,7 @@
     // If the person is in the chat window AND is talking with the user that sent the chat
     // send the message straight to the chat window    
     if (chatView != nil && chatView.user.userID == userId) {
-        [chatView receiveChatMessage:message];
+        [chatView receiveChatText:message];
     }
     // Otherwise send the message as a popup alert
     else
@@ -91,7 +91,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
             oneOnOneChat.user.userID = [userId intValue];
             oneOnOneChat.user.nickname = nickname;
             [oneOnOneChat addCloseButton];
-            [oneOnOneChat receiveChatMessage:message];
+            [oneOnOneChat receiveChatText:message];
         }
     }
 }

@@ -15,23 +15,25 @@
 - (id)init {
     self = [super init];
     
+    self.messages = [[NSMutableArray alloc] init];
+    
     return self;
 }
 
 // Add a message to the messages array for the given user
-- (void)addMessage:(ChatMessage*) message
-        fromUserId:(User*) user
+- (void)addMessage:(ChatMessage *)message
 {
-    
-    NSMutableArray* my_messages = [self.messages objectForKey:user];
-    
-    if (my_messages) {
-        my_messages = [NSMutableArray arrayWithObject:message];
-    } else {
-        [my_messages addObject:message];
-    }
-    
-    [self.messages setObject:my_messages forKey:user];
+    [self.messages addObject:message];
+}
+
+- (ChatMessage *)messageAtIndex:(NSUInteger)index
+{
+    return [self.messages objectAtIndex:index];
+}
+
+- (NSInteger)count
+{
+    return [self.messages count];
 }
 
 @end

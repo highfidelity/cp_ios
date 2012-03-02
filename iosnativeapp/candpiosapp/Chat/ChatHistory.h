@@ -12,9 +12,10 @@
 
 @interface ChatHistory : NSObject
 
-@property (nonatomic, strong) NSMutableDictionary* messages;
+@property (nonatomic, strong) NSMutableArray* messages;
 
-- (void)addMessage:(ChatMessage*) message
-        fromUserId:(User*) user;
+- (void)addMessage:(ChatMessage *)message;
+- (ChatMessage *)messageAtIndex:(NSUInteger)index;
+- (NSInteger)count;
 
 @end
