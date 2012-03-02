@@ -273,6 +273,7 @@
 		E402DB6314D43C1700BC82E8 /* defaultAvatar50.png in Resources */ = {isa = PBXBuildFile; fileRef = E402DB6214D43C1700BC82E8 /* defaultAvatar50.png */; };
 		E402DB6614D43C2B00BC82E8 /* pin-frame.png in Resources */ = {isa = PBXBuildFile; fileRef = E402DB6514D43C2B00BC82E8 /* pin-frame.png */; };
 		E433C0A51500522D009B819D /* perforated-skin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E433C0A41500522D009B819D /* perforated-skin@2x.png */; };
+		E46B5C1D150141F300CBFBB5 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E46B5C1B150141F300CBFBB5 /* MainStoryboard_iPad.storyboard */; };
 		E48C631B14EFCA1F00AC2979 /* PayUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E48C631A14EFCA1F00AC2979 /* PayUserViewController.m */; };
 		E48CFA30150035E700A35D0E /* vector-lock.png in Resources */ = {isa = PBXBuildFile; fileRef = E48CFA2E150035E700A35D0E /* vector-lock.png */; };
 		E48CFA31150035E700A35D0E /* vector-lock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E48CFA2F150035E700A35D0E /* vector-lock@2x.png */; };
@@ -737,6 +738,7 @@
 		E402DB6514D43C2B00BC82E8 /* pin-frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-frame.png"; sourceTree = "<group>"; };
 		E433C0A41500522D009B819D /* perforated-skin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "perforated-skin@2x.png"; sourceTree = "<group>"; };
 		E456941F14FEDD8B0060A896 /* perforated-skin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "perforated-skin.png"; sourceTree = "<group>"; };
+		E46B5C1C150141F300CBFBB5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		E48C631914EFCA1F00AC2979 /* PayUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PayUserViewController.h; path = Views/PayUserViewController.h; sourceTree = "<group>"; };
 		E48C631A14EFCA1F00AC2979 /* PayUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PayUserViewController.m; path = Views/PayUserViewController.m; sourceTree = "<group>"; };
 		E48CFA2E150035E700A35D0E /* vector-lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vector-lock.png"; sourceTree = "<group>"; };
@@ -1256,6 +1258,7 @@
 				6F3651DA14EAE8BB00E9322B /* FaceToFace */,
 				87F657F314B0D2D000F4AB6C /* images */,
 				6F368D9B14F86F8900CA1A41 /* Login */,
+				E46B5C1B150141F300CBFBB5 /* MainStoryboard_iPad.storyboard */,
 				871EFB1C14AE9C820030658B /* MainStoryboard_iPhone.storyboard */,
 				6F57076614E85439009B4053 /* Models */,
 				E48CFA321500416900A35D0E /* Payment */,
@@ -1860,6 +1863,7 @@
 				E48CFA30150035E700A35D0E /* vector-lock.png in Resources */,
 				E48CFA31150035E700A35D0E /* vector-lock@2x.png in Resources */,
 				E433C0A51500522D009B819D /* perforated-skin@2x.png in Resources */,
+				E46B5C1D150141F300CBFBB5 /* MainStoryboard_iPad.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2056,6 +2060,14 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		E46B5C1B150141F300CBFBB5 /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E46B5C1C150141F300CBFBB5 /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -2128,6 +2140,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				HEADER_SEARCH_PATHS = "Airship/**";
 				INFOPLIST_FILE = "candpiosapp/candpiosapp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/FlurryAnalytics\"",
@@ -2136,7 +2149,7 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2155,6 +2168,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				HEADER_SEARCH_PATHS = "Airship/**";
 				INFOPLIST_FILE = "candpiosapp/candpiosapp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/FlurryAnalytics\"",
@@ -2163,7 +2177,7 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
