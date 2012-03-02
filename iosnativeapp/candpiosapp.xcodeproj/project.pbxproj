@@ -93,10 +93,11 @@
 		4EBD1D4914FEC1C700E9C0C6 /* EmailLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EBD1D4414FEC1C700E9C0C6 /* EmailLoginController.m */; };
 		4EBD1D4A14FEC1C700E9C0C6 /* EmailLoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EBD1D4514FEC1C700E9C0C6 /* EmailLoginController.xib */; };
 		4EC78B0D14F76E8400581F4F /* SettingsMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EC78AFE14F761B300581F4F /* SettingsMenuController.m */; };
-		4EFC54631500629100BF51B0 /* logo-login-mug.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EFC54611500629100BF51B0 /* logo-login-mug.png */; };
-		4EFC54641500629100BF51B0 /* logo-login-mug@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EFC54621500629100BF51B0 /* logo-login-mug@2x.png */; };
 		4EFC5469150086A100BF51B0 /* LinkedInLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EFC5467150086A100BF51B0 /* LinkedInLoginController.m */; };
-		4EFC546A150086A100BF51B0 /* LinkedInLoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EFC5468150086A100BF51B0 /* LinkedInLoginController.xib */; };
+		4EFC547915015CDB00BF51B0 /* login-signup-banner.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EFC547715015CDB00BF51B0 /* login-signup-banner.png */; };
+		4EFC547A15015CDB00BF51B0 /* login-signup-banner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EFC547815015CDB00BF51B0 /* login-signup-banner@2x.png */; };
+		4EFC5484150161FA00BF51B0 /* logo-login-mug.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EFC54611500629100BF51B0 /* logo-login-mug.png */; };
+		4EFC5485150161FA00BF51B0 /* logo-login-mug@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EFC54621500629100BF51B0 /* logo-login-mug@2x.png */; };
 		5317491E14FEF4EE002E1042 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317491A14FEF4ED002E1042 /* Icon-Small.png */; };
 		5317491F14FEF4EE002E1042 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317491B14FEF4ED002E1042 /* Icon-Small@2x.png */; };
 		5317492014FEF4EE002E1042 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317491C14FEF4EE002E1042 /* Icon.png */; };
@@ -257,7 +258,6 @@
 		879381E414B4E659000EBCED /* Facebook+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 879381E314B4E659000EBCED /* Facebook+Blocks.m */; };
 		87DC9A3914BEB92200BA3907 /* SignupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DC9A3714BEB92200BA3907 /* SignupController.m */; };
 		87DC9A3A14BEB92200BA3907 /* SignupController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87DC9A3814BEB92200BA3907 /* SignupController.xib */; };
-		87DC9A4214BECB6F00BA3907 /* LoginSequenceBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DC9A4114BECB6F00BA3907 /* LoginSequenceBase.m */; };
 		87F5EF4614AFA68900EB83F7 /* MyWebTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F5EF4514AFA68800EB83F7 /* MyWebTabController.m */; };
 		87F5EF4F14AFAAC500EB83F7 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F5EF4E14AFAAC500EB83F7 /* Settings.m */; };
 		87F657EB14B0D0C800F4AB6C /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F657D814B0D0C800F4AB6C /* SDImageCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -476,6 +476,8 @@
 		4EFC5466150086A100BF51B0 /* LinkedInLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedInLoginController.h; sourceTree = "<group>"; };
 		4EFC5467150086A100BF51B0 /* LinkedInLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedInLoginController.m; sourceTree = "<group>"; };
 		4EFC5468150086A100BF51B0 /* LinkedInLoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LinkedInLoginController.xib; sourceTree = "<group>"; };
+		4EFC547715015CDB00BF51B0 /* login-signup-banner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-signup-banner.png"; sourceTree = "<group>"; };
+		4EFC547815015CDB00BF51B0 /* login-signup-banner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-signup-banner@2x.png"; sourceTree = "<group>"; };
 		5317491A14FEF4ED002E1042 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
 		5317491B14FEF4ED002E1042 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		5317491C14FEF4EE002E1042 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -702,8 +704,6 @@
 		87DC9A3614BEB92200BA3907 /* SignupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupController.h; sourceTree = "<group>"; };
 		87DC9A3714BEB92200BA3907 /* SignupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupController.m; sourceTree = "<group>"; };
 		87DC9A3814BEB92200BA3907 /* SignupController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupController.xib; sourceTree = "<group>"; };
-		87DC9A4014BECB6F00BA3907 /* LoginSequenceBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginSequenceBase.h; sourceTree = "<group>"; };
-		87DC9A4114BECB6F00BA3907 /* LoginSequenceBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginSequenceBase.m; sourceTree = "<group>"; };
 		87F5EF4414AFA68800EB83F7 /* MyWebTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWebTabController.h; sourceTree = "<group>"; };
 		87F5EF4514AFA68800EB83F7 /* MyWebTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWebTabController.m; sourceTree = "<group>"; };
 		87F5EF4D14AFAAC500EB83F7 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
@@ -1103,8 +1103,6 @@
 			isa = PBXGroup;
 			children = (
 				5350F4EE14FF06840012AC2E /* images */,
-				87DC9A4014BECB6F00BA3907 /* LoginSequenceBase.h */,
-				87DC9A4114BECB6F00BA3907 /* LoginSequenceBase.m */,
 			);
 			name = Login;
 			path = SupportingClasses;
@@ -1509,6 +1507,8 @@
 		87F657F314B0D2D000F4AB6C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				4EFC547715015CDB00BF51B0 /* login-signup-banner.png */,
+				4EFC547815015CDB00BF51B0 /* login-signup-banner@2x.png */,
 				4EFC54611500629100BF51B0 /* logo-login-mug.png */,
 				4EFC54621500629100BF51B0 /* logo-login-mug@2x.png */,
 				87F657F414B0D2D100F4AB6C /* 63-runner.png */,
@@ -1717,6 +1717,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EFC5484150161FA00BF51B0 /* logo-login-mug.png in Resources */,
+				4EFC5485150161FA00BF51B0 /* logo-login-mug@2x.png in Resources */,
 				871EFB1514AE9C820030658B /* InfoPlist.strings in Resources */,
 				871EFB1E14AE9C820030658B /* MainStoryboard_iPhone.storyboard in Resources */,
 				871EFBBA14AF97130030658B /* SVProgressHUD.bundle in Resources */,
@@ -1855,6 +1857,8 @@
 				E48CFA30150035E700A35D0E /* vector-lock.png in Resources */,
 				E48CFA31150035E700A35D0E /* vector-lock@2x.png in Resources */,
 				E433C0A51500522D009B819D /* perforated-skin@2x.png in Resources */,
+				4EFC547915015CDB00BF51B0 /* login-signup-banner.png in Resources */,
+				4EFC547A15015CDB00BF51B0 /* login-signup-banner@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1941,7 +1945,6 @@
 				8733311D14BCFAAB001BF4DB /* TableViewControllerHelper.m in Sources */,
 				32C762F814BEB48500FE25E4 /* UserListTableViewController.m in Sources */,
 				87DC9A3914BEB92200BA3907 /* SignupController.m in Sources */,
-				87DC9A4214BECB6F00BA3907 /* LoginSequenceBase.m in Sources */,
 				32E3CD8614C39B94001EA2AB /* UserTableViewCell.m in Sources */,
 				32E3CD9114C3AAA5001EA2AB /* WebViewController.m in Sources */,
 				875CB8F414C5DC8C00AD4F6E /* MapDataSet.m in Sources */,

@@ -32,7 +32,7 @@
 
 - (void)viewWillAppear:(BOOL)animated { 
     [super viewWillAppear:animated];
-    self.title = @"Sign Up";
+    self.title = @"Join";
     self.confirmPasswordErrorLabel.text = @"";
     self.nicknameErrorLabel.text = @"";
     self.nicknameField.text = [[AppDelegate instance] settings].userNickname;

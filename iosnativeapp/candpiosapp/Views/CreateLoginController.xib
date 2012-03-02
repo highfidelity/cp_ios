@@ -109,6 +109,7 @@
 											<bool key="IBUIAdjustsFontSizeToFit">YES</bool>
 											<float key="IBUIMinimumFontSize">17</float>
 											<object class="IBUITextInputTraits" key="IBUITextInputTraits">
+												<int key="IBUIKeyboardType">7</int>
 												<int key="IBUIReturnKeyType">4</int>
 												<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 											</object>
@@ -334,7 +335,6 @@
 											<string key="NSFrame">{{117, 364}, {140, 21}}</string>
 											<reference key="NSSuperview" ref="850731728"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:328</string>
 											<bool key="IBUIOpaque">NO</bool>
 											<bool key="IBUIClipsSubviews">YES</bool>
@@ -399,7 +399,7 @@
 						</object>
 						<object class="IBUINavigationItem" key="IBUINavigationItem" id="697771519">
 							<reference key="IBUINavigationBar"/>
-							<string key="IBUITitle">Sign Up</string>
+							<string key="IBUITitle">Join</string>
 							<object class="IBUIBarButtonItem" key="IBUIBackBarButtonItem" id="480853577">
 								<string key="IBUITitle">Back</string>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
