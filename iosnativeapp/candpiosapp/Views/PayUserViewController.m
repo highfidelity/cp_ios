@@ -11,6 +11,8 @@
 #import "AppDelegate.h"
 #import "AFNetworking.h"
 #import "SVProgressHUD.h"
+#import "CPapi.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation PayUserViewController
 @synthesize user = _user;
@@ -26,7 +28,24 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [[AppDelegate instance] hideCheckInButton];
+    
+    [[self view] setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"perforated-skin.png"]]];
     [paymentAmount becomeFirstResponder];
+    [paymentNote setDelegate: self];
+
+    descriptionView.layer.borderColor = [UIColor colorWithRed:159.0/255 green:159.0/255 blue:159.0/255 alpha:1.0].CGColor;
+    descriptionView.layer.borderWidth = 1.0f;
+    
+    UIColor *borderColor = [[UIColor alloc] initWithRed:122.0/255 green:132.0/255  blue:142.0/255 alpha:1];
+
+    [[payButton layer] setBorderColor:[borderColor CGColor]];
+    [[payButton layer] setBorderWidth:1.0f];
+    [[payButton layer] setCornerRadius:6];
+    
+    [[cancelButton layer] setBorderColor:[borderColor CGColor]];
+    [[cancelButton layer] setBorderWidth:1.0f];
+    [[cancelButton layer] setCornerRadius:6];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,20 +59,57 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [SVProgressHUD showWithStatus:@"Loading..."];
+
+
     [payTo setText: self.user.nickname];
-	// Do any additional setup after loading the view, typically from a nib.
+    [payeeImage setImageWithURL: self.user.urlPhoto];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    [CPapi getUserProfileWithCompletionBlock:^(NSDictionary *json, NSError *error) {
+        NSDictionary *jsonDict = json;
+
+        [SVProgressHUD dismiss];
+        int user_id = [[jsonDict objectForKey:@"userid"] intValue];
+        if (user_id > 0) {
+            float balance = [[jsonDict objectForKey:@"balance"] floatValue];
+            [userBalance setText:[NSString stringWithFormat:@"$%.2f", balance]];
+
+            if (balance == 0) {
+                [self performSegueWithIdentifier:@"PayToAddFundsUserSegue" sender:self];
+            }
+
+        } else {
+
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                message:@"You must be logged in to C&P in order to make payments"
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+            [alertView show];
+        }
+
+    }];
 }
 
 - (void)viewDidUnload
 {
     paymentAmount = nil;
     paymentNote = nil;
-    responseText = nil;
     charsLeft = nil;
     payTo = nil;
-    messageView = nil;
-    paymentView = nil; 
-    
+    payeeImage = nil;
+    userBalance = nil;
+    paymentNote = nil;
+    paymentNote = nil;
+    descriptionView = nil;
+    cancelButton = nil;
+    payButton = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -126,10 +182,15 @@
         {
             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
             
-            [responseText setText:[NSString stringWithFormat:@"Paid %@ $%.2f for %@", self.user.nickname, amount, [paymentNote text]]];
-                                   
-            [paymentView setHidden:YES];
-            [messageView setHidden:NO];
+            NSString *message = [NSString stringWithFormat:@"Paid %@ $%.2f for %@", self.user.nickname, amount, [paymentNote text]];
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Transaction"
+                                                                message:message
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+            [alertView show];
+            
         }
         
 	} failure:^(NSURLRequest *aRequest, NSHTTPURLResponse *response, NSError *error, id JSON) {
@@ -141,11 +202,6 @@
 	}];
 
     [[NSOperationQueue mainQueue] addOperation:postOperation];
-}
-
-- (IBAction)closeModal:(id)sender 
-{
-    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (IBAction)descriptionChanged:(id)sender 
@@ -164,5 +220,17 @@
     [paymentAmount setText:[NSString stringWithFormat:@"$%.2f", [[paymentAmount text] floatValue]]];
 }
 
+- (IBAction)closeView:(UIButton *)sender
+{
+    [[self navigationController] popViewControllerAnimated: YES];
+}
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+ if (textField == paymentNote) {
+     [textField resignFirstResponder];
+ }
+ return YES;
+}
 
 @end

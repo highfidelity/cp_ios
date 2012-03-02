@@ -9,22 +9,24 @@
 #import <UIKit/UIKit.h>
 #import "User.h"
 
-@interface PayUserViewController : UIViewController 
+@interface PayUserViewController : UIViewController <UITextFieldDelegate>
 {
     IBOutlet UITextField *paymentAmount;
-    IBOutlet UITextField *paymentNote;
-    IBOutlet UILabel *responseText;
     IBOutlet UILabel *charsLeft;
     IBOutlet UILabel *payTo;
-    IBOutlet UIView *messageView;
-    IBOutlet UIView *paymentView;    
+    __weak IBOutlet UITextField *paymentNote;
+    __weak IBOutlet UIImageView *payeeImage;
+    __weak IBOutlet UILabel *userBalance;
+    __weak IBOutlet UIView *descriptionView;
+    __weak IBOutlet UIButton *cancelButton;
+    __weak IBOutlet UIButton *payButton;
 }
 
 @property (weak) User *user;
 
 - (IBAction)makePayment:(id)sender;
-- (IBAction)closeModal:(id)sender;
 - (IBAction)descriptionChanged:(id)sender;
 - (IBAction)formatAmount:(id)sender;
+- (IBAction)closeView:(UIButton *)sender;
 
 @end

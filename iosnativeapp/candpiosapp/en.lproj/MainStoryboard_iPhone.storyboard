@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2177" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
     <dependencies>
         <deployment version="1280" identifier="iOS"/>
         <development version="4200" defaultVersion="4200" identifier="xcode"/>
@@ -944,7 +944,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="jFr-bh-Ddh" kind="modal" identifier="ProfileToPayUserSegue" id="ZZi-15-42H"/>
+                                    <segue destination="jFr-bh-Ddh" kind="push" identifier="ProfileToPayUserSegue" id="ZZi-15-42H"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1007" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DNJ-83-atP">
@@ -1172,151 +1172,181 @@
             </objects>
             <point key="canvasLocation" x="1910" y="-298"/>
         </scene>
+        <!--Pay User View Controller - Pay-->
         <scene sceneID="DEn-4Y-o5w">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T77-Ar-WSs" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="jFr-bh-Ddh" customClass="PayUserViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="76O-HM-hrr">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3Wu-DF-5vb">
+                                <rect key="frame" x="20" y="232" width="125" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.4823529411764706" green="0.51764705882352935" blue="0.5490196078431373" alpha="1" colorSpace="deviceRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                <size key="titleShadowOffset" width="1" height="1"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" title="Cancel">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeView:" destination="jFr-bh-Ddh" eventType="touchUpInside" id="Ox8-yi-Ew6"/>
+                                </connections>
+                            </button>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4W1-eR-imc">
+                                <rect key="frame" x="175" y="233" width="125" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.25882352941176467" green="0.51764705882352935" blue="0.50980392156862742" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                <size key="titleShadowOffset" width="1" height="1"/>
+                                <state key="normal" title="Pay">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="makePayment:" destination="jFr-bh-Ddh" eventType="touchUpInside" id="bBc-mS-ndp"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" id="1A4-yD-GSc">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="190"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="186"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0.00" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" id="1lG-jk-4Au" userLabel="Payment amount">
-                                        <rect key="frame" x="81" y="26" width="219" height="31"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Pay:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="9Rf-TV-C3P">
+                                        <rect key="frame" x="14" y="37" width="35" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="next"/>
-                                        <connections>
-                                            <action selector="formatAmount:" destination="jFr-bh-Ddh" eventType="editingDidEnd" id="tD8-MZ-egv"/>
-                                        </connections>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" id="MD6-lb-csn" userLabel="Payment note">
-                                        <rect key="frame" x="81" y="94" width="192" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <accessibility key="accessibilityConfiguration" label=""/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="go"/>
-                                        <connections>
-                                            <action selector="descriptionChanged:" destination="jFr-bh-Ddh" eventType="editingChanged" id="CD9-qT-LaX"/>
-                                        </connections>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4W1-eR-imc">
-                                        <rect key="frame" x="228" y="133" width="72" height="37"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Pay">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="makePayment:" destination="jFr-bh-Ddh" eventType="touchUpInside" id="bBc-mS-ndp"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Pay $" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="9Rf-TV-C3P">
-                                        <rect key="frame" x="29" y="31" width="44" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Nickname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="1ec-dy-A8A">
-                                        <rect key="frame" x="44" y="65" width="256" height="21"/>
+                                        <rect key="frame" x="48" y="37" width="175" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Pay for:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="6ms-YC-bS5">
-                                        <rect key="frame" x="14" y="99" width="59" height="21"/>
+                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="64" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="P5B-28-Ufw">
+                                        <rect key="frame" x="293" y="194" width="19" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="64" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="P5B-28-Ufw">
-                                        <rect key="frame" x="281" y="99" width="19" height="21"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="$0.00" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" id="1lG-jk-4Au" userLabel="Payment amount">
+                                        <rect key="frame" x="14" y="64" width="209" height="52"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3Wu-DF-5vb">
-                                        <rect key="frame" x="148" y="133" width="72" height="37"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                        <color key="textColor" red="0.37254901960784315" green="0.37254901960784315" blue="0.37254901960784315" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="47"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="next"/>
                                         <connections>
-                                            <action selector="closeModal:" destination="jFr-bh-Ddh" eventType="touchUpInside" id="JJj-8r-aqF"/>
+                                            <action selector="formatAmount:" destination="jFr-bh-Ddh" eventType="editingDidEnd" id="tD8-MZ-egv"/>
                                         </connections>
-                                    </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="To" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="JHc-fU-lnr">
-                                        <rect key="frame" x="14" y="65" width="20" height="21"/>
+                                    </textField>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="WTh-VT-Sud">
+                                        <rect key="frame" x="231" y="40" width="76" height="76"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" id="Vmc-zf-GpJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Your balance:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="oQc-iG-F3J">
+                                                <rect key="frame" x="36" y="3" width="87" height="18"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
+                                                <color key="textColor" red="0.74509803921568629" green="0.74509803921568629" blue="0.74509803921568629" alpha="1" colorSpace="deviceRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="$0.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" id="g4q-Ed-iKe">
+                                                <rect key="frame" x="127" y="3" width="173" height="18"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
+                                                <color key="textColor" red="0.74509803921568629" green="0.74509803921568629" blue="0.74509803921568629" alpha="1" colorSpace="deviceRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="vector-lock.png" id="BuN-mM-D2P">
+                                                <rect key="frame" x="17" y="5" width="13" height="13"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="xwJ-EI-Al9">
+                                        <rect key="frame" x="-1" y="125" width="322" height="61"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="description" minimumFontSize="17" id="toA-Ky-RHG">
+                                                <rect key="frame" x="8" y="7" width="307" height="48"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                <connections>
+                                                    <action selector="descriptionChanged:" destination="jFr-bh-Ddh" eventType="editingChanged" id="lMj-ar-EBJ"/>
+                                                </connections>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
-                            <view hidden="YES" contentMode="scaleToFill" id="F7F-wX-MDP">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="bh9-Kz-BNe">
-                                        <rect key="frame" x="20" y="20" width="280" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="O5o-q1-hnv">
-                                        <rect key="frame" x="228" y="134" width="72" height="37"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Close">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="closeModal:" destination="jFr-bh-Ddh" eventType="touchUpInside" id="X9k-gp-6YX"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="deviceRGB"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.99215686274509807" green="0.99215686274509807" blue="0.99215686274509807" alpha="1" colorSpace="deviceRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" id="wwj-UK-g9N"/>
+                    <navigationItem key="navigationItem" title="Pay" id="wwj-UK-g9N">
+                        <barButtonItem key="backBarButtonItem" title="C&amp;P" id="mmV-c4-6TC"/>
+                    </navigationItem>
                     <connections>
+                        <outlet property="cancelButton" destination="3Wu-DF-5vb" id="iSo-L2-6gS"/>
                         <outlet property="charsLeft" destination="P5B-28-Ufw" id="KYY-x6-clJ"/>
-                        <outlet property="messageView" destination="F7F-wX-MDP" id="QNr-bJ-cy4"/>
+                        <outlet property="descriptionView" destination="xwJ-EI-Al9" id="yQB-y1-E4c"/>
+                        <outlet property="payButton" destination="4W1-eR-imc" id="klM-w3-v89"/>
                         <outlet property="payTo" destination="1ec-dy-A8A" id="JN3-P7-T6c"/>
+                        <outlet property="payeeImage" destination="WTh-VT-Sud" id="qEs-Mq-yaj"/>
                         <outlet property="paymentAmount" destination="1lG-jk-4Au" id="Lx8-RK-rnQ"/>
-                        <outlet property="paymentNote" destination="MD6-lb-csn" id="QTO-bs-esp"/>
-                        <outlet property="paymentView" destination="1A4-yD-GSc" id="Qgi-K0-Rae"/>
-                        <outlet property="responseText" destination="bh9-Kz-BNe" id="EdK-DF-rdU"/>
+                        <outlet property="paymentNote" destination="toA-Ky-RHG" id="C4s-Mw-l82"/>
+                        <outlet property="userBalance" destination="g4q-Ed-iKe" id="Rmm-GB-3Og"/>
+                        <segue destination="cGc-eg-meh" kind="push" identifier="PayToAddFundsUserSegue" id="fup-w1-PeF"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="1910" y="280"/>
+            <point key="canvasLocation" x="1930" y="302"/>
         </scene>
+        <!--Add Funds View Controller - Add Funds-->
+        <scene sceneID="tWa-gi-Hjy">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TbL-Js-CDE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="AddFundsViewController" id="cGc-eg-meh" customClass="AddFundsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VFW-SQ-IfT">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="You don't have enough funds." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="lfv-hB-7n5">
+                                <rect key="frame" x="20" y="20" width="229" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Add Funds" id="z86-kX-lov"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="2428" y="291"/>
+        </scene>
+        <!--View Controller - Face To Face-->
         <scene sceneID="gtz-5a-hgw">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8HD-fd-1VU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1444,10 +1474,14 @@
         <image name="others-at-venue.png" width="16" height="16"/>
         <image name="people-list.png" width="42" height="29"/>
         <image name="settings-button-3.png" width="42" height="29"/>
+        <image name="vector-lock.png" width="13" height="13"/>
         <image name="verified-facebook.png" width="16" height="16"/>
         <image name="verified-linked-in.png" width="16" height="16"/>
     </resources>
     <classes>
+        <class className="AddFundsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFundsViewController.h"/>
+        </class>
         <class className="BalanceViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BalanceViewController.h"/>
             <relationships>
@@ -1536,17 +1570,19 @@
         <class className="PayUserViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PayUserViewController.h"/>
             <relationships>
-                <relationship kind="action" name="closeModal:"/>
+                <relationship kind="action" name="closeView:" candidateClass="UIButton"/>
                 <relationship kind="action" name="descriptionChanged:"/>
                 <relationship kind="action" name="formatAmount:"/>
                 <relationship kind="action" name="makePayment:"/>
+                <relationship kind="outlet" name="cancelButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="charsLeft" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="messageView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="descriptionView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="payButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="payTo" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="payeeImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="paymentAmount" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="paymentNote" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="paymentView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="responseText" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userBalance" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="SettingsMenuController" superclassName="UIViewController">
