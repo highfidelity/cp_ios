@@ -12,6 +12,7 @@
 #import "AFNetworking.h"
 #import "SVProgressHUD.h"
 #import "CPapi.h"
+#import "CPUIHelper.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation PayUserViewController
@@ -27,6 +28,10 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    
+    [CPUIHelper makeButtonCPButton: payButton withCPButtonColor:CPButtonTurquoise];
+    [CPUIHelper makeButtonCPButton: cancelButton withCPButtonColor:CPButtonGrey];
+    
     [[AppDelegate instance] hideCheckInButton];
     
     [[self view] setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"perforated-skin.png"]]];
@@ -36,15 +41,6 @@
     descriptionView.layer.borderColor = [UIColor colorWithRed:159.0/255 green:159.0/255 blue:159.0/255 alpha:1.0].CGColor;
     descriptionView.layer.borderWidth = 1.0f;
     
-    UIColor *borderColor = [[UIColor alloc] initWithRed:122.0/255 green:132.0/255  blue:142.0/255 alpha:1];
-
-    [[payButton layer] setBorderColor:[borderColor CGColor]];
-    [[payButton layer] setBorderWidth:1.0f];
-    [[payButton layer] setCornerRadius:6];
-    
-    [[cancelButton layer] setBorderColor:[borderColor CGColor]];
-    [[cancelButton layer] setBorderWidth:1.0f];
-    [[cancelButton layer] setCornerRadius:6];
     
 }
 
@@ -174,7 +170,7 @@
             
             if ([successNum intValue] == -1) {
                 //not logged in
-                [self dismissModalViewControllerAnimated:YES];
+                [[self navigationController] popViewControllerAnimated: YES];
             }
          
         }
@@ -190,6 +186,7 @@
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil];
             [alertView show];
+            [[self navigationController] popViewControllerAnimated: YES];
             
         }
         
