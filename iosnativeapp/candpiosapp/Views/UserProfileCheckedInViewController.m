@@ -170,20 +170,7 @@
     CGPoint rightAndUp = CGPointMake(124, 232);
     CLLocationCoordinate2D coordinate = [self.mapView convertPoint:rightAndUp toCoordinateFromView:self.mapView];
     [self.mapView setCenterCoordinate:coordinate animated:NO];
-    
-    if (!self.user.checkedIn) {
-        // change the label since the user isn't here anymore
-        self.checkedIn.text = @"WAS CHECKED IN";
-       
-        // move the loading points to the right so they're in the right spot
-        NSArray *pts = [NSArray arrayWithObjects:self.loadingPt1, self.loadingPt2, self.loadingPt3, nil];
-        for (UILabel *pt in pts) {
-            CGRect ptFrame = pt.frame;
-            ptFrame.origin.x += 33;
-            pt.frame = ptFrame;    
-        }
-    }
-    
+        
     // animate the three dots after checked in
     [self animateVenueLoadingPoints];
     
@@ -209,6 +196,7 @@
                         
             // if the user is checked in show how much longer they'll be available for
             if (self.user.checkedIn) {
+                self.checkedIn.text = @"CHECKED IN";
                 // get the number of seconds until they'll checkout
                 NSTimeInterval secondsToCheckout = [self.user.checkoutEpoch timeIntervalSinceNow];
                 // convert to minutes and then hours + minutes to next our
@@ -228,6 +216,18 @@
                 }            
                 self.minutesAvailable.text = [NSString stringWithFormat:@"%d mins", minutesToHour];
             } else {
+                // change the label since the user isn't here anymore
+                self.checkedIn.text = @"WAS CHECKED IN";
+                
+                // move the loading points to the right so they're in the right spot
+                NSArray *pts = [NSArray arrayWithObjects:self.loadingPt1, self.loadingPt2, self.loadingPt3, nil];
+                for (UILabel *pt in pts) {
+                    CGRect ptFrame = pt.frame;
+                    ptFrame.origin.x += 33;
+                    pt.frame = ptFrame;    
+                }
+                
+
                 // otherwise don't show the availability view
                 [self.availabilityView removeFromSuperview];
             }

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2177" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
     <dependencies>
         <deployment version="1280" identifier="iOS"/>
         <development version="4200" defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
     </dependencies>
     <scenes>
-        <!--Face To Face Invite Controller-->
         <scene sceneID="nyG-HQ-c1i">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F7V-o4-rhv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -112,7 +111,6 @@
             </objects>
             <point key="canvasLocation" x="-76" y="1132"/>
         </scene>
-        <!--View Controller - Settings-->
         <scene sceneID="P8B-gs-TKc">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZvI-Kw-LUQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -127,7 +125,6 @@
             </objects>
             <point key="canvasLocation" x="385" y="-836"/>
         </scene>
-        <!--Balance View Controller - Wallet-->
         <scene sceneID="N4C-DH-qKm">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="roq-lO-JF8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -161,7 +158,6 @@
             </objects>
             <point key="canvasLocation" x="385" y="-1398"/>
         </scene>
-        <!--Map Tab Controller-->
         <scene sceneID="Q7p-8T-DVG">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WIW-bY-l8z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -271,7 +267,6 @@
             </objects>
             <point key="canvasLocation" x="-76" y="-114"/>
         </scene>
-        <!--Check In List Table View Controller - Places-->
         <scene sceneID="A3v-gP-kYR">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A2n-ak-jSV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -396,7 +391,6 @@
             </objects>
             <point key="canvasLocation" x="385" y="455"/>
         </scene>
-        <!--Check In Details View Controller-->
         <scene sceneID="5iv-uJ-C8R">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FrM-U4-07M" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -635,7 +629,6 @@
             </objects>
             <point key="canvasLocation" x="844" y="455"/>
         </scene>
-        <!--User Profile Checked In View Controller-->
         <scene sceneID="jZa-Lm-4za">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ySL-Md-ewH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -710,7 +703,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="145" height="31"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="CHECKED IN" lineBreakMode="tailTruncation" minimumFontSize="10" id="EUa-JU-b4k">
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="LOADING" lineBreakMode="tailTruncation" minimumFontSize="10" id="EUa-JU-b4k">
                                                         <rect key="frame" x="7" y="4" width="124" height="24"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1059,7 +1052,6 @@
             </objects>
             <point key="canvasLocation" x="1386" y="-114"/>
         </scene>
-        <!--Settings Menu Controller-->
         <scene sceneID="ijm-S8-mQj">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yHQ-HS-SaI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1092,7 +1084,6 @@
             </objects>
             <point key="canvasLocation" x="-608" y="-601"/>
         </scene>
-        <!--Navigation Controller - Nearby-->
         <scene sceneID="X1z-oT-wPh">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flw-Jh-D1t" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1113,7 +1104,6 @@
             </objects>
             <point key="canvasLocation" x="-603" y="-30"/>
         </scene>
-        <!--Navigation Controller-->
         <scene sceneID="3mV-Fb-MBc">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lzg-tm-OqG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1131,7 +1121,6 @@
             </objects>
             <point key="canvasLocation" x="-76" y="455"/>
         </scene>
-        <!--One On One Chat View Controller-->
         <scene sceneID="yyw-Kg-745">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pc0-qS-LiY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1183,7 +1172,6 @@
             </objects>
             <point key="canvasLocation" x="1910" y="-298"/>
         </scene>
-        <!--Pay User View Controller - Pay-->
         <scene sceneID="DEn-4Y-o5w">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T77-Ar-WSs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1333,7 +1321,6 @@
             </objects>
             <point key="canvasLocation" x="1930" y="302"/>
         </scene>
-        <!--Add Funds View Controller - Add Funds-->
         <scene sceneID="tWa-gi-Hjy">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TbL-Js-CDE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1357,7 +1344,6 @@
             </objects>
             <point key="canvasLocation" x="2428" y="291"/>
         </scene>
-        <!--View Controller - Face To Face-->
         <scene sceneID="gtz-5a-hgw">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8HD-fd-1VU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1372,7 +1358,6 @@
             </objects>
             <point key="canvasLocation" x="385" y="-1966"/>
         </scene>
-        <!--User List Table View Controller-->
         <scene sceneID="YQP-0z-9N9">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OQD-E9-dVA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1490,181 +1475,6 @@
         <image name="verified-facebook.png" width="16" height="16"/>
         <image name="verified-linked-in.png" width="16" height="16"/>
     </resources>
-    <classes>
-        <class className="AddFundsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFundsViewController.h"/>
-        </class>
-        <class className="BalanceViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BalanceViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="userBalance" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CPMapView" superclassName="MKMapView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPMapView.h"/>
-        </class>
-        <class className="CheckInDetailsFrame" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInDetailsFrame.h"/>
-        </class>
-        <class className="CheckInDetailsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInDetailsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="sliderChanged:"/>
-                <relationship kind="outlet" name="blueOverlay" candidateClass="UIView"/>
-                <relationship kind="outlet" name="checkInButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="checkInDetails" candidateClass="UIView"/>
-                <relationship kind="outlet" name="checkInLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="durationHeader" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="durationString" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="infoBubbleNickname" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="infoBubbleStatus" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="orLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="otherUsersScrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="placeAddress" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="placeName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="TPKeyboardAvoidingScrollView"/>
-                <relationship kind="outlet" name="statusTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="timeSlider" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="userInfoBubble" candidateClass="UIView"/>
-                <relationship kind="outlet" name="venueInfo" candidateClass="UIView"/>
-                <relationship kind="outlet" name="wantLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="willLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CheckInListCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInListCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="distanceString" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CheckInListTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInListTableViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeWindow:"/>
-            </relationships>
-        </class>
-        <class className="FaceToFaceInviteController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FaceToFaceInviteController.h"/>
-            <relationships>
-                <relationship kind="action" name="acceptF2F"/>
-                <relationship kind="action" name="declineF2F"/>
-                <relationship kind="action" name="f2fSubmitPassword"/>
-                <relationship kind="outlet" name="f2fAcceptButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="f2fActionCaption" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="f2fDeclineButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="f2fPassword" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="f2fText" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="userImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="userNickname" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="MapTabController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapTabController.h"/>
-            <relationships>
-                <relationship kind="action" name="locateMe:"/>
-                <relationship kind="action" name="refreshButtonClicked:"/>
-                <relationship kind="action" name="revealButtonPressed:"/>
-                <relationship kind="outlet" name="mapAndButtonsView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="mapView" candidateClass="CPMapView"/>
-            </relationships>
-        </class>
-        <class className="OneOnOneChatViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/OneOnOneChatViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="sendChat"/>
-                <relationship kind="outlet" name="chatContents" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="chatEntryField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="PayUserViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PayUserViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeView:" candidateClass="UIButton"/>
-                <relationship kind="action" name="descriptionChanged:"/>
-                <relationship kind="action" name="formatAmount:"/>
-                <relationship kind="action" name="makePayment:"/>
-                <relationship kind="outlet" name="cancelButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="charsLeft" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="descriptionView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="payButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="payTo" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="payeeImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="paymentAmount" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="paymentNote" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="userBalance" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="SettingsMenuController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsMenuController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="edgeShadow" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="TPKeyboardAvoidingScrollView" superclassName="UIScrollView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TPKeyboardAvoidingScrollView.h"/>
-        </class>
-        <class className="UserListTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserListTableViewController.h"/>
-        </class>
-        <class className="UserProfileCheckedInViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserProfileCheckedInViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="f2fInvite"/>
-                <relationship kind="action" name="minusButtonPressed:"/>
-                <relationship kind="action" name="plusButtonPressed:"/>
-                <relationship kind="outlet" name="availabilityView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="cardImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="cardJobPosition" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="cardNickname" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="cardStatus" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="chatButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="checkedIn" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="distanceLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="f2fButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="facebookVerified" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="goMenuBackground" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="hoursAvailable" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="linkedinVerified" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="loadingPt1" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="loadingPt2" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="loadingPt3" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="minusButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="minutesAvailable" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="payButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="plusButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="resumeEarned" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="resumeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="resumeRate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="resumeSpent" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="resumeView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="resumeWebView" candidateClass="UIWebView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="userCard" candidateClass="UIView"/>
-                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueIcon" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueOthers" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueOthersIcon" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="venueView" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="UserTableViewCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserTableViewCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="checkInCountLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="checkInLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="distanceLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="profilePictureImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
