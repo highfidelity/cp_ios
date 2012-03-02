@@ -296,14 +296,18 @@
 {
     if ([[segue identifier] isEqualToString:@"ShowUserProfileCheckedInFromList"]) {
         
-        NSIndexPath *path = [self.tableView indexPathForSelectedRow];
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
         CPAnnotation *annotation;
-        if ([path section] == 0) {
-            annotation = [checkedInMissions objectAtIndex:path.row];
+
+        if (indexPath.section == 0 && checkedInMissions.count > 0) {
+            annotation = [checkedInMissions objectAtIndex:indexPath.row];
         }
-        else {
-            annotation = [missions objectAtIndex:path.row];
+        else if (indexPath.section == 0 && missions.count > 0) {
+            annotation = [missions objectAtIndex:indexPath.row];
+        }
+        else if (indexPath.section == 1) {
+            annotation = [missions objectAtIndex:indexPath.row];
         }
         
         // setup a user object with the info we have from the pin and callout
