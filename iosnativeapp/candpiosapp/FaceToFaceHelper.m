@@ -19,6 +19,27 @@
 + (void)presentF2FInviteFromUser:(int)userId
                         fromView:(UIViewController *)view
 {   
+    
+#if DEBUG
+    NSLog(@"Recieved a F2F Invite from user with ID %d", userId);
+#endif
+    
+    // make sure that we're not showing an invite from this user already
+    if ([view isKindOfClass:[FaceToFaceAcceptDeclineViewController class]]) {
+    
+        FaceToFaceAcceptDeclineViewController *f2fview = (FaceToFaceAcceptDeclineViewController *)view;
+        
+        if (f2fview.user.userID == userId) {
+            // we've already got an invite up from this user
+            // return out of here
+            return;
+        }        
+    }  
+    
+#if DEBUG
+    NSLog(@"Display an F2F Invite from user with ID %d", userId);
+#endif 
+    
     // Show the SVProgressHUD so the user knows they're waiting for an invite
     [SVProgressHUD showWithStatus:@"Recieving F2F Invite"];
     
@@ -44,10 +65,20 @@
             [view presentModalViewController:f2fVC animated:YES];
         } else {
             // dismiss the SVProgress HUD with an error
-            [SVProgressHUD dismissWithError:@"Error receiving invite"];
+            [SVProgressHUD dismiss];
+            NSString *alertMsg = [NSString stringWithFormat:
+                                  @"Oops! We couldn't get the data.\nAsk the sender to invite you again."];
+            
+            // Show password to this user
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle:@"Face to Face"
+                                  message:alertMsg
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles: nil];
+            [alert show];
         }        
-    }]; 
-    
+    }];
 }
 
 + (void)presentF2FAcceptFromUser:(int) userId

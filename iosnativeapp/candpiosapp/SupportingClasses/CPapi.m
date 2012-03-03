@@ -449,7 +449,7 @@
         {
             alertMsg = @"Congratulations! You've met Face to Face.";
             [SVProgressHUD dismiss];
-            [[AppDelegate instance].rootNavigationController dismissModalViewControllerAnimated:YES];
+            [[AppDelegate instance].rootNavigationController.visibleViewController dismissModalViewControllerAnimated:YES];
         }
         else if ([[json objectForKey:@"error"] isEqualToString:@"3"])
         {

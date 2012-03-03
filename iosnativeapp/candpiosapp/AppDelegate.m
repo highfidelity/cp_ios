@@ -301,8 +301,11 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
     // This is a Face-to-Face invite ("f2f1" = [user id])
     else if ([userInfo valueForKey:@"f2f1"] != nil)
     {        
+        // make sure we aren't looking at an invite from this user
+        
+        
         [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:@"f2f1"] intValue]
-                                          fromView:self.rootNavigationController];
+                                          fromView:self.rootNavigationController.visibleViewController];
     }
     // Face to Face Accept Invite ("f2f2" = [userId], "password" = [f2f password])
     else if ([userInfo valueForKey:@"f2f2"] != nil)
