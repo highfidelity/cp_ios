@@ -19,6 +19,9 @@ typedef enum {
     CPColorGrey = 1,
 } CPColor;
 
+// TODO: import this and other files we are always using in the prefix.pch file
+// Ex: CPUtils.h, SVProgressHUD.h, maybe AppDelegate too
+
 @interface CPUIHelper : NSObject
 
 // UI elements

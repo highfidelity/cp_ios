@@ -38,7 +38,6 @@
 @synthesize educationInformation  = _educationInformation;
 @synthesize jobTitle, reviews;
 
-
 -(id)init
 {
 	self = [super init];

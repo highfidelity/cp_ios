@@ -27,5 +27,10 @@
 @property (nonatomic, copy) NSString *userNickname;
 @property (nonatomic, copy) NSString *userPassword;
 
+// TODO: Don't store the userPassword here or in NSUserDefaults
+// it should be stored encrypted in the keychain
+
+// TODO: Store a user object (User.h) once the user is logged in instead of just storing an NSNumber which is the user ID
+
 
 @end

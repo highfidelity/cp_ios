@@ -318,6 +318,9 @@
     NSURL *baseURL = [NSURL fileURLWithPath:path];
     [self.resumeWebView loadHTMLString:[self htmlStringWithResumeText] baseURL:baseURL];
     
+    // TODO: get venue name and venue address from list cell or map annotation this profile was pulled up from
+    // venue name should already be there, address needs to be added in return from api.php
+    
     // request using the FoursquareAPIRequest class to get the venue data
     [FoursquareAPIRequest dictForVenueWithFoursquareID:self.user.placeCheckedIn.foursquareID :^(NSDictionary *fsDict, NSError *error) {
         if (!error) {
@@ -446,14 +449,14 @@
                 [resumeHtml addObject: @"<div style='display: none;' id='extra_reviews'>"];
             }
             
-            NSString *ratingImg = @"thumbup.png";
+            NSString *ratingImg = @"thumbs-up.png";
             
             if ([[review objectForKey:@"rating"] intValue] == -1) {
-                ratingImg = @"thumbdown.png";
+                ratingImg = @"thumbs-down.png";
             }
             
             [resumeHtml addObject:[NSString 
-                                   stringWithFormat:@"<p><img src='%@'/> \"%@\"</p>", ratingImg, [review objectForKey:@"review"]]];
+                                   stringWithFormat:@"<p><img src='%@' width='12' height='14'/> \"%@\"</p>", ratingImg, [review objectForKey:@"review"]]];
         }
         
         if (review_row > 5) {
@@ -504,7 +507,7 @@
     // if this is an f2f invite we need some extra height in the scrollview content size
     double f2fbar = 0;
     if (self.isF2FInvite) {
-        f2fbar = 125;
+        f2fbar = 81;
     }
     
     // set the scrollview content size to accomodate for the resume data

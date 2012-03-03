@@ -10,6 +10,7 @@
 
 #import "CPapi.h"
 #import "AppDelegate.h"
+#import "SVProgressHUD.h"
 
 @interface CPapi()
 
@@ -201,7 +202,8 @@
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setValue:[NSString stringWithFormat:@"%d", userId] forKey:@"greeted_id"];
-    
+
+    [SVProgressHUD showWithStatus:@"Sending Invite..."];
     [self makeHTTPRequestWithAction:@"f2fInvite"
                      withParameters:parameters
                     responseHandler:@selector(f2fInviteResponseHandler:)];
@@ -232,9 +234,11 @@
     NSString *alertMsg = @"";
     NSLog(@"f2f response: %@", json);
     
+    [SVProgressHUD dismiss];
+    
     if (json == NULL)
     {
-        alertMsg = @"Error sending invite.";
+        alertMsg = @"We couldn't send the invite.\nPlease try again.";
     } 
     else
     {
@@ -295,41 +299,41 @@
      *  5 - Other (message from exception)
      */
 
-    NSError *error;
-    NSDictionary* json = [NSJSONSerialization 
-                          JSONObjectWithData: response
-                          options: kNilOptions
-                          error: &error];
-    
-    NSString *alertMsg = @"";
-    NSLog(@"f2f response: %@", json);
-    
-    if (json == NULL)
-    {
-        alertMsg = @"Error accepting invite.";
-    } 
-    else
-    {
-        if ([[json objectForKey:@"error"] isEqualToString:@"0"] ||
-            [json objectForKey:@"error"] == nil)
-        {
-            alertMsg = @"Face to Face accepted!";
-        }
-        else
-        {
-            // Otherwise, just show whatever came back in "message"
-            alertMsg = [json objectForKey:@"message"];
-        }
-    }
-    
-    // Show error if we got one
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Face to Face"
-                          message:alertMsg
-                          delegate:self
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles: nil];
-    [alert show];
+//    NSError *error;
+//    NSDictionary* json = [NSJSONSerialization 
+//                          JSONObjectWithData: response
+//                          options: kNilOptions
+//                          error: &error];
+//    
+//    NSString *alertMsg = @"";
+//    NSLog(@"f2f response: %@", json);
+//    
+//    if (json == NULL)
+//    {
+//        alertMsg = @"Error accepting invite.";
+//    } 
+//    else
+//    {
+//        if ([[json objectForKey:@"error"] isEqualToString:@"0"] ||
+//            [json objectForKey:@"error"] == nil)
+//        {
+//            alertMsg = @"Face to Face accepted!";
+//        }
+//        else
+//        {
+//            // Otherwise, just show whatever came back in "message"
+//            alertMsg = [json objectForKey:@"message"];
+//        }
+//    }
+//    
+//    // Show error if we got one
+//    UIAlertView *alert = [[UIAlertView alloc]
+//                          initWithTitle:@"Face to Face"
+//                          message:alertMsg
+//                          delegate:self
+//                          cancelButtonTitle:@"OK"
+//                          otherButtonTitles: nil];
+//    [alert show];
 }
 
 + (void)sendF2FDecline:(int)userId
@@ -368,7 +372,7 @@
     
     if (json == NULL)
     {
-        alertMsg = @"Error accepting invite.";
+        alertMsg = @"Error declining invite.";
     } 
     else
     {
@@ -406,6 +410,7 @@
     [parameters setValue:[NSString stringWithString: password]
                   forKey:@"password"];
     
+    [SVProgressHUD show];
     [self makeHTTPRequestWithAction:@"f2fVerify"
                      withParameters:parameters
                     responseHandler:@selector(f2fVerifyResponseHandler:)];
@@ -442,7 +447,9 @@
         if ([[json objectForKey:@"error"] isEqualToString:@"0"] ||
             [json objectForKey:@"error"] == nil)
         {
-            alertMsg = @"Yay you've met Face to Face!!";
+            alertMsg = @"Congratulations! You've met Face to Face.";
+            [SVProgressHUD dismiss];
+            [[AppDelegate instance].rootNavigationController dismissModalViewControllerAnimated:YES];
         }
         else if ([[json objectForKey:@"error"] isEqualToString:@"3"])
         {

@@ -20,6 +20,8 @@
 
 @synthesize missions, checkedInMissions, titleForList, listType, currentVenue;
 
+// TODO: These are users, not missions so change the property name accordingly
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
