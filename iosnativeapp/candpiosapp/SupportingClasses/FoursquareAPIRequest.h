@@ -7,10 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface FoursquareAPIRequest: NSObject
 
 +(void)dictForVenueWithFoursquareID:(NSString *)foursquare_id
                                              :(void (^)(NSDictionary *dict, NSError *error))completion;
+
++(void)getVenuesCloseToLocation:(CLLocation *)location 
+                               :(void (^)(NSDictionary *dict, NSError *error))completion;
 
 @end

@@ -572,8 +572,8 @@
 		53FB9E4614E0A81300F4CC7F /* available-for-icon~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "available-for-icon~iphone.png"; path = "images/available-for-icon~iphone.png"; sourceTree = "<group>"; };
 		53FB9E4714E0A81300F4CC7F /* checked-in-location@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "checked-in-location@2x~iphone.png"; path = "images/checked-in-location@2x~iphone.png"; sourceTree = "<group>"; };
 		53FB9E4814E0A81300F4CC7F /* checked-in-location~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "checked-in-location~iphone.png"; path = "images/checked-in-location~iphone.png"; sourceTree = "<group>"; };
-		53FB9E4D14E0AE4600F4CC7F /* FoursquareAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoursquareAPIRequest.h; sourceTree = "<group>"; };
-		53FB9E4E14E0AE4600F4CC7F /* FoursquareAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoursquareAPIRequest.m; sourceTree = "<group>"; };
+		53FB9E4D14E0AE4600F4CC7F /* FoursquareAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FoursquareAPIRequest.h; path = SupportingClasses/FoursquareAPIRequest.h; sourceTree = "<group>"; };
+		53FB9E4E14E0AE4600F4CC7F /* FoursquareAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FoursquareAPIRequest.m; path = SupportingClasses/FoursquareAPIRequest.m; sourceTree = "<group>"; };
 		6F0B453714F6BCC50074DBD9 /* ChatHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatHelper.h; path = candpiosapp/Chat/ChatHelper.h; sourceTree = SOURCE_ROOT; };
 		6F0B453814F6BCD10074DBD9 /* ChatHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatHelper.m; path = candpiosapp/Chat/ChatHelper.m; sourceTree = SOURCE_ROOT; };
 		6F0B453A14F6BD560074DBD9 /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatMessage.h; path = candpiosapp/Chat/ChatMessage.h; sourceTree = SOURCE_ROOT; };
@@ -1049,6 +1049,8 @@
 			children = (
 				6FEEDFFA14E103F400861CA1 /* CPapi.h */,
 				6FEEDFFB14E103F400861CA1 /* CPapi.m */,
+				53FB9E4D14E0AE4600F4CC7F /* FoursquareAPIRequest.h */,
+				53FB9E4E14E0AE4600F4CC7F /* FoursquareAPIRequest.m */,
 				536DE92B1501710200794650 /* images */,
 				6F0B454014F6CEE40074DBD9 /* CPAlertView.h */,
 				6F0B454114F6CEE40074DBD9 /* CPAlertView.m */,
@@ -1600,8 +1602,6 @@
 				3241E8EC14EDA6C3006B81C2 /* OCDistance.h */,
 				3241E8ED14EDA6C3006B81C2 /* OCDistance.m */,
 				3241E8EE14EDA6C4006B81C2 /* OCGrouping.h */,
-				53FB9E4D14E0AE4600F4CC7F /* FoursquareAPIRequest.h */,
-				53FB9E4E14E0AE4600F4CC7F /* FoursquareAPIRequest.m */,
 				875CB8F214C5DC8C00AD4F6E /* MapDataSet.h */,
 				875CB8F314C5DC8C00AD4F6E /* MapDataSet.m */,
 				87F657FF14B0DC2D00F4AB6C /* MissionAnnotation.h */,

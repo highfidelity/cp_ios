@@ -7,6 +7,7 @@
 #import "SignupController.h"
 #import "CheckInListCell.h"
 #import "CPUtils.h"
+#import "FoursquareAPIRequest.h"
 
 @implementation CheckInListTableViewController
 
@@ -108,109 +109,89 @@
     places = [[NSMutableArray alloc] init];
 
     CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
-    // TODO: Add this to the FoursquareAPIRequest Code
-    NSString *locationString = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?ll=%f,%f&limit=20&oauth_token=BCG410DXRKXSBRWUNM1PPQFSLEFQ5ND4HOUTTTWYUB1PXYC4", location.coordinate.latitude, location.coordinate.longitude];
-    
-    NSURL *locationURL = [NSURL URLWithString:locationString];
-    
-    dispatch_async(dispatch_get_global_queue(
-                                             DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData* data = [NSData dataWithContentsOfURL: 
-                        locationURL];
-        [self performSelectorOnMainThread:@selector(fetchedData:) 
-                               withObject:data waitUntilDone:YES];
-    });
-}
-
-- (void)fetchedData:(NSData *)responseData {
-    //parse out the json data
-    NSError* error;
-    NSDictionary* json = [NSJSONSerialization 
-                          JSONObjectWithData:responseData //1
-                          
-                          options:kNilOptions 
-                          error:&error];
-    
-    if (!error) {
+    [FoursquareAPIRequest getVenuesCloseToLocation:location :^(NSDictionary *json, NSError *error){
         // Do error checking here, in case Foursquare is down
-        
-        // get the array of places that foursquare returned
-        NSArray *itemsArray = [[[[json valueForKey:@"response"] valueForKey:@"groups"] valueForKey:@"items"] objectAtIndex:0];
-        
-        CLLocation *userLocation = [[AppDelegate instance].settings lastKnownLocation];
-
-        // iterate through the results and add them to the places array
-        for (NSMutableDictionary *item in itemsArray) {
+        NSLog(@"%@", [json description]);
+        if (!error || [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
+            
+            // get the array of places that foursquare returned
+            NSArray *itemsArray = [[json valueForKey:@"response"] valueForKey:@"venues"];
+            
+            CLLocation *userLocation = [[AppDelegate instance].settings lastKnownLocation];
+            
+            // iterate through the results and add them to the places array
+            for (NSMutableDictionary *item in itemsArray) {
+                CPPlace *place = [[CPPlace alloc] init];
+                place.name = [item valueForKey:@"name"];
+                place.foursquareID = [item valueForKey:@"id"];
+                place.address = [[item valueForKey:@"location"] valueForKey:@"address"];
+                place.city = [[item valueForKey:@"location"] valueForKey:@"city"];
+                place.state = [[item valueForKey:@"location"] valueForKey:@"state"];
+                place.zip = [[item valueForKey:@"location"] valueForKey:@"postalCode"];
+                place.lat = [[item valueForKeyPath:@"location.lat"] doubleValue];
+                place.lng = [[item valueForKeyPath:@"location.lng"] doubleValue];
+                place.phone = [[item valueForKey:@"contact"] valueForKey:@"phone"];
+                
+                if ([item valueForKey:@"categories"] && [[item valueForKey:@"categories"] count] > 0) {
+                    place.icon = [[[item valueForKey:@"categories"] objectAtIndex:0] valueForKey:@"icon"];
+                }
+                else {
+                    place.icon = @"";
+                }
+                
+                // Don't allow any blank fields
+                if (!place.address) {
+                    place.address = @"";
+                }
+                
+                if (!place.city) {
+                    place.city = @"";
+                }
+                
+                if (!place.state) {
+                    place.state = @"";
+                }
+                
+                if (!place.zip) {
+                    place.zip = @"";
+                }
+                
+                if (!place.phone) {
+                    place.phone = @"";
+                }
+                
+                
+                CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:place.lat longitude:place.lng];
+                place.distanceFromUser = [placeLocation distanceFromLocation:userLocation];
+                [places addObject:place];
+            }
+            
+            // sort the places array by distance from user
+            [places sortUsingSelector:@selector(sortByDistanceToUser:)];
+            
+            // add a custom place so people can checkin if foursquare doesn't have the venue
             CPPlace *place = [[CPPlace alloc] init];
-            place.name = [item valueForKey:@"name"];
-            place.foursquareID = [item valueForKey:@"id"];
-            place.address = [[item valueForKey:@"location"] valueForKey:@"address"];
-            place.city = [[item valueForKey:@"location"] valueForKey:@"city"];
-            place.state = [[item valueForKey:@"location"] valueForKey:@"state"];
-            place.zip = [[item valueForKey:@"location"] valueForKey:@"postalCode"];
-            place.lat = [[item valueForKeyPath:@"location.lat"] doubleValue];
-            place.lng = [[item valueForKeyPath:@"location.lng"] doubleValue];
-            place.phone = [[item valueForKey:@"contact"] valueForKey:@"phone"];
-
-            if ([item valueForKey:@"categories"] && [[item valueForKey:@"categories"] count] > 0) {
-                place.icon = [[[item valueForKey:@"categories"] objectAtIndex:0] valueForKey:@"icon"];
-            }
-            else {
-                place.icon = @"";
-            }
+            place.name = @"Place not listed...";
+            place.foursquareID = @"0";
             
-            // Don't allow any blank fields
-            if (!place.address) {
-                place.address = @"";
-            }
+            CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
             
-            if (!place.city) {
-                place.city = @"";
-            }
+            place.lat = location.coordinate.latitude;
+            place.lng = location.coordinate.longitude;
             
-            if (!place.state) {
-                place.state = @"";
-            }
+            [places insertObject:place atIndex:0];
             
-            if (!place.zip) {
-                place.zip = @"";
-            }
+            [SVProgressHUD dismiss];
             
-            if (!place.phone) {
-                place.phone = @"";
-            }
-
-
-            CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:place.lat longitude:place.lng];
-            place.distanceFromUser = [placeLocation distanceFromLocation:userLocation];
-            [places addObject:place];
+            [self.tableView reloadData];  
+        } else {
+            // dismiss the progress HUD with an error
+            [SVProgressHUD dismissWithError:@"Oops!\nCouldn't get the data." afterDelay:3];
+            
+            UIBarButtonItem *refresh = [[UIBarButtonItem alloc] initWithTitle:@"Refresh" style:UIBarButtonItemStylePlain target:self action:@selector(refreshLocations)];
+            self.navigationItem.rightBarButtonItem = refresh;
         }
-        
-        // sort the places array by distance from user
-        [places sortUsingSelector:@selector(sortByDistanceToUser:)];
-        
-        // add a custom place so people can checkin if foursquare doesn't have the venue
-        CPPlace *place = [[CPPlace alloc] init];
-        place.name = @"Place not listed...";
-        place.foursquareID = @"0";
-        
-        CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
-        
-        place.lat = location.coordinate.latitude;
-        place.lng = location.coordinate.longitude;
-        
-        [places insertObject:place atIndex:0];
-        
-        [SVProgressHUD dismiss];
-        
-        [self.tableView reloadData];  
-    } else {
-        // dismiss the progress HUD with an error
-        [SVProgressHUD dismissWithError:@"Oops!\nCouldn't get the data." afterDelay:3];
-        
-        UIBarButtonItem *refresh = [[UIBarButtonItem alloc] initWithTitle:@"Refresh" style:UIBarButtonItemStylePlain target:self action:@selector(refreshLocations)];
-        self.navigationItem.rightBarButtonItem = refresh;
-    }   
+    }];
 }
 
 #pragma mark - Table view data source
