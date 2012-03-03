@@ -204,6 +204,12 @@
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    // make sure the check in button is on screen
+    [[AppDelegate instance] showCheckInButton];
+}
+
 - (void)viewDidUnload
 {
     [self setScrollView:nil];
