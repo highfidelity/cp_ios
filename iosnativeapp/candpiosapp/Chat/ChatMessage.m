@@ -27,7 +27,7 @@
              fromUser:(User *)fromUser
 {
     self = [super init];
-    
+        
     self.message = newMessage;
     self.fromUser = fromUser;
     self.toUser = toUser;

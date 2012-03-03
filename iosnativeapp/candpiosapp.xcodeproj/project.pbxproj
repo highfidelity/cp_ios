@@ -462,14 +462,14 @@
 		4E500D9514EF4D41007C17E6 /* map-shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map-shadow.png"; path = "images/map-shadow.png"; sourceTree = "<group>"; };
 		4EBD1D3314FEC19D00E9C0C6 /* secret-society.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "secret-society.png"; sourceTree = "<group>"; };
 		4EBD1D3414FEC19D00E9C0C6 /* secret-society@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "secret-society@2x.png"; sourceTree = "<group>"; };
-		4EBD1D3E14FEC1C700E9C0C6 /* BaseLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseLoginController.h; sourceTree = "<group>"; };
-		4EBD1D3F14FEC1C700E9C0C6 /* BaseLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseLoginController.m; sourceTree = "<group>"; };
-		4EBD1D4014FEC1C700E9C0C6 /* CreateLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateLoginController.h; sourceTree = "<group>"; };
-		4EBD1D4114FEC1C700E9C0C6 /* CreateLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateLoginController.m; sourceTree = "<group>"; };
-		4EBD1D4214FEC1C700E9C0C6 /* CreateLoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateLoginController.xib; sourceTree = "<group>"; };
-		4EBD1D4314FEC1C700E9C0C6 /* EmailLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailLoginController.h; sourceTree = "<group>"; };
-		4EBD1D4414FEC1C700E9C0C6 /* EmailLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailLoginController.m; sourceTree = "<group>"; };
-		4EBD1D4514FEC1C700E9C0C6 /* EmailLoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmailLoginController.xib; sourceTree = "<group>"; };
+		4EBD1D3E14FEC1C700E9C0C6 /* BaseLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseLoginController.h; path = ../Views/BaseLoginController.h; sourceTree = "<group>"; };
+		4EBD1D3F14FEC1C700E9C0C6 /* BaseLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseLoginController.m; path = ../Views/BaseLoginController.m; sourceTree = "<group>"; };
+		4EBD1D4014FEC1C700E9C0C6 /* CreateLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateLoginController.h; path = ../Views/CreateLoginController.h; sourceTree = "<group>"; };
+		4EBD1D4114FEC1C700E9C0C6 /* CreateLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateLoginController.m; path = ../Views/CreateLoginController.m; sourceTree = "<group>"; };
+		4EBD1D4214FEC1C700E9C0C6 /* CreateLoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateLoginController.xib; path = ../Views/CreateLoginController.xib; sourceTree = "<group>"; };
+		4EBD1D4314FEC1C700E9C0C6 /* EmailLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmailLoginController.h; path = ../Views/EmailLoginController.h; sourceTree = "<group>"; };
+		4EBD1D4414FEC1C700E9C0C6 /* EmailLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmailLoginController.m; path = ../Views/EmailLoginController.m; sourceTree = "<group>"; };
+		4EBD1D4514FEC1C700E9C0C6 /* EmailLoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmailLoginController.xib; path = ../Views/EmailLoginController.xib; sourceTree = "<group>"; };
 		4EC78AFD14F761B300581F4F /* SettingsMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsMenuController.h; sourceTree = "<group>"; };
 		4EC78AFE14F761B300581F4F /* SettingsMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsMenuController.m; sourceTree = "<group>"; };
 		4EFC54611500629100BF51B0 /* logo-login-mug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-login-mug.png"; sourceTree = "<group>"; };
@@ -705,9 +705,9 @@
 		875CB8F314C5DC8C00AD4F6E /* MapDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapDataSet.m; sourceTree = "<group>"; };
 		879381E214B4E659000EBCED /* Facebook+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Facebook+Blocks.h"; sourceTree = "<group>"; };
 		879381E314B4E659000EBCED /* Facebook+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Facebook+Blocks.m"; sourceTree = "<group>"; };
-		87DC9A3614BEB92200BA3907 /* SignupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupController.h; sourceTree = "<group>"; };
-		87DC9A3714BEB92200BA3907 /* SignupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupController.m; sourceTree = "<group>"; };
-		87DC9A3814BEB92200BA3907 /* SignupController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupController.xib; sourceTree = "<group>"; };
+		87DC9A3614BEB92200BA3907 /* SignupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignupController.h; path = ../Views/SignupController.h; sourceTree = "<group>"; };
+		87DC9A3714BEB92200BA3907 /* SignupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignupController.m; path = ../Views/SignupController.m; sourceTree = "<group>"; };
+		87DC9A3814BEB92200BA3907 /* SignupController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SignupController.xib; path = ../Views/SignupController.xib; sourceTree = "<group>"; };
 		87F5EF4414AFA68800EB83F7 /* MyWebTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWebTabController.h; sourceTree = "<group>"; };
 		87F5EF4514AFA68800EB83F7 /* MyWebTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWebTabController.m; sourceTree = "<group>"; };
 		87F5EF4D14AFAAC500EB83F7 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
@@ -1263,6 +1263,20 @@
 		6F368D9B14F86F8900CA1A41 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				4EBD1D3E14FEC1C700E9C0C6 /* BaseLoginController.h */,
+				4EBD1D3F14FEC1C700E9C0C6 /* BaseLoginController.m */,
+				4EBD1D4014FEC1C700E9C0C6 /* CreateLoginController.h */,
+				4EBD1D4114FEC1C700E9C0C6 /* CreateLoginController.m */,
+				4EBD1D4214FEC1C700E9C0C6 /* CreateLoginController.xib */,
+				4EBD1D4314FEC1C700E9C0C6 /* EmailLoginController.h */,
+				4EBD1D4414FEC1C700E9C0C6 /* EmailLoginController.m */,
+				4EBD1D4514FEC1C700E9C0C6 /* EmailLoginController.xib */,
+				4EFC5466150086A100BF51B0 /* LinkedInLoginController.h */,
+				4EFC5467150086A100BF51B0 /* LinkedInLoginController.m */,
+				4EFC5468150086A100BF51B0 /* LinkedInLoginController.xib */,
+				87DC9A3614BEB92200BA3907 /* SignupController.h */,
+				87DC9A3714BEB92200BA3907 /* SignupController.m */,
+				87DC9A3814BEB92200BA3907 /* SignupController.xib */,
 				5350F4EE14FF06840012AC2E /* images */,
 			);
 			name = Login;
@@ -1394,6 +1408,7 @@
 				871EFB6014AF97130030658B /* 3rdParty */,
 				871EFB1914AE9C820030658B /* AppDelegate.h */,
 				871EFB1A14AE9C820030658B /* AppDelegate.m */,
+				871EFB1C14AE9C820030658B /* MainStoryboard_iPhone.storyboard */,
 				6F7DA74914E89471001BEC19 /* Chat */,
 				53D65B4614EEEC3700801C5E /* Check In */,
 				6F3651DA14EAE8BB00E9322B /* FaceToFace */,
@@ -1542,14 +1557,6 @@
 		871EFBBC14AF987B0030658B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4EBD1D3E14FEC1C700E9C0C6 /* BaseLoginController.h */,
-				4EBD1D3F14FEC1C700E9C0C6 /* BaseLoginController.m */,
-				4EBD1D4014FEC1C700E9C0C6 /* CreateLoginController.h */,
-				4EBD1D4114FEC1C700E9C0C6 /* CreateLoginController.m */,
-				4EBD1D4214FEC1C700E9C0C6 /* CreateLoginController.xib */,
-				4EBD1D4314FEC1C700E9C0C6 /* EmailLoginController.h */,
-				4EBD1D4414FEC1C700E9C0C6 /* EmailLoginController.m */,
-				4EBD1D4514FEC1C700E9C0C6 /* EmailLoginController.xib */,
 				871EFBBD14AF987B0030658B /* MapTabController.h */,
 				871EFBBE14AF987B0030658B /* MapTabController.m */,
 				87F5EF4414AFA68800EB83F7 /* MyWebTabController.h */,

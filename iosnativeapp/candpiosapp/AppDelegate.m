@@ -335,6 +335,12 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
 	// We get here if the user has allowed Push Notifications
 	// We need to get our authorization token and send it to our servers
     
+    NSString *deviceToken = [[[[devToken description]
+                     stringByReplacingOccurrencesOfString: @"<" withString: @""]
+                    stringByReplacingOccurrencesOfString: @">" withString: @""]
+                   stringByReplacingOccurrencesOfString: @" " withString: @""];
+    NSLog(@"Device token: %@", deviceToken);
+    
     [[UAPush shared] registerDeviceToken:devToken];
 }
 

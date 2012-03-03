@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChatMessageCell : UITableViewCell
+#define CHAT_LABEL_TAG    324
+#define BUBBLE_TOP_TAG    823
+#define BUBBLE_MIDDLE_TAG 953
+#define BUBBLE_BOTTOM_TAG 382
+#define TIMESTAMP_TAG     720
 
-@property (weak, nonatomic) IBOutlet UILabel *chatMessageLabel;
+@interface ChatMessageCell : UITableViewCell
 
 @end

@@ -10,8 +10,6 @@
 
 @implementation ChatMessageCell
 
-@synthesize chatMessageLabel = _chatMessageLabel;
-
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier
 {

@@ -14,8 +14,11 @@
 
 @property (nonatomic, strong) NSMutableArray* messages;
 
+#pragma mark - Add to history
 - (void)addMessage:(ChatMessage *)message;
-- (ChatMessage *)messageAtIndex:(NSUInteger)index;
+
+#pragma mark - Retrieve from history
+- (id)messageAtIndex:(NSUInteger)index;
 - (NSInteger)count;
 
 @end
