@@ -264,9 +264,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
                                   CHAT_MESSAGE_LABEL_Y,
                                   CHAT_MESSAGE_LABEL_WIDTH,
                                   [self labelHeight:message]);
-    
-    NSLog(@"Label height is: %f", [self labelHeight:message]);
-    
+        
     // Figure out the height of the top and bottom bubble
     CGFloat newTopAndBottomHeight = [self labelHeight:message] / 2;
     

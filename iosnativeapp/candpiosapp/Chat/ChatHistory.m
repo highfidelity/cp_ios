@@ -45,7 +45,6 @@
 {    
     // If we have more than 2 items, see if we need to insert a timestamp
     if ([self count] >= 2) {
-        NSLog(@"Adding timestmap.");
         ChatMessage *oldMessage   = [self.messages objectAtIndex:[self count] - 1];
         
         NSTimeInterval delta = [message.date
