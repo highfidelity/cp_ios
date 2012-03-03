@@ -21,7 +21,7 @@
     // pass the v parameter to indicate when this api request added to the app
     // tells foursquare we are up to date as of that date
     // see https://developer.foursquare.com/overview/versioning
-    NSString *urlString = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/%@?oauth_token=%@&v=20120302", foursquare_id, OAUTH_TOKEN];
+    NSString *urlString = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/%@?oauth_token=%@&v=20120208", foursquare_id, OAUTH_TOKEN];
     NSURL *requestURL = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:requestURL];
     
