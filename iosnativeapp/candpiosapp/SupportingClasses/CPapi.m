@@ -289,6 +289,9 @@
 
 + (void)f2fAcceptResponseHandler:(NSData *)response
 {
+    
+    // TODO: handle error in accept response
+    
     /** Documentation from candpweb/web/api.php
      * @greeter_id - the user whose F2F invite you're accepting
      * Error codes:
