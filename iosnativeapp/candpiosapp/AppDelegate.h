@@ -34,7 +34,7 @@
 
 #define kCandPWebServiceUrl		@"https://staging.coffeeandpower.com/"
 // Facebook
-#define kFacebookAppId          @"278566002200147"
+#define kFacebookAppId          @"131753840249704"
 // LinkedIn
 #define kLinkedInKey            @"4xkfzpnvuc72"
 #define kLinkedInSecret         @"mxgFhH1i1PbPlWjq"
