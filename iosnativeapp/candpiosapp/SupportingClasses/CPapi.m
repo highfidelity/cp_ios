@@ -47,7 +47,7 @@
     if (parameters != nil) {
         for (NSString * key in parameters) {
             id value = [parameters valueForKey: key];
-            
+
             NSString *encodedParams = [NSString stringWithFormat:@"&%@=%@",
                                                                  [self urlEncode:key],
                                                                  [self urlEncode:value]];
@@ -249,7 +249,7 @@
         }
         else if ([[json objectForKey:@"error"] isEqualToString:@"4"])
         {
-            alertMsg = [NSString stringWithFormat:@"Invite pending with password: %@",
+            alertMsg = [NSString stringWithFormat:@"We've resent your invite.\nThe password is: %@.",
                         [json objectForKey:@"message"]];
         }
         else if ([[json objectForKey:@"error"] isEqualToString:@"6"])
@@ -506,8 +506,10 @@
     [parameters setValue:place.state forKey:@"state"];
     [parameters setValue:place.zip forKey:@"zip"];
     [parameters setValue:place.phone forKey:@"phone"];
-    [parameters setValue:place.icon forKey:@"icon"];
+    // Don't pass the place icon - it's a dictionary and this crashes the request
+    // [parameters setValue:place.icon forKey:@"icon"];
     [parameters setValue:stausText forKey:@"status"];
+    
         
     [self makeHTTPRequestWithAction:@"checkin"
                      withParameters:parameters
