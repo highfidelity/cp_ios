@@ -136,8 +136,6 @@
 		536DE90E150156DC00794650 /* FaceToFaceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 536DE90C150156DC00794650 /* FaceToFaceHelper.m */; };
 		536DE910150156F500794650 /* FaceToFace_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 536DE90F150156F500794650 /* FaceToFace_iPhone.storyboard */; };
 		536DE913150156FD00794650 /* FaceToFacePasswordInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536DE912150156FD00794650 /* FaceToFacePasswordInputViewController.m */; };
-		536DE938150171E900794650 /* thumbs-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 536DE936150171E900794650 /* thumbs-down.png */; };
-		536DE939150171E900794650 /* thumbs-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 536DE937150171E900794650 /* thumbs-up.png */; };
 		537C267F14EDD7EE0073FA70 /* go-menu-button-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 537C267714EDD7EE0073FA70 /* go-menu-button-1.png */; };
 		537C268014EDD7EE0073FA70 /* go-menu-button-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 537C267814EDD7EE0073FA70 /* go-menu-button-1@2x.png */; };
 		537C268114EDD7EE0073FA70 /* go-menu-button-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 537C267914EDD7EE0073FA70 /* go-menu-button-2.png */; };
@@ -154,6 +152,8 @@
 		5390190514D9D9AF0052100B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5390190414D9D9AF0052100B /* User.m */; };
 		5390190E14DA0D850052100B /* paper-texture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5390190D14DA0D850052100B /* paper-texture.jpg */; };
 		5396E0D814E466C200E33E0E /* LeagueGothic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5396E0D714E466C200E33E0E /* LeagueGothic.otf */; };
+		539B3DC915029D720017BACB /* thumbs-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 539B3DC715029D720017BACB /* thumbs-down.png */; };
+		539B3DCA15029D720017BACB /* thumbs-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 539B3DC815029D720017BACB /* thumbs-up.png */; };
 		53A5419E14DB4FCA0060D0DA /* checked-in~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A5419D14DB4FCA0060D0DA /* checked-in~iphone.png */; };
 		53BC266D14E4624200D16D4B /* others-at-venue@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BC266B14E4624200D16D4B /* others-at-venue@2x~iphone.png */; };
 		53BC266E14E4624200D16D4B /* others-at-venue~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BC266C14E4624200D16D4B /* others-at-venue~iphone.png */; };
@@ -523,8 +523,6 @@
 		536DE90F150156F500794650 /* FaceToFace_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FaceToFace_iPhone.storyboard; sourceTree = "<group>"; };
 		536DE911150156FD00794650 /* FaceToFacePasswordInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceToFacePasswordInputViewController.h; sourceTree = "<group>"; };
 		536DE912150156FD00794650 /* FaceToFacePasswordInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceToFacePasswordInputViewController.m; sourceTree = "<group>"; };
-		536DE936150171E900794650 /* thumbs-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbs-down.png"; sourceTree = "<group>"; };
-		536DE937150171E900794650 /* thumbs-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbs-up.png"; sourceTree = "<group>"; };
 		537C267714EDD7EE0073FA70 /* go-menu-button-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-menu-button-1.png"; path = "images/go-menu-button-1.png"; sourceTree = "<group>"; };
 		537C267814EDD7EE0073FA70 /* go-menu-button-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-menu-button-1@2x.png"; path = "images/go-menu-button-1@2x.png"; sourceTree = "<group>"; };
 		537C267914EDD7EE0073FA70 /* go-menu-button-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-menu-button-2.png"; path = "images/go-menu-button-2.png"; sourceTree = "<group>"; };
@@ -543,6 +541,8 @@
 		5390190414D9D9AF0052100B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = SupportingClasses/User.m; sourceTree = "<group>"; };
 		5390190D14DA0D850052100B /* paper-texture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "paper-texture.jpg"; sourceTree = "<group>"; };
 		5396E0D714E466C200E33E0E /* LeagueGothic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LeagueGothic.otf; sourceTree = "<group>"; };
+		539B3DC715029D720017BACB /* thumbs-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "thumbs-down.png"; path = "images/thumbs-down.png"; sourceTree = "<group>"; };
+		539B3DC815029D720017BACB /* thumbs-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "thumbs-up.png"; path = "images/thumbs-up.png"; sourceTree = "<group>"; };
 		53A5419D14DB4FCA0060D0DA /* checked-in~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "checked-in~iphone.png"; path = "images/checked-in~iphone.png"; sourceTree = "<group>"; };
 		53BC266B14E4624200D16D4B /* others-at-venue@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "others-at-venue@2x~iphone.png"; path = "images/others-at-venue@2x~iphone.png"; sourceTree = "<group>"; };
 		53BC266C14E4624200D16D4B /* others-at-venue~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "others-at-venue~iphone.png"; path = "images/others-at-venue~iphone.png"; sourceTree = "<group>"; };
@@ -1098,8 +1098,8 @@
 		536DE929150170BB00794650 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				536DE936150171E900794650 /* thumbs-down.png */,
-				536DE937150171E900794650 /* thumbs-up.png */,
+				539B3DC715029D720017BACB /* thumbs-down.png */,
+				539B3DC815029D720017BACB /* thumbs-up.png */,
 				53FB9E4514E0A81300F4CC7F /* available-for-icon@2x~iphone.png */,
 				53FB9E4614E0A81300F4CC7F /* available-for-icon~iphone.png */,
 				53DC695B14E48DB700D64175 /* verified-facebook@2x~iphone.png */,
@@ -1915,8 +1915,8 @@
 				4EFC547915015CDB00BF51B0 /* login-signup-banner.png in Resources */,
 				4EFC547A15015CDB00BF51B0 /* login-signup-banner@2x.png in Resources */,
 				536DE910150156F500794650 /* FaceToFace_iPhone.storyboard in Resources */,
-				536DE938150171E900794650 /* thumbs-down.png in Resources */,
-				536DE939150171E900794650 /* thumbs-up.png in Resources */,
+				539B3DC915029D720017BACB /* thumbs-down.png in Resources */,
+				539B3DCA15029D720017BACB /* thumbs-up.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
