@@ -10,7 +10,6 @@
 #import "FaceToFacePasswordInputViewController.h"
 #import "CPapi.h"
 #import "CPUIHelper.h"
-#import "UserProfileCheckedInViewController.h"
 
 #define F2FPasswordViewTag 1515
 
@@ -24,6 +23,7 @@
 @synthesize passwordField = _passwordField;
 @synthesize scrollView = _scrollView;
 @synthesize toolbar = _toolbar;
+@synthesize userProfile = _userProfile;
 
 /*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -66,15 +66,15 @@
     
     // Get the main storyboard that has the UserProfileViewController
     UIStoryboard *mainStory = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
-    UserProfileCheckedInViewController *userProfileVC = [mainStory instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
+    self.userProfile = [mainStory instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
     // tell that view controller when it loads that it's loading for a F2F Invite
-    userProfileVC.isF2FInvite = YES;
+    self.userProfile.isF2FInvite = YES;
     // set the user on that view controller to the user we just got back
-    userProfileVC.user = self.user; 
+    self.userProfile.user = self.user; 
     // seems like 20 is being added to this view frame (status bar?) so bring the origin back to 0
-    userProfileVC.view.frame = CGRectMake(0, 0, self.viewUnderToolbar.frame.size.width, self.viewUnderToolbar.frame.size.height);
+    self.userProfile.view.frame = CGRectMake(0, 0, self.viewUnderToolbar.frame.size.width, self.viewUnderToolbar.frame.size.height);
     
-    [self.viewUnderToolbar insertSubview:userProfileVC.view atIndex:0];
+    [self.viewUnderToolbar insertSubview:self.userProfile.view atIndex:0];
     
     // set the title of the toolbar
     [[self.toolbar.items objectAtIndex:1] setTitle:[NSString stringWithFormat:@"F2F with %@?", self.user.nickname]];
