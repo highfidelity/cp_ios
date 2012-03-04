@@ -456,10 +456,12 @@
         }
         else if ([[json objectForKey:@"error"] isEqualToString:@"3"])
         {
-            alertMsg = @"Password was incorrect :(";
+            [SVProgressHUD dismiss];
+            alertMsg = @"Wrong password!\nPlease try again.";
         }
         else
         {
+            [SVProgressHUD dismiss];
             // Otherwise, just show whatever came back in "message"
             alertMsg = [json objectForKey:@"message"];
         }
