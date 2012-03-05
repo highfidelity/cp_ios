@@ -154,8 +154,10 @@ BOOL zoomedOut = NO;
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 
-    // Refresh all locations when view will re-appear after being in another area of the app
-    [self refreshLocationsAfterDelay];
+    // Refresh all locations when view will re-appear after being in another area of the app; don't do it on the first launch though
+    if (hasShownLoadingScreen) {
+        [self refreshLocationsAfterDelay];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -166,7 +168,7 @@ BOOL zoomedOut = NO;
 	if(!hasShownLoadingScreen)
 	{
 		[SVProgressHUD showWithStatus:@"Loading..."];
-		hasShownLoadingScreen = true;
+		hasShownLoadingScreen = YES;
 	}
     
     [[AppDelegate instance] showCheckInButton];
