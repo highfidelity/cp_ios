@@ -32,7 +32,9 @@
 // called if the map tiles have been cached (as of iOS 4).
 @property (nonatomic) BOOL mapHasLoaded;
 
+- (void)applicationDidBecomeActive:(NSNotification *)notification;
 - (void)refreshLocations;
+- (void)refreshLocationsAfterDelay;
 - (IBAction)refreshButtonClicked:(id)sender;
 - (IBAction)locateMe:(id)sender;
 - (IBAction)revealButtonPressed:(id)sender;

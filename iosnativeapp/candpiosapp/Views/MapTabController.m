@@ -57,6 +57,11 @@ BOOL zoomedOut = NO;
     return self;
 }
 
+- (void)applicationDidBecomeActive:(NSNotification *)notification {
+    // Reload all pins when the app comes back into the foreground
+    [self refreshButtonClicked:nil];
+}
+
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -78,6 +83,12 @@ BOOL zoomedOut = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(refreshLocationsAfterDelay) 
                                                  name:@"userCheckedIn" 
+                                               object:nil];
+
+    // Add a notification catcher for applicationDidBecomeActive to refresh map pins
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(applicationDidBecomeActive:) 
+                                                 name:@"applicationDidBecomeActive" 
                                                object:nil];
     
     // Title view styling
@@ -134,12 +145,17 @@ BOOL zoomedOut = NO;
 	reloadTimer = nil;
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"userCheckedIn" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"applicationDidBecomeActive" object:nil];
+
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+
+    // Refresh all locations when view will re-appear after being in another area of the app
+    [self refreshLocationsAfterDelay];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -155,8 +171,6 @@ BOOL zoomedOut = NO;
     
     [[AppDelegate instance] showCheckInButton];
 
-    [self refreshLocationsIfNeeded];
-    
     // Update for login name in header field
     [[AppDelegate instance].settingsMenuController.tableView reloadData];
 }
