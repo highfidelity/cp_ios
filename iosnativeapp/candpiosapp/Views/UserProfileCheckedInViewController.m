@@ -119,6 +119,9 @@
 
 #pragma mark - View lifecycle
 
+// TODO: Allow the user to tap on the status bar to go back to the top of the scrollview
+// This is typical iOS behavior that we should have for consistency with the OS
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
