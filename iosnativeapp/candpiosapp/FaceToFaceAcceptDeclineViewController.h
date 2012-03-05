@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIView *viewUnderToolbar;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
+@property (weak, nonatomic) IBOutlet UILabel *toolbarTitle;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) UserProfileCheckedInViewController *userProfile;
 

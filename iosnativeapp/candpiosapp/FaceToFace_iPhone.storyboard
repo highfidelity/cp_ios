@@ -21,14 +21,15 @@
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackOpaque" id="QTq-tA-clu">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                        <items>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="n7m-YW-LrV"/>
-                                            <barButtonItem title="F2F with Daniel Guerrero?" style="plain" id="quB-2b-mmu">
-                                                <color key="tintColor" red="0.76470588240000004" green="0.76470588240000004" blue="0.76470588240000004" alpha="1" colorSpace="calibratedRGB"/>
-                                            </barButtonItem>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="fwQ-Yi-30k"/>
-                                        </items>
+                                        <items/>
                                     </toolbar>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="F2F with Birarda?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="llH-p4-zoi">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" id="JyI-9f-pYG">
                                         <rect key="frame" x="0.0" y="44" width="320" height="416"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -103,6 +104,7 @@
                         <outlet property="f2fDeclineButton" destination="Swh-hC-OdC" id="OWn-Tv-eU3"/>
                         <outlet property="scrollView" destination="uwy-6H-ACl" id="wKg-i2-MOV"/>
                         <outlet property="toolbar" destination="QTq-tA-clu" id="Jii-1C-2bQ"/>
+                        <outlet property="toolbarTitle" destination="llH-p4-zoi" id="YHN-MA-cYl"/>
                         <outlet property="viewUnderToolbar" destination="JyI-9f-pYG" id="HjV-vY-PIj"/>
                     </connections>
                 </viewController>
@@ -143,14 +145,17 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="8Tr-J5-wUy"/>
-                                    <barButtonItem title="Enter Password" style="plain" id="gdp-eZ-6mm">
-                                        <color key="tintColor" red="0.76470588240000004" green="0.76470588240000004" blue="0.76470588240000004" alpha="1" colorSpace="calibratedRGB"/>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="esj-32-WBd"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="tot-aX-zE6"/>
                                     <barButtonItem title="Cancel" id="rIC-o9-Urc"/>
                                 </items>
                             </toolbar>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Enter Password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="wbQ-99-lUz">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -182,6 +187,7 @@
                 <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+                <relationship kind="outlet" name="toolbarTitle" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="viewUnderToolbar" candidateClass="UIView"/>
             </relationships>
         </class>

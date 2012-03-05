@@ -21,6 +21,7 @@
 @synthesize f2fDeclineButton = _f2fDeclineButton;
 @synthesize viewUnderToolbar = _viewUnderToolbar;
 @synthesize passwordField = _passwordField;
+@synthesize toolbarTitle = _toolbarTitle;
 @synthesize scrollView = _scrollView;
 @synthesize toolbar = _toolbar;
 @synthesize userProfile = _userProfile;
@@ -77,7 +78,7 @@
     [self.viewUnderToolbar insertSubview:self.userProfile.view atIndex:0];
     
     // set the title of the toolbar
-    [[self.toolbar.items objectAtIndex:1] setTitle:[NSString stringWithFormat:@"F2F with %@?", self.user.nickname]];
+    self.toolbarTitle.text = [NSString stringWithFormat:@"F2F with %@?", self.user.nickname];
     
     self.actionBarHeader.text = [NSString stringWithFormat:@"%@ is nearby and\n wants to meet you face to face.", [self.user firstName]];
 }
@@ -91,6 +92,7 @@
     [self setViewUnderToolbar:nil];
     [self setToolbar:nil];
     [self setScrollView:nil];
+    [self setToolbarTitle:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -105,6 +107,7 @@
 #pragma mark - Actions
 
 - (IBAction)acceptF2F {
+    // TODO: Don't show the password entry screen unless we know that the accept request worked
     [CPapi sendF2FAccept:self.user.userID];
 
     if (![self.view viewWithTag:F2FPasswordViewTag]) {
@@ -131,7 +134,7 @@
         self.passwordField.delegate = self;
         
         // change cancel button target and action
-        UIBarButtonItem *cancel = (UIBarButtonItem *)[f2fPasswordVC.toolbar.items objectAtIndex:3];
+        UIBarButtonItem *cancel = (UIBarButtonItem *)[f2fPasswordVC.toolbar.items objectAtIndex:1];
         cancel.target = self;
         cancel.action = @selector(cancelPasswordEntry:);
     } 
