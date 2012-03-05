@@ -312,7 +312,7 @@
 			NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"params"];
 			
 			NSString *userId = [userInfo objectForKey:@"id"];
-			NSString  *nickname = [userInfo objectForKey:@"nickname"];
+			NSString *nickname = [userInfo objectForKey:@"nickname"];
             
 			// extract some user info
 			[AppDelegate instance].settings.candpUserId = [userId numberFromIntString];

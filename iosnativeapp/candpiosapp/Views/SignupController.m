@@ -215,10 +215,10 @@
             {
 				// we got in!
 				// so remember the success!
-				NSDictionary *userInfo = [[candpJson objectForKey:@"params"]objectForKey:@"user"];
-				
-				NSString *userId = [userInfo objectForKey:@"id"];
-				NSString *nickname = [userInfo objectForKey:@"nickname"];
+                NSDictionary *userInfo = [[candpJson objectForKey:@"params"] objectForKey:@"params"];
+                
+                NSString *userId = [userInfo objectForKey:@"id"];
+                NSString *nickname = [userInfo objectForKey:@"nickname"];
 				
 				// extract some user info
 				[AppDelegate instance].settings.candpUserId = [userId numberFromIntString];
