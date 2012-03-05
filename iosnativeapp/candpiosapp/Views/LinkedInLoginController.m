@@ -291,7 +291,6 @@
     
 	NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
         NSInteger succeeded = [[JSON objectForKey:@"succeeded"] intValue];
         NSLog(@"success: %d", succeeded);
         

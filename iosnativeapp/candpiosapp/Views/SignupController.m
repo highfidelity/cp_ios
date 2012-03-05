@@ -108,7 +108,7 @@
     if (![[appDelegate facebook] isSessionValid]) {   
         NSArray *extendedPermissions = [[NSArray alloc] 
                                         initWithObjects:@"offline_access", @"user_about_me", 
-                                        @"user_education_history", @"user_location", @"user_website", @"user_work_history", nil];
+                                        @"user_education_history", @"user_location", @"user_website", @"user_work_history", @"email", nil];
         [[appDelegate facebook] authorize:extendedPermissions];
     }
     else
@@ -165,17 +165,28 @@
         
 		NSString *facebookId = [fbJson objectForKey:@"id"];
 		NSLog(@"Got facebook user id: %@", facebookId);
+        NSString *fullName = [fbJson objectForKey:@"name"];
+        NSString *email = [fbJson objectForKey:@"email"];
+        
+        NSString *password = [NSString stringWithFormat:@"%d-%@", [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]], [[NSProcessInfo processInfo] globallyUniqueString]];
+
 		// we have succes!
 		// kick off the request to the candp server
 		NSMutableDictionary *loginParams = [NSMutableDictionary dictionary];
 		[loginParams setObject:@"loginFacebook" forKey:@"action"];
-		[loginParams setObject:facebookId forKey:@"login_fb_id"];
-		[loginParams setObject:[NSNumber numberWithInt:1] forKey:@"login_fb_connect"];
+		[loginParams setObject:facebookId forKey:@"fb_id"];
+		[loginParams setObject:@"1" forKey:@"fb_connect"];
 		[loginParams setObject:@"json" forKey:@"type"];
         [loginParams setObject:[AppDelegate instance].settings.facebookAccessToken forKey: @"fb_access_token"];
+        [loginParams setObject:fullName forKey:@"signupNickname"];
+        [loginParams setObject:email forKey:@"signupUsername"];
+        [loginParams setObject:password forKey:@"signupPassword"];
+        [loginParams setObject:password forKey:@"signupConfirm"];
+        [loginParams setObject:@"signup" forKey:@"action"];
+        [loginParams setObject:@"json" forKey:@"type"];
         
 		NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST"
-                                                                     path:@"login.php"
+                                                                     path:@"signup.php"
                                                                parameters:loginParams];
 		
 		AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id candpJson) {
@@ -185,23 +196,23 @@
 #if DEBUG
             NSLog(@"login json: %@", candpJson);
 #endif
+
+            NSInteger succeeded = [[candpJson objectForKey:@"succeeded"] intValue];
+            NSLog(@"success: %d", succeeded);
             
-			NSString *message = [candpJson objectForKey:@"message"];
-			if(message && [message compare:@"Error"] == 0)
-			{
-				// they haven't created an account
-				// so do it now
-				NSString *errorDetail = [[candpJson objectForKey:@"params"]objectForKey:@"message"];
-				NSString *displayMessage = [NSString stringWithFormat:@"You must create an account with Facebook first. Detail: %@",errorDetail];
-				UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unable to login"
-															   message:displayMessage
-															  delegate:self 
-													 cancelButtonTitle:@"OK"
-													 otherButtonTitles: nil];
-				[alert show];
-			}
-			else
-			{
+            if(succeeded == 0)
+            {
+                NSString *outerErrorMessage = [candpJson objectForKey:@"message"];// often just 'error'
+                
+                NSString *errorMessage = [NSString stringWithFormat:@"The error was:%@", outerErrorMessage];
+                // we get here if we failed to login
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unable to log in" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                [alert show];
+                
+                [self.navigationController dismissModalViewControllerAnimated:YES];
+            }
+            else
+            {
 				// we got in!
 				// so remember the success!
 				NSDictionary *userInfo = [[candpJson objectForKey:@"params"]objectForKey:@"user"];

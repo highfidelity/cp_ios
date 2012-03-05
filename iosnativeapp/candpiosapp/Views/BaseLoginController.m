@@ -69,6 +69,7 @@
 	}
 	[loginParams setObject:[NSNumber numberWithInt:1] forKey:@"signupAcceptTerms"];
 	[loginParams setObject:@"json" forKey:@"type"];
+
 	NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
 	AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
 #if DEBUG        
