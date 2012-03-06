@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *chatContents;
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIView *chatInputs;
+@property (weak, nonatomic) IBOutlet UIButton *chatButton;
 
 
 /*

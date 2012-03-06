@@ -1062,12 +1062,12 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="FiI-zf-lmO">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="FiI-zf-lmO">
                                         <rect key="frame" x="241" y="4" width="72" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="Send">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="highlighted">
@@ -1085,6 +1085,7 @@
                     <navigationItem key="navigationItem" id="RI8-fh-v2p"/>
                     <connections>
                         <outlet property="backgroundView" destination="ytV-66-Bjq" id="DWp-5Y-152"/>
+                        <outlet property="chatButton" destination="FiI-zf-lmO" id="6w8-eB-HL2"/>
                         <outlet property="chatContents" destination="HIs-HL-53Y" id="pvd-31-q2P"/>
                         <outlet property="chatEntryField" destination="wJ7-yh-fDm" id="ath-Lv-ouS"/>
                         <outlet property="chatInputs" destination="7Ib-za-8i5" id="h86-qT-xQY"/>
@@ -1553,6 +1554,7 @@
             <relationships>
                 <relationship kind="action" name="sendChat"/>
                 <relationship kind="outlet" name="backgroundView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="chatButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="chatContents" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="chatEntryField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="chatInputs" candidateClass="UIView"/>

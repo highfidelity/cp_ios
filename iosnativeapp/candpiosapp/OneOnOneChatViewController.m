@@ -44,6 +44,7 @@ static CGFloat const FONTSIZE = 14.0;
 @synthesize chatContents = _chatContents;
 @synthesize backgroundView = _backgroundView;
 @synthesize chatInputs = _chatInputs;
+@synthesize chatButton = _chatButton;
 
 
 #pragma mark - Misc Functions
@@ -366,11 +367,17 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     self.me.nickname = [AppDelegate instance].settings.userNickname;
 
     self.history = [[ChatHistory alloc] init];
-        
+    
     self.title = self.user.nickname;
         
     // Set up the fancy background on view
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-dark.png"]];
+    
+    // Make our chat button FANCY!
+    UIImage *chatButtonImage = [[UIImage imageNamed:@"button-turquoise-32pt.png"]
+                                resizableImageWithCapInsets:UIEdgeInsetsMake(0, 7, 0, 9)];
+    
+    [self.chatButton setBackgroundImage:chatButtonImage forState:UIControlStateNormal];
     
     // Set up the chat entry field
     self.chatEntryField.delegate = self;
@@ -394,6 +401,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     [self setChatContents:nil];
     [self setBackgroundView:nil];
     [self setChatInputs:nil];
+    [self setChatButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

@@ -188,6 +188,8 @@
 		6F0B453F14F6BD850074DBD9 /* ChatHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453E14F6BD850074DBD9 /* ChatHistory.m */; };
 		6F0B454214F6CEE40074DBD9 /* CPAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B454114F6CEE40074DBD9 /* CPAlertView.m */; };
 		6F5EB26C14DB51E40000294E /* OneOnOneChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5EB26B14DB51E40000294E /* OneOnOneChatViewController.m */; };
+		6F7084B11506B0170058D323 /* button-turquoise-32pt.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F7084AF1506B0170058D323 /* button-turquoise-32pt.png */; };
+		6F7084B21506B0170058D323 /* button-turquoise-32pt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F7084B01506B0170058D323 /* button-turquoise-32pt@2x.png */; };
 		6F7BA4DB14E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7BA4D814E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m */; };
 		6F7BA4DC14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7BA4DA14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		6F8EF74714FD8D2100F9BDC0 /* chat-bubble-left-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF73B14FD8D2100F9BDC0 /* chat-bubble-left-bottom.png */; };
@@ -588,6 +590,8 @@
 		6F0B454114F6CEE40074DBD9 /* CPAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPAlertView.m; path = Utils/CPAlertView.m; sourceTree = "<group>"; };
 		6F5EB26A14DB51E30000294E /* OneOnOneChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OneOnOneChatViewController.h; path = ../OneOnOneChatViewController.h; sourceTree = "<group>"; };
 		6F5EB26B14DB51E40000294E /* OneOnOneChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OneOnOneChatViewController.m; path = ../OneOnOneChatViewController.m; sourceTree = "<group>"; };
+		6F7084AF1506B0170058D323 /* button-turquoise-32pt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-turquoise-32pt.png"; sourceTree = "<group>"; };
+		6F7084B01506B0170058D323 /* button-turquoise-32pt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-turquoise-32pt@2x.png"; sourceTree = "<group>"; };
 		6F7BA4D714E308AF00420AD5 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
 		6F7BA4D814E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		6F7BA4D914E308AF00420AD5 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
@@ -1659,6 +1663,8 @@
 		87F657F314B0D2D000F4AB6C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				6F7084AF1506B0170058D323 /* button-turquoise-32pt.png */,
+				6F7084B01506B0170058D323 /* button-turquoise-32pt@2x.png */,
 				4EFC54611500629100BF51B0 /* logo-login-mug.png */,
 				4EFC54621500629100BF51B0 /* logo-login-mug@2x.png */,
 				87F657F414B0D2D100F4AB6C /* 63-runner.png */,
@@ -1921,6 +1927,8 @@
 				539B3DC915029D720017BACB /* thumbs-down.png in Resources */,
 				539B3DCA15029D720017BACB /* thumbs-up.png in Resources */,
 				53E2062C150596180000FA8D /* MainStoryboard_iPhone.storyboard in Resources */,
+				6F7084B11506B0170058D323 /* button-turquoise-32pt.png in Resources */,
+				6F7084B21506B0170058D323 /* button-turquoise-32pt@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

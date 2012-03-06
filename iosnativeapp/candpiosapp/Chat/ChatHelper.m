@@ -10,6 +10,7 @@
 #import "OneOnOneChatViewController.h"
 #import "CPAlertView.h"
 #import "AppDelegate.h"
+#import "CPUIHelper.h"
 
 @implementation ChatHelper
 
@@ -33,11 +34,12 @@
                lastObject] 
               isKindOfClass:[OneOnOneChatViewController class]])
     {
-        chatView = (OneOnOneChatViewController *) [[[[rootView.childViewControllers lastObject] modalViewController] childViewControllers] lastObject];
+        chatView = (OneOnOneChatViewController *)
+            [[[[rootView.childViewControllers lastObject] modalViewController] childViewControllers] lastObject];
     }
         
-    // If the person is in the chat window AND is talking with the user that sent the chat
-    // send the message straight to the chat window    
+    // If the person is in the chat window AND is talking with the user that
+    // sent the chat send the message straight to the chat window    
     if (chatView != nil && chatView.user.userID == userId) {
         [chatView receiveChatText:message];
     }
@@ -79,18 +81,23 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
             NSString *message  = [alertView.context objectForKey:@"message"];
             NSString *nickname = [alertView.context objectForKey:@"nickname"];
             
-            OneOnOneChatViewController *oneOnOneChat = [alertView.rootView.storyboard instantiateViewControllerWithIdentifier:@"OneOnOneChatView"];
+            OneOnOneChatViewController *oneOnOneChat =
+                [alertView.rootView.storyboard
+                    instantiateViewControllerWithIdentifier:@"OneOnOneChatView"];
                         
             UINavigationController *chatNavController = [[UINavigationController alloc] initWithRootViewController:oneOnOneChat];
-                        
-            [alertView.rootView presentViewController:chatNavController
-                                             animated:YES
-                                           completion:nil];
 
+            // Set up the view
+            [oneOnOneChat addCloseButton];
+            [CPUIHelper addDarkNavigationBarStyleToViewController:oneOnOneChat];
             oneOnOneChat.user = [[User alloc] init];
             oneOnOneChat.user.userID = [userId intValue];
             oneOnOneChat.user.nickname = nickname;
-            [oneOnOneChat addCloseButton];
+            
+            [alertView.rootView presentViewController:chatNavController
+                                             animated:YES
+                                           completion:nil];
+            
             [oneOnOneChat receiveChatText:message];
         }
     }

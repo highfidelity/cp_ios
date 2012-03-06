@@ -11,6 +11,8 @@
 #import "CPapi.h"
 #import "AppDelegate.h"
 #import "SVProgressHUD.h"
+#import "ChatHistory.h"
+#import "ChatMessage.h"
 
 @interface CPapi()
 
@@ -190,6 +192,15 @@
 + (void)oneOnOneChatResponseHandler:(NSData *)response
 {
     NSLog(@"One on one chat sent, or something: %@", response);
+}
+
++ (void)oneOnOneChatGetHistory:(ChatHistory *)history
+                      fromUser:(User *)fromUser
+                        toUser:(User *)toUser
+{
+    ChatMessage *message1 = [[ChatMessage alloc] initWithMessage:@"History 1"
+                                                          toUser:fromUser
+                                                        fromUser:toUser];
 }
 
 
