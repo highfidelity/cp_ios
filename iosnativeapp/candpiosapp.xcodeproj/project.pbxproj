@@ -173,6 +173,7 @@
 		53DC696014E48DB700D64175 /* verified-facebook~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DC695C14E48DB700D64175 /* verified-facebook~iphone.png */; };
 		53DC696114E48DB700D64175 /* verified-linked-in@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DC695D14E48DB700D64175 /* verified-linked-in@2x~iphone.png */; };
 		53DC696214E48DB700D64175 /* verified-linked-in~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DC695E14E48DB700D64175 /* verified-linked-in~iphone.png */; };
+		53E20621150591600000FA8D /* DismissHUDAfterReloadData.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E20620150591600000FA8D /* DismissHUDAfterReloadData.m */; };
 		53FB9E3514E089BC00F4CC7F /* map-marker@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FB9E3314E089BC00F4CC7F /* map-marker@2x~iphone.png */; };
 		53FB9E3614E089BC00F4CC7F /* map-marker~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FB9E3414E089BC00F4CC7F /* map-marker~iphone.png */; };
 		53FB9E4414E099BB00F4CC7F /* CPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FB9E4314E099BA00F4CC7F /* CPUtils.m */; };
@@ -564,6 +565,8 @@
 		53DC695C14E48DB700D64175 /* verified-facebook~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "verified-facebook~iphone.png"; path = "images/verified-facebook~iphone.png"; sourceTree = "<group>"; };
 		53DC695D14E48DB700D64175 /* verified-linked-in@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "verified-linked-in@2x~iphone.png"; path = "images/verified-linked-in@2x~iphone.png"; sourceTree = "<group>"; };
 		53DC695E14E48DB700D64175 /* verified-linked-in~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "verified-linked-in~iphone.png"; path = "images/verified-linked-in~iphone.png"; sourceTree = "<group>"; };
+		53E2061F150591600000FA8D /* DismissHUDAfterReloadData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DismissHUDAfterReloadData.h; path = CheckIn/DismissHUDAfterReloadData.h; sourceTree = "<group>"; };
+		53E20620150591600000FA8D /* DismissHUDAfterReloadData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DismissHUDAfterReloadData.m; path = CheckIn/DismissHUDAfterReloadData.m; sourceTree = "<group>"; };
 		53FB9E3314E089BC00F4CC7F /* map-marker@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map-marker@2x~iphone.png"; path = "images/map-marker@2x~iphone.png"; sourceTree = "<group>"; };
 		53FB9E3414E089BC00F4CC7F /* map-marker~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map-marker~iphone.png"; path = "images/map-marker~iphone.png"; sourceTree = "<group>"; };
 		53FB9E4214E099BA00F4CC7F /* CPUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPUtils.h; path = SupportingClasses/CPUtils.h; sourceTree = "<group>"; };
@@ -1241,6 +1244,8 @@
 				E4EFA7F014FA3427004A329D /* CheckInHelper.m */,
 				53882B5C14FC13630073058C /* CheckInListCell.h */,
 				53882B5D14FC13630073058C /* CheckInListCell.m */,
+				53E2061F150591600000FA8D /* DismissHUDAfterReloadData.h */,
+				53E20620150591600000FA8D /* DismissHUDAfterReloadData.m */,
 			);
 			name = "Check In";
 			sourceTree = "<group>";
@@ -2065,6 +2070,7 @@
 				536DE90D150156DC00794650 /* FaceToFaceAcceptDeclineViewController.m in Sources */,
 				536DE90E150156DC00794650 /* FaceToFaceHelper.m in Sources */,
 				536DE913150156FD00794650 /* FaceToFacePasswordInputViewController.m in Sources */,
+				53E20621150591600000FA8D /* DismissHUDAfterReloadData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

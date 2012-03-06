@@ -1,3 +1,10 @@
+//
+//  CheckInListTableViewController.m
+//  candpiosapp
+//
+//  Created by Stephen Birarda on 2/17/12.
+//  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
+
 #import "CheckInListTableViewController.h"
 #import "AppDelegate.h"
 #import "CPPlace.h"
@@ -181,9 +188,8 @@
             
             [places insertObject:place atIndex:0];
             
-            [SVProgressHUD dismiss];
-            
-            [self.tableView reloadData];  
+            // note that the HUD gets dismissed in this overloaded reloadData (check DismissHUDAfterReloadData.h)
+            [self.tableView reloadData];            
         } else {
             // dismiss the progress HUD with an error
             [SVProgressHUD dismissWithError:@"Oops!\nCouldn't get the data." afterDelay:3];
@@ -266,6 +272,8 @@
         return 60;
     }    
 }
+
+# pragma mark - Segue Methods
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
