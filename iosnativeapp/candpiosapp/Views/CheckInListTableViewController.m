@@ -118,7 +118,6 @@
     CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
     [FoursquareAPIRequest getVenuesCloseToLocation:location :^(NSDictionary *json, NSError *error){
         // Do error checking here, in case Foursquare is down
-        NSLog(@"%@", [json description]);
         if (!error || [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
             
             // get the array of places that foursquare returned

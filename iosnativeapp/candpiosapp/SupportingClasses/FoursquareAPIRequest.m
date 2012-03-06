@@ -28,9 +28,7 @@
     // set up an AFJSONRequestOperation with the NSURLRequest
     // call the completion function passed as a block by the caller
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-#if DEBUG
-        NSLog(@"JSON Returned for foursquare venue: %@", JSON);
-#endif
+        
         if(completion)
             completion(JSON, nil); 
         
@@ -55,9 +53,7 @@
     // set up an AFJSONRequestOperation with the NSURLRequest
     // call the completion function passed as a block by the caller
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-#if DEBUG
-        NSLog(@"JSON Returned for foursquare venue: %@", JSON);
-#endif
+        
         if(completion)
             completion(JSON, nil); 
         
