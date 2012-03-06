@@ -501,6 +501,10 @@
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)aWebView {
+    
+    // tell the webview not to scroll to top when status bar is clicked
+    aWebView.scrollView.scrollsToTop = NO;
+    
     // resize the webView frame depending on the size of the content
     CGRect frame = aWebView.frame;
     frame.size.height = 1;

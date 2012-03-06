@@ -65,6 +65,12 @@
     // set the background of the action bar
     self.actionBar.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-dark.png"]];
     
+    // set the shadow on the actionBar
+    [CPUIHelper addShadowToView:self.actionBar color:[UIColor blackColor] offset:CGSizeMake(0,-2) radius:3 opacity:0.5];
+    
+    // add a shadow to the toolbar
+    [CPUIHelper addShadowToView:self.toolbar color:[UIColor blackColor] offset:CGSizeMake(0,2) radius:3 opacity:0.5];
+    
     // Get the main storyboard that has the UserProfileViewController
     UIStoryboard *mainStory = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
     self.userProfile = [mainStory instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
