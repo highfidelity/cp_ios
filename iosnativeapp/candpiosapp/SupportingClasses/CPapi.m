@@ -535,8 +535,15 @@
 + (void)getUserProfileWithCompletionBlock:(void (^)(NSDictionary *, NSError *))completion
 {
     [self makeHTTPRequestWithAction:@"getUserData"
-                         withParameters:nil
-                             completion:completion];
+                     withParameters:nil
+                         completion:completion];
+}
+
++ (void)getUserTrasactionDataWithCompletitonBlock:(void (^)(NSDictionary *, NSError *))completion
+{
+    [self makeHTTPRequestWithAction:@"getTransactionData"
+                     withParameters:nil
+                         completion:completion];
 }
 
 + (void)getCheckInDataWithUserId:(int)userId

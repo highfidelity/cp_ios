@@ -9,6 +9,9 @@
 #import "CPUIHelper.h"
 #define navbarShadowTag 991
 
+#define M_PI   3.14159265358979323846264338327950288
+#define DEGREES_TO_RADIANS(angle) (angle / 180.0 * M_PI)
+
 @implementation CPUIHelper
 
 #pragma mark - UI Elements
@@ -109,5 +112,26 @@
             return nil;
     }
 }
+
+#pragma mark - UIImage rotate
+
++ (void)rotateImage:(UIImageView *)image duration:(NSTimeInterval)duration 
+              curve:(int)curve degrees:(CGFloat)degrees
+{
+    // Setup the animation
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:duration];
+    [UIView setAnimationCurve:curve];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    // The transform matrix
+    CGAffineTransform transform = 
+    CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees));
+    image.transform = transform;
+    
+    // Commit the changes
+    [UIView commitAnimations];
+}
+
 
 @end

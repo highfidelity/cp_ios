@@ -188,8 +188,6 @@
 		6F0B453F14F6BD850074DBD9 /* ChatHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453E14F6BD850074DBD9 /* ChatHistory.m */; };
 		6F0B454214F6CEE40074DBD9 /* CPAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B454114F6CEE40074DBD9 /* CPAlertView.m */; };
 		6F5EB26C14DB51E40000294E /* OneOnOneChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5EB26B14DB51E40000294E /* OneOnOneChatViewController.m */; };
-		6F7084B11506B0170058D323 /* button-turquoise-32pt.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F7084AF1506B0170058D323 /* button-turquoise-32pt.png */; };
-		6F7084B21506B0170058D323 /* button-turquoise-32pt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F7084B01506B0170058D323 /* button-turquoise-32pt@2x.png */; };
 		6F7BA4DB14E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7BA4D814E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m */; };
 		6F7BA4DC14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7BA4DA14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		6F8EF74714FD8D2100F9BDC0 /* chat-bubble-left-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF73B14FD8D2100F9BDC0 /* chat-bubble-left-bottom.png */; };
@@ -279,6 +277,8 @@
 		E402DB6314D43C1700BC82E8 /* defaultAvatar50.png in Resources */ = {isa = PBXBuildFile; fileRef = E402DB6214D43C1700BC82E8 /* defaultAvatar50.png */; };
 		E402DB6614D43C2B00BC82E8 /* pin-frame.png in Resources */ = {isa = PBXBuildFile; fileRef = E402DB6514D43C2B00BC82E8 /* pin-frame.png */; };
 		E433C0A51500522D009B819D /* perforated-skin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E433C0A41500522D009B819D /* perforated-skin@2x.png */; };
+		E44F81AC1506E26500EA17E0 /* button-turquoise-32pt.png in Resources */ = {isa = PBXBuildFile; fileRef = E44F81AA1506E26500EA17E0 /* button-turquoise-32pt.png */; };
+		E44F81AD1506E26500EA17E0 /* button-turquoise-32pt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E44F81AB1506E26500EA17E0 /* button-turquoise-32pt@2x.png */; };
 		E48C631B14EFCA1F00AC2979 /* PayUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E48C631A14EFCA1F00AC2979 /* PayUserViewController.m */; };
 		E48CFA30150035E700A35D0E /* vector-lock.png in Resources */ = {isa = PBXBuildFile; fileRef = E48CFA2E150035E700A35D0E /* vector-lock.png */; };
 		E48CFA31150035E700A35D0E /* vector-lock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E48CFA2F150035E700A35D0E /* vector-lock@2x.png */; };
@@ -286,6 +286,16 @@
 		E4B21B2514F5B8FF00144348 /* BalanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B21B2414F5B8FF00144348 /* BalanceViewController.m */; };
 		E4C35C4114F1323A009B6DBF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C35C4014F1323A009B6DBF /* AudioToolbox.framework */; };
 		E4E16DA414DDEF26004E4586 /* UserProfileCheckedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E16DA414DDEF26004E4585 /* UserProfileCheckedInViewController.m */; };
+		E4EAFBB91502CD880052448B /* wallet-lock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EAFBB71502CD880052448B /* wallet-lock@2x.png */; };
+		E4EAFBBA1502CD880052448B /* wallet-lock.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EAFBB81502CD880052448B /* wallet-lock.png */; };
+		E4EAFBC1150368380052448B /* wallet-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EAFBC0150368380052448B /* wallet-arrow.png */; };
+		E4EAFBCF150396760052448B /* wallet-cell-arrow-down.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EAFBCB150396760052448B /* wallet-cell-arrow-down.png */; };
+		E4EAFBD0150396760052448B /* wallet-cell-arrow-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EAFBCC150396760052448B /* wallet-cell-arrow-down@2x.png */; };
+		E4EAFBD1150396760052448B /* wallet-cell-arrow-up.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EAFBCD150396760052448B /* wallet-cell-arrow-up.png */; };
+		E4EAFBD2150396760052448B /* wallet-cell-arrow-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EAFBCE150396760052448B /* wallet-cell-arrow-up@2x.png */; };
+		E4EAFBD51503B5290052448B /* refresh-scroll-view@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EAFBD31503B5290052448B /* refresh-scroll-view@2x.png */; };
+		E4EAFBD61503B5290052448B /* refresh-scroll-view.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EAFBD41503B5290052448B /* refresh-scroll-view.png */; };
+		E4EAFBDE1505467C0052448B /* WalletCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EAFBDD1505467C0052448B /* WalletCell.m */; };
 		E4EFA7F114FA3427004A329D /* CheckInHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFA7F014FA3427004A329D /* CheckInHelper.m */; };
 /* End PBXBuildFile section */
 
@@ -590,8 +600,6 @@
 		6F0B454114F6CEE40074DBD9 /* CPAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPAlertView.m; path = Utils/CPAlertView.m; sourceTree = "<group>"; };
 		6F5EB26A14DB51E30000294E /* OneOnOneChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OneOnOneChatViewController.h; path = ../OneOnOneChatViewController.h; sourceTree = "<group>"; };
 		6F5EB26B14DB51E40000294E /* OneOnOneChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OneOnOneChatViewController.m; path = ../OneOnOneChatViewController.m; sourceTree = "<group>"; };
-		6F7084AF1506B0170058D323 /* button-turquoise-32pt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-turquoise-32pt.png"; sourceTree = "<group>"; };
-		6F7084B01506B0170058D323 /* button-turquoise-32pt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-turquoise-32pt@2x.png"; sourceTree = "<group>"; };
 		6F7BA4D714E308AF00420AD5 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
 		6F7BA4D814E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		6F7BA4D914E308AF00420AD5 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
@@ -745,6 +753,8 @@
 		E402DB6214D43C1700BC82E8 /* defaultAvatar50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultAvatar50.png; sourceTree = "<group>"; };
 		E402DB6514D43C2B00BC82E8 /* pin-frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pin-frame.png"; path = "images/pin-frame.png"; sourceTree = "<group>"; };
 		E433C0A41500522D009B819D /* perforated-skin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "perforated-skin@2x.png"; path = "images/perforated-skin@2x.png"; sourceTree = "<group>"; };
+		E44F81AA1506E26500EA17E0 /* button-turquoise-32pt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-turquoise-32pt.png"; sourceTree = "<group>"; };
+		E44F81AB1506E26500EA17E0 /* button-turquoise-32pt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-turquoise-32pt@2x.png"; sourceTree = "<group>"; };
 		E456941F14FEDD8B0060A896 /* perforated-skin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "perforated-skin.png"; path = "images/perforated-skin.png"; sourceTree = "<group>"; };
 		E48C631914EFCA1F00AC2979 /* PayUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PayUserViewController.h; path = Views/PayUserViewController.h; sourceTree = "<group>"; };
 		E48C631A14EFCA1F00AC2979 /* PayUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PayUserViewController.m; path = Views/PayUserViewController.m; sourceTree = "<group>"; };
@@ -757,6 +767,17 @@
 		E4C35C4014F1323A009B6DBF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		E4E16DA414DDEF26004E4584 /* UserProfileCheckedInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileCheckedInViewController.h; path = Views/UserProfileCheckedInViewController.h; sourceTree = "<group>"; };
 		E4E16DA414DDEF26004E4585 /* UserProfileCheckedInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfileCheckedInViewController.m; path = Views/UserProfileCheckedInViewController.m; sourceTree = "<group>"; };
+		E4EAFBB71502CD880052448B /* wallet-lock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wallet-lock@2x.png"; path = "images/wallet-lock@2x.png"; sourceTree = "<group>"; };
+		E4EAFBB81502CD880052448B /* wallet-lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wallet-lock.png"; path = "images/wallet-lock.png"; sourceTree = "<group>"; };
+		E4EAFBC0150368380052448B /* wallet-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wallet-arrow.png"; path = "images/wallet-arrow.png"; sourceTree = "<group>"; };
+		E4EAFBCB150396760052448B /* wallet-cell-arrow-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wallet-cell-arrow-down.png"; path = "images/wallet-cell-arrow-down.png"; sourceTree = "<group>"; };
+		E4EAFBCC150396760052448B /* wallet-cell-arrow-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wallet-cell-arrow-down@2x.png"; path = "images/wallet-cell-arrow-down@2x.png"; sourceTree = "<group>"; };
+		E4EAFBCD150396760052448B /* wallet-cell-arrow-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wallet-cell-arrow-up.png"; path = "images/wallet-cell-arrow-up.png"; sourceTree = "<group>"; };
+		E4EAFBCE150396760052448B /* wallet-cell-arrow-up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wallet-cell-arrow-up@2x.png"; path = "images/wallet-cell-arrow-up@2x.png"; sourceTree = "<group>"; };
+		E4EAFBD31503B5290052448B /* refresh-scroll-view@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refresh-scroll-view@2x.png"; sourceTree = "<group>"; };
+		E4EAFBD41503B5290052448B /* refresh-scroll-view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refresh-scroll-view.png"; sourceTree = "<group>"; };
+		E4EAFBDC1505467C0052448B /* WalletCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WalletCell.h; path = Views/WalletCell.h; sourceTree = "<group>"; };
+		E4EAFBDD1505467C0052448B /* WalletCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WalletCell.m; path = Views/WalletCell.m; sourceTree = "<group>"; };
 		E4EFA7EF14FA3427004A329D /* CheckInHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckInHelper.h; path = CheckIn/CheckInHelper.h; sourceTree = "<group>"; };
 		E4EFA7F014FA3427004A329D /* CheckInHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInHelper.m; path = CheckIn/CheckInHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1224,6 +1245,13 @@
 		536DE93C150173A500794650 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				E4EAFBC0150368380052448B /* wallet-arrow.png */,
+				E4EAFBCB150396760052448B /* wallet-cell-arrow-down.png */,
+				E4EAFBCC150396760052448B /* wallet-cell-arrow-down@2x.png */,
+				E4EAFBCD150396760052448B /* wallet-cell-arrow-up.png */,
+				E4EAFBCE150396760052448B /* wallet-cell-arrow-up@2x.png */,
+				E4EAFBB81502CD880052448B /* wallet-lock.png */,
+				E4EAFBB71502CD880052448B /* wallet-lock@2x.png */,
 				E456941F14FEDD8B0060A896 /* perforated-skin.png */,
 				E433C0A41500522D009B819D /* perforated-skin@2x.png */,
 				E48CFA2E150035E700A35D0E /* vector-lock.png */,
@@ -1663,13 +1691,11 @@
 		87F657F314B0D2D000F4AB6C /* images */ = {
 			isa = PBXGroup;
 			children = (
-				6F7084AF1506B0170058D323 /* button-turquoise-32pt.png */,
-				6F7084B01506B0170058D323 /* button-turquoise-32pt@2x.png */,
-				4EFC54611500629100BF51B0 /* logo-login-mug.png */,
-				4EFC54621500629100BF51B0 /* logo-login-mug@2x.png */,
 				87F657F414B0D2D100F4AB6C /* 63-runner.png */,
 				4E39305014EDF0B500D27DEA /* accessory-arrow.png */,
 				4E39305114EDF0B500D27DEA /* accessory-arrow@2x.png */,
+				E44F81AA1506E26500EA17E0 /* button-turquoise-32pt.png */,
+				E44F81AB1506E26500EA17E0 /* button-turquoise-32pt@2x.png */,
 				872E1C8814B28DBD00408DC6 /* Default.png */,
 				872E1C8514B28DB900408DC6 /* Default@2x.png */,
 				325462F714F9E977000FDD70 /* defaultAvatar25.png */,
@@ -1678,6 +1704,8 @@
 				4E39305614EDF0C300D27DEA /* header-shadow@2x.png */,
 				4E39305714EDF0C300D27DEA /* header.png */,
 				4E39305814EDF0C300D27DEA /* header@2x.png */,
+				4EFC54611500629100BF51B0 /* logo-login-mug.png */,
+				4EFC54621500629100BF51B0 /* logo-login-mug@2x.png */,
 				4E39305914EDF0C300D27DEA /* logo.png */,
 				4E39305A14EDF0C300D27DEA /* logo@2x.png */,
 				4E39306114EDF0D700D27DEA /* menu-background.png */,
@@ -1687,6 +1715,8 @@
 				4E39306714EDF0EC00D27DEA /* people-list.png */,
 				4E39306814EDF0EC00D27DEA /* people-list@2x.png */,
 				32A7998714F97C0300A0D4CB /* plusSign.png */,
+				E4EAFBD41503B5290052448B /* refresh-scroll-view.png */,
+				E4EAFBD31503B5290052448B /* refresh-scroll-view@2x.png */,
 				32A7999614F9882200A0D4CB /* runner-small-square.png */,
 				4EBD1D3314FEC19D00E9C0C6 /* secret-society.png */,
 				4EBD1D3414FEC19D00E9C0C6 /* secret-society@2x.png */,
@@ -1710,6 +1740,8 @@
 				E4B21B2414F5B8FF00144348 /* BalanceViewController.m */,
 				E48C631914EFCA1F00AC2979 /* PayUserViewController.h */,
 				E48C631A14EFCA1F00AC2979 /* PayUserViewController.m */,
+				E4EAFBDC1505467C0052448B /* WalletCell.h */,
+				E4EAFBDD1505467C0052448B /* WalletCell.m */,
 			);
 			name = Payment;
 			sourceTree = "<group>";
@@ -1926,9 +1958,18 @@
 				536DE910150156F500794650 /* FaceToFace_iPhone.storyboard in Resources */,
 				539B3DC915029D720017BACB /* thumbs-down.png in Resources */,
 				539B3DCA15029D720017BACB /* thumbs-up.png in Resources */,
+				E4EAFBB91502CD880052448B /* wallet-lock@2x.png in Resources */,
+				E4EAFBBA1502CD880052448B /* wallet-lock.png in Resources */,
+				E4EAFBC1150368380052448B /* wallet-arrow.png in Resources */,
+				E4EAFBCF150396760052448B /* wallet-cell-arrow-down.png in Resources */,
+				E4EAFBD0150396760052448B /* wallet-cell-arrow-down@2x.png in Resources */,
+				E4EAFBD1150396760052448B /* wallet-cell-arrow-up.png in Resources */,
+				E4EAFBD2150396760052448B /* wallet-cell-arrow-up@2x.png in Resources */,
+				E4EAFBD51503B5290052448B /* refresh-scroll-view@2x.png in Resources */,
+				E4EAFBD61503B5290052448B /* refresh-scroll-view.png in Resources */,
 				53E2062C150596180000FA8D /* MainStoryboard_iPhone.storyboard in Resources */,
-				6F7084B11506B0170058D323 /* button-turquoise-32pt.png in Resources */,
-				6F7084B21506B0170058D323 /* button-turquoise-32pt@2x.png in Resources */,
+				E44F81AC1506E26500EA17E0 /* button-turquoise-32pt.png in Resources */,
+				E44F81AD1506E26500EA17E0 /* button-turquoise-32pt@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2078,6 +2119,7 @@
 				536DE90E150156DC00794650 /* FaceToFaceHelper.m in Sources */,
 				536DE913150156FD00794650 /* FaceToFacePasswordInputViewController.m in Sources */,
 				53E20621150591600000FA8D /* DismissHUDAfterReloadData.m in Sources */,
+				E4EAFBDE1505467C0052448B /* WalletCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

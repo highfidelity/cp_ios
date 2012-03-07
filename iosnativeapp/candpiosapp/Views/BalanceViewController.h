@@ -8,8 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BalanceViewController : UIViewController
+@interface BalanceViewController : UIViewController <UIScrollViewDelegate, UITableViewDataSource,UITableViewDelegate>
+{
 
+@private
+    BOOL isFlipped;
+    BOOL loading;
+    NSArray *transactions;
+}
+
+@property (weak, nonatomic) IBOutlet UITableView *transTableView;
 @property (weak, nonatomic) IBOutlet UILabel *userBalance;
+@property (weak, nonatomic) IBOutlet UIImageView *pullIcon;
+@property (weak, nonatomic) IBOutlet UILabel *pullDownLabel;
+@property (weak, nonatomic) IBOutlet UILabel *updateTimeLabel;
+
+- (void)loadTransactionData;
 
 @end
