@@ -11,7 +11,6 @@
 #import "CPapi.h"
 #import "AppDelegate.h"
 #import "SVProgressHUD.h"
-#import "ChatHistory.h"
 #import "ChatMessage.h"
 
 @interface CPapi()
@@ -198,9 +197,20 @@
                       fromUser:(User *)fromUser
                         toUser:(User *)toUser
 {
+    NSDate *date1 = [NSDate dateWithTimeIntervalSince1970: 1000000];
+    NSDate *date2 = [NSDate dateWithTimeIntervalSince1970: 2000000];
+    
     ChatMessage *message1 = [[ChatMessage alloc] initWithMessage:@"History 1"
                                                           toUser:fromUser
-                                                        fromUser:toUser];
+                                                        fromUser:toUser
+                                                            date:date1];
+    ChatMessage *message2 = [[ChatMessage alloc] initWithMessage:@"History 2"
+                                                          toUser:toUser
+                                                        fromUser:fromUser
+                                                            date:date2];
+    
+    [history insertMessage:message1];
+    [history insertMessage:message2];
 }
 
 

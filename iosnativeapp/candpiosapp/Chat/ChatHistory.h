@@ -15,10 +15,16 @@
 @property (nonatomic, strong) NSMutableArray* messages;
 
 #pragma mark - Add to history
+// Add a message to the messages array for the given user
 - (void)addMessage:(ChatMessage *)message;
+// Inserts a message to the message array based on the timestamp
+- (void)insertMessage:(ChatMessage *)message;
 
 #pragma mark - Retrieve from history
 - (id)messageAtIndex:(NSUInteger)index;
 - (NSInteger)count;
+
+- (BOOL)isTimestampNecessaryBetween:(ChatMessage *)prevMessage
+                         andMessage:(ChatMessage *)nextMessage;
 
 @end

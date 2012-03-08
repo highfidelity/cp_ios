@@ -23,7 +23,7 @@ float const CHAT_BUBBLE_IMG_BOTTOM_HEIGHT = 10.0f;
 float const CHAT_MESSAGE_LABEL_Y          = 14.0;
 float const CHAT_MESSAGE_LABEL_WIDTH      = 220.0f;
 float const TIMESTAMP_CELL_WIDTH          = 304.0f;
-float const TIMESTAMP_CELL_HEIGHT         = 24.0f;
+float const TIMESTAMP_CELL_HEIGHT         = 20.0f;
 
 static CGFloat const FONTSIZE = 14.0;
 
@@ -149,81 +149,68 @@ static CGFloat const FONTSIZE = 14.0;
     return expectedLabelSize.height;
 }
 
+- (BOOL)shouldRowHaveTimestamp:(NSUInteger) row
+{
+    if (row > 0)
+    {
+        ChatMessage *prevMessage = [self.history messageAtIndex:row - 1];
+        ChatMessage *nextMessage = [self.history messageAtIndex:row];
+        
+        if ([self.history isTimestampNecessaryBetween:prevMessage
+                                           andMessage:nextMessage])
+        {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([[self.history messageAtIndex:indexPath.row] isKindOfClass:[NSDate class]])
+    CGFloat height = 0;
+    
+    // Optionally add a timestamp height if we need one
+    if ([self shouldRowHaveTimestamp:indexPath.row])
     {
-        return TIMESTAMP_CELL_HEIGHT;
+        height += TIMESTAMP_CELL_HEIGHT;
+    }
+        
+    // Figure out what the top and bottom bubble heights are
+    int labelHeight = [self labelHeight:[self.history
+                                         messageAtIndex:indexPath.row]];
+    int topAndBottomBubbleHeight;    
+    if (labelHeight > CHAT_BUBBLE_IMG_TOP_HEIGHT)
+    {
+        topAndBottomBubbleHeight = labelHeight / 2;
     }
     else
     {
-        int labelHeight = [self labelHeight:[self.history
-                                             messageAtIndex:indexPath.row]];
-        
-        if (labelHeight < CHAT_BUBBLE_IMG_MIDDLE_HEIGHT)
-            labelHeight = CHAT_BUBBLE_IMG_MIDDLE_HEIGHT;
-        
-        return CHAT_BUBBLE_PADDING_TOP +
-               CHAT_BUBBLE_IMG_TOP_HEIGHT +
-               labelHeight +
-               CHAT_BUBBLE_IMG_BOTTOM_HEIGHT;
-        //CHAT_BUBBLE_PADDING_BOTTOM;
+        topAndBottomBubbleHeight = CHAT_BUBBLE_IMG_TOP_HEIGHT;
     }
+        
+    height += CHAT_BUBBLE_PADDING_TOP;
+    height += topAndBottomBubbleHeight;
+    height += CHAT_BUBBLE_IMG_MIDDLE_HEIGHT;
+    height += topAndBottomBubbleHeight;
+    height += CHAT_BUBBLE_PADDING_BOTTOM;
+    
+    return height;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-        
+    
     ChatMessageCell *cell = nil;
-    
-    // Set up the message bubble for the particular message
-    id historyItem = [self.history messageAtIndex:indexPath.row];
-        
-    if ([historyItem isKindOfClass:[NSDate class]])
-    // This means we're drawing a timestamp cell
-    {
-        NSDate *timestamp = (NSDate *)historyItem;
-        
-        cell = [tableView dequeueReusableCellWithIdentifier:@"TimestampCell"];
-        UILabel *timestampLabel = (UILabel *)[cell viewWithTag:TIMESTAMP_TAG];
-        
-        // Get our date format. Ex: "Feb 27, 2012 — 10:04am"
-        NSString *timeString;
-        NSDateFormatter *timestampFormat = [[NSDateFormatter alloc] init];
-        
-        // Get the first half of the timestamp
-        timestampFormat.dateFormat = @"LLL d, YYYY";
-        timeString = [timestampFormat stringFromDate:timestamp];
-
-        // Get the second half of the timestamp. Note that we have to lowercase
-        // the AM/PM portion
-        timestampFormat.dateFormat = @" — HH:MMa";        
-        timeString = [timeString stringByAppendingString:
-                      [[timestampFormat stringFromDate:timestamp] lowercaseString]];
-        
-        // Size the cell & text area to match
-        CGRect timestampCellRect = CGRectMake(0,
-                                              0,
-                                              TIMESTAMP_CELL_WIDTH,
-                                              TIMESTAMP_CELL_HEIGHT);
-        
-        timestampLabel.frame = timestampCellRect;
-        timestampLabel.text = timeString;
-        
-        return cell;
-    }
-    
-    // If we're here, then the historyItem is a chat message
-    
-    ChatMessage *message = (ChatMessage *)historyItem;
+    ChatMessage *message = [self.history messageAtIndex:indexPath.row];
     
     UILabel *chatMessageLabel = nil;
     UIImageView *topBubble = nil;
     UIImageView *middleBubble = nil;
     UIImageView *bottomBubble = nil;
-    
     NSString *imageFilenamePrefix = nil;
+    UILabel *timestampLabel = nil;
+    CGFloat timestampOffset = 0.0;
     
     if (message.fromMe)
     {
@@ -242,6 +229,55 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
                                        reason:nil
                                      userInfo:nil];
     }        
+        
+    // See if we should draw a timestamp cell
+    if ([self shouldRowHaveTimestamp:indexPath.row])
+    {
+        timestampLabel = [[UILabel alloc] init];
+        NSDate *timestamp = message.date;
+                
+        // Get our date format. Ex: "Feb 27, 2012 — 10:04am"
+        NSString *timeString;
+        NSDateFormatter *timestampFormat = [[NSDateFormatter alloc] init];
+        
+        // Get the first half of the timestamp
+        timestampFormat.dateFormat = @"LLL d, YYYY";
+        timeString = [timestampFormat stringFromDate:timestamp];
+        
+        // Get the second half of the timestamp. Note that we have to lowercase
+        // the AM/PM portion
+        timestampFormat.dateFormat = @" — HH:MMa";        
+        timeString = [timeString stringByAppendingString:
+                      [[timestampFormat stringFromDate:timestamp] lowercaseString]];
+        
+        // Size the cell & text area to match
+        CGRect timestampCellRect = CGRectMake(0,
+                                              0,
+                                              TIMESTAMP_CELL_WIDTH,
+                                              TIMESTAMP_CELL_HEIGHT);
+        
+        // Set all timestamp properties
+        timestampLabel.textColor = [UIColor colorWithRed:153
+                                                   green:153
+                                                    blue:153
+                                                   alpha:1.0];
+        timestampLabel.backgroundColor = [UIColor colorWithWhite:0.0
+                                                           alpha:0.0];
+        timestampLabel.font = [UIFont systemFontOfSize: FONTSIZE];
+        timestampLabel.textAlignment = UITextAlignmentCenter;
+        timestampLabel.frame = timestampCellRect;
+        timestampLabel.text = timeString;
+        
+        [cell addSubview:timestampLabel];
+    }
+    
+    if (timestampLabel != nil)
+    {
+        timestampOffset = timestampLabel.frame.size.height +
+                          timestampLabel.frame.origin.y;
+    }
+    
+    NSLog(@"Row %d timestamp offset: %f", indexPath.row, timestampOffset);
     
     chatMessageLabel = (UILabel *)[cell viewWithTag:CHAT_LABEL_TAG];
     topBubble        = (UIImageView *)[cell viewWithTag:BUBBLE_TOP_TAG];
@@ -249,48 +285,64 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     bottomBubble     = (UIImageView *)[cell viewWithTag:BUBBLE_BOTTOM_TAG];
     
     // Create scalable images
-    UIImage *topBubbleImg = [[UIImage imageNamed:
-                              [imageFilenamePrefix stringByAppendingString:@"top.png"]]  
-                            resizableImageWithCapInsets:UIEdgeInsetsMake(9, 0, 0, 0)];
+    UIImage *topBubbleImg = [[UIImage imageNamed:[imageFilenamePrefix stringByAppendingString:@"top.png"]] resizableImageWithCapInsets:UIEdgeInsetsMake(9, 0, 0, 0)];
     topBubble.image = topBubbleImg;
-    UIImage *middleBubbleImg = [UIImage imageNamed:
-                                [imageFilenamePrefix stringByAppendingString:@"middle.png"]];
+    
+    UIImage *middleBubbleImg = [UIImage imageNamed:[imageFilenamePrefix stringByAppendingString:@"middle.png"]];
     middleBubble.image = middleBubbleImg;
-    UIImage *bottomBubbleImg = [[UIImage imageNamed:
-                                 [imageFilenamePrefix stringByAppendingString:@"bottom.png"]]  
-                             resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 9, 0)];
+    
+    UIImage *bottomBubbleImg = [[UIImage imageNamed:[imageFilenamePrefix stringByAppendingString:@"bottom.png"]] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 9, 0)];
     bottomBubble.image = bottomBubbleImg;
     
+    CGFloat chatLabelY = CHAT_MESSAGE_LABEL_Y +
+                         timestampOffset;
     CGRect labelRect = CGRectMake(chatMessageLabel.frame.origin.x,
-                                  CHAT_MESSAGE_LABEL_Y,
+                                  chatLabelY,
                                   CHAT_MESSAGE_LABEL_WIDTH,
                                   [self labelHeight:message]);
         
-    // Figure out the height of the top and bottom bubble
-    CGFloat newTopAndBottomHeight = [self labelHeight:message] / 2;
+    // Figure out the dynamic height portion of the top and bottom bubble
+    CGFloat topAndBottomHeight = [self labelHeight:message] / 2;
     
-    CGRect newTopBubbleRect = CGRectMake(topBubble.frame.origin.x, 
-                                         topBubble.frame.origin.y, 
-                                         topBubble.frame.size.width, 
-                                         newTopAndBottomHeight + CHAT_BUBBLE_PADDING_TOP);
-    topBubble.frame = newTopBubbleRect;
+    // Calculate the Y and HEIGHT of the top bubble
+    CGFloat topBubbleHeight = CHAT_BUBBLE_IMG_TOP_HEIGHT;
+    if (topAndBottomHeight > CHAT_BUBBLE_IMG_TOP_HEIGHT)
+    {
+        topBubbleHeight = topAndBottomHeight;
+    }
+    CGFloat topBubbleY = CHAT_BUBBLE_PADDING_TOP +
+                         timestampOffset;
     
-    // The middle bubble's Y is the top bubble's X + the top bubble's height
-    CGFloat newMiddleButtonY = topBubble.frame.origin.y + newTopAndBottomHeight;
-    CGRect newMiddleBubbleRect = CGRectMake(middleBubble.frame.origin.x, 
-                                            newMiddleButtonY, 
-                                            middleBubble.frame.size.width, 
-                                            middleBubble.frame.size.height);
-    middleBubble.frame = newMiddleBubbleRect;
+    CGRect topBubbleRect = CGRectMake(topBubble.frame.origin.x, 
+                                      topBubbleY, 
+                                      topBubble.frame.size.width, 
+                                      topBubbleHeight);
+    topBubble.frame = topBubbleRect;
     
-    // Add the top bubble's new height & the middle bubble's height to get
-    // the new bottom bubble's Y
-    CGFloat newBottomBubbleY = newTopAndBottomHeight + middleBubble.frame.size.height;
-    CGRect newBottomBubbleRect = CGRectMake(bottomBubble.frame.origin.x, 
-                                            newBottomBubbleY, 
-                                            bottomBubble.frame.size.width, 
-                                            newTopAndBottomHeight + CHAT_BUBBLE_PADDING_BOTTOM);
-    bottomBubble.frame = newBottomBubbleRect;
+    // Calculate the Y and HEIGHT of the middle bubble
+    CGFloat middleButtonY = topBubble.frame.origin.y +
+                            topBubble.frame.size.height;
+    
+    CGRect middleBubbleRect = CGRectMake(middleBubble.frame.origin.x, 
+                                         middleButtonY, 
+                                         middleBubble.frame.size.width, 
+                                         middleBubble.frame.size.height);
+    middleBubble.frame = middleBubbleRect;
+    
+    // Calculate the Y and HEIGHT of the bottm bubble
+    CGFloat bottomBubbleY = middleBubble.frame.origin.y +
+                            middleBubble.frame.size.height;
+    
+    CGFloat bottomBubbleHeight = CHAT_BUBBLE_IMG_BOTTOM_HEIGHT;
+    if (topAndBottomHeight > CHAT_BUBBLE_IMG_BOTTOM_HEIGHT)
+    {
+        bottomBubbleHeight = topAndBottomHeight;
+    }    
+    CGRect bottomBubbleRect = CGRectMake(bottomBubble.frame.origin.x, 
+                                         bottomBubbleY, 
+                                         bottomBubble.frame.size.width, 
+                                         bottomBubbleHeight);
+    bottomBubble.frame = bottomBubbleRect;
     
     chatMessageLabel.frame = labelRect;
     chatMessageLabel.text = message.message;
@@ -347,17 +399,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 
 #pragma mark - View lifecycle
 
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
-{
-}
-*/
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [SVProgressHUD showWithStatus:@"Starting chat..."];
     
     [[AppDelegate instance] hideCheckInButton];
     
@@ -365,10 +413,15 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     self.me = [[User alloc] init];
     self.me.userID = [[AppDelegate instance].settings.candpUserId intValue];
     self.me.nickname = [AppDelegate instance].settings.userNickname;
-
-    self.history = [[ChatHistory alloc] init];
     
+    self.history = [[ChatHistory alloc] init];
     self.title = self.user.nickname;
+    
+    // Load the last few lines of chat
+    [CPapi oneOnOneChatGetHistory:self.history
+                         fromUser:self.me
+                           toUser:self.user];
+    [SVProgressHUD dismiss];
         
     // Set up the fancy background on view
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-dark.png"]];

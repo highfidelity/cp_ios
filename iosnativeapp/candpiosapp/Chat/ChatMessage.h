@@ -20,5 +20,10 @@
 - (id)initWithMessage:(NSString *)newMessage
                toUser:(User *)toUser
              fromUser:(User *)fromUser;
+- (id)initWithMessage:(NSString *)newMessage
+               toUser:(User *)toUser
+             fromUser:(User *)fromUser
+                 date:(NSDate *)date;
+
 
 @end

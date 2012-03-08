@@ -11,6 +11,7 @@
 #import <Foundation/Foundation.h>
 #import "AFNetworking.h"
 #import "CPPlace.h"
+#import "ChatHistory.h"
 
 @interface CPapi : NSObject
 
@@ -28,6 +29,9 @@
 // Chat functions
 + (void)sendOneOnOneChatMessage:(NSString *)message
                         toUser:(int)userId;
++ (void)oneOnOneChatGetHistory:(ChatHistory *)history
+                      fromUser:(User *)fromUser
+                        toUser:(User *)toUser;
 
 // Face-to-Face functions
 + (void)sendF2FInvite:(int) userId;

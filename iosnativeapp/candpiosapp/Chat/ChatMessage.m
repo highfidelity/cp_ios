@@ -37,13 +37,26 @@
     if ([[AppDelegate instance].settings.candpUserId intValue] ==
         fromUser.userID)
     {
-        NSLog(@"setting from me");
         self.fromMe = YES;
     }
     else 
     {
         self.fromMe = NO;
     }
+    
+    return self;
+}
+
+- (id) initWithMessage:(NSString *)newMessage
+                toUser:(User *)toUser
+              fromUser:(User *)fromUser
+                  date:(NSDate *)date
+{
+    self = [self initWithMessage:newMessage
+                          toUser:toUser
+                        fromUser:fromUser];
+    
+    self.date = date;
     
     return self;
 }

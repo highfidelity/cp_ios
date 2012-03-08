@@ -84,15 +84,16 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
             OneOnOneChatViewController *oneOnOneChat =
                 [alertView.rootView.storyboard
                     instantiateViewControllerWithIdentifier:@"OneOnOneChatView"];
-                        
+            
             UINavigationController *chatNavController = [[UINavigationController alloc] initWithRootViewController:oneOnOneChat];
+            
+            oneOnOneChat.user = [[User alloc] init];
+            oneOnOneChat.user.userID = [userId intValue];
+            oneOnOneChat.user.nickname = nickname;
 
             // Set up the view
             [oneOnOneChat addCloseButton];
             [CPUIHelper addDarkNavigationBarStyleToViewController:oneOnOneChat];
-            oneOnOneChat.user = [[User alloc] init];
-            oneOnOneChat.user.userID = [userId intValue];
-            oneOnOneChat.user.nickname = nickname;
             
             [alertView.rootView presentViewController:chatNavController
                                              animated:YES
