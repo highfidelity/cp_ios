@@ -188,13 +188,20 @@
         self.distanceLabel.text = distance;
     }
     
+    // set the navigation controller title to the user's nickname
+    self.title = self.user.nickname;    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
     // check if this is an F2F invite
     if (self.isF2FInvite) {
         // we're in an F2F invite
         [self placeUserDataOnProfile];
     } else {
-        // set the navigation controller title to the user's nickname
-        self.title = self.user.nickname;
+        // make sure the check in button is on screen
+        [[AppDelegate instance] showCheckInButton];
+        
         // get a user object with resume data
         [self.user loadUserResumeData:^(User *user, NSError *error) {
             if (!error) {
@@ -204,14 +211,6 @@
                 // error checking for load of user 
             }
         }];
-    }
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    if (!self.isF2FInvite) {
-        // make sure the check in button is on screen
-        [[AppDelegate instance] showCheckInButton];
     }    
 }
 
