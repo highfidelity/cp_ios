@@ -44,7 +44,7 @@
     [super viewDidLoad];
     // Title view styling
     [CPUIHelper addDarkNavigationBarStyleToViewController:self];
-    self.title = @"Places";
+    self.title = @"CheckIn";
     refreshLocationsNow = YES;
     
     // don't set the seperator here, add it manually in storyboard
