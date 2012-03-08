@@ -287,7 +287,7 @@
         [self.mapTabController loginButtonTapped];
     } else { 
         NSString *segueName = [menuSegueIdentifiersArray objectAtIndex:indexPath.row];
-        [self.mapTabController performSegueWithIdentifier:segueName sender:self];
+        [self performSegueWithIdentifier:segueName sender:self];
     }
 }
 

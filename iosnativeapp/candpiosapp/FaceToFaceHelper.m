@@ -44,7 +44,7 @@
     [SVProgressHUD showWithStatus:@"Recieving F2F Invite"];
     
     // get the FaceToFace storyboard
-    UIStoryboard *f2fstory = [UIStoryboard storyboardWithName:@"FaceToFace_iPhone" bundle:nil];
+    UIStoryboard *f2fstory = [UIStoryboard storyboardWithName:@"FaceToFaceStoryboard_iPhone" bundle:nil];
     
     // instantiate a FacetoFaceInviteViewController to show the F2F invite
     FaceToFaceAcceptDeclineViewController *f2fVC = [f2fstory instantiateInitialViewController];

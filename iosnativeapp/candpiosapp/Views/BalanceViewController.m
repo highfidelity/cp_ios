@@ -54,6 +54,8 @@
     [super viewDidLoad];
     [self loadTransactionData];
     
+    [CPUIHelper addDarkNavigationBarStyleToViewController:self];
+    
     isFlipped = NO;
     loading = NO;
 }
@@ -260,6 +262,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [transactions count];
+}
+
+- (IBAction)gearPressed:(id)sender
+{
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

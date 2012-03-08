@@ -121,7 +121,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 	}
         
     // Switch out the UINavigationController in the rootviewcontroller for the SettingsMenuController
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"SettingsStoryboard_iPhone" bundle:nil];
     self.settingsMenuController = (SettingsMenuController*)[mainStoryboard instantiateViewControllerWithIdentifier:@"SettingsMenu"];
     self.rootNavigationController = (UINavigationController*)self.window.rootViewController;
     self.settingsMenuController.frontViewController = self.rootNavigationController;

@@ -71,6 +71,10 @@
     // add a shadow to the toolbar
     [CPUIHelper addShadowToView:self.toolbar color:[UIColor blackColor] offset:CGSizeMake(0,2) radius:3 opacity:0.5];
     
+    // TODO: add the UserProfileViewController as a child view controller
+    // via addChildViewController
+    // current implementation seems to work but child view controller setup would be cleaner
+    
     // Get the main storyboard that has the UserProfileViewController
     UIStoryboard *mainStory = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
     self.userProfile = [mainStory instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
@@ -117,6 +121,10 @@
     [CPapi sendF2FAccept:self.user.userID];
 
     if (![self.view viewWithTag:F2FPasswordViewTag]) {
+        
+        // TODO: Add the FaceToFacePasswordInputViewController as a child view controller
+        // This current implementation works but having it as a child view controller would be clearer
+        
         // get the password entry view if we don't have it
         // grab the view controller from the storyboard
         FaceToFacePasswordInputViewController *f2fPasswordVC = [self.storyboard instantiateViewControllerWithIdentifier:@"FaceToFacePasswordInput"];
