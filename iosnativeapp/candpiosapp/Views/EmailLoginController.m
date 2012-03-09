@@ -240,6 +240,7 @@
     if (textField == self.emailField) { 
         [self switchFromEmailField];
     } else if (textField == self.passwordField) {
+        [SVProgressHUD showWithStatus:@"Logging in..."];
         [self login:nil];
     }
     return YES;

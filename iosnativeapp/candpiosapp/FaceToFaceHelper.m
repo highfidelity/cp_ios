@@ -13,6 +13,8 @@
 #import "AppDelegate.h"
 #import "SVProgressHUD.h"
 
+#define passwordAlertTag 4898
+
 @implementation FaceToFaceHelper
 
 
@@ -95,6 +97,7 @@
                           delegate:self
                           cancelButtonTitle:@"OK"
                           otherButtonTitles: nil];
+    alert.tag = passwordAlertTag;
     [alert show];
 }
 
@@ -103,6 +106,10 @@
 {
     NSString *alertMsg = [NSString stringWithFormat:
                           @"Awesome! You met %@ Face to Face!", nickname];
+    
+    // dismiss the password alert if it's on screen
+    UIAlertView *passwordAlert = (UIAlertView *)[view.view viewWithTag:passwordAlertTag];
+    [passwordAlert dismissWithClickedButtonIndex:0 animated:NO];    
 
     // Show error if we got one
     UIAlertView *alert = [[UIAlertView alloc]
