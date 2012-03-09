@@ -342,7 +342,7 @@ BOOL zoomedOut = NO;
         // Fade in any new annotations
         view.alpha = 0;        
         [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.2];
+        [UIView setAnimationDuration:1.0];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         view.alpha = startingAlpha;
         [UIView commitAnimations];
@@ -617,7 +617,7 @@ BOOL zoomedOut = NO;
 
     // Set up correct offset + callout offset for custom pin images
     
-    pinToReturn.centerOffset = CGPointMake(0,-25);
+    pinToReturn.centerOffset = CGPointMake(0,0);
     pinToReturn.calloutOffset = CGPointMake(0,0);
 	
 	return pinToReturn;
