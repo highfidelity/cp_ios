@@ -410,7 +410,7 @@
                                                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="34" contentMode="left" text="FOR HOW LONG?" lineBreakMode="tailTruncation" minimumFontSize="10" id="mzo-bH-IoF">
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="34" contentMode="left" text="FOR HOW MANY HOURS?" lineBreakMode="tailTruncation" minimumFontSize="10" id="mzo-bH-IoF">
                                                         <rect key="frame" x="4" y="2" width="154" height="22"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
