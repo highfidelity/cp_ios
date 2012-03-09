@@ -10,6 +10,7 @@
 
 @interface WalletCell : UITableViewCell
 
+@property (nonatomic, assign) CGFloat fullHeight;
 
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nicknameLabel;

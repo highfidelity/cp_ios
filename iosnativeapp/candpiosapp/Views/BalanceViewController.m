@@ -45,6 +45,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [[AppDelegate instance] hideCheckInButton];
+    
+    [[self userBalance] setText: [NSString stringWithFormat:@"$%.2f", [AppDelegate instance].settings.userBalance]];
+    
     [[self view] setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"perforated-skin.png"]]];
     [transTableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"perforated-skin.png"]]];
     [self loadTransactionData];    
@@ -83,7 +86,6 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView 
 {
     if (!loading && !isFlipped && scrollView.contentOffset.y <= -kRefreshViewHeight) {
-        NSLog(@"R: %d - %f", isFlipped, scrollView.contentOffset.y);
         [pullDownLabel setText:kReleaseText];
         isFlipped = YES;
         
@@ -94,7 +96,6 @@
     }
     
     if (!loading && isFlipped && scrollView.contentOffset.y > -kRefreshViewHeight) {
-        NSLog(@"P: %d - %f", isFlipped, scrollView.contentOffset.y);
         [pullDownLabel setText:kPullText];
         isFlipped = NO;
         [CPUIHelper rotateImage:pullIcon 
@@ -136,8 +137,12 @@
             NSDictionary *jsonDict = [json objectForKey:@"payload"];
             
             float balance = [[jsonDict objectForKey:@"balance"] floatValue];
-            [userBalance setText:[NSString stringWithFormat:@"$%.2f", balance]];
             
+            [AppDelegate instance].settings.userBalance = balance;
+            [[AppDelegate instance] saveSettings];
+            
+            [[self userBalance] setText:[NSString stringWithFormat:@"$%.2f", balance]];
+
             transactions = [jsonDict objectForKey:@"transactions"];
             
             [transTableView reloadData];
@@ -205,12 +210,6 @@
     [[cell nicknameLabel] setText:[NSString stringWithFormat:@"%@ %@",
                                   from_to,
                                   [transaction objectForKey:@"nickname"]]];
-
-    CGRect f = [cell amountLabel].frame;
-    CGRect f2 = [cell nicknameLabel].frame;
-    f2.origin = CGPointMake(f.origin.x + f.size.width + 3, f.origin.y);
-    [cell nicknameLabel].frame = f2;
-    
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -230,16 +229,35 @@
     
     dateString = [dateFormat stringFromDate:paymentDate];
     
-    
     [[cell dateLabel] setText:dateString];
 
     if ([[transaction objectForKey:@"nickname"] isEqualToString:@"Exchange"]) {
-        [[cell descriptionLabel] setText:[NSString stringWithFormat:@"$%@ added to balance via %@", [transaction objectForKey:@"amount"], [transaction objectForKey:@"type"]]];       
-    } else {
-        [[cell descriptionLabel] setText:[transaction objectForKey:@"description"]];
+        [[cell descriptionLabel] setText:[NSString stringWithFormat:@"$%@ added to balance via %@", [transaction objectForKey:@"amount"], [transaction objectForKey:@"type"]]];           
+    } 
+    else {
+        
+        NSString *descr = [transaction objectForKey:@"description"];
+        [[cell descriptionLabel] setText:descr];
+        CGSize maximumLabelSize = CGSizeMake([[cell descriptionLabel] frame].size.width, 9999);
+        
+        CGSize expectedLabelSize = [descr sizeWithFont:[[cell descriptionLabel] font] 
+                                     constrainedToSize:maximumLabelSize
+                                         lineBreakMode:[cell descriptionLabel].lineBreakMode]; 
+        
+        if (expectedLabelSize.height > [[cell descriptionLabel] frame].size.height) {
+#if DEBUG  
+            NSLog(@"label size: %f", expectedLabelSize.height);
+#endif
+            //[[cell stateImage] setHidden:NO];
+            [cell setFullHeight:
+             [cell frame].size.height + expectedLabelSize.height - [[cell descriptionLabel] frame].size.height];
+        }
     }
+
     
-    if ([transaction objectForKey:@"thumbnail"]) {
+    NSObject *thumbnail = [transaction objectForKey:@"thumbnail"];
+    
+    if (thumbnail != [NSNull null]) {
         
         [[cell profileImage] setContentMode:UIViewContentModeScaleAspectFill];
         [[cell profileImage] setImageWithURL:[NSURL URLWithString:[transaction objectForKey:@"thumbnail"]] 
@@ -260,7 +278,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 0.1f;
+    return 1.0f;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

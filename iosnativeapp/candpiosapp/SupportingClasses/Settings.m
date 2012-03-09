@@ -16,7 +16,7 @@
 //@synthesize candpLoginToken;
 @synthesize candpUserId;
 @synthesize facebookAccessToken, facebookExpirationDate;
-@synthesize userEmailAddress, userNickname, userPassword;
+@synthesize userEmailAddress, userNickname, userPassword, userBalance;
 
 //=========================================================== 
 // - (id)init
@@ -47,6 +47,7 @@
 	[encoder encodeObject:userEmailAddress	forKey:@"userEmailAddress"];
 	[encoder encodeObject:userNickname	forKey:@"userNickname"];
 	[encoder encodeObject:userPassword	forKey:@"userPassword"];
+	[encoder encodeFloat:userBalance forKey:@"userBalance"];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder 
@@ -63,6 +64,7 @@
 		userEmailAddress = [decoder decodeObjectForKey:@"userEmailAddress"];
 		userNickname = [decoder decodeObjectForKey:@"userNickname"];
 		userPassword = [decoder decodeObjectForKey:@"userPassword"];
+		userBalance = [decoder decodeFloatForKey:@"userBalance"];
     }
     return self;
 }

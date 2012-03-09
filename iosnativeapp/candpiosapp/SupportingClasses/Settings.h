@@ -26,6 +26,7 @@
 @property (nonatomic, copy) NSString *userEmailAddress;
 @property (nonatomic, copy) NSString *userNickname;
 @property (nonatomic, copy) NSString *userPassword;
+@property (nonatomic, assign) float userBalance;
 
 // TODO: Don't store the userPassword here or in NSUserDefaults
 // it should be stored encrypted in the keychain

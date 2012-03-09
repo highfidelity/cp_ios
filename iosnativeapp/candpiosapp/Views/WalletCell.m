@@ -7,6 +7,7 @@
 //
 
 #import "WalletCell.h"
+#import "CPUIHelper.h"
 
 @implementation WalletCell
 @synthesize profileImage = _profileImage;
@@ -15,7 +16,7 @@
 @synthesize amountLabel = _amountLabel;
 @synthesize descriptionLabel = _descriptionLabel;
 @synthesize nicknameLabel = _nicknameLabel;
-
+@synthesize fullHeight = _fullHeight;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -28,7 +29,38 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
+    
     [super setSelected:selected animated:animated];
+    return;
+    
+#if DEBUG
+    NSLog(@" %s", selected ? "true" : "false");
+#endif
+    
+    if ([self fullHeight] > 0) {
+        if (selected) {
+            [CPUIHelper rotateImage:[self stateImage]
+                           duration:0.1
+                              curve:UIViewAnimationCurveEaseIn
+                            degrees:180];
+            
+            CGRect f2 = self.frame;
+            f2.size.height += 20;
+            self.frame = f2;
+        } 
+        else {
+            [CPUIHelper rotateImage:[self stateImage]
+                           duration:0.1
+                              curve:UIViewAnimationCurveEaseIn
+                            degrees:0];
+            
+            CGRect f2 = self.frame;
+            f2.size.height -= 20;
+            self.frame = f2;
+        }
+
+    }
+    
     
 }
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BalanceViewController : UIViewController <UIScrollViewDelegate, UITableViewDataSource,UITableViewDelegate>
+@interface BalanceViewController : UIViewController <UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate>
 {
 
 @private
