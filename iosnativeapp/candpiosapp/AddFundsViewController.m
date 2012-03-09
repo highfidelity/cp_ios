@@ -41,8 +41,8 @@
     urlAddress = kCandPAddFundsUrl;
 
     NSURL *url = [NSURL URLWithString:urlAddress];
-    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-    
+    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60.0];
+          
     activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     
 	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];

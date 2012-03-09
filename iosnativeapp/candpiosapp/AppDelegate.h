@@ -34,7 +34,8 @@
 #else
 
 #define kCandPWebServiceUrl		@"https://staging.coffeeandpower.com/"
-#define kCandPAddFundsUrl       @"http://staging.coffeeandpower.com/m/#addFundsiPhone"
+#define kCandPAddFundsUrl       @"http://staging.coffeeandpower.com/m/?ios#addFundsiPhone"
+
 // Facebook
 #define kFacebookAppId          @"131753840249704"
 // LinkedIn
