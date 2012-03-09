@@ -29,9 +29,11 @@
 -(void)zoomTo:(CLLocationCoordinate2D)loc;
 
 @property (nonatomic, strong) NSTimer *reloadTimer;
+@property (nonatomic, strong) NSTimer *locationAllowTimer;
+@property (nonatomic, assign) BOOL locationStatusKnown;
 
 -(void)refreshLocationsIfNeeded;
-
+-(void)checkIfUserHasDismissedLocationAlert;
 @end
 
 @implementation MapTabController 
@@ -42,6 +44,8 @@
 @synthesize reloadTimer;
 @synthesize mapHasLoaded;
 @synthesize mapAndButtonsView;
+@synthesize locationAllowTimer;
+@synthesize locationStatusKnown;
 
 BOOL clusterNow = YES;
 BOOL bigZoomLevelChange = NO;
@@ -104,17 +108,29 @@ BOOL zoomedOut = NO;
     
     self.navigationController.delegate = self;
 	hasUpdatedUserLocation = false;
-	
-	// every 10 seconds, see if it's time to refresh the data
-	// (the data invalidates every 2 minutes, but we check more often)
-
+    
+	// let's assume when this view loads we don't know the location status
+    // this is switched in checkIfUserHasDismissedLocationAlert
+    self.locationStatusKnown = NO;
+    
+    // fire a timer every two seconds to make sure the user has explicity denied or allowed location
+    // this allows us to not start loading the data until the user has dismiss the alert the OS puts up
+    
+    self.locationAllowTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 
+                                                               target:self 
+                                                             selector:@selector(checkIfUserHasDismissedLocationAlert) 
+                                                             userInfo:nil 
+                                                              repeats:YES];
+    // check this already since we don't want a lag time if this step has already been completed
+    [self checkIfUserHasDismissedLocationAlert];
+    
 	reloadTimer = [NSTimer scheduledTimerWithTimeInterval:10.0
 												   target:self
 												 selector:@selector(refreshLocationsIfNeeded)
 												 userInfo:nil
 												  repeats:YES];
     
-	// center on the last known user location
+    // center on the last known user location
 	if([AppDelegate instance].settings.hasLocation)
 	{
 		//[mapView setCenterCoordinate:[AppDelegate instance].settings.lastKnownLocation.coordinate];
@@ -164,12 +180,6 @@ BOOL zoomedOut = NO;
 {
 	[super viewDidAppear:animated];
 	self.mapHasLoaded = YES;
-	// show the loading screen but only the first time
-	if(!hasShownLoadingScreen)
-	{
-		[SVProgressHUD showWithStatus:@"Loading..."];
-		hasShownLoadingScreen = YES;
-	}
     
     [[AppDelegate instance] showCheckInButton];
 
@@ -199,56 +209,59 @@ BOOL zoomedOut = NO;
 
 -(void)refreshLocationsIfNeeded
 {
-    clusterNow = YES;
     
-	MKMapRect mapRect = mapView.visibleMapRect;
-
-    // If zoom level changed drastically, remove the previously clustered checkedOut pins
-    if (bigZoomLevelChange) {
-        for (id <MKAnnotation> annotation in mapView.annotations) {
-            if ([annotation isKindOfClass:[OCAnnotation class]]) {
-                OCAnnotation *thisAnnotation = (OCAnnotation *)annotation;
+    if (locationStatusKnown) {
+        clusterNow = YES;
+        
+        MKMapRect mapRect = mapView.visibleMapRect;
+        
+        // If zoom level changed drastically, remove the previously clustered checkedOut pins
+        if (bigZoomLevelChange) {
+            for (id <MKAnnotation> annotation in mapView.annotations) {
+                if ([annotation isKindOfClass:[OCAnnotation class]]) {
+                    OCAnnotation *thisAnnotation = (OCAnnotation *)annotation;
+                    
+                    if (!thisAnnotation.hasCheckins) {
+                        [self.mapView removeAnnotation:annotation];
+                    }
+                }
                 
-                if (!thisAnnotation.hasCheckins) {
-                    [self.mapView removeAnnotation:annotation];
+                if ([annotation isKindOfClass:[CPAnnotation class]]) {
+                    CPAnnotation *thisAnnotation = (CPAnnotation *)annotation;
+                    
+                    if (!thisAnnotation.checkedIn) {
+                        //                    [fullDataset.annotations removeObject:annotation];
+                        [self.mapView removeAnnotation:annotation];
+                        [annotationsToRedisplay addObject:annotation];
+                    }
                 }
             }
             
-            if ([annotation isKindOfClass:[CPAnnotation class]]) {
-                CPAnnotation *thisAnnotation = (CPAnnotation *)annotation;
-                
-                if (!thisAnnotation.checkedIn) {
-//                    [fullDataset.annotations removeObject:annotation];
-                    [self.mapView removeAnnotation:annotation];
-                    [annotationsToRedisplay addObject:annotation];
-                }
-            }
+            bigZoomLevelChange = NO;
+            [self.mapView doClustering];
         }
         
-        bigZoomLevelChange = NO;
-        [self.mapView doClustering];
-    }
-    
-    // prevent the refresh of locations when we have a valid dataset or the map is not yet loaded
-	if(self.mapHasLoaded && (!dataset || ![dataset isValidFor:mapRect]))
-	{
-		[self refreshLocations];
-	}
-
-    // Re-add any annotations in annotationsToRedisplay to get the correct pins after big zoom changes
-    if (annotationsToRedisplay.count > 0) {
-        for (CPAnnotation *ann in annotationsToRedisplay) {
-            [mapView addAnnotation:ann];
+        // prevent the refresh of locations when we have a valid dataset or the map is not yet loaded
+        if(self.mapHasLoaded && (!dataset || ![dataset isValidFor:mapRect]))
+        {
+            [self refreshLocations];
         }
-    
-        [self.mapView doClustering];
-        clusterNow = NO;
-        [annotationsToRedisplay removeAllObjects];
-    }
-
-    if (clusterNow) {
-        [self.mapView doClustering];
-        clusterNow = NO;
+        
+        // Re-add any annotations in annotationsToRedisplay to get the correct pins after big zoom changes
+        if (annotationsToRedisplay.count > 0) {
+            for (CPAnnotation *ann in annotationsToRedisplay) {
+                [mapView addAnnotation:ann];
+            }
+            
+            [self.mapView doClustering];
+            clusterNow = NO;
+            [annotationsToRedisplay removeAllObjects];
+        }
+        
+        if (clusterNow) {
+            [self.mapView doClustering];
+            clusterNow = NO;
+        }
     }
 }
 
@@ -289,7 +302,28 @@ BOOL zoomedOut = NO;
 
 - (IBAction)locateMe:(id)sender
 {
-    [self zoomTo: [[mapView userLocation] coordinate]];
+    if (![CLLocationManager locationServicesEnabled] || 
+        [CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied ||
+        [CLLocationManager authorizationStatus] == kCLAuthorizationStatusRestricted) {
+        
+        NSString *message = @"We're unable to get your location and the application relies on it.\n\nPlease go to your settings and enable location for the C&P app.";
+        
+        // show an alert to the user if location services are disabled
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Can't find you!" 
+                                                            message:message
+                                                           delegate:self 
+                                                  cancelButtonTitle:@"OK" 
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    } else {
+        // we have a location ... zoom to it
+        [self zoomTo: [[mapView userLocation] coordinate]];
+    }
+        
+    
+    
+    
+    
 }
 
 
@@ -718,8 +752,8 @@ BOOL zoomedOut = NO;
     if (self.mapView.region.span.longitudeDelta < kMinimumDeltaForSmallPins) {
         zoomedIn = NO;
     }
-
-	[self refreshLocationsIfNeeded];
+    
+    [self refreshLocationsIfNeeded];
 }
 
 - (void)mapViewWillStartLocatingUser:(CPMapView *)mapView
@@ -767,6 +801,46 @@ BOOL zoomedOut = NO;
     // zoom to a region 2km across
     MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(loc, 1000, 1000);
     [mapView setRegion:viewRegion animated:TRUE];    
+}
+
+// check if the user has either explicitly allowed or denied the use of their location
+- (void)checkIfUserHasDismissedLocationAlert
+{
+    if ([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusNotDetermined) {
+        
+#if DEBUG
+        NSLog(@"We have a location authorization status. We will now refresh data");
+#endif
+        
+        // we know we either will or won't be getting user location so load the datapoints
+        
+        // show the loading screen but only the first time
+        if(!hasShownLoadingScreen)
+        {
+            [SVProgressHUD showWithStatus:@"Loading..."];
+            hasShownLoadingScreen = YES;
+        }
+        
+        // set the locationStatusKnown boolean to yes so we know we can reload data
+        self.locationStatusKnown = YES;
+        
+        // refresh the locations now
+        [self refreshLocationsIfNeeded];
+        
+        // every 10 seconds, see if it's time to refresh the data
+        // (the data invalidates every 2 minutes, but we check more often)
+        
+        self.reloadTimer = [NSTimer scheduledTimerWithTimeInterval:10.0
+                                                       target:self
+                                                     selector:@selector(refreshLocationsIfNeeded)
+                                                     userInfo:nil
+                                                      repeats:YES];
+        
+        
+        // invalidate this timer so its done
+        [self.locationAllowTimer invalidate];
+        self.locationAllowTimer = nil;
+    }
 }
 
 @end
