@@ -17,7 +17,7 @@
 
 
 + (void)presentF2FInviteFromUser:(int)userId
-                        fromView:(UIViewController *)view
+                        fromView:(SettingsMenuController *)view
 {   
     
 #if DEBUG
@@ -69,7 +69,7 @@
             NSString *alertMsg = [NSString stringWithFormat:
                                   @"Oops! We couldn't get the data.\nAsk the sender to invite you again."];
             
-            // Show password to this user
+            // Show error alert
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle:@"Face to Face"
                                   message:alertMsg
@@ -83,10 +83,15 @@
 
 + (void)presentF2FAcceptFromUser:(int) userId
                     withPassword:(NSString *)password
-                        fromView:(UIViewController *)view
+                        fromView:(SettingsMenuController *)view
 {    
     NSString *alertMsg = [NSString stringWithFormat:
                           @"The Face to Face password is: %@", password];
+    
+    if (view.f2fInviteAlert) {
+        // dismiss the invite alert if it's still hanging around
+        [view.f2fInviteAlert dismissWithClickedButtonIndex:0 animated:NO];
+    }
     
     // Show password to this user
     UIAlertView *alert = [[UIAlertView alloc]
@@ -96,14 +101,19 @@
                           cancelButtonTitle:@"OK"
                           otherButtonTitles: nil];
     [alert show];
+    
+    view.f2fPasswordAlert = alert;
 }
 
 + (void)presentF2FSuccessFrom:(NSString *) nickname
-                     fromView:(UIViewController *) view
+                     fromView:(SettingsMenuController *) view
 {
     NSString *alertMsg = [NSString stringWithFormat:
                           @"Awesome! You met %@ Face to Face!", nickname];
 
+    // dismiss the password alert if it's still around so they don't stack
+    [view.f2fPasswordAlert dismissWithClickedButtonIndex:0 animated:NO];
+    
     // Show error if we got one
     UIAlertView *alert = [[UIAlertView alloc]
                           initWithTitle:@"Face to Face"

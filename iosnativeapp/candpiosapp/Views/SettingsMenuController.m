@@ -40,6 +40,8 @@
 @synthesize menuClosePanGestureRecognizer;
 @synthesize menuClosePanFromNavbarGestureRecognizer;
 @synthesize panStartLocation;
+@synthesize f2fInviteAlert = _f2fInviteAlert;
+@synthesize f2fPasswordAlert = _f2fPasswordAlert;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -91,6 +93,20 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+}
+
+#pragma mark - Alert View Setters
+
+- (void)setF2fInviteAlert:(UIAlertView *)f2fInviteAlert
+{
+    _f2fInviteAlert = f2fInviteAlert;
+    _f2fInviteAlert.delegate = self;
+}
+
+- (void)setF2fPasswordAlert:(UIAlertView *)f2fPasswordAlert 
+{
+    _f2fPasswordAlert = f2fPasswordAlert;
+    _f2fPasswordAlert.delegate = self;
 }
 
 #pragma mark - View lifecycle
@@ -289,6 +305,11 @@
         NSString *segueName = [menuSegueIdentifiersArray objectAtIndex:indexPath.row];
         [self performSegueWithIdentifier:segueName sender:self];
     }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    alertView = nil;
 }
 
 

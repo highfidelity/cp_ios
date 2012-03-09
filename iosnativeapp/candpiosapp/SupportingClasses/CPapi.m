@@ -292,6 +292,11 @@
                           cancelButtonTitle:@"OK"
                           otherButtonTitles: nil];
     [alert show];
+    
+    // set the invite alert property on the SettingsMenuController
+    // allows us to avoid stacking the f2f alerts
+    
+    [AppDelegate instance].settingsMenuController.f2fInviteAlert = alert;
 }
 
 + (void)sendF2FAccept:(int)userId

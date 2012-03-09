@@ -307,27 +307,27 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
         
         
         [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:@"f2f1"] intValue]
-                                          fromView:self.rootNavigationController.visibleViewController];
+                                          fromView:self.settingsMenuController];
     }
     // Face to Face Accept Invite ("f2f2" = [userId], "password" = [f2f password])
     else if ([userInfo valueForKey:@"f2f2"] != nil)
     {        
         [FaceToFaceHelper presentF2FAcceptFromUser:[[userInfo valueForKey:@"f2f2"] intValue]
                                       withPassword:[userInfo valueForKey:@"password"]
-                                          fromView:self.rootNavigationController];        
+                                          fromView:self.settingsMenuController];        
     }
     // Face to Face Accept Invite ("f2f3" = [user nickname])
     else if ([userInfo valueForKey:@"f2f3"] != nil)
     {        
         [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"f2f3"] 
-                                       fromView:self.rootNavigationController];
+                                       fromView:self.settingsMenuController];
     }
     // Received payment
     else if ([userInfo valueForKey:@"payment_received"] != nil)
     {
         int user_id = [[userInfo valueForKey:@"payment_received"] intValue];
         [CheckInHelper showCheckInProfileForUser:user_id
-                                        fromView: [self rootNavigationController]];
+                                        fromView: self.settingsMenuController];
     }
 }
 
