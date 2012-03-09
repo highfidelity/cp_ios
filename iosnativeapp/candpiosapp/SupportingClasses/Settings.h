@@ -13,7 +13,6 @@
 
 @property (nonatomic, assign) bool flag;
 @property (nonatomic, assign) bool hasLocation;
-@property (nonatomic, assign) bool hasCheckedIn;
 @property (nonatomic, assign) bool registeredForApnsSuccessfully;
 @property (nonatomic, copy) CLLocation *lastKnownLocation;
 
