@@ -566,7 +566,9 @@
         self.chatButton.transform = CGAffineTransformMakeTranslation(0, -110);
         self.payButton.transform = CGAffineTransformMakeTranslation(0, -55);
         self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, -165);
-    } completion:NULL];
+    } completion:^(BOOL finished){
+        [self.view viewWithTag:1005].userInteractionEnabled = YES;
+    }];
 }
 
 -(IBAction)minusButtonPressed:(id)sender {
@@ -586,7 +588,9 @@
         self.chatButton.transform = CGAffineTransformMakeTranslation(0, 0);
         self.payButton.transform = CGAffineTransformMakeTranslation(0, 0);
         self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, 0);
-    } completion:NULL];
+    } completion:^(BOOL finished){
+        [self.view viewWithTag:1005].userInteractionEnabled = NO;
+    }];
     
 }
 
