@@ -30,9 +30,13 @@
 
 @property (nonatomic, strong) NSTimer *reloadTimer;
 @property (nonatomic, strong) NSTimer *locationAllowTimer;
+@property (nonatomic, strong) NSTimer *arrowSpinTimer;
 @property (nonatomic, assign) BOOL locationStatusKnown;
+@property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 
 -(void)refreshLocationsIfNeeded;
+-(void)startRefreshArrowAnimation;
+-(void)stopRefreshArrowAnimation;
 -(void)checkIfUserHasDismissedLocationAlert;
 @end
 
@@ -42,10 +46,12 @@
 @synthesize fullDataset;
 @synthesize annotationsToRedisplay;
 @synthesize reloadTimer;
+@synthesize arrowSpinTimer;
 @synthesize mapHasLoaded;
 @synthesize mapAndButtonsView;
 @synthesize locationAllowTimer;
 @synthesize locationStatusKnown;
+@synthesize refreshButton;
 
 BOOL clusterNow = YES;
 BOOL bigZoomLevelChange = NO;
@@ -156,6 +162,7 @@ BOOL zoomedOut = NO;
 {
 	[self setMapView:nil];
     [self setMapAndButtonsView:nil];
+    [self setRefreshButton:nil];
     [super viewDidUnload];
 	[reloadTimer invalidate];
 	reloadTimer = nil;
@@ -196,6 +203,7 @@ BOOL zoomedOut = NO;
 
 - (IBAction)refreshButtonClicked:(id)sender
 {
+    [self startRefreshArrowAnimation];
     fullDataset = nil;    
     fullDataset = [[MapDataSet alloc] init];
     [self.mapView removeAllAnnotations];
@@ -295,9 +303,10 @@ BOOL zoomedOut = NO;
                                 
                                 [self.mapView doClustering];
                                 clusterNow = NO;
-                                
+                                // stop spinning the refresh icon and dismiss the HUD
+                                [self stopRefreshArrowAnimation];
                                 [SVProgressHUD dismiss];
-                            }];    
+                            }]; 
 }
 
 - (IBAction)locateMe:(id)sender
@@ -841,6 +850,26 @@ BOOL zoomedOut = NO;
         [self.locationAllowTimer invalidate];
         self.locationAllowTimer = nil;
     }
+}
+
+- (void)spinRefreshArrow
+{
+    [CPUIHelper spinView:self.refreshButton.imageView duration:1.0f repeatCount:0];
+}
+
+- (void)startRefreshArrowAnimation
+{
+    // spin the arrow
+    [self spinRefreshArrow];
+    // start a timer to keep spinning it
+    self.arrowSpinTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(spinRefreshArrow) userInfo:nil repeats:YES];
+}
+
+- (void)stopRefreshArrowAnimation
+{
+    // stop the timer so the arrow stops spinning after the rotation completes
+    [self.arrowSpinTimer invalidate];
+    self.arrowSpinTimer = nil;
 }
 
 @end

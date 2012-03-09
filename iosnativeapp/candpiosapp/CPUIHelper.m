@@ -133,5 +133,25 @@
     [UIView commitAnimations];
 }
 
+#pragma mark - 360 Rotation
+
+// note the the above method couldn't be used for this because it does nothing if the angle
+// you give it is 360 degrees
+
++ (void)spinView:(UIView *)view duration:(NSTimeInterval)duration repeatCount:(float)repeatCount
+{
+    CABasicAnimation *rotate360;
+    rotate360 = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    rotate360.fromValue = [NSNumber numberWithFloat:0];
+    rotate360.toValue = [NSNumber numberWithFloat:(-(360*M_PI)/180)];
+    rotate360.duration = duration;
+    rotate360.cumulative = YES;
+    rotate360.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    rotate360.repeatCount = repeatCount;
+    
+    
+    [view.layer addAnimation:rotate360 forKey:@"360"];
+}      
+
 
 @end

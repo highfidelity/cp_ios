@@ -31,7 +31,7 @@
                                         </connections>
                                     </mapView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Q93-hX-DWe">
-                                        <rect key="frame" x="10" y="352" width="42" height="42"/>
+                                        <rect key="frame" x="10" y="352" width="40" height="41"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -47,10 +47,10 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Gp4-X8-S05">
-                                        <rect key="frame" x="52" y="352" width="42" height="42"/>
+                                        <rect key="frame" x="51" y="352" width="40" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                                        <state key="normal" image="map-refresh.png">
+                                        <state key="normal" image="map-refresh-progress-arrow.png" backgroundImage="map-refresh.png">
                                             <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -106,6 +106,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="fm6-PX-4Yv" id="Dvs-wL-oEc"/>
+                        <outlet property="refreshButton" destination="Gp4-X8-S05" id="dQy-Fg-CIV"/>
                         <segue destination="L0d-87-YTQ" kind="push" identifier="ShowUserProfileCheckedInFromMap" id="sCE-rt-LRg"/>
                         <segue destination="g7S-Vu-b9I" kind="push" identifier="ShowUserClusterTable" id="9zP-ze-NHH"/>
                     </connections>
@@ -1367,9 +1368,10 @@
         <image name="go-menu-button-3.png" width="75" height="75"/>
         <image name="go-menu-button-minus.png" width="75" height="75"/>
         <image name="list-arrow-dark-grey.png" width="11" height="16"/>
-        <image name="map-locate.png" width="16" height="16"/>
+        <image name="map-locate.png" width="40" height="41"/>
         <image name="map-marker.png" width="16" height="16"/>
-        <image name="map-refresh.png" width="16" height="16"/>
+        <image name="map-refresh-progress-arrow.png" width="24" height="24"/>
+        <image name="map-refresh.png" width="40" height="41"/>
         <image name="map-shadow.png" width="10" height="320"/>
         <image name="others-at-venue.png" width="16" height="16"/>
         <image name="people-list.png" width="42" height="29"/>
@@ -1447,6 +1449,7 @@
                 <relationship kind="action" name="revealButtonPressed:"/>
                 <relationship kind="outlet" name="mapAndButtonsView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="mapView" candidateClass="CPMapView"/>
+                <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="OneOnOneChatViewController" superclassName="UIViewController">
@@ -1545,6 +1548,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="JVj-Fy-LMl"/>
-        <segue reference="He7-Ay-arZ"/>
+        <segue reference="sCE-rt-LRg"/>
     </inferredMetricsTieBreakers>
 </document>

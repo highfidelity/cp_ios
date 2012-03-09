@@ -45,9 +45,12 @@ typedef enum {
 + (UIColor *)colorForCPColor:(CPColor)cpColor;
 + (UIImage *)imageForCPColor:(CPButtonColor)buttonColor;
 
+// Animations
 + (void)rotateImage:(UIImageView *)image
            duration:(NSTimeInterval)duration
               curve:(int)curve 
             degrees:(CGFloat)degrees;
+
++ (void)spinView:(UIView *)view duration:(NSTimeInterval)duration repeatCount:(float)repeatCount;
 
 @end

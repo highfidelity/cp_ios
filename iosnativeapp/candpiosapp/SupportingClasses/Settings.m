@@ -12,6 +12,7 @@
 @synthesize flag;
 @synthesize hasLocation;
 @synthesize lastKnownLocation;
+@synthesize hasCheckedIn;
 @synthesize registeredForApnsSuccessfully;
 //@synthesize candpLoginToken;
 @synthesize candpUserId;
@@ -38,6 +39,7 @@
 {
     [encoder encodeBool:flag forKey:@"flag"];
     [encoder encodeBool:hasLocation forKey:@"hasLocation"];
+    [encoder encodeBool:hasCheckedIn forKey:@"hasLocation"];
     [encoder encodeBool:registeredForApnsSuccessfully forKey:@"registeredForApnsSuccessfully"];
 	
     [encoder encodeObject:lastKnownLocation forKey:@"lastKnownLocation"];

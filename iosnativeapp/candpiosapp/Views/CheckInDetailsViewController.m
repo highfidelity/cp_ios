@@ -286,6 +286,9 @@
                     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
                 }
                 
+                // use the define in CPConstants to say that the user has done their first checkin
+                SET_DEFAULTS(Bool, kUDHasCheckedIn, YES);
+                
                 // Post a notification so that the map is reloaded with the user's new checkin
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckedIn" object:nil];
                 

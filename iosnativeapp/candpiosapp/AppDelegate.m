@@ -85,7 +85,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     
 	[self loadSettings];  
     
-    [FlurryAnalytics startSession:flurryAnalytics];
+    [FlurryAnalytics startSession:flurryAnalyticsKey];
     
     // Init Airship launch options
     NSMutableDictionary *takeOffOptions = [[NSMutableDictionary alloc] init];
@@ -408,7 +408,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 -(void) loadSettings
 {	
-	// load the new settings
+    // load the new settings
 	@try 
 	{
 		// load our settings
