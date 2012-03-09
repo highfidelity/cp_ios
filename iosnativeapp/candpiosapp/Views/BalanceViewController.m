@@ -47,6 +47,7 @@
     [[AppDelegate instance] hideCheckInButton];
     [[self view] setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"perforated-skin.png"]]];
     [transTableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"perforated-skin.png"]]];
+    [self loadTransactionData];    
 }
 
 - (void)viewDidLoad
@@ -231,9 +232,12 @@
     
     
     [[cell dateLabel] setText:dateString];
-    
-    [[cell descriptionLabel] setText:[transaction objectForKey:@"description"]];
-    
+
+    if ([[transaction objectForKey:@"nickname"] isEqualToString:@"Exchange"]) {
+        [[cell descriptionLabel] setText:[NSString stringWithFormat:@"$%@ added to balance via %@", [transaction objectForKey:@"amount"], [transaction objectForKey:@"type"]]];       
+    } else {
+        [[cell descriptionLabel] setText:[transaction objectForKey:@"description"]];
+    }
     
     if ([transaction objectForKey:@"thumbnail"]) {
         

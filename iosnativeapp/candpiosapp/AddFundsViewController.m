@@ -7,12 +7,22 @@
 //
 
 #import "AddFundsViewController.h"
+#import "AppDelegate.h"
 
 @interface AddFundsViewController ()
 
 @end
 
 @implementation AddFundsViewController
+@synthesize webView, urlAddress, activityIndicator;
+
+- (IBAction)goBack:(id)sender {
+	[webView goBack];
+}
+
+- (IBAction)closeWindow:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,6 +37,27 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    urlAddress = kCandPAddFundsUrl;
+
+    NSURL *url = [NSURL URLWithString:urlAddress];
+    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+    
+    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    
+	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+	self.navigationItem.rightBarButtonItem = button;
+	
+	webView.delegate = self;
+	[webView loadRequest:requestObj];
+}
+
+-(void)webViewDidFinishLoad:(UIWebView *) webView {
+	[activityIndicator stopAnimating];
+}
+
+-(void)webViewDidStartLoad:(UIWebView *) webView {
+	[activityIndicator startAnimating];
 }
 
 - (void)viewDidUnload
@@ -43,6 +74,9 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)dealloc {
 }
 
 @end
