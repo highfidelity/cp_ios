@@ -185,7 +185,7 @@
             place.lat = location.coordinate.latitude;
             place.lng = location.coordinate.longitude;
             
-            [places insertObject:place atIndex:0];
+            [places insertObject:place atIndex:[places count]];
             
             // note that the HUD gets dismissed in this overloaded reloadData (check DismissHUDAfterReloadData.h)
             [self.tableView reloadData];            
@@ -221,7 +221,7 @@
     CheckInListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCell"];
     
     // if this is the "place not listed" cell then we have a different identifier
-    if (indexPath.row == 0) {
+    if (indexPath.row == [places count] - 1) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCellNotListed"];
     } else {
         // get the localized distance string based on the distance of this venue from the user
@@ -264,8 +264,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // if this is the first row it's the 'place not listed' row so make it smaller
-    if (indexPath.row == 0) {
+    // if this is the last row it's the 'place not listed' row so make it smaller
+    if (indexPath.row == [places count] - 1) {
         return 40;
     } else {
         return 60;
