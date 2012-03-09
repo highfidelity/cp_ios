@@ -22,7 +22,7 @@
 // ** We should probably not put production API keys in this public repo :) **
 // -alexi
 #define kCandPWebServiceUrl		@"https://coffeeandpower.com/"
-#define kCandPAddFundsUrl       @"http://coffeeandpower.com/m/#addFundsiPhone"
+#define kCandPAddFundsUrl       @"http://coffeeandpower.com/m/?ios#addFundsiPhone"
 // Facebook
 #define kFacebookAppId          @"" //bind to the fb[app_id]:// URL scheme in .plist
 // LinkedIn
