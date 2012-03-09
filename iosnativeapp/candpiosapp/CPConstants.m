@@ -21,7 +21,7 @@
     NSString* const kFacebookAppId = @"";
     NSString* const kLinkedInKey = @"";
     NSString* const kLinkedInSecret = @"";
-    NSString* const kFlurryAnalyticsKey = @"";
+    NSString* const flurryAnalyticsKey = @"";
 
     #error "You're running in production mode. Are you sure you wanna do this?"
 
