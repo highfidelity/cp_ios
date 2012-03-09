@@ -32,7 +32,7 @@
     }
     
     if (smallPin && !checkins) {
-        imageName = @"pin-round";
+        imageName = @"people-marker-turquoise-circle";
     }
     
     [self setImage:[UIImage imageNamed:imageName]];

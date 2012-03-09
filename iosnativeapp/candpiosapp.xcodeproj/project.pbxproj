@@ -52,8 +52,6 @@
 		3267F67A14D91A2E00BFFBAA /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F67914D91A2E00BFFBAA /* libsqlite3.dylib */; };
 		3267F67C14D91A3600BFFBAA /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F67B14D91A3600BFFBAA /* CoreTelephony.framework */; };
 		3278800014FAD7070055A991 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 32787FFF14FAD7070055A991 /* MKAnnotationView+WebCache.m */; };
-		3287CE1414FD9ACF00CFA825 /* pin-round.png in Resources */ = {isa = PBXBuildFile; fileRef = 3287CE1214FD9ACF00CFA825 /* pin-round.png */; };
-		3287CE1514FD9ACF00CFA825 /* pin-round@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3287CE1314FD9ACF00CFA825 /* pin-round@2x.png */; };
 		32A7998814F97C0300A0D4CB /* plusSign.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A7998714F97C0300A0D4CB /* plusSign.png */; };
 		32A7999314F9867D00A0D4CB /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A7998E14F9867D00A0D4CB /* UIImage+Alpha.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		32A7999414F9867D00A0D4CB /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A7999014F9867D00A0D4CB /* UIImage+Resize.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -165,6 +163,8 @@
 		53C01004150AA9650052069A /* map-refresh-progress-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C01000150AA9650052069A /* map-refresh-progress-arrow@2x.png */; };
 		53C01005150AA9650052069A /* map-refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C01001150AA9650052069A /* map-refresh.png */; };
 		53C01006150AA9650052069A /* map-refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C01002150AA9650052069A /* map-refresh@2x.png */; };
+		53C0100D150AC01F0052069A /* people-marker-turquoise-circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C0100B150AC01E0052069A /* people-marker-turquoise-circle.png */; };
+		53C0100E150AC01F0052069A /* people-marker-turquoise-circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C0100C150AC01E0052069A /* people-marker-turquoise-circle@2x.png */; };
 		53C4A78814FC3E630010801B /* texture-diagonal-noise-light.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C4A78714FC3E630010801B /* texture-diagonal-noise-light.png */; };
 		53C4A78A14FC3E7C0010801B /* texture-diagonal-noise-light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C4A78914FC3E7C0010801B /* texture-diagonal-noise-light@2x.png */; };
 		53D3344D15001B020011EA70 /* NSString+StringToNSNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D3344C15001B020011EA70 /* NSString+StringToNSNumber.m */; };
@@ -435,8 +435,6 @@
 		3267F67B14D91A3600BFFBAA /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		32787FFE14FAD7070055A991 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		32787FFF14FAD7070055A991 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
-		3287CE1214FD9ACF00CFA825 /* pin-round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pin-round.png"; path = "images/pin-round.png"; sourceTree = "<group>"; };
-		3287CE1314FD9ACF00CFA825 /* pin-round@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pin-round@2x.png"; path = "images/pin-round@2x.png"; sourceTree = "<group>"; };
 		32A7998714F97C0300A0D4CB /* plusSign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plusSign.png; sourceTree = "<group>"; };
 		32A7998D14F9867D00A0D4CB /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Alpha.h"; path = "UIImage-categories/UIImage+Alpha.h"; sourceTree = "<group>"; };
 		32A7998E14F9867D00A0D4CB /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Alpha.m"; path = "UIImage-categories/UIImage+Alpha.m"; sourceTree = "<group>"; };
@@ -572,6 +570,8 @@
 		53C01000150AA9650052069A /* map-refresh-progress-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map-refresh-progress-arrow@2x.png"; path = "Map/images/map-refresh-progress-arrow@2x.png"; sourceTree = "<group>"; };
 		53C01001150AA9650052069A /* map-refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map-refresh.png"; path = "Map/images/map-refresh.png"; sourceTree = "<group>"; };
 		53C01002150AA9650052069A /* map-refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map-refresh@2x.png"; path = "Map/images/map-refresh@2x.png"; sourceTree = "<group>"; };
+		53C0100B150AC01E0052069A /* people-marker-turquoise-circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "people-marker-turquoise-circle.png"; path = "Map/images/people-marker-turquoise-circle.png"; sourceTree = "<group>"; };
+		53C0100C150AC01E0052069A /* people-marker-turquoise-circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "people-marker-turquoise-circle@2x.png"; path = "Map/images/people-marker-turquoise-circle@2x.png"; sourceTree = "<group>"; };
 		53C4A78714FC3E630010801B /* texture-diagonal-noise-light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-diagonal-noise-light.png"; path = "images/texture-diagonal-noise-light.png"; sourceTree = "<group>"; };
 		53C4A78914FC3E7C0010801B /* texture-diagonal-noise-light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-diagonal-noise-light@2x.png"; path = "images/texture-diagonal-noise-light@2x.png"; sourceTree = "<group>"; };
 		53D3344B15001B020011EA70 /* NSString+StringToNSNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+StringToNSNumber.h"; sourceTree = "<group>"; };
@@ -1241,6 +1241,8 @@
 		536DE93B1501737500794650 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				53C0100B150AC01E0052069A /* people-marker-turquoise-circle.png */,
+				53C0100C150AC01E0052069A /* people-marker-turquoise-circle@2x.png */,
 				53BA0A1E150A9BF2006F5B98 /* map-locate.png */,
 				53BA0A1F150A9BF2006F5B98 /* map-locate@2x.png */,
 				53C00FFF150AA9650052069A /* map-refresh-progress-arrow.png */,
@@ -1252,8 +1254,6 @@
 				3200177A14FC3862008ADA53 /* pin-checkedout.png */,
 				3200177B14FC3862008ADA53 /* pin-checkedout@2x.png */,
 				E402DB6514D43C2B00BC82E8 /* pin-frame.png */,
-				3287CE1214FD9ACF00CFA825 /* pin-round.png */,
-				3287CE1314FD9ACF00CFA825 /* pin-round@2x.png */,
 				53FB9E3314E089BC00F4CC7F /* map-marker@2x~iphone.png */,
 				53FB9E3414E089BC00F4CC7F /* map-marker~iphone.png */,
 				4E500D9514EF4D41007C17E6 /* map-shadow.png */,
@@ -1958,8 +1958,6 @@
 				6F8EF75014FD8D2100F9BDC0 /* chat-bubble-right-middle@2x.png in Resources */,
 				6F8EF75114FD8D2100F9BDC0 /* chat-bubble-right-top.png in Resources */,
 				6F8EF75214FD8D2100F9BDC0 /* chat-bubble-right-top@2x.png in Resources */,
-				3287CE1414FD9ACF00CFA825 /* pin-round.png in Resources */,
-				3287CE1514FD9ACF00CFA825 /* pin-round@2x.png in Resources */,
 				4EBD1D3B14FEC19E00E9C0C6 /* secret-society.png in Resources */,
 				4EBD1D3C14FEC19E00E9C0C6 /* secret-society@2x.png in Resources */,
 				4EBD1D4814FEC1C700E9C0C6 /* CreateLoginController.xib in Resources */,
@@ -2003,6 +2001,8 @@
 				53C01004150AA9650052069A /* map-refresh-progress-arrow@2x.png in Resources */,
 				53C01005150AA9650052069A /* map-refresh.png in Resources */,
 				53C01006150AA9650052069A /* map-refresh@2x.png in Resources */,
+				53C0100D150AC01F0052069A /* people-marker-turquoise-circle.png in Resources */,
+				53C0100E150AC01F0052069A /* people-marker-turquoise-circle@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

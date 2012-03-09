@@ -203,7 +203,6 @@ BOOL zoomedOut = NO;
 
 - (IBAction)refreshButtonClicked:(id)sender
 {
-    [self startRefreshArrowAnimation];
     fullDataset = nil;    
     fullDataset = [[MapDataSet alloc] init];
     [self.mapView removeAllAnnotations];
@@ -275,6 +274,7 @@ BOOL zoomedOut = NO;
 
 -(void)refreshLocations
 {
+    [self startRefreshArrowAnimation];
     MKMapRect mapRect = mapView.visibleMapRect;
     [MapDataSet beginLoadingNewDataset:mapRect
                             completion:^(MapDataSet *newDataset, NSError *error) {
@@ -859,6 +859,9 @@ BOOL zoomedOut = NO;
 
 - (void)startRefreshArrowAnimation
 {
+    // invalidate the old timer if it exists
+    [self.arrowSpinTimer invalidate];
+    
     // spin the arrow
     [self spinRefreshArrow];
     // start a timer to keep spinning it
