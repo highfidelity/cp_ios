@@ -15,7 +15,7 @@
 
 #ifdef PRODUCTION
 
-    NSString* const kCandPWebServiceUrl = @"https://coffeeandpower.com/";
+    NSString* const kCandPWebServiceUrl = @"https://www.coffeeandpower.com/";
 
     NSString* const kCandPAddFundsUrl = @"http://www.coffeeandpower.com/m/?ios#addFundsiPhone";
     NSString* const kFacebookAppId = @"";
