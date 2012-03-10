@@ -21,7 +21,6 @@
 -(void)loadSettings;
 +(NSString*)settingsFilepath;
 -(void)addGoButton;
--(void)addCheckInButton;
 @end
 
 @implementation AppDelegate
@@ -45,27 +44,53 @@
 
 # pragma mark - Check-in Button
 
-- (void)addCheckInButton 
-{
-    UIButton *checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    checkInButton.backgroundColor = [UIColor clearColor];
-    checkInButton.frame = CGRectMake(235, 375, 75, 75);
-    [checkInButton addTarget:self action:@selector(checkInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [checkInButton setImage:[UIImage imageNamed:@"checked-in.png"] forState:UIControlStateNormal];
-    checkInButton.tag = 901;
-    [self.rootNavigationController.view addSubview:checkInButton];
+- (void)showCheckInButton {
+    UIButton *checkInButton;
+    if ((checkInButton = (UIButton *)[self.rootNavigationController.view viewWithTag:901])) {
+        checkInButton.alpha = 1.0;
+        checkInButton.userInteractionEnabled = YES;
+        UIImageView *banner = (UIImageView *)[self.rootNavigationController.view viewWithTag:902];
+        if (!DEFAULTS(bool, kUDHasCheckedIn)) {
+            // we also have to show the banner
+            banner.alpha = 1.0;
+        } else {
+            // otherwise we remove it (if it exists)
+            [banner removeFromSuperview];
+        }
+    } else {
+        checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        checkInButton.backgroundColor = [UIColor clearColor];
+        checkInButton.frame = CGRectMake(235, 375, 75, 75);
+        [checkInButton addTarget:self action:@selector(checkInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [checkInButton setImage:[UIImage imageNamed:@"checked-in.png"] forState:UIControlStateNormal];
+        checkInButton.tag = 901;
+        
+        if (!DEFAULTS(bool, kUDHasCheckedIn)) {
+            // this user hasn't checked in ever (according to flag in NSUserDefaults)
+            UIImageView *helpBanner = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"help-flag-check-in.png"]];
+            
+            CGRect bannerFrame = helpBanner.frame;
+            bannerFrame.origin.x = checkInButton.frame.origin.x - (bannerFrame.size.width / 1.75) - 3;
+            bannerFrame.origin.y = checkInButton.frame.origin.y + (checkInButton.frame.size.height / 2) - (bannerFrame.size.height / 2);
+            helpBanner.frame = bannerFrame;
+            
+            helpBanner.tag = 902;        
+            [self.rootNavigationController.view addSubview:helpBanner];
+        }
+        
+        [self.rootNavigationController.view addSubview:checkInButton];
+    }
 }
 
 - (void)hideCheckInButton {
     UIButton *checkInButton = (UIButton *)[self.rootNavigationController.view viewWithTag:901];
     checkInButton.alpha = 0.0;
     checkInButton.userInteractionEnabled = NO;
-}
-
-- (void)showCheckInButton {
-    UIButton *checkInButton = (UIButton *)[self.rootNavigationController.view viewWithTag:901];
-    checkInButton.alpha = 1.0;
-    checkInButton.userInteractionEnabled = YES;
+    if (!DEFAULTS(bool, kUDHasCheckedIn)) {
+        // we also have to hide the banner
+        UIImageView *banner = (UIImageView *)[self.rootNavigationController.view viewWithTag:902];
+        banner.alpha = 0.0;
+    }
 }
 
 - (void)checkInButtonPressed:(id)sender
@@ -128,8 +153,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     [settingsMenuController addChildViewController:self.rootNavigationController];
     self.window.rootViewController = settingsMenuController;
     [CPUIHelper addDarkNavigationBarStyleToViewController:self.rootNavigationController.topViewController];
-
-    [self addCheckInButton];
     
     // make the status bar the black style
     application.statusBarStyle = UIStatusBarStyleBlackOpaque;

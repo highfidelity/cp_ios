@@ -165,6 +165,8 @@
 		53C01006150AA9650052069A /* map-refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C01002150AA9650052069A /* map-refresh@2x.png */; };
 		53C0100D150AC01F0052069A /* people-marker-turquoise-circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C0100B150AC01E0052069A /* people-marker-turquoise-circle.png */; };
 		53C0100E150AC01F0052069A /* people-marker-turquoise-circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C0100C150AC01E0052069A /* people-marker-turquoise-circle@2x.png */; };
+		53C0101B150AE9870052069A /* help-flag-check-in.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C01019150AE9870052069A /* help-flag-check-in.png */; };
+		53C0101C150AE9870052069A /* help-flag-check-in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C0101A150AE9870052069A /* help-flag-check-in@2x.png */; };
 		53C4A78814FC3E630010801B /* texture-diagonal-noise-light.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C4A78714FC3E630010801B /* texture-diagonal-noise-light.png */; };
 		53C4A78A14FC3E7C0010801B /* texture-diagonal-noise-light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C4A78914FC3E7C0010801B /* texture-diagonal-noise-light@2x.png */; };
 		53D3344D15001B020011EA70 /* NSString+StringToNSNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D3344C15001B020011EA70 /* NSString+StringToNSNumber.m */; };
@@ -573,6 +575,8 @@
 		53C01002150AA9650052069A /* map-refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map-refresh@2x.png"; path = "Map/images/map-refresh@2x.png"; sourceTree = "<group>"; };
 		53C0100B150AC01E0052069A /* people-marker-turquoise-circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "people-marker-turquoise-circle.png"; path = "Map/images/people-marker-turquoise-circle.png"; sourceTree = "<group>"; };
 		53C0100C150AC01E0052069A /* people-marker-turquoise-circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "people-marker-turquoise-circle@2x.png"; path = "Map/images/people-marker-turquoise-circle@2x.png"; sourceTree = "<group>"; };
+		53C01019150AE9870052069A /* help-flag-check-in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "help-flag-check-in.png"; path = "CheckIn/images/help-flag-check-in.png"; sourceTree = "<group>"; };
+		53C0101A150AE9870052069A /* help-flag-check-in@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "help-flag-check-in@2x.png"; path = "CheckIn/images/help-flag-check-in@2x.png"; sourceTree = "<group>"; };
 		53C4A78714FC3E630010801B /* texture-diagonal-noise-light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-diagonal-noise-light.png"; path = "images/texture-diagonal-noise-light.png"; sourceTree = "<group>"; };
 		53C4A78914FC3E7C0010801B /* texture-diagonal-noise-light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-diagonal-noise-light@2x.png"; path = "images/texture-diagonal-noise-light@2x.png"; sourceTree = "<group>"; };
 		53D3344B15001B020011EA70 /* NSString+StringToNSNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+StringToNSNumber.h"; sourceTree = "<group>"; };
@@ -1176,6 +1180,8 @@
 		536DE92A150170CC00794650 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				53C01019150AE9870052069A /* help-flag-check-in.png */,
+				53C0101A150AE9870052069A /* help-flag-check-in@2x.png */,
 				53882B6014FC1B5A0073058C /* list-arrow-dark-grey.png */,
 				53882B6114FC1B5A0073058C /* list-arrow-dark-grey@2x.png */,
 				534FC98014EF27C1008C87B9 /* check-in-big.png */,
@@ -2008,6 +2014,8 @@
 				53C01006150AA9650052069A /* map-refresh@2x.png in Resources */,
 				53C0100D150AC01F0052069A /* people-marker-turquoise-circle.png in Resources */,
 				53C0100E150AC01F0052069A /* people-marker-turquoise-circle@2x.png in Resources */,
+				53C0101B150AE9870052069A /* help-flag-check-in.png in Resources */,
+				53C0101C150AE9870052069A /* help-flag-check-in@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

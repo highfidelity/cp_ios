@@ -36,7 +36,7 @@
     navigationBar.barStyle = UIBarStyleBlack;
     [navigationBar setBackgroundImage:[UIImage imageNamed: @"header.png"]
                         forBarMetrics: UIBarMetricsDefault];
-    navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"LeagueGothic" size:24] forKey:UITextAttributeFont];
+    navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"LeagueGothic" size:22] forKey:UITextAttributeFont];    
 }
 
 + (void)addDarkToolbarStyleToToolbar:(UIToolbar *)toolbar
