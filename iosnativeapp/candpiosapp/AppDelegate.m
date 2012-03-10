@@ -42,7 +42,23 @@
 @synthesize window = _window;
 
 
-# pragma mark - Check-in Button
+# pragma mark - Check-in Stuff
+
+- (void)startCheckInClockHandAnimation
+{
+    // grab the check in button
+    UIButton *checkInButton = (UIButton *)[self.rootNavigationController.view viewWithTag:901];
+    // spin the clock hand
+    [CPUIHelper spinView:[checkInButton viewWithTag:903] duration:15 repeatCount:MAXFLOAT clockwise:YES timingFunction:nil];
+}
+
+- (void)stopCheckInClockHandAnimation
+{
+    // grab the check in button
+    UIButton *checkInButton = (UIButton *)[self.rootNavigationController.view viewWithTag:901];
+    // stop the clock hand spin
+    [[checkInButton viewWithTag:903].layer removeAllAnimations];
+}
 
 - (void)showCheckInButton {
     UIButton *checkInButton;
@@ -50,7 +66,7 @@
         checkInButton.alpha = 1.0;
         checkInButton.userInteractionEnabled = YES;
         UIImageView *banner = (UIImageView *)[self.rootNavigationController.view viewWithTag:902];
-        if (!DEFAULTS(bool, kUDHasCheckedIn)) {
+        if (!DEFAULTS(bool, kUDFirstCheckIn)) {
             // we also have to show the banner
             banner.alpha = 1.0;
         } else {
@@ -62,10 +78,10 @@
         checkInButton.backgroundColor = [UIColor clearColor];
         checkInButton.frame = CGRectMake(235, 375, 75, 75);
         [checkInButton addTarget:self action:@selector(checkInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [checkInButton setImage:[UIImage imageNamed:@"checked-in.png"] forState:UIControlStateNormal];
+        [checkInButton setBackgroundImage:[UIImage imageNamed:@"check-in.png"] forState:UIControlStateNormal];
         checkInButton.tag = 901;
         
-        if (!DEFAULTS(bool, kUDHasCheckedIn)) {
+        if (!DEFAULTS(bool, kUDFirstCheckIn)) {
             // this user hasn't checked in ever (according to flag in NSUserDefaults)
             UIImageView *helpBanner = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"help-flag-check-in.png"]];
             
@@ -78,15 +94,32 @@
             [self.rootNavigationController.view addSubview:helpBanner];
         }
         
+        UIImageView *clockHand = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"check-in-clock-hand.png"]];
+        CGRect handFrame = clockHand.frame;
+        handFrame.origin.x = 28;
+        handFrame.origin.y = 24;
+        clockHand.frame = handFrame;
+        clockHand.tag = 903;
+        [checkInButton addSubview:clockHand];
+        
         [self.rootNavigationController.view addSubview:checkInButton];
     }
+    // spin the clock hand if the user is currently checked in
+    // Commenting this out for now until the design is set - birarda
+//    NSNumber *checkoutEpoch = DEFAULTS(object, kUDCheckoutTime);
+//    if ([checkoutEpoch intValue] > [[NSDate date]timeIntervalSince1970]) {
+//        // user is still checked in so spin the hand
+//        [self startCheckInClockHandAnimation];
+//    } else {
+//        [self stopCheckInClockHandAnimation];
+//    }
 }
 
 - (void)hideCheckInButton {
     UIButton *checkInButton = (UIButton *)[self.rootNavigationController.view viewWithTag:901];
     checkInButton.alpha = 0.0;
     checkInButton.userInteractionEnabled = NO;
-    if (!DEFAULTS(bool, kUDHasCheckedIn)) {
+    if (!DEFAULTS(bool, kUDFirstCheckIn)) {
         // we also have to hide the banner
         UIImageView *banner = (UIImageView *)[self.rootNavigationController.view viewWithTag:902];
         banner.alpha = 0.0;

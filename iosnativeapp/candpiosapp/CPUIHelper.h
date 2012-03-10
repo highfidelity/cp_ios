@@ -54,6 +54,10 @@ typedef enum {
               curve:(int)curve 
             degrees:(CGFloat)degrees;
 
-+ (void)spinView:(UIView *)view duration:(NSTimeInterval)duration repeatCount:(float)repeatCount;
++(void)spinView:(UIView *)view 
+    duration:(NSTimeInterval)duration 
+    repeatCount:(float)repeatCount 
+    clockwise:(BOOL)clockwise
+ timingFunction:(CAMediaTimingFunction *)timingFunction;
 
 @end

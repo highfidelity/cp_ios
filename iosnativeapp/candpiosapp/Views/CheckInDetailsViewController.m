@@ -284,11 +284,13 @@
                     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
                 }
                 
-                // use the define in CPConstants to say that the user has done their first checkin
-                SET_DEFAULTS(Bool, kUDHasCheckedIn, YES);
+                if (!DEFAULTS(bool, kUDFirstCheckIn)) {
+                    // use the define in CPConstants to say that the user has now done their first checkin
+                    SET_DEFAULTS(Bool, kUDFirstCheckIn, YES);
+                }
                 
-                // remove the helper banner that was beside the check in button
-                
+                // set the NSUserDefault to the user checkout time
+                SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
                 
                 // Post a notification so that the map is reloaded with the user's new checkin
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckedIn" object:nil];

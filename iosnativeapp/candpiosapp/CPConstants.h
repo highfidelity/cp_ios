@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "AppDelegate.h"
 
+// define a way to quickly grab the app delegate
+#define CPAppDelegate [[AppDelegate sharedApplication] delegate]
+
 // define a way to quickly grab and set NSUserDefaults
 #define DEFAULTS(type, key) ([[NSUserDefaults standardUserDefaults] type##ForKey:key])
 #define SET_DEFAULTS(Type, key, val) do {\
@@ -28,6 +31,7 @@ extern  NSString* const flurryAnalyticsKey;
 // NOTE: We are slowly moving the way we store data to the 
 // iOS standard NSUserDefaults (eventually replacing Settings.h)
 // these are the keys for things stored in NSUserDefaults
-extern NSString* const kUDHasCheckedIn;
+extern NSString* const kUDFirstCheckIn;
+extern NSString* const kUDCheckoutTime;
 
 @end

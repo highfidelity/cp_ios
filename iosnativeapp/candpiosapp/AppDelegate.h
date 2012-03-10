@@ -35,5 +35,7 @@
 -(void)logoutEverything;
 -(void)hideCheckInButton;
 -(void)showCheckInButton;
+-(void)startCheckInClockHandAnimation;
+-(void)stopCheckInClockHandAnimation;
 void uncaughtExceptionHandler(NSException *exception);
 @end

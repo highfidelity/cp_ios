@@ -44,6 +44,7 @@
 #endif
 
 // keys for data stored in NSUserDefaults
-NSString* const kUDHasCheckedIn = @"hasCheckedIn";
+NSString* const kUDFirstCheckIn = @"firstCheckIn";
+NSString* const kUDCheckoutTime = @"localUserCheckoutTime";
 
 @end

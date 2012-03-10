@@ -853,7 +853,11 @@ BOOL zoomedOut = NO;
 
 - (void)spinRefreshArrow
 {
-    [CPUIHelper spinView:self.refreshButton.imageView duration:1.0f repeatCount:0];
+    [CPUIHelper spinView:self.refreshButton.imageView 
+                duration:1.0f 
+             repeatCount:0 
+               clockwise:NO  
+          timingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
 }
 
 - (void)startRefreshArrowAnimation
