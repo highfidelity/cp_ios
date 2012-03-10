@@ -17,7 +17,7 @@
 
     NSString* const kCandPWebServiceUrl = @"https://coffeeandpower.com/";
 
-    NSString* const kCandPAddFundsUrl = @"http://coffeeandpower.com/m/?ios#addFundsiPhone";
+    NSString* const kCandPAddFundsUrl = @"http://www.coffeeandpower.com/m/?ios#addFundsiPhone";
     NSString* const kFacebookAppId = @"";
     NSString* const kLinkedInKey = @"";
     NSString* const kLinkedInSecret = @"";
