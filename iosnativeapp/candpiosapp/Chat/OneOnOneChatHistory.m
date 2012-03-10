@@ -35,7 +35,7 @@
 
 - (void)loadChatHistory
 {
-    [SVProgressHUD showWithStatus:@"Loading chat..."];
+    [SVProgressHUD showWithStatus:@"Loading chat"];
     
     void (^completionBlock)(NSDictionary *, NSError *) =
         ^(NSDictionary *jsonResponse, NSError *error)
@@ -58,6 +58,40 @@
         if (!error && !respError)
         {
             NSLog(@"Chat history dict: %@", jsonResponse);
+            
+            for (NSDictionary *chatDict in [jsonResponse valueForKey:@"chat"])
+            {
+                NSLog(@"chatDict: %@", chatDict);
+                
+                // Extract chat text from json...
+                NSString *messageString = [chatDict valueForKey:@"entry_text"];
+                
+                // Extract user details from json...
+                User *fromUser = nil;
+                User *toUser = nil;
+                int chatUserId = [[chatDict valueForKey:@"user_id"] intValue];
+                if (chatUserId == self.myUser.userID)
+                {
+                    fromUser = self.myUser;
+                    toUser = self.otherUser;
+                }
+                else 
+                {
+                    fromUser = self.otherUser;
+                    toUser = self.myUser;
+                }
+                
+                // Extract date from json...
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:
+                                [[chatDict valueForKey:@"date"] doubleValue]];
+                
+                ChatMessage *message = [[ChatMessage alloc] initWithMessage:messageString
+                                                                     toUser:toUser
+                                                                   fromUser:fromUser
+                                                                       date:date];
+                
+                [self insertMessage:message];
+            }
             
             [SVProgressHUD dismiss];
         }

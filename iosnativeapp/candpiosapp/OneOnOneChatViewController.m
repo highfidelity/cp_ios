@@ -383,9 +383,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [SVProgressHUD showWithStatus:@"Starting chat..."];
-    
+        
     [[AppDelegate instance] hideCheckInButton];
     
     // Setup the "me" object. It's a wonder why we don't just hae
@@ -395,11 +393,11 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 
     self.title = self.user.nickname;
     
-    //self.history = [[OneOnOneChatHistory alloc] initWithMyUser:self.me
-    //                                              andOtherUser:self.user];
+    self.history = [[OneOnOneChatHistory alloc] initWithMyUser:self.me
+                                                  andOtherUser:self.user];
     
     // Load the last few lines of chat
-    [self.history loadChatHistory];
+    //[self.history loadChatHistory];
         
     // Set up the fancy background on view
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise.png"]];
