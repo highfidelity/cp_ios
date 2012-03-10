@@ -206,6 +206,7 @@
 		6F8EF75014FD8D2100F9BDC0 /* chat-bubble-right-middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF74414FD8D2100F9BDC0 /* chat-bubble-right-middle@2x.png */; };
 		6F8EF75114FD8D2100F9BDC0 /* chat-bubble-right-top.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF74514FD8D2100F9BDC0 /* chat-bubble-right-top.png */; };
 		6F8EF75214FD8D2100F9BDC0 /* chat-bubble-right-top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF74614FD8D2100F9BDC0 /* chat-bubble-right-top@2x.png */; };
+		6FB06648150ACFD00064DC42 /* OneOnOneChatHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FB06647150ACFD00064DC42 /* OneOnOneChatHistory.m */; };
 		6FEEDFFC14E103F400861CA1 /* CPapi.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FEEDFFB14E103F400861CA1 /* CPapi.m */; };
 		6FF5891F14FEE7E300EFDB56 /* ChatMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FF5891E14FEE7E300EFDB56 /* ChatMessageCell.m */; };
 		870835F814B3E1AC00439431 /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E014B3E1AB00439431 /* Facebook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -625,6 +626,8 @@
 		6F8EF74414FD8D2100F9BDC0 /* chat-bubble-right-middle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-right-middle@2x.png"; path = "candpiosapp/Chat/images/chat-bubble-right-middle@2x.png"; sourceTree = SOURCE_ROOT; };
 		6F8EF74514FD8D2100F9BDC0 /* chat-bubble-right-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-right-top.png"; path = "candpiosapp/Chat/images/chat-bubble-right-top.png"; sourceTree = SOURCE_ROOT; };
 		6F8EF74614FD8D2100F9BDC0 /* chat-bubble-right-top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-right-top@2x.png"; path = "candpiosapp/Chat/images/chat-bubble-right-top@2x.png"; sourceTree = SOURCE_ROOT; };
+		6FB06646150ACFD00064DC42 /* OneOnOneChatHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OneOnOneChatHistory.h; path = candpiosapp/Chat/OneOnOneChatHistory.h; sourceTree = SOURCE_ROOT; };
+		6FB06647150ACFD00064DC42 /* OneOnOneChatHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OneOnOneChatHistory.m; path = candpiosapp/Chat/OneOnOneChatHistory.m; sourceTree = SOURCE_ROOT; };
 		6FEEDFFA14E103F400861CA1 /* CPapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPapi.h; path = SupportingClasses/CPapi.h; sourceTree = "<group>"; };
 		6FEEDFFB14E103F400861CA1 /* CPapi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPapi.m; path = SupportingClasses/CPapi.m; sourceTree = "<group>"; };
 		6FF5891D14FEE7E300EFDB56 /* ChatMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatMessageCell.h; path = candpiosapp/Chat/ChatMessageCell.h; sourceTree = SOURCE_ROOT; };
@@ -1370,6 +1373,8 @@
 				6F0B453B14F6BD560074DBD9 /* ChatMessage.m */,
 				6F0B453D14F6BD850074DBD9 /* ChatHistory.h */,
 				6F0B453E14F6BD850074DBD9 /* ChatHistory.m */,
+				6FB06646150ACFD00064DC42 /* OneOnOneChatHistory.h */,
+				6FB06647150ACFD00064DC42 /* OneOnOneChatHistory.m */,
 				6F0B453714F6BCC50074DBD9 /* ChatHelper.h */,
 				6F0B453814F6BCD10074DBD9 /* ChatHelper.m */,
 				6F5EB26A14DB51E30000294E /* OneOnOneChatViewController.h */,
@@ -2154,6 +2159,7 @@
 				53E20621150591600000FA8D /* DismissHUDAfterReloadData.m in Sources */,
 				E4EAFBDE1505467C0052448B /* WalletCell.m in Sources */,
 				535C7537150A9E98000DB33D /* CPConstants.m in Sources */,
+				6FB06648150ACFD00064DC42 /* OneOnOneChatHistory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

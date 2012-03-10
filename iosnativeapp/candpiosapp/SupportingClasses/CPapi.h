@@ -29,9 +29,8 @@
 // Chat functions
 + (void)sendOneOnOneChatMessage:(NSString *)message
                         toUser:(int)userId;
-+ (void)oneOnOneChatGetHistory:(ChatHistory *)history
-                      fromUser:(User *)fromUser
-                        toUser:(User *)toUser;
++ (void)oneOnOneChatGetHistoryWith:(User *)User
+                        completion:(void (^)(NSDictionary *, NSError *))completion;
 
 // Face-to-Face functions
 + (void)sendF2FInvite:(int) userId;

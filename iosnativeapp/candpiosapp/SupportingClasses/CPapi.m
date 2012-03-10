@@ -193,10 +193,10 @@
     NSLog(@"One on one chat sent, or something: %@", response);
 }
 
-+ (void)oneOnOneChatGetHistory:(ChatHistory *)history
-                      fromUser:(User *)fromUser
-                        toUser:(User *)toUser
++ (void)oneOnOneChatGetHistoryWith:(User *)user
+                        completion:(void (^)(NSDictionary *, NSError *))completion
 {
+    /*
     NSDate *date1 = [NSDate dateWithTimeIntervalSince1970: 1000000];
     NSDate *date2 = [NSDate dateWithTimeIntervalSince1970: 2000000];
     
@@ -211,6 +211,15 @@
     
     [history insertMessage:message1];
     [history insertMessage:message2];
+     */
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setValue:[NSString stringWithFormat:@"%d", user.userID]
+                  forKey:@"other_user"];
+    
+    [self makeHTTPRequestWithAction:@"getOneOnOneChatHistory"
+                     withParameters:parameters
+                         completion:completion];
 }
 
 

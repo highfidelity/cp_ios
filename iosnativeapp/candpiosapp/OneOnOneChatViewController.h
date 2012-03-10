@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
-#import "ChatHistory.h"
+#import "OneOnOneChatHistory.h"
 
 @interface OneOnOneChatViewController : UIViewController
     <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
@@ -21,7 +21,7 @@
 
 @property (strong, nonatomic) User   *user;
 @property (strong, nonatomic) User   *me;
-@property (strong, nonatomic) ChatHistory *history;
+@property (strong, nonatomic) OneOnOneChatHistory *history;
 
 @property (weak, nonatomic) IBOutlet UITextField *chatEntryField;
 @property (weak, nonatomic) IBOutlet UITableView *chatContents;

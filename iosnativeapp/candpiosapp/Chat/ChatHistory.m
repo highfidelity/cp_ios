@@ -11,13 +11,6 @@
 // Timestamp interval in seconds (15 minutes)
 #define ADD_TIMESTAMP_INTERVAL  900
 
-@interface ChatHistory()
-
-// Method to go through the array and add timestamps where necessary
-- (void)addTimestamps;
-
-@end
-
 @implementation ChatHistory
 
 @synthesize messages = _messages;
@@ -60,61 +53,6 @@
 
 
 #pragma mark - Add to history
-
-- (void)addTimestamps
-{
-    // Messages can be either timestamps (NSDate) or
-    // actual messages (ChatMessage). We need to determine this as we go.
-    id prevObject = nil;
-    id nextObject = nil;
-    
-    NSInteger insertLocation = -1;
-    
-    for (id checkObject in self.messages)
-    {
-        // Increment at the beginning because we can get bucked out of this
-        // loop at a few places
-        insertLocation++;
-        
-        // Handle the case for the first message in the array
-        if (prevObject == nil)
-        {
-            prevObject = checkObject;
-            continue;
-        }
-        
-        nextObject = checkObject;
-        
-        if ([prevObject isKindOfClass:[ChatMessage class]] &&
-            [nextObject isKindOfClass:[ChatMessage class]])
-        {
-            // If both previous and next are ChatMessages, see if we need
-            // to insert a timestamp here
-            ChatMessage *prevMessage = (ChatMessage *)prevObject;
-            ChatMessage *nextMessage = (ChatMessage *)nextObject;
-            
-            NSTimeInterval delta = [nextMessage.date
-                                    timeIntervalSinceDate:prevMessage.date];
-                        
-            // If it's been more than X minutes since the last message,
-            // throw in a timestamp
-            if ( delta >= ADD_TIMESTAMP_INTERVAL )
-            {
-                [self.messages insertObject:nextMessage.date
-                                    atIndex:insertLocation];
-                
-                // Now we do something ugly. Since you're not supposed to
-                // modify an array that you're doing fast enumeration on,
-                // we start all over again and kill this loop.
-                // TODO: feel free to make this less ugly.
-                [self addTimestamps];
-                break;
-            }
-        }
-        
-        prevObject = nextObject;
-    }
-}
 
 // Inserts a message to the message array based on the timestamp
 - (void)insertMessage:(ChatMessage *)message

@@ -15,15 +15,15 @@
 #import "ChatMessageCell.h"
 
 float const CHAT_CELL_PADDING_Y           = 12.0f;
-float const CHAT_BUBBLE_PADDING_TOP       = 6.0f;
-float const CHAT_BUBBLE_PADDING_BOTTOM    = 6.0f;
-float const CHAT_BUBBLE_IMG_TOP_HEIGHT    = 10.0f;
+float const CHAT_BUBBLE_PADDING_TOP       = 5.0f;
+float const CHAT_BUBBLE_PADDING_BOTTOM    = 5.0f;
+float const CHAT_BUBBLE_IMG_TOP_HEIGHT    = 14.0f;
 float const CHAT_BUBBLE_IMG_MIDDLE_HEIGHT = 13.0f;
-float const CHAT_BUBBLE_IMG_BOTTOM_HEIGHT = 10.0f;
+float const CHAT_BUBBLE_IMG_BOTTOM_HEIGHT = 14.0f;
 float const CHAT_MESSAGE_LABEL_Y          = 14.0;
 float const CHAT_MESSAGE_LABEL_WIDTH      = 220.0f;
 float const TIMESTAMP_CELL_WIDTH          = 304.0f;
-float const TIMESTAMP_CELL_HEIGHT         = 20.0f;
+float const TIMESTAMP_CELL_HEIGHT         = 18.0f;
 
 static CGFloat const FONTSIZE = 14.0;
 
@@ -210,18 +210,25 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     UIImageView *bottomBubble = nil;
     NSString *imageFilenamePrefix = nil;
     UILabel *timestampLabel = nil;
-    CGFloat timestampOffset = 0.0;
+    NSString *cellIdentifier = @"";
     
     if (message.fromMe)
     {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"MyChatCell"];
+        cellIdentifier = @"MyChatCell";
         imageFilenamePrefix = @"chat-bubble-right-";
     }
     else
     {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"TheirChatCell"];
+        cellIdentifier = @"TheirChatCell";
         imageFilenamePrefix = @"chat-bubble-left-";
     }
+    // Check to see if we should have a timestamp
+    if ([self shouldRowHaveTimestamp:indexPath.row])
+    {
+        cellIdentifier = [cellIdentifier stringByAppendingString: @"withTimestamp"];
+    }
+    
+    cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (cell == nil)
     {
@@ -233,7 +240,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     // See if we should draw a timestamp cell
     if ([self shouldRowHaveTimestamp:indexPath.row])
     {
-        timestampLabel = [[UILabel alloc] init];
+        timestampLabel = (UILabel *)[cell viewWithTag:TIMESTAMP_TAG];
         NSDate *timestamp = message.date;
                 
         // Get our date format. Ex: "Feb 27, 2012 — 10:04am"
@@ -246,60 +253,37 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         
         // Get the second half of the timestamp. Note that we have to lowercase
         // the AM/PM portion
-        timestampFormat.dateFormat = @" — HH:MMa";        
+        timestampFormat.dateFormat = @" — h:mm a";        
         timeString = [timeString stringByAppendingString:
                       [[timestampFormat stringFromDate:timestamp] lowercaseString]];
         
-        // Size the cell & text area to match
-        CGRect timestampCellRect = CGRectMake(0,
-                                              0,
-                                              TIMESTAMP_CELL_WIDTH,
-                                              TIMESTAMP_CELL_HEIGHT);
+        NSLog(@"Timestamp: %@ & Timestring: %@", timestamp, timeString);
         
-        // Set all timestamp properties
-        timestampLabel.textColor = [UIColor colorWithRed:153
-                                                   green:153
-                                                    blue:153
-                                                   alpha:1.0];
-        timestampLabel.backgroundColor = [UIColor colorWithWhite:0.0
-                                                           alpha:0.0];
-        timestampLabel.font = [UIFont systemFontOfSize: FONTSIZE];
-        timestampLabel.textAlignment = UITextAlignmentCenter;
-        timestampLabel.frame = timestampCellRect;
         timestampLabel.text = timeString;
+    }
         
-        [cell addSubview:timestampLabel];
-    }
-    
-    if (timestampLabel != nil)
-    {
-        timestampOffset = timestampLabel.frame.size.height +
-                          timestampLabel.frame.origin.y;
-    }
-    
-    NSLog(@"Row %d timestamp offset: %f", indexPath.row, timestampOffset);
-    
     chatMessageLabel = (UILabel *)[cell viewWithTag:CHAT_LABEL_TAG];
     topBubble        = (UIImageView *)[cell viewWithTag:BUBBLE_TOP_TAG];
     middleBubble     = (UIImageView *)[cell viewWithTag:BUBBLE_MIDDLE_TAG];
     bottomBubble     = (UIImageView *)[cell viewWithTag:BUBBLE_BOTTOM_TAG];
     
     // Create scalable images
-    UIImage *topBubbleImg = [[UIImage imageNamed:[imageFilenamePrefix stringByAppendingString:@"top.png"]] resizableImageWithCapInsets:UIEdgeInsetsMake(9, 0, 0, 0)];
+    UIImage *topBubbleImg = [[UIImage imageNamed:[imageFilenamePrefix stringByAppendingString:@"top.png"]] resizableImageWithCapInsets:UIEdgeInsetsMake(13, 0, 0, 0)];
     topBubble.image = topBubbleImg;
     
     UIImage *middleBubbleImg = [UIImage imageNamed:[imageFilenamePrefix stringByAppendingString:@"middle.png"]];
     middleBubble.image = middleBubbleImg;
     
-    UIImage *bottomBubbleImg = [[UIImage imageNamed:[imageFilenamePrefix stringByAppendingString:@"bottom.png"]] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 9, 0)];
+    UIImage *bottomBubbleImg = [[UIImage imageNamed:[imageFilenamePrefix stringByAppendingString:@"bottom.png"]] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 13, 0)];
     bottomBubble.image = bottomBubbleImg;
-    
-    CGFloat chatLabelY = CHAT_MESSAGE_LABEL_Y +
-                         timestampOffset;
+        
     CGRect labelRect = CGRectMake(chatMessageLabel.frame.origin.x,
-                                  chatLabelY,
+                                  chatMessageLabel.frame.origin.y,
                                   CHAT_MESSAGE_LABEL_WIDTH,
                                   [self labelHeight:message]);
+    
+    chatMessageLabel.frame = labelRect;
+    chatMessageLabel.text = message.message;
         
     // Figure out the dynamic height portion of the top and bottom bubble
     CGFloat topAndBottomHeight = [self labelHeight:message] / 2;
@@ -310,12 +294,10 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     {
         topBubbleHeight = topAndBottomHeight;
     }
-    CGFloat topBubbleY = CHAT_BUBBLE_PADDING_TOP +
-                         timestampOffset;
     
-    CGRect topBubbleRect = CGRectMake(topBubble.frame.origin.x, 
-                                      topBubbleY, 
-                                      topBubble.frame.size.width, 
+    CGRect topBubbleRect = CGRectMake(topBubble.frame.origin.x,
+                                      topBubble.frame.origin.y,
+                                      topBubble.frame.size.width,
                                       topBubbleHeight);
     topBubble.frame = topBubbleRect;
     
@@ -343,10 +325,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
                                          bottomBubble.frame.size.width, 
                                          bottomBubbleHeight);
     bottomBubble.frame = bottomBubbleRect;
-    
-    chatMessageLabel.frame = labelRect;
-    chatMessageLabel.text = message.message;
-    
+        
     return cell;
 }
 
@@ -413,18 +392,17 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     self.me = [[User alloc] init];
     self.me.userID = [[AppDelegate instance].settings.candpUserId intValue];
     self.me.nickname = [AppDelegate instance].settings.userNickname;
-    
-    self.history = [[ChatHistory alloc] init];
+
     self.title = self.user.nickname;
     
+    //self.history = [[OneOnOneChatHistory alloc] initWithMyUser:self.me
+    //                                              andOtherUser:self.user];
+    
     // Load the last few lines of chat
-    [CPapi oneOnOneChatGetHistory:self.history
-                         fromUser:self.me
-                           toUser:self.user];
-    [SVProgressHUD dismiss];
+    [self.history loadChatHistory];
         
     // Set up the fancy background on view
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-dark.png"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise.png"]];
     
     // Make our chat button FANCY!
     UIImage *chatButtonImage = [[UIImage imageNamed:@"button-turquoise-32pt.png"]

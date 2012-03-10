@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "User.h"
 
 @interface ChatHelper : NSObject <UIAlertViewDelegate>
-
 
 + (void)respondToIncomingChatNotification:(NSString *)message
                              fromNickname:(NSString *)nickname
