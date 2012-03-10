@@ -13,7 +13,6 @@
 #import "CPUtils.h"
 #import "FoursquareAPIRequest.h"
 #import "AFJSONRequestOperation.h"
-#import "CPUIHelper.h"
 #import "CPapi.h"
 
 @interface UserProfileCheckedInViewController() <UIWebViewDelegate, UIActionSheetDelegate>
@@ -149,9 +148,8 @@
     [self.scrollView insertSubview:blueOverlay atIndex:1];
         
     // set LeagueGothic font where applicable
-    UIFont *gothic = [UIFont fontWithName:@"LeagueGothic" size:24.f];
     for (UILabel *labelNeedsGothic in [NSArray arrayWithObjects:self.checkedIn, self.loadingPt1, self.loadingPt2, self.loadingPt3, self.cardNickname, self.resumeLabel, nil]) {
-        labelNeedsGothic.font = gothic;
+        [CPUIHelper changeFontForLabel:labelNeedsGothic toLeagueGothicOfSize:24];
     }
     
     // set the paper background color where applicable
@@ -189,7 +187,7 @@
     }
     
     // set the navigation controller title to the user's nickname
-    self.title = self.user.nickname;    
+    self.title = self.user.nickname;  
 }
 
 - (void)viewDidAppear:(BOOL)animated

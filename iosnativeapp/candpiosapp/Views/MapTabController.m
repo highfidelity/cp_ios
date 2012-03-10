@@ -15,7 +15,6 @@
 #import "UserListTableViewController.h"
 #import "SignupController.h"
 #import "MapDataSet.h"
-#import "CPUIHelper.h"
 #import "UserProfileCheckedInViewController.h"
 #import "OCAnnotation.h"
 #import "UIImage+Resize.h"

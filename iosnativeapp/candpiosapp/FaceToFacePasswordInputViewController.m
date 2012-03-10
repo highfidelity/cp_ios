@@ -7,7 +7,6 @@
 //
 
 #import "FaceToFacePasswordInputViewController.h"
-#import "CPUIHelper.h"
 #import "CPapi.h"
 
 @interface FaceToFacePasswordInputViewController ()

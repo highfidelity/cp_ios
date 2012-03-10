@@ -9,7 +9,6 @@
 #import "FaceToFaceAcceptDeclineViewController.h"
 #import "FaceToFacePasswordInputViewController.h"
 #import "CPapi.h"
-#import "CPUIHelper.h"
 
 #define F2FPasswordViewTag 1515
 

@@ -10,7 +10,6 @@
 #import "CPapi.h"
 #import "SVProgressHUD.h"
 #import "AppDelegate.h"
-#import "CPUIHelper.h"
 #import "ChatMessage.h"
 #import "ChatMessageCell.h"
 

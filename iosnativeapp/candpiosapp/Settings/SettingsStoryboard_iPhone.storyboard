@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11A511" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
     <dependencies>
+        <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1179"/>
     </dependencies>
     <scenes>
+        <!--Settings Menu Controller-->
         <scene sceneID="6r0-kD-pJQ">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YHg-io-CGj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -38,6 +40,7 @@
             </objects>
             <point key="canvasLocation" x="-2050" y="-557"/>
         </scene>
+        <!--Balance View Controller-->
         <scene sceneID="d1R-FS-22a">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MPq-6l-85G" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -187,7 +190,7 @@
                             <outlet property="delegate" destination="TbW-wK-vWK" id="TOR-67-GIb"/>
                         </connections>
                     </scrollView>
-                    <navigationItem key="navigationItem" title="Wallet" id="hsH-x5-Hao">
+                    <navigationItem key="navigationItem" id="hsH-x5-Hao">
                         <barButtonItem key="rightBarButtonItem" id="ml3-AW-bcu">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="RmG-W7-meg">
                                 <rect key="frame" x="273" y="7" width="42" height="29"/>
@@ -217,6 +220,7 @@
             </objects>
             <point key="canvasLocation" x="-1196" y="-1107"/>
         </scene>
+        <!--Add Funds View Controller-->
         <scene sceneID="LYN-xf-xk9">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9ev-4H-Jox" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -236,7 +240,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Add Funds" id="pNN-KM-MjK">
+                    <navigationItem key="navigationItem" id="pNN-KM-MjK">
                         <barButtonItem key="leftBarButtonItem" title="Wallet" style="plain" id="Clu-ZD-m0o">
                             <connections>
                                 <action selector="closeWindow:" destination="f1M-sl-xRX" id="T44-td-scl"/>
@@ -250,6 +254,7 @@
             </objects>
             <point key="canvasLocation" x="-193" y="-1107"/>
         </scene>
+        <!--Navigation Controller-->
         <scene sceneID="phP-HQ-dek">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jfp-Hs-Q2S" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -267,6 +272,7 @@
             </objects>
             <point key="canvasLocation" x="-1658" y="-1087"/>
         </scene>
+        <!--Navigation Controller-->
         <scene sceneID="a73-2I-eFa">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ors-e0-WQW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -293,44 +299,6 @@
         <image name="wallet-cell-arrow-down.png" width="14" height="9"/>
         <image name="wallet-lock.png" width="25" height="25"/>
     </resources>
-    <classes>
-        <class className="AddFundsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFundsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeWindow:"/>
-                <relationship kind="action" name="goBack:"/>
-                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="BalanceViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BalanceViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="pullDownLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="pullIcon" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="transTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="updateTimeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="userBalance" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="SettingsMenuController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsMenuController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="edgeShadow" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="WalletCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/WalletCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="amountLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="profileImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="stateImage" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

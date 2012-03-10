@@ -16,7 +16,6 @@
 #import "OAuthConsumer.h"
 #import "CheckInHelper.h"
 #import "SignupController.h"
-#import "CPUIHelper.h"
 
 @interface AppDelegate(Internal)
 -(void)loadSettings;

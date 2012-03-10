@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "CPPlace.h"
 #import "CheckInDetailsViewController.h"
-#import "CPUIHelper.h"
 #import "SVProgressHUD.h"
 #import "SignupController.h"
 #import "CheckInListCell.h"
@@ -42,10 +41,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Title view styling
-    [CPUIHelper addDarkNavigationBarStyleToViewController:self];
-    self.title = @"Check In";
     refreshLocationsNow = YES;
+    
+    self.title = @"Check In";
+    [CPUIHelper addDarkNavigationBarStyleToViewController:self];
     
     // don't set the seperator here, add it manually in storyboard
     // allows us to show a line on the top cell when you are at the top of the table view

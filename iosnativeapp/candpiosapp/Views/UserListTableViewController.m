@@ -51,7 +51,7 @@
     }
     
     self.title = self.titleForList;
-
+    
     // Iterate through the passed missions and only show the ones that were within the map bounds, ordered by distance
 
     CLLocation *currentLocation = [AppDelegate instance].settings.lastKnownLocation;
@@ -78,6 +78,7 @@
             [goodUserIds addObject:userId];
         }        
     }
+    
 
     // first sort using checkinId so that we dont remove the most resent checkin by the user
     NSSortDescriptor *d = [[NSSortDescriptor alloc] initWithKey:@"checkinId" ascending:YES];

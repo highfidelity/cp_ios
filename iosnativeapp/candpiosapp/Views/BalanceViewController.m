@@ -11,7 +11,6 @@
 #import "SVProgressHUD.h"
 #import "CPapi.h"
 #import "SignupController.h"
-#import "CPUIHelper.h"
 #import "WalletCell.h"
 #import "TableCellHelper.h"
 
@@ -58,6 +57,7 @@
     [super viewDidLoad];
     [self loadTransactionData];
     
+    self.title = @"Wallet";
     [CPUIHelper addDarkNavigationBarStyleToViewController:self];
     
     isFlipped = NO;

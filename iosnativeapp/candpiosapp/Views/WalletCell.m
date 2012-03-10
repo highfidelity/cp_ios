@@ -7,7 +7,6 @@
 //
 
 #import "WalletCell.h"
-#import "CPUIHelper.h"
 
 @implementation WalletCell
 @synthesize profileImage = _profileImage;

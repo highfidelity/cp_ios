@@ -8,7 +8,6 @@
 
 #import "CheckInDetailsViewController.h"
 #import "SVProgressHUD.h"
-#import "CPUIHelper.h"
 #import "SignupController.h"
 #import "AppDelegate.h"
 #import "CPapi.h"
@@ -181,9 +180,8 @@
     [self.mapView setCenterCoordinate:coordinate animated:NO];
     
     // set LeagueGothic font where applicable
-    UIFont *gothic = [UIFont fontWithName:@"LeagueGothic" size:26.f];
     for (UILabel *labelNeedsGothic in [NSArray arrayWithObjects:self.checkInLabel, self.willLabel, self.orLabel, self.wantLabel, self.durationHeader, nil]) {
-        labelNeedsGothic.font = gothic;
+        [CPUIHelper changeFontForLabel:labelNeedsGothic toLeagueGothicOfSize:26];
     }
 
     // add a shadow on the top of the checkInDetails View, the VenueInfo box and the user info bubble

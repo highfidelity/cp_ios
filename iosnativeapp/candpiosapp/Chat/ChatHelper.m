@@ -10,7 +10,6 @@
 #import "OneOnOneChatViewController.h"
 #import "CPAlertView.h"
 #import "AppDelegate.h"
-#import "CPUIHelper.h"
 
 @implementation ChatHelper
 

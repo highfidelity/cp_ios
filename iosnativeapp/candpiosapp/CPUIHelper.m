@@ -36,6 +36,7 @@
     navigationBar.barStyle = UIBarStyleBlack;
     [navigationBar setBackgroundImage:[UIImage imageNamed: @"header.png"]
                         forBarMetrics: UIBarMetricsDefault];
+    navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"LeagueGothic" size:24] forKey:UITextAttributeFont];
 }
 
 + (void)addDarkToolbarStyleToToolbar:(UIToolbar *)toolbar
@@ -111,6 +112,15 @@
         default:
             return nil;
     }
+}
+
+# pragma mark - League Gothic Helper
+
++ (void)changeFontForLabel:(UILabel *)label toLeagueGothicOfSize:(CGFloat)size
+{
+    
+    UIFont *gothic = [UIFont fontWithName:@"LeagueGothic" size:size];
+    label.font = gothic;
 }
 
 #pragma mark - UIImage rotate

@@ -12,7 +12,6 @@
 #import "AFNetworking.h"
 #import "SVProgressHUD.h"
 #import "CPapi.h"
-#import "CPUIHelper.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation PayUserViewController
@@ -60,7 +59,7 @@
     
     [SVProgressHUD showWithStatus:@"Loading..."];
 
-
+    
     [payTo setText: self.user.nickname];
     [payeeImage setImageWithURL: self.user.urlPhoto];
 }

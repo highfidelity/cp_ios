@@ -45,6 +45,9 @@ typedef enum {
 + (UIColor *)colorForCPColor:(CPColor)cpColor;
 + (UIImage *)imageForCPColor:(CPButtonColor)buttonColor;
 
+// Font changes (League Gothic)
++ (void)changeFontForLabel:(UILabel *)label toLeagueGothicOfSize:(CGFloat)size;
+
 // Animations
 + (void)rotateImage:(UIImageView *)image
            duration:(NSTimeInterval)duration
