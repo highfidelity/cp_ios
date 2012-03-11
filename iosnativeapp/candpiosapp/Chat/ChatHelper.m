@@ -77,7 +77,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     if (alertView.title == @"Incoming Chat") {
         if (buttonIndex == 1) {
             NSString *userId   = [alertView.context objectForKey:@"userid"];
-            NSString *message  = [alertView.context objectForKey:@"message"];
             NSString *nickname = [alertView.context objectForKey:@"nickname"];
             
             OneOnOneChatViewController *oneOnOneChat =
@@ -97,8 +96,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
             [alertView.rootView presentViewController:chatNavController
                                              animated:YES
                                            completion:nil];
-            
-            [oneOnOneChat receiveChatText:message];
         }
     }
 }

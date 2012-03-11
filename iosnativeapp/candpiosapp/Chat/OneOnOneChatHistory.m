@@ -33,7 +33,7 @@
     return self;
 }
 
-- (void)loadChatHistory
+- (void)loadChatHistoryWithSuccessBlock:(void (^)())successfulLoading
 {
     [SVProgressHUD showWithStatus:@"Loading chat"];
     
@@ -56,12 +56,10 @@
         BOOL respError = [[jsonResponse objectForKey:@"error"] boolValue];
         
         if (!error && !respError)
-        {
-            NSLog(@"Chat history dict: %@", jsonResponse);
-            
+        {            
             for (NSDictionary *chatDict in [jsonResponse valueForKey:@"chat"])
             {
-                NSLog(@"chatDict: %@", chatDict);
+                //NSLog(@"chatDict: %@", chatDict);
                 
                 // Extract chat text from json...
                 NSString *messageString = [chatDict valueForKey:@"entry_text"];
@@ -89,10 +87,11 @@
                                                                      toUser:toUser
                                                                    fromUser:fromUser
                                                                        date:date];
-                
                 [self insertMessage:message];
             }
             
+            // Run whatever completion code we need
+            (void) successfulLoading();
             [SVProgressHUD dismiss];
         }
         else

@@ -59,16 +59,11 @@
 {
     NSInteger insertLocation = 1;
     
-    for (id checkObject in self.messages)
+    for (ChatMessage *checkMessage in self.messages)
     {
-        // Make sure that the current object is 
-        if ([checkObject isKindOfClass:[ChatMessage class]])
+        if ([message.date compare:checkMessage.date] == NSOrderedAscending)
         {
-            ChatMessage *checkMessage = (ChatMessage *)checkObject;
-            if (message.date > checkMessage.date)
-            {
-                break;
-            }
+            break;
         }
         insertLocation++;
     }
@@ -84,8 +79,6 @@
     {
         [self addMessage:message];
     }
-    
-    
 }
 
 // Add a message to the messages array for the given user
@@ -104,5 +97,14 @@
 {
     return [self.messages objectAtIndex:index];
 }
+
+
+#pragma mark - Misc functions
+
+- (void)sort
+{
+    [self.messages sortUsingSelector:@selector(compareDateWith:)];
+}
+
 
 @end

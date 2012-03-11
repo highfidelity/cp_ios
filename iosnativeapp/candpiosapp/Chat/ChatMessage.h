@@ -25,5 +25,6 @@
              fromUser:(User *)fromUser
                  date:(NSDate *)date;
 
+- (NSComparisonResult)compareDateWith:(ChatMessage *)message;
 
 @end

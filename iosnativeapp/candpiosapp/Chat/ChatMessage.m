@@ -61,5 +61,9 @@
     return self;
 }
 
+- (NSComparisonResult)compareDateWith:(ChatMessage *)message
+{
+    return [self.date compare: message.date];
+}
 
 @end

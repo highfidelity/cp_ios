@@ -20,6 +20,7 @@ float const CHAT_BUBBLE_IMG_TOP_HEIGHT    = 14.0f;
 float const CHAT_BUBBLE_IMG_MIDDLE_HEIGHT = 13.0f;
 float const CHAT_BUBBLE_IMG_BOTTOM_HEIGHT = 14.0f;
 float const CHAT_MESSAGE_LABEL_Y          = 14.0;
+float const CHAT_MESSAGE_LABEL_BOTTOM_PADDING = 4.0;
 float const CHAT_MESSAGE_LABEL_WIDTH      = 220.0f;
 float const TIMESTAMP_CELL_WIDTH          = 304.0f;
 float const TIMESTAMP_CELL_HEIGHT         = 18.0f;
@@ -150,7 +151,11 @@ static CGFloat const FONTSIZE = 14.0;
 
 - (BOOL)shouldRowHaveTimestamp:(NSUInteger) row
 {
-    if (row > 0)
+    if (row == 0)
+    {
+        return YES;
+    }
+    else
     {
         ChatMessage *prevMessage = [self.history messageAtIndex:row - 1];
         ChatMessage *nextMessage = [self.history messageAtIndex:row];
@@ -161,6 +166,7 @@ static CGFloat const FONTSIZE = 14.0;
             return YES;
         }
     }
+    
     return NO;
 }
 
@@ -192,6 +198,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     height += topAndBottomBubbleHeight;
     height += CHAT_BUBBLE_IMG_MIDDLE_HEIGHT;
     height += topAndBottomBubbleHeight;
+    height += CHAT_MESSAGE_LABEL_BOTTOM_PADDING;
     height += CHAT_BUBBLE_PADDING_BOTTOM;
     
     return height;
@@ -285,7 +292,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     chatMessageLabel.text = message.message;
         
     // Figure out the dynamic height portion of the top and bottom bubble
-    CGFloat topAndBottomHeight = [self labelHeight:message] / 2;
+    CGFloat topAndBottomHeight = [self labelHeight:message] / 2 +CHAT_MESSAGE_LABEL_BOTTOM_PADDING;
     
     // Calculate the Y and HEIGHT of the top bubble
     CGFloat topBubbleHeight = CHAT_BUBBLE_IMG_TOP_HEIGHT;
@@ -396,7 +403,12 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
                                                   andOtherUser:self.user];
     
     // Load the last few lines of chat
-    //[self.history loadChatHistory];
+    void (^afterLoadingHistory)() = ^() {
+        NSLog(@"Reloading chat table & scrolling to the end.");
+        [self.chatContents reloadData];
+        [self scrollToLastChat];
+    };
+    [self.history loadChatHistoryWithSuccessBlock:afterLoadingHistory];
         
     // Set up the fancy background on view
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise.png"]];

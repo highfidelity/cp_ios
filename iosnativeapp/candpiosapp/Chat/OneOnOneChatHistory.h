@@ -16,6 +16,6 @@
 - (id)initWithMyUser:(User *)myUser
         andOtherUser:(User *)otherUser;
 
-- (void)loadChatHistory;
+- (void)loadChatHistoryWithSuccessBlock:(void (^)())successfulLoading;
 
 @end

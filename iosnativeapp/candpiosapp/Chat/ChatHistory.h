@@ -27,4 +27,8 @@
 - (BOOL)isTimestampNecessaryBetween:(ChatMessage *)prevMessage
                          andMessage:(ChatMessage *)nextMessage;
 
+#pragma mark - Misc functions
+
+- (void)sort;
+
 @end
