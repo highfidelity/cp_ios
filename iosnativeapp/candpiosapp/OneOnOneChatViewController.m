@@ -404,7 +404,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     
     // Load the last few lines of chat
     void (^afterLoadingHistory)() = ^() {
-        NSLog(@"Reloading chat table & scrolling to the end.");
         [self.chatContents reloadData];
         [self scrollToLastChat];
     };
