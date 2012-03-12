@@ -20,6 +20,12 @@
 @property (nonatomic, strong) UIAlertView *f2fInviteAlert;
 @property (nonatomic, strong) UIAlertView *f2fPasswordAlert;
 
+@property (weak, nonatomic) IBOutlet UISwitch *citySwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *venueSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *checkedInSwitch;
+
+-(IBAction) switchValueChanged: (id)sender;
+
 - (void)showMenu:(BOOL)shouldReveal;
 - (void)closeMenu;
 

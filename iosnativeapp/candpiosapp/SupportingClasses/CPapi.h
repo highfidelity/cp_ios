@@ -53,5 +53,8 @@
 + (void)getUserTrasactionDataWithCompletitonBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 + (void)getCheckInDataWithUserId:(int)userId
                    andCompletion:(void (^)(NSDictionary *, NSError *))completion;
++ (void)getNotificationSettingsWithCompletition:(void(^)(NSDictionary *json, NSError *error))completion;
++ (void)setNotificationSettingsForDistance:(NSString *)distance
+                              andCheckedId:(BOOL)checkedOnly;
 
 @end

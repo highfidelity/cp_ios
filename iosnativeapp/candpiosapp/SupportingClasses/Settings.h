@@ -28,6 +28,9 @@
 @property (nonatomic, copy) NSString *userPassword;
 @property (nonatomic, assign) float userBalance;
 
+//checkin notification settings
+@property (nonatomic, assign) bool notifyInVenueOnly;
+@property (nonatomic, assign) bool notifyWhenCheckedIn;
 // TODO: Don't store the userPassword here or in NSUserDefaults
 // it should be stored encrypted in the keychain
 

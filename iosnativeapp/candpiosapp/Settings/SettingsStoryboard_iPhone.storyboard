@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2177" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
     <dependencies>
-        <deployment defaultVersion="1296" identifier="iOS"/>
+        <deployment defaultVersion="1280" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1179"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1173"/>
     </dependencies>
     <scenes>
         <!--Settings Menu Controller-->
@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="B0T-Il-Eqh">
-                                <rect key="frame" x="0.0" y="0.0" width="256" height="460"/>
+                                <rect key="frame" x="0.0" y="0.0" width="256" height="125"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.1764705882" green="0.1764705882" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -28,12 +28,64 @@
                                 <rect key="frame" x="-10" y="0.0" width="10" height="460"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="4On-B1-Bt6">
+                                <rect key="frame" x="165" y="176" width="79" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="onTintColor" red="0.25882352939999997" green="0.51764705879999995" blue="0.50980392159999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="switchValueChanged:" destination="WGr-Yo-Vg9" eventType="valueChanged" id="IwS-0c-RqW"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show me new check-ins:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="tcx-0G-sQV">
+                                <rect key="frame" x="8" y="133" width="192" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="cXk-T8-iE5">
+                                <rect key="frame" x="166" y="218" width="79" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="onTintColor" red="0.25882352939999997" green="0.51764705879999995" blue="0.50980392159999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="switchValueChanged:" destination="WGr-Yo-Vg9" eventType="valueChanged" id="TRv-2j-xFQ"/>
+                                </connections>
+                            </switch>
+                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="tMD-2v-hZQ">
+                                <rect key="frame" x="166" y="259" width="79" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="onTintColor" red="0.25882352939999997" green="0.51764705879999995" blue="0.50980392159999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="In my city" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="YDZ-Ab-WZz">
+                                <rect key="frame" x="8" y="179" width="74" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="At my current location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="N2I-1z-9ac">
+                                <rect key="frame" x="8" y="219" width="168" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Only when I am checked in" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="w9m-FK-9Y6">
+                                <rect key="frame" x="8" y="251" width="133" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.1764705882" green="0.1764705882" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
+                        <outlet property="checkedInSwitch" destination="tMD-2v-hZQ" id="tdB-m3-HOv"/>
+                        <outlet property="citySwitch" destination="4On-B1-Bt6" id="s1C-Ww-8tp"/>
                         <outlet property="edgeShadow" destination="rBQ-Tw-WrU" id="ao2-Fv-5NN"/>
                         <outlet property="tableView" destination="B0T-Il-Eqh" id="QWr-pZ-Bem"/>
+                        <outlet property="venueSwitch" destination="cXk-T8-iE5" id="sNc-ZV-Odr"/>
                         <segue destination="v02-mH-SnY" kind="modal" identifier="ShowBalanceFromMenu" modalTransitionStyle="flipHorizontal" id="sYX-36-SM5"/>
                     </connections>
                 </viewController>
@@ -299,6 +351,48 @@
         <image name="wallet-cell-arrow-down.png" width="14" height="9"/>
         <image name="wallet-lock.png" width="25" height="25"/>
     </resources>
+    <classes>
+        <class className="AddFundsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFundsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="closeWindow:"/>
+                <relationship kind="action" name="goBack:"/>
+                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="BalanceViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BalanceViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="pullDownLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="pullIcon" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="transTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="updateTimeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userBalance" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="SettingsMenuController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsMenuController.h"/>
+            <relationships>
+                <relationship kind="action" name="switchValueChanged:"/>
+                <relationship kind="outlet" name="checkedInSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="citySwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="edgeShadow" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="venueSwitch" candidateClass="UISwitch"/>
+            </relationships>
+        </class>
+        <class className="WalletCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/WalletCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="amountLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="profileImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="stateImage" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

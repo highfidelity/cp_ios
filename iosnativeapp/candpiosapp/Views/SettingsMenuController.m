@@ -9,6 +9,7 @@
 #import "SettingsMenuController.h"
 #import "AppDelegate.h"
 #import "MapTabController.h"
+#import "CPapi.h"
 
 #define logoutMenuIndex 1
 #define menuWidthPercentage 0.8
@@ -42,6 +43,9 @@
 @synthesize panStartLocation;
 @synthesize f2fInviteAlert = _f2fInviteAlert;
 @synthesize f2fPasswordAlert = _f2fPasswordAlert;
+@synthesize citySwitch;
+@synthesize venueSwitch;
+@synthesize checkedInSwitch;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -87,6 +91,59 @@
     
 }
 
+- (void)loadNotificationSettings
+{
+    [CPapi getNotificationSettingsWithCompletition:^(NSDictionary *json, NSError *err) {
+        BOOL error = [[json objectForKey:@"error"] boolValue];
+        
+        NSLog(@"notif. rec.: %@", json); 
+        
+        if (error) {
+            [self setVenue:[AppDelegate instance].settings.notifyInVenueOnly];
+            [self setCheckin:[AppDelegate instance].settings.notifyWhenCheckedIn];
+        } else {
+            NSDictionary *dict = [json objectForKey:@"payload"];
+            
+            
+            NSString *venue = [dict objectForKey:@"push_distance"];
+            BOOL is_venue = [venue isEqualToString:@"venue"];
+            NSString *checkin = [dict objectForKey:@"checked_in_only"];
+            BOOL is_checkin = [checkin isEqualToString:@"1"];
+            
+            [self setVenue:is_venue];
+            [self setCheckin:is_checkin];
+            
+            [AppDelegate instance].settings.notifyInVenueOnly = venue;
+            [AppDelegate instance].settings.notifyWhenCheckedIn = checkin;
+            [[AppDelegate instance] saveSettings];
+        }
+    }];
+}
+
+- (void)saveNotificationSettings
+{
+    NSString *distance = venueSwitch.on ? @"venue" : @"city";
+    [CPapi setNotificationSettingsForDistance:distance
+                                 andCheckedId:checkedInSwitch.on];
+    
+    [AppDelegate instance].settings.notifyInVenueOnly = venueSwitch.on;
+    [AppDelegate instance].settings.notifyWhenCheckedIn = checkedInSwitch.on;
+    [[AppDelegate instance] saveSettings];   
+}
+
+- (void)setCheckin:(BOOL)setCheckin
+{
+    [checkedInSwitch setOn:setCheckin animated:YES];
+}
+
+- (void)setVenue:(BOOL)setVenue
+{
+    [citySwitch setOn:!setVenue animated:YES];
+    [venueSwitch setOn:setVenue animated:YES];
+}
+
+
+
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -127,10 +184,25 @@
     [self initMenu];
 }
 
+- (void)viewWillUnload
+{
+    if ([AppDelegate instance].settings.notifyInVenueOnly != 1 ||
+        [AppDelegate instance].settings.notifyWhenCheckedIn !=1 ) {
+        
+        [AppDelegate instance].settings.notifyInVenueOnly = 1;
+        [AppDelegate instance].settings.notifyWhenCheckedIn = 1;
+        
+        //save
+    }
+}
+
 - (void)viewDidUnload
 {
     [self setTableView:nil];
     [self setEdgeShadow:nil];
+    [self setCitySwitch:nil];
+    [self setVenueSwitch:nil];
+    [self setCheckedInSwitch:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -179,7 +251,23 @@
     self.edgeShadow.frame = CGRectOffset(self.edgeShadow.bounds, xOffset - self.edgeShadow.frame.size.width, 0);
 }
 
+
+- (IBAction)switchValueChanged:(id)sender {
+    if (sender == citySwitch) {
+        [self setVenue:!citySwitch.on];
+    } else {
+        [self setVenue:venueSwitch.on];
+    }
+}
+
 - (void)showMenu:(BOOL)showMenu {
+    
+    if (showMenu) {
+        [self loadNotificationSettings];   
+    }
+    else {
+        [self saveNotificationSettings];
+    }
     // Animate the reveal of the menu
     [UIView beginAnimations:@"" context:nil];
     [UIView setAnimationDuration:0.3];

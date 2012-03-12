@@ -102,10 +102,14 @@
     
     NSURLRequest *request =  [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        completion(JSON, nil);
+        if (completion != nil) {
+            completion(JSON, nil);   
+        }
     }
     failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        completion(JSON, error);
+        if (completion != nil) {
+            completion(JSON, error);
+        }
     }];
     
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
@@ -582,6 +586,23 @@
                          completion:completion];
 }
 
++ (void)getNotificationSettingsWithCompletition:(void (^)(NSDictionary *, NSError *))completion {
+    [self makeHTTPRequestWithAction:@"getNotificationSettings"
+                     withParameters:nil
+                         completion:completion];
+}
+
++ (void)setNotificationSettingsForDistance:(NSString *)distance
+                              andCheckedId:(BOOL)checkedOnly {
+
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setValue:distance forKey:@"push_distance"];
+    [parameters setValue:checkedOnly ? @"1" : @"0" forKey:@"checked_in_only"];
+
+    [self makeHTTPRequestWithAction:@"setNotificationSettings"
+                         withParameters:parameters
+                             completion:nil];
+}
 
 
 @end

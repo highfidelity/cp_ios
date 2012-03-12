@@ -17,6 +17,7 @@
 @synthesize candpUserId;
 @synthesize facebookAccessToken, facebookExpirationDate;
 @synthesize userEmailAddress, userNickname, userPassword, userBalance;
+@synthesize notifyInVenueOnly, notifyWhenCheckedIn;;
 
 //=========================================================== 
 // - (id)init
@@ -47,6 +48,8 @@
 	[encoder encodeObject:userNickname	forKey:@"userNickname"];
 	[encoder encodeObject:userPassword	forKey:@"userPassword"];
 	[encoder encodeFloat:userBalance forKey:@"userBalance"];
+    [encoder encodeBool:flag forKey:@"notifyInVenueOnly"];
+    [encoder encodeBool:flag forKey:@"notifyWhenCheckedIn"];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder 
@@ -64,6 +67,9 @@
 		userNickname = [decoder decodeObjectForKey:@"userNickname"];
 		userPassword = [decoder decodeObjectForKey:@"userPassword"];
 		userBalance = [decoder decodeFloatForKey:@"userBalance"];
+        
+        notifyInVenueOnly = [decoder decodeBoolForKey:@"notifyInVenueOnly"];
+        notifyWhenCheckedIn = [decoder decodeBoolForKey:@"notifyWhenCheckedIn"];
     }
     return self;
 }
