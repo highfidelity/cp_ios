@@ -384,6 +384,9 @@
                 
                 NSString *imageUrl = [user objectForKey:@"imageUrl"];
                 
+                // TODO: should we really be keeping the defaultAvatar locally?
+                // why not just pass it back as the user's image so we cut down on app size
+                // once it gets requested once it will be cached
                 if ([imageUrl isKindOfClass:[NSNull class]]) {
                     // no user image so use the default avatar
                     [userImage setImage:[UIImage imageNamed:@"defaultAvatar50"]];
