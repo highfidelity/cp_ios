@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2177" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
     <dependencies>
-        <deployment defaultVersion="1280" identifier="iOS"/>
+        <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1179"/>
     </dependencies>
     <scenes>
         <!--Settings Menu Controller-->
@@ -156,7 +156,7 @@
                                         <rect key="frame" x="250" y="23" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" backgroundImage="go-button~iphone.png">
+                                        <state key="normal" backgroundImage="add-funds.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -344,55 +344,13 @@
         </scene>
     </scenes>
     <resources>
-        <image name="go-button~iphone.png" width="75" height="75"/>
+        <image name="add-funds.png" width="58" height="58"/>
         <image name="map-shadow.png" width="10" height="320"/>
         <image name="refresh-scroll-view.png" width="15" height="40"/>
         <image name="settings-button-3.png" width="42" height="29"/>
         <image name="wallet-cell-arrow-down.png" width="14" height="9"/>
         <image name="wallet-lock.png" width="25" height="25"/>
     </resources>
-    <classes>
-        <class className="AddFundsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFundsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeWindow:"/>
-                <relationship kind="action" name="goBack:"/>
-                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="BalanceViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BalanceViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="pullDownLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="pullIcon" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="transTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="updateTimeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="userBalance" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="SettingsMenuController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsMenuController.h"/>
-            <relationships>
-                <relationship kind="action" name="switchValueChanged:"/>
-                <relationship kind="outlet" name="checkedInSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="citySwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="edgeShadow" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="venueSwitch" candidateClass="UISwitch"/>
-            </relationships>
-        </class>
-        <class className="WalletCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/WalletCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="amountLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="profileImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="stateImage" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

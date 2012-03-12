@@ -35,6 +35,8 @@
 
 @synthesize httpClient;
 
+// TODO: Show the network activity indicator while the request is being made. Update SVProgressHUD to its latest version (where it no longer automatically shows the network activity indicator when the HUD is displayed) so that the indicator is the responsibility of the actual request and not the HUD
+
 // Private method to perform HTTP requests to the C&P API
 + (void)makeHTTPRequestWithAction:(NSString *)action
                    withParameters:(NSMutableDictionary *)parameters
