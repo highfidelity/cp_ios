@@ -79,7 +79,7 @@
     NSRange spaceRange = [self.nickname rangeOfString:@" "]; 
     NSString *firstName;
     
-    if (spaceRange.length > 0) {
+    if (spaceRange.location != NSNotFound) {
         firstName = [self.nickname substringToIndex:spaceRange.location + 1];
     } else {
         firstName = self.nickname;

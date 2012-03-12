@@ -382,16 +382,25 @@
                 // add the button to the scrollview
                 [self.otherUsersScrollView addSubview:userImageButton];
                 
-                // setup the request for the user's image, use AFNetworking to grab it
-                NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[user objectForKey:@"imageUrl"]]];
-                [userImage setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
-                    [spinner stopAnimating];
-                }
-                failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error){
-                    // TODO: revisit the handling of errors here, we likely want to show that there was supposed to be a thumbnail there and still allow
-                    // the click event to see the user info
-                    [spinner stopAnimating];                    
-                }];
+                NSString *imageUrl = [user objectForKey:@"imageUrl"];
+                
+                if ([imageUrl isKindOfClass:[NSNull class]]) {
+                    // no user image so use the default avatar
+                    [userImage setImage:[UIImage imageNamed:@"defaultAvatar50"]];
+                    [spinner stopAnimating]; 
+                } else {
+                    // setup the request for the user's image, use AFNetworking to grab it
+                    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[user objectForKey:@"imageUrl"]]];
+                    [userImage setImageWithURLRequest:request placeholderImage:nil 
+                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
+                            [spinner stopAnimating];
+                        }
+                        failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error){
+                            // TODO: revisit the handling of errors here, we likely want to show that there was supposed to be a thumbnail there and still allow
+                            // the click event to see the user info
+                            [spinner stopAnimating];                    
+                    }];
+                } 
                 
                 // increase the leftOffset so the next image is in the right spot
                 leftOffset = leftOffset + 62;
@@ -514,7 +523,7 @@
     // decode the HTML entities
     self.infoBubbleNickname.text = [[self.userArray objectAtIndex:userIndex] nickname];
     NSString *status = [[self.userArray objectAtIndex:userIndex] status];
-    if (status.length > 0) {
+    if ([status length] > 0) {
         self.infoBubbleStatus.text = [NSString stringWithFormat:@"\"%@\"", status];
     } else {
         self.infoBubbleStatus.text = @"No status set...";
