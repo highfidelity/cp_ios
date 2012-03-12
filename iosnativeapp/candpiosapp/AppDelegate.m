@@ -14,7 +14,7 @@
 #import "ChatHelper.h"
 #import "FlurryAnalytics.h"
 #import "OAuthConsumer.h"
-#import "CheckInHelper.h"
+#import "PaymentHelper.h"
 #import "SignupController.h"
 
 @interface AppDelegate(Internal)
@@ -384,9 +384,8 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
     // Received payment
     else if ([userInfo valueForKey:@"payment_received"] != nil)
     {
-        int user_id = [[userInfo valueForKey:@"payment_received"] intValue];
-        [CheckInHelper showCheckInProfileForUser:user_id
-                                        fromView: self.settingsMenuController];
+        NSString *message = [userInfo valueForKeyPath:@"aps.alert"];
+        [PaymentHelper showPaymentReceivedAlertWithMessage:message];
     }
 }
 

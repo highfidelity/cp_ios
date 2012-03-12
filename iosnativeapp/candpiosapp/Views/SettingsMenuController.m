@@ -392,18 +392,21 @@
         [self.mapTabController loginButtonTapped];
     } else { 
         // for right now this is the wallet so let's slide over to there
-        [self performSegueWithIdentifier:@"ShowBalanceFromMenu" sender:self];
+        [self showUserWallet];
     }
 }
 
 - (void)showUserWallet
 {
-    BalanceViewController *userWallet = [self.storyboard instantiateViewControllerWithIdentifier:@"UserWalletViewController"];
-    [self presentModalViewController:userWallet animated:YES];
+    [self performSegueWithIdentifier:@"ShowBalanceFromMenu" sender:self];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
+    if (buttonIndex == 1 && [[alertView buttonTitleAtIndex:1] isEqualToString:@"Wallet"]) {
+        // the user wants to see their wallet, so let's do that
+        [self showUserWallet];
+    }
     alertView = nil;
 }
 

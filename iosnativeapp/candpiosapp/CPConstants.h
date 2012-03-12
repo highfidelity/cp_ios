@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 
 // define a way to quickly grab the app delegate
-#define CPAppDelegate [[AppDelegate sharedApplication] delegate]
+#define CPAppDelegate (AppDelegate *)[UIApplication sharedApplication].delegate
 
 // define a way to quickly grab and set NSUserDefaults
 #define DEFAULTS(type, key) ([[NSUserDefaults standardUserDefaults] type##ForKey:key])

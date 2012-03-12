@@ -8,9 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CheckInHelper : NSObject
+@interface PaymentHelper : NSObject
 
-+ (void)showCheckInProfileForUser:(int) user_id
-                         fromView:(UIViewController *)view;
++ (void)showPaymentReceivedAlertWithMessage:(NSString *)message;
 
 @end

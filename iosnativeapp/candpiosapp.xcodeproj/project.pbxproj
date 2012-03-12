@@ -195,6 +195,8 @@
 		53FB9E4B14E0A81300F4CC7F /* checked-in-location@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FB9E4714E0A81300F4CC7F /* checked-in-location@2x~iphone.png */; };
 		53FB9E4C14E0A81300F4CC7F /* checked-in-location~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FB9E4814E0A81300F4CC7F /* checked-in-location~iphone.png */; };
 		53FB9E4F14E0AE4600F4CC7F /* FoursquareAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FB9E4E14E0AE4600F4CC7F /* FoursquareAPIRequest.m */; };
+		53FE254E150EA50B00A0D93A /* PaymentHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE254D150EA50A00A0D93A /* PaymentHelper.m */; };
+		53FE254F150EA60D00A0D93A /* PaymentHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE254D150EA50A00A0D93A /* PaymentHelper.m */; };
 		6F0B453914F6BCD10074DBD9 /* ChatHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453814F6BCD10074DBD9 /* ChatHelper.m */; };
 		6F0B453C14F6BD560074DBD9 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453B14F6BD560074DBD9 /* ChatMessage.m */; };
 		6F0B453F14F6BD850074DBD9 /* ChatHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453E14F6BD850074DBD9 /* ChatHistory.m */; };
@@ -309,7 +311,6 @@
 		E4EAFBD51503B5290052448B /* refresh-scroll-view@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EAFBD31503B5290052448B /* refresh-scroll-view@2x.png */; };
 		E4EAFBD61503B5290052448B /* refresh-scroll-view.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EAFBD41503B5290052448B /* refresh-scroll-view.png */; };
 		E4EAFBDE1505467C0052448B /* WalletCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EAFBDD1505467C0052448B /* WalletCell.m */; };
-		E4EFA7F114FA3427004A329D /* CheckInHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFA7F014FA3427004A329D /* CheckInHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -616,6 +617,8 @@
 		53FB9E4814E0A81300F4CC7F /* checked-in-location~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "checked-in-location~iphone.png"; path = "images/checked-in-location~iphone.png"; sourceTree = "<group>"; };
 		53FB9E4D14E0AE4600F4CC7F /* FoursquareAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FoursquareAPIRequest.h; path = SupportingClasses/FoursquareAPIRequest.h; sourceTree = "<group>"; };
 		53FB9E4E14E0AE4600F4CC7F /* FoursquareAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FoursquareAPIRequest.m; path = SupportingClasses/FoursquareAPIRequest.m; sourceTree = "<group>"; };
+		53FE254C150EA50A00A0D93A /* PaymentHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaymentHelper.h; path = Payment/PaymentHelper.h; sourceTree = "<group>"; };
+		53FE254D150EA50A00A0D93A /* PaymentHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaymentHelper.m; path = Payment/PaymentHelper.m; sourceTree = "<group>"; };
 		6F0B453714F6BCC50074DBD9 /* ChatHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatHelper.h; path = candpiosapp/Chat/ChatHelper.h; sourceTree = SOURCE_ROOT; };
 		6F0B453814F6BCD10074DBD9 /* ChatHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatHelper.m; path = candpiosapp/Chat/ChatHelper.m; sourceTree = SOURCE_ROOT; };
 		6F0B453A14F6BD560074DBD9 /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatMessage.h; path = candpiosapp/Chat/ChatMessage.h; sourceTree = SOURCE_ROOT; };
@@ -806,8 +809,6 @@
 		E4EAFBD41503B5290052448B /* refresh-scroll-view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refresh-scroll-view.png"; sourceTree = "<group>"; };
 		E4EAFBDC1505467C0052448B /* WalletCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WalletCell.h; path = Views/WalletCell.h; sourceTree = "<group>"; };
 		E4EAFBDD1505467C0052448B /* WalletCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WalletCell.m; path = Views/WalletCell.m; sourceTree = "<group>"; };
-		E4EFA7EF14FA3427004A329D /* CheckInHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckInHelper.h; path = CheckIn/CheckInHelper.h; sourceTree = "<group>"; };
-		E4EFA7F014FA3427004A329D /* CheckInHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInHelper.m; path = CheckIn/CheckInHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1328,8 +1329,6 @@
 				32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */,
 				534FC98814EF2E8C008C87B9 /* CheckInDetailsFrame.h */,
 				534FC98914EF2E8C008C87B9 /* CheckInDetailsFrame.m */,
-				E4EFA7EF14FA3427004A329D /* CheckInHelper.h */,
-				E4EFA7F014FA3427004A329D /* CheckInHelper.m */,
 				53882B5C14FC13630073058C /* CheckInListCell.h */,
 				53882B5D14FC13630073058C /* CheckInListCell.m */,
 				53E2061F150591600000FA8D /* DismissHUDAfterReloadData.h */,
@@ -1792,6 +1791,8 @@
 		E48CFA321500416900A35D0E /* Payment */ = {
 			isa = PBXGroup;
 			children = (
+				53FE254C150EA50A00A0D93A /* PaymentHelper.h */,
+				53FE254D150EA50A00A0D93A /* PaymentHelper.m */,
 				536DE93C150173A500794650 /* images */,
 				E48CFA33150041FC00A35D0E /* AddFundsViewController.h */,
 				E48CFA34150041FC00A35D0E /* AddFundsViewController.m */,
@@ -2074,6 +2075,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53FE254F150EA60D00A0D93A /* PaymentHelper.m in Sources */,
 				4EC78B0D14F76E8400581F4F /* SettingsMenuController.m in Sources */,
 				871EFB1714AE9C820030658B /* main.m in Sources */,
 				871EFB1B14AE9C820030658B /* AppDelegate.m in Sources */,
@@ -2175,7 +2177,6 @@
 				32A7999314F9867D00A0D4CB /* UIImage+Alpha.m in Sources */,
 				32A7999414F9867D00A0D4CB /* UIImage+Resize.m in Sources */,
 				32A7999514F9867D00A0D4CB /* UIImage+RoundedCorner.m in Sources */,
-				E4EFA7F114FA3427004A329D /* CheckInHelper.m in Sources */,
 				3278800014FAD7070055A991 /* MKAnnotationView+WebCache.m in Sources */,
 				53882B5E14FC13630073058C /* CheckInListCell.m in Sources */,
 				4EBD1D4614FEC1C700E9C0C6 /* BaseLoginController.m in Sources */,
@@ -2200,6 +2201,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				871EFB4414AE9C820030658B /* candpiosappTests.m in Sources */,
+				53FE254E150EA50B00A0D93A /* PaymentHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
