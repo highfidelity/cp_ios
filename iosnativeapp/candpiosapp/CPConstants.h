@@ -31,6 +31,7 @@ extern  NSString* const flurryAnalyticsKey;
 // NOTE: We are slowly moving the way we store data to the 
 // iOS standard NSUserDefaults (eventually replacing Settings.h)
 // these are the keys for things stored in NSUserDefaults
+extern NSString* const kUDCurrentUser;
 extern NSString* const kUDFirstCheckIn;
 extern NSString* const kUDCheckoutTime;
 
