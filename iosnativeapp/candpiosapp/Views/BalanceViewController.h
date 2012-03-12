@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *pullIcon;
 @property (weak, nonatomic) IBOutlet UILabel *pullDownLabel;
 @property (weak, nonatomic) IBOutlet UILabel *updateTimeLabel;
+@property (weak, nonatomic) IBOutlet UIScrollView *balanceScrollView;
 
 - (void)loadTransactionData;
 

@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
+#import "FaceToFaceAcceptDeclineViewController.h"
 
 @interface FaceToFacePasswordInputViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UILabel *waitLabel;
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
 
 @end

@@ -29,22 +29,6 @@
     view.layer.shadowPath = [UIBezierPath bezierPathWithRect:view.bounds].CGPath;
 }
 
-+ (void)addDarkNavigationBarStyleToViewController:(UIViewController *)viewController
-{
-    // style the navigation bar
-    UINavigationBar *navigationBar = viewController.navigationController.navigationBar;
-    navigationBar.barStyle = UIBarStyleBlack;
-    [navigationBar setBackgroundImage:[UIImage imageNamed: @"header.png"]
-                        forBarMetrics: UIBarMetricsDefault];
-    navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"LeagueGothic" size:22] forKey:UITextAttributeFont];    
-}
-
-+ (void)addDarkToolbarStyleToToolbar:(UIToolbar *)toolbar
-{
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header.png"]];
-    [toolbar insertSubview:imageView atIndex:1];
-}
-
 // apparently it is a bad idea to subclass UIButton
 // this method will give you a UIButton with C&P styling
 

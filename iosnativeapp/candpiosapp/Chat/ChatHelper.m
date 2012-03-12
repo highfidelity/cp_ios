@@ -91,7 +91,6 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 
             // Set up the view
             [oneOnOneChat addCloseButton];
-            [CPUIHelper addDarkNavigationBarStyleToViewController:oneOnOneChat];
             
             [alertView.rootView presentViewController:chatNavController
                                              animated:YES

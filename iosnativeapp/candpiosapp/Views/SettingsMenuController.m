@@ -7,6 +7,7 @@
 //
 
 #import "SettingsMenuController.h"
+#import "BalanceViewController.h"
 #import "AppDelegate.h"
 #import "MapTabController.h"
 #import "CPapi.h"
@@ -390,9 +391,15 @@
         [self.mapTabController logoutButtonTapped];
         [self.mapTabController loginButtonTapped];
     } else { 
-        NSString *segueName = [menuSegueIdentifiersArray objectAtIndex:indexPath.row];
-        [self performSegueWithIdentifier:segueName sender:self];
+        // for right now this is the wallet so let's slide over to there
+        [self performSegueWithIdentifier:@"ShowBalanceFromMenu" sender:self];
     }
+}
+
+- (void)showUserWallet
+{
+    BalanceViewController *userWallet = [self.storyboard instantiateViewControllerWithIdentifier:@"UserWalletViewController"];
+    [self presentModalViewController:userWallet animated:YES];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex

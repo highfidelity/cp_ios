@@ -39,7 +39,6 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     self.title = @"Add Funds";
-    [CPUIHelper addDarkNavigationBarStyleToViewController:self];
     
     urlAddress = kCandPAddFundsUrl;
 

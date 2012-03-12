@@ -16,7 +16,7 @@
 @implementation FaceToFacePasswordInputViewController
 @synthesize passwordField;
 @synthesize waitLabel;
-@synthesize toolbar;
+@synthesize navigationItem;
 
 // This may seem a little strange but this view controller is never actually on screen.
 // It's used to append a view onto the bottom of the F2FAcceptDeclineView (which allows for the scrolling transition)
@@ -35,9 +35,6 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    // dark styling on toolbar
-    [CPUIHelper addDarkToolbarStyleToToolbar:self.toolbar];
-    
     // empty the passwordField
     self.passwordField.text = @"";
 }
@@ -46,7 +43,7 @@
 {
     [self setPasswordField:nil];
     [self setWaitLabel:nil];
-    [self setToolbar:nil];
+    [self setNavigationItem:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

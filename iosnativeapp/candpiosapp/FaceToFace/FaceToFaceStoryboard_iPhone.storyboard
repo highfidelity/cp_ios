@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2177" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="bei-px-nB9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="bei-px-nB9">
     <dependencies>
+        <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1179"/>
     </dependencies>
     <scenes>
         <!--Face To Face Accept Decline View Controller-->
@@ -80,18 +81,13 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
-                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackOpaque" id="QTq-tA-clu">
+                                    <navigationBar contentMode="scaleToFill" id="Xxc-bb-igU">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                        <items/>
-                                    </toolbar>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="F2F with Birarda?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="llH-p4-zoi">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <items>
+                                            <navigationItem title="F2F with birarda?" id="TCR-cd-9e9"/>
+                                        </items>
+                                    </navigationBar>
                                 </subviews>
                             </scrollView>
                         </subviews>
@@ -102,9 +98,8 @@
                         <outlet property="actionBarHeader" destination="7LK-tZ-E1u" id="VBE-2R-Qtt"/>
                         <outlet property="f2fAcceptButton" destination="gGc-I3-gKW" id="THw-Cw-NKX"/>
                         <outlet property="f2fDeclineButton" destination="Swh-hC-OdC" id="OWn-Tv-eU3"/>
+                        <outlet property="navigationBar" destination="Xxc-bb-igU" id="Zoi-uC-DHf"/>
                         <outlet property="scrollView" destination="uwy-6H-ACl" id="wKg-i2-MOV"/>
-                        <outlet property="toolbar" destination="QTq-tA-clu" id="Jii-1C-2bQ"/>
-                        <outlet property="toolbarTitle" destination="llH-p4-zoi" id="YHN-MA-cYl"/>
                         <outlet property="viewUnderToolbar" destination="JyI-9f-pYG" id="HjV-vY-PIj"/>
                     </connections>
                 </viewController>
@@ -141,14 +136,6 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackOpaque" id="MFm-1L-eJx">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="tot-aX-zE6"/>
-                                    <barButtonItem title="Cancel" id="rIC-o9-Urc"/>
-                                </items>
-                            </toolbar>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Enter Password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="wbQ-99-lUz">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -156,13 +143,20 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <navigationBar contentMode="scaleToFill" id="8eA-qR-eYY">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Enter Password" id="12i-KH-KKo"/>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="navigationItem" destination="12i-KH-KKo" id="ZAR-P9-gWV"/>
                         <outlet property="passwordField" destination="Um5-29-rub" id="idZ-F4-74H"/>
-                        <outlet property="toolbar" destination="MFm-1L-eJx" id="N0f-yA-ZlY"/>
                         <outlet property="view" destination="l1L-tc-zUe" id="fPT-1q-070"/>
                         <outlet property="waitLabel" destination="LpT-bp-wo5" id="hyT-78-54E"/>
                     </connections>
@@ -184,10 +178,9 @@
                 <relationship kind="outlet" name="actionBarHeader" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="f2fAcceptButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="f2fDeclineButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
                 <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
-                <relationship kind="outlet" name="toolbarTitle" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="viewUnderToolbar" candidateClass="UIView"/>
             </relationships>
         </class>
@@ -195,7 +188,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/FaceToFacePasswordInputViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
                 <relationship kind="outlet" name="waitLabel" candidateClass="UILabel"/>
             </relationships>
         </class>

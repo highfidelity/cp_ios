@@ -185,7 +185,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     [settingsMenuController.view addSubview:self.rootNavigationController.view];
     [settingsMenuController addChildViewController:self.rootNavigationController];
     self.window.rootViewController = settingsMenuController;
-    [CPUIHelper addDarkNavigationBarStyleToViewController:self.rootNavigationController.topViewController];
     
     // make the status bar the black style
     application.statusBarStyle = UIStatusBarStyleBlackOpaque;
@@ -196,6 +195,11 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
         SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
         [self.rootNavigationController pushViewController:controller animated:NO];        
     }
+    
+    // let's use UIAppearance to set our styles on UINavigationBars
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"header.png"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIFont fontWithName:@"LeagueGothic" size:22] forKey:UITextAttributeFont]];
     
     return YES;
 }

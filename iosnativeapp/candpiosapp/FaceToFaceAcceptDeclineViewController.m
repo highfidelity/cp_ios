@@ -20,9 +20,8 @@
 @synthesize f2fDeclineButton = _f2fDeclineButton;
 @synthesize viewUnderToolbar = _viewUnderToolbar;
 @synthesize passwordField = _passwordField;
-@synthesize toolbarTitle = _toolbarTitle;
 @synthesize scrollView = _scrollView;
-@synthesize toolbar = _toolbar;
+@synthesize navigationBar = _navigationBar;
 @synthesize userProfile = _userProfile;
 
 /*
@@ -52,9 +51,6 @@
 {
     [super viewDidLoad];
     
-    // change the toolbar to the dark style
-    [CPUIHelper addDarkToolbarStyleToToolbar:self.toolbar];
-    
     // make the accept button a CPButton
     self.f2fAcceptButton = [CPUIHelper makeButtonCPButton:self.f2fAcceptButton withCPButtonColor:CPButtonTurquoise];
     
@@ -68,7 +64,7 @@
     [CPUIHelper addShadowToView:self.actionBar color:[UIColor blackColor] offset:CGSizeMake(0,-2) radius:3 opacity:0.5];
     
     // add a shadow to the toolbar
-    [CPUIHelper addShadowToView:self.toolbar color:[UIColor blackColor] offset:CGSizeMake(0,2) radius:3 opacity:0.5];
+    [CPUIHelper addShadowToView:self.navigationBar color:[UIColor blackColor] offset:CGSizeMake(0,2) radius:3 opacity:0.5];
     
     // TODO: add the UserProfileViewController as a child view controller
     // via addChildViewController
@@ -87,7 +83,7 @@
     [self.viewUnderToolbar insertSubview:self.userProfile.view atIndex:0];
     
     // set the title of the toolbar
-    self.toolbarTitle.text = [NSString stringWithFormat:@"F2F with %@?", self.user.nickname];
+    self.title = [NSString stringWithFormat:@"F2F with %@?", self.user.nickname];
     
     self.actionBarHeader.text = [NSString stringWithFormat:@"%@ is nearby and\n wants to meet you face to face.", [self.user firstName]];
 }
@@ -99,9 +95,8 @@
     [self setActionBar:nil];
     [self setActionBarHeader:nil];
     [self setViewUnderToolbar:nil];
-    [self setToolbar:nil];
     [self setScrollView:nil];
-    [self setToolbarTitle:nil];
+    [self setNavigationBar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -146,10 +141,10 @@
         // be the delegate of that password field
         self.passwordField.delegate = self;
         
-        // change cancel button target and action
-        UIBarButtonItem *cancel = (UIBarButtonItem *)[f2fPasswordVC.toolbar.items objectAtIndex:1];
-        cancel.target = self;
-        cancel.action = @selector(cancelPasswordEntry:);
+        // put the cancel button in the navigation bar
+        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonSystemItemCancel target:self action:@selector(cancelPasswordEntry:)];
+        NSLog(@"%@", f2fPasswordVC.navigationItem.title);
+        f2fPasswordVC.navigationItem.rightBarButtonItem = cancelButton;
     } 
     
     // slide up the view

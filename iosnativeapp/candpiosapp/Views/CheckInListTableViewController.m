@@ -44,7 +44,6 @@
     refreshLocationsNow = YES;
     
     self.title = @"Check In";
-    [CPUIHelper addDarkNavigationBarStyleToViewController:self];
     
     // don't set the seperator here, add it manually in storyboard
     // allows us to show a line on the top cell when you are at the top of the table view

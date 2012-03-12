@@ -18,10 +18,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *f2fAcceptButton;
 @property (weak, nonatomic) IBOutlet UIButton *f2fDeclineButton;
 @property (weak, nonatomic) IBOutlet UIView *viewUnderToolbar;
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
-@property (weak, nonatomic) IBOutlet UILabel *toolbarTitle;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (strong, nonatomic) UserProfileCheckedInViewController *userProfile;
 
 - (IBAction)acceptF2F;

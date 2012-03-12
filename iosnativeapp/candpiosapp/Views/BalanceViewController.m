@@ -29,6 +29,7 @@
 @synthesize pullIcon;
 @synthesize pullDownLabel;
 @synthesize updateTimeLabel;
+@synthesize balanceScrollView;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -56,9 +57,11 @@
 {
     [super viewDidLoad];
     [self loadTransactionData];
+
     
-    self.title = @"Wallet";
-    [CPUIHelper addDarkNavigationBarStyleToViewController:self];
+    // content size for the scroll view
+    // allows scrolling to show pull to refresh
+    self.balanceScrollView.contentSize = self.balanceScrollView.frame.size;
     
     isFlipped = NO;
     loading = NO;
@@ -71,6 +74,7 @@
     [self setPullDownLabel:nil];
     [self setUpdateTimeLabel:nil];
     [self setTransTableView:nil];
+    [self setBalanceScrollView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -79,7 +83,6 @@
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
 
 #pragma mark - UIScrollViewDelegate Methods
 
