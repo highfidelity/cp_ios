@@ -106,7 +106,10 @@
         JSON = [JSON objectForKey:@"payload"];
         
         self.nickname = [JSON objectForKey:@"nickname"];
-        self.status = [JSON objectForKey:@"status_text"];
+        NSString *status = [[JSON objectForKey:@"status_text"]
+                stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+        self.status = status;
         self.bio = [JSON objectForKey:@"bio"];
         
         if ([[JSON objectForKey:@"job_title"] isKindOfClass:[NSString class]]) {

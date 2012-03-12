@@ -176,7 +176,10 @@
     
     // set the labels on the user business card
     self.cardNickname.text = [self.user.nickname uppercaseString];
-    self.cardStatus.text = [NSString stringWithFormat:@"\"%@\"", self.user.status];
+
+    if ([self.user.status length] > 0) {
+        self.cardStatus.text = [NSString stringWithFormat:@"\"%@\"", self.user.status];
+    }
     
     // if we have a location from this user then set the distance label to show how far the other user is
     if ([AppDelegate instance].settings.hasLocation) {

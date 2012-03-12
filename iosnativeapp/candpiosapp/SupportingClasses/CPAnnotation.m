@@ -27,7 +27,9 @@
         userId = [[jsonDict objectForKey:@"id"] integerValue];
         nickname = [jsonDict objectForKey:@"nickname"];
 		skills = [jsonDict objectForKey:@"skills"];
-        status = [jsonDict objectForKey:@"status_text"];
+        status = [[jsonDict objectForKey:@"status_text"]
+                  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
         if (status && [status length] > 0) {
             self.subtitle = [NSString stringWithFormat:@"\"%@\"", status];
         } else {
