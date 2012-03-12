@@ -191,10 +191,7 @@
     
     // set the navigation controller title to the user's nickname
     self.title = self.user.nickname;  
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
+    
     // check if this is an F2F invite
     if (self.isF2FInvite) {
         // we're in an F2F invite
@@ -212,7 +209,7 @@
                 // error checking for load of user 
             }
         }];
-    }    
+    } 
 }
 
 - (void)viewDidUnload
