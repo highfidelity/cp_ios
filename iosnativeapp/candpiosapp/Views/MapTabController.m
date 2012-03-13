@@ -382,7 +382,7 @@ BOOL zoomedOut = NO;
         // Fade in any new annotations
         view.alpha = 0;        
         [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:1.0];
+        [UIView setAnimationDuration:1.5];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         view.alpha = startingAlpha;
         [UIView commitAnimations];
@@ -587,9 +587,11 @@ BOOL zoomedOut = NO;
 
         if (hasCheckedInUsers) {
             [pin setNumberedPin:checkedInUsers hasCheckins:hasCheckedInUsers smallPin:NO];
+            pin.centerOffset = CGPointMake(0, -31);            
         }
         else {           
             [pin setNumberedPin:imageSources.count hasCheckins:hasCheckedInUsers smallPin:smallPin];
+            pin.centerOffset = CGPointMake(0, -18); 
         }
       
         pin.enabled = YES;
@@ -626,9 +628,11 @@ BOOL zoomedOut = NO;
         
         if (hasCheckedInUsers) {
             [pin setNumberedPin:1 hasCheckins:YES smallPin:NO];
+            pin.centerOffset = CGPointMake(0, -31);     
         }
         else {
-            [pin setNumberedPin:1 hasCheckins:NO smallPin:YES];            
+            [pin setNumberedPin:1 hasCheckins:NO smallPin:YES];
+            pin.centerOffset = CGPointMake(0, 0);
         }
         
 		pin.canShowCallout = YES;
@@ -655,9 +659,7 @@ BOOL zoomedOut = NO;
         pinToReturn = pin;
 	}
 
-    // Set up correct offset + callout offset for custom pin images
-    
-    pinToReturn.centerOffset = CGPointMake(0,0);
+    // Set up correct callout offset for custom pin images
     pinToReturn.calloutOffset = CGPointMake(0,0);
 	
 	return pinToReturn;
