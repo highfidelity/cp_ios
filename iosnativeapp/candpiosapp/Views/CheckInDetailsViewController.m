@@ -25,8 +25,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *placeAddress;
 @property (weak, nonatomic) IBOutlet UIView *checkInDetails;
 @property (weak, nonatomic) IBOutlet UILabel *willLabel;
-@property (weak, nonatomic) IBOutlet UILabel *orLabel;
-@property (weak, nonatomic) IBOutlet UILabel *wantLabel;
 @property (weak, nonatomic) IBOutlet UITextField *statusTextField;
 @property (weak, nonatomic) IBOutlet UISlider *timeSlider;
 @property (assign, nonatomic) int checkInDuration;
@@ -59,8 +57,6 @@
 @synthesize placeAddress = _placeAddress;
 @synthesize checkInDetails = _checkInDetails;
 @synthesize willLabel = _willLabel;
-@synthesize orLabel = _orLabel;
-@synthesize wantLabel = _wantLabel;
 @synthesize statusTextField = _statusTextField;
 @synthesize timeSlider = _timeSlider;
 @synthesize place = _place;
@@ -95,8 +91,8 @@
 
 -(void)setCheckInDuration:(int)checkInDuration
 {
-    // commenting this out as the label now just says 'check in'
-    // self.durationString.text = [NSString stringWithFormat:@"%d hours", checkInDuration];
+    NSString *formatStr = checkInDuration == 1 ? @"%d hour" : @"%d hours";
+    self.durationString.text = [NSString stringWithFormat:formatStr, checkInDuration];
     _checkInDuration = checkInDuration;
 }
 
@@ -180,7 +176,7 @@
     [self.mapView setCenterCoordinate:coordinate animated:NO];
     
     // set LeagueGothic font where applicable
-    for (UILabel *labelNeedsGothic in [NSArray arrayWithObjects:self.checkInLabel, self.willLabel, self.orLabel, self.wantLabel, self.durationHeader, nil]) {
+    for (UILabel *labelNeedsGothic in [NSArray arrayWithObjects:self.checkInLabel, self.willLabel, self.durationHeader, nil]) {
         [CPUIHelper changeFontForLabel:labelNeedsGothic toLeagueGothicOfSize:26];
     }
 
@@ -216,8 +212,6 @@
     [self setCheckInDetails:nil];
     [self setBlueOverlay:nil];
     [self setWillLabel:nil];
-    [self setOrLabel:nil];
-    [self setWantLabel:nil];
     [self setStatusTextField:nil];
     [self setTimeSlider:nil];
     [self setDurationString:nil];

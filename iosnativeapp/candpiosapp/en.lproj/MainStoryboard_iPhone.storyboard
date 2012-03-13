@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2177" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
     <dependencies>
-        <deployment version="1280" defaultVersion="1296" identifier="iOS"/>
+        <deployment version="1280" defaultVersion="1280" identifier="iOS"/>
         <development version="4200" defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1179"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1173"/>
     </dependencies>
     <scenes>
         <!--Map Tab Controller-->
@@ -316,31 +316,15 @@
                                         <rect key="frame" x="0.0" y="229" width="320" height="188"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="34" contentMode="left" text="I WILL..." lineBreakMode="tailTruncation" minimumFontSize="10" id="zI2-Ae-Iwy">
-                                                <rect key="frame" x="20" y="14" width="75" height="22"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="34" contentMode="left" text="What can you do, or what do you need?" lineBreakMode="tailTruncation" minimumFontSize="10" id="zI2-Ae-Iwy">
+                                                <rect key="frame" x="20" y="14" width="323" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="35" contentMode="left" text="-OR-" lineBreakMode="tailTruncation" minimumFontSize="10" id="VYL-ZT-wRz">
-                                                <rect key="frame" x="80" y="14" width="42" height="22"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <color key="textColor" red="0.5490196078431373" green="0.5490196078431373" blue="0.5490196078431373" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="36" contentMode="left" text="I WANT..." lineBreakMode="tailTruncation" minimumFontSize="10" id="TKZ-pk-IRu">
-                                                <rect key="frame" x="120" y="14" width="101" height="22"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="This is what others see..." minimumFontSize="17" clearButtonMode="whileEditing" id="41Q-Mq-N3C">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="optional" minimumFontSize="17" clearButtonMode="whileEditing" id="41Q-Mq-N3C">
                                                 <rect key="frame" x="15" y="41" width="285" height="31"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
@@ -462,7 +446,6 @@
                         <outlet property="infoBubbleNickname" destination="aZi-4n-3zY" id="TmH-CX-bcd"/>
                         <outlet property="infoBubbleStatus" destination="1v1-h6-bpt" id="bVc-8a-1ck"/>
                         <outlet property="mapView" destination="MQF-9M-cU0" id="iR6-un-ud3"/>
-                        <outlet property="orLabel" destination="VYL-ZT-wRz" id="D2x-lc-UaB"/>
                         <outlet property="otherUsersScrollView" destination="TF0-4o-hEC" id="22K-kX-aa5"/>
                         <outlet property="placeAddress" destination="PtD-Uj-ZiF" id="THK-hq-Aq8"/>
                         <outlet property="placeName" destination="a2d-yI-7Oz" id="8zr-fy-4iB"/>
@@ -471,7 +454,6 @@
                         <outlet property="timeSlider" destination="WXJ-T8-1gt" id="0Xb-Ha-vfx"/>
                         <outlet property="userInfoBubble" destination="EM0-cl-p71" id="4N9-aH-ZJu"/>
                         <outlet property="venueInfo" destination="hOO-0F-CUC" id="ziH-Qe-VhG"/>
-                        <outlet property="wantLabel" destination="TKZ-pk-IRu" id="d5F-UG-VnU"/>
                         <outlet property="willLabel" destination="zI2-Ae-Iwy" id="3jT-Q8-9OV"/>
                     </connections>
                 </viewController>
@@ -1468,7 +1450,6 @@
                 <relationship kind="outlet" name="infoBubbleNickname" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="infoBubbleStatus" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="orLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="otherUsersScrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="placeAddress" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="placeName" candidateClass="UILabel"/>
@@ -1477,7 +1458,6 @@
                 <relationship kind="outlet" name="timeSlider" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="userInfoBubble" candidateClass="UIView"/>
                 <relationship kind="outlet" name="venueInfo" candidateClass="UIView"/>
-                <relationship kind="outlet" name="wantLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="willLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
