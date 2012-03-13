@@ -176,10 +176,12 @@
     [self.mapView setCenterCoordinate:coordinate animated:NO];
     
     // set LeagueGothic font where applicable
-    for (UILabel *labelNeedsGothic in [NSArray arrayWithObjects:self.checkInLabel, self.willLabel, self.durationHeader, nil]) {
+    for (UILabel *labelNeedsGothic in [NSArray arrayWithObjects:self.checkInLabel, self.durationHeader, nil]) {
         [CPUIHelper changeFontForLabel:labelNeedsGothic toLeagueGothicOfSize:26];
     }
 
+    [CPUIHelper changeFontForLabel:self.willLabel toLeagueGothicOfSize:25];
+    
     // add a shadow on the top of the checkInDetails View, the VenueInfo box and the user info bubble
     [CPUIHelper addShadowToView:self.checkInDetails color:[UIColor blackColor] offset:CGSizeMake(0,-2) radius:3 opacity:0.24];
     [CPUIHelper addShadowToView:self.venueInfo color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];

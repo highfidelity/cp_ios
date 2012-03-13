@@ -316,11 +316,11 @@
                                         <rect key="frame" x="0.0" y="229" width="320" height="188"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="34" contentMode="left" text="What can you do, or what do you need?" lineBreakMode="tailTruncation" minimumFontSize="10" id="zI2-Ae-Iwy">
-                                                <rect key="frame" x="20" y="14" width="323" height="22"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="34" contentMode="left" text="What can you do, or what do you need?" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="zI2-Ae-Iwy">
+                                                <rect key="frame" x="14" y="5" width="286" height="33"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
