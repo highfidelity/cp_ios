@@ -216,13 +216,10 @@
 				// so remember the success!
                 NSDictionary *userInfo = [[candpJson objectForKey:@"params"] objectForKey:@"params"];
                 
+                // store the user info to NSUserDefaults
+                [CPAppDelegate storeUserDataFromDictionary:userInfo];
+                
                 NSString *userId = [userInfo objectForKey:@"id"];
-                NSString *nickname = [userInfo objectForKey:@"nickname"];
-				
-				// extract some user info
-				[AppDelegate instance].settings.candpUserId = [userId numberFromIntString];
-				[AppDelegate instance].settings.userNickname = nickname;
-				[[AppDelegate instance] saveSettings];
                 
                 [FlurryAnalytics logEvent:@"login_facebook"];
                 

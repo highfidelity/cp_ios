@@ -168,16 +168,11 @@
 		{
 			// remember that we're logged in!
 			// (it's really the persistent cookie that tracks our login, but we need a superficial indicator, too)
-			NSDictionary *userInfo = [[jsonDict objectForKey:@"params"]objectForKey:@"user"];
-			
-			NSString *userId = [userInfo objectForKey:@"id"];
-			NSString  *nickname = [userInfo objectForKey:@"nickname"];
-			
-			// extract some user info
-			[AppDelegate instance].settings.candpUserId = [userId numberFromIntString];
-			[AppDelegate instance].settings.userNickname = nickname;
-			[[AppDelegate instance] saveSettings];
+			NSDictionary *userInfo = [[jsonDict objectForKey:@"params"] objectForKey:@"user"];
             
+            [CPAppDelegate storeUserDataFromDictionary:userInfo];
+            
+			NSString *userId = [userInfo objectForKey:@"id"];
             [FlurryAnalytics logEvent:@"login_email"];
             
             // userId isn't actually an NSNumber it's an NSString!?

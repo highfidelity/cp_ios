@@ -43,9 +43,26 @@
 	self = [super init];
 	if(self)
 	{
-        
+        // init code here
 	}
 	return self;
+}
+
+-(id)initWithCoder:(NSCoder *)decoder
+{
+    self = [super init];
+    if (self) 
+    {         
+        self.userID = [decoder decodeIntForKey:@"userID"];
+        self.nickname = [decoder decodeObjectForKey:@"nickname"];
+    }    
+    return self;
+}
+
+-(void)encodeWithCoder:(NSCoder *)encoder
+{
+    [encoder encodeInt:self.userID forKey:@"userID"];
+    [encoder encodeObject:self.nickname forKey:@"nickname"];
 }
 
 // override nickname setter to decode html entities

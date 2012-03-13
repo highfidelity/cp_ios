@@ -349,10 +349,10 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     // Check to see if our login is valid, using the user name for the header
-	if([AppDelegate instance].settings.candpUserId ||
+	if([CPAppDelegate currentUser] ||
 	   [[AppDelegate instance].facebook isSessionValid])
 	{
-		return [AppDelegate instance].settings.userNickname;
+		return [CPAppDelegate currentUser].nickname;
 	}
 	else
 	{

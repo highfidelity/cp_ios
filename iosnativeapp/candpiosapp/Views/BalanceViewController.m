@@ -205,7 +205,7 @@
     
     NSString *from_to = @"to";
     
-    if ([[transaction objectForKey:@"payer"] intValue] != [[AppDelegate instance].settings.candpUserId intValue]) {
+    if ([[transaction objectForKey:@"payer"] intValue] != [CPAppDelegate currentUser].userID) {
         from_to = @"from";
     }
     

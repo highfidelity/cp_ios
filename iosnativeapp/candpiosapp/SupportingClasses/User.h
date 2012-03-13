@@ -10,7 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "CPPlace.h"
 
-@interface User : NSObject
+@interface User : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString *nickname;
 @property (nonatomic, assign) int userID;

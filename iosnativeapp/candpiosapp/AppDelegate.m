@@ -189,7 +189,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     // make the status bar the black style
     application.statusBarStyle = UIStatusBarStyleBlackOpaque;
 
-    if (settings.userNickname == nil) { 
+    if (!DEFAULTS(object, kUDCurrentUser)) { 
         // force a login
         [self logoutEverything];
         SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
@@ -446,14 +446,40 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 	// and email credentials
 	// (note that we keep the username & password)
-	settings.candpUserId = nil;
-	settings.userNickname = nil;
-
-
-	[[AppDelegate instance] saveSettings];
-
+	SET_DEFAULTS(Object, kUDCurrentUser, nil);
 }
 
+- (void)storeUserDataFromDictionary:(NSDictionary *)userInfo
+{
+    NSString *userId = [userInfo objectForKey:@"id"];
+    NSString  *nickname = [userInfo objectForKey:@"nickname"];
+    
+    User *currUser = [[User alloc] init];
+    currUser.nickname = nickname;
+    currUser.userID = [userId intValue];
+    
+#if DEBUG
+    NSLog(@"Storing user data for user with ID %@ and nickname %@ to NSUserDefaults", userId, nickname);
+#endif
+    
+    // encode the user object
+    NSData *encodedUser = [NSKeyedArchiver archivedDataWithRootObject:currUser];
+    
+    // store it in user defaults
+    SET_DEFAULTS(Object, kUDCurrentUser, encodedUser);
+}
+
+- (User *)currentUser
+{
+    if (DEFAULTS(object, kUDCurrentUser)) {
+        // grab the coded user from NSUserDefaults
+        NSData *myEncodedObject = DEFAULTS(object, kUDCurrentUser);
+        // return it
+        return (User *)[NSKeyedUnarchiver unarchiveObjectWithData:myEncodedObject];
+    } else {
+        return nil;
+    }
+}
 
 #pragma mark - User Settings
 

@@ -34,7 +34,7 @@
     self.date = [NSDate date];
     
     // Automatically determine if this is my message
-    if ([[AppDelegate instance].settings.candpUserId intValue] ==
+    if ([CPAppDelegate currentUser].userID ==
         fromUser.userID)
     {
         self.fromMe = YES;

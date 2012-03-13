@@ -1,21 +1,23 @@
-h1. SVProgressHUD (with ARC support)
+__29/02 IMPORTANT CHANGE: SVProgressHUD no longer interacts with iOS's status bar network activity indicator. Dedicated methods have been deprecated and you will need to show/hide the activity indicator yourself (ideally from a controller or the "class that makes the network requests":https://github.com/samvermette/SVHTTPRequest).__
+
+h1. SVProgressHUD
 
 SVProgressHUD is an easy-to-use, clean and lightweight progress HUD for iOS. It's a simplified and prettified alternative to the popular "MBProgressHUD":https://github.com/jdg/MBProgressHUD. Its fade in/out animations are highly inspired on Lauren Britcher's HUD in Tweetie for iOS. The success and error icons are from "Glyphish":http://glyphish.com/.
 
 
-!http://samvermette.com/files/svprogresshud3.png!
+!http://f.cl.ly/items/231Y2A0t0t1J0B0r3N0p/svprogresshud3.png!
 
 SVProgressHUD features:
 
 * very simple singleton convenience methods (@[SVProgressHUD show]@, @[SVProgressHUD dismiss]@, etc.)
 * optional loading, success and error status messages
 * automatic positioning based on device type, orientation and keyboard visibility
-* talks with @setNetworkActivityIndicatorVisible@ (default can be changed via @SVProgressHUDShowNetworkIndicator@ constant)
 * optionally disable user interactions while the HUD is showing with the @maskType@ parameter
 
 h2. Installation
 
-* Drag the @SVProgressHUD/SVProgressHUD@ folder into your project.
+* Drag the @SVProgressHUD/SVProgressHUD@ folder into your project. 
+* Add the *QuartzCore* framework to your project. 
 
 __If you plan on using SVProgressHUD in a lot of places inside your app, I recommend importing it directly inside your prefix file.__
 
@@ -28,14 +30,9 @@ SVProgressHUD is created as a singleton (i.e. it doesn't need to be explicitly a
 <pre>
 + (void)show;
 + (void)showWithStatus:(NSString*)status;
-+ (void)showWithStatus:(NSString*)status networkIndicator:(BOOL)show;
 + (void)showWithStatus:(NSString*)status maskType:(SVProgressHUDMaskType)maskType;
-+ (void)showWithStatus:(NSString*)status maskType:(SVProgressHUDMaskType)maskType networkIndicator:(BOOL)show;
 + (void)showWithMaskType:(SVProgressHUDMaskType)maskType;
-+ (void)showWithMaskType:(SVProgressHUDMaskType)maskType networkIndicator:(BOOL)show;
 </pre>
-
-__The previous @showInView:@ methods are deprecated. Using them with this version of SVProgressHUD will ignore the @view@ and @posY@ parameters, which are now automatically determined by the class.__
 
 You dismiss it using one of these:
 
@@ -72,14 +69,9 @@ enum {
 };
 </pre>
 
-h3. Network activity indicator
+h2. Automatic Reference Counting (ARC) support
 
-By default, showing SVProgressHUD will also show the network activity indicator (this makes sense for apps that make a lot of network operations). You can change this behavior by setting the @SVProgressHUDShowNetworkIndicator@ constant to @0@ in @SVProgressHUD.h@.
-
-
-h2. Automatic Referencing counting (ARC) support
-
-This is the ARC version of SVProgressHUD, made by "bryanveloso":https://github.com/bryanveloso. Head over to the "non-ARC branch":https://github.com/samvermette/SVProgressHUD if you haven't made the move to ARC yet.
+Maintaining an official ARC branch has proven to be too much work, often leading to confusion since the ARC branch is always a few commits behind. If you'd like to use SVProgressHUD in your ARC-enabled project, you'll have to "add the @-fno-objc-arc@ compiler flag":http://stackoverflow.com/questions/6646052/how-can-i-disable-arc-for-a-single-file-in-a-project to all of SVProgressHUD's files.
 
 h2. Credits
 

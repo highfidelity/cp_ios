@@ -393,9 +393,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     [[AppDelegate instance] hideCheckInButton];
     
     // Setup the "me" object. It's a wonder why we don't just hae
-    self.me = [[User alloc] init];
-    self.me.userID = [[AppDelegate instance].settings.candpUserId intValue];
-    self.me.nickname = [AppDelegate instance].settings.userNickname;
+    self.me = [CPAppDelegate currentUser];
 
     self.title = self.user.nickname;
     

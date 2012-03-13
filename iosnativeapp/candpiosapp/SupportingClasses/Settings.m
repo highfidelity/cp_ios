@@ -14,9 +14,8 @@
 @synthesize lastKnownLocation;
 @synthesize registeredForApnsSuccessfully;
 //@synthesize candpLoginToken;
-@synthesize candpUserId;
 @synthesize facebookAccessToken, facebookExpirationDate;
-@synthesize userEmailAddress, userNickname, userPassword, userBalance;
+@synthesize userEmailAddress, userPassword, userBalance;
 @synthesize notifyInVenueOnly, notifyWhenCheckedIn;;
 
 //=========================================================== 
@@ -41,11 +40,9 @@
     [encoder encodeBool:hasLocation forKey:@"hasLocation"];
     [encoder encodeBool:registeredForApnsSuccessfully forKey:@"registeredForApnsSuccessfully"];
     [encoder encodeObject:lastKnownLocation forKey:@"lastKnownLocation"];
-	[encoder encodeObject:candpUserId forKey:@"candpUserId"];
 	[encoder encodeObject:facebookAccessToken forKey:@"facebookAccessToken"];
 	[encoder encodeObject:facebookExpirationDate forKey:@"facebookExpirationDate"];
 	[encoder encodeObject:userEmailAddress	forKey:@"userEmailAddress"];
-	[encoder encodeObject:userNickname	forKey:@"userNickname"];
 	[encoder encodeObject:userPassword	forKey:@"userPassword"];
 	[encoder encodeFloat:userBalance forKey:@"userBalance"];
     [encoder encodeBool:flag forKey:@"notifyInVenueOnly"];
@@ -59,12 +56,10 @@
         hasLocation = [decoder decodeBoolForKey:@"hasLocation"];
         registeredForApnsSuccessfully = [decoder decodeBoolForKey:@"registeredForApnsSuccessfully"];
         lastKnownLocation = [decoder decodeObjectForKey:@"lastKnownLocation"];
-		candpUserId = [decoder decodeObjectForKey:@"candpUserId"];
 		
 		facebookAccessToken = [decoder decodeObjectForKey:@"facebookAccessToken"];
 		facebookExpirationDate = [decoder decodeObjectForKey:@"facebookExpirationDate"];
 		userEmailAddress = [decoder decodeObjectForKey:@"userEmailAddress"];
-		userNickname = [decoder decodeObjectForKey:@"userNickname"];
 		userPassword = [decoder decodeObjectForKey:@"userPassword"];
 		userBalance = [decoder decodeFloatForKey:@"userBalance"];
         

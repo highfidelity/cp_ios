@@ -35,7 +35,7 @@
     self.title = @"Join";
     self.confirmPasswordErrorLabel.text = @"";
     self.nicknameErrorLabel.text = @"";
-    self.nicknameField.text = [[AppDelegate instance] settings].userNickname;
+    self.nicknameField.text = [CPAppDelegate currentUser].nickname;
     self.navigationItem.rightBarButtonItem = self.signupBarButton;
     
 }
@@ -159,12 +159,9 @@
                              
                              NSDictionary *userInfo = [[jsonDict objectForKey:@"params"] objectForKey:@"params"];
                              
-                             NSString *userId = [userInfo objectForKey:@"id"];
-                             NSString  *nickname = [userInfo objectForKey:@"nickname"];
+                             [CPAppDelegate storeUserDataFromDictionary:userInfo];
                              
-                             [AppDelegate instance].settings.candpUserId = [userId numberFromIntString];
-                             [AppDelegate instance].settings.userNickname = nickname;
-                             [[AppDelegate instance] saveSettings];
+                             NSString *userId = [userInfo objectForKey:@"id"];
                              
                              [FlurryAnalytics logEvent:@"signup_email"];
                              [FlurryAnalytics setUserID:(NSString *)userId];

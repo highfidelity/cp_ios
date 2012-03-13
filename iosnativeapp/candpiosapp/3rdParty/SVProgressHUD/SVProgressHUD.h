@@ -10,8 +10,6 @@
 #import <UIKit/UIKit.h>
 #import <AvailabilityMacros.h>
 
-#define SVProgressHUDShowNetworkIndicator 1
-
 enum {
     SVProgressHUDMaskTypeNone = 1, // allow user interactions while HUD is displayed
     SVProgressHUDMaskTypeClear, // don't allow
@@ -21,17 +19,18 @@ enum {
 
 typedef NSUInteger SVProgressHUDMaskType;
 
-@interface SVProgressHUD : UIWindow
+@interface SVProgressHUD : UIView
 
 + (void)show;
 + (void)showWithStatus:(NSString*)status;
-+ (void)showWithStatus:(NSString*)status networkIndicator:(BOOL)show;
 + (void)showWithStatus:(NSString*)status maskType:(SVProgressHUDMaskType)maskType;
-+ (void)showWithStatus:(NSString*)status maskType:(SVProgressHUDMaskType)maskType networkIndicator:(BOOL)show;
 + (void)showWithMaskType:(SVProgressHUDMaskType)maskType;
-+ (void)showWithMaskType:(SVProgressHUDMaskType)maskType networkIndicator:(BOOL)show;
 
 + (void)showSuccessWithStatus:(NSString*)string;
++ (void)showSuccessWithStatus:(NSString *)string duration:(NSTimeInterval)duration;
++ (void)showErrorWithStatus:(NSString *)string;
++ (void)showErrorWithStatus:(NSString *)string duration:(NSTimeInterval)duration;
+
 + (void)setStatus:(NSString*)string; // change the HUD loading status while it's showing
 
 + (void)dismiss; // simply dismiss the HUD with a fade+scale out animation
@@ -40,11 +39,11 @@ typedef NSUInteger SVProgressHUDMaskType;
 + (void)dismissWithError:(NSString*)errorString; // also displays the error icon image
 + (void)dismissWithError:(NSString*)errorString afterDelay:(NSTimeInterval)seconds;
 
-// deprecated Show methods: view and posY params will be ignored
-+ (void)showInView:(UIView*)view DEPRECATED_ATTRIBUTE;
-+ (void)showInView:(UIView*)view status:(NSString*)string DEPRECATED_ATTRIBUTE;
-+ (void)showInView:(UIView*)view status:(NSString*)string networkIndicator:(BOOL)show DEPRECATED_ATTRIBUTE;
-+ (void)showInView:(UIView*)view status:(NSString*)string networkIndicator:(BOOL)show posY:(CGFloat)posY DEPRECATED_ATTRIBUTE;
-+ (void)showInView:(UIView*)view status:(NSString*)string networkIndicator:(BOOL)show posY:(CGFloat)posY maskType:(SVProgressHUDMaskType)maskType DEPRECATED_ATTRIBUTE;
++ (BOOL)isVisible;
+
+// deprecated methods; it shouldn't be the HUD's responsability to show/hide the network activity indicator
++ (void)showWithStatus:(NSString*)status networkIndicator:(BOOL)show DEPRECATED_ATTRIBUTE;
++ (void)showWithStatus:(NSString*)status maskType:(SVProgressHUDMaskType)maskType networkIndicator:(BOOL)show DEPRECATED_ATTRIBUTE; 
++ (void)showWithMaskType:(SVProgressHUDMaskType)maskType networkIndicator:(BOOL)show DEPRECATED_ATTRIBUTE;
 
 @end

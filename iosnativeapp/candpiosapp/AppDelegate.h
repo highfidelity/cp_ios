@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Settings.h"
+#import "User.h"
 #import "Facebook.h"
 #import "UAirship.h"
 #import "UAPush.h"
@@ -33,6 +34,8 @@
 -(void)saveSettings;
 +(AppDelegate *)instance;
 -(void)logoutEverything;
+-(void)storeUserDataFromDictionary:(NSDictionary *)userDictionary;
+-(User *)currentUser;
 -(void)hideCheckInButton;
 -(void)showCheckInButton;
 -(void)startCheckInClockHandAnimation;

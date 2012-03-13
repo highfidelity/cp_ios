@@ -246,7 +246,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    if ([AppDelegate instance].settings.candpUserId) {
+    if ([CPAppDelegate currentUser].userID) {
         // segue to CheckInDetailsViewController
         [self performSegueWithIdentifier:@"ShowCheckInDetailsView" sender:self];
     }
