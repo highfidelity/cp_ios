@@ -187,6 +187,7 @@
 		53DC696214E48DB700D64175 /* verified-linked-in~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DC695E14E48DB700D64175 /* verified-linked-in~iphone.png */; };
 		53E20621150591600000FA8D /* DismissHUDAfterReloadData.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E20620150591600000FA8D /* DismissHUDAfterReloadData.m */; };
 		53E2062C150596180000FA8D /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53E2062A150596180000FA8D /* MainStoryboard_iPhone.storyboard */; };
+		53E4EC0A150EDD6100DB236A /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 53E4EC09150EDD6100DB236A /* SVProgressHUD.bundle */; };
 		53FB9E3514E089BC00F4CC7F /* map-marker@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FB9E3314E089BC00F4CC7F /* map-marker@2x~iphone.png */; };
 		53FB9E3614E089BC00F4CC7F /* map-marker~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FB9E3414E089BC00F4CC7F /* map-marker~iphone.png */; };
 		53FB9E4414E099BB00F4CC7F /* CPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FB9E4314E099BA00F4CC7F /* CPUtils.m */; };
@@ -606,6 +607,7 @@
 		53E2061F150591600000FA8D /* DismissHUDAfterReloadData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DismissHUDAfterReloadData.h; path = CheckIn/DismissHUDAfterReloadData.h; sourceTree = "<group>"; };
 		53E20620150591600000FA8D /* DismissHUDAfterReloadData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DismissHUDAfterReloadData.m; path = CheckIn/DismissHUDAfterReloadData.m; sourceTree = "<group>"; };
 		53E2062B150596180000FA8D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		53E4EC09150EDD6100DB236A /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		53FB9E3314E089BC00F4CC7F /* map-marker@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map-marker@2x~iphone.png"; path = "images/map-marker@2x~iphone.png"; sourceTree = "<group>"; };
 		53FB9E3414E089BC00F4CC7F /* map-marker~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map-marker~iphone.png"; path = "images/map-marker~iphone.png"; sourceTree = "<group>"; };
 		53FB9E4214E099BA00F4CC7F /* CPUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPUtils.h; path = SupportingClasses/CPUtils.h; sourceTree = "<group>"; };
@@ -1641,6 +1643,7 @@
 		871EFB9714AF97130030658B /* SVProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
+				53E4EC09150EDD6100DB236A /* SVProgressHUD.bundle */,
 				871EFB9B14AF97130030658B /* SVProgressHUD.h */,
 				871EFB9C14AF97130030658B /* SVProgressHUD.m */,
 			);
@@ -2037,6 +2040,7 @@
 				5380D003150E773E003FCD66 /* add-funds@2x.png in Resources */,
 				5380D006150E7EB5003FCD66 /* defaultAvatar25@2x.png in Resources */,
 				5380D008150E80AC003FCD66 /* defaultAvatar50@2x.png in Resources */,
+				53E4EC0A150EDD6100DB236A /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
