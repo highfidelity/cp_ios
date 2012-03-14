@@ -38,7 +38,7 @@
 @property (nonatomic, strong) NSArray *educationInformation;
 @property (nonatomic, strong) NSDictionary *reviews;
 
--(void)loadUserResumeData:(void (^)(User *user, NSError *error))completion;
+-(void)loadUserResumeData:(void (^)(NSError *error))completion;
 
 -(NSString *)firstName;
 

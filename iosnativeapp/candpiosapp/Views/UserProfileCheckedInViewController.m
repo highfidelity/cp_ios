@@ -198,9 +198,8 @@
         [self placeUserDataOnProfile];
     } else {        
         // get a user object with resume data
-        [self.user loadUserResumeData:^(User *user, NSError *error) {
+        [self.user loadUserResumeData:^(NSError *error) {
             if (!error) {
-                self.user = user;
                 [self placeUserDataOnProfile];
             } else {
                 // error checking for load of user 

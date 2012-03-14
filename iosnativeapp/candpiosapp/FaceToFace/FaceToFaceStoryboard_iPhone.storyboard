@@ -85,7 +85,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <items>
-                                            <navigationItem title="F2F with birarda?" id="TCR-cd-9e9"/>
+                                            <navigationItem title="F2F Invite" id="TCR-cd-9e9"/>
                                         </items>
                                     </navigationBar>
                                 </subviews>
@@ -168,30 +168,6 @@
     <resources>
         <image name="f2f-logo-small.png" width="39" height="39"/>
     </resources>
-    <classes>
-        <class className="FaceToFaceAcceptDeclineViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FaceToFaceAcceptDeclineViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="acceptF2F"/>
-                <relationship kind="action" name="declineF2F"/>
-                <relationship kind="outlet" name="actionBar" candidateClass="UIView"/>
-                <relationship kind="outlet" name="actionBarHeader" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="f2fAcceptButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="f2fDeclineButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="viewUnderToolbar" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="FaceToFacePasswordInputViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FaceToFacePasswordInputViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="waitLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -105,7 +105,7 @@
     return firstName;
 }
 
--(void)loadUserResumeData:(void (^)(User *user, NSError *error))completion {
+-(void)loadUserResumeData:(void (^)(NSError *error))completion {
     
     [CPapi getResumeForUserId:self.userID andCompletion:^(NSDictionary *response, NSError *error) {
         
@@ -164,10 +164,10 @@
             
             // call the completion block passed by the caller
             if(completion)
-                completion(self, nil); 
+                completion(nil); 
         } else {
             if (completion) 
-                completion(self, error);
+                completion(error);
         }       
     }];
 }

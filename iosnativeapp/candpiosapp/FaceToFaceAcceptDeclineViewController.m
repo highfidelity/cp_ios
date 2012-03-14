@@ -82,8 +82,8 @@
     
     [self.viewUnderToolbar insertSubview:self.userProfile.view atIndex:0];
     
-    // set the title of the toolbar
-    self.title = [NSString stringWithFormat:@"F2F with %@?", self.user.nickname];
+    // set the title of the navigation item
+    self.navigationBar.topItem.title = [NSString stringWithFormat:@"F2F with %@?", self.user.nickname];
     
     self.actionBarHeader.text = [NSString stringWithFormat:@"%@ is nearby and\n wants to meet you face to face.", [self.user firstName]];
 }
