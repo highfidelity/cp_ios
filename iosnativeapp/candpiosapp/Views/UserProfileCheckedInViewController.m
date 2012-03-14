@@ -196,10 +196,7 @@
     if (self.isF2FInvite) {
         // we're in an F2F invite
         [self placeUserDataOnProfile];
-    } else {
-        // make sure the check in button is on screen
-        [[AppDelegate instance] showCheckInButton];
-        
+    } else {        
         // get a user object with resume data
         [self.user loadUserResumeData:^(User *user, NSError *error) {
             if (!error) {
@@ -210,6 +207,12 @@
             }
         }];
     } 
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    // make sure the check in button is on screen
+    [[AppDelegate instance] showCheckInButton];
 }
 
 - (void)viewDidUnload

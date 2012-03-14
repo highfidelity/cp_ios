@@ -449,7 +449,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 	SET_DEFAULTS(Object, kUDCurrentUser, nil);
 }
 
-- (void)storeUserDataFromDictionary:(NSDictionary *)userInfo
+- (void)storeUserLoginDataFromDictionary:(NSDictionary *)userInfo
 {
     NSString *userId = [userInfo objectForKey:@"id"];
     NSString  *nickname = [userInfo objectForKey:@"nickname"];
@@ -458,12 +458,19 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     currUser.nickname = nickname;
     currUser.userID = [userId intValue];
     
+    NSLog(@"%d", currUser.userID);
+    
+    [self saveCurrentUserToUserDefaults:currUser];
+}
+
+- (void)saveCurrentUserToUserDefaults:(User *)user
+{
 #if DEBUG
-    NSLog(@"Storing user data for user with ID %@ and nickname %@ to NSUserDefaults", userId, nickname);
+    NSLog(@"Storing user data for user with ID %d and nickname %@ to NSUserDefaults", user.userID, user.nickname);
 #endif
     
     // encode the user object
-    NSData *encodedUser = [NSKeyedArchiver archivedDataWithRootObject:currUser];
+    NSData *encodedUser = [NSKeyedArchiver archivedDataWithRootObject:user];
     
     // store it in user defaults
     SET_DEFAULTS(Object, kUDCurrentUser, encodedUser);

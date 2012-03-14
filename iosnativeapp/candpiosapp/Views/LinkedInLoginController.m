@@ -312,14 +312,12 @@
 			NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"params"];
             
             // store the user data to NSUserDefaults
-            [CPAppDelegate storeUserDataFromDictionary:userInfo];
+            [CPAppDelegate storeUserLoginDataFromDictionary:userInfo];
 			
 			NSString *userId = [userInfo objectForKey:@"id"];
             
             [FlurryAnalytics logEvent:@"login_linkedin"];
-            
-            // userId isn't actually an NSNumber it's an NSString!?
-            [FlurryAnalytics setUserID:(NSString *)userId];
+            [FlurryAnalytics setUserID:userId];
             
             // Perform common post-login operations
             [self pushAliasUpdate];

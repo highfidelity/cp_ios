@@ -159,7 +159,7 @@
                              
                              NSDictionary *userInfo = [[jsonDict objectForKey:@"params"] objectForKey:@"params"];
                              
-                             [CPAppDelegate storeUserDataFromDictionary:userInfo];
+                             [CPAppDelegate storeUserLoginDataFromDictionary:userInfo];
                              
                              NSString *userId = [userInfo objectForKey:@"id"];
                              

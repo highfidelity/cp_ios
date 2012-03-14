@@ -217,14 +217,13 @@
                 NSDictionary *userInfo = [[candpJson objectForKey:@"params"] objectForKey:@"params"];
                 
                 // store the user info to NSUserDefaults
-                [CPAppDelegate storeUserDataFromDictionary:userInfo];
+                [CPAppDelegate storeUserLoginDataFromDictionary:userInfo];
                 
                 NSString *userId = [userInfo objectForKey:@"id"];
                 
                 [FlurryAnalytics logEvent:@"login_facebook"];
                 
-                // userId isn't actually an NSNumber it's an NSString!?
-                [FlurryAnalytics setUserID:(NSString *)userId];
+                [FlurryAnalytics setUserID:userId];
                 
                 // Wrap up common login operations
                 [self pushAliasUpdate];

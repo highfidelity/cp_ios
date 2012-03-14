@@ -34,7 +34,8 @@
 -(void)saveSettings;
 +(AppDelegate *)instance;
 -(void)logoutEverything;
--(void)storeUserDataFromDictionary:(NSDictionary *)userDictionary;
+-(void)storeUserLoginDataFromDictionary:(NSDictionary *)userDictionary;
+-(void)saveCurrentUserToUserDefaults:(User *)user;
 -(User *)currentUser;
 -(void)hideCheckInButton;
 -(void)showCheckInButton;
