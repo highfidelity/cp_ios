@@ -49,12 +49,20 @@
           completionBlock:(void (^)(NSDictionary *, NSError *))completion;
 
 //Profile functions
++ (void)getResumeForUserId:(int)userId andCompletion:(void(^)(NSDictionary *json, NSError *error))completion;
 + (void)getUserProfileWithCompletionBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 + (void)getUserTrasactionDataWithCompletitonBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 + (void)getCheckInDataWithUserId:(int)userId
                    andCompletion:(void (^)(NSDictionary *, NSError *))completion;
+
+# pragma mark - User Settings
+
 + (void)getNotificationSettingsWithCompletition:(void(^)(NSDictionary *json, NSError *error))completion;
+
 + (void)setNotificationSettingsForDistance:(NSString *)distance
                               andCheckedId:(BOOL)checkedOnly;
+
++ (void)setUserProfileDataWithDictionary:(NSMutableDictionary *)dataDict
+                            andCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 @end

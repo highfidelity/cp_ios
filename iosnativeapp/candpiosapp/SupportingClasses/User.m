@@ -9,6 +9,7 @@
 #import "User.h"
 #import "AFJSONRequestOperation.h"
 #import "AppDelegate.h"
+#import "CPapi.h"
 #import "NSString+HTML.h"
 
 @implementation User
@@ -105,86 +106,70 @@
 }
 
 -(void)loadUserResumeData:(void (^)(User *user, NSError *error))completion {
-    // url hitting api.php to getResume
-    NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=getResume&user_id=%d", kCandPWebServiceUrl, self.userID];
-
-#if DEBUG
-    NSLog(@"Requesting resume data for user with ID: %d", self.userID);
-#endif
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    
-    // make an AFJSONRequestOperation with the NSURLRequest
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+    [CPapi getResumeForUserId:self.userID andCompletion:^(NSDictionary *response, NSError *error) {
         
-#if DEBUG
-        NSLog(@"JSON Returned for user resume: %@", JSON);
-#endif
-        JSON = [JSON objectForKey:@"payload"];
-        
-        self.nickname = [JSON objectForKey:@"nickname"];
-        NSString *status = [[JSON objectForKey:@"status_text"]
-                stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-
-        self.status = status;
-        self.bio = [JSON objectForKey:@"bio"];
-        
-        if ([[JSON objectForKey:@"job_title"] isKindOfClass:[NSString class]]) {
-            self.jobTitle = [JSON objectForKey:@"job_title"];
-        }
-        // set the user's photo url        
-        self.urlPhoto = [JSON objectForKey:@"urlPhoto"];
-        self.location = CLLocationCoordinate2DMake(
-                                                   [[JSON valueForKeyPath:@"location.lat"] doubleValue],
-                                                   [[JSON valueForKeyPath:@"location.lng"] doubleValue]);
-        
-        // set the booleans if the user is facebook/linkedin verified
-        self.facebookVerified = [[JSON valueForKeyPath:@"verified.facebook.verified"] boolValue];
-        self.linkedInVerified = [[JSON valueForKeyPath:@"verified.linkedin.verified"] boolValue];
-        
-        // get the users hourly_billing_rate if it isn't null
-        if ([[JSON objectForKey:@"hourly_billing_rate"] isKindOfClass:[NSString class]]) {
-            self.hourlyRate = [JSON objectForKey:@"hourly_billing_rate"];
-        }        
-        
-        // set the rest of the user info based on information in the JSON
-        self.totalEarned = [[JSON valueForKeyPath:@"stats.totalEarned"] doubleValue];
-        self.totalSpent = [[JSON valueForKeyPath:@"stats.totalSpent"] doubleValue];
-        
-        // bio, join date, number of users trusted by
-        self.bio = [JSON objectForKey:@"bio"];
-        self.join_date = [JSON objectForKey:@"joined"];
-        self.trusted_by = [[JSON objectForKey:@"trusted"] intValue];
-        
-        // listings information
-        self.listingsAsClient = [JSON objectForKey:@"listingsAsClient"];
-        self.listingsAsAgent = [JSON objectForKey:@"listingsAsAgent"];
-        
-        self.reviews = [JSON objectForKey:@"reviews"];
-        
-        // work and education
-        self.workInformation = [JSON objectForKey:@"work"];
-        self.educationInformation = [JSON objectForKey:@"education"];        
-        
-        // user checkin data
-        self.placeCheckedIn = [[CPPlace alloc] init];
-        self.placeCheckedIn.foursquareID = [JSON valueForKeyPath:@"checkin_data.foursquare"];
-        self.placeCheckedIn.othersHere = [[JSON valueForKeyPath:@"checkin_data.others_here"] intValue];
-        self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[JSON valueForKeyPath:@"checkin_data.checkout"] intValue]]; 
-        
-        
-        
-        // call the completion block passed by the caller
-        if(completion)
-            completion(self, nil); 
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        if(completion)
-            completion(nil, error);
+        if (!error) {
+            NSDictionary *userDict = [response objectForKey:@"payload"];
+            
+            self.nickname = [userDict objectForKey:@"nickname"];
+            NSString *status = [[userDict objectForKey:@"status_text"]
+                                stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            
+            self.status = status;
+            self.bio = [userDict objectForKey:@"bio"];
+            
+            if ([[userDict objectForKey:@"job_title"] isKindOfClass:[NSString class]]) {
+                self.jobTitle = [userDict objectForKey:@"job_title"];
+            }
+            // set the user's photo url        
+            self.urlPhoto = [userDict objectForKey:@"urlPhoto"];
+            self.location = CLLocationCoordinate2DMake(
+                                                       [[userDict valueForKeyPath:@"location.lat"] doubleValue],
+                                                       [[userDict valueForKeyPath:@"location.lng"] doubleValue]);
+            
+            // set the booleans if the user is facebook/linkedin verified
+            self.facebookVerified = [[userDict valueForKeyPath:@"verified.facebook.verified"] boolValue];
+            self.linkedInVerified = [[userDict valueForKeyPath:@"verified.linkedin.verified"] boolValue];
+            
+            // get the users hourly_billing_rate if it isn't null
+            if ([[userDict objectForKey:@"hourly_billing_rate"] isKindOfClass:[NSString class]]) {
+                self.hourlyRate = [userDict objectForKey:@"hourly_billing_rate"];
+            }        
+            
+            // set the rest of the user info based on information in the userDict
+            self.totalEarned = [[userDict valueForKeyPath:@"stats.totalEarned"] doubleValue];
+            self.totalSpent = [[userDict valueForKeyPath:@"stats.totalSpent"] doubleValue];
+            
+            // bio, join date, number of users trusted by
+            self.bio = [userDict objectForKey:@"bio"];
+            self.join_date = [userDict objectForKey:@"joined"];
+            self.trusted_by = [[userDict objectForKey:@"trusted"] intValue];
+            
+            // listings information
+            self.listingsAsClient = [userDict objectForKey:@"listingsAsClient"];
+            self.listingsAsAgent = [userDict objectForKey:@"listingsAsAgent"];
+            
+            self.reviews = [userDict objectForKey:@"reviews"];
+            
+            // work and education
+            self.workInformation = [userDict objectForKey:@"work"];
+            self.educationInformation = [userDict objectForKey:@"education"];        
+            
+            // user checkin data
+            self.placeCheckedIn = [[CPPlace alloc] init];
+            self.placeCheckedIn.foursquareID = [userDict valueForKeyPath:@"checkin_data.foursquare"];
+            self.placeCheckedIn.othersHere = [[userDict valueForKeyPath:@"checkin_data.others_here"] intValue];
+            self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict valueForKeyPath:@"checkin_data.checkout"] intValue]]; 
+            
+            // call the completion block passed by the caller
+            if(completion)
+                completion(self, nil); 
+        } else {
+            if (completion) 
+                completion(self, error);
+        }       
     }];
-    
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    [queue addOperation:operation];
 }
 
 @end

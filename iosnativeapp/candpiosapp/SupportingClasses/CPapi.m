@@ -562,6 +562,18 @@
                          completion:completion];
 }
 
++ (void)getResumeForUserId:(int)userId
+             andCompletion:(void (^)(NSDictionary *, NSError *))completion
+{
+    // params dict with user id
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d", userId], @"user_id", nil];
+    
+    // make the request
+    [self makeHTTPRequestWithAction:@"getResume"
+                     withParameters:parameters
+                         completion:completion];
+}
+
 + (void)getUserProfileWithCompletionBlock:(void (^)(NSDictionary *, NSError *))completion
 {
     [self makeHTTPRequestWithAction:@"getUserData"
@@ -588,6 +600,8 @@
                          completion:completion];
 }
 
+# pragma mark - User Settings
+
 + (void)getNotificationSettingsWithCompletition:(void (^)(NSDictionary *, NSError *))completion {
     [self makeHTTPRequestWithAction:@"getNotificationSettings"
                      withParameters:nil
@@ -604,6 +618,16 @@
     [self makeHTTPRequestWithAction:@"setNotificationSettings"
                          withParameters:parameters
                              completion:nil];
+}
+
++ (void)setUserProfileDataWithDictionary:(NSMutableDictionary *)dataDict andCompletion:(void (^)(NSDictionary *, NSError *))completion
+{
+    // make the HTTP Request with the dataDict passed from UserSettingsTableViewController
+    // in the current implementation this dictionary has one value and one key
+    
+    [self makeHTTPRequestWithAction:@"setUserProfileData" 
+                     withParameters:dataDict 
+                         completion:completion];
 }
 
 
