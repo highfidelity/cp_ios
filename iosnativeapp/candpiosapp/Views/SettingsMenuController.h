@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MapTabController.h"
 
-@interface SettingsMenuController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
+@interface SettingsMenuController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) UIViewController *frontViewController;
 @property (strong, nonatomic) MapTabController *mapTabController;
@@ -20,11 +20,11 @@
 @property (nonatomic, strong) UIAlertView *f2fInviteAlert;
 @property (nonatomic, strong) UIAlertView *f2fPasswordAlert;
 
-@property (weak, nonatomic) IBOutlet UISwitch *citySwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *venueSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *checkedInSwitch;
+@property (weak, nonatomic) IBOutlet UIButton *venueButton;
+@property (weak, nonatomic) IBOutlet UIButton *checkedInOnlyButton;
 
--(IBAction) switchValueChanged: (id)sender;
+- (IBAction)checkedInButtonClick:(UIButton *)sender;
+- (IBAction)selectVenueCity:(id)sender;
 
 - (void)showMenu:(BOOL)shouldReveal;
 - (void)closeMenu;
