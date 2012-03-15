@@ -12,7 +12,7 @@
 #import "MapTabController.h"
 #import "CPapi.h"
 
-#define logoutMenuIndex 1
+#define logoutMenuIndex 2
 #define menuWidthPercentage 0.8
 
 @interface SettingsMenuController() 
@@ -78,11 +78,13 @@
     
     // Setup the menu strings and seque identifiers
     self.menuStringsArray = [NSArray arrayWithObjects:
+                             @"Settings",
                              @"Wallet",
                              @"Logout",
                              nil];
     
     self.menuSegueIdentifiersArray = [NSArray arrayWithObjects:
+                                      @"ShowUserSettingsFromMenu",
                                       @"ShowBalanceFromMenu",
                                       @"ShowLogoutFromMenu",
                                       nil];
@@ -390,22 +392,16 @@
         if (self.isMenuShowing) { [self showMenu:NO]; }
         [self.mapTabController logoutButtonTapped];
         [self.mapTabController loginButtonTapped];
-    } else { 
-        // for right now this is the wallet so let's slide over to there
-        [self showUserWallet];
+    } else {
+        [self performSegueWithIdentifier:[self.menuSegueIdentifiersArray objectAtIndex:indexPath.row] sender:self];
     }
-}
-
-- (void)showUserWallet
-{
-    [self performSegueWithIdentifier:@"ShowBalanceFromMenu" sender:self];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1 && [[alertView buttonTitleAtIndex:1] isEqualToString:@"Wallet"]) {
         // the user wants to see their wallet, so let's do that
-        [self showUserWallet];
+        [self performSegueWithIdentifier:@"ShowBalanceFromMenu" sender:self];
     }
     alertView = nil;
 }

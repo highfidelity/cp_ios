@@ -161,6 +161,7 @@
 		5396E0D814E466C200E33E0E /* LeagueGothic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5396E0D714E466C200E33E0E /* LeagueGothic.otf */; };
 		539B3DC915029D720017BACB /* thumbs-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 539B3DC715029D720017BACB /* thumbs-down.png */; };
 		539B3DCA15029D720017BACB /* thumbs-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 539B3DC815029D720017BACB /* thumbs-up.png */; };
+		53B90651150EB08F00EAC9A1 /* UserSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE2551150EAC6B00A0D93A /* UserSettingsTableViewController.m */; };
 		53BA0A22150A9BF2006F5B98 /* map-locate.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BA0A1E150A9BF2006F5B98 /* map-locate.png */; };
 		53BA0A23150A9BF2006F5B98 /* map-locate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BA0A1F150A9BF2006F5B98 /* map-locate@2x.png */; };
 		53BC266D14E4624200D16D4B /* others-at-venue@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BC266B14E4624200D16D4B /* others-at-venue@2x~iphone.png */; };
@@ -198,6 +199,7 @@
 		53FB9E4F14E0AE4600F4CC7F /* FoursquareAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FB9E4E14E0AE4600F4CC7F /* FoursquareAPIRequest.m */; };
 		53FE254E150EA50B00A0D93A /* PaymentHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE254D150EA50A00A0D93A /* PaymentHelper.m */; };
 		53FE254F150EA60D00A0D93A /* PaymentHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE254D150EA50A00A0D93A /* PaymentHelper.m */; };
+		53FE2552150EAC6B00A0D93A /* UserSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE2551150EAC6B00A0D93A /* UserSettingsTableViewController.m */; };
 		6F0B453914F6BCD10074DBD9 /* ChatHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453814F6BCD10074DBD9 /* ChatHelper.m */; };
 		6F0B453C14F6BD560074DBD9 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453B14F6BD560074DBD9 /* ChatMessage.m */; };
 		6F0B453F14F6BD850074DBD9 /* ChatHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453E14F6BD850074DBD9 /* ChatHistory.m */; };
@@ -620,6 +622,8 @@
 		53FB9E4E14E0AE4600F4CC7F /* FoursquareAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FoursquareAPIRequest.m; path = SupportingClasses/FoursquareAPIRequest.m; sourceTree = "<group>"; };
 		53FE254C150EA50A00A0D93A /* PaymentHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaymentHelper.h; path = Payment/PaymentHelper.h; sourceTree = "<group>"; };
 		53FE254D150EA50A00A0D93A /* PaymentHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaymentHelper.m; path = Payment/PaymentHelper.m; sourceTree = "<group>"; };
+		53FE2550150EAC6B00A0D93A /* UserSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSettingsTableViewController.h; path = Settings/UserSettingsTableViewController.h; sourceTree = "<group>"; };
+		53FE2551150EAC6B00A0D93A /* UserSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSettingsTableViewController.m; path = Settings/UserSettingsTableViewController.m; sourceTree = "<group>"; };
 		6F0B453714F6BCC50074DBD9 /* ChatHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatHelper.h; path = candpiosapp/Chat/ChatHelper.h; sourceTree = SOURCE_ROOT; };
 		6F0B453814F6BCD10074DBD9 /* ChatHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatHelper.m; path = candpiosapp/Chat/ChatHelper.m; sourceTree = SOURCE_ROOT; };
 		6F0B453A14F6BD560074DBD9 /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatMessage.h; path = candpiosapp/Chat/ChatMessage.h; sourceTree = SOURCE_ROOT; };
@@ -1313,6 +1317,8 @@
 				5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */,
 				4EC78AFD14F761B300581F4F /* SettingsMenuController.h */,
 				4EC78AFE14F761B300581F4F /* SettingsMenuController.m */,
+				53FE2550150EAC6B00A0D93A /* UserSettingsTableViewController.h */,
+				53FE2551150EAC6B00A0D93A /* UserSettingsTableViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -2075,6 +2081,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53B90651150EB08F00EAC9A1 /* UserSettingsTableViewController.m in Sources */,
 				53FE254F150EA60D00A0D93A /* PaymentHelper.m in Sources */,
 				4EC78B0D14F76E8400581F4F /* SettingsMenuController.m in Sources */,
 				871EFB1714AE9C820030658B /* main.m in Sources */,
@@ -2202,6 +2209,7 @@
 			files = (
 				871EFB4414AE9C820030658B /* candpiosappTests.m in Sources */,
 				53FE254E150EA50B00A0D93A /* PaymentHelper.m in Sources */,
+				53FE2552150EAC6B00A0D93A /* UserSettingsTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

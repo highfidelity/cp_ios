@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) NSString *nickname;
 @property (nonatomic, assign) int userID;
+@property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *jobTitle;
 @property (nonatomic, strong) NSString *status;

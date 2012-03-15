@@ -23,6 +23,10 @@
                    withParameters:(NSMutableDictionary *)parameters 
                        completion:(void(^)(NSDictionary *json, NSError *error))completion;
 
++ (void)makeHTTPRequest:(NSURLRequest *)request 
+             completion:(void(^)(NSDictionary *json, NSError *error))completion;
+
+
 + (void)oneOnOneChatResponseHandler:(NSData *)response;
 + (void)f2fInviteResponseHandler:(NSData *)response;
 + (void)f2fAcceptResponseHandler:(NSData *)response;
@@ -32,8 +36,6 @@
 @end
 
 @implementation CPapi
-
-@synthesize httpClient;
 
 // TODO: Show the network activity indicator while the request is being made. Update SVProgressHUD to its latest version (where it no longer automatically shows the network activity indicator when the HUD is displayed) so that the indicator is the responsibility of the actual request and not the HUD
 
@@ -103,14 +105,21 @@
 #endif
     
     NSURLRequest *request =  [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        if (completion != nil) {
-            completion(JSON, nil);   
+    [self makeHTTPRequest:request completion:completion];
+}
+
+// Private method that takes an NSURLRequest and performs it using AFJSONOperation
++ (void)makeHTTPRequest:(NSURLRequest *)request completion:(void (^)(NSDictionary *, NSError *))completion
+{
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request 
+        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            if (completion != nil) {
+                completion(JSON, nil);   
+            }
         }
-    }
-    failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        if (completion != nil) {
-            completion(JSON, error);
+        failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+            if (completion != nil) {
+                completion(JSON, error);
         }
     }];
     
@@ -630,5 +639,30 @@
                          completion:completion];
 }
 
++ (void)uploadUserProfilePhoto:(UIImage *)image withCompletion:(void (^)(NSDictionary *, NSError *))completion
+{
+    // setup a client for this request so we can do the file uploading magic
+    AFHTTPClient *httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
+    
+    // get NSData for the image
+    NSData *imageData = UIImageJPEGRepresentation(image, 1.0); 
+    
+    // set the action to setUserProfileData
+    NSDictionary *params = [NSDictionary dictionaryWithObject:@"setUserProfileData" forKey:@"action"];
+    
+    // setup the request to pass the image
+    NSURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:@"api.php" parameters:params constructingBodyWithBlock: ^(id <AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:imageData name:@"profile" fileName:[NSString stringWithFormat:@"%d_iPhone_Profile_Upload.jpeg", [CPAppDelegate currentUser].userID] mimeType:@"image/jpeg"];
+    }];
+    
+#if DEBUG
+    NSLog(@"Uploading profile image for user with id %d", [CPAppDelegate currentUser].userID);
+#endif
+    
+    // make the request
+    [self makeHTTPRequest:request completion:^(NSDictionary *responseDict, NSError *error){
+        completion(responseDict, error); 
+    }];
+}
 
 @end

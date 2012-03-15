@@ -16,6 +16,7 @@
 
 @synthesize nickname = _nickname;
 @synthesize userID = _userID;
+@synthesize email = _email;
 @synthesize title = _title;
 @synthesize status = _status;
 @synthesize location = _location;
@@ -56,6 +57,8 @@
     {         
         self.userID = [decoder decodeIntForKey:@"userID"];
         self.nickname = [decoder decodeObjectForKey:@"nickname"];
+        self.email = [decoder decodeObjectForKey:@"email"];
+        self.urlPhoto = [decoder decodeObjectForKey:@"urlPhoto"];
     }    
     return self;
 }
@@ -64,6 +67,8 @@
 {
     [encoder encodeInt:self.userID forKey:@"userID"];
     [encoder encodeObject:self.nickname forKey:@"nickname"];
+    [encoder encodeObject:self.email forKey:@"email"];
+    [encoder encodeObject:self.urlPhoto forKey:@"urlPhoto"];
 }
 
 // override nickname setter to decode html entities
@@ -161,6 +166,8 @@
             self.placeCheckedIn.foursquareID = [userDict valueForKeyPath:@"checkin_data.foursquare"];
             self.placeCheckedIn.othersHere = [[userDict valueForKeyPath:@"checkin_data.others_here"] intValue];
             self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict valueForKeyPath:@"checkin_data.checkout"] intValue]]; 
+            
+            self.email = [userDict objectForKey:@"email"];
             
             // call the completion block passed by the caller
             if(completion)

@@ -210,6 +210,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     // make sure the check in button is on screen
     [[AppDelegate instance] showCheckInButton];
 }

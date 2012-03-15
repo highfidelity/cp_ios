@@ -15,8 +15,6 @@
 
 @interface CPapi : NSObject
 
-@property (nonatomic, strong) AFHTTPClient *httpClient;
-
 
 // Helper functions
 + (NSString *)urlEncode:(NSString *)string;
@@ -64,5 +62,7 @@
 
 + (void)setUserProfileDataWithDictionary:(NSMutableDictionary *)dataDict
                             andCompletion:(void (^)(NSDictionary *, NSError *))completion;
++ (void)uploadUserProfilePhoto:(UIImage *)image 
+                withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 @end
