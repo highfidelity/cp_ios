@@ -39,6 +39,7 @@
 @synthesize workInformation = _workInformation;
 @synthesize educationInformation  = _educationInformation;
 @synthesize jobTitle, reviews;
+@synthesize checkInHistory = _checkInHistory;
 
 -(id)init
 {
@@ -167,6 +168,23 @@
             self.placeCheckedIn.othersHere = [[userDict valueForKeyPath:@"checkin_data.others_here"] intValue];
             self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict valueForKeyPath:@"checkin_data.checkout"] intValue]]; 
             
+            // checkin history
+            self.checkInHistory = [NSMutableArray array];
+            for (NSDictionary *placeDict in [userDict valueForKey:@"checkin_history"]) {
+                CPPlace *place = [CPPlace new];
+                place.checkinCount = [[placeDict valueForKey:@"count"] intValue];
+                place.foursquareID = [placeDict valueForKey:@"foursquare_id"];
+                place.name = [placeDict valueForKey:@"name"];
+                place.address = [placeDict valueForKey:@"address"];
+                place.city = [placeDict valueForKey:@"city"];
+                place.state = [placeDict valueForKey:@"state"];
+                place.zip = [placeDict valueForKey:@"zip"];
+                place.phone = [placeDict valueForKey:@"phone"];
+                place.icon = [placeDict valueForKey:@"icon"];
+                [self.checkInHistory addObject:place];
+            }
+            
+            // user email
             self.email = [userDict objectForKey:@"email"];
             
             // call the completion block passed by the caller

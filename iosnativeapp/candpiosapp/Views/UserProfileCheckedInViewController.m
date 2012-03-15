@@ -444,6 +444,28 @@
     // add user trust information
     [resumeHtml addObject:[NSString stringWithFormat:@"<p><b>Trusted by %d people</b></p>", self.user.trusted_by]];
     
+    // favorite places to work
+    NSArray *checkInHistory = self.user.checkInHistory;
+    if (checkInHistory && [checkInHistory count] > 0) { 
+        [resumeHtml addObject:@"<p><b>Favorite places to work:</b>"];
+        int placeCount = 0;
+        for (CPPlace *place in self.user.checkInHistory) { 
+            if (placeCount == 2) { break; } // limit to the top two locations by checkin count 
+            if (placeCount != 0) { [resumeHtml addObject:@"<br/>"]; } // space between checkin locations
+            [resumeHtml addObject:[NSString stringWithFormat:@"<div style='float: left;'>%@</div><div style='float: right;'>", place.name]];
+            if (place.checkinCount == 1) { 
+                [resumeHtml addObject:@"1 Checkin"];                
+            } else if (place.checkinCount > 1) { 
+                [resumeHtml addObject:[NSString stringWithFormat:@"%d Checkins", place.checkinCount]];
+            }
+            [resumeHtml addObject:[NSString stringWithFormat:@"</div><br/><div style='float: left;'>%@</div><br/>", place.formattedAddress]];
+            placeCount++;
+        }
+        [resumeHtml addObject:@"</p>"];
+    }
+    
+    
+    
     //reviews
     int total_reviews = [[[[self user] reviews] objectForKey:@"records"] intValue];
     if (total_reviews > 0) {

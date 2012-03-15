@@ -14,6 +14,7 @@
 @interface UserSettingsTableViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
 
 -(void)syncWithWebData;
+-(void)placeCurrentUserData;
 
 @end
 

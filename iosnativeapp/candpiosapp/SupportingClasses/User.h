@@ -38,6 +38,7 @@
 @property (nonatomic, strong) NSArray *workInformation;
 @property (nonatomic, strong) NSArray *educationInformation;
 @property (nonatomic, strong) NSDictionary *reviews;
+@property (nonatomic, strong) NSMutableArray *checkInHistory;
 
 -(void)loadUserResumeData:(void (^)(NSError *error))completion;
 

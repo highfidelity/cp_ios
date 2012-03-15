@@ -25,6 +25,8 @@
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanFromNavbarGestureRecognizer;
 
 -(void)setMapAndButtonsViewXOffset:(CGFloat)xOffset;
+- (void)setCheckin:(BOOL)setCheckin;
+- (void)setVenue:(BOOL)setVenue;
 
 @end
 

@@ -17,6 +17,7 @@
 @synthesize lng = _lng;
 @synthesize othersHere = _othersHere;
 @synthesize distanceFromUser = _distanceFromUser;
+@synthesize checkinCount = _checkinCount;
 
 // this method is used in CheckInListTableViewController to sort the array of places
 // by the distance of each place from the user
@@ -31,6 +32,21 @@
     } else {
         return NSOrderedSame;
     }
+}
+
+- (NSString*) formattedAddress {
+    // format the address from available address components
+    NSMutableArray *addressComponents = [NSMutableArray array];
+    if (self.address && self.address.length > 0) { 
+        [addressComponents addObject:self.address];
+    }
+    if (self.city && self.city.length > 0) { 
+        [addressComponents addObject:self.city];
+    }
+    if (self.state && self.state.length > 0) {
+        [addressComponents addObject:self.state];
+    }
+    return [addressComponents componentsJoinedByString:@", "];
 }
 
 @end
