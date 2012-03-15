@@ -447,7 +447,7 @@
     // favorite places to work
     NSArray *checkInHistory = self.user.checkInHistory;
     if (checkInHistory && [checkInHistory count] > 0) { 
-        [resumeHtml addObject:@"<p><b>Favorite places to work:</b>"];
+        [resumeHtml addObject:@"<p><b>Favorite places to work</b>"];
         int placeCount = 0;
         for (CPPlace *place in self.user.checkInHistory) { 
             if (placeCount == 2) { break; } // limit to the top two locations by checkin count 
