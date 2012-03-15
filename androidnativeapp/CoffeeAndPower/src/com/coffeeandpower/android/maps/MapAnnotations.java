@@ -9,6 +9,11 @@ import android.graphics.drawable.Drawable;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
 
+/**
+ * A drawable list of annotations with interactions.
+ * 
+ * @author Melinda Green
+ */
 public class MapAnnotations extends ItemizedOverlay {
 
     @Override
@@ -47,6 +52,8 @@ public class MapAnnotations extends ItemizedOverlay {
 }
 
 /*
+ * Useful code for when we want to dynamically "paint" onto the overlay.
+ * 
  * @Override
  * public void draw(android.graphics.Canvas canvas, MapView mapView, boolean shadow) {
  * super.draw(canvas, mapView, shadow);

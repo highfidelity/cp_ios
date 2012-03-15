@@ -1,60 +1,62 @@
 package com.coffeeandpower.android.maps;
 
-import java.util.List;
-
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
-import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
+/**
+ * The main map GUI.
+ * Android Activity objects represent individual "screens" that users interact with.
+ * The system maintains a stack of these as users move to new activities and return from them.
+ * 
+ * @author Melinda Green
+ */
 public class CoffeeAndPowerActivity extends MapActivity {
+    private final static int CITY_LEVEL = 14;
+    private MapAnnotations mAnnotations; // All glyphs and other overlays.
+
+    // Just a static array of predefined annotations for prototyping.
+    // This will grow into a dynamically managed list.
+    private static OverlayItem mOverlayItems[] = {
+        new OverlayItem(GeoPointUtils.getGeoPoint("1825+Market+Street+San+Francisco"), "Headquarters", "Coffee & Power"),
+        new OverlayItem(GeoPointUtils.getGeoPoint("2340+Francisco+Street+San+Francisco"), "Developer", "Melinda Green"),
+        new OverlayItem(GeoPointUtils.getGeoPoint("481+York+Street+San+Francisco"), "Developer", "Charity Majors"),
+    };
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        MapView mapView = (MapView) findViewById(R.id.mapview);
-        mapView.setBuiltInZoomControls(true);//37.7, 122.4
-        MapController controller = mapView.getController();
 
-        List<Overlay> mapOverlays = mapView.getOverlays();
-        Drawable drawable = this.getResources().getDrawable(R.drawable.androidmarker);
-        MapAnnotations itemizedoverlay = new MapAnnotations(drawable, this);
+        Drawable drawableMarker = getResources().getDrawable(R.drawable.androidmarker);
+        mAnnotations = new MapAnnotations(drawableMarker, this);
 
-        GeoPoint sf = new GeoPoint(37779300, -122419200);
-        GeoPoint cnp = GeoPointUtils.getGeoPoint("1825+Market+Street+San+Francisco");
-        GeoPoint melinda = GeoPointUtils.getGeoPoint("2340+Francisco+Street+San+Francisco");
-        GeoPoint charity = GeoPointUtils.getGeoPoint("481+York+Street+San+Francisco");
+        // Add all the initial annotations.
+        for(OverlayItem item : mOverlayItems)
+            addAnnotation(item);
 
-        OverlayItem overlayitem = new OverlayItem(cnp, "Headquarters", "Coffee & Power");
-        itemizedoverlay.addOverlay(overlayitem);
-        mapOverlays.add(itemizedoverlay);
-//        overlayitem = new OverlayItem(sf, "Location", "Downtown SF");
-//        itemizedoverlay.addOverlay(overlayitem);
-//        mapOverlays.add(itemizedoverlay);
-        overlayitem = new OverlayItem(melinda, "Developer", "Melinda Green");
-        itemizedoverlay.addOverlay(overlayitem);
-        mapOverlays.add(itemizedoverlay);
-        overlayitem = new OverlayItem(charity, "Developer", "Charity Majors");
-        itemizedoverlay.addOverlay(overlayitem);
-        mapOverlays.add(itemizedoverlay);
-
-        controller.setCenter(cnp);
-        controller.setZoom(14);
+        MapView mapView = (MapView) findViewById(R.id.mapview); // From main.xml
+        mapView.setBuiltInZoomControls(true); // Shows the +/- controls as user interacts with the map.
+        mapView.getOverlays().add(mAnnotations); // Populates the map with all annotations.
+        MapController controller = mapView.getController(); // For programmatically driving the map.
+        controller.setCenter(mOverlayItems[0].getPoint()); // Center the map on the C&P headquarters.
+        controller.setZoom(CITY_LEVEL); // Innitial zoom level. Users pinch-to-zoom from there.
     }
 
+    private void addAnnotation(OverlayItem annotation) {
+        mAnnotations.addOverlay(annotation);
+    }
+
+    // Required by base class.
     @Override
     protected boolean isRouteDisplayed() {
         // TODO Auto-generated method stub
         return false;
     }
-
-
-    //////////////////////////////////////////////////////////////////////////////
 
 }

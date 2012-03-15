@@ -15,6 +15,12 @@ import org.json.JSONObject;
 
 import com.google.android.maps.GeoPoint;
 
+/**
+ * A collection of utility functions for creating and manipulating GeoPoint objects.
+ * These represent individual locations of annotations.
+ * 
+ * @author Melinda
+ */
 public class GeoPointUtils {
 
     public static GeoPoint getGeoPoint(String address) {
