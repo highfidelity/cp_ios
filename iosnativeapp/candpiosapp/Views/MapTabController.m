@@ -101,9 +101,7 @@ BOOL zoomedOut = NO;
                                                object:nil];
     
     // Title view styling
-    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo.png"]];
     self.navigationItem.title = @"C&P"; // TODO: Remove once back button with mug logo is added to pushed views
-    
     
     self.mapHasLoaded = NO;
 
