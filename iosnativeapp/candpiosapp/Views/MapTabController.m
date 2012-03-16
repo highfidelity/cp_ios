@@ -56,7 +56,6 @@ BOOL clusterNow = YES;
 BOOL bigZoomLevelChange = NO;
 BOOL zoomedIn = NO;
 BOOL zoomedOut = NO;
-BOOL clearLocations = NO;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -205,7 +204,7 @@ BOOL clearLocations = NO;
 {
     fullDataset = nil;    
     fullDataset = [[MapDataSet alloc] init];
-    clearLocations = YES;
+    [self.mapView removeAllAnnotations];
     [self refreshLocations];
 }
 
@@ -251,7 +250,6 @@ BOOL clearLocations = NO;
         // prevent the refresh of locations when we have a valid dataset or the map is not yet loaded
         if(self.mapHasLoaded && (!dataset || ![dataset isValidFor:mapRect]))
         {
-            clearLocations = NO;
             [self refreshLocations];
         }
         
@@ -280,10 +278,6 @@ BOOL clearLocations = NO;
     [MapDataSet beginLoadingNewDataset:mapRect
                             completion:^(MapDataSet *newDataset, NSError *error) {
 
-                                if (clearLocations) {
-                                    [self.mapView removeAllAnnotations];
-                                }
-                                
                                 if(newDataset)
                                 {
                                     NSSet *visiblePins = [mapView annotationsInMapRect: mapView.visibleMapRect];
