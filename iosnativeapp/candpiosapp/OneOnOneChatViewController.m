@@ -262,9 +262,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         timestampFormat.dateFormat = @" — h:mm a";        
         timeString = [timeString stringByAppendingString:
                       [[timestampFormat stringFromDate:timestamp] lowercaseString]];
-        
-        NSLog(@"Timestamp: %@ & Timestring: %@", timestamp, timeString);
-        
+                
         timestampLabel.text = timeString;
     }
         
@@ -408,7 +406,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     [self.history loadChatHistoryWithSuccessBlock:afterLoadingHistory];
         
     // Set up the fancy background on view
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise.png"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-light.png"]];
     
     // Make our chat button FANCY!
     UIImage *chatButtonImage = [[UIImage imageNamed:@"button-turquoise-32pt.png"]
