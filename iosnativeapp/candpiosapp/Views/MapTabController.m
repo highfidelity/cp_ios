@@ -128,12 +128,6 @@ BOOL clearLocations = NO;
     // check this already since we don't want a lag time if this step has already been completed
     [self checkIfUserHasDismissedLocationAlert];
     
-	reloadTimer = [NSTimer scheduledTimerWithTimeInterval:10.0
-												   target:self
-												 selector:@selector(refreshLocationsIfNeeded)
-												 userInfo:nil
-												  repeats:YES];
-    
     // center on the last known user location
 	if([AppDelegate instance].settings.hasLocation)
 	{

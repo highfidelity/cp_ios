@@ -189,7 +189,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     // make the status bar the black style
     application.statusBarStyle = UIStatusBarStyleBlackOpaque;
 
-    if (!DEFAULTS(object, kUDCurrentUser)) { 
+    if (![CPAppDelegate currentUser]) { 
         // force a login
         [self logoutEverything];
         SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
