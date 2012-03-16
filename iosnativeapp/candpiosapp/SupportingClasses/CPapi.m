@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "SVProgressHUD.h"
 #import "ChatMessage.h"
+#import "UIImage+Resize.h"
 
 @interface CPapi()
 
@@ -644,25 +645,48 @@
     // setup a client for this request so we can do the file uploading magic
     AFHTTPClient *httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
     
-    // get NSData for the image
-    NSData *imageData = UIImageJPEGRepresentation(image, 1.0); 
-    
-    // set the action to setUserProfileData
-    NSDictionary *params = [NSDictionary dictionaryWithObject:@"setUserProfileData" forKey:@"action"];
-    
-    // setup the request to pass the image
-    NSURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:@"api.php" parameters:params constructingBodyWithBlock: ^(id <AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:imageData name:@"profile" fileName:[NSString stringWithFormat:@"%d_iPhone_Profile_Upload.jpeg", [CPAppDelegate currentUser].userID] mimeType:@"image/jpeg"];
-    }];
-    
+    // do this in a thread so we don't block ui
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+       
+        double ratio;
+        UIImage *resizedImage = image;
+        
+        // let's resize the image first before we upload if it's longest side is bigger than 800
+        if (image.size.width > 512 || image.size.height > 512) {
+            if (image.size.width < image.size.height) {
+                ratio = image.size.width / 512.0;
+            } else {
+                ratio = image.size.height / 512.0;
+            }
+            resizedImage = [image resizedImage:CGSizeMake((image.size.width / ratio), (image.size.height / ratio)) interpolationQuality:kCGInterpolationHigh];
 #if DEBUG
-    NSLog(@"Uploading profile image for user with id %d", [CPAppDelegate currentUser].userID);
+            NSLog(@"The orginal image dimensions were %gx%g. It has been resized to %gx%g.", image.size.width, image.size.height, resizedImage.size.width, resizedImage.size.height);
 #endif
-    
-    // make the request
-    [self makeHTTPRequest:request completion:^(NSDictionary *responseDict, NSError *error){
-        completion(responseDict, error); 
-    }];
+        }
+        
+        // get NSData for the image
+        NSData *imageData = UIImageJPEGRepresentation(resizedImage, 1.0); 
+        
+        // set the action to setUserProfileData
+        NSDictionary *params = [NSDictionary dictionaryWithObject:@"setUserProfileData" forKey:@"action"];
+        
+        // setup the request to pass the image
+        NSURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:@"api.php" parameters:params constructingBodyWithBlock: ^(id <AFMultipartFormData> formData) {
+            [formData appendPartWithFileData:imageData name:@"profile" fileName:[NSString stringWithFormat:@"%d_iPhone_Profile_Upload.jpeg", [CPAppDelegate currentUser].userID] mimeType:@"image/jpeg"];
+        }];
+        
+        // go back to the main queue and make the request (the makeHTTPRequest method will queue it in an operation queue)
+        dispatch_async(dispatch_get_main_queue(), ^{
+#if DEBUG
+            NSLog(@"Uploading profile image for user with id %d", [CPAppDelegate currentUser].userID);
+#endif
+            
+            // make the request
+            [self makeHTTPRequest:request completion:^(NSDictionary *responseDict, NSError *error){
+                completion(responseDict, error); 
+            }];
+        });
+    });    
 }
 
 @end

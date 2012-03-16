@@ -11,6 +11,9 @@
 #import "User.h"
 #import "SVProgressHUD.h"
 
+#define tableCellSubviewTag 7909
+#define spinnerTag  7910
+
 @interface UserSettingsTableViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
 
 -(void)syncWithWebData;
@@ -74,6 +77,7 @@
     
     // put the local data on the card so it's there when it spins around
     [self placeCurrentUserData];
+    
     // sync local data with data from web
     [self syncWithWebData];
 }
@@ -218,9 +222,8 @@
         
         // store the updated user in NSUserDefaults
         [CPAppDelegate saveCurrentUserToUserDefaults:self.currentUser];
-    }
-    // if we don't get passed a responseDict
-    // there's nothing to update so we're just putting back the old
+    }  
+    // place our current data, wether or not soemthing changed
     [self placeCurrentUserData];
 }
 
@@ -237,18 +240,44 @@
      */
 }
 
-#pragma mark - UITextField delegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+#pragma mark - Spinner for Table Cells
+- (void)addSpinnerToTableCell:(UIView *)tableCell
 {
     // alloc-init a spinner
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     
+    // grab the textfield or imageview we're hiding
+    UIView *hideToSpin = [tableCell viewWithTag:tableCellSubviewTag];
+    
     // set the frame of the spinner so it's vertically centered on the right side of the row
     CGRect spinFrame = spinner.frame;
-    spinFrame.origin.x = textField.superview.frame.size.width - 10 - spinFrame.size.width;
-    spinFrame.origin.y = (textField.superview.frame.size.height / 2) - (spinFrame.size.height / 2) ;
+    spinFrame.origin.x = hideToSpin.superview.frame.size.width - 10 - spinFrame.size.width;
+    spinFrame.origin.y = (hideToSpin.superview.frame.size.height / 2) - (spinFrame.size.height / 2) ;
     spinner.frame = spinFrame;
-    [textField.superview addSubview:spinner];
+    
+    // give the spinner a tag so we can kill it later
+    spinner.tag = spinnerTag;
+    
+    // hide the hideToSpin view
+    hideToSpin.alpha = 0.0;
+    [tableCell addSubview:spinner]; 
+    
+    // spin the spinner and drop the keyboard
+    [spinner startAnimating];
+}
+
+- (void)stopTableCellSpinner:(UIView *)tableCell
+{
+    [[tableCell viewWithTag:spinnerTag] removeFromSuperview];
+    [tableCell viewWithTag:tableCellSubviewTag].alpha = 1.0;
+}
+
+
+#pragma mark - UITextField delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    
+    [self addSpinnerToTableCell:textField.superview];
 
     [textField resignFirstResponder];
     
@@ -264,16 +293,10 @@
         [params setObject:textField.text forKey:@"email"];
     }
     
-    // clear the text field so we can show the spinner
-    textField.text = @"";
-    // spin the spinner and drop the keyboard
-    [spinner startAnimating];
-    
     [CPapi setUserProfileDataWithDictionary:params andCompletion:^(NSDictionary *json, NSError *error) {
         if (!error) {
             // let's see if there was a successful change
             if ([[json objectForKey:@"succeeded"] boolValue]) {
-                [spinner stopAnimating];
                 textField.userInteractionEnabled = YES;
                 
                 [self updateCurrentUserWithNewData:json];
@@ -285,10 +308,9 @@
                                                           cancelButtonTitle:@"OK" 
                                                           otherButtonTitles:nil];
                 [alertView show];
-                
                 [self updateCurrentUserWithNewData:nil];
             }
-            [spinner stopAnimating];
+            [self stopTableCellSpinner:textField.superview];
             textField.userInteractionEnabled = YES;
         } else {
             // error parsing JSON
@@ -319,8 +341,12 @@
         if (buttonIndex == 0) {
             // user wants to pick from camera
             self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            // use the front camera by default
-            self.imagePicker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+            // use the front camera by default (if we have one)
+            // if there's no front camera we'll use the back (3GS)
+            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerCameraDeviceFront]) {
+                 self.imagePicker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+            }
+           
         } else if (buttonIndex == 1) {
             // user wants to pick from photo library
             self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
@@ -335,7 +361,11 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
 {
     // get rid of the image picker
-    [picker dismissModalViewControllerAnimated:YES];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        // show a spinner on the profile image button now that the modal is gone
+        [self addSpinnerToTableCell:self.profileImageButton.superview];
+    }];
+       
     
     // upload the image
     [CPapi uploadUserProfilePhoto:image withCompletion:^(NSDictionary *json, NSError *error) {
@@ -343,6 +373,9 @@
             // response was success ... we uploaded a new profile picture
             [self updateCurrentUserWithNewData:json];
         } else {
+#if DEBUG
+            NSLog(@"Error while uploading file. Here's the json: %@", json);
+#endif
             // show the user the error message
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Uh Oh!" 
                                                                 message:[json objectForKey:@"message"]
@@ -351,6 +384,8 @@
                                                       otherButtonTitles:nil];
             [alertView show];
         }
+        // stop the spinner no matter what happens
+        [self stopTableCellSpinner:self.profileImageButton.superview];
     }];
 }
 
