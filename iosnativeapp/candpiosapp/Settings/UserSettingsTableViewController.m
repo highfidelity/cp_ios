@@ -69,11 +69,15 @@
     // set our current user to the user in NSUserDefaults
     self.currentUser = [CPAppDelegate currentUser];
     
+    // hide the profile image button, it's going to get shown once we load the image
+    self.profileImageButton.alpha = 0.0;
+    
     // add an imageview to the profileImageButton
     self.profileImage = [[UIImageView alloc] initWithFrame:CGRectMake(1, 1, 31, 31)];
     
     // add the profile image imageview to the button
     [self.profileImageButton addSubview:self.profileImage];
+
     
     // put the local data on the card so it's there when it spins around
     [self placeCurrentUserData];
@@ -121,9 +125,8 @@
         self.emailTextField.text = self.pendingEmail;
     }
     
-    // seems like this should use the thumbnail but the frame is 31x31 so retina display wants at least 62x62
-    [self.profileImage setImageWithURL:self.currentUser.urlPhoto placeholderImage:[UIImage imageNamed:@"texture-diagonal-noise-dark"]]; 
-    
+    // show the profile image we have and stop the spinner
+    [self changeProfileImageAndStopSpinner];
 }
 
 - (void)syncWithWebData
@@ -143,15 +146,19 @@
                 self.newDataFromSync = YES;
             }
             
-            // check photo url
-            if (![self.currentUser.urlPhoto isEqual:webSyncUser.urlPhoto]) {
-                self.currentUser.urlPhoto = webSyncUser.urlPhoto;
-                self.newDataFromSync = YES;
-            }
-            
             // check email
             if (![self.currentUser.email isEqualToString:webSyncUser.email]) {
                 self.currentUser.email = webSyncUser.email;
+                self.newDataFromSync = YES;
+            }
+            
+            // check photo url
+            if (![self.currentUser.urlPhoto isEqual:webSyncUser.urlPhoto]) {
+                // user photo is going to change
+                // show the spinner
+                [self addSpinnerToTableCell:self.profileImageButton.superview];
+                
+                self.currentUser.urlPhoto = webSyncUser.urlPhoto;
                 self.newDataFromSync = YES;
             }
             
@@ -172,6 +179,8 @@
             // place the current user data into the table
             [self placeCurrentUserData];
         } else {
+            // kill the hud if there is one
+            [SVProgressHUD dismiss];    
             NSString *message = @"There was a problem getting current data.\nPlease try again in a little while";
             // we had an error, let's tell the user and leave
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
@@ -213,7 +222,7 @@
                                                       otherButtonTitles:nil];
             [alertView show];
         }
-        NSURL *newPhoto = [paramsDict objectForKey:@"picture"];
+        NSURL *newPhoto = [NSURL URLWithString:[paramsDict objectForKey:@"picture"]];
         if (newPhoto) {
             // we have a new profile picture
             // update the user's photo url
@@ -223,7 +232,7 @@
         // store the updated user in NSUserDefaults
         [CPAppDelegate saveCurrentUserToUserDefaults:self.currentUser];
     }  
-    // place our current data, wether or not soemthing changed
+    // place our current data, wether or not something changed
     [self placeCurrentUserData];
 }
 
@@ -251,8 +260,8 @@
     
     // set the frame of the spinner so it's vertically centered on the right side of the row
     CGRect spinFrame = spinner.frame;
-    spinFrame.origin.x = hideToSpin.superview.frame.size.width - 10 - spinFrame.size.width;
-    spinFrame.origin.y = (hideToSpin.superview.frame.size.height / 2) - (spinFrame.size.height / 2) ;
+    spinFrame.origin.x = tableCell.frame.size.width - 10 - spinFrame.size.width;
+    spinFrame.origin.y = (tableCell.frame.size.height / 2) - (spinFrame.size.height / 2) ;
     spinner.frame = spinFrame;
     
     // give the spinner a tag so we can kill it later
@@ -358,6 +367,23 @@
 
 #pragma mark - Image Picker Controller Delegate
 
+- (void)changeProfileImageAndStopSpinner
+{
+    if (self.currentUser.urlPhoto) {
+        NSURLRequest *request = [NSURLRequest requestWithURL:self.currentUser.urlPhoto];
+        
+        // avoid a retain cycle by using a weak pointer to call back to self
+        __weak UserSettingsTableViewController *thisVC = self;
+        [self.profileImage setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"texture-diagonal-noise-dark"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
+            // image loaded ... stop the spinner
+            [thisVC stopTableCellSpinner:self.profileImageButton.superview];
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error){
+            // failed to load the image
+        }];
+    }    
+}
+
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
 {
     // get rid of the image picker
@@ -376,16 +402,20 @@
 #if DEBUG
             NSLog(@"Error while uploading file. Here's the json: %@", json);
 #endif
+           
+            NSString *message = [json objectForKey:@"message"];
+            if ([message isKindOfClass:[NSNull class]]) {
+                // blank message from server
+                message = @"There was an problem uploading your image.\n Please try again.";
+            }
             // show the user the error message
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Uh Oh!" 
-                                                                message:[json objectForKey:@"message"]
+                                                                message:message
                                                                delegate:self 
                                                       cancelButtonTitle:@"OK" 
                                                       otherButtonTitles:nil];
             [alertView show];
         }
-        // stop the spinner no matter what happens
-        [self stopTableCellSpinner:self.profileImageButton.superview];
     }];
 }
 

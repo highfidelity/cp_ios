@@ -116,8 +116,6 @@
 		532524D314F854AF0089F8EA /* check-in-slider-grooves-light.png in Resources */ = {isa = PBXBuildFile; fileRef = 532524CF14F854AF0089F8EA /* check-in-slider-grooves-light.png */; };
 		532524D414F854AF0089F8EA /* check-in-slider-grooves-light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 532524D014F854AF0089F8EA /* check-in-slider-grooves-light@2x.png */; };
 		5335CF6F1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */; };
-		5335CF731507FC76007DED61 /* settings-button-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 5335CF711507FC76007DED61 /* settings-button-3.png */; };
-		5335CF741507FC76007DED61 /* settings-button-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5335CF721507FC76007DED61 /* settings-button-3@2x.png */; };
 		5349BA1414F3196D001D4560 /* check-in-slider-handle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5349BA1214F3196D001D4560 /* check-in-slider-handle.png */; };
 		5349BA1514F3196D001D4560 /* check-in-slider-handle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5349BA1314F3196D001D4560 /* check-in-slider-handle@2x.png */; };
 		534B7529150B021400200EE0 /* check-in-clock-hand.png in Resources */ = {isa = PBXBuildFile; fileRef = 534B7525150B021400200EE0 /* check-in-clock-hand.png */; };
@@ -128,14 +126,16 @@
 		534FC98214EF27C1008C87B9 /* check-in-big.png in Resources */ = {isa = PBXBuildFile; fileRef = 534FC98014EF27C1008C87B9 /* check-in-big.png */; };
 		534FC98314EF27C1008C87B9 /* check-in-big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 534FC98114EF27C1008C87B9 /* check-in-big@2x.png */; };
 		534FC98A14EF2E8C008C87B9 /* CheckInDetailsFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 534FC98914EF2E8C008C87B9 /* CheckInDetailsFrame.m */; };
-		5350F4F514FF07050012AC2E /* login-facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 5350F4EF14FF07050012AC2E /* login-facebook.png */; };
-		5350F4F614FF07050012AC2E /* login-facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5350F4F014FF07050012AC2E /* login-facebook@2x.png */; };
-		5350F4F714FF07050012AC2E /* login-linkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 5350F4F114FF07050012AC2E /* login-linkedin.png */; };
-		5350F4F814FF07050012AC2E /* login-linkedin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5350F4F214FF07050012AC2E /* login-linkedin@2x.png */; };
-		5350F4F914FF07050012AC2E /* login-mail-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 5350F4F314FF07050012AC2E /* login-mail-button.png */; };
-		5350F4FA14FF07050012AC2E /* login-mail-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5350F4F414FF07050012AC2E /* login-mail-button@2x.png */; };
+		5355B0C215140697006A3D89 /* settings-button-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 5355B0C015140697006A3D89 /* settings-button-3.png */; };
+		5355B0C315140697006A3D89 /* settings-button-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5355B0C115140697006A3D89 /* settings-button-3@2x.png */; };
 		5355C96C15082A56006F64C1 /* FaceToFaceStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5355C96B15082A56006F64C1 /* FaceToFaceStoryboard_iPhone.storyboard */; };
 		535C7537150A9E98000DB33D /* CPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 535C7536150A9E98000DB33D /* CPConstants.m */; };
+		5365F0D21514053E00CB12C7 /* login-facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 5365F0CC1514053E00CB12C7 /* login-facebook.png */; };
+		5365F0D31514053E00CB12C7 /* login-facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5365F0CD1514053E00CB12C7 /* login-facebook@2x.png */; };
+		5365F0D41514053E00CB12C7 /* login-linkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 5365F0CE1514053E00CB12C7 /* login-linkedin.png */; };
+		5365F0D51514053E00CB12C7 /* login-linkedin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5365F0CF1514053E00CB12C7 /* login-linkedin@2x.png */; };
+		5365F0D61514053E00CB12C7 /* login-mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 5365F0D01514053E00CB12C7 /* login-mail.png */; };
+		5365F0D71514053E00CB12C7 /* login-mail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5365F0D11514053E00CB12C7 /* login-mail@2x.png */; };
 		536DE90D150156DC00794650 /* FaceToFaceAcceptDeclineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536DE90A150156DC00794650 /* FaceToFaceAcceptDeclineViewController.m */; };
 		536DE90E150156DC00794650 /* FaceToFaceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 536DE90C150156DC00794650 /* FaceToFaceHelper.m */; };
 		536DE913150156FD00794650 /* FaceToFacePasswordInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536DE912150156FD00794650 /* FaceToFacePasswordInputViewController.m */; };
@@ -533,8 +533,6 @@
 		532524CF14F854AF0089F8EA /* check-in-slider-grooves-light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-slider-grooves-light.png"; path = "images/check-in-slider-grooves-light.png"; sourceTree = "<group>"; };
 		532524D014F854AF0089F8EA /* check-in-slider-grooves-light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-slider-grooves-light@2x.png"; path = "images/check-in-slider-grooves-light@2x.png"; sourceTree = "<group>"; };
 		5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SettingsStoryboard_iPhone.storyboard; path = Settings/SettingsStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		5335CF711507FC76007DED61 /* settings-button-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-button-3.png"; path = "Settings/images/settings-button-3.png"; sourceTree = "<group>"; };
-		5335CF721507FC76007DED61 /* settings-button-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-button-3@2x.png"; path = "Settings/images/settings-button-3@2x.png"; sourceTree = "<group>"; };
 		5349BA1214F3196D001D4560 /* check-in-slider-handle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-slider-handle.png"; path = "images/check-in-slider-handle.png"; sourceTree = "<group>"; };
 		5349BA1314F3196D001D4560 /* check-in-slider-handle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-slider-handle@2x.png"; path = "images/check-in-slider-handle@2x.png"; sourceTree = "<group>"; };
 		534B7525150B021400200EE0 /* check-in-clock-hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-clock-hand.png"; path = "CheckIn/images/check-in-clock-hand.png"; sourceTree = "<group>"; };
@@ -547,15 +545,17 @@
 		534FC98114EF27C1008C87B9 /* check-in-big@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-big@2x.png"; path = "images/check-in-big@2x.png"; sourceTree = "<group>"; };
 		534FC98814EF2E8C008C87B9 /* CheckInDetailsFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckInDetailsFrame.h; sourceTree = "<group>"; };
 		534FC98914EF2E8C008C87B9 /* CheckInDetailsFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInDetailsFrame.m; sourceTree = "<group>"; };
-		5350F4EF14FF07050012AC2E /* login-facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-facebook.png"; sourceTree = "<group>"; };
-		5350F4F014FF07050012AC2E /* login-facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-facebook@2x.png"; sourceTree = "<group>"; };
-		5350F4F114FF07050012AC2E /* login-linkedin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-linkedin.png"; sourceTree = "<group>"; };
-		5350F4F214FF07050012AC2E /* login-linkedin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-linkedin@2x.png"; sourceTree = "<group>"; };
-		5350F4F314FF07050012AC2E /* login-mail-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-mail-button.png"; sourceTree = "<group>"; };
-		5350F4F414FF07050012AC2E /* login-mail-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-mail-button@2x.png"; sourceTree = "<group>"; };
+		5355B0C015140697006A3D89 /* settings-button-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-button-3.png"; path = "Settings/images/settings-button-3.png"; sourceTree = "<group>"; };
+		5355B0C115140697006A3D89 /* settings-button-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-button-3@2x.png"; path = "Settings/images/settings-button-3@2x.png"; sourceTree = "<group>"; };
 		5355C96B15082A56006F64C1 /* FaceToFaceStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = FaceToFaceStoryboard_iPhone.storyboard; path = FaceToFace/FaceToFaceStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		535C7535150A9E97000DB33D /* CPConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPConstants.h; sourceTree = "<group>"; };
 		535C7536150A9E98000DB33D /* CPConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPConstants.m; sourceTree = "<group>"; };
+		5365F0CC1514053E00CB12C7 /* login-facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "login-facebook.png"; path = "candpiosapp/Login/images/login-facebook.png"; sourceTree = SOURCE_ROOT; };
+		5365F0CD1514053E00CB12C7 /* login-facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "login-facebook@2x.png"; path = "candpiosapp/Login/images/login-facebook@2x.png"; sourceTree = SOURCE_ROOT; };
+		5365F0CE1514053E00CB12C7 /* login-linkedin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "login-linkedin.png"; path = "candpiosapp/Login/images/login-linkedin.png"; sourceTree = SOURCE_ROOT; };
+		5365F0CF1514053E00CB12C7 /* login-linkedin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "login-linkedin@2x.png"; path = "candpiosapp/Login/images/login-linkedin@2x.png"; sourceTree = SOURCE_ROOT; };
+		5365F0D01514053E00CB12C7 /* login-mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "login-mail.png"; path = "candpiosapp/Login/images/login-mail.png"; sourceTree = SOURCE_ROOT; };
+		5365F0D11514053E00CB12C7 /* login-mail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "login-mail@2x.png"; path = "candpiosapp/Login/images/login-mail@2x.png"; sourceTree = SOURCE_ROOT; };
 		536DE909150156DC00794650 /* FaceToFaceAcceptDeclineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceToFaceAcceptDeclineViewController.h; sourceTree = "<group>"; };
 		536DE90A150156DC00794650 /* FaceToFaceAcceptDeclineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceToFaceAcceptDeclineViewController.m; sourceTree = "<group>"; };
 		536DE90B150156DC00794650 /* FaceToFaceHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceToFaceHelper.h; sourceTree = "<group>"; };
@@ -1111,10 +1111,10 @@
 		5335CF701507FC6C007DED61 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				5355B0C015140697006A3D89 /* settings-button-3.png */,
+				5355B0C115140697006A3D89 /* settings-button-3@2x.png */,
 				E47C832915115D0600ECE98D /* drop-down.png */,
 				E47C832A15115D0600ECE98D /* drop-down@2x.png */,
-				5335CF711507FC76007DED61 /* settings-button-3.png */,
-				5335CF721507FC76007DED61 /* settings-button-3@2x.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -1151,14 +1151,14 @@
 		5350F4EE14FF06840012AC2E /* images */ = {
 			isa = PBXGroup;
 			children = (
+				5365F0CC1514053E00CB12C7 /* login-facebook.png */,
+				5365F0CD1514053E00CB12C7 /* login-facebook@2x.png */,
+				5365F0CE1514053E00CB12C7 /* login-linkedin.png */,
+				5365F0CF1514053E00CB12C7 /* login-linkedin@2x.png */,
+				5365F0D01514053E00CB12C7 /* login-mail.png */,
+				5365F0D11514053E00CB12C7 /* login-mail@2x.png */,
 				4EFC547715015CDB00BF51B0 /* login-signup-banner.png */,
 				4EFC547815015CDB00BF51B0 /* login-signup-banner@2x.png */,
-				5350F4EF14FF07050012AC2E /* login-facebook.png */,
-				5350F4F014FF07050012AC2E /* login-facebook@2x.png */,
-				5350F4F114FF07050012AC2E /* login-linkedin.png */,
-				5350F4F214FF07050012AC2E /* login-linkedin@2x.png */,
-				5350F4F314FF07050012AC2E /* login-mail-button.png */,
-				5350F4F414FF07050012AC2E /* login-mail-button@2x.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -2017,12 +2017,6 @@
 				5317491F14FEF4EE002E1042 /* Icon-Small@2x.png in Resources */,
 				5317492014FEF4EE002E1042 /* Icon.png in Resources */,
 				5317492114FEF4EE002E1042 /* Icon@2x.png in Resources */,
-				5350F4F514FF07050012AC2E /* login-facebook.png in Resources */,
-				5350F4F614FF07050012AC2E /* login-facebook@2x.png in Resources */,
-				5350F4F714FF07050012AC2E /* login-linkedin.png in Resources */,
-				5350F4F814FF07050012AC2E /* login-linkedin@2x.png in Resources */,
-				5350F4F914FF07050012AC2E /* login-mail-button.png in Resources */,
-				5350F4FA14FF07050012AC2E /* login-mail-button@2x.png in Resources */,
 				E48CFA30150035E700A35D0E /* vector-lock.png in Resources */,
 				E48CFA31150035E700A35D0E /* vector-lock@2x.png in Resources */,
 				E433C0A51500522D009B819D /* perforated-skin@2x.png in Resources */,
@@ -2043,8 +2037,6 @@
 				E44F81AC1506E26500EA17E0 /* button-turquoise-32pt.png in Resources */,
 				E44F81AD1506E26500EA17E0 /* button-turquoise-32pt@2x.png in Resources */,
 				5335CF6F1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard in Resources */,
-				5335CF731507FC76007DED61 /* settings-button-3.png in Resources */,
-				5335CF741507FC76007DED61 /* settings-button-3@2x.png in Resources */,
 				5355C96C15082A56006F64C1 /* FaceToFaceStoryboard_iPhone.storyboard in Resources */,
 				53BA0A22150A9BF2006F5B98 /* map-locate.png in Resources */,
 				53BA0A23150A9BF2006F5B98 /* map-locate@2x.png in Resources */,
@@ -2071,6 +2063,14 @@
 				E4EB150C1512877F00AC5507 /* toggle-off@2x.png in Resources */,
 				E4EB150D1512877F00AC5507 /* toggle-on.png in Resources */,
 				E4EB150E1512877F00AC5507 /* toggle-on@2x.png in Resources */,
+				5365F0D21514053E00CB12C7 /* login-facebook.png in Resources */,
+				5365F0D31514053E00CB12C7 /* login-facebook@2x.png in Resources */,
+				5365F0D41514053E00CB12C7 /* login-linkedin.png in Resources */,
+				5365F0D51514053E00CB12C7 /* login-linkedin@2x.png in Resources */,
+				5365F0D61514053E00CB12C7 /* login-mail.png in Resources */,
+				5365F0D71514053E00CB12C7 /* login-mail@2x.png in Resources */,
+				5355B0C215140697006A3D89 /* settings-button-3.png in Resources */,
+				5355B0C315140697006A3D89 /* settings-button-3@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

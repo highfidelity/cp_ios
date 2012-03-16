@@ -129,7 +129,7 @@
                 self.jobTitle = [userDict objectForKey:@"job_title"];
             }
             // set the user's photo url        
-            self.urlPhoto = [userDict objectForKey:@"urlPhoto"];
+            self.urlPhoto = [NSURL URLWithString:[userDict objectForKey:@"urlPhoto"]];
             self.location = CLLocationCoordinate2DMake(
                                                        [[userDict valueForKeyPath:@"location.lat"] doubleValue],
                                                        [[userDict valueForKeyPath:@"location.lng"] doubleValue]);

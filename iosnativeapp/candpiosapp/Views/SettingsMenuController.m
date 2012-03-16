@@ -339,7 +339,6 @@
         cell.detailTextLabel.backgroundColor = [UIColor clearColor];
         cell.backgroundView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"menu-background.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:2.0]];  
         cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"selected-menu-background.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:2.0]];
-        cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"accessory-arrow.png"]];
     }
     cell.textLabel.text = (NSString*)[self.menuStringsArray objectAtIndex:indexPath.row];
     
@@ -370,7 +369,7 @@
     headerLabel.text = headerString;
     headerLabel.backgroundColor = [UIColor clearColor];
     headerLabel.textColor = [UIColor colorWithRed:(201.0/255.0) green:(201.0/255.0) blue:(201.0/255.0) alpha:1.0];
-    headerLabel.font = [UIFont boldSystemFontOfSize:18.0];
+    [CPUIHelper changeFontForLabel:headerLabel toLeagueGothicOfSize:24.0];
     
     [headerView addSubview:headerLabel];
     

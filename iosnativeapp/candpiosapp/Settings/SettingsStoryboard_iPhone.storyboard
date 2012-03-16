@@ -366,6 +366,10 @@
                                                         <action selector="chooseNewProfileImage:" destination="1JK-jA-7GK" eventType="touchUpInside" id="AFQ-6e-mln"/>
                                                     </connections>
                                                 </button>
+                                                <activityIndicatorView opaque="NO" tag="7910" contentMode="scaleToFill" animating="YES" style="white" id="byr-q9-Q4V">
+                                                    <rect key="frame" x="270" y="12" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
