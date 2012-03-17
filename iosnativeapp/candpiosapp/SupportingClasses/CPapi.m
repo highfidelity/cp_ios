@@ -83,6 +83,8 @@
 // Uses the AFJSONRequestOperation which seems to be the easiest way to pass around
 // completion blocks
 
+// TODO: Put a timeout on the requests so if the DB is down or something we're not sitting there doing nothing
+
 + (void)makeHTTPRequestWithAction:(NSString *)action 
                    withParameters:(NSMutableDictionary *)parameters 
                        completion:(void (^)(NSDictionary *, NSError *))completion

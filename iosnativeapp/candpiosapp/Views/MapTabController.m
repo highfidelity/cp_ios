@@ -815,7 +815,7 @@ BOOL clearLocations = NO;
     if ([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusNotDetermined) {
         
 #if DEBUG
-        NSLog(@"We have a location authorization status. We will now refresh data");
+        NSLog(@"We have a location authorization status. We will now refresh data.");
 #endif
         
         // we know we either will or won't be getting user location so load the datapoints
