@@ -7,21 +7,14 @@
 //
 
 #import "BalanceViewController.h"
-#import "AppDelegate.h"
 #import "SVProgressHUD.h"
 #import "CPapi.h"
-#import "SignupController.h"
 #import "WalletCell.h"
-#import "TableCellHelper.h"
 
 #define kRefreshViewHeight 52.0f
 #define kPullText @"Pull down to update"
 #define kReleaseText @"Release to update"
 #define kUpdatingText @"updating ..."
-
-@interface BalanceViewController ()
-
-@end
 
 @implementation BalanceViewController
 @synthesize transTableView;
@@ -55,7 +48,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     selectedHeight = 0;
-    selectedIndexPath = nil;
+    selectedIndex = -1;
 }
 
 - (void)viewDidLoad
@@ -67,6 +60,7 @@
     
     isFlipped = NO;
     loading = NO;
+    selectedIndex = -1;
 }
 
 - (void)viewDidUnload
@@ -188,23 +182,21 @@
 {
     WalletCell *cell = (WalletCell *)[tableView cellForRowAtIndexPath:indexPath];
     
-    
     if ([cell isKindOfClass:[WalletCell class]]) {
         BOOL refreshTable = NO;
-        
         
         if (selectedHeight > WalletCell.CELL_HEIGHT) {
             selectedHeight = WalletCell.CELL_HEIGHT;
             refreshTable = YES;
         }
         
-        if ([indexPath row] == [selectedIndexPath row]) {
-            [cell setSelected:NO];
-            selectedIndexPath = nil;
+        if ([indexPath row] == selectedIndex) {
+            [tableView deselectRowAtIndexPath:indexPath animated:NO];
+            selectedIndex = -1;
             selectedHeight = 0;
             refreshTable = YES;
         } else {
-            selectedIndexPath = indexPath;
+            selectedIndex = indexPath.row;
             selectedHeight = WalletCell.CELL_HEIGHT + [cell extraHeight];
         }
         
@@ -221,7 +213,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath 
 {   
-    if ([indexPath row] == [selectedIndexPath row] && selectedHeight > WalletCell.CELL_HEIGHT) {
+    if ([indexPath row] == selectedIndex && selectedHeight > WalletCell.CELL_HEIGHT) {
         return selectedHeight;
     }
     return WalletCell.CELL_HEIGHT;
@@ -231,8 +223,8 @@
 {
     static NSString *cellIdentifier = @"TransactionListCustomCell";
     WalletCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-
-    NSDictionary *transaction = [transactions objectAtIndex:[indexPath row]];    
+    
+    NSDictionary *transaction = [transactions objectAtIndex:(NSUInteger)[indexPath row]];
     if (cell == nil) {
         cell = [[WalletCell alloc] initWithStyle:UITableViewCellStyleDefault 
                                  reuseIdentifier:cellIdentifier];
@@ -291,7 +283,6 @@
             [cell setExtraHeight:0];
         }
     }
-
     
     NSObject *thumbnail = [transaction objectForKey:@"thumbnail"];
     

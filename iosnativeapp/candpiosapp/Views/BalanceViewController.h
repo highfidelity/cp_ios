@@ -14,7 +14,7 @@
     BOOL isFlipped;
     BOOL loading;
     NSArray *transactions;
-    NSIndexPath *selectedIndexPath;
+    NSInteger selectedIndex;
     float selectedHeight;
 }
 
