@@ -140,7 +140,7 @@
         if (!error) {
             // TODO: make this a better solution by checking for a problem with the PHP session cookie in CPApi
             // for now if the email comes back null this person isn't logged in so we're going to send them to do that.
-            if ([webSyncUser.email isKindOfClass:[NSNull class]]) {
+            if (!webSyncUser.email) {
                 [SVProgressHUD dismiss];
                 
                 NSString *message = @"There was a problem getting your data!\nPlease logout and login again.";
