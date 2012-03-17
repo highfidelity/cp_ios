@@ -48,16 +48,19 @@
     
     [[self userBalance] setText: [NSString stringWithFormat:@"$%.2f", [AppDelegate instance].settings.userBalance]];
     
-    [self.balanceScrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"perforated-skin.png"]]];
-    [self loadTransactionData];    
+    [self.balanceScrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"perforated-skin.png"]]]; 
+    [self loadTransactionData];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    selectedHeight = 0;
+    selectedIndexPath = nil;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self loadTransactionData];
-
-    
     // content size for the scroll view
     // allows scrolling to show pull to refresh
     self.balanceScrollView.contentSize = self.balanceScrollView.frame.size;
@@ -128,10 +131,6 @@
     [SVProgressHUD showWithStatus:@"Loading..."];
     
     [CPapi getUserTrasactionDataWithCompletitonBlock:^(NSDictionary *json, NSError *error) {
-
-#if DEBUG
-        NSLog(@"%@", json);
-#endif
         
         BOOL respError = [[json objectForKey:@"error"] boolValue];
         
@@ -173,6 +172,8 @@
     
 }
 
+#pragma mark - TableView
+
 -(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UILabel* headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 40)];
     headerLabel.backgroundColor = RGBA(88, 88, 88, 1);
@@ -183,18 +184,45 @@
     return headerLabel;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    WalletCell *cell = (WalletCell *)[tableView cellForRowAtIndexPath:indexPath];
+    
+    if ([cell isKindOfClass:[WalletCell class]]) {
+        BOOL refreshTable = NO;
+        
+        if (selectedHeight > WalletCell.CELL_HEIGHT) {
+            selectedHeight = WalletCell.CELL_HEIGHT;
+            refreshTable = YES;
+        }
+        
+        selectedIndexPath = indexPath;
+        selectedHeight = WalletCell.CELL_HEIGHT + [cell extraHeight];
+        if ([cell extraHeight] > 0) {
+            refreshTable = YES;
+        }
+        
+        if (refreshTable) {
+            [tableView beginUpdates];
+            [tableView endUpdates];
+        }
+    }
+}
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 50;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath 
+{   
+    if ([indexPath row] == [selectedIndexPath row] && selectedHeight > WalletCell.CELL_HEIGHT) {
+        return selectedHeight;
+    }
+    return WalletCell.CELL_HEIGHT;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *transaction = [transactions objectAtIndex:[indexPath row]];
-    
     static NSString *cellIdentifier = @"TransactionListCustomCell";
     WalletCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
+
+    NSDictionary *transaction = [transactions objectAtIndex:[indexPath row]];    
     if (cell == nil) {
         cell = [[WalletCell alloc] initWithStyle:UITableViewCellStyleDefault 
                                  reuseIdentifier:cellIdentifier];
@@ -202,9 +230,7 @@
 
     [[cell amountLabel] setText:[NSString stringWithFormat:@"$%@", [transaction objectForKey:@"amount"]]];
     
-    
-    NSString *from_to = @"to";
-    
+    NSString *from_to = @"to";    
     if ([[transaction objectForKey:@"payer"] intValue] != [CPAppDelegate currentUser].userID) {
         from_to = @"from";
     }
@@ -222,7 +248,7 @@
     NSTimeInterval timeInterval = [paymentDate timeIntervalSinceNow];    
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     
-    if (timeInterval < -6*24*60*60) {
+    if (timeInterval < -6 * 24 * 60 * 60) {
         [dateFormat setDateFormat:@"MM/dd/YYYY"];
     }
     else {
@@ -246,13 +272,13 @@
                                      constrainedToSize:maximumLabelSize
                                          lineBreakMode:[cell descriptionLabel].lineBreakMode]; 
         
-        if (expectedLabelSize.height > [[cell descriptionLabel] frame].size.height) {
-#if DEBUG  
-            NSLog(@"label size: %f", expectedLabelSize.height);
-#endif
-            //[[cell stateImage] setHidden:NO];
-            [cell setFullHeight:
-             [cell frame].size.height + expectedLabelSize.height - [[cell descriptionLabel] frame].size.height];
+        if (expectedLabelSize.height > WalletCell.DESCRIPTION_HEIGHT) {
+            [[cell stateImage] setHidden:NO];
+            [cell setExtraHeight:expectedLabelSize.height - WalletCell.DESCRIPTION_HEIGHT];
+        }
+        else {
+            [[cell stateImage] setHidden:YES];
+            [cell setExtraHeight:0];
         }
     }
 

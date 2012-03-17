@@ -14,7 +14,7 @@
 
 @class MapDataSet;
 
-@interface MapTabController : UIViewController< MKMapViewDelegate, UINavigationControllerDelegate>
+@interface MapTabController : UIViewController <MKMapViewDelegate, UINavigationControllerDelegate>
 {
     CPMapView *mapView;
 	bool hasUpdatedUserLocation;

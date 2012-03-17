@@ -15,7 +15,7 @@
 @synthesize amountLabel = _amountLabel;
 @synthesize descriptionLabel = _descriptionLabel;
 @synthesize nicknameLabel = _nicknameLabel;
-@synthesize fullHeight = _fullHeight;
+@synthesize extraHeight = _extraHeight;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -28,40 +28,35 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    
     [super setSelected:selected animated:animated];
-    return;
-    
-#if DEBUG
-    NSLog(@" %s", selected ? "true" : "false");
-#endif
-    
-    if ([self fullHeight] > 0) {
+    if ([self extraHeight] > 0) {
+        int imgDegrees = 0;
+        float descHeight = WalletCell.DESCRIPTION_HEIGHT;
+        
         if (selected) {
-            [CPUIHelper rotateImage:[self stateImage]
-                           duration:0.1
-                              curve:UIViewAnimationCurveEaseIn
-                            degrees:180];
-            
-            CGRect f2 = self.frame;
-            f2.size.height += 20;
-            self.frame = f2;
-        } 
-        else {
-            [CPUIHelper rotateImage:[self stateImage]
-                           duration:0.1
-                              curve:UIViewAnimationCurveEaseIn
-                            degrees:0];
-            
-            CGRect f2 = self.frame;
-            f2.size.height -= 20;
-            self.frame = f2;
+            imgDegrees = 180;
+            descHeight += [self extraHeight];
         }
-
+        
+        [CPUIHelper rotateImage:[self stateImage]
+                       duration:0.1
+                          curve:UIViewAnimationCurveEaseIn
+                        degrees:imgDegrees];
+        
+        CGRect f2 = [[self descriptionLabel] frame];
+        f2.size.height = descHeight;
+        
+        [[self descriptionLabel] setFrame:f2];
     }
     
     
 }
 
++ (float)CELL_HEIGHT {
+    return 50.0;
+}
 
++ (float)DESCRIPTION_HEIGHT {
+    return 18;
+}
 @end

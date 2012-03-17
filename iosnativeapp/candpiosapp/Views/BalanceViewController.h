@@ -10,11 +10,12 @@
 
 @interface BalanceViewController : UIViewController <UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate>
 {
-
 @private
     BOOL isFlipped;
     BOOL loading;
     NSArray *transactions;
+    NSIndexPath *selectedIndexPath;
+    float selectedHeight;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *transTableView;

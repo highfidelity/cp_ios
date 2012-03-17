@@ -89,10 +89,7 @@
                                       @"ShowBalanceFromMenu",
                                       @"ShowLogoutFromMenu",
                                       nil];
-    
-    
-    
-    
+
 }
 
 - (void)loadNotificationSettings
@@ -101,9 +98,13 @@
         BOOL error = [[json objectForKey:@"error"] boolValue];
         
         if (error) {
-            [self setVenue:[AppDelegate instance].settings.notifyInVenueOnly];
-            [self setCheckin:[AppDelegate instance].settings.notifyWhenCheckedIn];
+            [venueButton setEnabled:NO];
+            [checkedInOnlyButton setEnabled:NO];
         } else {
+            
+            [venueButton setEnabled:YES];
+            [checkedInOnlyButton setEnabled:YES];
+            
             NSDictionary *dict = [json objectForKey:@"payload"];
             
             NSString *venue = (NSString *)[dict objectForKey:@"push_distance"];
@@ -114,8 +115,8 @@
             [self setVenue:is_venue];
             [self setCheckin:is_checkin];
             
-            [AppDelegate instance].settings.notifyInVenueOnly = venue;
-            [AppDelegate instance].settings.notifyWhenCheckedIn = checkin;
+            [AppDelegate instance].settings.notifyInVenueOnly = is_venue;
+            [AppDelegate instance].settings.notifyWhenCheckedIn = is_checkin;
             [[AppDelegate instance] saveSettings];
         }
     }];
@@ -129,8 +130,7 @@
     BOOL settingsVenue = [AppDelegate instance].settings.notifyInVenueOnly;
     BOOL settingsCheckedIn = [AppDelegate instance].settings.notifyWhenCheckedIn;
     
-    if (notifyInVenue != settingsVenue || settingsCheckedIn != checkedInOnly) {
-
+    if (notifyInVenue != settingsVenue || checkedInOnly != settingsCheckedIn) {
         NSString *distance = notifyInVenue ? @"venue" : @"city";
         [CPapi setNotificationSettingsForDistance:distance
                                      andCheckedId:checkedInOnly];
