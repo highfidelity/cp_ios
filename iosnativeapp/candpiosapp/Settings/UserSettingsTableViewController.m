@@ -251,24 +251,30 @@
 #pragma mark - Spinner for Table Cells
 - (void)addSpinnerToTableCell:(UIView *)tableCell
 {
-    // alloc-init a spinner
-    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    
+    UIActivityIndicatorView *spinner = (UIActivityIndicatorView *)[tableCell viewWithTag:spinnerTag];
+    // only add the spinner for this cell if we don't already have one
+    if (!spinner) {
+        // alloc-init a spinner
+        spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        
+        // set the frame of the spinner so it's vertically centered on the right side of the row
+        CGRect spinFrame = spinner.frame;
+        spinFrame.origin.x = tableCell.frame.size.width - 10 - spinFrame.size.width;
+        spinFrame.origin.y = (tableCell.frame.size.height / 2) - (spinFrame.size.height / 2) ;
+        spinner.frame = spinFrame;
+        
+        // give the spinner a tag so we can kill it later
+        spinner.tag = spinnerTag;
+        
+        [tableCell addSubview:spinner]; 
+    }
     
     // grab the textfield or imageview we're hiding
     UIView *hideToSpin = [tableCell viewWithTag:tableCellSubviewTag];
     
-    // set the frame of the spinner so it's vertically centered on the right side of the row
-    CGRect spinFrame = spinner.frame;
-    spinFrame.origin.x = tableCell.frame.size.width - 10 - spinFrame.size.width;
-    spinFrame.origin.y = (tableCell.frame.size.height / 2) - (spinFrame.size.height / 2) ;
-    spinner.frame = spinFrame;
-    
-    // give the spinner a tag so we can kill it later
-    spinner.tag = spinnerTag;
-    
     // hide the hideToSpin view
     hideToSpin.alpha = 0.0;
-    [tableCell addSubview:spinner]; 
     
     // spin the spinner and drop the keyboard
     [spinner startAnimating];
