@@ -10,6 +10,7 @@
 #import "CPapi.h"
 #import "User.h"
 #import "SVProgressHUD.h"
+#import "SignupController.h"
 
 #define tableCellSubviewTag 7909
 #define spinnerTag  7910
@@ -142,7 +143,13 @@
             if ([webSyncUser.email isKindOfClass:[NSNull class]]) {
                 [SVProgressHUD dismiss];
                 [self dismissModalViewControllerAnimated:YES];
+                
+                // logout the user
                 [CPAppDelegate logoutEverything];
+                
+                // show the login screen
+                SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
+                [[CPAppDelegate rootNavigationController] pushViewController:controller animated:NO]; 
             } else {
                 // let's update the local current user with any new data
                 
