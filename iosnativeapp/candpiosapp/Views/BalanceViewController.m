@@ -188,16 +188,26 @@
 {
     WalletCell *cell = (WalletCell *)[tableView cellForRowAtIndexPath:indexPath];
     
+    
     if ([cell isKindOfClass:[WalletCell class]]) {
         BOOL refreshTable = NO;
+        
         
         if (selectedHeight > WalletCell.CELL_HEIGHT) {
             selectedHeight = WalletCell.CELL_HEIGHT;
             refreshTable = YES;
         }
         
-        selectedIndexPath = indexPath;
-        selectedHeight = WalletCell.CELL_HEIGHT + [cell extraHeight];
+        if ([indexPath row] == [selectedIndexPath row]) {
+            [cell setSelected:NO];
+            selectedIndexPath = nil;
+            selectedHeight = 0;
+            refreshTable = YES;
+        } else {
+            selectedIndexPath = indexPath;
+            selectedHeight = WalletCell.CELL_HEIGHT + [cell extraHeight];
+        }
+        
         if ([cell extraHeight] > 0) {
             refreshTable = YES;
         }
