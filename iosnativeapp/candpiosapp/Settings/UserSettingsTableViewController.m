@@ -181,7 +181,7 @@
         } else {
             // kill the hud if there is one
             [SVProgressHUD dismiss];    
-            NSString *message = @"There was a problem getting current data.\nPlease try again in a little while";
+            NSString *message = @"There was a problem getting current data. Please try again in a little while.";
             // we had an error, let's tell the user and leave
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
                                                                 message:message
