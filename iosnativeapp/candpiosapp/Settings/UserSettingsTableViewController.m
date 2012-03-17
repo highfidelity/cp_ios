@@ -137,45 +137,55 @@
    
     [webSyncUser loadUserResumeData:^(NSError *error) {
         if (!error) {
-            // let's update the local current user with any new data
-            
-            // check nickname
-            if (![self.currentUser.nickname isEqualToString:webSyncUser.nickname]) {
-                self.currentUser.nickname = webSyncUser.nickname;
-                self.newDataFromSync = YES;
-            }
-            
-            // check email
-            if (![self.currentUser.email isEqualToString:webSyncUser.email]) {
-                self.currentUser.email = webSyncUser.email;
-                self.newDataFromSync = YES;
-            }
-            
-            // check photo url
-            if (![self.currentUser.urlPhoto isEqual:webSyncUser.urlPhoto]) {
-                // user photo is going to change
-                // show the spinner
-                [self addSpinnerToTableCell:self.profileImageButton.superview];
+            // TODO: make this a better solution by checking for a problem with the PHP session cookie in CPApi
+            // for now if the email comes back null this person isn't logged in so we're going to send them to do that.
+            if ([webSyncUser.email isKindOfClass:[NSNull class]]) {
+                [SVProgressHUD dismiss];
+                [self dismissModalViewControllerAnimated:YES];
+                [CPAppDelegate logoutEverything];
+            } else {
+                // let's update the local current user with any new data
                 
-                self.currentUser.urlPhoto = webSyncUser.urlPhoto;
-                self.newDataFromSync = YES;
+                // check nickname
+                if (![self.currentUser.nickname isEqualToString:webSyncUser.nickname]) {
+                    self.currentUser.nickname = webSyncUser.nickname;
+                    self.newDataFromSync = YES;
+                }
+                
+                // check email
+                if (![self.currentUser.email isEqualToString:webSyncUser.email]) {
+                    self.currentUser.email = webSyncUser.email;
+                    self.newDataFromSync = YES;
+                }
+                
+                // check photo url
+                if (![self.currentUser.urlPhoto isEqual:webSyncUser.urlPhoto]) {
+                    // user photo is going to change
+                    // show the spinner
+                    [self addSpinnerToTableCell:self.profileImageButton.superview];
+                    
+                    self.currentUser.urlPhoto = webSyncUser.urlPhoto;
+                    self.newDataFromSync = YES;
+                }
+                
+                // if the sync brought us new data
+                if (self.newDataFromSync) {
+                    // save the changes to the local current user
+                    [CPAppDelegate saveCurrentUserToUserDefaults:self.currentUser]; 
+                    // place the current user data into the table
+                    [self placeCurrentUserData];
+                }
+                
+                // reset the newDataFromSync boolean
+                self.newDataFromSync = NO;
+                
+                // we finshed our sync so set that boolean
+                self.finishedSync = YES;
+                // kill the hud if there is one
+                [SVProgressHUD dismiss];
             }
             
-            // if the sync brought us new data
-            if (self.newDataFromSync) {
-                // save the changes to the local current user
-                [CPAppDelegate saveCurrentUserToUserDefaults:self.currentUser]; 
-                // place the current user data into the table
-                [self placeCurrentUserData];
-            }
-            
-            // reset the newDataFromSync boolean
-            self.newDataFromSync = NO;
-            
-            // we finshed our sync so set that boolean
-            self.finishedSync = YES;
-            // kill the hud if there is one
-            [SVProgressHUD dismiss];            
+                        
 
         } else {
             // kill the hud if there is one
