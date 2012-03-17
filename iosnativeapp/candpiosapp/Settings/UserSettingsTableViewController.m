@@ -142,14 +142,19 @@
             // for now if the email comes back null this person isn't logged in so we're going to send them to do that.
             if ([webSyncUser.email isKindOfClass:[NSNull class]]) {
                 [SVProgressHUD dismiss];
-                [self dismissModalViewControllerAnimated:YES];
                 
-                // logout the user
-                [CPAppDelegate logoutEverything];
+                NSString *message = @"There was a problem getting your data!\nPlease logout and login again.";
+                // we had an error, let's tell the user and leave
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
+                                                                    message:message
+                                                                   delegate:self 
+                                                          cancelButtonTitle:@"OK" 
+                                                          otherButtonTitles:nil];
+                // give this alertView a tag so we can recognize this alertview in the
+                // delegate function
+                alertView.tag = 7879;
+                [alertView show];
                 
-                // show the login screen
-                SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
-                [[CPAppDelegate rootNavigationController] pushViewController:controller animated:NO]; 
             } else {
                 // let's update the local current user with any new data
                 
