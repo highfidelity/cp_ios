@@ -78,7 +78,6 @@
     // add the profile image imageview to the button
     [self.profileImageButton addSubview:self.profileImage];
 
-    
     // put the local data on the card so it's there when it spins around
     [self placeCurrentUserData];
     
@@ -166,6 +165,8 @@
             if (self.newDataFromSync) {
                 // save the changes to the local current user
                 [CPAppDelegate saveCurrentUserToUserDefaults:self.currentUser]; 
+                // place the current user data into the table
+                [self placeCurrentUserData];
             }
             
             // reset the newDataFromSync boolean
@@ -174,10 +175,8 @@
             // we finshed our sync so set that boolean
             self.finishedSync = YES;
             // kill the hud if there is one
-            [SVProgressHUD dismiss];    
-            
-            // place the current user data into the table
-            [self placeCurrentUserData];
+            [SVProgressHUD dismiss];            
+
         } else {
             // kill the hud if there is one
             [SVProgressHUD dismiss];    
