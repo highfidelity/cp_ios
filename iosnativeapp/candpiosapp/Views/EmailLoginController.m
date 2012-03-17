@@ -177,7 +177,7 @@
             [FlurryAnalytics setUserID:userId];
             
             // Perform common login operations
-            [self pushAliasUpdate];
+            [BaseLoginController pushAliasUpdate];
             
 			[self.navigationController popToRootViewControllerAnimated:YES];
 		}

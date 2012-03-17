@@ -10,12 +10,15 @@
 #import "AFHTTPClient.h"
 
 @interface BaseLoginController : UIViewController
+
 @property (nonatomic, strong) AFHTTPClient *httpClient;
--(void)pushAliasUpdate;
--(void)handleCommonCreate:(NSString*)username
-				 password:(NSString*)password
-				 nickname:(NSString*)nickname
-			   facebookId:(NSString*)facebookId
-			   completion:(void (^)(NSError *error, id JSON))completion;
+
++(void) pushAliasUpdate;
+
+-(void) handleCommonCreate:(NSString*)username
+                  password:(NSString*)password
+                  nickname:(NSString*)nickname
+                facebookId:(NSString*)facebookId
+                completion:(void (^)(NSError *error, id JSON))completion;
 
 @end

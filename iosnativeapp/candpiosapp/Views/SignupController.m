@@ -107,7 +107,7 @@
 	// the facebook login object will handle the sequence that follows
 	AppDelegate *appDelegate = [AppDelegate instance];
     appDelegate.facebookLoginController = self;
-    if (![[appDelegate facebook] isSessionValid]) {   
+    if (![[appDelegate facebook] isSessionValid]) {
         NSArray *extendedPermissions = [[NSArray alloc] 
                                         initWithObjects:@"offline_access", @"user_about_me", 
                                         @"user_education_history", @"user_location", @"user_website", @"user_work_history", @"email", nil];
@@ -143,10 +143,12 @@
 
 - (void)handleResponseFromFacebookLogin
 {
-    
     NSString *fbAccessToken = [[[AppDelegate instance] facebook] accessToken];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@userData.php?action=collectFbData&fb_access_token=%@", kCandPWebServiceUrl, fbAccessToken];
+    // TODO: Pull this into CPapi
+    NSString *urlString = [NSString stringWithFormat:@"%@userData.php?action=collectFbData&fb_access_token=%@",
+                                                     kCandPWebServiceUrl,
+                                                     fbAccessToken];
     NSURL *locationURL = [NSURL URLWithString:urlString];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), 
@@ -163,19 +165,22 @@
 	[SVProgressHUD showWithStatus:@"Logging in"];
     
 	// get the user's facebook id (via facebook 'me' object)
-	FBRequestOperation *getMe = [[AppDelegate instance].facebook requestWithGraphPath:@"me" andCompletionHandler:^(FBRequestOperation *op, id fbJson, NSError *err) {
+	FBRequestOperation *getMe = [[AppDelegate instance].facebook requestWithGraphPath:@"me" 
+                                                                 andCompletionHandler:^(FBRequestOperation *op, id fbJson, NSError *err)
+    {
         
 		NSString *facebookId = [fbJson objectForKey:@"id"];
 		NSLog(@"Got facebook user id: %@", facebookId);
         NSString *fullName = [fbJson objectForKey:@"name"];
         NSString *email = [fbJson objectForKey:@"email"];
         
-        NSString *password = [NSString stringWithFormat:@"%d-%@", [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]], [[NSProcessInfo processInfo] globallyUniqueString]];
+        NSString *password = [NSString stringWithFormat:@"%d-%@",
+                              [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]],
+                              [[NSProcessInfo processInfo] globallyUniqueString]];
 
 		// we have succes!
 		// kick off the request to the candp server
 		NSMutableDictionary *loginParams = [NSMutableDictionary dictionary];
-		[loginParams setObject:@"loginFacebook" forKey:@"action"];
 		[loginParams setObject:facebookId forKey:@"fb_id"];
 		[loginParams setObject:@"1" forKey:@"fb_connect"];
 		[loginParams setObject:@"json" forKey:@"type"];
@@ -193,7 +198,6 @@
 		
 		AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id candpJson) {
             
-			
 			[SVProgressHUD dismiss];
 #if DEBUG
             NSLog(@"login json: %@", candpJson);
@@ -206,9 +210,14 @@
             {
                 NSString *outerErrorMessage = [candpJson objectForKey:@"message"];// often just 'error'
                 
-                NSString *errorMessage = [NSString stringWithFormat:@"The error was:%@", outerErrorMessage];
+                NSString *errorMessage = [NSString stringWithFormat:@"The error was: %@", outerErrorMessage];
+                
                 // we get here if we failed to login
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unable to log in" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unable to log in"
+                                                               message:errorMessage
+                                                              delegate:self
+                                                     cancelButtonTitle:@"OK"
+                                                     otherButtonTitles: nil];
                 [alert show];
                 
                 [self.navigationController dismissModalViewControllerAnimated:YES];
@@ -229,7 +238,7 @@
                 [FlurryAnalytics setUserID:userId];
                 
                 // Wrap up common login operations
-                [self pushAliasUpdate];
+                [BaseLoginController pushAliasUpdate];
                 
 				[self.navigationController popToRootViewControllerAnimated:YES];
 			}

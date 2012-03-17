@@ -14,7 +14,6 @@
 
 
 @interface BaseLoginController()
--(void)pushAliasUpdate;
 -(void)handleCommonCreate:(NSString*)username
                  password:(NSString*)password
                  nickname:(NSString*)nickname
@@ -23,6 +22,7 @@
 @end
 
 @implementation BaseLoginController
+
 @synthesize httpClient;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -39,18 +39,22 @@
 	return self;
 }
 
--(void)pushAliasUpdate {
++(void) pushAliasUpdate {
     // Set my UserID as an UrbanAirship alias for push notifications
     NSString *userid = [NSString stringWithFormat:@"%d", [CPAppDelegate currentUser].userID];
-    NSLog(@"Pushing aliases to UrbanAirship: %@", userid);
-    [[UAPush shared] updateAlias:userid];
+    if (![userid isEqualToString:@""])
+    {
+        // Only push user id if it's not blank
+        NSLog(@"Pushing aliases to UrbanAirship: %@", userid);
+        [[UAPush shared] updateAlias:userid];
+    }
 }
 
--(void)handleCommonCreate:(NSString*)username
-				 password:(NSString*)password
-				 nickname:(NSString*)nickname
-			   facebookId:(NSString*)facebookId
-			   completion:(void (^)(NSError *error, id JSON))completion
+-(void) handleCommonCreate:(NSString*)username
+                  password:(NSString*)password
+                  nickname:(NSString*)nickname
+                facebookId:(NSString*)facebookId
+                completion:(void (^)(NSError *error, id JSON))completion
 {
 	// kick off the request to the candp server
 	NSMutableDictionary *loginParams = [NSMutableDictionary dictionary];

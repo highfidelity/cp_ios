@@ -166,7 +166,7 @@
                              [FlurryAnalytics logEvent:@"signup_email"];
                              [FlurryAnalytics setUserID:(NSString *)userId];
                              
-                             [self pushAliasUpdate];
+                             [BaseLoginController pushAliasUpdate];
                              [self.navigationController popToRootViewControllerAnimated:YES];    
                          }
                          

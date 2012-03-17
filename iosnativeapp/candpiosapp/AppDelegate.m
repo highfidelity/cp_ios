@@ -9,18 +9,18 @@
 #import "AppDelegate.h"
 #import "AFHTTPClient.h"
 #import "SignupController.h"
-//#import "FaceToFaceInviteController.h" // TODO: replace with F2FHelper
 #import "FaceToFaceHelper.h"
 #import "ChatHelper.h"
 #import "FlurryAnalytics.h"
 #import "OAuthConsumer.h"
 #import "PaymentHelper.h"
 #import "SignupController.h"
+#import "BaseLoginController.h"
 
 @interface AppDelegate(Internal)
--(void)loadSettings;
-+(NSString*)settingsFilepath;
--(void)addGoButton;
+-(void) loadSettings;
++(NSString*) settingsFilepath;
+-(void) addGoButton;
 @end
 
 @implementation AppDelegate
@@ -336,9 +336,7 @@ didReceiveLocalNotification:(UILocalNotification *)notif
 - (void)application:(UIApplication*)application
 didReceiveRemoteNotification:(NSDictionary*)userInfo
 {
-#if DEBUG
 	NSLog(@"Received notification: %@", userInfo);
-#endif
     
     NSString *alertMessage = (NSString *)[[userInfo objectForKey:@"aps"]
                                           objectForKey:@"alert"];

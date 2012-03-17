@@ -320,7 +320,7 @@
             [FlurryAnalytics setUserID:userId];
             
             // Perform common post-login operations
-            [self pushAliasUpdate];
+            [BaseLoginController pushAliasUpdate];
             
             [self.navigationController dismissModalViewControllerAnimated:YES];
             [self.navigationController popToRootViewControllerAnimated:YES];
