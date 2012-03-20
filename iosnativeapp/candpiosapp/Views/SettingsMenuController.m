@@ -12,7 +12,6 @@
 #import "MapTabController.h"
 #import "CPapi.h"
 
-#define logoutMenuIndex 2
 #define menuWidthPercentage 0.8
 
 @interface SettingsMenuController() 
@@ -61,32 +60,19 @@
 - (void)initMenu 
 {
     // Setup the menu strings and seque identifiers
-    // COMMENTING OUT FOR FIRST BUILD
-    // Face To Face and Settings aren't showing anything
-//    self.menuStringsArray = [NSArray arrayWithObjects:
-//                             @"Face To Face", 
-//                             @"Wallet",
-//                             @"Settings",
-//                             @"Logout",
-//                             nil];
-    
-//    self.menuSegueIdentifiersArray = [NSArray arrayWithObjects:
-//                                      @"ShowFaceToFaceFromMenu", 
-//                                      @"ShowBalanceFromMenu",
-//                                      @"ShowSettingsFromMenu",
-//                                      @"ShowLogoutFromMenu",
-//                                      nil];
-    
-    // Setup the menu strings and seque identifiers
     self.menuStringsArray = [NSArray arrayWithObjects:
+                             // @"Face To Face", DISABLED (alexi)
                              @"Settings",
                              @"Wallet",
+                             //@"Linked Accounts", DISABLED (alexi)
                              @"Logout",
                              nil];
     
     self.menuSegueIdentifiersArray = [NSArray arrayWithObjects:
+                                      // @"ShowFaceToFaceFromMenu", DISABLED (alexi)
                                       @"ShowUserSettingsFromMenu",
                                       @"ShowBalanceFromMenu",
+                                      // @"ShowFederationFromMenu", DISALBED (alexi)
                                       @"ShowLogoutFromMenu",
                                       nil];
 
@@ -384,12 +370,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Handle the selected menu item, closing the menu for when we return
-    if (indexPath.row == logoutMenuIndex) { 
+    NSInteger logoutRowIndex = [self.menuStringsArray indexOfObject:@"Logout"];
+    if (indexPath.row == logoutRowIndex) { 
         //TODO: Merge logout xib with storyboard, adding segue for logout
         if (self.isMenuShowing) { [self showMenu:NO]; }
         [self.mapTabController logoutButtonTapped];
         [self.mapTabController loginButtonTapped];
     } else {
+        NSLog(@"You clicked on %@", [self.menuSegueIdentifiersArray objectAtIndex:indexPath.row]);
         [self performSegueWithIdentifier:[self.menuSegueIdentifiersArray objectAtIndex:indexPath.row] sender:self];
     }
 }

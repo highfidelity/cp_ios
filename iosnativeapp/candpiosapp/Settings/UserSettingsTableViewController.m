@@ -411,7 +411,9 @@
     }    
 }
 
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
+-(void)imagePickerController:(UIImagePickerController *)picker
+       didFinishPickingImage:(UIImage *)image
+                 editingInfo:(NSDictionary *)editingInfo
 {
     // get rid of the image picker
     [picker dismissViewControllerAnimated:YES completion:^{

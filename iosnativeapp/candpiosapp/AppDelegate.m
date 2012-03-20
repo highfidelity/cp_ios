@@ -157,6 +157,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 	// register for push 
     [[UAPush shared] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    [BaseLoginController pushAliasUpdate];
     
     
 	// load the facebook api
