@@ -14,7 +14,7 @@ import com.google.android.maps.OverlayItem;
  * 
  * @author Melinda Green
  */
-public class MapAnnotations extends ItemizedOverlay {
+public class MapAnnotations extends ItemizedOverlay<OverlayItem> {
 
     @Override
     protected boolean onTap(int index) {

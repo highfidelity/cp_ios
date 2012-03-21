@@ -2,10 +2,10 @@ package com.coffeeandpower.android.maps;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
-import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
 
 /**
@@ -18,7 +18,8 @@ import com.google.android.maps.OverlayItem;
 public class CoffeeAndPowerActivity extends MapActivity {
     private final static int CITY_LEVEL = 14;
     private MapAnnotations mAnnotations; // All glyphs and other overlays.
-
+    private CAPMapView mMapView;
+    
     // Just a static array of predefined annotations for prototyping.
     // This will grow into a dynamically managed list.
     private static OverlayItem mOverlayItems[] = {
@@ -40,15 +41,26 @@ public class CoffeeAndPowerActivity extends MapActivity {
         for(OverlayItem item : mOverlayItems)
             addAnnotation(item);
 
-        MapView mapView = (MapView) findViewById(R.id.mapview); // From main.xml
-        mapView.setBuiltInZoomControls(true); // Shows the +/- controls as user interacts with the map.
-        mapView.getOverlays().add(mAnnotations); // Populates the map with all annotations.
-        MapController controller = mapView.getController(); // For programmatically driving the map.
+        mMapView = (CAPMapView) findViewById(R.id.mapview); // From main.xml
+        mMapView.setBuiltInZoomControls(true); // Shows the +/- controls as user interacts with the map.
+        mMapView.getOverlays().add(mAnnotations); // Populates the map with all annotations.
+        MapController controller = mMapView.getController(); // For programmatically driving the map.
         controller.setCenter(mOverlayItems[0].getPoint()); // Center the map on the C&P headquarters.
-        controller.setZoom(CITY_LEVEL); // Innitial zoom level. Users pinch-to-zoom from there.
+        controller.setZoom(CITY_LEVEL); // Initial zoom level. Users pinch-to-zoom from there.
     }
 
-    private void addAnnotation(OverlayItem annotation) {
+    /* (non-Javadoc)
+	 * @see android.app.Activity#onWindowFocusChanged(boolean)
+	 */
+//	@Override
+//	public void onWindowFocusChanged(boolean hasFocus) {
+//		super.onWindowFocusChanged(hasFocus);
+//        Log.i("canpmobi","Left:" + mMapView.getLeft() + " Right:" + mMapView.getRight()
+//        		+ " Top:" + mMapView.getTop() + " Bottom:" + mMapView.getBottom());
+//		Log.i("candpmobi","LatLeft:" + mMapView.getProjection().fromPixels(0, 0));
+//	}
+
+	private void addAnnotation(OverlayItem annotation) {
         mAnnotations.addOverlay(annotation);
     }
 

@@ -4,12 +4,12 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <com.google.android.maps.MapView
+    <com.coffeeandpower.android.maps.CAPMapView
         android:id="@+id/mapview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:clickable="true"
-        android:apiKey="0Y3wPq-GKaMQOW3rW3NPosjFVMRz2fqEB_doi1A"
+        android:apiKey="0CZ5Ok60kQs18WppvXQIZc2FSkm-mVUvK7gVZsQ"
     />
     
 </LinearLayout>
