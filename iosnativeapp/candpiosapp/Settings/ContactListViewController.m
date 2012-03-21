@@ -214,7 +214,13 @@
     cell.checkInLabel.text = @"";
     cell.distanceLabel.text = @"";
     cell.nicknameLabel.text = [contact objectForKey:@"nickname"];
-    cell.statusLabel.text = [contact objectForKey:@"status_text"];
+    [CPUIHelper changeFontForLabel:cell.nicknameLabel toLeagueGothicOfSize:18.0];
+
+    NSString *status = [contact objectForKey:@"status_text"];
+    cell.statusLabel.text = @"";
+    if (![status isEqualToString:@""]) {
+        cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",status];
+    }
 
     UIImageView *imageView = cell.profilePictureImageView;
     if ([contact objectForKey:@"imageUrl"] != [NSNull null]) {
@@ -241,6 +247,7 @@
     User *user = [[User alloc] init];
     user.nickname = [contact objectForKey:@"nickname"];
     user.userID = [[contact objectForKey:@"id"] intValue];
+    user.status = [contact objectForKey:@"status_text"];
 
     // get the FaceToFace storyboard
     UIStoryboard *mainStory = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
