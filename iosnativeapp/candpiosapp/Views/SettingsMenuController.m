@@ -64,6 +64,7 @@
                              // @"Face To Face", DISABLED (alexi)
                              @"Settings",
                              @"Wallet",
+                             @"Contact list",
                              //@"Linked Accounts", DISABLED (alexi)
                              @"Logout",
                              nil];
@@ -72,6 +73,7 @@
                                       // @"ShowFaceToFaceFromMenu", DISABLED (alexi)
                                       @"ShowUserSettingsFromMenu",
                                       @"ShowBalanceFromMenu",
+                                      @"ShowContactsFromMenu",
                                       // @"ShowFederationFromMenu", DISALBED (alexi)
                                       @"ShowLogoutFromMenu",
                                       nil];

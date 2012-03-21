@@ -65,6 +65,7 @@
 		32E3CD9114C3AAA5001EA2AB /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E3CD8F14C3AAA5001EA2AB /* WebViewController.m */; };
 		32FF63D414BB935100E99F55 /* CheckInListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */; };
 		32FF63E414BBFAE300E99F55 /* CPPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF63E314BBFAE300E99F55 /* CPPlace.m */; };
+		35F0F0541516B3EF00882310 /* ContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F0F0531516B3EF00882310 /* ContactListViewController.m */; };
 		4E39305214EDF0B500D27DEA /* accessory-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E39305014EDF0B500D27DEA /* accessory-arrow.png */; };
 		4E39305314EDF0B500D27DEA /* accessory-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E39305114EDF0B500D27DEA /* accessory-arrow@2x.png */; };
 		4E39305B14EDF0C300D27DEA /* header-shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E39305514EDF0C300D27DEA /* header-shadow.png */; };
@@ -476,6 +477,8 @@
 		32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInListTableViewController.m; path = Views/CheckInListTableViewController.m; sourceTree = "<group>"; };
 		32FF63E214BBFAE300E99F55 /* CPPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPlace.h; path = SupportingClasses/CPPlace.h; sourceTree = "<group>"; };
 		32FF63E314BBFAE300E99F55 /* CPPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPlace.m; path = SupportingClasses/CPPlace.m; sourceTree = "<group>"; };
+		35F0F0521516B3EF00882310 /* ContactListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactListViewController.h; path = Settings/ContactListViewController.h; sourceTree = "<group>"; };
+		35F0F0531516B3EF00882310 /* ContactListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContactListViewController.m; path = Settings/ContactListViewController.m; sourceTree = "<group>"; };
 		4E39305014EDF0B500D27DEA /* accessory-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "accessory-arrow.png"; sourceTree = "<group>"; };
 		4E39305114EDF0B500D27DEA /* accessory-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "accessory-arrow@2x.png"; sourceTree = "<group>"; };
 		4E39305514EDF0C300D27DEA /* header-shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "header-shadow.png"; sourceTree = "<group>"; };
@@ -1336,6 +1339,8 @@
 				4EC78AFE14F761B300581F4F /* SettingsMenuController.m */,
 				53FE2550150EAC6B00A0D93A /* UserSettingsTableViewController.h */,
 				53FE2551150EAC6B00A0D93A /* UserSettingsTableViewController.m */,
+				35F0F0521516B3EF00882310 /* ContactListViewController.h */,
+				35F0F0531516B3EF00882310 /* ContactListViewController.m */,
 				6FC4EF0E151928BC003C63A5 /* LinkedAccountsTableViewControllerViewController.h */,
 				6FC4EF0F151928BC003C63A5 /* LinkedAccountsTableViewControllerViewController.m */,
 			);
@@ -2229,6 +2234,7 @@
 				E4EAFBDE1505467C0052448B /* WalletCell.m in Sources */,
 				535C7537150A9E98000DB33D /* CPConstants.m in Sources */,
 				6FB06648150ACFD00064DC42 /* OneOnOneChatHistory.m in Sources */,
+				35F0F0541516B3EF00882310 /* ContactListViewController.m in Sources */,
 				6FC4EF10151928BC003C63A5 /* LinkedAccountsTableViewControllerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -161,16 +161,6 @@
     
     [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     
-    // make an MKCoordinate region for the zoom level on the map
-    MKCoordinateRegion region = MKCoordinateRegionMake(self.user.location, MKCoordinateSpanMake(0.005, 0.005));
-    [self.mapView setRegion:region];
-    
-    // this will always be the point on iPhones up to iPhone4
-    // if this needs to be used on iPad we'll need to do this programatically or use an if-else
-    CGPoint rightAndUp = CGPointMake(84, 232);
-    CLLocationCoordinate2D coordinate = [self.mapView convertPoint:rightAndUp toCoordinateFromView:self.mapView];
-    [self.mapView setCenterCoordinate:coordinate animated:NO];
-        
     // animate the three dots after checked in
     [self animateVenueLoadingPoints];
     
@@ -179,14 +169,6 @@
 
     if ([self.user.status length] > 0) {
         self.cardStatus.text = [NSString stringWithFormat:@"\"%@\"", self.user.status];
-    }
-    
-    // if we have a location from this user then set the distance label to show how far the other user is
-    if ([AppDelegate instance].settings.hasLocation) {
-        CLLocation *myLocation = [[AppDelegate instance].settings lastKnownLocation];
-        CLLocation *otherUserLocation = [[CLLocation alloc] initWithLatitude:self.user.location.latitude longitude:self.user.location.longitude];
-        NSString *distance = [CPUtils localizedDistanceofLocationA:myLocation awayFromLocationB:otherUserLocation];
-        self.distanceLabel.text = distance;
     }
     
     // set the navigation controller title to the user's nickname
@@ -200,6 +182,24 @@
         // get a user object with resume data
         [self.user loadUserResumeData:^(NSError *error) {
             if (!error) {
+                // make an MKCoordinate region for the zoom level on the map
+                MKCoordinateRegion region = MKCoordinateRegionMake(self.user.location, MKCoordinateSpanMake(0.005, 0.005));
+                [self.mapView setRegion:region];
+
+                // this will always be the point on iPhones up to iPhone4
+                // if this needs to be used on iPad we'll need to do this programatically or use an if-else
+                CGPoint rightAndUp = CGPointMake(84, 232);
+                CLLocationCoordinate2D coordinate = [self.mapView convertPoint:rightAndUp toCoordinateFromView:self.mapView];
+                [self.mapView setCenterCoordinate:coordinate animated:NO];
+
+                // if we have a location from this user then set the distance label to show how far the other user is
+                if ([AppDelegate instance].settings.hasLocation) {
+                    CLLocation *myLocation = [[AppDelegate instance].settings lastKnownLocation];
+                    CLLocation *otherUserLocation = [[CLLocation alloc] initWithLatitude:self.user.location.latitude longitude:self.user.location.longitude];
+                    NSString *distance = [CPUtils localizedDistanceofLocationA:myLocation awayFromLocationB:otherUserLocation];
+                    self.distanceLabel.text = distance;
+                }
+
                 [self placeUserDataOnProfile];
             } else {
                 // error checking for load of user 

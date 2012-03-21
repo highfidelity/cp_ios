@@ -612,6 +612,11 @@
                          completion:completion];
 }
 
++ (void)getContactListWithCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion
+{
+    [self makeHTTPRequestWithAction:@"getContactList" withParameters:nil completion:completion];
+}
+
 # pragma mark - User Settings
 
 + (void)getNotificationSettingsWithCompletition:(void (^)(NSDictionary *, NSError *))completion {

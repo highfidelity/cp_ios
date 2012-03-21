@@ -53,6 +53,10 @@
 + (void)getCheckInDataWithUserId:(int)userId
                    andCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
+//Contanct list functions
++ (void)getContactListWithCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
+
+
 # pragma mark - User Settings
 
 + (void)getNotificationSettingsWithCompletition:(void(^)(NSDictionary *json, NSError *error))completion;
