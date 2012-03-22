@@ -22,11 +22,13 @@
 @interface CPConstants : NSObject
 
 extern  NSString* const kCandPWebServiceUrl;
-extern  NSString* const kCandPAddFundsUrl ;
+extern  NSString* const kCandPAPIVersion;
+extern  NSString* const kCandPAddFundsUrl;
 extern  NSString* const kFacebookAppId;
 extern  NSString* const kLinkedInKey;
 extern  NSString* const kLinkedInSecret;
 extern  NSString* const flurryAnalyticsKey;
+
 
 // NOTE: We are slowly moving the way we store data to the 
 // iOS standard NSUserDefaults (eventually replacing Settings.h)

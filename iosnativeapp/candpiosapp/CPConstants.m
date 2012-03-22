@@ -43,6 +43,8 @@
 
 #endif
 
+NSString* const kCandPAPIVersion = @"0";
+
 // keys for data stored in NSUserDefaults
 NSString* const kUDCurrentUser = @"loggedUser";
 NSString* const kUDFirstCheckIn = @"firstCheckIn";

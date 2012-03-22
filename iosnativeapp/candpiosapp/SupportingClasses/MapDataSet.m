@@ -36,20 +36,21 @@ static NSOperationQueue *sMapQueue = nil;
 	// TODO:  if we're already busy, cancel the old one and issue the new one
 	if([sMapQueue operationCount] == 0)
 	{
-        MKMapPoint neMapPoint = MKMapPointMake(mapRect.origin.x + mapRect.size.width, mapRect.origin.y + mapRect.size.height);
-        MKMapPoint swMapPoint = MKMapPointMake(mapRect.origin.x, mapRect.origin.y);
+        MKMapPoint neMapPoint = MKMapPointMake(mapRect.origin.x + mapRect.size.width, mapRect.origin.y);
+        MKMapPoint swMapPoint = MKMapPointMake(mapRect.origin.x, mapRect.origin.y + mapRect.size.height);
         CLLocationCoordinate2D swCoord = MKCoordinateForMapPoint(swMapPoint);
         CLLocationCoordinate2D neCoord = MKCoordinateForMapPoint(neMapPoint);
         
         CGFloat numberOfDays = 31.0;
         
-		NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=getCheckedInBoundsOverTime&sw_lat=%f&sw_lng=%f&ne_lat=%f&ne_lng=%f&checked_in_since=%f&group_users=1", 
+		NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=getCheckedInBoundsOverTime&sw_lat=%f&sw_lng=%f&ne_lat=%f&ne_lng=%f&checked_in_since=%f&group_users=1&version=%@", 
                                kCandPWebServiceUrl,
                                swCoord.latitude,
                                swCoord.longitude,
                                neCoord.latitude,
                                neCoord.longitude,
-                               [[NSDate date] timeIntervalSince1970] - (86400 * numberOfDays)
+                               [[NSDate date] timeIntervalSince1970] - (86400 * numberOfDays),
+                               kCandPAPIVersion                     
                                ];
 	#if DEBUG
 		NSLog(@"Loading datapoints from: %@", urlString);
