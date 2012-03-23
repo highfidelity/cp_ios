@@ -41,7 +41,7 @@ static NSOperationQueue *sMapQueue = nil;
         CLLocationCoordinate2D swCoord = MKCoordinateForMapPoint(swMapPoint);
         CLLocationCoordinate2D neCoord = MKCoordinateForMapPoint(neMapPoint);
         
-        CGFloat numberOfDays = 31.0;
+        CGFloat numberOfDays = 7.0;
         
 		NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=getCheckedInBoundsOverTime&sw_lat=%f&sw_lng=%f&ne_lat=%f&ne_lng=%f&checked_in_since=%f&group_users=1&version=%@", 
                                kCandPWebServiceUrl,
