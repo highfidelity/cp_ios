@@ -9,16 +9,17 @@
 #import "UserListTableViewController.h"
 #import "MissionAnnotation.h"
 #import "UIImageView+WebCache.h"
-#import "WebViewController.h"
-#import "CPAnnotation.h"
-#import "AppDelegate.h"
 #import "UserTableViewCell.h"
 #import "UserProfileCheckedInViewController.h"
 #import "NSString+HTML.h"
+#import "VenueCell.h"
+#import "CPapi.h"
+#import "SVProgressHUD.h"
 
 @implementation UserListTableViewController
 
-@synthesize missions, checkedInMissions, titleForList, listType, currentVenue;
+@synthesize missions, checkedInMissions, titleForList, listType, currentVenue, venues, mapBounds;
+
 
 // TODO: These are users, not missions so change the property name accordingly
 
@@ -51,7 +52,30 @@
     }
     
     self.title = self.titleForList;
+    venueList = NO;
     
+    MKMapPoint neMapPoint = MKMapPointMake(mapBounds.origin.x + mapBounds.size.width, mapBounds.origin.y);
+    MKMapPoint swMapPoint = MKMapPointMake(mapBounds.origin.x, mapBounds.origin.y + mapBounds.size.height);
+    CLLocationCoordinate2D swCoord = MKCoordinateForMapPoint(swMapPoint);
+    CLLocationCoordinate2D neCoord = MKCoordinateForMapPoint(neMapPoint);
+    
+    
+    [SVProgressHUD showWithStatus:@"Loading..."];
+
+    [CPapi getVenuesInSWCoords:swCoord
+                   andNECoords:neCoord
+                  userLocation:[AppDelegate instance].settings.lastKnownLocation
+                withCompletion:^(NSDictionary *json, NSError *error) {
+
+                    BOOL respError = [[json objectForKey:@"error"] boolValue];
+                    if (!error && !respError) {
+                        venues = [json objectForKey:@"payload"];
+                    }
+
+                    [SVProgressHUD dismiss];
+        
+    }];
+
     // Iterate through the passed missions and only show the ones that were within the map bounds, ordered by distance
 
     CLLocation *currentLocation = [AppDelegate instance].settings.lastKnownLocation;
@@ -168,14 +192,18 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (checkedInMissions.count > 0 && missions.count > 0) {
+    if (venueList) {
         return 2;
     }
+    
+    if (checkedInMissions.count > 0 && missions.count > 0) {
+        return 3;
+    }
     else if (checkedInMissions.count > 0 || missions.count > 0) {
-        return 1;
+        return 2;
     }
     else {
-        return 0;
+        return 1;
     }
 }
 
@@ -183,6 +211,10 @@
     NSString *checkedInNow;
     NSString *lastCheckins = @"Last 7 Days";
 
+    if (venueList) {
+        return @"";
+    }
+    
     if (listType == 0) {
         checkedInNow = @"Checked In Now";
     }
@@ -190,13 +222,13 @@
         checkedInNow = @"Here Now";
     }
 
-    if (section == 0 && checkedInMissions.count > 0) {
+    if (section == 1 && checkedInMissions.count > 0) {
         return checkedInNow;
     }
-    else if (section == 0 && missions.count > 0) {
+    else if (section == 1 && missions.count > 0) {
         return lastCheckins;
     }
-    else if (section == 1) {
+    else if (section == 2) {
         return lastCheckins;
     }
     else {
@@ -206,13 +238,23 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0 && checkedInMissions.count > 0) {
+    if (section == 0) {
+        return 1;
+    }
+    if (section == 1 && venueList) {
+        if (venues != [NSNull null]) {
+            return venues.count;
+        }
+        return 0;
+    }
+
+    if (section == 1 && checkedInMissions.count > 0) {
         return checkedInMissions.count;
     }
-    else if (section == 0 && missions.count > 0) {
+    else if (section == 1 && missions.count > 0) {
         return missions.count;
     }
-    else if (section == 1) {
+    else if (section == 2) {
         return missions.count;
     }
     else {
@@ -221,11 +263,68 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
+    if (indexPath.section == 0) {
+        return 36;
+    }
+    return venueList ? 130 : 60;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 0) {
+        return [tableView dequeueReusableCellWithIdentifier:@"UserListMenuCell"];
+    }
+
+    if (indexPath.section == 1 && venueList) {
+        
+        static NSString *venueCellIdentifier = @"VenueListCustomCell";
+        
+        VenueCell *vcell = [tableView dequeueReusableCellWithIdentifier:venueCellIdentifier];
+        
+        if (vcell == nil) {
+            vcell = [[VenueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:venueCellIdentifier];
+        }
+        
+        NSDictionary *jsonDict = [venues objectAtIndex:indexPath.row];
+        
+        vcell.venueName.text = [jsonDict objectForKey:@"name"];
+        vcell.venueAddress.text = [jsonDict objectForKey:@"address"];
+        
+        float distance = [[jsonDict objectForKey:@"distance"] floatValue];
+        NSString *formatedDistance = [[NSNumber numberWithFloat:distance] stringValue];
+        if ([formatedDistance length] >2 && [[formatedDistance substringToIndex:2] isEqualToString:@"0."]) {
+            formatedDistance = [formatedDistance substringFromIndex:1];
+        }
+        
+        vcell.venueDistance.text = [NSString stringWithFormat:@"%@ %@", formatedDistance, @"mi away"];
+        
+        vcell.venueCheckins.text = @"";
+        int checkins = [[jsonDict objectForKey:@"checkins"] integerValue];
+        if (checkins > 0) {
+            if (checkins == 1) {
+                vcell.venueCheckins.text = @"1 person here now";
+            } else {
+                vcell.venueCheckins.text = [NSString stringWithFormat:@"%d people here now", checkins];      
+            }
+        } else {
+            vcell.venueCheckins.text = @"";
+        }
+        
+        NSString *photo_url = [jsonDict objectForKey:@"photo_url"];
+        if (photo_url != [NSNull null] && photo_url != @"") {
+            [vcell.venuePicture setImageWithURL:[NSURL URLWithString:photo_url] 
+                               placeholderImage:[UIImage imageNamed:@"picture-coming-soon.jpg"]];
+        } else {
+            vcell.venuePicture.image = [UIImage imageNamed:@"picture-coming-soon.jpg"];
+        }
+        
+        return vcell;
+    }
+    
+    if (indexPath.section > 1 && venueList) {
+        return nil;
+    }
+
     static NSString *CellIdentifier = @"UserListCustomCell";
     
     UserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -236,13 +335,13 @@
     // Configure the cell...
     CPAnnotation *annotation;
 
-    if (indexPath.section == 0 && checkedInMissions.count > 0) {
+    if (indexPath.section == 1 && checkedInMissions.count > 0) {
         annotation = [checkedInMissions objectAtIndex:indexPath.row];
     }
-    else if (indexPath.section == 0 && missions.count > 0) {
+    else if (indexPath.section == 1 && missions.count > 0) {
         annotation = [missions objectAtIndex:indexPath.row];
     }
-    else if (indexPath.section == 1) {
+    else if (indexPath.section == 2) {
         annotation = [missions objectAtIndex:indexPath.row];
     }
 
@@ -287,6 +386,15 @@
 
 #pragma mark - Table view delegate
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section 
+{
+    if (section == 0 || venueList) {
+        return 0;
+    }
+    return 22;
+}
+
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 
     NSString *title = [self tableView:tableView titleForHeaderInSection:section];
@@ -304,7 +412,7 @@
     label.frame = CGRectMake(label.frame.origin.x+10, label.frame.origin.y+1, label.frame.size.width, label.frame.size.height);
 
     [theView addSubview:label];
-
+    
     return theView;
 }
 
@@ -316,13 +424,13 @@
         
         CPAnnotation *annotation;
 
-        if (indexPath.section == 0 && checkedInMissions.count > 0) {
+        if (indexPath.section == 1 && checkedInMissions.count > 0) {
             annotation = [checkedInMissions objectAtIndex:indexPath.row];
         }
-        else if (indexPath.section == 0 && missions.count > 0) {
+        else if (indexPath.section == 1 && missions.count > 0) {
             annotation = [missions objectAtIndex:indexPath.row];
         }
-        else if (indexPath.section == 1) {
+        else if (indexPath.section == 2) {
             annotation = [missions objectAtIndex:indexPath.row];
         }
         
@@ -343,4 +451,27 @@
     }
 }
 
+- (IBAction)peopleButtonClick:(UIButton *)sender 
+{
+    venueList = NO;
+    [[self navigationItem] setTitle:@"People"];
+    [[self.view viewWithTag:4] setAlpha:0.4];
+    [[self.view viewWithTag:3] setAlpha:1];
+    [[self.view viewWithTag:41] setHidden:YES];
+    [[self.view viewWithTag:31] setHidden:NO];
+    
+    [((UITableView *)[self view]) reloadData];
+}
+
+- (IBAction)placesButtonClick:(UIButton *)sender 
+{
+    venueList = YES;
+    [[self navigationItem] setTitle:@"Place"];
+    [[self.view viewWithTag:4] setAlpha:1];
+    [[self.view viewWithTag:3] setAlpha:0.4];
+    [[self.view viewWithTag:41] setHidden:NO];
+    [[self.view viewWithTag:31] setHidden:YES];
+    
+    [((UITableView *)[self view]) reloadData];
+}
 @end

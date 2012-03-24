@@ -710,10 +710,11 @@ BOOL clearLocations = NO;
         [[segue destinationViewController] setUser:selectedUser];
     }
     else if ([[segue identifier] isEqualToString:@"ShowUserListTable"]) {
-        [[segue destinationViewController] setTitleForList: @"List"];
+        [[segue destinationViewController] setTitleForList: @"People"];
         [[segue destinationViewController] setListType:0];
         [[segue destinationViewController] setCurrentVenue:nil];
         [[segue destinationViewController] setMissions: [fullDataset.annotations mutableCopy]];
+        [[segue destinationViewController] setMapBounds:[mapView visibleMapRect]];
     }
     else if ([[segue identifier] isEqualToString:@"ShowUserClusterTable"]) {
         OCAnnotation *tappedObj = [sender annotation];
