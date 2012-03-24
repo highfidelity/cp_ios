@@ -1380,70 +1380,62 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserListCustomCell" rowHeight="60.5" id="6mE-c1-T5r" customClass="UserTableViewCell">
-                                <rect key="frame" x="0.0" y="57.5" width="320" height="60.5"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserListCustomCell" rowHeight="130" id="6mE-c1-T5r" customClass="UserTableViewCell">
+                                <rect key="frame" x="0.0" y="57.5" width="320" height="130"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="59.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="129"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" id="zhs-Yx-pbR">
-                                            <rect key="frame" x="0.0" y="59.5" width="320" height="1"/>
+                                            <rect key="frame" x="0.0" y="128" width="320" height="1"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                                         </view>
-                                        <view contentMode="scaleToFill" id="4hW-uh-fsD">
-                                            <rect key="frame" x="60" y="0.0" width="1" height="60"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" red="0.2196078431372549" green="0.2196078431372549" blue="0.2196078431372549" alpha="1" colorSpace="calibratedRGB"/>
-                                        </view>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="I6V-wG-Xen">
-                                            <rect key="frame" x="5" y="4" width="51" height="51"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="defaultAvatar50.png" id="I6V-wG-Xen" userLabel="profile picture">
+                                            <rect key="frame" x="15" y="15" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="mjY-7Y-tr1">
-                                            <rect key="frame" x="64" y="4" width="162" height="21"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Nickname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="mjY-7Y-tr1" userLabel="Nickname">
+                                            <rect key="frame" x="123" y="15" width="162" height="34"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
-                                            <color key="textColor" red="0.85882359743118286" green="0.85882359743118286" blue="0.85882359743118286" alpha="1" colorSpace="deviceRGB"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="24"/>
+                                            <color key="textColor" red="0.78823529411764703" green="0.78823529411764703" blue="0.78823529411764703" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="deviceRGB"/>
+                                            <size key="shadowOffset" width="-1" height="-1"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="&quot;Status Status Status Status Status Status&quot;" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="icM-uq-8K3" userLabel="status label">
+                                            <rect key="frame" x="123" y="61" width="177" height="34"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="12"/>
+                                            <color key="textColor" red="0.76470588235294112" green="0.76470588235294112" blue="0.76470588235294112" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="icM-uq-8K3">
-                                            <rect key="frame" x="64" y="22" width="162" height="21"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Checkin name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="4J4-w6-UoS" userLabel="Checkin name">
+                                            <rect key="frame" x="123" y="90" width="162" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                            <color key="textColor" red="0.58823529411764708" green="0.58823529411764708" blue="0.58823529411764708" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text=".5mi away" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="sre-9B-55g" userLabel="distance label">
+                                            <rect key="frame" x="235" y="90" width="76" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                             <color key="textColor" red="0.85882359740000003" green="0.85882359740000003" blue="0.85882359740000003" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="4J4-w6-UoS">
-                                            <rect key="frame" x="64" y="36" width="162" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
-                                            <color key="textColor" red="0.85882359740000003" green="0.85882359740000003" blue="0.85882359740000003" alpha="1" colorSpace="deviceRGB"/>
-                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="sre-9B-55g">
-                                            <rect key="frame" x="234" y="1" width="76" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
-                                            <color key="textColor" red="0.85882359740000003" green="0.85882359740000003" blue="0.85882359740000003" alpha="1" colorSpace="deviceRGB"/>
-                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="46D-2C-ktR">
-                                            <rect key="frame" x="234" y="39" width="76" height="21"/>
+                                        <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="46D-2C-ktR" userLabel="checkin count">
+                                            <rect key="frame" x="-24" y="89" width="79" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                             <color key="textColor" red="0.24313727021217346" green="0.51372551918029785" blue="0.5058823823928833" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" tag="940" contentMode="scaleToFill" image="list-arrow-dark-grey.png" id="IZI-Hx-ZB5">
-                                            <rect key="frame" x="299" y="22" width="11" height="16"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
-                                <color key="backgroundColor" red="0.25098039215686274" green="0.25098039215686274" blue="0.25098039215686274" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="checkInCountLabel" destination="46D-2C-ktR" id="4AO-hc-Tzz"/>
                                     <outlet property="checkInLabel" destination="4J4-w6-UoS" id="lIg-bQ-SII"/>
@@ -1454,14 +1446,14 @@
                                     <segue destination="L0d-87-YTQ" kind="push" identifier="ShowUserProfileCheckedInFromList" id="He7-Ay-arZ"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="VenueListCustomCell" rowHeight="129.5" id="O7p-Mr-HFT" customClass="VenueCell">
-                                <rect key="frame" x="0.0" y="118" width="320" height="129.5"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="VenueListCustomCell" rowHeight="129.5" id="O7p-Mr-HFT" customClass="VenueCell">
+                                <rect key="frame" x="0.0" y="187.5" width="320" height="129.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="128.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="picture-coming-soon.jpg" id="bDo-SW-xXY">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="picture-coming-soon.jpg" id="bDo-SW-xXY" userLabel="venue photo">
                                             <rect key="frame" x="15" y="15" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -1477,7 +1469,7 @@
                                             <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="24"/>
                                             <color key="textColor" red="0.78823529411764703" green="0.78823529411764703" blue="0.78823529411764703" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="shadowColor" red="0.78823529411764703" green="0.78823529411764703" blue="0.78823529411764703" alpha="0.57999999999999996" colorSpace="calibratedRGB"/>
+                                            <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.48999999999999999" colorSpace="calibratedRGB"/>
                                             <size key="shadowOffset" width="-1" height="-1"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Venue Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="eRD-QI-7Bc">
@@ -1510,6 +1502,7 @@
                                     <outlet property="venueDistance" destination="F6b-VA-Xdg" id="gEQ-cn-hy8"/>
                                     <outlet property="venueName" destination="A6S-PP-MFB" id="Qnf-Bn-RBg"/>
                                     <outlet property="venuePicture" destination="bDo-SW-xXY" id="dIc-lx-xaK"/>
+                                    <segue destination="Hui-QQ-OPh" kind="push" identifier="ShowCheckInDetailsViewFromVenues" id="Nrg-Ga-ikG"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1534,6 +1527,7 @@
         <image name="chat-bubble-right-top.png" width="261" height="14"/>
         <image name="check-in-big.png" width="101" height="101"/>
         <image name="checked-in-location.png" width="16" height="16"/>
+        <image name="defaultAvatar50.png" width="50" height="50"/>
         <image name="go-button.png" width="16" height="16"/>
         <image name="go-menu-bg.png" width="75" height="205"/>
         <image name="go-menu-button-1.png" width="75" height="55"/>
@@ -1738,5 +1732,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="JVj-Fy-LMl"/>
         <segue reference="He7-Ay-arZ"/>
+        <segue reference="Nrg-Ga-ikG"/>
     </inferredMetricsTieBreakers>
 </document>

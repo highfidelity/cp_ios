@@ -730,6 +730,7 @@ BOOL clearLocations = NO;
         [[segue destinationViewController] setTitleForList: tappedObj.title];
         [[segue destinationViewController] setListType:1];
         [[segue destinationViewController] setMissions: [annotations mutableCopy]];
+        [[segue destinationViewController] setMapBounds:[mapView visibleMapRect]];
     }
 }
 

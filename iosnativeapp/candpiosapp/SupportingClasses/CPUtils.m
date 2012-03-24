@@ -65,4 +65,21 @@
     }
 }
 
++ (NSString *)localizedDistanceStringFromMiles:(double)miles
+{
+    float distance = miles;
+    NSString *suffix = @"mi";
+    if ([[[NSLocale currentLocale] objectForKey:NSLocaleUsesMetricSystem] boolValue]) {
+        distance = distance * 1.609344;
+        suffix = @"km";
+    }
+    
+    NSString *formatedDistance = [[NSNumber numberWithFloat:distance] stringValue];
+    if ([formatedDistance length] > 2 && [[formatedDistance substringToIndex:2] isEqualToString:@"0."]) {
+        formatedDistance = [formatedDistance substringFromIndex:1];
+    }
+    
+    return [NSString stringWithFormat:@"%@ %@", formatedDistance, suffix];
+}
+
 @end

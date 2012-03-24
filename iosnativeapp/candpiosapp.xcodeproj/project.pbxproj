@@ -1369,19 +1369,19 @@
 		53D65B4614EEEC3700801C5E /* Check In */ = {
 			isa = PBXGroup;
 			children = (
-				32FF63E214BBFAE300E99F55 /* CPPlace.h */,
-				32FF63E314BBFAE300E99F55 /* CPPlace.m */,
-				536DE92A150170CC00794650 /* images */,
-				53D65B4314EEEC2D00801C5E /* CheckInDetailsViewController.h */,
-				53D65B4414EEEC2D00801C5E /* CheckInDetailsViewController.m */,
-				32FF63D214BB935100E99F55 /* CheckInListTableViewController.h */,
-				32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */,
 				534FC98814EF2E8C008C87B9 /* CheckInDetailsFrame.h */,
 				534FC98914EF2E8C008C87B9 /* CheckInDetailsFrame.m */,
+				53D65B4314EEEC2D00801C5E /* CheckInDetailsViewController.h */,
+				53D65B4414EEEC2D00801C5E /* CheckInDetailsViewController.m */,
 				53882B5C14FC13630073058C /* CheckInListCell.h */,
 				53882B5D14FC13630073058C /* CheckInListCell.m */,
+				32FF63D214BB935100E99F55 /* CheckInListTableViewController.h */,
+				32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */,
+				32FF63E214BBFAE300E99F55 /* CPPlace.h */,
+				32FF63E314BBFAE300E99F55 /* CPPlace.m */,
 				53E2061F150591600000FA8D /* DismissHUDAfterReloadData.h */,
 				53E20620150591600000FA8D /* DismissHUDAfterReloadData.m */,
+				536DE92A150170CC00794650 /* images */,
 			);
 			name = "Check In";
 			sourceTree = "<group>";

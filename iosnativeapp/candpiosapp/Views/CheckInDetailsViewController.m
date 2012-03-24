@@ -123,6 +123,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[AppDelegate instance] hideCheckInButton];
     // set the title of the nav controller to the place name
     self.title = self.place.name;
     

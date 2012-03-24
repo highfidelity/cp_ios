@@ -16,4 +16,6 @@
     andLocationB:(CLLocation *)locationB;
 + (NSString *)localizedDistanceofLocationA:(CLLocation *)locationA awayFromLocationB:(CLLocation *)locationB;
 
++ (NSString *)localizedDistanceStringFromMiles:(double)miles;
+
 @end

@@ -13,6 +13,7 @@
 @synthesize state = _state;
 @synthesize zip = _zip;
 @synthesize phone = _phone;
+@synthesize photoURL = _photoURL;
 @synthesize lat = _lat;
 @synthesize lng = _lng;
 @synthesize othersHere = _othersHere;

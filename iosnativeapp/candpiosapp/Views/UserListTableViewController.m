@@ -15,10 +15,13 @@
 #import "VenueCell.h"
 #import "CPapi.h"
 #import "SVProgressHUD.h"
+#import "CheckInDetailsViewController.h"
 
 @implementation UserListTableViewController
 
-@synthesize missions, checkedInMissions, titleForList, listType, currentVenue, venues, mapBounds;
+@synthesize missions, checkedInMissions, titleForList, listType, currentVenue;
+@synthesize venues = _venues;
+@synthesize mapBounds = _mapBounds;
 
 
 // TODO: These are users, not missions so change the property name accordingly
@@ -54,22 +57,40 @@
     self.title = self.titleForList;
     venueList = NO;
     
-    MKMapPoint neMapPoint = MKMapPointMake(mapBounds.origin.x + mapBounds.size.width, mapBounds.origin.y);
-    MKMapPoint swMapPoint = MKMapPointMake(mapBounds.origin.x, mapBounds.origin.y + mapBounds.size.height);
+    MKMapPoint neMapPoint = MKMapPointMake(self.mapBounds.origin.x + self.mapBounds.size.width, self.mapBounds.origin.y);
+    MKMapPoint swMapPoint = MKMapPointMake(self.mapBounds.origin.x, self.mapBounds.origin.y + self.mapBounds.size.height);
     CLLocationCoordinate2D swCoord = MKCoordinateForMapPoint(swMapPoint);
     CLLocationCoordinate2D neCoord = MKCoordinateForMapPoint(neMapPoint);
     
-    
+    _venues = [[NSMutableArray alloc] init];
     [SVProgressHUD showWithStatus:@"Loading..."];
 
     [CPapi getVenuesInSWCoords:swCoord
                    andNECoords:neCoord
                   userLocation:[AppDelegate instance].settings.lastKnownLocation
                 withCompletion:^(NSDictionary *json, NSError *error) {
-
+                    
                     BOOL respError = [[json objectForKey:@"error"] boolValue];
                     if (!error && !respError) {
-                        venues = [json objectForKey:@"payload"];
+                        
+                        NSArray *itemsArray = [json objectForKey:@"payload"];
+                        
+                        if ([itemsArray class] != [NSNull class]) {
+                            for (NSMutableDictionary *item in itemsArray) {
+                                CPPlace *place = [[CPPlace alloc] init];
+                                
+                                place.name = [item valueForKey:@"name"];
+                                place.foursquareID = [item valueForKey:@"foursquare"];
+                                place.address = [item valueForKey:@"address"];
+                                place.photoURL = [item valueForKey:@"photo_url"];
+                                place.checkinCount = [[item valueForKey:@"checkins"] integerValue];
+                                place.distanceFromUser = [[item valueForKey:@"distance"] doubleValue];
+                                place.lat = [[item valueForKey:@"lat"] doubleValue];
+                                place.lng = [[item valueForKey:@"lng"] doubleValue];
+                                
+                                [[self venues] addObject:place];
+                            }   
+                        }
                     }
 
                     [SVProgressHUD dismiss];
@@ -169,6 +190,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [[AppDelegate instance] showCheckInButton];
     [super viewDidAppear:animated];
 }
 
@@ -242,10 +264,7 @@
         return 1;
     }
     if (section == 1 && venueList) {
-        if (venues != [NSNull null]) {
-            return venues.count;
-        }
-        return 0;
+        return [[self venues] count];
     }
 
     if (section == 1 && checkedInMissions.count > 0) {
@@ -266,7 +285,7 @@
     if (indexPath.section == 0) {
         return 36;
     }
-    return venueList ? 130 : 60;
+    return 130;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -285,34 +304,26 @@
             vcell = [[VenueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:venueCellIdentifier];
         }
         
-        NSDictionary *jsonDict = [venues objectAtIndex:indexPath.row];
+        CPPlace *venue = [[self venues] objectAtIndex:indexPath.row];
         
-        vcell.venueName.text = [jsonDict objectForKey:@"name"];
-        vcell.venueAddress.text = [jsonDict objectForKey:@"address"];
-        
-        float distance = [[jsonDict objectForKey:@"distance"] floatValue];
-        NSString *formatedDistance = [[NSNumber numberWithFloat:distance] stringValue];
-        if ([formatedDistance length] >2 && [[formatedDistance substringToIndex:2] isEqualToString:@"0."]) {
-            formatedDistance = [formatedDistance substringFromIndex:1];
-        }
-        
-        vcell.venueDistance.text = [NSString stringWithFormat:@"%@ %@", formatedDistance, @"mi away"];
+        vcell.venueName.text = venue.name;
+        vcell.venueAddress.text = venue.address;
+
+        vcell.venueDistance.text = [NSString stringWithFormat:@"%@ %@", [CPUtils localizedDistanceStringFromMiles:venue.distanceFromUser], @"away"];
         
         vcell.venueCheckins.text = @"";
-        int checkins = [[jsonDict objectForKey:@"checkins"] integerValue];
-        if (checkins > 0) {
-            if (checkins == 1) {
+        if (venue.checkinCount  > 0) {
+            if (venue.checkinCount == 1) {
                 vcell.venueCheckins.text = @"1 person here now";
             } else {
-                vcell.venueCheckins.text = [NSString stringWithFormat:@"%d people here now", checkins];      
+                vcell.venueCheckins.text = [NSString stringWithFormat:@"%d people here now", venue.checkinCount];
             }
         } else {
             vcell.venueCheckins.text = @"";
         }
-        
-        NSString *photo_url = [jsonDict objectForKey:@"photo_url"];
-        if (photo_url != [NSNull null] && photo_url != @"") {
-            [vcell.venuePicture setImageWithURL:[NSURL URLWithString:photo_url] 
+
+        if (venue.photoURL) {
+            [vcell.venuePicture setImageWithURL:[NSURL URLWithString:venue.photoURL]
                                placeholderImage:[UIImage imageNamed:@"picture-coming-soon.jpg"]];
         } else {
             vcell.venuePicture.image = [UIImage imageNamed:@"picture-coming-soon.jpg"];
@@ -418,9 +429,9 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    
     if ([[segue identifier] isEqualToString:@"ShowUserProfileCheckedInFromList"]) {
-        
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
         CPAnnotation *annotation;
 
@@ -447,6 +458,11 @@
         [[segue destinationViewController] setUser:selectedUser];
     } else if ([[segue identifier] isEqualToString:@"ProfileToFace2FaceInvite"]) {
         // We're going to make a F2F invite!
+        
+    } else if ([[segue identifier] isEqualToString:@"ShowCheckInDetailsViewFromVenues"]) {
+        // give place info to the CheckInDetailsViewController
+        CPPlace *place = [[self venues] objectAtIndex:indexPath.row];
+        [[segue destinationViewController] setPlace:place];
         
     }
 }
