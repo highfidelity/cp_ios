@@ -9,10 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CPUtils.h"
 
-@interface UserListTableViewController : UITableViewController {
-@private
-    BOOL venueList;
-}
+@interface UserListTableViewController : UITableViewController 
 
 @property (nonatomic, retain) NSMutableArray *venues;
 @property (nonatomic, retain) NSMutableArray *missions;

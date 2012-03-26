@@ -30,6 +30,7 @@
 @property (strong, nonatomic, readonly) AFHTTPClient *urbanAirshipClient;
 @property (strong, nonatomic) SettingsMenuController *settingsMenuController;
 @property (strong, nonatomic) UINavigationController *rootNavigationController;
+@property (readonly) BOOL userCheckedIn;
            
 -(void)saveSettings;
 +(AppDelegate *)instance;
@@ -39,6 +40,7 @@
 -(User *)currentUser;
 -(void)hideCheckInButton;
 -(void)showCheckInButton;
+- (void)refreshCheckInButton;
 -(void)startCheckInClockHandAnimation;
 -(void)stopCheckInClockHandAnimation;
 void uncaughtExceptionHandler(NSException *exception);

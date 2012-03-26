@@ -573,6 +573,13 @@
                          completion:completion];
 }
 
++ (void)checkOutWithCompletion:(void (^)(NSDictionary *, NSError *))completion
+{
+    [self makeHTTPRequestWithAction:@"checkout"
+                     withParameters:nil
+                         completion:completion];
+}
+
 + (void)getResumeForUserId:(int)userId
              andCompletion:(void (^)(NSDictionary *, NSError *))completion
 {

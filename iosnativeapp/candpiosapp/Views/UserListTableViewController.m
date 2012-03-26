@@ -17,13 +17,30 @@
 #import "SVProgressHUD.h"
 #import "CheckInDetailsViewController.h"
 
+@interface UserListTableViewController()
+@property BOOL venueList;
+@end
+
 @implementation UserListTableViewController
 
 @synthesize missions, checkedInMissions, titleForList, listType, currentVenue;
-@synthesize venues = _venues;
 @synthesize mapBounds = _mapBounds;
+@synthesize venues = _venues;
+@synthesize venueList = _venueList;
 
 
+- (void)setVenues:(NSMutableArray *)venues
+{
+    _venues = venues;
+}
+
+- (NSMutableArray *)venues
+{
+    if (_venues == nil) {
+        _venues = [[NSMutableArray alloc] init];
+    }
+    return _venues;
+}
 // TODO: These are users, not missions so change the property name accordingly
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -55,14 +72,13 @@
     }
     
     self.title = self.titleForList;
-    venueList = NO;
+    self.venueList = NO;
     
     MKMapPoint neMapPoint = MKMapPointMake(self.mapBounds.origin.x + self.mapBounds.size.width, self.mapBounds.origin.y);
     MKMapPoint swMapPoint = MKMapPointMake(self.mapBounds.origin.x, self.mapBounds.origin.y + self.mapBounds.size.height);
     CLLocationCoordinate2D swCoord = MKCoordinateForMapPoint(swMapPoint);
     CLLocationCoordinate2D neCoord = MKCoordinateForMapPoint(neMapPoint);
     
-    _venues = [[NSMutableArray alloc] init];
     [SVProgressHUD showWithStatus:@"Loading..."];
 
     [CPapi getVenuesInSWCoords:swCoord
@@ -214,7 +230,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (venueList) {
+    if (self.venueList) {
         return 2;
     }
     
@@ -233,7 +249,7 @@
     NSString *checkedInNow;
     NSString *lastCheckins = @"Last 7 Days";
 
-    if (venueList) {
+    if (self.venueList) {
         return @"";
     }
     
@@ -263,7 +279,7 @@
     if (section == 0) {
         return 1;
     }
-    if (section == 1 && venueList) {
+    if (section == 1 && self.venueList) {
         return [[self venues] count];
     }
 
@@ -294,7 +310,7 @@
         return [tableView dequeueReusableCellWithIdentifier:@"UserListMenuCell"];
     }
 
-    if (indexPath.section == 1 && venueList) {
+    if (indexPath.section == 1 && self.venueList) {
         
         static NSString *venueCellIdentifier = @"VenueListCustomCell";
         
@@ -332,7 +348,7 @@
         return vcell;
     }
     
-    if (indexPath.section > 1 && venueList) {
+    if (indexPath.section > 1 && self.venueList) {
         return nil;
     }
 
@@ -399,7 +415,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section 
 {
-    if (section == 0 || venueList) {
+    if (section == 0 || self.venueList) {
         return 0;
     }
     return 22;
@@ -469,7 +485,7 @@
 
 - (IBAction)peopleButtonClick:(UIButton *)sender 
 {
-    venueList = NO;
+    self.venueList = NO;
     [[self navigationItem] setTitle:@"People"];
     [[self.view viewWithTag:4] setAlpha:0.4];
     [[self.view viewWithTag:3] setAlpha:1];
@@ -481,7 +497,7 @@
 
 - (IBAction)placesButtonClick:(UIButton *)sender 
 {
-    venueList = YES;
+    self.venueList = YES;
     [[self navigationItem] setTitle:@"Place"];
     [[self.view viewWithTag:4] setAlpha:1];
     [[self.view viewWithTag:3] setAlpha:0.4];

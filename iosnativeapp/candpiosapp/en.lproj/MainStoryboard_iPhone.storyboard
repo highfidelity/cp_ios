@@ -1082,11 +1082,11 @@
             </objects>
             <point key="canvasLocation" x="1930" y="-323"/>
         </scene>
-        <!--Navigation Controller - Nearby-->
+        <!--Root Navigattion View Controller - Nearby-->
         <scene sceneID="X1z-oT-wPh">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flw-Jh-D1t" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController id="86X-eE-gGo" sceneMemberID="viewController">
+                <navigationController id="86X-eE-gGo" customClass="RootNavigattionViewController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Nearby" id="mXd-OI-Wox"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="US3-0t-kpP">
@@ -1722,6 +1722,9 @@
                 <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="venuePicture" candidateClass="UIImageView"/>
             </relationships>
+        </class>
+        <class className="RootNavigattionViewController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/RootNavigattionViewController.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

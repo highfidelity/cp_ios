@@ -46,6 +46,8 @@
                statusText:(NSString *)stausText
           completionBlock:(void (^)(NSDictionary *, NSError *))completion;
 
++ (void)checkOutWithCompletion:(void(^)(NSDictionary *json, NSError *error))completion;
+
 //Profile functions
 + (void)getResumeForUserId:(int)userId andCompletion:(void(^)(NSDictionary *json, NSError *error))completion;
 + (void)getUserProfileWithCompletionBlock:(void(^)(NSDictionary *json, NSError *error))completion;

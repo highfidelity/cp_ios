@@ -70,7 +70,7 @@
     float distance = miles;
     NSString *suffix = @"mi";
     if ([[[NSLocale currentLocale] objectForKey:NSLocaleUsesMetricSystem] boolValue]) {
-        distance = distance * 1.609344;
+        distance = roundf(distance * 160.9344) / 100;
         suffix = @"km";
     }
     

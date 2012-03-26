@@ -30,6 +30,7 @@
 @synthesize urbanAirshipClient;
 @synthesize settingsMenuController;
 @synthesize rootNavigationController;
+@synthesize userCheckedIn = _userCheckedIn;
 
 // TODO: Store what we're storing now in settings in NSUSERDefaults
 // Why make our own class when there's an iOS Api for this?
@@ -42,12 +43,19 @@
 @synthesize window = _window;
 
 
-# pragma mark - Check-in Stuff
+# pragma mark - Check-in/out Stuff
+
+- (BOOL)userCheckedIn 
+{
+    NSNumber *checkoutEpoch = DEFAULTS(object, kUDCheckoutTime);
+    return [checkoutEpoch intValue] > [[NSDate date]timeIntervalSince1970];
+}
 
 - (void)startCheckInClockHandAnimation
 {
     // grab the check in button
     UIButton *checkInButton = (UIButton *)[self.rootNavigationController.view viewWithTag:901];
+
     // spin the clock hand
     [CPUIHelper spinView:[checkInButton viewWithTag:903] duration:15 repeatCount:MAXFLOAT clockwise:YES timingFunction:nil];
 }
@@ -78,7 +86,6 @@
         checkInButton.backgroundColor = [UIColor clearColor];
         checkInButton.frame = CGRectMake(235, 375, 75, 75);
         [checkInButton addTarget:self action:@selector(checkInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [checkInButton setBackgroundImage:[UIImage imageNamed:@"check-in.png"] forState:UIControlStateNormal];
         checkInButton.tag = 901;
         
         if (!DEFAULTS(bool, kUDFirstCheckIn)) {
@@ -103,6 +110,7 @@
         [checkInButton addSubview:clockHand];
         
         [self.rootNavigationController.view addSubview:checkInButton];
+        [self refreshCheckInButton];
     }
     // spin the clock hand if the user is currently checked in
     // Commenting this out for now until the design is set - birarda
@@ -126,9 +134,36 @@
     }
 }
 
+
+- (void)refreshCheckInButton 
+{
+    UIButton *checkInButton = (UIButton *)[self.rootNavigationController.view viewWithTag:901];
+    if (checkInButton) {
+        if (self.userCheckedIn) {
+            [checkInButton setBackgroundImage:[UIImage imageNamed:@"check-out.png"] forState:UIControlStateNormal];
+            [[checkInButton viewWithTag:903] setHidden:YES];
+        } else {
+            [checkInButton setBackgroundImage:[UIImage imageNamed:@"check-in.png"] forState:UIControlStateNormal];
+            [[checkInButton viewWithTag:903] setHidden:NO];
+        }
+    }
+}
+
 - (void)checkInButtonPressed:(id)sender
 {
-    [self.rootNavigationController performSegueWithIdentifier:@"ShowCheckInListTable" sender:self];
+    if (self.userCheckedIn) {
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Check Out"
+                              message:@"Are you sure you want to be checked out?"
+                              delegate:self.rootNavigationController
+                              cancelButtonTitle:@"Cancel"
+                              otherButtonTitles: @"Check Out", nil];
+        alert.tag = 904;
+        [alert show];
+        
+    } else {
+        [self.rootNavigationController performSegueWithIdentifier:@"ShowCheckInListTable" sender:self];
+    }
 }
 
 

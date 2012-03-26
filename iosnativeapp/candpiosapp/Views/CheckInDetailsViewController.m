@@ -246,7 +246,7 @@
     
     // send the server your lat/lon, checkin_time (now), checkout_time (now + duration from slider), and the venue data from the place. 
     // url encode the appropriate values using the functions in CPapi
-    NSInteger checkInTime = [[NSDate date] timeIntervalSince1970];
+    NSInteger checkInTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
     NSInteger checkInDuration = self.checkInDuration;    
     NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
     NSString *statusText = @"";
@@ -291,6 +291,8 @@
                 
                 // Post a notification so that the map is reloaded with the user's new checkin
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckedIn" object:nil];
+
+                [[AppDelegate instance] refreshCheckInButton];
                 
                 // hide the checkin screen, we're checked in
                 [self dismissModalViewControllerAnimated:YES];
