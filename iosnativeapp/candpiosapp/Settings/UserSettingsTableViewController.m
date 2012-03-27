@@ -487,13 +487,10 @@
 - (void)emailTextField_ValueChanged:(id)sender {
     UITextField *tf = (UITextField *)sender;
     
-    if(tf.text.length > 0 && [CPUtils validateEmailWithString:tf.text]) {
-        self.emailValidationMsg.textColor = [UIColor greenColor];
-        self.emailValidationMsg.text = @"Valid email address.";
-    }else {
-        self.emailValidationMsg.textColor = [UIColor redColor];
+    if(tf.text.length == 0 || ![CPUtils validateEmailWithString:tf.text]) {
         self.emailValidationMsg.text = @"Must be a valid email address!";
-        
+    }else {
+        self.emailValidationMsg.text = @"";
     }   
 }
 
