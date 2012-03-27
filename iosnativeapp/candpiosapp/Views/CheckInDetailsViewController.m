@@ -196,6 +196,22 @@
     UIColor *lightTexture = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-light.png"]];
     self.checkInDetails.backgroundColor = lightTexture; 
     
+    User *user = [[AppDelegate instance] currentUser];
+   
+    [user loadUserResumeData:^(NSError *error) {
+        if (!error) {
+            
+            //CPPlace *place = [user.checkInHistory objectAtIndex:0];
+            //place.
+            self.statusTextField.text = user.status;
+            
+        } else {
+            // error checking for load of user 
+        }
+    }];
+    
+    
+
     // set the delegates for the textField and the otherUsersScrollView
     self.statusTextField.delegate = self;
     self.otherUsersScrollView.delegate = self;
