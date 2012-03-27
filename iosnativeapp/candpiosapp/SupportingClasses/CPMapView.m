@@ -124,7 +124,8 @@
     //calculate cluster radius
     CLLocationDistance clusterRadius = self.region.span.longitudeDelta * clusterSize;
 
-    BOOL allowClustering = YES;
+    // clustering is off by default, using grouping
+    BOOL allowClustering = NO;
     
     // If zoomed in all the way, disable clustering
     if (self.region.span.longitudeDelta < 0.001) {

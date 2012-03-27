@@ -22,6 +22,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #define qHideTopNavigationBarOnMapView			0
+#define kCheckinThresholdForSmallPin            2
 #define kMinimumDeltaForSmallPins               0.15
 
 @interface MapTabController() 
@@ -209,7 +210,7 @@ BOOL clearLocations = NO;
 {
     
     if (locationStatusKnown) {
-        clusterNow = YES;
+        clusterNow = NO;
         
         MKMapRect mapRect = mapView.visibleMapRect;
         
@@ -556,7 +557,7 @@ BOOL clearLocations = NO;
         }
 
         if (!hasCheckedInUsers) {
-            if (annotationsInCluster.count < 5) {
+            if (annotationsInCluster.count < kCheckinThresholdForSmallPin) {
                 smallPin = YES;
             }
             else {
@@ -584,11 +585,11 @@ BOOL clearLocations = NO;
 		}
 
         if (hasCheckedInUsers) {
-            [pin setNumberedPin:checkedInUsers hasCheckins:hasCheckedInUsers smallPin:NO];
+            [pin setPin:checkedInUsers hasCheckins:hasCheckedInUsers smallPin:NO withLabel:NO];
             pin.centerOffset = CGPointMake(0, -31);            
         }
         else {           
-            [pin setNumberedPin:imageSources.count hasCheckins:hasCheckedInUsers smallPin:smallPin];
+            [pin setPin:imageSources.count hasCheckins:hasCheckedInUsers smallPin:smallPin withLabel:NO];
             pin.centerOffset = CGPointMake(0, -18); 
         }
       
@@ -625,11 +626,11 @@ BOOL clearLocations = NO;
         }
         
         if (hasCheckedInUsers) {
-            [pin setNumberedPin:1 hasCheckins:YES smallPin:NO];
+            [pin setPin:1 hasCheckins:YES smallPin:NO withLabel:NO];
             pin.centerOffset = CGPointMake(0, -31);     
         }
         else {
-            [pin setNumberedPin:1 hasCheckins:NO smallPin:YES];
+            [pin setPin:1 hasCheckins:NO smallPin:YES withLabel:NO];
             pin.centerOffset = CGPointMake(0, 0);
         }
         

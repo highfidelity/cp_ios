@@ -13,7 +13,7 @@
 
 @implementation MKAnnotationView(WebCache)
 
-- (void)setNumberedPin:(NSInteger)number hasCheckins:(BOOL)checkins smallPin:(BOOL)smallPin {
+- (void)setPin:(NSInteger)number hasCheckins:(BOOL)checkins smallPin:(BOOL)smallPin withLabel:(BOOL)withLabel {
     CGFloat fontSize = 20;
     NSString *imageName;
     
@@ -38,7 +38,7 @@
     [self setImage:[UIImage imageNamed:imageName]];
     
     // Add number label
-    if (!smallPin) {
+    if (!smallPin && withLabel) {
         numberLabel.backgroundColor = [UIColor clearColor];
         numberLabel.opaque = NO;
         numberLabel.textColor = [UIColor whiteColor];

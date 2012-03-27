@@ -93,6 +93,12 @@
                 // If the annotation is in range of the Cluster add it to it
                 if (isLocationNearToOtherLocation([annotation coordinate], [clusterAnnotation coordinate], radius)) {
 
+                    // if grouping enabled, and can be grouped, don't create a new cluster
+                    if (grouped && [annotation respondsToSelector:@selector(groupTag)]) {
+                        if (![clusterAnnotation.groupTag isEqualToString:((id <OCGrouping>)annotation).groupTag])
+                            continue;
+                    }                    
+                    
                     // Check for duplicate annotations, and don't re-add to a cluster if it's already in it
                     if ([annotation isKindOfClass:[CPAnnotation class]]) {
                         if ([clusterAnnotation.annotationsInCluster containsObject:annotation]) {
