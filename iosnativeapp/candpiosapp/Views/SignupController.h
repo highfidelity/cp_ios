@@ -16,6 +16,8 @@
 - (void)handleResponseFromFacebookLogin;
 
 @property (weak, nonatomic) IBOutlet UILabel *connectWithLabel;
+@property (weak, nonatomic) IBOutlet UILabel *coffeeAndPowerLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sloganLabel;
 @property (weak, nonatomic) IBOutlet UIButton *facebookLoginButton;
 @property (weak, nonatomic) IBOutlet UIButton *linkedinLoginButton;
 @property (weak, nonatomic) IBOutlet UIButton *emailLoginButton;

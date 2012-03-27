@@ -23,6 +23,8 @@
 
 @implementation SignupController
 @synthesize connectWithLabel;
+@synthesize coffeeAndPowerLabel;
+@synthesize sloganLabel;
 @synthesize facebookLoginButton;
 @synthesize linkedinLoginButton;
 @synthesize emailLoginButton;
@@ -82,6 +84,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [CPUIHelper changeFontForLabel:self.connectWithLabel toLeagueGothicOfSize:22.0];
+    [CPUIHelper changeFontForLabel:self.coffeeAndPowerLabel toLeagueGothicOfSize:22.0];
+    [CPUIHelper changeFontForLabel:self.sloganLabel toLeagueGothicOfSize:22.0];
 }
 
 - (void)viewDidUnload
@@ -90,6 +94,8 @@
     [self setLinkedinLoginButton:nil];
     [self setEmailLoginButton:nil];
     [self setConnectWithLabel:nil];
+    [self setCoffeeAndPowerLabel:nil];
+    [self setSloganLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
