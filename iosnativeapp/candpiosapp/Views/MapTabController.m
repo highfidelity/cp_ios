@@ -585,7 +585,7 @@ BOOL clearLocations = NO;
 		}
 
         if (hasCheckedInUsers) {
-            [pin setPin:checkedInUsers hasCheckins:hasCheckedInUsers smallPin:NO withLabel:NO];
+            [pin setPin:checkedInUsers hasCheckins:hasCheckedInUsers smallPin:NO withLabel:YES];
             pin.centerOffset = CGPointMake(0, -31);            
         }
         else {           
@@ -626,7 +626,7 @@ BOOL clearLocations = NO;
         }
         
         if (hasCheckedInUsers) {
-            [pin setPin:1 hasCheckins:YES smallPin:NO withLabel:NO];
+            [pin setPin:1 hasCheckins:YES smallPin:NO withLabel:YES];
             pin.centerOffset = CGPointMake(0, -31);     
         }
         else {
