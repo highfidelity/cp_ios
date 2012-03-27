@@ -2,8 +2,6 @@ package com.coffeeandpower.android.maps;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
-
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.OverlayItem;
@@ -18,7 +16,7 @@ import com.google.android.maps.OverlayItem;
 public class CoffeeAndPowerActivity extends MapActivity {
     private final static int CITY_LEVEL = 14;
     private MapAnnotations mAnnotations; // All glyphs and other overlays.
-    private CAPMapView mMapView;
+    private CPMapView mMapView;
     
     // Just a static array of predefined annotations for prototyping.
     // This will grow into a dynamically managed list.
@@ -41,7 +39,7 @@ public class CoffeeAndPowerActivity extends MapActivity {
         for(OverlayItem item : mOverlayItems)
             addAnnotation(item);
 
-        mMapView = (CAPMapView) findViewById(R.id.mapview); // From main.xml
+        mMapView = (CPMapView) findViewById(R.id.mapview); // From main.xml
         mMapView.setBuiltInZoomControls(true); // Shows the +/- controls as user interacts with the map.
         mMapView.getOverlays().add(mAnnotations); // Populates the map with all annotations.
         MapController controller = mMapView.getController(); // For programmatically driving the map.

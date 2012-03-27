@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.coffeeandpower.android.maps"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="0.1"
+    android:installLocation="auto" >
 
     <uses-sdk android:minSdkVersion="7" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,6 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="com.coffeeandpower.android.maps.provider"
+            android:name="com.coffeeandpower.android.maps.CPcontentProvider"
+            />
+        <service android:name=".CPMapSyncService"/>
     </application>
 
 </manifest>

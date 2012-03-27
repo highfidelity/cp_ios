@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <com.coffeeandpower.android.maps.CAPMapView
+    <com.coffeeandpower.android.maps.CPMapView
         android:id="@+id/mapview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
