@@ -11,6 +11,7 @@
 #import "User.h"
 #import "SVProgressHUD.h"
 #import "SignupController.h"
+#import "CPUtils.h"
 
 #define tableCellSubviewTag 7909
 #define spinnerTag  7910
@@ -19,6 +20,7 @@
 
 -(void)syncWithWebData;
 -(void)placeCurrentUserData;
+-(void)emailTextField_ValueChanged:(id)sender;
 
 @end
 
@@ -32,6 +34,7 @@
 @synthesize newDataFromSync = _newDataFromSync;
 @synthesize profileImageButton = _profileImageButton;
 @synthesize profileImage = _profileImage;
+@synthesize emailValidationMsg = _emailValidationMsg;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -91,6 +94,7 @@
     [self setNicknameTextField:nil];
     [self setEmailTextField:nil];
     [self setProfileImageButton:nil];
+    [self setEmailValidationMsg:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -124,6 +128,10 @@
         // there's a pending email so show that to the user so they know it took
         self.emailTextField.text = self.pendingEmail;
     }
+    //Enable ValueChanged tracking for the emailTextField
+    [_emailTextField addTarget:self action:@selector(emailTextField_ValueChanged:) forControlEvents:UIControlEventEditingChanged];
+    //This validates the current emailaddress.  Shoudl be valid, but just in case.
+    [self emailTextField_ValueChanged:_emailTextField];
     
     // show the profile image we have and stop the spinner
     [self changeProfileImageAndStopSpinner];
@@ -310,8 +318,26 @@
 
 
 #pragma mark - UITextField delegate
+
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    //Check for valid email address if textField is emailTextField
+    if (textField == self.emailTextField && 
+        (textField.text.length == 0  || ![CPUtils validateEmailWithString:textField.text])) {
+        NSString *message = @"Email address does not appear to be valid.";
+        // we had an error, let's tell the user and leave
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
+                                                            message:message
+                                                           delegate:nil 
+                                                  cancelButtonTitle:@"OK" 
+                                                  otherButtonTitles:nil];
+    
+        [alertView show];
+        return NO;
+    }
+    
+    
     
     [self addSpinnerToTableCell:textField.superview];
 
@@ -455,6 +481,20 @@
     if (alertView.tag == 7879) {
         [self dismissModalViewControllerAnimated:YES];
     }
+}
+
+#pragma mark - Email Text Field Validation
+- (void)emailTextField_ValueChanged:(id)sender {
+    UITextField *tf = (UITextField *)sender;
+    
+    if(tf.text.length > 0 && [CPUtils validateEmailWithString:tf.text]) {
+        self.emailValidationMsg.textColor = [UIColor greenColor];
+        self.emailValidationMsg.text = @"Valid email address.";
+    }else {
+        self.emailValidationMsg.textColor = [UIColor redColor];
+        self.emailValidationMsg.text = @"Must be a valid email address!";
+        
+    }   
 }
 
 @end

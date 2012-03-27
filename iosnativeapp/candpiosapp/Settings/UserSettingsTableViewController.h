@@ -18,5 +18,7 @@
 @property (assign, nonatomic) BOOL newDataFromSync;
 @property (weak, nonatomic) IBOutlet UIButton *profileImageButton;
 @property (strong, nonatomic) UIImageView *profileImage;
+@property (strong, nonatomic) IBOutlet UILabel *emailValidationMsg;
+
 
 @end

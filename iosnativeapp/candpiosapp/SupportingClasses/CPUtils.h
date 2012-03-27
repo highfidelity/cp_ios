@@ -18,4 +18,5 @@
 
 + (NSString *)localizedDistanceStringFromMiles:(double)miles;
 
++ (BOOL)validateEmailWithString:(NSString*)email;
 @end
