@@ -57,9 +57,9 @@
     // fade in the icons to direct user attention at them
     [UIView beginAnimations:@"" context:nil];
     [UIView setAnimationDuration:0.3];
-    self.facebookLoginButton.alpha = 1.0;
+    //self.facebookLoginButton.alpha = 0.0;
     self.linkedinLoginButton.alpha = 1.0;
-    self.emailLoginButton.alpha = 1.0;        
+    //self.emailLoginButton.alpha = 0.0;        
     [UIView commitAnimations];    
 }
 
