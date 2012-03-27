@@ -23,4 +23,12 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)awakeFromNib
+{
+    [self profilePictureImageView].layer.shadowColor = [UIColor blackColor].CGColor;
+    [self profilePictureImageView].layer.shadowOffset = CGSizeMake(1, 1);
+    [self profilePictureImageView].layer.shadowOpacity = 0.5;
+    [self profilePictureImageView].layer.shadowRadius = 1.0;
+}
+
 @end

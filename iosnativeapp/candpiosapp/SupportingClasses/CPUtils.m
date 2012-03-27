@@ -74,12 +74,12 @@
         suffix = @"km";
     }
     
-    NSString *formatedDistance = [[NSNumber numberWithFloat:distance] stringValue];
-    if ([formatedDistance length] > 2 && [[formatedDistance substringToIndex:2] isEqualToString:@"0."]) {
-        formatedDistance = [formatedDistance substringFromIndex:1];
-    }
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    formatter.maximumFractionDigits = 1;
+    NSNumber *number = [NSNumber numberWithDouble:distance];
     
-    return [NSString stringWithFormat:@"%@ %@", formatedDistance, suffix];
+    return [NSString stringWithFormat:@"%@ %@", [formatter stringFromNumber:number], suffix];
 }
 
 # pragma mark Validation
