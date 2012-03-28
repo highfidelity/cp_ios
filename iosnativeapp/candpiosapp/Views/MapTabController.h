@@ -35,6 +35,9 @@
 - (void)applicationDidBecomeActive:(NSNotification *)notification;
 - (void)refreshLocations;
 - (void)refreshLocationsAfterDelay;
+- (void)refreshLocationsAfterCheckin;
+- (id)getCheckinsByGroupTag:(NSString *)groupTag;
+- (id)getCheckins;
 - (IBAction)refreshButtonClicked:(id)sender;
 - (IBAction)locateMe:(id)sender;
 - (IBAction)revealButtonPressed:(id)sender;

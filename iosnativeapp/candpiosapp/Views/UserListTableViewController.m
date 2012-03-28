@@ -16,14 +16,17 @@
 #import "CPapi.h"
 #import "SVProgressHUD.h"
 #import "CheckInDetailsViewController.h"
+#import "CPAnnotation.h"
+#import "OCAnnotation.h"
 
 @interface UserListTableViewController()
 @property BOOL venueList;
+@property id delegate;
 @end
 
 @implementation UserListTableViewController
 
-@synthesize missions, checkedInMissions, titleForList, listType, currentVenue;
+@synthesize delegate, missions, checkedInMissions, titleForList, listType, currentVenue;
 @synthesize mapBounds = _mapBounds;
 @synthesize venues = _venues;
 @synthesize venueList = _venueList;
@@ -71,6 +74,12 @@
         listType = 0;
     }
     
+    // Add a notification catcher for refreshViewOnCheckin to refresh the view
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(refreshViewOnCheckin:) 
+                                                 name:@"refreshViewOnCheckin" 
+                                               object:nil];    
+    
     self.title = self.titleForList;
     self.venueList = NO;
     
@@ -112,7 +121,49 @@
                     [SVProgressHUD dismiss];
         
     }];
+    
+    [self filterData];
+    
+}
 
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshViewOnCheckin" object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [[AppDelegate instance] showCheckInButton];
+    [super viewDidAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)filterData {
+    
     // Iterate through the passed missions and only show the ones that were within the map bounds, ordered by distance
 
     CLLocation *currentLocation = [AppDelegate instance].settings.lastKnownLocation;
@@ -192,38 +243,18 @@
         
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [[AppDelegate instance] showCheckInButton];
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (void)refreshViewOnCheckin:(NSNotification *)notification {
+    // get data based on the venue list we are viewing
+    if (self.currentVenue) {
+        missions = [self.delegate getCheckinsByGroupTag:self.currentVenue];
+    } else {
+        missions = [self.delegate getCheckins];
+    }
+    
+    // filter that data
+    [self filterData];
+    // and reload the table
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source

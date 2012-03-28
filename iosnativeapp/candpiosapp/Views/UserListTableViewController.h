@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSString *currentVenue;
 @property (nonatomic) MKMapRect mapBounds;
 
+- (void)refreshViewOnCheckin:(NSNotification *)notification;
 - (IBAction)peopleButtonClick:(UIButton *)sender;
 - (IBAction)placesButtonClick:(UIButton *)sender;
 

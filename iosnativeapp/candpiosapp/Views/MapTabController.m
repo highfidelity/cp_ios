@@ -35,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 
 -(void)refreshLocationsIfNeeded;
+-(void)refreshLocationsAfterCheckin;
 -(void)startRefreshArrowAnimation;
 -(void)stopRefreshArrowAnimation;
 -(void)checkIfUserHasDismissedLocationAlert;
@@ -54,10 +55,29 @@
 @synthesize refreshButton;
 
 BOOL clusterNow = YES;
+BOOL updateView = NO;
 BOOL bigZoomLevelChange = NO;
 BOOL zoomedIn = NO;
 BOOL zoomedOut = NO;
 BOOL clearLocations = NO;
+
+-(id)getCheckinsByGroupTag:(NSString *)groupTag {
+    NSMutableArray *checkins = [[NSMutableArray alloc] init];
+
+    for (id <MKAnnotation> annotation in dataset.annotations) {
+        CPAnnotation *thisAnnotation = (CPAnnotation *)annotation;
+            
+        if ([thisAnnotation.groupTag isEqualToString:groupTag]) {
+            [checkins addObject:thisAnnotation];
+        }
+    }
+    
+    return checkins;
+}
+
+-(id)getCheckins {
+    return fullDataset.annotations;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -92,7 +112,7 @@ BOOL clearLocations = NO;
 
     // Register to receive userCheckedIn notification to intitiate map refresh immediately after user checks in
     [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(refreshLocationsAfterDelay) 
+                                             selector:@selector(refreshLocationsAfterCheckin) 
                                                  name:@"userCheckedIn" 
                                                object:nil];
 
@@ -206,6 +226,12 @@ BOOL clearLocations = NO;
     [self refreshButtonClicked:nil];
 }
 
+- (void)refreshLocationsAfterCheckin
+{
+    updateView = YES;
+    [self refreshButtonClicked:nil];
+}
+
 -(void)refreshLocationsIfNeeded
 {
     
@@ -304,6 +330,12 @@ BOOL clearLocations = NO;
                                 // stop spinning the refresh icon and dismiss the HUD
                                 [self stopRefreshArrowAnimation];
                                 [SVProgressHUD dismiss];
+                                
+                                if (updateView) {
+                                    updateView = NO;
+                                    // send notification to list view to refresh data
+                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewOnCheckin" object:nil];
+                                }
                             }]; 
 }
 
@@ -715,13 +747,14 @@ BOOL clearLocations = NO;
         [[segue destinationViewController] setListType:0];
         [[segue destinationViewController] setCurrentVenue:nil];
         [[segue destinationViewController] setMissions: [fullDataset.annotations mutableCopy]];
+        [[segue destinationViewController] setDelegate:self];
         [[segue destinationViewController] setMapBounds:[mapView visibleMapRect]];
     }
     else if ([[segue identifier] isEqualToString:@"ShowUserClusterTable"]) {
         OCAnnotation *tappedObj = [sender annotation];
         NSArray *annotations = tappedObj.annotationsInCluster;
 
-        if (tappedObj.hasCheckins && tappedObj.groupTag) {
+        if (tappedObj.groupTag) {
             [[segue destinationViewController] setCurrentVenue:tappedObj.groupTag];            
         }
         else {
@@ -731,6 +764,7 @@ BOOL clearLocations = NO;
         [[segue destinationViewController] setTitleForList: tappedObj.title];
         [[segue destinationViewController] setListType:1];
         [[segue destinationViewController] setMissions: [annotations mutableCopy]];
+        [[segue destinationViewController] setDelegate:self];
         [[segue destinationViewController] setMapBounds:[mapView visibleMapRect]];
     }
 }
