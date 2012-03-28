@@ -1,18 +1,18 @@
 //
-//  LinkedAccountsTableViewControllerViewController.m
+//  LinkedAccountsTableViewController.m
 //  candpiosapp
 //
 //  Created by Alexi (Love Machine) on 2012/03/20.
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import "LinkedAccountsTableViewControllerViewController.h"
+#import "LinkedAccountsTableViewController.h"
 
-@interface LinkedAccountsTableViewControllerViewController ()
+@interface LinkedAccountsTableViewController ()
 
 @end
 
-@implementation LinkedAccountsTableViewControllerViewController
+@implementation LinkedAccountsTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {

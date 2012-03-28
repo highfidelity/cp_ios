@@ -1,5 +1,5 @@
 //
-//  LinkedAccountsTableViewControllerViewController.h
+//  LinkedAccountsTableViewController.h
 //  candpiosapp
 //
 //  Created by Alexi (Love Machine) on 2012/03/20.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LinkedAccountsTableViewControllerViewController : UITableViewController
+@interface LinkedAccountsTableViewController : UITableViewController
 
 - (IBAction)gearPressed;
 
