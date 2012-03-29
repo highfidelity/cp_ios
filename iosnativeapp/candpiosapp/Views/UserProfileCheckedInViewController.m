@@ -511,7 +511,7 @@
     
     // show listings as Agent in a table
     if (self.user.listingsAsAgent.count > 0) {
-        [resumeHtml addObject:@"<table><tr><th>Listing as Agent</th><th>Price</th></tr>"];
+        [resumeHtml addObject:@"<table><tr><th>Completed</th><th>Price</th></tr>"];
         for (NSDictionary *agentListing in self.user.listingsAsAgent) {
             [resumeHtml addObject:[NSString stringWithFormat:@"<tr><td class='listing'>\"%@\"</td>", [agentListing objectForKey:@"listing"]]];
             [resumeHtml addObject:[NSString stringWithFormat:@"<td class='price'>$%@</td></tr>", [agentListing objectForKey:@"price"]]];
@@ -521,7 +521,7 @@
     
     // show listings as Client in a table
     if (self.user.listingsAsClient.count > 0) {
-        [resumeHtml addObject:@"<table><tr><th>Listing as Client</th><th>Price</th></tr>"];
+        [resumeHtml addObject:@"<table><tr><th>Purchased</th><th>Price</th></tr>"];
         for (NSDictionary *clientListing in self.user.listingsAsClient) {
             [resumeHtml addObject:[NSString stringWithFormat:@"<tr><td class='listing'>\"%@\"</td>", [clientListing objectForKey:@"listing"]]];
             [resumeHtml addObject:[NSString stringWithFormat:@"<td class='price'>$%@</td></tr>", [clientListing objectForKey:@"price"]]];
