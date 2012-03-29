@@ -305,6 +305,10 @@
                 // set the NSUserDefault to the user checkout time
                 SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
                 
+                // put the foursquare ID for the venue the user is checked into in NSUserDefaults
+                // used to tell 
+                SET_DEFAULTS(Object, kUDCheckedInVenueID, self.place.foursquareID);
+                
                 // Post a notification so that the map is reloaded with the user's new checkin
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckedIn" object:nil];
 

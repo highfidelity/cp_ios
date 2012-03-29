@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
     <dependencies>
         <deployment version="1280" defaultVersion="1296" identifier="iOS"/>
         <development version="4200" defaultVersion="4200" identifier="xcode"/>
@@ -458,7 +458,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="844" y="455"/>
+            <point key="canvasLocation" x="1240" y="503"/>
         </scene>
         <!--User Profile Checked In View Controller-->
         <scene sceneID="jZa-Lm-4za">
@@ -1082,11 +1082,11 @@
             </objects>
             <point key="canvasLocation" x="1930" y="-323"/>
         </scene>
-        <!--Root Navigattion View Controller - Nearby-->
+        <!--Navigation Controller - Nearby-->
         <scene sceneID="X1z-oT-wPh">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flw-Jh-D1t" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController id="86X-eE-gGo" customClass="RootNavigattionViewController" sceneMemberID="viewController">
+                <navigationController id="86X-eE-gGo" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Nearby" id="mXd-OI-Wox"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="US3-0t-kpP">
@@ -1396,8 +1396,8 @@
                                             <rect key="frame" x="15" y="15" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Nickname Nickname Nickname Nickname Nickname Nickname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="mjY-7Y-tr1" userLabel="Nickname">
-                                            <rect key="frame" x="123" y="6" width="188" height="34"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Nickname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="mjY-7Y-tr1" userLabel="Nickname">
+                                            <rect key="frame" x="123" y="15" width="162" height="34"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="24"/>
                                             <color key="textColor" red="0.78823529411764703" green="0.78823529411764703" blue="0.78823529411764703" alpha="1" colorSpace="deviceRGB"/>
@@ -1405,25 +1405,25 @@
                                             <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="deviceRGB"/>
                                             <size key="shadowOffset" width="-1" height="-1"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="&quot;Status Status Status Status StatusStatus Status  Status Status Status&quot;" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="icM-uq-8K3" userLabel="status label">
-                                            <rect key="frame" x="123" y="61" width="188" height="34"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="&quot;Status Status Status Status Status Status&quot;" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="icM-uq-8K3" userLabel="status label">
+                                            <rect key="frame" x="123" y="61" width="177" height="34"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="12"/>
                                             <color key="textColor" red="0.76470588235294112" green="0.76470588235294112" blue="0.76470588235294112" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Checkin name Checkin name Checkin name Checkin name " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="4J4-w6-UoS" userLabel="Checkin name">
-                                            <rect key="frame" x="123" y="99" width="124" height="21"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Checkin name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="4J4-w6-UoS" userLabel="Checkin name">
+                                            <rect key="frame" x="123" y="90" width="162" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                            <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="textColor" red="0.58823529411764708" green="0.58823529411764708" blue="0.58823529411764708" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text=".5mi away" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="sre-9B-55g" userLabel="distance label">
-                                            <rect key="frame" x="245" y="99" width="68" height="21"/>
+                                            <rect key="frame" x="235" y="90" width="76" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="12"/>
-                                            <color key="textColor" red="0.58823529411764708" green="0.58823529411764708" blue="0.58823529411764708" alpha="1" colorSpace="deviceRGB"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                            <color key="textColor" red="0.85882359740000003" green="0.85882359740000003" blue="0.85882359740000003" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                         <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="46D-2C-ktR" userLabel="checkin count">
@@ -1446,11 +1446,11 @@
                                     <segue destination="L0d-87-YTQ" kind="push" identifier="ShowUserProfileCheckedInFromList" id="He7-Ay-arZ"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="VenueListCustomCell" rowHeight="129.5" id="O7p-Mr-HFT" customClass="VenueCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="VenueListCustomCell" rowHeight="129.5" id="O7p-Mr-HFT" customClass="VenueCell">
                                 <rect key="frame" x="0.0" y="187.5" width="320" height="129.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="128.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="128.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="picture-coming-soon.jpg" id="bDo-SW-xXY" userLabel="venue photo">
@@ -1463,8 +1463,8 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
                                         </view>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Venue Name Venue Name Venue Name Venue Name " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="A6S-PP-MFB">
-                                            <rect key="frame" x="122" y="6" width="189" height="34"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Venue Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="A6S-PP-MFB">
+                                            <rect key="frame" x="122" y="18" width="189" height="34"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="24"/>
                                             <color key="textColor" red="0.78823529411764703" green="0.78823529411764703" blue="0.78823529411764703" alpha="1" colorSpace="calibratedRGB"/>
@@ -1472,22 +1472,22 @@
                                             <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.48999999999999999" colorSpace="calibratedRGB"/>
                                             <size key="shadowOffset" width="-1" height="-1"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Venue AddressVenue AddressVenue AddressVenue Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="eRD-QI-7Bc">
-                                            <rect key="frame" x="122" y="48" width="189" height="17"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Venue Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="eRD-QI-7Bc">
+                                            <rect key="frame" x="122" y="49" width="189" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="13"/>
                                             <color key="textColor" red="0.58823529411764708" green="0.58823529411764708" blue="0.58823529411764708" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text=".5mi away" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="F6b-VA-Xdg">
-                                            <rect key="frame" x="238" y="102" width="77" height="17"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="venue distance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="F6b-VA-Xdg">
+                                            <rect key="frame" x="122" y="70" width="92" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="12"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                             <color key="textColor" red="0.58823529409999997" green="0.58823529409999997" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="venue Chekins" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="374-pR-Jpi">
-                                            <rect key="frame" x="122" y="66" width="130" height="23"/>
+                                            <rect key="frame" x="122" y="88" width="105" height="23"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="18"/>
                                             <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -1502,7 +1502,7 @@
                                     <outlet property="venueDistance" destination="F6b-VA-Xdg" id="gEQ-cn-hy8"/>
                                     <outlet property="venueName" destination="A6S-PP-MFB" id="Qnf-Bn-RBg"/>
                                     <outlet property="venuePicture" destination="bDo-SW-xXY" id="dIc-lx-xaK"/>
-                                    <segue destination="Hui-QQ-OPh" kind="push" identifier="ShowCheckInDetailsViewFromVenues" id="Nrg-Ga-ikG"/>
+                                    <segue destination="avM-vA-85Z" kind="push" identifier="ShowVenueInfoViewFromVenueList" id="5XR-rB-S1U"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1514,7 +1514,71 @@
                     <navigationItem key="navigationItem" id="9lv-b0-9v0"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="844" y="-458"/>
+            <point key="canvasLocation" x="476" y="-476"/>
+        </scene>
+        <!--Venue Info View Controller-->
+        <scene sceneID="ywy-VD-Ij1">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3ub-h2-Vlg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="avM-vA-85Z" customClass="VenueInfoViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dwc-zV-ofk">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="ZSR-qx-Cp6">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="WuG-rE-Ygi">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="218"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" id="rKo-Bu-abA">
+                                        <rect key="frame" x="0.0" y="217" width="320" height="199"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view tag="3548" contentMode="scaleToFill" id="87h-nO-fam">
+                                        <rect key="frame" x="0.0" y="158" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" id="KIR-Ul-K2d">
+                                                <rect key="frame" x="35" y="37" width="250" height="1"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </view>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="30" id="U01-TJ-tqr">
+                                                <rect key="frame" x="35" y="4" width="250" height="29"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                                <color key="shadowColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                                                <size key="shadowOffset" width="-1" height="-1"/>
+                                            </label>
+                                            <view tag="8014" contentMode="scaleToFill" id="qB6-Gz-RSy">
+                                                <rect key="frame" x="35" y="37" width="250" height="22"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                    </view>
+                                </subviews>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Md3-rQ-74f"/>
+                    <connections>
+                        <outlet property="scrollView" destination="ZSR-qx-Cp6" id="xZ7-Lb-crz"/>
+                        <outlet property="userSection" destination="rKo-Bu-abA" id="CX5-kC-KNY"/>
+                        <outlet property="venueName" destination="U01-TJ-tqr" id="6Q0-us-S3e"/>
+                        <outlet property="venuePhoto" destination="WuG-rE-Ygi" id="EdM-XB-Fxi"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="804" y="1061"/>
         </scene>
     </scenes>
     <resources>
@@ -1649,9 +1713,6 @@
                 <relationship kind="outlet" name="userBalance" candidateClass="UILabel"/>
             </relationships>
         </class>
-        <class className="RootNavigattionViewController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RootNavigattionViewController.h"/>
-        </class>
         <class className="TPKeyboardAvoidingScrollView" superclassName="UIScrollView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TPKeyboardAvoidingScrollView.h"/>
         </class>
@@ -1726,6 +1787,16 @@
                 <relationship kind="outlet" name="venuePicture" candidateClass="UIImageView"/>
             </relationships>
         </class>
+        <class className="VenueInfoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueInfoViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="tappedAddress:"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="userSection" candidateClass="UIView"/>
+                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venuePhoto" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
@@ -1735,6 +1806,5 @@
     <inferredMetricsTieBreakers>
         <segue reference="JVj-Fy-LMl"/>
         <segue reference="He7-Ay-arZ"/>
-        <segue reference="Nrg-Ga-ikG"/>
     </inferredMetricsTieBreakers>
 </document>

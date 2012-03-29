@@ -36,5 +36,6 @@ extern  NSString* const flurryAnalyticsKey;
 extern NSString* const kUDCurrentUser;
 extern NSString* const kUDFirstCheckIn;
 extern NSString* const kUDCheckoutTime;
+extern NSString* const kUDCheckedInVenueID;
 
 @end

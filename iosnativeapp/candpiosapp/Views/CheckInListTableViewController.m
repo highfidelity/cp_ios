@@ -135,35 +135,14 @@
                 place.lat = [[item valueForKeyPath:@"location.lat"] doubleValue];
                 place.lng = [[item valueForKeyPath:@"location.lng"] doubleValue];
                 place.phone = [[item valueForKey:@"contact"] valueForKey:@"phone"];
-                
+                place.formattedPhone = [item valueForKeyPath:@"contact.formattedPhone"];
+                                
                 if ([item valueForKey:@"categories"] && [[item valueForKey:@"categories"] count] > 0) {
                     place.icon = [[[item valueForKey:@"categories"] objectAtIndex:0] valueForKey:@"icon"];
                 }
                 else {
                     place.icon = @"";
                 }
-                
-                // Don't allow any blank fields
-                if (!place.address) {
-                    place.address = @"";
-                }
-                
-                if (!place.city) {
-                    place.city = @"";
-                }
-                
-                if (!place.state) {
-                    place.state = @"";
-                }
-                
-                if (!place.zip) {
-                    place.zip = @"";
-                }
-                
-                if (!place.phone) {
-                    place.phone = @"";
-                }
-                
                 
                 CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:place.lat longitude:place.lng];
                 place.distanceFromUser = [placeLocation distanceFromLocation:userLocation];

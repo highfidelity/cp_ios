@@ -18,6 +18,8 @@
 @synthesize _groupTag;
 @synthesize venueName;
 @synthesize nickname, status, skills, userId, distance, distanceTo, haveMet;
+@synthesize majorJobCategory;
+@synthesize minorJobCategory;
 
 -(id)initFromDictionary:(NSDictionary*)jsonDict
 {
@@ -29,6 +31,8 @@
 		skills = [jsonDict objectForKey:@"skills"];
         status = [[jsonDict objectForKey:@"status_text"]
                   stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
+        
         
         if (status && [status length] > 0) {
             self.subtitle = [NSString stringWithFormat:@"\"%@\"", status];
@@ -42,6 +46,9 @@
         } else {
             haveMet = NO;
         }
+        
+        self.majorJobCategory = [jsonDict objectForKey:@"major_job_category"];
+        self.minorJobCategory = [jsonDict objectForKey:@"minor_job_category"];
         
 		lat = [[jsonDict objectForKey:@"lat"]doubleValue];
 		lon = [[jsonDict objectForKey:@"lng"] doubleValue];

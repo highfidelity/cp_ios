@@ -56,4 +56,7 @@ typedef enum {
     clockwise:(BOOL)clockwise
  timingFunction:(CAMediaTimingFunction *)timingFunction;
 
+// App-wide Images
++ (UIImage *)defaultProfileImage;
+
 @end

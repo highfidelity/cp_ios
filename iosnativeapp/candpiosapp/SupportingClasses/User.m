@@ -163,9 +163,11 @@
             self.educationInformation = [userDict objectForKey:@"education"];        
             
             // user checkin data
+            // TODO: the information for this place has likely already been downloaded to the user's device
+            // We shouldn't need to make another request to get it here
             self.placeCheckedIn = [[CPPlace alloc] init];
             self.placeCheckedIn.foursquareID = [userDict valueForKeyPath:@"checkin_data.foursquare"];
-            self.placeCheckedIn.othersHere = [[userDict valueForKeyPath:@"checkin_data.others_here"] intValue];
+            self.placeCheckedIn.checkinCount = [[userDict valueForKeyPath:@"checkin_data.users_here"] intValue];
             self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict valueForKeyPath:@"checkin_data.checkout"] intValue]]; 
             
             // checkin history

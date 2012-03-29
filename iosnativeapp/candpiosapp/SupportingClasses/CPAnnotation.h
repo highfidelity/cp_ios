@@ -26,6 +26,8 @@
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *skills;
 @property (nonatomic, copy) NSString *status;
+@property (nonatomic, strong) NSString *majorJobCategory;
+@property (nonatomic, strong) NSString *minorJobCategory;
 @property (nonatomic) NSInteger userId;
 @property (nonatomic) double distance;
 @property (nonatomic, strong) NSString *distanceTo;

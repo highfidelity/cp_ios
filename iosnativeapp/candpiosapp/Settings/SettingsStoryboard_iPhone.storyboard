@@ -450,11 +450,11 @@
             </objects>
             <point key="canvasLocation" x="-719" y="-492"/>
         </scene>
-        <!--Linked Accounts Table View Controller View Controller - Linked Accounts-->
+        <!--Linked Accounts Table View Controller - Linked Accounts-->
         <scene sceneID="nc2-v7-E52">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SCP-Eu-ajv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController id="oag-4z-6cX" customClass="LinkedAccountsTableViewControllerViewController" sceneMemberID="viewController">
+                <tableViewController id="oag-4z-6cX" customClass="LinkedAccountsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="dVr-hq-deK">
                         <rect key="frame" x="0.0" y="64" width="320" height="372"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -752,12 +752,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ContactListViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-            </relationships>
-        </class>
-        <class className="LinkedAccountsTableViewControllerViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedAccountsTableViewControllerViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="gearPressed"/>
             </relationships>
         </class>
         <class className="SettingsMenuController" superclassName="UIViewController">

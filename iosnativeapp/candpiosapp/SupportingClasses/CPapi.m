@@ -563,6 +563,7 @@
     [parameters setValue:place.state forKey:@"state"];
     [parameters setValue:place.zip forKey:@"zip"];
     [parameters setValue:place.phone forKey:@"phone"];
+    [parameters setValue:place.formattedPhone forKey:@"formatted_phone"];
     // Don't pass the place icon - it's a dictionary and this crashes the request
     // [parameters setValue:place.icon forKey:@"icon"];
     [parameters setValue:stausText forKey:@"status"];

@@ -51,6 +51,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *chatButton;
 @property (weak, nonatomic) IBOutlet UIButton *payButton;
 @property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
+@property (nonatomic, assign) int othersAtPlace;
 
 -(void)animateVenueLoadingPoints;
 -(void)stopAnimatingVenueLoadingPoints;
@@ -98,6 +99,7 @@
 @synthesize loadingPt3 = _loadingPt3;
 @synthesize cardJobPosition = _cardJobPosition;
 @synthesize isF2FInvite = _isF2FInvite;
+@synthesize othersAtPlace = _othersAtPlace;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -345,7 +347,10 @@
             // put it on the view
             self.venueName.text = self.user.placeCheckedIn.name;
             self.venueAddress.text = self.user.placeCheckedIn.address;
-            if (self.user.placeCheckedIn.othersHere == 0) {
+            
+            self.othersAtPlace = self.user.checkedIn ? self.user.placeCheckedIn.checkinCount - 1 : self.user.placeCheckedIn.checkinCount;
+            
+            if (self.othersAtPlace == 0) {
                 // hide the little man, nobody else is here
                 [self.venueOthersIcon removeFromSuperview];
                 
@@ -358,7 +363,7 @@
                 }
             } else {
                 // otherwise put 1 other or x others here now
-                self.venueOthers.text = [NSString stringWithFormat:@"%d %@ here now", self.user.placeCheckedIn.othersHere, self.user.placeCheckedIn.othersHere == 1 ? @"other" : @"others"];
+                self.venueOthers.text = [NSString stringWithFormat:@"%d %@ here now", self.othersAtPlace, self.othersAtPlace == 1 ? @"other" : @"others"];
             }           
             // animate the display of the venueView and availabilityView
             [UIView animateWithDuration:0.4 animations:^{self.venueView.alpha = 1.0; self.availabilityView.alpha = 1.0;}];

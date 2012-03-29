@@ -49,5 +49,6 @@ NSString* const kCandPAPIVersion = @"0.1";
 NSString* const kUDCurrentUser = @"loggedUser";
 NSString* const kUDFirstCheckIn = @"firstCheckIn";
 NSString* const kUDCheckoutTime = @"localUserCheckoutTime";
+NSString* const kUDCheckedInVenueID = @"checkedInVenueID";
 
 @end

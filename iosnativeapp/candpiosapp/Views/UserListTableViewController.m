@@ -18,6 +18,7 @@
 #import "CheckInDetailsViewController.h"
 #import "CPAnnotation.h"
 #import "OCAnnotation.h"
+#import "VenueInfoViewController.h"
 
 @interface UserListTableViewController()
 @property BOOL venueList;
@@ -107,7 +108,11 @@
                                 place.name = [item valueForKey:@"name"];
                                 place.foursquareID = [item valueForKey:@"foursquare"];
                                 place.address = [item valueForKey:@"address"];
+                                place.city = [item valueForKey:@"city"];
+                                place.state = [item valueForKey:@"state"];
                                 place.photoURL = [item valueForKey:@"photo_url"];
+                                place.phone = [item valueForKey:@"phone"];
+                                place.formattedPhone = [item valueForKey:@"formatted_phone"];
                                 place.checkinCount = [[item valueForKey:@"checkins"] integerValue];
                                 place.distanceFromUser = [[item valueForKey:@"distance"] doubleValue];
                                 place.lat = [[item valueForKey:@"lat"] doubleValue];
@@ -369,7 +374,7 @@
             vcell.venueCheckins.text = @"";
         }
 
-        if (venue.photoURL) {
+        if (![venue.photoURL isKindOfClass:[NSNull class]]) {
             [vcell.venuePicture setImageWithURL:[NSURL URLWithString:venue.photoURL]
                                placeholderImage:[UIImage imageNamed:@"picture-coming-soon.jpg"]];
         } else {
@@ -506,11 +511,10 @@
     } else if ([[segue identifier] isEqualToString:@"ProfileToFace2FaceInvite"]) {
         // We're going to make a F2F invite!
         
-    } else if ([[segue identifier] isEqualToString:@"ShowCheckInDetailsViewFromVenues"]) {
+    } else if ([[segue identifier] isEqualToString:@"ShowVenueInfoViewFromVenueList"]) {
         // give place info to the CheckInDetailsViewController
         CPPlace *place = [[self venues] objectAtIndex:indexPath.row];
-        [[segue destinationViewController] setPlace:place];
-        
+        [[segue destinationViewController] setVenue:place];
     }
 }
 

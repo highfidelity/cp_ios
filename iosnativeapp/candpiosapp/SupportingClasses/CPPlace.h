@@ -10,10 +10,11 @@
 @property (nonatomic, strong) NSString *state;
 @property (nonatomic, strong) NSString *zip;
 @property (nonatomic, strong) NSString *phone;
+@property (nonatomic, strong) NSString *formattedPhone;
 @property (nonatomic, strong) NSString *photoURL;
 @property (nonatomic, assign) double lat;
 @property (nonatomic, assign) double lng;
-@property (nonatomic, assign) int othersHere;
+@property (nonatomic, readonly) int othersHere;
 @property (nonatomic, assign) double distanceFromUser;
 @property (nonatomic) int checkinCount;
 @property (nonatomic, readonly) NSString *formattedAddress;
