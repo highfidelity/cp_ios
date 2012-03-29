@@ -493,7 +493,7 @@ BOOL clearLocations = NO;
             }
                         
             if (!image) {
-                image = [UIImage imageNamed:@"defaultAvatar25"];
+                image = [CPUIHelper defaultProfileImage];
             }
         }
         else {

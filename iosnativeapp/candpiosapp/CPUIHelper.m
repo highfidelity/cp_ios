@@ -158,14 +158,12 @@
 }     
 
 #pragma mark - App-wide images
-// TODO: Always grab the profile image from here and then just change the UIImageView frame so it's the right size. We don't need defaultAvatar25 and defaultAvatar50
-// rename the image so it reflects the actual dimensions (it's currently 128x128) once the others are gone
 
 // returns a UIImage with our default profile pic
-// might need to be changed a to larger version if used somewhere that frame is larger than 128x128
+// might need to be changed a to larger version if used somewhere that frame is larger than 256x256
 + (UIImage *)defaultProfileImage
 {
-    return [UIImage imageNamed:@"default-avatar-512"];
+    return [UIImage imageNamed:@"default-avatar-256"];
 }
 
 

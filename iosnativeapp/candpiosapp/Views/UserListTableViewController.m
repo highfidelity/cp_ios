@@ -436,11 +436,11 @@
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         
         [imageView setImageWithURL:[NSURL URLWithString:annotation.imageUrl]
-                       placeholderImage:[UIImage imageNamed:@"defaultAvatar50"]];
+                       placeholderImage:[CPUIHelper defaultProfileImage]];
     }
     else
     {
-        imageView.image = [UIImage imageNamed:@"defaultAvatar50"];
+        imageView.image = [CPUIHelper defaultProfileImage];
     }
     
     return cell;

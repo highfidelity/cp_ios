@@ -408,7 +408,7 @@
                 // once it gets requested once it will be cached
                 if ([imageUrl isKindOfClass:[NSNull class]]) {
                     // no user image so use the default avatar
-                    [userImage setImage:[UIImage imageNamed:@"defaultAvatar50"]];
+                    [userImage setImage:[CPUIHelper defaultProfileImage]];
                     [spinner stopAnimating]; 
                 } else {
                     // setup the request for the user's image, use AFNetworking to grab it

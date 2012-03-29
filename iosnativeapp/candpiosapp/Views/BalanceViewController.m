@@ -290,10 +290,10 @@
         
         [[cell profileImage] setContentMode:UIViewContentModeScaleAspectFill];
         [[cell profileImage] setImageWithURL:[NSURL URLWithString:[transaction objectForKey:@"thumbnail"]] 
-                            placeholderImage:[UIImage imageNamed:@"defaultAvatar25"]];
+                            placeholderImage:[CPUIHelper defaultProfileImage]];
     }
     else {
-        [[cell profileImage] setImage:[UIImage imageNamed:@"defaultAvatar25"]];
+        [[cell profileImage] setImage:[CPUIHelper defaultProfileImage]];
     }
     
     UIView *myBackView = [[UIView alloc] initWithFrame:cell.frame];
