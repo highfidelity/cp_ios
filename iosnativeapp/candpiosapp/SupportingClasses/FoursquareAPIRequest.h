@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import "AFNetworking.h"
 
 @interface FoursquareAPIRequest: NSObject
 
@@ -16,5 +17,8 @@
 
 +(void)getVenuesCloseToLocation:(CLLocation *)location 
                                :(void (^)(NSDictionary *dict, NSError *error))completion;
+
++(void)addNewPlace:(NSString *)name atLocation:(CLLocation *)location
+                  :(void (^)(NSDictionary *dict, NSError *error))completion;
 
 @end

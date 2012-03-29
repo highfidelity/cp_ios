@@ -15,7 +15,9 @@
 #import "CPUtils.h"
 #import "FoursquareAPIRequest.h"
 
-@implementation CheckInListTableViewController
+@implementation CheckInListTableViewController {
+    UIAlertView *addPlaceAlertView;
+}
 
 @synthesize places, refreshLocationsNow;
 
@@ -154,7 +156,7 @@
             
             // add a custom place so people can checkin if foursquare doesn't have the venue
             CPPlace *place = [[CPPlace alloc] init];
-            place.name = @"Place not listed...";
+            place.name = @"Add Place...";
             place.foursquareID = @"0";
             
             CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
@@ -226,8 +228,17 @@
 {
 
     if ([CPAppDelegate currentUser].userID) {
-        // segue to CheckInDetailsViewController
-        [self performSegueWithIdentifier:@"ShowCheckInDetailsView" sender:self];
+        // If the item selected is the last in the list, prompt user to add a new venuen
+        if (indexPath.row == places.count - 1) {
+            addPlaceAlertView = [[UIAlertView alloc] initWithTitle:@"Name of New Place" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
+            addPlaceAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+            [[addPlaceAlertView textFieldAtIndex:0] setDelegate:self];
+            [addPlaceAlertView show];
+            return;
+        }
+        else {
+            [self performSegueWithIdentifier:@"ShowCheckInDetailsView" sender:self];            
+        }
     }
     else {
         // Tell the user they aren't logged in and show them the Signup Page
@@ -263,4 +274,70 @@
         
     }
 }
+
+# pragma mark - AlertView
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *name = [alertView textFieldAtIndex:0].text;
+    
+    // Check for a valid name, otherwise cancel the Add Place request
+    if (buttonIndex == 1) {
+        [self addNewPlace:name];
+    }
+    else {
+        [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    
+    NSLog(@"text: %@", textField.text);
+    [addPlaceAlertView dismissWithClickedButtonIndex:1 animated:YES];
+    [self addNewPlace:textField.text];
+    return YES;
+}
+
+- (void)addNewPlace:(NSString *)name {
+	[SVProgressHUD showWithStatus:@"Saving new place..."];
+
+    CPPlace *place = [places objectAtIndex:[self.tableView indexPathForSelectedRow].row];
+    place.name = name;
+    
+    // Send Add request to Foursquare and use the new Venue ID here
+    
+    CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
+    [FoursquareAPIRequest addNewPlace:name atLocation:location :^(NSDictionary *json, NSError *error){
+        // Do error checking here, in case Foursquare is down
+        if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
+#if DEBUG
+            NSLog(@"JSON returned: %@", [json description]);
+#endif
+            
+            NSString *venueID = [json valueForKeyPath:@"response.venue.id"];
+            
+            place.foursquareID = venueID;
+        }
+        else if ([[json valueForKeyPath:@"meta.code"] intValue] == 409) {
+            // 409 means a duplicate was found, use the id from the duplicate; if you really want to get fancy, show a list of all possible dupes but that's overkill for now
+
+            NSArray *venues = [json valueForKeyPath:@"response.candidateDuplicateVenues"];
+            
+            NSString *venueID = [[venues objectAtIndex:0] objectForKey:@"id"];
+
+            place.foursquareID = venueID;
+        }
+        else {
+            // Error encountered, but let the user check in anyhow and use a randomly generated ID so that it will still be tracked internally
+            place.foursquareID = [NSString stringWithFormat:@"CandP%@", [[NSProcessInfo processInfo] globallyUniqueString]];
+
+            NSLog(@"Error encountered while adding venue to Foursquare");
+        }
+        
+        [SVProgressHUD dismiss];
+        
+        [self performSegueWithIdentifier:@"ShowCheckInDetailsView" sender:self];
+    }];    
+}
+
 @end

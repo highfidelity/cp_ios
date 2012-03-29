@@ -40,6 +40,7 @@
 // Checkin functions
 + (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID
                                        :(void(^)(NSDictionary *json, NSError *error))completion; 
+
 + (void)checkInToLocation:(CPPlace *)place
               checkInTime:(NSInteger)checkInTime
              checkOutTime:(NSInteger)checkOutTime

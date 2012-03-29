@@ -66,4 +66,34 @@
     [queue addOperation:operation];
 }
 
++(void)addNewPlace:(NSString *)name atLocation:(CLLocation *)location
+                  :(void (^)(NSDictionary *dict, NSError *error))completion
+{
+    AFHTTPClient *httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://api.foursquare.com/v2/venues/"]];
+
+    NSMutableDictionary *requestParams = [NSMutableDictionary dictionary];
+    [requestParams setObject:name forKey:@"name"];
+    [requestParams setObject:[NSString stringWithFormat:@"%f,%f", location.coordinate.latitude, location.coordinate.longitude] forKey:@"ll"];
+    [requestParams setObject:OAUTH_TOKEN forKey:@"oauth_token"];
+    [requestParams setObject:@"20120208" forKey:@"v"];
+    
+    NSLog(@"params: %@", requestParams);
+    
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"add" parameters:requestParams];
+    
+    // set up an AFJSONRequestOperation with the NSURLRequest
+    // call the completion function passed as a block by the caller
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        if(completion)
+            completion(JSON, nil); 
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        if(completion)
+            completion(JSON, error); 
+    }];
+    
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [queue addOperation:operation];
+}
+
 @end

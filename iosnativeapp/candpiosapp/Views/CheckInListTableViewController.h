@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CheckInListTableViewController : UITableViewController {
+@interface CheckInListTableViewController : UITableViewController <UIAlertViewDelegate, UITextFieldDelegate> {
     NSMutableArray *places;
 }
 
