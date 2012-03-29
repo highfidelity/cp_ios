@@ -15,6 +15,17 @@
 
 @interface VenueInfoViewController () <UIAlertViewDelegate>
 - (IBAction)tappedAddress:(id)sender;
+- (IBAction)tappedPhone:(id)sender;
+- (void)populateUserSection;
+- (void)addUserAnnotation:(CPAnnotation *)userAnnotation
+    toArrayForJobCategory:(NSString *)jobCategory;
+- (UIView *)categoryViewForCurrentUserCategory:(NSString *)category
+                                   withYOrigin:(CGFloat)yOrigin;
+- (UIView *)viewForPreviousUsersWithYOrigin:(CGFloat)yOrigin;
+- (void)stylingForUserBox:(UIView *)userBox
+                withTitle:(NSString *)titleString;
+- (void)checkInPressed:(id)sender;
+
 
 @end
 
@@ -32,7 +43,7 @@
 @synthesize usersShown = _usersShown;
 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil  tbundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibNameOrNil  bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
