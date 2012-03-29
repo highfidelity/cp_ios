@@ -235,6 +235,7 @@
 		6FC4EF10151928BC003C63A5 /* LinkedAccountsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FC4EF0F151928BC003C63A5 /* LinkedAccountsTableViewController.m */; };
 		6FEEDFFC14E103F400861CA1 /* CPapi.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FEEDFFB14E103F400861CA1 /* CPapi.m */; };
 		6FF5891F14FEE7E300EFDB56 /* ChatMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FF5891E14FEE7E300EFDB56 /* ChatMessageCell.m */; };
+		7EDDADDD1523D0DD00A63A8A /* ReviewUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EDDADDC1523D0DD00A63A8A /* ReviewUserViewController.m */; };
 		870835F814B3E1AC00439431 /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E014B3E1AB00439431 /* Facebook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		870835F914B3E1AC00439431 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 870835E314B3E1AB00439431 /* FBDialog.bundle */; };
 		870835FA14B3E1AC00439431 /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E514B3E1AB00439431 /* FBDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -703,6 +704,8 @@
 		6FEEDFFB14E103F400861CA1 /* CPapi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPapi.m; path = SupportingClasses/CPapi.m; sourceTree = "<group>"; };
 		6FF5891D14FEE7E300EFDB56 /* ChatMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatMessageCell.h; path = candpiosapp/Chat/ChatMessageCell.h; sourceTree = SOURCE_ROOT; };
 		6FF5891E14FEE7E300EFDB56 /* ChatMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatMessageCell.m; path = candpiosapp/Chat/ChatMessageCell.m; sourceTree = SOURCE_ROOT; };
+		7EDDADDB1523D0DD00A63A8A /* ReviewUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReviewUserViewController.h; path = Views/ReviewUserViewController.h; sourceTree = "<group>"; };
+		7EDDADDC1523D0DD00A63A8A /* ReviewUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReviewUserViewController.m; path = Views/ReviewUserViewController.m; sourceTree = "<group>"; };
 		870835DF14B3E1AB00439431 /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
 		870835E014B3E1AB00439431 /* Facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Facebook.m; sourceTree = "<group>"; };
 		870835E214B3E1AB00439431 /* FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBConnect.h; sourceTree = "<group>"; };
@@ -1228,6 +1231,8 @@
 				32C762F714BEB48500FE25E4 /* UserListTableViewController.m */,
 				E4E16DA414DDEF26004E4584 /* UserProfileCheckedInViewController.h */,
 				E4E16DA414DDEF26004E4585 /* UserProfileCheckedInViewController.m */,
+				7EDDADDB1523D0DD00A63A8A /* ReviewUserViewController.h */,
+				7EDDADDC1523D0DD00A63A8A /* ReviewUserViewController.m */,
 				5390190314D9D9AF0052100B /* User.h */,
 				5390190414D9D9AF0052100B /* User.m */,
 			);
@@ -2349,6 +2354,7 @@
 				6FC4EF10151928BC003C63A5 /* LinkedAccountsTableViewController.m in Sources */,
 				E48C32B6151A7C3600A98427 /* VenueCell.m in Sources */,
 				E4E07315151FABF40062B67A /* RootNavigattionViewController.m in Sources */,
+				7EDDADDD1523D0DD00A63A8A /* ReviewUserViewController.m in Sources */,
 				536493361520F0F8006B39E8 /* VenueInfoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

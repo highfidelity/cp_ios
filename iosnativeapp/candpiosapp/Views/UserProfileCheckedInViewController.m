@@ -50,6 +50,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *f2fButton;
 @property (weak, nonatomic) IBOutlet UIButton *chatButton;
 @property (weak, nonatomic) IBOutlet UIButton *payButton;
+@property (weak, nonatomic) IBOutlet UIButton *reviewButton;
 @property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
 @property (nonatomic, assign) int othersAtPlace;
 
@@ -93,6 +94,7 @@
 @synthesize f2fButton = _f2fButton;
 @synthesize chatButton = _chatButton;
 @synthesize payButton = _payButton;
+@synthesize reviewButton = _reviewButton;
 @synthesize goMenuBackground = _goMenuBackground;
 @synthesize loadingPt1 = _loadingPt1;
 @synthesize loadingPt2 = _loadingPt2;
@@ -253,6 +255,7 @@
     [self setF2fButton:nil];
     [self setChatButton:nil];
     [self setPayButton:nil];
+    [self setReviewButton:nil];
     [self setGoMenuBackground:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -491,6 +494,8 @@
             
             if ([[review objectForKey:@"rating"] intValue] == -1) {
                 ratingImg = @"thumbs-down.png";
+            } else if ([[review objectForKey:@"is_love"] intValue] == 1) {
+                ratingImg = @"vector-lock.png";
             }
             
             [resumeHtml addObject:[NSString 
@@ -590,6 +595,7 @@
     } completion:NULL];
     // animation of menu buttons shooting out
     [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
+        self.reviewButton.transform = CGAffineTransformMakeTranslation(0, -135);
         self.f2fButton.transform = CGAffineTransformMakeTranslation(0, -165);
         self.chatButton.transform = CGAffineTransformMakeTranslation(0, -110);
         self.payButton.transform = CGAffineTransformMakeTranslation(0, -55);
@@ -615,6 +621,7 @@
         self.f2fButton.transform = CGAffineTransformMakeTranslation(0, 0);
         self.chatButton.transform = CGAffineTransformMakeTranslation(0, 0);
         self.payButton.transform = CGAffineTransformMakeTranslation(0, 0);
+        self.reviewButton.transform = CGAffineTransformMakeTranslation(0, 0);
         self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, 0);
     } completion:^(BOOL finished){
         [self.view viewWithTag:1005].userInteractionEnabled = NO;
@@ -640,6 +647,11 @@
     {
         [[segue destinationViewController] setUser:self.user];
         [self minusButtonPressed:nil];        
+    }
+    else if ([[segue identifier] isEqualToString:@"ProfileToReviewSegue"])
+    {
+        [[segue destinationViewController] setUser:self.user];
+        [self minusButtonPressed:nil];
     }
 }
 

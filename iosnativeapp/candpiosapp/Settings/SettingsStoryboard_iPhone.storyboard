@@ -516,7 +516,7 @@
         <scene sceneID="LYN-xf-xk9">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9ev-4H-Jox" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="f1M-sl-xRX" customClass="AddFundsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddFundsViewController" id="f1M-sl-xRX" customClass="AddFundsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fXC-pE-Ejf">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
