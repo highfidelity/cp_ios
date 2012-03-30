@@ -16,7 +16,7 @@
 @interface VenueInfoViewController () <UIAlertViewDelegate>
 - (IBAction)tappedAddress:(id)sender;
 - (IBAction)tappedPhone:(id)sender;
-- (void)populateUserSection;
+- (void)populateUserSection:(NSNotification *)notification;
 - (void)addUserAnnotation:(CPAnnotation *)userAnnotation
     toArrayForJobCategory:(NSString *)jobCategory;
 - (UIView *)categoryViewForCurrentUserCategory:(NSString *)category
@@ -132,7 +132,7 @@
     // put the texture in the bottom view
     self.userSection.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-first-aid-kit"]];
     
-    [self populateUserSection];
+    [self populateUserSection:nil];
 }
 
 - (void)viewDidUnload
@@ -149,8 +149,13 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)populateUserSection
+- (void)populateUserSection:(NSNotification *)notification
 {
+    // clear out the current user section
+    for (UIView *subview in [self.userSection subviews]) {
+        [subview removeFromSuperview];
+    }
+    
     // this is where we add the users and the check in button to the bottom of the scroll view
     
     // grab the user data by calling a delegate method on the map and grabbing the data from there
@@ -291,7 +296,9 @@
     
     [self stylingForUserBox:categoryView withTitle:[category capitalizedString]];
     
-    UIScrollView *usersScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 29, categoryView.frame.size.width, 71)];
+    CGFloat thumbnailDim = 71;
+    
+    UIScrollView *usersScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 29, categoryView.frame.size.width, thumbnailDim)];
     
     // add the scroll view to the category box
     [categoryView addSubview:usersScrollView];
@@ -299,7 +306,7 @@
     CGFloat xOffset = 10;
     for (CPAnnotation *userAnnotation in [self.currentUsers objectForKey:category]) {
         // setup an imageview for the user thumbnail
-        UIImageView *userThumb = [[UIImageView alloc] initWithFrame:CGRectMake(xOffset, 0, 71, 71)];
+        UIImageView *userThumb = [[UIImageView alloc] initWithFrame:CGRectMake(xOffset, 0, thumbnailDim, thumbnailDim)];
         
         [userThumb setImageWithURL:[NSURL URLWithString:userAnnotation.imageUrl] placeholderImage:[CPUIHelper defaultProfileImage]];
         
@@ -312,6 +319,23 @@
         // add this user to the usersShown set so we know we have them
         [self.usersShown addObject:[NSNumber numberWithInt:userAnnotation.userId]];
     }
+    
+    // set the content size on the scrollview
+    CGFloat newWidth = [[self.currentUsers objectForKey:category] count] * (thumbnailDim + 10) + 20;
+    usersScrollView.contentSize = CGSizeMake(newWidth, usersScrollView.contentSize.height);
+    usersScrollView.showsHorizontalScrollIndicator = NO;
+    
+    // gradient on the right side of the scrollview
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = CGRectMake(usersScrollView.frame.size.width - 20, usersScrollView.frame.origin.y, 20, usersScrollView.frame.size.height);
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:0.0] CGColor],
+                       (id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:0.9] CGColor],
+                       (id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:1.0] CGColor],
+                       nil];
+    [gradient setStartPoint:CGPointMake(0.0, 0.5)];
+    [gradient setEndPoint:CGPointMake(1.0, 0.5)];
+    gradient.locations = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:0.30], [NSNumber numberWithFloat:1.0], nil];
+//    [categoryView.layer addSublayer:gradient];
         
     // return the view
     return categoryView;
@@ -425,15 +449,30 @@
 
 - (void)checkInPressed:(id)sender
 {
-    // need to display this modally
-    // commented for now
-    //    [self performSegueWithIdentifier:@"ShowCheckInViewControllerFromVenue" sender:self];
+    // show check in details screen modally
+    [self performSegueWithIdentifier:@"ShowCheckInViewControllerFromVenue" sender:self];
+}
+
+- (void)cancelCheckinModal
+{
+    [self.modalViewController dismissModalViewControllerAnimated:YES];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"ShowCheckInViewControllerFromVenue"]) {
         [[segue destinationViewController] setPlace:self.venue];
+        
+        // give the CheckInDetailsViewController a top bar it won't have otherwise
+        UINavigationBar *topBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+        [[[segue destinationViewController] view] addSubview:topBar];
+        
+        // put a UINavigationItem on the UINavigationBar
+        [topBar pushNavigationItem:[[UINavigationItem alloc] initWithTitle:self.venue.name] animated:NO];
+        topBar.topItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelCheckinModal)];
+        
+        // set the title of the navigation item
+        topBar.topItem.title = self.venue.name;
     }
 }
 
