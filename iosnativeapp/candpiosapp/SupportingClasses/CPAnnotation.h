@@ -22,7 +22,7 @@
 @property (nonatomic, copy) NSString *objectId;
 @property (nonatomic, copy) NSString *_groupTag;
 @property (nonatomic, copy) NSString *venueName;
-
+@property (nonatomic, strong) NSString *headline;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *skills;
 @property (nonatomic, copy) NSString *status;

@@ -301,7 +301,7 @@
 {
     UIView *categoryView = [[UIView alloc] initWithFrame:CGRectMake(10, yOrigin, self.view.frame.size.width - 20, 113)]; 
     
-    [self stylingForUserBox:categoryView withTitle:[category capitalizedString] forCheckedInUsers:YES];
+    [self stylingForUserBox:categoryView withTitle:category forCheckedInUsers:YES];
     
     CGFloat thumbnailDim = 71;
     
@@ -382,8 +382,8 @@
             [previousUsersView addSubview:userName];
             
             // label for user headline
-            UILabel *userHeadline = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, yOffset + 26, maxLabelWidth, 20)];
-            userHeadline.text = userAnnotation.skills;
+            UILabel *userHeadline = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, yOffset + 27, maxLabelWidth, 20)];
+            userHeadline.text = userAnnotation.headline;
             
             // label for number of checkins
             UILabel *userCheckins = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, yOffset + 43, maxLabelWidth, 20)];
@@ -439,7 +439,12 @@
     
     // setup the label for the top of the category
     UILabel *categoryLabel = [[UILabel alloc] init];
-    categoryLabel.text = titleString;
+    if (isCurrentUserBox) {
+        categoryLabel.text = [titleString capitalizedString];
+    } else {
+        categoryLabel.text = titleString;
+    }
+    
     
     // font styling
     [CPUIHelper changeFontForLabel:categoryLabel toLeagueGothicOfSize:18];
@@ -452,6 +457,33 @@
     
     // add the category label to the view
     [userBox addSubview:categoryLabel];   
+    
+    // if this is a box for currently checked in users then we have a number of checked in users to show
+    if (isCurrentUserBox) {
+        
+        // setup the label using the frame of the category label
+        UILabel *userCount = [[UILabel alloc] initWithFrame:categoryLabel.frame];
+        CGRect countFrame = userCount.frame;
+        
+        // put it to the right of the category label
+        countFrame.origin.x = categoryLabel.frame.origin.x + categoryLabel.frame.size.width + 2;
+        
+        // set the text and text styling
+        userCount.text = [NSString stringWithFormat:@"- %@", [self.categoryCount objectForKey:titleString]];
+        userCount.backgroundColor = [UIColor clearColor];
+        userCount.textColor = [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1.0];
+        userCount.font = categoryLabel.font;
+        
+        // size to fit the label
+        CGSize countSize = [userCount.text sizeWithFont:userCount.font];
+        countFrame.size = countSize;
+        
+        // set the frame on the count
+        userCount.frame =  countFrame;
+        
+        // add the count to the userBox view
+        [userBox addSubview:userCount];
+    }
 }
 
 

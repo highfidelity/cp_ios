@@ -7,6 +7,7 @@
 //
 
 #import "CPAnnotation.h"
+#import "NSString+HTML.h"
 
 @implementation CPAnnotation
 @synthesize lat,lon;
@@ -17,6 +18,7 @@
 @synthesize checkinCount;
 @synthesize _groupTag;
 @synthesize venueName;
+@synthesize headline;
 @synthesize nickname, status, skills, userId, distance, distanceTo, haveMet;
 @synthesize majorJobCategory;
 @synthesize minorJobCategory;
@@ -32,11 +34,14 @@
         status = [[jsonDict objectForKey:@"status_text"]
                   stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
+        headline = [jsonDict objectForKey:@"headline"];
         
-        if ([skills isKindOfClass:[NSNull class]]) {
-            self.skills = @"";
-        }
-        
+        if ([headline isKindOfClass:[NSNull class]]) {
+            headline = @"";
+        } else {
+            headline = [headline stringByDecodingHTMLEntities];
+        }       
+    
         if (status && [status length] > 0) {
             self.subtitle = [NSString stringWithFormat:@"\"%@\"", status];
         } else {
