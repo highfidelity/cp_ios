@@ -33,6 +33,9 @@
                   stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
         
+        if ([skills isKindOfClass:[NSNull class]]) {
+            self.skills = @"";
+        }
         
         if (status && [status length] > 0) {
             self.subtitle = [NSString stringWithFormat:@"\"%@\"", status];
