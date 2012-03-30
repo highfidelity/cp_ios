@@ -495,7 +495,7 @@
             if ([[review objectForKey:@"rating"] intValue] == -1) {
                 ratingImg = @"thumbs-down.png";
             } else if ([[review objectForKey:@"is_love"] intValue] == 1) {
-                ratingImg = @"vector-lock.png";
+                ratingImg = @"send-love.png";
             }
             
             [resumeHtml addObject:[NSString 

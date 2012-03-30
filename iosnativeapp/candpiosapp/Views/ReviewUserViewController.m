@@ -153,7 +153,7 @@ BOOL hasBalance = NO;
         else {
 
 
-            NSString *message = [NSString stringWithFormat:@"Made review of %@", self.user.nickname];
+            NSString *message = [NSString stringWithFormat:@"Love sent successfully", self.user.nickname];
             
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Transaction"
                                                                 message:message
