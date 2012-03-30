@@ -288,11 +288,10 @@
                     [[UIApplication sharedApplication] cancelAllLocalNotifications];
                     
                     localNotif.alertBody = @"You will be checked out of C&P in 5 min.";
-                    localNotif.alertAction = @"Check In";
+                    localNotif.alertAction = @"Check Out";
                     localNotif.soundName = UILocalNotificationDefaultSoundName;
                     
                     localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkOutTime - minutesBefore * 60)];
-                    //        localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkInTime + 10)];
                     localNotif.timeZone = [NSTimeZone defaultTimeZone];
                     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
                 }
@@ -301,16 +300,13 @@
                     // use the define in CPConstants to say that the user has now done their first checkin
                     SET_DEFAULTS(Bool, kUDFirstCheckIn, YES);
                 }
-                
+                [[AppDelegate instance] setCheckedOut];
                 // set the NSUserDefault to the user checkout time
                 SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
                 
                 // put the foursquare ID for the venue the user is checked into in NSUserDefaults
                 // used to tell 
                 SET_DEFAULTS(Object, kUDCheckedInVenueID, self.place.foursquareID);
-                
-                // Post a notification so that the map is reloaded with the user's new checkin
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckedIn" object:nil];
 
                 [[AppDelegate instance] refreshCheckInButton];
                 

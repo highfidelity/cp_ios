@@ -401,9 +401,7 @@
             [SVProgressHUD dismiss];
             if (!error && !respError) {
                 [[UIApplication sharedApplication] cancelAllLocalNotifications];
-                NSInteger checkOutTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
-                SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckedIn" object:nil];
+                [[AppDelegate instance] setCheckedOut];
             } else {
                 
                  
@@ -420,7 +418,6 @@
                                       otherButtonTitles: nil];
                 [alert show];
             }
-            [[AppDelegate instance] refreshCheckInButton];
         }];
     }
     alertView = nil;

@@ -31,6 +31,7 @@
 @property (strong, nonatomic) SettingsMenuController *settingsMenuController;
 @property (strong, nonatomic) UINavigationController *rootNavigationController;
 @property (readonly) BOOL userCheckedIn;
+@property (strong) NSTimer *checkOutTimer;
            
 -(void)saveSettings;
 +(AppDelegate *)instance;
@@ -41,6 +42,7 @@
 -(void)hideCheckInButton;
 -(void)showCheckInButton;
 - (void)refreshCheckInButton;
+- (void)setCheckedOut;
 -(void)startCheckInClockHandAnimation;
 -(void)stopCheckInClockHandAnimation;
 void uncaughtExceptionHandler(NSException *exception);

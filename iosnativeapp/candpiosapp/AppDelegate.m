@@ -31,6 +31,7 @@
 @synthesize settingsMenuController;
 @synthesize rootNavigationController;
 @synthesize userCheckedIn = _userCheckedIn;
+@synthesize checkOutTimer = _checkOutTimer;
 
 // TODO: Store what we're storing now in settings in NSUSERDefaults
 // Why make our own class when there's an iOS Api for this?
@@ -147,6 +148,18 @@
             [checkInButton setBackgroundImage:[UIImage imageNamed:@"check-in.png"] forState:UIControlStateNormal];
             [[checkInButton viewWithTag:903] setHidden:NO];
         }
+    }
+}
+
+- (void)setCheckedOut
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckedIn" object:nil];
+    NSInteger checkOutTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
+    SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
+    [self refreshCheckInButton];
+    if (self.checkOutTimer != nil) {
+        [[self checkOutTimer] invalidate];
+        self.checkOutTimer = nil;   
     }
 }
 
@@ -365,8 +378,16 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 - (void)application:(UIApplication *)app
 didReceiveLocalNotification:(UILocalNotification *)notif
 {
-    [self.rootNavigationController performSegueWithIdentifier:@"ShowCheckInListTable"
-                                                        sender:self];
+    if (notif.alertAction = @"Check Out") {
+        [AppDelegate instance].checkOutTimer = [NSTimer scheduledTimerWithTimeInterval:300
+                                                                                target:self
+                                                                              selector:@selector(setCheckedOut) 
+                                                                              userInfo:nil 
+                                                                               repeats:NO];
+        
+        [self.rootNavigationController performSegueWithIdentifier:@"ShowCheckInListTable"
+                                                           sender:self]; 
+    }
 }
 
 // Handle PUSH notifications while the app is running
