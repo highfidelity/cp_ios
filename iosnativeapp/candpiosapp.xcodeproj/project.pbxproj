@@ -236,6 +236,8 @@
 		6FEEDFFC14E103F400861CA1 /* CPapi.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FEEDFFB14E103F400861CA1 /* CPapi.m */; };
 		6FF5891F14FEE7E300EFDB56 /* ChatMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FF5891E14FEE7E300EFDB56 /* ChatMessageCell.m */; };
 		7EDDADDD1523D0DD00A63A8A /* ReviewUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EDDADDC1523D0DD00A63A8A /* ReviewUserViewController.m */; };
+		7EFFADAE152543A0002DB9D0 /* send-love.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EFFADAC152543A0002DB9D0 /* send-love.png */; };
+		7EFFADAF152543A0002DB9D0 /* send-love@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EFFADAD152543A0002DB9D0 /* send-love@2x.png */; };
 		870835F814B3E1AC00439431 /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E014B3E1AB00439431 /* Facebook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		870835F914B3E1AC00439431 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 870835E314B3E1AB00439431 /* FBDialog.bundle */; };
 		870835FA14B3E1AC00439431 /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 870835E514B3E1AB00439431 /* FBDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -706,6 +708,8 @@
 		6FF5891E14FEE7E300EFDB56 /* ChatMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatMessageCell.m; path = candpiosapp/Chat/ChatMessageCell.m; sourceTree = SOURCE_ROOT; };
 		7EDDADDB1523D0DD00A63A8A /* ReviewUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReviewUserViewController.h; path = Views/ReviewUserViewController.h; sourceTree = "<group>"; };
 		7EDDADDC1523D0DD00A63A8A /* ReviewUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReviewUserViewController.m; path = Views/ReviewUserViewController.m; sourceTree = "<group>"; };
+		7EFFADAC152543A0002DB9D0 /* send-love.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-love.png"; path = "images/send-love.png"; sourceTree = "<group>"; };
+		7EFFADAD152543A0002DB9D0 /* send-love@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-love@2x.png"; path = "images/send-love@2x.png"; sourceTree = "<group>"; };
 		870835DF14B3E1AB00439431 /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
 		870835E014B3E1AB00439431 /* Facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Facebook.m; sourceTree = "<group>"; };
 		870835E214B3E1AB00439431 /* FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBConnect.h; sourceTree = "<group>"; };
@@ -1242,6 +1246,8 @@
 		536DE929150170BB00794650 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				7EFFADAC152543A0002DB9D0 /* send-love.png */,
+				7EFFADAD152543A0002DB9D0 /* send-love@2x.png */,
 				533AFECC1523E87200D6E6A9 /* default-avatar-256.png */,
 				533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */,
 				539B3DC715029D720017BACB /* thumbs-down.png */,
@@ -2197,6 +2203,8 @@
 				5332FB42152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg in Resources */,
 				533AFECE1523E87200D6E6A9 /* default-avatar-256.png in Resources */,
 				533AFECF1523E87200D6E6A9 /* default-avatar-256@2x.png in Resources */,
+				7EFFADAE152543A0002DB9D0 /* send-love.png in Resources */,
+				7EFFADAF152543A0002DB9D0 /* send-love@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

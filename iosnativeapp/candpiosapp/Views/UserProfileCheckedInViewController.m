@@ -595,11 +595,11 @@
     } completion:NULL];
     // animation of menu buttons shooting out
     [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
-        self.reviewButton.transform = CGAffineTransformMakeTranslation(0, -135);
+        self.reviewButton.transform = CGAffineTransformMakeTranslation(0, -220);
         self.f2fButton.transform = CGAffineTransformMakeTranslation(0, -165);
         self.chatButton.transform = CGAffineTransformMakeTranslation(0, -110);
         self.payButton.transform = CGAffineTransformMakeTranslation(0, -55);
-        self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, -165);
+        self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, -220);
     } completion:^(BOOL finished){
         [self.view viewWithTag:1005].userInteractionEnabled = YES;
     }];
