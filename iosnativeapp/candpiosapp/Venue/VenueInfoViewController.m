@@ -16,14 +16,21 @@
 @interface VenueInfoViewController () <UIAlertViewDelegate>
 - (IBAction)tappedAddress:(id)sender;
 - (IBAction)tappedPhone:(id)sender;
+
 - (void)populateUserSection:(NSNotification *)notification;
+
 - (void)addUserAnnotation:(CPAnnotation *)userAnnotation
     toArrayForJobCategory:(NSString *)jobCategory;
+
 - (UIView *)categoryViewForCurrentUserCategory:(NSString *)category
                                    withYOrigin:(CGFloat)yOrigin;
+
 - (UIView *)viewForPreviousUsersWithYOrigin:(CGFloat)yOrigin;
+
 - (void)stylingForUserBox:(UIView *)userBox
-                withTitle:(NSString *)titleString;
+                withTitle:(NSString *)titleString
+        forCheckedInUsers:(BOOL)isCurrentUserBox;
+
 - (void)checkInPressed:(id)sender;
 
 
@@ -294,7 +301,7 @@
 {
     UIView *categoryView = [[UIView alloc] initWithFrame:CGRectMake(10, yOrigin, self.view.frame.size.width - 20, 113)]; 
     
-    [self stylingForUserBox:categoryView withTitle:[category capitalizedString]];
+    [self stylingForUserBox:categoryView withTitle:[category capitalizedString] forCheckedInUsers:YES];
     
     CGFloat thumbnailDim = 71;
     
@@ -321,21 +328,21 @@
     }
     
     // set the content size on the scrollview
-    CGFloat newWidth = [[self.currentUsers objectForKey:category] count] * (thumbnailDim + 10) + 20;
+    CGFloat newWidth = [[self.currentUsers objectForKey:category] count] * (thumbnailDim + 10) + 45;
     usersScrollView.contentSize = CGSizeMake(newWidth, usersScrollView.contentSize.height);
     usersScrollView.showsHorizontalScrollIndicator = NO;
     
     // gradient on the right side of the scrollview
     CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = CGRectMake(usersScrollView.frame.size.width - 20, usersScrollView.frame.origin.y, 20, usersScrollView.frame.size.height);
+    gradient.frame = CGRectMake(usersScrollView.frame.size.width - 45, usersScrollView.frame.origin.y, 45, usersScrollView.frame.size.height);
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:0.0] CGColor],
-                       (id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:0.9] CGColor],
+                       (id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:1.0] CGColor],
                        (id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:1.0] CGColor],
                        nil];
     [gradient setStartPoint:CGPointMake(0.0, 0.5)];
     [gradient setEndPoint:CGPointMake(1.0, 0.5)];
-    gradient.locations = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:0.30], [NSNumber numberWithFloat:1.0], nil];
-//    [categoryView.layer addSublayer:gradient];
+    gradient.locations = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:0.65], [NSNumber numberWithFloat:1.0], nil];
+    [categoryView.layer addSublayer:gradient];
         
     // return the view
     return categoryView;
@@ -345,7 +352,7 @@
 {
     UIView *previousUsersView = [[UIView alloc] initWithFrame:CGRectMake(10, yOrigin, self.view.frame.size.width - 20, 113)];
     
-    [self stylingForUserBox:previousUsersView withTitle:@"Have worked here..."];
+    [self stylingForUserBox:previousUsersView withTitle:@"Have worked here..." forCheckedInUsers:NO];
     
     CGRect newFrame = previousUsersView.frame;
     
@@ -421,6 +428,7 @@
 
 - (void)stylingForUserBox:(UIView *)userBox
                 withTitle:(NSString *)titleString
+        forCheckedInUsers:(BOOL)isCurrentUserBox
 {
     // border on category view
     userBox.layer.borderColor = [[UIColor colorWithRed:(198.0/255.0) green:(198.0/255.0) blue:(198.0/255.0) alpha:1.0] CGColor];
