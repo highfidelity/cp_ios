@@ -45,6 +45,7 @@
 
 # pragma mark - Check-in/out Stuff
 
+// TODO: consolidate this with the checkedIn property on the current user in NSUserDefaults
 - (BOOL)userCheckedIn 
 {
     NSNumber *checkoutEpoch = DEFAULTS(object, kUDCheckoutTime);

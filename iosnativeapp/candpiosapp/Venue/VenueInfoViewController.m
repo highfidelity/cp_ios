@@ -321,7 +321,7 @@
 {
     UIView *previousUsersView = [[UIView alloc] initWithFrame:CGRectMake(10, yOrigin, self.view.frame.size.width - 20, 113)];
     
-    [self stylingForUserBox:previousUsersView withTitle:@"Have Worked Here..."];
+    [self stylingForUserBox:previousUsersView withTitle:@"Have worked here..."];
     
     CGRect newFrame = previousUsersView.frame;
     
@@ -345,30 +345,31 @@
             userName.text = userAnnotation.nickname;
             [CPUIHelper changeFontForLabel:userName toLeagueGothicOfSize:18];
             userName.backgroundColor = [UIColor clearColor];
-            userName.textColor = [UIColor blackColor];
+            userName.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
             
             // add the username to the previousUsersView
             [previousUsersView addSubview:userName];
             
             // label for user headline
-            UILabel *userHeadline = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, yOffset + 27, maxLabelWidth, 20)];
+            UILabel *userHeadline = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, yOffset + 26, maxLabelWidth, 20)];
             userHeadline.text = userAnnotation.skills;
-            userHeadline.backgroundColor = [UIColor clearColor];
-            userHeadline.textColor = [UIColor blackColor];
-            userHeadline.font = [UIFont systemFontOfSize:13];
-            
-            // add the userHeadline to the previousUsersView
-            [previousUsersView addSubview:userHeadline];
             
             // label for number of checkins
-            UILabel *userCheckins = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, yOffset + 44, maxLabelWidth, 20)];
+            UILabel *userCheckins = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, yOffset + 43, maxLabelWidth, 20)];
             userCheckins.text = [NSString stringWithFormat:@"%d check ins", userAnnotation.checkinCount];
-            userCheckins.backgroundColor = [UIColor clearColor];
-            userCheckins.textColor = [UIColor blackColor];
-            userCheckins.font = [UIFont systemFontOfSize:13];
             
-            // add the check in count label to previousUsersView
-            [previousUsersView addSubview:userCheckins];
+            UIColor *lightGray = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1.0];
+            
+            for (UILabel *label in [NSArray arrayWithObjects:userHeadline, userCheckins, nil]) {
+                label.backgroundColor = [UIColor clearColor];
+                label.textColor = lightGray;
+                label.font = [UIFont systemFontOfSize:12];
+                
+                // add the label to the previousUsersView
+                [previousUsersView addSubview:label];
+            }
+            
+            userCheckins.font = [UIFont boldSystemFontOfSize:12];
             
             // set the new y-offset for the next user
             yOffset += userThumbnail.frame.size.height + 11;

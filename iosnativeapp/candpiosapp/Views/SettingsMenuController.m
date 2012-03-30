@@ -403,7 +403,6 @@
                 [[UIApplication sharedApplication] cancelAllLocalNotifications];
                 NSInteger checkOutTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
                 SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
-                SET_DEFAULTS(Object, kUDCheckedInVenueID, [NSNumber numberWithInt:0]);
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckedIn" object:nil];
             } else {
                 

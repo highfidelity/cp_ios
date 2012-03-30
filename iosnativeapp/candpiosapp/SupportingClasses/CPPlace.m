@@ -81,7 +81,7 @@
 // based on the checkinCount and wether this user is also there
 -(int)othersHere
 {
-    return [self.foursquareID isEqualToString:DEFAULTS(object, kUDCheckedInVenueID)] ? self.checkinCount - 1 : self.checkinCount;
+    return [CPAppDelegate userCheckedIn] && [self.foursquareID isEqualToString:DEFAULTS(object, kUDCheckedInVenueID)] ? self.checkinCount - 1 : self.checkinCount;
 }
 
 // this method is used in CheckInListTableViewController to sort the array of places
