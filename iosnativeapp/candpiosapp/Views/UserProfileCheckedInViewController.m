@@ -508,11 +508,11 @@ BOOL firstLoad = YES;
             if ([[review objectForKey:@"rating"] intValue] == -1) {
                 ratingImg = @"thumbs-down.png";
             } else if ([[review objectForKey:@"is_love"] intValue] == 1) {
-                ratingImg = @"send-love.png";
+                ratingImg = @"send-love-small.png";
             }
             
             [resumeHtml addObject:[NSString 
-                                   stringWithFormat:@"<p><img src='%@' width='12' height='14'/> \"%@\"</p>", ratingImg, [review objectForKey:@"review"]]];
+                                   stringWithFormat:@"<p><img src='%@'/> \"%@\"</p>", ratingImg, [review objectForKey:@"review"]]];
         }
         
         if (review_row > 5) {
