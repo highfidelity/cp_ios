@@ -8,6 +8,7 @@
 
 #import "SettingsMenuController.h"
 #import "BalanceViewController.h"
+#import "SVProgressHUD.h"
 #import "AppDelegate.h"
 #import "MapTabController.h"
 #import "CPapi.h"
@@ -389,6 +390,38 @@
     if (buttonIndex == 1 && [[alertView buttonTitleAtIndex:1] isEqualToString:@"Wallet"]) {
         // the user wants to see their wallet, so let's do that
         [self performSegueWithIdentifier:@"ShowBalanceFromMenu" sender:self];
+    }
+    if (alertView.tag == 904 && buttonIndex == 1) {
+        [SVProgressHUD show];
+        
+        [CPapi checkOutWithCompletion:^(NSDictionary *json, NSError *error) {
+            
+            BOOL respError = [[json objectForKey:@"error"] boolValue];
+            
+            [SVProgressHUD dismiss];
+            if (!error && !respError) {
+                [[UIApplication sharedApplication] cancelAllLocalNotifications];
+                NSInteger checkOutTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
+                SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckedIn" object:nil];
+            } else {
+                
+                
+                NSString *message = [json objectForKey:@"payload"];
+                if (!message) {
+                    message = @"Oops. Something went wrong.";    
+                }
+                
+                UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle:@"An error occurred"
+                                      message:message
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles: nil];
+                [alert show];
+            }
+            [[AppDelegate instance] refreshCheckInButton];
+        }];
     }
     alertView = nil;
 }

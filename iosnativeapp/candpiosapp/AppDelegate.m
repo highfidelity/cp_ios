@@ -155,7 +155,7 @@
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle:@"Check Out"
                               message:@"Are you sure you want to be checked out?"
-                              delegate:self.rootNavigationController
+                              delegate:self.settingsMenuController
                               cancelButtonTitle:@"Cancel"
                               otherButtonTitles: @"Check Out", nil];
         alert.tag = 904;
