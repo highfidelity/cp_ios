@@ -262,7 +262,11 @@
     [[cell dateLabel] setText:dateString];
 
     if ([[transaction objectForKey:@"nickname"] isEqualToString:@"Exchange"]) {
-        [[cell descriptionLabel] setText:[NSString stringWithFormat:@"$%@ added to balance via %@", [transaction objectForKey:@"amount"], [transaction objectForKey:@"type"]]];           
+        if ([[transaction objectForKey:@"type"] isEqualToString:@"SendLove_Fee"]) {
+            [[cell descriptionLabel] setText:[transaction objectForKey:@"description"]];
+        } else {
+            [[cell descriptionLabel] setText:[NSString stringWithFormat:@"$%@ added to balance via %@", [transaction objectForKey:@"amount"], [transaction objectForKey:@"type"]]];
+        }
     } 
     else {
         

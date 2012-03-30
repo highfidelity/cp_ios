@@ -60,7 +60,7 @@ BOOL hasBalance = NO;
         int user_id = [[jsonDict objectForKey:@"userid"] intValue];
         if (user_id > 0) {
             float balance = [[jsonDict objectForKey:@"balance"] floatValue];
-            if (balance > 0) {
+            if (balance > 1) {
                 hasBalance = YES;
             }
         } else {
@@ -93,6 +93,8 @@ BOOL hasBalance = NO;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    // add funds button, segue to add funds view
+    // it is on a different storyboard so we have to get creative
     if (alertView.tag && alertView.tag == 5 && buttonIndex == 1) {
         UIStoryboard *secondStoryBoard = [UIStoryboard storyboardWithName:@"SettingsStoryboard_iPhone" bundle:nil];
         
@@ -101,6 +103,8 @@ BOOL hasBalance = NO;
         [self.navigationController presentModalViewController:navController animated:YES];
     }
     
+    // love sent, or error sending love. return to previous view
+    // after button clicked
     if (alertView.tag && alertView.tag == 4) {
         [[self navigationController] popViewControllerAnimated: YES];        
     }

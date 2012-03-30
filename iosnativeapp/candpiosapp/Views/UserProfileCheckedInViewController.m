@@ -103,6 +103,8 @@
 @synthesize isF2FInvite = _isF2FInvite;
 @synthesize othersAtPlace = _othersAtPlace;
 
+BOOL firstLoad = YES;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -129,6 +131,8 @@
 {
     [super viewDidLoad];
     
+    firstLoad = YES;
+
     // set the webview delegate to this VC so we can resize it based on the contents
     self.resumeWebView.delegate = self;
     
@@ -164,9 +168,17 @@
     self.resumeWebView.backgroundColor = paper;
     
     [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     // animate the three dots after checked in
     [self animateVenueLoadingPoints];
+    
+    // make sure the check in button is on screen
+    [[AppDelegate instance] showCheckInButton];
     
     // set the labels on the user business card
     self.cardNickname.text = [self.user.nickname uppercaseString];
@@ -210,13 +222,7 @@
             }
         }];
     } 
-}
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    // make sure the check in button is on screen
-    [[AppDelegate instance] showCheckInButton];
 }
 
 - (void)viewDidUnload
@@ -269,42 +275,44 @@
     // set the card image to the user's profile image
     [self.cardImage  setImageWithURL:self.user.urlPhoto];
     
-    // if the user is checked in show how much longer they'll be available for
-    if ([self.user.checkoutEpoch timeIntervalSinceNow] > 0) {
-        self.checkedIn.text = @"CHECKED IN";
-        // get the number of seconds until they'll checkout
-        NSTimeInterval secondsToCheckout = [self.user.checkoutEpoch timeIntervalSinceNow];
-        // convert to minutes and then hours + minutes to next our
-        int minutesToCheckout = floor(secondsToCheckout / 60.0);
-        int hoursToCheckout = floor(minutesToCheckout / 60.0);
-        int minutesToHour = minutesToCheckout % 60;
+    if (firstLoad) {
+        // if the user is checked in show how much longer they'll be available for
+        if ([self.user.checkoutEpoch timeIntervalSinceNow] > 0) {
+            self.checkedIn.text = @"CHECKED IN";
+            // get the number of seconds until they'll checkout
+            NSTimeInterval secondsToCheckout = [self.user.checkoutEpoch timeIntervalSinceNow];
+            // convert to minutes and then hours + minutes to next our
+            int minutesToCheckout = floor(secondsToCheckout / 60.0);
+            int hoursToCheckout = floor(minutesToCheckout / 60.0);
+            int minutesToHour = minutesToCheckout % 60;
         
-        // only show hours if there's at least one
-        if (hoursToCheckout > 0) {
-            self.hoursAvailable.text = [NSString stringWithFormat:@"%d hrs", hoursToCheckout];
+            // only show hours if there's at least one
+            if (hoursToCheckout > 0) {
+                self.hoursAvailable.text = [NSString stringWithFormat:@"%d hrs", hoursToCheckout];
+            } else {
+                // otherwise show just the minutes, move it so it's where hours would be
+                CGRect minutesFrame = self.minutesAvailable.frame;
+                minutesFrame.origin = self.hoursAvailable.frame.origin;
+                self.minutesAvailable.frame = minutesFrame;
+                self.minutesAvailable.font = [UIFont boldSystemFontOfSize:self.minutesAvailable.font.pointSize];
+            }            
+            self.minutesAvailable.text = [NSString stringWithFormat:@"%d mins", minutesToHour];
         } else {
-            // otherwise show just the minutes, move it so it's where hours would be
-            CGRect minutesFrame = self.minutesAvailable.frame;
-            minutesFrame.origin = self.hoursAvailable.frame.origin;
-            self.minutesAvailable.frame = minutesFrame;
-            self.minutesAvailable.font = [UIFont boldSystemFontOfSize:self.minutesAvailable.font.pointSize];
-        }            
-        self.minutesAvailable.text = [NSString stringWithFormat:@"%d mins", minutesToHour];
-    } else {
-        // change the label since the user isn't here anymore
-        self.checkedIn.text = @"WAS CHECKED IN";
+            // change the label since the user isn't here anymore
+            self.checkedIn.text = @"WAS CHECKED IN";
+            
+            // move the loading points to the right so they're in the right spot
+            NSArray *pts = [NSArray arrayWithObjects:self.loadingPt1, self.loadingPt2, self.loadingPt3, nil];
+            for (UILabel *pt in pts) {
+                CGRect ptFrame = pt.frame;
+                ptFrame.origin.x += 33;
+                pt.frame = ptFrame;    
+            }
+            
         
-        // move the loading points to the right so they're in the right spot
-        NSArray *pts = [NSArray arrayWithObjects:self.loadingPt1, self.loadingPt2, self.loadingPt3, nil];
-        for (UILabel *pt in pts) {
-            CGRect ptFrame = pt.frame;
-            ptFrame.origin.x += 33;
-            pt.frame = ptFrame;    
+            // otherwise don't show the availability view
+            [self.availabilityView removeFromSuperview];
         }
-        
-        
-        // otherwise don't show the availability view
-        [self.availabilityView removeFromSuperview];
     }
     
     // hide the icons for which the user isn't verified
@@ -340,6 +348,7 @@
     // request using the FoursquareAPIRequest class to get the venue data
     [FoursquareAPIRequest dictForVenueWithFoursquareID:self.user.placeCheckedIn.foursquareID :^(NSDictionary *fsDict, NSError *error) {
         if (!error) {
+
             // show the available for and the venue info, stop animating the ellipsis
             [self stopAnimatingVenueLoadingPoints];
             
@@ -353,21 +362,25 @@
             
             self.othersAtPlace = self.user.checkedIn ? self.user.placeCheckedIn.checkinCount - 1 : self.user.placeCheckedIn.checkinCount;
             
-            if (self.othersAtPlace == 0) {
-                // hide the little man, nobody else is here
-                [self.venueOthersIcon removeFromSuperview];
+            if (firstLoad) {
+                if (self.othersAtPlace == 0) {
+                    // hide the little man, nobody else is here
+                    [self.venueOthersIcon removeFromSuperview];
                 
-                // move the data in the venueView down so it's vertically centered
-                NSArray *venueInfo = [NSArray arrayWithObjects:self.venueIcon, self.venueName, self.venueAddress, nil];
-                for (UIView *venueItem in venueInfo) {
-                    CGRect frame = venueItem.frame;
-                    frame.origin.y += 8;
-                    venueItem.frame = frame;
+                    // move the data in the venueView down so it's vertically centered
+                    NSArray *venueInfo = [NSArray arrayWithObjects:self.venueIcon, self.venueName, self.venueAddress, nil];
+                    for (UIView *venueItem in venueInfo) {
+                        CGRect frame = venueItem.frame;
+                        frame.origin.y += 8;
+                        venueItem.frame = frame;
+                    }
+                } else {
+                    // otherwise put 1 other or x others here now
+                    self.venueOthers.text = [NSString stringWithFormat:@"%d %@ here now", self.othersAtPlace, self.othersAtPlace == 1 ? @"other" : @"others"];
                 }
-            } else {
-                // otherwise put 1 other or x others here now
-                self.venueOthers.text = [NSString stringWithFormat:@"%d %@ here now", self.othersAtPlace, self.othersAtPlace == 1 ? @"other" : @"others"];
-            }           
+                
+                firstLoad = NO;
+            }    
             // animate the display of the venueView and availabilityView
             [UIView animateWithDuration:0.4 animations:^{self.venueView.alpha = 1.0; self.availabilityView.alpha = 1.0;}];
         } else {
