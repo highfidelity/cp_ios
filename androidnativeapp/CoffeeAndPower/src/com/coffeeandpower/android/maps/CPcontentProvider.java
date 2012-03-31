@@ -16,6 +16,8 @@ public class CPcontentProvider extends ContentProvider {
 
 	static final String PROVIDER_AUTH = 
 			"com.coffeeandpower.android.maps.provider";
+	static final int DATABASE_VERSION = 1;
+	static String DATABASE_NAME = "coffeeandpower.db";
 
 	// Map bounds might get updated 60 times a second during a map pan
 	// Persist onPause instead of writing flash constantly
@@ -38,6 +40,52 @@ public class CPcontentProvider extends ContentProvider {
 					" ne_lon INTEGER NOT NULL, " +
 					" zoom   INTEGER NOT NULL );";
 
+	private static final String SQL_CREATE_TABLE_SYNC_MAP =
+			"CREATE TABLE " +
+					"sync_map " +
+					"(" +
+					" _ID INTEGER PRIMARY KEY, " +
+					" point_type integer, " + // check in / other foreign key?
+					" sw_lat INTEGER NOT NULL, " +
+					" sw_lon INTEGER NOT NULL, " +
+					" zoom   INTEGER NOT NULL, " +
+					" quad_index  INTEGER NOT NULL, " +
+					" sync_started INTEGER, " + // unix date
+					" sync_completed INTEGER, " +
+					" status INTEGER );";
+	
+	private static final String SQL_CREATE_TABLE_POINTS = 
+			"CREATE TABLE " +
+					"points " +
+					"(" +
+					" _ID INTEGER PRIMARY KEY, " +
+					" quad_index INTEGER NOT NULL, " +
+					" lat INTEGER NOT NULL, " +
+					" lon INTEGER NOT NULL " +
+					");";
+					
+	private static final String SQL_CREATE_TABLE_CHECKINS = 
+			"CREATE TABLE " +
+					"checkins " +
+					"(" +
+					" _ID INTEGER PRIMARY KEY, " +
+					" point_id INTEGER, " +
+				    " checked_in INTEGER, " +
+				    " checkin_count INTEGER, " +
+				    " checkin_id INTEGER, " +
+				    " filename TEXT, " +
+				    " foursquare TEXT, " +
+				    " id INTEGER, " +
+				    " major_job_category TEXT, " +
+				    " minor_job_category TEXT, " +
+				    " nickname TEXT, " +
+				    " photo INTEGER, " +
+				    " skills TEXT, " +
+				    " status_text TEXT, " +
+				    " venue_name TEXT, " +
+					"FOREIGN KEY(point_id) REFERENCES points(_ID)" +
+				    ");";
+	
 	private static class MemoryDatabaseHelper extends SQLiteOpenHelper{
 
 		public MemoryDatabaseHelper(Context context) {
@@ -52,8 +100,8 @@ public class CPcontentProvider extends ContentProvider {
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			// TODO Auto-generated method stub
-
+			db.execSQL("DROP TABLE IF EXISTS mapbounds;");
+			onCreate(db);
 		}		
 	}
 
@@ -62,13 +110,13 @@ public class CPcontentProvider extends ContentProvider {
 		public MainDatabaseHelper(Context context, String name,
 				CursorFactory factory, int version) {
 			super(context, name, factory, version);
-			// TODO Auto-generated constructor stub
 		}
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			// TODO Auto-generated method stub
-
+			db.execSQL(SQL_CREATE_TABLE_SYNC_MAP);
+			db.execSQL(SQL_CREATE_TABLE_POINTS);
+			db.execSQL(SQL_CREATE_TABLE_CHECKINS);
 		}
 
 		@Override
@@ -78,9 +126,15 @@ public class CPcontentProvider extends ContentProvider {
 		}
 
 	}
-
+//TODO change this stuff to be part of a contract class?
 	private static final int MAPBOUNDS = 1;
 	private static final int MAPBOUNDS_ID = 2;
+	private static final int SYNC_MAP = 3;
+	private static final int SYNC_MAP_ID = 4;
+	private static final int POINTS = 5;
+	private static final int POINTS_ID = 6;
+	private static final int CHECKINS = 7;
+	private static final int CHECKINS_ID = 8;
 
 	private static final UriMatcher sUriMatcher = 
 			new UriMatcher(UriMatcher.NO_MATCH);
@@ -88,6 +142,12 @@ public class CPcontentProvider extends ContentProvider {
 	{
 		sUriMatcher.addURI(PROVIDER_AUTH, "mapbounds", MAPBOUNDS);
 		sUriMatcher.addURI(PROVIDER_AUTH, "mapbounds/#", MAPBOUNDS_ID);
+		sUriMatcher.addURI(PROVIDER_AUTH, "sync_map", SYNC_MAP);
+		sUriMatcher.addURI(PROVIDER_AUTH, "sync_map/#", SYNC_MAP_ID);
+		sUriMatcher.addURI(PROVIDER_AUTH, "points", POINTS);
+		sUriMatcher.addURI(PROVIDER_AUTH, "points/#", POINTS_ID);
+		sUriMatcher.addURI(PROVIDER_AUTH, "checkins", CHECKINS);
+		sUriMatcher.addURI(PROVIDER_AUTH, "checkins/#", CHECKINS_ID);
 	}
 	@Override
 	public int delete(Uri arg0, String arg1, String[] arg2) {
@@ -104,6 +164,18 @@ public class CPcontentProvider extends ContentProvider {
 			return "vnd.android.cursor.dir/mapbounds";
 		case MAPBOUNDS_ID:
 			return "vnd.android.cursor.item/mapbounds";
+		case SYNC_MAP:
+			return "vnd.android.cursor.dir/sync_map";
+		case SYNC_MAP_ID:
+			return "vnd.android.cursor.item/sync_map";
+		case POINTS:
+			return "vnd.android.cursor.dir/points";
+		case POINTS_ID:
+			return "vnd.android.cursor.item/points";
+		case CHECKINS:
+			return "vnd.android.cursor.dir/checkins";
+		case CHECKINS_ID:
+			return "vnd.android.cursor.item/checkins";
 		default:
 			return null;
 		}
@@ -112,29 +184,40 @@ public class CPcontentProvider extends ContentProvider {
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
 		// TODO Auto-generated method stub
+		String table;
 		int match = sUriMatcher.match(uri);
 		switch(match)
 		{
 		case MAPBOUNDS:
-		case MAPBOUNDS_ID:
 			mMdb = mMOpenHelper.getReadableDatabase();
 			return Uri.parse("content://" + PROVIDER_AUTH + "/mapbounds/" +
 					mMdb.insert("mapbounds", null, values));
+		case SYNC_MAP:
+			table = "sync_map";
+			break;
+		case POINTS:
+		case CHECKINS:
 		default:
 			return null;
 		}
+		mDb = mOpenHelper.getWritableDatabase();
+		Log.i("db","inserting values");
+		return Uri.parse("content://" + PROVIDER_AUTH + "/" + table + "/" +
+		mDb.insert(table, null, values));
 	}
 
 	@Override
 	public boolean onCreate() {
-		// TODO create persistent db helper too
 		mMOpenHelper = new MemoryDatabaseHelper(getContext());
+		mOpenHelper = new MainDatabaseHelper(getContext(),DATABASE_NAME,
+				null,DATABASE_VERSION);
 		return true;
 	}
 
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
+		String table;
 		int match = sUriMatcher.match(uri);
 		switch(match)
 		{
@@ -143,9 +226,21 @@ public class CPcontentProvider extends ContentProvider {
 			mMdb = mMOpenHelper.getReadableDatabase();
 			return mMdb.query("mapbounds", projection, 
 					selection, selectionArgs, null, null, null);
+		case SYNC_MAP:
+			table = "sync_map";
+			break;
+		case SYNC_MAP_ID:
+		case POINTS:
+		case POINTS_ID:
+		case CHECKINS:
+		case CHECKINS_ID:
 		default:
 			return null;
 		}
+		mDb = mOpenHelper.getReadableDatabase();
+		Log.i("db", "querying database");
+		return mDb.query(table, projection, 
+				selection, selectionArgs, null, null, null);
 	}
 
 	@Override
@@ -183,6 +278,12 @@ public class CPcontentProvider extends ContentProvider {
 			Intent mapSync = new Intent(getContext(),CPMapSyncService.class);
 			this.getContext().startService(mapSync);
 			return updated;
+		case SYNC_MAP:
+		case SYNC_MAP_ID:
+		case POINTS:
+		case POINTS_ID:
+		case CHECKINS:
+		case CHECKINS_ID:
 		default:
 			return 0;
 		}

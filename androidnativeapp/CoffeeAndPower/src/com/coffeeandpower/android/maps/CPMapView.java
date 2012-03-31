@@ -3,7 +3,6 @@ package com.coffeeandpower.android.maps;
 import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.location.Location;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -71,7 +70,7 @@ public class CPMapView extends MapView {
     		newValues.put("ne_lat", mOldNe.getLatitudeE6());
     		newValues.put("ne_lon", mOldNe.getLongitudeE6());
     		newValues.put("zoom", String.valueOf(zoomLevel));
-    		int rowsUpdated = mContext.getContentResolver().update( 
+    		mContext.getContentResolver().update( 
     				mProviderUri, newValues, "", null);
 //    		Log.i("mMdb_rowsupdated",String.valueOf(rowsUpdated));
 //
@@ -79,18 +78,18 @@ public class CPMapView extends MapView {
 //            		+ " Top:" + getTop() + " Bottom:" + getBottom());
 //            double c_lat = center.getLatitudeE6()/1000000.0;
 //            double c_lon = center.getLongitudeE6()/1000000.0;
-//            double sw_lat = southwest.getLatitudeE6()/1000000.0;
-//            double sw_lon = southwest.getLongitudeE6()/1000000.0;
-//            double ne_lat = northeast.getLatitudeE6()/1000000.0;
-//            double ne_lon = northeast.getLongitudeE6()/1000000.0;
+            double sw_lat = southwest.getLatitudeE6()/1000000.0;
+            double sw_lon = southwest.getLongitudeE6()/1000000.0;
+            double ne_lat = northeast.getLatitudeE6()/1000000.0;
+            double ne_lon = northeast.getLongitudeE6()/1000000.0;
 //            float distance_sw_c[] = new float[1];
 //            float distance_ne_c[] = new float[1];
 //            Location.distanceBetween(c_lat, c_lon, sw_lat, sw_lon, distance_sw_c);
 //            Location.distanceBetween(c_lat, c_lon, ne_lat, ne_lon, distance_ne_c);
-//            String urlstring = "http://coffeeandpower.com/api.php?action=getCheckedInBoundsOverTime";
-//            urlstring += "&sw_lat=" + sw_lat + "&sw_lng=" + sw_lon + 
-//            		"&ne_lat=" + ne_lat + "&ne_lng=" + ne_lon + 
-//            		"&checked_in_since=1329441438.795357&group_users=1&version=0.1"; 
+            String urlstring = "http://coffeeandpower.com/api.php?action=getCheckedInBoundsOverTime";
+            urlstring += "&sw_lat=" + sw_lat + "&sw_lng=" + sw_lon + 
+            		"&ne_lat=" + ne_lat + "&ne_lng=" + ne_lon + 
+            		"&checked_in_since=1329441438.795357&group_users=1&version=0.1"; 
 //            Log.i("candpmobi","Center:" + center);
 //    		Log.i("candpmobi","SouthWest:" + proj.fromPixels(getLeft(), getBottom()));
 //    		Log.i("candpmobi","sw_lat:" + sw_lat + " sw_lon:" + sw_lon);
@@ -98,8 +97,9 @@ public class CPMapView extends MapView {
 //    		Log.i("candpmobi","NorthEast:" + proj.fromPixels(getRight(), getTop()));
 //    		Log.i("candpmobi","ne_lat:" + ne_lat + " ne_lon:" + ne_lon);
 //    		Log.i("candpmobi_url",urlstring);
-    		//CPAsyncGet gettask = new CPAsyncGet();
-    		//gettask.execute(urlstring);
+
+//    		CPAsyncGet gettask = new CPAsyncGet();
+//    		gettask.execute(urlstring);
         	
         }
         

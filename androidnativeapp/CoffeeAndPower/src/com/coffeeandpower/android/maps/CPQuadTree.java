@@ -114,12 +114,12 @@ public class CPQuadTree {
 			{
 				long ulat = sw.mULat + y * tileSize;
 				long ulon = sw.mULon + x * tileSize;
-				CPQuadTree logTest = new CPQuadTree(ulat, ulon, zoom);
-				GeoPoint logPoint = logTest.getPoint();
-				Log.i("bounds", "x:" + String.valueOf(x) + 
-						" y:" + String.valueOf(y) + 
-						" lat:" + logPoint.getLatitudeE6() +
-						" lon:" + logPoint.getLongitudeE6());
+//				CPQuadTree logTest = new CPQuadTree(ulat, ulon, zoom);
+//				GeoPoint logPoint = logTest.getPoint();
+//				Log.i("bounds", "x:" + String.valueOf(x) + 
+//						" y:" + String.valueOf(y) + 
+//						" lat:" + logPoint.getLatitudeE6() +
+//						" lon:" + logPoint.getLongitudeE6());
 				tiles[y][x] = new CPQuadTree(ulat, ulon, zoom);
 			}
 		}
