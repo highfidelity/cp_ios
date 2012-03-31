@@ -8,14 +8,16 @@
 
 #import "UserProfileCheckedInViewController.h"
 #import "AFHTTPClient.h"
+#import "AFNetworking.h"
 #import "UIImageView+WebCache.h"
 #import "AppDelegate.h"
 #import "CPUtils.h"
 #import "FoursquareAPIRequest.h"
 #import "AFJSONRequestOperation.h"
 #import "CPapi.h"
+#import "SVProgressHud.h"
 
-@interface UserProfileCheckedInViewController() <UIWebViewDelegate, UIActionSheetDelegate>
+@interface UserProfileCheckedInViewController() <UIWebViewDelegate, UIActionSheetDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UILabel *checkedIn;
 @property (nonatomic, weak) IBOutlet MKMapView *mapView;
@@ -52,6 +54,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *payButton;
 @property (weak, nonatomic) IBOutlet UIButton *reviewButton;
 @property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
+@property (nonatomic, weak) IBOutlet UIView *reviewView;
+@property (weak, nonatomic) IBOutlet UITextField *reviewDescription;
 @property (nonatomic, assign) int othersAtPlace;
 
 -(void)animateVenueLoadingPoints;
@@ -59,6 +63,7 @@
 -(NSString *)htmlStringWithResumeText;
 -(IBAction)plusButtonPressed:(id)sender;
 -(IBAction)minusButtonPressed:(id)sender;
+-(IBAction)sendloveButtonPressed:(id)sender;
 @end
 
 @implementation UserProfileCheckedInViewController
@@ -68,6 +73,8 @@
 @synthesize mapView = _mapView;
 @synthesize user = _user;
 @synthesize userCard = _userCard;
+@synthesize reviewView = _reviewView;
+@synthesize reviewDescription = _reviewDescription;
 @synthesize cardImage = _cardImage;
 @synthesize cardStatus = _cardStatus;
 @synthesize cardNickname = _cardNickname;
@@ -163,6 +170,7 @@ BOOL firstLoad = YES;
     // set the paper background color where applicable
     UIColor *paper = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paper-texture.jpg"]];
     self.userCard.backgroundColor = paper;
+    self.reviewView.backgroundColor = paper;
     self.resumeView.backgroundColor = paper;
     self.resumeWebView.opaque = NO;
     self.resumeWebView.backgroundColor = paper;
@@ -661,11 +669,71 @@ BOOL firstLoad = YES;
         [[segue destinationViewController] setUser:self.user];
         [self minusButtonPressed:nil];        
     }
-    else if ([[segue identifier] isEqualToString:@"ProfileToReviewSegue"])
-    {
-        [[segue destinationViewController] setUser:self.user];
-        [self minusButtonPressed:nil];
-    }
+}
+
+- (IBAction)sendloveButtonPressed:(id)sender {
+    [self minusButtonPressed:nil];
+    _reviewView.hidden = NO;
+    [_reviewDescription becomeFirstResponder];
+    [_reviewDescription setDelegate:self];
+}
+
+- (void)sendReview {
+    
+    [SVProgressHUD showWithStatus:@"Sending love"];
+    AFHTTPClient *httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
+    NSString *respUserId = [NSString stringWithFormat:@"%d", self.user.userID];
+	NSMutableDictionary *reviewParams = [NSMutableDictionary dictionary];
+    [reviewParams setObject:@"makeMobileReview" forKey:@"action"];
+    [reviewParams setObject:respUserId forKey:@"recipientID"];
+    [reviewParams setObject:_reviewDescription.text forKey:@"reviewText"];
+    
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
+                                                            path:@"reviews.php"
+                                                      parameters:reviewParams];
+    AFJSONRequestOperation *postOperation = [AFJSONRequestOperation                                         JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
+        
+        NSDictionary *jsonDict = json;
+        NSNumber *successNum = [jsonDict objectForKey:@"succeeded"];
+        [SVProgressHUD dismiss];
+        
+        if (successNum && [successNum intValue] != 1) {
+            NSString *error = [NSString stringWithFormat:@"%@", [jsonDict objectForKey:@"message"]];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                message:error
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+            
+            if ([successNum intValue] == -1) {
+                // not logged in - set tag in order for view to be closed
+                alertView.tag = 4;
+            }
+            [alertView show];
+            
+        }
+        else {
+            
+            NSString *message = [NSString stringWithFormat:@"Love sent successfully", self.user.nickname];
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Transaction"
+                                                                message:message
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+            
+            [alertView show];
+            [self viewWillAppear:YES];
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        // handle error
+#if DEBUG
+        NSLog(@"AFJSONRequestOperation error: %@", [error localizedDescription]);
+#endif
+        [SVProgressHUD dismissWithError:[error localizedDescription]];
+        
+    }];
+    [[NSOperationQueue mainQueue] addOperation:postOperation];
 }
 
 - (IBAction)f2fInvite {
@@ -686,6 +754,18 @@ BOOL firstLoad = YES;
             [CPapi sendF2FInvite:self.user.userID];
         }
     }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == _reviewDescription) {
+        [textField resignFirstResponder];
+        _reviewView.hidden = YES;
+        
+        if (_reviewDescription.text && [_reviewDescription.text length]) {
+            [self sendReview];
+        }
+    }
+    return YES;
 }
 
 @end
