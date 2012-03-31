@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSMutableDictionary *currentUsers;
 @property (strong, nonatomic) NSMutableArray *previousUsers;
 @property (strong, nonatomic) NSMutableSet *usersShown;
+@property (strong, nonatomic) NSMutableDictionary *userObjectsForUsersOnScreen;
 
 
 @end

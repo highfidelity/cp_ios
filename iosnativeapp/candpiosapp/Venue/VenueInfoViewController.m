@@ -10,6 +10,8 @@
 #import "CPAnnotation.h"
 #import "MapTabController.h"
 #import "CheckInDetailsViewController.h"
+#import "User.h"
+#import "UserProfileCheckedInViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "CPapi.h"
 
@@ -48,7 +50,15 @@
 @synthesize currentUsers = _currentUsers;
 @synthesize previousUsers = _previousUsers;
 @synthesize usersShown = _usersShown;
+@synthesize userObjectsForUsersOnScreen = _userObjectsForUsersOnScreen;
 
+- (NSMutableDictionary *)userObjectsForUsersOnScreen
+{
+    if (!_userObjectsForUsersOnScreen) {
+        _userObjectsForUsersOnScreen = [NSMutableDictionary dictionary];
+    }
+    return _userObjectsForUsersOnScreen;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil  bundle:(NSBundle *)nibBundleOrNil
 {
@@ -62,9 +72,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
-    // hide the normal check in button
-    [CPAppDelegate hideCheckInButton];
     
     // Add a notification catcher for refreshViewOnCheckin to refresh the view
     [[NSNotificationCenter defaultCenter] addObserver:self 
@@ -140,6 +147,13 @@
     self.userSection.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-first-aid-kit"]];
     
     [self populateUserSection:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    // hide the normal check in button
+    [CPAppDelegate hideCheckInButton];
 }
 
 - (void)viewDidUnload
@@ -296,6 +310,45 @@
     [self.categoryCount setObject:[NSNumber numberWithInt:1 + currentCount] forKey:jobCategory];
 }
 
+- (void)addUserToDictionaryOfUserObjectsFromCPAnnotation:(CPAnnotation *)userAnnotation
+{
+    // alloc init a user object
+    User *user = [[User alloc] init];
+    user.userID = userAnnotation.userId;
+    user.nickname = userAnnotation.nickname;
+    user.status = userAnnotation.status;
+    user.location = CLLocationCoordinate2DMake(userAnnotation.lat, userAnnotation.lon);
+    user.checkedIn = userAnnotation.checkedIn;
+    user.jobTitle = userAnnotation.headline;
+    [self.userObjectsForUsersOnScreen setObject:user forKey:[NSString stringWithFormat:@"%d", user.userID]];
+}
+
+- (UIButton *)thumbnailButtonForAnnotation:(CPAnnotation *)userAnnotation
+                             withSquareDim:(CGFloat)thumbnailDim
+                                andXOffset:(CGFloat)xOffset
+                                andYOffset:(CGFloat)yOffset
+{
+    // setup a button for the user thumbnail
+    UIButton *thumbButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    thumbButton.frame = CGRectMake(xOffset, yOffset, thumbnailDim, thumbnailDim);
+
+    // set the tag to the user ID
+    thumbButton.tag = userAnnotation.userId;
+
+    // add a target for this user thumbnail button
+    [thumbButton addTarget:self action:@selector(userImageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
+    UIImageView *userThumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, thumbnailDim, thumbnailDim)];
+    [userThumbnail setImageWithURL:[NSURL URLWithString:userAnnotation.imageUrl] placeholderImage:[CPUIHelper defaultProfileImage]];
+
+    // add a shadow to the imageview
+    [CPUIHelper addShadowToView:userThumbnail color:[UIColor blackColor] offset:CGSizeMake(1, 1) radius:3 opacity:0.40];
+
+    [thumbButton addSubview:userThumbnail];
+    
+    return thumbButton;
+}
+
 - (UIView *)categoryViewForCurrentUserCategory:(NSString *)category
                         withYOrigin:(CGFloat)yOrigin;
 {
@@ -312,19 +365,21 @@
     
     CGFloat xOffset = 10;
     for (CPAnnotation *userAnnotation in [self.currentUsers objectForKey:category]) {
-        // setup an imageview for the user thumbnail
-        UIImageView *userThumb = [[UIImageView alloc] initWithFrame:CGRectMake(xOffset, 0, thumbnailDim, thumbnailDim)];
         
-        [userThumb setImageWithURL:[NSURL URLWithString:userAnnotation.imageUrl] placeholderImage:[CPUIHelper defaultProfileImage]];
+        UIButton *thumbButton = [self thumbnailButtonForAnnotation:userAnnotation withSquareDim:thumbnailDim andXOffset:xOffset andYOffset:0];
         
         // add the thumbnail to the category view
-        [usersScrollView addSubview:userThumb];
+        [usersScrollView addSubview:thumbButton];
         
         // add to the xOffset for the next thumbnail
-        xOffset += 10 + userThumb.frame.size.width;
+        xOffset += 10 + thumbButton.frame.size.width;
         
         // add this user to the usersShown set so we know we have them
         [self.usersShown addObject:[NSNumber numberWithInt:userAnnotation.userId]];
+        
+        if (![self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", userAnnotation.userId]]) {
+            [self addUserToDictionaryOfUserObjectsFromCPAnnotation:userAnnotation];
+        }        
     }
     
     // set the content size on the scrollview
@@ -358,18 +413,20 @@
     
     CGFloat yOffset = 29;
     BOOL atLeastOne = NO;
+    
+    UIView *lastLine;
+    
     for (CPAnnotation *userAnnotation in self.previousUsers) {
         // make sure we aren't already showing this user as checked in or as a previous user
         if (![self.usersShown containsObject:[NSNumber numberWithInt:userAnnotation.userId]]) {
             // setup the user thumbnail
-            UIImageView *userThumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(10, yOffset, 71, 71)];
-            [userThumbnail setImageWithURL:[NSURL URLWithString:userAnnotation.imageUrl] placeholderImage:[CPUIHelper defaultProfileImage]];
+            UIButton *userThumbnailButton = [self thumbnailButtonForAnnotation:userAnnotation withSquareDim:71 andXOffset:10 andYOffset:yOffset];
             
             // add the thumbnail to the view
-            [previousUsersView addSubview:userThumbnail];
+            [previousUsersView addSubview:userThumbnailButton];
             
-            CGFloat maxLabelWidth = previousUsersView.frame.size.width - (userThumbnail.frame.size.width + userThumbnail.frame.origin.x) - 20;
-            CGFloat leftOffset = userThumbnail.frame.origin.x + userThumbnail.frame.size.width + 10;
+            CGFloat maxLabelWidth = previousUsersView.frame.size.width - (userThumbnailButton.frame.size.width + userThumbnailButton.frame.origin.x) - 20;
+            CGFloat leftOffset = userThumbnailButton.frame.origin.x + userThumbnailButton.frame.size.width + 10;
             
             // label for the user name
             UILabel *userName = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, yOffset + 10, maxLabelWidth, 20)];
@@ -381,29 +438,40 @@
             // add the username to the previousUsersView
             [previousUsersView addSubview:userName];
             
-            // label for user headline
-            UILabel *userHeadline = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, yOffset + 27, maxLabelWidth, 20)];
-            userHeadline.text = userAnnotation.headline;
-            
-            // label for number of checkins
-            UILabel *userCheckins = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, yOffset + 43, maxLabelWidth, 20)];
-            userCheckins.text = [NSString stringWithFormat:@"%d check ins", userAnnotation.checkinCount];
+            CGFloat labelOffset = yOffset;
             
             UIColor *lightGray = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1.0];
             
-            for (UILabel *label in [NSArray arrayWithObjects:userHeadline, userCheckins, nil]) {
-                label.backgroundColor = [UIColor clearColor];
-                label.textColor = lightGray;
-                label.font = [UIFont systemFontOfSize:12];
+            if ([userAnnotation.headline length] > 0) {
+                // label for user headline
+                labelOffset += 27;
+                UILabel *userHeadline = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, labelOffset, maxLabelWidth, 20)];
+                userHeadline.text = userAnnotation.headline;
+                
+                userHeadline.backgroundColor = [UIColor clearColor];
+                userHeadline.textColor = lightGray;
+                userHeadline.font = [UIFont systemFontOfSize:12];
                 
                 // add the label to the previousUsersView
-                [previousUsersView addSubview:label];
+                [previousUsersView addSubview:userHeadline];
+            } else {
+                labelOffset += 11;
             }
+            
+            UILabel *userCheckins = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, labelOffset + 16, maxLabelWidth, 20)];
+            userCheckins.text = [NSString stringWithFormat:@"%d check ins", userAnnotation.checkinCount];
             
             userCheckins.font = [UIFont boldSystemFontOfSize:12];
             
+            userCheckins.backgroundColor = [UIColor clearColor];
+            userCheckins.textColor = lightGray;
+            userCheckins.font = [UIFont systemFontOfSize:12];
+            
+            // add the label to the previousUsersView
+            [previousUsersView addSubview:userCheckins];
+            
             // set the new y-offset for the next user
-            yOffset += userThumbnail.frame.size.height + 11;
+            yOffset += userThumbnailButton.frame.size.height + 11;
             
             newFrame.size.height = yOffset;
             
@@ -411,8 +479,21 @@
             [self.usersShown addObject:[NSNumber numberWithInt:userAnnotation.userId]];
             
             atLeastOne = YES;
+            
+            // put a line to seperate the users
+            UIView *seperator = [[UIView alloc] initWithFrame:CGRectMake(userThumbnailButton.frame.origin.x, yOffset - 6, previousUsersView.frame.size.width - 20, 1)];
+            seperator.backgroundColor = [UIColor colorWithRed:(198.0/255.0) green:(198.0/255.0) blue:(198.0/255.0) alpha:0.75];
+            
+            [previousUsersView addSubview:seperator];   
+            
+            // this is the new last line
+            lastLine = seperator;
+            
+            [self addUserToDictionaryOfUserObjectsFromCPAnnotation:userAnnotation];            
         }        
     }
+    // remove the last line since we won't need it
+    [lastLine removeFromSuperview];
     
     // grow the previousUsersView frame to accomodate all users
     previousUsersView.frame = newFrame;
@@ -513,7 +594,13 @@
         
         // set the title of the navigation item
         topBar.topItem.title = self.venue.name;
-    }
+    } else if ([segue.identifier isEqualToString:@"ShowUserProfileFromVenue"]) {
+        UIButton *thumbnailButton = (UIButton *)sender;
+
+        // set the user object on that view controller
+        // using the tag on the button to pull this user out of the NSMutableDictionary of user objects
+        [[segue destinationViewController] setUser:[self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", thumbnailButton.tag]]];
+    }   
 }
 
 - (void)setupVenueButton:(UIButton *)venueButton
@@ -584,6 +671,11 @@
         alertView.tag = 1046;
         [alertView show];
     }   
+}
+
+- (IBAction)userImageButtonPressed:(id)sender
+{
+    [self performSegueWithIdentifier:@"ShowUserProfileFromVenue" sender:sender];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
