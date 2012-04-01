@@ -15,6 +15,7 @@
 #import "FoursquareAPIRequest.h"
 #import "AFJSONRequestOperation.h"
 #import "CPapi.h"
+#import "GRMustache.h"
 #import "SVProgressHud.h"
 
 @interface UserProfileCheckedInViewController() <UIWebViewDelegate, UIActionSheetDelegate, UITextFieldDelegate>
@@ -45,8 +46,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *resumeEarned;
 @property (weak, nonatomic) IBOutlet UILabel *resumeSpent;
 @property (weak, nonatomic) IBOutlet UIWebView *resumeWebView;
-@property (weak, nonatomic) IBOutlet UIImageView *facebookVerified;
-@property (weak, nonatomic) IBOutlet UIImageView *linkedinVerified;
 @property (weak, nonatomic) IBOutlet UIButton *plusButton;
 @property (weak, nonatomic) IBOutlet UIButton *minusButton;
 @property (weak, nonatomic) IBOutlet UIButton *f2fButton;
@@ -94,8 +93,6 @@
 @synthesize resumeEarned = _resumeEarned;
 @synthesize resumeSpent = _resumeSpent;
 @synthesize resumeWebView = _resumeWebView;
-@synthesize facebookVerified = _facebookVerified;
-@synthesize linkedinVerified = _linkedinVerified;
 @synthesize plusButton = _plusButton;
 @synthesize minusButton = _minusButton;
 @synthesize f2fButton = _f2fButton;
@@ -163,9 +160,10 @@ BOOL firstLoad = YES;
     [self.scrollView insertSubview:blueOverlay atIndex:1];
         
     // set LeagueGothic font where applicable
-    for (UILabel *labelNeedsGothic in [NSArray arrayWithObjects:self.checkedIn, self.loadingPt1, self.loadingPt2, self.loadingPt3, self.cardNickname, self.resumeLabel, nil]) {
+    for (UILabel *labelNeedsGothic in [NSArray arrayWithObjects:self.checkedIn, self.loadingPt1, self.loadingPt2, self.loadingPt3, self.resumeLabel, nil]) {
         [CPUIHelper changeFontForLabel:labelNeedsGothic toLeagueGothicOfSize:24];
     }
+    [CPUIHelper changeFontForLabel:self.cardNickname toLeagueGothicOfSize:28];
     
     // set the paper background color where applicable
     UIColor *paper = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paper-texture.jpg"]];
@@ -189,7 +187,7 @@ BOOL firstLoad = YES;
     [[AppDelegate instance] showCheckInButton];
     
     // set the labels on the user business card
-    self.cardNickname.text = [self.user.nickname uppercaseString];
+    self.cardNickname.text = self.user.nickname;
 
     if ([self.user.status length] > 0) {
         self.cardStatus.text = [NSString stringWithFormat:@"\"%@\"", self.user.status];
@@ -229,8 +227,7 @@ BOOL firstLoad = YES;
                 // error checking for load of user 
             }
         }];
-    } 
-
+    }
 }
 
 - (void)viewDidUnload
@@ -260,8 +257,6 @@ BOOL firstLoad = YES;
     [self setResumeRate:nil];
     [self setResumeEarned:nil];
     [self setResumeSpent:nil];
-    [self setFacebookVerified:nil];
-    [self setLinkedinVerified:nil];
     [self setScrollView:nil];
     [self setResumeWebView:nil];
     [self setPlusButton:nil];
@@ -286,7 +281,7 @@ BOOL firstLoad = YES;
     if (firstLoad) {
         // if the user is checked in show how much longer they'll be available for
         if ([self.user.checkoutEpoch timeIntervalSinceNow] > 0) {
-            self.checkedIn.text = @"CHECKED IN";
+            self.checkedIn.text = @"Checked in";
             // get the number of seconds until they'll checkout
             NSTimeInterval secondsToCheckout = [self.user.checkoutEpoch timeIntervalSinceNow];
             // convert to minutes and then hours + minutes to next our
@@ -307,7 +302,7 @@ BOOL firstLoad = YES;
             self.minutesAvailable.text = [NSString stringWithFormat:@"%d mins", minutesToHour];
         } else {
             // change the label since the user isn't here anymore
-            self.checkedIn.text = @"WAS CHECKED IN";
+            self.checkedIn.text = @"Was checked in";
             
             // move the loading points to the right so they're in the right spot
             NSArray *pts = [NSArray arrayWithObjects:self.loadingPt1, self.loadingPt2, self.loadingPt3, nil];
@@ -316,24 +311,12 @@ BOOL firstLoad = YES;
                 ptFrame.origin.x += 33;
                 pt.frame = ptFrame;    
             }
-            
-        
+                    
             // otherwise don't show the availability view
             [self.availabilityView removeFromSuperview];
         }
     }
-    
-    // hide the icons for which the user isn't verified
-    if (!self.user.facebookVerified) {
-        [self.facebookVerified removeFromSuperview];
-        if (!self.user.linkedInVerified) {
-            [self.linkedinVerified removeFromSuperview];
-        }
-    } else if (!self.user.linkedInVerified) {
-        self.facebookVerified.frame = self.linkedinVerified.frame;
-        [self.linkedinVerified removeFromSuperview];
-    }
-    
+        
     // if the user has an hourly rate then put it, otherwise it comes up as N/A
     if (self.user.hourlyRate) {
         self.resumeRate.text = self.user.hourlyRate;
@@ -398,159 +381,30 @@ BOOL firstLoad = YES;
 }
 
 - (NSString *)htmlStringWithResumeText {
-    NSMutableArray *resumeHtml = [NSMutableArray array];
-    // beginning of the string is styling info
-    [resumeHtml addObject:@"<style type='text/css'>body {font-family: Helvetica; font-size: 11pt; color: rgb(68,68,68); padding: 5pt 5pt; word-wrap: break-word;} .listing {width: 150pt; padding: 5pt 5pt 5pt 0pt; border-right: 1pt solid #C1C1C1;} .price {padding-left: 5pt;} table {font-size: 11pt; border-collapse: collapse;} th {text-align: left; padding-bottom: 5pt;} td {border-top: 1pt solid #C1C1C1;} a {color: #333;} #more_reviews a {display:inline-block; width: 100%; text-align: center} #more_reviews {padding: 0;margin: 0 0 15px;} </style>\n"];
-    
-    [resumeHtml addObject:[NSString stringWithFormat:@"<p><b>Joined:</b> %@</p>", self.user.join_date]];
-    // add the bio if we have it
-    if (self.user.bio.length > 0) {
-        [resumeHtml addObject:[NSString stringWithFormat:@"<p><b>Bio:</b> %@</p>", self.user.bio]];
-    }
-    
-    // user work information
-    if (self.user.workInformation.count > 0) {
-        // add the title
-        [resumeHtml addObject:@"<p><b>Work</b></p>"];
-        // go through each position in the workInformation array
-        for (NSDictionary *position in self.user.workInformation) {
-            // setup the div for each position
-            [resumeHtml addObject:@"<div>"];
-            // show the title beside the company if we have it
-            if (![[position objectForKey:@"title"] isKindOfClass:[NSNull class]]) {
-                [resumeHtml addObject:[NSString stringWithFormat:@"%@ at %@", [position objectForKey:@"title"], [position objectForKey:@"company"]]];
-            } else {
-                // otherwise just the company
-                [resumeHtml addObject:[position objectForKey:@"company"]];
-            }
-            // if we have a start date show it alongside the end date
-            if (![[position objectForKey:@"startDate"] isKindOfClass:[NSNull class]]) {
-                [resumeHtml addObject:[NSString stringWithFormat:@" from %@ to %@", [position objectForKey:@"startDate"], [position objectForKey:@"endDate"]]];
-            }
-            // close the div
-            [resumeHtml addObject:@"</div>"];
-        }
-    }
-    
-    // user education
-    if (self.user.educationInformation.count > 0) {
-        // add the title
-        [resumeHtml addObject:@"<p><b>Education</b></p>"];
-        // go through each school in educationInformation array (in reverse for the right chronological order)
-        for (NSDictionary *school in [self.user.educationInformation reverseObjectEnumerator]) {
-            // setup the div for each school
-            [resumeHtml addObject:@"<div>"];
-            // put the school name
-            [resumeHtml addObject:[school objectForKey:@"school"]];
-            // if we have an end date show it
-            if (![[school objectForKey:@"endDate"] isKindOfClass:[NSNull class]]) {
-                // show it with the start date if we have it
-                if (![[school objectForKey:@"startDate"] isKindOfClass:[NSNull class]]) {
-                    [resumeHtml addObject:[NSString stringWithFormat:@", %@-%@", [school objectForKey:@"startDate"], [school objectForKey:@"endDate"]]];
-                } else {
-                    // otherwise show it by itself
-                    [resumeHtml addObject:[NSString stringWithFormat:@", %@", [school objectForKey:@"endDate"]]];
-                }
-            }
-            // show the degree if we have it
-            if (![[school objectForKey:@"degree"] isKindOfClass:[NSNull class]]) {
-                // show it with the concentrations if we have them
-                if (![[school objectForKey:@"concentrations"] isKindOfClass:[NSNull class]]) {
-                    [resumeHtml addObject:[NSString stringWithFormat:@"</br>%@, %@", [school objectForKey:@"degree"], [school objectForKey:@"concentrations"]]];
-                } else {
-                    [resumeHtml addObject:[NSString stringWithFormat:@"</br>%@", [school objectForKey:@"degree"]]];
-                }
-            }
-            // otherwise check if we just have the concentration
-            else if (![[school objectForKey:@"concentrations"] isKindOfClass:[NSNull class]]) {
-                [resumeHtml addObject:[NSString stringWithFormat:@"</br>%@", [school objectForKey:@"concentrations"]]];
-            }
-            // close the div
-            [resumeHtml addObject:@"</div>"];
-        }
-    }
-    
-    // add user trust information
-    [resumeHtml addObject:[NSString stringWithFormat:@"<p><b>Trusted by %d people</b></p>", self.user.trusted_by]];
-    
-    // favorite places to work
-    NSArray *checkInHistory = self.user.checkInHistory;
-    if (checkInHistory && [checkInHistory count] > 0) { 
-        [resumeHtml addObject:@"<p><b>Favorite places to work</b>"];
-        int placeCount = 0;
-        for (CPPlace *place in self.user.checkInHistory) { 
-            if (placeCount == 2) { break; } // limit to the top two locations by checkin count 
-            if (placeCount != 0) { [resumeHtml addObject:@"<br/>"]; } // space between checkin locations
-            [resumeHtml addObject:[NSString stringWithFormat:@"<div style='float: left;'>%@</div><div style='float: right;'>", place.name]];
-            if (place.checkinCount == 1) { 
-                [resumeHtml addObject:@"1 Checkin"];                
-            } else if (place.checkinCount > 1) { 
-                [resumeHtml addObject:[NSString stringWithFormat:@"%d Checkins", place.checkinCount]];
-            }
-            [resumeHtml addObject:[NSString stringWithFormat:@"</div><br/><div style='float: left;'>%@</div><br/>", place.formattedAddress]];
-            placeCount++;
-        }
-        [resumeHtml addObject:@"</p>"];
-    }
-    
-    
-    
-    //reviews
-    int total_reviews = [[[[self user] reviews] objectForKey:@"records"] intValue];
-    if (total_reviews > 0) {
-        [resumeHtml addObject:@"<p><b>Reviews</b></p>"];
+    NSMutableArray *reviews = [NSMutableArray arrayWithCapacity:[[self.user.reviews objectForKey:@"rows"] count]];
+    for (NSDictionary *review in [self.user.reviews objectForKey:@"rows"]) {
+        NSMutableDictionary *mutableReview = [NSMutableDictionary dictionaryWithDictionary:review];
         
-        int review_row = 0;
-        
-        for (NSDictionary *review in [[[self user] reviews] objectForKey:@"rows"]) {
-            review_row++;
-            
-            if (review_row == 6) {
-                NSString *more_link = @"<p id='more_reviews'><a href='javascript:document.getElementById(\"more_reviews\").style.display=\"none\";document.getElementById(\"extra_reviews\").style.display=\"block\";'>more reviews</a></p>";
-                [resumeHtml addObject: more_link];
-                [resumeHtml addObject: @"<div style='display: none;' id='extra_reviews'>"];
-            }
-            
-            NSString *ratingImg = @"thumbs-up.png";
-            
-            if ([[review objectForKey:@"rating"] intValue] == -1) {
-                ratingImg = @"thumbs-down.png";
-            } else if ([[review objectForKey:@"is_love"] intValue] == 1) {
-                ratingImg = @"send-love-small.png";
-            }
-            
-            [resumeHtml addObject:[NSString 
-                                   stringWithFormat:@"<p><img src='%@'/> \"%@\"</p>", ratingImg, [review objectForKey:@"review"]]];
+        NSInteger rating = [[review objectForKey:@"rating"] integerValue];
+        if (rating < 0) {
+            [mutableReview setObject:[NSNumber numberWithBool:YES]
+                              forKey:@"isNegative"];
+        } else if (rating > 0) {
+            [mutableReview setObject:[NSNumber numberWithBool:YES]
+                              forKey:@"isPositive"];
         }
         
-        if (review_row > 5) {
-            [resumeHtml addObject: @"</div>"];
-        }
-        
-        [resumeHtml addObject: @"<br/>"];
+        [reviews addObject:mutableReview];
     }
     
-    // show listings as Agent in a table
-    if (self.user.listingsAsAgent.count > 0) {
-        [resumeHtml addObject:@"<table><tr><th>Completed</th><th>Price</th></tr>"];
-        for (NSDictionary *agentListing in self.user.listingsAsAgent) {
-            [resumeHtml addObject:[NSString stringWithFormat:@"<tr><td class='listing'>\"%@\"</td>", [agentListing objectForKey:@"listing"]]];
-            [resumeHtml addObject:[NSString stringWithFormat:@"<td class='price'>$%@</td></tr>", [agentListing objectForKey:@"price"]]];
-        }
-        [resumeHtml addObject:@"</table></br>"];
-    }
-    
-    // show listings as Client in a table
-    if (self.user.listingsAsClient.count > 0) {
-        [resumeHtml addObject:@"<table><tr><th>Purchased</th><th>Price</th></tr>"];
-        for (NSDictionary *clientListing in self.user.listingsAsClient) {
-            [resumeHtml addObject:[NSString stringWithFormat:@"<tr><td class='listing'>\"%@\"</td>", [clientListing objectForKey:@"listing"]]];
-            [resumeHtml addObject:[NSString stringWithFormat:@"<td class='price'>$%@</td></tr>", [clientListing objectForKey:@"price"]]];
-        }
-        [resumeHtml addObject:@"</table></br>"];
-    }
-    // return the HTML by joining the array into a string
-    return [resumeHtml componentsJoinedByString:@""];
+    return [GRMustacheTemplate renderObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                                             self.user, @"user",
+                                             reviews, @"reviews",
+                                             [NSNumber numberWithBool:reviews.count > 0], @"hasAnyReview",
+                                             nil]
+                               fromResource:@"UserResume"
+                                     bundle:nil
+                                      error:NULL];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)aWebView {
