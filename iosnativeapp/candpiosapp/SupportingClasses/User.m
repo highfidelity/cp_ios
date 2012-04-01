@@ -111,43 +111,6 @@
     return firstName;
 }
 
-- (BOOL)hasAnyListingsAsClient {
-    return self.listingsAsClient.count > 0;
-}
-
-- (BOOL)hasAnyListingsAsAgent {
-    return self.listingsAsAgent.count > 0;
-}
-
-- (BOOL)hasAnyWorkInformation {
-    return self.workInformation.count > 0;
-}
-
-- (BOOL)hasAnyEducationInformation {
-    return self.educationInformation.count > 0;;
-}
-
-- (NSMutableArray *)favoritePlaces {
-    NSMutableArray *places = [NSMutableArray arrayWithCapacity:3];
-    
-    int placeCount = 0;
-    for (CPPlace *place in self.checkInHistory) { 
-        if (placeCount == 4) {
-            break;
-        }
-        if (placeCount != 0) {
-            [places addObject:place];
-        }
-        placeCount++;
-    }
-    
-    return places;
-}
-
-- (BOOL)hasAnyFavoritePlaces {
-    return self.favoritePlaces.count > 0;;
-}
-
 -(void)loadUserResumeData:(void (^)(NSError *error))completion {
     
     [CPapi getResumeForUserId:self.userID andCompletion:^(NSDictionary *response, NSError *error) {

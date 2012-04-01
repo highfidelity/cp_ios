@@ -17,7 +17,6 @@
 @property (nonatomic, readonly) int othersHere;
 @property (nonatomic, assign) double distanceFromUser;
 @property (nonatomic) int checkinCount;
-@property (nonatomic, readonly) NSString *checkinCountString;
 @property (nonatomic, readonly) NSString *formattedAddress;
 
 - (NSComparisonResult)sortByDistanceToUser:(CPPlace *)place;
