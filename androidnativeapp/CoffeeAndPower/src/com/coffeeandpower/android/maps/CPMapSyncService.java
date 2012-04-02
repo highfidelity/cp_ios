@@ -9,7 +9,7 @@ import android.net.Uri;
 import com.google.android.maps.GeoPoint;
 
 public class CPMapSyncService extends IntentService {
-	private static String sUriString = 
+	public static String sUriString = 
 			"content://com.coffeeandpower.android.maps.provider/";
 
 	public CPMapSyncService() {
@@ -85,12 +85,11 @@ public class CPMapSyncService extends IntentService {
 					insertValues.put("quad_index", tile.getIndex());
 					insertValues.put("sync_started", System.currentTimeMillis());
 					getContentResolver().insert(syncMapUri, insertValues);
-					CPApi.getCheckedInBoundsOverTime(tileSw, tileNe);
+					CPApi.getCheckedInBoundsOverTime(this,tileSw, tileNe);
 				}
 			}
 		}
-		//TODO if don't have tile data mark db as fetching
-		// so that we only try to fetch once and start fetch
+		//TODO create status codes for db status column
 		
 
 	}

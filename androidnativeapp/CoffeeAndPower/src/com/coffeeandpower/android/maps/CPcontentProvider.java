@@ -183,7 +183,6 @@ public class CPcontentProvider extends ContentProvider {
 
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
-		// TODO Auto-generated method stub
 		String table;
 		int match = sUriMatcher.match(uri);
 		switch(match)
@@ -196,7 +195,11 @@ public class CPcontentProvider extends ContentProvider {
 			table = "sync_map";
 			break;
 		case POINTS:
+			table = "points";
+			break;
 		case CHECKINS:
+			table = "checkins";
+			break;
 		default:
 			return null;
 		}
