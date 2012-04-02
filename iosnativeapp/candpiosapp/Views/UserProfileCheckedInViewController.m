@@ -398,7 +398,7 @@ BOOL firstLoad = YES;
         
         // is this love?
         if (loveNumber == 1) {
-            [mutableReview setObject:[NSNumber numberWithInt:loveNumber] forKey:@"isLove"];
+            [mutableReview setObject:[NSNumber numberWithBool:YES] forKey:@"isLove"];
         }       
         
         [reviews addObject:mutableReview];
