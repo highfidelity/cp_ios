@@ -416,7 +416,8 @@
 {
     UIView *previousUsersView = [[UIView alloc] initWithFrame:CGRectMake(10, yOrigin, self.view.frame.size.width - 20, 113)];
     
-    [self stylingForUserBox:previousUsersView withTitle:@"Have worked here..." forCheckedInUsers:NO];
+    NSString *title = [self.previousUsers count] > 1 ? @"Have worked here..." : @"Has worked here...";
+    [self stylingForUserBox:previousUsersView withTitle:title forCheckedInUsers:NO];
     
     CGRect newFrame = previousUsersView.frame;
     
