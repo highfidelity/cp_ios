@@ -266,7 +266,12 @@
                 {{#reviews}}
                     <li>
                         {{#isPositive}}
-                            <img src="thumbs-up@2x.png" width="16" height="17" />
+                            {{#isLove}}
+                                <img src="send-love-small@2x.png" width="16" height="14" />
+                            {{/isLove}}
+                            {{^isLove}}
+                                <img src="thumbs-up@2x.png" width="16" height="17" />
+                            {{/isLove}}    
                         {{/isPositive}}
                         {{#isNegative}}
                             <img src="thumbs-down@2x.png" width="16" height="17" />

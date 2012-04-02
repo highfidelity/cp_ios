@@ -420,14 +420,8 @@
     else if (indexPath.section == 2) {
         annotation = [missions objectAtIndex:indexPath.row];
     }
-
-    // Add FaceToFace information
-    NSString* haveMet = @"";
-    if (annotation.haveMet) {
-        haveMet = @" (F2F)";
-    }
-    
-    cell.nicknameLabel.text = [annotation.nickname stringByAppendingString:haveMet];
+   
+    cell.nicknameLabel.text = annotation.nickname;
 
     // reset the nickname label since this is a reusable cell
     CGRect nicknameFrameChanger = cell.nicknameLabel.frame;

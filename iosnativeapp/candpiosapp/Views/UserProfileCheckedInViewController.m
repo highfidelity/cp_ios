@@ -394,6 +394,13 @@ BOOL firstLoad = YES;
                               forKey:@"isPositive"];
         }
         
+        NSInteger loveNumber = [[review objectForKey:@"is_love"] integerValue];
+        
+        // is this love?
+        if (loveNumber == 1) {
+            [mutableReview setObject:[NSNumber numberWithInt:loveNumber] forKey:@"isLove"];
+        }       
+        
         [reviews addObject:mutableReview];
     }
     
