@@ -99,6 +99,14 @@
     }
 }
 
+- (NSString *)checkinCountString {
+    if (1 == self.checkinCount) { 
+        return @"1 checkin";
+    }
+    
+    return [NSString stringWithFormat:@"%d checkins", self.checkinCount];
+}
+
 - (NSString*) formattedAddress {
     // format the address from available address components
     NSMutableArray *addressComponents = [NSMutableArray array];
