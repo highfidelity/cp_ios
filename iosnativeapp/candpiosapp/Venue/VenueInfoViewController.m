@@ -192,7 +192,7 @@
         if (userAnnotation.checkedIn) {
             [self addUserAnnotation:userAnnotation toArrayForJobCategory:userAnnotation.majorJobCategory];
             // if the major and minor job categories differ also add this person to the minor category
-            if (![userAnnotation.majorJobCategory isEqualToString:userAnnotation.minorJobCategory]) {
+            if (![userAnnotation.majorJobCategory isEqualToString:userAnnotation.minorJobCategory] && ![userAnnotation.minorJobCategory isEqualToString:@"other"]) {
                 [self addUserAnnotation:userAnnotation toArrayForJobCategory:userAnnotation.minorJobCategory];
             }
         } else {
@@ -208,7 +208,16 @@
     
     // look for currently checked in users to put on screen
     
-    for (NSString *category in [[self.categoryCount keysSortedByValueUsingSelector:@selector(compare:)] reverseObjectEnumerator]) {
+    // make sure the other category will come last, no matter the number of users
+    
+    NSMutableArray *categoriesByCount = [[self.categoryCount keysSortedByValueUsingSelector:@selector(compare:)] mutableCopy];
+    
+    if ([self.categoryCount objectForKey:@"other"]) {
+        [categoriesByCount removeObject:@"other"];
+        [categoriesByCount insertObject:@"other" atIndex:0];
+    }   
+    
+    for (NSString *category in [categoriesByCount reverseObjectEnumerator]) {
         // if the category exists there is at least one user annotation
         // setup the view that will hold them
         
