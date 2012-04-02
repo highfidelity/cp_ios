@@ -375,10 +375,11 @@
             }
         } else {
             if (venue.weeklyCheckinCount > 0) {
-                vcell.venueCheckins.text = [NSString stringWithFormat:@"%d people this week", venue.weeklyCheckinCount];
+                
+                vcell.venueCheckins.text = [NSString stringWithFormat:venue.weeklyCheckinCount == 1 ? @"%d person this week" : @"%d people this week", venue.weeklyCheckinCount];
             } else {
                 if (venue.monthlyCheckinCount > 0) {
-                    vcell.venueCheckins.text = [NSString stringWithFormat:@"%d people this month", venue.monthlyCheckinCount];
+                    vcell.venueCheckins.text = [NSString stringWithFormat:venue.monthlyCheckinCount == 1 ? @"%d person this month" : @"%d people this week", venue.monthlyCheckinCount];
                 } else {
                     vcell.venueCheckins.text = @"";
                 }                
