@@ -136,14 +136,12 @@
 - (NSMutableArray *)favoritePlaces {
     NSMutableArray *places = [NSMutableArray arrayWithCapacity:3];
     
-    int placeCount = 0;
+    int placeCount = 1;
     for (CPPlace *place in self.checkInHistory) { 
         if (placeCount == 4) {
             break;
         }
-        if (placeCount != 0) {
-            [places addObject:place];
-        }
+        [places addObject:place];
         placeCount++;
     }
     
