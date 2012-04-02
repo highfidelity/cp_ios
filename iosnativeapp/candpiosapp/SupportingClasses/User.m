@@ -96,6 +96,12 @@
     _hourlyRate = [hourlyRate stringByDecodingHTMLEntities];
 }
 
+// override bio setter to decode any html entities
+- (void)setBio:(NSString *)bio
+{
+    _bio = [bio stringByDecodingHTMLEntities];
+}
+
 - (NSString *)firstName
 {
     // if the user has a space in their nickname just use the first part
