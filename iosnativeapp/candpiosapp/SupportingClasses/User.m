@@ -223,7 +223,7 @@
                 place.state = [placeDict valueForKey:@"state"];
                 place.zip = [placeDict valueForKey:@"zip"];
                 place.phone = [placeDict valueForKey:@"phone"];
-                place.icon = [placeDict valueForKey:@"icon"];
+                place.photoURL = [placeDict valueForKey:@"photo_url"];
                 [self.checkInHistory addObject:place];
             }
             

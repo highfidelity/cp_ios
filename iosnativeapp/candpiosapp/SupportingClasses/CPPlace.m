@@ -23,6 +23,8 @@
 
 // override setters here to that when we parse JSON to set values we don't set things to null
 
+
+// TODO: find out if there is a JSON parser that will just set these values to nil or empty strings so we don't have to do this everywhere
 - (void)setAddress:(NSString *)address
 {
     if (![address isKindOfClass:[NSNull class]]) {
@@ -75,6 +77,16 @@
     } else {
         _formattedPhone = @"";
     }
+}
+
+- (void)setPhotoURL:(NSString *)photoURL
+{
+    if (![photoURL isKindOfClass:[NSNull class]]) {
+        _photoURL = photoURL;
+    } else {
+        _photoURL = nil;
+    }
+    
 }
 
 // override the getter for othersHere so it just intelligently calculates the value
