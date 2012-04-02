@@ -396,9 +396,9 @@ BOOL firstLoad = YES;
         
         // is this love?
         NSInteger loveNumber = [[review objectForKey:@"is_love"] integerValue];
-        if ( loveNumber == 1) {
+        if ( loveNumber > 1) {
             [mutableReview setObject:[NSNumber numberWithBool:YES] forKey:@"isLove"];
-        } else {
+        } else if (loveNumber < 0) {
             [mutableReview setObject:[NSNumber numberWithBool:YES] forKey:@"isNotLove"];
         }
         
