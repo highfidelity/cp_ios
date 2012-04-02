@@ -26,7 +26,7 @@
         font-weight: normal;
         margin: 0.5em 0;
     }
-    
+        
     table {
         border-collapse: collapse;
     }
@@ -78,6 +78,7 @@
         font-size: 26px;
         font-family: LeagueGothic;
         font-weight: normal;
+        line-height: 26px;
     }
     #favorite-places th .place-street {
         color: rgb(81, 81, 81);
@@ -158,12 +159,12 @@
         width: 100%;
     }
     .listings-as td {
-        border-top: 1px solid #999999;
+        border-top: 1px solid rgba(153, 153, 153, 0.30);
         padding: 10px 5px 10px 0;
     }
     .listings-as th {
-        border-top: 1px solid #999999;
-        border-left: 1px solid #999999;
+        border-top: 1px solid rgba(153, 153, 153, 0.30);
+        border-left: 1px solid rgba(153, 153, 153, 0.30);
         width: 36px;
         padding: 10px 0 10px 10px;
         text-align: left;
@@ -173,11 +174,6 @@
 <body>
     <div id="content">
         {{#user}}
-            <p>
-                <span id="f2f-met">
-                    F2F: <span class="highlite">Met {{trusted_by}} people (trusted by)</span>
-                </span>
-            </p>
 
             {{#bio}}
             <h2 id="summary-header">Summary</h2>
@@ -189,11 +185,9 @@
                 <table id="favorite-places">
                     {{#favoritePlaces}}
                         <tr>
-                            <td><img src="{{#photoURL}}{{photoURL}}{{/photoURL}}{{^photoURL}}texture-diagonal-noise-light@2x.png{{/photoURL}}" width="100" height="100"/></td>
+                            <td><img src="{{#photoURL}}{{photoURL}}{{/photoURL}}{{^photoURL}}picture-coming-soon@2x.jpg{{/photoURL}}" width="100" height="100"/></td>
                             <th>
                                 <h3>{{name}}</h3>
-                                <div class="place-street">{{formattedAddress}}</div>
-                                <div class="place-distance">{{distanceFromUser}} mi away</div>
                                 <div class="place-checkins">{{checkinCountString}}</div>
                             </th>
                         </tr>
@@ -209,13 +203,13 @@
                 {{#facebookVerified}}
                 <tr>
                     <th><img src="network-icon-facebook@2x.png" height="30" width="30" /></th>
-                    <td>220 friends</td>
+                    <td>Facebook</td>
                 </tr>
                 {{/facebookVerified}}
                 {{#linkedInVerified}}
                 <tr>
                     <th><img src="network-icon-linkedin@2x.png" height="30" width="30" /></th>
-                    <td>341 connections</td>
+                    <td>LinkedIn</td>
                 </tr>
                 {{/linkedInVerified}}
             </table>
@@ -296,10 +290,6 @@
                             <th>${{price}}</th>
                         </tr>
                     {{/listingsAsAgent}}
-                    <tr>
-                        <td>I was surprised! I was surprised! I was surprised! I was surprised!</td>
-                        <th>$50</th>
-                    </tr>
                 </table>
             {{/hasAnyListingsAsAgent}}
 
@@ -312,10 +302,6 @@
                             <th>${{price}}</th>
                         </tr>
                     {{/listingsAsClient}}
-                    <tr>
-                        <td>I was surprised! I was surprised! I was surprised! I was surprised!</td>
-                        <th>$50</th>
-                    </tr>
                 </table>
             {{/hasAnyListingsAsClient}}
         {{/user}}
