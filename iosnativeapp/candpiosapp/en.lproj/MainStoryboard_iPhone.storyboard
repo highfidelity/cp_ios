@@ -245,11 +245,11 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FrM-U4-07M" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="Hui-QQ-OPh" customClass="CheckInDetailsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6Ja-Sq-l1C">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="eHy-bY-Qma" customClass="TPKeyboardAvoidingScrollView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="MQF-9M-cU0">
@@ -1343,7 +1343,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view opaque="NO" tag="3" contentMode="scaleToFill" id="O9d-Ah-OKE" userLabel="people_menu">
-                                            <rect key="frame" x="38" y="0.0" width="85" height="34.5"/>
+                                            <rect key="frame" x="65" y="0.0" width="85" height="34.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="P0g-Hw-7Fh">
@@ -1369,7 +1369,7 @@
                                             <color key="backgroundColor" white="0.33333333333333331" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <view alpha="0.40000000000000002" tag="4" contentMode="scaleToFill" id="xvd-Pa-Ci6" userLabel="places_menu">
-                                            <rect key="frame" x="197" y="0.0" width="85" height="34"/>
+                                            <rect key="frame" x="168" y="0.0" width="85" height="34"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Uag-19-h96">
@@ -1400,11 +1400,11 @@
                                             <color key="backgroundColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                                         </view>
                                         <imageView userInteractionEnabled="NO" tag="31" contentMode="scaleToFill" image="grey-arrow-small.png" id="BOI-Dk-4qB" userLabel="people_arrow">
-                                            <rect key="frame" x="72" y="31" width="16" height="4"/>
+                                            <rect key="frame" x="106" y="31" width="16" height="4"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <imageView hidden="YES" userInteractionEnabled="NO" tag="41" contentMode="scaleToFill" image="grey-arrow-small.png" id="fwp-gu-Bek" userLabel="places_arrow">
-                                            <rect key="frame" x="232" y="31" width="16" height="4"/>
+                                            <rect key="frame" x="193" y="31" width="16" height="4"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                     </subviews>
@@ -1444,14 +1444,14 @@
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Checkin name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="4J4-w6-UoS" userLabel="Checkin name">
-                                            <rect key="frame" x="123" y="90" width="162" height="21"/>
+                                            <rect key="frame" x="123" y="92" width="116" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                             <color key="textColor" red="0.58823529411764708" green="0.58823529411764708" blue="0.58823529411764708" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text=".5mi away" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="sre-9B-55g" userLabel="distance label">
-                                            <rect key="frame" x="235" y="90" width="76" height="21"/>
+                                            <rect key="frame" x="235" y="93" width="76" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                             <color key="textColor" red="0.85882359740000003" green="0.85882359740000003" blue="0.85882359740000003" alpha="1" colorSpace="deviceRGB"/>
@@ -1464,10 +1464,18 @@
                                             <color key="textColor" red="0.24313727021217346" green="0.51372551918029785" blue="0.5058823823928833" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Major Job Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="bhX-UX-DQi" userLabel="Checkin name">
+                                            <rect key="frame" x="123" y="42" width="162" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                            <color key="textColor" red="0.58823529409999997" green="0.58823529409999997" blue="0.58823529409999997" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
+                                    <outlet property="categoryLabel" destination="bhX-UX-DQi" id="YUK-58-mvn"/>
                                     <outlet property="checkInCountLabel" destination="46D-2C-ktR" id="4AO-hc-Tzz"/>
                                     <outlet property="checkInLabel" destination="4J4-w6-UoS" id="lIg-bQ-SII"/>
                                     <outlet property="distanceLabel" destination="sre-9B-55g" id="fRc-jt-ima"/>
@@ -1580,7 +1588,7 @@
                                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                             </view>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="30" id="U01-TJ-tqr">
-                                                <rect key="frame" x="35" y="4" width="250" height="29"/>
+                                                <rect key="frame" x="35" y="2" width="250" height="36"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1804,6 +1812,7 @@
         <class className="UserTableViewCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UserTableViewCell.h"/>
             <relationships>
+                <relationship kind="outlet" name="categoryLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="checkInCountLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="checkInLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="distanceLabel" candidateClass="UILabel"/>
@@ -1840,8 +1849,8 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="eP3-nO-SO2"/>
         <segue reference="JVj-Fy-LMl"/>
-        <segue reference="He7-Ay-arZ"/>
+        <segue reference="xiG-dv-2vC"/>
+        <segue reference="GRz-1D-Hph"/>
     </inferredMetricsTieBreakers>
 </document>

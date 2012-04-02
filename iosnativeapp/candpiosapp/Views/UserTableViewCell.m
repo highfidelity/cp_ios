@@ -10,7 +10,7 @@
 
 @implementation UserTableViewCell
 
-@synthesize nicknameLabel, statusLabel, distanceLabel, checkInLabel, checkInCountLabel, profilePictureImageView;
+@synthesize nicknameLabel, categoryLabel, statusLabel, distanceLabel, checkInLabel, checkInCountLabel, profilePictureImageView;
 
 
 - (NSString *) reuseIdentifier {

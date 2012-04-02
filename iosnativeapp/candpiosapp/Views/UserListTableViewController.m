@@ -428,6 +428,20 @@
     
     cell.nicknameLabel.text = [annotation.nickname stringByAppendingString:haveMet];
 
+    // reset the nickname label since this is a reusable cell
+    CGRect nicknameFrameChanger = cell.nicknameLabel.frame;
+    nicknameFrameChanger.origin.y = 15;
+    // show the user's major job category (unless it's other)
+    if (![annotation.majorJobCategory isEqualToString:@"other"]) {
+        cell.categoryLabel.text = [annotation.majorJobCategory capitalizedString];
+        
+    } else {
+        cell.categoryLabel.text = @"";
+        nicknameFrameChanger.origin.y += 16;        
+    }
+    
+    cell.nicknameLabel.frame = nicknameFrameChanger;
+    
     cell.statusLabel.text = @"";
     if (![annotation.status isEqualToString:@""]) {
         cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",[annotation.status stringByDecodingHTMLEntities]];
@@ -455,6 +469,9 @@
     {
         imageView.image = [CPUIHelper defaultProfileImage];
     }
+    
+    
+    
     
     return cell;
 }

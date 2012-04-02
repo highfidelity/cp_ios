@@ -18,6 +18,7 @@
 }
 
 @property (nonatomic, retain) IBOutlet UILabel *nicknameLabel;
+@property (nonatomic, retain) IBOutlet UILabel *categoryLabel;
 @property (nonatomic, retain) IBOutlet UILabel *statusLabel;
 @property (nonatomic, retain) IBOutlet UILabel *distanceLabel;
 @property (nonatomic, retain) IBOutlet UILabel *checkInLabel;
