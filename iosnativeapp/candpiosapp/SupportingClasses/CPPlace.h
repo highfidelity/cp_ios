@@ -17,6 +17,8 @@
 @property (nonatomic, readonly) int othersHere;
 @property (nonatomic, assign) double distanceFromUser;
 @property (nonatomic) int checkinCount;
+@property (nonatomic, assign) int weeklyCheckinCount;
+@property (nonatomic, assign) int monthlyCheckinCount;
 @property (nonatomic, readonly) NSString *checkinCountString;
 @property (nonatomic, readonly) NSString *formattedAddress;
 

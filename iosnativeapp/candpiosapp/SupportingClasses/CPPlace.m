@@ -20,6 +20,9 @@
 @synthesize othersHere = _othersHere;
 @synthesize distanceFromUser = _distanceFromUser;
 @synthesize checkinCount = _checkinCount;
+@synthesize weeklyCheckinCount = _weeklyCheckinCount;
+@synthesize monthlyCheckinCount = _monthlyCheckinCount;
+
 
 // override setters here to that when we parse JSON to set values we don't set things to null
 

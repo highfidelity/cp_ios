@@ -114,6 +114,9 @@
                                 place.phone = [item valueForKey:@"phone"];
                                 place.formattedPhone = [item valueForKey:@"formatted_phone"];
                                 place.checkinCount = [[item valueForKey:@"checkins"] integerValue];
+                                place.weeklyCheckinCount = [[item valueForKey:@"checkins_for_week"] integerValue];
+                                place.monthlyCheckinCount = [[item valueForKey:@"checkins_for_month"]
+                                                             integerValue];
                                 place.distanceFromUser = [[item valueForKey:@"distance"] doubleValue];
                                 place.lat = [[item valueForKey:@"lat"] doubleValue];
                                 place.lng = [[item valueForKey:@"lng"] doubleValue];
@@ -371,7 +374,16 @@
                 vcell.venueCheckins.text = [NSString stringWithFormat:@"%d people here now", venue.checkinCount];
             }
         } else {
-            vcell.venueCheckins.text = @"";
+            if (venue.weeklyCheckinCount > 0) {
+                vcell.venueCheckins.text = [NSString stringWithFormat:@"%d people this week", venue.weeklyCheckinCount];
+            } else {
+                if (venue.monthlyCheckinCount > 0) {
+                    vcell.venueCheckins.text = [NSString stringWithFormat:@"%d people this month", venue.monthlyCheckinCount];
+                } else {
+                    vcell.venueCheckins.text = @"";
+                }                
+            }
+            
         }
 
         if (![venue.photoURL isKindOfClass:[NSNull class]]) {
@@ -423,6 +435,7 @@
     cell.distanceLabel.text = annotation.distanceTo;
 
     cell.checkInLabel.text = annotation.venueName;
+    
     if (annotation.checkinCount == 1) {
         cell.checkInCountLabel.text = [NSString stringWithFormat:@"%d Checkin",annotation.checkinCount];
     }
