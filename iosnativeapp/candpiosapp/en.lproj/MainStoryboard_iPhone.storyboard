@@ -91,7 +91,7 @@
                                 <rect key="frame" x="273" y="5" width="42" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="people-list.png">
+                                <state key="normal" image="people-place-list.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1649,7 +1649,7 @@
         <image name="map-shadow.png" width="10" height="320"/>
         <image name="others-at-venue.png" width="16" height="16"/>
         <image name="people-icon.png" width="30" height="20"/>
-        <image name="people-list.png" width="42" height="29"/>
+        <image name="people-place-list.png" width="42" height="29"/>
         <image name="picture-coming-soon.jpg" width="100" height="100"/>
         <image name="places-icon.png" width="32" height="20"/>
         <image name="send-love.png" width="75" height="75"/>
@@ -1849,8 +1849,8 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="sCE-rt-LRg"/>
         <segue reference="JVj-Fy-LMl"/>
-        <segue reference="xiG-dv-2vC"/>
         <segue reference="GRz-1D-Hph"/>
     </inferredMetricsTieBreakers>
 </document>
