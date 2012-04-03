@@ -1404,7 +1404,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <imageView hidden="YES" userInteractionEnabled="NO" tag="41" contentMode="scaleToFill" image="grey-arrow-small.png" id="fwp-gu-Bek" userLabel="places_arrow">
-                                            <rect key="frame" x="193" y="31" width="16" height="4"/>
+                                            <rect key="frame" x="206" y="31" width="16" height="4"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                     </subviews>
@@ -1651,7 +1651,7 @@
         <image name="people-icon.png" width="30" height="20"/>
         <image name="people-place-list.png" width="42" height="29"/>
         <image name="picture-coming-soon.jpg" width="100" height="100"/>
-        <image name="places-icon.png" width="32" height="20"/>
+        <image name="places-icon.png" width="30" height="19"/>
         <image name="send-love.png" width="75" height="75"/>
         <image name="settings-button-3.png" width="42" height="29"/>
         <image name="vector-lock.png" width="13" height="13"/>
@@ -1849,8 +1849,8 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="sCE-rt-LRg"/>
         <segue reference="JVj-Fy-LMl"/>
+        <segue reference="He7-Ay-arZ"/>
         <segue reference="GRz-1D-Hph"/>
     </inferredMetricsTieBreakers>
 </document>
