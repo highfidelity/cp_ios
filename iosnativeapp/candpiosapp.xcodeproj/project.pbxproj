@@ -337,8 +337,6 @@
 		E4906A9B151D53780095C72F /* people-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4906A93151D53780095C72F /* people-icon@2x.png */; };
 		E4906A9C151D53780095C72F /* picture-coming-soon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E4906A94151D53780095C72F /* picture-coming-soon.jpg */; };
 		E4906A9D151D53780095C72F /* picture-coming-soon@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E4906A95151D53780095C72F /* picture-coming-soon@2x.jpg */; };
-		E4906A9E151D53780095C72F /* places-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E4906A96151D53780095C72F /* places-icon.png */; };
-		E4906A9F151D53780095C72F /* places-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4906A97151D53780095C72F /* places-icon@2x.png */; };
 		E4B21B2514F5B8FF00144348 /* BalanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B21B2414F5B8FF00144348 /* BalanceViewController.m */; };
 		E4C35C4114F1323A009B6DBF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C35C4014F1323A009B6DBF /* AudioToolbox.framework */; };
 		E4E16DA414DDEF26004E4586 /* UserProfileCheckedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E16DA414DDEF26004E4585 /* UserProfileCheckedInViewController.m */; };
@@ -891,8 +889,6 @@
 		E4906A93151D53780095C72F /* people-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "people-icon@2x.png"; path = "Venue/images/people-icon@2x.png"; sourceTree = "<group>"; };
 		E4906A94151D53780095C72F /* picture-coming-soon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "picture-coming-soon.jpg"; path = "Venue/images/picture-coming-soon.jpg"; sourceTree = "<group>"; };
 		E4906A95151D53780095C72F /* picture-coming-soon@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "picture-coming-soon@2x.jpg"; path = "Venue/images/picture-coming-soon@2x.jpg"; sourceTree = "<group>"; };
-		E4906A96151D53780095C72F /* places-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "places-icon.png"; path = "Venue/images/places-icon.png"; sourceTree = "<group>"; };
-		E4906A97151D53780095C72F /* places-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "places-icon@2x.png"; path = "Venue/images/places-icon@2x.png"; sourceTree = "<group>"; };
 		E4B21B2314F5B8FF00144348 /* BalanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BalanceViewController.h; path = Views/BalanceViewController.h; sourceTree = "<group>"; };
 		E4B21B2414F5B8FF00144348 /* BalanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BalanceViewController.m; path = Views/BalanceViewController.m; sourceTree = "<group>"; };
 		E4C35C4014F1323A009B6DBF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1974,8 +1970,6 @@
 				E4906A93151D53780095C72F /* people-icon@2x.png */,
 				E4906A94151D53780095C72F /* picture-coming-soon.jpg */,
 				E4906A95151D53780095C72F /* picture-coming-soon@2x.jpg */,
-				E4906A96151D53780095C72F /* places-icon.png */,
-				E4906A97151D53780095C72F /* places-icon@2x.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -2251,8 +2245,6 @@
 				E4906A9B151D53780095C72F /* people-icon@2x.png in Resources */,
 				E4906A9C151D53780095C72F /* picture-coming-soon.jpg in Resources */,
 				E4906A9D151D53780095C72F /* picture-coming-soon@2x.jpg in Resources */,
-				E4906A9E151D53780095C72F /* places-icon.png in Resources */,
-				E4906A9F151D53780095C72F /* places-icon@2x.png in Resources */,
 				E451C542151E907900843852 /* check-out.png in Resources */,
 				E451C543151E907900843852 /* check-out@2x.png in Resources */,
 				53B6C4D2152108B5002934B8 /* place-location.png in Resources */,

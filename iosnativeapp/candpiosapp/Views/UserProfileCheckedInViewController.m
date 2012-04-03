@@ -44,7 +44,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *resumeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *resumeRate;
 @property (weak, nonatomic) IBOutlet UILabel *resumeEarned;
-@property (weak, nonatomic) IBOutlet UILabel *resumeSpent;
+@property (weak, nonatomic) IBOutlet UILabel *loveReceived;
 @property (weak, nonatomic) IBOutlet UIWebView *resumeWebView;
 @property (weak, nonatomic) IBOutlet UIButton *plusButton;
 @property (weak, nonatomic) IBOutlet UIButton *minusButton;
@@ -91,7 +91,7 @@
 @synthesize resumeLabel = _resumeLabel;
 @synthesize resumeRate = _resumeRate;
 @synthesize resumeEarned = _resumeEarned;
-@synthesize resumeSpent = _resumeSpent;
+@synthesize loveReceived = _loveReceived;
 @synthesize resumeWebView = _resumeWebView;
 @synthesize plusButton = _plusButton;
 @synthesize minusButton = _minusButton;
@@ -256,7 +256,7 @@ BOOL firstLoad = YES;
     [self setResumeView:nil];
     [self setResumeRate:nil];
     [self setResumeEarned:nil];
-    [self setResumeSpent:nil];
+    [self setLoveReceived:nil];
     [self setScrollView:nil];
     [self setResumeWebView:nil];
     [self setPlusButton:nil];
@@ -325,8 +325,9 @@ BOOL firstLoad = YES;
     // show total spent and total earned   
     NSNumberFormatter *decimalFormatter = [[NSNumberFormatter alloc] init];
     [decimalFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    [decimalFormatter setMaximumFractionDigits:0];
     self.resumeEarned.text = [@"$" stringByAppendingString:[decimalFormatter stringFromNumber:[NSNumber numberWithDouble:self.user.totalEarned]]];
-    self.resumeSpent.text = [@"$" stringByAppendingString:[decimalFormatter stringFromNumber:[NSNumber numberWithDouble:self.user.totalSpent]]];
+    self.loveReceived.text = [self.user.reviews objectForKey:@"love_received"];
     
     // load html into the bottom of the resume view for all the user data
     NSString *path = [[NSBundle mainBundle] bundlePath];

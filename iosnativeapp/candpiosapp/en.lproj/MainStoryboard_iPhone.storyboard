@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="86X-eE-gGo">
     <dependencies>
         <deployment version="1280" defaultVersion="1296" identifier="iOS"/>
         <development version="4200" defaultVersion="4200" identifier="xcode"/>
@@ -715,7 +715,7 @@
                                                         <rect key="frame" x="201" y="1" width="99" height="41"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="SPENT:" lineBreakMode="tailTruncation" minimumFontSize="10" id="fcY-jn-vm7">
+                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="LOVE:" lineBreakMode="tailTruncation" minimumFontSize="10" id="fcY-jn-vm7">
                                                                 <rect key="frame" x="11" y="0.0" width="54" height="21"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
@@ -896,7 +896,7 @@
                         <outlet property="resumeEarned" destination="dH1-gE-4GK" id="xMe-5f-tPU"/>
                         <outlet property="resumeLabel" destination="o28-BY-NCw" id="lI9-he-gKj"/>
                         <outlet property="resumeRate" destination="ogr-c7-cbr" id="910-be-Qpx"/>
-                        <outlet property="resumeSpent" destination="BZf-Y3-LMC" id="5Vu-gQ-HKH"/>
+                        <outlet property="loveReceived" destination="BZf-Y3-LMC" id="5Vu-gQ-HKH"/>
                         <outlet property="resumeView" destination="I6X-e7-zqf" id="LDi-py-HjC"/>
                         <outlet property="resumeWebView" destination="b0G-FA-LgU" id="DjX-Py-qAU"/>
                         <outlet property="reviewButton" destination="XhX-kM-cH9" id="gnq-KH-WUN"/>
@@ -1651,7 +1651,7 @@
         <image name="people-icon.png" width="30" height="20"/>
         <image name="people-place-list.png" width="42" height="29"/>
         <image name="picture-coming-soon.jpg" width="100" height="100"/>
-        <image name="places-icon.png" width="30" height="19"/>
+        <image name="places-icon.png" width="32" height="20"/>
         <image name="send-love.png" width="75" height="75"/>
         <image name="settings-button-3.png" width="42" height="29"/>
         <image name="vector-lock.png" width="13" height="13"/>
@@ -1793,7 +1793,7 @@
                 <relationship kind="outlet" name="resumeEarned" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="resumeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="resumeRate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="resumeSpent" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="loveReceived" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="resumeView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="resumeWebView" candidateClass="UIWebView"/>
                 <relationship kind="outlet" name="reviewButton" candidateClass="UIButton"/>
