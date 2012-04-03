@@ -211,20 +211,26 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     // See what notifications the user has set and push to Flurry
     UIRemoteNotificationType types = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
     NSMutableDictionary *flurryParams = [[NSMutableDictionary alloc] init];
+    NSString *alertValue = [[NSString alloc] init];
+
     if (types == UIRemoteNotificationTypeNone) {
-        [flurryParams setValue:@"1" forKey:@"None"];
+        alertValue = @"None";
     }
-    if ((types & UIRemoteNotificationTypeBadge) == UIRemoteNotificationTypeBadge) {
-        [flurryParams setValue:@"1" forKey:@"Badges"];
+    else
+    {
+        if ((types & UIRemoteNotificationTypeBadge) == UIRemoteNotificationTypeBadge) {
+            alertValue = @"+Badges";
+        }
+        if ((types & UIRemoteNotificationTypeAlert) == UIRemoteNotificationTypeAlert) {
+            alertValue = [alertValue stringByAppendingString:@"+Alerts"];
+        }
+        if ((types & UIRemoteNotificationTypeSound) == UIRemoteNotificationTypeSound) {
+            alertValue = [alertValue stringByAppendingString:@"+Sounds"];
+        }
     }
-    if ((types & UIRemoteNotificationTypeAlert) == UIRemoteNotificationTypeAlert) {
-        [flurryParams setValue:@"1" forKey:@"Alerts"];
-    }
-    if ((types & UIRemoteNotificationTypeAlert) == UIRemoteNotificationTypeSound) {
-        [flurryParams setValue:@"1" forKey:@"Sounds"];
-    }
+    [flurryParams setValue:alertValue forKey:@"Notifications"];
     [FlurryAnalytics logEvent:@"Notifications_Enabled" withParameters:flurryParams];
-    NSLog(@"Notification types: %d", types);
+    NSLog(@"Notification types: %@", flurryParams);
     
 	// load the facebook api
 	facebook = [[Facebook alloc] initWithAppId:kFacebookAppId 
