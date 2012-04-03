@@ -277,8 +277,13 @@
                             <img src="thumbs-down@2x.png" width="16" height="17" />
                         {{/isNegative}}
                         <div class="review">
+                            {{#isLove}}
+                            <div>from {{author}}: "{{review}}"</div>
+                            {{/isLove}}
+                            {{^isLove}}
                             <div>{{review}}</div>
                             <div>{{skill}}</div>
+                            {{/isLove}}
                         </div>
                     </li>
                 {{/reviews}}
