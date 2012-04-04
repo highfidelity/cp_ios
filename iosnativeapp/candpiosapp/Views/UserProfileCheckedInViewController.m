@@ -549,6 +549,24 @@ BOOL firstLoad = YES;
     [reviewParams setObject:respUserId forKey:@"recipientID"];
     [reviewParams setObject:_reviewDescription.text forKey:@"reviewText"];
     
+    if ([AppDelegate instance].settings.hasLocation) {
+        
+        [reviewParams setValue:[NSString stringWithFormat:@"%.7lf",
+                                [AppDelegate instance].settings.lastKnownLocation.coordinate.latitude]
+                        forKey:@"lat"];
+        
+        [reviewParams setValue:[NSString stringWithFormat:@"%.7lf",
+                                [AppDelegate instance].settings.lastKnownLocation.coordinate.longitude]
+                        forKey:@"lng"];   
+    }
+    
+    NSString *foursquareId = DEFAULTS(object, kUDCheckedInVenueID);
+    if ([CPAppDelegate userCheckedIn] && [foursquareId class] != [NSNull class]) {
+        [reviewParams setObject:foursquareId forKey:@"foursquare"];
+    }
+    
+    
+    
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
                                                             path:@"reviews.php"
                                                       parameters:reviewParams];

@@ -1,6 +1,7 @@
 #import "CPMapView.h"
 #import "OCAlgorithms.h"
 #import "OCAnnotation.h"
+#import "OCDistance.h"
 
 @interface CPMapView (private)
 - (void)initSetUp;

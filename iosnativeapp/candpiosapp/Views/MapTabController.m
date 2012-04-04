@@ -819,7 +819,7 @@ BOOL clearLocations = NO;
        userLocation.location.coordinate.longitude != 0)
 	{
 		// save the location for the next time
-		[AppDelegate instance].settings.hasLocation= true;
+		[AppDelegate instance].settings.hasLocation = true;
 		[AppDelegate instance].settings.lastKnownLocation = userLocation.location;
 		[[AppDelegate instance] saveSettings];
 		
