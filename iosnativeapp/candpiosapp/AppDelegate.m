@@ -229,7 +229,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
         }
     }
     [flurryParams setValue:alertValue forKey:@"Notifications"];
-    [FlurryAnalytics logEvent:@"Notifications_Enabled" withParameters:flurryParams];
+    [FlurryAnalytics logEvent:@"enabled_notifications" withParameters:flurryParams];
     NSLog(@"Notification types: %@", flurryParams);
     
 	// load the facebook api
