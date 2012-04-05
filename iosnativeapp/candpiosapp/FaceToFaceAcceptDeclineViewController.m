@@ -71,8 +71,7 @@
     // current implementation seems to work but child view controller setup would be cleaner
     
     // Get the main storyboard that has the UserProfileViewController
-    UIStoryboard *mainStory = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
-    self.userProfile = [mainStory instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
+    self.userProfile = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
     // tell that view controller when it loads that it's loading for a F2F Invite
     self.userProfile.isF2FInvite = YES;
     // set the user on that view controller to the user we just got back

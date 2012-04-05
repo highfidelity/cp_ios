@@ -13,6 +13,7 @@
 #import "UAirship.h"
 #import "UAPush.h"
 #import "SettingsMenuController.h"
+#import "CPTabBarController.h"
 
 // Constants have been moved to CPConstants.m
 
@@ -29,7 +30,7 @@
 @property (strong, nonatomic) SignupController *facebookLoginController;
 @property (strong, nonatomic, readonly) AFHTTPClient *urbanAirshipClient;
 @property (strong, nonatomic) SettingsMenuController *settingsMenuController;
-@property (strong, nonatomic) UINavigationController *rootNavigationController;
+@property (strong, nonatomic) CPTabBarController *tabBarController;
 @property (readonly) BOOL userCheckedIn;
 @property (strong) NSTimer *checkOutTimer;
            
@@ -39,11 +40,10 @@
 -(void)storeUserLoginDataFromDictionary:(NSDictionary *)userDictionary;
 -(void)saveCurrentUserToUserDefaults:(User *)user;
 -(User *)currentUser;
--(void)hideCheckInButton;
--(void)showCheckInButton;
 - (void)refreshCheckInButton;
 - (void)setCheckedOut;
 -(void)startCheckInClockHandAnimation;
 -(void)stopCheckInClockHandAnimation;
+- (void)showSignupModalFromViewController:(UIViewController *)viewController animated:(BOOL)animated;
 void uncaughtExceptionHandler(NSException *exception);
 @end

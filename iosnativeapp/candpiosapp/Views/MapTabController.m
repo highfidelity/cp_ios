@@ -200,8 +200,6 @@ BOOL clearLocations = NO;
 {
 	[super viewDidAppear:animated];
 	self.mapHasLoaded = YES;
-    
-    [[AppDelegate instance] showCheckInButton];
 
     // Update for login name in header field
     [[AppDelegate instance].settingsMenuController.tableView reloadData];
@@ -395,8 +393,7 @@ BOOL clearLocations = NO;
 
 -(void)loginButtonTapped
 {
-	SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
-	[self.navigationController pushViewController:controller animated:YES];
+	[CPAppDelegate showSignupModalFromViewController:self animated:YES];
 }
 
 -(void)logoutButtonTapped
@@ -743,10 +740,9 @@ BOOL clearLocations = NO;
         [[segue destinationViewController] setUser:selectedUser];
     }
     else if ([[segue identifier] isEqualToString:@"ShowUserListTable"]) {
-        [[segue destinationViewController] setTitleForList: @"People"];
         [[segue destinationViewController] setListType:0];
         [[segue destinationViewController] setCurrentVenue:nil];
-        [[segue destinationViewController] setMissions: [fullDataset.annotations mutableCopy]];
+        [[segue destinationViewController] setUsers: [fullDataset.annotations mutableCopy]];
         [[segue destinationViewController] setDelegate:self];
         [[segue destinationViewController] setMapBounds:[mapView visibleMapRect]];
     }
@@ -761,9 +757,8 @@ BOOL clearLocations = NO;
             [[segue destinationViewController] setCurrentVenue:nil];
         }
         
-        [[segue destinationViewController] setTitleForList: tappedObj.title];
         [[segue destinationViewController] setListType:1];
-        [[segue destinationViewController] setMissions: [annotations mutableCopy]];
+        [[segue destinationViewController] setUsers: [annotations mutableCopy]];
         [[segue destinationViewController] setDelegate:self];
         [[segue destinationViewController] setMapBounds:[mapView visibleMapRect]];
     }

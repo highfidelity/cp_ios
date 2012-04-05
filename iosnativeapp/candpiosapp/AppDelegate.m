@@ -29,7 +29,7 @@
 @synthesize facebookLoginController;
 @synthesize urbanAirshipClient;
 @synthesize settingsMenuController;
-@synthesize rootNavigationController;
+@synthesize tabBarController;
 @synthesize userCheckedIn = _userCheckedIn;
 @synthesize checkOutTimer = _checkOutTimer;
 
@@ -55,100 +55,14 @@
 
 - (void)startCheckInClockHandAnimation
 {
-    // grab the check in button
-    UIButton *checkInButton = (UIButton *)[self.rootNavigationController.view viewWithTag:901];
-
     // spin the clock hand
-    [CPUIHelper spinView:[checkInButton viewWithTag:903] duration:15 repeatCount:MAXFLOAT clockwise:YES timingFunction:nil];
+    [CPUIHelper spinView:[self.tabBarController.centerButton viewWithTag:903] duration:15 repeatCount:MAXFLOAT clockwise:YES timingFunction:nil];
 }
 
 - (void)stopCheckInClockHandAnimation
 {
-    // grab the check in button
-    UIButton *checkInButton = (UIButton *)[self.rootNavigationController.view viewWithTag:901];
     // stop the clock hand spin
-    [[checkInButton viewWithTag:903].layer removeAllAnimations];
-}
-
-- (void)showCheckInButton {
-    UIButton *checkInButton;
-    if ((checkInButton = (UIButton *)[self.rootNavigationController.view viewWithTag:901])) {
-        checkInButton.alpha = 1.0;
-        checkInButton.userInteractionEnabled = YES;
-        UIImageView *banner = (UIImageView *)[self.rootNavigationController.view viewWithTag:902];
-        if (!DEFAULTS(bool, kUDFirstCheckIn)) {
-            // we also have to show the banner
-            banner.alpha = 1.0;
-        } else {
-            // otherwise we remove it (if it exists)
-            [banner removeFromSuperview];
-        }
-    } else {
-        checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        checkInButton.backgroundColor = [UIColor clearColor];
-        checkInButton.frame = CGRectMake(235, 375, 75, 75);
-        [checkInButton addTarget:self action:@selector(checkInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        checkInButton.tag = 901;
-        
-        if (!DEFAULTS(bool, kUDFirstCheckIn)) {
-            // this user hasn't checked in ever (according to flag in NSUserDefaults)
-            UIImageView *helpBanner = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"help-flag-check-in.png"]];
-            
-            CGRect bannerFrame = helpBanner.frame;
-            bannerFrame.origin.x = checkInButton.frame.origin.x - (bannerFrame.size.width / 1.75) - 3;
-            bannerFrame.origin.y = checkInButton.frame.origin.y + (checkInButton.frame.size.height / 2) - (bannerFrame.size.height / 2);
-            helpBanner.frame = bannerFrame;
-            
-            helpBanner.tag = 902;        
-            [self.rootNavigationController.view addSubview:helpBanner];
-        }
-        
-        UIImageView *clockHand = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"check-in-clock-hand.png"]];
-        CGRect handFrame = clockHand.frame;
-        handFrame.origin.x = 28;
-        handFrame.origin.y = 24;
-        clockHand.frame = handFrame;
-        clockHand.tag = 903;
-        [checkInButton addSubview:clockHand];
-        
-        [self.rootNavigationController.view addSubview:checkInButton];
-        [self refreshCheckInButton];
-    }
-    // spin the clock hand if the user is currently checked in
-    // Commenting this out for now until the design is set - birarda
-//    NSNumber *checkoutEpoch = DEFAULTS(object, kUDCheckoutTime);
-//    if ([checkoutEpoch intValue] > [[NSDate date]timeIntervalSince1970]) {
-//        // user is still checked in so spin the hand
-//        [self startCheckInClockHandAnimation];
-//    } else {
-//        [self stopCheckInClockHandAnimation];
-//    }
-}
-
-- (void)hideCheckInButton {
-    UIButton *checkInButton = (UIButton *)[self.rootNavigationController.view viewWithTag:901];
-    checkInButton.alpha = 0.0;
-    checkInButton.userInteractionEnabled = NO;
-    if (!DEFAULTS(bool, kUDFirstCheckIn)) {
-        // we also have to hide the banner
-        UIImageView *banner = (UIImageView *)[self.rootNavigationController.view viewWithTag:902];
-        banner.alpha = 0.0;
-    }
-}
-
-
-- (void)refreshCheckInButton 
-{
-    UIButton *checkInButton = (UIButton *)[self.rootNavigationController.view viewWithTag:901];
-    if (checkInButton) {
-        if (self.userCheckedIn) {
-            [checkInButton setBackgroundImage:[UIImage imageNamed:@"check-out.png"] forState:UIControlStateNormal];
-            [[checkInButton viewWithTag:903] setHidden:YES];
-        } else {
-            [checkInButton setBackgroundImage:[UIImage imageNamed:@"check-in.png"] forState:UIControlStateNormal];
-            [[checkInButton viewWithTag:903] setHidden:NO];
-        }
-    }
+    [[self.tabBarController.centerButton viewWithTag:903].layer removeAllAnimations];
 }
 
 - (void)setCheckedOut
@@ -176,10 +90,36 @@
         [alert show];
         
     } else {
-        [self.rootNavigationController performSegueWithIdentifier:@"ShowCheckInListTable" sender:self];
+        UINavigationController *checkInNC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+        [self.tabBarController presentModalViewController:checkInNC animated:YES];
     }
 }
 
+- (void)refreshCheckInButton 
+{
+    // change the image and the text on the tab bar item
+    if (self.userCheckedIn) {
+        // start animating the clock hand
+        [self startCheckInClockHandAnimation];
+        [self.tabBarController.centerButton setBackgroundImage:[UIImage imageNamed:@"tab-check-out.png"] forState:UIControlStateNormal];
+    } else {
+        // stop animating the clock hand
+        [self stopCheckInClockHandAnimation];
+        [self.tabBarController.centerButton setBackgroundImage:[UIImage imageNamed:@"tab-check-in.png"] forState:UIControlStateNormal];
+    }
+}
+
+# pragma mark - Signup 
+
+- (void)showSignupModalFromViewController:(UIViewController *)viewController
+                                 animated:(BOOL)animated
+{
+    [self logoutEverything];
+    UIStoryboard *signupStoryboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
+    UINavigationController *signupController = [signupStoryboard instantiateInitialViewController];
+    
+    [viewController presentModalViewController:signupController animated:animated];
+}
 
 #pragma mark - View Lifecycle
 
@@ -253,20 +193,20 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     // Switch out the UINavigationController in the rootviewcontroller for the SettingsMenuController
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"SettingsStoryboard_iPhone" bundle:nil];
     self.settingsMenuController = (SettingsMenuController*)[mainStoryboard instantiateViewControllerWithIdentifier:@"SettingsMenu"];
-    self.rootNavigationController = (UINavigationController*)self.window.rootViewController;
-    self.settingsMenuController.frontViewController = self.rootNavigationController;
-    [settingsMenuController.view addSubview:self.rootNavigationController.view];
-    [settingsMenuController addChildViewController:self.rootNavigationController];
+    self.tabBarController = (CPTabBarController *)self.window.rootViewController;
+    self.settingsMenuController.frontViewController = self.tabBarController;
+    [settingsMenuController.view addSubview:self.tabBarController.view];
+    [settingsMenuController addChildViewController:self.tabBarController];
     self.window.rootViewController = settingsMenuController;
     
     // make the status bar the black style
     application.statusBarStyle = UIStatusBarStyleBlackOpaque;
 
-    if (![CPAppDelegate currentUser]) { 
-        // force a login
-        [self logoutEverything];
-        SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
-        [self.rootNavigationController pushViewController:controller animated:NO];        
+    [self.window makeKeyAndVisible];
+    
+    if (![CPAppDelegate currentUser]) {
+        // force the user to login
+        [CPAppDelegate showSignupModalFromViewController:self.tabBarController animated:NO];        
     }
     
     // let's use UIAppearance to set our styles on UINavigationBars
@@ -408,7 +348,7 @@ didReceiveLocalNotification:(UILocalNotification *)notif
                                                                               userInfo:nil 
                                                                                repeats:NO];
         
-        [self.rootNavigationController performSegueWithIdentifier:@"ShowCheckInListTable"
+        [self.tabBarController performSegueWithIdentifier:@"ShowCheckInListTable"
                                                            sender:self]; 
     }
 }
@@ -436,7 +376,7 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
         [ChatHelper respondToIncomingChatNotification:message
                                          fromNickname:nickname
                                            fromUserId:userId
-                                         withRootView:self.rootNavigationController];
+                                         withRootView:self.tabBarController];
     }
     // This is a Face-to-Face invite ("f2f1" = [user id])
     else if ([userInfo valueForKey:@"f2f1"] != nil)

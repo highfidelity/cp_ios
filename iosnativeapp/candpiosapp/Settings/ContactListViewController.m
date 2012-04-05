@@ -95,6 +95,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
     // hide the search bar if it hasn't been scrolled
     if (self.tableView.contentOffset.y == 0.0f) {
         [self.tableView setContentOffset:CGPointMake(0, 44) animated:NO];
@@ -106,23 +119,23 @@
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {
                 NSMutableArray *payload = [json objectForKey:@"payload"];
-
+                
                 // sort the list by name
                 NSSortDescriptor *d = [[NSSortDescriptor alloc] initWithKey:@"nickname" ascending:YES];
                 [payload sortUsingDescriptors:[NSArray arrayWithObjects:d,nil]];
                 self.contacts = [payload copy];
-
+                
                 // update table
                 [self.tableView reloadData];
             }
             else {
                 NSLog(@"%@",[json objectForKey:@"payload"]);
                 UIAlertView *alert = [[UIAlertView alloc]
-                                          initWithTitle:@"Contact list"
-                                          message:[json objectForKey:@"payload"]
-                                          delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles: nil];
+                                      initWithTitle:@"Contact list"
+                                      message:[json objectForKey:@"payload"]
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles: nil];
                 [alert show];
             }
         }
@@ -130,13 +143,6 @@
             NSLog(@"Coundn't fetch contact list");
         }
     }];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -249,11 +255,8 @@
     user.userID = [[contact objectForKey:@"id"] intValue];
     user.status = [contact objectForKey:@"status_text"];
 
-    // get the FaceToFace storyboard
-    UIStoryboard *mainStory = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
-
     // instantiate a UserProfileViewController
-    UserProfileCheckedInViewController *vc = [mainStory instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
+    UserProfileCheckedInViewController *vc = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
     vc.user = user;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -288,14 +291,6 @@
 
 
     return 22.0;
-}
-
-
-#pragma mark - IBActions
-
--(IBAction)gearPressed:(id)sender
-{
-    [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - UISearchBarDelegate

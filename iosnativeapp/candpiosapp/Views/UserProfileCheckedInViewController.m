@@ -109,23 +109,6 @@
 
 BOOL firstLoad = YES;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
 #pragma mark - View lifecycle
 
 // TODO: Allow the user to tap on the status bar to go back to the top of the scrollview
@@ -182,9 +165,6 @@ BOOL firstLoad = YES;
     
     // animate the three dots after checked in
     [self animateVenueLoadingPoints];
-    
-    // make sure the check in button is on screen
-    [[AppDelegate instance] showCheckInButton];
     
     // set the labels on the user business card
     self.cardNickname.text = self.user.nickname;
@@ -523,7 +503,6 @@ BOOL firstLoad = YES;
     {
         [[segue destinationViewController] setUser:self.user];
         [self minusButtonPressed:nil];
-        [[AppDelegate instance] hideCheckInButton];
     }
     else if ([[segue identifier] isEqualToString:@"ProfileToPayUserSegue"])
     {

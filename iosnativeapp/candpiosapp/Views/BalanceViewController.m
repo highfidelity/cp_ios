@@ -37,7 +37,6 @@
 #pragma mark - UIView Methods
 
 - (void)viewWillAppear:(BOOL)animated {
-    [[AppDelegate instance] hideCheckInButton];
     
     [[self userBalance] setText: [NSString stringWithFormat:@"$%.2f", [AppDelegate instance].settings.userBalance]];
     

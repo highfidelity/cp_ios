@@ -31,8 +31,6 @@
     [CPUIHelper makeButtonCPButton: payButton withCPButtonColor:CPButtonTurquoise];
     [CPUIHelper makeButtonCPButton: cancelButton withCPButtonColor:CPButtonGrey];
     
-    [[AppDelegate instance] hideCheckInButton];
-    
     [[self view] setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"perforated-skin.png"]]];
     [paymentAmount becomeFirstResponder];
     

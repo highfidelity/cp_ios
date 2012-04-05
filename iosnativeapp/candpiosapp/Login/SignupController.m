@@ -38,7 +38,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[AppDelegate instance] hideCheckInButton];
     [self.navigationItem setHidesBackButton:YES animated:NO];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     self.title = @"Log In";
@@ -125,8 +124,7 @@
 {
 	// Handle LinkedIn login
 	// The LinkedIn login object will handle the sequence that follows
-    LinkedInLoginController *linkedInLoginController = [[LinkedInLoginController alloc] initWithNibName:@"LinkedInLoginController" bundle:nil];
-    [self.navigationController pushViewController:linkedInLoginController animated:YES];
+    [self performSegueWithIdentifier:@"ShowLinkedInLoginController" sender:sender];
 }
 
 - (IBAction)loginWithEmailTapped:(id)sender 

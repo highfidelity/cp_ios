@@ -387,8 +387,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
-    [[AppDelegate instance] hideCheckInButton];
     
     // Setup the "me" object. It's a wonder why we don't just hae
     self.me = [CPAppDelegate currentUser];
@@ -431,7 +429,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 
 - (void)viewDidUnload
 {
-    [[AppDelegate instance] showCheckInButton];
     [self setChatEntryField:nil];
     [self setChatContents:nil];
     [self setBackgroundView:nil];

@@ -65,7 +65,6 @@
                              // @"Face To Face", DISABLED (alexi)
                              @"Settings",
                              @"Wallet",
-                             @"Contact list",
                              //@"Linked Accounts", DISABLED (alexi)
                              @"Logout",
                              nil];
@@ -74,7 +73,6 @@
                                       // @"ShowFaceToFaceFromMenu", DISABLED (alexi)
                                       @"ShowUserSettingsFromMenu",
                                       @"ShowBalanceFromMenu",
-                                      @"ShowContactsFromMenu",
                                       // @"ShowFederationFromMenu", DISALBED (alexi)
                                       @"ShowLogoutFromMenu",
                                       nil];
@@ -267,7 +265,6 @@
         // shift to the right, hiding buttons 
         [self setMapAndButtonsViewXOffset:shift];
         
-        [[AppDelegate instance] hideCheckInButton];
         mapView.scrollEnabled = NO;
         if (!self.menuCloseGestureRecognizer) {
             // Tap to close gesture recognizer
@@ -288,7 +285,7 @@
     } else {
         // shift to the left, restoring the buttons
         [self setMapAndButtonsViewXOffset:0];
-        [[AppDelegate instance] showCheckInButton];
+
         mapView.scrollEnabled = YES;                                   
         // remove gesture recognizers
         [mapView removeGestureRecognizer:self.menuCloseGestureRecognizer];

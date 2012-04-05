@@ -153,7 +153,6 @@
 {
     [super viewWillAppear:animated];
     // hide the normal check in button
-    [CPAppDelegate hideCheckInButton];
 }
 
 - (void)viewDidUnload
@@ -580,37 +579,15 @@
 
 - (void)checkInPressed:(id)sender
 {
-    // show check in details screen modally
-    [self performSegueWithIdentifier:@"ShowCheckInViewControllerFromVenue" sender:self];
+    CheckInDetailsViewController *checkinVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
+    checkinVC.place = self.venue;
+    
+    [self.navigationController pushViewController:checkinVC animated:YES];
 }
 
 - (void)cancelCheckinModal
 {
     [self.modalViewController dismissModalViewControllerAnimated:YES];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"ShowCheckInViewControllerFromVenue"]) {
-        [[segue destinationViewController] setPlace:self.venue];
-        
-        // give the CheckInDetailsViewController a top bar it won't have otherwise
-        UINavigationBar *topBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
-        [[[segue destinationViewController] view] addSubview:topBar];
-        
-        // put a UINavigationItem on the UINavigationBar
-        [topBar pushNavigationItem:[[UINavigationItem alloc] initWithTitle:self.venue.name] animated:NO];
-        topBar.topItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelCheckinModal)];
-        
-        // set the title of the navigation item
-        topBar.topItem.title = self.venue.name;
-    } else if ([segue.identifier isEqualToString:@"ShowUserProfileFromVenue"]) {
-        UIButton *thumbnailButton = (UIButton *)sender;
-
-        // set the user object on that view controller
-        // using the tag on the button to pull this user out of the NSMutableDictionary of user objects
-        [[segue destinationViewController] setUser:[self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", thumbnailButton.tag]]];
-    }   
 }
 
 - (void)setupVenueButton:(UIButton *)venueButton
@@ -685,7 +662,17 @@
 
 - (IBAction)userImageButtonPressed:(id)sender
 {
-    [self performSegueWithIdentifier:@"ShowUserProfileFromVenue" sender:sender];
+    UserProfileCheckedInViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+    
+    UIButton *thumbnailButton = (UIButton *)sender;
+    
+    // set the user object on that view controller
+    // using the tag on the button to pull this user out of the NSMutableDictionary of user objects
+    userVC.user = [self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", thumbnailButton.tag]]; 
+    
+    // push the user profile onto this navigation controller stack
+    [self.navigationController pushViewController:userVC animated:YES];
+
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex

@@ -79,9 +79,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
             NSString *userId   = [alertView.context objectForKey:@"userid"];
             NSString *nickname = [alertView.context objectForKey:@"nickname"];
             
-            OneOnOneChatViewController *oneOnOneChat =
-                [alertView.rootView.storyboard
-                    instantiateViewControllerWithIdentifier:@"OneOnOneChatView"];
+            OneOnOneChatViewController *oneOnOneChat = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"OneOnOneChatView"];
             
             UINavigationController *chatNavController = [[UINavigationController alloc] initWithRootViewController:oneOnOneChat];
             

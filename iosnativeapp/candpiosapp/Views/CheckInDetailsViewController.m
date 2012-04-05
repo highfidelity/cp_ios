@@ -123,7 +123,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[AppDelegate instance] hideCheckInButton];
     // set the title of the nav controller to the place name
     self.title = self.place.name;
     
@@ -308,7 +307,7 @@
                 // used to tell 
                 SET_DEFAULTS(Object, kUDCheckedInVenueID, self.place.foursquareID);
 
-                [[AppDelegate instance] refreshCheckInButton];
+                [CPAppDelegate refreshCheckInButton];
                 
                 // hide the checkin screen, we're checked in
                 [self dismissModalViewControllerAnimated:YES];
@@ -318,8 +317,7 @@
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You must be logged in to C&P in order to check in." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Okay", nil];
                 [alertView show];
                 
-                SignupController *controller = [[SignupController alloc]initWithNibName:@"SignupController" bundle:nil];
-                [self.navigationController pushViewController:controller animated:YES];
+                [CPAppDelegate showSignupModalFromViewController:self animated:YES];
             }
         } else {
             // TODO: error checking

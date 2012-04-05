@@ -164,15 +164,15 @@
         // NSLog(@"*** Response: %@", responseBody);
         
         NSString *authorizationURL = [NSString stringWithFormat:@"https://www.linkedin.com/uas/oauth/authorize?oauth_token=%@", requestToken.key];
-
+        
         NSURL *url = [NSURL URLWithString:authorizationURL];        
         NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
         self.myWebView.delegate = self;
         [self.myWebView loadRequest:requestObj];
         
-//        ModalWebViewController *myWebView = [[ModalWebViewController alloc] init];
-//        myWebView.urlAddress = authorizationURL;
-//        [self.navigationController presentModalViewController:myWebView animated:YES];
+        //        ModalWebViewController *myWebView = [[ModalWebViewController alloc] init];
+        //        myWebView.urlAddress = authorizationURL;
+        //        [self.navigationController presentModalViewController:myWebView animated:YES];
     }
 }
 
@@ -307,7 +307,7 @@
 		}
 		else
 		{
-			// remember that we're logged in!
+            // remember that we're logged in!
 			// (it's really the persistent cookie that tracks our login, but we need a superficial indicator, too)
 			NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"params"];
             
@@ -323,7 +323,6 @@
             [BaseLoginController pushAliasUpdate];
             
             [self.navigationController dismissModalViewControllerAnimated:YES];
-            [self.navigationController popToRootViewControllerAnimated:YES];
 		}
         
         // Remove NSNotification as it's no longer needed once logged in
