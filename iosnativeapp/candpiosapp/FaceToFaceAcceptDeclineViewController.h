@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "User.h"
 #import "UserProfileCheckedInViewController.h"
 
 @interface FaceToFaceAcceptDeclineViewController : UIViewController <UITextFieldDelegate>

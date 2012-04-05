@@ -8,8 +8,6 @@
 
 #import "User.h"
 #import "AFJSONRequestOperation.h"
-#import "AppDelegate.h"
-#import "CPapi.h"
 #import "NSString+HTML.h"
 
 @implementation User

@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AppDelegate.h"
 
 // define a way to quickly grab the app delegate
 #define CPAppDelegate (AppDelegate *)[UIApplication sharedApplication].delegate

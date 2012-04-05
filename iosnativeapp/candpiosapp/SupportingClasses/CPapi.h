@@ -8,10 +8,13 @@
 //  This is the (un)official C&P iOS API! These functions are to
 //  be used to interact with the C&P web services.
 
+
+
 #import <Foundation/Foundation.h>
 #import "AFNetworking.h"
 #import "CPPlace.h"
 #import "ChatHistory.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface CPapi : NSObject
 

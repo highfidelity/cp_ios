@@ -8,10 +8,7 @@
 
 #import <AudioToolbox/AudioToolbox.h>
 #import "PayUserViewController.h"
-#import "AppDelegate.h"
 #import "AFNetworking.h"
-#import "SVProgressHUD.h"
-#import "CPapi.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation PayUserViewController

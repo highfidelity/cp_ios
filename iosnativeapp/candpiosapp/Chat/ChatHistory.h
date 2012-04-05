@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "User.h"
 #import "ChatMessage.h"
 
 @interface ChatHistory : NSObject

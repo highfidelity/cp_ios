@@ -8,8 +8,6 @@
 
 #import "CreateLoginController.h"
 #import "TPKeyboardAvoidingScrollView.h"
-#import "AppDelegate.h"
-#import "SVProgressHUD.h"
 #import "FlurryAnalytics.h"
 #import "NSString+StringToNSNumber.h"
 

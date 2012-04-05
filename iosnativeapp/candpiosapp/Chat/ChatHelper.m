@@ -9,7 +9,6 @@
 #import "ChatHelper.h"
 #import "OneOnOneChatViewController.h"
 #import "CPAlertView.h"
-#import "AppDelegate.h"
 
 @implementation ChatHelper
 

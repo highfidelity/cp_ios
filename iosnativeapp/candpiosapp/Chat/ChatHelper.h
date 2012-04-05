@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "User.h"
 
 @interface ChatHelper : NSObject <UIAlertViewDelegate>
 

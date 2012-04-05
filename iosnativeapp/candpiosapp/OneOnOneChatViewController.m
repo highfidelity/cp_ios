@@ -7,9 +7,6 @@
 //
 
 #import "OneOnOneChatViewController.h"
-#import "CPapi.h"
-#import "SVProgressHUD.h"
-#import "AppDelegate.h"
 #import "ChatMessage.h"
 #import "ChatMessageCell.h"
 

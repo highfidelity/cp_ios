@@ -7,7 +7,6 @@
 //
 
 #import "DismissHUDAfterReloadData.h"
-#import "SVProgressHUD.h"
 
 @implementation DismissHUDAfterReloadData
 

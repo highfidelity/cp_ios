@@ -7,12 +7,10 @@
 //
 
 #import "SignupController.h"
-#import "AppDelegate.h"
 #import "EmailLoginController.h"
 #import "LinkedInLoginController.h"
 #import "AFNetworking.h"
 #import "Facebook+Blocks.h"
-#import "SVProgressHUD.h"
 #import "FlurryAnalytics.h"
 #import "NSString+StringToNSNumber.h"
 

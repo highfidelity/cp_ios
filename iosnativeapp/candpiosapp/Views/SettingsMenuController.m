@@ -8,10 +8,7 @@
 
 #import "SettingsMenuController.h"
 #import "BalanceViewController.h"
-#import "SVProgressHUD.h"
-#import "AppDelegate.h"
 #import "MapTabController.h"
-#import "CPapi.h"
 
 #define menuWidthPercentage 0.8
 

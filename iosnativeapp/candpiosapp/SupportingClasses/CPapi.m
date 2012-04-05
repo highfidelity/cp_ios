@@ -10,7 +10,6 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import "CPapi.h"
-#import "SVProgressHUD.h"
 #import "UIImage+Resize.h"
 
 @interface CPapi()

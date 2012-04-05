@@ -10,12 +10,8 @@
 #import "AFHTTPClient.h"
 #import "AFNetworking.h"
 #import "UIImageView+WebCache.h"
-#import "AppDelegate.h"
-#import "CPUtils.h"
 #import "FoursquareAPIRequest.h"
 #import "AFJSONRequestOperation.h"
-#import "CPapi.h"
-#import "SVProgressHud.h"
 #import "GRMustache.h"
 
 @interface UserProfileCheckedInViewController() <UIWebViewDelegate, UIActionSheetDelegate, UITextFieldDelegate>

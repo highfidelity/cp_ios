@@ -7,9 +7,6 @@
 //
 
 #import "VenueListTableViewController.h"
-#import "CPapi.h"
-#import "CPUtils.h"
-#import "SVProgressHUD.h"
 #import "VenueCell.h"
 #import "VenueInfoViewController.h"
 #import "MapTabController.h"

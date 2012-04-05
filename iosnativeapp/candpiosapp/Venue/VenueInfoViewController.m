@@ -10,10 +10,8 @@
 #import "CPAnnotation.h"
 #import "MapTabController.h"
 #import "CheckInDetailsViewController.h"
-#import "User.h"
 #import "UserProfileCheckedInViewController.h"
 #import "UIImageView+AFNetworking.h"
-#import "CPapi.h"
 
 @interface VenueInfoViewController () <UIAlertViewDelegate>
 - (IBAction)tappedAddress:(id)sender;

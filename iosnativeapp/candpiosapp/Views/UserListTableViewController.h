@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CPUtils.h"
 
 @interface UserListTableViewController : UITableViewController 
 

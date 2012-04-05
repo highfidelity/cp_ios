@@ -7,11 +7,7 @@
 //
 
 #import "UserSettingsTableViewController.h"
-#import "CPapi.h"
-#import "User.h"
-#import "SVProgressHUD.h"
 #import "SignupController.h"
-#import "CPUtils.h"
 
 #define tableCellSubviewTag 7909
 #define spinnerTag  7910

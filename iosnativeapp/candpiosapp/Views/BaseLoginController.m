@@ -7,7 +7,6 @@
 //
 
 #import "BaseLoginController.h"
-#import "AppDelegate.h"
 #import "AFNetworking.h"
 #import "UAPush.h"
 

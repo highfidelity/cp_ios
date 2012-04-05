@@ -7,8 +7,6 @@
 //
 
 #import "BalanceViewController.h"
-#import "SVProgressHUD.h"
-#import "CPapi.h"
 #import "WalletCell.h"
 
 #define kRefreshViewHeight 52.0f

@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-#import "User.h"
 
 @interface UserProfileCheckedInViewController : UIViewController
 

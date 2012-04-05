@@ -10,7 +10,6 @@
 #import "AFHTTPClient.h"
 #import "AFJSONRequestOperation.h"
 #import "CPAnnotation.h"
-#import "AppDelegate.h"
 
 @interface MapDataSet()
 -(id)initFromJson:(NSDictionary*)json;

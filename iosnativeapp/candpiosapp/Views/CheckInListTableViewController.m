@@ -6,13 +6,10 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 
 #import "CheckInListTableViewController.h"
-#import "AppDelegate.h"
 #import "CPPlace.h"
 #import "CheckInDetailsViewController.h"
-#import "SVProgressHUD.h"
 #import "SignupController.h"
 #import "CheckInListCell.h"
-#import "CPUtils.h"
 #import "FoursquareAPIRequest.h"
 
 @implementation CheckInListTableViewController {

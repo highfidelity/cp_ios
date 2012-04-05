@@ -9,9 +9,6 @@
 
 #import "FaceToFaceHelper.h"
 #import "FaceToFaceAcceptDeclineViewController.h"
-#import "User.h"
-#import "AppDelegate.h"
-#import "SVProgressHUD.h"
 
 @implementation FaceToFaceHelper
 

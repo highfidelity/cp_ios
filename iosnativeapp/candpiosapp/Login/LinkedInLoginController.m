@@ -7,7 +7,6 @@
 //
 
 #import "LinkedInLoginController.h"
-#import "AppDelegate.h"
 #import "AFNetworking.h"
 #import "FlurryAnalytics.h"
 #import "ModalWebViewController.h"

@@ -10,8 +10,6 @@
 #import "UIImageView+WebCache.h"
 #import "MissionAnnotation.h"
 #import "CPAnnotation.h"
-#import "AppDelegate.h"
-#import "SVProgressHUD.h"
 #import "UserListTableViewController.h"
 #import "SignupController.h"
 #import "MapDataSet.h"

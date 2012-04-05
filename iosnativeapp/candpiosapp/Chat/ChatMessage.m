@@ -7,7 +7,6 @@
 //
 
 #import "ChatMessage.h"
-#import "AppDelegate.h"
 
 @implementation ChatMessage
 

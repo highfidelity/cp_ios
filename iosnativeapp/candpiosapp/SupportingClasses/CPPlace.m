@@ -1,6 +1,4 @@
 #import "CPPlace.h"
-#import "AppDelegate.h"
-#import "CPUtils.h"
 #import <CoreLocation/CoreLocation.h>
 
 @implementation CPPlace

@@ -7,7 +7,6 @@
 //
 
 #import "AddFundsViewController.h"
-#import "AppDelegate.h"
 
 @interface AddFundsViewController ()
 

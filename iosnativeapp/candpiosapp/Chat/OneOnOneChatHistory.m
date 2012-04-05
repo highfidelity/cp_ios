@@ -7,8 +7,6 @@
 //
 
 #import "OneOnOneChatHistory.h"
-#import "CPapi.h"
-#import "SVProgressHUD.h"
 
 @implementation OneOnOneChatHistory
 

@@ -7,12 +7,8 @@
 //
 
 #import "CheckInDetailsViewController.h"
-#import "SVProgressHUD.h"
 #import "SignupController.h"
-#import "AppDelegate.h"
-#import "CPapi.h"
 #import "TPKeyboardAvoidingScrollView.h"
-#import "User.h"
 
 @interface CheckInDetailsViewController() <UITextFieldDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *blueOverlay;
@@ -320,7 +316,10 @@
                 [CPAppDelegate showSignupModalFromViewController:self animated:YES];
             }
         } else {
-            // TODO: error checking
+            // show an alertView letting the user know that an error occured, log the error if debugging
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"An error occured while attempting to check in." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Okay", nil];
+            [alertView show];
+
         }
     }];      
 }
@@ -407,13 +406,12 @@
                 } else {
                     // setup the request for the user's image, use AFNetworking to grab it
                     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[user objectForKey:@"imageUrl"]]];
-                    [userImage setImageWithURLRequest:request placeholderImage:nil 
+                    [userImage setImageWithURLRequest:request placeholderImage:[CPUIHelper defaultProfileImage] 
                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
                             [spinner stopAnimating];
                         }
                         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error){
-                            // TODO: revisit the handling of errors here, we likely want to show that there was supposed to be a thumbnail there and still allow
-                            // the click event to see the user info
+                            //If an error occurs, the defaultProfileImage is passed in as the placeholderImage so it will display that instead
                             [spinner stopAnimating];                    
                     }];
                 } 

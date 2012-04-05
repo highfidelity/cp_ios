@@ -46,10 +46,7 @@ UA_VERSION_INTERFACE(UAPushVersion)
 @protocol UAPushUIProtocol
 + (void)openApnsSettings:(UIViewController *)viewController
                    animated:(BOOL)animated;
-+ (void)openTokenSettings:(UIViewController *)viewController //TODO: remove from lib - it's a demo feature
-                   animated:(BOOL)animated;
 + (void)closeApnsSettingsAnimated:(BOOL)animated;
-+ (void)closeTokenSettingsAnimated:(BOOL)animated;//TODO: remove from lib - it's a demo feature
 @end
 
 /**
@@ -139,10 +136,7 @@ SINGLETON_INTERFACE(UAPush);
 + (void)useCustomUI:(Class)customUIClass;
 + (void)openApnsSettings:(UIViewController *)viewController
                 animated:(BOOL)animated;
-+ (void)openTokenSettings:(UIViewController *)viewController
-                 animated:(BOOL)animated;
 + (void)closeApnsSettingsAnimated:(BOOL)animated;
-+ (void)closeTokenSettingsAnimated:(BOOL)animated;
 
 + (void)land;
 

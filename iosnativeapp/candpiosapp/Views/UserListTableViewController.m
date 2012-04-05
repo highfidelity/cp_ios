@@ -13,7 +13,6 @@
 #import "UserProfileCheckedInViewController.h"
 #import "NSString+HTML.h"
 #import "VenueCell.h"
-#import "CPapi.h"
 #import "CheckInDetailsViewController.h"
 #import "CPAnnotation.h"
 #import "OCAnnotation.h"

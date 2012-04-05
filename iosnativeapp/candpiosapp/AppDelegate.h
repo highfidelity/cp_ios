@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "Settings.h"
-#import "User.h"
 #import "Facebook.h"
 #import "UAirship.h"
 #import "UAPush.h"

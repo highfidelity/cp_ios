@@ -13,4 +13,9 @@
 	#import <Foundation/Foundation.h>
     #import "CPUIHelper.h"
     #import "CPConstants.h" 
+    #import "SVProgressHUD.h"
+    #import "CPapi.h"
+    #import "AppDelegate.h"
+    #import "CPUtils.h"
+    #import "User.h"
 #endif

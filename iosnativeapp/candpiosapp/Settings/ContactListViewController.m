@@ -7,8 +7,6 @@
 //
 
 #import "ContactListViewController.h"
-#import "SVProgressHUD.h"
-#import "CPapi.h"
 #import "UserTableViewCell.h"
 #import "UserProfileCheckedInViewController.h"
 
