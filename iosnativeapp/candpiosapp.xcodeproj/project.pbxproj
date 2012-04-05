@@ -40,7 +40,6 @@
 		3241E8F114EDA6C4006B81C2 /* OCDistance.m in Sources */ = {isa = PBXBuildFile; fileRef = 3241E8ED14EDA6C3006B81C2 /* OCDistance.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		325462F814F9E977000FDD70 /* defaultAvatar25.png in Resources */ = {isa = PBXBuildFile; fileRef = 325462F714F9E977000FDD70 /* defaultAvatar25.png */; };
 		3267F60914D9196800BFFBAA /* CHANGELOG in Resources */ = {isa = PBXBuildFile; fileRef = 3267F51114D9196800BFFBAA /* CHANGELOG */; };
-		3267F60A14D9196800BFFBAA /* libUAirship-1.1.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F56814D9196800BFFBAA /* libUAirship-1.1.3.a */; };
 		3267F60B14D9196800BFFBAA /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 3267F56914D9196800BFFBAA /* LICENSE */; };
 		3267F60C14D9196800BFFBAA /* README.rst in Resources */ = {isa = PBXBuildFile; fileRef = 3267F56A14D9196800BFFBAA /* README.rst */; };
 		3267F66E14D919A700BFFBAA /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3267F66D14D919A700BFFBAA /* AirshipConfig.plist */; };
@@ -51,6 +50,7 @@
 		3267F67814D91A2600BFFBAA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F67714D91A2600BFFBAA /* libz.dylib */; };
 		3267F67A14D91A2E00BFFBAA /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F67914D91A2E00BFFBAA /* libsqlite3.dylib */; };
 		3267F67C14D91A3600BFFBAA /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F67B14D91A3600BFFBAA /* CoreTelephony.framework */; };
+		326EEA35152D3523000AC0B9 /* libUAirship-1.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 326EEA34152D3523000AC0B9 /* libUAirship-1.2.0.a */; };
 		3278800014FAD7070055A991 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 32787FFF14FAD7070055A991 /* MKAnnotationView+WebCache.m */; };
 		32A7998814F97C0300A0D4CB /* plusSign.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A7998714F97C0300A0D4CB /* plusSign.png */; };
 		32A7999314F9867D00A0D4CB /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A7998E14F9867D00A0D4CB /* UIImage+Alpha.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -491,7 +491,6 @@
 		3267F54614D9196800BFFBAA /* UA_ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UA_ZipArchive.h; sourceTree = "<group>"; };
 		3267F54914D9196800BFFBAA /* UAirship.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAirship.h; sourceTree = "<group>"; };
 		3267F55414D9196800BFFBAA /* UAPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAPush.h; sourceTree = "<group>"; };
-		3267F56814D9196800BFFBAA /* libUAirship-1.1.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libUAirship-1.1.3.a"; sourceTree = "<group>"; };
 		3267F56914D9196800BFFBAA /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		3267F56A14D9196800BFFBAA /* README.rst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.rst; sourceTree = "<group>"; };
 		3267F66D14D919A700BFFBAA /* AirshipConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = AirshipConfig.plist; sourceTree = "<group>"; };
@@ -502,6 +501,7 @@
 		3267F67714D91A2600BFFBAA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3267F67914D91A2E00BFFBAA /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		3267F67B14D91A3600BFFBAA /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		326EEA34152D3523000AC0B9 /* libUAirship-1.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libUAirship-1.2.0.a"; sourceTree = "<group>"; };
 		32787FFE14FAD7070055A991 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		32787FFF14FAD7070055A991 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		32A7998714F97C0300A0D4CB /* plusSign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plusSign.png; sourceTree = "<group>"; };
@@ -964,9 +964,9 @@
 				871EFB0D14AE9C820030658B /* Foundation.framework in Frameworks */,
 				871EFB0F14AE9C820030658B /* CoreGraphics.framework in Frameworks */,
 				320604A414D5BBA40035A88D /* libFlurryAnalytics.a in Frameworks */,
-				3267F60A14D9196800BFFBAA /* libUAirship-1.1.3.a in Frameworks */,
 				E4C35C4114F1323A009B6DBF /* AudioToolbox.framework in Frameworks */,
 				5386AFF4152A2A75008CD4BD /* libGRMustache2-iOS.a in Frameworks */,
+				326EEA35152D3523000AC0B9 /* libUAirship-1.2.0.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1062,7 +1062,7 @@
 				3267F51214D9196800BFFBAA /* Common */,
 				3267F52614D9196800BFFBAA /* External */,
 				3267F54714D9196800BFFBAA /* Library */,
-				3267F56814D9196800BFFBAA /* libUAirship-1.1.3.a */,
+				326EEA34152D3523000AC0B9 /* libUAirship-1.2.0.a */,
 				3267F56914D9196800BFFBAA /* LICENSE */,
 				3267F56A14D9196800BFFBAA /* README.rst */,
 			);
