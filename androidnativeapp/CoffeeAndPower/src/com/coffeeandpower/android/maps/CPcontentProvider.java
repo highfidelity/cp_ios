@@ -1,9 +1,15 @@
 package com.coffeeandpower.android.maps;
 
+import java.io.File;
+import java.util.ArrayList;
+
 import android.content.ContentProvider;
+import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.OperationApplicationException;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,7 +22,7 @@ public class CPcontentProvider extends ContentProvider {
 
 	static final String PROVIDER_AUTH = 
 			"com.coffeeandpower.android.maps.provider";
-	static final int DATABASE_VERSION = 1;
+	static final int DATABASE_VERSION = 2;
 	static String DATABASE_NAME = "coffeeandpower.db";
 
 	// Map bounds might get updated 60 times a second during a map pan
@@ -25,9 +31,6 @@ public class CPcontentProvider extends ContentProvider {
 	// ram based SQLite database
 	private MemoryDatabaseHelper mMOpenHelper;
 	private MainDatabaseHelper   mOpenHelper;
-
-	private SQLiteDatabase mMdb;
-	private SQLiteDatabase mDb;
 
 	private static final String SQL_CREATE_MEMDB = 
 			"CREATE TABLE " +
@@ -52,6 +55,7 @@ public class CPcontentProvider extends ContentProvider {
 					" quad_index  INTEGER NOT NULL, " +
 					" sync_started INTEGER, " + // unix date
 					" sync_completed INTEGER, " +
+					" visible INTEGER, " + // a tile that overlaps the current map bounds
 					" status INTEGER );";
 	
 	private static final String SQL_CREATE_TABLE_POINTS = 
@@ -121,8 +125,10 @@ public class CPcontentProvider extends ContentProvider {
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			// TODO Auto-generated method stub
-
+			db.execSQL("DROP TABLE IF EXISTS sync_map;");
+			db.execSQL("DROP TABLE IF EXISTS points;");
+			db.execSQL("DROP TABLE IF EXISTS checkins;");
+			onCreate(db);
 		}
 
 	}
@@ -183,14 +189,15 @@ public class CPcontentProvider extends ContentProvider {
 
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
+		final SQLiteDatabase memdb,db;
 		String table;
 		int match = sUriMatcher.match(uri);
 		switch(match)
 		{
 		case MAPBOUNDS:
-			mMdb = mMOpenHelper.getReadableDatabase();
+			memdb = mMOpenHelper.getReadableDatabase();
 			return Uri.parse("content://" + PROVIDER_AUTH + "/mapbounds/" +
-					mMdb.insert("mapbounds", null, values));
+					memdb.insert("mapbounds", null, values));
 		case SYNC_MAP:
 			table = "sync_map";
 			break;
@@ -203,16 +210,21 @@ public class CPcontentProvider extends ContentProvider {
 		default:
 			return null;
 		}
-		mDb = mOpenHelper.getWritableDatabase();
+		db = mOpenHelper.getWritableDatabase();
 		Log.i("db","inserting values");
 		return Uri.parse("content://" + PROVIDER_AUTH + "/" + table + "/" +
-		mDb.insert(table, null, values));
+		db.insert(table, null, values));
 	}
 
 	@Override
 	public boolean onCreate() {
 		mMOpenHelper = new MemoryDatabaseHelper(getContext());
-		mOpenHelper = new MainDatabaseHelper(getContext(),DATABASE_NAME,
+		//FIXME opening database on external storage because I couldn't get access
+		// permissions to the main one from developer tools.
+		File externalDir = this.getContext().getExternalFilesDir(null);
+		String dbFile = externalDir.getAbsolutePath() + "/" + DATABASE_NAME;
+		Log.i("db","external db location:" + dbFile);
+		mOpenHelper = new MainDatabaseHelper(getContext(),dbFile,
 				null,DATABASE_VERSION);
 		return true;
 	}
@@ -220,14 +232,15 @@ public class CPcontentProvider extends ContentProvider {
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
+		final SQLiteDatabase memdb,db;
 		String table;
 		int match = sUriMatcher.match(uri);
 		switch(match)
 		{
 		case MAPBOUNDS:
 		case MAPBOUNDS_ID:
-			mMdb = mMOpenHelper.getReadableDatabase();
-			return mMdb.query("mapbounds", projection, 
+			memdb = mMOpenHelper.getReadableDatabase();
+			return memdb.query("mapbounds", projection, 
 					selection, selectionArgs, null, null, null);
 		case SYNC_MAP:
 			table = "sync_map";
@@ -240,16 +253,17 @@ public class CPcontentProvider extends ContentProvider {
 		default:
 			return null;
 		}
-		mDb = mOpenHelper.getReadableDatabase();
-		Log.i("db", "querying database");
-		return mDb.query(table, projection, 
+		db = mOpenHelper.getReadableDatabase();
+//		Log.i("db", "querying database");
+		return db.query(table, projection, 
 				selection, selectionArgs, null, null, null);
 	}
 
 	@Override
 	public int update(Uri uri, ContentValues values, String selection,
 			String[] selectionArgs) {
-		// TODO Auto-generated method stub
+		final SQLiteDatabase memdb, db;
+		String table;
 		int match = sUriMatcher.match(uri);
 		switch(match)
 		{
@@ -276,19 +290,59 @@ public class CPcontentProvider extends ContentProvider {
 //			Log.i("quadtree","sw:" + String.valueOf(sw_quadindex));
 //			Log.i("quadtree","ne:" + String.valueOf(ne_quadindex));
 			selection = selection + " _ID = " + uri.getLastPathSegment();
-			mMdb = mMOpenHelper.getWritableDatabase();
-			int updated = mMdb.update("mapbounds", values, selection, null);
+			memdb = mMOpenHelper.getWritableDatabase();
+			int updated = memdb.update("mapbounds", values, selection, null);
 			Intent mapSync = new Intent(getContext(),CPMapSyncService.class);
 			this.getContext().startService(mapSync);
 			return updated;
 		case SYNC_MAP:
+			table = "sync_map";
+			break;
 		case SYNC_MAP_ID:
+			table = "sync_map";
+			selection = selection + " _ID = " + uri.getLastPathSegment();
+			break;
 		case POINTS:
+			table = "points";
+			break;			
 		case POINTS_ID:
+			table = "points";
+			selection = selection + " _ID = " + uri.getLastPathSegment();
+			break;
 		case CHECKINS:
+			table = "checkins";
+			break;
 		case CHECKINS_ID:
+			table = "checkins";
+			selection = selection + " _ID = " + uri.getLastPathSegment();
+			break;
 		default:
 			return 0;
+		}
+		db = mOpenHelper.getWritableDatabase();
+		int updated = db.update(table, values, selection, selectionArgs);
+		return updated;
+	}
+
+	@Override
+	public ContentProviderResult[] applyBatch(
+			ArrayList<ContentProviderOperation> operations)
+			throws OperationApplicationException {
+		final SQLiteDatabase db = this.mOpenHelper.getWritableDatabase();
+		db.beginTransaction();
+		try {
+			final int opSize = operations.size();
+			final ContentProviderResult[] results = new ContentProviderResult[opSize];
+			for(int n = 0; n < opSize; n++)
+			{
+				results[n] = operations.get(n).apply(this, results, n);
+			}
+			db.setTransactionSuccessful();
+			return results;
+		}
+		
+		finally {
+			db.endTransaction();
 		}
 	}
 

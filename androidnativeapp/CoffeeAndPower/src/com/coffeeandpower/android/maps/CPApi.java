@@ -87,6 +87,7 @@ public class CPApi {
 			}
 			
 		});
+		//TODO check for background network setting
 		HttpUriRequest request = new HttpGet(urlString);
 		try
 		{

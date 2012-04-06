@@ -161,12 +161,12 @@ public class CPQuadTree {
 		Log.i("zoomtest", "zoom         :" + String.valueOf(i) + 
 				" lat:" + zoomedPoint.getLatitudeE6() + 
 				" lon:" + zoomedPoint.getLongitudeE6());
-//		Log.i("zoomtest", "zoomNorth    :" + String.valueOf(i) + 
-//				" lat:" + zoomedNorth.getLatitudeE6() + 
-//				" lon:" + zoomedNorth.getLongitudeE6());
-//		Log.i("zoomtest", "zoomEast     :" + String.valueOf(i) + 
-//				" lat:" + zoomedEast.getLatitudeE6() + 
-//				" lon:" + zoomedEast.getLongitudeE6());
+		Log.i("zoomtest", "zoomNorth    :" + String.valueOf(i) + 
+				" lat:" + zoomedNorth.getLatitudeE6() + 
+				" lon:" + zoomedNorth.getLongitudeE6());
+		Log.i("zoomtest", "zoomEast     :" + String.valueOf(i) + 
+				" lat:" + zoomedEast.getLatitudeE6() + 
+				" lon:" + zoomedEast.getLongitudeE6());
 		Log.i("zoomtest", "zoomNorthEast:" + String.valueOf(i) + 
 				" lat:" + zoomedNorthEast.getLatitudeE6() + 
 				" lon:" + zoomedNorthEast.getLongitudeE6());
