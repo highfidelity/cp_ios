@@ -60,16 +60,18 @@
     // Setup the menu strings and seque identifiers
     self.menuStringsArray = [NSArray arrayWithObjects:
                              // @"Face To Face", DISABLED (alexi)
-                             @"Settings",
+                             @"Invite",
                              @"Wallet",
+                             @"Settings",
                              //@"Linked Accounts", DISABLED (alexi)
                              @"Logout",
                              nil];
     
     self.menuSegueIdentifiersArray = [NSArray arrayWithObjects:
+                                      @"ShowInvitationCodeMenu",
                                       // @"ShowFaceToFaceFromMenu", DISABLED (alexi)
-                                      @"ShowUserSettingsFromMenu",
                                       @"ShowBalanceFromMenu",
+                                      @"ShowUserSettingsFromMenu",
                                       // @"ShowFederationFromMenu", DISALBED (alexi)
                                       @"ShowLogoutFromMenu",
                                       nil];

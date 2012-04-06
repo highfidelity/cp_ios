@@ -642,6 +642,17 @@
     [self makeHTTPRequestWithAction:@"getContactList" withParameters:nil completion:completion];
 }
 
++ (void)getInvitationCodeForLocation:(CLLocation *)location
+                withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion {
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       [NSString stringWithFormat:@"%.7lf", location.coordinate.latitude], @"lat",
+                                       [NSString stringWithFormat:@"%.7lf", location.coordinate.longitude], @"lon",
+                                       nil];
+    [self makeHTTPRequestWithAction:@"getInvitationCode"
+                     withParameters:parameters
+                         completion:completion];
+}
+
 # pragma mark - User Settings
 
 + (void)getNotificationSettingsWithCompletition:(void (^)(NSDictionary *, NSError *))completion {

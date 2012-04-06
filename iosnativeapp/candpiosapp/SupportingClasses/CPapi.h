@@ -58,6 +58,8 @@
 + (void)getUserTrasactionDataWithCompletitonBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 + (void)getCheckInDataWithUserId:(int)userId
                    andCompletion:(void (^)(NSDictionary *, NSError *))completion;
++ (void)getInvitationCodeForLocation:(CLLocation *)location
+                withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
 //Contanct list functions
 + (void)getContactListWithCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;

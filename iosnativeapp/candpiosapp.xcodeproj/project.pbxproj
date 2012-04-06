@@ -239,6 +239,7 @@
 		6983702515252EC000D223BC /* network-icon-facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983702115252EC000D223BC /* network-icon-facebook@2x.png */; };
 		6983702615252EC000D223BC /* network-icon-linkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983702215252EC000D223BC /* network-icon-linkedin.png */; };
 		6983702715252EC000D223BC /* network-icon-linkedin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983702315252EC000D223BC /* network-icon-linkedin@2x.png */; };
+		69A621D7152DBC87008D24EE /* GenerateInvitationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A621D6152DBC87008D24EE /* GenerateInvitationCodeViewController.m */; };
 		6F0B453914F6BCD10074DBD9 /* ChatHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453814F6BCD10074DBD9 /* ChatHelper.m */; };
 		6F0B453C14F6BD560074DBD9 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453B14F6BD560074DBD9 /* ChatMessage.m */; };
 		6F0B453F14F6BD850074DBD9 /* ChatHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453E14F6BD850074DBD9 /* ChatHistory.m */; };
@@ -735,6 +736,8 @@
 		6983702115252EC000D223BC /* network-icon-facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "network-icon-facebook@2x.png"; path = "images/network-icon-facebook@2x.png"; sourceTree = "<group>"; };
 		6983702215252EC000D223BC /* network-icon-linkedin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "network-icon-linkedin.png"; path = "images/network-icon-linkedin.png"; sourceTree = "<group>"; };
 		6983702315252EC000D223BC /* network-icon-linkedin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "network-icon-linkedin@2x.png"; path = "images/network-icon-linkedin@2x.png"; sourceTree = "<group>"; };
+		69A621D5152DBC87008D24EE /* GenerateInvitationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GenerateInvitationCodeViewController.h; path = Settings/GenerateInvitationCodeViewController.h; sourceTree = "<group>"; };
+		69A621D6152DBC87008D24EE /* GenerateInvitationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenerateInvitationCodeViewController.m; path = Settings/GenerateInvitationCodeViewController.m; sourceTree = "<group>"; };
 		6F0B453714F6BCC50074DBD9 /* ChatHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatHelper.h; path = candpiosapp/Chat/ChatHelper.h; sourceTree = SOURCE_ROOT; };
 		6F0B453814F6BCD10074DBD9 /* ChatHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatHelper.m; path = candpiosapp/Chat/ChatHelper.m; sourceTree = SOURCE_ROOT; };
 		6F0B453A14F6BD560074DBD9 /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatMessage.h; path = candpiosapp/Chat/ChatMessage.h; sourceTree = SOURCE_ROOT; };
@@ -1471,6 +1474,8 @@
 				35F0F0531516B3EF00882310 /* ContactListViewController.m */,
 				6FC4EF0E151928BC003C63A5 /* LinkedAccountsTableViewController.h */,
 				6FC4EF0F151928BC003C63A5 /* LinkedAccountsTableViewController.m */,
+				69A621D5152DBC87008D24EE /* GenerateInvitationCodeViewController.h */,
+				69A621D6152DBC87008D24EE /* GenerateInvitationCodeViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -2510,6 +2515,7 @@
 				53D9B19C152A5E8600BC1304 /* CPTabBarController.m in Sources */,
 				53DDB7DC152CE79F008703D1 /* SignupController.m in Sources */,
 				53DDB7DF152CE7AF008703D1 /* LinkedInLoginController.m in Sources */,
+				69A621D7152DBC87008D24EE /* GenerateInvitationCodeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
