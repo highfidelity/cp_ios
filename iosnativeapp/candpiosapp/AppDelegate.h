@@ -44,5 +44,7 @@
 -(void)startCheckInClockHandAnimation;
 -(void)stopCheckInClockHandAnimation;
 - (void)showSignupModalFromViewController:(UIViewController *)viewController animated:(BOOL)animated;
+- (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController animated:(BOOL)animated;
+
 void uncaughtExceptionHandler(NSException *exception);
 @end

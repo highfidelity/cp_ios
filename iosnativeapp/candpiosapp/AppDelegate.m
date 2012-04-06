@@ -121,6 +121,16 @@
     [viewController presentModalViewController:signupController animated:animated];
 }
 
+- (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
+                                              animated:(BOOL)animated
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
+    [viewController presentModalViewController:[storyboard instantiateViewControllerWithIdentifier:
+                                                @"EnterInvitationCodeNavigationController"]
+                                      animated:animated];
+}
+
+
 #pragma mark - View Lifecycle
 
 - (BOOL)application:(UIApplication *)application

@@ -60,6 +60,9 @@
                    andCompletion:(void (^)(NSDictionary *, NSError *))completion;
 + (void)getInvitationCodeForLocation:(CLLocation *)location
                 withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
++ (void)enterInvitationCode:(NSString *)invitationCode
+                forLocation:(CLLocation *)location
+       withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
 //Contanct list functions
 + (void)getContactListWithCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;

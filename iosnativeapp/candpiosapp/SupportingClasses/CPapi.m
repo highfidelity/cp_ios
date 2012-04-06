@@ -653,6 +653,20 @@
                          completion:completion];
 }
 
++ (void)enterInvitationCode:(NSString *)invitationCode
+                forLocation:(CLLocation *)location
+       withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion {
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       [NSString stringWithFormat:@"%.7lf", location.coordinate.latitude], @"lat",
+                                       [NSString stringWithFormat:@"%.7lf", location.coordinate.longitude], @"lon",
+                                       invitationCode, @"invitation_code",
+                                       nil];
+    [self makeHTTPRequestWithAction:@"enterInvitationCode"
+                     withParameters:parameters
+                         completion:completion];
+}
+
+
 # pragma mark - User Settings
 
 + (void)getNotificationSettingsWithCompletition:(void (^)(NSDictionary *, NSError *))completion {

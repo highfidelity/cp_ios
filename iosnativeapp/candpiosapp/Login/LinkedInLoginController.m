@@ -321,8 +321,13 @@
             // Perform common post-login operations
             [BaseLoginController pushAliasUpdate];
             
-            [self.navigationController dismissModalViewControllerAnimated:YES];
-		}
+            BOOL hasUserEnteredValidInvitationCode = NO;
+            if (hasUserEnteredValidInvitationCode) {
+                [self.navigationController dismissModalViewControllerAnimated:NO];
+            } else {
+                [self performSegueWithIdentifier:@"EnterInvitationCodeSegue" sender:nil];
+            }
+        }
         
         // Remove NSNotification as it's no longer needed once logged in
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"linkedInCredentials" object:nil];
