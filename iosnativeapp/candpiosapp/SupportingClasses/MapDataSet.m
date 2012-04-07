@@ -95,32 +95,37 @@ static NSOperationQueue *sMapQueue = nil;
         // get the places that came back and make an annotation for each of them
         NSArray *placesArray = [[json objectForKey:@"payload"] objectForKey:@"venues"];
 
+        if (![placesArray isKindOfClass:[NSNull class]]) {
 #if DEBUG
-		NSLog(@"Got %d places.", [placesArray count]);
+            NSLog(@"Got %d places.", [placesArray count]);
 #endif
-		for(NSDictionary *placeDict in placesArray)
-		{
-			CPPlace *place = [[CPPlace alloc] initFromDictionary:placeDict];
+            for(NSDictionary *placeDict in placesArray)
+            {
+                CPPlace *place = [[CPPlace alloc] initFromDictionary:placeDict];
+                
+                // add (or update) the new pin
+                [self.annotations addObject:place];
+                
+            }
             
-			// add (or update) the new pin
-			[self.annotations addObject:place];
-            
-		}
-        
+        }
+
         // get the users that came back and setup the activeUsers array on the Map
         
         NSArray *usersArray = [[json objectForKey:@"payload"] objectForKey:@"users"];
 
+        if (![usersArray isKindOfClass:[NSNull class]]) {
 #if DEBUG
-        NSLog(@"Got %d users.", [usersArray count]);
+            NSLog(@"Got %d users.", [usersArray count]);
 #endif
-        
-        for (NSDictionary *userDict in usersArray) {
-            User *user = [[User alloc] initFromDictionary:userDict];
-
-            // add the user to the MapTabController activeUsers array
-            [[CPAppDelegate settingsMenuController].mapTabController.activeUsers setObject:user forKey:[NSString stringWithFormat:@"%d", user.userID]];
-        }
+            
+            for (NSDictionary *userDict in usersArray) {
+                User *user = [[User alloc] initFromDictionary:userDict];
+                
+                // add the user to the MapTabController activeUsers array
+                [[CPAppDelegate settingsMenuController].mapTabController.activeUsers setObject:user forKey:[NSString stringWithFormat:@"%d", user.userID]];
+            }
+        }       
 	}
 	return self;
 }
