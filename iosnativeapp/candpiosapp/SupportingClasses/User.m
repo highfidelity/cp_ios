@@ -36,8 +36,11 @@
 @synthesize listingsAsAgent = _listingsAsAgent;
 @synthesize workInformation = _workInformation;
 @synthesize educationInformation  = _educationInformation;
-@synthesize jobTitle, reviews;
+@synthesize jobTitle = _jobTitle;
+@synthesize reviews = _reviews;
 @synthesize checkInHistory = _checkInHistory;
+@synthesize majorJobCategory = _majorJobCategory;
+@synthesize minorJobCategory =  _minorJobCategory;
 
 -(id)init
 {
@@ -45,6 +48,38 @@
 	if(self)
 	{
         // init code here
+	}
+	return self;
+}
+
+-(id)initFromDictionary:(NSDictionary *)userDict
+{
+    self = [super init];
+	if(self)
+	{
+        self.userID = [[userDict objectForKey:@"id"] integerValue];
+        self.nickname = [userDict objectForKey:@"nickname"];
+        
+        self.status = [userDict objectForKey:@"status_text"];
+        self.jobTitle = [userDict objectForKey:@"headline"];
+        self.majorJobCategory = [userDict objectForKey:@"major_job_category"];
+        self.minorJobCategory = [userDict objectForKey:@"minor_job_category"];
+        
+        NSString *photoString = [userDict objectForKey:@"filename"];
+        if (![photoString isKindOfClass:[NSNull class]]) {
+            self.urlPhoto = [NSURL URLWithString:photoString];
+        }        
+        
+        double lat = [[userDict objectForKey:@"lat"] doubleValue];
+        double lng = [[userDict objectForKey:@"lng"] doubleValue];
+        self.location = CLLocationCoordinate2DMake(lat, lng);
+        
+        self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
+        
+        CPPlace *place = [[CPPlace alloc] init];
+        place.name = [userDict objectForKey:@"venue_name"];
+        place.foursquareID = [userDict objectForKey:@"foursquare"];
+        self.placeCheckedIn = place;
 	}
 	return self;
 }
@@ -73,19 +108,25 @@
 // override nickname setter to decode html entities
 - (void)setNickname:(NSString *)nickname
 {
-    _nickname = [nickname stringByDecodingHTMLEntities];
+    if ([nickname isKindOfClass:[NSNull class]]) {
+        _nickname = @"";
+    } else {
+        _nickname = [nickname stringByDecodingHTMLEntities];
+    }  
 }
 
 // override nickname setter to decode html entities
 - (void)setStatus:(NSString *)status
 {
-    NSString *cleanStatus = [status stringByDecodingHTMLEntities];
-    if ([cleanStatus length] > 0) {
-        if ([[cleanStatus substringFromIndex:[cleanStatus length] - 1] isEqualToString:@" "]) {
-            cleanStatus = [cleanStatus substringToIndex:[cleanStatus length] - 1];
-        }
+    if ([status isKindOfClass:[NSNull class]]) {
+        status = @"";
+    }
+    
+    status = [status stringByDecodingHTMLEntities];
+    if ([status length] > 0) {
+        [status stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     }    
-    _status = cleanStatus;
+    _status = status;
 }
 
 // override rate setter to decode any html entities
@@ -98,6 +139,16 @@
 - (void)setBio:(NSString *)bio
 {
     _bio = [bio stringByDecodingHTMLEntities];
+}
+
+// override job title setter to decode html entities
+-(void)setJobTitle:(NSString *)jobTitle
+{
+    if ([jobTitle isKindOfClass:[NSNull class]]) {
+        _jobTitle = @"";
+    } else {
+        _jobTitle = [jobTitle stringByDecodingHTMLEntities];
+    }
 }
 
 - (NSString *)firstName
@@ -156,6 +207,9 @@
         
         if (!error) {
             NSDictionary *userDict = [response objectForKey:@"payload"];
+            
+            // TODO: do most of the init here from initWithDictionary
+            // only add the extra info we get because of resume here
             
             self.nickname = [userDict objectForKey:@"nickname"];
             NSString *status = [[userDict objectForKey:@"status_text"]

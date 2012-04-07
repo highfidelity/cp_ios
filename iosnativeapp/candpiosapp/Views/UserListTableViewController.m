@@ -7,64 +7,39 @@
 //
 
 #import "UserListTableViewController.h"
-#import "MissionAnnotation.h"
 #import "UIImageView+WebCache.h"
 #import "UserTableViewCell.h"
 #import "UserProfileCheckedInViewController.h"
 #import "NSString+HTML.h"
 #import "VenueCell.h"
 #import "CheckInDetailsViewController.h"
-#import "CPAnnotation.h"
-#import "OCAnnotation.h"
-#import "VenueInfoViewController.h"
+#import "CPPlace.h"
+#import "SVProgressHUD.h"
 
 @interface UserListTableViewController()
 @end
 
 @implementation UserListTableViewController
 
-@synthesize delegate, users, checkedInUsers, listType, currentVenue;
-@synthesize mapBounds = _mapBounds;
-
-
-// TODO: These are users, not missions so change the property name accordingly
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
+@synthesize delegate = _delegate;
+@synthesize weeklyUsers = _weeklyUsers;
+@synthesize checkedInUsers = _checkedInUsers;
 
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // listType of 1 is used from within an annotation's callouts, otherwise set to 0, default for global list
-    if (!listType) {
-        listType = 0;
-    }
     
     // the map is our delegate
     self.delegate = [[CPAppDelegate settingsMenuController] mapTabController];
     
-    // Add a notification catcher for refreshViewOnCheckin to refresh the view
+    // Add a notification catcher for refreshTableViewWithNewMapData to refresh the view
     [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(refreshViewOnCheckin:) 
-                                                 name:@"refreshViewOnCheckin" 
-                                               object:nil];    
+                                             selector:@selector(refreshFromNewMapData:) 
+                                                 name:@"refreshFromNewMapData" 
+                                               object:nil]; 
+    
 }
 
 - (void)viewDidUnload
@@ -72,19 +47,17 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshViewOnCheckin" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshFromNewMapData" object:nil];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+-(void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    // call refreshViewOnCheckin now to grab data from the map
-    [self refreshViewOnCheckin:nil];
+    [SVProgressHUD showWithStatus:@"Loading..."];
+    
+    // tell the map to reload data
+    // we'll get a notification when that's done to reload ours
+    self.delegate.sendDataUpdateNotification = YES;
+    [self.delegate refreshButtonClicked:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -103,93 +76,51 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (NSMutableArray *)weeklyUsers
+{
+    if (!_weeklyUsers) {
+        _weeklyUsers = [NSMutableArray array];
+    }
+    return _weeklyUsers;
+}
+
+- (NSMutableArray *)checkedInUsers
+{
+    if (!_checkedInUsers) {
+        _checkedInUsers = [NSMutableArray array];
+    }
+    return _checkedInUsers;
+}
+
 - (void)filterData {
+    
+    // clear the current checked in users array
+    [self.checkedInUsers removeAllObjects];
     
     // Iterate through the passed missions and only show the ones that were within the map bounds, ordered by distance
 
     CLLocation *currentLocation = [AppDelegate instance].settings.lastKnownLocation;
-
-    // Build a list of annotations that should be removed from the list view so that duplicate individuals aren't shown (if they check in several times)
-    NSMutableArray *badAnnotations = [[NSMutableArray alloc] init];
-    NSMutableSet *goodUserIds = [[NSMutableSet alloc] init];
-    NSMutableSet *badUserIds = [[NSMutableSet alloc] init];
     
-    for (CPAnnotation *annotation in users) {
-        CLLocation *location = [[CLLocation alloc] initWithLatitude:annotation.lat longitude:annotation.lon];
-        
-        annotation.distance = [location distanceFromLocation:currentLocation];
-
-        annotation.distanceTo = [CPUtils localizedDistanceofLocationA:currentLocation awayFromLocationB:location];
-        
-        // Check if this person already has a checkin, and if so, mark the user as needing to clean up old checkins
-        NSNumber *userId = [NSNumber numberWithInteger:annotation.userId];
-        
-        if ([goodUserIds containsObject:userId]) {
-            [badUserIds addObject:userId];
+    for (User *user in [self.weeklyUsers copy]) {
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:user.location.latitude longitude:user.location.longitude];
+        user.distance = [location distanceFromLocation:currentLocation];
+        if (user.checkedIn) {
+            [self.checkedInUsers addObject:user];
+            [self.weeklyUsers removeObject:user];
         }
-        else {
-            [goodUserIds addObject:userId];
-        }        
-    }
-    
-
-    // first sort using checkinId so that we dont remove the most resent checkin by the user
-    NSSortDescriptor *d = [[NSSortDescriptor alloc] initWithKey:@"checkinId" ascending:YES];
-    [users sortUsingDescriptors:[NSArray arrayWithObjects:d,nil]];
-
-    // Clean up old checkins
-    for (NSNumber *userId in badUserIds) {
-        NSArray *duplicates = [users filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"userId == %d", [userId integerValue]]];
-        
-        for (NSInteger i = 0; i < (duplicates.count - 1); i++) {
-            [badAnnotations addObject:[duplicates objectAtIndex:i]];
-        }        
-    }
-    [users removeObjectsInArray:badAnnotations];
-    
-    NSMutableArray *excludedAnnotations = [[NSMutableArray alloc] init];
-    
-    checkedInUsers = [[NSMutableArray alloc] init];
-    for (CPAnnotation *mission in users) {
-        if (mission.checkedIn) {
-//            NSLog(@"currentVenue: %@", currentVenue);
-//            NSLog(@"Mission's venue: %@", mission.groupTag);
-//            if ((currentVenue && [mission.groupTag isEqualToString:currentVenue]) || !currentVenue) {
-                [checkedInUsers addObject:mission];
-//            }
-//            else {
-//                [excludedAnnotations addObject:mission];
-//            }
-        }
-    }
-    
-    if (excludedAnnotations.count > 0) {
-        [users removeObjectsInArray:excludedAnnotations];
-    }
-    
-    [users removeObjectsInArray:checkedInUsers];
-
-    NSSortDescriptor *descriptor;
-    
-    if (listType == 0) {
-        // Could sort by checkinId in reverse order to get most recent checkins
-        descriptor = [[NSSortDescriptor alloc] initWithKey:@"distance" ascending:YES];
-    }
-    else {
-         descriptor = [[NSSortDescriptor alloc] initWithKey:@"checkinCount" ascending:NO];
-    }
-
-    [users sortUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
-    [checkedInUsers sortUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
-        
+    }       
 }
 
-- (void)refreshViewOnCheckin:(NSNotification *)notification {
-    // get data based on the venue list we are viewing
-    if (self.currentVenue) {
-        users = [self.delegate getCheckinsByGroupTag:self.currentVenue];
-    } else {
-        users = [self.delegate getCheckins];
+- (void)refreshFromNewMapData:(NSNotification *)notification {
+    
+    // dismiss the SVProgressHUD
+    [SVProgressHUD dismiss];
+    
+    [self.weeklyUsers removeAllObjects];
+    
+    // add the users from the map
+    for (NSString *key in self.delegate.activeUsers) {
+        [self.weeklyUsers addObject:[self.delegate.activeUsers objectForKey:key]];
     }
     
     // filter that data
@@ -202,10 +133,10 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (checkedInUsers.count > 0 && users.count > 0) {
+    if (self.checkedInUsers.count > 0 && self.weeklyUsers.count > 0) {
         return 2;
     }
-    else if (checkedInUsers.count > 0 || users.count > 0) {
+    else if (self.checkedInUsers.count > 0 || self.weeklyUsers.count > 0) {
         return 1;
     }
     else {
@@ -216,18 +147,14 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString *checkedInNow;
     NSString *lastCheckins = @"Last 7 Days";
+    
+    checkedInNow = @"Checked In Now";
+    
 
-    if (listType == 0) {
-        checkedInNow = @"Checked In Now";
-    }
-    else {
-        checkedInNow = @"Here Now";
-    }
-
-    if (section == 0 && checkedInUsers.count > 0) {
+    if (section == 0 && self.checkedInUsers.count > 0) {
         return checkedInNow;
     }
-    else if (section == 0 && users.count > 0) {
+    else if (section == 0 && self.weeklyUsers.count > 0) {
         return lastCheckins;
     }
     else if (section == 1) {
@@ -240,14 +167,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0 && checkedInUsers.count > 0) {
-        return checkedInUsers.count;
+    if (section == 0 && self.checkedInUsers.count > 0) {
+        return self.checkedInUsers.count;
     }
-    else if (section == 0 && users.count > 0) {
-        return users.count;
+    else if (section == 0 && self.weeklyUsers.count > 0) {
+        return self.weeklyUsers.count;
     }
     else if (section == 1) {
-        return users.count;
+        return self.weeklyUsers.count;
     }
     else {
         return 0;
@@ -269,26 +196,26 @@
     }
 
     // Configure the cell...
-    CPAnnotation *annotation;
+    User *user;
 
-    if (indexPath.section == 0 && checkedInUsers.count > 0) {
-        annotation = [checkedInUsers objectAtIndex:indexPath.row];
+    if (indexPath.section == 0 && self.checkedInUsers.count > 0) {
+        user = [self.checkedInUsers objectAtIndex:indexPath.row];
     }
-    else if (indexPath.section == 0 && users.count > 0) {
-        annotation = [users objectAtIndex:indexPath.row];
+    else if (indexPath.section == 0 && self.weeklyUsers.count > 0) {
+        user = [self.weeklyUsers objectAtIndex:indexPath.row];
     }
     else if (indexPath.section == 1) {
-        annotation = [users objectAtIndex:indexPath.row];
+        user = [self.weeklyUsers objectAtIndex:indexPath.row];
     }
    
-    cell.nicknameLabel.text = annotation.nickname;
+    cell.nicknameLabel.text = user.nickname;
 
     // reset the nickname label since this is a reusable cell
     CGRect nicknameFrameChanger = cell.nicknameLabel.frame;
     nicknameFrameChanger.origin.y = 15;
     // show the user's major job category (unless it's other)
-    if (![annotation.majorJobCategory isEqualToString:@"other"]) {
-        cell.categoryLabel.text = [annotation.majorJobCategory capitalizedString];
+    if (![user.majorJobCategory isEqualToString:@"other"]) {
+        cell.categoryLabel.text = [user.majorJobCategory capitalizedString];
         
     } else {
         cell.categoryLabel.text = @"";
@@ -298,35 +225,32 @@
     cell.nicknameLabel.frame = nicknameFrameChanger;
     
     cell.statusLabel.text = @"";
-    if (![annotation.status isEqualToString:@""]) {
-        cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",[annotation.status stringByDecodingHTMLEntities]];
+    if (![user.status isEqualToString:@""]) {
+        cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",[user.status stringByDecodingHTMLEntities]];
     }
-    cell.distanceLabel.text = annotation.distanceTo;
-
-    cell.checkInLabel.text = annotation.venueName;
+    cell.distanceLabel.text = [CPUtils localizedDistanceStringForDistance:user.distance];
     
-    if (annotation.checkinCount == 1) {
-        cell.checkInCountLabel.text = [NSString stringWithFormat:@"%d Checkin",annotation.checkinCount];
-    }
-    else {
-        cell.checkInCountLabel.text = [NSString stringWithFormat:@"%d Checkins",annotation.checkinCount];
-    }
-
+    cell.checkInLabel.text = user.placeCheckedIn.name;
+    
+//    if (user.checkinCount == 1) {
+//        cell.checkInCountLabel.text = [NSString stringWithFormat:@"%d Checkin",annotation.checkinCount];
+//    }
+//    else {
+//        cell.checkInCountLabel.text = [NSString stringWithFormat:@"%d Checkins",annotation.checkinCount];
+//    }
+    
     UIImageView *imageView = cell.profilePictureImageView;
-    if (annotation.imageUrl) {
-
+    if (user.urlPhoto) {
+        
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         
-        [imageView setImageWithURL:[NSURL URLWithString:annotation.imageUrl]
-                       placeholderImage:[CPUIHelper defaultProfileImage]];
+        [imageView setImageWithURL:user.urlPhoto
+                  placeholderImage:[CPUIHelper defaultProfileImage]];
     }
     else
     {
         imageView.image = [CPUIHelper defaultProfileImage];
-    }
-    
-    
-    
+    }   
     
     return cell;
 }
@@ -363,27 +287,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CPAnnotation *annotation;
+    User *selectedUser;
     
-    if (indexPath.section == 0 && checkedInUsers.count > 0) {
-        annotation = [checkedInUsers objectAtIndex:indexPath.row];
+    if (indexPath.section == 0 && self.checkedInUsers.count > 0) {
+        selectedUser = [self.checkedInUsers objectAtIndex:indexPath.row];
     }
-    else if (indexPath.section == 0 && users.count > 0) {
-        annotation = [users objectAtIndex:indexPath.row];
+    else if (indexPath.section == 0 && self.weeklyUsers.count > 0) {
+        selectedUser = [self.weeklyUsers objectAtIndex:indexPath.row];
     }
     else if (indexPath.section == 1) {
-        annotation = [users objectAtIndex:indexPath.row];
+        selectedUser = [self.weeklyUsers objectAtIndex:indexPath.row];
     }
-    
-    // setup a user object with the info we have from the pin and callout
-    // so that this information can already be in the resume without having to load it
-    User *selectedUser = [[User alloc] init];
-    selectedUser.nickname = annotation.nickname;
-    selectedUser.status = annotation.status;
-    selectedUser.skills = annotation.skills;   
-    selectedUser.userID = [annotation.objectId intValue];
-    selectedUser.location = CLLocationCoordinate2DMake(annotation.lat, annotation.lon);
-    selectedUser.checkedIn = annotation.checkedIn;
     
     UserProfileCheckedInViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
     // set the user object on the UserProfileCheckedInVC to the user we just created

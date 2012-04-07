@@ -8,15 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UserListTableViewController : UITableViewController 
+@interface UserListTableViewController : UITableViewController <UINavigationControllerDelegate> 
 
-@property (nonatomic, retain) NSMutableArray *users;
+@property (nonatomic, retain) NSMutableArray *weeklyUsers;
 @property (nonatomic, retain) NSMutableArray *checkedInUsers;
-@property (nonatomic) NSInteger listType;
-@property (nonatomic, retain) NSString *currentVenue;
-@property (nonatomic) MKMapRect mapBounds;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) MapTabController *delegate;
 
-- (void)refreshViewOnCheckin:(NSNotification *)notification;
+- (void)refreshFromNewMapData:(NSNotification *)notification;
 
 @end

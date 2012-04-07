@@ -45,9 +45,11 @@
 @property (nonatomic, strong) NSMutableArray *checkInHistory;
 @property (nonatomic, readonly) NSMutableArray *favoritePlaces;
 @property (nonatomic, readonly) BOOL hasAnyFavoritePlaces;
+@property (nonatomic, strong) NSString *majorJobCategory;
+@property (nonatomic, strong) NSString *minorJobCategory;
 
 -(void)loadUserResumeData:(void (^)(NSError *error))completion;
-
+-(id)initFromDictionary:(NSDictionary *)userDict;
 -(NSString *)firstName;
 
 

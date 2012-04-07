@@ -41,58 +41,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     // our delegate is the map tab controller
     self.delegate = [[CPAppDelegate settingsMenuController] mapTabController];
     
-    MKMapRect mapBounds = [[self.delegate  mapView] visibleMapRect];
-    
-    MKMapPoint neMapPoint = MKMapPointMake(mapBounds.origin.x + mapBounds.size.width, mapBounds.origin.y);
-    MKMapPoint swMapPoint = MKMapPointMake(mapBounds.origin.x, mapBounds.origin.y + mapBounds.size.height);
-    CLLocationCoordinate2D swCoord = MKCoordinateForMapPoint(swMapPoint);
-    CLLocationCoordinate2D neCoord = MKCoordinateForMapPoint(neMapPoint);
-    
-    [SVProgressHUD showWithStatus:@"Loading ..."];
-    
-    [CPapi getVenuesInSWCoords:swCoord
-                   andNECoords:neCoord
-                  userLocation:[AppDelegate instance].settings.lastKnownLocation
-                withCompletion:^(NSDictionary *json, NSError *error) {
-                    
-                    BOOL respError = [[json objectForKey:@"error"] boolValue];
-                    if (!error && !respError) {
-                        
-                        NSArray *itemsArray = [json objectForKey:@"payload"];
-                        
-                        if ([itemsArray class] != [NSNull class]) {
-                            for (NSMutableDictionary *item in itemsArray) {
-                                CPPlace *place = [[CPPlace alloc] init];
-                                
-                                place.name = [item valueForKey:@"name"];
-                                place.foursquareID = [item valueForKey:@"foursquare"];
-                                place.address = [item valueForKey:@"address"];
-                                place.city = [item valueForKey:@"city"];
-                                place.state = [item valueForKey:@"state"];
-                                place.photoURL = [item valueForKey:@"photo_url"];
-                                place.phone = [item valueForKey:@"phone"];
-                                place.formattedPhone = [item valueForKey:@"formatted_phone"];
-                                place.checkinCount = [[item valueForKey:@"checkins"] integerValue];
-                                place.weeklyCheckinCount = [[item valueForKey:@"checkins_for_week"] integerValue];
-                                place.monthlyCheckinCount = [[item valueForKey:@"checkins_for_month"]
-                                                             integerValue];
-                                place.distanceFromUser = [[item valueForKey:@"distance"] doubleValue];
-                                place.lat = [[item valueForKey:@"lat"] doubleValue];
-                                place.lng = [[item valueForKey:@"lng"] doubleValue];
-                                
-                                [[self venues] addObject:place];
-                            }   
-                        }
-                    }
-                    
-                    [SVProgressHUD dismiss];                    
-                    [self.tableView reloadData];
-                    
-                }];
+    // Add a notification catcher for refreshTableViewWithNewMapData to refresh the view
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(refreshFromNewMapData:) 
+                                                 name:@"refreshFromNewMapData" 
+                                               object:nil]; 
 }
 
 - (void)viewDidUnload
@@ -102,9 +59,32 @@
     // e.g. self.myOutlet = nil;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [SVProgressHUD showWithStatus:@"Loading..."];
+    // tell the map to reload data
+    // we'll get a notification when that's done to reload ours
+    self.delegate.sendDataUpdateNotification = YES;
+    [self.delegate refreshButtonClicked:nil];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)refreshFromNewMapData:(NSNotification *)notification {
+    
+    // dismiss the SVProgressHUD
+    [SVProgressHUD dismiss];
+    
+    // get the venues from the map view
+    // TODO : grab this in a cleaner way
+    // we don't really need the getVenues function do we?
+    self.venues = [[self.delegate getVenues] mutableCopy];
+
+    // and reload the table
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -144,8 +124,8 @@
             
             vcell.venueCheckins.text = [NSString stringWithFormat:venue.weeklyCheckinCount == 1 ? @"%d person this week" : @"%d people this week", venue.weeklyCheckinCount];
         } else {
-            if (venue.monthlyCheckinCount > 0) {
-                vcell.venueCheckins.text = [NSString stringWithFormat:venue.monthlyCheckinCount == 1 ? @"%d person this month" : @"%d people this week", venue.monthlyCheckinCount];
+            if (venue.intervalCheckinCount > 0) {
+                vcell.venueCheckins.text = [NSString stringWithFormat:venue.intervalCheckinCount == 1 ? @"%d person all time" : @"%d people all time", venue.intervalCheckinCount];
             } else {
                 vcell.venueCheckins.text = @"";
             }                

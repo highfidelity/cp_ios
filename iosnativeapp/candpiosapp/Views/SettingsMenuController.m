@@ -259,7 +259,7 @@
     [UIView setAnimationDuration:0.3];
     
     float shift = menuWidthPercentage * [UIScreen mainScreen].bounds.size.width;
-    CPMapView* mapView = (CPMapView*)[self.frontViewController.view viewWithTag:mapTag];
+    MKMapView* mapView = (MKMapView*)[self.frontViewController.view viewWithTag:mapTag];
     if (showMenu) {
         // shift to the right, hiding buttons 
         [self setMapAndButtonsViewXOffset:shift];

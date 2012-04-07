@@ -7,6 +7,7 @@
 //
 
 #import "CheckInDetailsViewController.h"
+#import "CheckInListTableViewController.h"
 #import "SignupController.h"
 #import "TPKeyboardAvoidingScrollView.h"
 
@@ -306,7 +307,12 @@
                 [CPAppDelegate refreshCheckInButton];
                 
                 // hide the checkin screen, we're checked in
-                [self dismissModalViewControllerAnimated:YES];
+                if ([self respondsToSelector:@selector(dismissModalViewControllerAnimated:)]) {
+                    [self dismissModalViewControllerAnimated:YES];
+                } else {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+                
             }
             else {
                 // show an alertView if the user isn't checked in

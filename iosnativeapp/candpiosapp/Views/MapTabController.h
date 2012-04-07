@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import "CPMapView.h"
 
 #define mapTag 992
 
@@ -16,16 +15,17 @@
 
 @interface MapTabController : UIViewController <MKMapViewDelegate, UINavigationControllerDelegate>
 {
-    CPMapView *mapView;
 	bool hasUpdatedUserLocation;
 	bool hasShownLoadingScreen;
 }
 
-@property (nonatomic, retain) IBOutlet CPMapView *mapView;
+@property (nonatomic, retain) IBOutlet MKMapView *mapView;
 @property (nonatomic, readonly, strong) MapDataSet *dataset;
 @property (nonatomic, readonly, strong) MapDataSet *fullDataset;
 @property (nonatomic, strong) NSMutableSet *annotationsToRedisplay;
 @property (weak, nonatomic) IBOutlet UIView *mapAndButtonsView;
+@property (nonatomic, strong) NSMutableDictionary *activeUsers;
+@property (nonatomic, assign) BOOL sendDataUpdateNotification;
 
 // State to prevent querying userlist (with bad region) before the map has appeared
 // Although there is a delegate method, mapViewDidFinishLoadingMap:, this is not
@@ -36,15 +36,12 @@
 - (void)refreshLocations;
 - (void)refreshLocationsAfterDelay;
 - (void)refreshLocationsAfterCheckin;
-- (id)getCheckinsByGroupTag:(NSString *)groupTag;
-- (id)getCheckins;
+- (NSArray *)getVenues;
 - (IBAction)refreshButtonClicked:(id)sender;
 - (IBAction)locateMe:(id)sender;
 - (IBAction)revealButtonPressed:(id)sender;
 - (void)loginButtonTapped;
 - (void)logoutButtonTapped;
-- (UIImage *)imageWithBorderFromImage:(UIImage*)source;
-- (UIImage *)pinImage:(NSMutableArray *)imageSources;
 
 @end
 

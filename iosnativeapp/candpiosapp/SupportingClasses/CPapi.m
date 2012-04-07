@@ -18,12 +18,21 @@
                   withParameters:(NSMutableDictionary *)parameters
                  responseHandler:(SEL)selector;
 
+
 + (void)makeHTTPRequestWithAction:(NSString *)action
                    withParameters:(NSMutableDictionary *)parameters 
                        completion:(void(^)(NSDictionary *json, NSError *error))completion;
 
++ (void)makeHTTPRequestWithAction:(NSString *)action
+                   withParameters:(NSMutableDictionary *)parameters 
+                            queue:(NSOperationQueue *)operationQueue
+                       completion:(void(^)(NSDictionary *json, NSError *error))completion;
+                            
+
 + (void)makeHTTPRequest:(NSURLRequest *)request 
+                  queue:(NSOperationQueue *)operationQueue
              completion:(void(^)(NSDictionary *json, NSError *error))completion;
+                 
 
 
 + (void)oneOnOneChatResponseHandler:(NSData *)response;
@@ -36,9 +45,13 @@
 
 @implementation CPapi
 
+
 // TODO: Show the network activity indicator while the request is being made. Update SVProgressHUD to its latest version (where it no longer automatically shows the network activity indicator when the HUD is displayed) so that the indicator is the responsibility of the actual request and not the HUD
 
 // Private method to perform HTTP requests to the C&P API
+
+// TODO : get rid of this method in favor of the following one that uses AFJSONRequestOperation
+
 + (void)makeHTTPRequestWithAction:(NSString *)action
                    withParameters:(NSMutableDictionary *)parameters
                   responseHandler:(SEL)selector
@@ -78,6 +91,15 @@
 }
 
 // Private method to perform HTTP Requests to the C&P API
++ (void)makeHTTPRequestWithAction:(NSString *)action 
+                   withParameters:(NSMutableDictionary *)parameters 
+                       completion:(void (^)(NSDictionary *, NSError *))completion
+{
+    [self makeHTTPRequestWithAction:action withParameters:parameters queue:nil completion:completion];
+}
+
+// Private method to perform HTTP Requests to the C&P API
+// Different than the above because it will accept the queue on which it should make requests
 // Uses the AFJSONRequestOperation which seems to be the easiest way to pass around
 // completion blocks
 
@@ -85,7 +107,9 @@
 
 + (void)makeHTTPRequestWithAction:(NSString *)action 
                    withParameters:(NSMutableDictionary *)parameters 
+                            queue:(NSOperationQueue *)operationQueue
                        completion:(void (^)(NSDictionary *, NSError *))completion
+                            
 {
     NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=%@",
                            kCandPWebServiceUrl, action];
@@ -106,11 +130,13 @@
 #endif
     
     NSURLRequest *request =  [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self makeHTTPRequest:request completion:completion];
+    [self makeHTTPRequest:request completion:completion queue:operationQueue];
 }
+
 
 // Private method that takes an NSURLRequest and performs it using AFJSONOperation
 + (void)makeHTTPRequest:(NSURLRequest *)request completion:(void (^)(NSDictionary *, NSError *))completion
+                  queue:(NSOperationQueue *)operationQueue
 {
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request 
         success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
@@ -124,8 +150,14 @@
         }
     }];
     
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    [queue addOperation:operation];
+    // check if we were passed a specific queue to run this request on
+    
+    if (!operationQueue) {
+        operationQueue = [[NSOperationQueue alloc] init];
+        
+    }
+    
+    [operationQueue addOperation:operation];
 }
 
 
@@ -528,8 +560,31 @@
     [alert show];
 }
 
+# pragma mark - Map Dataset
++ (void)getVenuesWithCheckinsWithinSWCoordinate:(CLLocationCoordinate2D)swCoord
+                                   NECoordinate:(CLLocationCoordinate2D)neCoord
+                                   userLocation:(CLLocationCoordinate2D)userLocation
+                                 checkedInSince:(CGFloat)numberOfDays
+                                          mapQueue:(NSOperationQueue *)mapQueue 
+                                 withCompletion:(void (^)(NSDictionary *, NSError *))completion
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setValue:[NSString stringWithFormat:@"%f", swCoord.latitude] forKey:@"sw_lat"];
+    [params setValue:[NSString stringWithFormat:@"%f", swCoord.longitude] forKey:@"sw_lng"];
+    [params setValue:[NSString stringWithFormat:@"%f", neCoord.latitude] forKey:@"ne_lat"];
+    [params setValue:[NSString stringWithFormat:@"%f", neCoord.longitude] forKey:@"ne_lng"];
+    [params setValue:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970] - (86400 * numberOfDays)] forKey:@"checked_in_since"];
+    
+    // TODO: shouldn't we be able to do the distance sorting locally on the phone?
+    [params setValue:[NSString stringWithFormat:@"%f", userLocation.latitude] forKey:@"user_lat"];
+    [params setValue:[NSString stringWithFormat:@"%f", userLocation.longitude] forKey:@"user_lng"];
+    
+    [params setValue:kCandPAPIVersion forKey:@"version"];
+    
+    [self makeHTTPRequestWithAction:@"getVenuesAndUsersWithCheckinsInBoundsDuringInterval" withParameters:params queue:mapQueue completion:completion];
+}
 
-#pragma mark - CheckIn
+#pragma mark - Checkins
 
 + (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID 
                                        :(void (^)(NSDictionary *, NSError *))completion
@@ -739,7 +794,7 @@
 #endif
             
             // make the request
-            [self makeHTTPRequest:request completion:^(NSDictionary *responseDict, NSError *error){
+            [self makeHTTPRequest:request queue:nil completion:^(NSDictionary *responseDict, NSError *error){
                 completion(responseDict, error); 
             }];
         });

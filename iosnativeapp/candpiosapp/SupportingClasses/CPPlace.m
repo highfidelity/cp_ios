@@ -1,3 +1,10 @@
+//
+//  CPPlace.m
+//  candpiosapp
+//
+//  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
+//
+
 #import "CPPlace.h"
 #import <CoreLocation/CoreLocation.h>
 
@@ -19,8 +26,9 @@
 @synthesize distanceFromUser = _distanceFromUser;
 @synthesize checkinCount = _checkinCount;
 @synthesize weeklyCheckinCount = _weeklyCheckinCount;
-@synthesize monthlyCheckinCount = _monthlyCheckinCount;
-
+@synthesize intervalCheckinCount = _monthlyCheckinCount;
+@synthesize coordinate = _coordinate;
+@synthesize activeUsers = _activeUsers;
 
 // override setters here to that when we parse JSON to set values we don't set things to null
 
@@ -90,6 +98,41 @@
     
 }
 
+- (NSMutableDictionary *)activeUsers
+{
+    if (!_activeUsers) {
+        _activeUsers = [NSMutableDictionary dictionary];
+    }
+    return _activeUsers;
+}
+
+- (CPPlace *)initFromDictionary:(NSDictionary *)json
+{
+    self = [super init];
+    if (self) {
+        self.name = [json objectForKey:@"name"];
+        self.address = [json objectForKey:@"address"];
+        self.city = [json objectForKey:@"city"];
+        self.state = [json objectForKey:@"state"];
+        self.phone = [json objectForKey:@"phone"];
+        self.formattedPhone = [json objectForKey:@"formatted_phone"];
+        self.distanceFromUser = [[json objectForKey:@"distance"] doubleValue];
+        self.foursquareID = [json objectForKey:@"foursquare"];
+        self.checkinCount = [[json objectForKey:@"checkins"] integerValue];
+        self.weeklyCheckinCount = [[json objectForKey:@"checkins_for_week"] integerValue];
+        self.intervalCheckinCount = [[json objectForKey:@"checkins_for_interval"] integerValue];
+        self.photoURL = [json objectForKey:@"photo_url"];
+        
+        self.lat = [[json objectForKey:@"lat"] doubleValue];
+        self.lng = [[json objectForKey:@"lng"] doubleValue];
+        self.coordinate = CLLocationCoordinate2DMake(self.lat, self.lng);
+        
+        self.activeUsers = [json objectForKey:@"users"];
+               
+    }
+    return self;
+}
+
 // override the getter for othersHere so it just intelligently calculates the value
 // based on the checkinCount and wether this user is also there
 -(int)othersHere
@@ -133,6 +176,21 @@
         [addressComponents addObject:self.state];
     }
     return [addressComponents componentsJoinedByString:@", "];
+}
+
+// title method implemented for MKAnnotation protocol
+- (NSString *)title {
+    return self.name;
+}
+
+- (NSString *)subtitle {
+    NSString *subtitleString;
+    if (self.checkinCount > 0) {
+        subtitleString = [NSString stringWithFormat:@"%d %@ here now", self.checkinCount, self.checkinCount > 1 ? @"people" : @"person"];
+    } else {
+        subtitleString = [NSString stringWithFormat:@"%d %@ in the last week", self.weeklyCheckinCount, self.weeklyCheckinCount > 1 ? @"checkins" : @"checkin"];
+    }
+    return subtitleString;
 }
 
 @end

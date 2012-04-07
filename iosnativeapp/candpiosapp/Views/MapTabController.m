@@ -8,15 +8,13 @@
 
 #import "MapTabController.h"
 #import "UIImageView+WebCache.h"
-#import "MissionAnnotation.h"
-#import "CPAnnotation.h"
 #import "UserListTableViewController.h"
 #import "SignupController.h"
 #import "MapDataSet.h"
 #import "UserProfileCheckedInViewController.h"
-#import "OCAnnotation.h"
 #import "UIImage+Resize.h"
 #import "MKAnnotationView+WebCache.h"
+#import "VenueInfoViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define qHideTopNavigationBarOnMapView			0
@@ -51,30 +49,18 @@
 @synthesize locationAllowTimer;
 @synthesize locationStatusKnown;
 @synthesize refreshButton;
+@synthesize activeUsers = _activeUsers;
+@synthesize sendDataUpdateNotification;
+
 
 BOOL clusterNow = YES;
-BOOL updateView = NO;
 BOOL bigZoomLevelChange = NO;
 BOOL zoomedIn = NO;
 BOOL zoomedOut = NO;
 BOOL clearLocations = NO;
 
--(id)getCheckinsByGroupTag:(NSString *)groupTag {
-    NSMutableArray *checkins = [[NSMutableArray alloc] init];
-
-    for (id <MKAnnotation> annotation in dataset.annotations) {
-        CPAnnotation *thisAnnotation = (CPAnnotation *)annotation;
-            
-        if ([thisAnnotation.groupTag isEqualToString:groupTag]) {
-            [checkins addObject:thisAnnotation];
-        }
-    }
-    
-    return checkins;
-}
-
--(id)getCheckins {
-    return fullDataset.annotations;
+-(NSArray *)getVenues {
+    return self.dataset.annotations;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -89,6 +75,9 @@ BOOL clearLocations = NO;
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
     // Reload all pins when the app comes back into the foreground
     [self refreshButtonClicked:nil];
+    
+    // set the boolean so that the other tabs are told to update too
+    self.sendDataUpdateNotification = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -97,6 +86,15 @@ BOOL clearLocations = NO;
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+}
+
+# pragma mark - Overriden setters/getters
+- (NSMutableDictionary *)activeUsers
+{
+    if (!_activeUsers) {
+        _activeUsers = [NSMutableDictionary dictionary];
+    }
+    return _activeUsers;
 }
 
 #pragma mark - View lifecycle
@@ -119,6 +117,9 @@ BOOL clearLocations = NO;
                                              selector:@selector(applicationDidBecomeActive:) 
                                                  name:@"applicationDidBecomeActive" 
                                                object:nil];
+    
+    // default for sendDataUpdateNotification boolean
+    self.sendDataUpdateNotification = NO;
     
     // Title view styling
     self.navigationItem.title = @"C&P"; // TODO: Remove once back button with mug logo is added to pushed views
@@ -224,7 +225,7 @@ BOOL clearLocations = NO;
 
 - (void)refreshLocationsAfterCheckin
 {
-    updateView = YES;
+    self.sendDataUpdateNotification = YES;
     [self refreshButtonClicked:nil];
 }
 
@@ -239,19 +240,18 @@ BOOL clearLocations = NO;
         // If zoom level changed drastically, remove the previously clustered checkedOut pins
         if (bigZoomLevelChange) {
             for (id <MKAnnotation> annotation in mapView.annotations) {
-                if ([annotation isKindOfClass:[OCAnnotation class]]) {
-                    OCAnnotation *thisAnnotation = (OCAnnotation *)annotation;
+                if ([annotation isKindOfClass:[CPPlace class]]) {
+                    CPPlace *thisAnnotation = (CPPlace *)annotation;
                     
-                    if (!thisAnnotation.hasCheckins) {
+                    if (thisAnnotation.checkinCount == 0) {
                         [self.mapView removeAnnotation:annotation];
                     }
                 }
                 
-                if ([annotation isKindOfClass:[CPAnnotation class]]) {
-                    CPAnnotation *thisAnnotation = (CPAnnotation *)annotation;
+                if ([annotation isKindOfClass:[CPPlace class]]) {
+                    CPPlace *thisAnnotation = (CPPlace *)annotation;
                     
-                    if (!thisAnnotation.checkedIn) {
-                        //                    [fullDataset.annotations removeObject:annotation];
+                    if (thisAnnotation.checkinCount == 0) {
                         [self.mapView removeAnnotation:annotation];
                         [annotationsToRedisplay addObject:annotation];
                     }
@@ -259,7 +259,6 @@ BOOL clearLocations = NO;
             }
             
             bigZoomLevelChange = NO;
-            [self.mapView doClustering];
         }
         
         // prevent the refresh of locations when we have a valid dataset or the map is not yet loaded
@@ -271,17 +270,15 @@ BOOL clearLocations = NO;
         
         // Re-add any annotations in annotationsToRedisplay to get the correct pins after big zoom changes
         if (annotationsToRedisplay.count > 0) {
-            for (CPAnnotation *ann in annotationsToRedisplay) {
+            for (CPPlace *ann in annotationsToRedisplay) {
                 [mapView addAnnotation:ann];
             }
             
-            [self.mapView doClustering];
             clusterNow = NO;
             [annotationsToRedisplay removeAllObjects];
         }
         
         if (clusterNow) {
-            [self.mapView doClustering];
             clusterNow = NO;
         }
     }
@@ -295,14 +292,19 @@ BOOL clearLocations = NO;
                             completion:^(MapDataSet *newDataset, NSError *error) {
 
                                 if (clearLocations) {
-                                    [self.mapView removeAllAnnotations];                                
+                                    // clear other than current user location
+                                    for (id annotation in mapView.annotations) {
+                                        if ([annotation isKindOfClass:[CPPlace class]]) {
+                                            [self.mapView removeAnnotation:annotation];
+                                        }
+                                    }                             
                                 }
 
                                 if(newDataset)
                                 {
                                     NSSet *visiblePins = [mapView annotationsInMapRect: mapView.visibleMapRect];
                                     
-                                    for (CPAnnotation *ann in visiblePins) {
+                                    for (CPPlace *ann in visiblePins) {
                                         if ([[newDataset annotations] containsObject: ann]) {
                                             [[newDataset annotations] removeObject: ann];
                                         } else {
@@ -311,26 +313,19 @@ BOOL clearLocations = NO;
                                     }
                                     
                                     dataset = newDataset;
-
-                                    // Load all users (even outside of map bounds) into fullDataset for List view
-                                    for (CPAnnotation *ann2 in newDataset.annotations) {
-                                        if (![fullDataset.annotations containsObject: ann2]) {
-                                            [fullDataset.annotations addObject: ann2];
-                                            [mapView addAnnotation:ann2];
-                                        }
-                                    }
                                 }
                                 
-                                [self.mapView doClustering];
-                                clusterNow = NO;
+                                // Load the annotations
+                                [self.mapView addAnnotations:newDataset.annotations];                                
+                            
                                 // stop spinning the refresh icon and dismiss the HUD
                                 [self stopRefreshArrowAnimation];
                                 [SVProgressHUD dismiss];
                                 
-                                if (updateView) {
-                                    updateView = NO;
+                                if (self.sendDataUpdateNotification) {
+                                    self.sendDataUpdateNotification = NO;
                                     // send notification to list view to refresh data
-                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewOnCheckin" object:nil];
+                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshFromNewMapData" object:nil];
                                 }
                             }]; 
 }
@@ -353,12 +348,7 @@ BOOL clearLocations = NO;
     } else {
         // we have a location ... zoom to it
         [self zoomTo: [[mapView userLocation] coordinate]];
-    }
-        
-    
-    
-    
-    
+    }    
 }
 
 - (IBAction)revealButtonPressed:(id)sender {
@@ -401,7 +391,7 @@ BOOL clearLocations = NO;
 	
 }
 
-- (void) mapView:(CPMapView *)mapView didAddAnnotationViews:(NSArray *)views {
+- (void) mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     for (MKAnnotationView *view in views) {
         CGFloat startingAlpha = view.alpha;
 
@@ -413,358 +403,97 @@ BOOL clearLocations = NO;
         view.alpha = startingAlpha;
         [UIView commitAnimations];
         
-        // Bring any checked in pins to the front of all subviews
-        if ([view.annotation isKindOfClass:[OCAnnotation class]]) {
-            OCAnnotation *thisAnnotation = (OCAnnotation *)view.annotation;
+        if ([view.annotation isKindOfClass:[CPPlace class]]) {
+            // Bring any checked in pins to the front of all subviews
+            CPPlace *place = (CPPlace *)view.annotation;
             
-            if (thisAnnotation.hasCheckins) {
+            if (place.checkinCount > 0) {
                 [[view superview] bringSubviewToFront:view];
             }
             else {
                 [[view superview] sendSubviewToBack:view];                
             }
-        }
-        else {
+        } else {
             [[view superview] sendSubviewToBack:view];
         }
     }    
 }
 
-- (UIImage *)imageWithBorderFromImage:(UIImage*)source {
-    CGSize size = [source size];
-    UIGraphicsBeginImageContext(size);
-    CGRect rect = CGRectMake(0, 0, size.width, size.height);
-    [source drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetRGBStrokeColor(context, 0.5, 0.5, 0.5, 1.0);
-    CGContextStrokeRect(context, rect);
-    UIImage *finalImage =  UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return finalImage;
-}
-
-- (UIImage *)pinImage:(NSMutableArray *)imageSources {
-    // Re-order imageSources to first show non-empty images
-
-    NSSortDescriptor* sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:NO selector:@selector(localizedCompare:)];
-    imageSources = [[imageSources sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]] copy];
-    
-    SDWebImageManager *manager = [SDWebImageManager sharedManager];
-    
-    CGFloat faceSize = 25;
-    CGFloat rows;
-    CGFloat columns;
-
-    if (imageSources.count == 1) {
-        rows = columns = 1;
-    }
-    else if (imageSources.count == 2) {
-        columns = 2;
-        rows = 1;
-    }
-    else {
-//        columns = floor(imageSources.count / 2) + 1;
-        columns = 2;
-        rows = 2;
-    }
-    
-    CGSize size = CGSizeMake(columns * faceSize, rows * faceSize);
-    UIGraphicsBeginImageContext(size);
-
-    for (NSInteger i = 0; i < imageSources.count; i++) {
-        NSString *imageSource = [imageSources objectAtIndex:i];
-        
-        UIImage *image = nil;
-        
-        // Only show the first 3 faces and a + if more
-        if (i == 3 && imageSources.count > 3) {
-            image = [UIImage imageNamed:@"plusSign"];
-        }
-        else if (i < 3) {
-            // If the passed imageSource is empty don't try to fetch it from the imageCache
-            if (![imageSource isEqualToString:@"empty"]) {
-                image = [manager imageWithURL:[NSURL URLWithString:imageSource]];                
-            }
-                        
-            if (!image) {
-                image = [CPUIHelper defaultProfileImage];
-            }
-        }
-        else {
-            break;
-        }
-
-        CGFloat x;
-        CGFloat y;
-
-        switch (i) {
-            case 0:
-                x = 0;
-                y = 0;
-                break;
-
-            case 1:
-                x = faceSize;
-                y = 0;
-                break;
-
-            case 2:
-                x = 0;
-                y = faceSize;
-                break;
-
-            case 3:
-                x = faceSize;
-                y = faceSize;
-                break;
-
-            case 4:
-                x = faceSize*2;
-                y = 0;
-                break;
-
-            case 5:
-                x = faceSize*2;
-                y = faceSize;
-                break;
-                
-            default:
-                break;
-        }
-
-        // Resize any images that are larger than minSize
-        if (image.size.width > faceSize || image.size.height > faceSize) {
-            image = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFit bounds:CGSizeMake(faceSize, faceSize) interpolationQuality:kCGInterpolationLow];
-        }
-
-        image = [self imageWithBorderFromImage:image];
-        
-        CGPoint imagePoint = CGPointMake(x, y);
-        [image drawAtPoint:imagePoint];
-    }
-    
-    UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return result;
-}
-
 // mapView:viewForAnnotation: provides the view for each annotation.
 // This method may be called for all or some of the added annotations.
 // For MapKit provided annotations (eg. MKUserLocation) return nil to use the MapKit provided annotation view.
-- (MKAnnotationView *)mapView:(CPMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {   
 	MKAnnotationView *pinToReturn = nil;
-    BOOL hasCheckedInUsers = NO;
     BOOL smallPin = NO;
+    
+    if ([annotation isKindOfClass:[CPPlace class]]) {
+        CPPlace *placeAnn = (CPPlace *)annotation;
         
-    if ([annotation isKindOfClass:[OCAnnotation class]]) {
-        NSArray *annotationsInCluster = [(OCAnnotation *)annotation annotationsInCluster];
-        NSMutableArray *imageSources = [[NSMutableArray alloc] initWithCapacity:annotationsInCluster.count];
-
-        NSInteger checkedInUsers = 0;
+        // Need to set a unique identifier to prevent any weird formatting issues -- use a combination of annotationsInCluster.count + hasCheckedInUsers value + smallPin value
+        NSString *reuseId = [NSString stringWithFormat:@"place-%d-%d", (placeAnn.checkinCount > 0) ? placeAnn.checkinCount : placeAnn.weeklyCheckinCount, (placeAnn.checkinCount > 0)];
         
-        for (id <MKAnnotation> ann in annotationsInCluster) {
-            if ([ann isKindOfClass:[CPAnnotation class]]) {
-                CPAnnotation *thisAnn = (CPAnnotation *)ann;
-                
-                if (thisAnn.imageUrl) {
-                    [imageSources addObject:thisAnn.imageUrl];
-                }
-                else {
-                    [imageSources addObject:@"empty"];
-                }
-                
-                if (thisAnn.checkedIn) {
-                    checkedInUsers++;
-                    hasCheckedInUsers = YES;
-                }
-            }
+        MKAnnotationView *pin = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
+        
+        if (pin == nil)
+        {
+            pin = [[MKAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: reuseId];
         }
-
-        if (!hasCheckedInUsers) {
-            if (annotationsInCluster.count < kCheckinThresholdForSmallPin) {
+        else
+        {
+            pin.annotation = annotation;
+        }
+        
+        if (!placeAnn.checkinCount > 0) {
+            if (placeAnn.weeklyCheckinCount < kCheckinThresholdForSmallPin) {
                 smallPin = YES;
             }
             else {
                 smallPin = NO;
             }            
         }
-
-        // If zoomed out, force the smallPin
-//        if (self.mapView.region.span.longitudeDelta > kMinimumDeltaForSmallPins) {
-//            smallPin = YES;
-//        }
         
-        // Need to set a unique identifier to prevent any weird formatting issues -- use a combination of annotationsInCluster.count + hasCheckedInUsers value + smallPin value
-        NSString *reuseId = [NSString stringWithFormat:@"cluster-%d-%d-%d", (hasCheckedInUsers) ? checkedInUsers : imageSources.count, hasCheckedInUsers, smallPin];
-        
-        MKAnnotationView *pin = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
-
-        if (pin == nil)
-		{
-			pin = [[MKAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: reuseId];
-		}
-		else
-		{
-			pin.annotation = annotation;
-		}
-
-        if (hasCheckedInUsers) {
-            [pin setPin:checkedInUsers hasCheckins:hasCheckedInUsers smallPin:NO withLabel:YES];
+        if (placeAnn.checkinCount > 0) {
+            [pin setPin:placeAnn.checkinCount hasCheckins:YES smallPin:smallPin withLabel:YES];
             pin.centerOffset = CGPointMake(0, -31);            
         }
         else {           
-            [pin setPin:imageSources.count hasCheckins:hasCheckedInUsers smallPin:smallPin withLabel:NO];
+            [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO smallPin:smallPin withLabel:NO];
             pin.centerOffset = CGPointMake(0, -18); 
         }
-      
+        
         pin.enabled = YES;
         pin.canShowCallout = YES;
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-		button.frame = CGRectMake(0, 0, 32, 32);
-//		button.tag = [dataset.annotations indexOfObject:candpanno];
-		pin.rightCalloutAccessoryView = button;
+        button.frame = CGRectMake(0, 0, 32, 32);
+        //      button.tag = [dataset.annotations indexOfObject:candpanno];
+        pin.rightCalloutAccessoryView = button;
         pinToReturn = pin;
-
-    }  
-	else if ([annotation isKindOfClass:[CPAnnotation class]])
-	{ 
-		CPAnnotation *candpanno = (CPAnnotation*)annotation;
-        NSString *reuseId;
-
-        if (candpanno.checkedIn) {
-            hasCheckedInUsers = YES;
-        }
-
-        [NSString stringWithFormat: @"pin-%d-%d", hasCheckedInUsers, 1];
-
         
-		MKAnnotationView *pin = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
-		if (pin == nil)
-		{
-			pin = [[MKAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: reuseId];
-		}
-		else
-		{
-			pin.annotation = annotation;
-        }
-        
-        if (hasCheckedInUsers) {
-            [pin setPin:1 hasCheckins:YES smallPin:NO withLabel:YES];
-            pin.centerOffset = CGPointMake(0, -31);     
-        }
-        else {
-            [pin setPin:1 hasCheckins:NO smallPin:YES withLabel:NO];
-            pin.centerOffset = CGPointMake(0, 0);
-        }
-        
-		pin.canShowCallout = YES;
-		
-		// make the left callout image view
-//		UIImageView *leftCallout = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
-//		leftCallout.contentMode = UIViewContentModeScaleAspectFill;
-//		if (candpanno.imageUrl)
-//		{
-//			[leftCallout setImageWithURL:[NSURL URLWithString:candpanno.imageUrl]
-//                        placeholderImage:[UIImage imageNamed:@"63-runner"]];
-//		}
-//		else
-//		{
-//			leftCallout.image = [UIImage imageNamed:@"63-runner"];			
-//		}
-//		pin.leftCalloutAccessoryView = 	leftCallout;
-		// make the right callout
-		UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-		button.frame = CGRectMake(0, 0, 32, 32);
-		button.tag = [dataset.annotations indexOfObject:candpanno];
-		pin.rightCalloutAccessoryView = button;
-        
-        pinToReturn = pin;
-	}
-
-    // Set up correct callout offset for custom pin images
-    pinToReturn.calloutOffset = CGPointMake(0,0);
-	
-	return pinToReturn;
+        // Set up correct callout offset for custom pin images
+        pinToReturn.calloutOffset = CGPointMake(0,0);
+    
+    }
+    return pinToReturn;   
 }
 
-- (void)mapView:(CPMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
 
-    if ([view.annotation isKindOfClass:[OCAnnotation class]]) {
+    if ([view.annotation isKindOfClass:[CPPlace class]]) {
+        CPPlace *tappedPlace = (CPPlace *)view.annotation;
         
-        for (OCAnnotation *ann in ((OCAnnotation *)[view annotation]).annotationsInCluster) {
-//            NSLog(@"Found: %@", ann.title);
-        }
-
-      [self performSegueWithIdentifier:@"ShowUserClusterTable" sender:view];
-    }
-    else {
-        [self performSegueWithIdentifier:@"ShowUserProfileCheckedInFromMap" sender:view];
-    }
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender 
-{
-    SettingsMenuController *settingsMenuController = [AppDelegate instance].settingsMenuController;
-    if (settingsMenuController.isMenuShowing) { [settingsMenuController showMenu:NO]; }
-    if ([[segue identifier] isEqualToString:@"ShowUserProfileCheckedInFromMap"]) {
+        VenueInfoViewController *venueVC = [[UIStoryboard storyboardWithName:@"VenueStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+        venueVC.venue = tappedPlace;
         
-        // setup a user object with the info we have from the pin and callout
-        // so that this information can already be in the resume without having to load it
-        User *selectedUser = [[User alloc] init];
-        
-        if ([sender isKindOfClass: [MKAnnotationView class]]) 
-        {
-            // figure out which element was tapped
-            CPAnnotation *tappedObj = [sender annotation];
-            
-            selectedUser.nickname = tappedObj.nickname;
-            selectedUser.userID = [tappedObj.objectId intValue];
-            selectedUser.location = CLLocationCoordinate2DMake(tappedObj.lat, tappedObj.lon);
-            selectedUser.status = tappedObj.status;
-            selectedUser.skills = tappedObj.skills;
-            selectedUser.checkedIn = tappedObj.checkedIn;
-        } 
-        else if ([sender isKindOfClass: [User class]])
-        {
-            selectedUser = sender;
-        }
-            
-        
-        // set the user object on the UserProfileCheckedInVC to the user we just created
-        [[segue destinationViewController] setUser:selectedUser];
-    }
-    else if ([[segue identifier] isEqualToString:@"ShowUserListTable"]) {
-        [[segue destinationViewController] setListType:0];
-        [[segue destinationViewController] setCurrentVenue:nil];
-        [[segue destinationViewController] setUsers: [fullDataset.annotations mutableCopy]];
-        [[segue destinationViewController] setDelegate:self];
-        [[segue destinationViewController] setMapBounds:[mapView visibleMapRect]];
-    }
-    else if ([[segue identifier] isEqualToString:@"ShowUserClusterTable"]) {
-        OCAnnotation *tappedObj = [sender annotation];
-        NSArray *annotations = tappedObj.annotationsInCluster;
-
-        if (tappedObj.groupTag) {
-            [[segue destinationViewController] setCurrentVenue:tappedObj.groupTag];            
-        }
-        else {
-            [[segue destinationViewController] setCurrentVenue:nil];
-        }
-        
-        [[segue destinationViewController] setListType:1];
-        [[segue destinationViewController] setUsers: [annotations mutableCopy]];
-        [[segue destinationViewController] setDelegate:self];
-        [[segue destinationViewController] setMapBounds:[mapView visibleMapRect]];
+        // push the VenueInfoViewController onto the screen
+        [self.navigationController pushViewController:venueVC animated:YES];
     }
 }
 
 ////// map delegate
 
-- (void)mapView:(CPMapView *)thisMapView regionDidChangeAnimated:(BOOL)animated
+- (void)mapView:(MKMapView *)thisMapView regionDidChangeAnimated:(BOOL)animated
 {   
     if (self.mapView.region.span.longitudeDelta > kMinimumDeltaForSmallPins) {
         zoomedIn = YES;
@@ -792,17 +521,17 @@ BOOL clearLocations = NO;
     [self refreshLocationsIfNeeded];
 }
 
-- (void)mapViewWillStartLocatingUser:(CPMapView *)mapView
+- (void)mapViewWillStartLocatingUser:(MKMapView *)mapView
 {
 	NSLog(@"mapViewWillStartLocatingUser");
 }
 
-- (void)mapViewDidStopLocatingUser:(CPMapView *)mapView
+- (void)mapViewDidStopLocatingUser:(MKMapView *)mapView
 {
 	NSLog(@"mapViewDidStopLocatingUser");
 	
 }
-- (void)mapView:(CPMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
 //	NSLog(@"MapTab: didUpdateUserLocation (lat %f, lon %f)",
 //          userLocation.location.coordinate.latitude,
@@ -826,7 +555,7 @@ BOOL clearLocations = NO;
 
 	}
 }
-- (void)mapView:(CPMapView *)mapView didFailToLocateUserWithError:(NSError *)error
+- (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
 {
 	[SVProgressHUD dismiss];
 }

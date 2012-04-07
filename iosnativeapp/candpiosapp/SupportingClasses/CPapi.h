@@ -33,14 +33,22 @@
 + (void)oneOnOneChatGetHistoryWith:(User *)User
                         completion:(void (^)(NSDictionary *, NSError *))completion;
 
-// Face-to-Face functions
+# pragma mark - Map Dataset
++ (void)getVenuesWithCheckinsWithinSWCoordinate:(CLLocationCoordinate2D)swCoord
+                      NECoordinate:(CLLocationCoordinate2D)neCoord
+                      userLocation:(CLLocationCoordinate2D)userLocation
+                    checkedInSince:(CGFloat)daysInterval
+                            mapQueue:(NSOperationQueue *)mapQueue
+             withCompletion:(void (^)(NSDictionary *, NSError *))completion;
+
+# pragma mark - Face to Face
 + (void)sendF2FInvite:(int) userId;
 + (void)sendF2FAccept:(int) userId;
 + (void)sendF2FDecline:(int) userId;
 + (void)sendF2FVerify:(int) userId
              password:(NSString *) password;
 
-// Checkin functions
+# pragma mark - Checkins
 + (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID
                                        :(void(^)(NSDictionary *json, NSError *error))completion; 
 
@@ -52,7 +60,7 @@
 
 + (void)checkOutWithCompletion:(void(^)(NSDictionary *json, NSError *error))completion;
 
-//Profile functions
+# pragma mark - User Profile
 + (void)getResumeForUserId:(int)userId andCompletion:(void(^)(NSDictionary *json, NSError *error))completion;
 + (void)getUserProfileWithCompletionBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 + (void)getUserTrasactionDataWithCompletitonBlock:(void(^)(NSDictionary *json, NSError *error))completion;
@@ -64,7 +72,7 @@
                 forLocation:(CLLocation *)location
        withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
-//Contanct list functions
+# pragma mark - Contact List
 + (void)getContactListWithCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
 + (void)getVenuesInSWCoords:(CLLocationCoordinate2D)SWCoord

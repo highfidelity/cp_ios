@@ -11,6 +11,6 @@
 @interface VenueListTableViewController : UITableViewController
 
 @property (nonatomic, strong) NSMutableArray *venues;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) MapTabController *delegate;
 
 @end

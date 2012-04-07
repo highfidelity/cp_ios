@@ -7,7 +7,6 @@
 //
 
 #import "VenueInfoViewController.h"
-#import "CPAnnotation.h"
 #import "MapTabController.h"
 #import "CheckInDetailsViewController.h"
 #import "UserProfileCheckedInViewController.h"
@@ -19,7 +18,7 @@
 
 - (void)populateUserSection:(NSNotification *)notification;
 
-- (void)addUserAnnotation:(CPAnnotation *)userAnnotation
+- (void)addUser:(User *)user
     toArrayForJobCategory:(NSString *)jobCategory;
 
 - (UIView *)categoryViewForCurrentUserCategory:(NSString *)category
@@ -71,10 +70,10 @@
 {
     [super viewDidLoad];
     
-    // Add a notification catcher for refreshViewOnCheckin to refresh the view
+    // Add a notification catcher for refreshFromNewMapData to refresh the view
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(populateUserSection:) 
-                                                 name:@"refreshViewOnCheckin" 
+                                                 name:@"refreshFromNewMapData" 
                                                object:nil];
     
     // set the title of the navigation controller
@@ -177,25 +176,26 @@
     // this is where we add the users and the check in button to the bottom of the scroll view
     
     // grab the user data by calling a delegate method on the map and grabbing the data from there
-    NSArray *checkedInUsers = [self.delegate getCheckinsByGroupTag:self.venue.foursquareID];
-        
+    NSMutableDictionary *activeUsers = self.venue.activeUsers;
+
     // init the data structures
     self.currentUsers = [NSMutableDictionary dictionary];
     self.categoryCount = [NSMutableDictionary dictionary];
     self.previousUsers = [[NSMutableArray alloc] init];
     self.usersShown =  [NSMutableSet set];
     
-    for (CPAnnotation *userAnnotation in checkedInUsers) {
-        if (userAnnotation.checkedIn) {
-            [self addUserAnnotation:userAnnotation toArrayForJobCategory:userAnnotation.majorJobCategory];
+    for (NSString *userID in activeUsers) {
+        User *user = [[CPAppDelegate settingsMenuController].mapTabController.activeUsers objectForKey:userID];
+        if ([[[activeUsers objectForKey:userID] objectForKey:@"checked_in"] boolValue]) {
+            [self addUser:user toArrayForJobCategory:user.majorJobCategory];
             // if the major and minor job categories differ also add this person to the minor category
-            if (![userAnnotation.majorJobCategory isEqualToString:userAnnotation.minorJobCategory] && ![userAnnotation.minorJobCategory isEqualToString:@"other"]) {
-                [self addUserAnnotation:userAnnotation toArrayForJobCategory:userAnnotation.minorJobCategory];
+            if (![user.majorJobCategory isEqualToString:user.minorJobCategory] && ![user.minorJobCategory isEqualToString:@"other"]) {
+                [self addUser:user toArrayForJobCategory:user.minorJobCategory];
             }
         } else {
             // this is a non-checked in user
             // add them to the previous users dictionary
-            [self.previousUsers addObject:userAnnotation];
+            [self.previousUsers addObject:user];
         }
     }
     
@@ -301,7 +301,7 @@
     self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width, self.venuePhoto.frame.size.height + self.userSection.frame.size.height);    
 }
                             
-- (void)addUserAnnotation:(CPAnnotation *)userAnnotation
+- (void)addUser:(User *)user
     toArrayForJobCategory:(NSString *)jobCategory
 {
     // check if we already have an array for this category
@@ -311,25 +311,17 @@
         [self.categoryCount setObject:[NSNumber numberWithInt:0] forKey:jobCategory];
     }
     // add this user to that array
-    [[self.currentUsers objectForKey:jobCategory] addObject:userAnnotation];
+    [[self.currentUsers objectForKey:jobCategory] addObject:user];
     int currentCount = [[self.categoryCount objectForKey:jobCategory] intValue];
     [self.categoryCount setObject:[NSNumber numberWithInt:1 + currentCount] forKey:jobCategory];
 }
 
-- (void)addUserToDictionaryOfUserObjectsFromCPAnnotation:(CPAnnotation *)userAnnotation
+- (void)addUserToDictionaryOfUserObjectsFromUser:(User *)user
 {
-    // alloc init a user object
-    User *user = [[User alloc] init];
-    user.userID = userAnnotation.userId;
-    user.nickname = userAnnotation.nickname;
-    user.status = userAnnotation.status;
-    user.location = CLLocationCoordinate2DMake(userAnnotation.lat, userAnnotation.lon);
-    user.checkedIn = userAnnotation.checkedIn;
-    user.jobTitle = userAnnotation.headline;
     [self.userObjectsForUsersOnScreen setObject:user forKey:[NSString stringWithFormat:@"%d", user.userID]];
 }
 
-- (UIButton *)thumbnailButtonForAnnotation:(CPAnnotation *)userAnnotation
+- (UIButton *)thumbnailButtonForUser:(User *)user
                              withSquareDim:(CGFloat)thumbnailDim
                                 andXOffset:(CGFloat)xOffset
                                 andYOffset:(CGFloat)yOffset
@@ -339,13 +331,13 @@
     thumbButton.frame = CGRectMake(xOffset, yOffset, thumbnailDim, thumbnailDim);
 
     // set the tag to the user ID
-    thumbButton.tag = userAnnotation.userId;
+    thumbButton.tag = user.userID;
 
     // add a target for this user thumbnail button
     [thumbButton addTarget:self action:@selector(userImageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     UIImageView *userThumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, thumbnailDim, thumbnailDim)];
-    [userThumbnail setImageWithURL:[NSURL URLWithString:userAnnotation.imageUrl] placeholderImage:[CPUIHelper defaultProfileImage]];
+    [userThumbnail setImageWithURL:user.urlPhoto placeholderImage:[CPUIHelper defaultProfileImage]];
 
     // add a shadow to the imageview
     [CPUIHelper addShadowToView:userThumbnail color:[UIColor blackColor] offset:CGSizeMake(1, 1) radius:3 opacity:0.40];
@@ -370,9 +362,9 @@
     [categoryView addSubview:usersScrollView];
     
     CGFloat xOffset = 10;
-    for (CPAnnotation *userAnnotation in [self.currentUsers objectForKey:category]) {
+    for (User *user in [self.currentUsers objectForKey:category]) {
         
-        UIButton *thumbButton = [self thumbnailButtonForAnnotation:userAnnotation withSquareDim:thumbnailDim andXOffset:xOffset andYOffset:0];
+        UIButton *thumbButton = [self thumbnailButtonForUser:user withSquareDim:thumbnailDim andXOffset:xOffset andYOffset:0];
         
         // add the thumbnail to the category view
         [usersScrollView addSubview:thumbButton];
@@ -381,10 +373,10 @@
         xOffset += 10 + thumbButton.frame.size.width;
         
         // add this user to the usersShown set so we know we have them
-        [self.usersShown addObject:[NSNumber numberWithInt:userAnnotation.userId]];
+        [self.usersShown addObject:[NSNumber numberWithInt:user.userID]];
         
-        if (![self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", userAnnotation.userId]]) {
-            [self addUserToDictionaryOfUserObjectsFromCPAnnotation:userAnnotation];
+        if (![self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", user.userID]]) {
+            [self addUserToDictionaryOfUserObjectsFromUser:user];
         }        
     }
     
@@ -423,11 +415,11 @@
     
     UIView *lastLine;
     
-    for (CPAnnotation *userAnnotation in self.previousUsers) {
+    for (User *previousUser in self.previousUsers) {
         // make sure we aren't already showing this user as checked in or as a previous user
-        if (![self.usersShown containsObject:[NSNumber numberWithInt:userAnnotation.userId]]) {
+        if (![self.usersShown containsObject:[NSNumber numberWithInt:previousUser.userID]]) {
             // setup the user thumbnail
-            UIButton *userThumbnailButton = [self thumbnailButtonForAnnotation:userAnnotation withSquareDim:71 andXOffset:10 andYOffset:yOffset];
+            UIButton *userThumbnailButton = [self thumbnailButtonForUser:previousUser withSquareDim:71 andXOffset:10 andYOffset:yOffset];
             
             // add the thumbnail to the view
             [previousUsersView addSubview:userThumbnailButton];
@@ -437,7 +429,7 @@
             
             // label for the user name
             UILabel *userName = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, yOffset + 10, maxLabelWidth, 20)];
-            userName.text = userAnnotation.nickname;
+            userName.text = previousUser.nickname;
             [CPUIHelper changeFontForLabel:userName toLeagueGothicOfSize:18];
             userName.backgroundColor = [UIColor clearColor];
             userName.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
@@ -449,11 +441,11 @@
             
             UIColor *lightGray = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1.0];
             
-            if ([userAnnotation.headline length] > 0) {
+            if ([previousUser.jobTitle length] > 0) {
                 // label for user headline
                 labelOffset += 27;
                 UILabel *userHeadline = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, labelOffset, maxLabelWidth, 20)];
-                userHeadline.text = userAnnotation.headline;
+                userHeadline.text = previousUser.jobTitle;
                 
                 userHeadline.backgroundColor = [UIColor clearColor];
                 userHeadline.textColor = lightGray;
@@ -466,7 +458,9 @@
             }
             
             UILabel *userCheckins = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, labelOffset + 16, maxLabelWidth, 20)];
-            userCheckins.text = [NSString stringWithFormat:@"%d check ins", userAnnotation.checkinCount];
+            NSString *userID = [NSString stringWithFormat:@"%d", previousUser.userID];
+            int checkinCount = [[[self.venue.activeUsers objectForKey:userID] objectForKey:@"checkin_count"] integerValue];
+            userCheckins.text = [NSString stringWithFormat:@"%d check ins", checkinCount];
             
             userCheckins.font = [UIFont boldSystemFontOfSize:12];
             
@@ -483,7 +477,7 @@
             newFrame.size.height = yOffset;
             
             // add this user to the usersShown mutable set so they won't be shown again
-            [self.usersShown addObject:[NSNumber numberWithInt:userAnnotation.userId]];
+            [self.usersShown addObject:[NSNumber numberWithInt:previousUser.userID]];
             
             atLeastOne = YES;
             
@@ -496,7 +490,7 @@
             // this is the new last line
             lastLine = seperator;
             
-            [self addUserToDictionaryOfUserObjectsFromCPAnnotation:userAnnotation];            
+            [self addUserToDictionaryOfUserObjectsFromUser:previousUser];            
         }        
     }
     // remove the last line since we won't need it

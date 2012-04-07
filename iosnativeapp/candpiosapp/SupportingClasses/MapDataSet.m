@@ -9,13 +9,12 @@
 #import "MapDataSet.h"
 #import "AFHTTPClient.h"
 #import "AFJSONRequestOperation.h"
-#import "CPAnnotation.h"
 
 @interface MapDataSet()
 -(id)initFromJson:(NSDictionary*)json;
 @end
 @implementation MapDataSet
-@synthesize annotations;
+@synthesize annotations = _annotations;
 @synthesize dateLoaded;
 @synthesize regionCovered;
 
@@ -40,48 +39,51 @@ static NSOperationQueue *sMapQueue = nil;
         CLLocationCoordinate2D swCoord = MKCoordinateForMapPoint(swMapPoint);
         CLLocationCoordinate2D neCoord = MKCoordinateForMapPoint(neMapPoint);
         
+        
         CGFloat numberOfDays = 7.0;
         
-		NSString *urlString = [NSString stringWithFormat:@"%@api.php?action=getCheckedInBoundsOverTime&sw_lat=%f&sw_lng=%f&ne_lat=%f&ne_lng=%f&checked_in_since=%f&group_users=1&version=%@", 
-                               kCandPWebServiceUrl,
-                               swCoord.latitude,
-                               swCoord.longitude,
-                               neCoord.latitude,
-                               neCoord.longitude,
-                               [[NSDate date] timeIntervalSince1970] - (86400 * numberOfDays),
-                               kCandPAPIVersion                     
-                               ];
-	#if DEBUG
-		NSLog(@"Loading datapoints from: %@", urlString);
-	#endif
-		NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-		AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-			MapDataSet *dataSet = [[MapDataSet alloc]initFromJson:JSON];
-			dataSet.regionCovered = mapRect;
-			dataSet.dateLoaded = [NSDate date];
-			
-			if(completion)
-				completion(dataSet, nil); 
-			
-		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-            NSLog(@"%@", error);
-			if(completion)
-				completion(nil, error);
-		}];
-		
-		[sMapQueue addOperation:operation];
+        [CPapi getVenuesWithCheckinsWithinSWCoordinate:swCoord 
+                                          NECoordinate:neCoord 
+                                          userLocation:[CPAppDelegate settings].lastKnownLocation.coordinate
+                                        checkedInSince:numberOfDays  
+                                              mapQueue:sMapQueue 
+                                        withCompletion:^(NSDictionary *json, NSError *error){
+            
+            if (!error) {
+                MapDataSet *dataSet = [[MapDataSet alloc] initFromJson:json];
+                dataSet.regionCovered = mapRect;
+                dataSet.dateLoaded = [NSDate date];
+                
+                if (completion) {
+                    completion(dataSet, nil);
+                }
+            } else {
+                if (completion) {
+                    completion(nil, error);
+                }
+            }
+        }];
 	}
 	else
 	{
 		if(completion)
 			completion(nil, [NSError errorWithDomain:@"Busy" code:999 userInfo:nil]);
-		
 	}
 	
 }
+
+- (NSMutableArray *)annotations
+{
+    if (!_annotations) {
+        _annotations = [NSMutableArray array];
+    }
+    return _annotations;
+}
+
 -(id)init {
-    if (([super init])) {
-        annotations = [NSMutableArray array];
+    self = [super init];
+    if (self) {
+        
     }
     return self;
 }
@@ -89,18 +91,36 @@ static NSOperationQueue *sMapQueue = nil;
 -(id)initFromJson:(NSDictionary*)json
 {
 	if((self = [super init]))
-	{
-		annotations = [NSMutableArray array];
-		NSArray *payloadArray = [json objectForKey:@"payload"];
-		NSLog(@"Got %d users.", [payloadArray count]);
-		for(NSDictionary *userDict in payloadArray)
+	{		
+        // get the places that came back and make an annotation for each of them
+        NSArray *placesArray = [[json objectForKey:@"payload"] objectForKey:@"venues"];
+
+#if DEBUG
+		NSLog(@"Got %d places.", [placesArray count]);
+#endif
+		for(NSDictionary *placeDict in placesArray)
 		{
-			CPAnnotation *user = [[CPAnnotation alloc]initFromDictionary:userDict];
-
+			CPPlace *place = [[CPPlace alloc] initFromDictionary:placeDict];
+            
 			// add (or update) the new pin
-			[annotations addObject:user];
+			[self.annotations addObject:place];
+            
 		}
+        
+        // get the users that came back and setup the activeUsers array on the Map
+        
+        NSArray *usersArray = [[json objectForKey:@"payload"] objectForKey:@"users"];
 
+#if DEBUG
+        NSLog(@"Got %d users.", [usersArray count]);
+#endif
+        
+        for (NSDictionary *userDict in usersArray) {
+            User *user = [[User alloc] initFromDictionary:userDict];
+
+            // add the user to the MapTabController activeUsers array
+            [[CPAppDelegate settingsMenuController].mapTabController.activeUsers setObject:user forKey:[NSString stringWithFormat:@"%d", user.userID]];
+        }
 	}
 	return self;
 }

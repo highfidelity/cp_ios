@@ -35,6 +35,8 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+// TODO: Add a search box at the box of the table view so the user can quickly search for the venue
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
