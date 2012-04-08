@@ -255,10 +255,13 @@ BOOL clearLocations = NO;
                                     dataset = newDataset;
                                     
                                     NSSet *visiblePins = [mapView annotationsInMapRect: mapView.visibleMapRect];
-                                    
-                                    for (CPPlace *newAnn in newDataset.annotations) {
-                                        for (CPPlace *ann in visiblePins) {
+                                    BOOL foundIt = NO;
+
+                                    for (CPPlace *ann in visiblePins) {
+                                        foundIt = NO;                                            
+                                        for (CPPlace *newAnn in newDataset.annotations) {
                                             if ([ann.foursquareID isEqualToString:newAnn.foursquareID]) {
+                                                foundIt = YES;
                                                 if (ann.checkinCount != newAnn.checkinCount || ann.weeklyCheckinCount != newAnn.weeklyCheckinCount) {
                                                     // the annotation will be added again
                                                     [mapView removeAnnotation:ann];
@@ -267,13 +270,17 @@ BOOL clearLocations = NO;
                                                     [annotationsToAdd removeObject:newAnn];
                                                 }
                                                 break;
-                                            }                                           
+                                            }
                                         }
+                                        
+                                        if (! foundIt) {
+                                            [mapView removeAnnotation:ann];
+                                        }
+                                        
                                     }
                                 }
                                 
-                                // Load the annotations
-                                NSLog(@"Adding %d annotations", annotationsToAdd.count);
+                                // add modified dataset to map - new/updated annotations
                                 [mapView addAnnotations:annotationsToAdd];                                
                             
                                 // stop spinning the refresh icon and dismiss the HUD
