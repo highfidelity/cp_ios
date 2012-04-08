@@ -21,8 +21,6 @@
 
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
 @property (nonatomic, readonly, strong) MapDataSet *dataset;
-@property (nonatomic, readonly, strong) MapDataSet *fullDataset;
-@property (nonatomic, strong) NSMutableSet *annotationsToRedisplay;
 @property (weak, nonatomic) IBOutlet UIView *mapAndButtonsView;
 @property (nonatomic, strong) NSMutableDictionary *activeUsers;
 @property (nonatomic, assign) BOOL sendDataUpdateNotification;

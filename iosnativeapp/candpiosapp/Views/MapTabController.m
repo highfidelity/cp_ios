@@ -40,8 +40,6 @@
 @implementation MapTabController 
 @synthesize mapView;
 @synthesize dataset;
-@synthesize fullDataset;
-@synthesize annotationsToRedisplay;
 @synthesize reloadTimer;
 @synthesize arrowSpinTimer;
 @synthesize mapHasLoaded;
@@ -52,11 +50,6 @@
 @synthesize activeUsers = _activeUsers;
 @synthesize sendDataUpdateNotification;
 
-
-BOOL clusterNow = YES;
-BOOL bigZoomLevelChange = NO;
-BOOL zoomedIn = NO;
-BOOL zoomedOut = NO;
 BOOL clearLocations = NO;
 
 -(NSArray *)getVenues {
@@ -125,10 +118,6 @@ BOOL clearLocations = NO;
     self.navigationItem.title = @"C&P"; // TODO: Remove once back button with mug logo is added to pushed views
     
     self.mapHasLoaded = NO;
-
-    // Initialize the fullDataset array to keep track of all checked in users, even outside of current map bounds
-    fullDataset = [[MapDataSet alloc] init];
-    annotationsToRedisplay = [[NSMutableSet alloc] init];
     
     self.navigationController.delegate = self;
 	hasUpdatedUserLocation = false;
@@ -212,9 +201,7 @@ BOOL clearLocations = NO;
 
 - (IBAction)refreshButtonClicked:(id)sender
 {
-    fullDataset = nil;    
-    fullDataset = [[MapDataSet alloc] init];
-    clearLocations = YES;
+    clearLocations = NO;
     [self refreshLocations];
 }
 
@@ -233,53 +220,13 @@ BOOL clearLocations = NO;
 {
     
     if (locationStatusKnown) {
-        clusterNow = NO;
         
         MKMapRect mapRect = mapView.visibleMapRect;
-        
-        // If zoom level changed drastically, remove the previously clustered checkedOut pins
-        if (bigZoomLevelChange) {
-            for (id <MKAnnotation> annotation in mapView.annotations) {
-                if ([annotation isKindOfClass:[CPPlace class]]) {
-                    CPPlace *thisAnnotation = (CPPlace *)annotation;
-                    
-                    if (thisAnnotation.checkinCount == 0) {
-                        [self.mapView removeAnnotation:annotation];
-                    }
-                }
-                
-                if ([annotation isKindOfClass:[CPPlace class]]) {
-                    CPPlace *thisAnnotation = (CPPlace *)annotation;
-                    
-                    if (thisAnnotation.checkinCount == 0) {
-                        [self.mapView removeAnnotation:annotation];
-                        [annotationsToRedisplay addObject:annotation];
-                    }
-                }
-            }
-            
-            bigZoomLevelChange = NO;
-        }
         
         // prevent the refresh of locations when we have a valid dataset or the map is not yet loaded
         if(self.mapHasLoaded && (!dataset || ![dataset isValidFor:mapRect]))
         {
-            clearLocations = NO;
             [self refreshLocations];
-        }
-        
-        // Re-add any annotations in annotationsToRedisplay to get the correct pins after big zoom changes
-        if (annotationsToRedisplay.count > 0) {
-            for (CPPlace *ann in annotationsToRedisplay) {
-                [mapView addAnnotation:ann];
-            }
-            
-            clusterNow = NO;
-            [annotationsToRedisplay removeAllObjects];
-        }
-        
-        if (clusterNow) {
-            clusterNow = NO;
         }
     }
 }
@@ -292,6 +239,7 @@ BOOL clearLocations = NO;
                             completion:^(MapDataSet *newDataset, NSError *error) {
 
                                 if (clearLocations) {
+                                    
                                     // clear other than current user location
                                     for (id annotation in mapView.annotations) {
                                         if ([annotation isKindOfClass:[CPPlace class]]) {
@@ -300,23 +248,32 @@ BOOL clearLocations = NO;
                                     }                             
                                 }
 
+                                NSMutableArray *annotationsToAdd = [[NSMutableArray alloc] initWithArray:newDataset.annotations];
+                                
                                 if(newDataset)
                                 {
-                                    NSSet *visiblePins = [mapView annotationsInMapRect: mapView.visibleMapRect];
+                                    dataset = newDataset;
                                     
+                                    NSSet *visiblePins = [mapView annotationsInMapRect: mapView.visibleMapRect];                                 
                                     for (CPPlace *ann in visiblePins) {
-                                        if ([[newDataset annotations] containsObject: ann]) {
-                                            [[newDataset annotations] removeObject: ann];
-                                        } else {
-//                                            [mapView removeAnnotation:ann];
+                                        for (CPPlace *ann2 in newDataset.annotations) {
+                                            if ([ann.foursquareID isEqualToString:ann2.foursquareID]) {
+
+                                                if (ann.checkinCount != ann2.checkinCount || ann.weeklyCheckinCount != ann2.weeklyCheckinCount) {
+                                                    // the annotation will be added again
+                                                    [mapView removeAnnotation:ann];
+                                                } else {
+                                                    // no update to the annotation is required
+                                                    [annotationsToAdd removeObject:ann2];
+                                                }
+                                                break;
+                                            }
                                         }
                                     }
-                                    
-                                    dataset = newDataset;
                                 }
                                 
                                 // Load the annotations
-                                [self.mapView addAnnotations:newDataset.annotations];                                
+                                [mapView addAnnotations:annotationsToAdd];                                
                             
                                 // stop spinning the refresh icon and dismiss the HUD
                                 [self stopRefreshArrowAnimation];
@@ -431,6 +388,7 @@ BOOL clearLocations = NO;
         CPPlace *placeAnn = (CPPlace *)annotation;
         
         // Need to set a unique identifier to prevent any weird formatting issues -- use a combination of annotationsInCluster.count + hasCheckedInUsers value + smallPin value
+        // @TODO: comment above is now invalid, identifier below is not going to be unique. why not use the foursquare id, or venue id? -- lithium
         NSString *reuseId = [NSString stringWithFormat:@"place-%d-%d", (placeAnn.checkinCount > 0) ? placeAnn.checkinCount : placeAnn.weeklyCheckinCount, (placeAnn.checkinCount > 0)];
         
         MKAnnotationView *pin = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
@@ -447,19 +405,17 @@ BOOL clearLocations = NO;
         if (!placeAnn.checkinCount > 0) {
             if (placeAnn.weeklyCheckinCount < kCheckinThresholdForSmallPin) {
                 smallPin = YES;
+                [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO smallPin:smallPin withLabel:NO];
             }
             else {
                 smallPin = NO;
+                [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO smallPin:smallPin withLabel:NO];
+                pin.centerOffset = CGPointMake(0, -18);
             }            
-        }
-        
-        if (placeAnn.checkinCount > 0) {
+        } 
+        else {
             [pin setPin:placeAnn.checkinCount hasCheckins:YES smallPin:smallPin withLabel:YES];
             pin.centerOffset = CGPointMake(0, -31);            
-        }
-        else {           
-            [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO smallPin:smallPin withLabel:NO];
-            pin.centerOffset = CGPointMake(0, -18); 
         }
         
         pin.enabled = YES;
@@ -495,29 +451,6 @@ BOOL clearLocations = NO;
 
 - (void)mapView:(MKMapView *)thisMapView regionDidChangeAnimated:(BOOL)animated
 {   
-    if (self.mapView.region.span.longitudeDelta > kMinimumDeltaForSmallPins) {
-        zoomedIn = YES;
-    }
-    
-    if (self.mapView.region.span.longitudeDelta < kMinimumDeltaForSmallPins) {
-        zoomedOut = YES;
-    }
-
-    if (zoomedIn && zoomedOut && !bigZoomLevelChange) {
-        bigZoomLevelChange = YES;
-    }
-    else {
-        bigZoomLevelChange = NO;
-    }
-
-    if (self.mapView.region.span.longitudeDelta > kMinimumDeltaForSmallPins) {
-        zoomedOut = NO;
-    }
-    
-    if (self.mapView.region.span.longitudeDelta < kMinimumDeltaForSmallPins) {
-        zoomedIn = NO;
-    }
-    
     [self refreshLocationsIfNeeded];
 }
 
