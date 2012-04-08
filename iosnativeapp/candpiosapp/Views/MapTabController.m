@@ -274,7 +274,8 @@ BOOL clearLocations = NO;
                                         }
                                         
                                         if (! foundIt) {
-                                            [mapView removeAnnotation:ann];
+                                            // this is causing problems, commenting out for now
+                                            // [mapView removeAnnotation:ann];
                                         }
                                         
                                     }
