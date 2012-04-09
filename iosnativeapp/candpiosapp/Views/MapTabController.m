@@ -221,6 +221,7 @@ BOOL clearLocations = NO;
 {
     [self startRefreshArrowAnimation];
     MKMapRect mapRect = mapView.visibleMapRect;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"mapIsLoadingNewData" object:nil];
     [MapDataSet beginLoadingNewDataset:mapRect
                             completion:^(MapDataSet *newDataset, NSError *error) {
 
@@ -272,7 +273,13 @@ BOOL clearLocations = NO;
                             
                                 // stop spinning the refresh icon and dismiss the HUD
                                 [self stopRefreshArrowAnimation];
-                                [SVProgressHUD dismiss];
+                                
+                                // only try to dismiss the SVProgressHUD if this view is on screen
+                                // so that the places and venue tabs can dismiss their own ProgressHUDs
+                                
+                                if (self.isViewLoaded && self.view.window) {
+                                   [SVProgressHUD dismiss];
+                                }
                                 
                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshFromNewMapData" object:nil];
                             }]; 

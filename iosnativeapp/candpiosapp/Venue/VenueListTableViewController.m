@@ -46,6 +46,12 @@
     self.delegate = [[CPAppDelegate settingsMenuController] mapTabController];
     
     // Add a notification catcher for refreshTableViewWithNewMapData to refresh the view
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(newDataBeingLoaded:) 
+                                                 name:@"mapIsLoadingNewData" 
+                                               object:nil]; 
+    
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(refreshFromNewMapData:) 
                                                  name:@"refreshFromNewMapData" 
@@ -57,14 +63,21 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"mapIsLoadingNewData" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshFromNewMapData" object:nil];
+     
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [SVProgressHUD showWithStatus:@"Loading..."];
+    
+    // reload the table
+    [self.tableView reloadData];
+    
     // tell the map to reload data
     // we'll get a notification when that's done to reload ours
-    [self.delegate refreshButtonClicked:nil];
+    [self.delegate refreshButtonClicked:nil];   
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -72,18 +85,29 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+-(void)newDataBeingLoaded:(NSNotification *)notification
+{
+    // check if we're visible
+    if (self.isViewLoaded && self.view.window) {
+        // and show an SVProgressHUD if we are
+        [SVProgressHUD showWithStatus:@"Loading..."];
+    }
+}
+
 - (void)refreshFromNewMapData:(NSNotification *)notification {
     
-    // dismiss the SVProgressHUD
-    [SVProgressHUD dismiss];
-    
     // get the venues from the map view
-    // TODO : grab this in a cleaner way
+    // TODO : grab this in a cleaner way (directly from dataset?)
     // we don't really need the getVenues function do we?
     self.venues = [[self.delegate getVenues] mutableCopy];
 
-    // and reload the table
-    [self.tableView reloadData];
+    if (self.isViewLoaded && self.view.window) {
+        // we're visible
+        // dismiss the SVProgressHUD and reload our data
+        [SVProgressHUD dismiss];
+        [self.tableView reloadData];
+    }
+   
 }
 
 #pragma mark - Table view data source

@@ -388,7 +388,7 @@
         [self performSegueWithIdentifier:@"ShowBalanceFromMenu" sender:self];
     }
     if (alertView.tag == 904 && buttonIndex == 1) {
-        [SVProgressHUD show];
+        [SVProgressHUD showWithStatus:@"Checking out..."];
         
         [CPapi checkOutWithCompletion:^(NSDictionary *json, NSError *error) {
             

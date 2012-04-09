@@ -36,6 +36,11 @@
     
     // Add a notification catcher for refreshTableViewWithNewMapData to refresh the view
     [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(newDataBeingLoaded:) 
+                                                 name:@"mapIsLoadingNewData" 
+                                               object:nil]; 
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(refreshFromNewMapData:) 
                                                  name:@"refreshFromNewMapData" 
                                                object:nil]; 
@@ -47,12 +52,16 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"mapIsLoadingNewData" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshFromNewMapData" object:nil];
 }
 
--(void)viewDidAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
     [SVProgressHUD showWithStatus:@"Loading..."];
+    
+    // filter and reload whatever data we currently have
+    [self filterData];
     
     // tell the map to reload data
     // we'll get a notification when that's done to reload ours
@@ -107,14 +116,23 @@
             [self.checkedInUsers addObject:user];
             [self.weeklyUsers removeObject:user];
         }
-    }       
+    }    
+    [self.tableView reloadData];
+}
+
+-(void)newDataBeingLoaded:(NSNotification *)notification
+{
+    // check if we're visible
+    if (self.isViewLoaded && self.view.window) {
+        // and show an SVProgressHUD if we are
+        [SVProgressHUD showWithStatus:@"Loading..."];
+    }
+    
+    
 }
 
 - (void)refreshFromNewMapData:(NSNotification *)notification {
-    
-    // dismiss the SVProgressHUD
-    [SVProgressHUD dismiss];
-    
+        
     [self.weeklyUsers removeAllObjects];
        
     // add the users from the map
@@ -122,10 +140,13 @@
         [self.weeklyUsers addObject:[self.delegate.activeUsers objectForKey:key]];
     }
     
-    // filter that data
-    [self filterData];
-    // and reload the table
-    [self.tableView reloadData];
+    if (self.isViewLoaded && self.view.window) {
+        // we're visible
+        // dismiss the SVProgressHUD and reload our data
+        [SVProgressHUD dismiss];
+        // filter that data
+        [self filterData];
+    }
 }
 
 #pragma mark - Table view data source
