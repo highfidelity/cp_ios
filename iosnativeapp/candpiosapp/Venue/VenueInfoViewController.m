@@ -477,6 +477,11 @@
             CGFloat maxLabelWidth = previousUsersView.frame.size.width - (userThumbnailButton.frame.size.width + userThumbnailButton.frame.origin.x) - 20;
             CGFloat leftOffset = userThumbnailButton.frame.origin.x + userThumbnailButton.frame.size.width + 10;
             
+            // make the button clickable area extend over the user data as well
+            CGRect buttonFrame = userThumbnailButton.frame;
+            buttonFrame.size.width = userThumbnailButton.superview.frame.size.width - 20;
+            userThumbnailButton.frame = buttonFrame;
+            
             // label for the user name
             UILabel *userName = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, yOffset + 10, maxLabelWidth, 20)];
             userName.text = previousUser.nickname;
