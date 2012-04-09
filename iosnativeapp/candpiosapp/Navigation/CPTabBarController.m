@@ -15,6 +15,7 @@
 @implementation CPTabBarController
 
 @synthesize centerButton = _centerButton;
+@synthesize currentVenueID = _currentVenueID;
 
 - (void)viewDidLoad
 {

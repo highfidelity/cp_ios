@@ -106,6 +106,13 @@ static NSOperationQueue *sMapQueue = nil;
                 // add (or update) the new pin
                 [self.annotations addObject:place];
                 
+                // post a notification with this venue if there's currently a venue shown by a VenueInfoViewController
+                if ([CPAppDelegate tabBarController].currentVenueID) {
+                    if ([[CPAppDelegate tabBarController].currentVenueID isEqualToString:place.foursquareID]) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshVenueAfterCheckin" object:place];
+                    }                    
+                }
+                
             }
             
         }

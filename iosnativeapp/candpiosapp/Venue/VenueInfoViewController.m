@@ -16,7 +16,8 @@
 - (IBAction)tappedAddress:(id)sender;
 - (IBAction)tappedPhone:(id)sender;
 
-- (void)populateUserSection:(NSNotification *)notification;
+- (void)refreshVenueData:(CPPlace *)venue;
+- (void)populateUserSection;
 
 - (void)addUser:(User *)user
     toArrayForJobCategory:(NSString *)jobCategory;
@@ -72,9 +73,12 @@
     
     // Add a notification catcher for refreshFromNewMapData to refresh the view
     [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(populateUserSection:) 
-                                                 name:@"refreshFromNewMapData" 
+                                             selector:@selector(refreshVenueData:) 
+                                                 name:@"refreshVenueAfterCheckin" 
                                                object:nil];
+    
+    // set the property on the tab bar controller for the venue we're looking at
+    [CPAppDelegate tabBarController].currentVenueID = self.venue.foursquareID;
     
     // set the title of the navigation controller
     if (self.venue.othersHere != 0) {
@@ -143,7 +147,7 @@
     // put the texture in the bottom view
     self.userSection.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-first-aid-kit"]];
     
-    [self populateUserSection:nil];
+    [self populateUserSection];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -158,6 +162,7 @@
     [self setVenuePhoto:nil];
     [self setUserSection:nil];
     [super viewDidUnload];
+    [CPAppDelegate tabBarController].currentVenueID = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshFromNewMapData" object:nil];
     // Release any retained subviews of the main view.
 }
@@ -167,10 +172,19 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)populateUserSection:(NSNotification *)notification
+
+- (void)refreshVenueData:(NSNotification *)notification
 {
+    // we'll get a notification if this venue has been updated (by an API call)
+    // so set our venue to that as information will be updated
+    self.venue = notification.object;
     
-    NSLog(@"REPOPULATING");
+    // repopulate user data with new info
+    [self populateUserSection];
+}
+
+- (void)populateUserSection
+{
     // clear out the current user section
     for (UIView *subview in [self.userSection subviews]) {
         [subview removeFromSuperview];
@@ -179,7 +193,9 @@
     // this is where we add the users and the check in button to the bottom of the scroll view
     
     // grab the user data by calling a delegate method on the map and grabbing the data from there
+    // there is an active users property on this venue but we need to pull from the map to guaruntee new data
     NSMutableDictionary *activeUsers = self.venue.activeUsers;
+    
 
     // init the data structures
     self.currentUsers = [NSMutableDictionary dictionary];

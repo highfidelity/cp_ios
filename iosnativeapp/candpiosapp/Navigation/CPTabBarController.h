@@ -11,6 +11,7 @@
 @interface CPTabBarController : UITabBarController
 
 @property (nonatomic, strong) UIButton *centerButton;
+@property (nonatomic, strong) NSString *currentVenueID;
 
 - (void)addCenterButtonWithImage:(UIImage *)buttonImage;
 

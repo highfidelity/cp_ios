@@ -7,6 +7,7 @@
 
 #import "CPPlace.h"
 #import <CoreLocation/CoreLocation.h>
+#import "VenueInfoViewController.h"
 
 @implementation CPPlace
 
@@ -128,6 +129,12 @@
         self.coordinate = CLLocationCoordinate2DMake(self.lat, self.lng);
         
         self.activeUsers = [json objectForKey:@"users"];
+        
+        // if this is the venue being shown by the places tab then let's update it's data
+//        VenueInfoViewController *venueVC = [[[CPAppDelegate tabBarController].viewControllers objectAtIndex:1] rootViewController];
+//        if (self.foursquareID == venueVC.venue.foursquareID) {
+//            venueVC.venue = self;
+//        }
                
     }
     return self;
