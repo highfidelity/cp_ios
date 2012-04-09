@@ -451,6 +451,11 @@ BOOL clearLocations = NO;
         VenueInfoViewController *venueVC = [[UIStoryboard storyboardWithName:@"VenueStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
         venueVC.venue = tappedPlace;
         
+        // back button should say map and not C&P for this transition
+        UIBarButtonItem *backButton = [[ UIBarButtonItem alloc] init];
+        backButton.title = @"Map";
+        self.navigationItem.backBarButtonItem = backButton;
+        
         // push the VenueInfoViewController onto the screen
         [self.navigationController pushViewController:venueVC animated:YES];
     }
