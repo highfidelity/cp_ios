@@ -32,8 +32,6 @@
         forCheckedInUsers:(BOOL)isCurrentUserBox;
 
 - (void)checkInPressed:(id)sender;
-
-@property (nonatomic, assign) BOOL scrollToUserThumbnail;
 @end
 
 @implementation VenueInfoViewController
@@ -180,7 +178,6 @@
     self.venue = notification.object;
 
     // repopulate user data with new info
-    self.scrollToUserThumbnail = YES;
     [self populateUserSection];    
 }
 
@@ -338,8 +335,6 @@
         } 
         
         [self.scrollView setContentOffset:CGPointMake(0, viewTop.y) animated:YES];
-        
-        
         
         // scroll to the user thubmnail
         [parentScroll setContentOffset:CGPointMake(userButton.frame.origin.x - 10, 0) animated:YES];
@@ -618,6 +613,9 @@
 {
     CheckInDetailsViewController *checkinVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
     checkinVC.place = self.venue;
+    
+    // be the delgate of the check in view controller
+    checkinVC.delegate = self;
     
     [self.navigationController pushViewController:checkinVC animated:YES];
 }

@@ -8,6 +8,7 @@
 
 #import "CheckInDetailsViewController.h"
 #import "CheckInListTableViewController.h"
+#import "VenueInfoViewController.h"
 #import "SignupController.h"
 #import "TPKeyboardAvoidingScrollView.h"
 #import "UIViewController+isModal.h"
@@ -69,6 +70,7 @@
 @synthesize userArray = _userArray;
 @synthesize userArrayIndex = _userArrayIndex;
 @synthesize infoBubbleArrow = _infoBubbleArrow;
+@synthesize delegate = _delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -314,8 +316,11 @@
                     // show an SVProgressHUD since we'll be reloading user data in the venue view
                     [SVProgressHUD showWithStatus:@"Loading..."];
                     [self.navigationController popViewControllerAnimated:YES];
-                }
-                
+                    
+                    // our delegate is the venue info view controller
+                    // tell it to scroll to the user thumbnail after loading new data from this checkin
+                    [self.delegate setScrollToUserThumbnail:YES];
+                }                
             }
             else {
                 // show an alertView if the user isn't checked in
