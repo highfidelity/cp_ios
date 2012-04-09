@@ -23,7 +23,6 @@
 @property (nonatomic, assign) double lat;
 @property (nonatomic, assign) double lng;
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
-@property (nonatomic, readonly) int othersHere;
 @property (nonatomic, assign) double distanceFromUser;
 @property (nonatomic) int checkinCount;
 @property (nonatomic, assign) int weeklyCheckinCount;

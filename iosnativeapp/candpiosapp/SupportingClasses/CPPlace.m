@@ -23,7 +23,6 @@
 @synthesize photoURL = _photoURL;
 @synthesize lat = _lat;
 @synthesize lng = _lng;
-@synthesize othersHere = _othersHere;
 @synthesize distanceFromUser = _distanceFromUser;
 @synthesize checkinCount = _checkinCount;
 @synthesize weeklyCheckinCount = _weeklyCheckinCount;
@@ -138,13 +137,6 @@
                
     }
     return self;
-}
-
-// override the getter for othersHere so it just intelligently calculates the value
-// based on the checkinCount and wether this user is also there
--(int)othersHere
-{
-    return [CPAppDelegate userCheckedIn] && [self.foursquareID isEqualToString:DEFAULTS(object, kUDCheckedInVenueID)] ? self.checkinCount - 1 : self.checkinCount;
 }
 
 // this method is used in CheckInListTableViewController to sort the array of places
