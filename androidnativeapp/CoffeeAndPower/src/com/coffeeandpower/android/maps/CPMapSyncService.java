@@ -143,6 +143,7 @@ public class CPMapSyncService extends IntentService {
 			Builder op = ContentProviderOperation.newInsert(syncMapUri);
 			Log.i("create","adding insert db opperation");
 			Long createIndex = createItr.next();
+			Long nextIndex = CPQuadTree.getNextTileIndex(createIndex, zoom);
 			CPQuadTree newTile = tilesNew.get(createIndex);
 			ContentValues insertValues = new ContentValues();
 			insertValues.put("point_type", "checkin");
@@ -152,6 +153,7 @@ public class CPMapSyncService extends IntentService {
 			insertValues.put("sw_lon", tileSw.getLongitudeE6());
 			insertValues.put("zoom",zoom);
 			insertValues.put("quad_index", createIndex);
+			insertValues.put("next_index", nextIndex);
 			insertValues.put("sync_started", System.currentTimeMillis());
 			insertValues.put("visible", 1);
 			insertTiles.add(new GeoPoint[]{tileSw,tileNe});
@@ -163,7 +165,8 @@ public class CPMapSyncService extends IntentService {
 			Builder op = ContentProviderOperation.newUpdate(syncMapUri);
 //			Log.i("update","updateInvisible");
 			Long updateIndex = updateInvisibleItr.next();
-			//CPQuadTree updateTile = tilesOld.get(updateIndex);
+			CPQuadTree updateTile = tilesOld.get(updateIndex); //TODO here only for testing
+			CPQuadTree.getNextTileIndex(updateTile.getIndex(), zoom);//TODO here only for testing
 			ContentValues updateValues = new ContentValues();
 			String updateInvisibleSelection = " zoom = ? AND quad_index = ? ";
 			String[] updateInvisibleArgs = { String.valueOf(zoom), String.valueOf(updateIndex) };

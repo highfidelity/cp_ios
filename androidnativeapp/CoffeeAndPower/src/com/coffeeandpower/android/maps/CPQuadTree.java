@@ -100,10 +100,14 @@ public class CPQuadTree {
 			getTilesForBounds(GeoPoint swPoint,GeoPoint nePoint, int zoom)
 	{
 		int tileSize =  1 << (sSignificantBits - zoom);
-		CPQuadTree sw = new CPQuadTree(swPoint).getZoom(zoom);
-		CPQuadTree ne = new CPQuadTree(nePoint).getZoom(zoom);
+		CPQuadTree swPreZoom = new CPQuadTree(swPoint);
+		CPQuadTree nePreZoom = new CPQuadTree(nePoint);
+		CPQuadTree sw = swPreZoom.getZoom(zoom);
+		CPQuadTree ne = nePreZoom.getZoom(zoom);
 		long latSpan = ne.mULat - sw.mULat;
 		long lonSpan = ne.mULon - sw.mULon;
+		Log.i("getiles", "tileSize:" + String.valueOf(tileSize));
+		Log.i("getiles", "latSpan:" + String.valueOf(latSpan));
 		int latCount = (int) (latSpan/tileSize);
 		int lonCount = (int) (lonSpan/tileSize);
 		
@@ -120,7 +124,9 @@ public class CPQuadTree {
 //						" y:" + String.valueOf(y) + 
 //						" lat:" + logPoint.getLatitudeE6() +
 //						" lon:" + logPoint.getLongitudeE6());
-				tiles[y][x] = new CPQuadTree(ulat, ulon, zoom);
+				CPQuadTree tile = new CPQuadTree(ulat, ulon);
+				tiles[y][x] = tile.getZoom(zoom);
+//				tiles[y][x] = new CPQuadTree(ulat, ulon, zoom);
 			}
 		}
 		return tiles;
@@ -136,6 +142,14 @@ public class CPQuadTree {
 		return new CPQuadTree(zoomLat,zoomLon, zoomLevel);
 	}
 
+	public static long getNextTileIndex(long index,int zoomLevel)
+	{
+		int shiftSize = 2*(sSignificantBits - zoomLevel);
+		long increment = 1 << shiftSize;
+		index += increment;
+		return index;
+	}
+	
 	// this method is only used for testing
 	public void logZoomLevels()
 	{

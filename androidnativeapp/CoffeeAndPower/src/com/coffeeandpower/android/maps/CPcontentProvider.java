@@ -2,6 +2,7 @@ package com.coffeeandpower.android.maps;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
@@ -15,6 +16,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.util.Log;
 
@@ -22,7 +24,7 @@ public class CPcontentProvider extends ContentProvider {
 
 	static final String PROVIDER_AUTH = 
 			"com.coffeeandpower.android.maps.provider";
-	static final int DATABASE_VERSION = 2;
+	static final int DATABASE_VERSION = 4;
 	static String DATABASE_NAME = "coffeeandpower.db";
 
 	// Map bounds might get updated 60 times a second during a map pan
@@ -53,6 +55,7 @@ public class CPcontentProvider extends ContentProvider {
 					" sw_lon INTEGER NOT NULL, " +
 					" zoom   INTEGER NOT NULL, " +
 					" quad_index  INTEGER NOT NULL, " +
+					" next_index  INTEGER NOT NULL, " +
 					" sync_started INTEGER, " + // unix date
 					" sync_completed INTEGER, " +
 					" visible INTEGER, " + // a tile that overlaps the current map bounds
@@ -68,6 +71,11 @@ public class CPcontentProvider extends ContentProvider {
 					" lon INTEGER NOT NULL " +
 					");";
 					
+	private static final String SQL_CREATE_INDEX_POINTS_QUAD_INDEX =
+			" CREATE INDEX " +
+					" points_quad_index " +
+					" ON points (quad_index);";
+	
 	private static final String SQL_CREATE_TABLE_CHECKINS = 
 			"CREATE TABLE " +
 					"checkins " +
@@ -120,6 +128,7 @@ public class CPcontentProvider extends ContentProvider {
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL(SQL_CREATE_TABLE_SYNC_MAP);
 			db.execSQL(SQL_CREATE_TABLE_POINTS);
+			db.execSQL(SQL_CREATE_INDEX_POINTS_QUAD_INDEX);
 			db.execSQL(SQL_CREATE_TABLE_CHECKINS);
 		}
 
@@ -127,6 +136,7 @@ public class CPcontentProvider extends ContentProvider {
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			db.execSQL("DROP TABLE IF EXISTS sync_map;");
 			db.execSQL("DROP TABLE IF EXISTS points;");
+			db.execSQL("DROP TABLE IF EXISTS points_quad_index;");
 			db.execSQL("DROP TABLE IF EXISTS checkins;");
 			onCreate(db);
 		}
@@ -141,6 +151,8 @@ public class CPcontentProvider extends ContentProvider {
 	private static final int POINTS_ID = 6;
 	private static final int CHECKINS = 7;
 	private static final int CHECKINS_ID = 8;
+	private static final int VISIBLE = 9;
+	private static final int VISIBLE_ID = 10;
 
 	private static final UriMatcher sUriMatcher = 
 			new UriMatcher(UriMatcher.NO_MATCH);
@@ -154,6 +166,8 @@ public class CPcontentProvider extends ContentProvider {
 		sUriMatcher.addURI(PROVIDER_AUTH, "points/#", POINTS_ID);
 		sUriMatcher.addURI(PROVIDER_AUTH, "checkins", CHECKINS);
 		sUriMatcher.addURI(PROVIDER_AUTH, "checkins/#", CHECKINS_ID);
+		sUriMatcher.addURI(PROVIDER_AUTH, "visible", VISIBLE);
+		sUriMatcher.addURI(PROVIDER_AUTH, "visible/#", VISIBLE_ID);
 	}
 	@Override
 	public int delete(Uri arg0, String arg1, String[] arg2) {
@@ -182,6 +196,10 @@ public class CPcontentProvider extends ContentProvider {
 			return "vnd.android.cursor.dir/checkins";
 		case CHECKINS_ID:
 			return "vnd.android.cursor.item/checkins";
+		case VISIBLE:
+			return "vnd.android.cursor.dir/visible";
+		case VISIBLE_ID:
+			return "vnd.android.cursor.item/visible";
 		default:
 			return null;
 		}
@@ -212,8 +230,11 @@ public class CPcontentProvider extends ContentProvider {
 		}
 		db = mOpenHelper.getWritableDatabase();
 		Log.i("db","inserting values");
-		return Uri.parse("content://" + PROVIDER_AUTH + "/" + table + "/" +
+		Uri result = Uri.parse("content://" + PROVIDER_AUTH + "/" + table + "/" +
 		db.insert(table, null, values));
+		Uri visibleUri = Uri.parse("content://" + PROVIDER_AUTH + "/visible");
+		getContext().getContentResolver().notifyChange(visibleUri, null);
+		return result;
 	}
 
 	@Override
@@ -234,6 +255,7 @@ public class CPcontentProvider extends ContentProvider {
 			String[] selectionArgs, String sortOrder) {
 		final SQLiteDatabase memdb,db;
 		String table;
+		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		int match = sUriMatcher.match(uri);
 		switch(match)
 		{
@@ -244,17 +266,47 @@ public class CPcontentProvider extends ContentProvider {
 					selection, selectionArgs, null, null, null);
 		case SYNC_MAP:
 			table = "sync_map";
+			qb.setTables(table);
 			break;
 		case SYNC_MAP_ID:
 		case POINTS:
 		case POINTS_ID:
 		case CHECKINS:
 		case CHECKINS_ID:
+		case VISIBLE_ID:
+			//TODO add _ID to where clause
+		case VISIBLE:
+			Log.i("visquery", "in visible Query code");
+			table = " sync_map join points on sync_map.quad_index <= points.quad_index and sync_map.next_index > points.quad_index ";
+			qb.setTables(table);
+			HashMap<String,String> visibleProjectionMap = new HashMap<String, String>();
+			visibleProjectionMap.put("_ID", "p._ID");
+			visibleProjectionMap.put("sync_id", "m._ID");
+			visibleProjectionMap.put("point_type", "point_type");
+			visibleProjectionMap.put("sw_lat", "sw_lat");
+			visibleProjectionMap.put("sw_lon", "sw_lon");
+			visibleProjectionMap.put("zoom", "zoom");
+			visibleProjectionMap.put("quad_index", "p.quad_index");
+			visibleProjectionMap.put("sync_quad_index", "m.quad_index");
+			visibleProjectionMap.put("next_index", "next_index");
+			visibleProjectionMap.put("sync_started", "sync_started");
+			visibleProjectionMap.put("sync_completed", "sync_completed");
+			visibleProjectionMap.put("visible", "visible");
+			visibleProjectionMap.put("status", "status");
+			visibleProjectionMap.put("lat", "lat");
+			visibleProjectionMap.put("lon", "lon");
+//			qb.setProjectionMap(visibleProjectionMap);
+			db = mOpenHelper.getReadableDatabase();
+			Cursor result = db.rawQuery("select * from " + table + " where visible = ?", new String[] { "1"} );
+			Uri visibleUri = Uri.parse("content://" + PROVIDER_AUTH + "/visible");
+			result.setNotificationUri(this.getContext().getContentResolver(), visibleUri);
+			return result;
 		default:
 			return null;
 		}
 		db = mOpenHelper.getReadableDatabase();
 //		Log.i("db", "querying database");
+//		return qb.query(db, projection, selection, selectionArgs, null, null, null);
 		return db.query(table, projection, 
 				selection, selectionArgs, null, null, null);
 	}
@@ -343,6 +395,11 @@ public class CPcontentProvider extends ContentProvider {
 		
 		finally {
 			db.endTransaction();
+
+			Uri visibleUri = Uri.parse("content://" + PROVIDER_AUTH + "/visible");
+			Log.i("notify","notifying map of change");
+			getContext().getContentResolver().notifyChange(visibleUri, null);
+
 		}
 	}
 

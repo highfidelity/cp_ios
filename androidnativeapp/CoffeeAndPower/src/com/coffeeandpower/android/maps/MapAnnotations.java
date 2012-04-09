@@ -49,6 +49,11 @@ public class MapAnnotations extends ItemizedOverlay<OverlayItem> {
         populate();
     }
 
+    public void clear()
+    {
+    	mOverlays.clear();
+    	populate();
+    }
 }
 
 /*

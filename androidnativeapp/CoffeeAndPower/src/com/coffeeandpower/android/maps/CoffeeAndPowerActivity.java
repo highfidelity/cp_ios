@@ -1,7 +1,17 @@
 package com.coffeeandpower.android.maps;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import android.database.ContentObserver;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+
+import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.OverlayItem;
@@ -17,13 +27,26 @@ public class CoffeeAndPowerActivity extends MapActivity {
     private final static int CITY_LEVEL = 14;
     private MapAnnotations mAnnotations; // All glyphs and other overlays.
     private CPMapView mMapView;
-    
+    private Set<int[]> mVisiblePointsSet;
+    private Cursor mVisiblePointsCursor;
+	private static String sUriString = 
+			"content://com.coffeeandpower.android.maps.provider/";
+    Uri sVisiblePointsUri = Uri.parse(sUriString + "visible");
+    private ContentObserver mMapObserver = new ContentObserver(new Handler()){
+
+		@Override
+		public void onChange(boolean selfChange) {
+			queryPoints();
+		}
+    	
+    };
+	
     // Just a static array of predefined annotations for prototyping.
     // This will grow into a dynamically managed list.
     private static OverlayItem mOverlayItems[] = {
         new OverlayItem(GeoPointUtils.getGeoPoint("1825+Market+Street+San+Francisco"), "Headquarters", "Coffee & Power"),
-        new OverlayItem(GeoPointUtils.getGeoPoint("2340+Francisco+Street+San+Francisco"), "Developer", "Melinda Green"),
-        new OverlayItem(GeoPointUtils.getGeoPoint("481+York+Street+San+Francisco"), "Developer", "Charity Majors"),
+//        new OverlayItem(GeoPointUtils.getGeoPoint("2340+Francisco+Street+San+Francisco"), "Developer", "Melinda Green"),
+//        new OverlayItem(GeoPointUtils.getGeoPoint("481+York+Street+San+Francisco"), "Developer", "Charity Majors"),
     };
 
     /** Called when the activity is first created. */
@@ -31,13 +54,15 @@ public class CoffeeAndPowerActivity extends MapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
+        mVisiblePointsSet = new HashSet<int[]>();
         Drawable drawableMarker = getResources().getDrawable(R.drawable.androidmarker);
         mAnnotations = new MapAnnotations(drawableMarker, this);
 
         // Add all the initial annotations.
         for(OverlayItem item : mOverlayItems)
-            addAnnotation(item);
+        {
+        	addAnnotation(item);
+        }
 
         mMapView = (CPMapView) findViewById(R.id.mapview); // From main.xml
         mMapView.setBuiltInZoomControls(true); // Shows the +/- controls as user interacts with the map.
@@ -47,16 +72,62 @@ public class CoffeeAndPowerActivity extends MapActivity {
         controller.setZoom(CITY_LEVEL); // Initial zoom level. Users pinch-to-zoom from there.
     }
 
-    /* (non-Javadoc)
-	 * @see android.app.Activity#onWindowFocusChanged(boolean)
-	 */
-//	@Override
-//	public void onWindowFocusChanged(boolean hasFocus) {
-//		super.onWindowFocusChanged(hasFocus);
-//        Log.i("canpmobi","Left:" + mMapView.getLeft() + " Right:" + mMapView.getRight()
-//        		+ " Top:" + mMapView.getTop() + " Bottom:" + mMapView.getBottom());
-//		Log.i("candpmobi","LatLeft:" + mMapView.getProjection().fromPixels(0, 0));
-//	}
+    protected void queryPoints() {
+		// TODO Auto-generated method stub
+        String[] visiblePointsProjection = { "p.lat", "p.lon" };
+        String visiblePointsSelection = " visible = ? ";
+        String[] visiblePointsArgs = { "0" };
+        
+        Log.i("onCreate","about to create cursor");
+        
+        mVisiblePointsCursor = getContentResolver().query(
+        		sVisiblePointsUri, 
+        		visiblePointsProjection, 
+        		visiblePointsSelection, 
+        		visiblePointsArgs, 
+        		null);
+        
+        Log.i("onCreate", "cursor created read it");
+        Set<int[]> newPoints = new HashSet<int[]>();
+        while(mVisiblePointsCursor !=null && mVisiblePointsCursor.moveToNext())
+        {
+        	Log.i("onCreate","cursor dereferenced");
+        	int lat = mVisiblePointsCursor.getInt(mVisiblePointsCursor.getColumnIndex("lat"));
+        	int lon = mVisiblePointsCursor.getInt(mVisiblePointsCursor.getColumnIndex("lon"));
+        	newPoints.add(new int[]{lat,lon});
+        }
+        if(!mVisiblePointsSet.equals(newPoints))
+        {
+        	mVisiblePointsSet = newPoints;
+        	Log.i("points","recreating points");
+        	mAnnotations.clear();
+        	for(int[] point : newPoints){
+        		OverlayItem item = new OverlayItem(new GeoPoint(point[0],point[1]), "p", "point");
+        		addAnnotation(item);
+        	}
+        }
+	}
+
+    public void onQueryComplete(int token, Object cookie, Cursor cursor)
+    {
+    	
+    }
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		getContentResolver().unregisterContentObserver(mMapObserver);
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		queryPoints();
+		getContentResolver().registerContentObserver(
+				sVisiblePointsUri, false, mMapObserver);
+	}
 
 	private void addAnnotation(OverlayItem annotation) {
         mAnnotations.addOverlay(annotation);
