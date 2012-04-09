@@ -60,9 +60,6 @@
 {
     [SVProgressHUD showWithStatus:@"Loading..."];
     
-    // filter and reload whatever data we currently have
-    [self filterData];
-    
     // tell the map to reload data
     // we'll get a notification when that's done to reload ours
     [self.delegate refreshButtonClicked:nil];
