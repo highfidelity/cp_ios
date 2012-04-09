@@ -125,7 +125,6 @@ static NSOperationQueue *sMapQueue = nil;
 #if DEBUG
             NSLog(@"Got %d users.", [usersArray count]);
 #endif
-            
             for (NSDictionary *userDict in usersArray) {
                 User *user = [[User alloc] initFromDictionary:userDict];
                 

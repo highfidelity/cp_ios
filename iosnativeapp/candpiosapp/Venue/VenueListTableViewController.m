@@ -64,7 +64,6 @@
     [SVProgressHUD showWithStatus:@"Loading..."];
     // tell the map to reload data
     // we'll get a notification when that's done to reload ours
-    self.delegate.sendDataUpdateNotification = YES;
     [self.delegate refreshButtonClicked:nil];
 }
 

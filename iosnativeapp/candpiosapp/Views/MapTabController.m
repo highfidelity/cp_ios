@@ -31,7 +31,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 
 -(void)refreshLocationsIfNeeded;
--(void)refreshLocationsAfterCheckin;
 -(void)startRefreshArrowAnimation;
 -(void)stopRefreshArrowAnimation;
 -(void)checkIfUserHasDismissedLocationAlert;
@@ -48,7 +47,6 @@
 @synthesize locationStatusKnown;
 @synthesize refreshButton;
 @synthesize activeUsers = _activeUsers;
-@synthesize sendDataUpdateNotification;
 
 BOOL clearLocations = NO;
 
@@ -68,9 +66,6 @@ BOOL clearLocations = NO;
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
     // Reload all pins when the app comes back into the foreground
     [self refreshButtonClicked:nil];
-    
-    // set the boolean so that the other tabs are told to update too
-    self.sendDataUpdateNotification = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -101,7 +96,7 @@ BOOL clearLocations = NO;
 
     // Register to receive userCheckedIn notification to intitiate map refresh immediately after user checks in
     [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(refreshLocationsAfterCheckin) 
+                                             selector:@selector(refreshButtonClicked:) 
                                                  name:@"userCheckedIn" 
                                                object:nil];
 
@@ -110,9 +105,6 @@ BOOL clearLocations = NO;
                                              selector:@selector(applicationDidBecomeActive:) 
                                                  name:@"applicationDidBecomeActive" 
                                                object:nil];
-    
-    // default for sendDataUpdateNotification boolean
-    self.sendDataUpdateNotification = NO;
     
     // Title view styling
     self.navigationItem.title = @"C&P"; // TODO: Remove once back button with mug logo is added to pushed views
@@ -210,12 +202,6 @@ BOOL clearLocations = NO;
     [self refreshButtonClicked:nil];
 }
 
-- (void)refreshLocationsAfterCheckin
-{
-    self.sendDataUpdateNotification = YES;
-    [self refreshButtonClicked:nil];
-}
-
 -(void)refreshLocationsIfNeeded
 {
     
@@ -288,11 +274,7 @@ BOOL clearLocations = NO;
                                 [self stopRefreshArrowAnimation];
                                 [SVProgressHUD dismiss];
                                 
-                                if (self.sendDataUpdateNotification) {
-                                    self.sendDataUpdateNotification = NO;
-                                    // send notification to list view to refresh data
-                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshFromNewMapData" object:nil];
-                                }
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshFromNewMapData" object:nil];
                             }]; 
 }
 

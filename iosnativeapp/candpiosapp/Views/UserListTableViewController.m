@@ -56,7 +56,6 @@
     
     // tell the map to reload data
     // we'll get a notification when that's done to reload ours
-    self.delegate.sendDataUpdateNotification = YES;
     [self.delegate refreshButtonClicked:nil];
 }
 
@@ -117,7 +116,7 @@
     [SVProgressHUD dismiss];
     
     [self.weeklyUsers removeAllObjects];
-    
+       
     // add the users from the map
     for (NSString *key in self.delegate.activeUsers) {
         [self.weeklyUsers addObject:[self.delegate.activeUsers objectForKey:key]];
