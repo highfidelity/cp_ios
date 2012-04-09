@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *venueName;
 @property (weak, nonatomic) IBOutlet UIView *userSection;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) id delegate;
 @property (strong, nonatomic) NSMutableDictionary *categoryCount;
 @property (strong, nonatomic) NSMutableDictionary *currentUsers;
 @property (strong, nonatomic) NSMutableArray *previousUsers;

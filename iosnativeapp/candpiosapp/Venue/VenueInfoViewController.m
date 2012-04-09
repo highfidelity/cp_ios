@@ -41,7 +41,6 @@
 @synthesize venuePhoto = _venuePhoto;
 @synthesize venueName = _venueName;
 @synthesize userSection = _userSection;
-@synthesize delegate = _delegate;
 @synthesize categoryCount = _categoryCount;
 @synthesize currentUsers = _currentUsers;
 @synthesize previousUsers = _previousUsers;
@@ -81,9 +80,6 @@
     
     // set the title of the navigation controller
     self.title = self.venue.name;
-    
-    // the map tab controller is going to be our delegate
-    self.delegate = [CPAppDelegate settingsMenuController].mapTabController;
     
     // don't try to scroll to the user's thumbnail, not a checkin
     self.scrollToUserThumbnail = NO;
