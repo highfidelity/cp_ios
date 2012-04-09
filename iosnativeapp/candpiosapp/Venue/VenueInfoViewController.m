@@ -451,7 +451,21 @@
     
     UIView *lastLine;
     
-    for (User *previousUser in self.previousUsers) {
+    // sort the previous users by the number of checkins here
+    NSArray *sortedPreviousUsers = [self.previousUsers sortedArrayUsingComparator:^NSComparisonResult(User *u1, User *u2) {
+        int ch1 = [[[self.venue.activeUsers objectForKey:[NSString stringWithFormat:@"%d", u1.userID]] objectForKey:@"checkin_count"] integerValue];
+        int ch2 = [[[self.venue.activeUsers objectForKey:[NSString stringWithFormat:@"%d", u2.userID]] objectForKey:@"checkin_count"] integerValue];
+        if (ch1 > ch2) {
+            return (NSComparisonResult)NSOrderedDescending;
+        }
+        
+        if (ch1 < ch2) {
+            return (NSComparisonResult)NSOrderedAscending;
+        }
+        return (NSComparisonResult)NSOrderedSame;
+    }];
+    
+    for (User *previousUser in [sortedPreviousUsers reverseObjectEnumerator]) {
         // make sure we aren't already showing this user as checked in or as a previous user
         if (![self.usersShown containsObject:[NSNumber numberWithInt:previousUser.userID]]) {
             // setup the user thumbnail
