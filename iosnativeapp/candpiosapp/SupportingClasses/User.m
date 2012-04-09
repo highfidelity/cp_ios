@@ -76,8 +76,7 @@
         
         self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
         
-        // TODO: Attach the place to the user from the MapDataSet Code. 
-        // That way when pulling up a user from the list we already have their checkin data.
+
         CPPlace *place = [[CPPlace alloc] init];
         
         NSString *name = [userDict objectForKey:@"venue_name"];
