@@ -331,7 +331,15 @@
         
         // scroll to the right category view
         CGPoint viewTop = [categoryView.superview convertPoint:categoryView.frame.origin toView:self.scrollView];
+        
+        if (self.scrollView.contentSize.height - viewTop.y < self.view.frame.size.height) {
+            // we need to make sure we don't have white space under the scroll view after changing content offset
+            viewTop.y -= self.view.frame.size.height - (self.scrollView.contentSize.height - viewTop.y);
+        } 
+        
         [self.scrollView setContentOffset:CGPointMake(0, viewTop.y) animated:YES];
+        
+        
         
         // scroll to the user thubmnail
         [parentScroll setContentOffset:CGPointMake(userButton.frame.origin.x - 10, 0) animated:YES];
