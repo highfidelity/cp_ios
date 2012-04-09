@@ -33,7 +33,7 @@
 
 - (void)checkInPressed:(id)sender;
 
-
+@property (nonatomic, assign) BOOL scrollToUserThumbnail;
 @end
 
 @implementation VenueInfoViewController
@@ -49,6 +49,7 @@
 @synthesize previousUsers = _previousUsers;
 @synthesize usersShown = _usersShown;
 @synthesize userObjectsForUsersOnScreen = _userObjectsForUsersOnScreen;
+@synthesize scrollToUserThumbnail = _scrollToUserThumbnail;
 
 - (NSMutableDictionary *)userObjectsForUsersOnScreen
 {
@@ -89,6 +90,9 @@
     
     // the map tab controller is going to be our delegate
     self.delegate = [CPAppDelegate settingsMenuController].mapTabController;
+    
+    // don't try to scroll to the user's thumbnail, not a checkin
+    self.scrollToUserThumbnail = NO;
     
     // put the photo in the top box
     UIImage *comingSoon = [UIImage imageNamed:@"picture-coming-soon-rectangle.jpg"];
@@ -163,7 +167,7 @@
     [self setUserSection:nil];
     [super viewDidUnload];
     [CPAppDelegate tabBarController].currentVenueID = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshFromNewMapData" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshVenueAfterCheckin" object:nil];
     // Release any retained subviews of the main view.
 }
 
@@ -178,9 +182,10 @@
     // we'll get a notification if this venue has been updated (by an API call)
     // so set our venue to that as information will be updated
     self.venue = notification.object;
-    
+
     // repopulate user data with new info
-    [self populateUserSection];
+    self.scrollToUserThumbnail = YES;
+    [self populateUserSection];    
 }
 
 - (void)populateUserSection
@@ -317,7 +322,24 @@
     }    
     
     // set the scrollview content size
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width, self.venuePhoto.frame.size.height + self.userSection.frame.size.height);    
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width, self.venuePhoto.frame.size.height + self.userSection.frame.size.height); 
+    
+    // clear the SVProgressHUD if it's shown
+    [SVProgressHUD dismiss];
+    
+    if (self.scrollToUserThumbnail) {
+        // we need to find the userThumbnail and scroll to it
+        UIButton *userButton = (UIButton *)[self.view viewWithTag:[CPAppDelegate currentUser].userID];
+        UIScrollView *parentScroll = (UIScrollView *)userButton.superview;
+        UIView *categoryView = parentScroll.superview;
+        
+        // scroll to the right category view
+        CGPoint viewTop = [categoryView.superview convertPoint:categoryView.frame.origin toView:self.scrollView];
+        [self.scrollView setContentOffset:CGPointMake(0, viewTop.y) animated:YES];
+        
+        // scroll to the user thubmnail
+        [parentScroll setContentOffset:CGPointMake(userButton.frame.origin.x - 10, 0) animated:YES];
+    }    
 }
                             
 - (void)addUser:(User *)user

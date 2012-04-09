@@ -311,6 +311,8 @@
                 if ([self isModal]) {
                     [self dismissModalViewControllerAnimated:YES];
                 } else {
+                    // show an SVProgressHUD since we'll be reloading user data in the venue view
+                    [SVProgressHUD showWithStatus:@"Loading..."];
                     [self.navigationController popViewControllerAnimated:YES];
                 }
                 
