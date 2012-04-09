@@ -82,11 +82,7 @@
     [CPAppDelegate tabBarController].currentVenueID = self.venue.foursquareID;
     
     // set the title of the navigation controller
-    if (self.venue.othersHere != 0) {
-        self.title = [NSString stringWithFormat:@"%d %@ here", self.venue.othersHere, self.venue.othersHere == 1 ? @"other" : @"others"];
-    } else {
-        self.title = self.venue.name;
-    }   
+    self.title = self.venue.name;
     
     // the map tab controller is going to be our delegate
     self.delegate = [CPAppDelegate settingsMenuController].mapTabController;
