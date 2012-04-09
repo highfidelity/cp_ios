@@ -10,6 +10,7 @@
 #import "CheckInListTableViewController.h"
 #import "SignupController.h"
 #import "TPKeyboardAvoidingScrollView.h"
+#import "UIViewController+isModal.h"
 
 @interface CheckInDetailsViewController() <UITextFieldDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *blueOverlay;
@@ -296,7 +297,7 @@
                     // use the define in CPConstants to say that the user has now done their first checkin
                     SET_DEFAULTS(Bool, kUDFirstCheckIn, YES);
                 }
-                [[AppDelegate instance] setCheckedOut];
+                [CPAppDelegate setCheckedOut];
                 // set the NSUserDefault to the user checkout time
                 SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
                 
@@ -305,9 +306,9 @@
                 SET_DEFAULTS(Object, kUDCheckedInVenueID, self.place.foursquareID);
 
                 [CPAppDelegate refreshCheckInButton];
-                
+            
                 // hide the checkin screen, we're checked in
-                if ([self respondsToSelector:@selector(dismissModalViewControllerAnimated:)]) {
+                if ([self isModal]) {
                     [self dismissModalViewControllerAnimated:YES];
                 } else {
                     [self.navigationController popViewControllerAnimated:YES];

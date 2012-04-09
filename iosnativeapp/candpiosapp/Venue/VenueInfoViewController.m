@@ -158,6 +158,7 @@
     [self setVenuePhoto:nil];
     [self setUserSection:nil];
     [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshFromNewMapData" object:nil];
     // Release any retained subviews of the main view.
 }
 
@@ -168,6 +169,8 @@
 
 - (void)populateUserSection:(NSNotification *)notification
 {
+    
+    NSLog(@"REPOPULATING");
     // clear out the current user section
     for (UIView *subview in [self.userSection subviews]) {
         [subview removeFromSuperview];

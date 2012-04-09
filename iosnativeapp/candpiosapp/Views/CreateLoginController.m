@@ -9,7 +9,6 @@
 #import "CreateLoginController.h"
 #import "TPKeyboardAvoidingScrollView.h"
 #import "FlurryAnalytics.h"
-#import "NSString+StringToNSNumber.h"
 
 @implementation CreateLoginController
 @synthesize scrollView;

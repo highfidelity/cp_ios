@@ -12,7 +12,6 @@
 #import "AFNetworking.h"
 #import "Facebook+Blocks.h"
 #import "FlurryAnalytics.h"
-#import "NSString+StringToNSNumber.h"
 
 @interface SignupController ()
 - (void)handleResponseFromFacebookLogin;

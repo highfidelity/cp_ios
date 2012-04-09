@@ -13,7 +13,6 @@
 #import "FlurryAnalytics.h"
 #import "AFHTTPClient.h"
 #import "CreateLoginController.h"
-#import "NSString+StringToNSNumber.h"
 
 @interface EmailLoginController ()
 @end

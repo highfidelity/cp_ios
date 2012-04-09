@@ -111,6 +111,7 @@
 		5335CF6F1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */; };
 		533AFECE1523E87200D6E6A9 /* default-avatar-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 533AFECC1523E87200D6E6A9 /* default-avatar-256.png */; };
 		533AFECF1523E87200D6E6A9 /* default-avatar-256@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */; };
+		53463F5115336EA5001CA16D /* UIViewController+isModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 53463F5015336EA5001CA16D /* UIViewController+isModal.m */; };
 		5349BA1414F3196D001D4560 /* check-in-slider-handle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5349BA1214F3196D001D4560 /* check-in-slider-handle.png */; };
 		5349BA1514F3196D001D4560 /* check-in-slider-handle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5349BA1314F3196D001D4560 /* check-in-slider-handle@2x.png */; };
 		534B752B150B021400200EE0 /* check-in.png in Resources */ = {isa = PBXBuildFile; fileRef = 534B7527150B021400200EE0 /* check-in.png */; };
@@ -180,7 +181,6 @@
 		53C4BE41152CC97400A87EF0 /* UserProfileStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53C4BE40152CC97400A87EF0 /* UserProfileStoryboard_iPhone.storyboard */; };
 		53C4BE48152CD0FB00A87EF0 /* VenueStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53C4BE47152CD0FB00A87EF0 /* VenueStoryboard_iPhone.storyboard */; };
 		53C4BE4A152CD1A200A87EF0 /* CheckinStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53C4BE49152CD1A200A87EF0 /* CheckinStoryboard_iPhone.storyboard */; };
-		53D3344D15001B020011EA70 /* NSString+StringToNSNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D3344C15001B020011EA70 /* NSString+StringToNSNumber.m */; };
 		53D65B4514EEEC2D00801C5E /* CheckInDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D65B4414EEEC2D00801C5E /* CheckInDetailsViewController.m */; };
 		53D65B4914EF0D6100801C5E /* texture-diagonal-noise.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D65B4714EF0D6100801C5E /* texture-diagonal-noise.png */; };
 		53D65B4A14EF0D6100801C5E /* texture-diagonal-noise@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D65B4814EF0D6100801C5E /* texture-diagonal-noise@2x.png */; };
@@ -570,6 +570,8 @@
 		5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SettingsStoryboard_iPhone.storyboard; path = Settings/SettingsStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		533AFECC1523E87200D6E6A9 /* default-avatar-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default-avatar-256.png"; path = "User/images/default-avatar-256.png"; sourceTree = "<group>"; };
 		533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default-avatar-256@2x.png"; path = "User/images/default-avatar-256@2x.png"; sourceTree = "<group>"; };
+		53463F4F15336EA5001CA16D /* UIViewController+isModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+isModal.h"; path = "Utils/UIViewController+isModal.h"; sourceTree = "<group>"; };
+		53463F5015336EA5001CA16D /* UIViewController+isModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+isModal.m"; path = "Utils/UIViewController+isModal.m"; sourceTree = "<group>"; };
 		5349BA1214F3196D001D4560 /* check-in-slider-handle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-slider-handle.png"; path = "images/check-in-slider-handle.png"; sourceTree = "<group>"; };
 		5349BA1314F3196D001D4560 /* check-in-slider-handle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-slider-handle@2x.png"; path = "images/check-in-slider-handle@2x.png"; sourceTree = "<group>"; };
 		534B7527150B021400200EE0 /* check-in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in.png"; path = "CheckIn/images/check-in.png"; sourceTree = "<group>"; };
@@ -657,8 +659,6 @@
 		53C4BE40152CC97400A87EF0 /* UserProfileStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = UserProfileStoryboard_iPhone.storyboard; path = User/UserProfileStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		53C4BE47152CD0FB00A87EF0 /* VenueStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = VenueStoryboard_iPhone.storyboard; path = Venue/VenueStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		53C4BE49152CD1A200A87EF0 /* CheckinStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CheckinStoryboard_iPhone.storyboard; path = CheckIn/CheckinStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		53D3344B15001B020011EA70 /* NSString+StringToNSNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+StringToNSNumber.h"; sourceTree = "<group>"; };
-		53D3344C15001B020011EA70 /* NSString+StringToNSNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+StringToNSNumber.m"; sourceTree = "<group>"; };
 		53D65B4314EEEC2D00801C5E /* CheckInDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckInDetailsViewController.h; path = Views/CheckInDetailsViewController.h; sourceTree = "<group>"; };
 		53D65B4414EEEC2D00801C5E /* CheckInDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInDetailsViewController.m; path = Views/CheckInDetailsViewController.m; sourceTree = "<group>"; };
 		53D65B4714EF0D6100801C5E /* texture-diagonal-noise.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-diagonal-noise.png"; path = "images/texture-diagonal-noise.png"; sourceTree = "<group>"; };
@@ -1248,8 +1248,8 @@
 				53FB9E4D14E0AE4600F4CC7F /* FoursquareAPIRequest.h */,
 				53FB9E4E14E0AE4600F4CC7F /* FoursquareAPIRequest.m */,
 				536DE92B1501710200794650 /* images */,
-				53D3344B15001B020011EA70 /* NSString+StringToNSNumber.h */,
-				53D3344C15001B020011EA70 /* NSString+StringToNSNumber.m */,
+				53463F4F15336EA5001CA16D /* UIViewController+isModal.h */,
+				53463F5015336EA5001CA16D /* UIViewController+isModal.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -2465,7 +2465,6 @@
 				4EBD1D4714FEC1C700E9C0C6 /* CreateLoginController.m in Sources */,
 				4EBD1D4914FEC1C700E9C0C6 /* EmailLoginController.m in Sources */,
 				6FF5891F14FEE7E300EFDB56 /* ChatMessageCell.m in Sources */,
-				53D3344D15001B020011EA70 /* NSString+StringToNSNumber.m in Sources */,
 				E48CFA35150041FC00A35D0E /* AddFundsViewController.m in Sources */,
 				536DE90D150156DC00794650 /* FaceToFaceAcceptDeclineViewController.m in Sources */,
 				536DE90E150156DC00794650 /* FaceToFaceHelper.m in Sources */,
@@ -2484,6 +2483,7 @@
 				53DDB7DF152CE7AF008703D1 /* LinkedInLoginController.m in Sources */,
 				69A621D7152DBC87008D24EE /* GenerateInvitationCodeViewController.m in Sources */,
 				69DCDCB9152F611600317E5B /* EnterInvitationCodeViewController.m in Sources */,
+				53463F5115336EA5001CA16D /* UIViewController+isModal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
