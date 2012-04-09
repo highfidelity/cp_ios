@@ -76,9 +76,21 @@
         
         self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
         
+        // TODO: Attach the place to the user from the MapDataSet Code. 
+        // That way when pulling up a user from the list we already have their checkin data.
         CPPlace *place = [[CPPlace alloc] init];
-        place.name = [userDict objectForKey:@"venue_name"];
-        place.foursquareID = [userDict objectForKey:@"foursquare"];
+        
+        NSString *name = [userDict objectForKey:@"venue_name"];
+        
+        if (![name isKindOfClass:[NSNull class]]) {
+            place.name = [userDict objectForKey:@"venue_name"];
+        }
+        
+        NSString *foursquare = [userDict objectForKey:@"foursquare"];
+        if ([foursquare isKindOfClass:[NSNull class]]) {
+            place.foursquareID = [userDict objectForKey:@"foursquare"];
+        }
+        
         self.placeCheckedIn = place;
 	}
 	return self;
@@ -122,9 +134,9 @@
         status = @"";
     }
     
-    status = [status stringByDecodingHTMLEntities];
     if ([status length] > 0) {
-        [status stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        status = [status stringByDecodingHTMLEntities];
+        status = [status stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     }    
     _status = status;
 }
