@@ -70,10 +70,15 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [SVProgressHUD showWithStatus:@"Loading..."];
-    
+    [super viewWillAppear:animated];
     // reload the table
     [self.tableView reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [SVProgressHUD showWithStatus:@"Loading..."];
     
     // tell the map to reload data
     // we'll get a notification when that's done to reload ours

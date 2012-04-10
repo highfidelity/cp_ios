@@ -130,13 +130,15 @@
 #endif
     
     NSURLRequest *request =  [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [self makeHTTPRequest:request completion:completion queue:operationQueue];
+    [self makeHTTPRequest:request queue:operationQueue completion:completion];
 }
 
 
 // Private method that takes an NSURLRequest and performs it using AFJSONOperation
-+ (void)makeHTTPRequest:(NSURLRequest *)request completion:(void (^)(NSDictionary *, NSError *))completion
++ (void)makeHTTPRequest:(NSURLRequest *)request 
                   queue:(NSOperationQueue *)operationQueue
+             completion:(void (^)(NSDictionary *, NSError *))completion
+                  
 {
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request 
         success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {

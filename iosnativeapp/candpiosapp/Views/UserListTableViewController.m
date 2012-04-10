@@ -56,8 +56,9 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshFromNewMapData" object:nil];
 }
 
--(void)viewWillAppear:(BOOL)animated
+-(void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     [SVProgressHUD showWithStatus:@"Loading..."];
     
     // tell the map to reload data
