@@ -353,15 +353,5 @@
 	[activityIndicator startAnimating];
 }
 
--(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
-    if (navigationType == UIWebViewNavigationTypeLinkClicked) {
-        if ([[[request URL] absoluteString] isEqualToString:kCandPWebServiceUrl]) {
-            [self.navigationController popViewControllerAnimated:YES];
-            return NO;
-        }
-    }
-    return YES;
-}
 
 @end
