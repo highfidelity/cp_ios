@@ -13,9 +13,10 @@
 #import "FoursquareAPIRequest.h"
 #import "AFJSONRequestOperation.h"
 #import "GRMustache.h"
+#import "VenueInfoViewController.h"
 #import "NSString+HTML.h"
 
-@interface UserProfileCheckedInViewController() <UIWebViewDelegate, UIActionSheetDelegate, UITextFieldDelegate>
+@interface UserProfileCheckedInViewController() <UIWebViewDelegate, UIActionSheetDelegate, UITextFieldDelegate, GRMustacheTemplateDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UILabel *checkedIn;
 @property (nonatomic, weak) IBOutlet MKMapView *mapView;
@@ -25,6 +26,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *cardNickname;
 @property (nonatomic, weak) IBOutlet UILabel *cardJobPosition;
 @property (nonatomic, weak) IBOutlet UIView *venueView;
+@property (nonatomic, weak) IBOutlet UIButton *venueViewButton;
 @property (nonatomic, weak) IBOutlet UIImageView *venueIcon;
 @property (nonatomic, weak) IBOutlet UILabel *venueName;
 @property (nonatomic, weak) IBOutlet UILabel *venueAddress;
@@ -53,6 +55,8 @@
 @property (nonatomic, weak) IBOutlet UIView *reviewView;
 @property (weak, nonatomic) IBOutlet UITextField *reviewDescription;
 @property (nonatomic, assign) int othersAtPlace;
+@property (nonatomic, strong) NSNumber *templateCounter;
+@property (nonatomic, assign) NSInteger selectedFavoriteVenueIndex;
 
 -(void)animateVenueLoadingPoints;
 -(void)stopAnimatingVenueLoadingPoints;
@@ -60,6 +64,8 @@
 -(IBAction)plusButtonPressed:(id)sender;
 -(IBAction)minusButtonPressed:(id)sender;
 -(IBAction)sendloveButtonPressed:(id)sender;
+-(IBAction)venueViewButtonPressed:(id)sender;
+
 @end
 
 @implementation UserProfileCheckedInViewController
@@ -76,6 +82,7 @@
 @synthesize cardNickname = _cardNickname;
 @synthesize distanceLabel = _distanceLabel;
 @synthesize venueView = _venueView;
+@synthesize venueViewButton = _venueViewButton;
 @synthesize venueIcon = _venueIcon;
 @synthesize venueName = _venueName;
 @synthesize venueAddress = venueAddress;
@@ -103,6 +110,8 @@
 @synthesize cardJobPosition = _cardJobPosition;
 @synthesize isF2FInvite = _isF2FInvite;
 @synthesize othersAtPlace = _othersAtPlace;
+@synthesize templateCounter = _templateCounter;
+@synthesize selectedFavoriteVenueIndex = _selectedFavoriteVenueIndex;
 
 BOOL firstLoad = YES;
 
@@ -117,9 +126,6 @@ BOOL firstLoad = YES;
     
     firstLoad = YES;
 
-    // set the webview delegate to this VC so we can resize it based on the contents
-    self.resumeWebView.delegate = self;
-    
     // hide the go menu if this profile is current user's profile
     if (self.user.userID == [CPAppDelegate currentUser].userID || self.isF2FInvite) {
         for (NSNumber *viewID in [NSArray arrayWithObjects:[NSNumber numberWithInt:1005], [NSNumber numberWithInt:1006], [NSNumber numberWithInt:1007], [NSNumber numberWithInt:1008], [NSNumber numberWithInt:1009], [NSNumber numberWithInt:1010], [NSNumber numberWithInt:1020], nil]) {
@@ -217,6 +223,7 @@ BOOL firstLoad = YES;
     [self setCardStatus:nil];
     [self setCardNickname:nil];
     [self setVenueView:nil];
+    [self setVenueViewButton:nil];
     [self setVenueIcon:nil];
     [self setVenueName:nil];
     [self setVenueAddress:nil];
@@ -384,14 +391,33 @@ BOOL firstLoad = YES;
         [reviews addObject:mutableReview];
     }
     
-    return [GRMustacheTemplate renderObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                             self.user, @"user",
-                                             reviews, @"reviews",
-                                             [NSNumber numberWithBool:reviews.count > 0], @"hasAnyReview",
-                                             nil]
-                               fromResource:@"UserResume"
-                                     bundle:nil
-                                      error:NULL];
+    GRMustacheTemplate *template = [GRMustacheTemplate templateFromResource:@"UserResume" bundle:nil error:NULL];
+    template.delegate = self;
+    
+    return [template renderObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                                   self.user, @"user",
+                                   reviews, @"reviews",
+                                   [NSNumber numberWithBool:reviews.count > 0], @"hasAnyReview",
+                                   nil]];
+}
+
+#pragma mark -
+#pragma mark UIWebViewDelegate
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    NSURL *url = [request URL];
+    if ([url.scheme isEqualToString:@"favorite-venue-index"]) {
+        NSInteger selectedFavoriteVenueIndex = [url.host integerValue];
+        CPPlace *place = [self.user.favoritePlaces objectAtIndex:selectedFavoriteVenueIndex];
+        
+        VenueInfoViewController *venueVC = [[UIStoryboard storyboardWithName:@"VenueStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+        venueVC.venue = place;
+        
+        [self.navigationController pushViewController:venueVC animated:YES];
+        
+        return NO;
+    }
+    return YES;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)aWebView {
@@ -429,6 +455,8 @@ BOOL firstLoad = YES;
     // show the resume now that all the data is there
     [UIView animateWithDuration:0.4 animations:^{self.resumeView.alpha = 1.0;}];
 }
+
+#pragma mark -
 
 -(void)animateVenueLoadingPoints
 {
@@ -516,6 +544,13 @@ BOOL firstLoad = YES;
     _reviewView.hidden = NO;
     [_reviewDescription becomeFirstResponder];
     [_reviewDescription setDelegate:self];
+}
+
+-(IBAction)venueViewButtonPressed:(id)sender {
+    VenueInfoViewController *venueVC = [[UIStoryboard storyboardWithName:@"VenueStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+    venueVC.venue = self.user.placeCheckedIn;
+    
+    [self.navigationController pushViewController:venueVC animated:YES];
 }
 
 - (void)sendReview {
@@ -624,6 +659,35 @@ BOOL firstLoad = YES;
         }
     }
     return YES;
+}
+
+#pragma mark -
+#pragma mark GRMustacheTemplateDelegate
+
+- (void)template:(GRMustacheTemplate *)template willRenderReturnValueOfInvocation:(GRMustacheInvocation *)invocation {
+    // This method is called when the template is about to render a tag.
+    
+    // The invocation object tells us which object is about to be rendered.
+    if ([invocation.returnValue isKindOfClass:[NSArray class]]) {
+        // If it is an NSArray, reset our counter.
+        self.templateCounter = [NSNumber numberWithUnsignedInteger:0];
+    } else if (self.templateCounter && [invocation.key isEqualToString:@"index"]) {
+        // If we have a counter, and we're asked for the `index` key, set the
+        // invocation's returnValue to the counter: it will be rendered.
+        // 
+        // And increment the counter, of course.
+        invocation.returnValue = self.templateCounter;
+        self.templateCounter = [NSNumber numberWithUnsignedInteger:self.templateCounter.unsignedIntegerValue + 1];
+    }
+}
+
+- (void)template:(GRMustacheTemplate *)template didRenderReturnValueOfInvocation:(GRMustacheInvocation *)invocation {
+    // This method is called right after the template has rendered a tag.
+    
+    // Make sure we release the counter when we leave an NSArray.
+    if ([invocation.returnValue isKindOfClass:[NSArray class]]) {
+        self.templateCounter = nil;
+    }
 }
 
 @end

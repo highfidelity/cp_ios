@@ -15,6 +15,7 @@
         padding: 5pt 5pt;
         word-wrap: break-word;
         -webkit-font-smoothing: antialiased;
+        -webkit-touch-callout: none;
     }
     #content {
         margin: 0 7px 20px 0;
@@ -62,6 +63,12 @@
         border-top: 1px solid #999999;
         width: 110px;
         padding: 11px 0 14px 0;
+    }
+    #favorite-places tr {
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+    }
+    #favorite-places tr:active {
+        background-color: rgba(0, 0, 0, 0.3);
     }
     #favorite-places td img {
         -webkit-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.5);
@@ -184,7 +191,7 @@
                 <h2 id="favorite-places-header">Favorite places to work</h2>
                 <table id="favorite-places">
                     {{#favoritePlaces}}
-                        <tr>
+                        <tr ontouchstart="" onclick="document.location = 'favorite-venue-index://{{index}}';">
                             <td><img src="{{#photoURL}}{{photoURL}}{{/photoURL}}{{^photoURL}}picture-coming-soon@2x.jpg{{/photoURL}}" width="100" height="100"/></td>
                             <th>
                                 <h3>{{name}}</h3>
