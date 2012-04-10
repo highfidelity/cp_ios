@@ -10,6 +10,8 @@
 #import <CoreLocation/CoreLocation.h>
 #import "CPPlace.h"
 
+#define kDaysOfTrialAccessWithoutInviteCode 30
+
 @interface User : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString *nickname;
@@ -47,10 +49,16 @@
 @property (nonatomic, readonly) BOOL hasAnyFavoritePlaces;
 @property (nonatomic, strong) NSString *majorJobCategory;
 @property (nonatomic, strong) NSString *minorJobCategory;
+@property (nonatomic, assign) BOOL enteredInviteCode;
+@property (nonatomic, strong) NSDate *joinDate;
 
 -(void)loadUserResumeData:(void (^)(NSError *error))completion;
 -(id)initFromDictionary:(NSDictionary *)userDict;
 -(NSString *)firstName;
 
+- (void)setEnteredInviteCodeFromJSONString:(NSString *)enteredInviteCodeString;
+- (void)setJoinDateFromJSONString:(NSString *)dateString;
+
+- (BOOL)isDaysOfTrialAccessWithoutInviteCodeOK;
 
 @end

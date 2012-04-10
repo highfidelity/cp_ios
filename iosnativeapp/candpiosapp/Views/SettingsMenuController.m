@@ -11,6 +11,7 @@
 #import "MapTabController.h"
 
 #define menuWidthPercentage 0.8
+#define kEnterInviteFakeSegueID @"--kEnterInviteFakeSegueID"
 
 @interface SettingsMenuController() 
 
@@ -57,10 +58,18 @@
 
 - (void)initMenu 
 {
+    NSString *inviteItemName = @"Invite";
+    NSString *inviteItemSegue = @"ShowInvitationCodeMenu";
+    
+    if ( ! [[AppDelegate instance] currentUser].enteredInviteCode) {
+        inviteItemName = @"Enter invite code";
+        inviteItemSegue = kEnterInviteFakeSegueID;
+    }
+    
     // Setup the menu strings and seque identifiers
     self.menuStringsArray = [NSArray arrayWithObjects:
                              // @"Face To Face", DISABLED (alexi)
-                             @"Invite",
+                             inviteItemName,
                              @"Wallet",
                              @"Settings",
                              //@"Linked Accounts", DISABLED (alexi)
@@ -68,14 +77,15 @@
                              nil];
     
     self.menuSegueIdentifiersArray = [NSArray arrayWithObjects:
-                                      @"ShowInvitationCodeMenu",
+                                      inviteItemSegue,
                                       // @"ShowFaceToFaceFromMenu", DISABLED (alexi)
                                       @"ShowBalanceFromMenu",
                                       @"ShowUserSettingsFromMenu",
                                       // @"ShowFederationFromMenu", DISALBED (alexi)
                                       @"ShowLogoutFromMenu",
                                       nil];
-
+    
+    [self.tableView reloadData];
 }
 
 - (void)loadNotificationSettings
@@ -203,6 +213,13 @@
     // e.g. self.myOutlet = nil;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self initMenu];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -249,6 +266,8 @@
 - (void)showMenu:(BOOL)showMenu {
     
     if (showMenu) {
+        [self initMenu];
+        
         [self loadNotificationSettings];   
     }
     else {
@@ -376,8 +395,16 @@
         [self.mapTabController logoutButtonTapped];
         [self.mapTabController loginButtonTapped];
     } else {
-        NSLog(@"You clicked on %@", [self.menuSegueIdentifiersArray objectAtIndex:indexPath.row]);
-        [self performSegueWithIdentifier:[self.menuSegueIdentifiersArray objectAtIndex:indexPath.row] sender:self];
+        NSString *segueID = [self.menuSegueIdentifiersArray objectAtIndex:indexPath.row];
+        NSLog(@"You clicked on %@", segueID);
+        
+        if ([kEnterInviteFakeSegueID isEqual:segueID]) {
+            [[AppDelegate instance] showEnterInvitationCodeModalFromViewController:self
+                                     withDontShowTextNoticeAfterLaterButtonPressed:YES
+                                                                          animated:YES];
+        } else {
+            [self performSegueWithIdentifier:segueID sender:self];
+        }
     }
 }
 

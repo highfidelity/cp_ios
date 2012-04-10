@@ -16,6 +16,8 @@
 #import "PaymentHelper.h"
 #import "SignupController.h"
 #import "BaseLoginController.h"
+#import "EnterInvitationCodeViewController.h"
+#import "User.h"
 
 @interface AppDelegate(Internal)
 -(void) loadSettings;
@@ -122,12 +124,44 @@
 }
 
 - (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
+         withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed
                                               animated:(BOOL)animated
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
-    [viewController presentModalViewController:[storyboard instantiateViewControllerWithIdentifier:
-                                                @"EnterInvitationCodeNavigationController"]
-                                      animated:animated];
+    UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:
+                                                    @"EnterInvitationCodeNavigationController"];
+    
+    EnterInvitationCodeViewController *controller = (EnterInvitationCodeViewController *)navigationController.topViewController;
+    controller.dontShowTextNoticeAfterLaterButtonPressed = dontShowTextNoticeAfterLaterButtonPressed;
+    
+    [viewController presentModalViewController:navigationController animated:animated];
+}
+
+- (void)syncCurrentUserWithWebAndCheckValidLogin {
+    if (self.currentUser.userID) {        
+        User *webSyncUser = [[User alloc] init];
+        webSyncUser.userID = self.currentUser.userID;
+        
+        [webSyncUser loadUserResumeData:^(NSError *error) {
+            if (!error) {
+                // TODO: make this a better solution by checking for a problem with the PHP session cookie in CPApi
+                // for now if the email comes back null this person isn't logged in so we're going to send them to do that.
+                if ( ! [webSyncUser.email isKindOfClass:[NSNull class]]) {
+                    [self saveCurrentUserToUserDefaults:webSyncUser];
+                    
+                    if ( ! self.currentUser.isDaysOfTrialAccessWithoutInviteCodeOK) {
+                        [self showSignupModalFromViewController:self.tabBarController animated:NO];
+                        
+                        [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Your %d days trial has ended.", kDaysOfTrialAccessWithoutInviteCode]
+                                                    message:@"Please login and enter invite code."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }
+            }
+        }];
+    }
 }
 
 
@@ -214,10 +248,10 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 
     [self.window makeKeyAndVisible];
     
-    if (![CPAppDelegate currentUser]) {
-        // force the user to login
-        [CPAppDelegate showSignupModalFromViewController:self.tabBarController animated:NO];        
+    if ( ! [CPAppDelegate currentUser]) {
+        [self showSignupModalFromViewController:self.tabBarController animated:NO];
     }
+    [self syncCurrentUserWithWebAndCheckValidLogin];
     
     // let's use UIAppearance to set our styles on UINavigationBars
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
@@ -249,6 +283,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 	/*
 	 Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 	 */
+    [self syncCurrentUserWithWebAndCheckValidLogin];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -486,6 +521,8 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     User *currUser = [[User alloc] init];
     currUser.nickname = nickname;
     currUser.userID = [userId intValue];
+    [currUser setEnteredInviteCodeFromJSONString:[userInfo objectForKey:@"entered_invite_code"]];
+    [currUser setJoinDateFromJSONString:[userInfo objectForKey:@"join_date"]];
     
     NSLog(@"%d", currUser.userID);
     

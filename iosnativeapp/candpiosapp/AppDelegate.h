@@ -44,7 +44,10 @@
 -(void)startCheckInClockHandAnimation;
 -(void)stopCheckInClockHandAnimation;
 - (void)showSignupModalFromViewController:(UIViewController *)viewController animated:(BOOL)animated;
-- (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController animated:(BOOL)animated;
+- (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
+         withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed
+                                              animated:(BOOL)animated;
+- (void)syncCurrentUserWithWebAndCheckValidLogin;
 
 void uncaughtExceptionHandler(NSException *exception);
 @end

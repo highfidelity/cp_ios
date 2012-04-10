@@ -236,6 +236,10 @@
 		6983702615252EC000D223BC /* network-icon-linkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983702215252EC000D223BC /* network-icon-linkedin.png */; };
 		6983702715252EC000D223BC /* network-icon-linkedin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983702315252EC000D223BC /* network-icon-linkedin@2x.png */; };
 		69A621D7152DBC87008D24EE /* GenerateInvitationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A621D6152DBC87008D24EE /* GenerateInvitationCodeViewController.m */; };
+		69D5C3561533911300B3530F /* invite-code-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D5C3521533911300B3530F /* invite-code-background.png */; };
+		69D5C3571533911300B3530F /* invite-code-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D5C3531533911300B3530F /* invite-code-background@2x.png */; };
+		69D5C3581533911300B3530F /* plug-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D5C3541533911300B3530F /* plug-logo.png */; };
+		69D5C3591533911300B3530F /* plug-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D5C3551533911300B3530F /* plug-logo@2x.png */; };
 		69DCDCB9152F611600317E5B /* EnterInvitationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DCDCB8152F611600317E5B /* EnterInvitationCodeViewController.m */; };
 		6F0B453914F6BCD10074DBD9 /* ChatHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453814F6BCD10074DBD9 /* ChatHelper.m */; };
 		6F0B453C14F6BD560074DBD9 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453B14F6BD560074DBD9 /* ChatMessage.m */; };
@@ -724,6 +728,10 @@
 		6983702315252EC000D223BC /* network-icon-linkedin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "network-icon-linkedin@2x.png"; path = "images/network-icon-linkedin@2x.png"; sourceTree = "<group>"; };
 		69A621D5152DBC87008D24EE /* GenerateInvitationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GenerateInvitationCodeViewController.h; path = Settings/GenerateInvitationCodeViewController.h; sourceTree = "<group>"; };
 		69A621D6152DBC87008D24EE /* GenerateInvitationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenerateInvitationCodeViewController.m; path = Settings/GenerateInvitationCodeViewController.m; sourceTree = "<group>"; };
+		69D5C3521533911300B3530F /* invite-code-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "invite-code-background.png"; path = "Settings/images/invite-code-background.png"; sourceTree = "<group>"; };
+		69D5C3531533911300B3530F /* invite-code-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "invite-code-background@2x.png"; path = "Settings/images/invite-code-background@2x.png"; sourceTree = "<group>"; };
+		69D5C3541533911300B3530F /* plug-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "plug-logo.png"; path = "Settings/images/plug-logo.png"; sourceTree = "<group>"; };
+		69D5C3551533911300B3530F /* plug-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "plug-logo@2x.png"; path = "Settings/images/plug-logo@2x.png"; sourceTree = "<group>"; };
 		69DCDCB7152F611600317E5B /* EnterInvitationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EnterInvitationCodeViewController.h; path = candpiosapp/Login/EnterInvitationCodeViewController.h; sourceTree = SOURCE_ROOT; };
 		69DCDCB8152F611600317E5B /* EnterInvitationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EnterInvitationCodeViewController.m; path = candpiosapp/Login/EnterInvitationCodeViewController.m; sourceTree = SOURCE_ROOT; };
 		6F0B453714F6BCC50074DBD9 /* ChatHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatHelper.h; path = candpiosapp/Chat/ChatHelper.h; sourceTree = SOURCE_ROOT; };
@@ -1217,10 +1225,14 @@
 		5335CF701507FC6C007DED61 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				5355B0C015140697006A3D89 /* settings-button-3.png */,
-				5355B0C115140697006A3D89 /* settings-button-3@2x.png */,
 				E47C832915115D0600ECE98D /* drop-down.png */,
 				E47C832A15115D0600ECE98D /* drop-down@2x.png */,
+				69D5C3521533911300B3530F /* invite-code-background.png */,
+				69D5C3531533911300B3530F /* invite-code-background@2x.png */,
+				69D5C3541533911300B3530F /* plug-logo.png */,
+				69D5C3551533911300B3530F /* plug-logo@2x.png */,
+				5355B0C015140697006A3D89 /* settings-button-3.png */,
+				5355B0C115140697006A3D89 /* settings-button-3@2x.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -2329,6 +2341,10 @@
 				53DDB7FB152CFB8F008703D1 /* tab-check-out@2x.png in Resources */,
 				53DDB802152D08E5008703D1 /* tab-check-in-clock-hand.png in Resources */,
 				53DDB803152D08E5008703D1 /* tab-check-in-clock-hand@2x.png in Resources */,
+				69D5C3561533911300B3530F /* invite-code-background.png in Resources */,
+				69D5C3571533911300B3530F /* invite-code-background@2x.png in Resources */,
+				69D5C3581533911300B3530F /* plug-logo.png in Resources */,
+				69D5C3591533911300B3530F /* plug-logo@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

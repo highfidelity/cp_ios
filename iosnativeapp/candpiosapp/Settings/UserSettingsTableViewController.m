@@ -184,6 +184,16 @@
                     self.newDataFromSync = YES;
                 }
                 
+                if (![self.currentUser.joinDate isEqual:webSyncUser.joinDate]) {
+                    self.currentUser.joinDate = webSyncUser.joinDate;
+                    self.newDataFromSync = YES;
+                }
+                
+                if (self.currentUser.enteredInviteCode != webSyncUser.enteredInviteCode) {
+                    self.currentUser.enteredInviteCode = webSyncUser.enteredInviteCode;
+                    self.newDataFromSync = YES;
+                }
+                
                 // if the sync brought us new data
                 if (self.newDataFromSync) {
                     // save the changes to the local current user

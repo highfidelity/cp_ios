@@ -7,8 +7,9 @@
 //
 
 #import "EnterInvitationCodeViewController.h"
+#import "User.h"
 
-@interface EnterInvitationCodeViewController () <UITextFieldDelegate>
+@interface EnterInvitationCodeViewController () <UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UIButton *laterButton;
 @property (nonatomic, weak) IBOutlet UITextField *codeTextField;
@@ -25,6 +26,8 @@
 
 @synthesize laterButton = _laterButton;
 @synthesize codeTextField = _codeTextField;
+
+@synthesize dontShowTextNoticeAfterLaterButtonPressed = _dontShowTextNoticeAfterLaterButtonPressed;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -68,17 +71,51 @@
 }
 
 #pragma mark -
+#pragma mark UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.firstOtherButtonIndex == buttonIndex) {
+        [[AppDelegate instance] logoutEverything];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
+
+#pragma mark -
 #pragma mark actions
 
 - (IBAction)laterButtonAction:(id)sender; {
-    [self.navigationController dismissModalViewControllerAnimated:YES];
+    BOOL dismissModalViewController = YES;
+    
+    if ( ! self.dontShowTextNoticeAfterLaterButtonPressed) {
+        if ( ! [[AppDelegate instance].currentUser isDaysOfTrialAccessWithoutInviteCodeOK]) {
+            
+            [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Your %d days trial has ended.", kDaysOfTrialAccessWithoutInviteCode]
+                                        message:@"Please enter code or logout."
+                                       delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:@"Logout", nil] show];
+            
+            dismissModalViewController = NO;
+            
+        } else {
+            [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Coffee & Power requires an invite for full membership but you have %d days of full access to try us out.", kDaysOfTrialAccessWithoutInviteCode]
+                                        message:@"If you get an invite from another C&P user you can enter it anytime by going to the Account page/Enter invite code tab."
+                                       delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil] show];
+        }
+    }
+    
+    if (dismissModalViewController) {
+        [self.navigationController dismissModalViewControllerAnimated:YES];
+    }
 }
 
 #pragma mark -
 #pragma mark private
 
 - (void)sendCode:(NSString *)code {
-    [SVProgressHUD showWithStatus:@"Loading..."];
+    [SVProgressHUD showWithStatus:@"Checking..."];
     
     CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
     
@@ -92,13 +129,18 @@
             [CPAppDelegate storeUserLoginDataFromDictionary:userInfo];
             
             [self.navigationController dismissModalViewControllerAnimated:YES];
+            
+            [[[UIAlertView alloc] initWithTitle:@"Invite code accepted!" 
+                                        message:nil
+                                       delegate:nil 
+                              cancelButtonTitle:@"OK" 
+                              otherButtonTitles:nil] show];
         } else {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
-                                                                message:[json objectForKey:@"payload"]
-                                                               delegate:self 
-                                                      cancelButtonTitle:@"OK" 
-                                                      otherButtonTitles:nil];
-            [alertView show];
+            [[[UIAlertView alloc] initWithTitle:@"Error" 
+                                        message:[json objectForKey:@"payload"]
+                                       delegate:nil 
+                              cancelButtonTitle:@"OK" 
+                              otherButtonTitles:nil] show];
         }
         
         [SVProgressHUD dismiss];

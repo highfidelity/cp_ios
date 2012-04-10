@@ -8,4 +8,6 @@
 
 @interface EnterInvitationCodeViewController : UIViewController
 
+@property (nonatomic, assign) BOOL dontShowTextNoticeAfterLaterButtonPressed;
+
 @end

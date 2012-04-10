@@ -703,7 +703,7 @@
                 withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                        [NSString stringWithFormat:@"%.7lf", location.coordinate.latitude], @"lat",
-                                       [NSString stringWithFormat:@"%.7lf", location.coordinate.longitude], @"lon",
+                                       [NSString stringWithFormat:@"%.7lf", location.coordinate.longitude], @"lng",
                                        nil];
     [self makeHTTPRequestWithAction:@"getInvitationCode"
                      withParameters:parameters
@@ -715,8 +715,8 @@
        withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                        [NSString stringWithFormat:@"%.7lf", location.coordinate.latitude], @"lat",
-                                       [NSString stringWithFormat:@"%.7lf", location.coordinate.longitude], @"lon",
-                                       invitationCode, @"invitation_code",
+                                       [NSString stringWithFormat:@"%.7lf", location.coordinate.longitude], @"lng",
+                                       invitationCode, @"invite_code",
                                        nil];
     [self makeHTTPRequestWithAction:@"enterInvitationCode"
                      withParameters:parameters

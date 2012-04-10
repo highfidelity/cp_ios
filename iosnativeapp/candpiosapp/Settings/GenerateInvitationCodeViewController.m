@@ -11,6 +11,7 @@
 @interface GenerateInvitationCodeViewController ()
 
 @property (nonatomic, weak) IBOutlet UILabel *codeLabel;
+@property (nonatomic, weak) IBOutlet UIImageView *codeLabelBackground;
 @property (nonatomic, weak) IBOutlet UIButton *doneButton;
 
 - (IBAction)donePressed:(id)sender;
@@ -19,7 +20,6 @@
 #pragma mark private
 
 - (void)showCode:(NSString *)code;
-- (void)resizeCodeLabel;
 - (void)loadCode;
 
 @end
@@ -29,6 +29,7 @@
 @implementation GenerateInvitationCodeViewController
 
 @synthesize codeLabel = _codeLabel;
+@synthesize codeLabelBackground = _codeLabelBackground;
 @synthesize doneButton = _doneButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -42,9 +43,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.codeLabel.layer.cornerRadius = 7;
-    
-    [CPUIHelper makeButtonCPButton:self.doneButton withCPButtonColor:CPButtonGrey];
+    [CPUIHelper changeFontForLabel:self.codeLabel toLeagueGothicOfSize:86];
+    [CPUIHelper makeButtonCPButton:self.doneButton withCPButtonColor:CPButtonTurquoise];
 }
 
 - (void)viewDidUnload {
@@ -70,7 +70,6 @@
 
 - (void)showCode:(NSString *)code {
     self.codeLabel.text = code;
-    [self resizeCodeLabel];
     
     self.codeLabel.alpha = 0;
     self.codeLabel.hidden = NO;
@@ -80,15 +79,6 @@
     self.codeLabel.alpha = 1;
     
     [UIView commitAnimations];
-}
-
-- (void)resizeCodeLabel {
-    [self.codeLabel sizeToFit];
-    
-    CGRect codeLabelFrame = CGRectInset(self.codeLabel.frame, -10, -3);
-    codeLabelFrame.origin.x = round((self.view.frame.size.width - codeLabelFrame.size.width) / 2);
-    
-    self.codeLabel.frame = codeLabelFrame;
 }
 
 - (void)loadCode {

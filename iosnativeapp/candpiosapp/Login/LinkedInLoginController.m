@@ -320,9 +320,8 @@
             // Perform common post-login operations
             [BaseLoginController pushAliasUpdate];
             
-            BOOL hasUserEnteredValidInvitationCode = NO;
-            if (hasUserEnteredValidInvitationCode) {
-                [self.navigationController dismissModalViewControllerAnimated:NO];
+            if ([CPAppDelegate currentUser].enteredInviteCode) {
+                [self.navigationController dismissModalViewControllerAnimated:YES];
             } else {
                 [self performSegueWithIdentifier:@"EnterInvitationCodeSegue" sender:nil];
             }

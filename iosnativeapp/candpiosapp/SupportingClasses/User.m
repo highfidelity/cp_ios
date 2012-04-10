@@ -41,6 +41,8 @@
 @synthesize checkInHistory = _checkInHistory;
 @synthesize majorJobCategory = _majorJobCategory;
 @synthesize minorJobCategory =  _minorJobCategory;
+@synthesize enteredInviteCode = _enteredInviteCode;
+@synthesize joinDate = _joinDate;
 
 -(id)init
 {
@@ -104,6 +106,8 @@
         self.nickname = [decoder decodeObjectForKey:@"nickname"];
         self.email = [decoder decodeObjectForKey:@"email"];
         self.urlPhoto = [decoder decodeObjectForKey:@"urlPhoto"];
+        self.enteredInviteCode = [decoder decodeBoolForKey:@"enteredInviteCode"];
+        self.joinDate = [decoder decodeObjectForKey:@"joinDate"];
     }    
     return self;
 }
@@ -114,6 +118,9 @@
     [encoder encodeObject:self.nickname forKey:@"nickname"];
     [encoder encodeObject:self.email forKey:@"email"];
     [encoder encodeObject:self.urlPhoto forKey:@"urlPhoto"];
+    [encoder encodeBool:self.enteredInviteCode forKey:@"enteredInviteCode"];
+    [encoder encodeObject:self.joinDate forKey:@"joinDate"];
+    
 }
 
 // override nickname setter to decode html entities
@@ -212,6 +219,34 @@
     return self.favoritePlaces.count > 0;;
 }
 
+- (void)setEnteredInviteCodeFromJSONString:(NSString *)enteredInviteCodeString {
+    if ([@"Y" isEqual:enteredInviteCodeString]) {
+        self.enteredInviteCode = YES;
+    } else {
+        self.enteredInviteCode = NO;
+    }
+}
+
+- (void)setJoinDateFromJSONString:(NSString *)dateString {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd  HH:mm:ss"];
+    
+    self.joinDate = [dateFormat dateFromString:dateString];
+}
+
+- (BOOL)isDaysOfTrialAccessWithoutInviteCodeOK {
+    if ([self enteredInviteCode]) {
+        return YES;
+    }
+    
+    NSTimeInterval timeIntervalOfTrialAccess = kDaysOfTrialAccessWithoutInviteCode * 24 * 60 * 60;
+    if (0 > timeIntervalOfTrialAccess + [self.joinDate timeIntervalSinceNow]) {
+        return NO;
+    }
+    
+    return YES;
+}
+
 -(void)loadUserResumeData:(void (^)(NSError *error))completion {
     
     [CPapi getResumeForUserId:self.userID andCompletion:^(NSDictionary *response, NSError *error) {
@@ -292,6 +327,9 @@
             
             // user email
             self.email = [userDict objectForKey:@"email"];
+            
+            [self setEnteredInviteCodeFromJSONString:[userDict objectForKey:@"entered_invite_code"]];
+            [self setJoinDateFromJSONString:[userDict objectForKey:@"join_date"]];
             
             // call the completion block passed by the caller
             if(completion)
