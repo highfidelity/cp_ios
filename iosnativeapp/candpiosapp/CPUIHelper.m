@@ -102,9 +102,14 @@
 
 + (void)changeFontForLabel:(UILabel *)label toLeagueGothicOfSize:(CGFloat)size
 {
-    
     UIFont *gothic = [UIFont fontWithName:@"LeagueGothic" size:size];
     label.font = gothic;
+}
+
++ (void)changeFontForTextField:(UITextField *)textField toLeagueGothicOfSize:(CGFloat)size
+{
+    UIFont *gothic = [UIFont fontWithName:@"LeagueGothic" size:size];
+    textField.font = gothic;
 }
 
 #pragma mark - UIImage rotate

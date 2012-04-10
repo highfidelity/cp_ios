@@ -17,7 +17,6 @@
 - (IBAction)laterButtonAction:(id)sender;
 
 - (void)sendCode:(NSString *)code;
-- (void)resizeCodeTextField;
 
 @end
 
@@ -41,12 +40,8 @@
     [super viewDidLoad];
     
     [CPUIHelper makeButtonCPButton:self.laterButton
-                 withCPButtonColor:CPButtonGrey];
-    
-    self.codeTextField.layer.cornerRadius = 7;
-    self.codeTextField.backgroundColor = [UIColor whiteColor];
-    
-    [self resizeCodeTextField];
+                 withCPButtonColor:CPButtonTurquoise];
+    [CPUIHelper changeFontForTextField:self.codeTextField toLeagueGothicOfSize:86];
 }
 
 - (void)viewDidUnload {
@@ -146,16 +141,6 @@
         [SVProgressHUD dismiss];
     }];
 
-}
-
-- (void)resizeCodeTextField {
-    self.codeTextField.text = @"WWWW";
-    [self.codeTextField sizeToFit];
-    self.codeTextField.text = @"";
-    
-    CGRect codeFrame = CGRectInset(self.codeTextField.frame, -5, -2);
-    codeFrame.origin.x = round((self.view.frame.size.width - codeFrame.size.width) / 2);
-    self.codeTextField.frame = codeFrame;
 }
 
 @end

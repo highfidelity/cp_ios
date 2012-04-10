@@ -40,6 +40,7 @@ typedef enum {
 
 // Font changes (League Gothic)
 + (void)changeFontForLabel:(UILabel *)label toLeagueGothicOfSize:(CGFloat)size;
++ (void)changeFontForTextField:(UITextField *)textField toLeagueGothicOfSize:(CGFloat)size;
 
 // Animations
 + (void)rotateImage:(UIImageView *)image
