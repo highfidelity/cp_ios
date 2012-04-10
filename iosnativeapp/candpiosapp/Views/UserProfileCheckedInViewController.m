@@ -13,6 +13,7 @@
 #import "FoursquareAPIRequest.h"
 #import "AFJSONRequestOperation.h"
 #import "GRMustache.h"
+#import "NSString+HTML.h"
 
 @interface UserProfileCheckedInViewController() <UIWebViewDelegate, UIActionSheetDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -376,6 +377,9 @@ BOOL firstLoad = YES;
         if ( loveNumber == 1) {
             [mutableReview setObject:[NSNumber numberWithBool:YES] forKey:@"isLove"];
         }
+        
+        [mutableReview setObject:[[review objectForKey:@"review"] stringByDecodingHTMLEntities]
+                          forKey:@"review"];
         
         [reviews addObject:mutableReview];
     }
