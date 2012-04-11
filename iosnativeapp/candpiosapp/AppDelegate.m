@@ -272,6 +272,9 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     NSString *currentVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     // set the kUDLastLoggedAppVersion to the current version if there has been a change
     if (!appVersion || [appVersion doubleValue] < [currentVersion doubleValue]) {
+#if DEBUG
+        NSLog(@"Storing app version %@ in NSUserDefaults.", currentVersion);
+#endif
         SET_DEFAULTS(Object, kUDLastLoggedAppVersion, currentVersion);
     }    
     
