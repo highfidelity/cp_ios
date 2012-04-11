@@ -245,7 +245,7 @@ public class CPcontentProvider extends ContentProvider {
 		File externalDir = this.getContext().getExternalFilesDir(null);
 		String dbFile = externalDir.getAbsolutePath() + "/" + DATABASE_NAME;
 		Log.i("db","external db location:" + dbFile);
-		mOpenHelper = new MainDatabaseHelper(getContext(),dbFile,
+		mOpenHelper = new MainDatabaseHelper(getContext(),DATABASE_NAME,
 				null,DATABASE_VERSION);
 		return true;
 	}
