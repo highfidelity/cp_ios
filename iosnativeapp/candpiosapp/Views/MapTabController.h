@@ -22,8 +22,6 @@
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
 @property (nonatomic, readonly, strong) MapDataSet *dataset;
 @property (weak, nonatomic) IBOutlet UIView *mapAndButtonsView;
-@property (nonatomic, readonly) NSDictionary *activeUsers;
-@property (nonatomic, readonly) NSArray *activeVenues;
 @property (nonatomic, weak) IBOutlet UIButton *revealButton;
 
 // State to prevent querying userlist (with bad region) before the map has appeared

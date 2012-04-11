@@ -39,24 +39,9 @@
 @synthesize locationAllowTimer;
 @synthesize locationStatusKnown;
 @synthesize refreshButton;
-@synthesize activeUsers = _activeUsers;
-@synthesize activeVenues = _activeVenues;
 @synthesize revealButton = _revealButton;
 
 BOOL clearLocations = NO;
-
-// we pull activeVenues from here instead of directly from the dataset so that it's not a mutable array
-// that could allow people to modify the array in other class which may change map annotations
--(NSArray *)activeVenues {
-    return self.dataset.annotations;
-}
-
-// we pull activeUsers from here instead of directly from the dataset so that it's not a mutable dictionary
-// that makes sure the activeUsers mutableDictionary on the dataset is a clean copy from the API call
--(NSDictionary *)activeUsers
-{
-    return self.dataset.activeUsers;
-}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -281,7 +266,11 @@ BOOL clearLocations = NO;
                                    [SVProgressHUD dismiss];
                                 }
                                 
-                                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshFromNewMapData" object:nil];
+                                // post two notifications for places and people reload
+                                // both send non-mutable copies of the data
+                                // it's up to that view controller to make a mutable copy that it can modify so that it doesn't directly touch the dataset
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshUsersFromNewMapData" object:dataset.activeUsers];
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshVenuesFromNewMapData" object:[NSArray arrayWithArray:dataset.annotations]];
                             }]; 
 }
 

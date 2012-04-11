@@ -55,7 +55,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(refreshFromNewMapData:) 
-                                                 name:@"refreshFromNewMapData" 
+                                                 name:@"refreshVenuesFromNewMapData"
                                                object:nil]; 
 }
 
@@ -65,7 +65,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"mapIsLoadingNewData" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshFromNewMapData" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshVenuesFromNewMapData" object:nil];
      
 }
 
@@ -102,8 +102,8 @@
 
 - (void)refreshFromNewMapData:(NSNotification *)notification {
     
-    // get the venues from the map view
-    self.venues = [self.delegate.activeVenues mutableCopy];
+    // get the venues from the notification
+    self.venues = notification.object;
 
     if (self.isViewLoaded && self.view.window) {
         // we're visible

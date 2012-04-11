@@ -42,7 +42,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(refreshFromNewMapData:) 
-                                                 name:@"refreshFromNewMapData" 
+                                                 name:@"refreshUsersFromNewMapData" 
                                                object:nil]; 
     
 }
@@ -53,7 +53,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"mapIsLoadingNewData" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshFromNewMapData" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshUsersFromNewMapData" object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -121,9 +121,7 @@
     if (self.isViewLoaded && self.view.window) {
         // and show an SVProgressHUD if we are
         [SVProgressHUD showWithStatus:@"Loading..."];
-    }
-    
-    
+    }    
 }
 
 - (void)refreshFromNewMapData:(NSNotification *)notification {
@@ -131,10 +129,11 @@
     // clear the user arrays
     [self.weeklyUsers removeAllObjects];
     [self.checkedInUsers removeAllObjects];
-       
+    
+    NSDictionary *userDict = (NSDictionary *)notification.object;
     // add the users from the map
-    for (NSString *key in self.delegate.activeUsers) {
-        [self.weeklyUsers addObject:[self.delegate.activeUsers objectForKey:key]];
+    for (NSString *key in userDict) {
+        [self.weeklyUsers addObject:[userDict objectForKey:key]];
     }
     
     if (self.isViewLoaded && self.view.window) {

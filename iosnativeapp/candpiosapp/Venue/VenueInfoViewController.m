@@ -11,6 +11,7 @@
 #import "CheckInDetailsViewController.h"
 #import "UserProfileCheckedInViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "MapDataSet.h"
 
 @interface VenueInfoViewController () <UIAlertViewDelegate>
 - (IBAction)tappedAddress:(id)sender;
@@ -69,7 +70,7 @@
 {
     [super viewDidLoad];
     
-    // Add a notification catcher for refreshFromNewMapData to refresh the view
+    // Add a notification catcher for refreshVenueAfterCheckin to refresh the view
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(refreshVenueData:) 
                                                  name:@"refreshVenueAfterCheckin" 
@@ -198,7 +199,7 @@
     self.usersShown =  [NSMutableSet set];
     
     for (NSString *userID in activeUsers) {
-        User *user = [[CPAppDelegate settingsMenuController].mapTabController.activeUsers objectForKey:userID];
+        User *user = [[CPAppDelegate settingsMenuController].mapTabController.dataset.activeUsers objectForKey:userID];
         if ([[[activeUsers objectForKey:userID] objectForKey:@"checked_in"] boolValue]) {
             [self addUser:user toArrayForJobCategory:user.majorJobCategory];
             // if the major and minor job categories differ also add this person to the minor category

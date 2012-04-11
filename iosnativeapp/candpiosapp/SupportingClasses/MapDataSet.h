@@ -14,7 +14,7 @@
 @property (nonatomic, readonly, strong) NSMutableArray *annotations;
 @property (nonatomic, strong) NSDate *dateLoaded;
 @property (nonatomic, assign) MKMapRect regionCovered;
-@property (nonatomic, strong) NSMutableDictionary *activeUsers;
+@property (nonatomic, strong) NSDictionary *activeUsers;
 
 +(void)beginLoadingNewDataset:(MKMapRect)mapRect
 				   completion:(void (^)(MapDataSet *set, NSError *error))completion;

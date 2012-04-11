@@ -81,14 +81,6 @@ static NSOperationQueue *sMapQueue = nil;
     return _annotations;
 }
 
-- (NSMutableDictionary *)activeUsers
-{
-    if (!_activeUsers) {
-        _activeUsers = [NSMutableDictionary dictionary];
-    }
-    return _activeUsers;
-}
-
 -(id)init {
     self = [super init];
     if (self) {
@@ -129,6 +121,8 @@ static NSOperationQueue *sMapQueue = nil;
         // get the users that came back and setup the activeUsers array on the Map
         
         NSArray *usersArray = [[json objectForKey:@"payload"] objectForKey:@"users"];
+        
+        NSMutableDictionary *userMutableDict = [NSMutableDictionary dictionary];
 
         if (![usersArray isKindOfClass:[NSNull class]]) {
 #if DEBUG
@@ -138,9 +132,10 @@ static NSOperationQueue *sMapQueue = nil;
                 User *user = [[User alloc] initFromDictionary:userDict];
                 
                 // add the user to the MapTabController activeUsers array
-                [self.activeUsers setObject:user forKey:[NSString stringWithFormat:@"%d", user.userID]];
+                [userMutableDict setObject:user forKey:[NSString stringWithFormat:@"%d", user.userID]];
             }
-        }       
+        } 
+        self.activeUsers = userMutableDict;
 	}
 	return self;
 }
