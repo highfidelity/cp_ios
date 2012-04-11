@@ -15,6 +15,7 @@
 @end
 @implementation MapDataSet
 @synthesize annotations = _annotations;
+@synthesize activeUsers = _activeUsers;
 @synthesize dateLoaded;
 @synthesize regionCovered;
 
@@ -80,6 +81,14 @@ static NSOperationQueue *sMapQueue = nil;
     return _annotations;
 }
 
+- (NSMutableDictionary *)activeUsers
+{
+    if (!_activeUsers) {
+        _activeUsers = [NSMutableDictionary dictionary];
+    }
+    return _activeUsers;
+}
+
 -(id)init {
     self = [super init];
     if (self) {
@@ -129,7 +138,7 @@ static NSOperationQueue *sMapQueue = nil;
                 User *user = [[User alloc] initFromDictionary:userDict];
                 
                 // add the user to the MapTabController activeUsers array
-                [[CPAppDelegate settingsMenuController].mapTabController.activeUsers setObject:user forKey:[NSString stringWithFormat:@"%d", user.userID]];
+                [self.activeUsers setObject:user forKey:[NSString stringWithFormat:@"%d", user.userID]];
             }
         }       
 	}

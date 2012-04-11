@@ -10,6 +10,7 @@
 #import "VenueCell.h"
 #import "VenueInfoViewController.h"
 #import "MapTabController.h"
+#import "MapDataSet.h"
 
 @interface VenueListTableViewController ()
 
@@ -102,9 +103,7 @@
 - (void)refreshFromNewMapData:(NSNotification *)notification {
     
     // get the venues from the map view
-    // TODO : grab this in a cleaner way (directly from dataset?)
-    // we don't really need the getVenues function do we?
-    self.venues = [[self.delegate getVenues] mutableCopy];
+    self.venues = [self.delegate.activeVenues mutableCopy];
 
     if (self.isViewLoaded && self.view.window) {
         // we're visible

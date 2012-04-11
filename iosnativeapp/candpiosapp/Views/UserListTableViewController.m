@@ -100,9 +100,6 @@
 
 - (void)filterData {
     
-    // clear the current checked in users array
-    [self.checkedInUsers removeAllObjects];
-    
     // Iterate through the passed missions and only show the ones that were within the map bounds, ordered by distance
 
     CLLocation *currentLocation = [AppDelegate instance].settings.lastKnownLocation;
@@ -131,7 +128,9 @@
 
 - (void)refreshFromNewMapData:(NSNotification *)notification {
         
+    // clear the user arrays
     [self.weeklyUsers removeAllObjects];
+    [self.checkedInUsers removeAllObjects];
        
     // add the users from the map
     for (NSString *key in self.delegate.activeUsers) {

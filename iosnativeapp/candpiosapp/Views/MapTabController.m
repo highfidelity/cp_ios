@@ -47,11 +47,21 @@
 @synthesize locationStatusKnown;
 @synthesize refreshButton;
 @synthesize activeUsers = _activeUsers;
+@synthesize activeVenues = _activeVenues;
 
 BOOL clearLocations = NO;
 
--(NSArray *)getVenues {
+// we pull activeVenues from here instead of directly from the dataset so that it's not a mutable array
+// that could allow people to modify the array in other class which may change map annotations
+-(NSArray *)activeVenues {
     return self.dataset.annotations;
+}
+
+// we pull activeUsers from here instead of directly from the dataset so that it's not a mutable dictionary
+// that makes sure the activeUsers mutableDictionary on the dataset is a clean copy from the API call
+-(NSDictionary *)activeUsers
+{
+    return self.dataset.activeUsers;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -74,15 +84,6 @@ BOOL clearLocations = NO;
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
-}
-
-# pragma mark - Overriden setters/getters
-- (NSMutableDictionary *)activeUsers
-{
-    if (!_activeUsers) {
-        _activeUsers = [NSMutableDictionary dictionary];
-    }
-    return _activeUsers;
 }
 
 #pragma mark - View lifecycle
