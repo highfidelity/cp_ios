@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <development defaultVersion="4200" identifier="xcode"/>
+        <development version="4300" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
     </dependencies>
     <scenes>
@@ -85,12 +85,50 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <view tag="401" contentMode="scaleToFill" id="6y0-BL-V0c" userLabel="Login banner">
+                                <rect key="frame" x="0.0" y="-85" width="320" height="85"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="You must be a member to use this feature." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="i1W-nG-OYb">
+                                        <rect key="frame" x="38" y="0.0" width="245" height="61"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="i5t-UY-UVC">
+                                        <rect key="frame" x="229" y="42" width="72" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" size="button"/>
+                                        <size key="titleShadowOffset" width="1" height="1"/>
+                                        <state key="normal" title="Login">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loginButtonClick:" destination="WGr-Yo-Vg9" eventType="touchUpInside" id="Iez-uS-pco"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" id="NOb-qg-Oxx">
+                                        <rect key="frame" x="0.0" y="84" width="320" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="deviceRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.1764705882" green="0.1764705882" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
                         <outlet property="checkedInOnlyButton" destination="rIh-i1-OGz" id="kd2-RO-gLa"/>
                         <outlet property="edgeShadow" destination="rBQ-Tw-WrU" id="ao2-Fv-5NN"/>
+                        <outlet property="loginBanner" destination="6y0-BL-V0c" id="zUq-H5-8Rb"/>
                         <outlet property="tableView" destination="B0T-Il-Eqh" id="QWr-pZ-Bem"/>
                         <outlet property="venueButton" destination="ijP-kc-dQD" id="S5W-5b-tDW"/>
                         <segue destination="TbW-wK-vWK" kind="modal" identifier="ShowBalanceFromMenu" modalTransitionStyle="flipHorizontal" id="nld-iM-N11"/>
@@ -673,6 +711,75 @@
         <image name="wallet-cell-arrow-down.png" width="14" height="9"/>
         <image name="wallet-lock.png" width="25" height="25"/>
     </resources>
+    <classes>
+        <class className="AddFundsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFundsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="closeWindow:"/>
+                <relationship kind="action" name="goBack:"/>
+                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="BalanceViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BalanceViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="balanceScrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="pullDownLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="pullIcon" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="transTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="updateTimeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userBalance" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="GenerateInvitationCodeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GenerateInvitationCodeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="donePressed:"/>
+                <relationship kind="outlet" name="codeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="codeLabelBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="LinkedAccountsTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedAccountsTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="gearPressed"/>
+            </relationships>
+        </class>
+        <class className="SettingsMenuController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsMenuController.h"/>
+            <relationships>
+                <relationship kind="action" name="checkedInButtonClick:" candidateClass="UIButton"/>
+                <relationship kind="action" name="loginButtonClick:"/>
+                <relationship kind="action" name="selectVenueCity:"/>
+                <relationship kind="outlet" name="checkedInOnlyButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="edgeShadow" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="loginBanner" candidateClass="UIView"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="venueButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="UserSettingsTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserSettingsTableViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="emailValidationMsg" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nicknameTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="profileImageButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="WalletCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/WalletCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="amountLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="profileImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="stateImage" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

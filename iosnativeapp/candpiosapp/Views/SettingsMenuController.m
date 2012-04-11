@@ -22,7 +22,7 @@
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanFromNavbarGestureRecognizer;
 
--(void)setMapAndButtonsViewXOffset:(CGFloat)xOffset;
+- (void)setMapAndButtonsViewXOffset:(CGFloat)xOffset;
 - (void)setCheckin:(BOOL)setCheckin;
 - (void)setVenue:(BOOL)setVenue;
 
@@ -36,6 +36,7 @@
 @synthesize frontViewController;
 @synthesize isMenuShowing;
 @synthesize edgeShadow;
+@synthesize loginBanner;
 @synthesize menuStringsArray;
 @synthesize menuSegueIdentifiersArray;
 @synthesize menuCloseGestureRecognizer;
@@ -200,6 +201,10 @@
     
     [self setVenue:[AppDelegate instance].settings.notifyInVenueOnly];
     [self setCheckin:[AppDelegate instance].settings.notifyWhenCheckedIn];
+    loginBanner.frame = CGRectMake(0.0,
+                                   -loginBanner.frame.size.height,
+                                   loginBanner.frame.size.width,
+                                   loginBanner.frame.size.height);
 }
 
 - (void)viewDidUnload
@@ -474,4 +479,17 @@
                                   ];
     [actionSheet showInView:self.view];
 }
+
+- (IBAction)loginButtonClick:(id)sender
+{
+    [UIView animateWithDuration:0.3 animations:^ {
+        loginBanner.frame = CGRectMake(0.0,
+                                       -loginBanner.frame.size.height,
+                                       loginBanner.frame.size.width,
+                                       loginBanner.frame.size.height);
+        [CPAppDelegate showSignupModalFromViewController:[CPAppDelegate tabBarController] animated:YES];
+    }];    
+    
+}
+
 @end

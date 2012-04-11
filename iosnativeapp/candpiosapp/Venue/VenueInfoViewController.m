@@ -373,8 +373,9 @@
     [thumbButton addTarget:self action:@selector(userImageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     UIImageView *userThumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, thumbnailDim, thumbnailDim)];
-    [userThumbnail setImageWithURL:user.urlPhoto placeholderImage:[CPUIHelper defaultProfileImage]];
 
+    [CPUIHelper profileImageView:userThumbnail
+             withProfileImageUrl:user.urlPhoto];
     // add a shadow to the imageview
     [CPUIHelper addShadowToView:userThumbnail color:[UIColor blackColor] offset:CGSizeMake(1, 1) radius:3 opacity:0.40];
 
@@ -484,7 +485,7 @@
             
             // label for the user name
             UILabel *userName = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, yOffset + 10, maxLabelWidth, 20)];
-            userName.text = previousUser.nickname;
+            userName.text = [CPUIHelper profileNickname: previousUser.nickname];
             [CPUIHelper changeFontForLabel:userName toLeagueGothicOfSize:18];
             userName.backgroundColor = [UIColor clearColor];
             userName.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
@@ -712,17 +713,22 @@
 
 - (IBAction)userImageButtonPressed:(id)sender
 {
-    UserProfileCheckedInViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
-    
-    UIButton *thumbnailButton = (UIButton *)sender;
-    
-    // set the user object on that view controller
-    // using the tag on the button to pull this user out of the NSMutableDictionary of user objects
-    userVC.user = [self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", thumbnailButton.tag]]; 
-    
-    // push the user profile onto this navigation controller stack
-    [self.navigationController pushViewController:userVC animated:YES];
+    if (![CPAppDelegate currentUser]) {
+        [CPAppDelegate showSignupModalFromViewController:[CPAppDelegate tabBarController]
+                                                animated:YES];
 
+    }   else {
+        UserProfileCheckedInViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+
+        UIButton *thumbnailButton = (UIButton *)sender;
+
+        // set the user object on that view controller
+        // using the tag on the button to pull this user out of the NSMutableDictionary of user objects
+        userVC.user = [self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", thumbnailButton.tag]];
+
+        // push the user profile onto this navigation controller stack
+        [self.navigationController pushViewController:userVC animated:YES];
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex

@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="crz-ik-TbX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="crz-ik-TbX">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <development defaultVersion="4200" identifier="xcode"/>
+        <development version="4300" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Navigation Controller - Log In-->
         <scene sceneID="FCd-A8-ej4">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LT5-ih-eU0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController storyboardIdentifier="SignupNavigationController" definesPresentationContext="YES" id="crz-ik-TbX" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SignupNavigationController" title="Log In" definesPresentationContext="YES" id="crz-ik-TbX" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Log In" image="wallet-lock.png" id="qLD-41-OQc"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="yYw-4d-jbg">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -42,7 +44,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="anz-G9-zjM" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="EnterInvitationCodeViewController" id="YTE-Yd-6dA" customClass="EnterInvitationCodeViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="76G-9w-bA8">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="411"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="plug-logo.png" id="MUJ-EJ-afh">
@@ -104,11 +106,11 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uHK-uN-KEj" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="SignupViewController" wantsFullScreenLayout="YES" id="shZ-UI-Hx3" customClass="SignupController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ctr-Ri-18F">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="411"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Default.png" id="fS6-99-Qmu">
-                                <rect key="frame" x="0.0" y="-20" width="320" height="480"/>
+                                <rect key="frame" x="0.0" y="-69" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                             </imageView>
                             <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="deM-fx-R9X">
@@ -160,6 +162,21 @@
                                 <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="WNY-97-ttJ">
+                                <rect key="frame" x="124" y="409" width="72" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="0.78823529410000004" green="0.78823529410000004" blue="0.78823529410000004" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="dismissClick:" destination="shZ-UI-Hx3" eventType="touchUpInside" id="mNX-9b-H6B"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -167,6 +184,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="connectWithLabel" destination="7Ad-3P-ZVh" id="y9u-0x-lmL"/>
+                        <outlet property="dismissButton" destination="WNY-97-ttJ" id="3KR-xT-XXq"/>
                         <outlet property="linkedinLoginButton" destination="zvy-bo-mbF" id="nTi-qa-AD2"/>
                         <segue destination="0fs-TN-110" kind="push" identifier="ShowLinkedInLoginController" id="Y4e-Sg-yKH"/>
                     </connections>
@@ -180,11 +198,11 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NP3-pU-1zh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="0fs-TN-110" customClass="LinkedInLoginController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qpp-4g-QP8">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" id="0aa-43-K68">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -212,6 +230,7 @@
         <image name="login-linkedin.png" width="45" height="45"/>
         <image name="login-mail.png" width="45" height="45"/>
         <image name="plug-logo.png" width="96" height="96"/>
+        <image name="wallet-lock.png" width="25" height="25"/>
     </resources>
     <classes>
         <class className="BaseLoginController" superclassName="UIViewController">
@@ -234,10 +253,12 @@
         <class className="SignupController" superclassName="BaseLoginController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupController.h"/>
             <relationships>
+                <relationship kind="action" name="dismissClick:"/>
                 <relationship kind="action" name="loginWithEmailTapped:"/>
                 <relationship kind="action" name="loginWithFacebookTapped:"/>
                 <relationship kind="action" name="loginWithLinkedInTapped:"/>
                 <relationship kind="outlet" name="connectWithLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="dismissButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="emailLoginButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="facebookLoginButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="linkedinLoginButton" candidateClass="UIButton"/>

@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIView *mapAndButtonsView;
 @property (nonatomic, readonly) NSDictionary *activeUsers;
 @property (nonatomic, readonly) NSArray *activeVenues;
+@property (nonatomic, weak) IBOutlet UIButton *revealButton;
 
 // State to prevent querying userlist (with bad region) before the map has appeared
 // Although there is a delegate method, mapViewDidFinishLoadingMap:, this is not

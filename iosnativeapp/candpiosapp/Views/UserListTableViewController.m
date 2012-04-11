@@ -225,7 +225,6 @@
         user = [self.weeklyUsers objectAtIndex:indexPath.row];
     }
    
-    cell.nicknameLabel.text = user.nickname;
 
     // reset the nickname label since this is a reusable cell
     CGRect nicknameFrameChanger = cell.nicknameLabel.frame;
@@ -255,23 +254,13 @@
 //    else {
 //        cell.checkInCountLabel.text = [NSString stringWithFormat:@"%d Checkins",annotation.checkinCount];
 //    }
-    
-    UIImageView *imageView = cell.profilePictureImageView;
-    if (user.urlPhoto) {
-        
-        imageView.contentMode = UIViewContentModeScaleAspectFill;
-        
-        [imageView setImageWithURL:user.urlPhoto
-                  placeholderImage:[CPUIHelper defaultProfileImage]];
-    }
-    else
-    {
-        imageView.image = [CPUIHelper defaultProfileImage];
-    }   
+
+    [CPUIHelper profileImageView:cell.profilePictureImageView
+             withProfileImageUrl:user.urlPhoto];
+    cell.nicknameLabel.text = [CPUIHelper profileNickname:user.nickname];
     
     return cell;
 }
-
 
 #pragma mark - Table view delegate
 
@@ -304,6 +293,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (![CPAppDelegate currentUser]) {
+        [CPAppDelegate showSignupModalFromViewController:[CPAppDelegate tabBarController] animated:YES];
+    }
+    
     User *selectedUser;
     
     if (indexPath.section == 0 && self.checkedInUsers.count > 0) {

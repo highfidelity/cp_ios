@@ -171,5 +171,30 @@
     return [UIImage imageNamed:@"default-avatar-256"];
 }
 
++ (void)profileImageView:(UIImageView *)imageView
+     withProfileImageUrl:(NSURL *)photoUrl
+{
+    if (![CPAppDelegate currentUser]) {
+        imageView.image = [UIImage imageNamed:@"loggedout-avatar-256.png"];
+    } else  {
+        if (photoUrl) {
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+            [imageView setImageWithURL:photoUrl
+                      placeholderImage:[CPUIHelper defaultProfileImage]];
+        } else {
+            imageView.image = [CPUIHelper defaultProfileImage];
+        }
+    }
+}
+
++ (NSString *)profileNickname:(NSString *)nickname {
+
+    if (![CPAppDelegate currentUser]) {
+        return @"XXXX";
+    } else  {
+        return nickname;
+    }
+}
+
 
 @end

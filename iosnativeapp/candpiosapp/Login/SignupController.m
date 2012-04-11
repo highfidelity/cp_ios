@@ -23,6 +23,7 @@
 @synthesize facebookLoginButton;
 @synthesize linkedinLoginButton;
 @synthesize emailLoginButton;
+@synthesize dismissButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -77,7 +78,11 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [CPUIHelper changeFontForLabel:self.connectWithLabel toLeagueGothicOfSize:22.0];
+    [CPUIHelper changeFontForLabel:self.connectWithLabel 
+              toLeagueGothicOfSize:22.0];
+    
+    [CPUIHelper makeButtonCPButton:self.dismissButton
+                 withCPButtonColor:CPButtonGrey];
 }
 
 - (void)viewDidUnload
@@ -86,6 +91,7 @@
     [self setLinkedinLoginButton:nil];
     [self setEmailLoginButton:nil];
     [self setConnectWithLabel:nil];
+    [self setDismissButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -252,5 +258,9 @@
 	[[NSOperationQueue mainQueue] addOperation:getMe];
 }
 
+- (IBAction) dismissClick:(id)sender
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
 
 @end

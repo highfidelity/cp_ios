@@ -6,20 +6,13 @@
 //  Copyright (c) 2011 Coffee and Power Inc. All rights reserved.
 //
 
-#import "MapTabController.h"
 #import "UIImageView+WebCache.h"
-#import "UserListTableViewController.h"
-#import "SignupController.h"
 #import "MapDataSet.h"
-#import "UserProfileCheckedInViewController.h"
-#import "UIImage+Resize.h"
 #import "MKAnnotationView+WebCache.h"
 #import "VenueInfoViewController.h"
-#import <QuartzCore/QuartzCore.h>
 
 #define qHideTopNavigationBarOnMapView			0
 #define kCheckinThresholdForSmallPin            2
-#define kMinimumDeltaForSmallPins               0.15
 
 @interface MapTabController() 
 -(void)zoomTo:(CLLocationCoordinate2D)loc;
@@ -36,7 +29,7 @@
 -(void)checkIfUserHasDismissedLocationAlert;
 @end
 
-@implementation MapTabController 
+@implementation MapTabController
 @synthesize mapView;
 @synthesize dataset;
 @synthesize reloadTimer;
@@ -48,6 +41,7 @@
 @synthesize refreshButton;
 @synthesize activeUsers = _activeUsers;
 @synthesize activeVenues = _activeVenues;
+@synthesize revealButton = _revealButton;
 
 BOOL clearLocations = NO;
 
@@ -171,6 +165,11 @@ BOOL clearLocations = NO;
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 
+    if (![CPAppDelegate currentUser]) {
+        [[self revealButton] setHidden:YES];
+    } else {
+        [[self revealButton] setHidden:NO];
+    }
     // Refresh all locations when view will re-appear after being in another area of the app; don't do it on the first launch though
     if (hasShownLoadingScreen) {
         [self refreshLocationsAfterDelay];

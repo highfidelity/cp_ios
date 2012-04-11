@@ -15,6 +15,7 @@
 @property (strong, nonatomic) MapTabController *mapTabController;
 @property (nonatomic) BOOL isMenuShowing;
 @property (weak, nonatomic) IBOutlet UIImageView *edgeShadow;
+@property (weak, nonatomic) IBOutlet UIView *loginBanner;
 
 // the following properties are used to dismiss F2F alerts that don't need to still be showing once new ones come in
 @property (nonatomic, strong) UIAlertView *f2fInviteAlert;
@@ -25,6 +26,7 @@
 
 - (IBAction)checkedInButtonClick:(UIButton *)sender;
 - (IBAction)selectVenueCity:(id)sender;
+- (IBAction)loginButtonClick:(id)sender;
 
 - (void)showMenu:(BOOL)shouldReveal;
 - (void)closeMenu;

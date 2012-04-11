@@ -19,5 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *facebookLoginButton;
 @property (weak, nonatomic) IBOutlet UIButton *linkedinLoginButton;
 @property (weak, nonatomic) IBOutlet UIButton *emailLoginButton;
+@property (weak, nonatomic) IBOutlet UIButton *dismissButton;
 
+- (IBAction) dismissClick:(id)sender;
 @end

@@ -370,6 +370,8 @@
 		E4EB150C1512877F00AC5507 /* toggle-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EB15081512877F00AC5507 /* toggle-off@2x.png */; };
 		E4EB150D1512877F00AC5507 /* toggle-on.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EB15091512877F00AC5507 /* toggle-on.png */; };
 		E4EB150E1512877F00AC5507 /* toggle-on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EB150A1512877F00AC5507 /* toggle-on@2x.png */; };
+		E4F8586A153494ED0044804C /* loggedout-avatar-256.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F85868153494ED0044804C /* loggedout-avatar-256.png */; };
+		E4F8586B153494ED0044804C /* loggedout-avatar-256@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F85869153494ED0044804C /* loggedout-avatar-256@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -938,6 +940,8 @@
 		E4EB15081512877F00AC5507 /* toggle-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toggle-off@2x.png"; sourceTree = "<group>"; };
 		E4EB15091512877F00AC5507 /* toggle-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toggle-on.png"; sourceTree = "<group>"; };
 		E4EB150A1512877F00AC5507 /* toggle-on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toggle-on@2x.png"; sourceTree = "<group>"; };
+		E4F85868153494ED0044804C /* loggedout-avatar-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "loggedout-avatar-256.png"; path = "User/images/loggedout-avatar-256.png"; sourceTree = "<group>"; };
+		E4F85869153494ED0044804C /* loggedout-avatar-256@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "loggedout-avatar-256@2x.png"; path = "User/images/loggedout-avatar-256@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1284,17 +1288,17 @@
 		536DE9271501707400794650 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				53C4BE40152CC97400A87EF0 /* UserProfileStoryboard_iPhone.storyboard */,
-				694323A715213D9000EBF585 /* mustaches */,
 				536DE929150170BB00794650 /* images */,
-				32E3CD8314C39B94001EA2AB /* UserTableViewCell.h */,
-				32E3CD8414C39B94001EA2AB /* UserTableViewCell.m */,
+				694323A715213D9000EBF585 /* mustaches */,
+				5390190314D9D9AF0052100B /* User.h */,
+				5390190414D9D9AF0052100B /* User.m */,
 				32C762F614BEB48500FE25E4 /* UserListTableViewController.h */,
 				32C762F714BEB48500FE25E4 /* UserListTableViewController.m */,
 				E4E16DA414DDEF26004E4584 /* UserProfileCheckedInViewController.h */,
 				E4E16DA414DDEF26004E4585 /* UserProfileCheckedInViewController.m */,
-				5390190314D9D9AF0052100B /* User.h */,
-				5390190414D9D9AF0052100B /* User.m */,
+				53C4BE40152CC97400A87EF0 /* UserProfileStoryboard_iPhone.storyboard */,
+				32E3CD8314C39B94001EA2AB /* UserTableViewCell.h */,
+				32E3CD8414C39B94001EA2AB /* UserTableViewCell.m */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -1302,6 +1306,8 @@
 		536DE929150170BB00794650 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				E4F85868153494ED0044804C /* loggedout-avatar-256.png */,
+				E4F85869153494ED0044804C /* loggedout-avatar-256@2x.png */,
 				53D9B138152A52E300BC1304 /* send-love-small@2x.png */,
 				7EFFADAC152543A0002DB9D0 /* send-love.png */,
 				7EFFADAD152543A0002DB9D0 /* send-love@2x.png */,
@@ -1580,11 +1586,6 @@
 		6F368D9B14F86F8900CA1A41 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				53DDB7DD152CE7AF008703D1 /* LinkedInLoginController.h */,
-				53DDB7DE152CE7AF008703D1 /* LinkedInLoginController.m */,
-				53DDB7DA152CE79F008703D1 /* SignupController.h */,
-				53DDB7DB152CE79F008703D1 /* SignupController.m */,
-				53DDB7D8152CE752008703D1 /* SignupStoryboard_iPhone.storyboard */,
 				4EBD1D3E14FEC1C700E9C0C6 /* BaseLoginController.h */,
 				4EBD1D3F14FEC1C700E9C0C6 /* BaseLoginController.m */,
 				4EBD1D4014FEC1C700E9C0C6 /* CreateLoginController.h */,
@@ -1596,6 +1597,11 @@
 				69DCDCB7152F611600317E5B /* EnterInvitationCodeViewController.h */,
 				69DCDCB8152F611600317E5B /* EnterInvitationCodeViewController.m */,
 				5350F4EE14FF06840012AC2E /* images */,
+				53DDB7DD152CE7AF008703D1 /* LinkedInLoginController.h */,
+				53DDB7DE152CE7AF008703D1 /* LinkedInLoginController.m */,
+				53DDB7DA152CE79F008703D1 /* SignupController.h */,
+				53DDB7DB152CE79F008703D1 /* SignupController.m */,
+				53DDB7D8152CE752008703D1 /* SignupStoryboard_iPhone.storyboard */,
 			);
 			name = Login;
 			path = SupportingClasses;
@@ -2345,6 +2351,8 @@
 				69D5C3571533911300B3530F /* invite-code-background@2x.png in Resources */,
 				69D5C3581533911300B3530F /* plug-logo.png in Resources */,
 				69D5C3591533911300B3530F /* plug-logo@2x.png in Resources */,
+				E4F8586A153494ED0044804C /* loggedout-avatar-256.png in Resources */,
+				E4F8586B153494ED0044804C /* loggedout-avatar-256@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

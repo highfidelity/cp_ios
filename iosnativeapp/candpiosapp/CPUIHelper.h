@@ -57,4 +57,9 @@ typedef enum {
 // App-wide Images
 + (UIImage *)defaultProfileImage;
 
++ (void)profileImageView:(UIImageView *)imageView
+     withProfileImageUrl:(NSURL *)photoUrl;
+
++ (NSString *)profileNickname:(NSString *)nickname;
+
 @end

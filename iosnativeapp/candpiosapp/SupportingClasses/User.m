@@ -216,7 +216,7 @@
 }
 
 - (BOOL)hasAnyFavoritePlaces {
-    return self.favoritePlaces.count > 0;;
+    return self.favoritePlaces.count > 0;
 }
 
 - (void)setEnteredInviteCodeFromJSONString:(NSString *)enteredInviteCodeString {

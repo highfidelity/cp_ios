@@ -81,7 +81,10 @@
 
 - (void)checkInButtonPressed:(id)sender
 {
-    if (self.userCheckedIn) {
+    if (![CPAppDelegate currentUser]) {
+        [self showSignupModalFromViewController:[self tabBarController]
+                                       animated:YES];
+    } else if (self.userCheckedIn) {
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle:@"Check Out"
                               message:@"Are you sure you want to be checked out?"
@@ -487,30 +490,17 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 -(void)logoutEverything
 {
 	// clear out the cookies
-	//NSArray *httpscookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:@"https://coffeeandpower.com"]];
-	//NSArray *httpscookies2 = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:@"https://staging.coffeeandpower.com"]];
 	NSArray *httpscookies3 = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:kCandPWebServiceUrl]];
 	
 	[httpscookies3 enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 		NSHTTPCookie *cookie = (NSHTTPCookie*)obj;
 		[[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
 	}];
-#if DEBUG
-	// check they're all gone
-	//NSArray *httpscookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:kCandPWebServiceUrl]];
-#endif
-	
-	// facebook
-//	if (facebook && [facebook isSessionValid])
-//	{
-//		[facebook logout];
-//	}
-//	settings.facebookExpirationDate = nil;
-//	settings.facebookAccessToken = nil;
 
-	// and email credentials
-	// (note that we keep the username & password)
-	SET_DEFAULTS(Object, kUDCurrentUser, nil);
+    if ([CPAppDelegate currentUser]) {
+        SET_DEFAULTS(Object, kUDCurrentUser, nil);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
+    }
 }
 
 - (void)storeUserLoginDataFromDictionary:(NSDictionary *)userInfo
@@ -540,6 +530,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     
     // store it in user defaults
     SET_DEFAULTS(Object, kUDCurrentUser, encodedUser);
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
 }
 
 - (User *)currentUser

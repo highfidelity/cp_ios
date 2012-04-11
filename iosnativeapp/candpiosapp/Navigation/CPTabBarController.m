@@ -22,12 +22,20 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self addCenterButtonWithImage:[UIImage imageNamed:@"tab-check-in.png"]];
+    [self refreshTabBar];
+
+    // Add a notification catcher for refreshFromNewMapData to refresh the view
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshTabBar)
+                                                 name:@"LoginStateChanged"
+                                               object:nil];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LoginStateChanged" object:nil];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -88,8 +96,29 @@
     
     // change the button to the check out button if required
     [CPAppDelegate refreshCheckInButton];
-    
+}
 
+- (void)refreshTabBar
+{
+    if (![CPAppDelegate currentUser]) {
+        UIStoryboard *signUpStoryboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
+        UINavigationController *signupController = [signUpStoryboard instantiateInitialViewController];
+
+        NSMutableArray *tabVCArray = [self.viewControllers mutableCopy];
+        [tabVCArray replaceObjectAtIndex:4 withObject:signupController];
+        self.viewControllers = tabVCArray;
+    } else {
+
+        [[CPAppDelegate tabBarController] setSelectedIndex:0];
+
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone"
+                                                                 bundle:nil];
+        UINavigationController *contactsController = [mainStoryboard instantiateViewControllerWithIdentifier:@"contactsNavigationController"];
+
+        NSMutableArray *tabVCArray = [self.viewControllers mutableCopy];
+        [tabVCArray replaceObjectAtIndex:4 withObject:contactsController];
+        self.viewControllers = tabVCArray;
+    }
 }
 
 @end
