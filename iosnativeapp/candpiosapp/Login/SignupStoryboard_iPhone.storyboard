@@ -232,39 +232,6 @@
         <image name="plug-logo.png" width="96" height="96"/>
         <image name="wallet-lock.png" width="25" height="25"/>
     </resources>
-    <classes>
-        <class className="BaseLoginController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BaseLoginController.h"/>
-        </class>
-        <class className="EnterInvitationCodeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EnterInvitationCodeViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="laterButtonAction:"/>
-                <relationship kind="outlet" name="codeTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="laterButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="LinkedInLoginController" superclassName="BaseLoginController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedInLoginController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="myWebView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="SignupController" superclassName="BaseLoginController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupController.h"/>
-            <relationships>
-                <relationship kind="action" name="dismissClick:"/>
-                <relationship kind="action" name="loginWithEmailTapped:"/>
-                <relationship kind="action" name="loginWithFacebookTapped:"/>
-                <relationship kind="action" name="loginWithLinkedInTapped:"/>
-                <relationship kind="outlet" name="connectWithLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dismissButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="emailLoginButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="facebookLoginButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="linkedinLoginButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

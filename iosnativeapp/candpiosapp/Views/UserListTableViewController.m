@@ -294,6 +294,7 @@
 {
     if (![CPAppDelegate currentUser]) {
         [CPAppDelegate showSignupModalFromViewController:[CPAppDelegate tabBarController] animated:YES];
+        return;
     }
     
     User *selectedUser;

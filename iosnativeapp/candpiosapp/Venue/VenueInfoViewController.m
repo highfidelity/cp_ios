@@ -628,6 +628,11 @@
 
 - (void)checkInPressed:(id)sender
 {
+    if (![CPAppDelegate currentUser]) {
+        [CPAppDelegate showSignupModalFromViewController:[CPAppDelegate tabBarController] animated:YES];
+        return;
+    }
+
     CheckInDetailsViewController *checkinVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
     checkinVC.place = self.venue;
     

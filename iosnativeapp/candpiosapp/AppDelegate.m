@@ -250,10 +250,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     application.statusBarStyle = UIStatusBarStyleBlackOpaque;
 
     [self.window makeKeyAndVisible];
-    
-    if ( ! [CPAppDelegate currentUser]) {
-        [self showSignupModalFromViewController:self.tabBarController animated:NO];
-    }
     [self syncCurrentUserWithWebAndCheckValidLogin];
     
     // let's use UIAppearance to set our styles on UINavigationBars
