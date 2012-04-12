@@ -342,6 +342,8 @@
 		E44F81AD1506E26500EA17E0 /* button-turquoise-32pt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E44F81AB1506E26500EA17E0 /* button-turquoise-32pt@2x.png */; };
 		E451C542151E907900843852 /* check-out.png in Resources */ = {isa = PBXBuildFile; fileRef = E451C540151E907900843852 /* check-out.png */; };
 		E451C543151E907900843852 /* check-out@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E451C541151E907900843852 /* check-out@2x.png */; };
+		E4693161153774730089E9B9 /* linked-in-connect.png in Resources */ = {isa = PBXBuildFile; fileRef = E469315F153774730089E9B9 /* linked-in-connect.png */; };
+		E4693162153774730089E9B9 /* linked-in-connect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4693160153774730089E9B9 /* linked-in-connect@2x.png */; };
 		E47C832B15115D0600ECE98D /* drop-down.png in Resources */ = {isa = PBXBuildFile; fileRef = E47C832915115D0600ECE98D /* drop-down.png */; };
 		E47C832C15115D0600ECE98D /* drop-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E47C832A15115D0600ECE98D /* drop-down@2x.png */; };
 		E48C32B6151A7C3600A98427 /* VenueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E48C32B5151A7C3600A98427 /* VenueCell.m */; };
@@ -908,6 +910,8 @@
 		E451C540151E907900843852 /* check-out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-out.png"; path = "CheckIn/images/check-out.png"; sourceTree = "<group>"; };
 		E451C541151E907900843852 /* check-out@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-out@2x.png"; path = "CheckIn/images/check-out@2x.png"; sourceTree = "<group>"; };
 		E456941F14FEDD8B0060A896 /* perforated-skin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "perforated-skin.png"; path = "images/perforated-skin.png"; sourceTree = "<group>"; };
+		E469315F153774730089E9B9 /* linked-in-connect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "linked-in-connect.png"; path = "candpiosapp/Login/images/linked-in-connect.png"; sourceTree = SOURCE_ROOT; };
+		E4693160153774730089E9B9 /* linked-in-connect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "linked-in-connect@2x.png"; path = "candpiosapp/Login/images/linked-in-connect@2x.png"; sourceTree = SOURCE_ROOT; };
 		E47C832915115D0600ECE98D /* drop-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "drop-down.png"; path = "Settings/images/drop-down.png"; sourceTree = "<group>"; };
 		E47C832A15115D0600ECE98D /* drop-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "drop-down@2x.png"; path = "Settings/images/drop-down@2x.png"; sourceTree = "<group>"; };
 		E48C32B4151A7C3600A98427 /* VenueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VenueCell.h; path = Venue/VenueCell.h; sourceTree = "<group>"; };
@@ -1277,6 +1281,8 @@
 		5350F4EE14FF06840012AC2E /* images */ = {
 			isa = PBXGroup;
 			children = (
+				E469315F153774730089E9B9 /* linked-in-connect.png */,
+				E4693160153774730089E9B9 /* linked-in-connect@2x.png */,
 				5365F0CC1514053E00CB12C7 /* login-facebook.png */,
 				5365F0CD1514053E00CB12C7 /* login-facebook@2x.png */,
 				5365F0CE1514053E00CB12C7 /* login-linkedin.png */,
@@ -2361,6 +2367,8 @@
 				E43CFC33153756C300A3A716 /* person-login-to-view@2x.png in Resources */,
 				E43CFC421537669900A3A716 /* tab-login.png in Resources */,
 				E43CFC431537669900A3A716 /* tab-login@2x.png in Resources */,
+				E4693161153774730089E9B9 /* linked-in-connect.png in Resources */,
+				E4693162153774730089E9B9 /* linked-in-connect@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
