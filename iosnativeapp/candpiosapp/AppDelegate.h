@@ -19,6 +19,7 @@
 @class FacebookLoginSequence;
 @class AFHTTPClient;
 @class SignupController;
+@class User;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,
                                       FBSessionDelegate>
@@ -49,5 +50,9 @@
                                               animated:(BOOL)animated;
 - (void)syncCurrentUserWithWebAndCheckValidLogin;
 
+- (void)showLoginBanner;
+- (void)hideLoginBannerWithCompletion:(void (^)(void))completion;
+
 void uncaughtExceptionHandler(NSException *exception);
 @end
+

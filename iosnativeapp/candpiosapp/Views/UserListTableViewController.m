@@ -293,7 +293,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (![CPAppDelegate currentUser]) {
-        [CPAppDelegate showSignupModalFromViewController:[CPAppDelegate tabBarController] animated:YES];
+        [CPAppDelegate showLoginBanner];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
         return;
     }
     

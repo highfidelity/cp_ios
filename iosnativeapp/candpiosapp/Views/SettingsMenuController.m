@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
+#import <CoreGraphics/CoreGraphics.h>
 #import "SettingsMenuController.h"
 #import "BalanceViewController.h"
 #import "MapTabController.h"
@@ -36,7 +37,7 @@
 @synthesize frontViewController;
 @synthesize isMenuShowing;
 @synthesize edgeShadow;
-@synthesize loginBanner;
+@synthesize loginBanner = _loginBanner;
 @synthesize menuStringsArray;
 @synthesize menuSegueIdentifiersArray;
 @synthesize menuCloseGestureRecognizer;
@@ -47,6 +48,9 @@
 @synthesize f2fPasswordAlert = _f2fPasswordAlert;
 @synthesize venueButton;
 @synthesize checkedInOnlyButton;
+@synthesize loginButton = _loginButton;
+@synthesize blockUIButton = _blockUIButton;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -201,10 +205,9 @@
     
     [self setVenue:[AppDelegate instance].settings.notifyInVenueOnly];
     [self setCheckin:[AppDelegate instance].settings.notifyWhenCheckedIn];
-    loginBanner.frame = CGRectMake(0.0,
-                                   -loginBanner.frame.size.height,
-                                   loginBanner.frame.size.width,
-                                   loginBanner.frame.size.height);
+    
+    [CPUIHelper makeButtonCPButton:self.loginButton
+                 withCPButtonColor:CPButtonTurquoise];
 }
 
 - (void)viewDidUnload
@@ -480,16 +483,18 @@
     [actionSheet showInView:self.view];
 }
 
+#pragma mark - Login banner
+- (IBAction)blockUIButtonClick:(id)sender
+{
+    [CPAppDelegate hideLoginBannerWithCompletion:nil];
+}
+
 - (IBAction)loginButtonClick:(id)sender
 {
-    [UIView animateWithDuration:0.3 animations:^ {
-        loginBanner.frame = CGRectMake(0.0,
-                                       -loginBanner.frame.size.height,
-                                       loginBanner.frame.size.width,
-                                       loginBanner.frame.size.height);
-        [CPAppDelegate showSignupModalFromViewController:[CPAppDelegate tabBarController] animated:YES];
-    }];    
-    
+    [CPAppDelegate hideLoginBannerWithCompletion:^ {
+        [CPAppDelegate showSignupModalFromViewController:[CPAppDelegate tabBarController]
+                                                animated:YES];
+    }];
 }
 
 @end

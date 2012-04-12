@@ -76,6 +76,11 @@
                                                  name:@"refreshVenueAfterCheckin" 
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(populateUserSection) 
+                                                 name:@"LoginStateChanged" 
+                                               object:nil];
+    
     // set the property on the tab bar controller for the venue we're looking at
     [CPAppDelegate tabBarController].currentVenueID = self.venue.foursquareID;
     
@@ -159,6 +164,7 @@
     [super viewDidUnload];
     [CPAppDelegate tabBarController].currentVenueID = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshVenueAfterCheckin" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LoginStateChanged" object:nil];
     // Release any retained subviews of the main view.
 }
 
@@ -629,7 +635,7 @@
 - (void)checkInPressed:(id)sender
 {
     if (![CPAppDelegate currentUser]) {
-        [CPAppDelegate showSignupModalFromViewController:[CPAppDelegate tabBarController] animated:YES];
+        [CPAppDelegate showLoginBanner];
         return;
     }
 
@@ -720,8 +726,7 @@
 - (IBAction)userImageButtonPressed:(id)sender
 {
     if (![CPAppDelegate currentUser]) {
-        [CPAppDelegate showSignupModalFromViewController:[CPAppDelegate tabBarController]
-                                                animated:YES];
+        [CPAppDelegate showLoginBanner];
 
     }   else {
         UserProfileCheckedInViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];

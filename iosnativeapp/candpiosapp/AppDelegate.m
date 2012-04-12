@@ -82,8 +82,7 @@
 - (void)checkInButtonPressed:(id)sender
 {
     if (![CPAppDelegate currentUser]) {
-        [self showSignupModalFromViewController:[self tabBarController]
-                                       animated:YES];
+        [CPAppDelegate showLoginBanner];
     } else if (self.userCheckedIn) {
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle:@"Check Out"
@@ -166,6 +165,46 @@
         }];
     }
 }
+
+- (void)showLoginBanner
+{
+    if (self.tabBarController.selectedIndex == 4) {
+        return;
+    }
+
+    self.settingsMenuController.blockUIButton.frame = CGRectMake(0.0,
+            self.settingsMenuController.loginBanner.frame.size.height,
+            self.window.frame.size.width,
+            self.window.frame.size.height);
+
+    [self.settingsMenuController.view bringSubviewToFront: self.settingsMenuController.blockUIButton];
+    [self.settingsMenuController.view bringSubviewToFront: self.settingsMenuController.loginBanner];
+
+    [UIView animateWithDuration:0.3 animations:^ {
+        self.settingsMenuController.loginBanner.frame = CGRectMake(0.0, 0.0,
+                self.settingsMenuController.loginBanner.frame.size.width,
+                self.settingsMenuController.loginBanner.frame.size.height);
+    }];
+}
+
+- (void)hideLoginBannerWithCompletion:(void (^)(void))completion
+{
+    self.settingsMenuController.blockUIButton.frame = CGRectMake(0.0, 0.0, 0.0, 0.0);
+    [self.settingsMenuController.view sendSubviewToBack:self.settingsMenuController.blockUIButton];
+
+    [UIView animateWithDuration:0.3 animations:^ {
+        self.settingsMenuController.loginBanner.frame = CGRectMake(0.0,
+                -self.settingsMenuController.loginBanner.frame.size.height,
+                self.settingsMenuController.loginBanner.frame.size.width,
+                self.settingsMenuController.loginBanner.frame.size.height);
+
+        if (completion) {
+            completion();
+        }
+    }];
+}
+
+
 
 
 #pragma mark - View Lifecycle
@@ -287,6 +326,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"header.png"] forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIFont fontWithName:@"LeagueGothic" size:22] forKey:UITextAttributeFont]];
+
+    [self hideLoginBannerWithCompletion:nil];
     
     return YES;
 }
@@ -554,7 +595,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     
     // encode the user object
     NSData *encodedUser = [NSKeyedArchiver archivedDataWithRootObject:user];
-    
+
     // store it in user defaults
     SET_DEFAULTS(Object, kUDCurrentUser, encodedUser);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];

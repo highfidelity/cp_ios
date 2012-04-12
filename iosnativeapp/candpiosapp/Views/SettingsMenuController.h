@@ -24,9 +24,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *venueButton;
 @property (weak, nonatomic) IBOutlet UIButton *checkedInOnlyButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIButton *blockUIButton;
+
 - (IBAction)checkedInButtonClick:(UIButton *)sender;
 - (IBAction)selectVenueCity:(id)sender;
 - (IBAction)loginButtonClick:(id)sender;
+- (IBAction)blockUIButtonClick:(id)sender;
 
 - (void)showMenu:(BOOL)shouldReveal;
 - (void)closeMenu;

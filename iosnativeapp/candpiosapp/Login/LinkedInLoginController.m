@@ -321,6 +321,9 @@
             [BaseLoginController pushAliasUpdate];
             
             if ([CPAppDelegate currentUser].enteredInviteCode) {
+                if ([[CPAppDelegate tabBarController] selectedIndex] == 4) {
+                    [[CPAppDelegate tabBarController] setSelectedIndex:0];
+                }
                 [self.navigationController dismissModalViewControllerAnimated:YES];
             } else {
                 [self performSegueWithIdentifier:@"EnterInvitationCodeSegue" sender:nil];

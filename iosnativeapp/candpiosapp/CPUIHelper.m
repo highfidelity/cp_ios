@@ -175,7 +175,7 @@
      withProfileImageUrl:(NSURL *)photoUrl
 {
     if (![CPAppDelegate currentUser]) {
-        imageView.image = [UIImage imageNamed:@"loggedout-avatar-256.png"];
+        imageView.image = [UIImage imageNamed:@"person-login-to-view.png"];
     } else  {
         if (photoUrl) {
             imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -190,7 +190,7 @@
 + (NSString *)profileNickname:(NSString *)nickname {
 
     if (![CPAppDelegate currentUser]) {
-        return @"XXXX";
+        return @"Name Hidden";
     } else  {
         return nickname;
     }

@@ -24,7 +24,6 @@
     [self addCenterButtonWithImage:[UIImage imageNamed:@"tab-check-in.png"]];
     [self refreshTabBar];
 
-    // Add a notification catcher for refreshFromNewMapData to refresh the view
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(refreshTabBar)
                                                  name:@"LoginStateChanged"
@@ -108,9 +107,6 @@
         [tabVCArray replaceObjectAtIndex:4 withObject:signupController];
         self.viewControllers = tabVCArray;
     } else {
-
-        [[CPAppDelegate tabBarController] setSelectedIndex:0];
-
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone"
                                                                  bundle:nil];
         UINavigationController *contactsController = [mainStoryboard instantiateViewControllerWithIdentifier:@"contactsNavigationController"];

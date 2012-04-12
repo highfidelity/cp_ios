@@ -55,6 +55,11 @@
     UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
     topLine.backgroundColor = [UIColor colorWithRed:(68.0/255.0) green:(68.0/255.0) blue:(68.0/255.0) alpha:1.0];
     [self.view addSubview:topLine];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadData)
+                                                 name:@"LoginStateChanged"
+                                               object:nil];
 }
 
 - (IBAction)closeWindow:(id)sender {
@@ -67,6 +72,7 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LoginStateChanged" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -178,6 +184,11 @@
 }
 
 #pragma mark - Table view data source
+
+- (void)reloadData
+{
+    [self.tableView reloadData];
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
