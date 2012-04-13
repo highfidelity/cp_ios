@@ -86,6 +86,10 @@
     [self.delegate refreshButtonClicked:nil];   
 }
 
+- (IBAction)revealButtonPressed:(id)sender {
+    [CPAppDelegate toggleSettingsMenu];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);

@@ -82,6 +82,10 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (IBAction)revealButtonPressed:(id)sender {
+    [CPAppDelegate toggleSettingsMenu];
+}
+
 - (NSMutableArray *)weeklyUsers
 {
     if (!_weeklyUsers) {

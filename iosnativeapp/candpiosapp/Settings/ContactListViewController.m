@@ -148,6 +148,12 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark - IBActions
+
+- (IBAction)revealButtonPressed:(id)sender {
+    [CPAppDelegate toggleSettingsMenu];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

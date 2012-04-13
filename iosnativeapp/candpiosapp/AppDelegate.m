@@ -46,6 +46,14 @@
 @synthesize window = _window;
 
 
+# pragma mark - Settings Menu
+- (void)toggleSettingsMenu
+{
+    NSLog(@"Toggle Menu"); 
+    [self.settingsMenuController showMenu: !self.settingsMenuController.isMenuShowing];
+}
+
+
 # pragma mark - Check-in/out Stuff
 
 // TODO: consolidate this with the checkedIn property on the current user in NSUserDefaults

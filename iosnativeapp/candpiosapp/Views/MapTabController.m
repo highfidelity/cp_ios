@@ -296,8 +296,7 @@ BOOL clearLocations = NO;
 }
 
 - (IBAction)revealButtonPressed:(id)sender {
-    SettingsMenuController *settingsMenuController = [AppDelegate instance].settingsMenuController;
-    [settingsMenuController showMenu: !settingsMenuController.isMenuShowing];
+    [CPAppDelegate toggleSettingsMenu];
 }
 
 - (MKUserLocation *)currentUserLocationInMapView

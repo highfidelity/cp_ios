@@ -40,6 +40,7 @@
 -(void)storeUserLoginDataFromDictionary:(NSDictionary *)userDictionary;
 -(void)saveCurrentUserToUserDefaults:(User *)user;
 -(User *)currentUser;
+- (void)toggleSettingsMenu;
 - (void)refreshCheckInButton;
 - (void)setCheckedOut;
 -(void)startCheckInClockHandAnimation;
