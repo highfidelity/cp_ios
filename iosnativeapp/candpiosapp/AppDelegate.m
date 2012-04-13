@@ -288,7 +288,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"SettingsStoryboard_iPhone" bundle:nil];
     self.settingsMenuController = (SettingsMenuController*)[mainStoryboard instantiateViewControllerWithIdentifier:@"SettingsMenu"];
     self.tabBarController = (CPTabBarController *)self.window.rootViewController;
-    self.settingsMenuController.frontViewController = self.tabBarController;
+    self.settingsMenuController.cpTabBarController = self.tabBarController;
     [settingsMenuController.view addSubview:self.tabBarController.view];
     [settingsMenuController addChildViewController:self.tabBarController];
     self.window.rootViewController = settingsMenuController;
@@ -589,8 +589,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     currUser.userID = [userId intValue];
     [currUser setEnteredInviteCodeFromJSONString:[userInfo objectForKey:@"entered_invite_code"]];
     [currUser setJoinDateFromJSONString:[userInfo objectForKey:@"join_date"]];
-    
-    NSLog(@"%d", currUser.userID);
     
     [self saveCurrentUserToUserDefaults:currUser];
 }

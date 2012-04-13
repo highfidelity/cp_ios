@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "MapTabController.h"
+#import "CPTabBarController.h"
 
 @interface SettingsMenuController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) UIViewController *frontViewController;
+@property (strong, nonatomic) CPTabBarController *cpTabBarController;
 @property (strong, nonatomic) MapTabController *mapTabController;
 @property (nonatomic) BOOL isMenuShowing;
 @property (weak, nonatomic) IBOutlet UIImageView *edgeShadow;

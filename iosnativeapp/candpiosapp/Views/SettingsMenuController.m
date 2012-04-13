@@ -14,7 +14,7 @@
 #define menuWidthPercentage 0.8
 #define kEnterInviteFakeSegueID @"--kEnterInviteFakeSegueID"
 
-@interface SettingsMenuController() 
+@interface SettingsMenuController() <UITabBarControllerDelegate>
 
 @property (nonatomic, retain) NSArray *menuStringsArray;
 @property (nonatomic, retain) NSArray *menuSegueIdentifiersArray;
@@ -22,6 +22,9 @@
 @property (strong, nonatomic) UITapGestureRecognizer *menuCloseGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanFromNavbarGestureRecognizer;
+@property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanFromTabbarGestureRecognizer;
+@property (strong, nonatomic) UITapGestureRecognizer *menuCloseTapFromTabbarGestureRecognizer;
+
 
 - (void)setMapAndButtonsViewXOffset:(CGFloat)xOffset;
 - (void)setCheckin:(BOOL)setCheckin;
@@ -34,7 +37,7 @@
 
 @synthesize mapTabController;
 @synthesize tableView;
-@synthesize frontViewController;
+@synthesize cpTabBarController;
 @synthesize isMenuShowing;
 @synthesize edgeShadow;
 @synthesize loginBanner = _loginBanner;
@@ -43,6 +46,8 @@
 @synthesize menuCloseGestureRecognizer;
 @synthesize menuClosePanGestureRecognizer;
 @synthesize menuClosePanFromNavbarGestureRecognizer;
+@synthesize menuClosePanFromTabbarGestureRecognizer;
+@synthesize menuCloseTapFromTabbarGestureRecognizer;
 @synthesize panStartLocation;
 @synthesize f2fInviteAlert = _f2fInviteAlert;
 @synthesize f2fPasswordAlert = _f2fPasswordAlert;
@@ -267,7 +272,7 @@
 }
 
 - (void)setMapAndButtonsViewXOffset:(CGFloat)xOffset {
-    self.frontViewController.view.frame = CGRectOffset(self.view.bounds, xOffset, 0);
+    self.cpTabBarController.view.frame = CGRectOffset(self.view.bounds, xOffset, 0);
     self.edgeShadow.frame = CGRectOffset(self.edgeShadow.bounds, xOffset - self.edgeShadow.frame.size.width, 0);
 }
 
@@ -286,40 +291,91 @@
     [UIView setAnimationDuration:0.3];
     
     float shift = menuWidthPercentage * [UIScreen mainScreen].bounds.size.width;
-    MKMapView* mapView = (MKMapView*)[self.frontViewController.view viewWithTag:mapTag];
+    
+    int touchViewTag = 3040;
+    
+    UINavigationController *visibleNC = (UINavigationController *)self.cpTabBarController.selectedViewController;
+    UIViewController *visibleVC = visibleNC.visibleViewController; 
+    
+    // make sure we have a touchView layer
+    UIView *touchView = [visibleVC.view viewWithTag:touchViewTag];
+    
+    if (!touchView) {
+        // place an invisible view over the VC's view to handle touch
+        CGRect touchFrame = CGRectMake(0, 0, visibleVC.view.frame.size.width, visibleVC.view.frame.size.height);
+        touchView = [[UIView alloc] initWithFrame:touchFrame];
+        touchView.tag = touchViewTag;
+        [visibleVC.view addSubview:touchView];        
+    }   
+    
+    // make sure we have a tabTouch layer over the tabBar
+    UIView *tabTouch = [self.cpTabBarController.tabBar viewWithTag:touchViewTag];
+    
+    if (!tabTouch) {
+        // place an invisible view over the tab bar to handle tap
+        CGRect tabFrame = CGRectMake(0, 0, self.cpTabBarController.tabBar.frame.size.width, self.cpTabBarController.tabBar.frame.size.height);
+        tabTouch = [[UIView alloc] initWithFrame:tabFrame];
+        tabTouch.tag = touchViewTag;
+        [self.cpTabBarController.tabBar addSubview:tabTouch];
+    }
+   
     if (showMenu) {
+        
         // shift to the right, hiding buttons 
         [self setMapAndButtonsViewXOffset:shift];
         
-        mapView.scrollEnabled = NO;
         if (!self.menuCloseGestureRecognizer) {
             // Tap to close gesture recognizer
             self.menuCloseGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeMenu)];
             self.menuCloseGestureRecognizer.numberOfTapsRequired = 1;
-            [mapView addGestureRecognizer:self.menuCloseGestureRecognizer];
+            self.menuCloseGestureRecognizer.cancelsTouchesInView = YES;
+            [touchView addGestureRecognizer:self.menuCloseGestureRecognizer];
         }
         if (!self.menuClosePanGestureRecognizer) { 
             // Pan to close gesture recognizer
             self.menuClosePanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(menuClosePan:)];
-            [mapView addGestureRecognizer:self.menuClosePanGestureRecognizer];
+            [touchView addGestureRecognizer:self.menuClosePanGestureRecognizer];
         }
         if (!self.menuClosePanFromNavbarGestureRecognizer) { 
             // Pan to close from navbar
             self.menuClosePanFromNavbarGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(menuClosePan:)];
-            [self.mapTabController.navigationController.navigationBar addGestureRecognizer:menuClosePanFromNavbarGestureRecognizer];            
+            [visibleVC.navigationController.navigationBar addGestureRecognizer:menuClosePanFromNavbarGestureRecognizer];            
+        }
+        if (!self.menuClosePanFromTabbarGestureRecognizer) {
+            // Pan to close from tab bar
+            self.menuClosePanFromTabbarGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(menuClosePan:)];
+            [tabTouch addGestureRecognizer:menuClosePanFromTabbarGestureRecognizer];  
+        }
+        if (!self.menuCloseTapFromTabbarGestureRecognizer) {
+            // Tap to close from tab bar
+            self.menuCloseTapFromTabbarGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeMenu)];
+            [tabTouch addGestureRecognizer:menuCloseTapFromTabbarGestureRecognizer];
         }
     } else {
         // shift to the left, restoring the buttons
         [self setMapAndButtonsViewXOffset:0];
-
-        mapView.scrollEnabled = YES;                                   
+                                   
         // remove gesture recognizers
-        [mapView removeGestureRecognizer:self.menuCloseGestureRecognizer];
+        [touchView removeGestureRecognizer:self.menuCloseGestureRecognizer];
         self.menuCloseGestureRecognizer = nil;
-        [mapView removeGestureRecognizer:self.menuClosePanGestureRecognizer];
+        [touchView removeGestureRecognizer:self.menuClosePanGestureRecognizer];
         self.menuClosePanGestureRecognizer = nil;
-        [self.mapTabController.navigationController.navigationBar removeGestureRecognizer:self.menuClosePanFromNavbarGestureRecognizer];
+        
+        // remove the touch view from the VC
+        [touchView removeFromSuperview];
+        
+        [visibleVC.navigationController.navigationBar removeGestureRecognizer:self.menuClosePanFromNavbarGestureRecognizer];
         self.menuClosePanFromNavbarGestureRecognizer = nil;
+        
+        [tabTouch removeGestureRecognizer:self.menuClosePanFromTabbarGestureRecognizer];
+        self.menuClosePanFromTabbarGestureRecognizer = nil; 
+        
+        [tabTouch removeGestureRecognizer:self.menuCloseTapFromTabbarGestureRecognizer];
+        self.menuCloseTapFromTabbarGestureRecognizer = nil; 
+        
+        // remove the tab touch view from the tab bar
+        [tabTouch removeFromSuperview];
+        
     }
     [UIView commitAnimations];
     isMenuShowing = showMenu ? 1 : 0;
