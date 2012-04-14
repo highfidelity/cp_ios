@@ -70,28 +70,10 @@
                     <tabBarItem key="tabBarItem" title="Map" image="tab-map.png" id="nqB-5e-TMy"/>
                     <navigationItem key="navigationItem" id="mZs-pB-Rfc">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" id="c53-dn-qaF">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cLp-wO-yWX">
-                                <rect key="frame" x="5" y="7" width="42" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="settings-button-3.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="revealButtonPressed:" destination="1pt-yI-hCV" eventType="touchUpInside" id="2lk-WR-kgz"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="fm6-PX-4Yv" id="Dvs-wL-oEc"/>
                         <outlet property="refreshButton" destination="Gp4-X8-S05" id="aco-wZ-Y3B"/>
-                        <outlet property="revealButton" destination="cLp-wO-yWX" id="jf1-g4-8W0"/>
                     </connections>
                 </viewController>
             </objects>
@@ -172,26 +154,7 @@
                             <outlet property="delegate" destination="qhQ-fU-mds" id="lOU-Jx-NZ0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Places" id="5Mv-wG-Tqt">
-                        <barButtonItem key="leftBarButtonItem" id="JFM-jy-6du">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="H5R-DB-m7q">
-                                <rect key="frame" x="5" y="7" width="42" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="settings-button-3.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="revealButtonPressed:" destination="qhQ-fU-mds" eventType="touchUpInside" id="cJH-VE-E5n"/>
-                                    <action selector="revealButtonPressed:" destination="1pt-yI-hCV" eventType="touchUpInside" id="cbz-cg-hGe"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Places" id="5Mv-wG-Tqt"/>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="-272" y="-492"/>
@@ -359,26 +322,7 @@
                             <outlet property="delegate" destination="g7S-Vu-b9I" id="2BM-vX-e1Z"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="People" id="9lv-b0-9v0">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="CP3-tT-3H4">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="uAq-rx-6u4">
-                                <rect key="frame" x="5" y="7" width="42" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="settings-button-3.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="revealButtonPressed:" destination="g7S-Vu-b9I" eventType="touchUpInside" id="FCh-1x-HQc"/>
-                                    <action selector="revealButtonPressed:" destination="1pt-yI-hCV" eventType="touchUpInside" id="scn-0d-LzV"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="People" id="9lv-b0-9v0"/>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="-264" y="96"/>
@@ -476,26 +420,7 @@
                             </tableViewCell>
                         </prototypes>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Contact list" id="Bzk-ce-tPT">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="poK-xt-QIq">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xGb-eb-ziC">
-                                <rect key="frame" x="5" y="7" width="42" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="settings-button-3.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="revealButtonPressed:" destination="v81-7I-y3p" eventType="touchUpInside" id="xGi-wU-mwh"/>
-                                    <action selector="revealButtonPressed:" destination="1pt-yI-hCV" eventType="touchUpInside" id="xnr-gH-u1w"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Contact list" id="Bzk-ce-tPT"/>
                     <connections>
                         <outlet property="searchBar" destination="Nwo-wJ-9Mq" id="X7G-ZJ-yC9"/>
                     </connections>
@@ -528,7 +453,6 @@
         <image name="map-refresh.png" width="40" height="41"/>
         <image name="map-shadow.png" width="10" height="320"/>
         <image name="picture-coming-soon.jpg" width="100" height="100"/>
-        <image name="settings-button-3.png" width="42" height="29"/>
         <image name="tab-contacts.png" width="56" height="51"/>
         <image name="tab-map.png" width="56" height="51"/>
         <image name="tab-people.png" width="56" height="51"/>

@@ -49,7 +49,6 @@
 # pragma mark - Settings Menu
 - (void)toggleSettingsMenu
 {
-    NSLog(@"Toggle Menu"); 
     [self.settingsMenuController showMenu: !self.settingsMenuController.isMenuShowing];
 }
 

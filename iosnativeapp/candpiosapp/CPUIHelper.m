@@ -196,5 +196,34 @@
     }
 }
 
+# pragma mark - Settings Button Setup
+
++ (void)settingsButtonForNavigationItem:(UINavigationItem *)navigationItem
+{
+    if ([CPAppDelegate currentUser]) {
+        // we have a current user so we need a button
+        // but only if we don't have it
+        if (!navigationItem.leftBarButtonItem) {
+            // setup the settings button
+            UIImage *settingsImage = [UIImage imageNamed:@"settings-button-3.png"];
+            UIButton *settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [settingsButton setImage:settingsImage forState:UIControlStateNormal];
+            
+            // set the target
+            [settingsButton addTarget:CPAppDelegate action:@selector(toggleSettingsMenu) forControlEvents:UIControlEventTouchUpInside];
+            
+            CGSize settingsImageSize = settingsImage.size;
+            settingsButton.frame = CGRectMake(0, 0, settingsImageSize.width, settingsImageSize.height);
+            
+            // setup a bar button item with the UIButton
+            UIBarButtonItem *settingsBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:settingsButton];  
+            
+            // put the bar button item on the navigation controller
+            navigationItem.leftBarButtonItem = settingsBarButtonItem;
+        }
+    } else {
+        navigationItem.leftBarButtonItem = nil;
+    }
+}
 
 @end

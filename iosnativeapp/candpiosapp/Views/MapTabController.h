@@ -22,7 +22,6 @@
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
 @property (nonatomic, readonly, strong) MapDataSet *dataset;
 @property (weak, nonatomic) IBOutlet UIView *mapAndButtonsView;
-@property (nonatomic, weak) IBOutlet UIButton *revealButton;
 
 // State to prevent querying userlist (with bad region) before the map has appeared
 // Although there is a delegate method, mapViewDidFinishLoadingMap:, this is not
@@ -34,7 +33,6 @@
 - (void)refreshLocationsAfterDelay;
 - (IBAction)refreshButtonClicked:(id)sender;
 - (IBAction)locateMe:(id)sender;
-- (IBAction)revealButtonPressed:(id)sender;
 - (void)loginButtonTapped;
 - (void)logoutButtonTapped;
 

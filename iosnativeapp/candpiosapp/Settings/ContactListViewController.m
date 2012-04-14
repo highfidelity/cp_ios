@@ -102,6 +102,15 @@
     // e.g. self.myOutlet = nil;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // place the settings button on the navigation item if required
+    // or remove it if the user isn't logged in
+    [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -146,12 +155,6 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-#pragma mark - IBActions
-
-- (IBAction)revealButtonPressed:(id)sender {
-    [CPAppDelegate toggleSettingsMenu];
 }
 
 #pragma mark - Table view data source

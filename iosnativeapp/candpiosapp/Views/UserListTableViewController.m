@@ -56,6 +56,14 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshUsersFromNewMapData" object:nil];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    // place the settings button on the navigation item if required
+    // or remove it if the user isn't logged in
+    [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -80,10 +88,6 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (IBAction)revealButtonPressed:(id)sender {
-    [CPAppDelegate toggleSettingsMenu];
 }
 
 - (NSMutableArray *)weeklyUsers

@@ -21,7 +21,7 @@ typedef enum {
 
 @interface CPUIHelper : NSObject
 
-// UI elements
+# pragma mark - UI Elements
 + (void)addShadowToView:(UIView *)view
                   color:(UIColor *)color
                  offset:(CGSize)offset
@@ -34,15 +34,15 @@ typedef enum {
 
 + (UIButton *)makeButtonCPButton:(UIButton *)button withCPButtonColor:(CPButtonColor)buttonColor;
 
-// C&P Color scheme
+# pragma mark - Color schemes
 + (UIColor *)colorForCPColor:(CPColor)cpColor;
 + (UIImage *)imageForCPColor:(CPButtonColor)buttonColor;
 
-// Font changes (League Gothic)
+# pragma mark - League Gothic Helper
 + (void)changeFontForLabel:(UILabel *)label toLeagueGothicOfSize:(CGFloat)size;
 + (void)changeFontForTextField:(UITextField *)textField toLeagueGothicOfSize:(CGFloat)size;
 
-// Animations
+#pragma mark - Animations
 + (void)rotateImage:(UIImageView *)image
            duration:(NSTimeInterval)duration
               curve:(int)curve 
@@ -54,12 +54,15 @@ typedef enum {
     clockwise:(BOOL)clockwise
  timingFunction:(CAMediaTimingFunction *)timingFunction;
 
-// App-wide Images
+#pragma mark - App-wide images
 + (UIImage *)defaultProfileImage;
 
 + (void)profileImageView:(UIImageView *)imageView
      withProfileImageUrl:(NSURL *)photoUrl;
 
 + (NSString *)profileNickname:(NSString *)nickname;
+
+# pragma mark - Settings Button
++ (void)settingsButtonForNavigationItem:(UINavigationItem *)navigationItem;
 
 @end

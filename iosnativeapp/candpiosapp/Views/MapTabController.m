@@ -39,7 +39,6 @@
 @synthesize locationAllowTimer;
 @synthesize locationStatusKnown;
 @synthesize refreshButton;
-@synthesize revealButton = _revealButton;
 
 BOOL clearLocations = NO;
 
@@ -150,12 +149,12 @@ BOOL clearLocations = NO;
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 
-    if (![CPAppDelegate currentUser]) {
-        [[self revealButton] setHidden:YES];
-    } else {
-        [[self revealButton] setHidden:NO];
-    }
+    // place the settings button on the navigation item if required
+    // or remove it if the user isn't logged in
+    [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
+    
     // Refresh all locations when view will re-appear after being in another area of the app; don't do it on the first launch though
+    
     if (hasShownLoadingScreen) {
         [self refreshLocationsAfterDelay];
     }
@@ -293,10 +292,6 @@ BOOL clearLocations = NO;
         // we have a location ... zoom to it
         [self zoomTo: [[mapView userLocation] coordinate]];
     }    
-}
-
-- (IBAction)revealButtonPressed:(id)sender {
-    [CPAppDelegate toggleSettingsMenu];
 }
 
 - (MKUserLocation *)currentUserLocationInMapView

@@ -72,6 +72,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    // place the settings button on the navigation item if required
+    // or remove it if the user isn't logged in
+    [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
+    
     // reload the table
     [self.tableView reloadData];
 }
@@ -84,10 +89,6 @@
     // tell the map to reload data
     // we'll get a notification when that's done to reload ours
     [self.delegate refreshButtonClicked:nil];   
-}
-
-- (IBAction)revealButtonPressed:(id)sender {
-    [CPAppDelegate toggleSettingsMenu];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
