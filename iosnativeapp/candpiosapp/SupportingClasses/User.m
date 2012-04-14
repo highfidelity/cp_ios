@@ -305,7 +305,7 @@
             // TODO: the information for this place has likely already been downloaded to the user's device
             // We shouldn't need to make another request to get it here
             self.placeCheckedIn = [[CPPlace alloc] init];
-            self.placeCheckedIn.foursquareID = [userDict valueForKeyPath:@"checkin_data.foursquare"];
+            self.placeCheckedIn.foursquareID = [userDict valueForKeyPath:@"checkin_data.foursquare_id"];
             self.placeCheckedIn.checkinCount = [[userDict valueForKeyPath:@"checkin_data.users_here"] intValue];
             self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict valueForKeyPath:@"checkin_data.checkout"] intValue]]; 
             
