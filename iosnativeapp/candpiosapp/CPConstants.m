@@ -27,7 +27,7 @@
 
 #else
 
-    NSString* const kCandPWebServiceUrl = @"https://staging.coffeeandpower.com/";
+    NSString* const kCandPWebServiceUrl = @"https://staging.candp.me/";
 
     NSString* const kCandPAddFundsUrl = @"http://staging.coffeeandpower.com/m/?ios#addFundsiPhone";
     NSString* const kFacebookAppId = @"131753840249704";

@@ -277,7 +277,7 @@
         // hide the SVProgressHUD
         [SVProgressHUD dismiss];
         if (!error) {
-            if ([[json objectForKey:@"response"] intValue] == 1) {
+            if (![[json objectForKey:@"error"] boolValue]) {
                 
                 // Fire a notification 5 minutes before checkout time
                 NSInteger minutesBefore = 5;
@@ -323,6 +323,8 @@
                 }                
             }
             else {
+                // there's an error either becuase the user wasn't checked in or we didn't pass a foursquare ID
+                // we obviously passed a foursquare ID if we're in the app so the user isn't actually logged in
                 // show an alertView if the user isn't checked in
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You must be logged in to C&P in order to check in." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Okay", nil];
                 [alertView show];
