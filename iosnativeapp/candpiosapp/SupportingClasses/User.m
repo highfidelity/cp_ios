@@ -120,7 +120,7 @@
     [encoder encodeObject:self.urlPhoto forKey:@"urlPhoto"];
     [encoder encodeBool:self.enteredInviteCode forKey:@"enteredInviteCode"];
     [encoder encodeObject:self.joinDate forKey:@"joinDate"];
-    
+
 }
 
 // override nickname setter to decode html entities
@@ -260,7 +260,10 @@
             self.nickname = [userDict objectForKey:@"nickname"];
             NSString *status = [[userDict objectForKey:@"status_text"]
                                 stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-            
+
+            self.majorJobCategory = [userDict objectForKey:@"major_job_category"];
+            self.minorJobCategory = [userDict objectForKey:@"minor_job_category"];
+
             self.status = status;
             self.bio = [userDict objectForKey:@"bio"];
             

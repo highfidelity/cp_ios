@@ -7,7 +7,7 @@
 //
 
 #import "UserSettingsTableViewController.h"
-#import "SignupController.h"
+#import "JobCategoryViewController.h"
 
 #define tableCellSubviewTag 7909
 #define spinnerTag  7910
@@ -144,7 +144,7 @@
         if (!error) {
             // TODO: make this a better solution by checking for a problem with the PHP session cookie in CPApi
             // for now if the email comes back null this person isn't logged in so we're going to send them to do that.
-            if ([webSyncUser.email isKindOfClass:[NSNull class]]) {
+            if ([webSyncUser.email isKindOfClass:[NSNull class]] || [webSyncUser.email length] == 0) {
                 [SVProgressHUD dismiss];
                 
                 NSString *message = @"There was a problem getting your data!\nPlease logout and login again.";
@@ -192,6 +192,14 @@
                 if (self.currentUser.enteredInviteCode != webSyncUser.enteredInviteCode) {
                     self.currentUser.enteredInviteCode = webSyncUser.enteredInviteCode;
                     self.newDataFromSync = YES;
+                }
+
+                if (self.currentUser.majorJobCategory != webSyncUser.majorJobCategory) {
+                    self.currentUser.majorJobCategory = webSyncUser.majorJobCategory;
+                }
+
+                if (self.currentUser.minorJobCategory != webSyncUser.minorJobCategory) {
+                    self.currentUser.minorJobCategory = webSyncUser.minorJobCategory;
                 }
                 
                 // if the sync brought us new data
@@ -273,15 +281,13 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    if (indexPath.row == 3) {
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.textLabel.text = @"Job Category";
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
+    }
 }
 
 #pragma mark - Spinner for Table Cells
@@ -498,6 +504,14 @@
     }else {
         self.emailValidationMsg.text = @"";
     }   
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"SettingsToJobCategoriesSegue"])
+    {
+        [[segue destinationViewController] setUser:self.currentUser];
+    }
 }
 
 @end

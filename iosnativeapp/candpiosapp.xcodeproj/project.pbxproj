@@ -333,6 +333,7 @@
 		87F657F514B0D2D100F4AB6C /* 63-runner.png in Resources */ = {isa = PBXBuildFile; fileRef = 87F657F414B0D2D100F4AB6C /* 63-runner.png */; };
 		E402DB6314D43C1700BC82E8 /* defaultAvatar50.png in Resources */ = {isa = PBXBuildFile; fileRef = E402DB6214D43C1700BC82E8 /* defaultAvatar50.png */; };
 		E402DB6614D43C2B00BC82E8 /* pin-frame.png in Resources */ = {isa = PBXBuildFile; fileRef = E402DB6514D43C2B00BC82E8 /* pin-frame.png */; };
+		E41080711539AB2200D7EAA8 /* JobCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E41080701539AB2200D7EAA8 /* JobCategoryViewController.m */; };
 		E433C0A51500522D009B819D /* perforated-skin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E433C0A41500522D009B819D /* perforated-skin@2x.png */; };
 		E43CFC32153756C300A3A716 /* person-login-to-view.png in Resources */ = {isa = PBXBuildFile; fileRef = E43CFC30153756C300A3A716 /* person-login-to-view.png */; };
 		E43CFC33153756C300A3A716 /* person-login-to-view@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E43CFC31153756C300A3A716 /* person-login-to-view@2x.png */; };
@@ -364,6 +365,11 @@
 		E4E05CFB153794BC00A0E719 /* plug-logo-bigger.png in Resources */ = {isa = PBXBuildFile; fileRef = E4E05CF9153794BC00A0E719 /* plug-logo-bigger.png */; };
 		E4E05CFC153794BC00A0E719 /* plug-logo-bigger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4E05CFA153794BC00A0E719 /* plug-logo-bigger@2x.png */; };
 		E4E16DA414DDEF26004E4586 /* UserProfileCheckedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E16DA414DDEF26004E4585 /* UserProfileCheckedInViewController.m */; };
+		E4E74E03153B08710022F403 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E74DFA153B08710022F403 /* AbstractActionSheetPicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E4E74E04153B08710022F403 /* ActionSheetDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E74DFC153B08710022F403 /* ActionSheetDatePicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E4E74E05153B08710022F403 /* ActionSheetDistancePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E74DFE153B08710022F403 /* ActionSheetDistancePicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E4E74E06153B08710022F403 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E74E00153B08710022F403 /* ActionSheetStringPicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E4E74E07153B08710022F403 /* DistancePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E74E02153B08710022F403 /* DistancePickerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E4EAFBB91502CD880052448B /* wallet-lock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EAFBB71502CD880052448B /* wallet-lock@2x.png */; };
 		E4EAFBBA1502CD880052448B /* wallet-lock.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EAFBB81502CD880052448B /* wallet-lock.png */; };
 		E4EAFBC1150368380052448B /* wallet-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EAFBC0150368380052448B /* wallet-arrow.png */; };
@@ -902,6 +908,8 @@
 		87F657F414B0D2D100F4AB6C /* 63-runner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "63-runner.png"; sourceTree = "<group>"; };
 		E402DB6214D43C1700BC82E8 /* defaultAvatar50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultAvatar50.png; sourceTree = "<group>"; };
 		E402DB6514D43C2B00BC82E8 /* pin-frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pin-frame.png"; path = "images/pin-frame.png"; sourceTree = "<group>"; };
+		E410806F1539AB2200D7EAA8 /* JobCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JobCategoryViewController.h; path = Settings/JobCategoryViewController.h; sourceTree = "<group>"; };
+		E41080701539AB2200D7EAA8 /* JobCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JobCategoryViewController.m; path = Settings/JobCategoryViewController.m; sourceTree = "<group>"; };
 		E433C0A41500522D009B819D /* perforated-skin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "perforated-skin@2x.png"; path = "images/perforated-skin@2x.png"; sourceTree = "<group>"; };
 		E43CFC30153756C300A3A716 /* person-login-to-view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "person-login-to-view.png"; path = "User/images/person-login-to-view.png"; sourceTree = "<group>"; };
 		E43CFC31153756C300A3A716 /* person-login-to-view@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "person-login-to-view@2x.png"; path = "User/images/person-login-to-view@2x.png"; sourceTree = "<group>"; };
@@ -939,6 +947,16 @@
 		E4E05CFA153794BC00A0E719 /* plug-logo-bigger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "plug-logo-bigger@2x.png"; path = "candpiosapp/Login/images/plug-logo-bigger@2x.png"; sourceTree = SOURCE_ROOT; };
 		E4E16DA414DDEF26004E4584 /* UserProfileCheckedInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileCheckedInViewController.h; path = Views/UserProfileCheckedInViewController.h; sourceTree = "<group>"; };
 		E4E16DA414DDEF26004E4585 /* UserProfileCheckedInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfileCheckedInViewController.m; path = Views/UserProfileCheckedInViewController.m; sourceTree = "<group>"; };
+		E4E74DF9153B08710022F403 /* AbstractActionSheetPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractActionSheetPicker.h; sourceTree = "<group>"; };
+		E4E74DFA153B08710022F403 /* AbstractActionSheetPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractActionSheetPicker.m; sourceTree = "<group>"; };
+		E4E74DFB153B08710022F403 /* ActionSheetDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetDatePicker.h; sourceTree = "<group>"; };
+		E4E74DFC153B08710022F403 /* ActionSheetDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetDatePicker.m; sourceTree = "<group>"; };
+		E4E74DFD153B08710022F403 /* ActionSheetDistancePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetDistancePicker.h; sourceTree = "<group>"; };
+		E4E74DFE153B08710022F403 /* ActionSheetDistancePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetDistancePicker.m; sourceTree = "<group>"; };
+		E4E74DFF153B08710022F403 /* ActionSheetStringPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetStringPicker.h; sourceTree = "<group>"; };
+		E4E74E00153B08710022F403 /* ActionSheetStringPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetStringPicker.m; sourceTree = "<group>"; };
+		E4E74E01153B08710022F403 /* DistancePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistancePickerView.h; sourceTree = "<group>"; };
+		E4E74E02153B08710022F403 /* DistancePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistancePickerView.m; sourceTree = "<group>"; };
 		E4EAFBB71502CD880052448B /* wallet-lock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wallet-lock@2x.png"; path = "images/wallet-lock@2x.png"; sourceTree = "<group>"; };
 		E4EAFBB81502CD880052448B /* wallet-lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wallet-lock.png"; path = "images/wallet-lock.png"; sourceTree = "<group>"; };
 		E4EAFBC0150368380052448B /* wallet-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wallet-arrow.png"; path = "images/wallet-arrow.png"; sourceTree = "<group>"; };
@@ -1494,6 +1512,8 @@
 				5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */,
 				53FE2550150EAC6B00A0D93A /* UserSettingsTableViewController.h */,
 				53FE2551150EAC6B00A0D93A /* UserSettingsTableViewController.m */,
+				E410806F1539AB2200D7EAA8 /* JobCategoryViewController.h */,
+				E41080701539AB2200D7EAA8 /* JobCategoryViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1820,6 +1840,7 @@
 				5386AFF1152A2A75008CD4BD /* GRMustache */,
 				532524C614F852F60089F8EA /* NSString+HTML */,
 				3222123E14E1E17B00C5471B /* OAuthConsumerARC */,
+				E4E74DF8153B08710022F403 /* Pickers */,
 				871EFB7A14AF97130030658B /* SBJson */,
 				87F657D414B0D0C800F4AB6C /* SDWebImage */,
 				32B9976514E37B6400713B6E /* SSKeychain */,
@@ -2078,6 +2099,23 @@
 				E4EAFBDD1505467C0052448B /* WalletCell.m */,
 			);
 			name = Payment;
+			sourceTree = "<group>";
+		};
+		E4E74DF8153B08710022F403 /* Pickers */ = {
+			isa = PBXGroup;
+			children = (
+				E4E74DF9153B08710022F403 /* AbstractActionSheetPicker.h */,
+				E4E74DFA153B08710022F403 /* AbstractActionSheetPicker.m */,
+				E4E74DFB153B08710022F403 /* ActionSheetDatePicker.h */,
+				E4E74DFC153B08710022F403 /* ActionSheetDatePicker.m */,
+				E4E74DFD153B08710022F403 /* ActionSheetDistancePicker.h */,
+				E4E74DFE153B08710022F403 /* ActionSheetDistancePicker.m */,
+				E4E74DFF153B08710022F403 /* ActionSheetStringPicker.h */,
+				E4E74E00153B08710022F403 /* ActionSheetStringPicker.m */,
+				E4E74E01153B08710022F403 /* DistancePickerView.h */,
+				E4E74E02153B08710022F403 /* DistancePickerView.m */,
+			);
+			path = Pickers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2532,6 +2570,12 @@
 				69A621D7152DBC87008D24EE /* GenerateInvitationCodeViewController.m in Sources */,
 				69DCDCB9152F611600317E5B /* EnterInvitationCodeViewController.m in Sources */,
 				53463F5115336EA5001CA16D /* UIViewController+isModal.m in Sources */,
+				E41080711539AB2200D7EAA8 /* JobCategoryViewController.m in Sources */,
+				E4E74E03153B08710022F403 /* AbstractActionSheetPicker.m in Sources */,
+				E4E74E04153B08710022F403 /* ActionSheetDatePicker.m in Sources */,
+				E4E74E05153B08710022F403 /* ActionSheetDistancePicker.m in Sources */,
+				E4E74E06153B08710022F403 /* ActionSheetStringPicker.m in Sources */,
+				E4E74E07153B08710022F403 /* DistancePickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

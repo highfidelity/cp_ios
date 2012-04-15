@@ -92,4 +92,6 @@
 + (void)uploadUserProfilePhoto:(UIImage *)image 
                 withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
++ (void)saveUserMajorJobCategory:(NSString *)majorJobCategory
+             andMinorJobCategory:(NSString *)minorJobCategory;
 @end

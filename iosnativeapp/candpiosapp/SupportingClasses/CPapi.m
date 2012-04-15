@@ -803,4 +803,15 @@
     });    
 }
 
++ (void)saveUserMajorJobCategory:(NSString *)majorJobCategory andMinorJobCategory:(NSString *)minorJobCategory
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setValue:majorJobCategory forKey:@"major_job_category"];
+    [parameters setValue:minorJobCategory forKey:@"minor_job_category"];
+
+    [self makeHTTPRequestWithAction:@"updateJobCategories"
+                     withParameters:parameters
+                         completion:nil];
+}
+
 @end
