@@ -318,51 +318,36 @@ BOOL firstLoad = YES;
     NSURL *baseURL = [NSURL fileURLWithPath:path];
     [self.resumeWebView loadHTMLString:[self htmlStringWithResumeText] baseURL:baseURL];
     
-    // TODO: get venue name and venue address from list cell or map annotation this profile was pulled up from
-    // venue name should already be there, address needs to be added in return from api.php
-    
-    // request using the FoursquareAPIRequest class to get the venue data
-    [FoursquareAPIRequest dictForVenueWithFoursquareID:self.user.placeCheckedIn.foursquareID :^(NSDictionary *fsDict, NSError *error) {
-        if (!error) {
+    self.venueName.text = self.user.placeCheckedIn.name;
+    self.venueAddress.text = self.user.placeCheckedIn.address;
 
-            // show the available for and the venue info, stop animating the ellipsis
-            [self stopAnimatingVenueLoadingPoints];
+    // show the available for and the venue info, stop animating the ellipsis
+    [self stopAnimatingVenueLoadingPoints];
             
-            // set the CPPlace data on the user object we're holding
-            self.user.placeCheckedIn.name = [fsDict valueForKeyPath:@"response.venue.name"];
-            self.user.placeCheckedIn.address = [fsDict valueForKeyPath:@"response.venue.location.address"];
+    self.othersAtPlace = self.user.checkedIn ? self.user.placeCheckedIn.checkinCount - 1 : self.user.placeCheckedIn.checkinCount;
             
-            // put it on the view
-            self.venueName.text = self.user.placeCheckedIn.name;
-            self.venueAddress.text = self.user.placeCheckedIn.address;
-            
-            self.othersAtPlace = self.user.checkedIn ? self.user.placeCheckedIn.checkinCount - 1 : self.user.placeCheckedIn.checkinCount;
-            
-            if (firstLoad) {
-                if (self.othersAtPlace == 0) {
-                    // hide the little man, nobody else is here
-                    [self.venueOthersIcon removeFromSuperview];
+    if (firstLoad) {
+        if (self.othersAtPlace == 0) {
+            // hide the little man, nobody else is here
+            [self.venueOthersIcon removeFromSuperview];
                 
-                    // move the data in the venueView down so it's vertically centered
-                    NSArray *venueInfo = [NSArray arrayWithObjects:self.venueIcon, self.venueName, self.venueAddress, nil];
-                    for (UIView *venueItem in venueInfo) {
-                        CGRect frame = venueItem.frame;
-                        frame.origin.y += 8;
-                        venueItem.frame = frame;
-                    }
-                } else {
-                    // otherwise put 1 other or x others here now
-                    self.venueOthers.text = [NSString stringWithFormat:@"%d %@ here now", self.othersAtPlace, self.othersAtPlace == 1 ? @"other" : @"others"];
-                }
-                
-                firstLoad = NO;
-            }    
-            // animate the display of the venueView and availabilityView
-            [UIView animateWithDuration:0.4 animations:^{self.venueView.alpha = 1.0; self.availabilityView.alpha = 1.0;}];
+            // move the data in the venueView down so it's vertically centered
+            NSArray *venueInfo = [NSArray arrayWithObjects:self.venueIcon, self.venueName, self.venueAddress, nil];
+            for (UIView *venueItem in venueInfo) {
+                CGRect frame = venueItem.frame;
+                frame.origin.y += 8;
+                venueItem.frame = frame;
+            }
         } else {
-            // error for load of foursquare data
+            // otherwise put 1 other or x others here now
+            self.venueOthers.text = [NSString stringWithFormat:@"%d %@ here now", self.othersAtPlace, self.othersAtPlace == 1 ? @"other" : @"others"];
         }
-    }];
+                
+        firstLoad = NO;
+    }    
+    // animate the display of the venueView and availabilityView
+    [UIView animateWithDuration:0.4 animations:^{self.venueView.alpha = 1.0; self.availabilityView.alpha = 1.0;}];
+
 }
 
 - (NSString *)htmlStringWithResumeText {
