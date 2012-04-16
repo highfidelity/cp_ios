@@ -18,6 +18,7 @@
 #import "BaseLoginController.h"
 #import "EnterInvitationCodeViewController.h"
 #import "User.h"
+#import "NSTimer+Blocks.h"
 
 @interface AppDelegate(Internal)
 -(void) loadSettings;
@@ -62,16 +63,35 @@
     return [checkoutEpoch intValue] > [[NSDate date]timeIntervalSince1970];
 }
 
-- (void)startCheckInClockHandAnimation
+- (void)startCheckInClockHandAnimation:(BOOL)checkedIn
 {
-    // spin the clock hand
-    [CPUIHelper spinView:[self.tabBarController.centerButton viewWithTag:903] duration:15 repeatCount:MAXFLOAT clockwise:YES timingFunction:nil];
-}
-
-- (void)stopCheckInClockHandAnimation
-{
-    // stop the clock hand spin
-    [[self.tabBarController.centerButton viewWithTag:903].layer removeAllAnimations];
+    // grab the clock hand
+    UIView *clockHand = [self.tabBarController.centerButton viewWithTag:903];
+    
+    // stop the fast clock hand spin
+    [clockHand.layer removeAllAnimations];
+    
+    if (checkedIn) {
+        clockHand.transform = CGAffineTransformIdentity;
+        
+        // spin the clock hand at 5x speed of normal second hand
+        [CPUIHelper spinView:[self.tabBarController.centerButton viewWithTag:903] duration:12 repeatCount:MAXFLOAT clockwise:YES timingFunction:nil];
+    } else {
+        // get the current minute and second of the current hour
+        NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *dateComponents = [gregorian components:(NSHourCalendarUnit  | NSMinuteCalendarUnit | NSSecondCalendarUnit) fromDate:[NSDate date]];
+        
+        // move the clock hand to the right minute
+        int second = [dateComponents second];
+        float angle = 2 * M_PI * (second / 60.0);
+        
+        CGAffineTransform transform = CGAffineTransformMakeRotation(angle);
+        clockHand.transform = transform;
+        
+        [CPUIHelper spinView:clockHand duration:60 repeatCount:MAXFLOAT clockwise:YES timingFunction:nil];
+    }
+    
+    
 }
 
 - (void)setCheckedOut
@@ -110,12 +130,12 @@
 {
     // change the image and the text on the tab bar item
     if (self.userCheckedIn) {
-        // start animating the clock hand
-        [self startCheckInClockHandAnimation];
+        // start the fast clock hand animation
+        [self startCheckInClockHandAnimation:YES];
         [self.tabBarController.centerButton setBackgroundImage:[UIImage imageNamed:@"tab-check-out.png"] forState:UIControlStateNormal];
     } else {
-        // stop animating the clock hand
-        [self stopCheckInClockHandAnimation];
+        // start the slow clock hand animation
+        [self startCheckInClockHandAnimation:NO];
         [self.tabBarController.centerButton setBackgroundImage:[UIImage imageNamed:@"tab-check-in.png"] forState:UIControlStateNormal];
     }
 }
@@ -368,6 +388,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"applicationDidBecomeActive" object:nil];
     
+    // make sure the check in button starts spinning if it's supposed to
+    // or that we switch to the right button if the check in state has changed
     [self refreshCheckInButton];
 
 	/*

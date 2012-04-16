@@ -184,6 +184,7 @@
 		53D65B4514EEEC2D00801C5E /* CheckInDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D65B4414EEEC2D00801C5E /* CheckInDetailsViewController.m */; };
 		53D65B4914EF0D6100801C5E /* texture-diagonal-noise.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D65B4714EF0D6100801C5E /* texture-diagonal-noise.png */; };
 		53D65B4A14EF0D6100801C5E /* texture-diagonal-noise@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D65B4814EF0D6100801C5E /* texture-diagonal-noise@2x.png */; };
+		53D87B0B153C9E3C001E1C6D /* NSTimer+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D87B0A153C9E3C001E1C6D /* NSTimer+Blocks.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		53D9B139152A52E300BC1304 /* send-love-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D9B138152A52E300BC1304 /* send-love-small@2x.png */; };
 		53D9B164152A557000BC1304 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D9B160152A557000BC1304 /* Icon-Small.png */; };
 		53D9B165152A557000BC1304 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D9B161152A557000BC1304 /* Icon-Small@2x.png */; };
@@ -681,6 +682,8 @@
 		53D65B4414EEEC2D00801C5E /* CheckInDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInDetailsViewController.m; path = Views/CheckInDetailsViewController.m; sourceTree = "<group>"; };
 		53D65B4714EF0D6100801C5E /* texture-diagonal-noise.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-diagonal-noise.png"; path = "images/texture-diagonal-noise.png"; sourceTree = "<group>"; };
 		53D65B4814EF0D6100801C5E /* texture-diagonal-noise@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-diagonal-noise@2x.png"; path = "images/texture-diagonal-noise@2x.png"; sourceTree = "<group>"; };
+		53D87B09153C9E3C001E1C6D /* NSTimer+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Blocks.h"; sourceTree = "<group>"; };
+		53D87B0A153C9E3C001E1C6D /* NSTimer+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Blocks.m"; sourceTree = "<group>"; };
 		53D9B138152A52E300BC1304 /* send-love-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-love-small@2x.png"; path = "User/images/send-love-small@2x.png"; sourceTree = "<group>"; };
 		53D9B160152A557000BC1304 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
 		53D9B161152A557000BC1304 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
@@ -1565,6 +1568,15 @@
 			name = "Check In";
 			sourceTree = "<group>";
 		};
+		53D87B08153C9E3C001E1C6D /* NSTimer+Blocks */ = {
+			isa = PBXGroup;
+			children = (
+				53D87B09153C9E3C001E1C6D /* NSTimer+Blocks.h */,
+				53D87B0A153C9E3C001E1C6D /* NSTimer+Blocks.m */,
+			);
+			path = "NSTimer+Blocks";
+			sourceTree = "<group>";
+		};
 		53D9B199152A5E6100BC1304 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1832,6 +1844,7 @@
 		871EFB6014AF97130030658B /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
+				53D87B08153C9E3C001E1C6D /* NSTimer+Blocks */,
 				871EFB6114AF97130030658B /* AFNetworking */,
 				3267F51014D9196800BFFBAA /* Airship */,
 				870835DE14B3E1AB00439431 /* facebook-ios-sdk */,
@@ -2576,6 +2589,7 @@
 				E4E74E05153B08710022F403 /* ActionSheetDistancePicker.m in Sources */,
 				E4E74E06153B08710022F403 /* ActionSheetStringPicker.m in Sources */,
 				E4E74E07153B08710022F403 /* DistancePickerView.m in Sources */,
+				53D87B0B153C9E3C001E1C6D /* NSTimer+Blocks.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

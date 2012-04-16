@@ -145,9 +145,14 @@
 {
     CABasicAnimation *rotate360;
     rotate360 = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
-    rotate360.fromValue = [NSNumber numberWithFloat:0];
+    float currentAngle = [[view.layer valueForKeyPath:@"transform.rotation.z"] floatValue];
+    if (currentAngle < 0) {
+        currentAngle = M_PI_2 - currentAngle;
+    }
+    rotate360.fromValue = [NSNumber numberWithFloat:currentAngle];
     
-    CGFloat endVal = (360*M_PI)/180;
+    
+    CGFloat endVal = currentAngle + (360*M_PI)/180;
     if (!clockwise) {
         endVal = -1 * endVal;
     }
