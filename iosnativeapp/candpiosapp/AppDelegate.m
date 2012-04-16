@@ -18,7 +18,6 @@
 #import "BaseLoginController.h"
 #import "EnterInvitationCodeViewController.h"
 #import "User.h"
-#import "NSTimer+Blocks.h"
 
 @interface AppDelegate(Internal)
 -(void) loadSettings;
