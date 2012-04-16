@@ -37,7 +37,7 @@
             NSNumber *number = [NSNumber numberWithDouble:distance];
             return [NSString stringWithFormat:@"%@mi", [formatter stringFromNumber:number]];
         } else {
-            distance = distance * 3.2808399;
+            distance = round(distance * 3.2808399);
             NSNumber *number = [NSNumber numberWithDouble:distance];
             return [NSString stringWithFormat:@"%@ft", [formatter stringFromNumber:number]];                
         }            
@@ -67,11 +67,21 @@
 
 + (NSString *)localizedDistanceStringFromMiles:(double)miles
 {
-    float distance = miles;
+    float distance = (float)miles;
     NSString *suffix = @"mi";
     if ([[[NSLocale currentLocale] objectForKey:NSLocaleUsesMetricSystem] boolValue]) {
-        distance = roundf(distance * 160.9344) / 100;
-        suffix = @"km";
+        distance = roundf(distance * 1609.344);
+        if (distance <= 100) {
+            suffix = @"m";
+        } else {
+            distance = distance / 1000;
+            suffix = @"km";
+        }
+    } else {
+        if (distance <= 0.1) {
+            distance = roundf(distance * 5280);
+            suffix = @"ft";
+        }
     }
     
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
