@@ -102,7 +102,7 @@ static NSOperationQueue *sMapQueue = nil;
 #endif
             for(NSDictionary *placeDict in placesArray)
             {
-                CPPlace *place = [[CPPlace alloc] initFromDictionary:placeDict];
+                CPVenue *place = [[CPVenue alloc] initFromDictionary:placeDict];
                 
                 // add (or update) the new pin
                 [self.annotations addObject:place];

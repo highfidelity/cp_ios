@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CPPlace.h"
+#import "CPVenue.h"
 
 @interface VenueInfoViewController : UIViewController
 
-@property (nonatomic, strong) CPPlace *venue;
+@property (nonatomic, strong) CPVenue *venue;
 @property (weak, nonatomic) IBOutlet UIImageView *venuePhoto;
 @property (weak, nonatomic) IBOutlet UILabel *venueName;
 @property (weak, nonatomic) IBOutlet UIView *userSection;

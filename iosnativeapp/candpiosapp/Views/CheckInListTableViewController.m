@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 
 #import "CheckInListTableViewController.h"
-#import "CPPlace.h"
+#import "CPVenue.h"
 #import "CheckInDetailsViewController.h"
 #import "SignupController.h"
 #import "CheckInListCell.h"
@@ -132,7 +132,7 @@
             
             // iterate through the results and add them to the places array
             for (NSMutableDictionary *item in itemsArray) {
-                CPPlace *place = [[CPPlace alloc] init];
+                CPVenue *place = [[CPVenue alloc] init];
                 place.name = [item valueForKey:@"name"];
                 place.foursquareID = [item valueForKey:@"id"];
                 place.address = [[item valueForKey:@"location"] valueForKey:@"address"];
@@ -160,7 +160,7 @@
             [places sortUsingSelector:@selector(sortByDistanceToUser:)];
             
             // add a custom place so people can checkin if foursquare doesn't have the venue
-            CPPlace *place = [[CPPlace alloc] init];
+            CPVenue *place = [[CPVenue alloc] init];
             place.name = @"Add Place...";
             place.foursquareID = @"0";
             
@@ -276,7 +276,7 @@
     if ([[segue identifier] isEqualToString:@"ShowCheckInDetailsView"]) {
         
         NSIndexPath *path = [self.tableView indexPathForSelectedRow];
-        CPPlace *place = [places objectAtIndex:path.row];
+        CPVenue *place = [places objectAtIndex:path.row];
         
         // give place info to the CheckInDetailsViewController
         [[segue destinationViewController] setPlace:place];
@@ -310,7 +310,7 @@
 - (void)addNewPlace:(NSString *)name {
 	[SVProgressHUD showWithStatus:@"Saving new place..."];
 
-    CPPlace *place = [places objectAtIndex:[self.tableView indexPathForSelectedRow].row];
+    CPVenue *place = [places objectAtIndex:[self.tableView indexPathForSelectedRow].row];
     place.name = name;
     
     // Send Add request to Foursquare and use the new Venue ID here

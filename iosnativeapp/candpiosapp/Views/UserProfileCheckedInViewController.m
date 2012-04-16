@@ -393,7 +393,7 @@ BOOL firstLoad = YES;
     NSURL *url = [request URL];
     if ([url.scheme isEqualToString:@"favorite-venue-index"]) {
         NSInteger selectedFavoriteVenueIndex = [url.host integerValue];
-        CPPlace *place = [self.user.favoritePlaces objectAtIndex:selectedFavoriteVenueIndex];
+        CPVenue *place = [self.user.favoritePlaces objectAtIndex:selectedFavoriteVenueIndex];
         
         VenueInfoViewController *venueVC = [[UIStoryboard storyboardWithName:@"VenueStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
         venueVC.venue = place;

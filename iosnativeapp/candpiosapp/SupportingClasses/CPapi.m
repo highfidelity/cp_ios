@@ -597,7 +597,7 @@
                          completion:completion];
 }
 
-+ (void)checkInToLocation:(CPPlace *)place
++ (void)checkInToLocation:(CPVenue *)place
               checkInTime:(NSInteger)checkInTime
              checkOutTime:(NSInteger)checkOutTime
                statusText:(NSString *)stausText

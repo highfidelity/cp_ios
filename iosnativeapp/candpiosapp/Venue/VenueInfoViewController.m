@@ -17,7 +17,7 @@
 - (IBAction)tappedAddress:(id)sender;
 - (IBAction)tappedPhone:(id)sender;
 
-- (void)refreshVenueData:(CPPlace *)venue;
+- (void)refreshVenueData:(CPVenue *)venue;
 - (void)populateUserSection;
 
 - (void)addUser:(User *)user

@@ -213,7 +213,7 @@ BOOL clearLocations = NO;
                                     
                                     // clear other than current user location
                                     for (id annotation in mapView.annotations) {
-                                        if ([annotation isKindOfClass:[CPPlace class]]) {
+                                        if ([annotation isKindOfClass:[CPVenue class]]) {
                                             [self.mapView removeAnnotation:annotation];
                                         }
                                     }                             
@@ -228,9 +228,9 @@ BOOL clearLocations = NO;
                                     NSSet *visiblePins = [mapView annotationsInMapRect: mapView.visibleMapRect];
                                     BOOL foundIt = NO;
 
-                                    for (CPPlace *ann in visiblePins) {
+                                    for (CPVenue *ann in visiblePins) {
                                         foundIt = NO;                                            
-                                        for (CPPlace *newAnn in newDataset.annotations) {
+                                        for (CPVenue *newAnn in newDataset.annotations) {
                                             if ([ann.foursquareID isEqualToString:newAnn.foursquareID]) {
                                                 foundIt = YES;
                                                 if (ann.checkinCount != newAnn.checkinCount || ann.weeklyCheckinCount != newAnn.weeklyCheckinCount) {
@@ -341,9 +341,9 @@ BOOL clearLocations = NO;
         view.alpha = startingAlpha;
         [UIView commitAnimations];
         
-        if ([view.annotation isKindOfClass:[CPPlace class]]) {
+        if ([view.annotation isKindOfClass:[CPVenue class]]) {
             // Bring any checked in pins to the front of all subviews
-            CPPlace *place = (CPPlace *)view.annotation;
+            CPVenue *place = (CPVenue *)view.annotation;
             
             if (place.checkinCount > 0) {
                 [[view superview] bringSubviewToFront:view];
@@ -365,8 +365,8 @@ BOOL clearLocations = NO;
 	MKAnnotationView *pinToReturn = nil;
     BOOL smallPin = NO;
     
-    if ([annotation isKindOfClass:[CPPlace class]]) {
-        CPPlace *placeAnn = (CPPlace *)annotation;
+    if ([annotation isKindOfClass:[CPVenue class]]) {
+        CPVenue *placeAnn = (CPVenue *)annotation;
         
         // Need to set a unique identifier to prevent any weird formatting issues -- use a combination of annotationsInCluster.count + hasCheckedInUsers value + smallPin value
         // @TODO: comment above is now invalid, identifier below is not going to be unique. why not use the foursquare id, or venue id? -- lithium
@@ -417,8 +417,8 @@ BOOL clearLocations = NO;
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
 
-    if ([view.annotation isKindOfClass:[CPPlace class]]) {
-        CPPlace *tappedPlace = (CPPlace *)view.annotation;
+    if ([view.annotation isKindOfClass:[CPVenue class]]) {
+        CPVenue *tappedPlace = (CPVenue *)view.annotation;
         
         VenueInfoViewController *venueVC = [[UIStoryboard storyboardWithName:@"VenueStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
         venueVC.venue = tappedPlace;

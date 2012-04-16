@@ -137,7 +137,7 @@
         vcell = [[VenueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:venueCellIdentifier];
     }
     
-    CPPlace *venue = [[self venues] objectAtIndex:indexPath.row];
+    CPVenue *venue = [[self venues] objectAtIndex:indexPath.row];
     
     vcell.venueName.text = venue.name;
     vcell.venueAddress.text = venue.address;
@@ -184,7 +184,7 @@
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // give place info to the CheckInDetailsViewController
-    CPPlace *place = [[self venues] objectAtIndex:indexPath.row];
+    CPVenue *place = [[self venues] objectAtIndex:indexPath.row];
     
     VenueInfoViewController *venueVC = [[UIStoryboard storyboardWithName:@"VenueStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
     venueVC.venue = place;

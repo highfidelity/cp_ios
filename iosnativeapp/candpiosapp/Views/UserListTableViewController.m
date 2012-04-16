@@ -13,7 +13,7 @@
 #import "NSString+HTML.h"
 #import "VenueCell.h"
 #import "CheckInDetailsViewController.h"
-#import "CPPlace.h"
+#import "CPVenue.h"
 #import "SVProgressHUD.h"
 
 @interface UserListTableViewController()

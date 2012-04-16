@@ -60,7 +60,7 @@
 		32E3CD9014C3AAA5001EA2AB /* WebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E3CD8D14C3AAA5001EA2AB /* WebView.xib */; };
 		32E3CD9114C3AAA5001EA2AB /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E3CD8F14C3AAA5001EA2AB /* WebViewController.m */; };
 		32FF63D414BB935100E99F55 /* CheckInListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */; };
-		32FF63E414BBFAE300E99F55 /* CPPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF63E314BBFAE300E99F55 /* CPPlace.m */; };
+		32FF63E414BBFAE300E99F55 /* CPVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FF63E314BBFAE300E99F55 /* CPVenue.m */; };
 		35F0F0541516B3EF00882310 /* ContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35F0F0531516B3EF00882310 /* ContactListViewController.m */; };
 		4E39305214EDF0B500D27DEA /* accessory-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E39305014EDF0B500D27DEA /* accessory-arrow.png */; };
 		4E39305314EDF0B500D27DEA /* accessory-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E39305114EDF0B500D27DEA /* accessory-arrow@2x.png */; };
@@ -531,8 +531,8 @@
 		32E3CD8F14C3AAA5001EA2AB /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		32FF63D214BB935100E99F55 /* CheckInListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckInListTableViewController.h; path = Views/CheckInListTableViewController.h; sourceTree = "<group>"; };
 		32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInListTableViewController.m; path = Views/CheckInListTableViewController.m; sourceTree = "<group>"; };
-		32FF63E214BBFAE300E99F55 /* CPPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPlace.h; path = SupportingClasses/CPPlace.h; sourceTree = "<group>"; };
-		32FF63E314BBFAE300E99F55 /* CPPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPlace.m; path = SupportingClasses/CPPlace.m; sourceTree = "<group>"; };
+		32FF63E214BBFAE300E99F55 /* CPVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; name = CPVenue.h; path = SupportingClasses/CPVenue.h; sourceTree = "<group>"; };
+		32FF63E314BBFAE300E99F55 /* CPVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPVenue.m; path = SupportingClasses/CPVenue.m; sourceTree = "<group>"; };
 		35F0F0521516B3EF00882310 /* ContactListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactListViewController.h; path = Settings/ContactListViewController.h; sourceTree = "<group>"; };
 		35F0F0531516B3EF00882310 /* ContactListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContactListViewController.m; path = Settings/ContactListViewController.m; sourceTree = "<group>"; };
 		4E39305014EDF0B500D27DEA /* accessory-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "accessory-arrow.png"; sourceTree = "<group>"; };
@@ -1560,8 +1560,8 @@
 				53882B5D14FC13630073058C /* CheckInListCell.m */,
 				32FF63D214BB935100E99F55 /* CheckInListTableViewController.h */,
 				32FF63D314BB935100E99F55 /* CheckInListTableViewController.m */,
-				32FF63E214BBFAE300E99F55 /* CPPlace.h */,
-				32FF63E314BBFAE300E99F55 /* CPPlace.m */,
+				32FF63E214BBFAE300E99F55 /* CPVenue.h */,
+				32FF63E314BBFAE300E99F55 /* CPVenue.m */,
 				53E2061F150591600000FA8D /* DismissHUDAfterReloadData.h */,
 				53E20620150591600000FA8D /* DismissHUDAfterReloadData.m */,
 				536DE92A150170CC00794650 /* images */,
@@ -2504,7 +2504,7 @@
 				8745448D14B799C100D96134 /* NSDictionaryAdditions.m in Sources */,
 				8745448E14B799C100D96134 /* NSMutableURLRequestAdditions.m in Sources */,
 				32FF63D414BB935100E99F55 /* CheckInListTableViewController.m in Sources */,
-				32FF63E414BBFAE300E99F55 /* CPPlace.m in Sources */,
+				32FF63E414BBFAE300E99F55 /* CPVenue.m in Sources */,
 				8733311C14BCFAAB001BF4DB /* TableCellHelper.m in Sources */,
 				8733311D14BCFAAB001BF4DB /* TableViewControllerHelper.m in Sources */,
 				32C762F814BEB48500FE25E4 /* UserListTableViewController.m in Sources */,

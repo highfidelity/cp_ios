@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
-@interface CPPlace : NSObject <MKAnnotation>
+@interface CPVenue : NSObject <MKAnnotation>
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *icon;
@@ -33,7 +33,7 @@
 
 // TODO: kill the lat and lng properties and merge with coordinate
 
-- (CPPlace *)initFromDictionary:(NSDictionary *)json;
-- (NSComparisonResult)sortByDistanceToUser:(CPPlace *)place;
+- (CPVenue *)initFromDictionary:(NSDictionary *)json;
+- (NSComparisonResult)sortByDistanceToUser:(CPVenue *)place;
 
 @end

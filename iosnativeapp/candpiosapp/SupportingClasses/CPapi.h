@@ -12,7 +12,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AFNetworking.h"
-#import "CPPlace.h"
+#import "CPVenue.h"
 #import "ChatHistory.h"
 #import <CoreLocation/CoreLocation.h>
 
@@ -52,7 +52,7 @@
 + (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID
                                        :(void(^)(NSDictionary *json, NSError *error))completion; 
 
-+ (void)checkInToLocation:(CPPlace *)place
++ (void)checkInToLocation:(CPVenue *)place
               checkInTime:(NSInteger)checkInTime
              checkOutTime:(NSInteger)checkOutTime
                statusText:(NSString *)stausText

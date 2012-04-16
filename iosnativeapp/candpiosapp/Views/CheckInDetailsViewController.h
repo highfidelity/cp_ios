@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import "CPPlace.h"
+#import "CPVenue.h"
 
 @interface CheckInDetailsViewController : UIViewController
 
 @property (nonatomic, assign) id delegate;
-@property (nonatomic, strong) CPPlace *place;
+@property (nonatomic, strong) CPVenue *place;
 
 -(void)userImageButtonPressed:(UIButton *)sender;
 

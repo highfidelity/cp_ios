@@ -79,7 +79,7 @@
         self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
         
 
-        CPPlace *place = [[CPPlace alloc] init];
+        CPVenue *place = [[CPVenue alloc] init];
         
         NSString *name = [userDict objectForKey:@"venue_name"];
         
@@ -210,7 +210,7 @@
     NSMutableArray *places = [NSMutableArray arrayWithCapacity:3];
     
     int placeCount = 1;
-    for (CPPlace *place in self.checkInHistory) { 
+    for (CPVenue *place in self.checkInHistory) { 
         if (placeCount == 4) {
             break;
         }
@@ -317,7 +317,7 @@
             // checkin history
             self.checkInHistory = [NSMutableArray array];
             for (NSDictionary *placeDict in [userDict valueForKey:@"checkin_history"]) {
-                CPPlace *place = [CPPlace new];
+                CPVenue *place = [CPVenue new];
                 place.checkinCount = [[placeDict valueForKey:@"count"] intValue];
                 place.foursquareID = [placeDict valueForKey:@"foursquare_id"];
                 place.name = [placeDict valueForKey:@"name"];

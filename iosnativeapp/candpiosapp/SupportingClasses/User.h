@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import "CPPlace.h"
+#import "CPVenue.h"
 
 #define kDaysOfTrialAccessWithoutInviteCode 30
 
@@ -31,7 +31,7 @@
 @property (nonatomic, strong) NSString *skills;
 @property (nonatomic, assign) double distance;
 @property (nonatomic, assign) BOOL checkedIn;
-@property (nonatomic, strong) CPPlace *placeCheckedIn;
+@property (nonatomic, strong) CPVenue *placeCheckedIn;
 @property (nonatomic, strong) NSDate *checkoutEpoch;
 @property (nonatomic, strong) NSString *join_date;
 @property (nonatomic, assign) int trusted_by;

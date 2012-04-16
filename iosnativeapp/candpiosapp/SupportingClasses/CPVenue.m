@@ -5,11 +5,11 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import "CPPlace.h"
+#import "CPVenue.h"
 #import <CoreLocation/CoreLocation.h>
 #import "VenueInfoViewController.h"
 
-@implementation CPPlace
+@implementation CPVenue
 
 @synthesize name = _name;
 @synthesize icon = _icon;
@@ -106,7 +106,7 @@
     return _activeUsers;
 }
 
-- (CPPlace *)initFromDictionary:(NSDictionary *)json
+- (CPVenue *)initFromDictionary:(NSDictionary *)json
 {
     self = [super init];
     if (self) {
@@ -143,7 +143,7 @@
 // by the distance of each place from the user
 // might be a faster way to accomplish this (sorting while inserting the foursquare returned
 // data) but this seems to be quite quick anyways, as we aren't displaying a ton of places
-- (NSComparisonResult)sortByDistanceToUser:(CPPlace *)place
+- (NSComparisonResult)sortByDistanceToUser:(CPVenue *)place
 {
     if (self.distanceFromUser < place.distanceFromUser) {
         return NSOrderedAscending;
