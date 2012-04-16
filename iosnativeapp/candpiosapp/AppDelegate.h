@@ -43,7 +43,8 @@
 - (void)toggleSettingsMenu;
 - (void)refreshCheckInButton;
 - (void)setCheckedOut;
--(void)startCheckInClockHandAnimation:(BOOL)checkedIn;
+-(void)startCheckInClockHandAnimation;
+-(void)stopCheckInClockHandAnimation;
 - (void)showSignupModalFromViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
          withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed
