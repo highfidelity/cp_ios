@@ -33,9 +33,11 @@
     BOOL isSearching;
 }
 
+@property (weak, nonatomic) IBOutlet UIImageView *placeholderImage;
 @end
 
 @implementation ContactListViewController
+@synthesize placeholderImage;
 
 @synthesize contacts, searchBar;
 
@@ -86,7 +88,16 @@
     sortedContactList = [contactList copy];
 }
 
-- (NSArray*)sectionIndexTitles {
+-(void)hidePlaceholder:(BOOL)hide
+{
+    [self.placeholderImage setHidden:hide];
+    [self.tableView setScrollEnabled:hide];
+    [self.searchBar setHidden:!hide];
+    isSearching = !hide;
+}
+
+- (NSArray*)sectionIndexTitles 
+{
     return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
 }
 
@@ -97,6 +108,7 @@
 
 - (void)viewDidUnload
 {
+    [self setPlaceholderImage:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -105,7 +117,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    [self hidePlaceholder:YES];
     // place the settings button on the navigation item if required
     // or remove it if the user isn't logged in
     [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
@@ -126,6 +138,7 @@
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {
                 NSMutableArray *payload = [json objectForKey:@"payload"];
+                [self hidePlaceholder:[payload count] > 0];
                 
                 // sort the list by name
                 NSSortDescriptor *d = [[NSSortDescriptor alloc] initWithKey:@"nickname" ascending:YES];
