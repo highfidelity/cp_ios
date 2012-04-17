@@ -544,7 +544,7 @@ BOOL firstLoad = YES;
 
 - (void)sendReview {
     
-    [SVProgressHUD showWithStatus:@"Sending love"];
+    [SVProgressHUD showWithStatus:@"Sending \"prop\""];
     AFHTTPClient *httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
     NSString *respUserId = [NSString stringWithFormat:@"%d", self.user.userID];
 	NSMutableDictionary *reviewParams = [NSMutableDictionary dictionary];
@@ -596,7 +596,7 @@ BOOL firstLoad = YES;
         }
         else {
             
-            NSString *message = [NSString stringWithFormat:@"Love sent successfully", self.user.nickname];
+            NSString *message = [NSString stringWithFormat:@"You Recognized %@", self.user.nickname];
             
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Transaction"
                                                                 message:message
