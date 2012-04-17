@@ -57,6 +57,7 @@
 @property (nonatomic, assign) int othersAtPlace;
 @property (nonatomic, strong) NSNumber *templateCounter;
 @property (nonatomic, assign) NSInteger selectedFavoriteVenueIndex;
+@property (weak, nonatomic) IBOutlet UILabel *propNoteLabel;
 
 -(void)animateVenueLoadingPoints;
 -(void)stopAnimatingVenueLoadingPoints;
@@ -112,6 +113,7 @@
 @synthesize othersAtPlace = _othersAtPlace;
 @synthesize templateCounter = _templateCounter;
 @synthesize selectedFavoriteVenueIndex = _selectedFavoriteVenueIndex;
+@synthesize propNoteLabel = _propNoteLabel;
 
 BOOL firstLoad = YES;
 
@@ -171,6 +173,7 @@ BOOL firstLoad = YES;
     
     // set the labels on the user business card
     self.cardNickname.text = self.user.nickname;
+    self.propNoteLabel.text = [NSString stringWithFormat:self.propNoteLabel.text, self.user.nickname];
 
     if ([self.user.status length] > 0) {
         self.cardStatus.text = [NSString stringWithFormat:@"\"%@\"", self.user.status];
@@ -250,6 +253,7 @@ BOOL firstLoad = YES;
     [self setPayButton:nil];
     [self setReviewButton:nil];
     [self setGoMenuBackground:nil];
+    [self setPropNoteLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

@@ -276,7 +276,7 @@
                                                         <rect key="frame" x="201" y="1" width="99" height="41"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="LOVE:" lineBreakMode="tailTruncation" minimumFontSize="10" id="wy1-Ol-R29">
+                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="PROPS:" lineBreakMode="tailTruncation" minimumFontSize="10" id="wy1-Ol-R29">
                                                                 <rect key="frame" x="11" y="0.0" width="54" height="21"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
@@ -313,17 +313,17 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="16" id="atw-QG-ThQ">
-                                                <rect key="frame" x="12" y="12" width="275" height="46"/>
+                                                <rect key="frame" x="7" y="8" width="286" height="46"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Type your reason here. Each Love costs $1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="90M-rq-Ijk">
-                                                <rect key="frame" x="12" y="58" width="275" height="21"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Recognize %@ here. Each &quot;prop&quot; costs $1" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="90M-rq-Ijk">
+                                                <rect key="frame" x="12" y="52" width="281" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="17"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="14"/>
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -458,6 +458,7 @@
                         <outlet property="minutesAvailable" destination="Gye-uK-iuD" id="7Bk-Lm-v7U"/>
                         <outlet property="payButton" destination="LRq-df-2Bf" id="zTG-eM-Qaa"/>
                         <outlet property="plusButton" destination="4JE-vB-evy" id="ue3-O9-3F4"/>
+                        <outlet property="propNoteLabel" destination="90M-rq-Ijk" id="tBn-oC-uO8"/>
                         <outlet property="resumeEarned" destination="sjx-FC-Si0" id="yLF-zl-fSC"/>
                         <outlet property="resumeLabel" destination="Do4-zK-XAE" id="uMQ-Io-0rq"/>
                         <outlet property="resumeRate" destination="x1V-ut-muC" id="4KE-BS-4Oi"/>
@@ -941,6 +942,7 @@
                 <relationship kind="outlet" name="minutesAvailable" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="payButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="plusButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="propNoteLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="resumeEarned" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="resumeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="resumeRate" candidateClass="UILabel"/>
