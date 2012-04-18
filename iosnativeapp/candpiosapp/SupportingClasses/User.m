@@ -259,18 +259,17 @@
         
         if (!error) {
             NSDictionary *userDict = [response objectForKey:@"payload"];
-            
-            // TODO: do most of the init here from initWithDictionary
+
             // only add the extra info we get because of resume here
             
             self.nickname = [userDict objectForKey:@"nickname"];
-            NSString *status = [[userDict objectForKey:@"status_text"]
-                                stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
             self.majorJobCategory = [userDict objectForKey:@"major_job_category"];
             self.minorJobCategory = [userDict objectForKey:@"minor_job_category"];
 
-            self.status = status;
+            self.status = [[userDict objectForKey:@"status_text"]
+                           stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            
             self.bio = [userDict objectForKey:@"bio"];
             
             if ([[userDict objectForKey:@"job_title"] isKindOfClass:[NSString class]]) {

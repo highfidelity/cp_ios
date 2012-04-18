@@ -21,8 +21,6 @@
 @synthesize formattedPhone = _formattedPhone;
 @synthesize phone = _phone;
 @synthesize photoURL = _photoURL;
-@synthesize lat = _lat;
-@synthesize lng = _lng;
 @synthesize distanceFromUser = _distanceFromUser;
 @synthesize checkinCount = _checkinCount;
 @synthesize weeklyCheckinCount = _weeklyCheckinCount;
@@ -123,9 +121,7 @@
         self.intervalCheckinCount = [[json objectForKey:@"checkins_for_interval"] integerValue];
         self.photoURL = [json objectForKey:@"photo_url"];
         
-        self.lat = [[json objectForKey:@"lat"] doubleValue];
-        self.lng = [[json objectForKey:@"lng"] doubleValue];
-        self.coordinate = CLLocationCoordinate2DMake(self.lat, self.lng);
+        self.coordinate = CLLocationCoordinate2DMake([[json objectForKey:@"lat"] doubleValue], [[json objectForKey:@"lng"] doubleValue]);
         
         self.activeUsers = [json objectForKey:@"users"];
         

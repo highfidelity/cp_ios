@@ -139,8 +139,7 @@
                 place.city = [[item valueForKey:@"location"] valueForKey:@"city"];
                 place.state = [[item valueForKey:@"location"] valueForKey:@"state"];
                 place.zip = [[item valueForKey:@"location"] valueForKey:@"postalCode"];
-                place.lat = [[item valueForKeyPath:@"location.lat"] doubleValue];
-                place.lng = [[item valueForKeyPath:@"location.lng"] doubleValue];
+                place.coordinate = CLLocationCoordinate2DMake([[item valueForKeyPath:@"location.lat"] doubleValue], [[item valueForKeyPath:@"location.lng"] doubleValue]);
                 place.phone = [[item valueForKey:@"contact"] valueForKey:@"phone"];
                 place.formattedPhone = [item valueForKeyPath:@"contact.formattedPhone"];
                                 
@@ -151,7 +150,9 @@
                     place.icon = @"";
                 }
                 
-                CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:place.lat longitude:place.lng];
+                CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:place.coordinate.latitude longitude:place.coordinate.longitude];                
+                
+                
                 place.distanceFromUser = [placeLocation distanceFromLocation:userLocation];
                 [places addObject:place];
             }
@@ -165,9 +166,7 @@
             place.foursquareID = @"0";
             
             CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
-            
-            place.lat = location.coordinate.latitude;
-            place.lng = location.coordinate.longitude;
+            place.coordinate = location.coordinate;
             
             [places insertObject:place atIndex:[places count]];
             

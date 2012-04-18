@@ -26,13 +26,17 @@ static NSOperationQueue *sMapQueue = nil;
 {
 	if(!sMapQueue)
 	{
-		sMapQueue = [[NSOperationQueue alloc]init];
+		sMapQueue = [NSOperationQueue new];
 		[sMapQueue setSuspended:NO];
 		// serialize requests, please
 		[sMapQueue setMaxConcurrentOperationCount:1];
 	}
+    if ([sMapQueue operationCount] > 0) {
+        [sMapQueue cancelAllOperations];
+        [sMapQueue waitUntilAllOperationsAreFinished];
+    }
+    
 	
-	// TODO:  if we're already busy, cancel the old one and issue the new one
 	if([sMapQueue operationCount] == 0)
 	{
         MKMapPoint neMapPoint = MKMapPointMake(mapRect.origin.x + mapRect.size.width, mapRect.origin.y);
@@ -67,16 +71,19 @@ static NSOperationQueue *sMapQueue = nil;
 	}
 	else
 	{
+        //Because cancelAllOperations is called above it should not get here, but it is does it will show busy.
 		if(completion)
 			completion(nil, [NSError errorWithDomain:@"Busy" code:999 userInfo:nil]);
+        
+        NSLog(@"MapDataSet: Busy");
 	}
 	
 }
 
-- (NSMutableArray *)annotations
+- (NSArray *)annotations
 {
     if (!_annotations) {
-        _annotations = [NSMutableArray array];
+        _annotations = [NSArray array];
     }
     return _annotations;
 }
@@ -95,7 +102,7 @@ static NSOperationQueue *sMapQueue = nil;
 	{		
         // get the places that came back and make an annotation for each of them
         NSArray *placesArray = [[json objectForKey:@"payload"] objectForKey:@"venues"];
-
+        NSMutableArray *tmpAnnotations = [NSMutableArray new];
         if (![placesArray isKindOfClass:[NSNull class]]) {
 #if DEBUG
             NSLog(@"Got %d places.", [placesArray count]);
@@ -105,7 +112,7 @@ static NSOperationQueue *sMapQueue = nil;
                 CPVenue *place = [[CPVenue alloc] initFromDictionary:placeDict];
                 
                 // add (or update) the new pin
-                [self.annotations addObject:place];
+                [tmpAnnotations addObject:place];
                 
                 // post a notification with this venue if there's currently a venue shown by a VenueInfoViewController
                 if ([CPAppDelegate tabBarController].currentVenueID) {
@@ -117,7 +124,8 @@ static NSOperationQueue *sMapQueue = nil;
             }
             
         }
-
+        _annotations = [NSArray arrayWithArray:tmpAnnotations];
+        tmpAnnotations = nil;
         // get the users that came back and setup the activeUsers array on the Map
         
         NSArray *usersArray = [[json objectForKey:@"payload"] objectForKey:@"users"];

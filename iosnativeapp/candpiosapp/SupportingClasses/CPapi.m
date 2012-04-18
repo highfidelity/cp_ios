@@ -150,6 +150,7 @@
             if (completion != nil) {
                 completion(JSON, error);
         }
+            
     }];
     
     // check if we were passed a specific queue to run this request on
@@ -656,9 +657,9 @@
           completionBlock:(void (^)(NSDictionary *, NSError *))completion
 {        
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:[NSString stringWithFormat:@"%.7lf", place.lat]
+    [parameters setValue:[NSString stringWithFormat:@"%.7lf", place.coordinate.latitude]
                   forKey:@"lat"];
-    [parameters setValue:[NSString stringWithFormat:@"%.7lf", place.lng]
+    [parameters setValue:[NSString stringWithFormat:@"%.7lf", place.coordinate.longitude]
                   forKey:@"lng"];
     [parameters setValue:place.name forKey:@"venue_name"];
     [parameters setValue:[NSString stringWithFormat:@"%d", checkInTime]

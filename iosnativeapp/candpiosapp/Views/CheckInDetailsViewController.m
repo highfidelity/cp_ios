@@ -166,7 +166,7 @@
     
     
     // make an MKCoordinate region for the zoom level on the map
-    MKCoordinateRegion region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(self.place.lat, self.place.lng), MKCoordinateSpanMake(0.006, 0.006));
+    MKCoordinateRegion region = MKCoordinateRegionMake(self.place.coordinate, MKCoordinateSpanMake(0.006, 0.006));
     [self.mapView setRegion:region];
     
     // this will always be the point on iPhones up to iPhone4

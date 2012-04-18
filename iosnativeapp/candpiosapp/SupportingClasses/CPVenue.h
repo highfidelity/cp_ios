@@ -20,8 +20,6 @@
 @property (nonatomic, strong) NSString *phone;
 @property (nonatomic, strong) NSString *formattedPhone;
 @property (nonatomic, strong) NSString *photoURL;
-@property (nonatomic, assign) double lat;
-@property (nonatomic, assign) double lng;
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 @property (nonatomic, assign) double distanceFromUser;
 @property (nonatomic) int checkinCount;
@@ -31,7 +29,6 @@
 @property (nonatomic, readonly) NSString *formattedAddress;
 @property (nonatomic, strong) NSMutableDictionary *activeUsers;
 
-// TODO: kill the lat and lng properties and merge with coordinate
 
 - (CPVenue *)initFromDictionary:(NSDictionary *)json;
 - (NSComparisonResult)sortByDistanceToUser:(CPVenue *)place;

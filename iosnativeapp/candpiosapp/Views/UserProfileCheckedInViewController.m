@@ -121,9 +121,6 @@ BOOL firstLoad = YES;
 
 #pragma mark - View lifecycle
 
-// TODO: Allow the user to tap on the status bar to go back to the top of the scrollview
-// This is typical iOS behavior that we should have for consistency with the OS
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -164,6 +161,15 @@ BOOL firstLoad = YES;
     self.resumeWebView.backgroundColor = paper;
     
     [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
+    
+        
+    UITapGestureRecognizer* tapRecon = [[UITapGestureRecognizer alloc]
+                                        initWithTarget:self action:@selector(navigationBarTitleTap:)];
+    tapRecon.numberOfTapsRequired = 1;
+    tapRecon.cancelsTouchesInView = NO;
+    [self.navigationController.navigationBar addGestureRecognizer:tapRecon];
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -183,6 +189,7 @@ BOOL firstLoad = YES;
     
     // set the navigation controller title to the user's nickname
     self.title = self.user.nickname;  
+    
     
     // check if this is an F2F invite
     if (self.isF2FInvite) {
@@ -679,6 +686,10 @@ BOOL firstLoad = YES;
     if ([invocation.returnValue isKindOfClass:[NSArray class]]) {
         self.templateCounter = nil;
     }
+}
+
+- (void)navigationBarTitleTap:(UIGestureRecognizer*)recognizer {
+    [_scrollView setContentOffset:CGPointMake(0,0) animated:NO];
 }
 
 @end
