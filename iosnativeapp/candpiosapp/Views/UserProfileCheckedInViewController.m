@@ -399,6 +399,35 @@ BOOL firstLoad = YES;
         [reviews addObject:mutableReview];
     }
     
+    if (self.user.smartererName.length > 0) {
+        // Get user's current badges from smarterer if they've linked their account
+        
+        NSMutableArray *badges = [[NSMutableArray alloc] init];
+        
+        NSString *urlString = [NSString stringWithFormat:@"https://smarterer.com/api/badges/%@", self.user.smartererName];
+
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+        if (data != nil) {
+            NSError *error = nil;
+            NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+            
+            if (!error) {
+                NSArray *returnedBadges = [JSON objectForKey:@"badges"];
+                
+                for (NSDictionary *badge in returnedBadges) {
+                    NSString *badgeURL = [[badge objectForKey:@"badge"] objectForKey:@"image"];
+                    
+                    [badges addObject:[NSDictionary dictionaryWithObjectsAndKeys:badgeURL,@"badgeURL", nil]];
+                }
+            }
+            else {
+                NSLog(@"%@", error.localizedDescription);
+            }
+        }
+
+        self.user.badges = badges;
+    }
+        
     GRMustacheTemplate *template = [GRMustacheTemplate templateFromResource:@"UserResume" bundle:nil error:NULL];
     template.delegate = self;
     

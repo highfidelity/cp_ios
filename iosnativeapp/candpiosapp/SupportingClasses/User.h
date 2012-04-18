@@ -44,6 +44,7 @@
 @property (nonatomic, readonly) BOOL hasAnyWorkInformation;
 @property (nonatomic, strong) NSArray *educationInformation;
 @property (nonatomic, readonly) BOOL hasAnyEducationInformation;
+@property (nonatomic, assign) BOOL hasAnyBadges;
 @property (nonatomic, strong) NSDictionary *reviews;
 @property (nonatomic, strong) NSMutableArray *checkInHistory;
 @property (nonatomic, readonly) NSMutableArray *favoritePlaces;
@@ -52,6 +53,8 @@
 @property (nonatomic, strong) NSString *minorJobCategory;
 @property (nonatomic, assign) BOOL enteredInviteCode;
 @property (nonatomic, strong) NSDate *joinDate;
+@property (nonatomic, strong) NSMutableArray *badges;
+@property (nonatomic, strong) NSString *smartererName;
 
 -(void)loadUserResumeData:(void (^)(NSError *error))completion;
 -(id)initFromDictionary:(NSDictionary *)userDict;

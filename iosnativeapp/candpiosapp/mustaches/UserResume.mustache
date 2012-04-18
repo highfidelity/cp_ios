@@ -136,6 +136,13 @@
         font-weight: bold;
     }
 
+    dl#smarterer-list dt {
+        float: left;
+        display: inline-block;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
     dt {
         margin-top: 1em;
     }
@@ -221,6 +228,18 @@
                 </tr>
                 {{/linkedInVerified}}
             </table>
+
+            {{#hasAnyBadges}}
+                <h2 class="line-bottom">Smarterer Badges</h2>
+                <dl id="smarterer-list">
+                    {{#badges}}
+                        <dt>
+                            <img src="{{#badgeURL}}{{badgeURL}}{{/badgeURL}}" width="100" height="90"/>
+                        </dt>
+                    {{/badges}}
+                </dl>
+                <div style="clear: both"></div>
+            {{/hasAnyBadges}}
 
             {{#hasAnyWorkInformation}}
                 <h2 class="line-bottom">Work</h2>

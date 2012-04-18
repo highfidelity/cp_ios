@@ -44,6 +44,8 @@
 @synthesize minorJobCategory =  _minorJobCategory;
 @synthesize enteredInviteCode = _enteredInviteCode;
 @synthesize joinDate = _joinDate;
+@synthesize badges = _badges;
+@synthesize smartererName = _smartererName;
 
 -(id)init
 {
@@ -204,7 +206,11 @@
 }
 
 - (BOOL)hasAnyEducationInformation {
-    return self.educationInformation.count > 0;;
+    return self.educationInformation.count > 0;
+}
+
+- (BOOL)hasAnyBadges {
+    return self.badges.count > 0;
 }
 
 - (NSMutableArray *)favoritePlaces {
@@ -312,7 +318,10 @@
             
             // work and education
             self.workInformation = [userDict objectForKey:@"work"];
-            self.educationInformation = [userDict objectForKey:@"education"];        
+            self.educationInformation = [userDict objectForKey:@"education"];
+
+            // badge information
+//            self.badges = [userDict objectForKey:@"badges"];
             
             // user checkin data
             self.placeCheckedIn.checkinCount = [[userDict valueForKeyPath:@"checkin_data.users_here"] intValue];
@@ -339,6 +348,10 @@
             
             [self setEnteredInviteCodeFromJSONString:[userDict objectForKey:@"entered_invite_code"]];
             [self setJoinDateFromJSONString:[userDict objectForKey:@"join_date"]];
+
+            if ([[userDict objectForKey:@"smarterer_name"] isKindOfClass:[NSString class]]) {
+                self.smartererName = [userDict objectForKey:@"smarterer_name"];
+            }
             
             // call the completion block passed by the caller
             if(completion)

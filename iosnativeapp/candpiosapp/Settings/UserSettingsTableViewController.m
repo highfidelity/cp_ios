@@ -290,7 +290,7 @@
     }
     else if (indexPath.row == 4) {
         cell.textLabel.textColor = [UIColor whiteColor];
-        cell.textLabel.text = @"Smarterer";
+        cell.textLabel.text = @"Smarterer Badges";
         cell.textLabel.font = [UIFont systemFontOfSize:14];
     }
 
