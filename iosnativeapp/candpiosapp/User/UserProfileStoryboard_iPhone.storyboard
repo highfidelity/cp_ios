@@ -377,7 +377,7 @@
                                 <rect key="frame" x="9" y="331" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="go-menu-button-1.png">
+                                <state key="normal" image="exchange-cards.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -863,9 +863,9 @@
         <image name="chat-bubble-right-middle.png" width="261" height="13"/>
         <image name="chat-bubble-right-top.png" width="261" height="14"/>
         <image name="checked-in-location.png" width="16" height="16"/>
+        <image name="exchange-cards.png" width="75" height="75"/>
         <image name="go-button.png" width="16" height="16"/>
         <image name="go-menu-bg.png" width="75" height="279"/>
-        <image name="go-menu-button-1.png" width="75" height="55"/>
         <image name="go-menu-button-2.png" width="75" height="54"/>
         <image name="go-menu-button-3.png" width="75" height="75"/>
         <image name="go-menu-button-minus.png" width="75" height="75"/>

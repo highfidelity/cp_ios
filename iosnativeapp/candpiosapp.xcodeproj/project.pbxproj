@@ -134,8 +134,6 @@
 		536DE90D150156DC00794650 /* FaceToFaceAcceptDeclineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536DE90A150156DC00794650 /* FaceToFaceAcceptDeclineViewController.m */; };
 		536DE90E150156DC00794650 /* FaceToFaceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 536DE90C150156DC00794650 /* FaceToFaceHelper.m */; };
 		536DE913150156FD00794650 /* FaceToFacePasswordInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536DE912150156FD00794650 /* FaceToFacePasswordInputViewController.m */; };
-		537C267F14EDD7EE0073FA70 /* go-menu-button-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 537C267714EDD7EE0073FA70 /* go-menu-button-1.png */; };
-		537C268014EDD7EE0073FA70 /* go-menu-button-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 537C267814EDD7EE0073FA70 /* go-menu-button-1@2x.png */; };
 		537C268114EDD7EE0073FA70 /* go-menu-button-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 537C267914EDD7EE0073FA70 /* go-menu-button-2.png */; };
 		537C268214EDD7EE0073FA70 /* go-menu-button-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 537C267A14EDD7EE0073FA70 /* go-menu-button-2@2x.png */; };
 		537C268914EDE0B90073FA70 /* go-menu-button-minus.png in Resources */ = {isa = PBXBuildFile; fileRef = 537C268714EDE0B90073FA70 /* go-menu-button-minus.png */; };
@@ -229,6 +227,8 @@
 		53FE254F150EA60D00A0D93A /* PaymentHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE254D150EA50A00A0D93A /* PaymentHelper.m */; };
 		53FE2552150EAC6B00A0D93A /* UserSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE2551150EAC6B00A0D93A /* UserSettingsTableViewController.m */; };
 		694323A915213D9000EBF585 /* UserResume.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 694323A815213D9000EBF585 /* UserResume.mustache */; };
+		6947F40015372B59005D9958 /* exchange-cards.png in Resources */ = {isa = PBXBuildFile; fileRef = 6947F3FE15372B59005D9958 /* exchange-cards.png */; };
+		6947F40115372B59005D9958 /* exchange-cards@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6947F3FF15372B59005D9958 /* exchange-cards@2x.png */; };
 		6983701C15252E9E00D223BC /* thumbs-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983701B15252E9E00D223BC /* thumbs-down@2x.png */; };
 		6983701F15252EA500D223BC /* thumbs-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983701E15252EA500D223BC /* thumbs-up@2x.png */; };
 		6983702415252EC000D223BC /* network-icon-facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983702015252EC000D223BC /* network-icon-facebook.png */; };
@@ -623,8 +623,6 @@
 		536DE90C150156DC00794650 /* FaceToFaceHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceToFaceHelper.m; sourceTree = "<group>"; };
 		536DE911150156FD00794650 /* FaceToFacePasswordInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceToFacePasswordInputViewController.h; sourceTree = "<group>"; };
 		536DE912150156FD00794650 /* FaceToFacePasswordInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaceToFacePasswordInputViewController.m; sourceTree = "<group>"; };
-		537C267714EDD7EE0073FA70 /* go-menu-button-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-menu-button-1.png"; path = "images/go-menu-button-1.png"; sourceTree = "<group>"; };
-		537C267814EDD7EE0073FA70 /* go-menu-button-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-menu-button-1@2x.png"; path = "images/go-menu-button-1@2x.png"; sourceTree = "<group>"; };
 		537C267914EDD7EE0073FA70 /* go-menu-button-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-menu-button-2.png"; path = "images/go-menu-button-2.png"; sourceTree = "<group>"; };
 		537C267A14EDD7EE0073FA70 /* go-menu-button-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-menu-button-2@2x.png"; path = "images/go-menu-button-2@2x.png"; sourceTree = "<group>"; };
 		537C268714EDE0B90073FA70 /* go-menu-button-minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-menu-button-minus.png"; path = "images/go-menu-button-minus.png"; sourceTree = "<group>"; };
@@ -738,6 +736,8 @@
 		53FE2550150EAC6B00A0D93A /* UserSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSettingsTableViewController.h; path = Settings/UserSettingsTableViewController.h; sourceTree = "<group>"; };
 		53FE2551150EAC6B00A0D93A /* UserSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSettingsTableViewController.m; path = Settings/UserSettingsTableViewController.m; sourceTree = "<group>"; };
 		694323A815213D9000EBF585 /* UserResume.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserResume.mustache; sourceTree = "<group>"; };
+		6947F3FE15372B59005D9958 /* exchange-cards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exchange-cards.png"; path = "User/images/exchange-cards.png"; sourceTree = "<group>"; };
+		6947F3FF15372B59005D9958 /* exchange-cards@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exchange-cards@2x.png"; path = "User/images/exchange-cards@2x.png"; sourceTree = "<group>"; };
 		6983701B15252E9E00D223BC /* thumbs-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "thumbs-down@2x.png"; path = "images/thumbs-down@2x.png"; sourceTree = "<group>"; };
 		6983701E15252EA500D223BC /* thumbs-up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "thumbs-up@2x.png"; path = "images/thumbs-up@2x.png"; sourceTree = "<group>"; };
 		6983702015252EC000D223BC /* network-icon-facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "network-icon-facebook.png"; path = "images/network-icon-facebook.png"; sourceTree = "<group>"; };
@@ -1348,6 +1348,8 @@
 		536DE929150170BB00794650 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				6947F3FE15372B59005D9958 /* exchange-cards.png */,
+				6947F3FF15372B59005D9958 /* exchange-cards@2x.png */,
 				53FB9E4514E0A81300F4CC7F /* available-for-icon@2x~iphone.png */,
 				53FB9E4614E0A81300F4CC7F /* available-for-icon~iphone.png */,
 				533AFECC1523E87200D6E6A9 /* default-avatar-256.png */,
@@ -1356,8 +1358,6 @@
 				53DC036114EDA16F0064D880 /* go-button~iphone.png */,
 				537C268B14EDE98F0073FA70 /* go-menu-bg.png */,
 				537C268C14EDE98F0073FA70 /* go-menu-bg@2x.png */,
-				537C267714EDD7EE0073FA70 /* go-menu-button-1.png */,
-				537C267814EDD7EE0073FA70 /* go-menu-button-1@2x.png */,
 				537C267914EDD7EE0073FA70 /* go-menu-button-2.png */,
 				537C267A14EDD7EE0073FA70 /* go-menu-button-2@2x.png */,
 				538432E914F8714D009780C5 /* go-menu-button-3.png */,
@@ -2238,8 +2238,6 @@
 				53DC696214E48DB700D64175 /* verified-linked-in~iphone.png in Resources */,
 				53DC036214EDA16F0064D880 /* go-button@2x~iphone.png in Resources */,
 				53DC036314EDA16F0064D880 /* go-button~iphone.png in Resources */,
-				537C267F14EDD7EE0073FA70 /* go-menu-button-1.png in Resources */,
-				537C268014EDD7EE0073FA70 /* go-menu-button-1@2x.png in Resources */,
 				537C268114EDD7EE0073FA70 /* go-menu-button-2.png in Resources */,
 				537C268214EDD7EE0073FA70 /* go-menu-button-2@2x.png in Resources */,
 				537C268914EDE0B90073FA70 /* go-menu-button-minus.png in Resources */,
@@ -2431,6 +2429,8 @@
 				E47E41CA153C917900D44BFD /* contacts-blank-slate@2x.png in Resources */,
 				E4BDF450153DF2700061D711 /* props-thumb.png in Resources */,
 				E4BDF451153DF2700061D711 /* props-thumb@2x.png in Resources */,
+				6947F40015372B59005D9958 /* exchange-cards.png in Resources */,
+				6947F40115372B59005D9958 /* exchange-cards@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
