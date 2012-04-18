@@ -117,7 +117,7 @@
         self.phone = [json objectForKey:@"phone"];
         self.formattedPhone = [json objectForKey:@"formatted_phone"];
         self.distanceFromUser = [[json objectForKey:@"distance"] doubleValue];
-        self.foursquareID = [json objectForKey:@"foursquare"];
+        self.foursquareID = [json objectForKey:@"foursquare_id"];
         self.checkinCount = [[json objectForKey:@"checkins"] integerValue];
         self.weeklyCheckinCount = [[json objectForKey:@"checkins_for_week"] integerValue];
         self.intervalCheckinCount = [[json objectForKey:@"checkins_for_interval"] integerValue];
