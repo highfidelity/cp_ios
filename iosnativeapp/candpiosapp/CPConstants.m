@@ -22,6 +22,8 @@
     NSString* const kLinkedInKey = @"";
     NSString* const kLinkedInSecret = @"";
     NSString* const flurryAnalyticsKey = @"";
+    NSString* const kSmartererKey = @"";
+    NSString* const kSmartererSecret = @"";
 
     #error "You're running in production mode. Are you sure you wanna do this?"
 
@@ -34,15 +36,15 @@
     NSString* const kLinkedInKey = @"4xkfzpnvuc72";
     NSString* const kLinkedInSecret = @"mxgFhH1i1PbPlWjq";
     NSString* const flurryAnalyticsKey = @"BI59BJPSZZTIFB5H87HQ";
+    NSString* const kSmartererKey = @"3f883e6fc3d54834ac93c3bfe6f33553";
+    NSString* const kSmartererSecret = @"ea670a5ca21c7d54d4e17972059b4f07";
 
-    // Emcro-created LI:
-    //#define kLinkedInKey          @"dj7n9nz3bj65"
-    //#define kLinkedInSecret       @"Hnt0m2JuooWM29OW"
     // Urban Airship
     // Configured in AirshipConfig.plist, not here anymore
 
 #endif
 
+NSString* const kSmartererCallback = @"candp://smarterer";
 NSString* const kCandPAPIVersion = @"0.1";
 
 // keys for data stored in NSUserDefaults

@@ -27,6 +27,9 @@ extern  NSString* const kFacebookAppId;
 extern  NSString* const kLinkedInKey;
 extern  NSString* const kLinkedInSecret;
 extern  NSString* const flurryAnalyticsKey;
+extern  NSString* const kSmartererKey;
+extern  NSString* const kSmartererSecret;
+extern  NSString* const kSmartererCallback;
 
 
 // NOTE: We are slowly moving the way we store data to the 

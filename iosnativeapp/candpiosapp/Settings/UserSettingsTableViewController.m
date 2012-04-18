@@ -288,6 +288,12 @@
         cell.textLabel.text = @"Job Category";
         cell.textLabel.font = [UIFont systemFontOfSize:14];
     }
+    else if (indexPath.row == 4) {
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.textLabel.text = @"Smarterer";
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
+    }
+
 }
 
 #pragma mark - Spinner for Table Cells

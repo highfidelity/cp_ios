@@ -99,4 +99,8 @@
 
 + (void)saveUserMajorJobCategory:(NSString *)majorJobCategory
              andMinorJobCategory:(NSString *)minorJobCategory;
+
++ (void)saveUserSmartererName:(NSString *)name
+                                       :(void(^)(NSDictionary *json, NSError *error))completion; 
+
 @end

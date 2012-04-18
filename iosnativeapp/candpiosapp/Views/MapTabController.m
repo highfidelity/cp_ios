@@ -177,6 +177,7 @@ BOOL clearLocations = NO;
 
 - (IBAction)refreshButtonClicked:(id)sender
 {
+    
     clearLocations = NO;
     [self refreshLocations];
 }

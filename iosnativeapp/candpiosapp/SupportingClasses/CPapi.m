@@ -867,4 +867,13 @@
                          completion:nil];
 }
 
++ (void)saveUserSmartererName:(NSString *)name 
+                                       :(void (^)(NSDictionary *, NSError *))completion
+{
+    [self makeHTTPRequestWithAction:@"saveUserSmartererName"
+                     withParameters:[NSDictionary dictionaryWithObject:name
+                                                                forKey:@"name"]
+                         completion:completion];
+}
+
 @end

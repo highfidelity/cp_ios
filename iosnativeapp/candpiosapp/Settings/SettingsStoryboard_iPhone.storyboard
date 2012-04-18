@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development version="4300" identifier="xcode"/>
@@ -547,7 +547,7 @@
                                         <color key="backgroundColor" red="0.24313725489999999" green="0.24313725489999999" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" shouldIndentWhileEditing="NO" textLabel="wlF-CM-RiE" style="IBUITableViewCellStyleDefault" id="2rZ-uo-Ob7">
-                                        <rect key="frame" x="0.0" y="143" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="143" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -566,6 +566,28 @@
                                         <color key="backgroundColor" red="0.24313725489999999" green="0.24313725489999999" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <segue destination="Iyg-jY-ijR" kind="push" identifier="SettingsToJobCategoriesSegue" id="aZ9-VM-UcT"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="0.0" shouldIndentWhileEditing="NO" textLabel="yrD-1g-XDV" style="IBUITableViewCellStyleDefault" id="VNZ-aP-2bT">
+                                        <rect key="frame" x="0.0" y="187" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Smarterer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yrD-1g-XDV" userLabel="Label - Smarterer">
+                                                    <rect key="frame" x="10" y="0.0" width="260" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" red="0.24313725531101227" green="0.24313725531101227" blue="0.24313725531101227" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <segue destination="N65-G8-6X2" kind="push" identifier="SettingsToSmartererSegue" id="Z1k-Ye-2lH"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -670,7 +692,33 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-332" y="-489"/>
+            <point key="canvasLocation" x="-193" y="-492"/>
+        </scene>
+        <!--Table View Controller - Root View Controller-->
+        <scene sceneID="JjA-VT-1vz">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1QL-82-i8j" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="qKS-Ul-qjI" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="X8n-zR-Xzg">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="LxM-P8-r4P">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="CbQ-Co-84G"/>
+                </tableViewController>
+            </objects>
+            <point key="canvasLocation" x="202" y="132"/>
         </scene>
         <!--Linked Accounts Table View Controller - Linked Accounts-->
         <scene sceneID="nc2-v7-E52">
@@ -717,7 +765,35 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="-719" y="97"/>
+            <point key="canvasLocation" x="-719" y="405"/>
+        </scene>
+        <!--Smarterer Login Controller-->
+        <scene sceneID="W9b-jS-2LZ">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wSs-m8-YRB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="N65-G8-6X2" customClass="SmartererLoginController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Boe-pk-R9B">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" id="pyQ-wl-Awg">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="delegate" destination="N65-G8-6X2" id="Obk-ca-tx9"/>
+                                </connections>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="g7U-S9-gxl"/>
+                    <connections>
+                        <outlet property="myWebView" destination="pyQ-wl-Awg" id="sUA-hD-8GA"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-326" y="116"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Cuu-5f-AYW">
@@ -732,7 +808,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-1196" y="97"/>
+            <point key="canvasLocation" x="-1196" y="405"/>
         </scene>
         <!--Add Funds View Controller-->
         <scene sceneID="LYN-xf-xk9">
@@ -837,6 +913,9 @@
                 <relationship kind="outlet" name="userBalance" candidateClass="UILabel"/>
             </relationships>
         </class>
+        <class className="BaseLoginController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BaseLoginController.h"/>
+        </class>
         <class className="GenerateInvitationCodeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GenerateInvitationCodeViewController.h"/>
             <relationships>
@@ -875,6 +954,12 @@
                 <relationship kind="outlet" name="loginButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="venueButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="SmartererLoginController" superclassName="BaseLoginController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SmartererLoginController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="myWebView" candidateClass="UIWebView"/>
             </relationships>
         </class>
         <class className="UserSettingsTableViewController" superclassName="UITableViewController">
