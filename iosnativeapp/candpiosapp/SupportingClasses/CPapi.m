@@ -295,7 +295,7 @@
              if ([[json objectForKey:@"error"] boolValue]) {
                  alertMsg = [json objectForKey:@"message"];
              } else {
-                 alertMsg = @"Request sent!";
+                 [SVProgressHUD showSuccessWithStatus:@"Contact Request Sent!"];
              }
          }
          
