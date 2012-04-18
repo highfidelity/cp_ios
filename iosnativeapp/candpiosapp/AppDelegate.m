@@ -523,7 +523,7 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
     // Face to Face Accept Invite ("f2f3" = [user nickname])
     else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey] != nil)
     {        
-        [FaceToFaceHelper presentF2FSuccessFrom:[[userInfo valueForKey:@"aps"] valueForKey:@"alert"] 
+        [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"acceptor"]
                                        fromView:self.settingsMenuController];
     }
     // Received payment

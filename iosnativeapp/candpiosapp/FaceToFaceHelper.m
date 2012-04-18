@@ -113,7 +113,7 @@
     
     // Show error if we got one
     UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Contact Request"
+                          initWithTitle:@"Contact Request Accepted"
                           message:alertMsg
                           delegate:self
                           cancelButtonTitle:@"OK"
