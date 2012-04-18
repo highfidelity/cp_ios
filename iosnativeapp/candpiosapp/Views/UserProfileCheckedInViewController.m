@@ -60,6 +60,7 @@
 @property (nonatomic, strong) NSNumber *templateCounter;
 @property (nonatomic, assign) NSInteger selectedFavoriteVenueIndex;
 @property (weak, nonatomic) IBOutlet UILabel *propNoteLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sponsorNicknameLabel;
 
 -(void)animateVenueLoadingPoints;
 -(void)stopAnimatingVenueLoadingPoints;
@@ -116,6 +117,7 @@
 @synthesize templateCounter = _templateCounter;
 @synthesize selectedFavoriteVenueIndex = _selectedFavoriteVenueIndex;
 @synthesize propNoteLabel = _propNoteLabel;
+@synthesize sponsorNicknameLabel = _sponsorNicknameLabel;
 
 BOOL firstLoad = YES;
 
@@ -263,6 +265,7 @@ BOOL firstLoad = YES;
     [self setReviewButton:nil];
     [self setGoMenuBackground:nil];
     [self setPropNoteLabel:nil];
+    [self setSponsorNicknameLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -314,10 +317,17 @@ BOOL firstLoad = YES;
         }
     }
         
+    if (self.user.sponsorNickname) {
+        self.sponsorNicknameLabel.text = [self.user.sponsorNickname uppercaseString];
+    } else {
+        self.sponsorNicknameLabel.text = @"N/A";
+    }
     // if the user has an hourly rate then put it, otherwise it comes up as N/A
     if (self.user.hourlyRate) {
         self.resumeRate.text = self.user.hourlyRate;
     }            
+    
+    
     
     // show total spent and total earned   
     NSNumberFormatter *decimalFormatter = [[NSNumberFormatter alloc] init];

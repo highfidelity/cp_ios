@@ -19,6 +19,7 @@
 @synthesize status = _status;
 @synthesize location = _location;
 @synthesize bio = _bio;
+@synthesize sponsorNickname = _sponsorNickname;
 @synthesize facebookVerified = _facebookVerified;
 @synthesize linkedInVerified = _linkedInVerified;
 @synthesize hourlyRate = _hourlyRate;
@@ -271,6 +272,10 @@
                            stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             
             self.bio = [userDict objectForKey:@"bio"];
+            
+            if ([[userDict objectForKey:@"sponsorNickname"] isKindOfClass:[NSString class]]) {
+                self.sponsorNickname = [userDict objectForKey:@"sponsorNickname"];
+            }
             
             if ([[userDict objectForKey:@"job_title"] isKindOfClass:[NSString class]]) {
                 self.jobTitle = [userDict objectForKey:@"job_title"];

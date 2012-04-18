@@ -217,6 +217,24 @@
                                         <rect key="frame" x="10" y="263" width="300" height="115"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sponsor Name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="nbi-kY-loo">
+                                                <rect key="frame" x="142" y="24" width="147" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <color key="shadowColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
+                                                <size key="shadowOffset" width="0.0" height="1"/>
+                                            </label>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sponsored by" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="csW-0E-HxZ">
+                                                <rect key="frame" x="159" y="9" width="130" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <color key="shadowColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
+                                                <size key="shadowOffset" width="0.0" height="1"/>
+                                            </label>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.75" contentMode="left" text="Resume" lineBreakMode="tailTruncation" minimumFontSize="10" id="Do4-zK-XAE">
                                                 <rect key="frame" x="22" y="17" width="73" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -468,6 +486,7 @@
                         <outlet property="reviewDescription" destination="atw-QG-ThQ" id="WRm-DR-FwM"/>
                         <outlet property="reviewView" destination="nko-kG-ujj" id="hCX-C5-TU7"/>
                         <outlet property="scrollView" destination="FvT-cB-xLT" id="pcL-ZE-SlX"/>
+                        <outlet property="sponsorNicknameLabel" destination="nbi-kY-loo" id="pPw-iy-02k"/>
                         <outlet property="userCard" destination="4sO-iN-dSk" id="fec-rS-lGF"/>
                         <outlet property="venueAddress" destination="kT2-bI-cY7" id="3wb-Dv-biX"/>
                         <outlet property="venueIcon" destination="eYn-un-Hew" id="9y3-74-3Z1"/>
@@ -952,6 +971,7 @@
                 <relationship kind="outlet" name="reviewDescription" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="reviewView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="sponsorNicknameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="userCard" candidateClass="UIView"/>
                 <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="venueIcon" candidateClass="UIImageView"/>
