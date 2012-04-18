@@ -17,7 +17,7 @@
 + (void)makeHTTPRequestWithAction:(NSString *)action
                   withParameters:(NSMutableDictionary *)parameters
                  responseHandler:(SEL)selector;
-
+ 
 
 + (void)makeHTTPRequestWithAction:(NSString *)action
                    withParameters:(NSMutableDictionary *)parameters 
@@ -272,6 +272,58 @@
                          completion:completion];
 }
 
+#pragma mark - Contact Request
++ (void)sendContactRequestToUserId:(int)userId {
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   [NSString stringWithFormat:@"%d", userId], @"acceptor_id",
+                                   nil];
+    
+    [SVProgressHUD showWithStatus:@"Sending Request..."];
+    
+    [self makeHTTPRequestWithAction:@"sendContactRequest"
+                     withParameters:params 
+                         completion:
+     ^(NSDictionary *json, NSError *error) {
+         NSString *alertMsg = nil;
+         
+         [SVProgressHUD dismiss];
+         
+         if (json == NULL) {
+             alertMsg = @"We couldn't send the request.\nPlease try again.";
+         } else {
+             if ([[json objectForKey:@"error"] boolValue]) {
+                 alertMsg = [json objectForKey:@"message"];
+             } else {
+                 alertMsg = @"Request sent!";
+             }
+         }
+         
+         if (alertMsg) {
+             UIAlertView *alert = [[UIAlertView alloc]
+                                   initWithTitle:@"Add a Contact"
+                                   message:alertMsg
+                                   delegate:self
+                                   cancelButtonTitle:@"OK"
+                                   otherButtonTitles: nil];
+             [alert show];
+             
+             // avoid stacking the f2f alerts
+             [AppDelegate instance].settingsMenuController.f2fInviteAlert = alert;
+         }
+    }];
+}
+
++ (void)sendAcceptContactRequestFromUserId:(int)userId
+                                completion:(void (^)(NSDictionary *, NSError *))completion {
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   [NSString stringWithFormat:@"%d", userId], @"initiator_id",
+                                   nil];
+    
+    [self makeHTTPRequestWithAction:@"acceptContactRequest"
+                     withParameters:params 
+                         completion:completion];
+}
 
 #pragma mark - Face-to-Face
 
@@ -283,7 +335,7 @@
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setValue:[NSString stringWithFormat:@"%d", userId] forKey:@"greeted_id"];
 
-    [SVProgressHUD showWithStatus:@"Sending Invite..."];
+    [SVProgressHUD showWithStatus:@"Sending Request..."];
     [self makeHTTPRequestWithAction:@"f2fInvite"
                      withParameters:parameters
                     responseHandler:@selector(f2fInviteResponseHandler:)];
@@ -318,23 +370,23 @@
     
     if (json == NULL)
     {
-        alertMsg = @"We couldn't send the invite.\nPlease try again.";
+        alertMsg = @"We couldn't send the request.\nPlease try again.";
     } 
     else
     {
         if ([[json objectForKey:@"error"] isEqualToString:@"0"] ||
             [json objectForKey:@"error"] == nil)
         {
-            alertMsg = @"Invite sent!";
+            alertMsg = @"Request sent!";
         }
         else if ([[json objectForKey:@"error"] isEqualToString:@"4"])
         {
-            alertMsg = [NSString stringWithFormat:@"We've resent your invite.\nThe password is: %@.",
+            alertMsg = [NSString stringWithFormat:@"We've resent your request.\nThe password is: %@.",
                         [json objectForKey:@"message"]];
         }
         else if ([[json objectForKey:@"error"] isEqualToString:@"6"])
         {
-            alertMsg = @"Invite already sent";
+            alertMsg = @"Request already sent";
         }
         else
         {
@@ -345,7 +397,7 @@
     
     // Show error if we got one
     UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Face to Face"
+                          initWithTitle:@"Add a Contact"
                           message:alertMsg
                           delegate:self
                           cancelButtonTitle:@"OK"
@@ -460,14 +512,14 @@
     
     if (json == NULL)
     {
-        alertMsg = @"Error declining invite.";
+        alertMsg = @"Error declining request.";
     } 
     else
     {
         if ([[json objectForKey:@"error"] isEqualToString:@"0"] ||
             [json objectForKey:@"error"] == nil)
         {
-            alertMsg = @"Face to Face declined.";
+            alertMsg = @"Contact Request declined.";
         }
         else
         {
@@ -478,7 +530,7 @@
     
     // Show error if we got one
     UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Face to Face"
+                          initWithTitle:@"Contact Request"
                           message:alertMsg
                           delegate:self
                           cancelButtonTitle:@"OK"
@@ -535,7 +587,7 @@
         if ([[json objectForKey:@"error"] isEqualToString:@"0"] ||
             [json objectForKey:@"error"] == nil)
         {
-            alertMsg = @"Congratulations! You've met Face to Face.";
+            alertMsg = @"You have been added as a Contact!";
             [SVProgressHUD dismiss];
             [[AppDelegate instance].tabBarController dismissModalViewControllerAnimated:YES];
         }
@@ -554,7 +606,7 @@
     
     // Show error if we got one
     UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Face to Face"
+                          initWithTitle:@"Contact Request"
                           message:alertMsg
                           delegate:self
                           cancelButtonTitle:@"OK"

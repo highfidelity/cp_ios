@@ -19,6 +19,9 @@
 #import "EnterInvitationCodeViewController.h"
 #import "User.h"
 
+#define kContactRequestAPNSKey @"contact_request"
+#define kContactRequestAcceptedAPNSKey @"contact_accepted"
+
 @interface AppDelegate(Internal)
 -(void) loadSettings;
 +(NSString*) settingsFilepath;
@@ -505,13 +508,9 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
                                            fromUserId:userId
                                          withRootView:self.tabBarController];
     }
-    // This is a Face-to-Face invite ("f2f1" = [user id])
-    else if ([userInfo valueForKey:@"f2f1"] != nil)
+    else if ([userInfo valueForKey:kContactRequestAPNSKey] != nil)
     {        
-        // make sure we aren't looking at an invite from this user
-        
-        
-        [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:@"f2f1"] intValue]
+        [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:kContactRequestAPNSKey] intValue]
                                           fromView:self.settingsMenuController];
     }
     // Face to Face Accept Invite ("f2f2" = [userId], "password" = [f2f password])
@@ -522,9 +521,9 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
                                           fromView:self.settingsMenuController];        
     }
     // Face to Face Accept Invite ("f2f3" = [user nickname])
-    else if ([userInfo valueForKey:@"f2f3"] != nil)
+    else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey] != nil)
     {        
-        [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"f2f3"] 
+        [FaceToFaceHelper presentF2FSuccessFrom:[[userInfo valueForKey:@"aps"] valueForKey:@"alert"] 
                                        fromView:self.settingsMenuController];
     }
     // Received payment

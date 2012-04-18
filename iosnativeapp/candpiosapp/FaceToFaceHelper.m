@@ -38,7 +38,7 @@
 #endif 
     
     // Show the SVProgressHUD so the user knows they're waiting for an invite
-    [SVProgressHUD showWithStatus:@"Recieving F2F Invite"];
+    [SVProgressHUD showWithStatus:@"Recieving Contact Request..."];
     
     // get the FaceToFace storyboard
     UIStoryboard *f2fstory = [UIStoryboard storyboardWithName:@"FaceToFaceStoryboard_iPhone" bundle:nil];
@@ -64,11 +64,11 @@
             // dismiss the SVProgress HUD with an error
             [SVProgressHUD dismiss];
             NSString *alertMsg = [NSString stringWithFormat:
-                                  @"Oops! We couldn't get the data.\nAsk the sender to invite you again."];
+                                  @"Oops! We couldn't get the data.\nAsk the sender to send Contact Request again."];
             
             // Show error alert
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:@"Face to Face"
+                                  initWithTitle:@"Contct Request"
                                   message:alertMsg
                                   delegate:self
                                   cancelButtonTitle:@"OK"
@@ -83,7 +83,7 @@
                         fromView:(SettingsMenuController *)view
 {    
     NSString *alertMsg = [NSString stringWithFormat:
-                          @"The Face to Face password is: %@", password];
+                          @"The Contact Request password is: %@", password];
     
     if (view.f2fInviteAlert) {
         // dismiss the invite alert if it's still hanging around
@@ -92,7 +92,7 @@
     
     // Show password to this user
     UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Face to Face"
+                          initWithTitle:@"Contact Request"
                           message:alertMsg
                           delegate:self
                           cancelButtonTitle:@"OK"
@@ -106,14 +106,14 @@
                      fromView:(SettingsMenuController *) view
 {
     NSString *alertMsg = [NSString stringWithFormat:
-                          @"Awesome! You met %@ Face to Face!", nickname];
+                          @"Awesome! %@ has been added as a Contact!", nickname];
 
     // dismiss the password alert if it's still around so they don't stack
     [view.f2fPasswordAlert dismissWithClickedButtonIndex:0 animated:NO];
     
     // Show error if we got one
     UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Face to Face"
+                          initWithTitle:@"Contact Request"
                           message:alertMsg
                           delegate:self
                           cancelButtonTitle:@"OK"

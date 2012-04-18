@@ -16,6 +16,8 @@
 #import "VenueInfoViewController.h"
 #import "NSString+HTML.h"
 
+#define kRequestToAddToMyContactsActionSheetTitle @"Request to add to My Contacts?"
+
 @interface UserProfileCheckedInViewController() <UIWebViewDelegate, UIActionSheetDelegate, UITextFieldDelegate, GRMustacheTemplateDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UILabel *checkedIn;
@@ -620,7 +622,7 @@ BOOL firstLoad = YES;
 
 - (IBAction)f2fInvite {
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                  initWithTitle:@"Send Face to Face invite?"
+                                  initWithTitle:kRequestToAddToMyContactsActionSheetTitle
                                   delegate:self
                                   cancelButtonTitle:@"Cancel"
                                   destructiveButtonTitle:@"Send"
@@ -630,10 +632,10 @@ BOOL firstLoad = YES;
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if ([actionSheet title] == @"Send Face to Face invite?") {
+    if ([actionSheet title] == kRequestToAddToMyContactsActionSheetTitle) {
         [self minusButtonPressed:nil];
         if (buttonIndex != [actionSheet cancelButtonIndex]) {
-            [CPapi sendF2FInvite:self.user.userID];
+            [CPapi sendContactRequestToUserId:self.user.userID];
         }
     }
 }

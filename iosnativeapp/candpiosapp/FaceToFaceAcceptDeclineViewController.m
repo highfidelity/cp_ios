@@ -81,9 +81,9 @@
     [self.viewUnderToolbar insertSubview:self.userProfile.view atIndex:0];
     
     // set the title of the navigation item
-    self.navigationBar.topItem.title = [NSString stringWithFormat:@"F2F with %@?", self.user.nickname];
+    self.navigationBar.topItem.title = @"Contact Request";
     
-    self.actionBarHeader.text = [NSString stringWithFormat:@"%@ is nearby and\n wants to meet you face to face.", [self.user firstName]];
+    self.actionBarHeader.text = [NSString stringWithFormat:@"%@ is nearby and\nwants to add you to their Contacts.", [self.user firstName]];
 }
 
 - (void)viewDidUnload
@@ -109,52 +109,49 @@
 #pragma mark - Actions
 
 - (IBAction)acceptF2F {
-    // TODO: Don't show the password entry screen unless we know that the accept request worked
-    [CPapi sendF2FAccept:self.user.userID];
-
-    if (![self.view viewWithTag:F2FPasswordViewTag]) {
-        
-        // TODO: Add the FaceToFacePasswordInputViewController as a child view controller
-        // This current implementation works but having it as a child view controller would be clearer
-        
-        // get the password entry view if we don't have it
-        // grab the view controller from the storyboard
-        FaceToFacePasswordInputViewController *f2fPasswordVC = [self.storyboard instantiateViewControllerWithIdentifier:@"FaceToFacePasswordInput"];
-        
-        // set the frame of the password entry view so it's below the current view
-        f2fPasswordVC.view.frame = CGRectMake(0, self.scrollView.frame.size.height, f2fPasswordVC.view.frame.size.width, f2fPasswordVC.view.frame.size.height);
-        f2fPasswordVC.view.tag = F2FPasswordViewTag;
-        
-        [self.scrollView addSubview:f2fPasswordVC.view];
-        
-        // set the scrollView contentSize so we can hold everything
-        self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, self.scrollView.contentSize.height + f2fPasswordVC.view.frame.size.height);
-        
-        // set the text on the top label
-        f2fPasswordVC.waitLabel.text = [NSString stringWithFormat:@"Wait for %@ to find you\nand tell you the password.", [self.user firstName]];
-        
-        // set our passwordField property to the passwordField of the view we just added
-        self.passwordField = f2fPasswordVC.passwordField;
-        
-        // be the delegate of that password field
-        self.passwordField.delegate = self;
-        
-        // put the cancel button in the navigation bar
-        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonSystemItemCancel target:self action:@selector(cancelPasswordEntry:)];
-        NSLog(@"%@", f2fPasswordVC.navigationItem.title);
-        f2fPasswordVC.navigationItem.rightBarButtonItem = cancelButton;
-    } 
+    self.f2fAcceptButton.enabled = NO;
     
-    // slide up the view
-    [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
-        [self.scrollView setContentOffset:CGPointMake(0, self.scrollView.frame.size.height)];
-        [self.passwordField becomeFirstResponder];
-    } completion:NULL];
+    [SVProgressHUD showWithStatus:@"Loading..."];
     
+    [CPapi sendAcceptContactRequestFromUserId:self.user.userID
+                                   completion:
+     ^(NSDictionary *json, NSError *error) {
+         NSString *errorMessage = nil;
+         
+         [SVProgressHUD dismiss];
+         
+         if (json == NULL) {
+             errorMessage = @"We couldn't send the request.\nPlease try again.";
+         } else {
+             if ([[json objectForKey:@"error"] boolValue]) {
+                 errorMessage = [json objectForKey:@"message"];
+             }
+         }
+         
+         if (errorMessage) {
+             UIAlertView *alert = [[UIAlertView alloc]
+                                   initWithTitle:@"Contact Request"
+                                   message:errorMessage
+                                   delegate:self
+                                   cancelButtonTitle:@"OK"
+                                   otherButtonTitles: nil];
+             [alert show];
+             
+             // avoid stacking the f2f alerts
+             [AppDelegate instance].settingsMenuController.f2fInviteAlert = alert;
+             
+             self.f2fAcceptButton.enabled = YES;
+         } else {
+             [self dismissModalViewControllerAnimated:YES];
+             
+             [SVProgressHUD performSelector:@selector(showSuccessWithStatus:)
+                                 withObject:@"Contact Request Accepted"
+                                 afterDelay:1];
+         }
+     }];
 }
 
 - (IBAction)declineF2F {
-    [CPapi sendF2FDecline:self.user.userID];
     [self dismissModalViewControllerAnimated:YES];
 }
 
