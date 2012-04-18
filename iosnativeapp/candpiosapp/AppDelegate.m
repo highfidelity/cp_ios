@@ -513,14 +513,6 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
         [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:kContactRequestAPNSKey] intValue]
                                           fromView:self.settingsMenuController];
     }
-    // Face to Face Accept Invite ("f2f2" = [userId], "password" = [f2f password])
-    else if ([userInfo valueForKey:@"f2f2"] != nil)
-    {        
-        [FaceToFaceHelper presentF2FAcceptFromUser:[[userInfo valueForKey:@"f2f2"] intValue]
-                                      withPassword:[userInfo valueForKey:@"password"]
-                                          fromView:self.settingsMenuController];        
-    }
-    // Face to Face Accept Invite ("f2f3" = [user nickname])
     else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey] != nil)
     {        
         [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"acceptor"]
