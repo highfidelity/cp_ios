@@ -258,7 +258,16 @@
     UILabel *checkInLabel = [[UILabel alloc] init];
         
     // set the text on the label
-    checkInLabel.text = [NSString stringWithFormat:@"Check in to %@", self.venue.name];
+    
+    NSString *curUserID = [NSString stringWithFormat:@"%i", [CPAppDelegate currentUser].userID];
+    NSString *lblText = @"";
+    
+    if([[[activeUsers objectForKey:curUserID] objectForKey:@"checked_in"] boolValue]){
+        lblText = [NSString stringWithFormat:@"Check out of %@", self.venue.name];
+    }else{
+        lblText = [NSString stringWithFormat:@"Check in to %@", self.venue.name];
+    }
+    checkInLabel.text = lblText;
     
     // change the font to league gothic
     [CPUIHelper changeFontForLabel:checkInLabel toLeagueGothicOfSize:18];
@@ -305,8 +314,11 @@
     checkInButton.frame = newFrame;
     
     // target for check in button
-    [checkInButton addTarget:self action:@selector(checkInPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
+    if([[[activeUsers objectForKey:curUserID] objectForKey:@"checked_in"] boolValue]){
+        [checkInButton addTarget:CPAppDelegate action:@selector(checkInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        [checkInButton addTarget:self action:@selector(checkInPressed:) forControlEvents:UIControlEventTouchUpInside];
+    }
     // add the check in button to the view
     [self.userSection addSubview:checkInButton];
     
