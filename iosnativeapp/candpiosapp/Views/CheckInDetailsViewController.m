@@ -268,8 +268,7 @@
     if (self.statusTextField.text) {
         statusText = self.statusTextField.text;
     }
-            
-    // show the progressHUD to show the user that we're doing something
+    
     [SVProgressHUD showWithStatus:@"Checking In..."];
     
     // use CPapi to checkin
@@ -292,6 +291,7 @@
                     
                     localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkOutTime - minutesBefore * 60)];
                     localNotif.timeZone = [NSTimeZone defaultTimeZone];
+                    localNotif.userInfo = self.place.initializationDictionaryJSON;
                     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
                 }
                 
@@ -622,6 +622,10 @@
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationTransitionNone animations:^{
         self.userInfoBubble.alpha = 0.0;
     } completion:NULL];
+}
+
+- (void)dismissViewControllerAnimated {
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

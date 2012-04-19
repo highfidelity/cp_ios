@@ -44,7 +44,7 @@
 @property (nonatomic, readonly) BOOL hasAnyWorkInformation;
 @property (nonatomic, strong) NSArray *educationInformation;
 @property (nonatomic, readonly) BOOL hasAnyEducationInformation;
-@property (nonatomic, assign) BOOL hasAnyBadges;
+@property (nonatomic, readonly) BOOL hasAnyBadges;
 @property (nonatomic, strong) NSDictionary *reviews;
 @property (nonatomic, strong) NSMutableArray *checkInHistory;
 @property (nonatomic, readonly) NSMutableArray *favoritePlaces;

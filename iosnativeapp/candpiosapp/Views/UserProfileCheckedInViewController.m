@@ -16,7 +16,7 @@
 #import "VenueInfoViewController.h"
 #import "NSString+HTML.h"
 
-#define kRequestToAddToMyContactsActionSheetTitle @"Request to add to My Contacts?"
+#define kRequestToAddToMyContactsActionSheetTitle @"Request to exchange contact info?"
 
 @interface UserProfileCheckedInViewController() <UIWebViewDelegate, UIActionSheetDelegate, UITextFieldDelegate, GRMustacheTemplateDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;

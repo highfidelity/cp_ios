@@ -18,9 +18,12 @@
 #import "BaseLoginController.h"
 #import "EnterInvitationCodeViewController.h"
 #import "User.h"
+#import "CheckInDetailsViewController.h"
+#import "CPAlertView.h"
 
 #define kContactRequestAPNSKey @"contact_request"
 #define kContactRequestAcceptedAPNSKey @"contact_accepted"
+#define kCheckOutLocalNotificationAlertViewTitle @"You will be checked out of C&P in 5 min."
 
 @interface AppDelegate(Internal)
 -(void) loadSettings;
@@ -481,15 +484,15 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 - (void)application:(UIApplication *)app
 didReceiveLocalNotification:(UILocalNotification *)notif
 {
-    if (notif.alertAction = @"Check Out") {
-        [AppDelegate instance].checkOutTimer = [NSTimer scheduledTimerWithTimeInterval:300
-                                                                                target:self
-                                                                              selector:@selector(setCheckedOut) 
-                                                                              userInfo:nil 
-                                                                               repeats:NO];
+    if ([notif.alertAction isEqual:@"Check Out"]) {
         
-        [self.tabBarController performSegueWithIdentifier:@"ShowCheckInListTable"
-                                                           sender:self]; 
+        CPAlertView *alertView = [[CPAlertView alloc] initWithTitle:kCheckOutLocalNotificationAlertViewTitle
+                                                            message:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:@"View", nil];
+        alertView.context = notif;
+        [alertView show];
     }
 }
 
@@ -663,6 +666,35 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 void uncaughtExceptionHandler(NSException *exception) {
     [FlurryAnalytics logError:@"Uncaught" message:@"Crash!" exception:exception];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if ([alertView.title isEqualToString:kCheckOutLocalNotificationAlertViewTitle]) {
+        if (alertView.firstOtherButtonIndex == buttonIndex) {
+            CPAlertView *cpAlertView = (CPAlertView *)alertView;
+            UILocalNotification *notif = cpAlertView.context;
+            
+            [AppDelegate instance].checkOutTimer = [NSTimer scheduledTimerWithTimeInterval:300
+                                                                                    target:self
+                                                                                  selector:@selector(setCheckedOut) 
+                                                                                  userInfo:nil 
+                                                                                   repeats:NO];
+            
+            CPVenue *place = [[CPVenue alloc] initFromDictionary:notif.userInfo];
+            CheckInDetailsViewController *vc = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil]
+                                                instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
+            [vc setPlace:place];
+            vc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                                   style:UIBarButtonItemStylePlain
+                                                                                  target:vc
+                                                                                  action:@selector(dismissViewControllerAnimated)];
+            
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
+            [self.tabBarController presentModalViewController:navigationController animated:YES];
+        }
+    }
 }
 
 @end

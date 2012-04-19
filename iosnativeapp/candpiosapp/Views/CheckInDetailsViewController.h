@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "CPVenue.h"
 

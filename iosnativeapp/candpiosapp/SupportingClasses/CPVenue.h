@@ -28,6 +28,7 @@
 @property (nonatomic, readonly) NSString *checkinCountString;
 @property (nonatomic, readonly) NSString *formattedAddress;
 @property (nonatomic, strong) NSMutableDictionary *activeUsers;
+@property (nonatomic, readonly) NSDictionary *initializationDictionaryJSON;
 
 
 - (CPVenue *)initFromDictionary:(NSDictionary *)json;
