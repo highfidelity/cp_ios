@@ -184,6 +184,20 @@
         padding: 10px 0 10px 10px;
         text-align: left;
     }
+    .sponsor {
+        float: right;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 59%;
+        text-align: right;
+        white-space: nowrap;
+    }
+    .join-date {
+        display: inline-block;
+        width: 39%;
+        overflow: hidden;
+    }
 </style>
 </head>
 <body>
@@ -211,7 +225,10 @@
             {{/hasAnyFavoritePlaces}}
 
             <div id="joined-on" class="line-top line-bottom">
-                Joined on <span class="highlite">{{join_date}}</span>
+                <span class="join-date">Joined on <span class="highlite">{{join_date}}</span></span>
+                {{#sponsorNickname}}
+                <span class="sponsor">Sponsored by <span class="highlite">{{sponsorNickname}}</span></span>
+                {{/sponsorNickname}}                
             </div>
 
             <table id="connected-networks">
