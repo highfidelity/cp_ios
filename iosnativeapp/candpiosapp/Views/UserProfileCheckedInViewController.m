@@ -118,6 +118,8 @@
 @synthesize propNoteLabel = _propNoteLabel;
 
 BOOL firstLoad = YES;
+UITapGestureRecognizer* _tapRecon = nil;
+
 
 #pragma mark - View lifecycle
 
@@ -161,15 +163,15 @@ BOOL firstLoad = YES;
     self.resumeWebView.backgroundColor = paper;
     
     [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
+
     
-        
-    UITapGestureRecognizer* tapRecon = [[UITapGestureRecognizer alloc]
-                                        initWithTarget:self action:@selector(navigationBarTitleTap:)];
-    tapRecon.numberOfTapsRequired = 1;
-    tapRecon.cancelsTouchesInView = NO;
-    [self.navigationController.navigationBar addGestureRecognizer:tapRecon];
-    
-    
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self.navigationController.navigationBar removeGestureRecognizer:_tapRecon];
+    _tapRecon = nil;
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -223,6 +225,14 @@ BOOL firstLoad = YES;
             }
         }];
     }
+   
+    if(!_tapRecon){
+        _tapRecon = [[UITapGestureRecognizer alloc]
+                                        initWithTarget:self action:@selector(navigationBarTitleTap:)];
+        _tapRecon.numberOfTapsRequired = 1;
+        _tapRecon.cancelsTouchesInView = NO;
+        [self.navigationController.navigationBar addGestureRecognizer:_tapRecon];
+    }
 }
 
 - (void)viewDidUnload
@@ -263,6 +273,9 @@ BOOL firstLoad = YES;
     [self setReviewButton:nil];
     [self setGoMenuBackground:nil];
     [self setPropNoteLabel:nil];
+    
+    [self.navigationController.navigationBar removeGestureRecognizer:_tapRecon];
+    _tapRecon = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -720,7 +733,7 @@ BOOL firstLoad = YES;
 }
 
 - (void)navigationBarTitleTap:(UIGestureRecognizer*)recognizer {
-    [_scrollView setContentOffset:CGPointMake(0,0) animated:NO];
+    [_scrollView setContentOffset:CGPointMake(0,0) animated:YES];
 }
 
 @end
