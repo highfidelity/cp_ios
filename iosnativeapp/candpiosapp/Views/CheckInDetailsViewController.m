@@ -177,7 +177,7 @@
     
     // set LeagueGothic font where applicable
     for (UILabel *labelNeedsGothic in [NSArray arrayWithObjects:self.checkInLabel, self.durationHeader, nil]) {
-        [CPUIHelper changeFontForLabel:labelNeedsGothic toLeagueGothicOfSize:26];
+        [CPUIHelper changeFontForLabel:labelNeedsGothic toLeagueGothicOfSize:22];
     }
 
     [CPUIHelper changeFontForLabel:self.willLabel toLeagueGothicOfSize:25];
