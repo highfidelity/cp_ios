@@ -1,7 +1,6 @@
 #import "SmartererLoginController.h"
 #import "AFNetworking.h"
 #import "FlurryAnalytics.h"
-#import "ModalWebViewController.h"
 #import "CPapi.h"
 
 @implementation SmartererLoginController

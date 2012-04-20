@@ -23,7 +23,6 @@
 extern  NSString* const kCandPWebServiceUrl;
 extern  NSString* const kCandPAPIVersion;
 extern  NSString* const kCandPAddFundsUrl;
-extern  NSString* const kFacebookAppId;
 extern  NSString* const kLinkedInKey;
 extern  NSString* const kLinkedInSecret;
 extern  NSString* const flurryAnalyticsKey;

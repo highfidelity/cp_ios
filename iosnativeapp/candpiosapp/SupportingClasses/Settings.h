@@ -18,9 +18,6 @@
 
 //@property (nonatomic, copy) NSString *candpLoginToken;
 
-@property (nonatomic, copy) NSString *facebookAccessToken;
-@property (nonatomic, copy) NSDate *facebookExpirationDate;
-
 // note: userEmailAddress is only valid if the created their account with an email address
 @property (nonatomic, copy) NSString *userEmailAddress;
 @property (nonatomic, copy) NSString *userPassword;

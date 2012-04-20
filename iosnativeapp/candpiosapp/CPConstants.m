@@ -18,7 +18,6 @@
     NSString* const kCandPWebServiceUrl = @"https://www.coffeeandpower.com/";
 
     NSString* const kCandPAddFundsUrl = @"http://www.coffeeandpower.com/m/?ios#addFundsiPhone";
-    NSString* const kFacebookAppId = @"";
     NSString* const kLinkedInKey = @"";
     NSString* const kLinkedInSecret = @"";
     NSString* const flurryAnalyticsKey = @"";
@@ -32,7 +31,6 @@
     NSString* const kCandPWebServiceUrl = @"https://staging.candp.me/";
 
     NSString* const kCandPAddFundsUrl = @"http://staging.coffeeandpower.com/m/?ios#addFundsiPhone";
-    NSString* const kFacebookAppId = @"131753840249704";
     NSString* const kLinkedInKey = @"4xkfzpnvuc72";
     NSString* const kLinkedInSecret = @"mxgFhH1i1PbPlWjq";
     NSString* const flurryAnalyticsKey = @"BI59BJPSZZTIFB5H87HQ";

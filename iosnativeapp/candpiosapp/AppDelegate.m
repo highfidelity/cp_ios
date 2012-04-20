@@ -6,18 +6,13 @@
 //  Copyright (c) 2011 Coffee and Power Inc. All rights reserved.
 //
 
-#import "AppDelegate.h"
-#import "AFHTTPClient.h"
 #import "SignupController.h"
 #import "FaceToFaceHelper.h"
 #import "ChatHelper.h"
 #import "FlurryAnalytics.h"
 #import "OAuthConsumer.h"
 #import "PaymentHelper.h"
-#import "SignupController.h"
-#import "BaseLoginController.h"
 #import "EnterInvitationCodeViewController.h"
-#import "User.h"
 #import "CheckInDetailsViewController.h"
 #import "CPAlertView.h"
 
@@ -28,13 +23,10 @@
 @interface AppDelegate(Internal)
 -(void) loadSettings;
 +(NSString*) settingsFilepath;
--(void) addGoButton;
 @end
 
 @implementation AppDelegate
 @synthesize settings;
-@synthesize facebook;
-@synthesize facebookLoginController;
 @synthesize urbanAirshipClient;
 @synthesize settingsMenuController;
 @synthesize tabBarController;
@@ -270,14 +262,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     [flurryParams setValue:alertValue forKey:@"Notifications"];
     [FlurryAnalytics logEvent:@"enabled_notifications" withParameters:flurryParams];
     NSLog(@"Notification types: %@", flurryParams);
-    
-	// load the facebook api
-	facebook = [[Facebook alloc] initWithAppId:kFacebookAppId 
-                                   andDelegate:self];
-	facebook.accessToken = settings.facebookAccessToken;
-	facebook.expirationDate = settings.facebookExpirationDate;
-	
-    
+
     // Handle the case where we were launched from a PUSH notification
     if (launchOptions != nil)
 	{
@@ -428,9 +413,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
         
         succeeded = YES;
     }
-    else {
-        succeeded = [facebook handleOpenURL:url]; 
-    }
     
     return succeeded;
 }
@@ -563,12 +545,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 
 #pragma mark - Login Stuff
-
-// implement the Facebook Delegate
-- (void)fbDidLogin 
-{
-    [facebookLoginController handleResponseFromFacebookLogin];
-}
 
 -(void)logoutEverything
 {

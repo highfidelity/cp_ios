@@ -230,12 +230,8 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupController.h"/>
             <relationships>
                 <relationship kind="action" name="dismissClick:"/>
-                <relationship kind="action" name="loginWithEmailTapped:"/>
-                <relationship kind="action" name="loginWithFacebookTapped:"/>
                 <relationship kind="action" name="loginWithLinkedInTapped:"/>
                 <relationship kind="outlet" name="dismissButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="emailLoginButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="facebookLoginButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="linkedinLoginButton" candidateClass="UIButton"/>
             </relationships>
         </class>

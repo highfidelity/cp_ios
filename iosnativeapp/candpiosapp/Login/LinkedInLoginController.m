@@ -7,9 +7,7 @@
 //
 
 #import "LinkedInLoginController.h"
-#import "AFNetworking.h"
 #import "FlurryAnalytics.h"
-#import "ModalWebViewController.h"
 #import "OAConsumer.h"
 #import "OAMutableURLRequest.h"
 #import "OADataFetcher.h"
@@ -167,10 +165,6 @@
         NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
         self.myWebView.delegate = self;
         [self.myWebView loadRequest:requestObj];
-        
-        //        ModalWebViewController *myWebView = [[ModalWebViewController alloc] init];
-        //        myWebView.urlAddress = authorizationURL;
-        //        [self.navigationController presentModalViewController:myWebView animated:YES];
     }
 }
 

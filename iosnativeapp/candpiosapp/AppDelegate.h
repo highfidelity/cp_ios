@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "Settings.h"
-#import "Facebook.h"
 #import "UAirship.h"
 #import "UAPush.h"
 #import "SettingsMenuController.h"
@@ -16,19 +15,15 @@
 
 // Constants have been moved to CPConstants.m
 
-@class FacebookLoginSequence;
 @class AFHTTPClient;
 @class SignupController;
 @class User;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,
-                                      FBSessionDelegate,
                                       UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, readonly) Settings *settings;
-@property (strong, readonly) Facebook *facebook;
-@property (strong, nonatomic) SignupController *facebookLoginController;
 @property (strong, nonatomic, readonly) AFHTTPClient *urbanAirshipClient;
 @property (strong, nonatomic) SettingsMenuController *settingsMenuController;
 @property (strong, nonatomic) CPTabBarController *tabBarController;

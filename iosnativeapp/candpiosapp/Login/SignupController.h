@@ -10,14 +10,9 @@
 #import "BaseLoginController.h"
 
 @interface SignupController : BaseLoginController
-- (IBAction)loginWithFacebookTapped:(id)sender;
 - (IBAction)loginWithLinkedInTapped:(id)sender;
-- (IBAction)loginWithEmailTapped:(id)sender;
-- (void)handleResponseFromFacebookLogin;
 
-@property (weak, nonatomic) IBOutlet UIButton *facebookLoginButton;
 @property (weak, nonatomic) IBOutlet UIButton *linkedinLoginButton;
-@property (weak, nonatomic) IBOutlet UIButton *emailLoginButton;
 @property (weak, nonatomic) IBOutlet UIButton *dismissButton;
 
 - (IBAction) dismissClick:(id)sender;
