@@ -9,6 +9,7 @@
 #import "ContactListViewController.h"
 #import "UserTableViewCell.h"
 #import "UserProfileCheckedInViewController.h"
+#import "NSString+HTML.h"
 
 
 // add a nickname selector to NSDictionary so we can sort the contact list
@@ -244,7 +245,8 @@
 
     NSString *status = [contact objectForKey:@"status_text"];
     cell.statusLabel.text = @"";
-    if (![status isEqualToString:@""]) {
+    if (status.length > 0) {
+        status = [[status stringByDecodingHTMLEntities] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",status];
     }
 
