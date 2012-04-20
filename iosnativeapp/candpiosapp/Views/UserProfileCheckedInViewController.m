@@ -129,6 +129,10 @@ UITapGestureRecognizer* _tapRecon = nil;
     
     firstLoad = YES;
 
+    // set the card image to the user's profile image
+    [CPUIHelper profileImageView:self.cardImage
+             withProfileImageUrl:self.user.urlPhoto];
+    
     // hide the go menu if this profile is current user's profile
     if (self.user.userID == [CPAppDelegate currentUser].userID || self.isF2FInvite) {
         for (NSNumber *viewID in [NSArray arrayWithObjects:[NSNumber numberWithInt:1005], [NSNumber numberWithInt:1006], [NSNumber numberWithInt:1007], [NSNumber numberWithInt:1008], [NSNumber numberWithInt:1009], [NSNumber numberWithInt:1010], [NSNumber numberWithInt:1020], nil]) {
@@ -285,8 +289,6 @@ UITapGestureRecognizer* _tapRecon = nil;
 {
     
     self.cardJobPosition.text = self.user.jobTitle;
-    // set the card image to the user's profile image
-    [self.cardImage  setImageWithURL:self.user.urlPhoto];
     
     if (firstLoad) {
         // if the user is checked in show how much longer they'll be available for
