@@ -7,10 +7,13 @@
 //
 
 #import "LinkedInLoginController.h"
+#import "AFNetworking.h"
 #import "FlurryAnalytics.h"
+#import "ModalWebViewController.h"
 #import "OAConsumer.h"
 #import "OAMutableURLRequest.h"
 #import "OADataFetcher.h"
+#import "SSKeychain.h"
 
 @implementation LinkedInLoginController
 @synthesize myWebView;
@@ -43,7 +46,28 @@
 	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
 	self.navigationItem.rightBarButtonItem = button;
     
-    [self initiateLogin];
+    // check for token in keychain
+    NSString *keyToken = [SSKeychain passwordForService:@"linkedin" account:@"token"];
+    NSString *keyTokenSecret = [SSKeychain passwordForService:@"linkedin" account:@"token_secret"];
+    
+    if (keyToken && keyTokenSecret)
+    {
+        // token and token secret found in keychain
+        // update user defaults and attempt login
+        NSLog(@"token:%@ account:%@", keyToken, keyTokenSecret);
+        
+        [[NSUserDefaults standardUserDefaults] setObject:keyToken forKey:@"linkedin_token"];
+        [[NSUserDefaults standardUserDefaults] setObject:keyTokenSecret forKey:@"linkedin_secret"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [self loadLinkedInConnections];
+        //[self linkedInLogin];
+    }
+    else
+    {
+        // no token/secret in keychain
+        [self initiateLogin];
+    }
 }
 
 - (void)viewDidUnload
@@ -165,6 +189,10 @@
         NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
         self.myWebView.delegate = self;
         [self.myWebView loadRequest:requestObj];
+        
+        //        ModalWebViewController *myWebView = [[ModalWebViewController alloc] init];
+        //        myWebView.urlAddress = authorizationURL;
+        //        [self.navigationController presentModalViewController:myWebView animated:YES];
     }
 }
 
@@ -194,6 +222,12 @@
         NSString *secret = [pairs objectForKey:@"oauth_token_secret"];
         
         // Store auth token + secret
+        
+        // store in keychain
+        [SSKeychain setPassword:token forService:@"linkedin" account:@"token"];
+        [SSKeychain setPassword:secret forService:@"linkedin" account:@"token_secret"];
+        
+        // store in user defaults
         [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"linkedin_token"];
         [[NSUserDefaults standardUserDefaults] setObject:secret forKey:@"linkedin_secret"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -267,71 +301,77 @@
 
 - (void)handleLinkedInLogin:(NSString*)fullName linkedinID:(NSString *)linkedinID password:(NSString*)password email:(NSString *)email oauthToken:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret {
     // kick off the request to the candp server
-    
-    NSMutableDictionary *loginParams = [NSMutableDictionary dictionary];
-    
-    [loginParams setObject:fullName forKey:@"signupNickname"];
-    [loginParams setObject:linkedinID forKey:@"linkedin_id"];
-    [loginParams setObject:@"1" forKey:@"linkedin_connect"];
-    [loginParams setObject:email forKey:@"signupUsername"];
-    [loginParams setObject:oauthToken forKey:@"oauth_token"];
-    [loginParams setObject:oauthSecret forKey:@"oauth_secret"];
-    [loginParams setObject:password forKey:@"signupPassword"];
-    [loginParams setObject:password forKey:@"signupConfirm"];
-    [loginParams setObject:@"signup" forKey:@"action"];
-    [loginParams setObject:@"json" forKey:@"type"];
-    
-	NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        NSInteger succeeded = [[JSON objectForKey:@"succeeded"] intValue];
-        NSLog(@"success: %d", succeeded);
+    if (!linkedinID)
+    {
+        [self initiateLogin];
+    }
+    else
+    {
+        NSMutableDictionary *loginParams = [NSMutableDictionary dictionary];
         
-		if(succeeded == 0)
-		{
-			NSString *outerErrorMessage = [JSON objectForKey:@"message"];// often just 'error'
+        [loginParams setObject:fullName forKey:@"signupNickname"];
+        [loginParams setObject:linkedinID forKey:@"linkedin_id"];
+        [loginParams setObject:@"1" forKey:@"linkedin_connect"];
+        [loginParams setObject:email forKey:@"signupUsername"];
+        [loginParams setObject:oauthToken forKey:@"oauth_token"];
+        [loginParams setObject:oauthSecret forKey:@"oauth_secret"];
+        [loginParams setObject:password forKey:@"signupPassword"];
+        [loginParams setObject:password forKey:@"signupConfirm"];
+        [loginParams setObject:@"signup" forKey:@"action"];
+        [loginParams setObject:@"json" forKey:@"type"];
+        
+        NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
+        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            NSInteger succeeded = [[JSON objectForKey:@"succeeded"] intValue];
+            NSLog(@"success: %d", succeeded);
             
-			NSString *errorMessage = [NSString stringWithFormat:@"The error was:%@", outerErrorMessage];
-			// we get here if we failed to login
-			UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unable to log in" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-			[alert show];
-            
-            [self.navigationController dismissModalViewControllerAnimated:YES];
-		}
-		else
-		{
-            // remember that we're logged in!
-			// (it's really the persistent cookie that tracks our login, but we need a superficial indicator, too)
-			NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"params"];
-            
-            // store the user data to NSUserDefaults
-            [CPAppDelegate storeUserLoginDataFromDictionary:userInfo];
-			
-			NSString *userId = [userInfo objectForKey:@"id"];
-            
-            [FlurryAnalytics logEvent:@"login_linkedin"];
-            [FlurryAnalytics setUserID:userId];
-            
-            // Perform common post-login operations
-            [BaseLoginController pushAliasUpdate];
-            
-            if ([CPAppDelegate currentUser].enteredInviteCode) {
-                if ([[CPAppDelegate tabBarController] selectedIndex] == 4) {
-                    [[CPAppDelegate tabBarController] setSelectedIndex:0];
-                }
+            if(succeeded == 0)
+            {
+                NSString *outerErrorMessage = [JSON objectForKey:@"message"];// often just 'error'
+                
+                NSString *errorMessage = [NSString stringWithFormat:@"The error was:%@", outerErrorMessage];
+                // we get here if we failed to login
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unable to log in" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                [alert show];
+                
                 [self.navigationController dismissModalViewControllerAnimated:YES];
-            } else {
-                [self performSegueWithIdentifier:@"EnterInvitationCodeSegue" sender:nil];
             }
-        }
+            else
+            {
+                // remember that we're logged in!
+                // (it's really the persistent cookie that tracks our login, but we need a superficial indicator, too)
+                NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"params"];
+                
+                // store the user data to NSUserDefaults
+                [CPAppDelegate storeUserLoginDataFromDictionary:userInfo];
+                
+                NSString *userId = [userInfo objectForKey:@"id"];
+                
+                [FlurryAnalytics logEvent:@"login_linkedin"];
+                [FlurryAnalytics setUserID:userId];
+                
+                // Perform common post-login operations
+                [BaseLoginController pushAliasUpdate];
+                
+                if ([CPAppDelegate currentUser].enteredInviteCode) {
+                    if ([[CPAppDelegate tabBarController] selectedIndex] == 4) {
+                        [[CPAppDelegate tabBarController] setSelectedIndex:0];
+                    }
+                    [self.navigationController dismissModalViewControllerAnimated:YES];
+                } else {
+                    [self performSegueWithIdentifier:@"EnterInvitationCodeSegue" sender:nil];
+                }
+            }
+            
+            // Remove NSNotification as it's no longer needed once logged in
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:@"linkedInCredentials" object:nil];
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        }];
         
-        // Remove NSNotification as it's no longer needed once logged in
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"linkedInCredentials" object:nil];
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-    }];
-    
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    [queue addOperation:operation];    
+        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+        [queue addOperation:operation];  
+    }
 }
 
 - (void)loadLinkedInConnectionsResult:(OAServiceTicket *)ticket didFail:(NSData *)error 
