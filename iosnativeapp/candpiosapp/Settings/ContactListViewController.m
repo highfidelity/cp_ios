@@ -274,6 +274,7 @@
     user.nickname = [contact objectForKey:@"nickname"];
     user.userID = [[contact objectForKey:@"id"] intValue];
     user.status = [contact objectForKey:@"status_text"];
+    user.urlPhoto = [contact objectForKey:@"imageUrl"];
 
     // instantiate a UserProfileViewController
     UserProfileCheckedInViewController *vc = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
