@@ -584,7 +584,9 @@ UITapGestureRecognizer* _tapRecon = nil;
 }
 
 - (IBAction)sendloveButtonPressed:(id)sender {
+    
     [self minusButtonPressed:nil];
+    [_scrollView setContentOffset:CGPointMake(0,0) animated:NO];
     _reviewView.hidden = NO;
     [_reviewDescription becomeFirstResponder];
     [_reviewDescription setDelegate:self];
