@@ -7,7 +7,6 @@
 //
 
 #import "SignupController.h"
-#import "EmailLoginController.h"
 #import "LinkedInLoginController.h"
 #import "AFNetworking.h"
 #import "Facebook+Blocks.h"
@@ -123,18 +122,6 @@
 	// Handle LinkedIn login
 	// The LinkedIn login object will handle the sequence that follows
     [self performSegueWithIdentifier:@"ShowLinkedInLoginController" sender:sender];
-}
-
-- (IBAction)loginWithEmailTapped:(id)sender 
-{
-	// handle email login
-	// include Forgot option (but not create for now)
-    Settings *settings = [AppDelegate instance].settings;
-    
-    EmailLoginController *emailLoginController = [[EmailLoginController alloc] initWithNibName:@"EmailLoginController" bundle:nil];
-    emailLoginController.emailField.text = [settings valueForKey:@"userEmailAddress"];
-    [emailLoginController.emailField becomeFirstResponder];
-    [self.navigationController pushViewController:emailLoginController animated:YES];
 }
 
 - (void)handleResponseFromFacebookLogin
