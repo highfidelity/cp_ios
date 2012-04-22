@@ -52,6 +52,8 @@
 		32C762F814BEB48500FE25E4 /* UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C762F714BEB48500FE25E4 /* UserListTableViewController.m */; };
 		32CCF184153F445A00C53D5E /* SmartererLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CCF183153F445A00C53D5E /* SmartererLoginController.m */; };
 		32CE875214D27FFF002D391B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CE875114D27FFF002D391B /* QuartzCore.framework */; };
+		32E03BAD154468B600288BF9 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E03BAB154468B600288BF9 /* libTestFlight.a */; };
+		32E03BB115446A4000288BF9 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E03BAB154468B600288BF9 /* libTestFlight.a */; };
 		32E3CD8614C39B94001EA2AB /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E3CD8414C39B94001EA2AB /* UserTableViewCell.m */; };
 		32E3CD9014C3AAA5001EA2AB /* WebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E3CD8D14C3AAA5001EA2AB /* WebView.xib */; };
 		32E3CD9114C3AAA5001EA2AB /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E3CD8F14C3AAA5001EA2AB /* WebViewController.m */; };
@@ -462,6 +464,8 @@
 		32CCF182153F445A00C53D5E /* SmartererLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SmartererLoginController.h; path = candpiosapp/Login/SmartererLoginController.h; sourceTree = SOURCE_ROOT; };
 		32CCF183153F445A00C53D5E /* SmartererLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SmartererLoginController.m; path = candpiosapp/Login/SmartererLoginController.m; sourceTree = SOURCE_ROOT; };
 		32CE875114D27FFF002D391B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		32E03BAB154468B600288BF9 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		32E03BAC154468B600288BF9 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		32E3CD8314C39B94001EA2AB /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTableViewCell.h; path = Views/UserTableViewCell.h; sourceTree = "<group>"; };
 		32E3CD8414C39B94001EA2AB /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTableViewCell.m; path = Views/UserTableViewCell.m; sourceTree = "<group>"; };
 		32E3CD8D14C3AAA5001EA2AB /* WebView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebView.xib; sourceTree = "<group>"; };
@@ -875,6 +879,7 @@
 				E4C35C4114F1323A009B6DBF /* AudioToolbox.framework in Frameworks */,
 				5386AFF4152A2A75008CD4BD /* libGRMustache2-iOS.a in Frameworks */,
 				326EEA35152D3523000AC0B9 /* libUAirship-1.2.0.a in Frameworks */,
+				32E03BB115446A4000288BF9 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -885,6 +890,7 @@
 				871EFB3714AE9C820030658B /* SenTestingKit.framework in Frameworks */,
 				871EFB3814AE9C820030658B /* UIKit.framework in Frameworks */,
 				871EFB3914AE9C820030658B /* Foundation.framework in Frameworks */,
+				32E03BAD154468B600288BF9 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1122,6 +1128,15 @@
 				32B9976714E37B6400713B6E /* SSKeychain.m */,
 			);
 			path = SSKeychain;
+			sourceTree = "<group>";
+		};
+		32E03BA91544689300288BF9 /* TestFlight */ = {
+			isa = PBXGroup;
+			children = (
+				32E03BAB154468B600288BF9 /* libTestFlight.a */,
+				32E03BAC154468B600288BF9 /* TestFlight.h */,
+			);
+			path = TestFlight;
 			sourceTree = "<group>";
 		};
 		532524C614F852F60089F8EA /* NSString+HTML */ = {
@@ -1662,6 +1677,7 @@
 				871EFB9714AF97130030658B /* SVProgressHUD */,
 				8733311314BCFAAB001BF4DB /* TableViewHelper */,
 				8745448514B799C000D96134 /* TapkuLibrary-subset */,
+				32E03BA91544689300288BF9 /* TestFlight */,
 				6F7BA4D614E308AF00420AD5 /* TPKeyboardAvoiding */,
 				32A7998C14F9863200A0D4CB /* UIImage-categories */,
 			);
@@ -2440,6 +2456,7 @@
 					"\"$(SRCROOT)/candpiosapp/3rdParty/FlurryAnalytics\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/Airship\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/GRMustache\"",
+					"\"$(SRCROOT)/candpiosapp/3rdParty/TestFlight\"",
 				);
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
@@ -2468,6 +2485,7 @@
 					"\"$(SRCROOT)/candpiosapp/3rdParty/FlurryAnalytics\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/Airship\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/GRMustache\"",
+					"\"$(SRCROOT)/candpiosapp/3rdParty/TestFlight\"",
 				);
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
@@ -2489,6 +2507,10 @@
 				GCC_PREFIX_HEADER = "candpiosapp/candpiosapp-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "candpiosappTests/candpiosappTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/candpiosapp/3rdParty/TestFlight\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -2507,6 +2529,10 @@
 				GCC_PREFIX_HEADER = "candpiosapp/candpiosapp-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "candpiosappTests/candpiosappTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/candpiosapp/3rdParty/TestFlight\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;

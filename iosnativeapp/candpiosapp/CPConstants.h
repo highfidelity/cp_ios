@@ -29,6 +29,7 @@ extern  NSString* const flurryAnalyticsKey;
 extern  NSString* const kSmartererKey;
 extern  NSString* const kSmartererSecret;
 extern  NSString* const kSmartererCallback;
+extern  NSString* const kTestFlightKey;
 
 
 // NOTE: We are slowly moving the way we store data to the 

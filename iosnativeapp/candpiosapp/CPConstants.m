@@ -23,6 +23,7 @@
     NSString* const flurryAnalyticsKey = @"";
     NSString* const kSmartererKey = @"";
     NSString* const kSmartererSecret = @"";
+    NSString* const kTestFlightKey = @"";
 
     #error "You're running in production mode. Are you sure you wanna do this?"
 
@@ -36,6 +37,7 @@
     NSString* const flurryAnalyticsKey = @"BI59BJPSZZTIFB5H87HQ";
     NSString* const kSmartererKey = @"3f883e6fc3d54834ac93c3bfe6f33553";
     NSString* const kSmartererSecret = @"ea670a5ca21c7d54d4e17972059b4f07";
+    NSString* const kTestFlightKey = @"2ed46ba74d908aecc8ead4558ff3c7f5_MTA4NjQyMDEyLTAxLTAzIDIxOjA2OjE3LjcxODkwNA";
 
     // Urban Airship
     // Configured in AirshipConfig.plist, not here anymore

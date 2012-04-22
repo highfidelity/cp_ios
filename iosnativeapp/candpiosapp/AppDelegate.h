@@ -51,5 +51,7 @@
 - (void)hideLoginBannerWithCompletion:(void (^)(void))completion;
 
 void uncaughtExceptionHandler(NSException *exception);
+void SignalHandler(int sig);
+
 @end
 
