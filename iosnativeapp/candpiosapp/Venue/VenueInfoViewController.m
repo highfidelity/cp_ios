@@ -12,13 +12,29 @@
 #import "UserProfileCheckedInViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "MapDataSet.h"
+#import "VenueChat.h"
+#import "VenueChatEntry.h"
+
+#define CHAT_MESSAGE_ORIGIN_X 11
 
 @interface VenueInfoViewController () <UIAlertViewDelegate>
+
+@property (nonatomic, strong) NSTimer *chatReloadTimer;
+@property (nonatomic, strong) VenueChat *venueChat;
+@property (weak, nonatomic) IBOutlet UIView *venueChatBox;
+@property (weak, nonatomic) IBOutlet UIView *venueChatBoxVerticalLine;
+@property (weak, nonatomic) IBOutlet UILabel *activeChatters;
+@property (weak, nonatomic) IBOutlet UIImageView *activeChattersIcon;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activeChattersIndicator;
+@property (weak, nonatomic) IBOutlet UILabel *activeChatText;
+@property (assign, nonatomic) BOOL hadNoChat;
+
 - (IBAction)tappedAddress:(id)sender;
 - (IBAction)tappedPhone:(id)sender;
-
 - (void)refreshVenueData:(CPVenue *)venue;
 - (void)populateUserSection;
+- (void)checkInPressed:(id)sender;
+- (void)reloadVenueChat;
 
 - (void)addUser:(User *)user
     toArrayForJobCategory:(NSString *)jobCategory;
@@ -32,7 +48,7 @@
                 withTitle:(NSString *)titleString
         forCheckedInUsers:(BOOL)isCurrentUserBox;
 
-- (void)checkInPressed:(id)sender;
+
 @end
 
 @implementation VenueInfoViewController
@@ -41,6 +57,7 @@
 @synthesize venue = _venue;
 @synthesize venuePhoto = _venuePhoto;
 @synthesize venueName = _venueName;
+@synthesize firstAidSection = _firstAidSection;
 @synthesize userSection = _userSection;
 @synthesize categoryCount = _categoryCount;
 @synthesize currentUsers = _currentUsers;
@@ -48,6 +65,15 @@
 @synthesize usersShown = _usersShown;
 @synthesize userObjectsForUsersOnScreen = _userObjectsForUsersOnScreen;
 @synthesize scrollToUserThumbnail = _scrollToUserThumbnail;
+@synthesize chatReloadTimer = _chatReloadTimer;
+@synthesize venueChat = _venueChat;
+@synthesize venueChatBox = _venueChatBox;
+@synthesize venueChatBoxVerticalLine = _venueChatBoxVerticalLine;
+@synthesize activeChatters = _activeChatters;
+@synthesize activeChattersIcon = _activeChattersIcon;
+@synthesize activeChattersIndicator = _activeChattersIndicator;
+@synthesize activeChatText = _activeChatText;
+@synthesize hadNoChat = _hadNoChat;
 
 - (NSMutableDictionary *)userObjectsForUsersOnScreen
 {
@@ -64,6 +90,15 @@
         // Custom initialization
     }
     return self;
+}
+
+- (VenueChat *)venueChat
+{
+    if (!_venueChat) {
+        _venueChat = [[VenueChat alloc] init];
+        _venueChat.venueIDString = [NSString stringWithFormat:@"%d", self.venue.venueID];
+    }
+    return _venueChat;
 }
 
 - (void)viewDidLoad
@@ -145,8 +180,46 @@
     [address addTarget:self action:@selector(tappedAddress:) forControlEvents:UIControlEventTouchUpInside];
     
     // put the texture in the bottom view
-    self.userSection.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-first-aid-kit"]];
+    self.firstAidSection.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-first-aid-kit"]];
     
+    // border on venue chat box
+    // color gets set in view will appear
+    self.venueChatBox.layer.borderWidth = 1.0;
+    
+    
+    // change the active chat labels to league gothic
+    [CPUIHelper changeFontForLabel:self.activeChatters toLeagueGothicOfSize:18];
+    [CPUIHelper changeFontForLabel:self.activeChatText toLeagueGothicOfSize:18];
+    
+    // setup a UIButton to hold the venue chat box
+    UIButton *venueChatButton = [[UIButton alloc] initWithFrame:self.venueChatBox.frame];
+    
+    // remove the venueChatBoxFrom the regular view so we can add it back as a button
+    [self.venueChatBox removeFromSuperview];
+    // change the origins to zero so it's in the same spot
+    self.venueChatBox.frame = CGRectMake(0, 0, self.venueChatBox.frame.size.width, self.venueChatBox.frame.size.height);
+    
+    // targets for the venueChatButton
+    [venueChatButton addTarget:self action:@selector(showVenueChat) forControlEvents:UIControlEventTouchUpInside];
+    [venueChatButton addTarget:self action:@selector(highlightedVenueChatButton) forControlEvents:UIControlEventTouchDown];
+    [venueChatButton addTarget:self action:@selector(normalVenueChatButton) forControlEvents:UIControlEventTouchUpOutside];
+    
+    // add the venueChatBox as a subview of the new button
+    [venueChatButton addSubview:self.venueChatBox];
+    
+    // hide the activeChatters text and icon when we're loading chat history
+    self.activeChatters.alpha = 0.0;
+    self.activeChattersIcon.alpha = 0.0;
+    
+    // disable user interaction on the chat box so the button gets the touch events
+    self.venueChatBox.userInteractionEnabled = NO;
+    
+    // add the button to the bottom section
+    [self.firstAidSection addSubview:venueChatButton];
+    
+    // set hadNoChat to no, it may be changed when the chat gets loaded
+    self.hadNoChat = NO;
+
     [self populateUserSection];
 }
 
@@ -154,6 +227,22 @@
 {
     [super viewWillAppear:animated];
     // hide the normal check in button
+    [self reloadVenueChat];
+    self.chatReloadTimer = [NSTimer scheduledTimerWithTimeInterval:VENUE_CHAT_RELOAD_INTERVAL target:self selector:@selector(reloadVenueChat) userInfo:nil repeats:YES];
+    
+    // make sure the button borders are back to grey
+    [self normalVenueChatButton];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    if (self.chatReloadTimer) {
+        [self.chatReloadTimer invalidate];
+        self.chatReloadTimer = nil;
+    }    
+
 }
 
 - (void)viewDidUnload
@@ -161,6 +250,13 @@
     [self setVenueName:nil];
     [self setVenuePhoto:nil];
     [self setUserSection:nil];
+    [self setActiveChatters:nil];
+    [self setFirstAidSection:nil];
+    [self setVenueChatBox:nil];
+    [self setActiveChattersIcon:nil];
+    [self setActiveChattersIndicator:nil];
+    [self setActiveChatText:nil];
+    [self setVenueChatBoxVerticalLine:nil];
     [super viewDidUnload];
     [CPAppDelegate tabBarController].currentVenueID = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshVenueAfterCheckin" object:nil];
@@ -182,6 +278,140 @@
 
     // repopulate user data with new info
     [self populateUserSection];    
+}
+
+- (void)reloadVenueChat
+{    
+    
+    [self.venueChat getNewChatEntriesWithCompletion:^(BOOL newEntries){
+        if (newEntries) {
+            
+            // there are new entries so it's time to update
+            if (self.hadNoChat) {
+                // move the icon back over
+                CGRect moveRight = self.activeChattersIcon.frame;
+                moveRight.origin.x += 9;
+                self.activeChattersIcon.frame = moveRight;
+                
+                // unhide the number of active chatters
+                self.activeChatters.hidden = NO;
+            }
+            
+            self.activeChatters.text = [NSString stringWithFormat:@"%d", self.venueChat.activeChattersDuringInterval];
+            
+            // display the new chat message
+            [self slideAwayChatMessageAndDisplayNewChat:YES];
+            
+        } else if (self.venueChat.activeChattersDuringInterval > 0) {
+            
+            // we didn't get a new message but we need to make sure the latest is showing
+            [self slideAwayChatMessageAndDisplayNewChat:NO];
+            
+        } else if (self.venueChat.activeChattersDuringInterval == 0) {
+            // we have no chat in last 7 days
+            
+            // move the active chatters icon over if required
+            if (!self.hadNoChat) {
+                // center the icon
+                CGRect newFrame = self.activeChattersIcon.frame;
+                newFrame.origin.x -= 9;
+                self.activeChattersIcon.frame = newFrame;
+                
+                // hide the number of active chatters
+                self.activeChatters.hidden = YES;
+                
+                // set the hadNoChat boolean so we know we need to move things if we get chat
+                self.hadNoChat = YES;
+            }           
+            
+            // static message for no chat
+            self.activeChatText.text = @"Tap here to chat.";
+        } 
+        
+        if ([self.activeChattersIndicator isAnimating]) {
+            
+            [UIView animateWithDuration:0.5 animations:^{
+                // stop the spinner
+                [self.activeChattersIndicator stopAnimating];
+                
+                // show the number of active chatters and the number of active
+                self.activeChatters.alpha = 1.0;
+                self.activeChattersIcon.alpha = 1.0;
+            }];
+            
+        }
+    }];
+}
+
+- (void)slideAwayChatMessageAndDisplayNewChat:(BOOL)newEntry
+{
+    // reset the frame of the chat message
+    CGRect originalFrame = self.activeChatText.frame;
+    originalFrame.origin.x = CHAT_MESSAGE_ORIGIN_X;
+    self.activeChatText.frame = originalFrame;
+    
+    if (newEntry) {
+        // we have a new entry so let's slide this old thing over and show it
+        CGRect newFrame = originalFrame;
+        newFrame.origin.x = newFrame.origin.x - [self.activeChatText sizeThatFits:self.activeChatText.frame.size].width - 10; 
+        
+        // animation to slide away the currently displayed chat
+        [UIView animateWithDuration:1.5 delay:1.0 options:UIViewAnimationCurveEaseInOut animations:^{
+            self.activeChatText.frame = newFrame;
+        } completion:^(BOOL finished) {
+            if (finished) {            
+                // hide it and move it into place
+                self.activeChatText.alpha = 0;
+                self.activeChatText.frame = originalFrame;
+                
+                // set the new text to the next entry
+                self.activeChatText.text = [NSString stringWithFormat:@"\"%@\"", [[self.venueChat.chatEntries lastObject] text]];
+                
+                // fade in the text
+                [UIView animateWithDuration:0.3 animations:^{
+                    self.activeChatText.alpha = 1.0;
+                } completion:nil];
+            }
+        }];
+    } else {
+        // didn't get a newEntry but let's make sure the latest is showing
+        self.activeChatText.text = [NSString stringWithFormat:@"\"%@\"", [[self.venueChat.chatEntries lastObject] text]];
+    }
+}
+
+- (void)highlightedVenueChatButton
+{
+    // the button is currently highlighted so make the borders orange
+    // border on venue chat box
+    UIColor *orange = [UIColor colorWithRed:(181.0/255.0) green:(107.0/255.0) blue:(0/255.0) alpha:1.0];
+    self.venueChatBox.layer.borderColor = [orange CGColor];
+    self.venueChatBoxVerticalLine.backgroundColor = orange;
+}
+
+- (void)normalVenueChatButton
+{
+    // the button has gone back to normal so bring the borders back to the grey color
+    // border on venue chat box
+    UIColor *grey = [UIColor colorWithRed:(198.0/255.0) green:(198.0/255.0) blue:(198.0/255.0) alpha:1.0];
+    self.venueChatBox.layer.borderColor = [grey CGColor];
+    self.venueChatBoxVerticalLine.backgroundColor = grey;
+}
+
+- (void)showVenueChat
+{
+    [self performSegueWithIdentifier:@"ShowVenueChatFromVenue" sender:self];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // back button should say back and not the venue name for this transition
+    UIBarButtonItem *backButton = [[ UIBarButtonItem alloc] init];
+    backButton.title = @"Back";
+    self.navigationItem.backBarButtonItem = backButton;
+    
+    // give the venue and venue chat to the VenueChatViewController
+    [segue.destinationViewController setVenue:self.venue];
+    [segue.destinationViewController setVenueChat:self.venueChat];
 }
 
 - (void)populateUserSection
@@ -221,7 +451,7 @@
     
     // setup a frame to keep spacing between elements
     CGRect newFrame;
-    newFrame.origin.y = 16;
+    newFrame.origin.y = 9;
     
     // look for currently checked in users to put on screen
     
@@ -245,8 +475,9 @@
         [self.userSection addSubview:categoryView];
     }
     
+    float viewForPreviousOrigin = newFrame.origin.y == 9 ? newFrame.origin.y : newFrame.origin.y + 15;
     // place previously checked in users on screen
-    UIView *previousView = [self viewForPreviousUsersWithYOrigin:newFrame.origin.y + 15];
+    UIView *previousView = [self viewForPreviousUsersWithYOrigin:viewForPreviousOrigin];
     
     // show the previousView if it exists
     if (previousView) {
@@ -325,12 +556,18 @@
     // resize the user section frame
     CGRect newSectionFrame = self.userSection.frame;
     newSectionFrame.size.height = newFrame.origin.y + newFrame.size.height;
+     
     if (newSectionFrame.size.height > self.userSection.frame.size.height) {
         self.userSection.frame = newSectionFrame;
     }    
     
+    // resize the first aid box
+    newSectionFrame = self.firstAidSection.frame;
+    newSectionFrame.size.height = self.venueChatBox.frame.size.height + self.userSection.frame.size.height;
+    self.firstAidSection.frame = newSectionFrame;
+    
     // set the scrollview content size
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width, self.venuePhoto.frame.size.height + self.userSection.frame.size.height); 
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width, self.venuePhoto.frame.size.height + self.firstAidSection.frame.size.height); 
     
     // clear the SVProgressHUD if it's shown
     [SVProgressHUD dismiss];

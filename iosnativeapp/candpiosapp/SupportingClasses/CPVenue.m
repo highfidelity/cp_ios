@@ -11,6 +11,7 @@
 
 @implementation CPVenue
 
+@synthesize venueID = _venueID;
 @synthesize name = _name;
 @synthesize icon = _icon;
 @synthesize foursquareID = _foursquareID;
@@ -108,6 +109,7 @@
 {
     self = [super init];
     if (self) {
+        self.venueID = [[json objectForKey:@"venue_id"] intValue];
         self.name = [json objectForKey:@"name"];
         self.address = [json objectForKey:@"address"];
         self.city = [json objectForKey:@"city"];
@@ -123,14 +125,7 @@
         
         self.coordinate = CLLocationCoordinate2DMake([[json objectForKey:@"lat"] doubleValue], [[json objectForKey:@"lng"] doubleValue]);
         
-        self.activeUsers = [json objectForKey:@"users"];
-        
-        // if this is the venue being shown by the places tab then let's update it's data
-//        VenueInfoViewController *venueVC = [[[CPAppDelegate tabBarController].viewControllers objectAtIndex:1] rootViewController];
-//        if (self.foursquareID == venueVC.venue.foursquareID) {
-//            venueVC.venue = self;
-//        }
-               
+        self.activeUsers = [json objectForKey:@"users"];               
     }
     return self;
 }

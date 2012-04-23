@@ -103,4 +103,13 @@
 + (void)saveUserSmartererName:(NSString *)name
                                        :(void(^)(NSDictionary *json, NSError *error))completion; 
 
+# pragma mark - Venue Chat
++ (void)getVenueChatForVenueWithID:(NSString *)venueIDString
+                        lastChatID:(NSString *)lastChatIDString
+                        completion:(void (^)(NSDictionary *, NSError *))completion;
+
++ (void)sendVenueChatForVenueWithID:(NSString *)venueIDString
+                            message:(NSString *)message
+                        lastChatID:(NSString *)lastChatIDString
+                        completion:(void (^)(NSDictionary *, NSError *))completion;
 @end

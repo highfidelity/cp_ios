@@ -10,6 +10,7 @@
 
 @interface CPVenue : NSObject <MKAnnotation>
 
+@property (nonatomic, assign) int venueID;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *icon;
 @property (nonatomic, strong) NSString *foursquareID;
