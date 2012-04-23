@@ -190,8 +190,12 @@
 
 - (void)reloadVenueChat
 {    
-    [self.venueChat getNewChatEntriesWithCompletion:^(BOOL newEntries){
-        [self updateTableAndHeaderWithNewVenueChat];
+    [self.venueChat getNewChatEntriesWithCompletion:^(BOOL authenticated, BOOL newEntries){
+        if (!authenticated) {
+            
+        } else {
+            [self updateTableAndHeaderWithNewVenueChat];
+        }        
     }];
 }
 

@@ -56,17 +56,20 @@
     return _usersCounted;
 }
 
-- (void)getNewChatEntriesWithCompletion:(void (^)(BOOL newEntries))completion
+- (void)getNewChatEntriesWithCompletion:(void (^)(BOOL authenticated, BOOL newEntries))completion
 {
     [CPapi getVenueChatForVenueWithID:self.venueIDString lastChatID:self.lastChatIDString completion:^(NSDictionary *dict, NSError *error) {
         if (!error) {
             // we have a payload to check out
             if (![[dict objectForKey:@"error"] boolValue]) {
                 // no error, parse the chat if there is any
-                [self addNewChatEntriesFromDictionary:dict completion:completion];
+                [self addNewChatEntriesFromDictionary:dict completion:^(BOOL newEntries){
+                    completion(YES, newEntries);
+                }];
             }
             else {
                 // error, means the user isn't logged in (since we know we passed a venue ID)
+                completion(NO, NO);
             }
         }
     }];

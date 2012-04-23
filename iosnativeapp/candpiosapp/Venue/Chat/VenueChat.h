@@ -22,7 +22,7 @@
 @property (nonatomic, strong) NSDateFormatter *entryDateFormatter;
 @property (nonatomic, assign) int activeChattersDuringInterval;
 
-- (void)getNewChatEntriesWithCompletion:(void (^)(BOOL newEntries))completion;
+- (void)getNewChatEntriesWithCompletion:(void (^)(BOOL authenticated, BOOL newEntries))completion;
 - (void)addNewChatEntriesFromDictionary:(NSDictionary *)dict 
                              completion:(void (^)(BOOL newEntries))completion;
 

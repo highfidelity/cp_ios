@@ -226,9 +226,14 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    // hide the normal check in button
-    [self reloadVenueChat];
-    self.chatReloadTimer = [NSTimer scheduledTimerWithTimeInterval:VENUE_CHAT_RELOAD_INTERVAL target:self selector:@selector(reloadVenueChat) userInfo:nil repeats:YES];
+    
+    
+    if ([CPAppDelegate currentUser]) {
+        [self reloadVenueChat];
+        self.chatReloadTimer = [NSTimer scheduledTimerWithTimeInterval:VENUE_CHAT_RELOAD_INTERVAL target:self selector:@selector(reloadVenueChat) userInfo:nil repeats:YES];
+    } else {
+        [self hideVenueChatFromAnonymousUser];
+    }
     
     // make sure the button borders are back to grey
     [self normalVenueChatButton];
@@ -280,66 +285,91 @@
     [self populateUserSection];    
 }
 
+- (void)hideVenueChatFromAnonymousUser
+{
+    // this is hard coded to 10 for now
+    // not an actual representation of the number of active people chatting
+    // just here to entice users who aren't logged in
+    self.activeChatters.text = @"10";
+    self.activeChatText.text = @"Please login to chat.";
+    
+    // stop the loading spinner
+    [self stopActiveChattersLoadingIndicator];
+}
+
+- (void)stopActiveChattersLoadingIndicator
+{
+    if ([self.activeChattersIndicator isAnimating]) {
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            // stop the spinner
+            [self.activeChattersIndicator stopAnimating];
+            
+            // show the number of active chatters and the number of active
+            self.activeChatters.alpha = 1.0;
+            self.activeChattersIcon.alpha = 1.0;
+        }];
+        
+    }
+}
+
 - (void)reloadVenueChat
 {    
     
-    [self.venueChat getNewChatEntriesWithCompletion:^(BOOL newEntries){
-        if (newEntries) {
-            
-            // there are new entries so it's time to update
-            if (self.hadNoChat) {
-                // move the icon back over
-                CGRect moveRight = self.activeChattersIcon.frame;
-                moveRight.origin.x += 9;
-                self.activeChattersIcon.frame = moveRight;
+    [self.venueChat getNewChatEntriesWithCompletion:^(BOOL authenticated, BOOL newEntries){
+        if (authenticated) {
+            if (newEntries) {
                 
-                // unhide the number of active chatters
-                self.activeChatters.hidden = NO;
-            }
-            
-            self.activeChatters.text = [NSString stringWithFormat:@"%d", self.venueChat.activeChattersDuringInterval];
-            
-            // display the new chat message
-            [self slideAwayChatMessageAndDisplayNewChat:YES];
-            
-        } else if (self.venueChat.activeChattersDuringInterval > 0) {
-            
-            // we didn't get a new message but we need to make sure the latest is showing
-            [self slideAwayChatMessageAndDisplayNewChat:NO];
-            
-        } else if (self.venueChat.activeChattersDuringInterval == 0) {
-            // we have no chat in last 7 days
-            
-            // move the active chatters icon over if required
-            if (!self.hadNoChat) {
-                // center the icon
-                CGRect newFrame = self.activeChattersIcon.frame;
-                newFrame.origin.x -= 9;
-                self.activeChattersIcon.frame = newFrame;
+                // there are new entries so it's time to update
+                if (self.hadNoChat) {
+                    // move the icon back over
+                    CGRect moveRight = self.activeChattersIcon.frame;
+                    moveRight.origin.x += 9;
+                    self.activeChattersIcon.frame = moveRight;
+                    
+                    // unhide the number of active chatters
+                    self.activeChatters.hidden = NO;
+                }
                 
-                // hide the number of active chatters
-                self.activeChatters.hidden = YES;
+                self.activeChatters.text = [NSString stringWithFormat:@"%d", self.venueChat.activeChattersDuringInterval];
                 
-                // set the hadNoChat boolean so we know we need to move things if we get chat
-                self.hadNoChat = YES;
-            }           
+                // display the new chat message
+                [self slideAwayChatMessageAndDisplayNewChat:YES];
+                
+            } else if (self.venueChat.activeChattersDuringInterval > 0) {
+                
+                // we didn't get a new message but we need to make sure the latest is showing
+                [self slideAwayChatMessageAndDisplayNewChat:NO];
+                
+            } else if (self.venueChat.activeChattersDuringInterval == 0) {
+                
+                // move the active chatters icon over if required
+                if (!self.hadNoChat) {
+                    // center the icon
+                    CGRect newFrame = self.activeChattersIcon.frame;
+                    newFrame.origin.x -= 9;
+                    self.activeChattersIcon.frame = newFrame;
+                    
+                    // hide the number of active chatters
+                    self.activeChatters.hidden = YES;
+                    
+                    // set the hadNoChat boolean so we know we need to move things if we get chat
+                    self.hadNoChat = YES;
+                }           
+                
+                // static message for no chat
+                self.activeChatText.text = @"Tap here to chat.";
+            } 
             
-            // static message for no chat
-            self.activeChatText.text = @"Tap here to chat.";
-        } 
+            [self stopActiveChattersLoadingIndicator];
+        } else {
+            // user isn't actually logged in
+            [self hideVenueChatFromAnonymousUser];
+            // make sure nothing is lingering ... this user isn't logged in
+            [CPAppDelegate logoutEverything];
+        }   
+     
         
-        if ([self.activeChattersIndicator isAnimating]) {
-            
-            [UIView animateWithDuration:0.5 animations:^{
-                // stop the spinner
-                [self.activeChattersIndicator stopAnimating];
-                
-                // show the number of active chatters and the number of active
-                self.activeChatters.alpha = 1.0;
-                self.activeChattersIcon.alpha = 1.0;
-            }];
-            
-        }
     }];
 }
 
@@ -399,7 +429,14 @@
 
 - (void)showVenueChat
 {
-    [self performSegueWithIdentifier:@"ShowVenueChatFromVenue" sender:self];
+    if ([CPAppDelegate currentUser]) {
+        [self performSegueWithIdentifier:@"ShowVenueChatFromVenue" sender:self];
+    } else {
+        // prompt the user to login
+        [CPAppDelegate showLoginBanner];
+        [self normalVenueChatButton];
+    }
+    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
