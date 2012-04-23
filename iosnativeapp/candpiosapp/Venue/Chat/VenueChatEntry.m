@@ -17,14 +17,15 @@
 @synthesize date = _date;
 @synthesize delegate = _delegate;
 
-- (VenueChatEntry *)initWithJSON:(NSDictionary *)json
+- (VenueChatEntry *)initWithJSON:(NSDictionary *)json dateFormatter:(NSDateFormatter *)dateFormatter
 {
     if (self = [super init]) {
         
         // set the basic entry properties
         self.entryID = [[json objectForKey:@"id"] intValue];
         self.text = [json objectForKey:@"entry"];
-        self.date = [self.delegate.entryDateFormatter dateFromString:[json objectForKey:@"date"]];
+        
+        self.date = [dateFormatter dateFromString:[json objectForKey:@"date"]];
         
         // get the user ID
         NSString *userID = [json objectForKey:@"user_id"];

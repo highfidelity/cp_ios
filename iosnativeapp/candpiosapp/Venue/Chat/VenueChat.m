@@ -9,6 +9,10 @@
 #import "VenueChat.h"
 #import "VenueChatEntry.h"
 
+@interface VenueChat ()
+@property (nonatomic, strong) NSMutableSet *usersCounted;
+@end
+
 @implementation VenueChat
 
 @synthesize venueIDString = _venueIDString;
@@ -16,6 +20,7 @@
 @synthesize chatEntries = _chatEntries;
 @synthesize entryDateFormatter = _entryDateFormatter;
 @synthesize activeChattersDuringInterval = _activeChattersDuringInterval;
+@synthesize usersCounted = _usersCounted;
 
 
 - (VenueChat *)init
@@ -30,7 +35,7 @@
 {
     if (!_entryDateFormatter) {
         _entryDateFormatter = [[NSDateFormatter alloc] init];
-        [_entryDateFormatter setDateFormat:@"yyyy-mm-dd hh:mm:ss"];
+        [_entryDateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     }
     return _entryDateFormatter;
 }
@@ -41,6 +46,14 @@
         _chatEntries = [NSArray array];
     } 
     return _chatEntries;
+}
+
+- (NSMutableSet *)usersCounted
+{
+    if (!_usersCounted) {
+        _usersCounted = [NSMutableSet set];
+    }
+    return _usersCounted;
 }
 
 - (void)getNewChatEntriesWithCompletion:(void (^)(BOOL newEntries))completion
@@ -91,12 +104,18 @@
         // go through the chat entries and add them to the array of chat entries
         for (NSDictionary *entryJSON in entries) {
             // create a VenueChatEntry and add it to the array of chat entries
-            VenueChatEntry *entry = [[VenueChatEntry alloc] initWithJSON:entryJSON]; 
+            VenueChatEntry *entry = [[VenueChatEntry alloc] initWithJSON:entryJSON dateFormatter:self.entryDateFormatter]; 
             [mutableChatEntries addObject:entry];
             
             // if this entry is after the time interval then add it to the count
             if ([entry.date compare:dateAtInterval] != NSOrderedAscending) {
-                self.activeChattersDuringInterval += 1;
+                // check if we've already counted this user
+                NSString *userIDString = [NSString stringWithFormat:@"%d", entry.user.userID];
+                if (![self.usersCounted containsObject:userIDString]) {
+                    self.activeChattersDuringInterval += 1;
+                    [self.usersCounted addObject:userIDString];
+                }
+                
             }
         }
         
