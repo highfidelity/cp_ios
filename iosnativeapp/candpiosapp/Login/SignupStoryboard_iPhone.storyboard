@@ -113,6 +113,10 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" image="secret-society@2x.png" id="WSu-w6-gVi">
+                                <rect key="frame" x="0.0" y="-20" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="zvy-bo-mbF">
                                 <rect key="frame" x="84" y="234" width="153" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
@@ -151,8 +155,8 @@
                                     <action selector="dismissClick:" destination="shZ-UI-Hx3" eventType="touchUpInside" id="mNX-9b-H6B"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="center" image="splash-screen-logo.png" id="k5k-dK-U5N">
-                                <rect key="frame" x="52" y="9" width="240" height="197"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="splash-screen-logo.png" id="dRs-gE-OEZ">
+                                <rect key="frame" x="111" y="16" width="112" height="193"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -205,9 +209,38 @@
         <image name="invite-code-background.png" width="240" height="140"/>
         <image name="linked-in-connect.png" width="153" height="75"/>
         <image name="plug-logo.png" width="96" height="96"/>
+        <image name="secret-society@2x.png" width="640" height="960"/>
         <image name="splash-screen-logo.png" width="112" height="193"/>
         <image name="tab-login.png" width="56" height="51"/>
     </resources>
+    <classes>
+        <class className="BaseLoginController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BaseLoginController.h"/>
+        </class>
+        <class className="EnterInvitationCodeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EnterInvitationCodeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="laterButtonAction:"/>
+                <relationship kind="outlet" name="codeTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="laterButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="LinkedInLoginController" superclassName="BaseLoginController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedInLoginController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="myWebView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="SignupController" superclassName="BaseLoginController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupController.h"/>
+            <relationships>
+                <relationship kind="action" name="dismissClick:"/>
+                <relationship kind="action" name="loginWithLinkedInTapped:"/>
+                <relationship kind="outlet" name="dismissButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="linkedinLoginButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
