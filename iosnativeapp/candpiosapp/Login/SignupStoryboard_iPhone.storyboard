@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="crz-ik-TbX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2182" systemVersion="11D50d" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="crz-ik-TbX">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development version="4300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1179"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller - Log In-->
@@ -151,8 +151,8 @@
                                     <action selector="dismissClick:" destination="shZ-UI-Hx3" eventType="touchUpInside" id="mNX-9b-H6B"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="center" image="plug-logo-bigger.png" id="k5k-dK-U5N">
-                                <rect key="frame" x="40" y="26" width="240" height="197"/>
+                            <imageView userInteractionEnabled="NO" contentMode="center" image="splash-screen-logo.png" id="k5k-dK-U5N">
+                                <rect key="frame" x="52" y="9" width="240" height="197"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -204,38 +204,10 @@
     <resources>
         <image name="invite-code-background.png" width="240" height="140"/>
         <image name="linked-in-connect.png" width="153" height="75"/>
-        <image name="plug-logo-bigger.png" width="176" height="175"/>
         <image name="plug-logo.png" width="96" height="96"/>
+        <image name="splash-screen-logo.png" width="112" height="193"/>
         <image name="tab-login.png" width="56" height="51"/>
     </resources>
-    <classes>
-        <class className="BaseLoginController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BaseLoginController.h"/>
-        </class>
-        <class className="EnterInvitationCodeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EnterInvitationCodeViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="laterButtonAction:"/>
-                <relationship kind="outlet" name="codeTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="laterButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="LinkedInLoginController" superclassName="BaseLoginController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedInLoginController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="myWebView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="SignupController" superclassName="BaseLoginController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupController.h"/>
-            <relationships>
-                <relationship kind="action" name="dismissClick:"/>
-                <relationship kind="action" name="loginWithLinkedInTapped:"/>
-                <relationship kind="outlet" name="dismissButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="linkedinLoginButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

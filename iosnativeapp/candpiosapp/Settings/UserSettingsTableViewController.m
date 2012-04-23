@@ -279,22 +279,7 @@
     [self placeCurrentUserData];
 }
 
-#pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == 3) {
-        cell.textLabel.textColor = [UIColor whiteColor];
-        cell.textLabel.text = @"Job Category";
-        cell.textLabel.font = [UIFont systemFontOfSize:14];
-    }
-    else if (indexPath.row == 4) {
-        cell.textLabel.textColor = [UIColor whiteColor];
-        cell.textLabel.text = @"Smarterer Badges";
-        cell.textLabel.font = [UIFont systemFontOfSize:14];
-    }
-
-}
 
 #pragma mark - Spinner for Table Cells
 - (void)addSpinnerToTableCell:(UIView *)tableCell
