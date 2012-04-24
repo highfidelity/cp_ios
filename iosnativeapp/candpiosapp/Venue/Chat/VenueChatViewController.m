@@ -113,8 +113,9 @@
     self.sendingSpinner.hidesWhenStopped = YES;
     CGRect spinnerFrame = self.sendingSpinner.frame;
     spinnerFrame.origin.x = self.sendButton.frame.origin.x + (self.sendButton.frame.size.width / 2) - (spinnerFrame.size.width / 2);
-    spinnerFrame.origin.y = (self.chatBox.frame.size.height / 2) - (spinnerFrame.size.height / 2);
+    spinnerFrame.origin.y = self.sendButton.frame.origin.y + (self.sendButton.frame.size.height / 2) - (spinnerFrame.size.height / 2);
     self.sendingSpinner.frame = spinnerFrame;
+    self.sendingSpinner.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
     // resizing for chatBox
     self.chatBox.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
@@ -296,6 +297,12 @@
                      }
                      completion:nil];
     [self scrollToLastChat:YES animated:NO];
+    
+    if (beingShown) {
+        // if the keyboard is being shown then make sure the growing text field grows to the right height again
+        // by calling the text setter with the text that's already in the box
+        self.growingTextView.text = self.growingTextView.text;
+    }
 }
 
 - (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height
