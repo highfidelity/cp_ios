@@ -29,7 +29,7 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" id="63A-NG-4u2">
                                                 <rect key="frame" x="10" y="0.0" width="300" height="39"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                 <subviews>
                                                     <view clipsSubviews="YES" contentMode="scaleToFill" id="mpd-jq-9vX">
                                                         <rect key="frame" x="60" y="0.0" width="240" height="39"/>

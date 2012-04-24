@@ -186,7 +186,6 @@
     // color gets set in view will appear
     self.venueChatBox.layer.borderWidth = 1.0;
     
-    
     // change the active chat labels to league gothic
     [CPUIHelper changeFontForLabel:self.activeChatters toLeagueGothicOfSize:18];
     [CPUIHelper changeFontForLabel:self.activeChatText toLeagueGothicOfSize:18];
@@ -194,18 +193,10 @@
     // setup a UIButton to hold the venue chat box
     UIButton *venueChatButton = [[UIButton alloc] initWithFrame:self.venueChatBox.frame];
     
-    // remove the venueChatBoxFrom the regular view so we can add it back as a button
-    [self.venueChatBox removeFromSuperview];
-    // change the origins to zero so it's in the same spot
-    self.venueChatBox.frame = CGRectMake(0, 0, self.venueChatBox.frame.size.width, self.venueChatBox.frame.size.height);
-    
     // targets for the venueChatButton
     [venueChatButton addTarget:self action:@selector(showVenueChat) forControlEvents:UIControlEventTouchUpInside];
     [venueChatButton addTarget:self action:@selector(highlightedVenueChatButton) forControlEvents:UIControlEventTouchDown];
     [venueChatButton addTarget:self action:@selector(normalVenueChatButton) forControlEvents:UIControlEventTouchUpOutside];
-    
-    // add the venueChatBox as a subview of the new button
-    [venueChatButton addSubview:self.venueChatBox];
     
     // hide the activeChatters text and icon when we're loading chat history
     self.activeChatters.alpha = 0.0;
