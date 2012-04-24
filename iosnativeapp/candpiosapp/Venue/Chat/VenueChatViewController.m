@@ -133,6 +133,9 @@
     [super viewWillAppear:animated];
     [self updateTableAndHeaderWithNewVenueChat];
     
+    // force a scroll to the last chat
+    [self scrollToLastChat:YES animated:NO];
+    
     // start calling a timer that reloads chat every VENUE_CHAT_RELOAD_INTERVAL seconds
     [self reloadVenueChat];
     self.chatReloadTimer = [NSTimer scheduledTimerWithTimeInterval:VENUE_CHAT_RELOAD_INTERVAL target:self selector:@selector(reloadVenueChat) userInfo:nil repeats:YES];
@@ -168,21 +171,30 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)scrollToLastChat
+- (void)scrollToLastChat:(BOOL)forced animated:(BOOL)animated
 {
-    if (self.venueChat.chatEntries.count > 0) {
-        NSIndexPath *lastCell = [NSIndexPath indexPathForRow:[self.venueChat.chatEntries count] - 1
-                                                   inSection:0];
-        [self.tableView scrollToRowAtIndexPath:lastCell
-                              atScrollPosition:UITableViewScrollPositionBottom
-                                      animated:NO];
+    if (self.venueChat.chatEntries.count > 0) { 
+        if (forced) {
+            NSIndexPath *lastCell = [NSIndexPath indexPathForRow:[self.venueChat.chatEntries count] - 1
+                                                       inSection:0];
+            [self.tableView scrollToRowAtIndexPath:lastCell
+                                  atScrollPosition:UITableViewScrollPositionBottom
+                                          animated:animated];
+        }        
     }  
 }
 
 - (void)updateTableAndHeaderWithNewVenueChat
 {
+    BOOL forceScroll = NO;
+    BOOL animatedScroll = NO;
+    NSLog(@"%f, %f", self.tableView.contentOffset.y + self.tableView.frame.size.height, self.tableView.contentSize.height);
+    if (self.tableView.contentOffset.y + self.tableView.frame.size.height == self.tableView.contentSize.height) {
+        forceScroll = YES;
+        animatedScroll = YES;
+    }
     [self.tableView reloadData];
-    [self scrollToLastChat];
+    [self scrollToLastChat:forceScroll animated:animatedScroll];
     
     // setup the little orange man in the navigation item
     [self updateActiveChattingUserCount];
@@ -192,7 +204,7 @@
 {    
     [self.venueChat getNewChatEntriesWithCompletion:^(BOOL authenticated, BOOL newEntries){
         if (!authenticated) {
-            
+            // this user somehow got here without being logged in
         } else {
             [self updateTableAndHeaderWithNewVenueChat];
         }        
@@ -284,7 +296,7 @@
                          self.tableView.frame = newTableViewRect;
                      }
                      completion:nil];
-    [self scrollToLastChat];
+    [self scrollToLastChat:YES animated:NO];
 }
 
 - (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height
