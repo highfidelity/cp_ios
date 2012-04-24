@@ -204,95 +204,91 @@
 	// kill the keyboard
     [self.growingTextView resignFirstResponder];
     
-    // show the spinner in place of the send button
-    [self.sendingSpinner startAnimating];
-    self.sendButton.hidden = YES;
-    
-    // don't let the user click on the text field until we've gotten a response back about this entry
-    self.growingTextView.userInteractionEnabled = NO;
-    
-    __weak VenueChatViewController *chatVC = self;
-    
-    // send the new chat message
-    [CPapi sendVenueChatForVenueWithID:self.venueChat.venueIDString message:self.growingTextView.text lastChatID:self.venueChat.lastChatIDString completion:^(NSDictionary *json, NSError *error) {
+    if (self.growingTextView.text.length > 0) {
+        // show the spinner in place of the send button
+        [self.sendingSpinner startAnimating];
+        self.sendButton.hidden = YES;
         
-        // no matter what happens we want to stop the spinner and show the button again
-        // also allow the user to click on the text view again
-        [self.sendingSpinner stopAnimating];
-        self.sendButton.hidden = NO;
-        self.growingTextView.userInteractionEnabled = YES;
+        // don't let the user click on the text field until we've gotten a response back about this entry
+        self.growingTextView.userInteractionEnabled = NO;
         
-        if (!error) {
-            if (![[json objectForKey:@"error"] boolValue]) {
-                [self.venueChat addNewChatEntriesFromDictionary:json completion:^(BOOL newEntries){
-                    if (newEntries) {
-                        // we better have some new entries here because at the very least we have our new message
-                        [chatVC updateTableAndHeaderWithNewVenueChat];
-                        
-                        // clear the textView now that the chat message has been sent
-                        chatVC.growingTextView.text = @"";
-                    }
-                }];
+        __weak VenueChatViewController *chatVC = self;
+        
+        // send the new chat message
+        [CPapi sendVenueChatForVenueWithID:self.venueChat.venueIDString message:self.growingTextView.text lastChatID:self.venueChat.lastChatIDString completion:^(NSDictionary *json, NSError *error) {
+            
+            // no matter what happens we want to stop the spinner and show the button again
+            // also allow the user to click on the text view again
+            [self.sendingSpinner stopAnimating];
+            self.sendButton.hidden = NO;
+            self.growingTextView.userInteractionEnabled = YES;
+            
+            if (!error) {
+                if (![[json objectForKey:@"error"] boolValue]) {
+                    [self.venueChat addNewChatEntriesFromDictionary:json completion:^(BOOL newEntries){
+                        if (newEntries) {
+                            // we better have some new entries here because at the very least we have our new message
+                            [chatVC updateTableAndHeaderWithNewVenueChat];
+                            
+                            // clear the textView now that the chat message has been sent
+                            chatVC.growingTextView.text = @"";
+                        }
+                    }];
+                } else {
+                    // json returned an error
+                    // let's present that to the user
+                    UIAlertView *alert = [[UIAlertView alloc]
+                                          initWithTitle:@"Oh No!"
+                                          message:[json objectForKey:@"payload"]
+                                          delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+                    [alert show];
+                }
             } else {
-                // json returned an error
-                // let's present that to the user
-                UIAlertView *alert = [[UIAlertView alloc]
-                                      initWithTitle:@"Oh No!"
-                                      message:[json objectForKey:@"payload"]
-                                      delegate:self
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-                [alert show];
+                // error in JSON parse
             }
-        } else {
-            // error in JSON parse
-        }
-    }];    
+        }]; 
+    }    
 }
 
 -(void) keyboardWillShow:(NSNotification *)notification{
-    
+    [self fixChatBoxAndTableViewDuringKeyboardMovementFromNotification:notification beingShown:YES];
+}
+
+-(void) keyboardWillHide:(NSNotification *)notification {
+    [self fixChatBoxAndTableViewDuringKeyboardMovementFromNotification:notification beingShown:NO];
+}
+
+- (void)fixChatBoxAndTableViewDuringKeyboardMovementFromNotification:(NSNotification *)notification beingShown:(BOOL)beingShown
+{
+    // Grab the dimensions of the keyboard
     CGRect keyboardRect = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    double scrollSpeed = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     
-    self.originalChatBoxFrame = self.chatBox.frame;
-    self.originalTableViewFrame = self.tableView.frame;
+    CGFloat keyboardHeight = beingShown ? -keyboardRect.size.height : keyboardRect.size.height;
     
     // Shrink the height of the table view by the # of points that the keyboard
     // will occupy
     CGRect newTableViewRect = self.tableView.frame;
-    newTableViewRect.size.height = newTableViewRect.size.height - keyboardRect.size.height;
+    newTableViewRect.size.height = newTableViewRect.size.height + keyboardHeight;
     
     // Raise the inputs by the # of points that the keyboard will occupy
     CGRect newChatBoxRect = self.chatBox.frame;
-    newChatBoxRect.origin.y = newChatBoxRect.origin.y - keyboardRect.size.height;
+    newChatBoxRect.origin.y = newChatBoxRect.origin.y + keyboardHeight;
     
-    [UIView animateWithDuration:scrollSpeed
-                          delay:0
-                        options:UIViewAnimationOptionAllowUserInteraction
-                     animations:^{
-                         self.tableView.frame = newTableViewRect;
-                         self.chatBox.frame = newChatBoxRect;
-                     }
-                     completion:nil];
-    [self scrollToLastChat];
-}
-
--(void) keyboardWillHide:(NSNotification *)notification {
-    // Return the chatContents and the inputs to their original position
     [UIView animateWithDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]
                           delay:0
                         options:UIViewAnimationOptionAllowUserInteraction
                      animations:^{
-                         self.chatBox.frame = self.originalChatBoxFrame;
-                         self.tableView.frame = self.originalTableViewFrame;
+                         self.chatBox.frame = newChatBoxRect;
+                         self.tableView.frame = newTableViewRect;
                      }
                      completion:nil];
     [self scrollToLastChat];
 }
 
 - (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height
-{
+{    
     float diff = (growingTextView.frame.size.height - height);
     
     // change the frame of the chatBox and the tableView to accomodate for the textView growing
