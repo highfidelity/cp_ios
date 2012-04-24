@@ -188,7 +188,6 @@
 {
     BOOL forceScroll = NO;
     BOOL animatedScroll = NO;
-    NSLog(@"%f, %f", self.tableView.contentOffset.y + self.tableView.frame.size.height, self.tableView.contentSize.height);
     if (self.tableView.contentOffset.y + self.tableView.frame.size.height == self.tableView.contentSize.height) {
         forceScroll = YES;
         animatedScroll = YES;
