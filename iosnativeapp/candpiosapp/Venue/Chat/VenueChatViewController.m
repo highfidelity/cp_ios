@@ -212,10 +212,7 @@
 }
 
 -(void)sendChat
-{
-	// kill the keyboard
-    [self.growingTextView resignFirstResponder];
-    
+{    
     if (self.growingTextView.text.length > 0) {
         // show the spinner in place of the send button
         [self.sendingSpinner startAnimating];
@@ -314,15 +311,15 @@
     CGRect table = self.tableView.frame;
     box.size.height -= diff;
     
-    table.size.height += diff;
-    box.origin.y += diff;
-	self.chatBox.frame = box;
-    self.tableView.frame = table;
-    
     // scroll the tableview to maintain position
     CGPoint currentOffset = self.tableView.contentOffset;
     currentOffset.y -= diff;
     [self.tableView setContentOffset:currentOffset animated:NO];
+    
+    table.size.height += diff;
+    box.origin.y += diff;
+	self.chatBox.frame = box;
+    self.tableView.frame = table;
 }
 
 - (void)updateActiveChattingUserCount
@@ -396,6 +393,5 @@
     
     return cell;
 }
-
 
 @end
