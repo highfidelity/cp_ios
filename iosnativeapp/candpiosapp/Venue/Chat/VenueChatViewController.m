@@ -241,10 +241,14 @@
 {
     BOOL forceScroll = NO;
     BOOL animatedScroll = NO;
+    
     if (self.tableView.contentOffset.y + self.tableView.frame.size.height == self.tableView.contentSize.height) {
         forceScroll = YES;
         animatedScroll = YES;
+    } else if (!self.completedFirstChatLoad) {
+        forceScroll = YES;
     }
+    
     [self.tableView reloadData];
     [self scrollToLastChat:forceScroll animated:animatedScroll];
     
