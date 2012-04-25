@@ -21,7 +21,7 @@
 @synthesize entryDateFormatter = _entryDateFormatter;
 @synthesize activeChattersDuringInterval = _activeChattersDuringInterval;
 @synthesize usersCounted = _usersCounted;
-
+@synthesize chatQueue = _chatQueue;
 
 - (VenueChat *)init
 {
@@ -29,6 +29,17 @@
         self.activeChattersDuringInterval = 0;
     }
     return self;
+}
+
+- (NSOperationQueue *)chatQueue
+{
+    if (!_chatQueue) {
+        _chatQueue = [NSOperationQueue new];
+		[_chatQueue setSuspended:NO];
+		// serialize requests, please
+		[_chatQueue setMaxConcurrentOperationCount:1];
+    }
+    return _chatQueue;
 }
 
 - (NSDateFormatter *)entryDateFormatter
@@ -58,7 +69,7 @@
 
 - (void)getNewChatEntriesWithCompletion:(void (^)(BOOL authenticated, BOOL newEntries))completion
 {
-    [CPapi getVenueChatForVenueWithID:self.venueIDString lastChatID:self.lastChatIDString completion:^(NSDictionary *dict, NSError *error) {
+    [CPapi getVenueChatForVenueWithID:self.venueIDString lastChatID:self.lastChatIDString queue:self.chatQueue completion:^(NSDictionary *dict, NSError *error) {
         if (!error) {
             // we have a payload to check out
             if (![[dict objectForKey:@"error"] boolValue]) {

@@ -880,18 +880,20 @@
 
 + (void)getVenueChatForVenueWithID:(NSString *)venueIDString
                         lastChatID:(NSString *)lastChatIDString
+                             queue:(NSOperationQueue *)chatQueue
                         completion:(void (^)(NSDictionary *, NSError *))completion
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setValue:venueIDString forKey:@"venue_id"];
     [parameters setValue:lastChatIDString forKey:@"last_id"];
     
-    [self makeHTTPRequestWithAction:@"getVenueChat" withParameters:parameters completion:completion];
+    [self makeHTTPRequestWithAction:@"getVenueChat" withParameters:parameters queue:chatQueue completion:completion];
 }
 
 + (void)sendVenueChatForVenueWithID:(NSString *)venueIDString
                             message:(NSString *)message
                          lastChatID:(NSString *)lastChatIDString
+                              queue:(NSOperationQueue *)chatQueue
                          completion:(void (^)(NSDictionary *, NSError *))completion
 {
     // note that we also send the last_id here so that we can get all new chat messages back when the send is successful
@@ -900,7 +902,7 @@
     [parameters setValue:message forKey:@"message"];
     [parameters setValue:lastChatIDString forKey:@"last_id"];
     
-    [self makeHTTPRequestWithAction:@"sendVenueChat" withParameters:parameters completion:completion];
+    [self makeHTTPRequestWithAction:@"sendVenueChat" withParameters:parameters queue:chatQueue completion:completion];
 }
 
 @end

@@ -44,7 +44,7 @@
                                                                 <rect key="frame" x="11" y="9" width="205" height="22"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
-                                                                <color key="textColor" red="0.70980392160000005" green="0.41960784309999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="textColor" red="0.76862745098039209" green="0.41960784313725491" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="list-arrow-light-grey.png" id="idP-YG-8kQ">
@@ -70,7 +70,7 @@
                                                         <rect key="frame" x="0.0" y="10" width="29" height="22"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
-                                                        <color key="textColor" red="0.70980392156862748" green="0.41960784313725491" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="textColor" red="0.76862745099999996" green="0.41960784309999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="number-of-people-here.png" id="1dE-q4-umq">
@@ -205,10 +205,10 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="999" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="8D4-M7-AiM">
-                                        <rect key="frame" x="3" y="4" width="35" height="26"/>
+                                        <rect key="frame" x="3" y="5" width="35" height="26"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="24"/>
-                                        <color key="textColor" red="0.70980392160000005" green="0.41960784309999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.76862745098039209" green="0.41960784313725491" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -230,36 +230,6 @@
         <image name="list-arrow-light-grey.png" width="12" height="18"/>
         <image name="number-of-people-here.png" width="29" height="26"/>
     </resources>
-    <classes>
-        <class className="VenueChatCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueChatCell.h"/>
-        </class>
-        <class className="VenueChatViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueChatViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activeChatters" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="VenueInfoViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueInfoViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="tappedAddress:"/>
-                <relationship kind="action" name="tappedPhone:"/>
-                <relationship kind="outlet" name="activeChatText" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="activeChatters" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="activeChattersIcon" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="activeChattersIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="firstAidSection" candidateClass="UIView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="userSection" candidateClass="UIView"/>
-                <relationship kind="outlet" name="venueChatBox" candidateClass="UIView"/>
-                <relationship kind="outlet" name="venueChatBoxVerticalLine" candidateClass="UIView"/>
-                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venuePhoto" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

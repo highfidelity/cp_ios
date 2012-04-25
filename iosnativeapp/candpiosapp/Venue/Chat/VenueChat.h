@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSArray *chatEntries;
 @property (nonatomic, strong) NSDateFormatter *entryDateFormatter;
 @property (nonatomic, assign) int activeChattersDuringInterval;
+@property (nonatomic, strong) NSOperationQueue *chatQueue;
 
 - (void)getNewChatEntriesWithCompletion:(void (^)(BOOL authenticated, BOOL newEntries))completion;
 - (void)addNewChatEntriesFromDictionary:(NSDictionary *)dict 

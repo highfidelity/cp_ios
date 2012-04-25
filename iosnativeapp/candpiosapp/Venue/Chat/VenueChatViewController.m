@@ -63,6 +63,12 @@
                                              selector:@selector(keyboardWillHide:) 
                                                  name:UIKeyboardWillHideNotification 
                                                object:nil];
+    
+    // league gothic the number of active chatters
+    // and put a shadow on the text
+    [CPUIHelper changeFontForLabel:self.activeChatters toLeagueGothicOfSize:self.activeChatters.font.pointSize];
+    self.activeChatters.layer.shadowOffset = CGSizeMake(1, 0);
+    self.activeChatters.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
 
     // setup the box that will hold the chat input
     self.chatBox = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 39, [[UIScreen mainScreen] bounds].size.width, 39)];
@@ -224,7 +230,7 @@
         __weak VenueChatViewController *chatVC = self;
         
         // send the new chat message
-        [CPapi sendVenueChatForVenueWithID:self.venueChat.venueIDString message:self.growingTextView.text lastChatID:self.venueChat.lastChatIDString completion:^(NSDictionary *json, NSError *error) {
+        [CPapi sendVenueChatForVenueWithID:self.venueChat.venueIDString message:self.growingTextView.text lastChatID:self.venueChat.lastChatIDString queue:self.venueChat.chatQueue completion:^(NSDictionary *json, NSError *error) {
             
             // no matter what happens we want to stop the spinner and show the button again
             // also allow the user to click on the text view again
