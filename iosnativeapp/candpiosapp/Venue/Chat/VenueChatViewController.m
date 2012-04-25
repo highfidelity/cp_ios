@@ -224,9 +224,6 @@
         [self.sendingSpinner startAnimating];
         self.sendButton.hidden = YES;
         
-        // don't let the user click on the text field until we've gotten a response back about this entry
-        self.growingTextView.userInteractionEnabled = NO;
-        
         __weak VenueChatViewController *chatVC = self;
         
         // send the new chat message
@@ -236,7 +233,6 @@
             // also allow the user to click on the text view again
             [self.sendingSpinner stopAnimating];
             self.sendButton.hidden = NO;
-            self.growingTextView.userInteractionEnabled = YES;
             
             if (!error) {
                 if (![[json objectForKey:@"error"] boolValue]) {
@@ -247,6 +243,7 @@
                             
                             // clear the textView now that the chat message has been sent
                             chatVC.growingTextView.text = @"";
+        
                         }
                     }];
                 } else {
@@ -398,6 +395,20 @@
     
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.growingTextView resignFirstResponder];
+}
+
+- (BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    // make sure the user can't edit the growingTextView while chat is being sent
+    if ([self.sendingSpinner isAnimating]) {
+        return NO;
+    } else {
+        return YES;
+    }
 }
 
 @end
