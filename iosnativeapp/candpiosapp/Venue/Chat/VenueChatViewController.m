@@ -12,6 +12,8 @@
 #import "HPGrowingTextView.h"
 #import "HPTextViewInternal.h"
 
+#define BLANKSHEET_VIEW_TAG 6582
+
 @interface VenueChatViewController () <UITableViewDelegate, UITableViewDataSource, HPGrowingTextViewDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, assign) IBOutlet UILabel *activeChatters;
@@ -23,6 +25,8 @@
 @property (assign, nonatomic) CGRect originalTableViewFrame;
 @property (strong, nonatomic) UIActivityIndicatorView *sendingSpinner;
 @property (strong, nonatomic) NSTimer *chatReloadTimer;
+@property (strong, nonatomic) UIView *blankSheet;
+@property (nonatomic, assign) BOOL completedFirstChatLoad;
 
 - (void)updateActiveChattingUserCount;
 
@@ -44,6 +48,8 @@
 @synthesize originalTableViewFrame = _originalTableViewFrame;
 @synthesize sendingSpinner = _sendingSpinner;
 @synthesize chatReloadTimer = _chatReloadTimer;
+@synthesize blankSheet = _blankSheet;
+@synthesize completedFirstChatLoad = _completedFirstChatLoad;
 
 - (void)viewDidLoad
 {
@@ -103,7 +109,7 @@
     
     [self.chatBox addSubview:self.sendButton];
     
-    if ([CPAppDelegate currentUser].checkedIn && DEFAULTS(integer, kUDCheckedInVenueID) == self.venue.venueID) {
+    if ([CPAppDelegate userCheckedIn] && DEFAULTS(integer, kUDCheckedInVenueID) == self.venue.venueID) {
         // this user is checked in here
         // show them the textView and an enabled send button
         
@@ -154,15 +160,24 @@
         [self.chatBox addSubview:notifyLabel];
         self.sendButton.enabled = NO;
     }
+    
+    if (!self.venueChat.hasLoaded) {
+        // the chat hasn't loaded so we need to show the blank background
+        [self placeBlankSheetOverTableView];
+        [SVProgressHUD showWithStatus:@"Loading Venue Chat..."];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self updateTableAndHeaderWithNewVenueChat];
     
-    // force a scroll to the last chat
-    [self scrollToLastChat:YES animated:NO];
+    if (self.venueChat.hasLoaded) {
+        // update with the venueChat
+        [self updateTableAndHeaderWithNewVenueChat];
+        // force a scroll to the last chat
+        [self scrollToLastChat:YES animated:NO];
+    }    
     
     // start calling a timer that reloads chat every VENUE_CHAT_RELOAD_INTERVAL seconds
     [self reloadVenueChat];
@@ -199,6 +214,16 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)placeBlankSheetOverTableView
+{
+    // make sure the blankSheet is sitting in front of the tableView
+    if (!self.blankSheet) {
+        self.blankSheet = [[UIView alloc] initWithFrame:self.tableView.frame];
+        self.blankSheet.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:self.blankSheet];
+    }
+}
+
 - (void)scrollToLastChat:(BOOL)forced animated:(BOOL)animated
 {
     if (self.venueChat.chatEntries.count > 0) { 
@@ -225,6 +250,42 @@
     
     // setup the little orange man in the navigation item
     [self updateActiveChattingUserCount];
+    
+    if (self.venueChat.hasLoaded) {
+        if (!self.completedFirstChatLoad) {
+            [SVProgressHUD dismiss];
+            if (self.venueChat.chatEntries.count > 0) {
+                [self.blankSheet removeFromSuperview];
+                self.blankSheet = nil;
+            } else {
+                [self placeBlankSheetOverTableView];
+                // zero chat entries so put the bubble to prompt the user to chat
+                UIImageView *bubbleImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"venue-chat-blank-slate.png"]];
+                
+                // put the bubble in the right spot
+                CGRect bubbleFrame = bubbleImage.frame;
+                bubbleFrame.origin.y = self.blankSheet.frame.size.height - bubbleFrame.size.height;
+                bubbleImage.frame = bubbleFrame;
+                
+                // add the bubble to the blank sheet
+                [self.blankSheet addSubview:bubbleImage];
+            }
+            self.completedFirstChatLoad = YES;
+        } else if (self.venueChat.chatEntries.count != 0 && self.blankSheet) {
+            // slide the blankSheet up and away
+            CGRect sheetFrame = self.blankSheet.frame;
+            sheetFrame.origin.y = -sheetFrame.size.height;
+            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationCurveEaseInOut animations:^{
+                self.blankSheet.frame = sheetFrame;  
+            } completion:^(BOOL finished){
+                if (finished) {
+                    // kill the blankSheet since we don't need it anymore
+                    [self.blankSheet removeFromSuperview];
+                    self.blankSheet = nil;
+                }
+            }];
+        }
+    }
 }
 
 - (void)reloadVenueChat
@@ -303,11 +364,14 @@
     // Shrink the height of the table view by the # of points that the keyboard
     // will occupy
     CGRect newTableViewRect = self.tableView.frame;
-    newTableViewRect.size.height = newTableViewRect.size.height + keyboardHeight;
+    newTableViewRect.size.height += keyboardHeight;
     
     // Raise the inputs by the # of points that the keyboard will occupy
     CGRect newChatBoxRect = self.chatBox.frame;
-    newChatBoxRect.origin.y = newChatBoxRect.origin.y + keyboardHeight;
+    newChatBoxRect.origin.y += keyboardHeight;
+    
+    CGRect newBlankSheetRect = self.blankSheet.frame;
+    newBlankSheetRect.origin.y += keyboardHeight;
     
     [UIView animateWithDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]
                           delay:0
@@ -315,6 +379,7 @@
                      animations:^{
                          self.chatBox.frame = newChatBoxRect;
                          self.tableView.frame = newTableViewRect;
+                         self.blankSheet.frame = newBlankSheetRect;
                      }
                      completion:nil];
     [self scrollToLastChat:YES animated:NO];
@@ -353,7 +418,7 @@
         self.activeChatters.text = [NSString stringWithFormat:@"%d", self.venueChat.activeChattersDuringInterval];
     } else {
         self.activeChatters.hidden = YES;
-    }   
+    } 
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

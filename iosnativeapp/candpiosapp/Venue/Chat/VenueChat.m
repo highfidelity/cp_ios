@@ -22,11 +22,13 @@
 @synthesize activeChattersDuringInterval = _activeChattersDuringInterval;
 @synthesize usersCounted = _usersCounted;
 @synthesize chatQueue = _chatQueue;
+@synthesize hasLoaded = _hasLoaded;
 
 - (VenueChat *)init
 {
     if (self = [super init]) {
         self.activeChattersDuringInterval = 0;
+        self.hasLoaded = NO;
     }
     return self;
 }
@@ -71,6 +73,11 @@
 {
     [CPapi getVenueChatForVenueWithID:self.venueIDString lastChatID:self.lastChatIDString queue:self.chatQueue completion:^(NSDictionary *dict, NSError *error) {
         if (!error) {
+            
+            if (!self.hasLoaded) {
+                self.hasLoaded = YES;
+            }
+                
             // we have a payload to check out
             if (![[dict objectForKey:@"error"] boolValue]) {
                 // no error, parse the chat if there is any

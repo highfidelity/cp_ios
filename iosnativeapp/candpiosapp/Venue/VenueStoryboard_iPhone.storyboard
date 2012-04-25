@@ -156,7 +156,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="hcK-sa-ySL">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="377"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="VenueChatCell" rowHeight="42" id="cbf-oh-TEs" customClass="VenueChatCell">
@@ -230,6 +230,36 @@
         <image name="list-arrow-light-grey.png" width="12" height="18"/>
         <image name="number-of-people-here.png" width="29" height="26"/>
     </resources>
+    <classes>
+        <class className="VenueChatCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueChatCell.h"/>
+        </class>
+        <class className="VenueChatViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueChatViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activeChatters" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="VenueInfoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueInfoViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="tappedAddress:"/>
+                <relationship kind="action" name="tappedPhone:"/>
+                <relationship kind="outlet" name="activeChatText" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="activeChatters" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="activeChattersIcon" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="activeChattersIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="firstAidSection" candidateClass="UIView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="userSection" candidateClass="UIView"/>
+                <relationship kind="outlet" name="venueChatBox" candidateClass="UIView"/>
+                <relationship kind="outlet" name="venueChatBoxVerticalLine" candidateClass="UIView"/>
+                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venuePhoto" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
