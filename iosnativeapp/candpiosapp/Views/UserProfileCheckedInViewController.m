@@ -620,13 +620,6 @@ UITapGestureRecognizer* _tapRecon = nil;
                         forKey:@"lng"];   
     }
     
-    NSString *foursquareId = DEFAULTS(object, kUDCheckedInVenueID);
-    if ([CPAppDelegate userCheckedIn] && [foursquareId class] != [NSNull class]) {
-        [reviewParams setObject:foursquareId forKey:@"foursquare"];
-    }
-    
-    
-    
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
                                                             path:@"reviews.php"
                                                       parameters:reviewParams];

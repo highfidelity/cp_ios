@@ -305,7 +305,7 @@
                 
                 // put the foursquare ID for the venue the user is checked into in NSUserDefaults
                 // used to tell 
-                SET_DEFAULTS(Object, kUDCheckedInVenueID, self.place.foursquareID);
+                SET_DEFAULTS(Integer, kUDCheckedInVenueID, self.place.venueID);
 
                 [CPAppDelegate refreshCheckInButton];
             

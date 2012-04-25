@@ -73,25 +73,6 @@
     // setup the box that will hold the chat input
     self.chatBox = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 39, [[UIScreen mainScreen] bounds].size.width, 39)];
     
-    // setup an HPGrowingTextView to hold inputted chat
-    self.growingTextView = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(6, 3, 240, 40)];
-    self.growingTextView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5);
-	self.growingTextView.minNumberOfLines = 1;
-	self.growingTextView.maxNumberOfLines = 6;
-	self.growingTextView.returnKeyType = UIReturnKeyDefault;
-	self.growingTextView.font = [VenueChatCell chatEntryFont];
-	self.growingTextView.delegate = self;
-    self.growingTextView.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(5, 0, 5, 0);
-    self.growingTextView.backgroundColor = [UIColor whiteColor];
-    self.growingTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    
-    // setup the white chat box with rounded corners
-    UIImage *rawEntryBackground = [UIImage imageNamed:@"MessageEntryInputField.png"];
-    UIImage *entryBackground = [rawEntryBackground stretchableImageWithLeftCapWidth:13 topCapHeight:22];
-    UIImageView *entryImageView = [[UIImageView alloc] initWithImage:entryBackground];
-    entryImageView.frame = CGRectMake(5, 0, 248, 40);
-    entryImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    
     // setup the gray background on the chat box
     UIImage *rawBackground = [UIImage imageNamed:@"MessageEntryBackground.png"];
     UIImage *background = [rawBackground stretchableImageWithLeftCapWidth:13 topCapHeight:22];
@@ -113,26 +94,66 @@
     [self.sendButton setBackgroundImage:chatButtonImage forState:UIControlStateNormal];
     self.sendButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
-    // setup a spinner centered on the send button that we will show when sending the chat
-    self.sendingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    self.sendingSpinner.color = [UIColor colorWithRed:(181.0/255.0) green:(107.0/255.0) blue:(0/255.0) alpha:1.0];
-    self.sendingSpinner.hidesWhenStopped = YES;
-    CGRect spinnerFrame = self.sendingSpinner.frame;
-    spinnerFrame.origin.x = self.sendButton.frame.origin.x + (self.sendButton.frame.size.width / 2) - (spinnerFrame.size.width / 2);
-    spinnerFrame.origin.y = self.sendButton.frame.origin.y + (self.sendButton.frame.size.height / 2) - (spinnerFrame.size.height / 2);
-    self.sendingSpinner.frame = spinnerFrame;
-    self.sendingSpinner.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    
-    // resizing for chatBox
+    // chatBox autoresizing
     self.chatBox.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     
     // setup the view hierarchy of the chatBox
     [self.view addSubview:self.chatBox];
     [self.chatBox addSubview:imageView];
-    [self.chatBox addSubview:self.growingTextView];
-    [self.chatBox addSubview:entryImageView];
+    
     [self.chatBox addSubview:self.sendButton];
-    [self.chatBox addSubview:self.sendingSpinner];
+    
+    if ([CPAppDelegate currentUser].checkedIn && DEFAULTS(integer, kUDCheckedInVenueID) == self.venue.venueID) {
+        // this user is checked in here
+        // show them the textView and an enabled send button
+        
+        // setup an HPGrowingTextView to hold inputted chat
+        self.growingTextView = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(6, 3, 240, 40)];
+        self.growingTextView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5);
+        self.growingTextView.minNumberOfLines = 1;
+        self.growingTextView.maxNumberOfLines = 6;
+        self.growingTextView.returnKeyType = UIReturnKeyDefault;
+        self.growingTextView.font = [VenueChatCell chatEntryFont];
+        self.growingTextView.delegate = self;
+        self.growingTextView.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(5, 0, 5, 0);
+        self.growingTextView.backgroundColor = [UIColor whiteColor];
+        self.growingTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        
+        // setup the white chat box with rounded corners
+        UIImage *rawEntryBackground = [UIImage imageNamed:@"MessageEntryInputField.png"];
+        UIImage *entryBackground = [rawEntryBackground stretchableImageWithLeftCapWidth:13 topCapHeight:22];
+        UIImageView *entryImageView = [[UIImageView alloc] initWithImage:entryBackground];
+        entryImageView.frame = CGRectMake(5, 0, 248, 40);
+        entryImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        
+        // setup a spinner centered on the send button that we will show when sending the chat
+        self.sendingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        self.sendingSpinner.color = [UIColor colorWithRed:(181.0/255.0) green:(107.0/255.0) blue:(0/255.0) alpha:1.0];
+        self.sendingSpinner.hidesWhenStopped = YES;
+        CGRect spinnerFrame = self.sendingSpinner.frame;
+        spinnerFrame.origin.x = self.sendButton.frame.origin.x + (self.sendButton.frame.size.width / 2) - (spinnerFrame.size.width / 2);
+        spinnerFrame.origin.y = self.sendButton.frame.origin.y + (self.sendButton.frame.size.height / 2) - (spinnerFrame.size.height / 2);
+        self.sendingSpinner.frame = spinnerFrame;
+        self.sendingSpinner.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+        
+        [self.chatBox addSubview:self.growingTextView];
+        [self.chatBox addSubview:entryImageView];
+        
+        [self.chatBox addSubview:self.sendingSpinner];
+        
+    } else {
+        // setup a UILabel to tell the user they have to check in to chat here
+        UILabel *notifyLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 280, 39)];
+        notifyLabel.text = @"Please check in to chat here";
+        notifyLabel.backgroundColor = [UIColor clearColor];
+        notifyLabel.textColor = [UIColor colorWithRed:(196.0/255.0) green:(102.0/255.0) blue:0 alpha:1.0];
+        notifyLabel.font = self.sendButton.titleLabel.font;
+        notifyLabel.shadowOffset = CGSizeMake(0, -1);
+        notifyLabel.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.1];
+        
+        [self.chatBox addSubview:notifyLabel];
+        self.sendButton.enabled = NO;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
