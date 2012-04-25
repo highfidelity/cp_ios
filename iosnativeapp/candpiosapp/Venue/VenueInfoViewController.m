@@ -211,7 +211,7 @@
     // set hadNoChat to no, it may be changed when the chat gets loaded
     self.hadNoChat = NO;
 
-    [self populateUserSection];
+    [self populateUserSection]; 
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -452,7 +452,7 @@
     // this is where we add the users and the check in button to the bottom of the scroll view
     
     // grab the user data by calling a delegate method on the map and grabbing the data from there
-    // there is an active users property on this venue but we need to pull from the map to guaruntee new data
+    // there is an active users property on this venue but we need to pull from the map to guarantee new data
     NSMutableDictionary *activeUsers = self.venue.activeUsers;
     
 
@@ -539,7 +539,7 @@
     newFrame.origin.x = (self.userSection.frame.size.width / 2) - (toFit.width / 2);
     
     // check if there are no users currently or previously checked in (in last week) and set the y-origin based on that
-    newFrame.origin.y += newFrame.origin.y == 16 ? 4 : 20;
+    newFrame.origin.y += newFrame.origin.y == 9 ? 4 : 20;
     newFrame.size = toFit;
         
     // give that frame to the label
@@ -671,181 +671,183 @@
 - (UIView *)categoryViewForCurrentUserCategory:(NSString *)category
                         withYOrigin:(CGFloat)yOrigin;
 {
-    UIView *categoryView = [[UIView alloc] initWithFrame:CGRectMake(10, yOrigin, self.view.frame.size.width - 20, 113)]; 
+
+    UIView *categoryView = nil;
     
-    [self stylingForUserBox:categoryView withTitle:category forCheckedInUsers:YES];
-    
-    CGFloat thumbnailDim = 71;
-    
-    UIScrollView *usersScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 29, categoryView.frame.size.width, thumbnailDim)];
-    
-    // add the scroll view to the category box
-    [categoryView addSubview:usersScrollView];
-    
-    CGFloat xOffset = 10;
-    for (User *user in [self.currentUsers objectForKey:category]) {
+    if (self.currentUsers.count > 0) {
+        categoryView = [[UIView alloc] initWithFrame:CGRectMake(10, yOrigin, self.view.frame.size.width - 20, 113)]; 
         
-        UIButton *thumbButton = [self thumbnailButtonForUser:user withSquareDim:thumbnailDim andXOffset:xOffset andYOffset:0];
+        [self stylingForUserBox:categoryView withTitle:category forCheckedInUsers:YES];
         
-        // add the thumbnail to the category view
-        [usersScrollView addSubview:thumbButton];
+        CGFloat thumbnailDim = 71;
         
-        // add to the xOffset for the next thumbnail
-        xOffset += 10 + thumbButton.frame.size.width;
+        UIScrollView *usersScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 29, categoryView.frame.size.width, thumbnailDim)];
         
-        // add this user to the usersShown set so we know we have them
-        [self.usersShown addObject:[NSNumber numberWithInt:user.userID]];
+        // add the scroll view to the category box
+        [categoryView addSubview:usersScrollView];
         
-        if (![self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", user.userID]]) {
-            [self addUserToDictionaryOfUserObjectsFromUser:user];
-        }        
+        CGFloat xOffset = 10;
+        for (User *user in [self.currentUsers objectForKey:category]) {
+            
+            UIButton *thumbButton = [self thumbnailButtonForUser:user withSquareDim:thumbnailDim andXOffset:xOffset andYOffset:0];
+            
+            // add the thumbnail to the category view
+            [usersScrollView addSubview:thumbButton];
+            
+            // add to the xOffset for the next thumbnail
+            xOffset += 10 + thumbButton.frame.size.width;
+            
+            // add this user to the usersShown set so we know we have them
+            [self.usersShown addObject:[NSNumber numberWithInt:user.userID]];
+            
+            if (![self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", user.userID]]) {
+                [self addUserToDictionaryOfUserObjectsFromUser:user];
+            }        
+        }
+        
+        // set the content size on the scrollview
+        CGFloat newWidth = [[self.currentUsers objectForKey:category] count] * (thumbnailDim + 10) + 45;
+        usersScrollView.contentSize = CGSizeMake(newWidth, usersScrollView.contentSize.height);
+        usersScrollView.showsHorizontalScrollIndicator = NO;
+        
+        // gradient on the right side of the scrollview
+        CAGradientLayer *gradient = [CAGradientLayer layer];
+        gradient.frame = CGRectMake(usersScrollView.frame.size.width - 45, usersScrollView.frame.origin.y, 45, usersScrollView.frame.size.height);
+        gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:0.0] CGColor],
+                           (id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:1.0] CGColor],
+                           (id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:1.0] CGColor],
+                           nil];
+        [gradient setStartPoint:CGPointMake(0.0, 0.5)];
+        [gradient setEndPoint:CGPointMake(1.0, 0.5)];
+        gradient.locations = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:0.65], [NSNumber numberWithFloat:1.0], nil];
+        [categoryView.layer addSublayer:gradient];
+
     }
     
-    // set the content size on the scrollview
-    CGFloat newWidth = [[self.currentUsers objectForKey:category] count] * (thumbnailDim + 10) + 45;
-    usersScrollView.contentSize = CGSizeMake(newWidth, usersScrollView.contentSize.height);
-    usersScrollView.showsHorizontalScrollIndicator = NO;
-    
-    // gradient on the right side of the scrollview
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = CGRectMake(usersScrollView.frame.size.width - 45, usersScrollView.frame.origin.y, 45, usersScrollView.frame.size.height);
-    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:0.0] CGColor],
-                       (id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:1.0] CGColor],
-                       (id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:1.0] CGColor],
-                       nil];
-    [gradient setStartPoint:CGPointMake(0.0, 0.5)];
-    [gradient setEndPoint:CGPointMake(1.0, 0.5)];
-    gradient.locations = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:0.65], [NSNumber numberWithFloat:1.0], nil];
-    [categoryView.layer addSublayer:gradient];
-        
-    // return the view
-    return categoryView;
+    // return the view (or nil if we didn't create it)
+    return categoryView;    
 }
 
 - (UIView *)viewForPreviousUsersWithYOrigin:(CGFloat)yOrigin
 {
-    UIView *previousUsersView = [[UIView alloc] initWithFrame:CGRectMake(10, yOrigin, self.view.frame.size.width - 20, 113)];
-    
-    NSString *title = [self.previousUsers count] > 1 ? @"Have worked here..." : @"Has worked here...";
-    [self stylingForUserBox:previousUsersView withTitle:title forCheckedInUsers:NO];
-    
-    CGRect newFrame = previousUsersView.frame;
-    
-    CGFloat yOffset = 29;
-    BOOL atLeastOne = NO;
-    
-    UIView *lastLine;
-    
-    // sort the previous users by the number of checkins here
-    NSArray *sortedPreviousUsers = [self.previousUsers sortedArrayUsingComparator:^NSComparisonResult(User *u1, User *u2) {
-        int ch1 = [[[self.venue.activeUsers objectForKey:[NSString stringWithFormat:@"%d", u1.userID]] objectForKey:@"checkin_count"] integerValue];
-        int ch2 = [[[self.venue.activeUsers objectForKey:[NSString stringWithFormat:@"%d", u2.userID]] objectForKey:@"checkin_count"] integerValue];
-        if (ch1 > ch2) {
-            return (NSComparisonResult)NSOrderedDescending;
-        }
+    UIView *previousUsersView = nil;
+    if (self.previousUsers.count > 0) {
+        previousUsersView = [[UIView alloc] initWithFrame:CGRectMake(10, yOrigin, self.view.frame.size.width - 20, 113)];
         
-        if (ch1 < ch2) {
-            return (NSComparisonResult)NSOrderedAscending;
-        }
-        return (NSComparisonResult)NSOrderedSame;
-    }];
-    
-    for (User *previousUser in [sortedPreviousUsers reverseObjectEnumerator]) {
-        // make sure we aren't already showing this user as checked in or as a previous user
-        if (![self.usersShown containsObject:[NSNumber numberWithInt:previousUser.userID]]) {
-            // setup the user thumbnail
-            UIButton *userThumbnailButton = [self thumbnailButtonForUser:previousUser withSquareDim:71 andXOffset:10 andYOffset:yOffset];
-            
-            // add the thumbnail to the view
-            [previousUsersView addSubview:userThumbnailButton];
-            
-            CGFloat maxLabelWidth = previousUsersView.frame.size.width - (userThumbnailButton.frame.size.width + userThumbnailButton.frame.origin.x) - 20;
-            CGFloat leftOffset = userThumbnailButton.frame.origin.x + userThumbnailButton.frame.size.width + 10;
-            
-            // make the button clickable area extend over the user data as well
-            CGRect buttonFrame = userThumbnailButton.frame;
-            buttonFrame.size.width = userThumbnailButton.superview.frame.size.width - 20;
-            userThumbnailButton.frame = buttonFrame;
-            
-            // label for the user name
-            UILabel *userName = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, yOffset + 10, maxLabelWidth, 20)];
-            userName.text = [CPUIHelper profileNickname: previousUser.nickname];
-            [CPUIHelper changeFontForLabel:userName toLeagueGothicOfSize:18];
-            userName.backgroundColor = [UIColor clearColor];
-            userName.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
-            
-            // add the username to the previousUsersView
-            [previousUsersView addSubview:userName];
-            
-            CGFloat labelOffset = yOffset;
-            
-            UIColor *lightGray = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1.0];
-            
-            if ([previousUser.jobTitle length] > 0) {
-                // label for user headline
-                labelOffset += 27;
-                UILabel *userHeadline = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, labelOffset, maxLabelWidth, 20)];
-                userHeadline.text = previousUser.jobTitle;
-                
-                userHeadline.backgroundColor = [UIColor clearColor];
-                userHeadline.textColor = lightGray;
-                userHeadline.font = [UIFont systemFontOfSize:12];
-                
-                // add the label to the previousUsersView
-                [previousUsersView addSubview:userHeadline];
-            } else {
-                labelOffset += 11;
+        NSString *title = [self.previousUsers count] > 1 ? @"Have worked here..." : @"Has worked here...";
+        [self stylingForUserBox:previousUsersView withTitle:title forCheckedInUsers:NO];
+        
+        CGRect newFrame = previousUsersView.frame;
+        
+        CGFloat yOffset = 29;
+        
+        UIView *lastLine;
+        
+        // sort the previous users by the number of checkins here
+        NSArray *sortedPreviousUsers = [self.previousUsers sortedArrayUsingComparator:^NSComparisonResult(User *u1, User *u2) {
+            int ch1 = [[[self.venue.activeUsers objectForKey:[NSString stringWithFormat:@"%d", u1.userID]] objectForKey:@"checkin_count"] integerValue];
+            int ch2 = [[[self.venue.activeUsers objectForKey:[NSString stringWithFormat:@"%d", u2.userID]] objectForKey:@"checkin_count"] integerValue];
+            if (ch1 > ch2) {
+                return (NSComparisonResult)NSOrderedDescending;
             }
             
-            UILabel *userCheckins = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, labelOffset + 16, maxLabelWidth, 20)];
-            NSString *userID = [NSString stringWithFormat:@"%d", previousUser.userID];
-            int checkinCount = [[[self.venue.activeUsers objectForKey:userID] objectForKey:@"checkin_count"] integerValue];
-            userCheckins.text = [NSString stringWithFormat:@"%d check ins", checkinCount];
-            
-            userCheckins.font = [UIFont boldSystemFontOfSize:12];
-            
-            userCheckins.backgroundColor = [UIColor clearColor];
-            userCheckins.textColor = lightGray;
-            userCheckins.font = [UIFont systemFontOfSize:12];
-            
-            // add the label to the previousUsersView
-            [previousUsersView addSubview:userCheckins];
-            
-            // set the new y-offset for the next user
-            yOffset += userThumbnailButton.frame.size.height + 11;
-            
-            newFrame.size.height = yOffset;
-            
-            // add this user to the usersShown mutable set so they won't be shown again
-            [self.usersShown addObject:[NSNumber numberWithInt:previousUser.userID]];
-            
-            atLeastOne = YES;
-            
-            // put a line to seperate the users
-            UIView *seperator = [[UIView alloc] initWithFrame:CGRectMake(userThumbnailButton.frame.origin.x, yOffset - 6, previousUsersView.frame.size.width - 20, 1)];
-            seperator.backgroundColor = [UIColor colorWithRed:(198.0/255.0) green:(198.0/255.0) blue:(198.0/255.0) alpha:0.75];
-            
-            [previousUsersView addSubview:seperator];   
-            
-            // this is the new last line
-            lastLine = seperator;
-            
-            [self addUserToDictionaryOfUserObjectsFromUser:previousUser];            
-        }        
+            if (ch1 < ch2) {
+                return (NSComparisonResult)NSOrderedAscending;
+            }
+            return (NSComparisonResult)NSOrderedSame;
+        }];
+        
+        for (User *previousUser in [sortedPreviousUsers reverseObjectEnumerator]) {
+            // make sure we aren't already showing this user as checked in or as a previous user
+            if (![self.usersShown containsObject:[NSNumber numberWithInt:previousUser.userID]]) {
+                // setup the user thumbnail
+                UIButton *userThumbnailButton = [self thumbnailButtonForUser:previousUser withSquareDim:71 andXOffset:10 andYOffset:yOffset];
+                
+                // add the thumbnail to the view
+                [previousUsersView addSubview:userThumbnailButton];
+                
+                CGFloat maxLabelWidth = previousUsersView.frame.size.width - (userThumbnailButton.frame.size.width + userThumbnailButton.frame.origin.x) - 20;
+                CGFloat leftOffset = userThumbnailButton.frame.origin.x + userThumbnailButton.frame.size.width + 10;
+                
+                // make the button clickable area extend over the user data as well
+                CGRect buttonFrame = userThumbnailButton.frame;
+                buttonFrame.size.width = userThumbnailButton.superview.frame.size.width - 20;
+                userThumbnailButton.frame = buttonFrame;
+                
+                // label for the user name
+                UILabel *userName = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, yOffset + 10, maxLabelWidth, 20)];
+                userName.text = [CPUIHelper profileNickname: previousUser.nickname];
+                [CPUIHelper changeFontForLabel:userName toLeagueGothicOfSize:18];
+                userName.backgroundColor = [UIColor clearColor];
+                userName.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
+                
+                // add the username to the previousUsersView
+                [previousUsersView addSubview:userName];
+                
+                CGFloat labelOffset = yOffset;
+                
+                UIColor *lightGray = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1.0];
+                
+                if ([previousUser.jobTitle length] > 0) {
+                    // label for user headline
+                    labelOffset += 27;
+                    UILabel *userHeadline = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, labelOffset, maxLabelWidth, 20)];
+                    userHeadline.text = previousUser.jobTitle;
+                    
+                    userHeadline.backgroundColor = [UIColor clearColor];
+                    userHeadline.textColor = lightGray;
+                    userHeadline.font = [UIFont systemFontOfSize:12];
+                    
+                    // add the label to the previousUsersView
+                    [previousUsersView addSubview:userHeadline];
+                } else {
+                    labelOffset += 11;
+                }
+                
+                UILabel *userCheckins = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, labelOffset + 16, maxLabelWidth, 20)];
+                NSString *userID = [NSString stringWithFormat:@"%d", previousUser.userID];
+                int checkinCount = [[[self.venue.activeUsers objectForKey:userID] objectForKey:@"checkin_count"] integerValue];
+                userCheckins.text = [NSString stringWithFormat:@"%d check ins", checkinCount];
+                
+                userCheckins.font = [UIFont boldSystemFontOfSize:12];
+                
+                userCheckins.backgroundColor = [UIColor clearColor];
+                userCheckins.textColor = lightGray;
+                userCheckins.font = [UIFont systemFontOfSize:12];
+                
+                // add the label to the previousUsersView
+                [previousUsersView addSubview:userCheckins];
+                
+                // set the new y-offset for the next user
+                yOffset += userThumbnailButton.frame.size.height + 11;
+                
+                newFrame.size.height = yOffset;
+                
+                // add this user to the usersShown mutable set so they won't be shown again
+                [self.usersShown addObject:[NSNumber numberWithInt:previousUser.userID]];
+                
+                
+                // put a line to seperate the users
+                UIView *seperator = [[UIView alloc] initWithFrame:CGRectMake(userThumbnailButton.frame.origin.x, yOffset - 6, previousUsersView.frame.size.width - 20, 1)];
+                seperator.backgroundColor = [UIColor colorWithRed:(198.0/255.0) green:(198.0/255.0) blue:(198.0/255.0) alpha:0.75];
+                
+                [previousUsersView addSubview:seperator];   
+                
+                // this is the new last line
+                lastLine = seperator;
+                
+                [self addUserToDictionaryOfUserObjectsFromUser:previousUser];            
+            }        
+        }
+        // remove the last line since we won't need it
+        [lastLine removeFromSuperview];
+        
+        // grow the previousUsersView frame to accomodate all users
+        previousUsersView.frame = newFrame;
     }
-    // remove the last line since we won't need it
-    [lastLine removeFromSuperview];
-    
-    // grow the previousUsersView frame to accomodate all users
-    previousUsersView.frame = newFrame;
     
     // if there's at least on user to show then return a view otherwise be nil
-    if (atLeastOne) {
-        return previousUsersView; 
-    } else {
-        return nil;
-    }
-       
+    return previousUsersView;        
 }
 
 - (void)stylingForUserBox:(UIView *)userBox

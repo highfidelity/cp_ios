@@ -24,7 +24,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" id="rNQ-lK-JnA">
-                                        <rect key="frame" x="0.0" y="218" width="320" height="242"/>
+                                        <rect key="frame" x="0.0" y="218" width="320" height="198"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" id="63A-NG-4u2">
@@ -86,7 +86,7 @@
                                                 <color key="backgroundColor" red="0.92941176470588238" green="0.92941176470588238" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
                                             </view>
                                             <view contentMode="scaleToFill" id="qUM-c1-uKR">
-                                                <rect key="frame" x="0.0" y="39" width="320" height="203"/>
+                                                <rect key="frame" x="0.0" y="39" width="320" height="159"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
