@@ -332,6 +332,7 @@
             for (NSDictionary *placeDict in [userDict valueForKey:@"checkin_history"]) {
                 CPVenue *place = [CPVenue new];
                 place.checkinCount = [[placeDict valueForKey:@"count"] intValue];
+                place.venueID = [[placeDict valueForKey:@"venue_id"] intValue];
                 place.foursquareID = [placeDict valueForKey:@"foursquare_id"];
                 place.name = [placeDict valueForKey:@"name"];
                 place.address = [placeDict valueForKey:@"address"];
