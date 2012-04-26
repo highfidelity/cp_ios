@@ -24,9 +24,11 @@
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 @property (nonatomic, assign) double distanceFromUser;
 @property (nonatomic) int checkinCount;
+@property (nonatomic) int checkinTime;
 @property (nonatomic, assign) int weeklyCheckinCount;
 @property (nonatomic, assign) int intervalCheckinCount;
 @property (nonatomic, readonly) NSString *checkinCountString;
+@property (nonatomic, readonly) NSString *checkinTimeString;
 @property (nonatomic, readonly) NSString *formattedAddress;
 @property (nonatomic, strong) NSMutableDictionary *activeUsers;
 @property (nonatomic, readonly) NSDictionary *initializationDictionaryJSON;

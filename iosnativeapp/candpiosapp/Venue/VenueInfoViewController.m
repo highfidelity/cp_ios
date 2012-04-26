@@ -806,8 +806,8 @@
                 
                 UILabel *userCheckins = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, labelOffset + 16, maxLabelWidth, 20)];
                 NSString *userID = [NSString stringWithFormat:@"%d", previousUser.userID];
-                int checkinCount = [[[self.venue.activeUsers objectForKey:userID] objectForKey:@"checkin_count"] integerValue];
-                userCheckins.text = [NSString stringWithFormat:@"%d check ins", checkinCount];
+                int checkinTime = [[[self.venue.activeUsers objectForKey:userID] objectForKey:@"checkin_time"] integerValue];
+                userCheckins.text = [NSString stringWithFormat:@"%d hrs/week", checkinTime / 3600];
                 
                 userCheckins.font = [UIFont boldSystemFontOfSize:12];
                 

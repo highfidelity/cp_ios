@@ -24,6 +24,7 @@
 @synthesize photoURL = _photoURL;
 @synthesize distanceFromUser = _distanceFromUser;
 @synthesize checkinCount = _checkinCount;
+@synthesize checkinTime = _checkinTime;
 @synthesize weeklyCheckinCount = _weeklyCheckinCount;
 @synthesize intervalCheckinCount = _monthlyCheckinCount;
 @synthesize coordinate = _coordinate;
@@ -151,6 +152,14 @@
     }
     
     return [NSString stringWithFormat:@"%d checkins", self.checkinCount];
+}
+
+- (NSString *)checkinTimeString {
+    if (1 == self.checkinTime / 3600) {
+        return @"1 hr/week";
+    }
+    
+    return [NSString stringWithFormat:@"%d hrs/week", self.checkinTime / 3600];
 }
 
 - (NSString*) formattedAddress {
