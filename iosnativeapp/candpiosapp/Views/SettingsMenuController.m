@@ -81,7 +81,7 @@
                              // @"Face To Face", DISABLED (alexi)
                              inviteItemName,
                              @"Wallet",
-                             @"Settings",
+                             @"Profile",
                              //@"Linked Accounts", DISABLED (alexi)
                              @"Logout",
                              nil];

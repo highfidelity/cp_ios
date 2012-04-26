@@ -431,7 +431,7 @@ It is good for 24 hours.  </string>
             </objects>
             <point key="canvasLocation" x="-1196" y="-1107"/>
         </scene>
-        <!--User Settings Table View Controller - Settings-->
+        <!--User Settings Table View Controller - Profile-->
         <scene sceneID="YCm-Gg-tIG">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tR5-hO-HYq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -600,7 +600,7 @@ It is good for 24 hours.  </string>
                             <outlet property="delegate" destination="1JK-jA-7GK" id="60s-Ud-5Ci"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Settings" id="7KM-FU-Rh2">
+                    <navigationItem key="navigationItem" title="Profile" id="7KM-FU-Rh2">
                         <barButtonItem key="rightBarButtonItem" id="Flr-yH-xki">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="i9o-au-a0n">
                                 <rect key="frame" x="273" y="7" width="42" height="29"/>
@@ -895,96 +895,6 @@ It is good for 24 hours.  </string>
         <image name="wallet-cell-arrow-down.png" width="14" height="9"/>
         <image name="wallet-lock.png" width="25" height="25"/>
     </resources>
-    <classes>
-        <class className="AddFundsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFundsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeWindow:"/>
-                <relationship kind="action" name="goBack:"/>
-                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="BalanceViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BalanceViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="balanceScrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="pullDownLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="pullIcon" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="transTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="updateTimeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="userBalance" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="BaseLoginController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BaseLoginController.h"/>
-        </class>
-        <class className="GenerateInvitationCodeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GenerateInvitationCodeViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="donePressed:"/>
-                <relationship kind="outlet" name="codeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="codeLabelBackground" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="doneButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="JobCategoryViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/JobCategoryViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="majorCategoryButtonClick:"/>
-                <relationship kind="action" name="minorCategoryButtonClick:"/>
-                <relationship kind="outlet" name="majorCategoryButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="minorCategoryButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="LinkedAccountsTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedAccountsTableViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="gearPressed"/>
-            </relationships>
-        </class>
-        <class className="SettingsMenuController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsMenuController.h"/>
-            <relationships>
-                <relationship kind="action" name="blockUIButtonClick:"/>
-                <relationship kind="action" name="checkedInButtonClick:" candidateClass="UIButton"/>
-                <relationship kind="action" name="loginButtonClick:"/>
-                <relationship kind="action" name="selectVenueCity:"/>
-                <relationship kind="outlet" name="blockUIButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="checkedInOnlyButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="edgeShadow" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="loginBanner" candidateClass="UIView"/>
-                <relationship kind="outlet" name="loginButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="venueButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="SmartererLoginController" superclassName="BaseLoginController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SmartererLoginController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="myWebView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="UserSettingsTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserSettingsTableViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="emailValidationMsg" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="nicknameTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="profileImageButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="WalletCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/WalletCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="amountLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="profileImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="stateImage" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
