@@ -98,6 +98,15 @@
     [self makeHTTPRequestWithAction:action withParameters:parameters queue:nil completion:completion];
 }
 
++ (void)makeHTTPRequestWithAction:(NSString *)action 
+                   withParameters:(NSMutableDictionary *)parameters 
+                            queue:(NSOperationQueue *)operationQueue
+                       completion:(void (^)(NSDictionary *, NSError *))completion
+
+{
+    [self makeHTTPRequestWithAction:action withParameters:parameters queue:operationQueue timeout:0 completion:completion];
+}   
+
 // Private method to perform HTTP Requests to the C&P API
 // Different than the above because it will accept the queue on which it should make requests
 // Uses the AFJSONRequestOperation which seems to be the easiest way to pass around
@@ -108,6 +117,7 @@
 + (void)makeHTTPRequestWithAction:(NSString *)action 
                    withParameters:(NSMutableDictionary *)parameters 
                             queue:(NSOperationQueue *)operationQueue
+                          timeout:(NSTimeInterval)timeout
                        completion:(void (^)(NSDictionary *, NSError *))completion
                             
 {
@@ -129,7 +139,14 @@
     NSLog(@"Sending request to URL: %@", urlString);
 #endif
     
-    NSURLRequest *request =  [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    NSURLRequest *request = nil;
+    NSURL *url = [NSURL URLWithString:urlString];
+    if (timeout > 0) {
+        request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:timeout];
+    } else {
+        request = [NSURLRequest requestWithURL:url];
+    }
+    
     [self makeHTTPRequest:request queue:operationQueue completion:completion];
 }
 
@@ -157,7 +174,6 @@
     
     if (!operationQueue) {
         operationQueue = [[NSOperationQueue alloc] init];
-        
     }
     
     [operationQueue addOperation:operation];
@@ -902,7 +918,8 @@
     [parameters setValue:message forKey:@"message"];
     [parameters setValue:lastChatIDString forKey:@"last_id"];
     
-    [self makeHTTPRequestWithAction:@"sendVenueChat" withParameters:parameters queue:chatQueue completion:completion];
+    
+    [self makeHTTPRequestWithAction:@"sendVenueChat" withParameters:parameters queue:chatQueue timeout:5 completion:completion];
 }
 
 @end

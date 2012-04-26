@@ -320,6 +320,8 @@
             [self.sendingSpinner stopAnimating];
             self.sendButton.hidden = NO;
             
+            NSString *message = nil;
+            
             if (!error) {
                 if (![[json objectForKey:@"error"] boolValue]) {
                     [self.venueChat addNewChatEntriesFromDictionary:json completion:^(BOOL newEntries){
@@ -329,24 +331,30 @@
                             
                             // clear the textView now that the chat message has been sent
                             chatVC.growingTextView.text = @"";
-        
                         }
+                        return;
                     }];
                 } else {
                     // json returned an error
                     // let's present that to the user
-                    UIAlertView *alert = [[UIAlertView alloc]
-                                          initWithTitle:@"Oh No!"
-                                          message:[json objectForKey:@"payload"]
-                                          delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-                    [alert show];
+                    message = [json objectForKey:@"payload"];
+                    
                 }
             } else {
-                // error in JSON parse
+                // error in JSON parse (or timeout)
+                message = @"There was a problem sending chat.\nPlease try again!";
             }
+            
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle:@"Oh No!"
+                                  message:message
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
         }]; 
+        
+        
     }    
 }
 
