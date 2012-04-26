@@ -98,21 +98,20 @@
     [self makeHTTPRequestWithAction:action withParameters:parameters queue:nil completion:completion];
 }
 
+// Calls the next method with a timeout of 60 (which is the default)
 + (void)makeHTTPRequestWithAction:(NSString *)action 
                    withParameters:(NSMutableDictionary *)parameters 
                             queue:(NSOperationQueue *)operationQueue
                        completion:(void (^)(NSDictionary *, NSError *))completion
 
 {
-    [self makeHTTPRequestWithAction:action withParameters:parameters queue:operationQueue timeout:0 completion:completion];
+    [self makeHTTPRequestWithAction:action withParameters:parameters queue:operationQueue timeout:60 completion:completion];
 }   
 
 // Private method to perform HTTP Requests to the C&P API
 // Different than the above because it will accept the queue on which it should make requests
 // Uses the AFJSONRequestOperation which seems to be the easiest way to pass around
 // completion blocks
-
-// TODO: Put a timeout on the requests so if the DB is down or something we're not sitting there doing nothing
 
 + (void)makeHTTPRequestWithAction:(NSString *)action 
                    withParameters:(NSMutableDictionary *)parameters 
@@ -141,11 +140,8 @@
     
     NSURLRequest *request = nil;
     NSURL *url = [NSURL URLWithString:urlString];
-    if (timeout > 0) {
-        request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:timeout];
-    } else {
-        request = [NSURLRequest requestWithURL:url];
-    }
+    
+    request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:timeout];
     
     [self makeHTTPRequest:request queue:operationQueue completion:completion];
 }
