@@ -26,9 +26,12 @@
 @property (nonatomic, strong) NSDateFormatter *timestampDateFormatter;
 @property (nonatomic, strong) NSDate *pendingTimestamp;
 
+-(VenueChat *)initWithVenueID:(int)venueID;
+
 - (void)getNewChatEntriesWithCompletion:(void (^)(BOOL authenticated, BOOL newEntries))completion;
 - (void)addNewChatEntriesFromDictionary:(NSDictionary *)dict 
                              completion:(void (^)(BOOL newEntries))completion;
+
 
 
 @end

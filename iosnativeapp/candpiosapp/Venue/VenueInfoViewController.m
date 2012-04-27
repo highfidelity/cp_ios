@@ -98,8 +98,7 @@
 - (VenueChat *)venueChat
 {
     if (!_venueChat) {
-        _venueChat = [[VenueChat alloc] init];
-        _venueChat.venueIDString = [NSString stringWithFormat:@"%d", self.venue.venueID];
+        _venueChat = [[VenueChat alloc] initWithVenueID:self.venue.venueID];
     }
     return _venueChat;
 }
@@ -431,7 +430,11 @@
     
     // give the venue and venue chat to the VenueChatViewController
     [segue.destinationViewController setVenue:self.venue];
-    [segue.destinationViewController setVenueChat:self.venueChat];
+    
+    // only pass the venue chat to the VenueChatViewController if it's ready
+    if (self.venueChat.hasLoaded) {
+        [segue.destinationViewController setVenueChat:self.venueChat];
+    }
 }
 
 - (void)populateUserSection

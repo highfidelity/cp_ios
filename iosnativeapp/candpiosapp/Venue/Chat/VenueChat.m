@@ -40,6 +40,14 @@
     return self;
 }
 
+- (VenueChat *)initWithVenueID:(int)venueID
+{
+    if (self = [self init]) {
+        self.venueIDString = [NSString stringWithFormat:@"%d", venueID];
+    }
+    return self;
+}
+
 - (NSOperationQueue *)chatQueue
 {
     if (!_chatQueue) {

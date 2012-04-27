@@ -303,9 +303,9 @@
                 // set the NSUserDefault to the user checkout time
                 SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
                 
-                // put the foursquare ID for the venue the user is checked into in NSUserDefaults
-                // used to tell 
-                SET_DEFAULTS(Integer, kUDCheckedInVenueID, self.place.venueID);
+                // put the venue ID for the venue the user is checked into in NSUserDefaults
+                // used across the app to check if the user is checked into the venue they're looking at
+                SET_DEFAULTS(Integer, kUDCheckedInVenueID, [[json objectForKey:@"venue_id"] integerValue]);
 
                 [CPAppDelegate refreshCheckInButton];
             
@@ -348,7 +348,7 @@
         // check if we had an error or nobody else is here
         if (!error && count != 0) {
 #if DEBUG
-            NSLog(@"JSON returned for other users at venue: %@", [json description]);
+            NSLog(@"%d users at venue returned", count);
 #endif
             
             // add a view above the scrollview so we can have a shadow along the top
