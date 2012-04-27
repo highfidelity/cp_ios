@@ -7,6 +7,7 @@
 //
 
 #import "UserTableViewCell.h"
+#import "CPUIHelper.h"
 
 @implementation UserTableViewCell
 
@@ -29,6 +30,8 @@
     [self profilePictureImageView].layer.shadowOffset = CGSizeMake(1, 1);
     [self profilePictureImageView].layer.shadowOpacity = 0.5;
     [self profilePictureImageView].layer.shadowRadius = 1.0;
+    
+    [CPUIHelper changeFontForLabel:self.nicknameLabel toLeagueGothicOfSize:24];
 }
 
 @end
