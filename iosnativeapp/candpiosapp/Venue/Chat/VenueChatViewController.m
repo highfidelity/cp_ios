@@ -524,7 +524,7 @@
         cell.contentView.backgroundColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-light@2x.png"]] colorWithAlphaComponent:0.5];  
         cell.contentView.opaque = NO;
         cell.contentView.layer.opaque = NO;
-        cell.timestampLabel.text =  [[self.venueChat.chatEntries objectAtIndex:indexPath.row] uppercaseString];
+        cell.timestampLabel.text =  [self.venueChat.chatEntries objectAtIndex:indexPath.row];
         
         return cell;
     }

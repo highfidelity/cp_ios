@@ -9,8 +9,8 @@
 #import "VenueChat.h"
 #import "VenueChatEntry.h"
   
-#define MAJOR_TIMESTAMP_INTERVAL_FORMAT @"MMM dd, yyyy"
-#define MINOR_TIMESTAMP_INTERVAL_FORMAT @"hh:mma - MMM dd, yyyy"
+#define MAJOR_TIMESTAMP_INTERVAL_FORMAT @"MMMM dd, yyyy"
+#define MINOR_TIMESTAMP_INTERVAL_FORMAT @"h:mma - MMMM dd, yyyy"
 
 @interface VenueChat ()
 @property (nonatomic, strong) NSMutableSet *usersCounted;
@@ -204,7 +204,7 @@
                     // check if we already have a timestamp for this minor interval
                     if (![self.previousTimestamp isEqualToString:[self.timestampDateFormatter stringFromDate:interval]]) {
                         self.previousTimestamp = [self.timestampDateFormatter stringFromDate:interval];
-                        [mutableChatEntries addObject:self.previousTimestamp];
+                        [mutableChatEntries addObject:[self.timestampDateFormatter stringFromDate:entry.date]];
                     }
                 }
             } else if (self.pendingTimestamp) {
