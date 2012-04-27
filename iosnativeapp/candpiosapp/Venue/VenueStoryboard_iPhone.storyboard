@@ -94,29 +94,8 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
                                     <view tag="3548" contentMode="scaleToFill" id="AtK-AV-cUC">
-                                        <rect key="frame" x="0.0" y="158" width="320" height="60"/>
+                                        <rect key="frame" x="0.0" y="173" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" id="rSO-DS-jSL">
-                                                <rect key="frame" x="35" y="37" width="250" height="1"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                                            </view>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="30" id="iUl-cU-dHI">
-                                                <rect key="frame" x="35" y="2" width="250" height="36"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <nil key="highlightedColor"/>
-                                                <color key="shadowColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
-                                                <size key="shadowOffset" width="-1" height="-1"/>
-                                            </label>
-                                            <view tag="8014" contentMode="scaleToFill" id="mXH-5m-qnh">
-                                                <rect key="frame" x="35" y="37" width="250" height="22"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            </view>
-                                        </subviews>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
                                     </view>
                                 </subviews>
@@ -132,12 +111,12 @@
                         <outlet property="activeChatters" destination="VcI-pv-G3w" id="v2D-Y7-R0n"/>
                         <outlet property="activeChattersIcon" destination="1dE-q4-umq" id="dEb-9t-tGz"/>
                         <outlet property="activeChattersIndicator" destination="phm-Vz-7nO" id="fjr-fx-bN3"/>
+                        <outlet property="bottomPhotoOverlayView" destination="AtK-AV-cUC" id="vfY-fk-vgt"/>
                         <outlet property="firstAidSection" destination="rNQ-lK-JnA" id="b2v-1L-y03"/>
                         <outlet property="scrollView" destination="Zco-Po-7S8" id="VFL-2C-wxZ"/>
                         <outlet property="userSection" destination="qUM-c1-uKR" id="xhL-8e-Zuq"/>
                         <outlet property="venueChatBox" destination="63A-NG-4u2" id="IJi-e2-LKz"/>
                         <outlet property="venueChatBoxVerticalLine" destination="XS7-WP-9j6" id="UPA-Dt-khf"/>
-                        <outlet property="venueName" destination="iUl-cU-dHI" id="Vv3-me-r9n"/>
                         <outlet property="venuePhoto" destination="VpL-4s-UAd" id="rMq-Mr-Jd2"/>
                         <segue destination="HLC-7w-cEe" kind="push" identifier="ShowVenueChatFromVenue" id="zEo-JV-HUw"/>
                     </connections>
@@ -277,12 +256,12 @@
                 <relationship kind="outlet" name="activeChatters" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="activeChattersIcon" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="activeChattersIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="bottomPhotoOverlayView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="firstAidSection" candidateClass="UIView"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="userSection" candidateClass="UIView"/>
                 <relationship kind="outlet" name="venueChatBox" candidateClass="UIView"/>
                 <relationship kind="outlet" name="venueChatBoxVerticalLine" candidateClass="UIView"/>
-                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="venuePhoto" candidateClass="UIImageView"/>
             </relationships>
         </class>

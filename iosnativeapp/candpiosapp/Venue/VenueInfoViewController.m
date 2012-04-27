@@ -21,12 +21,14 @@
 
 @property (nonatomic, strong) NSTimer *chatReloadTimer;
 @property (nonatomic, strong) VenueChat *venueChat;
+@property (weak, nonatomic) IBOutlet UIView *bottomPhotoOverlayView;
 @property (weak, nonatomic) IBOutlet UIView *venueChatBox;
 @property (weak, nonatomic) IBOutlet UIView *venueChatBoxVerticalLine;
 @property (weak, nonatomic) IBOutlet UILabel *activeChatters;
 @property (weak, nonatomic) IBOutlet UIImageView *activeChattersIcon;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activeChattersIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *activeChatText;
+@property (weak, nonatomic) UIButton *checkInButton;
 @property (assign, nonatomic) BOOL hadNoChat;
 
 - (IBAction)tappedAddress:(id)sender;
@@ -56,7 +58,7 @@
 @synthesize scrollView = _scrollView;
 @synthesize venue = _venue;
 @synthesize venuePhoto = _venuePhoto;
-@synthesize venueName = _venueName;
+@synthesize bottomPhotoOverlayView = _bottomPhotoOverlayView;
 @synthesize firstAidSection = _firstAidSection;
 @synthesize userSection = _userSection;
 @synthesize categoryCount = _categoryCount;
@@ -73,6 +75,7 @@
 @synthesize activeChattersIcon = _activeChattersIcon;
 @synthesize activeChattersIndicator = _activeChattersIndicator;
 @synthesize activeChatText = _activeChatText;
+@synthesize checkInButton = _checkInButton;
 @synthesize hadNoChat = _hadNoChat;
 
 - (NSMutableDictionary *)userObjectsForUsersOnScreen
@@ -133,51 +136,38 @@
         [self.venuePhoto setImage:comingSoon];
     }
     
-    // leage gothic for venue name
-    [CPUIHelper changeFontForLabel:self.venueName toLeagueGothicOfSize:30.0];
-    
     // shadow that shows above user info
     [CPUIHelper addShadowToView:[self.view viewWithTag:3548]  color:[UIColor blackColor] offset:CGSizeMake(0, 1) radius:5 opacity:0.7];
     
-    // set the venue info in the box
-    self.venueName.text = self.venue.name;
-    
-    // get the info bar that's below the line
-    UIView *infoBar = [self.view viewWithTag:8014];
-    
-    // setup the address button
-    UIButton *address = [UIButton buttonWithType:UIButtonTypeCustom];
-    // add the address button to the infobar
-    [infoBar addSubview:address];
-    
-    // setup the phone button
-    UIButton *phone;
-    
-    // check if we're putting a phone number or just the address
-    if ([self.venue.formattedPhone length] > 0) {
-        // frame for address button
-        address.frame = CGRectMake(0, 2, infoBar.frame.size.width / 2, infoBar.frame.size.height - 2);
+    {
+        UIButton *phone = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.bottomPhotoOverlayView addSubview:phone];
         
-        // we'll also need a phone button
-        phone = [UIButton buttonWithType:UIButtonTypeCustom];
-        CGRect newFrame = address.frame;
-        newFrame.origin.x = (infoBar.frame.size.width / 2);
-        phone.frame = newFrame;
+        if ([self.venue.formattedPhone length] > 0) {
+            [self setupVenueButton:phone withIconNamed:@"place-phone" andlabelText:self.venue.formattedPhone];
+            [phone addTarget:self action:@selector(tappedPhone:) forControlEvents:UIControlEventTouchUpInside];
+        } else {
+            [self setupVenueButton:phone withIconNamed:@"place-phone" andlabelText:@"N/A"];
+        }
         
-        [self setupVenueButton:phone withIconNamed:@"place-phone" andlabelText:self.venue.formattedPhone];
-        
-        // add the phone button to the infobar
-        [infoBar addSubview:phone];
-        
-        [phone addTarget:self action:@selector(tappedPhone:) forControlEvents:UIControlEventTouchUpInside];
-    } else {
-        // setup the frame for the address button
-        address.frame = CGRectMake(0, 2, infoBar.frame.size.width, infoBar.frame.size.height - 2);
+        CGRect phoneFrame = phone.frame;
+        phoneFrame.origin.x = 11 + round((self.bottomPhotoOverlayView.frame.size.width + 64) / 2);
+        phoneFrame.origin.y = 21;
+        phone.frame = phoneFrame;
     }
     
-    [self setupVenueButton:address withIconNamed:@"place-location" andlabelText:self.venue.address];
-    // set the target for the address button
-    [address addTarget:self action:@selector(tappedAddress:) forControlEvents:UIControlEventTouchUpInside];
+    {
+        UIButton *address = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.bottomPhotoOverlayView addSubview:address];
+        
+        [self setupVenueButton:address withIconNamed:@"place-location" andlabelText:self.venue.address];
+        [address addTarget:self action:@selector(tappedAddress:) forControlEvents:UIControlEventTouchUpInside];
+        
+        CGRect addressFrame = address.frame;
+        addressFrame.origin.x = round((self.bottomPhotoOverlayView.frame.size.width - 64) / 2) - 5 - addressFrame.size.width;
+        addressFrame.origin.y = 21;
+        address.frame = addressFrame;
+    }
     
     // put the texture in the bottom view
     self.firstAidSection.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-first-aid-kit"]];
@@ -246,7 +236,6 @@
 
 - (void)viewDidUnload
 {
-    [self setVenueName:nil];
     [self setVenuePhoto:nil];
     [self setUserSection:nil];
     [self setActiveChatters:nil];
@@ -255,6 +244,7 @@
     [self setActiveChattersIcon:nil];
     [self setActiveChattersIndicator:nil];
     [self setActiveChatText:nil];
+    [self setCheckInButton:nil];
     [self setVenueChatBoxVerticalLine:nil];
     [super viewDidUnload];
     [CPAppDelegate tabBarController].currentVenueID = nil;
@@ -514,74 +504,33 @@
         [self.userSection addSubview:previousView];
         newFrame.origin.y = previousView.frame.origin.y + previousView.frame.size.height;
     }    
-    
-    // label for check in text
-    UILabel *checkInLabel = [[UILabel alloc] init];
         
-    // set the text on the label
-    
-    NSString *curUserID = [NSString stringWithFormat:@"%i", [CPAppDelegate currentUser].userID];
-    NSString *lblText = @"";
-    
-    if([[[activeUsers objectForKey:curUserID] objectForKey:@"checked_in"] boolValue]){
-        lblText = [NSString stringWithFormat:@"Check out of %@", self.venue.name];
-    }else{
-        lblText = [NSString stringWithFormat:@"Check in to %@", self.venue.name];
-    }
-    checkInLabel.text = lblText;
-    
-    // change the font to league gothic
-    [CPUIHelper changeFontForLabel:checkInLabel toLeagueGothicOfSize:18];
-    
-    // get the size we'll need for the label to center it
-    CGSize toFit = [checkInLabel.text sizeWithFont:checkInLabel.font];
-    
-    // change the newFrame properties to what we need
-    
-    newFrame.origin.x = (self.userSection.frame.size.width / 2) - (toFit.width / 2);
-    
-    // check if there are no users currently or previously checked in (in last week) and set the y-origin based on that
-    newFrame.origin.y += newFrame.origin.y == 9 ? 4 : 20;
-    newFrame.size = toFit;
+    {
+        NSString *curUserID = [NSString stringWithFormat:@"%i", [CPAppDelegate currentUser].userID];
         
-    // give that frame to the label
-    checkInLabel.frame = newFrame;
-    
-    // move the newframe origin down for the check in button
-    // this is commented out because the button image is larger than the actual
-    // button and it fits well without moving it down
-    // newFrame.origin.y += newFrame.size.height;
-    
-    // change the color and background color of the check in label text
-    checkInLabel.textColor = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1.0];
-    checkInLabel.backgroundColor = [UIColor clearColor];
-    
-    // add the check in label to the view
-    [self.userSection addSubview:checkInLabel];  
-    
-    // check in button
-    UIButton *checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    UIImage *checkInImage = [UIImage imageNamed:@"check-in-big"];
-    
-    // image for the check in button
-    [checkInButton setImage:checkInImage forState:UIControlStateNormal];
-    
-    // change the newFrame properties to what we need
-    newFrame.size = checkInImage.size;
-    newFrame.origin.x = (self.userSection.frame.size.width / 2) - (newFrame.size.width / 2);
-    newFrame.origin.y += 6;
-    
-    checkInButton.frame = newFrame;
-    
-    // target for check in button
-    if([[[activeUsers objectForKey:curUserID] objectForKey:@"checked_in"] boolValue]){
-        [checkInButton addTarget:CPAppDelegate action:@selector(checkInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    }else{
-        [checkInButton addTarget:self action:@selector(checkInPressed:) forControlEvents:UIControlEventTouchUpInside];
+        if ( ! self.checkInButton) {
+            self.checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            UIImage *checkInImage = [UIImage imageNamed:@"check-in-big"];
+            [self.checkInButton setImage:checkInImage forState:UIControlStateNormal];
+            
+            CGRect checkInButtonFrame = self.bottomPhotoOverlayView.frame;
+            checkInButtonFrame.size = checkInImage.size;
+            checkInButtonFrame.origin.x = round((self.bottomPhotoOverlayView.frame.size.width - checkInButtonFrame.size.width) / 2);
+            checkInButtonFrame.origin.y -= 41;
+            
+            self.checkInButton.frame = checkInButtonFrame;
+            
+            [self.bottomPhotoOverlayView.superview addSubview:self.checkInButton];
+        }
+        
+        [self.checkInButton removeTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
+        
+        if([[[activeUsers objectForKey:curUserID] objectForKey:@"checked_in"] boolValue]){
+            [self.checkInButton addTarget:CPAppDelegate action:@selector(checkInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        } else {
+            [self.checkInButton addTarget:self action:@selector(checkInPressed:) forControlEvents:UIControlEventTouchUpInside];
+        }
     }
-    // add the check in button to the view
-    [self.userSection addSubview:checkInButton];
     
     // resize the user section frame
     CGRect newSectionFrame = self.userSection.frame;
@@ -589,7 +538,7 @@
      
     if (newSectionFrame.size.height > self.userSection.frame.size.height) {
         self.userSection.frame = newSectionFrame;
-    }    
+    }
     
     // resize the first aid box
     newSectionFrame = self.firstAidSection.frame;

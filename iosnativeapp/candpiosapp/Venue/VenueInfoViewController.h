@@ -13,7 +13,6 @@
 
 @property (nonatomic, strong) CPVenue *venue;
 @property (weak, nonatomic) IBOutlet UIImageView *venuePhoto;
-@property (weak, nonatomic) IBOutlet UILabel *venueName;
 @property (weak, nonatomic) IBOutlet UIView *firstAidSection;
 @property (weak, nonatomic) IBOutlet UIView *userSection;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
