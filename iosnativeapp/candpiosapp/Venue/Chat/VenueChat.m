@@ -199,9 +199,7 @@
                         [mutableChatEntries addObject:self.previousTimestamp];
                     }
                 }
-            }
-            
-            if (self.pendingTimestamp) {
+            } else if (self.pendingTimestamp) {
 
                 // we have a timestamp to add because of a load of the venue chat
                 [self.timestampDateFormatter setDateFormat:MINOR_TIMESTAMP_INTERVAL_FORMAT];
