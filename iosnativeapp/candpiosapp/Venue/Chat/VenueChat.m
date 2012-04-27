@@ -233,6 +233,12 @@
             completion(YES);
         }
     } else {
+        
+        // indicate that we have loaded for the first time (if that hasn't already happened)
+        if (!self.hasLoaded) {
+            self.hasLoaded = YES;
+        }
+        
         // we didn't get any new entries
         if (completion) {
             completion(NO);
