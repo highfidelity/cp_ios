@@ -38,7 +38,7 @@
 #endif 
     
     // Show the SVProgressHUD so the user knows they're waiting for an invite
-    [SVProgressHUD showWithStatus:@"Recieving Contact Request..."];
+    [SVProgressHUD showWithStatus:@"Receiving Contact Request..."];
     
     // get the FaceToFace storyboard
     UIStoryboard *f2fstory = [UIStoryboard storyboardWithName:@"FaceToFaceStoryboard_iPhone" bundle:nil];
