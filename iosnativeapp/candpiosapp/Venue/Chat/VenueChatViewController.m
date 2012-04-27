@@ -121,7 +121,6 @@
     
     [self.chatBox addSubview:self.sendButton];
     
-    NSLog(@"%d, %d", [CPAppDelegate userCheckedIn], DEFAULTS(integer, kUDCheckedInVenueID));
     if ([CPAppDelegate userCheckedIn] && DEFAULTS(integer, kUDCheckedInVenueID) == self.venue.venueID) {
         // this user is checked in here
         // show them the textView and an enabled send button
