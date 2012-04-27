@@ -648,7 +648,8 @@
     
     [params setValue:kCandPAPIVersion forKey:@"version"];
     
-    [self makeHTTPRequestWithAction:@"getVenuesAndUsersWithCheckinsInBoundsDuringInterval" withParameters:params queue:mapQueue completion:completion];
+    // 9 second timeout on this call, the map will try and reload every 10s anyways
+    [self makeHTTPRequestWithAction:@"getVenuesAndUsersWithCheckinsInBoundsDuringInterval" withParameters:params queue:mapQueue timeout:9 completion:completion];
 }
 
 #pragma mark - Checkins
