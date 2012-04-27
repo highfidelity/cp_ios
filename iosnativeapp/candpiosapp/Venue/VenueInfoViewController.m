@@ -238,6 +238,9 @@
         [self.chatReloadTimer invalidate];
         self.chatReloadTimer = nil;
     }    
+    
+    // stop a request to get venue chat if this view is dissapearing as that fudges up the next view controller
+    [self.venueChat.chatQueue cancelAllOperations];
 
 }
 
@@ -306,7 +309,6 @@
 
 - (void)reloadVenueChat
 {    
-    
     [self.venueChat getNewChatEntriesWithCompletion:^(BOOL authenticated, BOOL newEntries){
         if (authenticated) {
             if (newEntries) {

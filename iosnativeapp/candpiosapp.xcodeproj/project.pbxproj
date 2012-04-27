@@ -203,6 +203,7 @@
 		53E20621150591600000FA8D /* DismissHUDAfterReloadData.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E20620150591600000FA8D /* DismissHUDAfterReloadData.m */; };
 		53E2062C150596180000FA8D /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53E2062A150596180000FA8D /* MainStoryboard_iPhone.storyboard */; };
 		53E4EC0A150EDD6100DB236A /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 53E4EC09150EDD6100DB236A /* SVProgressHUD.bundle */; };
+		53E9224A154B3B6400130864 /* TimestampCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E92249154B3B6400130864 /* TimestampCell.m */; };
 		53FB9E3514E089BC00F4CC7F /* map-marker@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FB9E3314E089BC00F4CC7F /* map-marker@2x~iphone.png */; };
 		53FB9E3614E089BC00F4CC7F /* map-marker~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FB9E3414E089BC00F4CC7F /* map-marker~iphone.png */; };
 		53FB9E4414E099BB00F4CC7F /* CPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FB9E4314E099BA00F4CC7F /* CPUtils.m */; };
@@ -675,6 +676,8 @@
 		53E20620150591600000FA8D /* DismissHUDAfterReloadData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DismissHUDAfterReloadData.m; path = CheckIn/DismissHUDAfterReloadData.m; sourceTree = "<group>"; };
 		53E2062B150596180000FA8D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		53E4EC09150EDD6100DB236A /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		53E92248154B3B6400130864 /* TimestampCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimestampCell.h; sourceTree = "<group>"; };
+		53E92249154B3B6400130864 /* TimestampCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimestampCell.m; sourceTree = "<group>"; };
 		53FB9E3314E089BC00F4CC7F /* map-marker@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map-marker@2x~iphone.png"; path = "images/map-marker@2x~iphone.png"; sourceTree = "<group>"; };
 		53FB9E3414E089BC00F4CC7F /* map-marker~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map-marker~iphone.png"; path = "images/map-marker~iphone.png"; sourceTree = "<group>"; };
 		53FB9E4214E099BA00F4CC7F /* CPUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPUtils.h; path = SupportingClasses/CPUtils.h; sourceTree = "<group>"; };
@@ -1531,6 +1534,8 @@
 				53DDBD14153F5BF500306F8B /* VenueChatViewController.m */,
 				53DDBD20153F5C2800306F8B /* VenueChatCell.h */,
 				53DDBD21153F5C2800306F8B /* VenueChatCell.m */,
+				53E92248154B3B6400130864 /* TimestampCell.h */,
+				53E92249154B3B6400130864 /* TimestampCell.m */,
 			);
 			name = Chat;
 			path = Venue/Chat;
@@ -2448,6 +2453,7 @@
 				53DDBD1E153F5BF500306F8B /* VenueChatEntry.m in Sources */,
 				53DDBD1F153F5BF500306F8B /* VenueChatViewController.m in Sources */,
 				53DDBD22153F5C2800306F8B /* VenueChatCell.m in Sources */,
+				53E9224A154B3B6400130864 /* TimestampCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

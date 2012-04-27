@@ -11,6 +11,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "HPGrowingTextView.h"
 #import "HPTextViewInternal.h"
+#import "TimestampCell.h"
 
 #define BLANKSHEET_VIEW_TAG 6582
 
@@ -182,6 +183,9 @@
     // start calling a timer that reloads chat every VENUE_CHAT_RELOAD_INTERVAL seconds
     [self reloadVenueChat];
     self.chatReloadTimer = [NSTimer scheduledTimerWithTimeInterval:VENUE_CHAT_RELOAD_INTERVAL target:self selector:@selector(reloadVenueChat) userInfo:nil repeats:YES];
+    
+    // setup a pending timestamp with the VenueChat model
+    self.venueChat.pendingTimestamp = [NSDate date];
 }
 
 - (void)viewDidUnload
@@ -332,8 +336,8 @@
                             // clear the textView now that the chat message has been sent
                             chatVC.growingTextView.text = @"";
                         }
-                        return;
                     }];
+                    return;
                 } else {
                     // json returned an error
                     // let's present that to the user
@@ -447,52 +451,73 @@
     
     // The font and size values in here are manually pulled from the VenueChatCell spec.
     // They will need to be changed here too if the cell design is changed
-    
-    VenueChatEntry *chatEntry = [self.venueChat.chatEntries objectAtIndex:indexPath.row];
-    CGSize labelSize = [chatEntry.text sizeWithFont:[VenueChatCell chatEntryFont] constrainedToSize:CGSizeMake([VenueChatCell chatEntryFrame].size.width, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
-    
-    // keep a 9 point margin on either side of the label
-    labelSize.height += 18;
-    
-    return labelSize.height > 42 ? labelSize.height : 42;
-
+    if ([[self.venueChat.chatEntries objectAtIndex:indexPath.row] isKindOfClass:[VenueChatEntry class]]) {
+        
+        VenueChatEntry *chatEntry = [self.venueChat.chatEntries objectAtIndex:indexPath.row];
+        CGSize labelSize = [chatEntry.text sizeWithFont:[VenueChatCell chatEntryFont] constrainedToSize:CGSizeMake([VenueChatCell chatEntryFrame].size.width, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
+        
+        // keep a 9 point margin on either side of the label
+        labelSize.height += 18;
+        
+        return labelSize.height > 42 ? labelSize.height : 42;
+        
+    } else {
+        // this is a timestamp cell
+        return 22;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"VenueChatCell";
-    
-    VenueChatCell *cell = [[VenueChatCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    if (cell == nil) {
-        // crash if this cell is nil
-        // something's wrong
+    if ([[self.venueChat.chatEntries objectAtIndex:indexPath.row] isKindOfClass:[VenueChatEntry class]]) {
+        static NSString *ChatCellIdentifier = @"VenueChatCell";
+        
+        VenueChatCell *cell = [[VenueChatCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ChatCellIdentifier];
+        if (cell == nil) {
+            // crash if this cell is nil
+            // something's wrong
+        }
+        
+        VenueChatEntry *entry = [self.venueChat.chatEntries objectAtIndex:indexPath.row];
+        User *chatUser = entry.user;
+        
+        cell.chatEntry.text = entry.text;
+        
+        // change the cell height if required
+        CGRect cellHeightFix = cell.chatEntry.frame;
+        CGSize labelSize = [cell.chatEntry.text sizeWithFont:[VenueChatCell chatEntryFont] constrainedToSize:CGSizeMake([VenueChatCell chatEntryFrame].size.width, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
+        
+        cellHeightFix.size.height = labelSize.height;
+        
+        cell.chatEntry.frame = cellHeightFix;
+        
+        // make a request for the profile image
+        NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:chatUser.urlPhoto];
+        UIImageView *thumbnail = [[UIImageView alloc] init];
+        
+        [thumbnail setImageWithURLRequest:thumbnailRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
+            [cell.userThumbnail setBackgroundImage:image forState:UIControlStateNormal];
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+            // nothing to do here, let's just leave it as the default
+        }];
+        
+        return cell;
+
+    } else {
+        static NSString *TimestampCellIdentifier = @"ChatTimestampCell";
+        TimestampCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TimestampCellIdentifier];
+        
+        if (cell == nil) {
+            // crash if the cell is nil
+            // something terrible has happened
+        }
+        cell.contentView.backgroundColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-light@2x.png"]] colorWithAlphaComponent:0.5];  
+        cell.contentView.opaque = NO;
+        cell.contentView.layer.opaque = NO;
+        cell.timestampLabel.text =  [[self.venueChat.chatEntries objectAtIndex:indexPath.row] uppercaseString];
+        
+        return cell;
     }
-    
-    VenueChatEntry *entry = [self.venueChat.chatEntries objectAtIndex:indexPath.row];
-    User *chatUser = entry.user;
-    
-    cell.chatEntry.text = entry.text;
-    
-    // change the cell height if required
-    CGRect cellHeightFix = cell.chatEntry.frame;
-    CGSize labelSize = [cell.chatEntry.text sizeWithFont:[VenueChatCell chatEntryFont] constrainedToSize:CGSizeMake([VenueChatCell chatEntryFrame].size.width, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
-    
-    cellHeightFix.size.height = labelSize.height;
-    
-    cell.chatEntry.frame = cellHeightFix;
-    
-    // make a request for the profile image
-    NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:chatUser.urlPhoto];
-    UIImageView *thumbnail = [[UIImageView alloc] init];
-    
-    [thumbnail setImageWithURLRequest:thumbnailRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
-        [cell.userThumbnail setBackgroundImage:image forState:UIControlStateNormal];
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        // nothing to do here, let's just leave it as the default
-    }];
-    
-    
-    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
