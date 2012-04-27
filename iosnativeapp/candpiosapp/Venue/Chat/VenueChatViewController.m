@@ -12,6 +12,8 @@
 #import "HPGrowingTextView.h"
 #import "HPTextViewInternal.h"
 #import "TimestampCell.h"
+#import "MapTabController.h"
+#import "UserProfileCheckedInViewController.h"
 
 #define BLANKSHEET_VIEW_TAG 6582
 
@@ -177,25 +179,25 @@
         [self placeBlankSheetOverTableView];
         [SVProgressHUD showWithStatus:@"Loading Venue Chat..."];
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
     
     if (self.venueChat.hasLoaded) {
         // update with the venueChat
         [self updateTableAndHeaderWithNewVenueChat];
         // force a scroll to the last chat
         [self scrollToLastChat:YES animated:NO];
-    }    
+    } 
+    
+    // setup a pending timestamp with the VenueChat model
+    self.venueChat.pendingTimestamp = [NSDate date];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     // start calling a timer that reloads chat every VENUE_CHAT_RELOAD_INTERVAL seconds
     [self reloadVenueChat];
     self.chatReloadTimer = [NSTimer scheduledTimerWithTimeInterval:VENUE_CHAT_RELOAD_INTERVAL target:self selector:@selector(reloadVenueChat) userInfo:nil repeats:YES];
-    
-    // setup a pending timestamp with the VenueChat model
-    self.venueChat.pendingTimestamp = [NSDate date];
 }
 
 - (void)viewDidUnload
@@ -511,6 +513,12 @@
             // nothing to do here, let's just leave it as the default
         }];
         
+        // set the tag of the cell button to be row so we can grab the entry when it is tapped
+        cell.userThumbnail.tag = indexPath.row;
+        
+        // add a target on the user thumbnail so we can pull up the user's profile
+        [cell.userThumbnail addTarget:self action:@selector(showUserProfileFromThumbnail:) forControlEvents:UIControlEventTouchUpInside];
+        
         return cell;
 
     } else {
@@ -542,6 +550,19 @@
     } else {
         return YES;
     }
+}
+
+- (void)showUserProfileFromThumbnail:(UIButton *)sender
+{
+    VenueChatEntry *entry = [self.venueChat.chatEntries objectAtIndex:sender.tag];
+    
+    // grab a UserProfileVC and set its user object to the user for the entry
+    UserProfileCheckedInViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+    
+    userVC.user = entry.user;
+    
+    // push the userVC onto our UINavigationController's stack
+    [self.navigationController pushViewController:userVC animated:YES];
 }
 
 @end
