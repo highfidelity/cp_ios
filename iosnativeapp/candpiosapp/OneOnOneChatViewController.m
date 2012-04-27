@@ -55,7 +55,7 @@ static CGFloat const FONTSIZE = 14.0;
 {
     UIBarButtonItem *closeButton = [[UIBarButtonItem alloc]
                                     initWithTitle:@"Close"
-                                    style:UIBarButtonItemStyleDone
+                                    style:UIBarButtonItemStyleBordered
                                     target:self
                                     action:@selector(closeModalView)];
     

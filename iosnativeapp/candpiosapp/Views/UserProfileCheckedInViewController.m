@@ -120,6 +120,15 @@
 BOOL firstLoad = YES;
 UITapGestureRecognizer* _tapRecon = nil;
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Profile"
+                                                                                 style:UIBarButtonItemStylePlain
+                                                                                target:nil
+                                                                                action:nil];
+    }
+    return self;
+}
 
 #pragma mark - View lifecycle
 
