@@ -409,7 +409,13 @@
                          self.blankSheet.frame = newBlankSheetRect;
                      }
                      completion:nil];
-    [self scrollToLastChat:YES animated:NO];
+    
+    // only force a scroll to the last chat if the keyboard is being shown
+    BOOL forced = NO;
+    if (beingShown) {
+        forced = YES;
+    }
+    [self scrollToLastChat:forced animated:NO];
     
     if (beingShown) {
         // if the keyboard is being shown then make sure the growing text field grows to the right height again
