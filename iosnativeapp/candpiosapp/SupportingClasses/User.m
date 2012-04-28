@@ -326,7 +326,9 @@
             if (!self.placeCheckedIn) {
                 // we don't have a check in for this user so pull it here
                 NSDictionary *checkinDict = [userDict valueForKey:@"checkin_data"];
-                self.placeCheckedIn = [[CPVenue alloc] initFromDictionary:checkinDict];
+                if ([checkinDict objectForKey:@"venue_id"]) {
+                    self.placeCheckedIn = [[CPVenue alloc] initFromDictionary:checkinDict];
+                }
             }
             
             // user checkin data
