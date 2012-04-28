@@ -323,6 +323,12 @@
             // badge information
 //            self.badges = [userDict objectForKey:@"badges"];
             
+            if (!self.placeCheckedIn) {
+                // we don't have a check in for this user so pull it here
+                NSDictionary *checkinDict = [userDict valueForKey:@"checkin_data"];
+                self.placeCheckedIn = [[CPVenue alloc] initFromDictionary:checkinDict];
+            }
+            
             // user checkin data
             self.placeCheckedIn.checkinCount = [[userDict valueForKeyPath:@"checkin_data.users_here"] intValue];
             self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict valueForKeyPath:@"checkin_data.checkout"] intValue]]; 
