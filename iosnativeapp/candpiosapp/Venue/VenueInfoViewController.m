@@ -446,8 +446,8 @@
     
     // this is where we add the users and the check in button to the bottom of the scroll view
     
-    // grab the user data by calling a delegate method on the map and grabbing the data from there
-    // there is an active users property on this venue but we need to pull from the map to guarantee new data
+    // TODO: If this venue wasn't loaded by the map it will appear as if it has no active users
+    // Add the ability to make an API call to get that data
     NSMutableDictionary *activeUsers = self.venue.activeUsers;
     
 
