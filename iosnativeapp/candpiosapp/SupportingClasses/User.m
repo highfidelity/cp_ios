@@ -82,7 +82,9 @@
         
         self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
         
-        CPVenue *venue = [[CPAppDelegate settingsMenuController].mapTabController.dataset.activeVenues objectForKey:[userDict objectForKey:@"venue_id"]];
+        int venue_id = [[userDict objectForKey:@"venue_id"] integerValue];
+        CPVenue *venue = [[CPAppDelegate settingsMenuController].mapTabController venueFromActiveVenues:venue_id];
+        
         if (venue) {
             // we already have the venue from the map
             self.placeCheckedIn = venue;
@@ -106,7 +108,7 @@
                 place.foursquareID = [userDict objectForKey:@"foursquare"];
             }
             
-            place.venueID = [[userDict objectForKey:@"venue_id"] intValue];
+            place.venueID = venue_id;
             
             self.placeCheckedIn = place;
         }
@@ -329,13 +331,19 @@
             self.educationInformation = [userDict objectForKey:@"education"];
 
             // badge information
-//            self.badges = [userDict objectForKey:@"badges"];
+            // self.badges = [userDict objectForKey:@"badges"];
             
             if (!self.placeCheckedIn) {
                 // we don't have a check in for this user so pull it here
                 NSDictionary *checkinDict = [userDict valueForKey:@"checkin_data"];
                 if ([checkinDict objectForKey:@"venue_id"]) {
-                    self.placeCheckedIn = [[CPVenue alloc] initFromDictionary:checkinDict];
+                    // try and grab the venue from the activeVenues from the map
+                    CPVenue *venue = [[CPAppDelegate settingsMenuController].mapTabController venueFromActiveVenues:[[checkinDict objectForKey:@"venue_id"] integerValue]];
+                    // otherwise alloc init one from the dictionary
+                    if (!venue) {
+                        venue = [[CPVenue alloc] initFromDictionary:checkinDict];
+                    }
+                    self.placeCheckedIn = venue;
                 }
             }
             

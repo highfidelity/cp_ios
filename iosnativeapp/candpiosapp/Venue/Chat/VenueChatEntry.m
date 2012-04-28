@@ -31,7 +31,7 @@
         NSString *userID = [json objectForKey:@"user_id"];
         
         // check if we have this user in the map dataset
-        User *entryUser = [[CPAppDelegate settingsMenuController].mapTabController.dataset.activeUsers objectForKey:userID];
+        User *entryUser = [[CPAppDelegate settingsMenuController].mapTabController userFromActiveUsers:[userID integerValue]];
         
         if (!entryUser) {
             // we didn't get the user from the activeUsers from the map

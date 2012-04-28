@@ -175,6 +175,18 @@ BOOL clearLocations = NO;
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+# pragma mark - Active Venue and Active User Grabbing
+
+- (User *)userFromActiveUsers:(int)userID
+{
+    return [self.dataset.activeUsers objectForKey:[NSString stringWithFormat:@"%d", userID]];
+}
+
+- (CPVenue *)venueFromActiveVenues:(int)venueID
+{
+    return [self.dataset.activeVenues objectForKey:[NSString stringWithFormat:@"%d", venueID]];
+}
+
 - (IBAction)refreshButtonClicked:(id)sender
 {
     

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "User.h"
+#import "CPVenue.h"
 
 #define mapTag 992
 
@@ -35,6 +37,10 @@
 - (IBAction)locateMe:(id)sender;
 - (void)loginButtonTapped;
 - (void)logoutButtonTapped;
+
+# pragma mark - Active Venue and Active User grabbing
+- (User *)userFromActiveUsers:(int)userID;
+- (CPVenue *)venueFromActiveVenues:(int)venueID;
 
 @end
 

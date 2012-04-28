@@ -458,7 +458,7 @@
     self.usersShown =  [NSMutableSet set];
     
     for (NSString *userID in activeUsers) {
-        User *user = [[CPAppDelegate settingsMenuController].mapTabController.dataset.activeUsers objectForKey:userID];
+        User *user = [[CPAppDelegate settingsMenuController].mapTabController userFromActiveUsers:[userID integerValue]];
         if ([[[activeUsers objectForKey:userID] objectForKey:@"checked_in"] boolValue]) {
             [self addUser:user toArrayForJobCategory:user.majorJobCategory];
             // if the major and minor job categories differ also add this person to the minor category
