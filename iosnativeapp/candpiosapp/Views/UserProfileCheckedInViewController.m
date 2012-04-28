@@ -228,7 +228,7 @@ UITapGestureRecognizer* _tapRecon = nil;
         // we're missing a place that the user is checked in at which means we're coming from contacts or venue chat (and this wasn't an active user)
         // show a progress hud
         
-        [SVProgressHUD showWithStatus:@"Loading..."];
+        [SVProgressHUD showWithStatus:@"Loading Profile..."];
     }
 }
 
