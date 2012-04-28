@@ -471,6 +471,12 @@ UITapGestureRecognizer* _tapRecon = nil;
         NSInteger selectedFavoriteVenueIndex = [url.host integerValue];
         CPVenue *place = [self.user.favoritePlaces objectAtIndex:selectedFavoriteVenueIndex];
         
+        CPVenue *activeVenue = [[CPAppDelegate settingsMenuController].mapTabController venueFromActiveVenues:place.venueID];
+        if (activeVenue) {
+            // we had this venue in the map dictionary of activeVenues so use that
+            place = activeVenue;
+        }
+        
         VenueInfoViewController *venueVC = [[UIStoryboard storyboardWithName:@"VenueStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
         venueVC.venue = place;
         
