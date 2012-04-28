@@ -16,6 +16,7 @@
 @implementation MapDataSet
 @synthesize annotations = _annotations;
 @synthesize activeUsers = _activeUsers;
+@synthesize activeVenues = _activeVenues;
 @synthesize dateLoaded;
 @synthesize regionCovered;
 
@@ -82,10 +83,7 @@ static NSOperationQueue *sMapQueue = nil;
 
 - (NSArray *)annotations
 {
-    if (!_annotations) {
-        _annotations = [NSArray array];
-    }
-    return _annotations;
+    return [self.activeVenues allValues];
 }
 
 -(id)init {
@@ -102,7 +100,7 @@ static NSOperationQueue *sMapQueue = nil;
 	{		
         // get the places that came back and make an annotation for each of them
         NSArray *placesArray = [[json objectForKey:@"payload"] objectForKey:@"venues"];
-        NSMutableArray *tmpAnnotations = [NSMutableArray new];
+        NSMutableDictionary *venueMutableDict = [NSMutableDictionary dictionary];
         if (![placesArray isKindOfClass:[NSNull class]]) {
 #if DEBUG
             NSLog(@"Got %d places.", [placesArray count]);
@@ -112,7 +110,7 @@ static NSOperationQueue *sMapQueue = nil;
                 CPVenue *place = [[CPVenue alloc] initFromDictionary:placeDict];
                 
                 // add (or update) the new pin
-                [tmpAnnotations addObject:place];
+                [venueMutableDict setObject:place forKey:[NSString stringWithFormat:@"%d", place.venueID]];
                 
                 // post a notification with this venue if there's currently a venue shown by a VenueInfoViewController
                 if ([CPAppDelegate tabBarController].currentVenueID) {
@@ -124,8 +122,9 @@ static NSOperationQueue *sMapQueue = nil;
             }
             
         }
-        _annotations = [NSArray arrayWithArray:tmpAnnotations];
-        tmpAnnotations = nil;
+        
+        self.activeVenues = [NSDictionary dictionaryWithDictionary:venueMutableDict];
+        venueMutableDict = nil;
         // get the users that came back and setup the activeUsers array on the Map
         
         NSArray *usersArray = [[json objectForKey:@"payload"] objectForKey:@"users"];
@@ -143,7 +142,8 @@ static NSOperationQueue *sMapQueue = nil;
                 [userMutableDict setObject:user forKey:[NSString stringWithFormat:@"%d", user.userID]];
             }
         } 
-        self.activeUsers = userMutableDict;
+        self.activeUsers = [NSDictionary dictionaryWithDictionary:userMutableDict];
+        userMutableDict = nil;
 	}
 	return self;
 }

@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSDate *dateLoaded;
 @property (nonatomic, assign) MKMapRect regionCovered;
 @property (nonatomic, strong) NSDictionary *activeUsers;
+@property (nonatomic, strong) NSDictionary *activeVenues;
 
 +(void)beginLoadingNewDataset:(MKMapRect)mapRect
 				   completion:(void (^)(MapDataSet *set, NSError *error))completion;
