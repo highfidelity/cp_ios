@@ -508,31 +508,32 @@
         newFrame.origin.y = previousView.frame.origin.y + previousView.frame.size.height;
     }    
         
-    {
-        NSString *curUserID = [NSString stringWithFormat:@"%i", [CPAppDelegate currentUser].userID];
+    // TODO: Make the target for the checkin button smaller.
+    // Right now it encroaches on the venue chat box
+    
+    NSString *curUserID = [NSString stringWithFormat:@"%i", [CPAppDelegate currentUser].userID];
+    
+    if ( ! self.checkInButton) {
+        self.checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *checkInImage = [UIImage imageNamed:@"check-in-big"];
+        [self.checkInButton setImage:checkInImage forState:UIControlStateNormal];
         
-        if ( ! self.checkInButton) {
-            self.checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            UIImage *checkInImage = [UIImage imageNamed:@"check-in-big"];
-            [self.checkInButton setImage:checkInImage forState:UIControlStateNormal];
-            
-            CGRect checkInButtonFrame = self.bottomPhotoOverlayView.frame;
-            checkInButtonFrame.size = checkInImage.size;
-            checkInButtonFrame.origin.x = round((self.bottomPhotoOverlayView.frame.size.width - checkInButtonFrame.size.width) / 2);
-            checkInButtonFrame.origin.y -= 41;
-            
-            self.checkInButton.frame = checkInButtonFrame;
-            
-            [self.bottomPhotoOverlayView.superview addSubview:self.checkInButton];
-        }
+        CGRect checkInButtonFrame = self.bottomPhotoOverlayView.frame;
+        checkInButtonFrame.size = checkInImage.size;
+        checkInButtonFrame.origin.x = round((self.bottomPhotoOverlayView.frame.size.width - checkInButtonFrame.size.width) / 2);
+        checkInButtonFrame.origin.y -= 41;
         
-        [self.checkInButton removeTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
+        self.checkInButton.frame = checkInButtonFrame;
         
-        if([[[activeUsers objectForKey:curUserID] objectForKey:@"checked_in"] boolValue]){
-            [self.checkInButton addTarget:CPAppDelegate action:@selector(checkInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        } else {
-            [self.checkInButton addTarget:self action:@selector(checkInPressed:) forControlEvents:UIControlEventTouchUpInside];
-        }
+        [self.bottomPhotoOverlayView.superview addSubview:self.checkInButton];
+    }
+    
+    [self.checkInButton removeTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
+    
+    if([[[activeUsers objectForKey:curUserID] objectForKey:@"checked_in"] boolValue]){
+        [self.checkInButton addTarget:CPAppDelegate action:@selector(checkInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [self.checkInButton addTarget:self action:@selector(checkInPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     // resize the user section frame
