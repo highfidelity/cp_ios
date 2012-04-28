@@ -177,6 +177,11 @@ BOOL clearLocations = NO;
 
 # pragma mark - Active Venue and Active User Grabbing
 
+// TODO: For both users and venues let's have a caching strategy
+// probably store them after they are loaded in core data
+// and grab them from there and update them when new calls are made
+// instead of reloaded them everytime the map is reloaded and losing the ones no longer on the map
+
 - (User *)userFromActiveUsers:(int)userID
 {
     return [self.dataset.activeUsers objectForKey:[NSString stringWithFormat:@"%d", userID]];
