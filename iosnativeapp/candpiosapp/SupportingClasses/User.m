@@ -8,6 +8,7 @@
 
 #import "User.h"
 #import "AFJSONRequestOperation.h"
+#import "MapDataSet.h"
 #import "NSString+HTML.h"
 
 @implementation User
@@ -81,27 +82,34 @@
         
         self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
         
-
-        CPVenue *place = [[CPVenue alloc] init];
-        
-        NSString *name = [userDict objectForKey:@"venue_name"];
-        
-        if (![name isKindOfClass:[NSNull class]]) {
-            place.name = [userDict objectForKey:@"venue_name"];
+        CPVenue *venue = [[CPAppDelegate settingsMenuController].mapTabController.dataset.activeVenues objectForKey:[userDict objectForKey:@"venue_id"]];
+        if (venue) {
+            // we already have the venue from the map
+            self.placeCheckedIn = venue;
+        } else {
+            CPVenue *place = [[CPVenue alloc] init];
+            
+            NSString *name = [userDict objectForKey:@"venue_name"];
+            
+            if (![name isKindOfClass:[NSNull class]]) {
+                place.name = [userDict objectForKey:@"venue_name"];
+            }
+            
+            NSString *address = [userDict objectForKey:@"venue_address"];
+            
+            if (![address isKindOfClass:[NSNull class]]) {
+                place.address = [userDict objectForKey:@"venue_address"];
+            }
+            
+            NSString *foursquare = [userDict objectForKey:@"foursquare"];
+            if ([foursquare isKindOfClass:[NSNull class]]) {
+                place.foursquareID = [userDict objectForKey:@"foursquare"];
+            }
+            
+            place.venueID = [[userDict objectForKey:@"venue_id"] intValue];
+            
+            self.placeCheckedIn = place;
         }
-        
-        NSString *address = [userDict objectForKey:@"venue_address"];
-        
-        if (![address isKindOfClass:[NSNull class]]) {
-            place.address = [userDict objectForKey:@"venue_address"];
-        }
-        
-        NSString *foursquare = [userDict objectForKey:@"foursquare"];
-        if ([foursquare isKindOfClass:[NSNull class]]) {
-            place.foursquareID = [userDict objectForKey:@"foursquare"];
-        }
-        
-        self.placeCheckedIn = place;
 	}
 	return self;
 }
