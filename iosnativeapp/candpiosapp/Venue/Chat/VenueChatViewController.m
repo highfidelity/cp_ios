@@ -309,11 +309,19 @@
 
 - (void)reloadVenueChat
 {    
-    [self.venueChat getNewChatEntriesWithCompletion:^(BOOL authenticated, BOOL newEntries){
+    [self.venueChat getNewChatEntriesWithCompletion:^(BOOL authenticated, NSArray *newEntries){
         if (!authenticated) {
             // this user somehow got here without being logged in
         } else {
             [self updateTableAndHeaderWithNewVenueChat];
+            
+            // let's make sure that the message the user is sending hasn't just come back
+            for (VenueChatEntry *entry in newEntries) {
+                if ([entry.text isEqualToString:self.growingTextView.text] && entry.user.userID == [CPAppDelegate currentUser].userID) {
+                    // clear the growing text view since we just got the message back
+                    [self resetGrowingTextView:YES];
+                }
+            }
         }        
     }];
 }
@@ -332,16 +340,17 @@
             
             // no matter what happens we want to stop the spinner and show the button again
             // also allow the user to click on the text view again
-            [self.sendingSpinner stopAnimating];
-            self.sendButton.hidden = NO;
+            [self resetGrowingTextView:NO];
             
             NSString *message = nil;
             
             if (!error) {
                 if (![[json objectForKey:@"error"] boolValue]) {
-                    [self.venueChat addNewChatEntriesFromDictionary:json completion:^(BOOL newEntries){
+                    [self.venueChat addNewChatEntriesFromDictionary:json completion:^(NSArray *newEntries){
                         if (newEntries) {
                             // we better have some new entries here because at the very least we have our new message
+                            // unless it already came back in a request to get new chat
+                            // we're accomodating for that in reloadVenueChat
                             [chatVC updateTableAndHeaderWithNewVenueChat];
                             
                             // clear the textView now that the chat message has been sent
@@ -373,11 +382,27 @@
     }    
 }
 
--(void) keyboardWillShow:(NSNotification *)notification{
+- (void)resetGrowingTextView:(BOOL)clearTextView
+{
+    // only reset the text view if the spinner is already spinning 
+    // we use the spinner to avoid race conditions
+    if (self.sendingSpinner.isAnimating) {
+        // make sure the send button is active again and we have no spinner
+        [self.sendingSpinner stopAnimating];
+        self.sendButton.hidden = NO;
+        
+        // clear the text in the HPGrowingTextView
+        if (clearTextView) {
+            self.growingTextView.text = @"";
+        }
+    }
+}
+
+- (void) keyboardWillShow:(NSNotification *)notification{
     [self fixChatBoxAndTableViewDuringKeyboardMovementFromNotification:notification beingShown:YES];
 }
 
--(void) keyboardWillHide:(NSNotification *)notification {
+- (void) keyboardWillHide:(NSNotification *)notification {
     [self fixChatBoxAndTableViewDuringKeyboardMovementFromNotification:notification beingShown:NO];
 }
 

@@ -8,7 +8,7 @@
 
 #import "VenueChat.h"
 #import "VenueChatEntry.h"
-  
+
 #define MAJOR_TIMESTAMP_INTERVAL_FORMAT @"MMMM dd, yyyy"
 #define MINOR_TIMESTAMP_INTERVAL_FORMAT @"h:mma - MMMM dd, yyyy"
 
@@ -95,27 +95,27 @@
     return _usersCounted;
 }
 
-- (void)getNewChatEntriesWithCompletion:(void (^)(BOOL authenticated, BOOL newEntries))completion
+- (void)getNewChatEntriesWithCompletion:(void (^)(BOOL authenticated, NSArray *newEntries))completion
 {
     [CPapi getVenueChatForVenueWithID:self.venueIDString lastChatID:self.lastChatIDString queue:self.chatQueue completion:^(NSDictionary *dict, NSError *error) {
         if (!error) {                
             // we have a payload to check out
             if (![[dict objectForKey:@"error"] boolValue]) {
                 // no error, parse the chat if there is any
-                [self addNewChatEntriesFromDictionary:dict completion:^(BOOL newEntries){
+                [self addNewChatEntriesFromDictionary:dict completion:^(NSArray *newEntries){
                     completion(YES, newEntries);
                 }];
     
             }
             else {
                 // error, means the user isn't logged in (since we know we passed a venue ID)
-                completion(NO, NO);
+                completion(NO, nil);
             }
         }
     }];
 }
 
-- (void)addNewChatEntriesFromDictionary:(NSDictionary *)dict completion:(void (^)(BOOL newEntries))completion
+- (void)addNewChatEntriesFromDictionary:(NSDictionary *)dict completion:(void (^)(NSArray *newEntries))completion
 {
     NSMutableArray *entries = [[dict valueForKeyPath:@"payload.entries"] mutableCopy];
     
@@ -141,8 +141,10 @@
         int interval = -VENUE_CHAT_ACTIVE_INTERVAL * 3600 * 24;
         NSDate *dateAtInterval = [[NSDate alloc] initWithTimeIntervalSinceNow:interval];
         
-        // setup the mutableChatEntries array to hold new entries
+        // setup the mutableChatEntries array to add new entries
         NSMutableArray *mutableChatEntries = [self.chatEntries mutableCopy];
+        // setup the newEntries array to hold just the new entries
+        NSMutableArray *newEntries = [NSMutableArray arrayWithCapacity:entries.count];
         
         NSDate *now;
         NSCalendar *cal;
@@ -217,6 +219,7 @@
                 self.pendingTimestamp = nil;
             }
             
+            [newEntries addObject:entry];
             [mutableChatEntries addObject:entry];
         }
     
@@ -230,7 +233,7 @@
         }
         
         if (completion) {
-            completion(YES);
+            completion([NSArray arrayWithArray:newEntries]);
         }
     } else {
         
@@ -241,7 +244,7 @@
         
         // we didn't get any new entries
         if (completion) {
-            completion(NO);
+            completion(nil);
         }
     }
 }

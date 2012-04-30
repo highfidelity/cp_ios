@@ -298,7 +298,7 @@
 
 - (void)reloadVenueChat
 {    
-    [self.venueChat getNewChatEntriesWithCompletion:^(BOOL authenticated, BOOL newEntries){
+    [self.venueChat getNewChatEntriesWithCompletion:^(BOOL authenticated, NSArray *newEntries){
         if (authenticated) {
             if (newEntries) {
                 

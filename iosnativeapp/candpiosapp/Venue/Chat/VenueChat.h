@@ -28,9 +28,9 @@
 
 -(VenueChat *)initWithVenueID:(int)venueID;
 
-- (void)getNewChatEntriesWithCompletion:(void (^)(BOOL authenticated, BOOL newEntries))completion;
+- (void)getNewChatEntriesWithCompletion:(void (^)(BOOL authenticated,NSArray *newEntries))completion;
 - (void)addNewChatEntriesFromDictionary:(NSDictionary *)dict 
-                             completion:(void (^)(BOOL newEntries))completion;
+                             completion:(void (^)(NSArray *newEntries))completion;
 
 
 
