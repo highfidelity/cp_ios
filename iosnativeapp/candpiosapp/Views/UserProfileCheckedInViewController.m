@@ -35,9 +35,6 @@
 @property (nonatomic, weak) IBOutlet UIImageView *venueOthersIcon;
 @property (nonatomic, weak) IBOutlet UILabel *venueOthers;
 @property (nonatomic, weak) IBOutlet UIView *availabilityView;
-@property (nonatomic, weak) IBOutlet UILabel *loadingPt1;
-@property (nonatomic, weak) IBOutlet UILabel *loadingPt2;
-@property (nonatomic, weak) IBOutlet UILabel *loadingPt3;
 @property (nonatomic, weak) IBOutlet UILabel *distanceLabel;
 @property (nonatomic, weak) IBOutlet UILabel *hoursAvailable;
 @property (nonatomic, weak) IBOutlet UILabel *minutesAvailable;
@@ -62,8 +59,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *propNoteLabel;
 @property (nonatomic, assign) BOOL mapAndDistanceLoaded;
 
--(void)animateVenueLoadingPoints;
--(void)stopAnimatingVenueLoadingPoints;
 -(NSString *)htmlStringWithResumeText;
 -(IBAction)plusButtonPressed:(id)sender;
 -(IBAction)minusButtonPressed:(id)sender;
@@ -108,9 +103,6 @@
 @synthesize payButton = _payButton;
 @synthesize reviewButton = _reviewButton;
 @synthesize goMenuBackground = _goMenuBackground;
-@synthesize loadingPt1 = _loadingPt1;
-@synthesize loadingPt2 = _loadingPt2;
-@synthesize loadingPt3 = _loadingPt3;
 @synthesize cardJobPosition = _cardJobPosition;
 @synthesize isF2FInvite = _isF2FInvite;
 @synthesize othersAtPlace = _othersAtPlace;
@@ -166,9 +158,8 @@ UITapGestureRecognizer* _tapRecon = nil;
     [self.scrollView insertSubview:blueOverlay atIndex:1];
         
     // set LeagueGothic font where applicable
-    for (UILabel *labelNeedsGothic in [NSArray arrayWithObjects:self.checkedIn, self.loadingPt1, self.loadingPt2, self.loadingPt3, self.resumeLabel, nil]) {
-        [CPUIHelper changeFontForLabel:labelNeedsGothic toLeagueGothicOfSize:24];
-    }
+    [CPUIHelper changeFontForLabel:self.checkedIn toLeagueGothicOfSize:24];
+    [CPUIHelper changeFontForLabel:self.resumeLabel toLeagueGothicOfSize:24];
     [CPUIHelper changeFontForLabel:self.cardNickname toLeagueGothicOfSize:28];
     
     // set the paper background color where applicable
@@ -195,18 +186,23 @@ UITapGestureRecognizer* _tapRecon = nil;
         // we're in an F2F invite
         [self placeUserDataOnProfile];
     } else {        
+        // lock the scrollView
+        self.scrollView.scrollEnabled = NO;
+        
         // get a user object with resume data
         [self.user loadUserResumeData:^(NSError *error) {
             if (!error) {
+                // unlock the scrollView
+                self.scrollView.scrollEnabled = YES;
+                // resume has loaded, change the label
+                self.resumeLabel.text = @"Resume";
+                
                 [self placeUserDataOnProfile];
             } else {
                 // error checking for load of user 
             }
         }];
     }
-    
-    // animate the three dots after checked in
-    [self animateVenueLoadingPoints];
     
     if (!self.user.placeCheckedIn) {
         // we're missing a place that the user is checked in at which means we're coming from contacts or venue chat (and this wasn't an active user)
@@ -260,9 +256,6 @@ UITapGestureRecognizer* _tapRecon = nil;
     [self setVenueOthersIcon:nil];
     [self setVenueOthers:nil];
     [self setAvailabilityView:nil];
-    [self setLoadingPt1:nil];
-    [self setLoadingPt2:nil];
-    [self setLoadingPt3:nil];
     [self setDistanceLabel:nil];
     [self setHoursAvailable:nil];
     [self setMinutesAvailable:nil];
@@ -294,7 +287,7 @@ UITapGestureRecognizer* _tapRecon = nil;
     if (firstLoad) {
         // if the user is checked in show how much longer they'll be available for
         if ([self.user.checkoutEpoch timeIntervalSinceNow] > 0) {
-            self.checkedIn.text = @"Checked in";
+            self.checkedIn.text = @"Checked in...";
             // get the number of seconds until they'll checkout
             NSTimeInterval secondsToCheckout = [self.user.checkoutEpoch timeIntervalSinceNow];
             // convert to minutes and then hours + minutes to next our
@@ -315,15 +308,7 @@ UITapGestureRecognizer* _tapRecon = nil;
             self.minutesAvailable.text = [NSString stringWithFormat:@"%d mins", minutesToHour];
         } else {
             // change the label since the user isn't here anymore
-            self.checkedIn.text = @"Was checked in";
-            
-            // move the loading points to the right so they're in the right spot
-            NSArray *pts = [NSArray arrayWithObjects:self.loadingPt1, self.loadingPt2, self.loadingPt3, nil];
-            for (UILabel *pt in pts) {
-                CGRect ptFrame = pt.frame;
-                ptFrame.origin.x += 33;
-                pt.frame = ptFrame;    
-            }
+            self.checkedIn.text = @"Was checked in...";
             
             // otherwise don't show the availability view
             [self.availabilityView removeFromSuperview];
@@ -332,9 +317,6 @@ UITapGestureRecognizer* _tapRecon = nil;
     
     self.venueName.text = self.user.placeCheckedIn.name;
     self.venueAddress.text = self.user.placeCheckedIn.address;
-    
-    // show the available for and the venue info, stop animating the ellipsis
-    [self stopAnimatingVenueLoadingPoints];
     
     self.othersAtPlace = self.user.checkedIn ? self.user.placeCheckedIn.checkinCount - 1 : self.user.placeCheckedIn.checkinCount;
     
@@ -399,6 +381,7 @@ UITapGestureRecognizer* _tapRecon = nil;
 {    
     // dismiss the SVProgressHUD if it's up
     [SVProgressHUD dismiss];
+
     
     self.cardJobPosition.text = self.user.jobTitle;
     
@@ -555,16 +538,9 @@ UITapGestureRecognizer* _tapRecon = nil;
 
 -(void)animateVenueLoadingPoints
 {
-    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{self.loadingPt1.alpha = 1.0;} completion:NULL];
-    [UIView animateWithDuration:0.5 delay:0.25 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{self.loadingPt2.alpha = 1.0;} completion:NULL];
-    [UIView animateWithDuration:0.5 delay:0.5 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{self.loadingPt3.alpha = 1.0;} completion:NULL];
-}
-
--(void)stopAnimatingVenueLoadingPoints
-{
-    [self.loadingPt1.layer removeAllAnimations];
-    [self.loadingPt2.layer removeAllAnimations];
-    [self.loadingPt3.layer removeAllAnimations];
+//    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{self.loadingPt1.alpha = 1.0;} completion:NULL];
+//    [UIView animateWithDuration:0.5 delay:0.25 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{self.loadingPt2.alpha = 1.0;} completion:NULL];
+//    [UIView animateWithDuration:0.5 delay:0.5 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{self.loadingPt3.alpha = 1.0;} completion:NULL];
 }
 
 -(IBAction)plusButtonPressed:(id)sender {

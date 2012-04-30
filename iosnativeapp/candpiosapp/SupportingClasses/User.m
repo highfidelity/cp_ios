@@ -308,9 +308,12 @@
             self.linkedInVerified = [[userDict valueForKeyPath:@"verified.linkedin.verified"] boolValue];
             
             // get the users hourly_billing_rate if it isn't null
+            // set it to N/A if it's empty
             if ([[userDict objectForKey:@"hourly_billing_rate"] isKindOfClass:[NSString class]]) {
                 self.hourlyRate = [userDict objectForKey:@"hourly_billing_rate"];
-            }        
+            } else {
+                self.hourlyRate = @"N/A";
+            }
             
             // set the rest of the user info based on information in the userDict
             self.totalEarned = [[userDict valueForKeyPath:@"stats.totalEarned"] doubleValue];
