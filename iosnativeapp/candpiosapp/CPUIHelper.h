@@ -54,6 +54,9 @@ typedef enum {
     clockwise:(BOOL)clockwise
  timingFunction:(CAMediaTimingFunction *)timingFunction;
 
++ (void)animatedEllipsisAfterLabel:(UILabel *)label
+                              start:(BOOL)startAnimation;
+
 #pragma mark - App-wide images
 + (UIImage *)defaultProfileImage;
 

@@ -160,7 +160,58 @@
     
     
     [view.layer addAnimation:rotate360 forKey:@"360"];
-}     
+}    
+
++ (void)animatedEllipsisAfterLabel:(UILabel *)label start:(BOOL)startAnimation
+{
+    int tag = 5657;
+    
+    if (startAnimation) {
+        // we want to start the animation of the dots
+        // grab the frame of the original label
+        CGRect labelFrame = label.frame;
+        
+        CGSize actualLabelSize = [label.text sizeWithFont:label.font constrainedToSize:labelFrame.size];
+        
+        // setup three dots
+        labelFrame.origin.x += actualLabelSize.width + 5;
+        UILabel *pt1 = [[UILabel alloc] initWithFrame:labelFrame];
+        labelFrame.origin.x += 3;
+        UILabel *pt2 = [[UILabel alloc] initWithFrame:labelFrame];
+        labelFrame.origin.x += 3;
+        UILabel *pt3 = [[UILabel alloc] initWithFrame:labelFrame];
+        
+        for (UILabel *pt in [NSArray arrayWithObjects:pt1, pt2, pt3, nil]) {
+            // give this pt a unique tag so we can grab it and hide it later
+            pt.tag = tag;
+            
+            // set some properties on the view
+            pt.alpha = 0;
+            pt.text = @".";
+            pt.font = label.font;
+            pt.textColor = label.textColor;
+            pt.backgroundColor = [UIColor clearColor];
+            
+            // increment the tag variable so the next pt gets a unique tag
+            tag += 1;
+            
+            // add this pt to the superview of the label
+            [label.superview addSubview:pt];
+        }
+        
+        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{pt1.alpha = 1.0;} completion:NULL];
+        [UIView animateWithDuration:0.5 delay:0.25 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{pt2.alpha = 1.0;} completion:NULL];
+        [UIView animateWithDuration:0.5 delay:0.5 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{pt3.alpha = 1.0;} completion:NULL];
+    } else {
+        for (int i = 1; i <= 3; i += 1) {
+            // remove each pt from the label superview
+            [[label.superview viewWithTag:tag] removeFromSuperview];
+            
+            // increment tag so we grab the next pt
+            tag += 1;
+        }
+    }
+}
 
 #pragma mark - App-wide images
 

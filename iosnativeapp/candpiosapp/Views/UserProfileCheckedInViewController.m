@@ -188,13 +188,16 @@ UITapGestureRecognizer* _tapRecon = nil;
     } else {        
         // lock the scrollView
         self.scrollView.scrollEnabled = NO;
+        // put three animated dots after the Loading Resume text
+        [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:YES];
         
         // get a user object with resume data
         [self.user loadUserResumeData:^(NSError *error) {
             if (!error) {
                 // unlock the scrollView
                 self.scrollView.scrollEnabled = YES;
-                // resume has loaded, change the label
+                // resume has loaded, change the label and remove the animated dots
+                [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
                 self.resumeLabel.text = @"Resume";
                 
                 [self placeUserDataOnProfile];
@@ -532,15 +535,6 @@ UITapGestureRecognizer* _tapRecon = nil;
     [self.scrollView insertSubview:blueOverlayExtend atIndex:0];
     // show the resume now that all the data is there
     [UIView animateWithDuration:0.4 animations:^{self.resumeView.alpha = 1.0;}];
-}
-
-#pragma mark -
-
--(void)animateVenueLoadingPoints
-{
-//    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{self.loadingPt1.alpha = 1.0;} completion:NULL];
-//    [UIView animateWithDuration:0.5 delay:0.25 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{self.loadingPt2.alpha = 1.0;} completion:NULL];
-//    [UIView animateWithDuration:0.5 delay:0.5 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{self.loadingPt3.alpha = 1.0;} completion:NULL];
 }
 
 -(IBAction)plusButtonPressed:(id)sender {
