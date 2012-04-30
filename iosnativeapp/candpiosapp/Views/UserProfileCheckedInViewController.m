@@ -177,16 +177,11 @@ UITapGestureRecognizer* _tapRecon = nil;
     
     [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     
-    // animate the three dots after checked in
-    [self animateVenueLoadingPoints];
-    
     // set the labels on the user business card
     self.cardNickname.text = self.user.nickname;
     self.propNoteLabel.text = [NSString stringWithFormat:self.propNoteLabel.text, self.user.nickname];
     
-    if ([self.user.status length] > 0) {
-        self.cardStatus.text = [NSString stringWithFormat:@"\"%@\"", self.user.status];
-    }
+    [self setUserStatusWithQuotes:self.user.status];
     
     // set the navigation controller title to the user's nickname
     self.title = self.user.nickname;  
@@ -224,11 +219,19 @@ UITapGestureRecognizer* _tapRecon = nil;
         }];
     }
     
+    // animate the three dots after checked in
+    [self animateVenueLoadingPoints];
+    
     if (!self.user.placeCheckedIn) {
         // we're missing a place that the user is checked in at which means we're coming from contacts or venue chat (and this wasn't an active user)
         // show a progress hud
         
         [SVProgressHUD showWithStatus:@"Loading Profile..."];
+    } else {
+        self.venueView.alpha = 1.0;
+        self.availabilityView.alpha = 1.0;
+        // given that we already have a last checked in place for the user show it already
+        [self updateLastUserCheckin];
     }
 }
 
@@ -299,16 +302,8 @@ UITapGestureRecognizer* _tapRecon = nil;
     // e.g. self.myOutlet = nil;
 }
 
-- (void)placeUserDataOnProfile
+- (void)updateLastUserCheckin
 {
-    
-    self.cardJobPosition.text = self.user.jobTitle;
-    
-    // dismiss the SVProgressHUD if it's up
-    [SVProgressHUD dismiss];
-    
-    self.cardStatus.text = self.user.status;
-    
     if (firstLoad) {
         // if the user is checked in show how much longer they'll be available for
         if ([self.user.checkoutEpoch timeIntervalSinceNow] > 0) {
@@ -319,7 +314,7 @@ UITapGestureRecognizer* _tapRecon = nil;
             int minutesToCheckout = floor(secondsToCheckout / 60.0);
             int hoursToCheckout = floor(minutesToCheckout / 60.0);
             int minutesToHour = minutesToCheckout % 60;
-        
+            
             // only show hours if there's at least one
             if (hoursToCheckout > 0) {
                 self.hoursAvailable.text = [NSString stringWithFormat:@"%d hrs", hoursToCheckout];
@@ -342,11 +337,60 @@ UITapGestureRecognizer* _tapRecon = nil;
                 ptFrame.origin.x += 33;
                 pt.frame = ptFrame;    
             }
-                    
+            
             // otherwise don't show the availability view
             [self.availabilityView removeFromSuperview];
         }
     }
+    
+    self.venueName.text = self.user.placeCheckedIn.name;
+    self.venueAddress.text = self.user.placeCheckedIn.address;
+    
+    // show the available for and the venue info, stop animating the ellipsis
+    [self stopAnimatingVenueLoadingPoints];
+    
+    self.othersAtPlace = self.user.checkedIn ? self.user.placeCheckedIn.checkinCount - 1 : self.user.placeCheckedIn.checkinCount;
+    
+    if (firstLoad) {
+        if (self.othersAtPlace == 0) {
+            // hide the little man, nobody else is here
+            [self.venueOthersIcon removeFromSuperview];
+            
+            // move the data in the venueView down so it's vertically centered
+            NSArray *venueInfo = [NSArray arrayWithObjects:self.venueIcon, self.venueName, self.venueAddress, nil];
+            for (UIView *venueItem in venueInfo) {
+                CGRect frame = venueItem.frame;
+                frame.origin.y += 8;
+                venueItem.frame = frame;
+            }
+        } else {
+            // otherwise put 1 other or x others here now
+            self.venueOthers.text = [NSString stringWithFormat:@"%d %@ here now", self.othersAtPlace, self.othersAtPlace == 1 ? @"other" : @"others"];
+        }
+        
+        firstLoad = NO;
+    }    
+    
+    // animate the display of the venueView and availabilityView
+    // if they aren't already on screen
+    [UIView animateWithDuration:0.4 animations:^{self.venueView.alpha = 1.0; self.availabilityView.alpha = 1.0;}];
+}
+
+- (void)setUserStatusWithQuotes:(NSString *)status
+{
+    if ([self.user.status length] > 0) {
+        self.cardStatus.text = [NSString stringWithFormat:@"\"%@\"", status];
+    }
+}
+
+- (void)placeUserDataOnProfile
+{    
+    // dismiss the SVProgressHUD if it's up
+    [SVProgressHUD dismiss];
+    
+    self.cardJobPosition.text = self.user.jobTitle;
+    
+    [self setUserStatusWithQuotes:self.user.status];
         
     // if the user has an hourly rate then put it, otherwise it comes up as N/A
     if (self.user.hourlyRate) {
@@ -365,36 +409,7 @@ UITapGestureRecognizer* _tapRecon = nil;
     NSURL *baseURL = [NSURL fileURLWithPath:path];
     [self.resumeWebView loadHTMLString:[self htmlStringWithResumeText] baseURL:baseURL];
     
-    self.venueName.text = self.user.placeCheckedIn.name;
-    self.venueAddress.text = self.user.placeCheckedIn.address;
-
-    // show the available for and the venue info, stop animating the ellipsis
-    [self stopAnimatingVenueLoadingPoints];
-            
-    self.othersAtPlace = self.user.checkedIn ? self.user.placeCheckedIn.checkinCount - 1 : self.user.placeCheckedIn.checkinCount;
-            
-    if (firstLoad) {
-        if (self.othersAtPlace == 0) {
-            // hide the little man, nobody else is here
-            [self.venueOthersIcon removeFromSuperview];
-                
-            // move the data in the venueView down so it's vertically centered
-            NSArray *venueInfo = [NSArray arrayWithObjects:self.venueIcon, self.venueName, self.venueAddress, nil];
-            for (UIView *venueItem in venueInfo) {
-                CGRect frame = venueItem.frame;
-                frame.origin.y += 8;
-                venueItem.frame = frame;
-            }
-        } else {
-            // otherwise put 1 other or x others here now
-            self.venueOthers.text = [NSString stringWithFormat:@"%d %@ here now", self.othersAtPlace, self.othersAtPlace == 1 ? @"other" : @"others"];
-        }
-                
-        firstLoad = NO;
-    }    
-    // animate the display of the venueView and availabilityView
-    [UIView animateWithDuration:0.4 animations:^{self.venueView.alpha = 1.0; self.availabilityView.alpha = 1.0;}];
-
+    [self updateLastUserCheckin];
 }
 
 - (NSString *)htmlStringWithResumeText {

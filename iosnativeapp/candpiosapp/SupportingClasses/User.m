@@ -80,6 +80,7 @@
         double lng = [[userDict objectForKey:@"lng"] doubleValue];
         self.location = CLLocationCoordinate2DMake(lat, lng);
         
+        self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict objectForKey:@"checkout"] integerValue]];
         self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
         
         int venue_id = [[userDict objectForKey:@"venue_id"] integerValue];
