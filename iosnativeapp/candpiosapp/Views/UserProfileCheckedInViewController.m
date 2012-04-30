@@ -60,6 +60,7 @@
 @property (nonatomic, strong) NSNumber *templateCounter;
 @property (nonatomic, assign) NSInteger selectedFavoriteVenueIndex;
 @property (weak, nonatomic) IBOutlet UILabel *propNoteLabel;
+@property (nonatomic, assign) BOOL mapAndDistanceLoaded;
 
 -(void)animateVenueLoadingPoints;
 -(void)stopAnimatingVenueLoadingPoints;
@@ -116,6 +117,7 @@
 @synthesize templateCounter = _templateCounter;
 @synthesize selectedFavoriteVenueIndex = _selectedFavoriteVenueIndex;
 @synthesize propNoteLabel = _propNoteLabel;
+@synthesize mapAndDistanceLoaded = _mapAndDistanceLoaded;
 
 BOOL firstLoad = YES;
 UITapGestureRecognizer* _tapRecon = nil;
@@ -136,7 +138,9 @@ UITapGestureRecognizer* _tapRecon = nil;
 {
     [super viewDidLoad];
     
+    // set the booleans this VC uses in later control statements
     firstLoad = YES;
+    self.mapAndDistanceLoaded = NO;
 
     // set the card image to the user's profile image
     [CPUIHelper profileImageView:self.cardImage
@@ -194,24 +198,6 @@ UITapGestureRecognizer* _tapRecon = nil;
         // get a user object with resume data
         [self.user loadUserResumeData:^(NSError *error) {
             if (!error) {
-                // make an MKCoordinate region for the zoom level on the map
-                MKCoordinateRegion region = MKCoordinateRegionMake(self.user.location, MKCoordinateSpanMake(0.005, 0.005));
-                [self.mapView setRegion:region];
-                
-                // this will always be the point on iPhones up to iPhone4
-                // if this needs to be used on iPad we'll need to do this programatically or use an if-else
-                CGPoint rightAndUp = CGPointMake(84, 232);
-                CLLocationCoordinate2D coordinate = [self.mapView convertPoint:rightAndUp toCoordinateFromView:self.mapView];
-                [self.mapView setCenterCoordinate:coordinate animated:NO];
-                
-                // if we have a location from this user then set the distance label to show how far the other user is
-                if ([AppDelegate instance].settings.hasLocation) {
-                    CLLocation *myLocation = [[AppDelegate instance].settings lastKnownLocation];
-                    CLLocation *otherUserLocation = [[CLLocation alloc] initWithLatitude:self.user.location.latitude longitude:self.user.location.longitude];
-                    NSString *distance = [CPUtils localizedDistanceofLocationA:myLocation awayFromLocationB:otherUserLocation];
-                    self.distanceLabel.text = distance;
-                }
-                
                 [self placeUserDataOnProfile];
             } else {
                 // error checking for load of user 
@@ -232,6 +218,7 @@ UITapGestureRecognizer* _tapRecon = nil;
         self.availabilityView.alpha = 1.0;
         // given that we already have a last checked in place for the user show it already
         [self updateLastUserCheckin];
+        [self updateMapAndDistanceToUser];
     }
 }
 
@@ -376,6 +363,31 @@ UITapGestureRecognizer* _tapRecon = nil;
     [UIView animateWithDuration:0.4 animations:^{self.venueView.alpha = 1.0; self.availabilityView.alpha = 1.0;}];
 }
 
+- (void)updateMapAndDistanceToUser
+{
+    if (!self.mapAndDistanceLoaded) {
+        // make an MKCoordinate region for the zoom level on the map
+        MKCoordinateRegion region = MKCoordinateRegionMake(self.user.location, MKCoordinateSpanMake(0.005, 0.005));
+        [self.mapView setRegion:region];
+        
+        // this will always be the point on iPhones up to iPhone4
+        // if this needs to be used on iPad we'll need to do this programatically or use an if-else
+        CGPoint rightAndUp = CGPointMake(84, 232);
+        CLLocationCoordinate2D coordinate = [self.mapView convertPoint:rightAndUp toCoordinateFromView:self.mapView];
+        [self.mapView setCenterCoordinate:coordinate animated:NO];
+        
+        // if we have a location from this user then set the distance label to show how far the other user is
+        if ([AppDelegate instance].settings.hasLocation) {
+            CLLocation *myLocation = [[AppDelegate instance].settings lastKnownLocation];
+            CLLocation *otherUserLocation = [[CLLocation alloc] initWithLatitude:self.user.location.latitude longitude:self.user.location.longitude];
+            NSString *distance = [CPUtils localizedDistanceofLocationA:myLocation awayFromLocationB:otherUserLocation];
+            self.distanceLabel.text = distance;
+        }
+        
+        self.mapAndDistanceLoaded = YES;
+    }
+}
+
 - (void)setUserStatusWithQuotes:(NSString *)status
 {
     if ([self.user.status length] > 0) {
@@ -410,6 +422,7 @@ UITapGestureRecognizer* _tapRecon = nil;
     [self.resumeWebView loadHTMLString:[self htmlStringWithResumeText] baseURL:baseURL];
     
     [self updateLastUserCheckin];
+    [self updateMapAndDistanceToUser];
 }
 
 - (NSString *)htmlStringWithResumeText {
