@@ -301,6 +301,9 @@
 
 - (void)handleLinkedInLogin:(NSString*)fullName linkedinID:(NSString *)linkedinID password:(NSString*)password email:(NSString *)email oauthToken:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret {
     // kick off the request to the candp server
+    
+    NSString *generatedEmail = email;
+    
     if (!linkedinID)
     {
         [self initiateLogin];
@@ -342,10 +345,11 @@
                 // (it's really the persistent cookie that tracks our login, but we need a superficial indicator, too)
                 NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"params"];
                 
-                // store the user data to NSUserDefaults
                 [CPAppDelegate storeUserLoginDataFromDictionary:userInfo];
                 
                 NSString *userId = [userInfo objectForKey:@"id"];
+                NSString *userEmail = [userInfo objectForKey:@"email"];
+                BOOL hasSentConfirmationEmail = [[userInfo objectForKey:@"has_confirm_string"] boolValue];
                 
                 [FlurryAnalytics logEvent:@"login_linkedin"];
                 [FlurryAnalytics setUserID:userId];
@@ -353,13 +357,21 @@
                 // Perform common post-login operations
                 [BaseLoginController pushAliasUpdate];
                 
-                if ([CPAppDelegate currentUser].enteredInviteCode) {
-                    if ([[CPAppDelegate tabBarController] selectedIndex] == 4) {
-                        [[CPAppDelegate tabBarController] setSelectedIndex:0];
-                    }
-                    [self.navigationController dismissModalViewControllerAnimated:YES];
+                if ( ! hasSentConfirmationEmail && (
+                         ! userEmail ||
+                        [@"" isEqualToString:userEmail] ||
+                        [generatedEmail isEqualToString:userEmail]
+                    )) {
+                    [self performSegueWithIdentifier:@"EnterEmailAfterSignUpSegue" sender:nil];
                 } else {
-                    [self performSegueWithIdentifier:@"EnterInvitationCodeSegue" sender:nil];
+                    if ([CPAppDelegate currentUser].enteredInviteCode) {
+                        if ([[CPAppDelegate tabBarController] selectedIndex] == 4) {
+                            [[CPAppDelegate tabBarController] setSelectedIndex:0];
+                        }
+                        [self.navigationController dismissModalViewControllerAnimated:YES];
+                    } else {
+                        [self performSegueWithIdentifier:@"EnterInvitationCodeSegue" sender:nil];
+                    }
                 }
             }
             

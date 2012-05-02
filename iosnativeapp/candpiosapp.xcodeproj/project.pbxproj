@@ -230,6 +230,7 @@
 		69D5C3581533911300B3530F /* plug-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D5C3541533911300B3530F /* plug-logo.png */; };
 		69D5C3591533911300B3530F /* plug-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D5C3551533911300B3530F /* plug-logo@2x.png */; };
 		69DCDCB9152F611600317E5B /* EnterInvitationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DCDCB8152F611600317E5B /* EnterInvitationCodeViewController.m */; };
+		69DEA9C4154F60B1008053C0 /* EnterEmailAfterSingUpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DEA9C3154F60B1008053C0 /* EnterEmailAfterSingUpController.m */; };
 		6F0B453914F6BCD10074DBD9 /* ChatHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453814F6BCD10074DBD9 /* ChatHelper.m */; };
 		6F0B453C14F6BD560074DBD9 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453B14F6BD560074DBD9 /* ChatMessage.m */; };
 		6F0B453F14F6BD850074DBD9 /* ChatHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453E14F6BD850074DBD9 /* ChatHistory.m */; };
@@ -709,6 +710,8 @@
 		69D5C3551533911300B3530F /* plug-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "plug-logo@2x.png"; path = "Settings/images/plug-logo@2x.png"; sourceTree = "<group>"; };
 		69DCDCB7152F611600317E5B /* EnterInvitationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EnterInvitationCodeViewController.h; path = candpiosapp/Login/EnterInvitationCodeViewController.h; sourceTree = SOURCE_ROOT; };
 		69DCDCB8152F611600317E5B /* EnterInvitationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EnterInvitationCodeViewController.m; path = candpiosapp/Login/EnterInvitationCodeViewController.m; sourceTree = SOURCE_ROOT; };
+		69DEA9C2154F60B1008053C0 /* EnterEmailAfterSingUpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EnterEmailAfterSingUpController.h; path = candpiosapp/Login/EnterEmailAfterSingUpController.h; sourceTree = SOURCE_ROOT; };
+		69DEA9C3154F60B1008053C0 /* EnterEmailAfterSingUpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EnterEmailAfterSingUpController.m; path = candpiosapp/Login/EnterEmailAfterSingUpController.m; sourceTree = SOURCE_ROOT; };
 		6F0B453714F6BCC50074DBD9 /* ChatHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatHelper.h; path = candpiosapp/Chat/ChatHelper.h; sourceTree = SOURCE_ROOT; };
 		6F0B453814F6BCD10074DBD9 /* ChatHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatHelper.m; path = candpiosapp/Chat/ChatHelper.m; sourceTree = SOURCE_ROOT; };
 		6F0B453A14F6BD560074DBD9 /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatMessage.h; path = candpiosapp/Chat/ChatMessage.h; sourceTree = SOURCE_ROOT; };
@@ -1598,6 +1601,8 @@
 				53DDB7D8152CE752008703D1 /* SignupStoryboard_iPhone.storyboard */,
 				32CCF182153F445A00C53D5E /* SmartererLoginController.h */,
 				32CCF183153F445A00C53D5E /* SmartererLoginController.m */,
+				69DEA9C2154F60B1008053C0 /* EnterEmailAfterSingUpController.h */,
+				69DEA9C3154F60B1008053C0 /* EnterEmailAfterSingUpController.m */,
 			);
 			name = Login;
 			path = SupportingClasses;
@@ -2454,6 +2459,7 @@
 				53DDBD1F153F5BF500306F8B /* VenueChatViewController.m in Sources */,
 				53DDBD22153F5C2800306F8B /* VenueChatCell.m in Sources */,
 				53E9224A154B3B6400130864 /* TimestampCell.m in Sources */,
+				69DEA9C4154F60B1008053C0 /* EnterEmailAfterSingUpController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
