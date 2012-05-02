@@ -242,10 +242,9 @@ BOOL clearLocations = NO;
         {
             dataset = newDataset;
             
-            NSSet *visiblePins = [mapView annotationsInMapRect: mapView.visibleMapRect];
             BOOL foundIt = NO;
 
-            for (CPVenue *ann in visiblePins) {
+            for (CPVenue *ann in [self.mapView.annotations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"!(self isKindOfClass: %@)", [MKUserLocation class]]]) {
                 foundIt = NO;                                            
                 for (CPVenue *newAnn in newDataset.annotations) {
                     if ([ann.foursquareID isEqualToString:newAnn.foursquareID]) {
