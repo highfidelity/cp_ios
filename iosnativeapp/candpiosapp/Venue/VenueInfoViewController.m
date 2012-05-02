@@ -151,7 +151,7 @@
         
         CGRect phoneFrame = phone.frame;
         phoneFrame.origin.x = 11 + round((self.bottomPhotoOverlayView.frame.size.width + 64) / 2);
-        phoneFrame.origin.y = 21;
+        phoneFrame.origin.y = 3;
         phone.frame = phoneFrame;
     }
     
@@ -164,7 +164,7 @@
         
         CGRect addressFrame = address.frame;
         addressFrame.origin.x = round((self.bottomPhotoOverlayView.frame.size.width - 64) / 2) - 5 - addressFrame.size.width;
-        addressFrame.origin.y = 21;
+        addressFrame.origin.y = 3;
         address.frame = addressFrame;
     }
     
@@ -206,7 +206,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     
     if ([CPAppDelegate currentUser]) {
         [self reloadVenueChat];
@@ -891,6 +890,10 @@
     withIconNamed:(NSString *)imageName
         andlabelText:(NSString *)labelText
 {
+    CGRect venueButtonFrame = venueButton.frame;
+    venueButtonFrame.size.height = 36;
+    venueButton.frame = venueButtonFrame;
+    
     // alloc-init the icon
     UIImageView *buttonIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
     
@@ -943,9 +946,8 @@
 
 - (IBAction)tappedPhone:(id)sender
 {
-    // only do something here if we can actually make a call
-    
-    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel://"]]) {
+    if ([self.venue.formattedPhone length] > 0 &&
+        [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel://"]]) {
         NSString *title = [NSString stringWithFormat:@"Call %@?", self.venue.name];
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title 
                                                             message:self.venue.formattedPhone
