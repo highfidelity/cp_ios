@@ -108,7 +108,12 @@
 - (void)refreshFromNewMapData:(NSNotification *)notification {
     
     // get the venues from the notification
-    self.venues = notification.object;
+    self.venues = [[(NSArray *)notification.object sortedArrayUsingComparator:^(id a, id b) {
+        NSNumber *first = [NSNumber numberWithDouble:[a distanceFromUser]];
+        NSNumber *second = [NSNumber numberWithDouble:[b distanceFromUser]];
+        
+        return [first compare:second];
+    }] mutableCopy];
 
     if (self.isViewLoaded && self.view.window) {
         // we're visible

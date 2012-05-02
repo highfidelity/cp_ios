@@ -11,18 +11,33 @@
 #import "AFJSONRequestOperation.h"
 
 @interface MapDataSet()
+
 -(id)initFromJson:(NSDictionary*)json;
+
 @end
 @implementation MapDataSet
-@synthesize annotations = _annotations;
 @synthesize activeUsers = _activeUsers;
 @synthesize activeVenues = _activeVenues;
-@synthesize dateLoaded;
-@synthesize regionCovered;
+@synthesize dateLoaded = _dateLoaded;
+@synthesize regionCovered = _regionCovered;
+@synthesize previousCenter = _previousCenter;
 
 static NSOperationQueue *sMapQueue = nil;
 
-+(void)beginLoadingNewDataset:(MKMapRect)mapRect
+-(id)init {
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+
+- (NSArray *)annotations
+{
+    return [self.activeVenues allValues];
+}
+
++(void)beginLoadingNewDataset:(CLLocationCoordinate2D)mapCenter
 					 completion:(void (^)(MapDataSet *set, NSError *error))completion
 {
 	if(!sMapQueue)
@@ -40,24 +55,16 @@ static NSOperationQueue *sMapQueue = nil;
 	
 	if([sMapQueue operationCount] == 0)
 	{
-        MKMapPoint neMapPoint = MKMapPointMake(mapRect.origin.x + mapRect.size.width, mapRect.origin.y);
-        MKMapPoint swMapPoint = MKMapPointMake(mapRect.origin.x, mapRect.origin.y + mapRect.size.height);
-        CLLocationCoordinate2D swCoord = MKCoordinateForMapPoint(swMapPoint);
-        CLLocationCoordinate2D neCoord = MKCoordinateForMapPoint(neMapPoint);
-        
-        
-        CGFloat numberOfDays = 7.0;
-        
-        [CPapi getVenuesWithCheckinsWithinSWCoordinate:swCoord 
-                                          NECoordinate:neCoord 
-                                          userLocation:[CPAppDelegate settings].lastKnownLocation.coordinate
-                                        checkedInSince:numberOfDays  
-                                              mapQueue:sMapQueue 
-                                        withCompletion:^(NSDictionary *json, NSError *error){
+            
+        [CPapi getNearestVenuesWithCheckinsToCoordinate:mapCenter 
+                                               mapQueue:sMapQueue 
+                                             completion:^(NSDictionary *json, NSError *error){
             
             if (!error) {
                 MapDataSet *dataSet = [[MapDataSet alloc] initFromJson:json];
-                dataSet.regionCovered = mapRect;
+                
+                // set some properties on the dataSet we'll use later to see if we need to reload it
+                dataSet.previousCenter = mapCenter;
                 dataSet.dateLoaded = [NSDate date];
                 
                 if (completion) {
@@ -81,50 +88,53 @@ static NSOperationQueue *sMapQueue = nil;
 	
 }
 
-- (NSArray *)annotations
-{
-    return [self.activeVenues allValues];
-}
-
--(id)init {
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
-
 -(id)initFromJson:(NSDictionary*)json
 {
 	if((self = [super init]))
 	{		
         // get the places that came back and make an annotation for each of them
-        NSArray *placesArray = [[json objectForKey:@"payload"] objectForKey:@"venues"];
+        NSArray *venuesArray = [[json objectForKey:@"payload"] objectForKey:@"venues"];
+        
+        // mutable data structure to hold venues 
         NSMutableDictionary *venueMutableDict = [NSMutableDictionary dictionary];
-        if (![placesArray isKindOfClass:[NSNull class]]) {
+        
+        if (![venuesArray isKindOfClass:[NSNull class]]) {
 #if DEBUG
-            NSLog(@"Got %d places.", [placesArray count]);
+            NSLog(@"Got %d venues.", [venuesArray count]);
 #endif
-            for(NSDictionary *placeDict in placesArray)
+            
+            
+            MKMapRect coveredRect = MKMapRectNull;
+            
+            for(NSDictionary *venueDict in venuesArray)
             {
-                CPVenue *place = [[CPVenue alloc] initFromDictionary:placeDict];
+                CPVenue *venue = [[CPVenue alloc] initFromDictionary:venueDict];
                 
-                // add (or update) the new pin
-                [venueMutableDict setObject:place forKey:[NSString stringWithFormat:@"%d", place.venueID]];
+                MKMapPoint venuePoint = MKMapPointForCoordinate(venue.coordinate);
+                MKMapRect pointRect = MKMapRectMake(venuePoint.x, venuePoint.y, 0, 0);
+                if (MKMapRectIsNull(coveredRect)) {
+                    coveredRect = pointRect;
+                } else {
+                    coveredRect = MKMapRectUnion(coveredRect, pointRect);
+                }
+                
+                // add (or update) the new pin in the 
+                [venueMutableDict setObject:venue forKey:[NSString stringWithFormat:@"%d", venue.venueID]];
                 
                 // post a notification with this venue if there's currently a venue shown by a VenueInfoViewController
                 if ([CPAppDelegate tabBarController].currentVenueID) {
-                    if ([[CPAppDelegate tabBarController].currentVenueID isEqualToString:place.foursquareID]) {
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshVenueAfterCheckin" object:place];
+                    if ([[CPAppDelegate tabBarController].currentVenueID isEqualToString:venue.foursquareID]) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshVenueAfterCheckin" object:venue];
                     }                    
                 }
                 
             }
-            
+            // set our regionCovered property given the southwest coordinate and northeast coordinate
+            self.regionCovered = coveredRect;
         }
         
         self.activeVenues = [NSDictionary dictionaryWithDictionary:venueMutableDict];
-        venueMutableDict = nil;
+        
         // get the users that came back and setup the activeUsers array on the Map
         
         NSArray *usersArray = [[json objectForKey:@"payload"] objectForKey:@"users"];
@@ -137,6 +147,10 @@ static NSOperationQueue *sMapQueue = nil;
 #endif
             for (NSDictionary *userDict in usersArray) {
                 User *user = [[User alloc] initFromDictionary:userDict];
+                
+                int venue_id = [[userDict objectForKey:@"venue_id"] integerValue];
+                user.placeCheckedIn = [self.activeVenues objectForKey:[NSString stringWithFormat:@"%d", venue_id]];
+    
                 
                 // add the user to the MapTabController activeUsers array
                 [userMutableDict setObject:user forKey:[NSString stringWithFormat:@"%d", user.userID]];
@@ -151,25 +165,32 @@ static NSOperationQueue *sMapQueue = nil;
 // called by the mapview after scrolling & zooming
 // 
 -(bool)isValidFor:(MKMapRect)newRegion
+        mapCenter:(CLLocationCoordinate2D)mapCenter
 {
 	const double kTwoMinutesAgo = - 2 * 60;
 	
 	// if the data is old, we need to reload anyway
-	double age = [dateLoaded timeIntervalSinceNow];
-	if(dateLoaded && age < kTwoMinutesAgo)
+	double age = [self.dateLoaded timeIntervalSinceNow];
+	if(self.dateLoaded && age < kTwoMinutesAgo)
 	{
 		NSLog(@".... data was too old (%.2f seconds old)", age);
 		return false;
 	}
-	
-	// 
-	if(MKMapRectContainsRect(regionCovered, newRegion))
+    
+    // if the center hasn't changed we don't need to reload data
+    // unless it's stale which is handled above
+    if(self.previousCenter.latitude == mapCenter.latitude &&
+       self.previousCenter.longitude == mapCenter.longitude) {
+        return true;
+    }
+    
+	// if the new map region is contained within the region defined by the venues that are the furthest away
+    // then we don't need to reload
+	if(MKMapRectContainsRect(self.regionCovered, newRegion))
 	{
-		// we get here if the new region is *entirely* within our dataset
 		return true;
-	}
-	else
-	{
+    } else {
+        NSLog(@"Not covered!");
 		return false;
 	}
 	

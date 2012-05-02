@@ -652,6 +652,21 @@
     [self makeHTTPRequestWithAction:@"getVenuesAndUsersWithCheckinsInBoundsDuringInterval" withParameters:params queue:mapQueue timeout:9 completion:completion];
 }
 
++ (void)getNearestVenuesWithCheckinsToCoordinate:(CLLocationCoordinate2D)coordinate
+                                     mapQueue:(NSOperationQueue *)mapQueue
+                               completion:(void (^)(NSDictionary *, NSError *))completion
+{
+    // parameters for API call
+    // you could also send checked_in_since (timestamp) and limit (integer) to this call
+    // those default to 1 week ago and 25
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setValue:[NSString stringWithFormat:@"%f", coordinate.latitude] forKey:@"lat"];
+    [params setValue:[NSString stringWithFormat:@"%f", coordinate.longitude] forKey:@"lng"];
+    
+    [self makeHTTPRequestWithAction:@"getNearestVenuesAndUsersWithCheckinsDuringInterval" withParameters:params queue:mapQueue timeout:9 completion:completion];
+}
+
+
 #pragma mark - Checkins
 
 + (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID 

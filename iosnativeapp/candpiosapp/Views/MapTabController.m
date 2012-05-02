@@ -212,7 +212,7 @@ BOOL clearLocations = NO;
         MKMapRect mapRect = mapView.visibleMapRect;
         
         // prevent the refresh of locations when we have a valid dataset or the map is not yet loaded
-        if(self.mapHasLoaded && (!dataset || ![dataset isValidFor:mapRect]))
+        if(self.mapHasLoaded && (!dataset || ![dataset isValidFor:mapRect mapCenter:self.mapView.centerCoordinate]))
         {
             [self refreshLocations];
         }
@@ -222,73 +222,72 @@ BOOL clearLocations = NO;
 -(void)refreshLocations
 {
     [self startRefreshArrowAnimation];
-    MKMapRect mapRect = mapView.visibleMapRect;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"mapIsLoadingNewData" object:nil];
-    [MapDataSet beginLoadingNewDataset:mapRect
+    [MapDataSet beginLoadingNewDataset:self.mapView.centerCoordinate
                             completion:^(MapDataSet *newDataset, NSError *error) {
 
-                                if (clearLocations) {
-                                    
-                                    // clear other than current user location
-                                    for (id annotation in mapView.annotations) {
-                                        if ([annotation isKindOfClass:[CPVenue class]]) {
-                                            [self.mapView removeAnnotation:annotation];
-                                        }
-                                    }                             
-                                }
+        if (clearLocations) {
+            
+            // clear other than current user location
+            for (id annotation in mapView.annotations) {
+                if ([annotation isKindOfClass:[CPVenue class]]) {
+                    [self.mapView removeAnnotation:annotation];
+                }
+            }                             
+        }
 
-                                NSMutableArray *annotationsToAdd = [[NSMutableArray alloc] initWithArray:newDataset.annotations];
-                                
-                                if(newDataset)
-                                {
-                                    dataset = newDataset;
-                                    
-                                    NSSet *visiblePins = [mapView annotationsInMapRect: mapView.visibleMapRect];
-                                    BOOL foundIt = NO;
+        NSMutableArray *annotationsToAdd = [[NSMutableArray alloc] initWithArray:newDataset.annotations];
+        
+        if(newDataset)
+        {
+            dataset = newDataset;
+            
+            NSSet *visiblePins = [mapView annotationsInMapRect: mapView.visibleMapRect];
+            BOOL foundIt = NO;
 
-                                    for (CPVenue *ann in visiblePins) {
-                                        foundIt = NO;                                            
-                                        for (CPVenue *newAnn in newDataset.annotations) {
-                                            if ([ann.foursquareID isEqualToString:newAnn.foursquareID]) {
-                                                foundIt = YES;
-                                                if (ann.checkinCount != newAnn.checkinCount || ann.weeklyCheckinCount != newAnn.weeklyCheckinCount) {
-                                                    // the annotation will be added again
-                                                    [mapView removeAnnotation:ann];
-                                                } else {
-                                                    // no update to the annotation is required
-                                                    [annotationsToAdd removeObject:newAnn];
-                                                }
-                                                break;
-                                            }
-                                        }
-                                        
-                                        if (! foundIt) {
-                                            // this is causing problems, commenting out for now
-                                            // [mapView removeAnnotation:ann];
-                                        }
-                                        
-                                    }
-                                }
-                                
-                                // add modified dataset to map - new/updated annotations
-                                [mapView addAnnotations:annotationsToAdd];                                
-                            
-                                // stop spinning the refresh icon and dismiss the HUD
-                                [self stopRefreshArrowAnimation];
-                                
-                                // only try to dismiss the SVProgressHUD if this view is on screen
-                                // so that the places and venue tabs can dismiss their own ProgressHUDs
-                                
-                                if (self.isViewLoaded && self.view.window) {
-                                   [SVProgressHUD dismiss];
-                                }
-                                
-                                // post two notifications for places and people reload
-                                // both send non-mutable copies of the data
-                                // it's up to that view controller to make a mutable copy that it can modify so that it doesn't directly touch the dataset
-                                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshUsersFromNewMapData" object:dataset.activeUsers];
-                                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshVenuesFromNewMapData" object:[NSArray arrayWithArray:dataset.annotations]];
-                            }]; 
+            for (CPVenue *ann in visiblePins) {
+                foundIt = NO;                                            
+                for (CPVenue *newAnn in newDataset.annotations) {
+                    if ([ann.foursquareID isEqualToString:newAnn.foursquareID]) {
+                        foundIt = YES;
+                        if (ann.checkinCount != newAnn.checkinCount || ann.weeklyCheckinCount != newAnn.weeklyCheckinCount) {
+                            // the annotation will be added again
+                            [mapView removeAnnotation:ann];
+                        } else {
+                            // no update to the annotation is required
+                            [annotationsToAdd removeObject:newAnn];
+                        }
+                        break;
+                    }
+                }
+                
+                if (! foundIt) {
+                    // this is causing problems, commenting out for now
+                    // [mapView removeAnnotation:ann];
+                }
+                
+            }
+        }
+        
+        // add modified dataset to map - new/updated annotations
+        [mapView addAnnotations:annotationsToAdd];                                
+
+        // stop spinning the refresh icon and dismiss the HUD
+        [self stopRefreshArrowAnimation];
+        
+        // only try to dismiss the SVProgressHUD if this view is on screen
+        // so that the places and venue tabs can dismiss their own ProgressHUDs
+        
+        if (self.isViewLoaded && self.view.window) {
+           [SVProgressHUD dismiss];
+        }
+        
+        // post two notifications for places and people reload
+        // both send non-mutable copies of the data
+        // it's up to that view controller to make a mutable copy that it can modify so that it doesn't directly touch the dataset
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshUsersFromNewMapData" object:dataset.activeUsers];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshVenuesFromNewMapData" object:[NSArray arrayWithArray:dataset.annotations]];
+    }]; 
 }
 
 - (IBAction)locateMe:(id)sender

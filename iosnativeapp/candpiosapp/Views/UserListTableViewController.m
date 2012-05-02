@@ -119,7 +119,12 @@
             [self.checkedInUsers addObject:user];
             [self.weeklyUsers removeObject:user];
         }
-    }    
+    }  
+    
+    // sort the two arrays by the distance to each user
+    self.checkedInUsers = [[self.checkedInUsers sortedArrayUsingSelector:@selector(compareDistanceToUser:)] mutableCopy];
+    self.weeklyUsers = [[self.weeklyUsers sortedArrayUsingSelector:@selector(compareDistanceToUser:)] mutableCopy];    
+    
     [self.tableView reloadData];
 }
 
@@ -138,11 +143,7 @@
     [self.weeklyUsers removeAllObjects];
     [self.checkedInUsers removeAllObjects];
     
-    NSDictionary *userDict = (NSDictionary *)notification.object;
-    // add the users from the map
-    for (NSString *key in userDict) {
-        [self.weeklyUsers addObject:[userDict objectForKey:key]];
-    }
+    self.weeklyUsers = [[(NSDictionary *)notification.object allValues] mutableCopy];    
     
     if (self.isViewLoaded && self.view.window) {
         // we're visible
@@ -325,4 +326,5 @@
     // push the UserProfileCheckedInViewController onto the navigation controller stack
     [self.navigationController pushViewController:userVC animated:YES];
 }
+
 @end

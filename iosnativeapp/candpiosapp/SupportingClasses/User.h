@@ -64,5 +64,6 @@
 - (void)setJoinDateFromJSONString:(NSString *)dateString;
 
 - (BOOL)isDaysOfTrialAccessWithoutInviteCodeOK;
+- (NSComparisonResult) compareDistanceToUser:(User *)otherUser;
 
 @end

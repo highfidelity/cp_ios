@@ -178,6 +178,8 @@ UITapGestureRecognizer* _tapRecon = nil;
     
     [self setUserStatusWithQuotes:self.user.status];
     
+    self.cardJobPosition.text = self.user.jobTitle;
+    
     // set the navigation controller title to the user's nickname
     self.title = self.user.nickname;  
     
@@ -385,7 +387,6 @@ UITapGestureRecognizer* _tapRecon = nil;
     // dismiss the SVProgressHUD if it's up
     [SVProgressHUD dismiss];
 
-    
     self.cardJobPosition.text = self.user.jobTitle;
     
     [self setUserStatusWithQuotes:self.user.status];

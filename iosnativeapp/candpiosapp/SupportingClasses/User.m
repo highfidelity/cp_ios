@@ -70,6 +70,7 @@
         self.jobTitle = [userDict objectForKey:@"headline"];
         self.majorJobCategory = [userDict objectForKey:@"major_job_category"];
         self.minorJobCategory = [userDict objectForKey:@"minor_job_category"];
+        self.jobTitle = [userDict objectForKey:@"headline"];
         
         NSString *photoString = [userDict objectForKey:@"filename"];
         if (![photoString isKindOfClass:[NSNull class]]) {
@@ -82,37 +83,6 @@
         
         self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict objectForKey:@"checkout"] integerValue]];
         self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
-        
-        int venue_id = [[userDict objectForKey:@"venue_id"] integerValue];
-        CPVenue *venue = [[CPAppDelegate settingsMenuController].mapTabController venueFromActiveVenues:venue_id];
-        
-        if (venue) {
-            // we already have the venue from the map
-            self.placeCheckedIn = venue;
-        } else {
-            CPVenue *place = [[CPVenue alloc] init];
-            
-            NSString *name = [userDict objectForKey:@"venue_name"];
-            
-            if (![name isKindOfClass:[NSNull class]]) {
-                place.name = [userDict objectForKey:@"venue_name"];
-            }
-            
-            NSString *address = [userDict objectForKey:@"venue_address"];
-            
-            if (![address isKindOfClass:[NSNull class]]) {
-                place.address = [userDict objectForKey:@"venue_address"];
-            }
-            
-            NSString *foursquare = [userDict objectForKey:@"foursquare"];
-            if ([foursquare isKindOfClass:[NSNull class]]) {
-                place.foursquareID = [userDict objectForKey:@"foursquare"];
-            }
-            
-            place.venueID = venue_id;
-            
-            self.placeCheckedIn = place;
-        }
 	}
 	return self;
 }
@@ -391,6 +361,13 @@
                 completion(error);
         }       
     }];
+}
+
+- (NSComparisonResult) compareDistanceToUser:(User *)otherUser {
+    NSNumber *distanceA = [NSNumber numberWithDouble:self.distance];
+    NSNumber *distanceB = [NSNumber numberWithDouble:otherUser.distance];
+    
+    return [distanceA compare:distanceB];
 }
 
 @end

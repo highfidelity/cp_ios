@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50d" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="k3E-ap-M38">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="k3E-ap-M38">
     <dependencies>
         <deployment version="1280" defaultVersion="1296" identifier="iOS"/>
         <development version="4200" defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1179"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
     </dependencies>
     <scenes>
         <!--Map Tab Controller - Map-->
@@ -255,7 +255,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                                         </view>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="defaultAvatar50.png" id="I6V-wG-Xen" userLabel="profile picture">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="default-avatar-256.png" id="I6V-wG-Xen" userLabel="profile picture">
                                             <rect key="frame" x="15" y="15" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -452,7 +452,7 @@
     </scenes>
     <resources>
         <image name="contacts-blank-slate.png" width="320" height="340"/>
-        <image name="defaultAvatar50.png" width="50" height="50"/>
+        <image name="default-avatar-256.png" width="256" height="256"/>
         <image name="list-arrow-dark-grey.png" width="11" height="16"/>
         <image name="map-locate.png" width="40" height="41"/>
         <image name="map-refresh-progress-arrow.png" width="24" height="24"/>

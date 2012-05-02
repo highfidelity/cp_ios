@@ -41,6 +41,10 @@
                             mapQueue:(NSOperationQueue *)mapQueue
              withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
++ (void)getNearestVenuesWithCheckinsToCoordinate:(CLLocationCoordinate2D)coordinate
+                                        mapQueue:(NSOperationQueue *)mapQueue
+                                      completion:(void (^)(NSDictionary *, NSError *))completion;
+
 #pragma mark - Contact Request
 + (void)sendContactRequestToUserId:(int)userId;
 + (void)sendAcceptContactRequestFromUserId:(int)userId
