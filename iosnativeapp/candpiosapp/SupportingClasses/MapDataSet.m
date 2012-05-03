@@ -190,7 +190,6 @@ static NSOperationQueue *sMapQueue = nil;
 	{
 		return true;
     } else {
-        NSLog(@"Not covered!");
 		return false;
 	}
 	
