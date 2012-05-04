@@ -99,6 +99,7 @@
 		5328937115548946007B0157 /* props-thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = 5328936F15548946007B0157 /* props-thumb.png */; };
 		5328937215548946007B0157 /* props-thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5328937015548946007B0157 /* props-thumb@2x.png */; };
 		5328937515548A2D007B0157 /* OneOnOneChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328937415548A2D007B0157 /* OneOnOneChatViewController.m */; };
+		5328937815548BAC007B0157 /* CPUIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328937715548BAC007B0157 /* CPUIHelper.m */; };
 		5332FB41152141A4002E7035 /* picture-coming-soon-rectangle.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5332FB3F152141A4002E7035 /* picture-coming-soon-rectangle.jpg */; };
 		5332FB42152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5332FB40152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg */; };
 		5335CF6F1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */; };
@@ -107,7 +108,6 @@
 		53463F5115336EA5001CA16D /* UIViewController+isModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 53463F5015336EA5001CA16D /* UIViewController+isModal.m */; };
 		5349BA1414F3196D001D4560 /* check-in-slider-handle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5349BA1214F3196D001D4560 /* check-in-slider-handle.png */; };
 		5349BA1514F3196D001D4560 /* check-in-slider-handle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5349BA1314F3196D001D4560 /* check-in-slider-handle@2x.png */; };
-		534FC97F14EF1E77008C87B9 /* CPUIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 534FC97E14EF1E77008C87B9 /* CPUIHelper.m */; };
 		534FC98214EF27C1008C87B9 /* check-in-big.png in Resources */ = {isa = PBXBuildFile; fileRef = 534FC98014EF27C1008C87B9 /* check-in-big.png */; };
 		534FC98314EF27C1008C87B9 /* check-in-big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 534FC98114EF27C1008C87B9 /* check-in-big@2x.png */; };
 		5355B0C215140697006A3D89 /* settings-button-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 5355B0C015140697006A3D89 /* settings-button-3.png */; };
@@ -548,6 +548,8 @@
 		5328937015548946007B0157 /* props-thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "props-thumb@2x.png"; path = "User/images/props-thumb@2x.png"; sourceTree = "<group>"; };
 		5328937315548A2D007B0157 /* OneOnOneChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OneOnOneChatViewController.h; path = candpiosapp/Chat/OneOnOneChatViewController.h; sourceTree = SOURCE_ROOT; };
 		5328937415548A2D007B0157 /* OneOnOneChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OneOnOneChatViewController.m; path = candpiosapp/Chat/OneOnOneChatViewController.m; sourceTree = SOURCE_ROOT; };
+		5328937615548BAC007B0157 /* CPUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPUIHelper.h; path = Utils/CPUIHelper.h; sourceTree = "<group>"; };
+		5328937715548BAC007B0157 /* CPUIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPUIHelper.m; path = Utils/CPUIHelper.m; sourceTree = "<group>"; };
 		5332FB3F152141A4002E7035 /* picture-coming-soon-rectangle.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "picture-coming-soon-rectangle.jpg"; path = "Venue/images/picture-coming-soon-rectangle.jpg"; sourceTree = "<group>"; };
 		5332FB40152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "picture-coming-soon-rectangle@2x.jpg"; path = "Venue/images/picture-coming-soon-rectangle@2x.jpg"; sourceTree = "<group>"; };
 		5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SettingsStoryboard_iPhone.storyboard; path = Settings/SettingsStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
@@ -557,8 +559,6 @@
 		53463F5015336EA5001CA16D /* UIViewController+isModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+isModal.m"; path = "Utils/UIViewController+isModal.m"; sourceTree = "<group>"; };
 		5349BA1214F3196D001D4560 /* check-in-slider-handle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-slider-handle.png"; path = "images/check-in-slider-handle.png"; sourceTree = "<group>"; };
 		5349BA1314F3196D001D4560 /* check-in-slider-handle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-slider-handle@2x.png"; path = "images/check-in-slider-handle@2x.png"; sourceTree = "<group>"; };
-		534FC97D14EF1E77008C87B9 /* CPUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUIHelper.h; sourceTree = "<group>"; };
-		534FC97E14EF1E77008C87B9 /* CPUIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPUIHelper.m; sourceTree = "<group>"; };
 		534FC98014EF27C1008C87B9 /* check-in-big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-big.png"; path = "images/check-in-big.png"; sourceTree = "<group>"; };
 		534FC98114EF27C1008C87B9 /* check-in-big@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-big@2x.png"; path = "images/check-in-big@2x.png"; sourceTree = "<group>"; };
 		5355B0C015140697006A3D89 /* settings-button-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-button-3.png"; path = "Settings/images/settings-button-3.png"; sourceTree = "<group>"; };
@@ -1225,6 +1225,8 @@
 		534FC97C14EF1E53008C87B9 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5328937615548BAC007B0157 /* CPUIHelper.h */,
+				5328937715548BAC007B0157 /* CPUIHelper.m */,
 				5328935A155488F5007B0157 /* CPConstants.h */,
 				5328935B155488F5007B0157 /* CPConstants.m */,
 				5384B25A1554833D00A4E0C1 /* Settings.h */,
@@ -1237,8 +1239,6 @@
 				5384B249155481FA00A4E0C1 /* CPapi.m */,
 				6F0B454014F6CEE40074DBD9 /* CPAlertView.h */,
 				6F0B454114F6CEE40074DBD9 /* CPAlertView.m */,
-				534FC97D14EF1E77008C87B9 /* CPUIHelper.h */,
-				534FC97E14EF1E77008C87B9 /* CPUIHelper.m */,
 				536DE92B1501710200794650 /* images */,
 				53463F4F15336EA5001CA16D /* UIViewController+isModal.h */,
 				53463F5015336EA5001CA16D /* UIViewController+isModal.m */,
@@ -2388,7 +2388,6 @@
 				6F7BA4DC14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m in Sources */,
 				E4E16DA414DDEF26004E4586 /* UserProfileCheckedInViewController.m in Sources */,
 				53D65B4514EEEC2D00801C5E /* CheckInDetailsViewController.m in Sources */,
-				534FC97F14EF1E77008C87B9 /* CPUIHelper.m in Sources */,
 				E48C631B14EFCA1F00AC2979 /* PayUserViewController.m in Sources */,
 				E4B21B2514F5B8FF00144348 /* BalanceViewController.m in Sources */,
 				6F0B453914F6BCD10074DBD9 /* ChatHelper.m in Sources */,
@@ -2448,6 +2447,7 @@
 				5328936D15548931007B0157 /* FaceToFaceHelper.m in Sources */,
 				5328936E15548931007B0157 /* FaceToFacePasswordInputViewController.m in Sources */,
 				5328937515548A2D007B0157 /* OneOnOneChatViewController.m in Sources */,
+				5328937815548BAC007B0157 /* CPUIHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
