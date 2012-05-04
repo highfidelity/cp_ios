@@ -14,6 +14,7 @@
 #import "MapDataSet.h"
 #import "VenueChat.h"
 #import "VenueChatEntry.h"
+#import "UIButton+AnimatedClockHand.h"
 
 #define CHAT_MESSAGE_ORIGIN_X 11
 
@@ -118,6 +119,11 @@
                                                  name:@"LoginStateChanged" 
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(refreshVenueViewCheckinButton) 
+                                                 name:@"userCheckinStateChange" 
+                                               object:nil];
+    
     // set the property on the tab bar controller for the venue we're looking at
     [CPAppDelegate tabBarController].currentVenueID = self.venue.foursquareID;
     
@@ -214,6 +220,9 @@
         [self hideVenueChatFromAnonymousUser];
     }
     
+    // place the checkin button on screen and make sure it is consistent with the user states
+    [self refreshVenueViewCheckinButton];
+    
     // make sure the button borders are back to grey
     [self normalVenueChatButton];
 }
@@ -248,6 +257,7 @@
     [CPAppDelegate tabBarController].currentVenueID = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshVenueAfterCheckin" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LoginStateChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"userCheckinStateChange" object:nil];
     // Release any retained subviews of the main view.
 }
 
@@ -256,6 +266,28 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)refreshVenueViewCheckinButton
+{ 
+    if (!self.checkInButton) {
+        self.checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        // add the clock hand and set the button to the right state
+        [self.checkInButton refreshButtonState];
+    
+        CGRect checkInButtonFrame = self.bottomPhotoOverlayView.frame;
+        checkInButtonFrame.size = [self.checkInButton checkinImage].size;
+        checkInButtonFrame.origin.x = ((self.bottomPhotoOverlayView.frame.size.width - checkInButtonFrame.size.width) / 2);
+        checkInButtonFrame.origin.y -= 25;
+        
+        self.checkInButton.frame = checkInButtonFrame;
+        
+        [self.bottomPhotoOverlayView.superview addSubview:self.checkInButton];
+        [self.checkInButton addTarget:self action:@selector(checkInPressed:) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        NSLog(@"Refreshing state");
+        [self.checkInButton refreshButtonState];
+    }
+}
 
 - (void)refreshVenueData:(NSNotification *)notification
 {
@@ -506,34 +538,6 @@
         [self.userSection addSubview:previousView];
         newFrame.origin.y = previousView.frame.origin.y + previousView.frame.size.height;
     }    
-        
-    // TODO: Make the target for the checkin button smaller.
-    // Right now it encroaches on the venue chat box
-    
-    NSString *curUserID = [NSString stringWithFormat:@"%i", [CPAppDelegate currentUser].userID];
-    
-    if ( ! self.checkInButton) {
-        self.checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *checkInImage = [UIImage imageNamed:@"check-in-big"];
-        [self.checkInButton setImage:checkInImage forState:UIControlStateNormal];
-        
-        CGRect checkInButtonFrame = self.bottomPhotoOverlayView.frame;
-        checkInButtonFrame.size = checkInImage.size;
-        checkInButtonFrame.origin.x = round((self.bottomPhotoOverlayView.frame.size.width - checkInButtonFrame.size.width) / 2);
-        checkInButtonFrame.origin.y -= 41;
-        
-        self.checkInButton.frame = checkInButtonFrame;
-        
-        [self.bottomPhotoOverlayView.superview addSubview:self.checkInButton];
-    }
-    
-    [self.checkInButton removeTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
-    
-    if([[[activeUsers objectForKey:curUserID] objectForKey:@"checked_in"] boolValue]){
-        [self.checkInButton addTarget:CPAppDelegate action:@selector(checkInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    } else {
-        [self.checkInButton addTarget:self action:@selector(checkInPressed:) forControlEvents:UIControlEventTouchUpInside];
-    }
     
     // resize the user section frame
     CGRect newSectionFrame = self.userSection.frame;
@@ -572,6 +576,9 @@
         
         // scroll to the user thubmnail
         [parentScroll setContentOffset:CGPointMake(userButton.frame.origin.x - 10, 0) animated:YES];
+        
+        // completed scroll to user thumbnail, don't do it again
+        self.scrollToUserThumbnail = NO;
     }    
 }
                             
@@ -869,16 +876,21 @@
 {
     if (![CPAppDelegate currentUser]) {
         [CPAppDelegate showLoginBanner];
-        return;
+    } else {
+        if ([CPAppDelegate userCheckedIn] && [CPAppDelegate currentVenue].venueID == self.venue.venueID){
+            // user is checked in here so ask them if they want to be checked out
+            [CPAppDelegate promptForCheckout];
+        } else {
+            // show them the check in screen
+            CheckInDetailsViewController *checkinVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
+            checkinVC.place = self.venue;
+            
+            // be the delgate of the check in view controller
+            checkinVC.delegate = self;
+            
+            [self.navigationController pushViewController:checkinVC animated:YES];
+        }
     }
-
-    CheckInDetailsViewController *checkinVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
-    checkinVC.place = self.venue;
-    
-    // be the delgate of the check in view controller
-    checkinVC.delegate = self;
-    
-    [self.navigationController pushViewController:checkinVC animated:YES];
 }
 
 - (void)dismissViewControllerAnimated {

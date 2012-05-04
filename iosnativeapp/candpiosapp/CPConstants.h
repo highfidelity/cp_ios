@@ -40,7 +40,6 @@ extern NSString* const kUDCurrentVenue;
 extern NSString* const kUDPastVenues;
 extern NSString* const kUDFirstCheckIn;
 extern NSString* const kUDCheckoutTime;
-extern NSString* const kUDCheckedInVenueID;
 extern NSString* const kUDLastLoggedAppVersion;
 
 @end

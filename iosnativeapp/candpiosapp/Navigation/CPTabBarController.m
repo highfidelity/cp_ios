@@ -7,6 +7,7 @@
 //
 
 #import "CPTabBarController.h"
+#import "UIButton+AnimatedClockHand.h"
 
 @interface CPTabBarController ()
 
@@ -64,16 +65,7 @@
     // add a tag to the button so we can grab it and hide it later
     button.tag = 901;
     
-    // add the clock hand to the button
-    // this is seperate so we can spin it when the person is checked out
-    
-    UIImageView *clockHand = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tab-check-in-clock-hand.png"]];
-    CGRect handFrame = clockHand.frame;
-    handFrame.origin.x = 30;
-    handFrame.origin.y = 23;
-    clockHand.frame = handFrame;
-    clockHand.tag = 903;
-    [button addSubview:clockHand];
+    [button addClockHand];
     
     // add the target for the button
     [button addTarget:CPAppDelegate action:@selector(checkInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];

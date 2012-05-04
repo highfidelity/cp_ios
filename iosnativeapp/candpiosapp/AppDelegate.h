@@ -42,9 +42,8 @@
 - (CPVenue *)currentVenue;
 - (void)toggleSettingsMenu;
 - (void)refreshCheckInButton;
+- (void)promptForCheckout;
 - (void)setCheckedOut;
--(void)startCheckInClockHandAnimation;
--(void)stopCheckInClockHandAnimation;
 - (void)checkOutNow;
 - (void)showSignupModalFromViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController

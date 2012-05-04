@@ -77,6 +77,7 @@
 		4EC78B0D14F76E8400581F4F /* SettingsMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EC78AFE14F761B300581F4F /* SettingsMenuController.m */; };
 		4EFC5484150161FA00BF51B0 /* logo-login-mug.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EFC54611500629100BF51B0 /* logo-login-mug.png */; };
 		4EFC5485150161FA00BF51B0 /* logo-login-mug@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EFC54621500629100BF51B0 /* logo-login-mug@2x.png */; };
+		5319C76115547157005DA299 /* UIButton+AnimatedClockHand.m in Sources */ = {isa = PBXBuildFile; fileRef = 5319C76015547157005DA299 /* UIButton+AnimatedClockHand.m */; };
 		5319F33C14FC60F30047B6CB /* texture-diagonal-noise-dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5319F33A14FC60F30047B6CB /* texture-diagonal-noise-dark.png */; };
 		5319F33D14FC60F30047B6CB /* texture-diagonal-noise-dark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5319F33B14FC60F30047B6CB /* texture-diagonal-noise-dark@2x.png */; };
 		5319F34514FC63F80047B6CB /* button-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 5319F34114FC63F70047B6CB /* button-grey.png */; };
@@ -518,6 +519,8 @@
 		4EC78AFE14F761B300581F4F /* SettingsMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsMenuController.m; path = Views/SettingsMenuController.m; sourceTree = "<group>"; };
 		4EFC54611500629100BF51B0 /* logo-login-mug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-login-mug.png"; sourceTree = "<group>"; };
 		4EFC54621500629100BF51B0 /* logo-login-mug@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-login-mug@2x.png"; sourceTree = "<group>"; };
+		5319C75F15547157005DA299 /* UIButton+AnimatedClockHand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+AnimatedClockHand.h"; path = "CheckIn/UIButton+AnimatedClockHand.h"; sourceTree = "<group>"; };
+		5319C76015547157005DA299 /* UIButton+AnimatedClockHand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+AnimatedClockHand.m"; path = "CheckIn/UIButton+AnimatedClockHand.m"; sourceTree = "<group>"; };
 		5319F33A14FC60F30047B6CB /* texture-diagonal-noise-dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-diagonal-noise-dark.png"; path = "images/texture-diagonal-noise-dark.png"; sourceTree = "<group>"; };
 		5319F33B14FC60F30047B6CB /* texture-diagonal-noise-dark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-diagonal-noise-dark@2x.png"; path = "images/texture-diagonal-noise-dark@2x.png"; sourceTree = "<group>"; };
 		5319F34114FC63F70047B6CB /* button-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-grey.png"; path = "images/button-grey.png"; sourceTree = "<group>"; };
@@ -1477,6 +1480,8 @@
 				53E2061F150591600000FA8D /* DismissHUDAfterReloadData.h */,
 				53E20620150591600000FA8D /* DismissHUDAfterReloadData.m */,
 				536DE92A150170CC00794650 /* images */,
+				5319C75F15547157005DA299 /* UIButton+AnimatedClockHand.h */,
+				5319C76015547157005DA299 /* UIButton+AnimatedClockHand.m */,
 			);
 			name = "Check In";
 			sourceTree = "<group>";
@@ -2460,6 +2465,7 @@
 				53DDBD22153F5C2800306F8B /* VenueChatCell.m in Sources */,
 				53E9224A154B3B6400130864 /* TimestampCell.m in Sources */,
 				69DEA9C4154F60B1008053C0 /* EnterEmailAfterSingUpController.m in Sources */,
+				5319C76115547157005DA299 /* UIButton+AnimatedClockHand.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

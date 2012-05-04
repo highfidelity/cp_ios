@@ -296,7 +296,7 @@
                     
                     // Include the venue in the userCheckedIn notification
                     CPVenue *venue = [[CPVenue alloc] initFromDictionary:localNotif.userInfo];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckedIn" object:venue];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:venue];
                 }
                 
                 if (!DEFAULTS(bool, kUDFirstCheckIn)) {
@@ -307,9 +307,14 @@
                 // set the NSUserDefault to the user checkout time
                 SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
                 
+                // a successful checkin passes back venue_id
+                // give that to this venue before we store it in NSUserDefaults
+                // in case we came from foursquare venue list and didn't have it
+                self.place.venueID = [[json objectForKey:@"venue_id"] intValue];
+                
                 // put the venue ID for the venue the user is checked into in NSUserDefaults
                 // used across the app to check if the user is checked into the venue they're looking at
-                SET_DEFAULTS(Integer, kUDCheckedInVenueID, [[json objectForKey:@"venue_id"] integerValue]);
+                [CPAppDelegate saveCurrentVenueUserDefaults:self.place];
 
                 [CPAppDelegate refreshCheckInButton];
             

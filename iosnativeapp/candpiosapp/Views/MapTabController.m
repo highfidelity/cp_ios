@@ -80,7 +80,7 @@ BOOL clearLocations = NO;
     // Register to receive userCheckedIn notification to intitiate map refresh immediately after user checks in
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(userCheckedIn:) 
-                                                 name:@"userCheckedIn" 
+                                                 name:@"userCheckinStateChange" 
                                                object:nil];
 
     // Add a notification catcher for applicationDidBecomeActive to refresh map pins
@@ -145,7 +145,7 @@ BOOL clearLocations = NO;
 	[reloadTimer invalidate];
 	reloadTimer = nil;
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"userCheckedIn" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"userCheckinStateChange" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"applicationDidBecomeActive" object:nil];
 
     // Release any retained subviews of the main view.

@@ -16,6 +16,7 @@
 #import "CheckInDetailsViewController.h"
 #import "CPAlertView.h"
 #import "VenueInfoViewController.h"
+#import "UIButton+AnimatedClockHand.h"
 
 #define kContactRequestAPNSKey @"contact_request"
 #define kContactRequestAcceptedAPNSKey @"contact_accepted"
@@ -51,8 +52,13 @@
     [self.settingsMenuController showMenu: !self.settingsMenuController.isMenuShowing];
 }
 
-
 # pragma mark - Check-in/out Stuff
+
+-(void)refreshCheckInButton
+{
+    // helper to grab center button and refresh state
+    [self.tabBarController.centerButton refreshButtonState];
+}
 
 // TODO: consolidate this with the checkedIn property on the current user in NSUserDefaults
 - (BOOL)userCheckedIn 
@@ -61,16 +67,16 @@
     return [checkoutEpoch intValue] > [[NSDate date]timeIntervalSince1970];
 }
 
-- (void)startCheckInClockHandAnimation
+- (void)promptForCheckout
 {
-    // spin the clock hand
-    [CPUIHelper spinView:[self.tabBarController.centerButton viewWithTag:903] duration:15 repeatCount:MAXFLOAT clockwise:YES timingFunction:nil];
-}
-
-- (void)stopCheckInClockHandAnimation
-{
-    // stop the clock hand spin
-    [[self.tabBarController.centerButton viewWithTag:903].layer removeAllAnimations];
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Check Out"
+                          message:@"Are you sure you want to be checked out?"
+                          delegate:self.settingsMenuController
+                          cancelButtonTitle:@"Cancel"
+                          otherButtonTitles: @"Check Out", nil];
+    alert.tag = 904;
+    [alert show];
 }
 
 - (void)checkOutNow
@@ -106,14 +112,16 @@
 
 - (void)setCheckedOut
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckedIn" object:nil];
     NSInteger checkOutTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
     SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
+    // nil out the venue in NSUserDefaults
+    [self saveCurrentVenueUserDefaults:nil];
     [self refreshCheckInButton];
     if (self.checkOutTimer != nil) {
         [[self checkOutTimer] invalidate];
         self.checkOutTimer = nil;   
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
 }
 
 - (void)checkInButtonPressed:(id)sender
@@ -121,32 +129,10 @@
     if (![CPAppDelegate currentUser]) {
         [CPAppDelegate showLoginBanner];
     } else if (self.userCheckedIn) {
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:@"Check Out"
-                              message:@"Are you sure you want to be checked out?"
-                              delegate:self.settingsMenuController
-                              cancelButtonTitle:@"Cancel"
-                              otherButtonTitles: @"Check Out", nil];
-        alert.tag = 904;
-        [alert show];
-        
+        [self promptForCheckout];
     } else {
         UINavigationController *checkInNC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
         [self.tabBarController presentModalViewController:checkInNC animated:YES];
-    }
-}
-
-- (void)refreshCheckInButton 
-{
-    // change the image and the text on the tab bar item
-    if (self.userCheckedIn) {
-        // start animating the clock hand
-        [self startCheckInClockHandAnimation];
-        [self.tabBarController.centerButton setBackgroundImage:[UIImage imageNamed:@"tab-check-out.png"] forState:UIControlStateNormal];
-    } else {
-        // stop animating the clock hand
-        [self stopCheckInClockHandAnimation];
-        [self.tabBarController.centerButton setBackgroundImage:[UIImage imageNamed:@"tab-check-in.png"] forState:UIControlStateNormal];
     }
 }
 
