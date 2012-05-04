@@ -293,6 +293,10 @@
                     localNotif.timeZone = [NSTimeZone defaultTimeZone];
                     localNotif.userInfo = self.place.initializationDictionaryJSON;
                     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+                    
+                    // Include the venue in the userCheckedIn notification
+                    CPVenue *venue = [[CPVenue alloc] initFromDictionary:localNotif.userInfo];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckedIn" object:venue];
                 }
                 
                 if (!DEFAULTS(bool, kUDFirstCheckIn)) {

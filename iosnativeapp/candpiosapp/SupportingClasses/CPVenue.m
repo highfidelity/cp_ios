@@ -214,4 +214,21 @@
     return json;
 }
 
+-(id)initWithCoder:(NSCoder *)decoder
+{
+    self = [super init];
+    if (self) 
+    {
+        self.name = [decoder decodeObjectForKey:@"name"];
+        self.foursquareID = [decoder decodeObjectForKey:@"foursquareID"];
+    }    
+    return self;
+}
+
+-(void)encodeWithCoder:(NSCoder *)encoder
+{
+    [encoder encodeObject:self.name forKey:@"name"];
+    [encoder encodeObject:self.foursquareID forKey:@"foursquareID"];
+}
+
 @end

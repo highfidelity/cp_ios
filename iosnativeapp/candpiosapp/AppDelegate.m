@@ -72,6 +72,37 @@
     [[self.tabBarController.centerButton viewWithTag:903].layer removeAllAnimations];
 }
 
+- (void)checkOutNow
+{
+    [SVProgressHUD showWithStatus:@"Checking out..."];
+    
+    [CPapi checkOutWithCompletion:^(NSDictionary *json, NSError *error) {
+        
+        BOOL respError = [[json objectForKey:@"error"] boolValue];
+        
+        [SVProgressHUD dismiss];
+        if (!error && !respError) {
+            [[UIApplication sharedApplication] cancelAllLocalNotifications];
+            [self setCheckedOut];
+        } else {
+            
+            
+            NSString *message = [json objectForKey:@"payload"];
+            if (!message) {
+                message = @"Oops. Something went wrong.";    
+            }
+            
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle:@"An error occurred"
+                                  message:message
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles: nil];
+            [alert show];
+        }
+    }];    
+}
+
 - (void)setCheckedOut
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckedIn" object:nil];
@@ -494,14 +525,62 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 - (void)application:(UIApplication *)app
 didReceiveLocalNotification:(UILocalNotification *)notif
 {
-    if ([notif.alertAction isEqual:@"Check Out"]) {
-        
-        CPAlertView *alertView = [[CPAlertView alloc] initWithTitle:kCheckOutLocalNotificationAlertViewTitle
+    NSDictionary *userDict = notif.userInfo;
+    
+    BOOL showAlert = NO;
+    NSString *alertText;
+    NSString *cancelText;
+    NSString *otherText;
+    NSInteger tagNumber;
+
+    if (userDict && [[userDict objectForKey:@"type"] isEqualToString:@"didExitRegion"]) {
+        if (app.applicationState == UIApplicationStateActive) {
+            // Show didExitRegion alert
+            showAlert = YES;
+            alertText = notif.alertBody;
+            otherText = @"Check Out";
+            cancelText = @"Cancel";
+            tagNumber = 601;
+        }
+        else {
+            // Log out immediately if user tapped Check Out from notification
+            [self checkOutNow];
+        }
+    }
+    else if (userDict && [[userDict objectForKey:@"type"] isEqualToString:@"didEnterRegion"]) {
+        if (app.applicationState == UIApplicationStateActive) {
+            // Show didEnterRegion alert
+            showAlert = YES;
+            alertText = notif.alertBody;
+            otherText = @"Check In";
+            cancelText = @"Cancel";
+            tagNumber = 602;
+        }
+        else {
+            // Take the user to the Venue page as they chose to Check In
+            [self loadVenueView:[userDict objectForKey:@"name"]];
+        }
+    }
+    else if ([notif.alertAction isEqual:@"Check Out"]) {
+        // For regular timeout checkouts
+        showAlert = YES;
+        alertText = kCheckOutLocalNotificationAlertViewTitle;
+        cancelText = @"OK";
+        otherText = @"View";
+    }
+
+    if (showAlert) {
+        CPAlertView *alertView = [[CPAlertView alloc] initWithTitle:alertText
                                                             message:nil
                                                            delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:@"View", nil];
+                                                  cancelButtonTitle:cancelText
+                                                  otherButtonTitles:otherText, nil];
         alertView.context = notif;
+        
+        if (tagNumber) {
+            alertView.tag = tagNumber;
+        }
+        
         [alertView show];
     }
 }
@@ -630,6 +709,28 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     }
 }
 
+- (void)saveCurrentVenueUserDefaults:(CPVenue *)venue
+{
+    // encode the user object
+    NSData *encodedVenue = [NSKeyedArchiver archivedDataWithRootObject:venue];
+    
+    // store it in user defaults
+    SET_DEFAULTS(Object, kUDCurrentVenue, encodedVenue);
+}
+
+- (CPVenue *)currentVenue
+{
+    if (DEFAULTS(object, kUDCurrentVenue)) {
+        // grab the coded user from NSUserDefaults
+        NSData *myEncodedObject = DEFAULTS(object, kUDCurrentVenue);
+        // return it
+        return (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:myEncodedObject];
+    } else {
+        return nil;
+    }
+}
+
+
 #pragma mark - User Settings
 
 +(NSString*)settingsFilepath
@@ -668,6 +769,41 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 	
 }
 
+- (void)loadVenueView:(NSString *)venueName {
+    
+    // For now, launch the checkin modal screen as checkInHistory doesn't work
+    [self checkInButtonPressed:nil];
+    return;
+
+    NSLog(@"load venue: %@", venueName);
+    
+    CPVenue *venueMatch;
+    
+    for (CPVenue *venue in [self currentUser].checkInHistory) {
+        if ([venue.name isEqualToString:@"venueName"]) {
+            venueMatch = venue;
+        }
+    }
+
+    if (venueMatch) {
+        CheckInDetailsViewController *vc = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil]
+                                            instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
+        [vc setPlace:venueMatch];
+        vc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                               style:UIBarButtonItemStylePlain
+                                                                              target:vc
+                                                                              action:@selector(dismissViewControllerAnimated)];
+        
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
+        [self.tabBarController presentModalViewController:navigationController animated:YES];        
+    }
+    else {
+        NSLog(@"Unable to find a venueMatch");
+    }
+}
+
+#pragma mark - Crash Handlers
+
 void uncaughtExceptionHandler(NSException *exception) {
     [FlurryAnalytics logError:@"Uncaught" message:@"Crash!" exception:exception];
 }
@@ -702,6 +838,18 @@ void SignalHandler(int sig) {
             
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
             [self.tabBarController presentModalViewController:navigationController animated:YES];
+        }
+    }
+    else if (alertView.tag == 601 && alertView.firstOtherButtonIndex == buttonIndex) {
+        // Log user out immediately if they tapped Check Out
+        [self checkOutNow];
+    }
+    else if (alertView.tag == 602 && alertView.firstOtherButtonIndex == buttonIndex) {
+        CPAlertView *cpAlertView = (CPAlertView *)alertView;
+        UILocalNotification *notif = cpAlertView.context;
+
+        if (notif && notif.userInfo) {
+            [self loadVenueView:[notif.userInfo objectForKey:@"name"]];
         }
     }
 }

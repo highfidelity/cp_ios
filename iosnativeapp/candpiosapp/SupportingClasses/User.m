@@ -110,7 +110,6 @@
     [encoder encodeObject:self.urlPhoto forKey:@"urlPhoto"];
     [encoder encodeBool:self.enteredInviteCode forKey:@"enteredInviteCode"];
     [encoder encodeObject:self.joinDate forKey:@"joinDate"];
-
 }
 
 // override nickname setter to decode html entities

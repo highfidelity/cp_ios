@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
-@interface CPVenue : NSObject <MKAnnotation>
+@interface CPVenue : NSObject <MKAnnotation, NSCoding>
 
 @property (nonatomic, assign) int venueID;
 @property (nonatomic, strong) NSString *name;

@@ -10,9 +10,11 @@
 #import "MapDataSet.h"
 #import "MKAnnotationView+WebCache.h"
 #import "VenueInfoViewController.h"
+#import "User.h"
 
 #define qHideTopNavigationBarOnMapView			0
 #define kCheckinThresholdForSmallPin            2
+#define kRadiusForCheckins                      10 // measure in meters, from lat/lng of CPVenue
 
 @interface MapTabController() 
 -(void)zoomTo:(CLLocationCoordinate2D)loc;
@@ -22,6 +24,7 @@
 @property (nonatomic, strong) NSTimer *arrowSpinTimer;
 @property (nonatomic, assign) BOOL locationStatusKnown;
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
+@property (nonatomic, strong) CLLocationManager *locationManager;
 
 -(void)refreshLocationsIfNeeded;
 -(void)startRefreshArrowAnimation;
@@ -39,6 +42,7 @@
 @synthesize locationAllowTimer;
 @synthesize locationStatusKnown;
 @synthesize refreshButton;
+@synthesize locationManager;
 
 BOOL clearLocations = NO;
 
@@ -75,7 +79,7 @@ BOOL clearLocations = NO;
 
     // Register to receive userCheckedIn notification to intitiate map refresh immediately after user checks in
     [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(refreshButtonClicked:) 
+                                             selector:@selector(userCheckedIn:) 
                                                  name:@"userCheckedIn" 
                                                object:nil];
 
@@ -127,7 +131,9 @@ BOOL clearLocations = NO;
                                   0, 
                                   self.view.frame.size.width, 
                                   shadowView.frame.size.height);
-    [self.view addSubview:shadowView];  
+    [self.view addSubview:shadowView];
+    
+    [self startStandardUpdates];
 }
 
 - (void)viewDidUnload
@@ -192,9 +198,43 @@ BOOL clearLocations = NO;
     return [self.dataset.activeVenues objectForKey:[NSString stringWithFormat:@"%d", venueID]];
 }
 
+- (void)userCheckedIn:(NSNotification *)notification
+{
+    NSLog(@"*** user checked in");
+    
+    // Check if this is a fresh user checking (a CPVenue is passed), and if so, add it to the regions to monitor for auto checkin and checkout
+    if (notification.object) {
+        NSLog(@"Object: %@", notification.object);
+
+        // Clear out old regions as there is a max of 20; in the future, get all of the latest regions via an API call
+        if (self.locationManager.monitoredRegions.count > 19) {
+            for (CLRegion *reg in [self.locationManager monitoredRegions]) {
+                [self.locationManager stopMonitoringForRegion:reg];
+            }
+        }
+        
+        if ([notification.object isKindOfClass:[CPVenue class]]) {
+            CPVenue *venue = (CPVenue *)notification.object;
+
+            NSLog(@"venue: %@", venue);
+
+            // Save current venue to be able to auto checkout in the future
+            [CPAppDelegate saveCurrentVenueUserDefaults:venue];
+            
+            CLRegion* region = [[CLRegion alloc] initCircularRegionWithCenter:venue.coordinate
+                                                                       radius:kRadiusForCheckins identifier:venue.name];
+            [self.locationManager startMonitoringForRegion:region
+                                           desiredAccuracy:kCLLocationAccuracyNearestTenMeters];
+            
+            NSLog(@"current # of monitored regions: %i", self.locationManager.monitoredRegions.count);
+        }
+    }
+    
+    [self refreshButtonClicked:notification];
+}
+
 - (IBAction)refreshButtonClicked:(id)sender
 {
-    
     clearLocations = NO;
     [self refreshLocations];
 }
@@ -288,6 +328,7 @@ BOOL clearLocations = NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshVenuesFromNewMapData" object:[NSArray arrayWithArray:dataset.annotations]];
     }]; 
 }
+
 
 - (IBAction)locateMe:(id)sender
 {
@@ -568,6 +609,88 @@ BOOL clearLocations = NO;
     // stop the timer so the arrow stops spinning after the rotation completes
     [self.arrowSpinTimer invalidate];
     self.arrowSpinTimer = nil;
+}
+
+- (void)startStandardUpdates
+{
+    // Create the location manager if this object does not
+    // already have one.
+    if (nil == self.locationManager)
+        self.locationManager = [[CLLocationManager alloc] init];
+
+    self.locationManager.delegate = self;
+    
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    
+    self.locationManager.distanceFilter = 20;
+    
+    [self.locationManager startMonitoringSignificantLocationChanges];
+    
+    // Do not create regions if support is unavailable or disabled.
+    if (![CLLocationManager regionMonitoringAvailable] || ![CLLocationManager regionMonitoringEnabled]) {
+        return;
+    }
+}
+
+// Delegate method from the CLLocationManagerDelegate protocol.
+- (void)locationManager:(CLLocationManager *)manager
+    didUpdateToLocation:(CLLocation *)newLocation
+           fromLocation:(CLLocation *)oldLocation
+{
+    // Process changes here
+}
+
+- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
+    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+    if (localNotif) {
+        NSString *alertText = [NSString stringWithFormat:@"Do you want to check in at %@?", region.identifier];
+        
+        localNotif.alertBody = alertText;
+        localNotif.alertAction = @"Check In";
+        localNotif.soundName = UILocalNotificationDefaultSoundName;
+        
+        localNotif.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @"didEnterRegion", @"type",
+                               region.identifier, @"name",
+                               nil];
+
+        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];        
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+    // Only show check out prompt if user is currently logged in to the venue in question
+    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+
+    CPVenue *venue = [CPAppDelegate currentVenue];
+    
+    if ([CPAppDelegate userCheckedIn] && venue && venue.name && [venue.name isEqualToString:region.identifier] && localNotif) {
+        NSString *alertText = [NSString stringWithFormat:@"Do you want to check out of %@?", region.identifier];
+        
+        localNotif.alertBody = alertText;
+        localNotif.alertAction = @"Check Out";
+        localNotif.soundName = UILocalNotificationDefaultSoundName;
+        
+        localNotif.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @"didExitRegion", @"type",
+                               region.identifier, @"name",
+                               nil];
+        
+        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+
+        // Cancel the "you will be checked out of C&P in 5 minutes" notification so that user isn't prompted to check out twice
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error
+{
+    NSLog(@"monitoringDidFailForRegion, ERROR: %@", error);
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"didfailwitherror");
 }
 
 @end

@@ -12,6 +12,7 @@
 #import "UAPush.h"
 #import "SettingsMenuController.h"
 #import "CPTabBarController.h"
+#import <CoreLocation/CoreLocation.h>
 
 // Constants have been moved to CPConstants.m
 
@@ -36,11 +37,14 @@
 -(void)storeUserLoginDataFromDictionary:(NSDictionary *)userDictionary;
 -(void)saveCurrentUserToUserDefaults:(User *)user;
 -(User *)currentUser;
+- (void)saveCurrentVenueUserDefaults:(CPVenue *)venue;
+- (CPVenue *)currentVenue;
 - (void)toggleSettingsMenu;
 - (void)refreshCheckInButton;
 - (void)setCheckedOut;
 -(void)startCheckInClockHandAnimation;
 -(void)stopCheckInClockHandAnimation;
+- (void)checkOutNow;
 - (void)showSignupModalFromViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
          withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed

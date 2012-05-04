@@ -10,12 +10,13 @@
 #import <MapKit/MapKit.h>
 #import "User.h"
 #import "CPVenue.h"
+#import <CoreLocation/CoreLocation.h>
 
 #define mapTag 992
 
 @class MapDataSet;
 
-@interface MapTabController : UIViewController <MKMapViewDelegate, UINavigationControllerDelegate>
+@interface MapTabController : UIViewController <MKMapViewDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate>
 {
 	bool hasUpdatedUserLocation;
 	bool hasShownLoadingScreen;
@@ -33,6 +34,7 @@
 - (void)applicationDidBecomeActive:(NSNotification *)notification;
 - (void)refreshLocations;
 - (void)refreshLocationsAfterDelay;
+- (void)userCheckedIn:(NSNotification *)notification;
 - (IBAction)refreshButtonClicked:(id)sender;
 - (IBAction)locateMe:(id)sender;
 - (void)loginButtonTapped;
