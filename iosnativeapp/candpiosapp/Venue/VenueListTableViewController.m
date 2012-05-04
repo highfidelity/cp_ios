@@ -114,6 +114,17 @@
         
         return [first compare:second];
     }] mutableCopy];
+    
+    CLLocation *currentLocation = [AppDelegate instance].settings.lastKnownLocation;
+    
+    // although distanceFromUser has already been set after the API call in the map
+    // it's been set to distance from the center of the map, which isn't necessarily the user's location
+    // so iterate through the venues now and make sure that the distances are correct
+    for (CPVenue __strong *venue in self.venues) {
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:venue.coordinate.latitude longitude:venue.coordinate.longitude];
+        venue.distanceFromUser = [location distanceFromLocation:currentLocation];
+    }
+
 
     if (self.isViewLoaded && self.view.window) {
         // we're visible
@@ -147,7 +158,7 @@
     vcell.venueName.text = venue.name;
     vcell.venueAddress.text = venue.address;
     
-    vcell.venueDistance.text = [NSString stringWithFormat:@"%@ %@", [CPUtils localizedDistanceStringFromMiles:venue.distanceFromUser], @"away"];
+    vcell.venueDistance.text = [NSString stringWithFormat:@"%@ %@", [CPUtils localizedDistanceStringForDistance:venue.distanceFromUser], @"away"];
     
     vcell.venueCheckins.text = @"";
     if (venue.checkinCount  > 0) {
