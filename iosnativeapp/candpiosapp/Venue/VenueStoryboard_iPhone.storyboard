@@ -96,7 +96,7 @@
                                     <view tag="3548" contentMode="scaleToFill" id="AtK-AV-cUC">
                                         <rect key="frame" x="0.0" y="173" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
                             </scrollView>
