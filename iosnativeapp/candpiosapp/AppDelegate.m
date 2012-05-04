@@ -15,6 +15,7 @@
 #import "EnterInvitationCodeViewController.h"
 #import "CheckInDetailsViewController.h"
 #import "CPAlertView.h"
+#import "VenueInfoViewController.h"
 
 #define kContactRequestAPNSKey @"contact_request"
 #define kContactRequestAcceptedAPNSKey @"contact_accepted"
@@ -385,7 +386,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
                                                forBarMetrics:UIBarMetricsDefault];
     
     [self hideLoginBannerWithCompletion:nil];
-    
+
     return YES;
 }
 
@@ -716,6 +717,15 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     
     // store it in user defaults
     SET_DEFAULTS(Object, kUDCurrentVenue, encodedVenue);
+    
+    // Store venue in pastVenues array if not already present
+    NSArray *pastVenues = DEFAULTS(object, kUDPastVenues);
+    
+    if (pastVenues == nil || ![pastVenues containsObject:encodedVenue]) {
+        NSMutableArray *mutablePastVenues = [[NSMutableArray alloc] initWithArray:pastVenues];
+        [mutablePastVenues addObject:encodedVenue];
+        SET_DEFAULTS(Object, kUDPastVenues, mutablePastVenues);
+    }
 }
 
 - (CPVenue *)currentVenue
@@ -728,6 +738,23 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     } else {
         return nil;
     }
+}
+
+- (CPVenue *)venueWithName:(NSString *)name
+{
+    NSArray *pastVenues = DEFAULTS(object, kUDPastVenues);
+
+    CPVenue *venueMatch;
+
+    for (NSData *encodedObject in pastVenues) {
+        CPVenue *venue = (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
+
+        if ([venue.name isEqualToString:name]) {
+            venueMatch = venue;
+        }
+    }
+    
+    return venueMatch;
 }
 
 
@@ -769,36 +796,44 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 	
 }
 
-- (void)loadVenueView:(NSString *)venueName {
+- (void)loadVenueView:(NSString *)venueName
+{    
+    CPVenue *venue = [self venueWithName:venueName];
     
-    // For now, launch the checkin modal screen as checkInHistory doesn't work
-    [self checkInButtonPressed:nil];
-    return;
+    if (venue) {
+        NSLog(@"Load venue: %@", venueName);
 
-    NSLog(@"load venue: %@", venueName);
-    
-    CPVenue *venueMatch;
-    
-    for (CPVenue *venue in [self currentUser].checkInHistory) {
-        if ([venue.name isEqualToString:@"venueName"]) {
-            venueMatch = venue;
-        }
-    }
+        VenueInfoViewController *venueVC = [[UIStoryboard storyboardWithName:@"VenueStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+        venueVC.venue = venue;
 
-    if (venueMatch) {
-        CheckInDetailsViewController *vc = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil]
-                                            instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
-        [vc setPlace:venueMatch];
-        vc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+        venueVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
                                                                                style:UIBarButtonItemStylePlain
-                                                                              target:vc
+                                                                              target:venueVC
                                                                               action:@selector(dismissViewControllerAnimated)];
+
         
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:venueVC];
         [self.tabBarController presentModalViewController:navigationController animated:YES];        
+        
+        // If you want to instead take the user directly to the check-in screen, use the code below
+        
+        //    CheckInDetailsViewController *vc = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil]
+        //                                        instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
+        //    [vc setPlace:venue];
+        //    vc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+        //                                                                           style:UIBarButtonItemStylePlain
+        //                                                                          target:vc
+        //                                                                          action:@selector(dismissViewControllerAnimated)];
+        //    
+        //    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
+        //    [self.tabBarController presentModalViewController:navigationController animated:YES];
     }
     else {
-        NSLog(@"Unable to find a venueMatch");
+        // Venue wasn't found, so load the normal checkIn screen so the user can select it
+        NSLog(@"Venue not found");
+        
+        UINavigationController *checkInNC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+        [self.tabBarController presentModalViewController:checkInNC animated:YES];
     }
 }
 

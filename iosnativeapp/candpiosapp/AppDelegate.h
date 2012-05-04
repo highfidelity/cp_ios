@@ -32,6 +32,7 @@
 @property (strong) NSTimer *checkOutTimer;
            
 -(void)saveSettings;
+- (void)loadVenueView:(NSString *)venueName;
 +(AppDelegate *)instance;
 -(void)logoutEverything;
 -(void)storeUserLoginDataFromDictionary:(NSDictionary *)userDictionary;

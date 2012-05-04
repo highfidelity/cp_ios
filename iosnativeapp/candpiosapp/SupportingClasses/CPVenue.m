@@ -221,14 +221,22 @@
     {
         self.name = [decoder decodeObjectForKey:@"name"];
         self.foursquareID = [decoder decodeObjectForKey:@"foursquareID"];
+        self.coordinate = CLLocationCoordinate2DMake([[decoder decodeObjectForKey:@"lat"] doubleValue], [[decoder decodeObjectForKey:@"lng"] doubleValue]);
+        self.address = [decoder decodeObjectForKey:@"address"];
+        self.phone = [decoder decodeObjectForKey:@"phone"];
     }    
     return self;
 }
 
 -(void)encodeWithCoder:(NSCoder *)encoder
 {
+    NSLog(@"encoded lat: %f", self.coordinate.latitude);
     [encoder encodeObject:self.name forKey:@"name"];
     [encoder encodeObject:self.foursquareID forKey:@"foursquareID"];
+    [encoder encodeObject:[NSNumber numberWithDouble:self.coordinate.latitude] forKey:@"lat"];
+    [encoder encodeObject:[NSNumber numberWithDouble:self.coordinate.longitude] forKey:@"lng"];
+    [encoder encodeObject:self.address forKey:@"address"];
+    [encoder encodeObject:self.phone forKey:@"phone"];
 }
 
 @end

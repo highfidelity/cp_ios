@@ -37,6 +37,7 @@ extern  NSString* const kTestFlightKey;
 // these are the keys for things stored in NSUserDefaults
 extern NSString* const kUDCurrentUser;
 extern NSString* const kUDCurrentVenue;
+extern NSString* const kUDPastVenues;
 extern NSString* const kUDFirstCheckIn;
 extern NSString* const kUDCheckoutTime;
 extern NSString* const kUDCheckedInVenueID;

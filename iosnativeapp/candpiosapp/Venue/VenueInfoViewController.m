@@ -881,6 +881,10 @@
     [self.navigationController pushViewController:checkinVC animated:YES];
 }
 
+- (void)dismissViewControllerAnimated {
+    [self dismissModalViewControllerAnimated:YES];
+}
+
 - (void)cancelCheckinModal
 {
     [self.modalViewController dismissModalViewControllerAnimated:YES];

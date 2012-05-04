@@ -50,6 +50,7 @@ NSString* const kCandPAPIVersion = @"0.1";
 // keys for data stored in NSUserDefaults
 NSString* const kUDCurrentUser = @"loggedUser";
 NSString* const kUDCurrentVenue = @"currentCheckIn";
+NSString* const kUDPastVenues = @"pastVenues";
 NSString* const kUDFirstCheckIn = @"firstCheckIn";
 NSString* const kUDCheckoutTime = @"localUserCheckoutTime";
 NSString* const kUDCheckedInVenueID = @"checkedInVenueID";
