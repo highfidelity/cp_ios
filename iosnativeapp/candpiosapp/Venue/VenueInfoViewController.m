@@ -31,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *activeChatText;
 @property (weak, nonatomic) UIButton *checkInButton;
 @property (assign, nonatomic) BOOL hadNoChat;
+@property (assign, nonatomic) BOOL checkInIsVirtual;
 
 - (IBAction)tappedAddress:(id)sender;
 - (IBAction)tappedPhone:(id)sender;
@@ -78,6 +79,7 @@
 @synthesize activeChatText = _activeChatText;
 @synthesize checkInButton = _checkInButton;
 @synthesize hadNoChat = _hadNoChat;
+@synthesize checkInIsVirtual = _checkInIsVirtual;
 
 - (NSMutableDictionary *)userObjectsForUsersOnScreen
 {
@@ -119,10 +121,6 @@
                                                  name:@"LoginStateChanged" 
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(refreshVenueViewCheckinButton) 
-                                                 name:@"userCheckinStateChange" 
-                                               object:nil];
     
     // set the property on the tab bar controller for the venue we're looking at
     [CPAppDelegate tabBarController].currentVenueID = self.venue.foursquareID;
@@ -220,11 +218,10 @@
         [self hideVenueChatFromAnonymousUser];
     }
     
-    // place the checkin button on screen and make sure it is consistent with the user states
-    [self refreshVenueViewCheckinButton];
-    
     // make sure the button borders are back to grey
     [self normalVenueChatButton];
+    
+    [self checkInAllowed];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -268,6 +265,7 @@
 
 - (void)refreshVenueViewCheckinButton
 { 
+    
     if (!self.checkInButton) {
         self.checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
         
@@ -870,7 +868,98 @@
         [userBox addSubview:userCount];
     }
 }
+- (void)checkInAllowed
+{
+    self.checkInIsVirtual = false;
+    
+    //Find the distance between the user and the venue in Meters
+    CLLocation *venueLocation= [[CLLocation alloc] initWithLatitude:self.venue.coordinate.latitude longitude:self.venue.coordinate.longitude];
+    double distanceFromUserMeters = [venueLocation distanceFromLocation:[[AppDelegate instance].settings lastKnownLocation]];
+    //double venueDistance = self.venue.distanceFromUser;
+    if(distanceFromUserMeters>300)
+    {
+        // User is more than 300m from venue so only a virtual checkin is possible.
+        // If the user has a contact in the venue then they can checkin, otherwise it is not allowed
+        //and the checkin button will not appear.
+        [CPapi getContactListWithCompletionsBlock:^(NSDictionary *json, NSError *error) {
+            if (!error) {
+                if (![[json objectForKey:@"error"] boolValue]) {
+                    NSMutableArray *payload = [json objectForKey:@"payload"];
+                    //[self hidePlaceholder:[payload count] > 0];
+                    
+                    // sort the contact list by id smallest to largest
+                    NSSortDescriptor *d = [[NSSortDescriptor alloc] initWithKey:@"userID" ascending:NO];
+                    [payload sortUsingDescriptors:[NSArray arrayWithObjects:d,nil]];
+                    
+                    // sort the current list of users at the venue by id smallest to largest
+                    NSMutableArray *otherUsers = [self.currentUsers objectForKey:@"other"];
+                    [otherUsers sortUsingDescriptors:[NSArray arrayWithObjects:d,nil]];
+                    
+                    //Iterate through contacts and see if any of them are at the current venue
+                    for(int i = 0; i < payload.count; i++)
+                    {
+                        NSDictionary *contact = [payload objectAtIndex:i];
+                        int contactUserID = [[contact objectForKey:@"id"] intValue];
+                        for(int j = 0; j < otherUsers.count; j++)
+                        {
+                            
+                            int venueUserID = [[otherUsers objectAtIndex:j] userID];
+                            //DEBUG: Test override
+                            //venueUserID = 7495;
+                            if(contactUserID == venueUserID)
+                            {
+                                //User has a contact at the venue, make the checkin button appear
+                                [self checkInButtonSetup];
+                                self.checkInIsVirtual = true;
+                                NSLog("Has contact:%@ at venue",[[payload objectAtIndex:i] nickname]);
+                                break;
+                            }
+                        }                        
+                    }
+                }
+                
+                else {
+                    NSLog(@"%@",[json objectForKey:@"payload"]);
+                    UIAlertView *alert = [[UIAlertView alloc]
+                                          initWithTitle:@"Contact list"
+                                          message:[json objectForKey:@"payload"]
+                                          delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles: nil];
+                    [alert show];
+                }
+            }
+            else {
+                NSLog(@"Coundn't fetch contact list");
+            }
+        }];
+    }
+    else
+    {
+        //If the user is within 300m of the venue they can checkin to that venue
+        [self checkInButtonSetup];
+    }
+        
 
+}
+
+
+
+- (void)checkInButtonSetup
+{
+    //from viewwillappear
+    // place the checkin button on screen and make sure it is consistent with the user states
+    [self refreshVenueViewCheckinButton];
+    
+    //from viewDidLoad
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(refreshVenueViewCheckinButton) 
+                                                 name:@"userCheckinStateChange" 
+                                               object:nil];
+    
+    
+    
+}
 
 - (void)checkInPressed:(id)sender
 {
