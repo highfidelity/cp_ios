@@ -156,10 +156,10 @@
 
 - (NSString *)checkinTimeString {
     if (1 == self.checkinTime / 3600) {
-        return @"1 hr/week";
+        return @"1 hr";
     }
     
-    return [NSString stringWithFormat:@"%d hrs/week", self.checkinTime / 3600];
+    return [NSString stringWithFormat:@"%d hrs", self.checkinTime / 3600];
 }
 
 - (NSString*) formattedAddress {
