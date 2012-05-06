@@ -56,6 +56,8 @@
 @property (nonatomic, strong) NSMutableArray *badges;
 @property (nonatomic, strong) NSString *smartererName;
 @property (nonatomic, assign) BOOL checkInIsVirtual;
+@property (nonatomic, assign) BOOL contactsOnlyChat;
+@property (nonatomic, assign) BOOL isContact;
 
 -(void)loadUserResumeData:(void (^)(NSError *error))completion;
 -(id)initFromDictionary:(NSDictionary *)userDict;

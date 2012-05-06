@@ -10,7 +10,7 @@
 #import "MapTabController.h"
 #import "CPTabBarController.h"
 
-@interface SettingsMenuController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, UIActionSheetDelegate>
+@interface SettingsMenuController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) CPTabBarController *cpTabBarController;
 @property (strong, nonatomic) MapTabController *mapTabController;
@@ -22,14 +22,9 @@
 @property (nonatomic, strong) UIAlertView *f2fInviteAlert;
 @property (nonatomic, strong) UIAlertView *f2fPasswordAlert;
 
-@property (weak, nonatomic) IBOutlet UIButton *venueButton;
-@property (weak, nonatomic) IBOutlet UIButton *checkedInOnlyButton;
-
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *blockUIButton;
 
-- (IBAction)checkedInButtonClick:(UIButton *)sender;
-- (IBAction)selectVenueCity:(id)sender;
 - (IBAction)loginButtonClick:(id)sender;
 - (IBAction)blockUIButtonClick:(id)sender;
 

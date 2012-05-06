@@ -814,12 +814,26 @@
 }
 
 + (void)setNotificationSettingsForDistance:(NSString *)distance
-                              andCheckedId:(BOOL)checkedOnly {
-
+                              andCheckedId:(BOOL)checkedOnly 
+                                 quietTime:(BOOL)quietTime
+                             quietTimeFrom:(NSDate *)quietTimeFrom
+                               quietTimeTo:(NSDate *)quietTimeTo  
+                   timezoneOffsetInSeconds:(NSInteger)tzOffsetSeconds                            
+                      chatFromContactsOnly:(BOOL)chatFromContactsOnly
+{
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"HH:mm"];
+    
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setValue:distance forKey:@"push_distance"];
     [parameters setValue:checkedOnly ? @"1" : @"0" forKey:@"checked_in_only"];
-
+    [parameters setValue:quietTime ? @"1" : @"0" forKey:@"quiet_time"];
+    [parameters setValue:[formatter stringFromDate:quietTimeFrom] forKey:@"quiet_time_from"];
+    [parameters setValue:[formatter stringFromDate:quietTimeTo] forKey:@"quiet_time_to"];
+    [parameters setValue:[NSString stringWithFormat:@"%d", tzOffsetSeconds] forKey:@"tz_offset_seconds"];
+    [parameters setValue:chatFromContactsOnly ? @"1" : @"0" forKey:@"contacts_only_chat"];
+    
     [self makeHTTPRequestWithAction:@"setNotificationSettings"
                          withParameters:parameters
                              completion:nil];

@@ -6,11 +6,6 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import <CoreGraphics/CoreGraphics.h>
-#import "SettingsMenuController.h"
-#import "BalanceViewController.h"
-#import "MapTabController.h"
-
 #define menuWidthPercentage 0.8
 #define kEnterInviteFakeSegueID @"--kEnterInviteFakeSegueID"
 
@@ -25,10 +20,7 @@
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanFromTabbarGestureRecognizer;
 @property (strong, nonatomic) UITapGestureRecognizer *menuCloseTapFromTabbarGestureRecognizer;
 
-
 - (void)setMapAndButtonsViewXOffset:(CGFloat)xOffset;
-- (void)setCheckin:(BOOL)setCheckin;
-- (void)setVenue:(BOOL)setVenue;
 
 @end
 
@@ -51,8 +43,6 @@
 @synthesize panStartLocation;
 @synthesize f2fInviteAlert = _f2fInviteAlert;
 @synthesize f2fPasswordAlert = _f2fPasswordAlert;
-@synthesize venueButton;
-@synthesize checkedInOnlyButton;
 @synthesize loginButton = _loginButton;
 @synthesize blockUIButton = _blockUIButton;
 
@@ -98,76 +88,6 @@
     [self.tableView reloadData];
 }
 
-- (void)loadNotificationSettings
-{
-    [CPapi getNotificationSettingsWithCompletition:^(NSDictionary *json, NSError *err) {
-        BOOL error = [[json objectForKey:@"error"] boolValue];
-        
-        if (error) {
-            [venueButton setEnabled:NO];
-            [checkedInOnlyButton setEnabled:NO];
-        } else {
-            
-            [venueButton setEnabled:YES];
-            [checkedInOnlyButton setEnabled:YES];
-            
-            NSDictionary *dict = [json objectForKey:@"payload"];
-            
-            NSString *venue = (NSString *)[dict objectForKey:@"push_distance"];
-            BOOL is_venue = [venue isEqualToString:@"venue"];
-            NSString *checkin = (NSString *)[dict objectForKey:@"checked_in_only"];
-            BOOL is_checkin = [checkin isEqualToString:@"1"];
-            
-            [self setVenue:is_venue];
-            [self setCheckin:is_checkin];
-            
-            [AppDelegate instance].settings.notifyInVenueOnly = is_venue;
-            [AppDelegate instance].settings.notifyWhenCheckedIn = is_checkin;
-            [[AppDelegate instance] saveSettings];
-        }
-    }];
-}
-
-- (void)saveNotificationSettings
-{
-    BOOL notifyInVenue = [venueButton tag] == 1;
-    BOOL checkedInOnly = [checkedInOnlyButton tag] == 1;
-    
-    BOOL settingsVenue = [AppDelegate instance].settings.notifyInVenueOnly;
-    BOOL settingsCheckedIn = [AppDelegate instance].settings.notifyWhenCheckedIn;
-    
-    if (notifyInVenue != settingsVenue || checkedInOnly != settingsCheckedIn) {
-        NSString *distance = notifyInVenue ? @"venue" : @"city";
-        [CPapi setNotificationSettingsForDistance:distance
-                                     andCheckedId:checkedInOnly];
-        
-        [AppDelegate instance].settings.notifyInVenueOnly = notifyInVenue;
-        [AppDelegate instance].settings.notifyWhenCheckedIn = checkedInOnly;
-        [[AppDelegate instance] saveSettings];   
-    }
-}
-
-- (void)setCheckin:(BOOL)setCheckin
-{
-    [checkedInOnlyButton setTag:setCheckin ? 1 : 0];
-    UIImage *btnImage = [UIImage imageNamed:setCheckin ? @"toggle-on" : @"toggle-off"];
-    [checkedInOnlyButton setBackgroundImage:btnImage forState:UIControlStateNormal];
-}
-
-- (void)setVenue:(BOOL)setVenue
-{
-    if (setVenue) {
-        [venueButton setTitle:@"in venue" forState: UIControlStateNormal];
-    } 
-    else {
-        [venueButton setTitle:@"in city" forState: UIControlStateNormal];
-    }
-    
-    [venueButton setTag:setVenue ? 1 : 0];
-}
-
-
-
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -206,10 +126,6 @@
     [super viewDidLoad];
     [self.view bringSubviewToFront:self.edgeShadow];    
     [self initMenu];
-    [self venueButton].titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
-    
-    [self setVenue:[AppDelegate instance].settings.notifyInVenueOnly];
-    [self setCheckin:[AppDelegate instance].settings.notifyWhenCheckedIn];
     
     [CPUIHelper makeButtonCPButton:self.loginButton
                  withCPButtonColor:CPButtonTurquoise];
@@ -219,8 +135,6 @@
 {
     [self setTableView:nil];
     [self setEdgeShadow:nil];
-    [self setVenueButton:nil];
-    [self setCheckedInOnlyButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -280,12 +194,8 @@
     
     if (showMenu) {
         [self initMenu];
-        
-        [self loadNotificationSettings];   
     }
-    else {
-        [self saveNotificationSettings];
-    }
+
     // Animate the reveal of the menu
     [UIView beginAnimations:@"" context:nil];
     [UIView setAnimationDuration:0.3];
@@ -507,35 +417,6 @@
         }];
     }
     alertView = nil;
-}
-
-
-#pragma mark - Action Sheet Delegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex < 2) {
-        [self setVenue:buttonIndex == 1];
-    }
-}
-
-
-- (IBAction)checkedInButtonClick:(UIButton *)sender 
-{
-    [self setCheckin:[sender tag] == 0];
-}
-
-- (IBAction)selectVenueCity:(id)sender 
-{
-    
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                  initWithTitle:@"Show me new check-ins from:"
-                                  delegate:self
-                                  cancelButtonTitle:@"Cancel"
-                                  destructiveButtonTitle:nil
-                                  otherButtonTitles:@"City", @"Venue", nil
-                                  ];
-    [actionSheet showInView:self.view];
 }
 
 #pragma mark - Login banner

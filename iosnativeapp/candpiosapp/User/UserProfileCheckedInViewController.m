@@ -64,6 +64,7 @@
 -(IBAction)minusButtonPressed:(id)sender;
 -(IBAction)sendloveButtonPressed:(id)sender;
 -(IBAction)venueViewButtonPressed:(id)sender;
+-(IBAction)chatButtonPressed:(id)sender;
 
 @end
 
@@ -620,6 +621,23 @@ UITapGestureRecognizer* _tapRecon = nil;
     
     [self.navigationController pushViewController:venueVC animated:YES];
 }
+
+- (IBAction)chatButtonPressed:(id)sender
+{
+    if (self.user.contactsOnlyChat && !self.user.isContact) {
+        NSString *errorMessage = [NSString stringWithFormat:@"You can not chat with %@ until the two of you have exchanged contact information", self.user.nickname];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Chat"
+                                                            message:errorMessage
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    } else {
+        [self performSegueWithIdentifier:@"ProfileToOneOnOneSegue" sender:sender];
+    }
+    [self minusButtonPressed:nil];
+}
+
 
 - (void)sendReview {
     

@@ -14,6 +14,8 @@
 
 @interface UserSettingsTableViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UITextField *billingRateTextField;
+
 -(void)syncWithWebData;
 -(void)placeCurrentUserData;
 -(void)emailTextField_ValueChanged:(id)sender;
@@ -23,6 +25,7 @@
 @implementation UserSettingsTableViewController
 @synthesize nicknameTextField = _nicknameTextField;
 @synthesize emailTextField = _emailTextField;
+@synthesize billingRateTextField = _billingRateTextField;
 @synthesize pendingEmail = _pendingEmail;
 @synthesize currentUser = _currentUser;
 @synthesize imagePicker = _imagePicker;
@@ -91,6 +94,7 @@
     [self setEmailTextField:nil];
     [self setProfileImageButton:nil];
     [self setEmailValidationMsg:nil];
+    [self setBillingRateTextField:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -116,6 +120,7 @@
 {
     // put the nickname
     self.nicknameTextField.text = self.currentUser.nickname;
+    self.billingRateTextField.text = self.currentUser.hourlyRate;
     
     if (!self.pendingEmail) {
         // there's no pending email so put whatever the current email is
@@ -201,7 +206,11 @@
                 if (self.currentUser.minorJobCategory != webSyncUser.minorJobCategory) {
                     self.currentUser.minorJobCategory = webSyncUser.minorJobCategory;
                 }
-                
+
+                if (![self.currentUser.hourlyRate isEqualToString:webSyncUser.hourlyRate]) {
+                    self.currentUser.hourlyRate = webSyncUser.hourlyRate;
+                }
+
                 // if the sync brought us new data
                 if (self.newDataFromSync) {
                     // save the changes to the local current user

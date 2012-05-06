@@ -48,6 +48,8 @@
 @synthesize badges = _badges;
 @synthesize smartererName = _smartererName;
 @synthesize checkInIsVirtual = _checkInIsVirtual;
+@synthesize contactsOnlyChat = _contactsOnlyChat;
+@synthesize isContact = _isContact;
 
 -(id)init
 {
@@ -258,11 +260,11 @@
 
             self.majorJobCategory = [userDict objectForKey:@"major_job_category"];
             self.minorJobCategory = [userDict objectForKey:@"minor_job_category"];
+            self.contactsOnlyChat = [[userDict objectForKey:@"contacts_only_chat"] boolValue];
+            self.isContact = [[userDict objectForKey:@"user_is_contact"] boolValue];
 
             self.status = [[userDict objectForKey:@"status_text"]
                            stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-            
-            self.bio = [userDict objectForKey:@"bio"];
             
             if ([[userDict objectForKey:@"sponsorNickname"] isKindOfClass:[NSString class]]) {
                 self.sponsorNickname = [userDict objectForKey:@"sponsorNickname"];

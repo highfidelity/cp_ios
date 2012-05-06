@@ -94,7 +94,12 @@
 + (void)getNotificationSettingsWithCompletition:(void(^)(NSDictionary *json, NSError *error))completion;
 
 + (void)setNotificationSettingsForDistance:(NSString *)distance
-                              andCheckedId:(BOOL)checkedOnly;
+                              andCheckedId:(BOOL)checkedOnly
+                                 quietTime:(BOOL)quietTime
+                             quietTimeFrom:(NSDate *)quietTimeFrom
+                               quietTimeTo:(NSDate *)quietTimeTo
+                   timezoneOffsetInSeconds:(NSInteger)tzOffsetSeconds                                  
+                      chatFromContactsOnly:(BOOL)chatFromContactsOnly;
 
 + (void)setUserProfileDataWithDictionary:(NSMutableDictionary *)dataDict
                             andCompletion:(void (^)(NSDictionary *, NSError *))completion;
