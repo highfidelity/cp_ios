@@ -128,7 +128,7 @@
             
             NSString *quietTimeFrom = (NSString *)[dict objectForKey:@"quiet_time_from"];
             if ([quietTimeFrom isKindOfClass:[NSNull class]]) {
-                quietTimeFrom = @"7:00";
+                quietTimeFrom = @"07:00:00";
             }
             
             @try {
@@ -144,7 +144,7 @@
             
             NSString *quietTimeTo = (NSString *)[dict objectForKey:@"quiet_time_to"];
             if ([quietTimeTo isKindOfClass:[NSNull class]]) {
-                quietTimeTo = @"19:00";
+                quietTimeTo = @"19:00:00";
             }
             
             @try {
