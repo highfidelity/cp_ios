@@ -209,6 +209,7 @@
 
                 if (![self.currentUser.hourlyRate isEqualToString:webSyncUser.hourlyRate]) {
                     self.currentUser.hourlyRate = webSyncUser.hourlyRate;
+                    self.newDataFromSync = YES;
                 }
 
                 // if the sync brought us new data
@@ -365,6 +366,8 @@
         [params setObject:textField.text forKey:@"nickname"];
     } else if (textField == self.emailTextField) {
         [params setObject:textField.text forKey:@"email"];
+    } else if (textField == self.billingRateTextField) {
+        [params setObject:textField.text forKey:@"hourly_billing_rate"];
     }
     
     [CPapi setUserProfileDataWithDictionary:params andCompletion:^(NSDictionary *json, NSError *error) {
@@ -372,6 +375,10 @@
             // let's see if there was a successful change
             if ([[json objectForKey:@"succeeded"] boolValue]) {
                 textField.userInteractionEnabled = YES;
+                
+                if (textField == self.billingRateTextField) {     
+                    self.currentUser.hourlyRate = self.billingRateTextField.text;
+                }
                 
                 [self updateCurrentUserWithNewData:json];
             } else {
