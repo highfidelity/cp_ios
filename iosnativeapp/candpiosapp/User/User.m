@@ -84,6 +84,10 @@
         
         self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict objectForKey:@"checkout"] integerValue]];
         self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
+        //self.checkInIsVirtual = [[userDict objectForKey:@"checkInIsVirtual"] boolValue];
+        //DEBUG
+        //This is a temporary assignment until the api is expanded
+        self.checkInIsVirtual = NO;
 	}
 	return self;
 }
