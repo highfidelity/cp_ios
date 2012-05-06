@@ -13,6 +13,7 @@
 
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, strong) CPVenue *place;
+@property (nonatomic, assign) bool checkInIsVirtual;
 
 -(void)userImageButtonPressed:(UIButton *)sender;
 

@@ -70,7 +70,9 @@
 @synthesize userArray = _userArray;
 @synthesize userArrayIndex = _userArrayIndex;
 @synthesize infoBubbleArrow = _infoBubbleArrow;
+@synthesize checkInIsVirtual = _checkInIsVirtual;
 @synthesize delegate = _delegate;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

@@ -904,8 +904,6 @@
                         {
                             
                             int venueUserID = [[otherUsers objectAtIndex:j] userID];
-                            //DEBUG: Test override
-                            //venueUserID = 7495;
                             if(contactUserID == venueUserID)
                             {
                                 //User has a contact at the venue, make the checkin button appear
@@ -952,6 +950,7 @@
     [self refreshVenueViewCheckinButton];
     
     //from viewDidLoad
+    //Add observer to update checkIn button
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(refreshVenueViewCheckinButton) 
                                                  name:@"userCheckinStateChange" 
@@ -976,6 +975,9 @@
             
             // be the delgate of the check in view controller
             checkinVC.delegate = self;
+            
+            // Pass whether the checkin is virtual or non-virtual
+            checkinVC.checkInIsVirtual = self.checkInIsVirtual;
             
             [self.navigationController pushViewController:checkinVC animated:YES];
         }
