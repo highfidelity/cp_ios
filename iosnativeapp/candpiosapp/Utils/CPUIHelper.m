@@ -222,6 +222,11 @@
     return [UIImage imageNamed:@"default-avatar-256"];
 }
 
++ (UIImage *)virtualCheckInBadge
+{
+    return [UIImage imageNamed:@"virtual-check-in-badge"];
+}
+
 + (void)profileImageView:(UIImageView *)imageView
      withProfileImageUrl:(NSURL *)photoUrl
 {

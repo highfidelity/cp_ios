@@ -55,6 +55,7 @@
 @property (nonatomic, strong) NSDate *joinDate;
 @property (nonatomic, strong) NSMutableArray *badges;
 @property (nonatomic, strong) NSString *smartererName;
+@property (nonatomic, assign) BOOL checkInIsVirtual;
 
 -(void)loadUserResumeData:(void (^)(NSError *error))completion;
 -(id)initFromDictionary:(NSDictionary *)userDict;

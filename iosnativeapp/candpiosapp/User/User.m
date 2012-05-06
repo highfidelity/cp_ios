@@ -47,6 +47,7 @@
 @synthesize joinDate = _joinDate;
 @synthesize badges = _badges;
 @synthesize smartererName = _smartererName;
+@synthesize checkInIsVirtual = _checkInIsVirtual;
 
 -(id)init
 {

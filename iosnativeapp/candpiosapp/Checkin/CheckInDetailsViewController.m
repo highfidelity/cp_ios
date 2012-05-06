@@ -392,6 +392,10 @@
                 User *checkedInUser = [[User alloc] init];
                 checkedInUser.nickname = [user objectForKey:@"nickname"];
                 checkedInUser.status = [user objectForKey:@"status_text"];
+                //checkedInUser.checkInIsVirtual = [user objectForKey:@"checkInIsVirtual"];
+                //DEBUG
+                //This is a temporary assignment until the api is expanded
+                checkedInUser.checkInIsVirtual = NO;
                 
                 // add this user to the user array
                 // this is how we put the user's info in the info bubble later
@@ -418,6 +422,21 @@
                 
                 // add the imageview to the button
                 [userImageButton addSubview:userImage];
+                
+                //If user is virtually checkedIn then add virtual badge to their profile image
+                if(checkedInUser.checkInIsVirtual)
+                {
+                    UIImageView *badgeImageView = [[UIImageView alloc] initWithImage:[CPUIHelper virtualCheckInBadge]];
+                    //Make badge a fraction of the size of the profile image and place it in the lower right corner
+                    int fractionSize = 3;
+                    badgeImageView.frame = CGRectMake(userImage.frame.size.width-userImage.frame.size.width/fractionSize,
+                                                      userImage.frame.size.height-userImage.frame.size.height/fractionSize,
+                                                      (userImage.frame.size.width/fractionSize),
+                                                      (userImage.frame.size.height/fractionSize));
+                    [userImageButton addSubview:badgeImageView];
+                }
+
+                
                 // add the button to the scrollview
                 [self.otherUsersScrollView addSubview:userImageButton];
                 
@@ -433,13 +452,15 @@
                 } else {
                     // setup the request for the user's image, use AFNetworking to grab it
                     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[user objectForKey:@"imageUrl"]]];
+                    
                     [userImage setImageWithURLRequest:request placeholderImage:[CPUIHelper defaultProfileImage] 
                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
                             [spinner stopAnimating];
                         }
                         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error){
                             //If an error occurs, the defaultProfileImage is passed in as the placeholderImage so it will display that instead
-                            [spinner stopAnimating];                    
+                     
+                            [spinner stopAnimating];
                     }];
                 } 
                 
