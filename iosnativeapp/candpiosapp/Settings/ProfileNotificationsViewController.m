@@ -20,11 +20,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *quietFromButton;
 @property (weak, nonatomic) IBOutlet UIButton *quietToButton;
 @property (weak, nonatomic) IBOutlet UISwitch *contactsOnlyChatSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *chatNotificationLabel;
 
 - (IBAction)selectVenueCity:(UIButton *)sender;
 - (IBAction)quietFromClicked:(UIButton *)sender;
 - (IBAction)quietToClicked:(UIButton *)sender;
 - (IBAction)quietTimeValueChanged:(UISwitch *)sender;
+- (IBAction)anyoneChatSwitchChanged:(id)sender;
 
 
 @property NSDate *quietTimeFromDate;
@@ -41,6 +43,7 @@
 @synthesize quietFromButton = _quietFromButton;
 @synthesize quietToButton = _quietToButton;
 @synthesize contactsOnlyChatSwitch = _contactsOnlyChatSwitch;
+@synthesize chatNotificationLabel = _chatNotificationLabel;
 @synthesize quietTimeFromDate = _quietTimeFromDate;
 @synthesize quietTimeToDate = _quietTimeToDate;
 
@@ -79,7 +82,7 @@
     [self setContactsOnlyChatSwitch:nil];
     [self setQuietTimeFromDate:nil];
     [self setQuietTimeToDate:nil];
-    
+    [self setChatNotificationLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -128,7 +131,7 @@
             
             NSString *quietTimeFrom = (NSString *)[dict objectForKey:@"quiet_time_from"];
             if ([quietTimeFrom isKindOfClass:[NSNull class]]) {
-                quietTimeFrom = @"07:00:00";
+                quietTimeFrom = @"20:00:00";
             }
             
             @try {
@@ -144,7 +147,7 @@
             
             NSString *quietTimeTo = (NSString *)[dict objectForKey:@"quiet_time_to"];
             if ([quietTimeTo isKindOfClass:[NSNull class]]) {
-                quietTimeTo = @"19:00:00";
+                quietTimeTo = @"07:00:00";
             }
             
             @try {
@@ -159,6 +162,8 @@
 
             NSString *contactsOnlyChat = (NSString *)[dict objectForKey:@"contacts_only_chat"];
             [[self contactsOnlyChatSwitch] setOn:[contactsOnlyChat isEqualToString:@"0"]];
+
+            [[self chatNotificationLabel] setHidden:self.contactsOnlyChatSwitch.on];
         }
     }];
 }
@@ -215,6 +220,11 @@
     [self setQuietTime:sender.on];
 }
 
+- (IBAction)anyoneChatSwitchChanged:(id)sender 
+{
+    [[self chatNotificationLabel] setHidden:self.contactsOnlyChatSwitch.on];
+}
+
 - (IBAction)selectVenueCity:(UIButton *)sender 
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
@@ -242,7 +252,7 @@
 {   
     [UIView animateWithDuration:0.3 animations:^ {
         self.anyoneChatView.frame = CGRectMake(self.anyoneChatView.frame.origin.x, 
-                                               quietTime ? 218 : 175,
+                                               quietTime ? 210 : 170,
                                                self.anyoneChatView.frame.size.width,
                                                self.anyoneChatView.frame.size.height);
     }];

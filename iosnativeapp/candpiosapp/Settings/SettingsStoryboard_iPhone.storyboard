@@ -793,21 +793,36 @@ It is good for 24 hours.  </string>
                                 </subviews>
                             </view>
                             <view contentMode="scaleToFill" id="dcW-c1-7jW">
-                                <rect key="frame" x="0.0" y="218" width="320" height="36"/>
+                                <rect key="frame" x="0.0" y="210" width="320" height="77"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Allow anyone to send me 1:1 chat" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="YUO-8p-sji">
-                                        <rect key="frame" x="20" y="-8" width="157" height="44"/>
+                                        <rect key="frame" x="20" y="2" width="157" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="nAr-eK-TY9" userLabel="Switch - chat from anyone">
-                                        <rect key="frame" x="221" y="0.0" width="79" height="27"/>
+                                        <rect key="frame" x="221" y="10" width="79" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="anyoneChatSwitchChanged:" destination="Oyl-sh-T3U" eventType="valueChanged" id="aQ2-pc-a1k"/>
+                                        </connections>
                                     </switch>
+                                    <view contentMode="scaleToFill" id="OHf-4s-Rnv">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Only people in your Contact list will be able to send you 1:1 chat." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="IGb-dB-XuB">
+                                        <rect key="frame" x="20" y="36" width="280" height="41"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -830,6 +845,7 @@ It is good for 24 hours.  </string>
                     <navigationItem key="navigationItem" title="Notifications" id="pAn-YV-1fZ"/>
                     <connections>
                         <outlet property="anyoneChatView" destination="dcW-c1-7jW" id="2D6-Uk-aND"/>
+                        <outlet property="chatNotificationLabel" destination="IGb-dB-XuB" id="T3d-wa-reL"/>
                         <outlet property="checkedInOnlySwitch" destination="g1N-vj-D8B" id="lWu-bq-yea"/>
                         <outlet property="contactsOnlyChatSwitch" destination="nAr-eK-TY9" id="PbO-B8-p52"/>
                         <outlet property="quietFromButton" destination="vU4-oH-lqq" id="rrz-vt-BWF"/>
@@ -1089,11 +1105,13 @@ It is good for 24 hours.  </string>
         <class className="ProfileNotificationsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ProfileNotificationsViewController.h"/>
             <relationships>
+                <relationship kind="action" name="anyoneChatSwitchChanged:"/>
                 <relationship kind="action" name="quietFromClicked:" candidateClass="UIButton"/>
                 <relationship kind="action" name="quietTimeValueChanged:" candidateClass="UISwitch"/>
                 <relationship kind="action" name="quietToClicked:" candidateClass="UIButton"/>
                 <relationship kind="action" name="selectVenueCity:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="anyoneChatView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="chatNotificationLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="checkedInOnlySwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="contactsOnlyChatSwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="quietFromButton" candidateClass="UIButton"/>
