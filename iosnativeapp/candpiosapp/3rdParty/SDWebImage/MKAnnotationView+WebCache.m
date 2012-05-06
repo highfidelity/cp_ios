@@ -13,7 +13,7 @@
 
 @implementation MKAnnotationView(WebCache)
 
-- (void)setPin:(NSInteger)number hasCheckins:(BOOL)checkins smallPin:(BOOL)smallPin withLabel:(BOOL)withLabel {
+- (void)setPin:(NSInteger)number hasCheckins:(BOOL)checkins hasVirtual:(BOOL)virtual smallPin:(BOOL)smallPin withLabel:(BOOL)withLabel {
     CGFloat fontSize = 20;
     NSString *imageName;
     
@@ -21,8 +21,16 @@
 
     // If no one is currently checked in, use smaller image + font size
     if (checkins) {
-        imageName = @"pin-checkedin";
-        numberLabel.frame = CGRectMake(0, 15, 93, 20);
+        if(virtual)
+        {
+            imageName = @"pin-virtual-checkedin";
+            numberLabel.frame = CGRectMake(0, 20, 93, 20);
+        }
+        else
+        {
+            imageName = @"pin-checkedin";
+            numberLabel.frame = CGRectMake(0, 15, 93, 20);
+        }
     }
     else {
 //        self.alpha = 0.4;        

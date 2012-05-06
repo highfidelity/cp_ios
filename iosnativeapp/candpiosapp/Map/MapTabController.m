@@ -443,17 +443,26 @@ BOOL clearLocations = NO;
         if (!placeAnn.checkinCount > 0) {
             if (placeAnn.weeklyCheckinCount < kCheckinThresholdForSmallPin) {
                 smallPin = YES;
-                [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO smallPin:smallPin withLabel:NO];
+                [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO hasVirtual:NO smallPin:smallPin withLabel:NO];
             }
             else {
                 smallPin = NO;
-                [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO smallPin:smallPin withLabel:NO];
+                [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO hasVirtual:NO smallPin:smallPin withLabel:NO];
                 pin.centerOffset = CGPointMake(0, -18);
             }            
         } 
         else {
-            [pin setPin:placeAnn.checkinCount hasCheckins:YES smallPin:smallPin withLabel:YES];
-            pin.centerOffset = CGPointMake(0, -31);            
+            if(placeAnn.hasVirtualCheckin)
+            {
+                [pin setPin:placeAnn.checkinCount hasCheckins:YES hasVirtual:YES smallPin:smallPin withLabel:YES];
+                pin.centerOffset = CGPointMake(0, -31);
+            }
+            else
+            {
+                [pin setPin:placeAnn.checkinCount hasCheckins:YES hasVirtual:NO smallPin:smallPin withLabel:YES];
+                pin.centerOffset = CGPointMake(0, -31);
+
+            }
         }
         
         pin.enabled = YES;
