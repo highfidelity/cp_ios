@@ -265,7 +265,6 @@
 
 - (BOOL)isCheckedInHere
 {
-    NSLog(@"%d, %d", [CPAppDelegate currentVenue].venueID, self.venue.venueID);
     return [CPAppDelegate userCheckedIn] && [CPAppDelegate currentVenue].venueID == self.venue.venueID;
 }
 
