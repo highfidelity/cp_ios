@@ -263,14 +263,19 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (BOOL)isCheckedInHere
+{
+    NSLog(@"%d, %d", [CPAppDelegate currentVenue].venueID, self.venue.venueID);
+    return [CPAppDelegate userCheckedIn] && [CPAppDelegate currentVenue].venueID == self.venue.venueID;
+}
+
 - (void)refreshVenueViewCheckinButton
 { 
-    
     if (!self.checkInButton) {
         self.checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
         
         // add the clock hand and set the button to the right state
-        [self.checkInButton refreshButtonState];
+        [self.checkInButton refreshButtonStateWithBoolean:[self isCheckedInHere]];
     
         CGRect checkInButtonFrame = self.bottomPhotoOverlayView.frame;
         checkInButtonFrame.size = [self.checkInButton checkinImage].size;
@@ -282,8 +287,7 @@
         [self.bottomPhotoOverlayView.superview addSubview:self.checkInButton];
         [self.checkInButton addTarget:self action:@selector(checkInPressed:) forControlEvents:UIControlEventTouchUpInside];
     } else {
-        NSLog(@"Refreshing state");
-        [self.checkInButton refreshButtonState];
+        [self.checkInButton refreshButtonStateWithBoolean:[self isCheckedInHere]];
     }
 }
 

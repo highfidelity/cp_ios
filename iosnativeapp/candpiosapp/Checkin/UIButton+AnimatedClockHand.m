@@ -38,13 +38,21 @@
     }
 }
 
--(void)refreshButtonState
+-(void)refreshButtonStateFromCheckinStatus
+{
+    // change the image and the text on the button
+    if ([CPAppDelegate userCheckedIn]) {
+        [self refreshButtonStateWithBoolean:YES];
+    } else {
+        [self refreshButtonStateWithBoolean:NO];
+    }
+}
+
+-(void)refreshButtonStateWithBoolean:(BOOL)checkedIn
 {
     // make sure we have a clock hand
     [self addClockHand];
-    
-    // change the image and the text on the button
-    if ([CPAppDelegate userCheckedIn]) {
+    if (checkedIn) {
         // start animating the clock hand
         [self toggleAnimationOfClockHand:YES];
         [self setBackgroundImage:[UIImage imageNamed:@"tab-check-out.png"] forState:UIControlStateNormal];

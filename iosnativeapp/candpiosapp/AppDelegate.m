@@ -57,7 +57,7 @@
 -(void)refreshCheckInButton
 {
     // helper to grab center button and refresh state
-    [self.tabBarController.centerButton refreshButtonState];
+    [self.tabBarController.centerButton refreshButtonStateFromCheckinStatus];
 }
 
 // TODO: consolidate this with the checkedIn property on the current user in NSUserDefaults
