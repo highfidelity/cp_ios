@@ -184,6 +184,11 @@ UITapGestureRecognizer* _tapRecon = nil;
     // set the navigation controller title to the user's nickname
     self.title = self.user.nickname;  
     
+    // don't allow scrolling in the mustache view until it's loaded
+    self.resumeWebView.userInteractionEnabled = NO;
+    // make sure there's a shadow on the resumeView for the part that is already showing
+    [CPUIHelper addShadowToView:self.resumeView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
+    
     // check if this is an F2F invite
     if (self.isF2FInvite) {
         // we're in an F2F invite
@@ -507,6 +512,7 @@ UITapGestureRecognizer* _tapRecon = nil;
     
     // tell the webview not to scroll to top when status bar is clicked
     aWebView.scrollView.scrollsToTop = NO;
+    aWebView.scrollView.userInteractionEnabled = YES;
     
     // resize the webView frame depending on the size of the content
     CGRect frame = aWebView.frame;
@@ -535,8 +541,6 @@ UITapGestureRecognizer* _tapRecon = nil;
     UIView *blueOverlayExtend = [[UIView alloc] initWithFrame:CGRectMake(0, 416, 320, self.scrollView.contentSize.height - 416)];
     blueOverlayExtend.backgroundColor = [UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0];
     [self.scrollView insertSubview:blueOverlayExtend atIndex:0];
-    // show the resume now that all the data is there
-    [UIView animateWithDuration:0.4 animations:^{self.resumeView.alpha = 1.0;}];
 }
 
 -(IBAction)plusButtonPressed:(id)sender {
