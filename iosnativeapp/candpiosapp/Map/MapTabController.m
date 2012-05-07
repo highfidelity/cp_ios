@@ -158,12 +158,6 @@ BOOL clearLocations = NO;
     // place the settings button on the navigation item if required
     // or remove it if the user isn't logged in
     [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
-    
-    // Refresh all locations when view will re-appear after being in another area of the app; don't do it on the first launch though
-    
-    if (hasShownLoadingScreen) {
-        [self refreshLocationsAfterDelay];
-    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -173,6 +167,11 @@ BOOL clearLocations = NO;
 
     // Update for login name in header field
     [[AppDelegate instance].settingsMenuController.tableView reloadData];
+    
+    // Refresh all locations when view will re-appear after being in another area of the app; don't do it on the first launch though
+    if (self.locationStatusKnown) {
+        [self refreshButtonClicked:nil];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -237,11 +236,6 @@ BOOL clearLocations = NO;
 {
     clearLocations = NO;
     [self refreshLocations];
-}
-
-- (void)refreshLocationsAfterDelay
-{
-    [self refreshButtonClicked:nil];
 }
 
 -(void)refreshLocationsIfNeeded
@@ -540,10 +534,6 @@ BOOL clearLocations = NO;
 
 	}
 }
-- (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
-{
-	[SVProgressHUD dismiss];
-}
 
 // zoom to the location; on initial load & after updaing their pos
 -(void)zoomTo:(CLLocationCoordinate2D)loc
@@ -563,14 +553,6 @@ BOOL clearLocations = NO;
 #endif
         
         // we know we either will or won't be getting user location so load the datapoints
-        
-        // show the loading screen but only the first time
-        if(!hasShownLoadingScreen)
-        {
-            [SVProgressHUD showWithStatus:@"Loading..."];
-            hasShownLoadingScreen = YES;
-        }
-        
         // set the locationStatusKnown boolean to yes so we know we can reload data
         self.locationStatusKnown = YES;
         

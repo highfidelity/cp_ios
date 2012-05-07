@@ -19,7 +19,6 @@
 @interface MapTabController : UIViewController <MKMapViewDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate>
 {
 	bool hasUpdatedUserLocation;
-	bool hasShownLoadingScreen;
 }
 
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
@@ -33,7 +32,6 @@
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification;
 - (void)refreshLocations;
-- (void)refreshLocationsAfterDelay;
 - (void)userCheckedIn:(NSNotification *)notification;
 - (IBAction)refreshButtonClicked:(id)sender;
 - (IBAction)locateMe:(id)sender;

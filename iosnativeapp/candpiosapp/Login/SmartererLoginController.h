@@ -7,7 +7,6 @@
 @property (nonatomic, retain) OAToken *requestToken;
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 
-- (void)initiateLogin;
 - (void)smartererLogin;
-- (void)loadSmartererConnections;
+- (void)loadSmartererConnections:(NSString *)token;
 @end

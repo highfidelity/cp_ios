@@ -99,7 +99,7 @@
 -(void)newDataBeingLoaded:(NSNotification *)notification
 {
     // check if we're visible
-    if (self.isViewLoaded && self.view.window) {
+    if ([[[self tabBarController] selectedViewController] isEqual:self]) {
         // and show an SVProgressHUD if we are
         [SVProgressHUD showWithStatus:@"Loading..."];
     }
