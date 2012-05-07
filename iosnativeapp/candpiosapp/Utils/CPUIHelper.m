@@ -222,6 +222,17 @@
     return [UIImage imageNamed:@"default-avatar-256"];
 }
 
++ (UIImage *)buttonCheckinImage
+{
+    return [UIImage imageNamed:@"tab-check-in.png"];
+}
+
++ (UIImage *)buttonCheckoutImage
+{
+    return [UIImage imageNamed:@"tab-check-out.png"];
+}
+
+
 + (void)addVirtualBadgeToProfileImageView:(UIImageView *)profileImageView
 {
     //This function adds a "V" badge to the lower right hand corner of the profileImage

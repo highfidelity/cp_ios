@@ -31,7 +31,7 @@
 -(void)toggleAnimationOfClockHand:(BOOL)animating
 {
     if (animating) {
-        // spin the clock hand
+        // spin the clock hand 
         [CPUIHelper spinView:[self viewWithTag:CLOCK_HAND_TAG] duration:15 repeatCount:MAXFLOAT clockwise:YES timingFunction:nil];
     } else {
         [[self viewWithTag:CLOCK_HAND_TAG].layer removeAllAnimations];
@@ -55,22 +55,11 @@
     if (checkedIn) {
         // start animating the clock hand
         [self toggleAnimationOfClockHand:YES];
-        [self setBackgroundImage:[UIImage imageNamed:@"tab-check-out.png"] forState:UIControlStateNormal];
+        [self setBackgroundImage:[CPUIHelper buttonCheckoutImage] forState:UIControlStateNormal];
     } else {
         // stop animating the clock hand
         [self toggleAnimationOfClockHand:NO];
-        [self setBackgroundImage:[UIImage imageNamed:@"tab-check-in.png"] forState:UIControlStateNormal];
+        [self setBackgroundImage:[CPUIHelper buttonCheckinImage] forState:UIControlStateNormal];
     }
 }
-
--(UIImage *)checkinImage
-{
-    return [UIImage imageNamed:@"tab-check-in.png"];
-}
-
--(UIImage *)checkoutImage
-{
-    return [UIImage imageNamed:@"tab-check-out.png"];
-}
-
 @end

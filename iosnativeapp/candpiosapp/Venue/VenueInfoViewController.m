@@ -30,8 +30,12 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activeChattersIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *activeChatText;
 @property (weak, nonatomic) UIButton *checkInButton;
+@property (weak, nonatomic) UIButton *phoneButton;
+@property (weak, nonatomic) UIButton *addressButton;
 @property (assign, nonatomic) BOOL hadNoChat;
 @property (assign, nonatomic) BOOL checkInIsVirtual;
+@property (assign, nonatomic) BOOL hasPhone;
+@property (assign, nonatomic) BOOL hasAddress;
 
 - (IBAction)tappedAddress:(id)sender;
 - (IBAction)tappedPhone:(id)sender;
@@ -80,6 +84,10 @@
 @synthesize checkInButton = _checkInButton;
 @synthesize hadNoChat = _hadNoChat;
 @synthesize checkInIsVirtual = _checkInIsVirtual;
+@synthesize hasPhone = _hasPhone;
+@synthesize hasAddress = _hasAddress;
+@synthesize phoneButton = _phoneButton;
+@synthesize addressButton = _addressButton;
 
 - (NSMutableDictionary *)userObjectsForUsersOnScreen
 {
@@ -143,34 +151,34 @@
     [CPUIHelper addShadowToView:[self.view viewWithTag:3548]  color:[UIColor blackColor] offset:CGSizeMake(0, 1) radius:5 opacity:0.7];
     
     {
-        UIButton *phone = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.bottomPhotoOverlayView addSubview:phone];
+        self.phoneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.bottomPhotoOverlayView addSubview:self.phoneButton];
         
         if ([self.venue.formattedPhone length] > 0) {
-            [self setupVenueButton:phone withIconNamed:@"place-phone" andlabelText:self.venue.formattedPhone];
-            [phone addTarget:self action:@selector(tappedPhone:) forControlEvents:UIControlEventTouchUpInside];
+            self.hasPhone = YES;
+            [self setupVenueButton:self.phoneButton withIconNamed:@"place-phone" andlabelText:self.venue.formattedPhone];
+            [self.phoneButton addTarget:self action:@selector(tappedPhone:) forControlEvents:UIControlEventTouchUpInside];
         } else {
-            [self setupVenueButton:phone withIconNamed:@"place-phone" andlabelText:@"N/A"];
+            self.hasPhone = NO;
+            [self setupVenueButton:self.phoneButton withIconNamed:@"place-phone" andlabelText:@"N/A"];
         }
-        
-        CGRect phoneFrame = phone.frame;
-        phoneFrame.origin.x = 11 + round((self.bottomPhotoOverlayView.frame.size.width + 64) / 2);
-        phoneFrame.origin.y = 3;
-        phone.frame = phoneFrame;
     }
     
     {
-        UIButton *address = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.bottomPhotoOverlayView addSubview:address];
+        self.addressButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.bottomPhotoOverlayView addSubview:self.addressButton];
         
-        [self setupVenueButton:address withIconNamed:@"place-location" andlabelText:self.venue.address];
-        [address addTarget:self action:@selector(tappedAddress:) forControlEvents:UIControlEventTouchUpInside];
-        
-        CGRect addressFrame = address.frame;
-        addressFrame.origin.x = round((self.bottomPhotoOverlayView.frame.size.width - 64) / 2) - 5 - addressFrame.size.width;
-        addressFrame.origin.y = 3;
-        address.frame = addressFrame;
+        if ([self.venue.address length] > 0) {
+            self.hasAddress = YES;
+            [self setupVenueButton:self.addressButton withIconNamed:@"place-location" andlabelText:self.venue.address];
+            [self.addressButton addTarget:self action:@selector(tappedAddress:) forControlEvents:UIControlEventTouchUpInside];
+        } else {
+            self.hasAddress = NO;
+            [self setupVenueButton:self.addressButton withIconNamed:@"place-location" andlabelText:@"N/A"];
+        }
     }
+    
+    [self repositionAddressAndPhone:NO];
     
     // put the texture in the bottom view
     self.firstAidSection.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-first-aid-kit"]];
@@ -277,7 +285,7 @@
         [self.checkInButton refreshButtonStateWithBoolean:[self isCheckedInHere]];
     
         CGRect checkInButtonFrame = self.bottomPhotoOverlayView.frame;
-        checkInButtonFrame.size = [self.checkInButton checkinImage].size;
+        checkInButtonFrame.size = [CPUIHelper buttonCheckinImage].size;
         checkInButtonFrame.origin.x = ((self.bottomPhotoOverlayView.frame.size.width - checkInButtonFrame.size.width) / 2);
         checkInButtonFrame.origin.y -= 25;
         
@@ -957,6 +965,10 @@
 
 - (void)checkInButtonSetup
 {
+    // reposition the address and phone if required 
+    // or just show them now that we have the button
+    [self repositionAddressAndPhone:YES];
+    
     //from viewwillappear
     // place the checkin button on screen and make sure it is consistent with the user states
     [self refreshVenueViewCheckinButton];
@@ -1005,6 +1017,67 @@
     [self.modalViewController dismissModalViewControllerAnimated:YES];
 }
 
+- (void)repositionAddressAndPhone:(BOOL)checkinButtonIsShown
+{
+    
+    // we're here because we have no checkin button and as such the address and phone may need to be moved
+    if (self.hasAddress || self.hasPhone) {
+        
+        // set the basic frame for the phone and address buttons
+        CGRect phoneFrame = self.phoneButton.frame;
+        phoneFrame.origin.x = 11 + round((self.bottomPhotoOverlayView.frame.size.width + 64) / 2);
+        phoneFrame.origin.y = 3;
+             
+        
+        CGRect addressFrame = self.addressButton.frame;
+        addressFrame.origin.x = round((self.bottomPhotoOverlayView.frame.size.width - 64) / 2) - 5 - addressFrame.size.width;
+        addressFrame.origin.y = 3;
+        
+    
+        if (!self.hasAddress || !self.hasPhone) {
+            // only need to make changes if one is missing
+            if (!checkinButtonIsShown) {
+                UIButton *move;
+                if (!self.hasAddress) {
+                    move = self.phoneButton;
+                    self.addressButton.hidden = YES;
+                    
+                    // move the phone button to the middle
+                    phoneFrame.origin.x = (self.bottomPhotoOverlayView.frame.size.width / 2) - (phoneFrame.size.width / 2);
+                } else {
+                    move = self.addressButton;
+                    self.phoneButton.hidden = YES;
+                    
+                    // move the address button to the middle
+                    addressFrame.origin.x = (self.bottomPhotoOverlayView.frame.size.width / 2) - (addressFrame.size.width / 2);
+                }
+            } else {
+                // make sure the phone button is around
+                self.phoneButton.hidden = NO;
+                // make sure the address button is around
+                self.addressButton.hidden = NO;
+                
+                // no need to touch the frame here ... it'll get reset
+            }
+        }
+        
+        self.phoneButton.frame = phoneFrame; 
+        self.addressButton.frame = addressFrame;
+    } else {
+        if (checkinButtonIsShown) {
+            // fade in the bottom bar
+            self.bottomPhotoOverlayView.userInteractionEnabled = YES;
+            
+            [UIView animateWithDuration:0.5 animations:^{
+                self.bottomPhotoOverlayView.alpha = 1.0;
+            }];
+        } else {
+            self.bottomPhotoOverlayView.alpha = 0.0;
+            self.bottomPhotoOverlayView.userInteractionEnabled = NO;
+        }
+    }
+}
+
 - (void)setupVenueButton:(UIButton *)venueButton
     withIconNamed:(NSString *)imageName
         andlabelText:(NSString *)labelText
@@ -1028,7 +1101,7 @@
     UILabel *buttonLabel = [[UILabel alloc] init];
     
     // league gothic for the label
-    [CPUIHelper changeFontForLabel:buttonLabel toLeagueGothicOfSize:15];
+    [CPUIHelper changeFontForLabel:buttonLabel toLeagueGothicOfSize:17];
     
     // sizing and styling for label
     CGSize labelSize = [labelText sizeWithFont:buttonLabel.font];

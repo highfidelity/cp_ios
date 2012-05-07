@@ -17,7 +17,4 @@
 -(void)refreshButtonStateFromCheckinStatus;
 -(void)refreshButtonStateWithBoolean:(BOOL)checkedIn;
 
--(UIImage *)checkinImage;
--(UIImage *)checkoutImage;
-
 @end
