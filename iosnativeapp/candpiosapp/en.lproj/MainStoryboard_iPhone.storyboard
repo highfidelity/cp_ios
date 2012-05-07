@@ -370,10 +370,6 @@
                                             <color key="textColor" red="0.24313727020000001" green="0.51372551919999998" blue="0.50588238240000005" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" tag="940" contentMode="scaleToFill" image="list-arrow-dark-grey.png" id="xU4-cg-bCM">
-                                            <rect key="frame" x="299" y="22" width="11" height="16"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
                                         <view contentMode="scaleToFill" id="Ek7-Wq-Gb6">
                                             <rect key="frame" x="60" y="0.0" width="1" height="60"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -453,7 +449,6 @@
     <resources>
         <image name="contacts-blank-slate.png" width="320" height="340"/>
         <image name="default-avatar-256.png" width="256" height="256"/>
-        <image name="list-arrow-dark-grey.png" width="11" height="16"/>
         <image name="map-locate.png" width="40" height="41"/>
         <image name="map-refresh-progress-arrow.png" width="24" height="24"/>
         <image name="map-refresh.png" width="40" height="41"/>
