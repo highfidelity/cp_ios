@@ -512,7 +512,7 @@ UITapGestureRecognizer* _tapRecon = nil;
     
     // tell the webview not to scroll to top when status bar is clicked
     aWebView.scrollView.scrollsToTop = NO;
-    aWebView.scrollView.userInteractionEnabled = YES;
+    aWebView.userInteractionEnabled = YES;
     
     // resize the webView frame depending on the size of the content
     CGRect frame = aWebView.frame;
