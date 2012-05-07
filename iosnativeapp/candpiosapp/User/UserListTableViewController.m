@@ -267,6 +267,18 @@
              withProfileImageUrl:user.urlPhoto];
     cell.nicknameLabel.text = [CPUIHelper profileNickname:user.nickname];
     
+    //If user is virtually checkedIn then add virtual badge to their profile image
+    if(user.checkInIsVirtual)
+    {
+        UIImageView *badgeImageView = [[UIImageView alloc] initWithImage:[CPUIHelper virtualCheckInBadge]];
+        //Make badge a fraction of the size of the profile image and place it in the lower right corner
+        int fractionSize = 3;
+        badgeImageView.frame = CGRectMake(cell.profilePictureImageView.frame.size.width-cell.profilePictureImageView.frame.size.width/fractionSize,
+                                          cell.profilePictureImageView.frame.size.height-cell.profilePictureImageView.frame.size.height/fractionSize,
+                                          (cell.profilePictureImageView.frame.size.width/fractionSize),
+                                          (cell.profilePictureImageView.frame.size.height/fractionSize));
+        [cell.profilePictureImageView addSubview:badgeImageView];
+    }    
     return cell;
 }
 
