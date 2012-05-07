@@ -60,7 +60,7 @@ typedef enum {
 #pragma mark - App-wide images
 + (UIImage *)defaultProfileImage;
 
-+ (UIImage *)virtualCheckInBadge;
++ (void)addVirtualBadgeToProfileImageView:(UIImageView *)profileImageView;
 
 + (void)profileImageView:(UIImageView *)imageView
      withProfileImageUrl:(NSURL *)photoUrl;

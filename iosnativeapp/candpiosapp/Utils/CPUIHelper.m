@@ -222,9 +222,19 @@
     return [UIImage imageNamed:@"default-avatar-256"];
 }
 
-+ (UIImage *)virtualCheckInBadge
++ (void)addVirtualBadgeToProfileImageView:(UIImageView *)profileImageView
 {
-    return [UIImage imageNamed:@"virtual-check-in-badge"];
+    //This function adds a "V" badge to the lower right hand corner of the profileImage
+    UIImageView *badgeImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"virtual-check-in-badge"]];
+    //Make badge a fraction of the size of the profile image and place it in the lower right corner
+    int fractionSize = 3;
+    badgeImageView.frame = CGRectMake(profileImageView.frame.size.width-profileImageView.frame.size.width/fractionSize,
+                                      profileImageView.frame.size.height-profileImageView.frame.size.height/fractionSize,
+                                      (profileImageView.frame.size.width/fractionSize),
+                                      (profileImageView.frame.size.height/fractionSize));
+    [profileImageView addSubview:badgeImageView];
+    
+    
 }
 
 + (void)profileImageView:(UIImageView *)imageView

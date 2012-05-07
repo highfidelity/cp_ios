@@ -426,14 +426,7 @@
                 //If user is virtually checkedIn then add virtual badge to their profile image
                 if(checkedInUser.checkInIsVirtual)
                 {
-                    UIImageView *badgeImageView = [[UIImageView alloc] initWithImage:[CPUIHelper virtualCheckInBadge]];
-                    //Make badge a fraction of the size of the profile image and place it in the lower right corner
-                    int fractionSize = 3;
-                    badgeImageView.frame = CGRectMake(userImage.frame.size.width-userImage.frame.size.width/fractionSize,
-                                                      userImage.frame.size.height-userImage.frame.size.height/fractionSize,
-                                                      (userImage.frame.size.width/fractionSize),
-                                                      (userImage.frame.size.height/fractionSize));
-                    [userImageButton addSubview:badgeImageView];
+                    [CPUIHelper addVirtualBadgeToProfileImageView:userImage];        
                 }
 
                 
