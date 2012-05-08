@@ -46,9 +46,9 @@
 - (void)setCheckedOut;
 - (void)checkOutNow;
 - (void)showSignupModalFromViewController:(UIViewController *)viewController animated:(BOOL)animated;
-- (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
-         withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed
-                                              animated:(BOOL)animated;
+- (void)pushEnterInvitationCodeViewControllerFromViewController:(UIViewController *)viewController
+                  withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed
+                                                       animated:(BOOL)animated;
 - (void)syncCurrentUserWithWebAndCheckValidLogin;
 
 - (void)showLoginBanner;

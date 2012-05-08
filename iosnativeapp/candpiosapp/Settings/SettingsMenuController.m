@@ -144,6 +144,8 @@
 {
     [super viewWillAppear:animated];
     
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    
     [self initMenu];
 }
 
@@ -372,9 +374,9 @@
         NSLog(@"You clicked on %@", segueID);
         
         if ([kEnterInviteFakeSegueID isEqual:segueID]) {
-            [[AppDelegate instance] showEnterInvitationCodeModalFromViewController:self
-                                     withDontShowTextNoticeAfterLaterButtonPressed:YES
-                                                                          animated:YES];
+            [[AppDelegate instance] pushEnterInvitationCodeViewControllerFromViewController:self
+                                              withDontShowTextNoticeAfterLaterButtonPressed:YES
+                                                                                   animated:YES];
         } else {
             [self performSegueWithIdentifier:segueID sender:self];
         }

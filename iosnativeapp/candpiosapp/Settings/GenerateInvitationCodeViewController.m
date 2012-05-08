@@ -62,7 +62,7 @@
 #pragma mark actions
 
 - (IBAction)donePressed:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark -

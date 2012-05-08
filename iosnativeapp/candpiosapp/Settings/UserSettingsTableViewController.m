@@ -100,6 +100,12 @@
     // e.g. self.myOutlet = nil;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -402,11 +408,6 @@
 }
 
 #pragma mark - IBActions
-
--(IBAction)gearPressed:(id)sender
-{
-    [self dismissModalViewControllerAnimated:YES];
-}
 
 -(IBAction)chooseNewProfileImage:(id)sender
 {

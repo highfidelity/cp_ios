@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2182" systemVersion="11D50d" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="9FU-tg-y0C">
     <dependencies>
+        <deployment defaultVersion="1296" identifier="iOS"/>
         <development version="4300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1179"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
     </dependencies>
     <scenes>
         <!--Settings Menu Controller-->
@@ -82,16 +83,18 @@
                         </subviews>
                         <color key="backgroundColor" red="0.1764705882" green="0.1764705882" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="OM6-0J-dUj"/>
                     <connections>
                         <outlet property="blockUIButton" destination="Ch7-Hg-nv6" id="QWk-iy-0Fc"/>
                         <outlet property="edgeShadow" destination="rBQ-Tw-WrU" id="ao2-Fv-5NN"/>
                         <outlet property="loginBanner" destination="6y0-BL-V0c" id="zUq-H5-8Rb"/>
                         <outlet property="loginButton" destination="i5t-UY-UVC" id="rHl-ax-qm3"/>
                         <outlet property="tableView" destination="B0T-Il-Eqh" id="QWr-pZ-Bem"/>
-                        <segue destination="TbW-wK-vWK" kind="modal" identifier="ShowBalanceFromMenu" modalTransitionStyle="flipHorizontal" id="nld-iM-N11"/>
-                        <segue destination="cJS-DT-22N" kind="modal" identifier="ShowUserSettingsFromMenu" modalTransitionStyle="flipHorizontal" id="Ols-cb-ALz"/>
-                        <segue destination="g4S-1W-OlN" kind="modal" identifier="ShowFederationFromMenu" modalTransitionStyle="flipHorizontal" id="QpH-Nd-etk"/>
-                        <segue destination="LIc-1O-LQB" kind="modal" identifier="ShowInvitationCodeMenu" modalTransitionStyle="flipHorizontal" id="p4O-gm-OdH"/>
+                        <segue destination="TbW-wK-vWK" kind="push" identifier="ShowBalanceFromMenu" id="nld-iM-N11"/>
+                        <segue destination="LIc-1O-LQB" kind="push" identifier="ShowInvitationCodeMenu-old" id="p4O-gm-OdH"/>
+                        <segue destination="1JK-jA-7GK" kind="push" identifier="ShowUserSettingsFromMenu" id="gvY-dg-UoK"/>
+                        <segue destination="oag-4z-6cX" kind="push" identifier="ShowFederationFromMenu" id="5w4-Fx-2P6"/>
+                        <segue destination="doX-wg-0Sm" kind="push" identifier="ShowInvitationCodeMenu" id="6gr-e4-fdR"/>
                     </connections>
                 </viewController>
             </objects>
@@ -102,6 +105,7 @@
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U6H-7w-aEh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController definesPresentationContext="YES" id="LIc-1O-LQB" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="1JT-27-DMn"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="1ov-tY-gCf">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -181,42 +185,17 @@ It is good for 24 hours.  </string>
             </objects>
             <point key="canvasLocation" x="-666" y="-1724"/>
         </scene>
-        <!--Balance View Controller-->
+        <!--Balance View Controller - Wallet-->
         <scene sceneID="d1R-FS-22a">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MPq-6l-85G" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="UserWalletViewController" id="TbW-wK-vWK" customClass="BalanceViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UG1-be-cTC">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" id="sm4-cK-9XU">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="Wallet" id="J1n-oo-K8G">
-                                        <barButtonItem key="rightBarButtonItem" id="LxU-PW-EiH">
-                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Udq-Js-1Vs">
-                                                <rect key="frame" x="273" y="7" width="42" height="29"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <state key="normal" image="settings-button-3.png">
-                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <state key="highlighted">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="gearPressed:" destination="TbW-wK-vWK" eventType="touchUpInside" id="l14-xO-JnG"/>
-                                                </connections>
-                                            </button>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" id="Ldr-Nv-zwj">
-                                <rect key="frame" x="0.0" y="44" width="320" height="416"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <view opaque="NO" contentMode="scaleToFill" id="igu-6f-7Ee" userLabel="refreshView">
@@ -363,6 +342,8 @@ It is good for 24 hours.  </string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Wallet" id="UVP-LF-i3s"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="balanceScrollView" destination="Ldr-Nv-zwj" id="cCX-eA-bg7"/>
                         <outlet property="pullDownLabel" destination="l2U-m4-wzo" id="VvW-zK-ASn"/>
@@ -595,25 +576,8 @@ It is good for 24 hours.  </string>
                             <outlet property="delegate" destination="1JK-jA-7GK" id="60s-Ud-5Ci"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Profile" id="7KM-FU-Rh2">
-                        <barButtonItem key="rightBarButtonItem" id="Flr-yH-xki">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="i9o-au-a0n">
-                                <rect key="frame" x="273" y="7" width="42" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="settings-button-3.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="gearPressed:" destination="1JK-jA-7GK" eventType="touchUpInside" id="apy-tp-AGp"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Profile" id="7KM-FU-Rh2"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="billingRateTextField" destination="VPq-og-Op0" id="t0V-EM-ftK"/>
                         <outlet property="emailTextField" destination="YZh-jX-yBq" id="8q7-4v-9FN"/>
@@ -623,7 +587,7 @@ It is good for 24 hours.  </string>
                     </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="-719" y="-492"/>
+            <point key="canvasLocation" x="-1196" y="22"/>
         </scene>
         <!--Job Category View Controller - Job Categories-->
         <scene sceneID="Kag-ik-hPh">
@@ -690,7 +654,7 @@ It is good for 24 hours.  </string>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-157" y="-518"/>
+            <point key="canvasLocation" x="-670" y="-538"/>
         </scene>
         <!--Profile Notifications View Controller - Notifications-->
         <scene sceneID="Dbf-Iq-Bi0">
@@ -858,7 +822,7 @@ It is good for 24 hours.  </string>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="288" y="-518"/>
+            <point key="canvasLocation" x="-670" y="22"/>
         </scene>
         <!--Linked Accounts Table View Controller - Linked Accounts-->
         <scene sceneID="nc2-v7-E52">
@@ -882,30 +846,12 @@ It is good for 24 hours.  </string>
                         </prototypes>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Linked Accounts" id="uLG-95-1sH">
-                        <barButtonItem key="rightBarButtonItem" id="ung-yW-Isb">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Dha-pP-Cog">
-                                <rect key="frame" x="273" y="7" width="42" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="settings-button-3.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="gearPressed" destination="oag-4z-6cX" eventType="touchUpInside" id="BTV-n4-cuX"/>
-                                    <action selector="gearPressed:" destination="1JK-jA-7GK" eventType="touchUpInside" id="Y6A-cK-F1W"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Linked Accounts" id="uLG-95-1sH"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="-719" y="405"/>
+            <point key="canvasLocation" x="-1196" y="647"/>
         </scene>
         <!--Smarterer Login Controller-->
         <scene sceneID="W9b-jS-2LZ">
@@ -933,22 +879,7 @@ It is good for 24 hours.  </string>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-326" y="116"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Cuu-5f-AYW">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ifd-c2-ojS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController definesPresentationContext="YES" id="g4S-1W-OlN" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="tvL-Z8-cSZ">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="oag-4z-6cX" kind="relationship" relationship="rootViewController" id="29d-cm-hWU"/>
-                    </connections>
-                </navigationController>
-            </objects>
-            <point key="canvasLocation" x="-1196" y="405"/>
+            <point key="canvasLocation" x="-666" y="612"/>
         </scene>
         <!--Add Funds View Controller-->
         <scene sceneID="LYN-xf-xk9">
@@ -1003,22 +934,19 @@ It is good for 24 hours.  </string>
             <point key="canvasLocation" x="-670" y="-1107"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="ouw-gO-OVS">
+        <scene sceneID="1oQ-L5-kcn">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uf6-OX-9GJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController id="cJS-DT-22N" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="HFU-6a-cmg">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wKx-w6-MbF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController definesPresentationContext="YES" navigationBarHidden="YES" id="9FU-tg-y0C" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="HVq-Ii-GLu">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
-                    <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="1JK-jA-7GK" kind="relationship" relationship="rootViewController" id="YhA-D6-gqH"/>
+                        <segue destination="WGr-Yo-Vg9" kind="relationship" relationship="rootViewController" id="4UV-ko-EwW"/>
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-1196" y="-492"/>
+            <point key="canvasLocation" x="-2462" y="-557"/>
         </scene>
     </scenes>
     <resources>
@@ -1027,7 +955,6 @@ It is good for 24 hours.  </string>
         <image name="invite-code-background.png" width="240" height="140"/>
         <image name="map-shadow.png" width="10" height="320"/>
         <image name="refresh-scroll-view.png" width="15" height="40"/>
-        <image name="settings-button-3.png" width="42" height="29"/>
         <image name="wallet-cell-arrow-down.png" width="14" height="9"/>
         <image name="wallet-lock.png" width="25" height="25"/>
     </resources>
@@ -1141,4 +1068,7 @@ It is good for 24 hours.  </string>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="6gr-e4-fdR"/>
+    </inferredMetricsTieBreakers>
 </document>

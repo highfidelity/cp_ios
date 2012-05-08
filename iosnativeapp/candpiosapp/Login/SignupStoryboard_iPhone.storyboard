@@ -27,21 +27,6 @@
             </objects>
             <point key="canvasLocation" x="-88" y="111"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="AUz-WF-qin">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="R7I-G3-fFr" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController storyboardIdentifier="EnterInvitationCodeNavigationController" definesPresentationContext="YES" id="CBU-z1-0n1" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="V9b-am-f2v">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="YTE-Yd-6dA" kind="relationship" relationship="rootViewController" id="Ysd-bs-GKi"/>
-                    </connections>
-                </navigationController>
-            </objects>
-            <point key="canvasLocation" x="1288" y="-505"/>
-        </scene>
         <!--Enter Email After Sing Up Controller-->
         <scene sceneID="81E-Lk-B61">
             <objects>
@@ -289,6 +274,7 @@
             <relationships>
                 <relationship kind="action" name="sendButtonPressed:"/>
                 <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="emailValidationMessage" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="sendButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="weWillNotSpamYouLabel" candidateClass="UILabel"/>
             </relationships>
@@ -323,6 +309,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="8Ex-TH-30I"/>
+        <segue reference="jUs-Oz-9ug"/>
     </inferredMetricsTieBreakers>
 </document>
