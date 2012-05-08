@@ -392,10 +392,10 @@
                 User *checkedInUser = [[User alloc] init];
                 checkedInUser.nickname = [user objectForKey:@"nickname"];
                 checkedInUser.status = [user objectForKey:@"status_text"];
-                //checkedInUser.checkInIsVirtual = [user objectForKey:@"checkInIsVirtual"];
+                checkedInUser.checkInIsVirtual = [[user objectForKey:@"is_virtual"] boolValue];
                 //DEBUG
                 //This is a temporary assignment until the api is expanded
-                checkedInUser.checkInIsVirtual = NO;
+                //checkedInUser.checkInIsVirtual = NO;
                 
                 // add this user to the user array
                 // this is how we put the user's info in the info bubble later
