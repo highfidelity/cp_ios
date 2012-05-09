@@ -149,12 +149,12 @@
 
     if (!sender.on) {
         [placesArray removeAllObjects];
-        [[CPAppDelegate locationManager] stopMonitoringSignificantLocationChanges];
+        // [[CPAppDelegate locationManager] stopMonitoringSignificantLocationChanges];
 //        [self.locationManager stopMonitoringSignificantLocationChanges];
     }
     else {
         [self setupPlacesArray];
-        [[CPAppDelegate locationManager] startMonitoringSignificantLocationChanges];
+        // [[CPAppDelegate locationManager] startMonitoringSignificantLocationChanges];
 //        [self.locationManager startMonitoringSignificantLocationChanges];
     }
     
