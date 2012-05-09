@@ -41,6 +41,8 @@
 		3267F67C14D91A3600BFFBAA /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F67B14D91A3600BFFBAA /* CoreTelephony.framework */; };
 		326EEA35152D3523000AC0B9 /* libUAirship-1.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 326EEA34152D3523000AC0B9 /* libUAirship-1.2.0.a */; };
 		3278800014FAD7070055A991 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 32787FFF14FAD7070055A991 /* MKAnnotationView+WebCache.m */; };
+		328452BF155A0EE800CF32F5 /* AutoCheckinTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 328452BE155A0EE800CF32F5 /* AutoCheckinTableViewController.m */; };
+		328452C3155A17CB00CF32F5 /* AutoCheckinCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 328452C2155A17CA00CF32F5 /* AutoCheckinCell.m */; };
 		32A7999314F9867D00A0D4CB /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A7998E14F9867D00A0D4CB /* UIImage+Alpha.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		32A7999414F9867D00A0D4CB /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A7999014F9867D00A0D4CB /* UIImage+Resize.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		32A7999514F9867D00A0D4CB /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A7999214F9867D00A0D4CB /* UIImage+RoundedCorner.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -472,6 +474,10 @@
 		326EEA34152D3523000AC0B9 /* libUAirship-1.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libUAirship-1.2.0.a"; sourceTree = "<group>"; };
 		32787FFE14FAD7070055A991 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		32787FFF14FAD7070055A991 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
+		328452BD155A0EE800CF32F5 /* AutoCheckinTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AutoCheckinTableViewController.h; path = Settings/AutoCheckinTableViewController.h; sourceTree = "<group>"; };
+		328452BE155A0EE800CF32F5 /* AutoCheckinTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AutoCheckinTableViewController.m; path = Settings/AutoCheckinTableViewController.m; sourceTree = "<group>"; };
+		328452C1155A17CA00CF32F5 /* AutoCheckinCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AutoCheckinCell.h; path = Settings/AutoCheckinCell.h; sourceTree = "<group>"; };
+		328452C2155A17CA00CF32F5 /* AutoCheckinCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AutoCheckinCell.m; path = Settings/AutoCheckinCell.m; sourceTree = "<group>"; };
 		32A7998D14F9867D00A0D4CB /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Alpha.h"; path = "UIImage-categories/UIImage+Alpha.h"; sourceTree = "<group>"; };
 		32A7998E14F9867D00A0D4CB /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Alpha.m"; path = "UIImage-categories/UIImage+Alpha.m"; sourceTree = "<group>"; };
 		32A7998F14F9867D00A0D4CB /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "UIImage-categories/UIImage+Resize.h"; sourceTree = "<group>"; };
@@ -1509,6 +1515,10 @@
 				E41080701539AB2200D7EAA8 /* JobCategoryViewController.m */,
 				E4DFEB4C1554915100AE90F0 /* ProfileNotificationsViewController.h */,
 				E4DFEB4D1554915100AE90F0 /* ProfileNotificationsViewController.m */,
+				328452BD155A0EE800CF32F5 /* AutoCheckinTableViewController.h */,
+				328452BE155A0EE800CF32F5 /* AutoCheckinTableViewController.m */,
+				328452C1155A17CA00CF32F5 /* AutoCheckinCell.h */,
+				328452C2155A17CA00CF32F5 /* AutoCheckinCell.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -2487,6 +2497,8 @@
 				532893A115548EB6007B0157 /* UserTableViewCell.m in Sources */,
 				E4DFEB4E1554915100AE90F0 /* ProfileNotificationsViewController.m in Sources */,
 				536E1E881554988300052D40 /* ContactListViewController.m in Sources */,
+				328452BF155A0EE800CF32F5 /* AutoCheckinTableViewController.m in Sources */,
+				328452C3155A17CB00CF32F5 /* AutoCheckinCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
