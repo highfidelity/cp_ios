@@ -654,7 +654,7 @@ UITapGestureRecognizer* _tapRecon = nil;
     
     // TODO: Move this functionality to CPApi.
     
-    [SVProgressHUD showWithStatus:@"Sending \"prop\""];
+    [SVProgressHUD showWithStatus:@"Sending"];
     AFHTTPClient *httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
     NSString *respUserId = [NSString stringWithFormat:@"%d", self.user.userID];
 	NSMutableDictionary *reviewParams = [NSMutableDictionary dictionary];
