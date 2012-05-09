@@ -408,13 +408,9 @@ UITapGestureRecognizer* _tapRecon = nil;
     // if the user has an hourly rate then put it, otherwise it comes up as N/A
     if (self.user.hourlyRate) {
         self.resumeRate.text = self.user.hourlyRate;
-    }            
-    
-    // show total spent and total earned   
-    NSNumberFormatter *decimalFormatter = [[NSNumberFormatter alloc] init];
-    [decimalFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    [decimalFormatter setMaximumFractionDigits:0];
-    self.resumeEarned.text = [@"$" stringByAppendingString:[decimalFormatter stringFromNumber:[NSNumber numberWithDouble:self.user.totalEarned]]];
+    }
+
+    self.resumeEarned.text = [NSString stringWithFormat:@"%d", self.user.totalHours];
     self.loveReceived.text = [self.user.reviews objectForKey:@"love_received"];
     
     // load html into the bottom of the resume view for all the user data

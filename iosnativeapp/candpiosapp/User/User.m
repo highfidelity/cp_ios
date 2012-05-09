@@ -50,6 +50,8 @@
 @synthesize checkInIsVirtual = _checkInIsVirtual;
 @synthesize contactsOnlyChat = _contactsOnlyChat;
 @synthesize isContact = _isContact;
+@synthesize totalHours = _totalHours;
+
 
 -(id)init
 {
@@ -291,6 +293,7 @@
             // set the rest of the user info based on information in the userDict
             self.totalEarned = [[userDict valueForKeyPath:@"stats.totalEarned"] doubleValue];
             self.totalSpent = [[userDict valueForKeyPath:@"stats.totalSpent"] doubleValue];
+            self.totalHours = [[userDict valueForKeyPath:@"stats.totalHours"] intValue];
             
             // bio, join date, number of users trusted by
             self.bio = [userDict objectForKey:@"bio"];

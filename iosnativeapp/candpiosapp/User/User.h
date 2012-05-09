@@ -27,6 +27,7 @@
 @property (nonatomic, assign) BOOL linkedInVerified;
 @property (nonatomic, strong) NSString *hourlyRate;
 @property (nonatomic, assign) double totalEarned;
+@property (nonatomic, assign) int totalHours;
 @property (nonatomic, assign) double totalSpent;
 @property (nonatomic, strong) NSURL *urlPhoto;
 @property (nonatomic, strong) NSString *skills;
