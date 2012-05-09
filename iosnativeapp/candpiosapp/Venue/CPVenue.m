@@ -125,13 +125,9 @@
         self.weeklyCheckinCount = [[json objectForKey:@"checkins_for_week"] integerValue];
         self.intervalCheckinCount = [[json objectForKey:@"checkins_for_interval"] integerValue];
         self.photoURL = [json objectForKey:@"photo_url"];
-        //self.hasVirtualCheckin = [[json objectForKey:@"has_virutal_checkin"] boolValue];
-        //DEBUG
-        //Test code until api is updated
-        self.hasVirtualCheckin = NO;
-        
         self.coordinate = CLLocationCoordinate2DMake([[json objectForKey:@"lat"] doubleValue], [[json objectForKey:@"lng"] doubleValue]);
         self.activeUsers = [json objectForKey:@"users"];
+        self.hasVirtualCheckin = [[json objectForKey:@"has_virtual_checkins"] boolValue];
     }
     return self;
 }
@@ -214,25 +210,8 @@
     if (self.photoURL) { [json setObject:self.photoURL forKey:@"photo_url"]; }
     [json setObject:[NSNumber numberWithDouble:self.coordinate.latitude] forKey:@"lat"];
     [json setObject:[NSNumber numberWithDouble:self.coordinate.longitude] forKey:@"lng"];
-    if (self.activeUsers) 
-    { 
-        //FIXME
-        //This is a hack until is_virtual flag is fixed on server
-        //Without this is_virtual is Null causing crash
-        for(id key in self.activeUsers)
-        {
-            [[self.activeUsers objectForKey:key] setObject:@"0" forKey:@"is_virtual"];
-        }
-        [json setObject:self.activeUsers forKey:@"users"]; 
-    
-    
-    }
-    //FIXME
-    //DEBUG
-    //Code to help debug value of is_virtual SQL value
-    //Delete once server side issues are fixed.
-    //for(id key in self.activeUsers)
-    //    NSLog(@"key=%@ value=%@", key, [self.activeUsers objectForKey:key]);
+    if (self.activeUsers) { [json setObject:self.activeUsers forKey:@"users"]; }
+
     
     return json;
 }

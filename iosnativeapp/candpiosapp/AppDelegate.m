@@ -854,6 +854,7 @@ void SignalHandler(int sig) {
             CPVenue *place = [[CPVenue alloc] initFromDictionary:notif.userInfo];
             CheckInDetailsViewController *vc = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil]
                                                 instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
+            vc.checkInIsVirtual = false;
             [vc setPlace:place];
             vc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
                                                                                    style:UIBarButtonItemStylePlain

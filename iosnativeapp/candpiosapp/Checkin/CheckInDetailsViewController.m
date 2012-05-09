@@ -274,7 +274,7 @@
     [SVProgressHUD showWithStatus:@"Checking In..."];
     
     // use CPapi to checkin
-    [CPapi checkInToLocation:self.place checkInTime:checkInTime checkOutTime:checkOutTime statusText:statusText completionBlock:^(NSDictionary *json, NSError *error){
+    [CPapi checkInToLocation:self.place checkInTime:checkInTime checkOutTime:checkOutTime statusText:statusText isVirtual:self.checkInIsVirtual completionBlock:^(NSDictionary *json, NSError *error){
         // hide the SVProgressHUD
         [SVProgressHUD dismiss];
         if (!error) {
@@ -393,9 +393,6 @@
                 checkedInUser.nickname = [user objectForKey:@"nickname"];
                 checkedInUser.status = [user objectForKey:@"status_text"];
                 checkedInUser.checkInIsVirtual = [[user objectForKey:@"is_virtual"] boolValue];
-                //DEBUG
-                //This is a temporary assignment until the api is expanded
-                //checkedInUser.checkInIsVirtual = NO;
                 
                 // add this user to the user array
                 // this is how we put the user's info in the info bubble later
@@ -424,10 +421,8 @@
                 [userImageButton addSubview:userImage];
                 
                 //If user is virtually checkedIn then add virtual badge to their profile image
-                if(checkedInUser.checkInIsVirtual)
-                {
-                    [CPUIHelper addVirtualBadgeToProfileImageView:userImage];        
-                }
+                [CPUIHelper manageVirtualBadgeForProfileImageView:userImage 
+                                                 checkInIsVirtual:checkedInUser.checkInIsVirtual];        
 
                 
                 // add the button to the scrollview

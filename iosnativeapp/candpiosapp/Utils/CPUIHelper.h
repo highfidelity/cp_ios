@@ -62,7 +62,8 @@ typedef enum {
 + (UIImage *)buttonCheckinImage;
 + (UIImage *)buttonCheckoutImage;
 
-+ (void)addVirtualBadgeToProfileImageView:(UIImageView *)profileImageView;
++ (void)manageVirtualBadgeForProfileImageView:(UIImageView *)profileImageView
+                             checkInIsVirtual:(BOOL)checkInIsVirtual;
 
 + (void)profileImageView:(UIImageView *)imageView
      withProfileImageUrl:(NSURL *)photoUrl;

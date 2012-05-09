@@ -268,10 +268,12 @@
     cell.nicknameLabel.text = [CPUIHelper profileNickname:user.nickname];
     
     //If user is virtually checkedIn then add virtual badge to their profile image
-    if(user.checkInIsVirtual)
+    if(user.checkedIn)
     {
-        [CPUIHelper addVirtualBadgeToProfileImageView:cell.profilePictureImageView];
-    }    
+        [CPUIHelper manageVirtualBadgeForProfileImageView:cell.profilePictureImageView
+                                         checkInIsVirtual:user.checkInIsVirtual];
+    }
+    
     return cell;
 }
 

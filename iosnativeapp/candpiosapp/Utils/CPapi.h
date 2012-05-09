@@ -65,6 +65,7 @@
               checkInTime:(NSInteger)checkInTime
              checkOutTime:(NSInteger)checkOutTime
                statusText:(NSString *)stausText
+                isVirtual:(BOOL)isVirtual
           completionBlock:(void (^)(NSDictionary *, NSError *))completion;
 
 + (void)checkOutWithCompletion:(void(^)(NSDictionary *json, NSError *error))completion;

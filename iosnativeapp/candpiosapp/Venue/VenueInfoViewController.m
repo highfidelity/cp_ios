@@ -629,10 +629,8 @@
     UIImageView *userThumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, thumbnailDim, thumbnailDim)];
     
     //If the user is checkedIn virutally add a virtual badge to their image
-    if(user.checkInIsVirtual)
-    {
-        [CPUIHelper addVirtualBadgeToProfileImageView:userThumbnail];        
-    }
+    [CPUIHelper manageVirtualBadgeForProfileImageView:userThumbnail
+                                     checkInIsVirtual:user.checkInIsVirtual];        
 
     [CPUIHelper profileImageView:userThumbnail
              withProfileImageUrl:user.urlPhoto];

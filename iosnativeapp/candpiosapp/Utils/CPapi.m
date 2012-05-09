@@ -682,6 +682,7 @@
               checkInTime:(NSInteger)checkInTime
              checkOutTime:(NSInteger)checkOutTime
                statusText:(NSString *)stausText
+                isVirtual:(BOOL)isVirtual
           completionBlock:(void (^)(NSDictionary *, NSError *))completion
 {        
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
@@ -701,6 +702,14 @@
     [parameters setValue:place.zip forKey:@"zip"];
     [parameters setValue:place.phone forKey:@"phone"];
     [parameters setValue:place.formattedPhone forKey:@"formatted_phone"];
+    if(isVirtual)
+    {
+        [parameters setValue:@"1" forKey:@"is_virtual"];
+    }
+    else {
+        [parameters setValue:@"0" forKey:@"is_virtual"];
+
+    }
     // Don't pass the place icon - it's a dictionary and this crashes the request
     // [parameters setValue:place.icon forKey:@"icon"];
     [parameters setValue:stausText forKey:@"status"];
