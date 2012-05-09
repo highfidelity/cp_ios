@@ -29,8 +29,7 @@
 
 #else
 
-    //NSString* const kCandPWebServiceUrl = @"https://staging.candp.me/";
-    NSString* const kCandPWebServiceUrl = @"http://dev.candp.me/~andrewa/candpweb2/web/";
+    NSString* const kCandPWebServiceUrl = @"https://staging.candp.me/";
 
     NSString* const kCandPAddFundsUrl = @"http://staging.coffeeandpower.com/m/?ios#addFundsiPhone";
     NSString* const kLinkedInKey = @"4xkfzpnvuc72";
