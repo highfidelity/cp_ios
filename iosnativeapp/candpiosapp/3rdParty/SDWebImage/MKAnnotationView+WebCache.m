@@ -24,7 +24,7 @@
         if(virtual)
         {
             imageName = @"pin-virtual-checkedin";
-            numberLabel.frame = CGRectMake(0, 20, 93, 20);
+            numberLabel.frame = CGRectMake(0, 23, 93, 20);
         }
         else
         {
@@ -44,6 +44,19 @@
     }
     
     [self setImage:[UIImage imageNamed:imageName]];
+    
+    int subViewCount = self.subviews.count;
+    if(subViewCount > 0)
+    {
+        if(subViewCount > 1)
+        {
+            //Ideally there would be a better way to identify the subviews
+            NSLog(@"MultipleSubviews!  The incorrect subview could be getting hidden!");
+        }
+        [[self.subviews objectAtIndex:0] removeFromSuperview];
+        
+    }
+
     
     // Add number label
     if (!smallPin && withLabel) {
