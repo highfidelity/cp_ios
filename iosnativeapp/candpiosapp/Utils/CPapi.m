@@ -662,6 +662,8 @@
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setValue:[NSString stringWithFormat:@"%f", coordinate.latitude] forKey:@"lat"];
     [params setValue:[NSString stringWithFormat:@"%f", coordinate.longitude] forKey:@"lng"];
+    int currentUserID = [[CPAppDelegate currentUser] userID];
+    [params setValue:[NSString stringWithFormat:@"%i", currentUserID] forKey:@"user_id"];
     
     [self makeHTTPRequestWithAction:@"getNearestVenuesAndUsersWithCheckinsDuringInterval" withParameters:params queue:mapQueue timeout:9 completion:completion];
 }

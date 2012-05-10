@@ -29,7 +29,7 @@
 @synthesize intervalCheckinCount = _monthlyCheckinCount;
 @synthesize coordinate = _coordinate;
 @synthesize activeUsers = _activeUsers;
-@synthesize hasVirtualCheckin = _hasVirtualCheckin;
+@synthesize hasContactAtVenue = _hasContactAtVenue;
 @synthesize autoCheckin = _autoCheckin;
 
 // override setters here to that when we parse JSON to set values we don't set things to null
@@ -127,7 +127,6 @@
         self.photoURL = [json objectForKey:@"photo_url"];
         self.coordinate = CLLocationCoordinate2DMake([[json objectForKey:@"lat"] doubleValue], [[json objectForKey:@"lng"] doubleValue]);
         self.activeUsers = [json objectForKey:@"users"];
-        self.hasVirtualCheckin = [[json objectForKey:@"has_virtual_checkins"] boolValue];
     }
     return self;
 }

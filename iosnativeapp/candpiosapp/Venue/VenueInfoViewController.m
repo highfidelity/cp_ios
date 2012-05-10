@@ -885,7 +885,7 @@
 }
 - (void)checkInAllowed
 {
-    self.checkInIsVirtual = false;
+    self.checkInIsVirtual = NO;
     
     //Find the distance between the user and the venue in Meters
     CLLocation *venueLocation= [[CLLocation alloc] initWithLatitude:self.venue.coordinate.latitude longitude:self.venue.coordinate.longitude];
@@ -896,59 +896,12 @@
         // User is more than 300m from venue so only a virtual checkin is possible.
         // If the user has a contact in the venue then they can checkin, otherwise it is not allowed
         //and the checkin button will not appear.
-        [CPapi getContactListWithCompletionsBlock:^(NSDictionary *json, NSError *error) {
-            if (!error) {
-                if (![[json objectForKey:@"error"] boolValue]) {
-                    NSMutableArray *payload = [json objectForKey:@"payload"];
-                    //[self hidePlaceholder:[payload count] > 0];
-                    
-                    // sort the contact list by id smallest to largest
-                    NSSortDescriptor *d = [[NSSortDescriptor alloc] initWithKey:@"userID" ascending:NO];
-                    [payload sortUsingDescriptors:[NSArray arrayWithObjects:d,nil]];
-                    
-                    // sort the current list of users at the venue by id smallest to largest
-                    NSMutableArray *otherUsers = [self.currentUsers objectForKey:@"other"];
-                    [otherUsers sortUsingDescriptors:[NSArray arrayWithObjects:d,nil]];
-                    
-                    //Iterate through contacts and see if any of them are at the current venue
-                    for(int i = 0; i < payload.count; i++)
-                    {
-                        NSDictionary *contact = [payload objectAtIndex:i];
-                        int contactUserID = [[contact objectForKey:@"id"] intValue];
-                        for(int j = 0; j < otherUsers.count; j++)
-                        {
-                            
-                            int venueUserID = [[otherUsers objectAtIndex:j] userID];
-                            if(contactUserID == venueUserID)
-                            {
-                                //User has a contact at the venue, make the checkin button appear
-                                [self checkInButtonSetup];
-                                self.checkInIsVirtual = true;
-                                #if DEBUG
-                                    NSLog("Has contact:%@ at venue",[[payload objectAtIndex:i] nickname]);
-                                #endif
+        if(self.venue.hasContactAtVenue)
+        {
+            [self checkInButtonSetup];
+            self.checkInIsVirtual = YES;
+        }
 
-                                break;
-                            }
-                        }                        
-                    }
-                }
-                
-                else {
-                    NSLog(@"%@",[json objectForKey:@"payload"]);
-                    UIAlertView *alert = [[UIAlertView alloc]
-                                          initWithTitle:@"Contact list"
-                                          message:[json objectForKey:@"payload"]
-                                          delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles: nil];
-                    [alert show];
-                }
-            }
-            else {
-                NSLog(@"Coundn't fetch contact list");
-            }
-        }];
     }
     else
     {

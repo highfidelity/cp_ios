@@ -32,7 +32,7 @@
 @property (nonatomic, readonly) NSString *formattedAddress;
 @property (nonatomic, strong) NSMutableDictionary *activeUsers;
 @property (nonatomic, readonly) NSDictionary *initializationDictionaryJSON;
-@property (nonatomic, assign) bool hasVirtualCheckin;
+@property (nonatomic, assign) bool hasContactAtVenue;
 @property (nonatomic, assign) bool autoCheckin;
 
 - (CPVenue *)initFromDictionary:(NSDictionary *)json;

@@ -413,7 +413,7 @@ BOOL clearLocations = NO;
             }            
         } 
         else {
-            if(placeAnn.hasVirtualCheckin)
+            if(placeAnn.hasContactAtVenue)
             {
                 [pin setPin:placeAnn.checkinCount hasCheckins:YES hasVirtual:YES smallPin:smallPin withLabel:YES];
                 pin.centerOffset = CGPointMake(0, -31);

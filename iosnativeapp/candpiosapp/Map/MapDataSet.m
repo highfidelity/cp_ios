@@ -102,13 +102,33 @@ static NSOperationQueue *sMapQueue = nil;
 #if DEBUG
             NSLog(@"Got %d venues.", [venuesArray count]);
 #endif
-            
+            //get the contacts of the current user
+            NSArray *contactsArray = [[json objectForKey:@"payload"] objectForKey:@"contacts"];
+#if DEBUG
+            NSLog(@"Got %d contacts.", [contactsArray count]);
+#endif
             
             MKMapRect coveredRect = MKMapRectNull;
-            
+
             for(NSDictionary *venueDict in venuesArray)
             {
+                
                 CPVenue *venue = [[CPVenue alloc] initFromDictionary:venueDict];
+                //See if the user can checkin at a venue because they have a contact there
+                venue.hasContactAtVenue = NO;
+                for(id userIDObj in venue.activeUsers)
+                {
+                    int activeUserID = [userIDObj integerValue];
+                    for(NSDictionary *contactDict in contactsArray)
+                    {
+                        if(activeUserID == [[contactDict objectForKey:@"other_user_id"] integerValue])
+                        {
+                            venue.hasContactAtVenue = YES;
+                            break;
+                        }
+                        
+                    }
+               }
                 
                 MKMapPoint venuePoint = MKMapPointForCoordinate(venue.coordinate);
                 MKMapRect pointRect = MKMapRectMake(venuePoint.x, venuePoint.y, 0, 0);
