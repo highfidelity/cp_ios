@@ -35,7 +35,6 @@
 #pragma mark - UIView Methods
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
     
     [[self userBalance] setText: [NSString stringWithFormat:@"$%.2f", [AppDelegate instance].settings.userBalance]];
     

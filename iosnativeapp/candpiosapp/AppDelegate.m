@@ -71,7 +71,6 @@
 
 - (void)promptForCheckout
 {
-    
     UIAlertView *alert = [[UIAlertView alloc]
                           initWithTitle:@"Check Out"
                           message:@"Are you sure you want to be checked out?"
@@ -151,18 +150,18 @@
     [viewController presentModalViewController:signupController animated:animated];
 }
 
-- (void)pushEnterInvitationCodeViewControllerFromViewController:(UIViewController *)viewController
-                  withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed
-                                                       animated:(BOOL)animated
+- (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
+         withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed
+                                              animated:(BOOL)animated
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
-    EnterInvitationCodeViewController *controller = [storyboard instantiateViewControllerWithIdentifier:
-                                                     @"EnterInvitationCodeViewController"];
+    UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:
+                                                    @"EnterInvitationCodeNavigationController"];
     
+    EnterInvitationCodeViewController *controller = (EnterInvitationCodeViewController *)navigationController.topViewController;
     controller.dontShowTextNoticeAfterLaterButtonPressed = dontShowTextNoticeAfterLaterButtonPressed;
-    controller.shouldDismissOrPop = kEnterInvitationCodeViewControllerShouldPop;
     
-    [viewController.navigationController pushViewController:controller animated:animated];
+    [viewController presentModalViewController:navigationController animated:animated];
 }
 
 - (void)syncCurrentUserWithWebAndCheckValidLogin {
@@ -316,14 +315,12 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
         
     // Switch out the UINavigationController in the rootviewcontroller for the SettingsMenuController
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"SettingsStoryboard_iPhone" bundle:nil];
-    UINavigationController *rootNavigationController = [mainStoryboard instantiateInitialViewController];
-    self.settingsMenuController = (SettingsMenuController*)rootNavigationController.topViewController;
+    self.settingsMenuController = (SettingsMenuController*)[mainStoryboard instantiateViewControllerWithIdentifier:@"SettingsMenu"];
     self.tabBarController = (CPTabBarController *)self.window.rootViewController;
     self.settingsMenuController.cpTabBarController = self.tabBarController;
     [settingsMenuController.view addSubview:self.tabBarController.view];
     [settingsMenuController addChildViewController:self.tabBarController];
-    
-    self.window.rootViewController = rootNavigationController;
+    self.window.rootViewController = settingsMenuController;
     
     // make the status bar the black style
     application.statusBarStyle = UIStatusBarStyleBlackOpaque;

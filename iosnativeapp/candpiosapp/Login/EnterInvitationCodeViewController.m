@@ -17,7 +17,6 @@
 - (IBAction)laterButtonAction:(id)sender;
 
 - (void)sendCode:(NSString *)code;
-- (void)dismissOrPopViewControllerAnimated:(BOOL)animated;
 
 @end
 
@@ -28,7 +27,6 @@
 @synthesize codeTextField = _codeTextField;
 
 @synthesize dontShowTextNoticeAfterLaterButtonPressed = _dontShowTextNoticeAfterLaterButtonPressed;
-@synthesize shouldDismissOrPop = _shouldDismissOrPop;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -104,7 +102,7 @@
     }
     
     if (dismissModalViewController) {
-        [self dismissOrPopViewControllerAnimated:YES];
+        [self.navigationController dismissModalViewControllerAnimated:YES];
     }
 }
 
@@ -125,7 +123,7 @@
             NSDictionary *userInfo = [[json objectForKey:@"payload"] objectForKey:@"user"];
             [CPAppDelegate storeUserLoginDataFromDictionary:userInfo];
             
-            [self dismissOrPopViewControllerAnimated:YES];
+            [self.navigationController dismissModalViewControllerAnimated:YES];
             
             [[[UIAlertView alloc] initWithTitle:@"Invite code accepted!" 
                                         message:nil
@@ -143,14 +141,6 @@
         [SVProgressHUD dismiss];
     }];
 
-}
-
-- (void)dismissOrPopViewControllerAnimated:(BOOL)animated {
-    if (kEnterInvitationCodeViewControllerShouldDismiss == self.shouldDismissOrPop) {
-        [self.navigationController dismissModalViewControllerAnimated:YES];
-    } else {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
 }
 
 @end
