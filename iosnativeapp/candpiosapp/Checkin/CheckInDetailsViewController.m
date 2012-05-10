@@ -314,9 +314,13 @@
                 // in case we came from foursquare venue list and didn't have it
                 self.place.venueID = [[json objectForKey:@"venue_id"] intValue];
                 
+                // Store the current time as lastCheckinTime, used to only monitor the 20 most recent checkins with geofences due to device limitations
+                self.place.checkinTime = checkInTime;
+                
+                // Start monitoring the new location to allow auto-checkout and checkin (if enabled) 
                 // put the venue ID for the venue the user is checked into in NSUserDefaults
                 // used across the app to check if the user is checked into the venue they're looking at
-                [CPAppDelegate saveCurrentVenueUserDefaults:self.place];
+                [CPAppDelegate startMonitoringVenue:self.place];
 
                 [CPAppDelegate refreshCheckInButton];
             

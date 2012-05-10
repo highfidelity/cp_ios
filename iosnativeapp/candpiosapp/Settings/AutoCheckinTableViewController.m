@@ -34,7 +34,14 @@
 {
     [super viewDidLoad];
 
-    [self setupPlacesArray];
+    // If automaticCheckins is disabled, hide the table view unless changed
+    BOOL automaticCheckins = [DEFAULTS(object, kAutomaticCheckins) boolValue];
+        
+    self.globalCheckinSwitch.on = automaticCheckins;
+
+    if (automaticCheckins) {    
+        [self setupPlacesArray];
+    }
 }
 
 - (void)viewDidUnload
@@ -56,7 +63,7 @@
         CPVenue *venue = (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
         
         if (venue && venue.name) {
-            NSLog(@"venue found: %@", venue.name);
+//            NSLog(@"venue found: %@", venue.name);
             [placesArray addObject:venue];
         }
     }
@@ -133,6 +140,7 @@
     if (venue) {
         cell.venueName.text = venue.name;
         cell.venueAddress.text = venue.address;
+        cell.venue = venue;
     }
 
     
@@ -144,19 +152,21 @@
 - (IBAction)globalCheckinChanged:(UISwitch *)sender {
     NSLog(@"new value: %i", sender.on);
 
-    if (nil == self.locationManager)
-        self.locationManager = [[CLLocationManager alloc] init];
-
     if (!sender.on) {
         [placesArray removeAllObjects];
-        // [[CPAppDelegate locationManager] stopMonitoringSignificantLocationChanges];
-//        [self.locationManager stopMonitoringSignificantLocationChanges];
+//        [[CPAppDelegate locationManager] stopMonitoringSignificantLocationChanges];
+//        [[CPAppDelegate locationManager] stopUpdatingLocation];
+
+        for (CLRegion *reg in [[CPAppDelegate locationManager] monitoredRegions]) {
+            [[CPAppDelegate locationManager] stopMonitoringForRegion:reg];
+        }
     }
     else {
         [self setupPlacesArray];
-        // [[CPAppDelegate locationManager] startMonitoringSignificantLocationChanges];
-//        [self.locationManager startMonitoringSignificantLocationChanges];
+//        [[CPAppDelegate locationManager] startMonitoringSignificantLocationChanges];
     }
+
+    SET_DEFAULTS(Object, kAutomaticCheckins, [NSNumber numberWithBool:sender.on]);
     
     [self.tableView reloadData];
 }

@@ -21,6 +21,7 @@
 #define kContactRequestAPNSKey @"contact_request"
 #define kContactRequestAcceptedAPNSKey @"contact_accepted"
 #define kCheckOutLocalNotificationAlertViewTitle @"You will be checked out of C&P in 5 min."
+#define kRadiusForCheckins                      10 // measure in meters, from lat/lng of CPVenue
 
 @interface AppDelegate(Internal)
 -(void) loadSettings;
@@ -34,6 +35,7 @@
 @synthesize tabBarController;
 @synthesize userCheckedIn = _userCheckedIn;
 @synthesize checkOutTimer = _checkOutTimer;
+@synthesize locationManager;
 
 // TODO: Store what we're storing now in settings in NSUSERDefaults
 // Why make our own class when there's an iOS Api for this?
@@ -376,9 +378,136 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     
     [self hideLoginBannerWithCompletion:nil];
 
+    [self startStandardUpdates];
+    
     return YES;
 }
 
+- (CLRegion *)getRegionForVenue:(CPVenue *)venue
+{
+    CLRegion* region = [[CLRegion alloc] initCircularRegionWithCenter:venue.coordinate
+                                                               radius:kRadiusForCheckins identifier:venue.name];
+    
+    return region;
+}
+
+- (void)startMonitoringVenue:(CPVenue *)venue
+{
+    // Save current venue to be able to auto checkout in the future, and also used in other places in the app to determine checkin status
+    [self saveCurrentVenueUserDefaults:venue];
+
+    // Only start monitoring a region if automaticCheckins is YES
+    BOOL automaticCheckins = [DEFAULTS(object, kAutomaticCheckins) boolValue];
+
+    if (automaticCheckins) {
+        NSLog(@"monitor venue: %@", venue.name);
+        
+        CLRegion* region = [self getRegionForVenue:venue];
+        
+        [self.locationManager startMonitoringForRegion:region
+                                       desiredAccuracy:kCLLocationAccuracyNearestTenMeters];
+    }
+    
+    NSLog(@"current # of monitored regions: %i", self.locationManager.monitoredRegions.count);
+}
+
+- (void)stopMonitoringVenue:(CPVenue *)venue
+{
+    CLRegion* region = [self getRegionForVenue:venue];
+    [self.locationManager stopMonitoringForRegion:region];
+
+    NSLog(@"current # of monitored regions after deleting: %i", self.locationManager.monitoredRegions.count);
+    
+    //    if (self.locationManager.monitoredRegions.count > 19) {
+//        for (CLRegion *reg in [self.locationManager monitoredRegions]) {
+//            [self.locationManager stopMonitoringForRegion:reg];
+//        }
+//    }
+
+}
+
+- (void)startStandardUpdates
+{
+    // Create the location manager if this object does not
+    // already have one.
+    if (nil == self.locationManager)
+        self.locationManager = [[CLLocationManager alloc] init];
+    
+    self.locationManager.delegate = self;
+    
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    
+    self.locationManager.distanceFilter = 20;
+    
+    [self.locationManager startMonitoringSignificantLocationChanges];
+    
+    // Do not create regions if support is unavailable or disabled.
+    if (![CLLocationManager regionMonitoringAvailable] || ![CLLocationManager regionMonitoringEnabled]) {
+        return;
+    }
+}
+ 
+ // Delegate method from the CLLocationManagerDelegate protocol.
+ - (void)locationManager:(CLLocationManager *)manager
+ didUpdateToLocation:(CLLocation *)newLocation
+ fromLocation:(CLLocation *)oldLocation
+{
+    // Process changes here
+}
+ 
+ - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
+     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+     if (localNotif) {
+         NSString *alertText = [NSString stringWithFormat:@"Do you want to check in at %@?", region.identifier];
+         
+         localNotif.alertBody = alertText;
+         localNotif.alertAction = @"Check In";
+         localNotif.soundName = UILocalNotificationDefaultSoundName;
+         
+         localNotif.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                @"didEnterRegion", @"type",
+                                region.identifier, @"name",
+                                nil];
+         
+         [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];        
+     }
+ }
+ 
+ - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+     // Only show check out prompt if user is currently logged in to the venue in question
+     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+     
+     CPVenue *venue = [CPAppDelegate currentVenue];
+     
+     if ([CPAppDelegate userCheckedIn] && venue && venue.name && [venue.name isEqualToString:region.identifier] && localNotif) {
+         NSString *alertText = [NSString stringWithFormat:@"Do you want to check out of %@?", region.identifier];
+         
+         localNotif.alertBody = alertText;
+         localNotif.alertAction = @"Check Out";
+         localNotif.soundName = UILocalNotificationDefaultSoundName;
+         
+         localNotif.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                @"didExitRegion", @"type",
+                                region.identifier, @"name",
+                                nil];
+         
+         [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+         
+         // Cancel the "you will be checked out of C&P in 5 minutes" notification so that user isn't prompted to check out twice
+         [[UIApplication sharedApplication] cancelAllLocalNotifications];
+     }
+ }
+ 
+ - (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error
+{
+    NSLog(@"monitoringDidFailForRegion, ERROR: %@", error);
+}
+ 
+ - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"didfailwitherror");
+}
+     
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -390,10 +519,16 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-	/*
-	 Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-	 If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-	 */
+//    if (self.locationManager.monitoredRegions.count == 0) {
+//        [self.locationManager stopMonitoringSignificantLocationChanges];
+//    }
+//    else {
+//        [self.locationManager startMonitoringSignificantLocationChanges];        
+//    }
+
+    // Stop monitoring for locations; if geofences are set up, they'll automatically work in the background    
+    [self.locationManager stopMonitoringSignificantLocationChanges];    
+//    [self.locationManager stopUpdatingLocation];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -684,6 +819,10 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
     // store it in user defaults
     SET_DEFAULTS(Object, kUDCurrentUser, encodedUser);
+    
+    // Reset the Automatic Checkins default to YES
+    SET_DEFAULTS(Object, kAutomaticCheckins, [NSNumber numberWithBool:YES]);
+
     [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
 }
 
@@ -702,19 +841,40 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 - (void)saveCurrentVenueUserDefaults:(CPVenue *)venue
 {
     // encode the user object
-    NSData *encodedVenue = [NSKeyedArchiver archivedDataWithRootObject:venue];
+    NSData *encodedVenueData = [NSKeyedArchiver archivedDataWithRootObject:venue];
     
     // store it in user defaults
-    SET_DEFAULTS(Object, kUDCurrentVenue, encodedVenue);
+    SET_DEFAULTS(Object, kUDCurrentVenue, encodedVenueData);
     
     // Store venue in pastVenues array if not already present
     NSArray *pastVenues = DEFAULTS(object, kUDPastVenues);
+    pastVenues = [[pastVenues reverseObjectEnumerator] allObjects];
     
-    if (pastVenues == nil || ![pastVenues containsObject:encodedVenue]) {
-        NSMutableArray *mutablePastVenues = [[NSMutableArray alloc] initWithArray:pastVenues];
-        [mutablePastVenues addObject:encodedVenue];
-        SET_DEFAULTS(Object, kUDPastVenues, mutablePastVenues);
+    NSMutableArray *mutablePastVenues = [[NSMutableArray alloc] init];
+
+    NSInteger i = 0;
+    
+    for (NSData *encodedObject in pastVenues) {
+        i++;
+                
+        CPVenue *encodedVenue = (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
+        
+        // Only add the current venue at the very end, so that it will stay on the list the longest
+        if (encodedVenue && encodedVenue.name) {
+            if (![encodedVenue.name isEqualToString:venue.name]) {
+                [mutablePastVenues addObject:encodedObject];
+            }
+        }
+        
+        // Limit number of geofencable venues to 20 due to iOS limitations
+        if (i > 18) {
+            break;
+        }
     }
+    
+    [mutablePastVenues addObject:encodedVenueData];
+
+    SET_DEFAULTS(Object, kUDPastVenues, mutablePastVenues);
 }
 
 - (CPVenue *)currentVenue

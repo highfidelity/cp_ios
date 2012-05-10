@@ -13,6 +13,7 @@
 @synthesize venueName = _venueName;
 @synthesize venueAddress = _venueAddress;
 @synthesize venueSwitch = _venueSwitch;
+@synthesize venue;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -32,8 +33,14 @@
 
 - (IBAction)venueSwitchChanged:(UISwitch *)sender
 {
-    NSLog(@"switch changed: %d", sender.on);
-//    [self setQuietTime:sender.on];
+    NSLog(@"switch changed: %d for venue id %i: %@", sender.on, venue.venueID, venue.name);
+
+    if (!sender.on) {
+        [CPAppDelegate stopMonitoringVenue:venue];
+    }
+    else {
+        [CPAppDelegate startMonitoringVenue:venue];
+    }
 }
 
 @end

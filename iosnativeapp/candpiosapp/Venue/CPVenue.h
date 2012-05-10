@@ -33,6 +33,7 @@
 @property (nonatomic, strong) NSMutableDictionary *activeUsers;
 @property (nonatomic, readonly) NSDictionary *initializationDictionaryJSON;
 @property (nonatomic, assign) bool hasVirtualCheckin;
+@property (nonatomic, assign) bool autoCheckin;
 
 - (CPVenue *)initFromDictionary:(NSDictionary *)json;
 - (NSComparisonResult)sortByDistanceToUser:(CPVenue *)place;

@@ -54,5 +54,6 @@ NSString* const kUDPastVenues = @"pastVenues";
 NSString* const kUDFirstCheckIn = @"firstCheckIn";
 NSString* const kUDCheckoutTime = @"localUserCheckoutTime";
 NSString* const kUDLastLoggedAppVersion = @"lastLoggedAppVersion";
+NSString* const kAutomaticCheckins = @"automaticCheckins";
 
 @end

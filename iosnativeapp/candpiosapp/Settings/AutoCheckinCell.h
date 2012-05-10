@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CPVenue.h"
 
 @interface AutoCheckinCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UILabel *venueName;
 @property (nonatomic, weak) IBOutlet UILabel *venueAddress;
-@property (nonatomic, nonatomic) IBOutlet UISwitch *venueSwitch;
+@property (nonatomic, weak) IBOutlet UISwitch *venueSwitch;
+@property (nonatomic, strong) CPVenue *venue;
+
+- (IBAction)venueSwitchChanged:(id)sender;
 
 @end
