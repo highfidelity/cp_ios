@@ -273,6 +273,10 @@
         [CPUIHelper manageVirtualBadgeForProfileImageView:cell.profilePictureImageView
                                          checkInIsVirtual:user.checkInIsVirtual];
     }
+    else {
+        [CPUIHelper manageVirtualBadgeForProfileImageView:cell.profilePictureImageView
+                                         checkInIsVirtual:NO];
+    }
     
     return cell;
 }
