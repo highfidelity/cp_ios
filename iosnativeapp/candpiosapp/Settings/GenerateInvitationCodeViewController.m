@@ -7,6 +7,7 @@
 //
 
 #import "GenerateInvitationCodeViewController.h"
+#import "PushModalViewControllerFromLeftSegue.h"
 
 @interface GenerateInvitationCodeViewController ()
 
@@ -62,7 +63,7 @@
 #pragma mark actions
 
 - (IBAction)donePressed:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissPushModalViewControllerFromLeftSegue];
 }
 
 #pragma mark -

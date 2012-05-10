@@ -7,6 +7,7 @@
 //
 
 #import "EnterInvitationCodeViewController.h"
+#import "PushModalViewControllerFromLeftSegue.h"
 #import "User.h"
 
 @interface EnterInvitationCodeViewController () <UITextFieldDelegate, UIAlertViewDelegate>
@@ -17,6 +18,7 @@
 - (IBAction)laterButtonAction:(id)sender;
 
 - (void)sendCode:(NSString *)code;
+- (void)dismissLeftOrNormalModalViewControllerAnimated:(BOOL)animated;
 
 @end
 
@@ -27,6 +29,7 @@
 @synthesize codeTextField = _codeTextField;
 
 @synthesize dontShowTextNoticeAfterLaterButtonPressed = _dontShowTextNoticeAfterLaterButtonPressed;
+@synthesize isPushedFromLeft = _isPushedFromLeft;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -102,7 +105,7 @@
     }
     
     if (dismissModalViewController) {
-        [self.navigationController dismissModalViewControllerAnimated:YES];
+        [self dismissLeftOrNormalModalViewControllerAnimated:YES];
     }
 }
 
@@ -123,7 +126,7 @@
             NSDictionary *userInfo = [[json objectForKey:@"payload"] objectForKey:@"user"];
             [CPAppDelegate storeUserLoginDataFromDictionary:userInfo];
             
-            [self.navigationController dismissModalViewControllerAnimated:YES];
+            [self dismissLeftOrNormalModalViewControllerAnimated:YES];
             
             [[[UIAlertView alloc] initWithTitle:@"Invite code accepted!" 
                                         message:nil
@@ -141,6 +144,14 @@
         [SVProgressHUD dismiss];
     }];
 
+}
+
+- (void)dismissLeftOrNormalModalViewControllerAnimated:(BOOL)animated {
+    if (self.isPushedFromLeft) {
+        [self dismissPushModalViewControllerFromLeftSegue];
+    } else {
+        [self.navigationController dismissModalViewControllerAnimated:animated];
+    }
 }
 
 @end

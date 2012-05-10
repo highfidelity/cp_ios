@@ -8,6 +8,7 @@
 
 #import "BalanceViewController.h"
 #import "WalletCell.h"
+#import "PushModalViewControllerFromLeftSegue.h"
 
 #define kRefreshViewHeight 52.0f
 #define kPullText @"Pull down to update"
@@ -318,7 +319,7 @@
 
 - (IBAction)gearPressed:(id)sender
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissPushModalViewControllerFromLeftSegue];
 }
 
 @end

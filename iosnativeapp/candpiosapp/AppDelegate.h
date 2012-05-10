@@ -48,6 +48,7 @@
 - (void)showSignupModalFromViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
          withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed
+                                          pushFromLeft:(BOOL)pushFromLeft
                                               animated:(BOOL)animated;
 - (void)syncCurrentUserWithWebAndCheckValidLogin;
 

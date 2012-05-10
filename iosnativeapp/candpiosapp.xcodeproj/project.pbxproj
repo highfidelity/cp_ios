@@ -259,6 +259,7 @@
 		5FAF89201555FA6600247B95 /* virtual-check-in-badge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAF891E1555FA6600247B95 /* virtual-check-in-badge@2x.png */; };
 		5FAF89241555FA8300247B95 /* pin-virtual-checkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAF89221555FA8300247B95 /* pin-virtual-checkedin.png */; };
 		5FAF89251555FA8300247B95 /* pin-virtual-checkedin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAF89231555FA8300247B95 /* pin-virtual-checkedin@2x.png */; };
+		692552E0155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 692552DF155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m */; };
 		694323A915213D9000EBF585 /* UserResume.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 694323A815213D9000EBF585 /* UserResume.mustache */; };
 		6947F40015372B59005D9958 /* exchange-cards.png in Resources */ = {isa = PBXBuildFile; fileRef = 6947F3FE15372B59005D9958 /* exchange-cards.png */; };
 		6947F40115372B59005D9958 /* exchange-cards@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6947F3FF15372B59005D9958 /* exchange-cards@2x.png */; };
@@ -756,6 +757,8 @@
 		5FAF891E1555FA6600247B95 /* virtual-check-in-badge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "virtual-check-in-badge@2x.png"; sourceTree = "<group>"; };
 		5FAF89221555FA8300247B95 /* pin-virtual-checkedin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-virtual-checkedin.png"; sourceTree = "<group>"; };
 		5FAF89231555FA8300247B95 /* pin-virtual-checkedin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-virtual-checkedin@2x.png"; sourceTree = "<group>"; };
+		692552DE155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushModalViewControllerFromLeftSegue.h; path = Settings/PushModalViewControllerFromLeftSegue.h; sourceTree = "<group>"; };
+		692552DF155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushModalViewControllerFromLeftSegue.m; path = Settings/PushModalViewControllerFromLeftSegue.m; sourceTree = "<group>"; };
 		694323A815213D9000EBF585 /* UserResume.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserResume.mustache; sourceTree = "<group>"; };
 		6947F3FE15372B59005D9958 /* exchange-cards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exchange-cards.png"; path = "User/images/exchange-cards.png"; sourceTree = "<group>"; };
 		6947F3FF15372B59005D9958 /* exchange-cards@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exchange-cards@2x.png"; path = "User/images/exchange-cards@2x.png"; sourceTree = "<group>"; };
@@ -1524,6 +1527,8 @@
 				328452BE155A0EE800CF32F5 /* AutoCheckinTableViewController.m */,
 				328452C1155A17CA00CF32F5 /* AutoCheckinCell.h */,
 				328452C2155A17CA00CF32F5 /* AutoCheckinCell.m */,
+				692552DE155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.h */,
+				692552DF155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -2504,6 +2509,7 @@
 				536E1E881554988300052D40 /* ContactListViewController.m in Sources */,
 				328452BF155A0EE800CF32F5 /* AutoCheckinTableViewController.m in Sources */,
 				328452C3155A17CB00CF32F5 /* AutoCheckinCell.m in Sources */,
+				692552E0155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

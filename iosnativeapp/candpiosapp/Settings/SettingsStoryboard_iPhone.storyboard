@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2182" systemVersion="11D50d" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
     <dependencies>
+        <deployment defaultVersion="1296" identifier="iOS"/>
         <development version="4300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1179"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
     </dependencies>
     <scenes>
         <!--Settings Menu Controller-->
@@ -88,14 +89,29 @@
                         <outlet property="loginBanner" destination="6y0-BL-V0c" id="zUq-H5-8Rb"/>
                         <outlet property="loginButton" destination="i5t-UY-UVC" id="rHl-ax-qm3"/>
                         <outlet property="tableView" destination="B0T-Il-Eqh" id="QWr-pZ-Bem"/>
-                        <segue destination="TbW-wK-vWK" kind="modal" identifier="ShowBalanceFromMenu" modalTransitionStyle="flipHorizontal" id="nld-iM-N11"/>
-                        <segue destination="cJS-DT-22N" kind="modal" identifier="ShowUserSettingsFromMenu" modalTransitionStyle="flipHorizontal" id="Ols-cb-ALz"/>
-                        <segue destination="g4S-1W-OlN" kind="modal" identifier="ShowFederationFromMenu" modalTransitionStyle="flipHorizontal" id="QpH-Nd-etk"/>
-                        <segue destination="LIc-1O-LQB" kind="modal" identifier="ShowInvitationCodeMenu" modalTransitionStyle="flipHorizontal" id="p4O-gm-OdH"/>
+                        <segue destination="cJS-DT-22N" kind="custom" identifier="ShowUserSettingsFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="Ols-cb-ALz"/>
+                        <segue destination="g4S-1W-OlN" kind="custom" identifier="ShowFederationFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="QpH-Nd-etk"/>
+                        <segue destination="LIc-1O-LQB" kind="custom" identifier="ShowInvitationCodeMenu" customClass="PushModalViewControllerFromLeftSegue" id="p4O-gm-OdH"/>
+                        <segue destination="l1s-lq-suM" kind="custom" identifier="ShowBalanceFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="Brh-PE-BHX"/>
                     </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="-2050" y="-557"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="l4p-Xc-Yli">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YX0-dd-TfY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController definesPresentationContext="YES" navigationBarHidden="YES" id="l1s-lq-suM" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="GkE-Wp-VvA">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="TbW-wK-vWK" kind="relationship" relationship="rootViewController" id="W2X-yZ-jF5"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="-1196" y="-1112"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="o7p-JZ-2b9">
@@ -179,13 +195,13 @@ It is good for 24 hours.  </string>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-666" y="-1724"/>
+            <point key="canvasLocation" x="-719" y="-1716"/>
         </scene>
         <!--Balance View Controller-->
         <scene sceneID="d1R-FS-22a">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MPq-6l-85G" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController storyboardIdentifier="UserWalletViewController" id="TbW-wK-vWK" customClass="BalanceViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserWalletViewController" modalTransitionStyle="crossDissolve" id="TbW-wK-vWK" customClass="BalanceViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UG1-be-cTC">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -363,6 +379,7 @@ It is good for 24 hours.  </string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Fh6-n4-jwx"/>
                     <connections>
                         <outlet property="balanceScrollView" destination="Ldr-Nv-zwj" id="cCX-eA-bg7"/>
                         <outlet property="pullDownLabel" destination="l2U-m4-wzo" id="VvW-zK-ASn"/>
@@ -373,7 +390,7 @@ It is good for 24 hours.  </string>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-1196" y="-1107"/>
+            <point key="canvasLocation" x="-719" y="-1103"/>
         </scene>
         <!--User Settings Table View Controller - Profile-->
         <scene sceneID="YCm-Gg-tIG">
@@ -645,7 +662,7 @@ It is good for 24 hours.  </string>
                     </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="-719" y="-492"/>
+            <point key="canvasLocation" x="-719" y="-280"/>
         </scene>
         <!--Job Category View Controller - Job Categories-->
         <scene sceneID="Kag-ik-hPh">
@@ -712,7 +729,7 @@ It is good for 24 hours.  </string>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-157" y="-518"/>
+            <point key="canvasLocation" x="-21" y="-510"/>
         </scene>
         <!--Profile Notifications View Controller - Notifications-->
         <scene sceneID="Dbf-Iq-Bi0">
@@ -880,7 +897,7 @@ It is good for 24 hours.  </string>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="288" y="-518"/>
+            <point key="canvasLocation" x="-28" y="90"/>
         </scene>
         <!--Linked Accounts Table View Controller - Linked Accounts-->
         <scene sceneID="nc2-v7-E52">
@@ -955,7 +972,7 @@ It is good for 24 hours.  </string>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-326" y="116"/>
+            <point key="canvasLocation" x="-28" y="660"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Cuu-5f-AYW">
@@ -1059,7 +1076,7 @@ It is good for 24 hours.  </string>
                     </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="-670" y="1214"/>
+            <point key="canvasLocation" x="-34" y="1258"/>
         </scene>
         <!--Add Funds View Controller-->
         <scene sceneID="LYN-xf-xk9">
@@ -1093,7 +1110,7 @@ It is good for 24 hours.  </string>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-193" y="-1107"/>
+            <point key="canvasLocation" x="284" y="-1103"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="a73-2I-eFa">
@@ -1111,7 +1128,7 @@ It is good for 24 hours.  </string>
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-670" y="-1107"/>
+            <point key="canvasLocation" x="-193" y="-1103"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ouw-gO-OVS">
@@ -1129,7 +1146,7 @@ It is good for 24 hours.  </string>
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-1196" y="-492"/>
+            <point key="canvasLocation" x="-1196" y="-280"/>
         </scene>
     </scenes>
     <resources>
@@ -1201,6 +1218,9 @@ It is good for 24 hours.  </string>
         </class>
         <class className="LinkedAccountsTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedAccountsTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="gearPressed"/>
+            </relationships>
         </class>
         <class className="ProfileNotificationsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ProfileNotificationsViewController.h"/>

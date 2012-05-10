@@ -374,6 +374,7 @@
         if ([kEnterInviteFakeSegueID isEqual:segueID]) {
             [[AppDelegate instance] showEnterInvitationCodeModalFromViewController:self
                                      withDontShowTextNoticeAfterLaterButtonPressed:YES
+                                                                      pushFromLeft:YES
                                                                           animated:YES];
         } else {
             [self performSegueWithIdentifier:segueID sender:self];

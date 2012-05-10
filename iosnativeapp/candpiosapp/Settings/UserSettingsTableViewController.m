@@ -8,6 +8,7 @@
 
 #import "UserSettingsTableViewController.h"
 #import "JobCategoryViewController.h"
+#import "PushModalViewControllerFromLeftSegue.h"
 
 #define tableCellSubviewTag 7909
 #define spinnerTag  7910
@@ -405,7 +406,7 @@
 
 -(IBAction)gearPressed:(id)sender
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissPushModalViewControllerFromLeftSegue];
 }
 
 -(IBAction)chooseNewProfileImage:(id)sender

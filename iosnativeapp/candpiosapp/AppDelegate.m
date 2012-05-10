@@ -17,6 +17,7 @@
 #import "CPAlertView.h"
 #import "VenueInfoViewController.h"
 #import "UIButton+AnimatedClockHand.h"
+#import "PushModalViewControllerFromLeftSegue.h"
 
 #define kContactRequestAPNSKey @"contact_request"
 #define kContactRequestAcceptedAPNSKey @"contact_accepted"
@@ -152,6 +153,7 @@
 
 - (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
          withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed
+                                          pushFromLeft:(BOOL)pushFromLeft
                                               animated:(BOOL)animated
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
@@ -161,7 +163,15 @@
     EnterInvitationCodeViewController *controller = (EnterInvitationCodeViewController *)navigationController.topViewController;
     controller.dontShowTextNoticeAfterLaterButtonPressed = dontShowTextNoticeAfterLaterButtonPressed;
     
-    [viewController presentModalViewController:navigationController animated:animated];
+    if (pushFromLeft) {
+        controller.isPushedFromLeft = YES;
+        PushModalViewControllerFromLeftSegue *segue = [[PushModalViewControllerFromLeftSegue alloc] initWithIdentifier:nil
+                                                                                                                source:viewController
+                                                                                                           destination:navigationController];
+        [segue perform];
+    } else {
+        [viewController presentModalViewController:navigationController animated:animated];
+    }
 }
 
 - (void)syncCurrentUserWithWebAndCheckValidLogin {
