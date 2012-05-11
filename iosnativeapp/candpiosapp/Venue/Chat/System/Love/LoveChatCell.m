@@ -14,7 +14,7 @@
 
 + (CGRect)chatEntryFrame
 {
-    return CGRectMake(111, 6, 175, 16);
+    return CGRectMake(111, 6, 125, 16);
 }
 
 + (UIFont *)chatEntryFont
