@@ -38,8 +38,6 @@
     // get the user ID
     NSString *userID = [userDict objectForKey:@"user_id"];
     
-    NSLog(@"%@, %@", userID, userDict.description);
-    
     // check if we have this user in the map dataset
     User *entryUser = [[CPAppDelegate settingsMenuController].mapTabController userFromActiveUsers:[userID integerValue]];
     
