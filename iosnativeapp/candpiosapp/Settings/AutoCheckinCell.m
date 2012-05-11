@@ -33,14 +33,17 @@
 
 - (IBAction)venueSwitchChanged:(UISwitch *)sender
 {
-    NSLog(@"switch changed: %d for venue id %i: %@", sender.on, venue.venueID, venue.name);
-
     if (!sender.on) {
+        venue.autoCheckin = NO;
         [CPAppDelegate stopMonitoringVenue:venue];
     }
     else {
+        venue.autoCheckin = YES;
         [CPAppDelegate startMonitoringVenue:venue];
     }
+
+    // Save the changes to pastVenues
+    [CPAppDelegate updatePastVenue:venue];
 }
 
 @end

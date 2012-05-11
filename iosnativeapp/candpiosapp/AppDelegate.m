@@ -400,43 +400,35 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 
 - (void)startMonitoringVenue:(CPVenue *)venue
 {
+    // Set default autoCheckin to yes, so if the user re-enables it later it'll default to On to cut down on time to restore auto checkins
+    venue.autoCheckin = YES;
+
     // Save current venue to be able to auto checkout in the future, and also used in other places in the app to determine checkin status
     [self saveCurrentVenueUserDefaults:venue];
 
     // Only start monitoring a region if automaticCheckins is YES
     BOOL automaticCheckins = [DEFAULTS(object, kAutomaticCheckins) boolValue];
 
-    if (automaticCheckins) {
-        NSLog(@"monitor venue: %@", venue.name);
-        
+    if (automaticCheckins) {        
         CLRegion* region = [self getRegionForVenue:venue];
         
         [self.locationManager startMonitoringForRegion:region
                                        desiredAccuracy:kCLLocationAccuracyNearestTenMeters];
     }
-    
-    NSLog(@"current # of monitored regions: %i", self.locationManager.monitoredRegions.count);
 }
 
 - (void)stopMonitoringVenue:(CPVenue *)venue
 {
+    venue.autoCheckin = NO;
+    
     CLRegion* region = [self getRegionForVenue:venue];
     [self.locationManager stopMonitoringForRegion:region];
-
-    NSLog(@"current # of monitored regions after deleting: %i", self.locationManager.monitoredRegions.count);
-    
-    //    if (self.locationManager.monitoredRegions.count > 19) {
-//        for (CLRegion *reg in [self.locationManager monitoredRegions]) {
-//            [self.locationManager stopMonitoringForRegion:reg];
-//        }
-//    }
-
 }
 
 - (void)startStandardUpdates
 {
-    // Create the location manager if this object does not
-    // already have one.
+    // Create the location manager if this object does not already have one.
+
     if (nil == self.locationManager)
         self.locationManager = [[CLLocationManager alloc] init];
     
@@ -454,58 +446,50 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     }
 }
  
- // Delegate method from the CLLocationManagerDelegate protocol.
- - (void)locationManager:(CLLocationManager *)manager
- didUpdateToLocation:(CLLocation *)newLocation
- fromLocation:(CLLocation *)oldLocation
-{
-    // Process changes here
+- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
+    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+    if (localNotif) {
+        NSString *alertText = [NSString stringWithFormat:@"Do you want to check in at %@?", region.identifier];
+        
+        localNotif.alertBody = alertText;
+        localNotif.alertAction = @"Open";
+        localNotif.soundName = UILocalNotificationDefaultSoundName;
+        
+        localNotif.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @"didEnterRegion", @"type",
+                               region.identifier, @"name",
+                               nil];
+        
+        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];        
+    }
 }
  
- - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-     if (localNotif) {
-         NSString *alertText = [NSString stringWithFormat:@"Do you want to check in at %@?", region.identifier];
-         
-         localNotif.alertBody = alertText;
-         localNotif.alertAction = @"Check In";
-         localNotif.soundName = UILocalNotificationDefaultSoundName;
-         
-         localNotif.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                @"didEnterRegion", @"type",
-                                region.identifier, @"name",
-                                nil];
-         
-         [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];        
-     }
- }
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+    // Only show check out prompt if user is currently logged in to the venue in question
+    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+    
+    CPVenue *venue = [CPAppDelegate currentVenue];
+    
+    if ([CPAppDelegate userCheckedIn] && venue && venue.name && [venue.name isEqualToString:region.identifier] && localNotif) {
+        NSString *alertText = [NSString stringWithFormat:@"Do you want to check out of %@?", region.identifier];
+        
+        localNotif.alertBody = alertText;
+        localNotif.alertAction = @"Check Out";
+        localNotif.soundName = UILocalNotificationDefaultSoundName;
+        
+        localNotif.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @"didExitRegion", @"type",
+                               region.identifier, @"name",
+                               nil];
+        
+        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+        
+        // Cancel the "you will be checked out of C&P in 5 minutes" notification so that user isn't prompted to check out twice
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    }
+}
  
- - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
-     // Only show check out prompt if user is currently logged in to the venue in question
-     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-     
-     CPVenue *venue = [CPAppDelegate currentVenue];
-     
-     if ([CPAppDelegate userCheckedIn] && venue && venue.name && [venue.name isEqualToString:region.identifier] && localNotif) {
-         NSString *alertText = [NSString stringWithFormat:@"Do you want to check out of %@?", region.identifier];
-         
-         localNotif.alertBody = alertText;
-         localNotif.alertAction = @"Check Out";
-         localNotif.soundName = UILocalNotificationDefaultSoundName;
-         
-         localNotif.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                @"didExitRegion", @"type",
-                                region.identifier, @"name",
-                                nil];
-         
-         [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
-         
-         // Cancel the "you will be checked out of C&P in 5 minutes" notification so that user isn't prompted to check out twice
-         [[UIApplication sharedApplication] cancelAllLocalNotifications];
-     }
- }
- 
- - (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error
+- (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error
 {
     NSLog(@"monitoringDidFailForRegion, ERROR: %@", error);
 }
@@ -515,7 +499,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     NSLog(@"didfailwitherror");
 }
      
-
 - (void)applicationWillResignActive:(UIApplication *)application
 {
 	/*
@@ -660,8 +643,10 @@ didReceiveLocalNotification:(UILocalNotification *)notif
     NSDictionary *userDict = notif.userInfo;
     
     BOOL showAlert = NO;
+    BOOL showActionSheet = YES;
     NSString *alertText;
     NSString *cancelText;
+    NSString *neverText = @"Never for this location";
     NSString *otherText;
     NSInteger tagNumber;
 
@@ -680,18 +665,12 @@ didReceiveLocalNotification:(UILocalNotification *)notif
         }
     }
     else if (userDict && [[userDict objectForKey:@"type"] isEqualToString:@"didEnterRegion"]) {
-        if (app.applicationState == UIApplicationStateActive) {
-            // Show didEnterRegion alert
-            showAlert = YES;
-            alertText = notif.alertBody;
-            otherText = @"Check In";
-            cancelText = @"Cancel";
-            tagNumber = 602;
-        }
-        else {
-            // Take the user to the Venue page as they chose to Check In
-            [self loadVenueView:[userDict objectForKey:@"name"]];
-        }
+        // Show didEnterRegion alert
+        showActionSheet = YES;
+        alertText = notif.alertBody;
+        otherText = @"Check In";
+        cancelText = @"Cancel";
+        tagNumber = 602;
     }
     else if ([notif.alertAction isEqual:@"Check Out"]) {
         // For regular timeout checkouts
@@ -701,12 +680,24 @@ didReceiveLocalNotification:(UILocalNotification *)notif
         otherText = @"View";
     }
 
-    if (showAlert) {
-        CPAlertView *alertView = [[CPAlertView alloc] initWithTitle:alertText
-                                                            message:nil
-                                                           delegate:self
-                                                  cancelButtonTitle:cancelText
-                                                  otherButtonTitles:otherText, nil];
+    CPAlertView *alertView;
+    
+    if (showActionSheet) {
+        alertView = [[CPAlertView alloc] initWithTitle:alertText
+                                               message:nil
+                                              delegate:self
+                                     cancelButtonTitle:cancelText
+                                     otherButtonTitles:otherText, neverText, nil];
+    }
+    else {
+        alertView = [[CPAlertView alloc] initWithTitle:alertText
+                                               message:nil
+                                              delegate:self
+                                     cancelButtonTitle:cancelText
+                                     otherButtonTitles:otherText, nil];        
+    }
+
+    if (alertView) {
         alertView.context = notif;
         
         if (tagNumber) {
@@ -811,6 +802,9 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     currUser.userID = [userId intValue];
     [currUser setEnteredInviteCodeFromJSONString:[userInfo objectForKey:@"entered_invite_code"]];
     [currUser setJoinDateFromJSONString:[userInfo objectForKey:@"join_date"]];
+
+    // Reset the Automatic Checkins default to YES
+    SET_DEFAULTS(Object, kAutomaticCheckins, [NSNumber numberWithBool:YES]);
     
     [self saveCurrentUserToUserDefaults:currUser];
 }
@@ -827,9 +821,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     // store it in user defaults
     SET_DEFAULTS(Object, kUDCurrentUser, encodedUser);
     
-    // Reset the Automatic Checkins default to YES
-    SET_DEFAULTS(Object, kAutomaticCheckins, [NSNumber numberWithBool:YES]);
-
     [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
 }
 
@@ -845,43 +836,54 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     }
 }
 
-- (void)saveCurrentVenueUserDefaults:(CPVenue *)venue
+- (void)updatePastVenue:(CPVenue *)venue
 {
+    // Store updated venue in pastVenues array
+
     // encode the user object
-    NSData *encodedVenueData = [NSKeyedArchiver archivedDataWithRootObject:venue];
-    
-    // store it in user defaults
-    SET_DEFAULTS(Object, kUDCurrentVenue, encodedVenueData);
-    
-    // Store venue in pastVenues array if not already present
+    NSData *newVenueData = [NSKeyedArchiver archivedDataWithRootObject:venue];
+
     NSArray *pastVenues = DEFAULTS(object, kUDPastVenues);
+    
+    // Reverse order so that the oldest venues are knocked out
     pastVenues = [[pastVenues reverseObjectEnumerator] allObjects];
     
     NSMutableArray *mutablePastVenues = [[NSMutableArray alloc] init];
-
+    
     NSInteger i = 0;
     
     for (NSData *encodedObject in pastVenues) {
         i++;
-                
-        CPVenue *encodedVenue = (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
+        
+        CPVenue *unencodedVenue = (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
         
         // Only add the current venue at the very end, so that it will stay on the list the longest
-        if (encodedVenue && encodedVenue.name) {
-            if (![encodedVenue.name isEqualToString:venue.name]) {
+        if (unencodedVenue && unencodedVenue.name) {
+            if (![unencodedVenue.name isEqualToString:venue.name]) {
                 [mutablePastVenues addObject:encodedObject];
             }
         }
         
-        // Limit number of geofencable venues to 20 due to iOS limitations
+        // Limit number of geofencable venues to 20 due to iOS limitations; remove all of the old venues from monitoring
         if (i > 18) {
-            break;
+            [self stopMonitoringVenue:unencodedVenue];
         }
     }
     
-    [mutablePastVenues addObject:encodedVenueData];
+    [mutablePastVenues addObject:newVenueData];
+    
+    SET_DEFAULTS(Object, kUDPastVenues, mutablePastVenues);    
+}
 
-    SET_DEFAULTS(Object, kUDPastVenues, mutablePastVenues);
+- (void)saveCurrentVenueUserDefaults:(CPVenue *)venue
+{
+    // encode the user object
+    NSData *newVenueData = [NSKeyedArchiver archivedDataWithRootObject:venue];
+    
+    // store it in user defaults
+    SET_DEFAULTS(Object, kUDCurrentVenue, newVenueData);
+
+    [self updatePastVenue:venue];
 }
 
 - (CPVenue *)currentVenue
@@ -1036,12 +1038,25 @@ void SignalHandler(int sig) {
         // Log user out immediately if they tapped Check Out
         [self checkOutNow];
     }
-    else if (alertView.tag == 602 && alertView.firstOtherButtonIndex == buttonIndex) {
+    else if (alertView.tag == 602) {
+        // didEnter action chosen, user can either check in or choose to always ignore this location
+
         CPAlertView *cpAlertView = (CPAlertView *)alertView;
         UILocalNotification *notif = cpAlertView.context;
 
-        if (notif && notif.userInfo) {
-            [self loadVenueView:[notif.userInfo objectForKey:@"name"]];
+        if (alertView.firstOtherButtonIndex == buttonIndex) {
+            // Take that person to the check in screen
+
+            if (notif && notif.userInfo) {
+                [self loadVenueView:[notif.userInfo objectForKey:@"name"]];
+            }
+        }
+        else if (buttonIndex == 2) {
+            // Set auto check in to off for this venue
+            
+            CPVenue *venue = [self venueWithName:[notif.userInfo objectForKey:@"name"]];
+            [self stopMonitoringVenue:venue];
+            [self updatePastVenue:venue];
         }
     }
 }

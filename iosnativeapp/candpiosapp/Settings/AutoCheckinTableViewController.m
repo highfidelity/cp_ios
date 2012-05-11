@@ -11,14 +11,14 @@
 #import "AutoCheckinCell.h"
 
 @interface AutoCheckinTableViewController ()
-@property (strong, nonatomic) NSMutableArray *placesArray;
+@property (nonatomic, strong) NSMutableArray *placesArray;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @end
 
 @implementation AutoCheckinTableViewController
 
 @synthesize globalCheckinSwitch = _globalCheckinSwitch;
-@synthesize placesArray;
+@synthesize placesArray = _placesArray;
 @synthesize locationManager = _locationManager;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -53,8 +53,8 @@
 }
 
 - (void)setupPlacesArray {
-    if (!placesArray) {
-        placesArray = [[NSMutableArray alloc] init];
+    if (!self.placesArray) {
+        self.placesArray = [[NSMutableArray alloc] init];
     }
     
     NSArray *pastVenues = DEFAULTS(object, kUDPastVenues);
@@ -64,19 +64,19 @@
         
         if (venue && venue.name) {
 //            NSLog(@"venue found: %@", venue.name);
-            [placesArray addObject:venue];
+            [self.placesArray addObject:venue];
         }
     }
    
     NSArray *sortedArray;
     
-    sortedArray = [placesArray sortedArrayUsingComparator:^(id a, id b) {
+    sortedArray = [self.placesArray sortedArrayUsingComparator:^(id a, id b) {
         NSString *first = [(CPVenue *)a name];
         NSString *second = [(CPVenue *)b name];
         return [first compare:second];
     }];
     
-    placesArray = [sortedArray mutableCopy];
+    self.placesArray = [sortedArray mutableCopy];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -112,7 +112,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (placesArray.count > 0) {
+    if (self.placesArray.count > 0) {
         return 1;
     }
     else {
@@ -122,8 +122,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (placesArray.count > 0) {
-        return placesArray.count;
+    if (self.placesArray.count > 0) {
+        return self.placesArray.count;
     }
     else {
         return 0;
@@ -135,38 +135,46 @@
     static NSString *CellIdentifier = @"AutoCheckinCell";
     AutoCheckinCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
-    CPVenue *venue = [placesArray objectAtIndex:indexPath.row];
+    CPVenue *venue = [self.placesArray objectAtIndex:indexPath.row];
     
     if (venue) {
         cell.venueName.text = venue.name;
         cell.venueAddress.text = venue.address;
         cell.venue = venue;
+        
+        cell.venueSwitch.on = venue.autoCheckin;
     }
-
-    
-    // Configure the cell...
     
     return cell;
 }
 
 - (IBAction)globalCheckinChanged:(UISwitch *)sender {
-    NSLog(@"new value: %i", sender.on);
-
+    // Store the choice in NSUserDefaults
+    SET_DEFAULTS(Object, kAutomaticCheckins, [NSNumber numberWithBool:sender.on]);
+    
     if (!sender.on) {
-        [placesArray removeAllObjects];
-//        [[CPAppDelegate locationManager] stopMonitoringSignificantLocationChanges];
-//        [[CPAppDelegate locationManager] stopUpdatingLocation];
+        for (CPVenue *venue in self.placesArray) {
+            [CPAppDelegate stopMonitoringVenue:venue];
+        }
+        
+        [self.placesArray removeAllObjects];
 
+        // Clear out all currently monitored regions in order to stop using geofencing altogether
         for (CLRegion *reg in [[CPAppDelegate locationManager] monitoredRegions]) {
             [[CPAppDelegate locationManager] stopMonitoringForRegion:reg];
         }
     }
     else {
         [self setupPlacesArray];
-//        [[CPAppDelegate locationManager] startMonitoringSignificantLocationChanges];
+        
+        // Iterate over all past venues to start monitoring those with autoCheckin enabled        
+        for (CPVenue *venue in self.placesArray) {
+            NSLog(@"auto: %i, venue: %@", venue.autoCheckin, venue.name);
+            if (venue.autoCheckin) {
+                [CPAppDelegate startMonitoringVenue:venue];
+            }
+        }
     }
-
-    SET_DEFAULTS(Object, kAutomaticCheckins, [NSNumber numberWithBool:sender.on]);
     
     [self.tableView reloadData];
 }
