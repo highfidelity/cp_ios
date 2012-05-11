@@ -153,6 +153,8 @@
     SET_DEFAULTS(Object, kAutomaticCheckins, [NSNumber numberWithBool:sender.on]);
     
     if (!sender.on) {
+        // Disable auto checkins
+        
         for (CPVenue *venue in self.placesArray) {
             [CPAppDelegate stopMonitoringVenue:venue];
         }
@@ -163,6 +165,8 @@
         for (CLRegion *reg in [[CPAppDelegate locationManager] monitoredRegions]) {
             [[CPAppDelegate locationManager] stopMonitoringForRegion:reg];
         }
+        
+        [FlurryAnalytics logEvent:@"automaticCheckinsDisabled"];
     }
     else {
         [self setupPlacesArray];
@@ -174,6 +178,8 @@
                 [CPAppDelegate startMonitoringVenue:venue];
             }
         }
+
+        [FlurryAnalytics logEvent:@"automaticCheckinsEnabled"];
     }
     
     [self.tableView reloadData];

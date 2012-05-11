@@ -414,6 +414,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
         
         [self.locationManager startMonitoringForRegion:region
                                        desiredAccuracy:kCLLocationAccuracyNearestTenMeters];
+
+        [CPapi saveVenueAutoCheckinStatus:venue];
     }
 }
 
@@ -423,6 +425,10 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     
     CLRegion* region = [self getRegionForVenue:venue];
     [self.locationManager stopMonitoringForRegion:region];
+
+    [CPapi saveVenueAutoCheckinStatus:venue];
+    
+    [FlurryAnalytics logEvent:@"automaticCheckinLocationDisabled"];
 }
 
 - (void)startStandardUpdates

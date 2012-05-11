@@ -124,4 +124,6 @@
                         lastChatID:(NSString *)lastChatIDString
                               queue:(NSOperationQueue *)chatQueue
                         completion:(void (^)(NSDictionary *, NSError *))completion;
+
++ (void)saveVenueAutoCheckinStatus:(CPVenue *)venue;
 @end

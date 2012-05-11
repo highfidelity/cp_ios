@@ -959,4 +959,20 @@
     [self makeHTTPRequestWithAction:@"sendVenueChat" withParameters:parameters queue:chatQueue timeout:5 completion:completion];
 }
 
++ (void)saveVenueAutoCheckinStatus:(CPVenue *)venue
+{
+    NSLog(@"Saving checkin status of %d for venue: %@", venue.autoCheckin, venue.name);
+
+    NSInteger currentUserID = [[CPAppDelegate currentUser] userID];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setValue:[NSString stringWithFormat:@"%d", currentUserID] forKey:@"user_id"];
+    [parameters setValue:[NSString stringWithFormat:@"%d", venue.venueID] forKey:@"venue_id"];
+    [parameters setValue:[NSString stringWithFormat:@"%d", venue.autoCheckin] forKey:@"autocheckin"];
+    
+    [self makeHTTPRequestWithAction:@"saveVenueAutoCheckinStatus"
+                     withParameters:parameters
+                    responseHandler:nil];
+}
+
 @end
