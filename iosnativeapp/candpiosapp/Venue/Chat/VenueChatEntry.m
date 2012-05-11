@@ -17,7 +17,7 @@
 @synthesize date = _date;
 @synthesize delegate = _delegate;
 
-- (VenueChatEntry *)initWithJSON:(NSDictionary *)json dateFormatter:(NSDateFormatter *)dateFormatter
+- (VenueChatEntry *)initFromJSON:(NSDictionary *)json dateFormatter:(NSDateFormatter *)dateFormatter
 {
     if (self = [super init]) {
         
@@ -27,29 +27,36 @@
         
         self.date = [dateFormatter dateFromString:[json objectForKey:@"date"]];
         
-        // get the user ID
-        NSString *userID = [json objectForKey:@"user_id"];
-        
-        // check if we have this user in the map dataset
-        User *entryUser = [[CPAppDelegate settingsMenuController].mapTabController userFromActiveUsers:[userID integerValue]];
-        
-        if (!entryUser) {
-            // we didn't get the user from the activeUsers from the map
-            // so we'll make one here
-            entryUser = [[User alloc] init];
-            entryUser.userID = [userID intValue];
-            entryUser.nickname = [json objectForKey:@"author"];
-            
-            NSString *photoString = [json objectForKey:@"filename"];
-            if (![photoString isKindOfClass:[NSNull class]]) {
-                entryUser.urlPhoto = [NSURL URLWithString:photoString];
-            }            
-        }
-        
         // set the user property
-        self.user = entryUser;
+        self.user = [self userFromDictionaryOrActiveUsers:json];
     }
     return self;
+}
+
+- (User *)userFromDictionaryOrActiveUsers:(NSDictionary *)userDict
+{
+    // get the user ID
+    NSString *userID = [userDict objectForKey:@"user_id"];
+    
+    NSLog(@"%@, %@", userID, userDict.description);
+    
+    // check if we have this user in the map dataset
+    User *entryUser = [[CPAppDelegate settingsMenuController].mapTabController userFromActiveUsers:[userID integerValue]];
+    
+    if (!entryUser) {
+        // we didn't get the user from the activeUsers from the map
+        // so we'll make one here
+        entryUser = [[User alloc] init];
+        entryUser.userID = [userID intValue];
+        entryUser.nickname = [userDict objectForKey:@"author"];
+        
+        NSString *photoString = [userDict objectForKey:@"filename"];
+        if (![photoString isKindOfClass:[NSNull class]]) {
+            entryUser.urlPhoto = [NSURL URLWithString:photoString];
+        }            
+    }
+    
+    return entryUser;
 }
 
 // override the isEqual method to be able to tell if we have already added a chat entry

@@ -8,6 +8,7 @@
 
 #import "VenueChat.h"
 #import "VenueChatEntry.h"
+#import "LoveChatEntry.h"
 
 #define MAJOR_TIMESTAMP_INTERVAL_FORMAT @"MMMM dd, yyyy"
 #define MINOR_TIMESTAMP_INTERVAL_FORMAT @"h:mma - MMMM dd, yyyy"
@@ -168,45 +169,56 @@
         
         // go through the chat entries and add them to the array of chat entries
         for (NSDictionary *entryJSON in entries) {
-            // create a VenueChatEntry and add it to the array of chat entries
-            VenueChatEntry *entry = [[VenueChatEntry alloc] initWithJSON:entryJSON dateFormatter:self.entryDateFormatter]; 
+             
+            // check if this is a system entry
+            NSDictionary *systemData = [entryJSON objectForKey:@"is_system"];
             
-            // if this entry is after the time interval then add it to the count
-            if ([entry.date compare:dateAtInterval] != NSOrderedAscending) {
-                // check if we've already counted this user
-                NSString *userIDString = [NSString stringWithFormat:@"%d", entry.user.userID];
-                if (![self.usersCounted containsObject:userIDString]) {
-                    self.activeChattersDuringInterval += 1;
-                    [self.usersCounted addObject:userIDString];
+            id entry;
+            
+            if ([systemData isKindOfClass:[NSNull class]]) {
+                // create a VenueChatEntry and add it to the array of chat entries
+                entry = [[VenueChatEntry alloc] initFromJSON:entryJSON dateFormatter:self.entryDateFormatter]; 
+                
+                // if this entry is after the time interval then add it to the count
+                if ([[entry date] compare:dateAtInterval] != NSOrderedAscending) {
+                    // check if we've already counted this user
+                    NSString *userIDString = [NSString stringWithFormat:@"%d", ((VenueChatEntry *)entry).user.userID];
+                    if (![self.usersCounted containsObject:userIDString]) {
+                        self.activeChattersDuringInterval += 1;
+                        [self.usersCounted addObject:userIDString];
+                    }
                 }
-            }
+
+            } else {
+                entry = [[LoveChatEntry alloc] initFromJSON:entryJSON dateFormatter:self.entryDateFormatter];
+            }            
             
             if (!self.hasLoaded) {
                 // only do timestamping on first load
                 
                 // grab the month, day, year units from this entry
-                NSDateComponents *entryComps = [cal components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:entry.date];
+                NSDateComponents *entryComps = [cal components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:[entry date]];
                 
                 
                 // check if this entry was more than 1 day ago
                 if (entryComps.year != nowComps.year || entryComps.month != nowComps.month || entryComps.day != nowComps.day) {
                     // check if we already have a timestamp for this day
                     [self.timestampDateFormatter setDateFormat:MAJOR_TIMESTAMP_INTERVAL_FORMAT];
-                    if (![self.previousTimestamp isEqualToString:[self.timestampDateFormatter stringFromDate:entry.date]]) {
-                        self.previousTimestamp = [self.timestampDateFormatter stringFromDate:entry.date];
+                    if (![self.previousTimestamp isEqualToString:[self.timestampDateFormatter stringFromDate:[entry date]]]) {
+                        self.previousTimestamp = [self.timestampDateFormatter stringFromDate:[entry date]];
                         [mutableChatEntries addObject:self.previousTimestamp];
                     }
                 } else {
                     // same day but we need timestamps every 15 minutes
-                    int seconds = [now timeIntervalSinceDate:entry.date];
+                    int seconds = [now timeIntervalSinceDate:[entry date]];
                     int leftToMinor = 900 - (seconds % 900);
-                    NSDate *interval = [NSDate dateWithTimeInterval:-leftToMinor sinceDate:entry.date];
+                    NSDate *interval = [NSDate dateWithTimeInterval:-leftToMinor sinceDate:[entry date]];
                     
                     [self.timestampDateFormatter setDateFormat:MINOR_TIMESTAMP_INTERVAL_FORMAT];
                     // check if we already have a timestamp for this minor interval
                     if (![self.previousTimestamp isEqualToString:[self.timestampDateFormatter stringFromDate:interval]]) {
                         self.previousTimestamp = [self.timestampDateFormatter stringFromDate:interval];
-                        [mutableChatEntries addObject:[self.timestampDateFormatter stringFromDate:entry.date]];
+                        [mutableChatEntries addObject:[self.timestampDateFormatter stringFromDate:[entry date]]];
                     }
                 }
             } else if (self.pendingTimestamp) {

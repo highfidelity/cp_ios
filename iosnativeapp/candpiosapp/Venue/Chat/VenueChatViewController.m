@@ -8,6 +8,9 @@
 
 #import "VenueChatViewController.h"
 #import "VenueChatCell.h"
+#import "VenueChatEntry.h"
+#import "LoveChatCell.h"
+#import "LoveChatEntry.h"
 #import "UIImageView+AFNetworking.h"
 #import "HPGrowingTextView.h"
 #import "HPTextViewInternal.h"
@@ -491,12 +494,18 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    // The font and size values in here are manually pulled from the VenueChatCell spec.
-    // They will need to be changed here too if the cell design is changed
-    if ([[self.venueChat.chatEntries objectAtIndex:indexPath.row] isKindOfClass:[VenueChatEntry class]]) {
-        
+    // The font and size values in here are pulled from the corresponding ChatCell class
+    if ([[self.venueChat.chatEntries objectAtIndex:indexPath.row] isKindOfClass:[VenueChatEntry class]]) {        
         VenueChatEntry *chatEntry = [self.venueChat.chatEntries objectAtIndex:indexPath.row];
-        CGSize labelSize = [chatEntry.text sizeWithFont:[VenueChatCell chatEntryFont] constrainedToSize:CGSizeMake([VenueChatCell chatEntryFrame].size.width, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
+        
+        Class cellClass;
+        if ([chatEntry isKindOfClass:[LoveChatEntry class]]) {
+            cellClass = [LoveChatCell class];
+        } else {
+            cellClass = [VenueChatCell class];
+        }
+        
+        CGSize labelSize = [chatEntry.text sizeWithFont:[cellClass chatEntryFont] constrainedToSize:CGSizeMake([cellClass chatEntryFrame].size.width, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
         
         // keep a 9 point margin on either side of the label
         labelSize.height += 18;
@@ -512,45 +521,47 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([[self.venueChat.chatEntries objectAtIndex:indexPath.row] isKindOfClass:[VenueChatEntry class]]) {
-        static NSString *ChatCellIdentifier = @"VenueChatCell";
-        
-        VenueChatCell *cell = [[VenueChatCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ChatCellIdentifier];
-        if (cell == nil) {
-            // crash if this cell is nil
-            // something's wrong
-        }
         
         VenueChatEntry *entry = [self.venueChat.chatEntries objectAtIndex:indexPath.row];
-        User *chatUser = entry.user;
+        VenueChatCell *cell;
         
-        cell.chatEntry.text = entry.text;
+        // check if this is an entry for sent love
+        if ([entry isKindOfClass:[LoveChatEntry class]]) {
+            static NSString *LoveCellIdentifier = @"LoveChatCell";
+            
+            // grab the cell
+            cell = [self.tableView dequeueReusableCellWithIdentifier:LoveCellIdentifier];
+            if (!cell) {
+                cell = [[LoveChatCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:LoveCellIdentifier];
+            }
+            
+            
+            // setup thumbnail buttons for the sender and receiver
+            [self thumbnailButtonForButton:cell.userThumbnail photoURL:((LoveChatEntry *) entry).sender.urlPhoto row:indexPath.row];
+            [self thumbnailButtonForButton:((LoveChatCell *) cell).recipientThumbnail photoURL:((LoveChatEntry *) entry).recipient.urlPhoto row:indexPath.row];
+            
+            // use a helper method to add the entry text and resize the cell
+            [self textForCell:cell withEntry:entry];
+            
+            return cell;
+        } else {
+            // this is a regular chat message            
+            static NSString *ChatCellIdentifier = @"VenueChatCell";
+            
+            // grab the cell
+            VenueChatCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ChatCellIdentifier];
+            if (!cell) {
+                cell = [[VenueChatCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ChatCellIdentifier];
+            }
+            
+            // setup a thumbnail button for the entry author
+            [self thumbnailButtonForButton:cell.userThumbnail photoURL:entry.user.urlPhoto row:indexPath.row]; 
         
-        // change the cell height if required
-        CGRect cellHeightFix = cell.chatEntry.frame;
-        CGSize labelSize = [cell.chatEntry.text sizeWithFont:[VenueChatCell chatEntryFont] constrainedToSize:CGSizeMake([VenueChatCell chatEntryFrame].size.width, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
-        
-        cellHeightFix.size.height = labelSize.height;
-        
-        cell.chatEntry.frame = cellHeightFix;
-        
-        // make a request for the profile image
-        NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:chatUser.urlPhoto];
-        UIImageView *thumbnail = [[UIImageView alloc] init];
-        
-        [thumbnail setImageWithURLRequest:thumbnailRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
-            [cell.userThumbnail setBackgroundImage:image forState:UIControlStateNormal];
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-            // nothing to do here, let's just leave it as the default
-        }];
-        
-        // set the tag of the cell button to be row so we can grab the entry when it is tapped
-        cell.userThumbnail.tag = indexPath.row;
-        
-        // add a target on the user thumbnail so we can pull up the user's profile
-        [cell.userThumbnail addTarget:self action:@selector(showUserProfileFromThumbnail:) forControlEvents:UIControlEventTouchUpInside];
-        
-        return cell;
-
+            // user a helper method to add the entry text and resize the cell
+            [self textForCell:cell withEntry:entry];
+            
+            return cell;
+        }
     } else {
         static NSString *TimestampCellIdentifier = @"ChatTimestampCell";
         TimestampCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TimestampCellIdentifier];
@@ -582,14 +593,60 @@
     }
 }
 
-- (void)showUserProfileFromThumbnail:(UIButton *)sender
+- (void)textForCell:(VenueChatCell *)cell withEntry:(VenueChatEntry *)entry
 {
-    VenueChatEntry *entry = [self.venueChat.chatEntries objectAtIndex:sender.tag];
+    // set the text property on the entry label
+    cell.chatEntry.text = entry.text;
+    
+    // change the cell height if required
+    CGRect cellHeightFix = cell.chatEntry.frame;
+    CGSize labelSize = [cell.chatEntry.text sizeWithFont:[[cell class] chatEntryFont] constrainedToSize:CGSizeMake([[cell class] chatEntryFrame].size.width, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
+    
+    cellHeightFix.size.height = labelSize.height;
+    
+    cell.chatEntry.frame = cellHeightFix;
+}
+
+- (void)thumbnailButtonForButton:(UIButton *)thumbnailButton photoURL:(NSURL *)photoURL row:(NSInteger)row
+{
+    // make a request for the profile image
+    NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:photoURL];
+    UIImageView *thumbnail = [[UIImageView alloc] init];
+    
+    [thumbnail setImageWithURLRequest:thumbnailRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
+        [thumbnailButton setBackgroundImage:image forState:UIControlStateNormal];
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        // nothing to do here, let's just leave it as the default
+    }];
+    
+    // set the tag of the cell button to be row so we can grab the entry when it is tapped
+    thumbnailButton.tag = row;
+    
+    // add a target on the user thumbnail so we can pull up the user's profile
+    [thumbnailButton addTarget:self action:@selector(showUserProfileFromThumbnail:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)showUserProfileFromThumbnail:(UIButton *)button
+{
+    VenueChatEntry *entry = [self.venueChat.chatEntries objectAtIndex:button.tag];
     
     // grab a UserProfileVC and set its user object to the user for the entry
     UserProfileCheckedInViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
     
-    userVC.user = entry.user;
+    // check if this was a love chat cell
+    if ([entry isKindOfClass:[LoveChatEntry class]]) {
+        // if so we need to find out if sender or reciever was tapped
+        LoveChatCell *loveCell = (LoveChatCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:button.tag inSection:0]];
+        if (button.frame.origin.x == loveCell.userThumbnail.frame.origin.x) {
+            userVC.user = ((LoveChatEntry *)entry).sender;
+        } else {
+            userVC.user = ((LoveChatEntry *)entry).recipient;
+        }
+    } else {
+        userVC.user = entry.user;
+    }
+    
+    
     
     // push the userVC onto our UINavigationController's stack
     [self.navigationController pushViewController:userVC animated:YES];

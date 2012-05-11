@@ -177,6 +177,8 @@
 		536E1F0315549BE100052D40 /* refresh-scroll-view@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1F0115549BE100052D40 /* refresh-scroll-view@2x.png */; };
 		536E1F0615549C0900052D40 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1F0415549C0900052D40 /* logo.png */; };
 		536E1F0715549C0900052D40 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1F0515549C0900052D40 /* logo@2x.png */; };
+		53724E29155D8D86006A86A9 /* love-sent.png in Resources */ = {isa = PBXBuildFile; fileRef = 53724E27155D8D86006A86A9 /* love-sent.png */; };
+		53724E2A155D8D86006A86A9 /* love-sent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53724E28155D8D86006A86A9 /* love-sent@2x.png */; };
 		5380D002150E773E003FCD66 /* add-funds.png in Resources */ = {isa = PBXBuildFile; fileRef = 5380D000150E773E003FCD66 /* add-funds.png */; };
 		5380D003150E773E003FCD66 /* add-funds@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5380D001150E773E003FCD66 /* add-funds@2x.png */; };
 		5384B24A155481FA00A4E0C1 /* CPapi.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B249155481FA00A4E0C1 /* CPapi.m */; };
@@ -186,6 +188,8 @@
 		5384B2561554827600A4E0C1 /* MapDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2551554827600A4E0C1 /* MapDataSet.m */; };
 		5384B2591554831400A4E0C1 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2581554831400A4E0C1 /* User.m */; };
 		5384B25C1554833D00A4E0C1 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B25B1554833D00A4E0C1 /* Settings.m */; };
+		538EF1D7155B2BF500A207AF /* LoveChatEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 538EF1D6155B2BF500A207AF /* LoveChatEntry.m */; };
+		538EF1DA155B2D0800A207AF /* LoveChatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 538EF1D9155B2D0800A207AF /* LoveChatCell.m */; };
 		539102EC1545DA7600D000BD /* button-orange-32pt.png in Resources */ = {isa = PBXBuildFile; fileRef = 539102EA1545DA7600D000BD /* button-orange-32pt.png */; };
 		539102ED1545DA7600D000BD /* button-orange-32pt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 539102EB1545DA7600D000BD /* button-orange-32pt@2x.png */; };
 		5396E0D814E466C200E33E0E /* LeagueGothic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5396E0D714E466C200E33E0E /* LeagueGothic.otf */; };
@@ -645,6 +649,8 @@
 		536E1F0115549BE100052D40 /* refresh-scroll-view@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refresh-scroll-view@2x.png"; sourceTree = "<group>"; };
 		536E1F0415549C0900052D40 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		536E1F0515549C0900052D40 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
+		53724E27155D8D86006A86A9 /* love-sent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "love-sent.png"; path = "images/love-sent.png"; sourceTree = "<group>"; };
+		53724E28155D8D86006A86A9 /* love-sent@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "love-sent@2x.png"; path = "images/love-sent@2x.png"; sourceTree = "<group>"; };
 		5380D000150E773E003FCD66 /* add-funds.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add-funds.png"; path = "Payment/images/add-funds.png"; sourceTree = "<group>"; };
 		5380D001150E773E003FCD66 /* add-funds@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add-funds@2x.png"; path = "Payment/images/add-funds@2x.png"; sourceTree = "<group>"; };
 		5384B248155481FA00A4E0C1 /* CPapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPapi.h; path = Utils/CPapi.h; sourceTree = "<group>"; };
@@ -671,6 +677,10 @@
 		5386AFFD152A2AAA008CD4BD /* GRMustacheTemplateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplateDelegate.h; sourceTree = "<group>"; };
 		5386AFFE152A2AAA008CD4BD /* GRMustacheTemplateRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplateRepository.h; sourceTree = "<group>"; };
 		5386AFFF152A2AAA008CD4BD /* GRMustacheVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheVersion.h; sourceTree = "<group>"; };
+		538EF1D5155B2BF500A207AF /* LoveChatEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoveChatEntry.h; sourceTree = "<group>"; };
+		538EF1D6155B2BF500A207AF /* LoveChatEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoveChatEntry.m; sourceTree = "<group>"; };
+		538EF1D8155B2D0800A207AF /* LoveChatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoveChatCell.h; sourceTree = "<group>"; };
+		538EF1D9155B2D0800A207AF /* LoveChatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoveChatCell.m; sourceTree = "<group>"; };
 		539102EA1545DA7600D000BD /* button-orange-32pt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-orange-32pt.png"; sourceTree = "<group>"; };
 		539102EB1545DA7600D000BD /* button-orange-32pt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-orange-32pt@2x.png"; sourceTree = "<group>"; };
 		5396E0D714E466C200E33E0E /* LeagueGothic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LeagueGothic.otf; sourceTree = "<group>"; };
@@ -1506,6 +1516,15 @@
 			path = Utils/images/common;
 			sourceTree = "<group>";
 		};
+		53724E25155D8D6B006A86A9 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				53724E27155D8D86006A86A9 /* love-sent.png */,
+				53724E28155D8D86006A86A9 /* love-sent@2x.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
 		537F7CAF1507F1E70057A70E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -1557,6 +1576,26 @@
 				5386AFFF152A2AAA008CD4BD /* GRMustacheVersion.h */,
 			);
 			path = include;
+			sourceTree = "<group>";
+		};
+		538EF1D0155B2BBB00A207AF /* System */ = {
+			isa = PBXGroup;
+			children = (
+				538EF1D1155B2BBB00A207AF /* Love */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		538EF1D1155B2BBB00A207AF /* Love */ = {
+			isa = PBXGroup;
+			children = (
+				53724E25155D8D6B006A86A9 /* images */,
+				538EF1D8155B2D0800A207AF /* LoveChatCell.h */,
+				538EF1D9155B2D0800A207AF /* LoveChatCell.m */,
+				538EF1D5155B2BF500A207AF /* LoveChatEntry.h */,
+				538EF1D6155B2BF500A207AF /* LoveChatEntry.m */,
+			);
+			path = Love;
 			sourceTree = "<group>";
 		};
 		53D65B4614EEEC3700801C5E /* Checkin */ = {
@@ -1627,6 +1666,7 @@
 		53DDBD05153F5BF500306F8B /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				538EF1D0155B2BBB00A207AF /* System */,
 				53DDBD06153F5BF500306F8B /* images */,
 				53DDBD0F153F5BF500306F8B /* VenueChat.h */,
 				53DDBD10153F5BF500306F8B /* VenueChat.m */,
@@ -2037,9 +2077,9 @@
 				E472FA9A151BAD780004430A /* images */,
 				E48C32B4151A7C3600A98427 /* VenueCell.h */,
 				E48C32B5151A7C3600A98427 /* VenueCell.m */,
+				53D9B196152A5D9300BC1304 /* VenueListTableViewController.h */,
 				536493341520F0F8006B39E8 /* VenueInfoViewController.h */,
 				536493351520F0F8006B39E8 /* VenueInfoViewController.m */,
-				53D9B196152A5D9300BC1304 /* VenueListTableViewController.h */,
 				53D9B197152A5D9300BC1304 /* VenueListTableViewController.m */,
 			);
 			name = Venue;
@@ -2346,6 +2386,8 @@
 				5FAF89201555FA6600247B95 /* virtual-check-in-badge@2x.png in Resources */,
 				5FAF89241555FA8300247B95 /* pin-virtual-checkedin.png in Resources */,
 				5FAF89251555FA8300247B95 /* pin-virtual-checkedin@2x.png in Resources */,
+				53724E29155D8D86006A86A9 /* love-sent.png in Resources */,
+				53724E2A155D8D86006A86A9 /* love-sent@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2509,6 +2551,8 @@
 				536E1E881554988300052D40 /* ContactListViewController.m in Sources */,
 				328452BF155A0EE800CF32F5 /* AutoCheckinTableViewController.m in Sources */,
 				328452C3155A17CB00CF32F5 /* AutoCheckinCell.m in Sources */,
+				538EF1D7155B2BF500A207AF /* LoveChatEntry.m in Sources */,
+				538EF1DA155B2D0800A207AF /* LoveChatCell.m in Sources */,
 				692552E0155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

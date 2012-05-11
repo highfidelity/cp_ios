@@ -138,34 +138,8 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="VenueChatCell" rowHeight="42" id="cbf-oh-TEs" customClass="VenueChatCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="42"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mZe-Fa-xR0">
-                                                    <rect key="frame" x="8" y="6" width="30" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                    <state key="normal" backgroundImage="default-avatar-256.png">
-                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <state key="highlighted">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                </button>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <connections>
-                                            <outlet property="userThumbnail" destination="mZe-Fa-xR0" id="D5b-6P-9hB"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ChatTimestampCell" rowHeight="22" id="Jz9-XC-7g4" customClass="TimestampCell">
-                                        <rect key="frame" x="0.0" y="64" width="320" height="22"/>
+                                        <rect key="frame" x="0.0" y="22" width="320" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
@@ -226,10 +200,42 @@
         </scene>
     </scenes>
     <resources>
-        <image name="default-avatar-256.png" width="256" height="256"/>
         <image name="list-arrow-light-grey.png" width="12" height="18"/>
         <image name="number-of-people-here.png" width="29" height="26"/>
     </resources>
+    <classes>
+        <class className="TimestampCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TimestampCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="timestampLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="VenueChatViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueChatViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activeChatters" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="VenueInfoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueInfoViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="tappedAddress:"/>
+                <relationship kind="action" name="tappedPhone:"/>
+                <relationship kind="outlet" name="activeChatText" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="activeChatters" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="activeChattersIcon" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="activeChattersIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="bottomPhotoOverlayView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="firstAidSection" candidateClass="UIView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="userSection" candidateClass="UIView"/>
+                <relationship kind="outlet" name="venueChatBox" candidateClass="UIView"/>
+                <relationship kind="outlet" name="venueChatBoxVerticalLine" candidateClass="UIView"/>
+                <relationship kind="outlet" name="venuePhoto" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

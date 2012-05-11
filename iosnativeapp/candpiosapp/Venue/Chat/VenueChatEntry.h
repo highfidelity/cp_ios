@@ -17,7 +17,9 @@
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, assign) VenueChat *delegate;
 
-- (VenueChatEntry *)initWithJSON:(NSDictionary *)json
+- (VenueChatEntry *)initFromJSON:(NSDictionary *)json
                    dateFormatter:(NSDateFormatter *)dateFormatter;
+
+- (User *)userFromDictionaryOrActiveUsers:(NSDictionary *)userDict;
 
 @end
