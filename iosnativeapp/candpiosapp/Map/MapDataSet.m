@@ -119,14 +119,20 @@ static NSOperationQueue *sMapQueue = nil;
                 for(id userIDObj in venue.activeUsers)
                 {
                     int activeUserID = [userIDObj integerValue];
-                    for(NSDictionary *contactDict in contactsArray)
+                    NSDictionary *currentActiveUser = [venue.activeUsers objectForKey:userIDObj];
+                    BOOL activeUserCheckedIn = [[currentActiveUser objectForKey:@"checked_in"] boolValue];
+                    //Check to see if the activeUser at the venue is checkin
+                    if(activeUserCheckedIn)
                     {
-                        if(activeUserID == [[contactDict objectForKey:@"other_user_id"] integerValue])
+                        for(NSDictionary *contactDict in contactsArray)
                         {
-                            venue.hasContactAtVenue = YES;
-                            break;
+                            if(activeUserID == [[contactDict objectForKey:@"other_user_id"] integerValue])
+                            {
+                                venue.hasContactAtVenue = YES;
+                                break;
+                            }
+                            
                         }
-                        
                     }
                }
                 
