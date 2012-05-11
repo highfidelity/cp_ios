@@ -209,21 +209,21 @@
                 if (entryComps.year != nowComps.year || entryComps.month != nowComps.month || entryComps.day != nowComps.day) {
                     // check if we already have a timestamp for this day
                     [self.timestampDateFormatter setDateFormat:MAJOR_TIMESTAMP_INTERVAL_FORMAT];
-                    if (![self.previousTimestamp isEqualToString:[self.timestampDateFormatter stringFromDate:[entry date]]]) {
-                        self.previousTimestamp = [self.timestampDateFormatter stringFromDate:[entry date]];
+                    if (![self.previousTimestamp isEqualToString:[self.timestampDateFormatter stringFromDate:entry.date]]) {
+                        self.previousTimestamp = [self.timestampDateFormatter stringFromDate:entry.date];
                         [mutableChatEntries addObject:self.previousTimestamp];
                     }
                 } else {
                     // same day but we need timestamps every 15 minutes
-                    int seconds = [now timeIntervalSinceDate:[entry date]];
+                    int seconds = [now timeIntervalSinceDate:entry.date];
                     int leftToMinor = 900 - (seconds % 900);
-                    NSDate *interval = [NSDate dateWithTimeInterval:-leftToMinor sinceDate:[entry date]];
+                    NSDate *interval = [NSDate dateWithTimeInterval:-leftToMinor sinceDate:entry.date];
                     
                     [self.timestampDateFormatter setDateFormat:MINOR_TIMESTAMP_INTERVAL_FORMAT];
                     // check if we already have a timestamp for this minor interval
                     if (![self.previousTimestamp isEqualToString:[self.timestampDateFormatter stringFromDate:interval]]) {
                         self.previousTimestamp = [self.timestampDateFormatter stringFromDate:interval];
-                        [mutableChatEntries addObject:[self.timestampDateFormatter stringFromDate:[entry date]]];
+                        [mutableChatEntries addObject:[self.timestampDateFormatter stringFromDate:entry.date]];
                     }
                 }
             } else if (self.pendingTimestamp) {
