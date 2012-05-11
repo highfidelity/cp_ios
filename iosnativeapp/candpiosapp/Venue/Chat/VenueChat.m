@@ -173,25 +173,30 @@
             // check if this is a system entry
             NSDictionary *systemData = [entryJSON objectForKey:@"is_system"];
             
-            id entry;
+            VenueChatEntry *entry;
+            int possibleActiveID;
             
             if ([systemData isKindOfClass:[NSNull class]]) {
                 // create a VenueChatEntry and add it to the array of chat entries
-                entry = [[VenueChatEntry alloc] initFromJSON:entryJSON dateFormatter:self.entryDateFormatter]; 
+                entry = [[VenueChatEntry alloc] initFromJSON:entryJSON dateFormatter:self.entryDateFormatter];
                 
-                // if this entry is after the time interval then add it to the count
-                if ([[entry date] compare:dateAtInterval] != NSOrderedAscending) {
-                    // check if we've already counted this user
-                    NSString *userIDString = [NSString stringWithFormat:@"%d", ((VenueChatEntry *)entry).user.userID];
-                    if (![self.usersCounted containsObject:userIDString]) {
-                        self.activeChattersDuringInterval += 1;
-                        [self.usersCounted addObject:userIDString];
-                    }
-                }
-
+                // grab the author user ID so we can check if they need to be added to the count of active users
+                possibleActiveID = entry.user.userID;
             } else {
+                // this is love
+                // grab the sending user ID so we can check if they need to be added to the count of active users
                 entry = [[LoveChatEntry alloc] initFromJSON:entryJSON dateFormatter:self.entryDateFormatter];
-            }            
+                possibleActiveID = ((LoveChatEntry *) entry).sender.userID;
+            }         
+            
+            // if this entry is after the time interval then add it to the count
+            if ([[entry date] compare:dateAtInterval] != NSOrderedAscending) {
+                NSString *userIDString = [NSString stringWithFormat:@"%d", possibleActiveID];
+                if (![self.usersCounted containsObject:userIDString]) {
+                    self.activeChattersDuringInterval += 1;
+                    [self.usersCounted addObject:userIDString];
+                }
+            }
             
             if (!self.hasLoaded) {
                 // only do timestamping on first load
