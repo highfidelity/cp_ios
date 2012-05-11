@@ -10,15 +10,16 @@
 
 @implementation LoveChatEntry
 
-@synthesize sender = _lover;
 @synthesize recipient = _reciever;
 
 - (LoveChatEntry *)initFromJSON:(NSDictionary *)json 
                   dateFormatter:(NSDateFormatter *)dateFormatter
 {
     if (self = [super initFromJSON:json dateFormatter:dateFormatter]) {
-        self.sender = [super userFromDictionaryOrActiveUsers:[json valueForKeyPath:@"is_system.sender"]];
-        self.recipient = [super userFromDictionaryOrActiveUsers:[json valueForKeyPath:@"is_system.recipient"]];
+        // the user for this chat entry should be the sender of love
+        self.user = [super userFromDictionaryOrActiveUsers:[json valueForKeyPath:@"system_data.sender"]];
+        // set our recipient property
+        self.recipient = [super userFromDictionaryOrActiveUsers:[json valueForKeyPath:@"system_data.recipient"]];
     }
     return self;
 }

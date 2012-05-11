@@ -10,9 +10,10 @@
 #import "User.h"
 #import "VenueChatEntry.h"
 
+#define LOVE_SYSTEM_CHAT_TYPE @"review"
+
 @interface LoveChatEntry : VenueChatEntry
 
-@property (nonatomic, strong) User *sender;
 @property (nonatomic, strong) User *recipient;
 
 - (LoveChatEntry *)initFromJSON:(NSDictionary *)json 

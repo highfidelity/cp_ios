@@ -79,6 +79,8 @@
 		5332FB41152141A4002E7035 /* picture-coming-soon-rectangle.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5332FB3F152141A4002E7035 /* picture-coming-soon-rectangle.jpg */; };
 		5332FB42152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5332FB40152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg */; };
 		5335CF6F1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */; };
+		533A577E155DB405009DEF22 /* CheckinChatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533A577D155DB405009DEF22 /* CheckinChatCell.m */; };
+		533A5784155DBF68009DEF22 /* CheckinChatEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 533A5783155DBF68009DEF22 /* CheckinChatEntry.m */; };
 		533AFECE1523E87200D6E6A9 /* default-avatar-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 533AFECC1523E87200D6E6A9 /* default-avatar-256.png */; };
 		533AFECF1523E87200D6E6A9 /* default-avatar-256@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */; };
 		53463F5115336EA5001CA16D /* UIViewController+isModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 53463F5015336EA5001CA16D /* UIViewController+isModal.m */; };
@@ -548,6 +550,10 @@
 		5332FB3F152141A4002E7035 /* picture-coming-soon-rectangle.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "picture-coming-soon-rectangle.jpg"; path = "Venue/images/picture-coming-soon-rectangle.jpg"; sourceTree = "<group>"; };
 		5332FB40152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "picture-coming-soon-rectangle@2x.jpg"; path = "Venue/images/picture-coming-soon-rectangle@2x.jpg"; sourceTree = "<group>"; };
 		5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SettingsStoryboard_iPhone.storyboard; path = Settings/SettingsStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		533A577C155DB405009DEF22 /* CheckinChatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckinChatCell.h; sourceTree = "<group>"; };
+		533A577D155DB405009DEF22 /* CheckinChatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckinChatCell.m; sourceTree = "<group>"; };
+		533A5782155DBF68009DEF22 /* CheckinChatEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckinChatEntry.h; sourceTree = "<group>"; };
+		533A5783155DBF68009DEF22 /* CheckinChatEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckinChatEntry.m; sourceTree = "<group>"; };
 		533AFECC1523E87200D6E6A9 /* default-avatar-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default-avatar-256.png"; path = "User/images/default-avatar-256.png"; sourceTree = "<group>"; };
 		533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default-avatar-256@2x.png"; path = "User/images/default-avatar-256@2x.png"; sourceTree = "<group>"; };
 		53463F4F15336EA5001CA16D /* UIViewController+isModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+isModal.h"; path = "Utils/UIViewController+isModal.h"; sourceTree = "<group>"; };
@@ -1248,6 +1254,17 @@
 			name = images;
 			sourceTree = "<group>";
 		};
+		533A5777155DB38A009DEF22 /* Checkin */ = {
+			isa = PBXGroup;
+			children = (
+				533A5782155DBF68009DEF22 /* CheckinChatEntry.h */,
+				533A5783155DBF68009DEF22 /* CheckinChatEntry.m */,
+				533A577C155DB405009DEF22 /* CheckinChatCell.h */,
+				533A577D155DB405009DEF22 /* CheckinChatCell.m */,
+			);
+			path = Checkin;
+			sourceTree = "<group>";
+		};
 		53412E5714FEFC0D00C87666 /* images */ = {
 			isa = PBXGroup;
 			children = (
@@ -1581,6 +1598,7 @@
 		538EF1D0155B2BBB00A207AF /* System */ = {
 			isa = PBXGroup;
 			children = (
+				533A5777155DB38A009DEF22 /* Checkin */,
 				538EF1D1155B2BBB00A207AF /* Love */,
 			);
 			path = System;
@@ -2554,6 +2572,8 @@
 				538EF1D7155B2BF500A207AF /* LoveChatEntry.m in Sources */,
 				538EF1DA155B2D0800A207AF /* LoveChatCell.m in Sources */,
 				692552E0155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m in Sources */,
+				533A577E155DB405009DEF22 /* CheckinChatCell.m in Sources */,
+				533A5784155DBF68009DEF22 /* CheckinChatEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

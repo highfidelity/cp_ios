@@ -32,6 +32,7 @@
         self.chatEntry.font = [VenueChatCell chatEntryFont];
         self.chatEntry.numberOfLines = 0;
         self.chatEntry.lineBreakMode = UILineBreakModeWordWrap;
+        self.chatEntry.textColor = [UIColor colorWithRed:(51.0/255.0) green:(51.0/255.0) blue:(51.0/255.0) alpha:1.0];
         [self addSubview:self.chatEntry];
         
         // add the button for the user image

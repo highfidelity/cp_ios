@@ -9,6 +9,8 @@
 #import "VenueChat.h"
 #import "VenueChatEntry.h"
 #import "LoveChatEntry.h"
+#import "CheckinChatEntry.h"
+
 
 #define MAJOR_TIMESTAMP_INTERVAL_FORMAT @"MMMM dd, yyyy"
 #define MINOR_TIMESTAMP_INTERVAL_FORMAT @"h:mma - MMMM dd, yyyy"
@@ -171,27 +173,27 @@
         for (NSDictionary *entryJSON in entries) {
              
             // check if this is a system entry
-            NSDictionary *systemData = [entryJSON objectForKey:@"is_system"];
+            NSString *systemType = [entryJSON objectForKey:@"system_type"];
             
-            VenueChatEntry *entry;
-            int possibleActiveID;
             
-            if ([systemData isKindOfClass:[NSNull class]]) {
+            Class entryClass;
+            
+            if ([systemType isKindOfClass:[NSNull class]]) {
                 // create a VenueChatEntry and add it to the array of chat entries
-                entry = [[VenueChatEntry alloc] initFromJSON:entryJSON dateFormatter:self.entryDateFormatter];
-                
-                // grab the author user ID so we can check if they need to be added to the count of active users
-                possibleActiveID = entry.user.userID;
-            } else {
+                entryClass = [VenueChatEntry class];
+            } else if ([systemType isEqualToString:LOVE_SYSTEM_CHAT_TYPE]) {
                 // this is love
-                // grab the sending user ID so we can check if they need to be added to the count of active users
-                entry = [[LoveChatEntry alloc] initFromJSON:entryJSON dateFormatter:self.entryDateFormatter];
-                possibleActiveID = ((LoveChatEntry *) entry).sender.userID;
-            }         
+                entryClass = [LoveChatEntry class];
+            } else if ([systemType isEqualToString:CHECKIN_SYSTEM_CHAT_TYPE]) {
+                entryClass = [CheckinChatEntry class];
+            }
+            
+            VenueChatEntry *entry = [[entryClass alloc] initFromJSON:entryJSON dateFormatter:self.entryDateFormatter];
             
             // if this entry is after the time interval then add it to the count
-            if ([[entry date] compare:dateAtInterval] != NSOrderedAscending) {
-                NSString *userIDString = [NSString stringWithFormat:@"%d", possibleActiveID];
+            // a checkin system chat message should also not be in the active chatter count
+            if ([[entry date] compare:dateAtInterval] != NSOrderedAscending && ![entry isKindOfClass:[CheckinChatEntry class]]) {
+                NSString *userIDString = [NSString stringWithFormat:@"%d", entry.user.userID];
                 if (![self.usersCounted containsObject:userIDString]) {
                     self.activeChattersDuringInterval += 1;
                     [self.usersCounted addObject:userIDString];

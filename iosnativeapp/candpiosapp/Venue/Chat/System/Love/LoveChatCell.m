@@ -10,7 +10,6 @@
 
 @implementation LoveChatCell
 @synthesize recipientThumbnail = _recipientThumbnail;
-@synthesize sentLoveIcon = _sentLoveIcon;
 
 + (CGRect)chatEntryFrame
 {
@@ -27,29 +26,22 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        // thumnbnail button for lover
-        self.userThumbnail = [[UIButton alloc] initWithFrame:CGRectMake(8, 6, 30, 30)];
-        
-        // background should use default profile image
-        [self.userThumbnail setBackgroundImage:[CPUIHelper defaultProfileImage] forState:UIControlStateNormal];
-        
-        // add it to the cell
-        [self addSubview:self.userThumbnail];
+        // thumbnail button for sender is taken care of by VenueChatCell superclass
         
         // icon for love
-        self.sentLoveIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"love-sent"]];
+        UIImageView *sentLoveIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"love-sent"]];
         
         // change the frame for the love icon
-        CGRect loveIconFrame = self.sentLoveIcon.frame;
+        CGRect loveIconFrame = sentLoveIcon.frame;
         loveIconFrame.origin.x = self.userThumbnail.frame.origin.x + self.userThumbnail.frame.size.width + 5;
         loveIconFrame.origin.y = self.userThumbnail.frame.origin.y + ((self.userThumbnail.frame.size.height / 2) - (loveIconFrame.size.height / 2));
-        self.sentLoveIcon.frame = loveIconFrame;
+        sentLoveIcon.frame = loveIconFrame;
         
         // add it to the cell
-        [self addSubview:self.sentLoveIcon];
+        [self addSubview:sentLoveIcon];
         
         // thumbnail button for lovee
-        double rcpOriginY = self.sentLoveIcon.frame.origin.x + self.sentLoveIcon.frame.size.width + 3;
+        double rcpOriginY = sentLoveIcon.frame.origin.x + sentLoveIcon.frame.size.width + 3;
         self.recipientThumbnail = [[UIButton alloc] initWithFrame:CGRectMake(rcpOriginY, 6, 30, 30)];
         
         // background is default profile image

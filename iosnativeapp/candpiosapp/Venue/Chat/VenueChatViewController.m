@@ -11,6 +11,8 @@
 #import "VenueChatEntry.h"
 #import "LoveChatCell.h"
 #import "LoveChatEntry.h"
+#import "CheckinChatCell.h"
+#import "CheckinChatEntry.h"
 #import "UIImageView+AFNetworking.h"
 #import "HPGrowingTextView.h"
 #import "HPTextViewInternal.h"
@@ -522,46 +524,57 @@
 {
     if ([[self.venueChat.chatEntries objectAtIndex:indexPath.row] isKindOfClass:[VenueChatEntry class]]) {
         
+        // setup the variables we need to play with to setup our cell
         VenueChatEntry *entry = [self.venueChat.chatEntries objectAtIndex:indexPath.row];
         VenueChatCell *cell;
+        Class cellClass;
+        void (^extraBlock)(VenueChatCell *cell, VenueChatEntry *entry);
         
         // check if this is an entry for sent love
         if ([entry isKindOfClass:[LoveChatEntry class]]) {
-            static NSString *LoveCellIdentifier = @"LoveChatCell";
+            cellClass = [LoveChatCell class];
             
-            // grab the cell
-            cell = [self.tableView dequeueReusableCellWithIdentifier:LoveCellIdentifier];
-            if (!cell) {
-                cell = [[LoveChatCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:LoveCellIdentifier];
-            }
-            
-            
-            // setup thumbnail buttons for the sender and receiver
-            [self thumbnailButtonForButton:cell.userThumbnail photoURL:((LoveChatEntry *) entry).sender.urlPhoto row:indexPath.row];
-            [self thumbnailButtonForButton:((LoveChatCell *) cell).recipientThumbnail photoURL:((LoveChatEntry *) entry).recipient.urlPhoto row:indexPath.row];
-            
-            // use a helper method to add the entry text and resize the cell
-            [self textForCell:cell withEntry:entry];
-            
-            return cell;
+            // setup a block that will set the recipient thumbnail for the cell
+            extraBlock = ^(VenueChatCell *cell, VenueChatEntry *entry) {
+                // thumbnail button for recipient
+                // sender gets taken care below as the entry user
+                [self thumbnailButtonForButton:((LoveChatCell *) cell).recipientThumbnail photoURL:((LoveChatEntry *) entry).recipient.urlPhoto row:indexPath.row];
+            };
+        } else if ([entry isKindOfClass:[CheckinChatEntry class]]) {
+            // checkin system chat entry
+            cellClass = [CheckinChatCell class];
         } else {
-            // this is a regular chat message            
-            static NSString *ChatCellIdentifier = @"VenueChatCell";
-            
-            // grab the cell
-            VenueChatCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ChatCellIdentifier];
-            if (!cell) {
-                cell = [[VenueChatCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ChatCellIdentifier];
-            }
-            
-            // setup a thumbnail button for the entry author
-            [self thumbnailButtonForButton:cell.userThumbnail photoURL:entry.user.urlPhoto row:indexPath.row]; 
-        
-            // user a helper method to add the entry text and resize the cell
-            [self textForCell:cell withEntry:entry];
-            
-            return cell;
+            // regular chat message
+            cellClass = [VenueChatCell class];
         }
+        
+        // grab the cell
+        cell = [self.tableView dequeueReusableCellWithIdentifier:[cellClass description]];
+        if (!cell) {
+            cell = [[cellClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[cellClass description]];
+        }
+        
+        // setup thumbnail buttons for the entry user
+        [self thumbnailButtonForButton:cell.userThumbnail photoURL:entry.user.urlPhoto row:indexPath.row];
+        
+        // set the text property on the entry label
+        cell.chatEntry.text = entry.text;
+        
+        // change the cell height if required based on the label height
+        CGRect cellHeightFix = cell.chatEntry.frame;
+        CGSize labelSize = [cell.chatEntry.text sizeWithFont:[[cell class] chatEntryFont] constrainedToSize:CGSizeMake([[cell class] chatEntryFrame].size.width, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
+        cellHeightFix.size.height = labelSize.height;
+        cell.chatEntry.frame = cellHeightFix;
+        
+        // run the extra block if it exists
+        // to set extra non-standard properties on the system cell
+        if (extraBlock) {
+            extraBlock(cell, entry);
+        }       
+        
+        // return the cell
+        return cell;
+        
     } else {
         static NSString *TimestampCellIdentifier = @"ChatTimestampCell";
         TimestampCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TimestampCellIdentifier];
@@ -593,20 +606,6 @@
     }
 }
 
-- (void)textForCell:(VenueChatCell *)cell withEntry:(VenueChatEntry *)entry
-{
-    // set the text property on the entry label
-    cell.chatEntry.text = entry.text;
-    
-    // change the cell height if required
-    CGRect cellHeightFix = cell.chatEntry.frame;
-    CGSize labelSize = [cell.chatEntry.text sizeWithFont:[[cell class] chatEntryFont] constrainedToSize:CGSizeMake([[cell class] chatEntryFrame].size.width, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
-    
-    cellHeightFix.size.height = labelSize.height;
-    
-    cell.chatEntry.frame = cellHeightFix;
-}
-
 - (void)thumbnailButtonForButton:(UIButton *)thumbnailButton photoURL:(NSURL *)photoURL row:(NSInteger)row
 {
     // make a request for the profile image
@@ -634,14 +633,10 @@
     UserProfileCheckedInViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
     
     // check if this was a love chat cell
-    if ([entry isKindOfClass:[LoveChatEntry class]]) {
-        // if so we need to find out if sender or reciever was tapped
-        LoveChatCell *loveCell = (LoveChatCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:button.tag inSection:0]];
-        if (button.frame.origin.x == loveCell.userThumbnail.frame.origin.x) {
-            userVC.user = ((LoveChatEntry *)entry).sender;
-        } else {
-            userVC.user = ((LoveChatEntry *)entry).recipient;
-        }
+    if (button.frame.origin.x > 50) {
+        // if this button was more than 50 pts in it's the recipient thumbnail for a LoveChatCell
+        // seems kludgy but this is faster than grabbing the cell from the tableview and checking it out
+        userVC.user = ((LoveChatEntry *)entry).recipient;
     } else {
         userVC.user = entry.user;
     }

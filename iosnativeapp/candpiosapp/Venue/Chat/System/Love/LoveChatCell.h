@@ -12,7 +12,6 @@
 @interface LoveChatCell : VenueChatCell
 
 @property (nonatomic, strong) UIButton *recipientThumbnail;
-@property (nonatomic, strong) UIImageView *sentLoveIcon;
 
 + (CGRect)chatEntryFrame;
 + (UIFont *)chatEntryFont;
