@@ -114,7 +114,7 @@
 }
 
 - (void)refreshLocations {
-	[SVProgressHUD showWithStatus:@"Loading nearby places..."];
+	[SVProgressHUD showWithStatus:@"Loading nearby venues..."];
 
     // Reset the Places array
     
