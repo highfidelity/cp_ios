@@ -9,6 +9,7 @@
 #import "AutoCheckinTableViewController.h"
 #import "CPVenue.h"
 #import "AutoCheckinCell.h"
+#import "FlurryAnalytics.h"
 
 @interface AutoCheckinTableViewController ()
 @property (nonatomic, strong) NSMutableArray *placesArray;
