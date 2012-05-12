@@ -621,6 +621,7 @@ UITapGestureRecognizer* _tapRecon = nil;
     _reviewView.hidden = NO;
     [_reviewDescription becomeFirstResponder];
     [_reviewDescription setDelegate:self];
+    [[self reviewDescription] setPlaceholder:[NSString stringWithFormat:@"Recognize %@ here for $1", self.user.nickname]];
 }
 
 -(IBAction)venueViewButtonPressed:(id)sender {
