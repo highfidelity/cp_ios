@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="6Bs-xG-Mnl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="6Bs-xG-Mnl">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
@@ -255,7 +255,7 @@
                                                         <rect key="frame" x="201" y="1" width="99" height="41"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="RECS:" lineBreakMode="tailTruncation" minimumFontSize="10" id="wy1-Ol-R29">
+                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="LOVE:" lineBreakMode="tailTruncation" minimumFontSize="10" id="wy1-Ol-R29">
                                                                 <rect key="frame" x="11" y="0.0" width="54" height="21"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
@@ -879,6 +879,102 @@
         <image name="props-thumb.png" width="75" height="75"/>
         <image name="vector-lock.png" width="13" height="13"/>
     </resources>
+    <classes>
+        <class className="AddFundsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFundsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="closeWindow:"/>
+                <relationship kind="action" name="goBack:"/>
+                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="ChatMessageCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatMessageCell.h"/>
+        </class>
+        <class className="OneOnOneChatViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/OneOnOneChatViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="sendChat"/>
+                <relationship kind="outlet" name="backgroundView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="chatButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="chatContents" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="chatEntryField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="chatInputs" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="PayUserViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PayUserViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="closeView:" candidateClass="UIButton"/>
+                <relationship kind="action" name="descriptionChanged:"/>
+                <relationship kind="action" name="makePayment:"/>
+                <relationship kind="outlet" name="cancelButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="charsLeft" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="payButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="payTo" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="payeeImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="paymentAmount" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="paymentNote" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="userBalance" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="UserProfileCheckedInViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserProfileCheckedInViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="chatButtonPressed:"/>
+                <relationship kind="action" name="f2fInvite"/>
+                <relationship kind="action" name="minusButtonPressed:"/>
+                <relationship kind="action" name="plusButtonPressed:"/>
+                <relationship kind="action" name="sendloveButtonPressed:"/>
+                <relationship kind="action" name="socialViewButtonPressed:"/>
+                <relationship kind="action" name="venueViewButtonPressed:"/>
+                <relationship kind="outlet" name="availabilityView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="cardImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="cardJobPosition" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="cardNickname" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="cardStatus" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="chatButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="checkedIn" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="distanceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="f2fButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="goMenuBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="hoursAvailable" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="loveReceived" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="minusButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="minutesAvailable" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="payButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="plusButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="propNoteLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="resumeEarned" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="resumeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="resumeRate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="resumeView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="resumeWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="reviewButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="reviewDescription" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="reviewView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="socialView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="socialViewButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="userCard" candidateClass="UIView"/>
+                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueIcon" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueOthers" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueOthersIcon" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="venueView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="venueViewButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="UserProfileLinkedInViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserProfileLinkedInViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="socialWebView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
