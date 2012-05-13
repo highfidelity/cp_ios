@@ -62,18 +62,11 @@
             [view presentModalViewController:f2fVC animated:YES];
         } else {
             // dismiss the SVProgress HUD with an error
-            [SVProgressHUD dismiss];
             NSString *alertMsg = [NSString stringWithFormat:
                                   @"Oops! We couldn't get the data.\nAsk the sender to send Contact Request again."];
-            
-            // Show error alert
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:@"Contct Request"
-                                  message:alertMsg
-                                  delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles: nil];
-            [alert show];
+
+            [SVProgressHUD dismissWithError:alertMsg
+                                 afterDelay:kDefaultDimissDelay];
         }        
     }];
 }
@@ -110,15 +103,8 @@
 
     // dismiss the password alert if it's still around so they don't stack
     [view.f2fPasswordAlert dismissWithClickedButtonIndex:0 animated:NO];
-    
-    // Show error if we got one
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Contact Request Accepted"
-                          message:alertMsg
-                          delegate:self
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles: nil];
-    [alert show];
-}
 
+    [SVProgressHUD showSuccessWithStatus:alertMsg
+                                duration:kDefaultDimissDelay];
+}
 @end

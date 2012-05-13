@@ -8,8 +8,6 @@
 
 #import <AudioToolbox/AudioToolbox.h>
 #import "PayUserViewController.h"
-#import "AFNetworking.h"
-#import <QuartzCore/QuartzCore.h>
 
 @implementation PayUserViewController
 @synthesize user = _user;
@@ -66,9 +64,9 @@
     [CPapi getUserProfileWithCompletionBlock:^(NSDictionary *json, NSError *error) {
         NSDictionary *jsonDict = json;
 
-        [SVProgressHUD dismiss];
         int user_id = [[jsonDict objectForKey:@"userid"] intValue];
         if (user_id > 0) {
+            [SVProgressHUD dismiss];
             float balance = [[jsonDict objectForKey:@"balance"] floatValue];
             [userBalance setText:[NSString stringWithFormat:@"$%.2f", balance]];
 
@@ -77,13 +75,8 @@
             }
 
         } else {
-
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                message:@"You must be logged in to C&P in order to make payments"
-                                                               delegate:self
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-            [alertView show];
+            [SVProgressHUD dismissWithError:@"You must be logged in to C&P in order to make payments"
+                                 afterDelay:kDefaultDimissDelay];
         }
 
     }];
@@ -113,26 +106,23 @@
 
 - (IBAction)makePayment:(id)sender {
 
+    [SVProgressHUD showWithStatus:@"Proccessing transaction"];
+
     float amount = [[[paymentAmount text] stringByReplacingOccurrencesOfString:@"$"
                                                                     withString:@""]
             floatValue];
     if (amount == 0)
     {
         [paymentAmount becomeFirstResponder];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Invalid payment amount"
-                                                            message:@"Payment amount must be greater then $0."
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-        [alertView show];
+
+        [SVProgressHUD dismissWithError:@"Payment amount must be greater then $0."
+                             afterDelay:kDefaultDimissDelay];
         return;
     }
 
-    [SVProgressHUD showWithStatus:@"Proccessing transaction"];
     AFHTTPClient *httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
 
     NSString *respUserId = [NSString stringWithFormat:@"%d", self.user.userID];
-
 	NSMutableDictionary *paymentParams = [NSMutableDictionary dictionary];
 	[paymentParams setObject:@"makeMobilePayment" forKey:@"action"];
 	[paymentParams setObject:respUserId forKey:@"recipientID"];
@@ -144,29 +134,19 @@
                                                       parameters:paymentParams];
 
     AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
-
-        
         NSDictionary *jsonDict = json;
         NSNumber *successNum = [jsonDict objectForKey:@"succeeded"];
-        
-        
-		[SVProgressHUD dismiss];
-        
+
         if(successNum && [successNum intValue] != 1)
         {
             NSString *error = [NSString stringWithFormat:@"%@", [jsonDict objectForKey:@"message"]];
+            [SVProgressHUD dismissWithError:error
+                                 afterDelay:kDefaultDimissDelay];
 
-            
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Transaction error"
-                                                                message:error
-                                                               delegate:self
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-            [alertView show];
-            
             if ([successNum intValue] == -1) {
-                //not logged in
-                [[self navigationController] popViewControllerAnimated: YES];
+                [[self navigationController] performSelector:@selector(popViewControllerAnimated:)
+                                                  withObject:self
+                                                  afterDelay:kDefaultDimissDelay];
             }
          
         }
@@ -175,14 +155,12 @@
             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
             
             NSString *message = [NSString stringWithFormat:@"Paid %@ $%.2f for %@", self.user.nickname, amount, [paymentNote text]];
-            
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Transaction"
-                                                                message:message
-                                                               delegate:self
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-            [alertView show];
-            [[self navigationController] popViewControllerAnimated: YES];
+            [SVProgressHUD dismissWithSuccess:message
+                                 afterDelay:kDefaultDimissDelay];
+
+            [[self navigationController] performSelector:@selector(popViewControllerAnimated:)
+                                              withObject:self
+                                              afterDelay:kDefaultDimissDelay];
             
         }
         
@@ -191,7 +169,8 @@
 #if DEBUG
 		NSLog(@"AFJSONRequestOperation error: %@", [error localizedDescription] );
 #endif
-		[SVProgressHUD dismissWithError:[error localizedDescription]];
+		[SVProgressHUD dismissWithError:[error localizedDescription]
+                             afterDelay:kDefaultDimissDelay];
 	}];
 
     [[NSOperationQueue mainQueue] addOperation:postOperation];

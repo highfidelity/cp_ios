@@ -136,7 +136,7 @@
                                    cancelButtonTitle:@"OK"
                                    otherButtonTitles: nil];
              [alert show];
-             
+
              // avoid stacking the f2f alerts
              [AppDelegate instance].settingsMenuController.f2fInviteAlert = alert;
              
@@ -146,7 +146,7 @@
              
              [SVProgressHUD performSelector:@selector(showSuccessWithStatus:)
                                  withObject:@"Contact Request Accepted"
-                                 afterDelay:1];
+                                 afterDelay:kDefaultDimissDelay];
          }
      }];
 }
@@ -168,7 +168,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    // the user has input a passwod and tapped on go
+    // the user has input a password and tapped on go
     // let's try the F2F
     [CPapi sendF2FVerify:self.user.userID password:textField.text];
     return NO;

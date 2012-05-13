@@ -298,14 +298,8 @@ BOOL clearLocations = NO;
         [CLLocationManager authorizationStatus] == kCLAuthorizationStatusRestricted) {
         
         NSString *message = @"We're unable to get your location and the application relies on it.\n\nPlease go to your settings and enable location for the C&P app.";
-        
-        // show an alert to the user if location services are disabled
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Can't find you!" 
-                                                            message:message
-                                                           delegate:self 
-                                                  cancelButtonTitle:@"OK" 
-                                                  otherButtonTitles:nil];
-        [alertView show];
+        [SVProgressHUD showErrorWithStatus:message
+                             duration:kDefaultDimissDelay];
     } else {
         // we have a location ... zoom to it
         [self zoomTo: [[mapView userLocation] coordinate]];

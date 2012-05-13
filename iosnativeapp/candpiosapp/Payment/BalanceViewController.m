@@ -146,20 +146,15 @@
             NSString *dateString = [dateFormat stringFromDate:date];
             
             [updateTimeLabel setText:[NSString stringWithFormat:@"last updated %@", dateString]];
+            [SVProgressHUD dismiss];
         } else {
-            
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
-                                                                message:[json objectForKey:@"payload"]
-                                                               delegate:self 
-                                                      cancelButtonTitle:@"OK" 
-                                                      otherButtonTitles:nil];
-            [alertView show];
+            [SVProgressHUD dismissWithError:[json objectForKey:@"payload"]
+                                 afterDelay:kDefaultDimissDelay];
         }
     
         [pullDownLabel setText:kPullText];
         loading = NO;
-        
-        [SVProgressHUD dismiss];
+
     }];
     
 }

@@ -57,17 +57,12 @@
     
     [CPapi setUserProfileDataWithDictionary:params andCompletion:^(NSDictionary *json, NSError *error) {
         if ( ! error && [[json objectForKey:@"succeeded"] boolValue]) {
+            [SVProgressHUD dismiss];
             [self pushNextViewContollerOrDismissWithMessage:[json objectForKey:@"message"]];
         } else {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Uh Oh!" 
-                                                                message:[json objectForKey:@"message"]
-                                                               delegate:self
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-            [alertView show];
+            [SVProgressHUD dismissWithError:[json objectForKey:@"message"]
+                                 afterDelay:kDefaultDimissDelay];
         }
-        
-        [SVProgressHUD dismiss];
     }];
 }
 
@@ -106,14 +101,8 @@
     
     if (email.length == 0  || ![CPUtils validateEmailWithString:email]) {
         NSString *message = @"Email address does not appear to be valid.";
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
-                                                            message:message
-                                                           delegate:nil 
-                                                  cancelButtonTitle:@"OK" 
-                                                  otherButtonTitles:nil];
-        
-        [alertView show];
+        [SVProgressHUD dismissWithError:message
+                             afterDelay:kDefaultDimissDelay];
     } else {
         [self.emailTextField resignFirstResponder];
         [self sendEmailSettingsWithEmail:email];

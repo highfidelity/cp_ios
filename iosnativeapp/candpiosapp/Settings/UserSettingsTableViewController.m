@@ -13,7 +13,7 @@
 #define tableCellSubviewTag 7909
 #define spinnerTag  7910
 
-@interface UserSettingsTableViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
+@interface UserSettingsTableViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *billingRateTextField;
 
@@ -145,26 +145,16 @@
     
     // load the user's data from the web by their id
     webSyncUser.userID = self.currentUser.userID;
+    [SVProgressHUD show];
    
     [webSyncUser loadUserResumeData:^(NSError *error) {
         if (!error) {
             // TODO: make this a better solution by checking for a problem with the PHP session cookie in CPApi
             // for now if the email comes back null this person isn't logged in so we're going to send them to do that.
             if ([webSyncUser.email isKindOfClass:[NSNull class]] || [webSyncUser.email length] == 0) {
-                [SVProgressHUD dismiss];
-                
+                [self dismissModalViewControllerAnimated:YES];
                 NSString *message = @"There was a problem getting your data!\nPlease logout and login again.";
-                // we had an error, let's tell the user and leave
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
-                                                                    message:message
-                                                                   delegate:self 
-                                                          cancelButtonTitle:@"OK" 
-                                                          otherButtonTitles:nil];
-                // give this alertView a tag so we can recognize this alertview in the
-                // delegate function
-                alertView.tag = 7879;
-                [alertView show];
-                
+                [SVProgressHUD dismissWithError:message afterDelay:kDefaultDimissDelay];
             } else {
                 // let's update the local current user with any new data
                 
@@ -229,23 +219,10 @@
                 // kill the hud if there is one
                 [SVProgressHUD dismiss];
             }
-            
-                        
-
         } else {
-            // kill the hud if there is one
-            [SVProgressHUD dismiss];    
+            [self dismissModalViewControllerAnimated:YES];
             NSString *message = @"There was a problem getting current data. Please try again in a little while.";
-            // we had an error, let's tell the user and leave
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
-                                                                message:message
-                                                               delegate:self 
-                                                      cancelButtonTitle:@"OK" 
-                                                      otherButtonTitles:nil];
-            // give this alertView a tag so we can recognize this alertview in the
-            // delegate function
-            alertView.tag = 7879;
-            [alertView show];            
+            [SVProgressHUD showErrorWithStatus:message duration:kDefaultDimissDelay];
         }      
     }];
     
@@ -267,14 +244,7 @@
         if (pendingEmail) {
             // user wants to change email, set our pending email instance variable to that
             self.pendingEmail = pendingEmail;
-            
-            // show an alert if the update was to the user email so they know they have to confirm
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Email Change" 
-                                                                message:[json objectForKey:@"message"]
-                                                               delegate:self 
-                                                      cancelButtonTitle:@"OK" 
-                                                      otherButtonTitles:nil];
-            [alertView show];
+            [SVProgressHUD showErrorWithStatus:[json objectForKey:@"message"] duration:kDefaultDimissDelay];
         }
         NSURL *newPhoto = [NSURL URLWithString:[paramsDict objectForKey:@"picture"]];
         if (newPhoto) {
@@ -341,13 +311,7 @@
         (textField.text.length == 0  || ![CPUtils validateEmailWithString:textField.text])) {
         NSString *message = @"Email address does not appear to be valid.";
         // we had an error, let's tell the user and leave
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
-                                                            message:message
-                                                           delegate:nil 
-                                                  cancelButtonTitle:@"OK" 
-                                                  otherButtonTitles:nil];
-    
-        [alertView show];
+        [SVProgressHUD showErrorWithStatus:message duration:kDefaultDimissDelay];
         return NO;
     }
     
@@ -383,13 +347,7 @@
                 
                 [self updateCurrentUserWithNewData:json];
             } else {
-                // show the user the error message
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Uh Oh!" 
-                                                                    message:[json objectForKey:@"message"]
-                                                                   delegate:self 
-                                                          cancelButtonTitle:@"OK" 
-                                                          otherButtonTitles:nil];
-                [alertView show];
+                [SVProgressHUD showErrorWithStatus:[json objectForKey:@"message"] duration:kDefaultDimissDelay];
                 [self updateCurrentUserWithNewData:nil];
             }
             [self stopTableCellSpinner:textField.superview];
@@ -483,24 +441,9 @@
                 // blank message from server
                 message = @"There was an problem uploading your image.\n Please try again.";
             }
-            // show the user the error message
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Uh Oh!" 
-                                                                message:message
-                                                               delegate:self 
-                                                      cancelButtonTitle:@"OK" 
-                                                      otherButtonTitles:nil];
-            [alertView show];
+            [SVProgressHUD showErrorWithStatus:message duration:kDefaultDimissDelay];
         }
     }];
-}
-
-#pragma mark - Alert View Delegate
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    // dismiss the modal view controller if there was an error syncing the user data
-    if (alertView.tag == 7879) {
-        [self dismissModalViewControllerAnimated:YES];
-    }
 }
 
 #pragma mark - Email Text Field Validation

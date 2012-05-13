@@ -43,4 +43,6 @@ extern NSString* const kUDCheckoutTime;
 extern NSString* const kUDLastLoggedAppVersion;
 extern NSString* const kAutomaticCheckins;
 
+extern int const kDefaultDimissDelay;
+
 @end

@@ -251,10 +251,9 @@
     }
     else {
         // Tell the user they aren't logged in and show them the Signup Page
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You must be logged in to C&P in order to check in." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Okay", nil];
-        [alertView show];
-        
-        [CPAppDelegate showSignupModalFromViewController:self animated:YES];
+        [SVProgressHUD showErrorWithStatus:@"You must be logged in to C&P in order to check in."
+                                  duration:kDefaultDimissDelay];
+        [CPAppDelegate performSelector:@selector(showSignupModalFromViewController:animated:) withObject:self afterDelay:kDefaultDimissDelay];
     }
 }
 

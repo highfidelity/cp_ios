@@ -638,12 +638,8 @@ UITapGestureRecognizer* _tapRecon = nil;
 {
     if (self.user.contactsOnlyChat && !self.user.isContact) {
         NSString *errorMessage = [NSString stringWithFormat:@"You can not chat with %@ until the two of you have exchanged contact information", self.user.nickname];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Chat"
-                                                            message:errorMessage
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-        [alertView show];
+        [SVProgressHUD showErrorWithStatus:errorMessage
+                                  duration:kDefaultDimissDelay];
     } else {
         [self performSegueWithIdentifier:@"ProfileToOneOnOneSegue" sender:sender];
     }
@@ -681,42 +677,34 @@ UITapGestureRecognizer* _tapRecon = nil;
         
         NSDictionary *jsonDict = json;
         NSNumber *successNum = [jsonDict objectForKey:@"succeeded"];
-        [SVProgressHUD dismiss];
+
         
         if (successNum && [successNum intValue] != 1) {
+
             NSString *error = [NSString stringWithFormat:@"%@", [jsonDict objectForKey:@"message"]];
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                message:error
-                                                               delegate:self
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-            
+
+            [SVProgressHUD dismissWithError:error
+                                 afterDelay:kDefaultDimissDelay];
             if ([successNum intValue] == -1) {
                 // not logged in - set tag in order for view to be closed
-                alertView.tag = 4;
             }
-            [alertView show];
-            
         }
         else {
             
             NSString *message = [NSString stringWithFormat:@"You Recognized %@", self.user.nickname];
-            
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Transaction"
-                                                                message:message
-                                                               delegate:self
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-            
-            [alertView show];
-            [self viewWillAppear:YES];
+            [SVProgressHUD dismissWithSuccess:message
+                                 afterDelay:kDefaultDimissDelay];
+            [self performSelector:@selector(viewWillAppear:)
+                       withObject:nil
+                       afterDelay:kDefaultDimissDelay];
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         // handle error
 #if DEBUG
         NSLog(@"AFJSONRequestOperation error: %@", [error localizedDescription]);
 #endif
-        [SVProgressHUD dismissWithError:[error localizedDescription]];
+        [SVProgressHUD dismissWithError:[error localizedDescription]
+                             afterDelay:kDefaultDimissDelay];
         
     }];
     [[NSOperationQueue mainQueue] addOperation:postOperation];

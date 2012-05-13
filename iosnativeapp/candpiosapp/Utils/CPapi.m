@@ -378,9 +378,7 @@
     
     NSString *alertMsg = @"";
     NSLog(@"f2f response: %@", json);
-    
-    [SVProgressHUD dismiss];
-    
+
     if (json == NULL)
     {
         alertMsg = @"We couldn't send the request.\nPlease try again.";
@@ -394,8 +392,19 @@
         }
         else if ([[json objectForKey:@"error"] isEqualToString:@"4"])
         {
+            [SVProgressHUD dismiss];
             alertMsg = [NSString stringWithFormat:@"We've resent your request.\nThe password is: %@.",
                         [json objectForKey:@"message"]];
+            UIAlertView *alert = [[UIAlertView alloc]
+                    initWithTitle:@"Add a Contact"
+                          message:alertMsg
+                         delegate:self
+                cancelButtonTitle:@"OK"
+                otherButtonTitles: nil];
+            [alert show];
+            // set the invite alert property on the SettingsMenuController
+            // allows us to avoid stacking the f2f alerts
+            [AppDelegate instance].settingsMenuController.f2fInviteAlert = alert;
         }
         else if ([[json objectForKey:@"error"] isEqualToString:@"6"])
         {
@@ -407,20 +416,8 @@
             alertMsg = [json objectForKey:@"message"];
         }
     }
-    
-    // Show error if we got one
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Add a Contact"
-                          message:alertMsg
-                          delegate:self
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles: nil];
-    [alert show];
-    
-    // set the invite alert property on the SettingsMenuController
-    // allows us to avoid stacking the f2f alerts
-    
-    [AppDelegate instance].settingsMenuController.f2fInviteAlert = alert;
+
+    [SVProgressHUD dismissWithError:alertMsg afterDelay:kDefaultDimissDelay];
 }
 
 + (void)sendF2FAccept:(int)userId
@@ -496,7 +493,7 @@
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setValue:[NSString stringWithFormat:@"%d", userId] forKey:@"greeter_id"];
-    
+    [SVProgressHUD show];
     [self makeHTTPRequestWithAction:@"f2fDecline"
                      withParameters:parameters
                     responseHandler:@selector(f2fDeclineResponseHandler:)];
@@ -526,6 +523,8 @@
     if (json == NULL)
     {
         alertMsg = @"Error declining request.";
+        [SVProgressHUD dismissWithError:alertMsg
+                             afterDelay:kDefaultDimissDelay];
     } 
     else
     {
@@ -533,22 +532,17 @@
             [json objectForKey:@"error"] == nil)
         {
             alertMsg = @"Contact Request declined.";
+            [SVProgressHUD dismissWithSuccess:alertMsg
+                                 afterDelay:kDefaultDimissDelay];
         }
         else
         {
             // Otherwise, just show whatever came back in "message"
             alertMsg = [json objectForKey:@"message"];
+            [SVProgressHUD dismissWithError:alertMsg
+                                 afterDelay:kDefaultDimissDelay];
         }
     }
-    
-    // Show error if we got one
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Contact Request"
-                          message:alertMsg
-                          delegate:self
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles: nil];
-    [alert show];
 }
 
 + (void)sendF2FVerify:(int)userId
@@ -594,6 +588,8 @@
     if (json == NULL)
     {
         alertMsg = @"Error submitting password.";
+        [SVProgressHUD dismissWithError:alertMsg
+                             afterDelay:kDefaultDimissDelay];
     } 
     else
     {
@@ -601,30 +597,24 @@
             [json objectForKey:@"error"] == nil)
         {
             alertMsg = @"You have been added as a Contact!";
-            [SVProgressHUD dismiss];
-            [[AppDelegate instance].tabBarController dismissModalViewControllerAnimated:YES];
+            [SVProgressHUD dismissWithSuccess:alertMsg afterDelay:kDefaultDimissDelay];
+            [[AppDelegate instance].tabBarController
+                    performSelector:@selector(dismissModalViewControllerAnimated:)
+                         withObject:[NSNumber numberWithBool:YES]
+                         afterDelay:kDefaultDimissDelay];
         }
-        else if ([[json objectForKey:@"error"] isEqualToString:@"3"])
-        {
-            [SVProgressHUD dismiss];
-            alertMsg = @"Wrong password!\nPlease try again.";
+        else {
+            if ([[json objectForKey:@"error"] isEqualToString:@"3"]) {
+                alertMsg = @"Wrong password!\nPlease try again.";
+            }
+            else {
+                // Otherwise, just show whatever came back in "message"
+                alertMsg = [json objectForKey:@"message"];
+            }
         }
-        else
-        {
-            [SVProgressHUD dismiss];
-            // Otherwise, just show whatever came back in "message"
-            alertMsg = [json objectForKey:@"message"];
-        }
+        [SVProgressHUD dismissWithError:alertMsg
+                             afterDelay:kDefaultDimissDelay];
     }
-    
-    // Show error if we got one
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Contact Request"
-                          message:alertMsg
-                          delegate:self
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles: nil];
-    [alert show];
 }
 
 # pragma mark - Map Dataset

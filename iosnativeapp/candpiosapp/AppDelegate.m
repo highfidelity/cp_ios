@@ -89,26 +89,19 @@
     [CPapi checkOutWithCompletion:^(NSDictionary *json, NSError *error) {
         
         BOOL respError = [[json objectForKey:@"error"] boolValue];
-        
-        [SVProgressHUD dismiss];
+
         if (!error && !respError) {
             [[UIApplication sharedApplication] cancelAllLocalNotifications];
             [self setCheckedOut];
+            [SVProgressHUD dismissWithSuccess:@"You have been sucessfully checked out." 
+                                   afterDelay:kDefaultDimissDelay];
         } else {
-            
-            
             NSString *message = [json objectForKey:@"payload"];
             if (!message) {
                 message = @"Oops. Something went wrong.";    
             }
-            
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:@"An error occurred"
-                                  message:message
-                                  delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles: nil];
-            [alert show];
+            [SVProgressHUD dismissWithError:message 
+                                 afterDelay:kDefaultDimissDelay];
         }
     }];    
 }

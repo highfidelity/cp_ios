@@ -29,8 +29,8 @@
 - (IBAction)anyoneChatSwitchChanged:(id)sender;
 
 
-@property NSDate *quietTimeFromDate;
-@property NSDate *quietTimeToDate;
+@property(strong) NSDate *quietTimeFromDate;
+@property(strong) NSDate *quietTimeToDate;
 
 @end
 
@@ -102,16 +102,14 @@
 #pragma mark - Api calls
 - (void)loadNotificationSettings
 {
+    [SVProgressHUD show];
     [CPapi getNotificationSettingsWithCompletition:^(NSDictionary *json, NSError *err) {
         BOOL error = [[json objectForKey:@"error"] boolValue];
         if (error) {
+            [self dismissModalViewControllerAnimated:YES];
             NSString *message = @"There was a problem getting your data!\nPlease logout and login again.";
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
-                                                                message:message
-                                                               delegate:self 
-                                                      cancelButtonTitle:@"OK" 
-                                                      otherButtonTitles:nil];
-            [alertView show];
+            [SVProgressHUD dismissWithError:message
+                                 afterDelay:kDefaultDimissDelay];
         } else {
             NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
             [dateFormat setDateFormat:@"HH:mm:ss"];
@@ -164,6 +162,7 @@
             [[self contactsOnlyChatSwitch] setOn:[contactsOnlyChat isEqualToString:@"0"]];
 
             [[self chatNotificationLabel] setHidden:self.contactsOnlyChatSwitch.on];
+            [SVProgressHUD dismiss];
         }
     }];
 }
@@ -266,13 +265,6 @@
     NSString *dateString = [timeFormatter stringFromDate: timeValue];
     
     return dateString;
-}
-
-
-#pragma mark - Alert View Delegate
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

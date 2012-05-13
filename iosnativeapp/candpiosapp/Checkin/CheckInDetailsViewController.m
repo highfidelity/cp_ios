@@ -7,9 +7,7 @@
 //
 
 #import "CheckInDetailsViewController.h"
-#import "CheckInListTableViewController.h"
 #import "VenueInfoViewController.h"
-#import "SignupController.h"
 #import "TPKeyboardAvoidingScrollView.h"
 #import "UIViewController+isModal.h"
 
@@ -271,14 +269,14 @@
         statusText = self.statusTextField.text;
     }
     
-    [SVProgressHUD showWithStatus:@"Checking In..."];
+    [SVProgressHUD showWithStatus:@"Checking In ..."];
     
     // use CPapi to checkin
     [CPapi checkInToLocation:self.place checkInTime:checkInTime checkOutTime:checkOutTime statusText:statusText isVirtual:self.checkInIsVirtual completionBlock:^(NSDictionary *json, NSError *error){
         // hide the SVProgressHUD
-        [SVProgressHUD dismiss];
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {
+                [SVProgressHUD dismiss];
                 
                 // Fire a notification 5 minutes before checkout time
                 NSInteger minutesBefore = 5;
@@ -338,19 +336,18 @@
                 }                
             }
             else {
+
                 // there's an error either becuase the user wasn't checked in or we didn't pass a foursquare ID
                 // we obviously passed a foursquare ID if we're in the app so the user isn't actually logged in
                 // show an alertView if the user isn't checked in
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You must be logged in to C&P in order to check in." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Okay", nil];
-                [alertView show];
-                
-                [CPAppDelegate showSignupModalFromViewController:self animated:YES];
+                [SVProgressHUD dismissWithError:@"You must be logged in to C&P in order to check in."
+                                     afterDelay:kDefaultDimissDelay];
+                [CPAppDelegate performSelector:@selector(showSignupModalFromViewController:animated:) withObject:self afterDelay:kDefaultDimissDelay];
             }
         } else {
             // show an alertView letting the user know that an error occured, log the error if debugging
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"An error occured while attempting to check in." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Okay", nil];
-            [alertView show];
-
+            [SVProgressHUD dismissWithError:@"An error occured while attempting to check in."
+                                 afterDelay:kDefaultDimissDelay];
         }
     }];      
 }

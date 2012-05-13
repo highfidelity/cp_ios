@@ -92,18 +92,13 @@
         BOOL respError = [[json objectForKey:@"error"] boolValue];
         
         if (!error && !respError) {
+            [SVProgressHUD dismiss];
             NSDictionary *jsonDict = [json objectForKey:@"payload"];
             [self showCode:[jsonDict objectForKey:@"code"]];
         } else {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" 
-                                                                message:[json objectForKey:@"payload"]
-                                                               delegate:self 
-                                                      cancelButtonTitle:@"OK" 
-                                                      otherButtonTitles:nil];
-            [alertView show];
+            [SVProgressHUD dismissWithError:[json objectForKey:@"payload"]
+                                 afterDelay:kDefaultDimissDelay];
         }
-        
-        [SVProgressHUD dismiss];
     }];
 }
 

@@ -151,13 +151,8 @@
             }
             else {
                 NSLog(@"%@",[json objectForKey:@"payload"]);
-                UIAlertView *alert = [[UIAlertView alloc]
-                                      initWithTitle:@"Contact list"
-                                      message:[json objectForKey:@"payload"]
-                                      delegate:self
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles: nil];
-                [alert show];
+                [SVProgressHUD dismissWithError:[json objectForKey:@"payload"]
+                                     afterDelay:kDefaultDimissDelay];
             }
         }
         else {

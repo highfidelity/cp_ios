@@ -373,14 +373,8 @@
                 // error in JSON parse (or timeout)
                 message = @"There was a problem sending chat.\nPlease try again!";
             }
-            
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:@"Oh No!"
-                                  message:message
-                                  delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
+
+            [SVProgressHUD showErrorWithStatus:message duration:kDefaultDimissDelay];
         }]; 
         
         

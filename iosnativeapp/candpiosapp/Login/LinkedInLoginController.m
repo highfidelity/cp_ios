@@ -322,41 +322,42 @@
         [loginParams setObject:password forKey:@"signupConfirm"];
         [loginParams setObject:@"signup" forKey:@"action"];
         [loginParams setObject:@"json" forKey:@"type"];
-        
+
         NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
             NSInteger succeeded = [[JSON objectForKey:@"succeeded"] intValue];
             NSLog(@"success: %d", succeeded);
-            
+
             if(succeeded == 0)
             {
                 NSString *outerErrorMessage = [JSON objectForKey:@"message"];// often just 'error'
-                
-                NSString *errorMessage = [NSString stringWithFormat:@"The error was:%@", outerErrorMessage];
                 // we get here if we failed to login
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unable to log in" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                [alert show];
-                
-                [self.navigationController dismissModalViewControllerAnimated:YES];
+                NSString *errorMessage = [NSString stringWithFormat:@"The error was: %@", outerErrorMessage];\
+                [SVProgressHUD showErrorWithStatus:errorMessage duration:kDefaultDimissDelay];
+                [[AppDelegate instance].tabBarController
+                        performSelector:@selector(dismissModalViewControllerAnimated:)
+                             withObject:[NSNumber numberWithBool:YES]
+                             afterDelay:kDefaultDimissDelay];
+
             }
             else
             {
                 // remember that we're logged in!
                 // (it's really the persistent cookie that tracks our login, but we need a superficial indicator, too)
                 NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"params"];
-                
+
                 [CPAppDelegate storeUserLoginDataFromDictionary:userInfo];
-                
+
                 NSString *userId = [userInfo objectForKey:@"id"];
                 NSString *userEmail = [userInfo objectForKey:@"email"];
                 BOOL hasSentConfirmationEmail = [[userInfo objectForKey:@"has_confirm_string"] boolValue];
-                
+
                 [FlurryAnalytics logEvent:@"login_linkedin"];
                 [FlurryAnalytics setUserID:userId];
-                
+
                 // Perform common post-login operations
                 [BaseLoginController pushAliasUpdate];
-                
+
                 if ( ! hasSentConfirmationEmail && (
                          ! userEmail ||
                         [@"" isEqualToString:userEmail] ||
@@ -374,11 +375,13 @@
                     }
                 }
             }
-            
+
             // Remove NSNotification as it's no longer needed once logged in
             [[NSNotificationCenter defaultCenter] removeObserver:self name:@"linkedInCredentials" object:nil];
-            
+
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+            [SVProgressHUD showErrorWithStatus:[error localizedDescription] duration:kDefaultDimissDelay];
+
         }];
         
         NSOperationQueue *queue = [[NSOperationQueue alloc] init];

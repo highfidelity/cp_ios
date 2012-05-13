@@ -56,4 +56,6 @@ NSString* const kUDCheckoutTime = @"localUserCheckoutTime";
 NSString* const kUDLastLoggedAppVersion = @"lastLoggedAppVersion";
 NSString* const kAutomaticCheckins = @"automaticCheckins";
 
+int const kDefaultDimissDelay = 2.5;
+
 @end
