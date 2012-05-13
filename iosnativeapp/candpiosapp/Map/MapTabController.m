@@ -499,9 +499,18 @@ BOOL clearLocations = NO;
 // zoom to the location; on initial load & after updaing their pos
 -(void)zoomTo:(CLLocationCoordinate2D)loc
 {
-    // zoom to a region 2km across
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(loc, 1000, 1000);
-    [mapView setRegion:viewRegion animated:TRUE];    
+
+    if(CLLocationCoordinate2DIsValid(loc))
+    {
+        // zoom to a region 2km across
+        MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(loc, 1000, 1000);
+        [mapView setRegion:viewRegion animated:TRUE];
+    }
+    else {
+#if DEBUG
+        NSLog(@"Received Invalid Coordinate, not zooming");
+#endif
+    }
 }
 
 // check if the user has either explicitly allowed or denied the use of their location
