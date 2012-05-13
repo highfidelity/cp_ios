@@ -692,11 +692,12 @@ UITapGestureRecognizer* _tapRecon = nil;
         else {
             
             NSString *message = [NSString stringWithFormat:@"You Recognized %@", self.user.nickname];
+            [self performSelector:@selector(viewDidLoad)
+                       withObject:nil
+                       afterDelay:0];
             [SVProgressHUD dismissWithSuccess:message
                                  afterDelay:kDefaultDimissDelay];
-            [self performSelector:@selector(viewWillAppear:)
-                       withObject:nil
-                       afterDelay:kDefaultDimissDelay];
+
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         // handle error
