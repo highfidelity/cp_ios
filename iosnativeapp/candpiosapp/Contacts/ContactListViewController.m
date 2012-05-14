@@ -239,8 +239,9 @@
     [CPUIHelper changeFontForLabel:cell.nicknameLabel toLeagueGothicOfSize:18.0];
 
     NSString *status = [contact objectForKey:@"status_text"];
+    bool checkedIn = [[contact objectForKey:@"checked_in"]boolValue];
     cell.statusLabel.text = @"";
-    if (status.length > 0) {
+    if (status.length > 0 && checkedIn) {
         status = [[status stringByDecodingHTMLEntities] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",status];
     }

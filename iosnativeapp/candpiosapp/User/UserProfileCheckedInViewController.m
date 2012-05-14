@@ -391,7 +391,7 @@ UITapGestureRecognizer* _tapRecon = nil;
 
 - (void)setUserStatusWithQuotes:(NSString *)status
 {
-    if ([self.user.status length] > 0) {
+    if ([self.user.status length] > 0 && self.user.checkedIn) {
         self.cardStatus.text = [NSString stringWithFormat:@"\"%@\"", status];
     }
 }

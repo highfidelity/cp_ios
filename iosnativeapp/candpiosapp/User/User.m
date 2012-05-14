@@ -324,12 +324,14 @@
                         venue = [[CPVenue alloc] initFromDictionary:checkinDict];
                     }
                     self.placeCheckedIn = venue;
+                    self.checkedIn = [[checkinDict valueForKey:@"checked_in"] boolValue];
                 }
             }
             
             // user checkin data
             self.placeCheckedIn.checkinCount = [[userDict valueForKeyPath:@"checkin_data.users_here"] intValue];
             self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict valueForKeyPath:@"checkin_data.checkout"] intValue]]; 
+            //self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
             
             // checkin history
             self.checkInHistory = [NSMutableArray array];

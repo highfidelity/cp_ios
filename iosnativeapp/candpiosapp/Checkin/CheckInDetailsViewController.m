@@ -195,8 +195,11 @@
     UIColor *lightTexture = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-light.png"]];
     self.checkInDetails.backgroundColor = lightTexture; 
     
+    /*
+    Removed WL 17349 - andyast
     User *user = [[AppDelegate instance] currentUser];
    
+    
     [user loadUserResumeData:^(NSError *error) {
         if (!error) {
             
@@ -208,7 +211,7 @@
             // error checking for load of user 
         }
     }];
-    
+    */
     
 
     // set the delegates for the textField and the otherUsersScrollView

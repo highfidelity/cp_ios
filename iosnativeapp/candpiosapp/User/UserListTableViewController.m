@@ -249,7 +249,7 @@
     cell.nicknameLabel.frame = nicknameFrameChanger;
     
     cell.statusLabel.text = @"";
-    if (![user.status isEqualToString:@""]) {
+    if (user.status.length > 0 && user.checkedIn) {
         cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",[user.status stringByDecodingHTMLEntities]];
     }
     cell.distanceLabel.text = [CPUtils localizedDistanceStringForDistance:user.distance];
