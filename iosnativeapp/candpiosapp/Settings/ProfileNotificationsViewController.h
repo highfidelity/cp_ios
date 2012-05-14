@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProfileNotificationsViewController : UIViewController
+@interface ProfileNotificationsViewController : UITableViewController
 
 @end

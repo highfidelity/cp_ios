@@ -70,18 +70,20 @@
     self.menuStringsArray = [NSArray arrayWithObjects:
                              // @"Face To Face", DISABLED (alexi)
                              inviteItemName,
-                             @"Wallet",
+                             // @"Wallet", DISABLED (WL #17339 - andyast)
                              @"Profile",
                              //@"Linked Accounts", DISABLED (alexi)
+                             @"Notifications",
                              @"Logout",
                              nil];
     
     self.menuSegueIdentifiersArray = [NSArray arrayWithObjects:
                                       inviteItemSegue,
                                       // @"ShowFaceToFaceFromMenu", DISABLED (alexi)
-                                      @"ShowBalanceFromMenu",
+                                      // @"ShowBalanceFromMenu", DISABLED (WL #17339 - andyast)
                                       @"ShowUserSettingsFromMenu",
                                       // @"ShowFederationFromMenu", DISALBED (alexi)
+                                       @"ShowNotificationsFromMenu",
                                       @"ShowLogoutFromMenu",
                                       nil];
     

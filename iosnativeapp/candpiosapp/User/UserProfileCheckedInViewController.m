@@ -548,6 +548,8 @@ UITapGestureRecognizer* _tapRecon = nil;
 }
 
 -(IBAction)plusButtonPressed:(id)sender {
+    self.payButton.hidden = YES;
+    
     // animate the spinning of the plus button and replacement by the minus button
     [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{ 
         self.plusButton.transform = CGAffineTransformMakeRotation(M_PI); 
@@ -560,11 +562,11 @@ UITapGestureRecognizer* _tapRecon = nil;
     } completion:NULL];
     // animation of menu buttons shooting out
     [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
-        self.f2fButton.transform = CGAffineTransformMakeTranslation(0, -220);
-        self.chatButton.transform = CGAffineTransformMakeTranslation(0, -165);
-        self.reviewButton.transform = CGAffineTransformMakeTranslation(0, -110);
-        self.payButton.transform = CGAffineTransformMakeTranslation(0, -55);
-        self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, -220);
+        self.f2fButton.transform = CGAffineTransformMakeTranslation(0, -165);
+        self.chatButton.transform = CGAffineTransformMakeTranslation(0, -110);
+        self.reviewButton.transform = CGAffineTransformMakeTranslation(0, -55);
+        //self.payButton.transform = CGAffineTransformMakeTranslation(0, -55);
+        self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, -165);
     } completion:^(BOOL finished){
         [self.view viewWithTag:1005].userInteractionEnabled = YES;
     }];
@@ -585,7 +587,7 @@ UITapGestureRecognizer* _tapRecon = nil;
     [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
         self.f2fButton.transform = CGAffineTransformMakeTranslation(0, 0);
         self.chatButton.transform = CGAffineTransformMakeTranslation(0, 0);
-        self.payButton.transform = CGAffineTransformMakeTranslation(0, 0);
+        //self.payButton.transform = CGAffineTransformMakeTranslation(0, 0);
         self.reviewButton.transform = CGAffineTransformMakeTranslation(0, 0);
         self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, 0);
     } completion:^(BOOL finished){
