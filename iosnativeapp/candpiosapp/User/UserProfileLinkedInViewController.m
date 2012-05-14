@@ -28,12 +28,15 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];    
+    [super viewDidLoad];
+    
+    self.socialWebView.delegate = self;
+    
+    [SVProgressHUD showWithStatus:@"Loading..."];
+    
     //Create a URL object.
     NSURL *url = [NSURL URLWithString:self.linkedInProfileUrlAddress];
     
-    //NSURL *url = [NSURL URLWithString:@"www.google.com"];
-
     //URL Requst Object
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     
@@ -52,6 +55,21 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark - UIWebViewDelegate
+
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [SVProgressHUD dismiss];
+    
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    [SVProgressHUD dismissWithError:[error localizedDescription]
+                         afterDelay:kDefaultDimissDelay];
 }
 
 @end
