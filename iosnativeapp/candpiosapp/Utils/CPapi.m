@@ -805,6 +805,31 @@
                          completion:completion];
 }
 
+# pragma mark - Love
+
++ (void)sendLoveToUserWithID:(int)recieverID 
+                 loveMessage:(NSString *)message
+                 completion :(void (^)(NSDictionary *, NSError *))completion
+{
+    NSMutableDictionary *reviewParams = [NSMutableDictionary dictionaryWithCapacity:2];
+    [reviewParams setObject:[NSString stringWithFormat:@"%d", recieverID] forKey:@"recipientID"];
+    [reviewParams setObject:message forKey:@"reviewText"];
+    
+    [self makeHTTPRequestWithAction:@"sendLove" withParameters:reviewParams completion:completion];
+}
+
+
++ (void)sendPlusOneForLoveWithID:(int)reviewID 
+                      completion:(void(^)(NSDictionary *json, NSError *error))completion
+{
+    // setup the parameters dictionary
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:1];
+    [parameters setValue:[NSString stringWithFormat:@"%d", reviewID] forKey:@"review_id"];
+    
+    // make the request
+    [self makeHTTPRequestWithAction:@"plusOneForLove" withParameters:parameters completion:completion];
+}
+
 
 # pragma mark - User Settings
 

@@ -82,6 +82,14 @@
                 forLocation:(CLLocation *)location
        withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
+# pragma mark - Love
++ (void)sendLoveToUserWithID:(int)recieverID
+                 loveMessage:(NSString *)loveMessage
+                  completion:(void(^)(NSDictionary *json, NSError *error))completion;
+
++ (void)sendPlusOneForLoveWithID:(int)reviewID 
+                    completion:(void(^)(NSDictionary *json, NSError *error))completion;
+
 # pragma mark - Contact List
 + (void)getContactListWithCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
@@ -126,4 +134,5 @@
                         completion:(void (^)(NSDictionary *, NSError *))completion;
 
 + (void)saveVenueAutoCheckinStatus:(CPVenue *)venue;
+
 @end
