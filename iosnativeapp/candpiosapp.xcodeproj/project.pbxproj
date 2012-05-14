@@ -261,6 +261,8 @@
 		53FE254F150EA60D00A0D93A /* PaymentHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE254D150EA50A00A0D93A /* PaymentHelper.m */; };
 		53FE2552150EAC6B00A0D93A /* UserSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE2551150EAC6B00A0D93A /* UserSettingsTableViewController.m */; };
 		5F7D21D9155AF1A200EAA540 /* UserProfileLinkedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */; };
+		5F8413DB15617A78003B43B8 /* UserProfileWebStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F8413DA15617A78003B43B8 /* UserProfileWebStoryboard_iPhone.storyboard */; };
+		5F8413E115619721003B43B8 /* UserProfileLinkedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */; };
 		5FAF891F1555FA6600247B95 /* virtual-check-in-badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAF891D1555FA6600247B95 /* virtual-check-in-badge.png */; };
 		5FAF89201555FA6600247B95 /* virtual-check-in-badge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAF891E1555FA6600247B95 /* virtual-check-in-badge@2x.png */; };
 		5FAF89241555FA8300247B95 /* pin-virtual-checkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAF89221555FA8300247B95 /* pin-virtual-checkedin.png */; };
@@ -772,6 +774,7 @@
 		53FE2551150EAC6B00A0D93A /* UserSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSettingsTableViewController.m; path = Settings/UserSettingsTableViewController.m; sourceTree = "<group>"; };
 		5F7D21D7155AF1A200EAA540 /* UserProfileLinkedInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileLinkedInViewController.h; path = User/UserProfileLinkedInViewController.h; sourceTree = "<group>"; };
 		5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfileLinkedInViewController.m; path = User/UserProfileLinkedInViewController.m; sourceTree = "<group>"; };
+		5F8413DA15617A78003B43B8 /* UserProfileWebStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = UserProfileWebStoryboard_iPhone.storyboard; path = User/UserProfileWebStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		5FAF891D1555FA6600247B95 /* virtual-check-in-badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "virtual-check-in-badge.png"; sourceTree = "<group>"; };
 		5FAF891E1555FA6600247B95 /* virtual-check-in-badge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "virtual-check-in-badge@2x.png"; sourceTree = "<group>"; };
 		5FAF89221555FA8300247B95 /* pin-virtual-checkedin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-virtual-checkedin.png"; sourceTree = "<group>"; };
@@ -1329,6 +1332,7 @@
 				536DE929150170BB00794650 /* images */,
 				694323A715213D9000EBF585 /* mustaches */,
 				53C4BE40152CC97400A87EF0 /* UserProfileStoryboard_iPhone.storyboard */,
+				5F8413DA15617A78003B43B8 /* UserProfileWebStoryboard_iPhone.storyboard */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -2418,6 +2422,7 @@
 				E4E169DC15616F0300A6B9F0 /* send-love.png in Resources */,
 				E4E169DD15616F0300A6B9F0 /* send-love@2x.png in Resources */,
 				E4E169DF1561702E00A6B9F0 /* send-love-small@2x.png in Resources */,
+				5F8413DB15617A78003B43B8 /* UserProfileWebStoryboard_iPhone.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2452,6 +2457,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F8413E115619721003B43B8 /* UserProfileLinkedInViewController.m in Sources */,
 				53B90651150EB08F00EAC9A1 /* UserSettingsTableViewController.m in Sources */,
 				53FE254F150EA60D00A0D93A /* PaymentHelper.m in Sources */,
 				871EFB1714AE9C820030658B /* main.m in Sources */,

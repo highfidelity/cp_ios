@@ -59,6 +59,8 @@
 @property (nonatomic, assign) BOOL checkInIsVirtual;
 @property (nonatomic, assign) BOOL contactsOnlyChat;
 @property (nonatomic, assign) BOOL isContact;
+@property (nonatomic, strong) NSString *linkedInPublicProfileUrl;
+
 
 -(void)loadUserResumeData:(void (^)(NSError *error))completion;
 -(id)initFromDictionary:(NSDictionary *)userDict;

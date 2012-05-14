@@ -51,6 +51,8 @@
 @synthesize contactsOnlyChat = _contactsOnlyChat;
 @synthesize isContact = _isContact;
 @synthesize totalHours = _totalHours;
+@synthesize linkedInPublicProfileUrl = _linkedInPublicProfileUrl;
+
 
 
 -(id)init
@@ -281,6 +283,9 @@
             // set the booleans if the user is facebook/linkedin verified
             self.facebookVerified = [[userDict valueForKeyPath:@"verified.facebook.verified"] boolValue];
             self.linkedInVerified = [[userDict valueForKeyPath:@"verified.linkedin.verified"] boolValue];
+            
+            // get the linkedin profile url
+            self.linkedInPublicProfileUrl = [userDict objectForKey:@"linkedin_public_profile_url"];
             
             // get the users hourly_billing_rate if it isn't null
             // set it to N/A if it's empty

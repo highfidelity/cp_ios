@@ -9,17 +9,15 @@
 #import "UserProfileLinkedInViewController.h"
 
 @interface UserProfileLinkedInViewController ()
-@property (nonatomic, weak) IBOutlet UIWebView *socialWebView;
 
 
 @end
 
 @implementation UserProfileLinkedInViewController
+@synthesize linkedInProfileUrlAddress = _linkedInProfileUrlAddress;
 @synthesize socialWebView = _socialWebView;
 
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibNameOrNil  bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -30,13 +28,12 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    NSString *urlAddress =@"http://www.linkedin.com/pub/bryan-galusha/a/618/b3";
-    
+    [super viewDidLoad];    
     //Create a URL object.
-    NSURL *url = [NSURL URLWithString:urlAddress];
+    NSURL *url = [NSURL URLWithString:self.linkedInProfileUrlAddress];
     
+    //NSURL *url = [NSURL URLWithString:@"www.google.com"];
+
     //URL Requst Object
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     

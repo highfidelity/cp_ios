@@ -15,6 +15,8 @@
 #import "GRMustache.h"
 #import "VenueInfoViewController.h"
 #import "NSString+HTML.h"
+#import "UserProfileLinkedInViewController.h"
+
 
 #define kRequestToAddToMyContactsActionSheetTitle @"Request to exchange contact info?"
 
@@ -34,8 +36,6 @@
 @property (nonatomic, weak) IBOutlet UILabel *venueAddress;
 @property (nonatomic, weak) IBOutlet UIImageView *venueOthersIcon;
 @property (nonatomic, weak) IBOutlet UILabel *venueOthers;
-@property (nonatomic, weak) IBOutlet UIView *socialView;
-@property (nonatomic, weak) IBOutlet UIButton *socialViewButton;
 @property (nonatomic, weak) IBOutlet UIView *availabilityView;
 @property (nonatomic, weak) IBOutlet UILabel *distanceLabel;
 @property (nonatomic, weak) IBOutlet UILabel *hoursAvailable;
@@ -66,7 +66,6 @@
 -(IBAction)minusButtonPressed:(id)sender;
 -(IBAction)sendloveButtonPressed:(id)sender;
 -(IBAction)venueViewButtonPressed:(id)sender;
--(IBAction)socialViewButtonPressed:(id)sender;
 -(IBAction)chatButtonPressed:(id)sender;
 
 @end
@@ -91,8 +90,6 @@
 @synthesize venueAddress = venueAddress;
 @synthesize venueOthersIcon = _venueOthersIcon;
 @synthesize venueOthers = venueOthers;
-@synthesize socialView = _socialView;
-@synthesize socialViewButton = _socialViewButton;
 @synthesize availabilityView = _availabilityView;
 @synthesize hoursAvailable = _hoursAvailable;
 @synthesize minutesAvailable = _minutesAvailable;
@@ -227,7 +224,6 @@ UITapGestureRecognizer* _tapRecon = nil;
         [SVProgressHUD showWithStatus:@"Loading Profile..."];
     } else {
         self.venueView.alpha = 1.0;
-        self.socialView.alpha = 1.0;
         self.availabilityView.alpha = 1.0;
         // given that we already have a last checked in place for the user show it already
         [self updateLastUserCheckin];
@@ -272,8 +268,6 @@ UITapGestureRecognizer* _tapRecon = nil;
     [self setVenueAddress:nil];
     [self setVenueOthersIcon:nil];
     [self setVenueOthers:nil];
-    [self setSocialView:nil];
-    [self setSocialViewButton:nil];
     [self setAvailabilityView:nil];
     [self setDistanceLabel:nil];
     [self setHoursAvailable:nil];
@@ -509,6 +503,14 @@ UITapGestureRecognizer* _tapRecon = nil;
         
         return NO;
     }
+    if ([url.scheme isEqualToString:@"linkedin-view"]) {
+        UserProfileLinkedInViewController *profileVC = [[UIStoryboard storyboardWithName:@"UserProfileWebStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+        [UserProfileLinkedInViewController class];
+        profileVC.linkedInProfileUrlAddress = self.user.linkedInPublicProfileUrl;
+        [self.navigationController pushViewController:profileVC animated:YES];
+        return NO;
+    }
+
     return YES;
 }
 
@@ -631,9 +633,6 @@ UITapGestureRecognizer* _tapRecon = nil;
     venueVC.venue = self.user.placeCheckedIn;
     
     [self.navigationController pushViewController:venueVC animated:YES];
-}
--(IBAction)socialViewButtonPressed:(id)sender {
-    
 }
 
 - (IBAction)chatButtonPressed:(id)sender
