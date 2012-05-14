@@ -31,6 +31,7 @@
     [super viewDidLoad];
     
     self.socialWebView.delegate = self;
+    self.socialWebView.hidden = YES;
     
     [SVProgressHUD showWithStatus:@"Loading..."];
     
@@ -62,6 +63,7 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    self.socialWebView.hidden = NO;
     [SVProgressHUD dismiss];
     
 }
