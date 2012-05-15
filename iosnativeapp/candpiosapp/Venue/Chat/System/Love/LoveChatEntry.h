@@ -15,6 +15,8 @@
 @interface LoveChatEntry : VenueChatEntry
 
 @property (nonatomic, strong) User *recipient;
+@property (nonatomic, assign) int reviewID;
+@property (nonatomic, strong) NSMutableDictionary *plusOnes;
 
 - (LoveChatEntry *)initFromJSON:(NSDictionary *)json 
                   dateFormatter:(NSDateFormatter *)dateFormatter;

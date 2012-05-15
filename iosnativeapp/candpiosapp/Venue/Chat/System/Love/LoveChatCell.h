@@ -12,8 +12,14 @@
 @interface LoveChatCell : VenueChatCell
 
 @property (nonatomic, strong) UIButton *recipientThumbnail;
+@property (nonatomic, strong) UIButton *plusOneButton;
+@property (nonatomic, strong) UIActivityIndicatorView *plusOneSpinner;
+@property (nonatomic, strong) UIImageView *loveCountBubble;
+@property (nonatomic, strong) UILabel *loveCountLabel;
+@property (nonatomic, assign) int loveCount;
 
 + (CGRect)chatEntryFrame;
 + (UIFont *)chatEntryFont;
+- (void)disablePlusOneButton;
 
 @end

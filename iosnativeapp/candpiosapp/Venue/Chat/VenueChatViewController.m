@@ -341,7 +341,7 @@
         __weak VenueChatViewController *chatVC = self;
         
         // send the new chat message
-        [CPapi sendVenueChatForVenueWithID:self.venueChat.venueIDString message:self.growingTextView.text lastChatID:self.venueChat.lastChatIDString queue:self.venueChat.chatQueue completion:^(NSDictionary *json, NSError *error) {
+        [CPapi sendVenueChatForVenueWithID:self.venueChat.venueID message:self.growingTextView.text lastChatID:self.venueChat.lastChatID queue:self.venueChat.chatQueue completion:^(NSDictionary *json, NSError *error) {
             
             // no matter what happens we want to stop the spinner and show the button again
             // also allow the user to click on the text view again
@@ -530,6 +530,25 @@
             
             // setup a block that will set the recipient thumbnail for the cell
             extraBlock = ^(VenueChatCell *cell, VenueChatEntry *entry) {
+                // make the tag of the plusOneButton the row so we can grab the entry later
+                ((LoveChatCell *) cell).plusOneButton.tag = indexPath.row;
+                
+                // set the count of +1s in the bubble
+                ((LoveChatCell *) cell).loveCount = ((LoveChatEntry *) entry).plusOnes.count;
+                
+                // check if this was love sent by the current user
+                // or if this user was the recipient of the love sent
+                // or if this user already has a +1
+                // and disable the +1 button if that is the case
+                if (entry.user.userID == [CPAppDelegate currentUser].userID || 
+                    ((LoveChatEntry *)entry).recipient.userID == [CPAppDelegate currentUser].userID ||
+                    [((LoveChatEntry *)entry).plusOnes objectForKey:[NSString stringWithFormat:@"%d", [CPAppDelegate currentUser].userID]]) {
+                    [((LoveChatCell *)cell) disablePlusOneButton];
+                } else {
+                    // be the target for the +1 button to fire off an api request
+                    [((LoveChatCell *)cell).plusOneButton addTarget:self action:@selector(sendPlusOneForLove:) forControlEvents:UIControlEventTouchUpInside];
+                }
+                
                 // thumbnail button for recipient
                 // sender gets taken care below as the entry user
                 [self thumbnailButtonForButton:((LoveChatCell *) cell).recipientThumbnail photoURL:((LoveChatEntry *) entry).recipient.urlPhoto row:indexPath.row];
@@ -600,6 +619,53 @@
     }
 }
 
+- (void)sendPlusOneForLove:(UIButton *)button
+{
+    
+    LoveChatCell *loveCell = (LoveChatCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:button.tag inSection:0]];
+    LoveChatEntry *loveEntry = [self.venueChat.chatEntries objectAtIndex:button.tag];
+    
+    // add that entry to entry purgatory so it can be easily deleted if we get it back with updated data
+    [self.venueChat.entryPurgatory addObject:loveEntry];
+    
+    // show the +1 spinner and hide the rest
+    [loveCell.plusOneSpinner startAnimating];
+    loveCell.plusOneButton.hidden = YES;
+    
+    __weak VenueChatViewController *chatVC = self;
+    
+    // kick off a request to CPApi in order to send the +1
+    [CPapi sendPlusOneForLoveWithID:loveEntry.reviewID
+        fromVenueChatForVenueWithID:self.venue.venueID 
+                    lastChatEntryID:self.venueChat.lastChatID
+                          chatQueue:self.venueChat.chatQueue 
+                         completion:^(NSDictionary *json, NSError *error){
+        if (!error) {
+            
+            // no matter what happended here let's stop the spinner and show the plus again
+            [loveCell.plusOneSpinner stopAnimating];
+            loveCell.plusOneButton.hidden = NO;
+            
+            BOOL respError = [[json objectForKey:@"error"] boolValue];
+            if (respError) {
+                // the backend has responded with an error
+                // show it to the user
+                [SVProgressHUD showErrorWithStatus:[json objectForKey:@"payload"] duration:kDefaultDimissDelay];
+
+            } else {
+                // no problems ... let's parse the new chat entries that we got back
+                // no error, parse the chat if there is any
+                
+                [self.venueChat addNewChatEntriesFromDictionary:json completion:^(NSArray *newEntries){
+                    [chatVC updateTableAndHeaderWithNewVenueChat];
+                }];
+            }
+        } else {
+            // we have an error parsing the json
+        }
+    }];
+}
+
 - (void)thumbnailButtonForButton:(UIButton *)thumbnailButton photoURL:(NSURL *)photoURL row:(NSInteger)row
 {
     // make a request for the profile image
@@ -634,8 +700,6 @@
     } else {
         userVC.user = entry.user;
     }
-    
-    
     
     // push the userVC onto our UINavigationController's stack
     [self.navigationController pushViewController:userVC animated:YES];

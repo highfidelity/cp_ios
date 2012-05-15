@@ -827,7 +827,23 @@
     [parameters setValue:[NSString stringWithFormat:@"%d", reviewID] forKey:@"review_id"];
     
     // make the request
-    [self makeHTTPRequestWithAction:@"plusOneForLove" withParameters:parameters completion:completion];
+    [self makeHTTPRequestWithAction:@"sendPlusOneForLove" withParameters:parameters completion:completion];
+}
+
++ (void)sendPlusOneForLoveWithID:(int)reviewID 
+     fromVenueChatForVenueWithID:(int)venueID
+                 lastChatEntryID:(int)lastID
+                       chatQueue:(NSOperationQueue *)chatQueue
+                      completion:(void (^)(NSDictionary *, NSError *))completion
+{
+    // setup the parameters dictionary
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:3];
+    [parameters setValue:[NSString stringWithFormat:@"%d", reviewID] forKey:@"review_id"];
+    [parameters setValue:[NSString stringWithFormat:@"%d", venueID] forKey:@"venue_id"];
+    [parameters setValue:[NSString stringWithFormat:@"%d", lastID] forKey:@"last_id"];
+    
+    // make the request
+    [self makeHTTPRequestWithAction:@"sendPlusOneForLove" withParameters:parameters queue:chatQueue completion:completion];
 }
 
 
@@ -946,29 +962,29 @@
 
 # pragma mark - Venue Chat
 
-+ (void)getVenueChatForVenueWithID:(NSString *)venueIDString
-                        lastChatID:(NSString *)lastChatIDString
++ (void)getVenueChatForVenueWithID:(int)venueID
+                        lastChatID:(int)lastChatID
                              queue:(NSOperationQueue *)chatQueue
                         completion:(void (^)(NSDictionary *, NSError *))completion
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:venueIDString forKey:@"venue_id"];
-    [parameters setValue:lastChatIDString forKey:@"last_id"];
+    [parameters setValue:[NSString stringWithFormat:@"%d", venueID] forKey:@"venue_id"];
+    [parameters setValue:[NSString stringWithFormat:@"%d", lastChatID] forKey:@"last_id"];
     
     [self makeHTTPRequestWithAction:@"getVenueChat" withParameters:parameters queue:chatQueue completion:completion];
 }
 
-+ (void)sendVenueChatForVenueWithID:(NSString *)venueIDString
++ (void)sendVenueChatForVenueWithID:(int)venueID
                             message:(NSString *)message
-                         lastChatID:(NSString *)lastChatIDString
+                         lastChatID:(int)lastChatID
                               queue:(NSOperationQueue *)chatQueue
                          completion:(void (^)(NSDictionary *, NSError *))completion
 {
     // note that we also send the last_id here so that we can get all new chat messages back when the send is successful
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:venueIDString forKey:@"venue_id"];
+    [parameters setValue:[NSString stringWithFormat:@"%d", venueID] forKey:@"venue_id"];
     [parameters setValue:message forKey:@"message"];
-    [parameters setValue:lastChatIDString forKey:@"last_id"];
+    [parameters setValue:[NSString stringWithFormat:@"%d", lastChatID] forKey:@"last_id"];
     
     
     [self makeHTTPRequestWithAction:@"sendVenueChat" withParameters:parameters queue:chatQueue timeout:5 completion:completion];

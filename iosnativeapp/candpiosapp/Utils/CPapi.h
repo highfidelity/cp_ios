@@ -90,6 +90,12 @@
 + (void)sendPlusOneForLoveWithID:(int)reviewID 
                     completion:(void(^)(NSDictionary *json, NSError *error))completion;
 
++ (void)sendPlusOneForLoveWithID:(int)reviewID 
+     fromVenueChatForVenueWithID:(int)venueID
+                 lastChatEntryID:(int)lastID
+                       chatQueue:(NSOperationQueue *)chatQueue
+                      completion:(void (^)(NSDictionary *, NSError *))completion;
+
 # pragma mark - Contact List
 + (void)getContactListWithCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
@@ -122,14 +128,14 @@
                                        :(void(^)(NSDictionary *json, NSError *error))completion; 
 
 # pragma mark - Venue Chat
-+ (void)getVenueChatForVenueWithID:(NSString *)venueIDString
-                        lastChatID:(NSString *)lastChatIDString
++ (void)getVenueChatForVenueWithID:(int)venueID
+                        lastChatID:(int)lastChatID
                              queue:(NSOperationQueue *)chatQueue
                         completion:(void (^)(NSDictionary *, NSError *))completion;
 
-+ (void)sendVenueChatForVenueWithID:(NSString *)venueIDString
++ (void)sendVenueChatForVenueWithID:(int)venueIDString
                             message:(NSString *)message
-                        lastChatID:(NSString *)lastChatIDString
+                        lastChatID:(int)lastChatIDString
                               queue:(NSOperationQueue *)chatQueue
                         completion:(void (^)(NSDictionary *, NSError *))completion;
 

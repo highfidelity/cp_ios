@@ -22,8 +22,8 @@
 
 @implementation VenueChat
 
-@synthesize venueIDString = _venueIDString;
-@synthesize lastChatIDString = _lastChatIDString;
+@synthesize venueID = _venueID;
+@synthesize lastChatID = _lastChatID;
 @synthesize chatEntries = _chatEntries;
 @synthesize entryDateFormatter = _entryDateFormatter;
 @synthesize activeChattersDuringInterval = _activeChattersDuringInterval;
@@ -33,6 +33,7 @@
 @synthesize timestampDateFormatter = _timestampDateFormatter;
 @synthesize previousTimestamp = _previousTimestamp;
 @synthesize pendingTimestamp = _pendingTimestamp;
+@synthesize entryPurgatory = _entryPurgatory;
 
 - (VenueChat *)init
 {
@@ -46,7 +47,7 @@
 - (VenueChat *)initWithVenueID:(int)venueID
 {
     if (self = [self init]) {
-        self.venueIDString = [NSString stringWithFormat:@"%d", venueID];
+        self.venueID = venueID;
     }
     return self;
 }
@@ -90,6 +91,14 @@
     return _chatEntries;
 }
 
+- (NSMutableArray *)entryPurgatory
+{
+    if (!_entryPurgatory) {
+        _entryPurgatory = [NSMutableArray array];
+    }
+    return _entryPurgatory;
+}
+
 - (NSMutableSet *)usersCounted
 {
     if (!_usersCounted) {
@@ -100,7 +109,7 @@
 
 - (void)getNewChatEntriesWithCompletion:(void (^)(BOOL authenticated, NSArray *newEntries))completion
 {
-    [CPapi getVenueChatForVenueWithID:self.venueIDString lastChatID:self.lastChatIDString queue:self.chatQueue completion:^(NSDictionary *dict, NSError *error) {
+    [CPapi getVenueChatForVenueWithID:self.venueID lastChatID:self.lastChatID queue:self.chatQueue completion:^(NSDictionary *dict, NSError *error) {
         if (!error) {                
             // we have a payload to check out
             if (![[dict objectForKey:@"error"] boolValue]) {
@@ -108,7 +117,6 @@
                 [self addNewChatEntriesFromDictionary:dict completion:^(NSArray *newEntries){
                     completion(YES, newEntries);
                 }];
-    
             }
             else {
                 // error, means the user isn't logged in (since we know we passed a venue ID)
@@ -138,7 +146,7 @@
 #endif
         // set the lastChatIDString property on the VenueChat object
         // so that the subsequent call can be made for only new chat
-        self.lastChatIDString = [dict valueForKeyPath:@"payload.lastId"];
+        self.lastChatID = [[dict valueForKeyPath:@"payload.lastId"] intValue];
         
         // setup an NSDate object for the time VENUE_CHAT_ACTIVE_INTERVAL days ago
         int interval = -VENUE_CHAT_ACTIVE_INTERVAL * 3600 * 24;
@@ -192,7 +200,7 @@
             
             // if this entry is after the time interval then add it to the count
             // a checkin system chat message should also not be in the active chatter count
-            if ([[entry date] compare:dateAtInterval] != NSOrderedAscending && ![entry isKindOfClass:[CheckinChatEntry class]]) {
+            if ([entry.date compare:dateAtInterval] != NSOrderedAscending && ![entry isKindOfClass:[CheckinChatEntry class]]) {
                 NSString *userIDString = [NSString stringWithFormat:@"%d", entry.user.userID];
                 if (![self.usersCounted containsObject:userIDString]) {
                     self.activeChattersDuringInterval += 1;
@@ -236,6 +244,16 @@
                 
                 // nil out the pending timestamp now that we've added it
                 self.pendingTimestamp = nil;
+            }
+            
+            if ([entry isKindOfClass:[LoveChatEntry class]]) {
+                // check if we have an entry in purgatory for this lvoe that should be deleted from our entries
+                for (LoveChatEntry *oldEntry in [self.entryPurgatory copy]) {
+                    if (oldEntry.reviewID == ((LoveChatEntry *)entry).reviewID) {
+                        [self.entryPurgatory removeObject:oldEntry];
+                        [mutableChatEntries removeObject:oldEntry];
+                    }
+                }
             }
             
             [newEntries addObject:entry];

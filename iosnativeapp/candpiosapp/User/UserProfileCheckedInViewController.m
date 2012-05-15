@@ -649,67 +649,41 @@ UITapGestureRecognizer* _tapRecon = nil;
 
 
 - (void)sendReview {
-    
-    // TODO: Move this functionality to CPApi.
-    
-    [SVProgressHUD showWithStatus:@"Sending"];
-    AFHTTPClient *httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
-    NSString *respUserId = [NSString stringWithFormat:@"%d", self.user.userID];
-	NSMutableDictionary *reviewParams = [NSMutableDictionary dictionary];
-    [reviewParams setObject:@"makeMobileReview" forKey:@"action"];
-    [reviewParams setObject:respUserId forKey:@"recipientID"];
-    [reviewParams setObject:_reviewDescription.text forKey:@"reviewText"];
-    
-    if ([AppDelegate instance].settings.hasLocation) {
-        
-        [reviewParams setValue:[NSString stringWithFormat:@"%.7lf",
-                                [AppDelegate instance].settings.lastKnownLocation.coordinate.latitude]
-                        forKey:@"lat"];
-        
-        [reviewParams setValue:[NSString stringWithFormat:@"%.7lf",
-                                [AppDelegate instance].settings.lastKnownLocation.coordinate.longitude]
-                        forKey:@"lng"];   
-    }
-    
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST"
-                                                            path:@"reviews.php"
-                                                      parameters:reviewParams];
-    AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
-        
-        NSDictionary *jsonDict = json;
-        NSNumber *successNum = [jsonDict objectForKey:@"succeeded"];
-
-        
-        if (successNum && [successNum intValue] != 1) {
-
-            NSString *error = [NSString stringWithFormat:@"%@", [jsonDict objectForKey:@"message"]];
-
-            [SVProgressHUD dismissWithError:error
-                                 afterDelay:kDefaultDimissDelay];
-            if ([successNum intValue] == -1) {
-                // not logged in - set tag in order for view to be closed
-            }
-        }
-        else {
+    // show a progress HUD
+    [SVProgressHUD showWithStatus:@"Sending..."];
+    // call method in CPapi to send love
+    [CPapi sendLoveToUserWithID:self.user.userID loveMessage:self.reviewDescription.text completion:^(NSDictionary *json, NSError *error){
+        // check for a JSON parse error
+        if (!error) {
+            BOOL respError = [[json objectForKey:@"error"] boolValue];
             
-            NSString *message = [NSString stringWithFormat:@"You Recognized %@", self.user.nickname];
-            [self performSelector:@selector(viewDidLoad)
-                       withObject:nil
-                       afterDelay:0];
-            [SVProgressHUD dismissWithSuccess:message
-                                 afterDelay:kDefaultDimissDelay];
+            // check for a error according to api response
+            if (respError) {
+                
+                // dismiss the HUD with the error that came back
+                NSString *error = [NSString stringWithFormat:@"%@", [json objectForKey:@"message"]];
+                
+                [SVProgressHUD dismissWithError:error
+                                     afterDelay:kDefaultDimissDelay];
+            }
+            else {
+                // dismiss the HUD with the success message that came back
+                NSString *message = [NSString stringWithFormat:@"You Recognized %@", self.user.nickname];
+                [self performSelector:@selector(viewDidLoad)
+                           withObject:nil
+                           afterDelay:0];
+                [SVProgressHUD dismissWithSuccess:message
+                                       afterDelay:kDefaultDimissDelay];
+                
+            }
 
-        }
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        // handle error
+        } else {
+            // debug the JSON parse error
 #if DEBUG
-        NSLog(@"AFJSONRequestOperation error: %@", [error localizedDescription]);
+            NSLog(@"AFJSONRequestOperation error: %@", [error localizedDescription]);
 #endif
-        [SVProgressHUD dismissWithError:[error localizedDescription]
-                             afterDelay:kDefaultDimissDelay];
-        
+        }
     }];
-    [[NSOperationQueue mainQueue] addOperation:postOperation];
 }
 
 - (IBAction)f2fInvite {

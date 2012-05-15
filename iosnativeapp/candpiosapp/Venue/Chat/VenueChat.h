@@ -16,8 +16,8 @@
 
 @interface VenueChat : NSObject
 
-@property (nonatomic, strong) NSString *venueIDString;
-@property (nonatomic, strong) NSString *lastChatIDString;
+@property (nonatomic, assign) int venueID;
+@property (nonatomic, assign) int lastChatID;
 @property (nonatomic, strong) NSArray *chatEntries;
 @property (nonatomic, strong) NSDateFormatter *entryDateFormatter;
 @property (nonatomic, assign) int activeChattersDuringInterval;
@@ -25,6 +25,7 @@
 @property (nonatomic, assign) BOOL hasLoaded;
 @property (nonatomic, strong) NSDateFormatter *timestampDateFormatter;
 @property (nonatomic, strong) NSDate *pendingTimestamp;
+@property (nonatomic, strong) NSMutableArray *entryPurgatory;
 
 -(VenueChat *)initWithVenueID:(int)venueID;
 
