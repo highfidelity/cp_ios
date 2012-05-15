@@ -14,6 +14,7 @@
 #import "MapDataSet.h"
 #import "VenueChat.h"
 #import "VenueChatEntry.h"
+#import "CheckinChatEntry.h"
 #import "UIButton+AnimatedClockHand.h"
 
 #define CHAT_MESSAGE_ORIGIN_X 11
@@ -364,23 +365,7 @@
                 [self slideAwayChatMessageAndDisplayNewChat:NO];
                 
             } else if (self.venueChat.activeChattersDuringInterval == 0) {
-                
-                // move the active chatters icon over if required
-                if (!self.hadNoChat) {
-                    // center the icon
-                    CGRect newFrame = self.activeChattersIcon.frame;
-                    newFrame.origin.x -= 9;
-                    self.activeChattersIcon.frame = newFrame;
-                    
-                    // hide the number of active chatters
-                    self.activeChatters.hidden = YES;
-                    
-                    // set the hadNoChat boolean so we know we need to move things if we get chat
-                    self.hadNoChat = YES;
-                }           
-                
-                // static message for no chat
-                self.activeChatText.text = @"Tap here to chat.";
+                [self showTapToChat];
             } 
             
             [self stopActiveChattersLoadingIndicator];
@@ -402,33 +387,81 @@
     originalFrame.origin.x = CHAT_MESSAGE_ORIGIN_X;
     self.activeChatText.frame = originalFrame;
     
-    if (newEntry) {
-        // we have a new entry so let's slide this old thing over and show it
-        CGRect newFrame = originalFrame;
-        newFrame.origin.x = newFrame.origin.x - [self.activeChatText sizeThatFits:self.activeChatText.frame.size].width - 10; 
-        
-        // animation to slide away the currently displayed chat
-        [UIView animateWithDuration:1.5 delay:1.0 options:UIViewAnimationCurveEaseInOut animations:^{
-            self.activeChatText.frame = newFrame;
-        } completion:^(BOOL finished) {
-            if (finished) {            
-                // hide it and move it into place
-                self.activeChatText.alpha = 0;
-                self.activeChatText.frame = originalFrame;
-                
-                // set the new text to the next entry
-                self.activeChatText.text = [NSString stringWithFormat:@"\"%@\"", [[self.venueChat.chatEntries lastObject] text]];
-                
-                // fade in the text
-                [UIView animateWithDuration:0.3 animations:^{
-                    self.activeChatText.alpha = 1.0;
-                } completion:nil];
+    VenueChatEntry *lastEntry = [self.venueChat.chatEntries lastObject];
+    BOOL entryToShow = YES;
+    
+    if ([lastEntry isKindOfClass:[CheckinChatEntry class]]) {
+        if (self.venueChat.chatEntries.count == 1) {
+            // the only entry we have is a checkin message so don't show it
+            entryToShow = NO;
+        } else {
+            // enumerate through the chat entries to make sure we have a message that isn't a checkin message to show
+            for (VenueChatEntry *possibleLast in [self.venueChat.chatEntries reverseObjectEnumerator]) {
+                if (![possibleLast isKindOfClass:[CheckinChatEntry class]] && ![possibleLast isKindOfClass:[NSString class]]) {
+                    // indicate that we'll show an entry
+                    entryToShow = YES;
+                    // change the lastEntry variable to this entry
+                    lastEntry = possibleLast;
+                    // break from the for loop
+                    break;
+                } else {
+                    entryToShow = NO;
+                }
             }
-        }];
+        }
+    } 
+    
+    if (entryToShow) {
+        if (newEntry) {
+            // we have a new entry so let's slide this old thing over and show it
+            CGRect newFrame = originalFrame;
+            newFrame.origin.x = newFrame.origin.x - [self.activeChatText sizeThatFits:self.activeChatText.frame.size].width - 10; 
+            
+            // animation to slide away the currently displayed chat
+            [UIView animateWithDuration:1.5 delay:1.0 options:UIViewAnimationCurveEaseInOut animations:^{
+                self.activeChatText.frame = newFrame;
+            } completion:^(BOOL finished) {
+                if (finished) {            
+                    // hide it and move it into place
+                    self.activeChatText.alpha = 0;
+                    self.activeChatText.frame = originalFrame;
+                    
+                    // set the new text to the next entry
+                    self.activeChatText.text = [NSString stringWithFormat:@"\"%@\"", lastEntry.text];
+                    
+                    // fade in the text
+                    [UIView animateWithDuration:0.3 animations:^{
+                        self.activeChatText.alpha = 1.0;
+                    } completion:nil];
+                }
+            }];
+        } else {
+            // didn't get a newEntry but let's make sure the latest is showing
+            self.activeChatText.text = [NSString stringWithFormat:@"\"%@\"", lastEntry.text];
+        }
     } else {
-        // didn't get a newEntry but let's make sure the latest is showing
-        self.activeChatText.text = [NSString stringWithFormat:@"\"%@\"", [[self.venueChat.chatEntries lastObject] text]];
+        [self showTapToChat];
     }
+}
+
+- (void)showTapToChat
+{
+    // move the active chatters icon over if required
+    if (!self.hadNoChat) {
+        // center the icon
+        CGRect newFrame = self.activeChattersIcon.frame;
+        newFrame.origin.x -= 9;
+        self.activeChattersIcon.frame = newFrame;
+        
+        // hide the number of active chatters
+        self.activeChatters.hidden = YES;
+        
+        // set the hadNoChat boolean so we know we need to move things if we get chat
+        self.hadNoChat = YES;
+    }           
+    
+    // static message for no chat
+    self.activeChatText.text = @"Tap here to chat.";
 }
 
 - (void)highlightedVenueChatButton
