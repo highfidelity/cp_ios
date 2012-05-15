@@ -11,6 +11,8 @@
 #import "UserProfileCheckedInViewController.h"
 #import "NSString+HTML.h"
 
+#define kContactRequestsSections 0
+#define kHeightForHeader 22.0
 
 // add a nickname selector to NSDictionary so we can sort the contact list
 @interface NSDictionary (nickname)
@@ -35,12 +37,15 @@
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *placeholderImage;
+@property (nonatomic, readonly) NSInteger extraContactRequestsSections;
+
 @end
 
 @implementation ContactListViewController
 @synthesize placeholderImage;
 
 @synthesize contacts, searchBar;
+@synthesize contactRequests = _contactRequests;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -139,14 +144,17 @@
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {
                 NSMutableArray *payload = [json objectForKey:@"payload"];
-                [self hidePlaceholder:[payload count] > 0];
+                NSMutableArray *contactRequests = [json objectForKey:@"contact_requests"];
                 
-                // sort the list by name
+                [self hidePlaceholder:[payload count] > 0 || [contactRequests count] > 0];
+                
                 NSSortDescriptor *d = [[NSSortDescriptor alloc] initWithKey:@"nickname" ascending:YES];
-                [payload sortUsingDescriptors:[NSArray arrayWithObjects:d,nil]];
-                self.contacts = [payload copy];
+                [payload sortUsingDescriptors:[NSArray arrayWithObject:d]];
+                [contactRequests sortUsingDescriptors:[NSArray arrayWithObject:d]];
                 
-                // update table
+                self.contacts = payload;
+                self.contactRequests = contactRequests;
+                
                 [self.tableView reloadData];
             }
             else {
@@ -170,23 +178,35 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
-    if (isSearching) return 1;
-    return [[self sectionIndexTitles] count];
+    if (isSearching) {
+        return 1;
+    }
+    
+    return [[self sectionIndexTitles] count] + self.extraContactRequestsSections;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    if (isSearching) return [searchResults count];
-
-    return [[self.contacts objectAtIndex:(NSUInteger)section] count];
+    if (isSearching) {
+        return [searchResults count];
+    }
+    
+    if (kContactRequestsSections == section && self.extraContactRequestsSections) {
+        return [self.contactRequests count];
+    }
+    
+    return [[self.contacts objectAtIndex:(NSUInteger)section - self.extraContactRequestsSections] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)aSection
 {
     if (!isSearching) {
-        return [[[UILocalizedIndexedCollation currentCollation] sectionTitles] objectAtIndex:(NSUInteger)aSection];
+        if (kContactRequestsSections == aSection && self.extraContactRequestsSections) {
+            return @"Contact Requests";
+        }
+        
+        return [[[UILocalizedIndexedCollation currentCollation] sectionTitles]
+                objectAtIndex:(NSUInteger)aSection - self.extraContactRequestsSections];
     }
 
     return @"";
@@ -194,7 +214,10 @@
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-    if (isSearching) return nil;
+    if (isSearching) {
+        return nil;
+    }
+    
     return [[NSArray arrayWithObject:UITableViewIndexSearch] arrayByAddingObjectsFromArray:[self sectionIndexTitles]];
 }
 
@@ -204,7 +227,9 @@
         [self.tableView setContentOffset:CGPointMake(0, 0) animated:YES];
         return NSNotFound;
     }
-    return [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index-1];
+    
+    return [[UILocalizedIndexedCollation currentCollation]
+            sectionForSectionIndexTitleAtIndex:index - 1 + self.extraContactRequestsSections];
 }
 
 
@@ -216,9 +241,13 @@
     if (isSearching) {
         return [searchResults objectAtIndex:(NSUInteger)[indexPath row]];
     }
-
-    return [[self.contacts objectAtIndex:(NSUInteger)indexPath.section] objectAtIndex:(NSUInteger)indexPath.row];
-
+    
+    if (kContactRequestsSections == indexPath.section && self.extraContactRequestsSections) {
+        return [self.contactRequests objectAtIndex:indexPath.row];
+    }
+    
+    return [[self.contacts objectAtIndex:(NSUInteger)indexPath.section - self.extraContactRequestsSections]
+            objectAtIndex:(NSUInteger)indexPath.row];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -304,12 +333,19 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (isSearching || ![[self.contacts objectAtIndex:(NSUInteger)section] count]) {
+    if (isSearching) {
         return 0;
     }
-
-
-    return 22.0;
+    
+    if (kContactRequestsSections == section && self.extraContactRequestsSections) {
+        return kHeightForHeader;
+    }
+    
+    if (0 == [[self.contacts objectAtIndex:(NSUInteger)section - self.extraContactRequestsSections] count]) {
+        return 0;
+    }
+    
+    return kHeightForHeader;
 }
 
 #pragma mark - UISearchBarDelegate
@@ -342,5 +378,13 @@
     [self.searchBar resignFirstResponder];
 }
 
+#pragma mark - private
+
+-(NSInteger)extraContactRequestsSections {
+    if ([self.contactRequests count]) {
+        return 1;
+    }
+    return 0;
+}
 
 @end
