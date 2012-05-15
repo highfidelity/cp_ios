@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "UserTableViewCell.h"
 
-@interface ContactListViewController : UITableViewController <UISearchBarDelegate>
+@interface ContactListViewController : UITableViewController <UISearchBarDelegate, UserTableViewCellDelegate>
 
 @property (nonatomic, copy) NSArray *contacts;
 @property (nonatomic, copy) NSArray *contactRequests;

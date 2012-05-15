@@ -11,10 +11,10 @@
 
 @implementation UserTableViewCell
 
-@synthesize nicknameLabel, categoryLabel, statusLabel, distanceLabel, checkInLabel, checkInCountLabel, profilePictureImageView;
+@synthesize cellIndexPath, delegate, nicknameLabel, categoryLabel, statusLabel, distanceLabel, checkInLabel, checkInCountLabel, profilePictureImageView, acceptContactRequestButton, rejectContactRequestButton;
 
 
-- (NSString *) reuseIdentifier {
+- (NSString *)reuseIdentifier {
     return @"UserListCustomCell";
 }
 
@@ -32,6 +32,40 @@
     [self profilePictureImageView].layer.shadowRadius = 1.0;
     
     [CPUIHelper changeFontForLabel:self.nicknameLabel toLeagueGothicOfSize:24];
+    
+    if (self.acceptContactRequestButton) {
+        [CPUIHelper makeButtonCPButton:self.acceptContactRequestButton
+                     withCPButtonColor:CPButtonTurquoise];
+        [self.acceptContactRequestButton addTarget:self
+                                            action:@selector(acceptButtonAction)
+                                  forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    if (self.rejectContactRequestButton) {
+        [CPUIHelper makeButtonCPButton:self.rejectContactRequestButton
+                     withCPButtonColor:CPButtonGrey];
+        [self.rejectContactRequestButton addTarget:self
+                                            action:@selector(rejectButtonAction)
+                                  forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    
+    self.delegate = nil;
+    self.acceptContactRequestButton.hidden = YES;
+    self.rejectContactRequestButton.hidden = YES;
+}
+
+#pragma mark - actions
+
+- (void)acceptButtonAction {
+    [self.delegate clickedAcceptButtonInUserTableViewCell:self];
+}
+
+- (void)rejectButtonAction {
+    [self.delegate clickedRejectButtonInUserTableViewCell:self];
 }
 
 @end

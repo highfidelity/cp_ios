@@ -7,7 +7,6 @@
 //
 
 #import "ContactListViewController.h"
-#import "UserTableViewCell.h"
 #import "UserProfileCheckedInViewController.h"
 #import "NSString+HTML.h"
 
@@ -16,10 +15,13 @@
 
 // add a nickname selector to NSDictionary so we can sort the contact list
 @interface NSDictionary (nickname)
+
 - (NSString *)nickname;
+
 @end
 
 @implementation NSDictionary (nickname)
+
 - (NSString *)nickname
 {
     if (![self objectForKey:@"nickname"]) {
@@ -27,6 +29,7 @@
     }
     return [self objectForKey:@"nickname"];
 }
+
 @end
 
 
@@ -41,9 +44,10 @@
 
 @end
 
-@implementation ContactListViewController
-@synthesize placeholderImage;
 
+@implementation ContactListViewController
+
+@synthesize placeholderImage;
 @synthesize contacts, searchBar;
 @synthesize contactRequests = _contactRequests;
 
@@ -282,10 +286,15 @@
 
         [imageView setImageWithURL:[NSURL URLWithString:[contact objectForKey:@"imageUrl"]]
                        placeholderImage:[CPUIHelper defaultProfileImage]];
-    }
-    else
-    {
+    } else {
         imageView.image = [CPUIHelper defaultProfileImage];
+    }
+    
+    if (kContactRequestsSections == indexPath.section && self.extraContactRequestsSections) {
+        cell.acceptContactRequestButton.hidden = NO;
+        cell.rejectContactRequestButton.hidden = NO;
+        cell.cellIndexPath = indexPath;
+        cell.delegate = self;
     }
 
     return cell;
@@ -376,6 +385,16 @@
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)aSearchBar {
     [self.searchBar resignFirstResponder];
+}
+
+#pragma mark - UserTableViewCellDelegate
+
+-(void)clickedAcceptButtonInUserTableViewCell:(UserTableViewCell *)userTableViewCell {
+    
+}
+
+-(void)clickedRejectButtonInUserTableViewCell:(UserTableViewCell *)userTableViewCell {
+    
 }
 
 #pragma mark - private
