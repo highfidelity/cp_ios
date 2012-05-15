@@ -295,7 +295,7 @@
     [SVProgressHUD showWithStatus:@"Sending Request..."];
     
     [self makeHTTPRequestWithAction:@"sendContactRequest"
-                     withParameters:params 
+                     withParameters:params
                          completion:
      ^(NSDictionary *json, NSError *error) {
          NSString *alertMsg = nil;
@@ -334,9 +334,21 @@
                                    nil];
     
     [self makeHTTPRequestWithAction:@"acceptContactRequest"
-                     withParameters:params 
+                     withParameters:params
                          completion:completion];
 }
+
++ (void)sendDeclineContactRequestFromUserId:(int)userId
+                                 completion:(void (^)(NSDictionary *, NSError *))completion {
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   [NSString stringWithFormat:@"%d", userId], @"initiator_id",
+                                   nil];
+    
+    [self makeHTTPRequestWithAction:@"declineContactRequest"
+                     withParameters:params
+                         completion:completion];
+}
+
 
 #pragma mark - Face-to-Face
 

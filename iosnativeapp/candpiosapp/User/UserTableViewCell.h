@@ -13,7 +13,7 @@
 @protocol UserTableViewCellDelegate <NSObject>
 
 - (void)clickedAcceptButtonInUserTableViewCell:(UserTableViewCell *)userTableViewCell;
-- (void)clickedRejectButtonInUserTableViewCell:(UserTableViewCell *)userTableViewCell;
+- (void)clickedDeclineButtonInUserTableViewCell:(UserTableViewCell *)userTableViewCell;
 
 @end
 
@@ -29,7 +29,7 @@
     UIImageView *profilePictureImageView;
     
     UIButton *acceptContactRequestButton;
-    UIButton *rejectContactRequestButton;
+    UIButton *declineContactRequestButton;
 }
 
 @property (nonatomic, retain) id<UserTableViewCellDelegate> delegate;
@@ -41,6 +41,6 @@
 @property (nonatomic, retain) IBOutlet UILabel *checkInCountLabel;
 @property (nonatomic, retain) IBOutlet UIImageView *profilePictureImageView;
 @property (nonatomic, retain) IBOutlet UIButton *acceptContactRequestButton;
-@property (nonatomic, retain) IBOutlet UIButton *rejectContactRequestButton;
+@property (nonatomic, retain) IBOutlet UIButton *declineContactRequestButton;
 
 @end

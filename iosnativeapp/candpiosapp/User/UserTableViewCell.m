@@ -11,7 +11,7 @@
 
 @implementation UserTableViewCell
 
-@synthesize delegate, nicknameLabel, categoryLabel, statusLabel, distanceLabel, checkInLabel, checkInCountLabel, profilePictureImageView, acceptContactRequestButton, rejectContactRequestButton;
+@synthesize delegate, nicknameLabel, categoryLabel, statusLabel, distanceLabel, checkInLabel, checkInCountLabel, profilePictureImageView, acceptContactRequestButton, declineContactRequestButton;
 
 
 - (NSString *)reuseIdentifier {
@@ -41,12 +41,12 @@
                                   forControlEvents:UIControlEventTouchUpInside];
     }
     
-    if (self.rejectContactRequestButton) {
-        [CPUIHelper makeButtonCPButton:self.rejectContactRequestButton
+    if (self.declineContactRequestButton) {
+        [CPUIHelper makeButtonCPButton:self.declineContactRequestButton
                      withCPButtonColor:CPButtonGrey];
-        [self.rejectContactRequestButton addTarget:self
-                                            action:@selector(rejectButtonAction)
-                                  forControlEvents:UIControlEventTouchUpInside];
+        [self.declineContactRequestButton addTarget:self
+                                             action:@selector(declineButtonAction)
+                                   forControlEvents:UIControlEventTouchUpInside];
     }
 }
 
@@ -55,7 +55,7 @@
     
     self.delegate = nil;
     self.acceptContactRequestButton.hidden = YES;
-    self.rejectContactRequestButton.hidden = YES;
+    self.declineContactRequestButton.hidden = YES;
 }
 
 #pragma mark - actions
@@ -64,8 +64,8 @@
     [self.delegate clickedAcceptButtonInUserTableViewCell:self];
 }
 
-- (void)rejectButtonAction {
-    [self.delegate clickedRejectButtonInUserTableViewCell:self];
+- (void)declineButtonAction {
+    [self.delegate clickedDeclineButtonInUserTableViewCell:self];
 }
 
 @end

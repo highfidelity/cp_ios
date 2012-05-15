@@ -49,6 +49,8 @@
 + (void)sendContactRequestToUserId:(int)userId;
 + (void)sendAcceptContactRequestFromUserId:(int)userId
                                 completion:(void (^)(NSDictionary *, NSError *))completion;
++ (void)sendDeclineContactRequestFromUserId:(int)userId
+                                 completion:(void (^)(NSDictionary *, NSError *))completion;
 
 # pragma mark - Face to Face
 + (void)sendF2FInvite:(int) userId;

@@ -43,6 +43,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *placeholderImage;
 - (NSIndexPath *)addToContacts:(NSDictionary *)contactData;
 - (void)animateRemoveContacRequestAtIndex:(NSUInteger)index;
+- (void)handleSendAcceptOrDeclineComletionWithJson:(NSDictionary *)json andError:(NSError *)error;
 
 @end
 
@@ -297,7 +298,7 @@
     
     if (!isSearching && kContactRequestsSection == indexPath.section) {
         cell.acceptContactRequestButton.hidden = NO;
-        cell.rejectContactRequestButton.hidden = NO;
+        cell.declineContactRequestButton.hidden = NO;
         cell.delegate = self;
     }
 
@@ -418,13 +419,24 @@
         }
     }
     [self.tableView endUpdates];
+    
+    [CPapi sendAcceptContactRequestFromUserId:[[contactData objectForKey:@"id"] intValue]
+                                   completion:^(NSDictionary *json, NSError *error) {
+                                       [self handleSendAcceptOrDeclineComletionWithJson:json andError:error];
+                                   }];
 }
 
-- (void)clickedRejectButtonInUserTableViewCell:(UserTableViewCell *)userTableViewCell {
+- (void)clickedDeclineButtonInUserTableViewCell:(UserTableViewCell *)userTableViewCell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:userTableViewCell];
+    NSDictionary *contactData = [self.contactRequests objectAtIndex:indexPath.row];
     
     [self.contactRequests removeObjectAtIndex:indexPath.row];
     [self animateRemoveContacRequestAtIndex:indexPath.row];
+    
+    [CPapi sendDeclineContactRequestFromUserId:[[contactData objectForKey:@"id"] intValue]
+                                    completion:^(NSDictionary *json, NSError *error) {
+                                        [self handleSendAcceptOrDeclineComletionWithJson:json andError:error];
+                                    }];
 }
 
 #pragma mark - private
@@ -457,6 +469,26 @@
     if (0 == [self.contactRequests count]) {
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section]
                       withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+- (void)handleSendAcceptOrDeclineComletionWithJson:(NSDictionary *)json andError:(NSError *)error {
+    NSString *errorMessage = nil;
+    
+    if (error) {
+        errorMessage = [error localizedDescription];
+    } else {
+        if (json == NULL) {
+            errorMessage = @"We couldn't send the request.\nPlease try again.";
+        } else if ([[json objectForKey:@"error"] boolValue]) {
+            errorMessage = [json objectForKey:@"message"];
+        }
+    }
+    
+    if (errorMessage) {
+        [SVProgressHUD show];
+        [SVProgressHUD dismissWithError:errorMessage
+                             afterDelay:kDefaultDimissDelay];
     }
 }
 

@@ -118,17 +118,19 @@
      ^(NSDictionary *json, NSError *error) {
          NSString *errorMessage = nil;
          
-         [SVProgressHUD dismiss];
-         
-         if (json == NULL) {
-             errorMessage = @"We couldn't send the request.\nPlease try again.";
+         if (error) {
+             errorMessage = [error localizedDescription];
          } else {
-             if ([[json objectForKey:@"error"] boolValue]) {
+             if (json == NULL) {
+                 errorMessage = @"We couldn't send the request.\nPlease try again.";
+             } else if ([[json objectForKey:@"error"] boolValue]) {
                  errorMessage = [json objectForKey:@"message"];
              }
          }
          
          if (errorMessage) {
+             [SVProgressHUD dismiss];
+             
              UIAlertView *alert = [[UIAlertView alloc]
                                    initWithTitle:@"Contact Request"
                                    message:errorMessage
@@ -152,6 +154,34 @@
 }
 
 - (IBAction)declineF2F {
+    [SVProgressHUD showWithStatus:@"Loading..."];
+    
+    [CPapi sendDeclineContactRequestFromUserId:self.user.userID
+                                    completion:
+     ^(NSDictionary *json, NSError *error) {
+         NSString *errorMessage = nil;
+         
+         if (error) {
+             errorMessage = [error localizedDescription];
+         } else {
+             if (json == NULL) {
+                 errorMessage = @"We couldn't send the request.\nPlease try again.";
+             } else if ([[json objectForKey:@"error"] boolValue]) {
+                 errorMessage = [json objectForKey:@"message"];
+             }
+         }
+         
+         if (errorMessage) {
+             [SVProgressHUD performSelector:@selector(showErrorWithStatus:)
+                                 withObject:errorMessage
+                                 afterDelay:kDefaultDimissDelay];
+         } else {
+             [SVProgressHUD performSelector:@selector(showSuccessWithStatus:)
+                                 withObject:@"Contact Request Accepted"
+                                 afterDelay:kDefaultDimissDelay];
+         }
+     }];
+    
     [self dismissModalViewControllerAnimated:YES];
 }
 

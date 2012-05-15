@@ -437,10 +437,10 @@
                                     <outlet property="acceptContactRequestButton" destination="3OM-3f-de7" id="TKs-TK-AtR"/>
                                     <outlet property="checkInCountLabel" destination="shF-j9-YgY" id="vjx-DF-XDt"/>
                                     <outlet property="checkInLabel" destination="fKG-8j-5qp" id="dbp-ex-dTK"/>
+                                    <outlet property="declineContactRequestButton" destination="E3X-0z-BdW" id="B0C-sG-jkJ"/>
                                     <outlet property="distanceLabel" destination="5jn-NZ-ZYv" id="CKo-bV-8Fy"/>
                                     <outlet property="nicknameLabel" destination="UH9-6E-f6k" id="Xeu-DX-LFJ"/>
                                     <outlet property="profilePictureImageView" destination="4LH-Pu-1oy" id="TBM-Du-TRe"/>
-                                    <outlet property="rejectContactRequestButton" destination="E3X-0z-BdW" id="JCO-1g-aO8"/>
                                     <outlet property="statusLabel" destination="ZAH-3A-gx8" id="OHv-Vb-hKu"/>
                                 </connections>
                             </tableViewCell>
