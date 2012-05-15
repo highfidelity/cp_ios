@@ -12,14 +12,13 @@
 
 @protocol UserTableViewCellDelegate <NSObject>
 
--(void)clickedAcceptButtonInUserTableViewCell:(UserTableViewCell *)userTableViewCell;
--(void)clickedRejectButtonInUserTableViewCell:(UserTableViewCell *)userTableViewCell;
+- (void)clickedAcceptButtonInUserTableViewCell:(UserTableViewCell *)userTableViewCell;
+- (void)clickedRejectButtonInUserTableViewCell:(UserTableViewCell *)userTableViewCell;
 
 @end
 
 
 @interface UserTableViewCell : UITableViewCell {
-    NSIndexPath *cellIndexPath;
     id<UserTableViewCellDelegate> delegate;
     
     UILabel *nicknameLabel;
@@ -33,7 +32,6 @@
     UIButton *rejectContactRequestButton;
 }
 
-@property (nonatomic, retain) NSIndexPath *cellIndexPath;
 @property (nonatomic, retain) id<UserTableViewCellDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UILabel *nicknameLabel;
 @property (nonatomic, retain) IBOutlet UILabel *categoryLabel;

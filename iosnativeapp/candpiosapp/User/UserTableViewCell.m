@@ -11,7 +11,7 @@
 
 @implementation UserTableViewCell
 
-@synthesize cellIndexPath, delegate, nicknameLabel, categoryLabel, statusLabel, distanceLabel, checkInLabel, checkInCountLabel, profilePictureImageView, acceptContactRequestButton, rejectContactRequestButton;
+@synthesize delegate, nicknameLabel, categoryLabel, statusLabel, distanceLabel, checkInLabel, checkInCountLabel, profilePictureImageView, acceptContactRequestButton, rejectContactRequestButton;
 
 
 - (NSString *)reuseIdentifier {
