@@ -497,6 +497,8 @@
         Class cellClass;
         if ([chatEntry isKindOfClass:[LoveChatEntry class]]) {
             cellClass = [LoveChatCell class];
+        } else if ([chatEntry isKindOfClass:[CheckinChatEntry class]]) {
+            cellClass = [CheckinChatCell class];
         } else {
             cellClass = [VenueChatCell class];
         }
