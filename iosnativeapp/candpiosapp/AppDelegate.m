@@ -642,7 +642,7 @@ didReceiveLocalNotification:(UILocalNotification *)notif
     NSDictionary *userDict = notif.userInfo;
     
     BOOL showAlert = NO;
-    BOOL showActionSheet = YES;
+    BOOL showActionSheet = NO;
     NSString *alertText;
     NSString *cancelText;
     NSString *neverText = @"Never for this location";
@@ -671,7 +671,7 @@ didReceiveLocalNotification:(UILocalNotification *)notif
         cancelText = @"Cancel";
         tagNumber = 602;
     }
-    else if ([notif.alertAction isEqual:@"Check Out"]) {
+    else if ([notif.alertAction isEqualToString:@"Check Out"]) {
         // For regular timeout checkouts
         showAlert = YES;
         alertText = kCheckOutLocalNotificationAlertViewTitle;
