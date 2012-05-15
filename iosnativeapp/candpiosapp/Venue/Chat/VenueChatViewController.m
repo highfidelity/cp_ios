@@ -627,9 +627,6 @@
     LoveChatCell *loveCell = (LoveChatCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:button.tag inSection:0]];
     LoveChatEntry *loveEntry = [self.venueChat.chatEntries objectAtIndex:button.tag];
     
-    // add that entry to entry purgatory so it can be easily deleted if we get it back with updated data
-    [self.venueChat.entryPurgatory addObject:loveEntry];
-    
     // show the +1 spinner and hide the rest
     [loveCell.plusOneSpinner startAnimating];
     loveCell.plusOneButton.hidden = YES;

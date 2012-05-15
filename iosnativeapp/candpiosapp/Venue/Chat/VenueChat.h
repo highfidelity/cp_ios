@@ -25,7 +25,6 @@
 @property (nonatomic, assign) BOOL hasLoaded;
 @property (nonatomic, strong) NSDateFormatter *timestampDateFormatter;
 @property (nonatomic, strong) NSDate *pendingTimestamp;
-@property (nonatomic, strong) NSMutableArray *entryPurgatory;
 
 -(VenueChat *)initWithVenueID:(int)venueID;
 

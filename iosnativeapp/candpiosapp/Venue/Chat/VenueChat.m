@@ -33,7 +33,6 @@
 @synthesize timestampDateFormatter = _timestampDateFormatter;
 @synthesize previousTimestamp = _previousTimestamp;
 @synthesize pendingTimestamp = _pendingTimestamp;
-@synthesize entryPurgatory = _entryPurgatory;
 
 - (VenueChat *)init
 {
@@ -89,14 +88,6 @@
         _chatEntries = [NSArray array];
     } 
     return _chatEntries;
-}
-
-- (NSMutableArray *)entryPurgatory
-{
-    if (!_entryPurgatory) {
-        _entryPurgatory = [NSMutableArray array];
-    }
-    return _entryPurgatory;
 }
 
 - (NSMutableSet *)usersCounted
@@ -248,11 +239,13 @@
             
             if ([entry isKindOfClass:[LoveChatEntry class]]) {
                 // check if we have an entry in purgatory for this lvoe that should be deleted from our entries
-                for (LoveChatEntry *oldEntry in [self.entryPurgatory copy]) {
-                    if (oldEntry.reviewID == ((LoveChatEntry *)entry).reviewID) {
-                        [self.entryPurgatory removeObject:oldEntry];
-                        [mutableChatEntries removeObject:oldEntry];
+                for (VenueChatEntry *oldEntry in [mutableChatEntries copy]) {
+                    if ([oldEntry isKindOfClass:[LoveChatEntry class]]) {
+                        if (((LoveChatEntry *)oldEntry).reviewID == ((LoveChatEntry *)entry).reviewID) {
+                            [mutableChatEntries removeObject:oldEntry];
+                        }
                     }
+                    
                 }
             }
             
