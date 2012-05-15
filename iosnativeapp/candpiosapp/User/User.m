@@ -52,6 +52,7 @@
 @synthesize isContact = _isContact;
 @synthesize totalHours = _totalHours;
 @synthesize linkedInPublicProfileUrl = _linkedInPublicProfileUrl;
+@synthesize numberOfContactRequests = _numberOfContactRequests;
 
 
 
@@ -286,6 +287,7 @@
             
             // get the linkedin profile url
             self.linkedInPublicProfileUrl = [userDict objectForKey:@"linkedin_public_profile_url"];
+            self.numberOfContactRequests = [userDict objectForKey:@"number_of_contact_requests"];
             
             // get the users hourly_billing_rate if it isn't null
             // set it to N/A if it's empty

@@ -8,6 +8,8 @@
 
 #import "UserTableViewCell.h"
 
+#define kNumberOfContactRequestsNotification @"kNumberOfContactRequestsNotification"
+
 @interface ContactListViewController : UITableViewController <UISearchBarDelegate, UserTableViewCellDelegate>
 
 @property (nonatomic, retain) NSMutableArray *contacts;

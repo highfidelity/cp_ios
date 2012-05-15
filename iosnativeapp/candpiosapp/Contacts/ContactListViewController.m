@@ -44,6 +44,8 @@
 - (NSIndexPath *)addToContacts:(NSDictionary *)contactData;
 - (void)animateRemoveContacRequestAtIndex:(NSUInteger)index;
 - (void)handleSendAcceptOrDeclineComletionWithJson:(NSDictionary *)json andError:(NSError *)error;
+- (void)updateBadgeValue;
+- (void)setBadgeNumber:(NSInteger)badgeNumber;
 
 @end
 
@@ -61,6 +63,23 @@
         isSearching = NO;
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(numberOfContactRequestsNotification:)
+                                                     name:kNumberOfContactRequestsNotification
+                                                   object:nil];
+    }
+    return self;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kNumberOfContactRequestsNotification
+                                                  object:nil];
 }
 
 - (NSMutableArray *)partitionObjects:(NSArray *)array collationStringSelector:(SEL)selector
@@ -123,8 +142,6 @@
 {
     [self setPlaceholderImage:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -163,6 +180,7 @@
                 self.contactRequests = contactRequests;
                 
                 [self.tableView reloadData];
+                [self updateBadgeValue];
             }
             else {
                 NSLog(@"%@",[json objectForKey:@"payload"]);
@@ -424,6 +442,8 @@
                                    completion:^(NSDictionary *json, NSError *error) {
                                        [self handleSendAcceptOrDeclineComletionWithJson:json andError:error];
                                    }];
+    
+    [self updateBadgeValue];
 }
 
 - (void)clickedDeclineButtonInUserTableViewCell:(UserTableViewCell *)userTableViewCell {
@@ -437,6 +457,14 @@
                                     completion:^(NSDictionary *json, NSError *error) {
                                         [self handleSendAcceptOrDeclineComletionWithJson:json andError:error];
                                     }];
+    
+    [self updateBadgeValue];
+}
+
+#pragma mark - actions
+
+- (void)numberOfContactRequestsNotification:(NSNotification *)notification {
+    [self setBadgeNumber:[[[notification userInfo] objectForKey:@"numberOfContactRequests"] integerValue]];
 }
 
 #pragma mark - private
@@ -490,6 +518,18 @@
         [SVProgressHUD dismissWithError:errorMessage
                              afterDelay:kDefaultDimissDelay];
     }
+}
+
+- (void)updateBadgeValue {
+    [self setBadgeNumber:[self.contactRequests count]];
+}
+
+- (void)setBadgeNumber:(NSInteger)badgeNumber {
+    NSString *badgeValue = nil;
+    if (badgeNumber > 0) {
+        badgeValue = [NSString stringWithFormat:@"%d", badgeNumber];
+    }
+    self.navigationController.tabBarItem.badgeValue = badgeValue;
 }
 
 @end

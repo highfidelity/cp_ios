@@ -60,6 +60,7 @@
 @property (nonatomic, assign) BOOL contactsOnlyChat;
 @property (nonatomic, assign) BOOL isContact;
 @property (nonatomic, strong) NSString *linkedInPublicProfileUrl;
+@property (nonatomic, strong) NSNumber *numberOfContactRequests;
 
 
 -(void)loadUserResumeData:(void (^)(NSError *error))completion;

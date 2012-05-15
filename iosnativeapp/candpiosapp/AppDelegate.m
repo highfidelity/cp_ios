@@ -18,6 +18,7 @@
 #import "VenueInfoViewController.h"
 #import "UIButton+AnimatedClockHand.h"
 #import "PushModalViewControllerFromLeftSegue.h"
+#import "ContactListViewController.h"
 
 #define kContactRequestAPNSKey @"contact_request"
 #define kContactRequestAcceptedAPNSKey @"contact_accepted"
@@ -801,7 +802,8 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     currUser.userID = [userId intValue];
     [currUser setEnteredInviteCodeFromJSONString:[userInfo objectForKey:@"entered_invite_code"]];
     [currUser setJoinDateFromJSONString:[userInfo objectForKey:@"join_date"]];
-
+    currUser.numberOfContactRequests = [userInfo objectForKey:@"number_of_contact_requests"];
+    
     // Reset the Automatic Checkins default to YES
     SET_DEFAULTS(Object, kAutomaticCheckins, [NSNumber numberWithBool:YES]);
     
@@ -821,6 +823,14 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     SET_DEFAULTS(Object, kUDCurrentUser, encodedUser);
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
+    
+    if (user.numberOfContactRequests) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNumberOfContactRequestsNotification
+                                                            object:self
+                                                          userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                    user.numberOfContactRequests, @"numberOfContactRequests",
+                                                                    nil]];
+    }
 }
 
 - (User *)currentUser
