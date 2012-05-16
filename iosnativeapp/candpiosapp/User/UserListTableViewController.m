@@ -255,13 +255,6 @@
     cell.distanceLabel.text = [CPUtils localizedDistanceStringForDistance:user.distance];
     
     cell.checkInLabel.text = user.placeCheckedIn.name;
-    
-//    if (user.checkinCount == 1) {
-//        cell.checkInCountLabel.text = [NSString stringWithFormat:@"%d Checkin",annotation.checkinCount];
-//    }
-//    else {
-//        cell.checkInCountLabel.text = [NSString stringWithFormat:@"%d Checkins",annotation.checkinCount];
-//    }
 
     [CPUIHelper profileImageView:cell.profilePictureImageView
              withProfileImageUrl:user.urlPhoto];
