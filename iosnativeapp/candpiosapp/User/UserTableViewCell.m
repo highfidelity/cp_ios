@@ -13,11 +13,6 @@
 
 @synthesize delegate, nicknameLabel, categoryLabel, statusLabel, distanceLabel, checkInLabel, checkInCountLabel, profilePictureImageView, acceptContactRequestButton, declineContactRequestButton;
 
-
-- (NSString *)reuseIdentifier {
-    return @"UserListCustomCell";
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -34,16 +29,12 @@
     [CPUIHelper changeFontForLabel:self.nicknameLabel toLeagueGothicOfSize:24];
     
     if (self.acceptContactRequestButton) {
-        [CPUIHelper makeButtonCPButton:self.acceptContactRequestButton
-                     withCPButtonColor:CPButtonTurquoise];
         [self.acceptContactRequestButton addTarget:self
                                             action:@selector(acceptButtonAction)
                                   forControlEvents:UIControlEventTouchUpInside];
     }
     
     if (self.declineContactRequestButton) {
-        [CPUIHelper makeButtonCPButton:self.declineContactRequestButton
-                     withCPButtonColor:CPButtonGrey];
         [self.declineContactRequestButton addTarget:self
                                              action:@selector(declineButtonAction)
                                    forControlEvents:UIControlEventTouchUpInside];

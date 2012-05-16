@@ -13,6 +13,7 @@
 #define kContactRequestsSection 0
 #define kExtraContactRequestsSections 1
 #define kHeightForHeader 22.0
+#define kContactRequestsCellIdentifier @"ContactRequestCell"
 
 // add a nickname selector to NSDictionary so we can sort the contact list
 @interface NSDictionary (nickname)
@@ -280,8 +281,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"UserListCustomCell";
-
+    NSString *CellIdentifier = @"UserListCustomCell";
+    if (!isSearching && kContactRequestsSection == indexPath.section) {
+        CellIdentifier = kContactRequestsCellIdentifier;
+    }
+    
     UserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UserTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -314,10 +318,12 @@
         imageView.image = [CPUIHelper defaultProfileImage];
     }
     
-    if (!isSearching && kContactRequestsSection == indexPath.section) {
+    if ([CellIdentifier isEqualToString:kContactRequestsCellIdentifier]) {
         cell.acceptContactRequestButton.hidden = NO;
         cell.declineContactRequestButton.hidden = NO;
         cell.delegate = self;
+        cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+        cell.backgroundView.backgroundColor = RGBA(66, 128, 128, 1);
     }
 
     return cell;

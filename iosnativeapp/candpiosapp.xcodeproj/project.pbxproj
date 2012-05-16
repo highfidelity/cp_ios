@@ -278,6 +278,10 @@
 		694323A915213D9000EBF585 /* UserResume.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 694323A815213D9000EBF585 /* UserResume.mustache */; };
 		6947F40015372B59005D9958 /* exchange-cards.png in Resources */ = {isa = PBXBuildFile; fileRef = 6947F3FE15372B59005D9958 /* exchange-cards.png */; };
 		6947F40115372B59005D9958 /* exchange-cards@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6947F3FF15372B59005D9958 /* exchange-cards@2x.png */; };
+		6983394A15641509007CD32F /* contact-accept.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983394615641509007CD32F /* contact-accept.png */; };
+		6983394B15641509007CD32F /* contact-accept@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983394715641509007CD32F /* contact-accept@2x.png */; };
+		6983394C15641509007CD32F /* contact-ignore.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983394815641509007CD32F /* contact-ignore.png */; };
+		6983394D15641509007CD32F /* contact-ignore@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983394915641509007CD32F /* contact-ignore@2x.png */; };
 		69A621D7152DBC87008D24EE /* GenerateInvitationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A621D6152DBC87008D24EE /* GenerateInvitationCodeViewController.m */; };
 		69D5C3561533911300B3530F /* invite-code-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D5C3521533911300B3530F /* invite-code-background.png */; };
 		69D5C3571533911300B3530F /* invite-code-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D5C3531533911300B3530F /* invite-code-background@2x.png */; };
@@ -795,6 +799,10 @@
 		694323A815213D9000EBF585 /* UserResume.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserResume.mustache; sourceTree = "<group>"; };
 		6947F3FE15372B59005D9958 /* exchange-cards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exchange-cards.png"; path = "User/images/exchange-cards.png"; sourceTree = "<group>"; };
 		6947F3FF15372B59005D9958 /* exchange-cards@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exchange-cards@2x.png"; path = "User/images/exchange-cards@2x.png"; sourceTree = "<group>"; };
+		6983394615641509007CD32F /* contact-accept.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-accept.png"; sourceTree = "<group>"; };
+		6983394715641509007CD32F /* contact-accept@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-accept@2x.png"; sourceTree = "<group>"; };
+		6983394815641509007CD32F /* contact-ignore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-ignore.png"; sourceTree = "<group>"; };
+		6983394915641509007CD32F /* contact-ignore@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-ignore@2x.png"; sourceTree = "<group>"; };
 		69A621D5152DBC87008D24EE /* GenerateInvitationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GenerateInvitationCodeViewController.h; path = Settings/GenerateInvitationCodeViewController.h; sourceTree = "<group>"; };
 		69A621D6152DBC87008D24EE /* GenerateInvitationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenerateInvitationCodeViewController.m; path = Settings/GenerateInvitationCodeViewController.m; sourceTree = "<group>"; };
 		69D5C3521533911300B3530F /* invite-code-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "invite-code-background.png"; path = "Settings/images/invite-code-background.png"; sourceTree = "<group>"; };
@@ -1534,6 +1542,10 @@
 		536E1E851554988300052D40 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				6983394615641509007CD32F /* contact-accept.png */,
+				6983394715641509007CD32F /* contact-accept@2x.png */,
+				6983394815641509007CD32F /* contact-ignore.png */,
+				6983394915641509007CD32F /* contact-ignore@2x.png */,
 				5FAF891D1555FA6600247B95 /* virtual-check-in-badge.png */,
 				5FAF891E1555FA6600247B95 /* virtual-check-in-badge@2x.png */,
 				536E1E861554988300052D40 /* contacts-blank-slate.png */,
@@ -2439,6 +2451,10 @@
 				53A9F78C1561B1B10049F427 /* love-plus-one-bubble@2x.png in Resources */,
 				5F8413DB15617A78003B43B8 /* UserProfileWebStoryboard_iPhone.storyboard in Resources */,
 				53ABCC2515621054004BA177 /* send-love-small@2x.png in Resources */,
+				6983394A15641509007CD32F /* contact-accept.png in Resources */,
+				6983394B15641509007CD32F /* contact-accept@2x.png in Resources */,
+				6983394C15641509007CD32F /* contact-ignore.png in Resources */,
+				6983394D15641509007CD32F /* contact-ignore@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
