@@ -21,10 +21,8 @@
 
 - (void)awakeFromNib
 {
-    [self profilePictureImageView].layer.shadowColor = [UIColor blackColor].CGColor;
-    [self profilePictureImageView].layer.shadowOffset = CGSizeMake(1, 1);
-    [self profilePictureImageView].layer.shadowOpacity = 0.5;
-    [self profilePictureImageView].layer.shadowRadius = 1.0;
+    
+    [CPUIHelper addShadowToView:self.profilePictureImageView color:[UIColor blackColor] offset:CGSizeMake(1, 1) radius:0.5 opacity:1.0];
     
     [CPUIHelper changeFontForLabel:self.nicknameLabel toLeagueGothicOfSize:24];
     

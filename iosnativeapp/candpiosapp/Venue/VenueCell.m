@@ -34,11 +34,8 @@
 }
 
 - (void)awakeFromNib
-{
-    [self venuePicture].layer.shadowColor = [UIColor blackColor].CGColor;
-    [self venuePicture].layer.shadowOffset = CGSizeMake(1, 1);
-    [self venuePicture].layer.shadowOpacity = 0.5;
-    [self venuePicture].layer.shadowRadius = 1.0;
+{    
+    [CPUIHelper addShadowToView:self.venuePicture color:[UIColor blackColor] offset:CGSizeMake(1, 1) radius:0.5 opacity:1.0];
     
     [CPUIHelper changeFontForLabel:self.venueName toLeagueGothicOfSize:24];
     [CPUIHelper changeFontForLabel:self.venueAddress toLeagueGothicOfSize:24];
