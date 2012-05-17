@@ -448,7 +448,14 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
  
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-    if (localNotif) {
+
+    CPVenue *venue = [CPAppDelegate currentVenue];
+
+    // Don't show notification if user is currently checked in to this venue
+    if ([CPAppDelegate userCheckedIn] && venue && venue.name && [venue.name isEqualToString:region.identifier]) {
+        return;
+    }
+    else if (localNotif) {
         NSString *alertText = [NSString stringWithFormat:@"Do you want to check in at %@?", region.identifier];
         
         localNotif.alertBody = alertText;
