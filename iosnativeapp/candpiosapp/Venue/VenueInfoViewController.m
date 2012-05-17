@@ -627,16 +627,25 @@
 - (void)addUser:(User *)user
     toArrayForJobCategory:(NSString *)jobCategory
 {
-    // check if we already have an array for this category
-    // and create one if we don't
-    if (![self.currentUsers objectForKey:jobCategory]) {
-        [self.currentUsers setObject:[NSMutableArray array] forKey:jobCategory];
-        [self.categoryCount setObject:[NSNumber numberWithInt:0] forKey:jobCategory];
+    //If the jobCategory has a null value then don't show anything
+    if(jobCategory != Nil)
+    {
+        // check if we already have an array for this category
+        // and create one if we don't
+        if (![self.currentUsers objectForKey:jobCategory]) {
+            [self.currentUsers setObject:[NSMutableArray array] forKey:jobCategory];
+            [self.categoryCount setObject:[NSNumber numberWithInt:0] forKey:jobCategory];
+        }
+        // add this user to that array
+        [[self.currentUsers objectForKey:jobCategory] addObject:user];
+        int currentCount = [[self.categoryCount objectForKey:jobCategory] intValue];
+        [self.categoryCount setObject:[NSNumber numberWithInt:1 + currentCount] forKey:jobCategory];
     }
-    // add this user to that array
-    [[self.currentUsers objectForKey:jobCategory] addObject:user];
-    int currentCount = [[self.categoryCount objectForKey:jobCategory] intValue];
-    [self.categoryCount setObject:[NSNumber numberWithInt:1 + currentCount] forKey:jobCategory];
+    else {
+        #if DEBUG
+            NSLog(@"User has nil value job category!!!!");
+        #endif
+    }
 }
 
 - (void)addUserToDictionaryOfUserObjectsFromUser:(User *)user
