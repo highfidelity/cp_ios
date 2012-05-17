@@ -510,37 +510,8 @@ It is good for 24 hours.  </string>
                                         </view>
                                         <color key="backgroundColor" red="0.24313725489999999" green="0.24313725489999999" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="m44-ma-izt" userLabel="Cell - billing rate">
-                                        <rect key="frame" x="0.0" y="143" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Billing Rate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="gEF-Qr-Mx9">
-                                                    <rect key="frame" x="10" y="11" width="79" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" red="0.8862745098" green="0.89019607840000003" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="7909" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" adjustsFontSizeToFit="NO" minimumFontSize="14" clearButtonMode="whileEditing" id="VPq-og-Op0" userLabel="Text Field - Billing rate">
-                                                    <rect key="frame" x="84" y="6" width="211" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="textColor" red="0.8862745098" green="0.89019607840000003" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
-                                                    <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="send"/>
-                                                    <connections>
-                                                        <outlet property="delegate" destination="1JK-jA-7GK" id="B3g-Px-AcN"/>
-                                                    </connections>
-                                                </textField>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" red="0.24313725529999999" green="0.24313725529999999" blue="0.24313725529999999" alpha="1" colorSpace="calibratedRGB"/>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" shouldIndentWhileEditing="NO" textLabel="wlF-CM-RiE" style="IBUITableViewCellStyleDefault" id="2rZ-uo-Ob7">
-                                        <rect key="frame" x="0.0" y="187" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="143" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -562,7 +533,7 @@ It is good for 24 hours.  </string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="0.0" shouldIndentWhileEditing="NO" textLabel="yrD-1g-XDV" style="IBUITableViewCellStyleDefault" id="VNZ-aP-2bT">
-                                        <rect key="frame" x="0.0" y="231" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="187" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -611,7 +582,6 @@ It is good for 24 hours.  </string>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="billingRateTextField" destination="VPq-og-Op0" id="t0V-EM-ftK"/>
                         <outlet property="emailTextField" destination="YZh-jX-yBq" id="8q7-4v-9FN"/>
                         <outlet property="emailValidationMsg" destination="ZhM-yn-cui" id="5nX-Ng-0vZ"/>
                         <outlet property="nicknameTextField" destination="9nY-7I-0Zu" id="vg1-4q-KEW"/>
