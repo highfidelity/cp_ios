@@ -267,6 +267,8 @@
 		53FE254E150EA50B00A0D93A /* PaymentHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE254D150EA50A00A0D93A /* PaymentHelper.m */; };
 		53FE254F150EA60D00A0D93A /* PaymentHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE254D150EA50A00A0D93A /* PaymentHelper.m */; };
 		53FE2552150EAC6B00A0D93A /* UserSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE2551150EAC6B00A0D93A /* UserSettingsTableViewController.m */; };
+		568753F81566CE4F00ED99FE /* action-button-container-glow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 568753F61566CE4F00ED99FE /* action-button-container-glow@2x.png */; };
+		568753F91566CE4F00ED99FE /* action-button-container-glow.png in Resources */ = {isa = PBXBuildFile; fileRef = 568753F71566CE4F00ED99FE /* action-button-container-glow.png */; };
 		5F7D21D9155AF1A200EAA540 /* UserProfileLinkedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */; };
 		5F8413DB15617A78003B43B8 /* UserProfileWebStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F8413DA15617A78003B43B8 /* UserProfileWebStoryboard_iPhone.storyboard */; };
 		5F8413E115619721003B43B8 /* UserProfileLinkedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */; };
@@ -787,6 +789,8 @@
 		53FE254D150EA50A00A0D93A /* PaymentHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaymentHelper.m; path = Payment/PaymentHelper.m; sourceTree = "<group>"; };
 		53FE2550150EAC6B00A0D93A /* UserSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSettingsTableViewController.h; path = Settings/UserSettingsTableViewController.h; sourceTree = "<group>"; };
 		53FE2551150EAC6B00A0D93A /* UserSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSettingsTableViewController.m; path = Settings/UserSettingsTableViewController.m; sourceTree = "<group>"; };
+		568753F61566CE4F00ED99FE /* action-button-container-glow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "action-button-container-glow@2x.png"; path = "User/images/action-button-container-glow@2x.png"; sourceTree = "<group>"; };
+		568753F71566CE4F00ED99FE /* action-button-container-glow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "action-button-container-glow.png"; path = "User/images/action-button-container-glow.png"; sourceTree = "<group>"; };
 		5F7D21D7155AF1A200EAA540 /* UserProfileLinkedInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileLinkedInViewController.h; path = User/UserProfileLinkedInViewController.h; sourceTree = "<group>"; };
 		5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfileLinkedInViewController.m; path = User/UserProfileLinkedInViewController.m; sourceTree = "<group>"; };
 		5F8413DA15617A78003B43B8 /* UserProfileWebStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = UserProfileWebStoryboard_iPhone.storyboard; path = User/UserProfileWebStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
@@ -1356,6 +1360,8 @@
 		536DE929150170BB00794650 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				568753F61566CE4F00ED99FE /* action-button-container-glow@2x.png */,
+				568753F71566CE4F00ED99FE /* action-button-container-glow.png */,
 				53ABCC2415621054004BA177 /* send-love-small@2x.png */,
 				536E1E5A1554932F00052D40 /* available-for-icon@2x~iphone.png */,
 				536E1E5B1554932F00052D40 /* available-for-icon~iphone.png */,
@@ -2455,6 +2461,8 @@
 				6983394B15641509007CD32F /* contact-accept@2x.png in Resources */,
 				6983394C15641509007CD32F /* contact-ignore.png in Resources */,
 				6983394D15641509007CD32F /* contact-ignore@2x.png in Resources */,
+				568753F81566CE4F00ED99FE /* action-button-container-glow@2x.png in Resources */,
+				568753F91566CE4F00ED99FE /* action-button-container-glow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
