@@ -6,11 +6,11 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import "UserTableViewCell.h"
+#import "ContactListCell.h"
 
 #define kNumberOfContactRequestsNotification @"kNumberOfContactRequestsNotification"
 
-@interface ContactListViewController : UITableViewController <UISearchBarDelegate, UserTableViewCellDelegate>
+@interface ContactListViewController : UITableViewController <UISearchBarDelegate, ContactListCellDelegate>
 
 @property (nonatomic, retain) NSMutableArray *contacts;
 @property (nonatomic, retain) NSMutableArray *contactRequests;

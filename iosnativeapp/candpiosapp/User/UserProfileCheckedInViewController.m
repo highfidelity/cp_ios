@@ -72,6 +72,7 @@
 
 @implementation UserProfileCheckedInViewController
 
+@synthesize loadAction = _loadAction;
 @synthesize scrollView = _scrollView;
 @synthesize checkedIn = _checkedIn;
 @synthesize mapView = _mapView;
@@ -249,7 +250,16 @@ UITapGestureRecognizer* _tapRecon = nil;
         _tapRecon.cancelsTouchesInView = NO;
         [self.navigationController.navigationBar addGestureRecognizer:_tapRecon];
     }
+}
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    // perform the loadAction if we have one
+    if (self.loadAction != UserProfileLoadActionNone) {
+        [self performLoadAction];
+    }
 }
 
 - (void)viewDidUnload
@@ -293,6 +303,20 @@ UITapGestureRecognizer* _tapRecon = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (void)performLoadAction 
+{
+    // switch on the loadAction, set it to none after it's performed
+    switch (self.loadAction) {
+        case UserProfileLoadActionLove:
+            [self sendloveButtonPressed:nil];
+            break;
+            
+        default:
+            self.loadAction = UserProfileLoadActionNone;
+            break;
+    }
 }
 
 - (void)updateLastUserCheckin

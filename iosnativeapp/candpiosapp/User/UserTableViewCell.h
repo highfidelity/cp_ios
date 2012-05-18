@@ -7,32 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CPSwipeableTableViewCell.h"
 
 @class UserTableViewCell;
 
-@protocol UserTableViewCellDelegate <NSObject>
-
-- (void)clickedAcceptButtonInUserTableViewCell:(UserTableViewCell *)userTableViewCell;
-- (void)clickedDeclineButtonInUserTableViewCell:(UserTableViewCell *)userTableViewCell;
-
-@end
+@interface UserTableViewCell : CPSwipeableTableViewCell
 
 
-@interface UserTableViewCell : UITableViewCell {
-    id<UserTableViewCellDelegate> delegate;
-    
-    UILabel *nicknameLabel;
-    UILabel *statusLabel;
-    UILabel *distanceLabel;
-    UILabel *checkInLabel;
-    UILabel *checkInCountLabel;
-    UIImageView *profilePictureImageView;
-    
-    UIButton *acceptContactRequestButton;
-    UIButton *declineContactRequestButton;
-}
-
-@property (nonatomic, retain) id<UserTableViewCellDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UILabel *nicknameLabel;
 @property (nonatomic, retain) IBOutlet UILabel *categoryLabel;
 @property (nonatomic, retain) IBOutlet UILabel *statusLabel;
@@ -40,7 +21,6 @@
 @property (nonatomic, retain) IBOutlet UILabel *checkInLabel;
 @property (nonatomic, retain) IBOutlet UILabel *checkInCountLabel;
 @property (nonatomic, retain) IBOutlet UIImageView *profilePictureImageView;
-@property (nonatomic, retain) IBOutlet UIButton *acceptContactRequestButton;
-@property (nonatomic, retain) IBOutlet UIButton *declineContactRequestButton;
+
 
 @end

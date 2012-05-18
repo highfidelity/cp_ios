@@ -9,9 +9,15 @@
 #import "UserTableViewCell.h"
 #import "CPUIHelper.h"
 
-@implementation UserTableViewCell
+@implementation UserTableViewCell 
 
-@synthesize delegate, nicknameLabel, categoryLabel, statusLabel, distanceLabel, checkInLabel, checkInCountLabel, profilePictureImageView, acceptContactRequestButton, declineContactRequestButton;
+@synthesize nicknameLabel;
+@synthesize categoryLabel;
+@synthesize statusLabel;
+@synthesize distanceLabel;
+@synthesize checkInLabel;
+@synthesize checkInCountLabel;
+@synthesize profilePictureImageView;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -21,40 +27,23 @@
 
 - (void)awakeFromNib
 {
+    // call super's awakeFromNib so that this cell can be swipeable
+    [super awakeFromNib];
+    
+    self.contentView.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
+    
+    // these cells only have the quick action on a swipe to the right
+    self.rightStyle = CPSwipeableTableViewCellSwipeStyleQuickAction;    
+    self.leftStyle = CPSwipeableTableViewCellSwipeStyleNone;
+    
+    // set the secretIcons array of the CPSwipeableTableViewCell to an array with
+    // the send love heart
+    self.secretIcons = [NSArray arrayWithObject:[UIImage imageNamed:@"send-love-heart"]];
+    
     
     [CPUIHelper addShadowToView:self.profilePictureImageView color:[UIColor blackColor] offset:CGSizeMake(1, 1) radius:0.5 opacity:1.0];
     
-    [CPUIHelper changeFontForLabel:self.nicknameLabel toLeagueGothicOfSize:24];
-    
-    if (self.acceptContactRequestButton) {
-        [self.acceptContactRequestButton addTarget:self
-                                            action:@selector(acceptButtonAction)
-                                  forControlEvents:UIControlEventTouchUpInside];
-    }
-    
-    if (self.declineContactRequestButton) {
-        [self.declineContactRequestButton addTarget:self
-                                             action:@selector(declineButtonAction)
-                                   forControlEvents:UIControlEventTouchUpInside];
-    }
-}
-
-- (void)prepareForReuse {
-    [super prepareForReuse];
-    
-    self.delegate = nil;
-    self.acceptContactRequestButton.hidden = YES;
-    self.declineContactRequestButton.hidden = YES;
-}
-
-#pragma mark - actions
-
-- (void)acceptButtonAction {
-    [self.delegate clickedAcceptButtonInUserTableViewCell:self];
-}
-
-- (void)declineButtonAction {
-    [self.delegate clickedDeclineButtonInUserTableViewCell:self];
+    [CPUIHelper changeFontForLabel:self.nicknameLabel toLeagueGothicOfSize:24];   
 }
 
 @end

@@ -220,6 +220,9 @@
         cell = [[UserTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
 
+    // be the delegate of the cell for swipe actions
+    cell.delegate = self;
+    
     // Configure the cell...
     User *user;
 
@@ -311,6 +314,23 @@
         return;
     }
     
+    [self showUserProfileForUser:[self selectedUserForIndexPath:indexPath] loadAction:UserProfileLoadActionNone];
+}
+
+# pragma mark - CPSwipeableTableViewCellDelegate
+
+-(void)quickActionForDirection:(CPSwipeableTableViewCellDirection)direction cell:(CPSwipeableTableViewCell *)sender
+{
+    // only go over to the user profile if this user is logged in
+    if ([CPAppDelegate currentUser]) {
+        User *selectedUser = [self selectedUserForIndexPath:[self.tableView indexPathForCell:sender]];
+        [self showUserProfileForUser:selectedUser loadAction:UserProfileLoadActionLove];
+    }
+    
+}
+
+- (User *)selectedUserForIndexPath:(NSIndexPath *)indexPath
+{
     User *selectedUser;
     
     if (indexPath.section == 0 && self.checkedInUsers.count > 0) {
@@ -323,10 +343,18 @@
         selectedUser = [self.weeklyUsers objectAtIndex:indexPath.row];
     }
     
+    return selectedUser;
+}
+
+- (void)showUserProfileForUser:(User *)selectedUser loadAction:(UserProfileLoadAction)loadAction
+{
     UserProfileCheckedInViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
     // set the user object on the UserProfileCheckedInVC to the user we just created
     userVC.user = selectedUser;
     
+    // set the passed loadAction on the user VC
+    userVC.loadAction = loadAction;
+
     // push the UserProfileCheckedInViewController onto the navigation controller stack
     [self.navigationController pushViewController:userVC animated:YES];
 }

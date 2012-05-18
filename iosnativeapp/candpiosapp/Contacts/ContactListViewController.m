@@ -286,12 +286,16 @@
         CellIdentifier = kContactRequestsCellIdentifier;
     }
     
-    UserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ContactListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UserTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[ContactListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
 
     NSDictionary *contact = [self contactForIndexPath:indexPath];
+    
+    // these aren't swipeable cells
+    cell.leftStyle = CPSwipeableTableViewCellSwipeStyleNone;
+    cell.rightStyle = CPSwipeableTableViewCellSwipeStyleNone;
 
     cell.checkInCountLabel.text = @"";
     cell.checkInLabel.text = @"";
@@ -321,7 +325,8 @@
     if ([CellIdentifier isEqualToString:kContactRequestsCellIdentifier]) {
         cell.acceptContactRequestButton.hidden = NO;
         cell.declineContactRequestButton.hidden = NO;
-        cell.delegate = self;
+        
+        cell.contactListTVC = self;
         cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
         cell.backgroundView.backgroundColor = RGBA(66, 128, 128, 1);
     }
@@ -424,8 +429,8 @@
 
 #pragma mark - UserTableViewCellDelegate
 
-- (void)clickedAcceptButtonInUserTableViewCell:(UserTableViewCell *)userTableViewCell {
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:userTableViewCell];
+- (void)clickedAcceptButtonInUserTableViewCell:(ContactListCell *)contactListCell {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:contactListCell];
     NSDictionary *contactData = [self.contactRequests objectAtIndex:indexPath.row];
     
     [self.tableView beginUpdates];
@@ -452,8 +457,8 @@
     [self updateBadgeValue];
 }
 
-- (void)clickedDeclineButtonInUserTableViewCell:(UserTableViewCell *)userTableViewCell {
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:userTableViewCell];
+- (void)clickedDeclineButtonInUserTableViewCell:(ContactListCell *)contactListCell {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:contactListCell];
     NSDictionary *contactData = [self.contactRequests objectAtIndex:indexPath.row];
     
     [self.contactRequests removeObjectAtIndex:indexPath.row];

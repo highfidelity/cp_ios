@@ -12,6 +12,7 @@
 	#import <UIKit/UIKit.h>
 	#import <Foundation/Foundation.h>
     #import "CPUIHelper.h"
+    #import "UIColor+EasyRGB.h"
     #import "CPConstants.h" 
     #import "SVProgressHUD.h"
     #import "CPapi.h"

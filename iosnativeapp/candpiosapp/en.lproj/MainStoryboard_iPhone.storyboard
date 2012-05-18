@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="k3E-ap-M38">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="k3E-ap-M38">
     <dependencies>
         <deployment version="1280" defaultVersion="1296" identifier="iOS"/>
         <development version="4200" defaultVersion="4200" identifier="xcode"/>
@@ -251,7 +251,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" id="zhs-Yx-pbR">
-                                            <rect key="frame" x="0.0" y="128" width="320" height="1"/>
+                                            <rect key="frame" x="0.0" y="129" width="320" height="1"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                                         </view>
@@ -289,13 +289,6 @@
                                             <color key="textColor" red="0.85882359740000003" green="0.85882359740000003" blue="0.85882359740000003" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="46D-2C-ktR" userLabel="checkin count">
-                                            <rect key="frame" x="-24" y="89" width="79" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                            <color key="textColor" red="0.24313727021217346" green="0.51372551918029785" blue="0.5058823823928833" alpha="1" colorSpace="deviceRGB"/>
-                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Major Job Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="bhX-UX-DQi" userLabel="Checkin name">
                                             <rect key="frame" x="123" y="42" width="162" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -308,7 +301,6 @@
                                 </view>
                                 <connections>
                                     <outlet property="categoryLabel" destination="bhX-UX-DQi" id="YUK-58-mvn"/>
-                                    <outlet property="checkInCountLabel" destination="46D-2C-ktR" id="4AO-hc-Tzz"/>
                                     <outlet property="checkInLabel" destination="4J4-w6-UoS" id="lIg-bQ-SII"/>
                                     <outlet property="distanceLabel" destination="sre-9B-55g" id="fRc-jt-ima"/>
                                     <outlet property="nicknameLabel" destination="mjY-7Y-tr1" id="8qQ-NI-EQl"/>
@@ -349,7 +341,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ContactRequestCell" rowHeight="60" id="Vlx-4o-pmE" customClass="UserTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ContactRequestCell" rowHeight="60" id="Vlx-4o-pmE" customClass="ContactListCell">
                                 <rect key="frame" x="0.0" y="66" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -409,10 +401,9 @@
                                     <outlet property="acceptContactRequestButton" destination="3OM-3f-de7" id="TKs-TK-AtR"/>
                                     <outlet property="declineContactRequestButton" destination="E3X-0z-BdW" id="B0C-sG-jkJ"/>
                                     <outlet property="nicknameLabel" destination="UH9-6E-f6k" id="Xeu-DX-LFJ"/>
-                                    <outlet property="profilePictureImageView" destination="4LH-Pu-1oy" id="TBM-Du-TRe"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserListCustomCell" rowHeight="60" id="b0y-hI-Pil" customClass="UserTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserListCustomCell" rowHeight="60" id="b0y-hI-Pil" customClass="ContactListCell">
                                 <rect key="frame" x="0.0" y="126" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
