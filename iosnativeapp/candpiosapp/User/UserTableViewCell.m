@@ -36,11 +36,6 @@
     self.rightStyle = CPSwipeableTableViewCellSwipeStyleQuickAction;    
     self.leftStyle = CPSwipeableTableViewCellSwipeStyleNone;
     
-    // set the secretIcons array of the CPSwipeableTableViewCell to an array with
-    // the send love heart
-    self.secretIcons = [NSArray arrayWithObject:[UIImage imageNamed:@"send-love-heart"]];
-    
-    
     [CPUIHelper addShadowToView:self.profilePictureImageView color:[UIColor blackColor] offset:CGSizeMake(1, 1) radius:0.5 opacity:1.0];
     
     [CPUIHelper changeFontForLabel:self.nicknameLabel toLeagueGothicOfSize:24];   

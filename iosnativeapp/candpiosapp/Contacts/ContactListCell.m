@@ -11,20 +11,16 @@
 @implementation ContactListCell
 
 @synthesize contactListTVC = _contactListTVC;
-@synthesize acceptContactRequestButton;
-@synthesize declineContactRequestButton;
+@synthesize profilePicture = _profilePicture;
+@synthesize nicknameLabel = _nicknameLabel;
+@synthesize statusLabel = _statusLabel;
+@synthesize acceptContactRequestButton = _acceptContactRequestButton;
+@synthesize declineContactRequestButton = _declineContactRequestButton;
 
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    
-    // we aren't swipeable (for now!)
-    self.leftStyle = CPSwipeableTableViewCellSwipeStyleNone;
-    self.rightStyle = CPSwipeableTableViewCellSwipeStyleNone;
-    self.secretIcons = nil;
-    
-    // do anything here we need to do that differentiates us from the UserTableViewCell
-    
+
     if (self.acceptContactRequestButton) {
         [self.acceptContactRequestButton addTarget:self
                                             action:@selector(acceptButtonAction)
@@ -38,13 +34,6 @@
     }
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
-
 - (void)prepareForReuse {
     [super prepareForReuse];
     
@@ -53,11 +42,11 @@
     self.declineContactRequestButton.hidden = YES;
 }
 
-- (void)acceptButtonAction {
+- (IBAction)acceptButtonAction {
     [self.contactListTVC clickedAcceptButtonInUserTableViewCell:self];
 }
 
-- (void)declineButtonAction {
+- (IBAction)declineButtonAction {
     [self.contactListTVC clickedDeclineButtonInUserTableViewCell:self];
 }
 

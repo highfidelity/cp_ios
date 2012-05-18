@@ -223,6 +223,9 @@
     // be the delegate of the cell for swipe actions
     cell.delegate = self;
     
+    // set the secretIcons array for this cell 
+    cell.secretIcons = [NSArray arrayWithObject:[UIImage imageNamed:@"send-love-heart"]];
+    
     // Configure the cell...
     User *user;
 

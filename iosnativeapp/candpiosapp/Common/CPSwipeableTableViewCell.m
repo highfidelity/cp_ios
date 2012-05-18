@@ -18,8 +18,8 @@
 #import "CPSwipeableTableViewCell.h"
 #import <objc/runtime.h>
 
-# define ICON_PADDING 20
-# define ICON_EFFECTIVE_WIDTH 43
+# define BUTTON_LEFT_MARGIN 20
+# define PADDING_TO_CONTAINER_IMAGE 16
 # define QUICK_ACTION_MARGIN 83
 
 @interface CPSwipeableTableViewCell()
@@ -29,7 +29,7 @@
 @property (nonatomic, assign) CGFloat initialHorizontalCenter;
 @property (nonatomic, assign) CPSwipeableTableViewCellDirection lastDirection;
 @property (nonatomic, assign) CPSwipeableTableViewCellDirection currentDirection;
-@property (nonatomic, strong) NSMutableArray *actionButtons;
+@property (nonatomic, strong) NSMutableArray *secretButtons;
 @property (nonatomic, strong) NSMutableArray *secretImageViews;
 
 - (BOOL)shouldDragLeft;
@@ -54,7 +54,7 @@
 @synthesize initialHorizontalCenter = _initialHorizontalCenter;
 @synthesize lastDirection = _lastDirection;
 @synthesize currentDirection = _currentDirection;
-@synthesize actionButtons = _actionButtons;
+@synthesize secretButtons = _secretButtons;
 @synthesize secretImageViews = _secretImageViews;
 @dynamic revealing;
 
@@ -136,13 +136,13 @@
 	self.hiddenView.frame = self.contentView.frame;
 }
 
-- (NSMutableArray *)actionButtons
+- (NSMutableArray *)secretButtons
 {
     // lazily instantiate an NSMutableArary for the action buttons
-    if (!_actionButtons) {
-        _actionButtons = [NSMutableArray array];
+    if (!_secretButtons) {
+        _secretButtons = [NSMutableArray array];
     }
-    return _actionButtons;
+    return _secretButtons;
 }
 
 - (NSMutableArray *)secretImageViews
@@ -158,55 +158,65 @@
 {    
     // when our secret icons array gets set we want to add the icons to the background view
     
-    // let's make sure first we remove all of the eight icons that might currently be there
-    for (UIButton *oldButton in self.actionButtons) {
+    // let's make sure first we remove all of the buttons and images that might currently be there
+    
+    for (UIButton *oldButton in self.secretButtons) {
         [oldButton removeFromSuperview];
     }
     
-    // clear the array of actionButtons
-    [self.actionButtons removeAllObjects];
+    // clear the array of secretButtons
+    [self.secretButtons removeAllObjects];
     
-    CGFloat originX = 4;
-    UIImage *containerImage = [UIImage imageNamed:@"action-button-container"];
-    
-    // cycle through the images in the secretIcons array
-    for (UIImage *actionImage in secretIcons) {
-        UIButton *actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-        // set the image for the action button to the container image
-        [actionButton setBackgroundImage:containerImage forState:UIControlStateNormal];
-        
-        // change the frame of the action button
-        CGRect containerFrame = CGRectMake(originX, -containerImage.size.height, containerImage.size.width, containerImage.size.height);
-        actionButton.frame = containerFrame;
-        
-        // setup a shadow on the container that is used to show the user the action will fire
-        [CPUIHelper addShadowToView:actionButton color:[UIColor whiteColor] offset:CGSizeMake(0, 0) radius:4 opacity:0.0];
-        
-        // add the action button to the hiddenView
-        [self.hiddenView addSubview:actionButton];
-        
-        // add this action button to our array of action buttons so we can grab it later
-        [self.actionButtons addObject:actionButton];
-        
-        UIImageView *secretImageView = [[UIImageView alloc] initWithImage:actionImage];
-        
-        // move the secretImageView to the right spot
-        CGRect iconHider = secretImageView.frame;
-        iconHider.origin.x = originX;
-        iconHider.origin.y = self.contentView.frame.size.height;
-        secretImageView.frame = iconHider;
-        
-        // add the secretImageView to the hiddenView
-        [self.hiddenView addSubview:secretImageView];
-        
-        // add the secret icon to our array of secret icons to grab it later
-        [self.secretImageViews addObject:secretImageView];
-        
-        // add some padding for the next button
-        originX += 20;
+    for (UIImageView *oldImageView in self.secretImageViews) {
+        [oldImageView removeFromSuperview];
     }
     
+    // clear the array of secretImageViews
+    [self.secretImageViews removeAllObjects];
+    
+    if (secretIcons.count > 0) {
+        UIImage *containerImage = [UIImage imageNamed:@"action-button-container"];
+        
+        // start at 4 points in (it needs
+        CGFloat originX = BUTTON_LEFT_MARGIN - PADDING_TO_CONTAINER_IMAGE;
+        
+        // cycle through the images in the secretIcons array
+        for (UIImage *actionImage in secretIcons) {
+            UIButton *actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            
+            // set the image for the action button to the container image
+            [actionButton setBackgroundImage:containerImage forState:UIControlStateNormal];
+            
+            // change the frame of the action button
+            CGRect containerFrame = CGRectMake(originX, -containerImage.size.height, containerImage.size.width, containerImage.size.height);
+            actionButton.frame = containerFrame;
+            
+            // add the action button to the hiddenView
+            [self.hiddenView addSubview:actionButton];
+            
+            // add this action button to our array of action buttons so we can grab it later
+            [self.secretButtons addObject:actionButton];
+            
+            // alloc-init an imageView to hold the icon
+            UIImageView *secretImageView = [[UIImageView alloc] initWithImage:actionImage];
+            
+            // move the secretImageView to the right spot
+            CGRect iconHider = secretImageView.frame;
+            iconHider.origin.x = originX;
+            iconHider.origin.y = self.contentView.frame.size.height;
+            secretImageView.frame = iconHider;
+            
+            // add the secretImageView to the hiddenView
+            [self.hiddenView addSubview:secretImageView];
+            
+            // add the secret icon to our array of secret icons to grab it later
+            [self.secretImageViews addObject:secretImageView];
+            
+            // add some padding for the next button
+            originX += 20;
+        }
+    }
+
     // set the instance variable to the passed array
     _secretIcons = secretIcons;
 }
@@ -474,84 +484,92 @@ static char BOOLRevealing;
 
 - (void)repositionSecretIconsForCenterX:(CGFloat)centerX
 {        
-    
+    // make sure we actually have images to show
+    if (self.secretImageViews.count > 0) {
+        
 # define CONTAINER_SHADOW_FIRST_TAG 8832
-# define PADDING_BELOW_BUTTON 16
-    
-    // get the position of the left edge of the cell
-    CGFloat leftEdge = centerX - (self.contentView.frame.size.width / 2);
-    
-    // grab the first actionButton
-    UIButton *actionButton = [self.actionButtons objectAtIndex:0];
-    
-    CGFloat halfButton = (actionButton.frame.size.height / 2);
-    
-    // get the vertical center point
-    CGFloat buttonBaseDesination = (self.contentView.frame.size.height / 2) + (halfButton - PADDING_BELOW_BUTTON);
-    
-    // grab the first secretIcon
-    UIImageView *secretImageView = [self.secretImageViews objectAtIndex:0];
-    
-    if (leftEdge >= ICON_PADDING) {
         
-        // the cell is at what % of its destination?
-        CGFloat cellClose = (leftEdge - ICON_PADDING) / (QUICK_ACTION_MARGIN - ICON_PADDING);
+        // get the position of the left edge of the cell
+        CGFloat leftEdge = centerX - (self.contentView.frame.size.width / 2);
         
-        // we want the base to also be that close to where it's going
-        CGFloat newBase = cellClose * buttonBaseDesination;
+        // grab the first actionButton
+        UIButton *actionButton = [self.secretButtons objectAtIndex:0];
         
-        // calculate a new center point based on the position of the left edge of the cell
-        CGFloat newCenterY = newBase - (halfButton - PADDING_BELOW_BUTTON);
+        // CGFloat set to half the side of the button, used for center calculations
+        CGFloat halfButton = (actionButton.frame.size.height / 2);
         
-        // set the new center for the actionButton
-        CGPoint newCenter = actionButton.center;
-        newCenter.y = newCenterY;
-        actionButton.center = newCenter;
+        // get the destination point for the base of the button
+        CGFloat buttonBaseDesination = (self.contentView.frame.size.height / 2) + (halfButton - PADDING_TO_CONTAINER_IMAGE);
         
-        // change the center for the bottom heart
-        newCenter.y = self.contentView.frame.size.height - newCenterY;
+        // grab the first secretIcon
+        UIImageView *secretImageView = [self.secretImageViews objectAtIndex:0];
         
-        // set the new center for the secretImageView
-        secretImageView.center = newCenter;
-        
-        // calculate an alpha based on how close the elements are to the center
-        CGFloat changingAlpha = cellClose;
-        
-        // set the calculated alpha value on each element
-        actionButton.alpha = changingAlpha;
-        secretImageView.alpha = changingAlpha;
-    }
-    
-    
-    if (leftEdge >= QUICK_ACTION_MARGIN) {
-        // if the the icon is locked then start the shadow beam
-        // but only if we don't already have it
-        if (![self.hiddenView viewWithTag:CONTAINER_SHADOW_FIRST_TAG]) {
-            UIImageView *shadowBeam = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"action-button-container-glow"]];
+        // only move the button and the imageView if they'll be displayed
+        if (leftEdge >= BUTTON_LEFT_MARGIN) {
             
-            // give the shadoeBeam the right tag
-            shadowBeam.tag = CONTAINER_SHADOW_FIRST_TAG;
+            // the cell is at what % of its destination?
+            CGFloat cellClose = (leftEdge - BUTTON_LEFT_MARGIN) / (QUICK_ACTION_MARGIN - BUTTON_LEFT_MARGIN);
             
-            // start the shadowBeam at alpha 0
-            shadowBeam.alpha = 0.0;
+            // we want the base to also be that close to where it's going
+            CGFloat newBase = cellClose * buttonBaseDesination;
             
-            // center the UIImageView with the button
-            shadowBeam.center  = actionButton.center;
+            // calculate a new center point based on the position of the left edge of the cell
+            CGFloat newCenterY = newBase - (halfButton - PADDING_TO_CONTAINER_IMAGE);
             
-            // add the shadowBeam below the button
-            [self.hiddenView insertSubview:shadowBeam belowSubview:actionButton];
+            // set the new center for the actionButton
+            CGPoint newCenter = actionButton.center;
+            newCenter.y = newCenterY;
+            actionButton.center = newCenter;
             
-            [self shadowBeamForContainer:shadowBeam];
+            // change the center for the bottom heart
+            newCenter.y = self.contentView.frame.size.height - newCenterY;
+            
+            // set the new center for the secretImageView
+            secretImageView.center = newCenter;
+            
+            // calculate an alpha based on how close the elements are to the center
+            CGFloat changingAlpha = cellClose;
+            
+            // set the calculated alpha value on each element
+            actionButton.alpha = changingAlpha;
+            secretImageView.alpha = changingAlpha;
+            
         }
-    } else {
-        // remove the shadow beam from the button container
-        [[self.hiddenView viewWithTag:CONTAINER_SHADOW_FIRST_TAG] removeFromSuperview];
-    }
-    
+        
+        // if the the icon is locked then start the shadow beam
+        if (leftEdge >= QUICK_ACTION_MARGIN) {
+            
+            // but only if we don't already have it
+            if (![self.hiddenView viewWithTag:CONTAINER_SHADOW_FIRST_TAG]) {
+                // setup a UIImageView to hold the beam image
+                UIImageView *shadowBeam = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"action-button-container-glow"]];
+                
+                // give the shadowBeam the right tag
+                shadowBeam.tag = CONTAINER_SHADOW_FIRST_TAG;
+                
+                // start the shadowBeam at alpha 0
+                shadowBeam.alpha = 0.0;
+                
+                // center the UIImageView with the button
+                shadowBeam.center  = actionButton.center;
+                
+                // add the shadowBeam below the button
+                [self.hiddenView insertSubview:shadowBeam belowSubview:actionButton];
+                
+                // call shadowBeamForContainer to start pulsing it
+                [self shadowBeamForContainer:shadowBeam];
+            }
+        } else {
+            // remove the shadow beam from the button container
+            [[self.hiddenView viewWithTag:CONTAINER_SHADOW_FIRST_TAG] removeFromSuperview];
+        }
+
+    }    
 }
 
--(void) shadowBeamForContainer:(UIImageView *)beamImageView 
+-(void)shadowBeamForContainer:(UIImageView *)beamImageView 
 {
+    // start a repeating animation to pulse the shadow beam on the button
     [UIView animateWithDuration:0.5 delay:0.0 options:(UIViewAnimationCurveEaseInOut | UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat) animations:^{
         beamImageView.alpha = 1.0;
     } completion:nil];

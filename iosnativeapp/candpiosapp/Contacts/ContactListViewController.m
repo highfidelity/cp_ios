@@ -281,25 +281,18 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *CellIdentifier = @"UserListCustomCell";
+    NSString *CellIdentifier = @"ContactListCell";
     if (!isSearching && kContactRequestsSection == indexPath.section) {
         CellIdentifier = kContactRequestsCellIdentifier;
     }
     
-    ContactListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ContactListCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[ContactListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
 
     NSDictionary *contact = [self contactForIndexPath:indexPath];
-    
-    // these aren't swipeable cells
-    cell.leftStyle = CPSwipeableTableViewCellSwipeStyleNone;
-    cell.rightStyle = CPSwipeableTableViewCellSwipeStyleNone;
 
-    cell.checkInCountLabel.text = @"";
-    cell.checkInLabel.text = @"";
-    cell.distanceLabel.text = @"";
     cell.nicknameLabel.text = [contact objectForKey:@"nickname"];
     [CPUIHelper changeFontForLabel:cell.nicknameLabel toLeagueGothicOfSize:18.0];
 
@@ -311,7 +304,7 @@
         cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",status];
     }
 
-    UIImageView *imageView = cell.profilePictureImageView;
+    UIImageView *imageView = cell.profilePicture;
     if ([contact objectForKey:@"imageUrl"] != [NSNull null]) {
 
         imageView.contentMode = UIViewContentModeScaleAspectFill;
