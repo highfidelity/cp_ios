@@ -242,9 +242,9 @@
     
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"linkedin_token"];
     NSString *secret = [[NSUserDefaults standardUserDefaults] objectForKey:@"linkedin_secret"];
-    
+
     self.requestToken = [[OAToken alloc] initWithKey:token secret:secret];
-    
+
     NSLog(@"Final token: %@", self.requestToken);
     
     NSURL *url = [NSURL URLWithString:@"https://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,site-standard-profile-request)"];
@@ -293,6 +293,9 @@
     
     oauthToken = self.requestToken.key;
     oauthSecret = self.requestToken.secret;
+    
+    [CPapi updateLiDataWithToken:oauthToken 
+                       andSecret:oauthSecret];
     
     // Now that we have the user's basic information, log them in with their new/existing account
     

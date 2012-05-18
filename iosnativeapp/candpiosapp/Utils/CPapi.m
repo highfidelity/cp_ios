@@ -817,6 +817,18 @@
                          completion:completion];
 }
 
++ (void)updateLiDataWithToken:(NSString *)token andSecret:(NSString *)secret
+{
+    NSString *urlString = [NSString 
+                           stringWithFormat:@"%@userData.php?action=collectLiData&li_access_token=0&oauth_token=%@&oauth_secret=%@", 
+                           kCandPWebServiceUrl, token, secret];
+
+    NSURL *url = [NSURL URLWithString: urlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+
+    [self makeHTTPRequest:request queue:nil completion:nil];
+}
+
 # pragma mark - Love
 
 + (void)sendLoveToUserWithID:(int)recieverID 
