@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "CPSwipeableTableViewCell.h"
+#import "CPBaseTableViewController.h"
 
-@interface UserListTableViewController : UITableViewController <UINavigationControllerDelegate, CPSwipeableTableViewCellDelegate>
+@interface UserListTableViewController : CPBaseTableViewController <UINavigationControllerDelegate, CPSwipeableTableViewCellDelegate>
 
 @property (nonatomic, retain) NSMutableArray *weeklyUsers;
 @property (nonatomic, retain) NSMutableArray *checkedInUsers;
-@property (nonatomic, assign) MapTabController *delegate;
+
 
 - (void)refreshFromNewMapData:(NSNotification *)notification;
 

@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CPBaseTableViewController.h"
 
-@interface VenueListTableViewController : UITableViewController
+@interface VenueListTableViewController : CPBaseTableViewController
 
 @property (nonatomic, strong) NSMutableArray *venues;
-@property (nonatomic, assign) MapTabController *delegate;
 
 @end

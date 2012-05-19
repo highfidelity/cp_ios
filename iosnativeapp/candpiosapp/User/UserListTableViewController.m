@@ -14,14 +14,9 @@
 #import "VenueCell.h"
 #import "CheckInDetailsViewController.h"
 #import "CPVenue.h"
-#import "SVProgressHUD.h"
-
-@interface UserListTableViewController()
-@end
 
 @implementation UserListTableViewController
 
-@synthesize delegate = _delegate;
 @synthesize weeklyUsers = _weeklyUsers;
 @synthesize checkedInUsers = _checkedInUsers;
 
@@ -44,7 +39,6 @@
                                              selector:@selector(refreshFromNewMapData:) 
                                                  name:@"refreshUsersFromNewMapData" 
                                                object:nil]; 
-    
 }
 
 - (void)viewDidUnload
@@ -56,32 +50,15 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshUsersFromNewMapData" object:nil];
 }
 
--(void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-    // place the settings button on the navigation item if required
-    // or remove it if the user isn't logged in
-    [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [SVProgressHUD showWithStatus:@"Loading..."];
+    // setup the tableView with whatever we already have
+    [self filterData];
     
     // tell the map to reload data
     // we'll get a notification when that's done to reload ours
     [self.delegate refreshButtonClicked:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
+    [self showCorrectLoadingSpinnerForCount:self.weeklyUsers.count + self.checkedInUsers.count];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -132,8 +109,7 @@
 {
     // check if we're visible
     if ([[[self tabBarController] selectedViewController] isEqual:self]) {
-        // and show an SVProgressHUD if we are
-        [SVProgressHUD showWithStatus:@"Loading..."];
+        [self showCorrectLoadingSpinnerForCount:self.weeklyUsers.count + self.checkedInUsers.count];
     }    
 }
 
@@ -147,8 +123,8 @@
     
     if (self.isViewLoaded && self.view.window) {
         // we're visible
-        // dismiss the SVProgressHUD and reload our data
-        [SVProgressHUD dismiss];
+        [self stopAppropriateLoadingSpinner];
+        
         // filter that data
         [self filterData];
     }

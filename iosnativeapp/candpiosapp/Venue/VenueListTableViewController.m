@@ -19,7 +19,6 @@
 @implementation VenueListTableViewController
 
 @synthesize venues = _venues;
-@synthesize delegate = _delegate;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -69,22 +68,15 @@
      
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    // place the settings button on the navigation item if required
-    // or remove it if the user isn't logged in
-    [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
-    
-    // reload the table
-    [self.tableView reloadData];
-}
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [SVProgressHUD showWithStatus:@"Loading..."];
+    
+    // setup the tableView with whatever we already have
+    [self.tableView reloadData];
+    
+    // show the right loading spinner
+    [self showCorrectLoadingSpinnerForCount:self.venues.count];
     
     // tell the map to reload data
     // we'll get a notification when that's done to reload ours
@@ -100,8 +92,7 @@
 {
     // check if we're visible
     if ([[[self tabBarController] selectedViewController] isEqual:self]) {
-        // and show an SVProgressHUD if we are
-        [SVProgressHUD showWithStatus:@"Loading..."];
+        [self showCorrectLoadingSpinnerForCount:self.venues.count];
     }
 }
 
@@ -129,7 +120,8 @@
     if (self.isViewLoaded && self.view.window) {
         // we're visible
         // dismiss the SVProgressHUD and reload our data
-        [SVProgressHUD dismiss];
+        [self stopAppropriateLoadingSpinner];
+        
         [self.tableView reloadData];
     }
    
