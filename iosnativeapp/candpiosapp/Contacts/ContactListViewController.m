@@ -163,9 +163,9 @@
         [self.tableView setContentOffset:CGPointMake(0, 44) animated:NO];
     }
     
-    [SVProgressHUD showWithStatus:@"Loading..."];
+    [self showCorrectLoadingSpinnerForCount:self.contacts.count + self.contactRequests.count];
     [CPapi getContactListWithCompletionsBlock:^(NSDictionary *json, NSError *error) {
-        [SVProgressHUD dismiss];
+        [self stopAppropriateLoadingSpinner];
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {
                 NSMutableArray *payload = [json objectForKey:@"payload"];
@@ -185,8 +185,7 @@
             }
             else {
                 NSLog(@"%@",[json objectForKey:@"payload"]);
-                [SVProgressHUD dismissWithError:[json objectForKey:@"payload"]
-                                     afterDelay:kDefaultDimissDelay];
+                [SVProgressHUD showErrorWithStatus:[json objectForKey:@"payload"] duration:kDefaultDimissDelay];
             }
         }
         else {
@@ -518,9 +517,7 @@
     }
     
     if (errorMessage) {
-        [SVProgressHUD show];
-        [SVProgressHUD dismissWithError:errorMessage
-                             afterDelay:kDefaultDimissDelay];
+        [SVProgressHUD showErrorWithStatus:errorMessage duration:kDefaultDimissDelay];
     }
 }
 

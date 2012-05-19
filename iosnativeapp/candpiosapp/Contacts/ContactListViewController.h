@@ -7,10 +7,11 @@
 //
 
 #import "ContactListCell.h"
+#import "CPBaseTableViewController.h"
 
 #define kNumberOfContactRequestsNotification @"kNumberOfContactRequestsNotification"
 
-@interface ContactListViewController : UITableViewController <UISearchBarDelegate, ContactListCellDelegate>
+@interface ContactListViewController : CPBaseTableViewController <UISearchBarDelegate, ContactListCellDelegate>
 
 @property (nonatomic, retain) NSMutableArray *contacts;
 @property (nonatomic, retain) NSMutableArray *contactRequests;

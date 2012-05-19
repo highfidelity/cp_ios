@@ -11,7 +11,7 @@
 @interface CPBaseTableViewController : UITableViewController
 
 @property (nonatomic, strong) UIActivityIndicatorView *barSpinner;
-@property (nonatomic, assign) MapTabController *delegate;
+@property (nonatomic, assign) id delegate;
 
 - (void)showCorrectLoadingSpinnerForCount:(int)count;
 - (void)stopAppropriateLoadingSpinner;
