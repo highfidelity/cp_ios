@@ -449,26 +449,15 @@ It is good for 24 hours.  </string>
                                                     <color key="textColor" red="0.8862745098" green="0.89019607840000003" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <button opaque="NO" tag="7909" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="c6b-5b-J6i">
-                                                    <rect key="frame" x="257" y="5" width="33" height="33"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                    <state key="normal">
-                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <state key="highlighted">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="chooseNewProfileImage:" destination="1JK-jA-7GK" eventType="touchUpInside" id="AFQ-6e-mln"/>
-                                                    </connections>
-                                                </button>
                                                 <activityIndicatorView opaque="NO" tag="7910" contentMode="scaleToFill" animating="YES" style="white" id="byr-q9-Q4V">
                                                     <rect key="frame" x="270" y="12" width="20" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </activityIndicatorView>
+                                                <view tag="7909" contentMode="scaleToFill" id="T6L-86-gKm">
+                                                    <rect key="frame" x="257" y="5" width="33" height="33"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -585,7 +574,7 @@ It is good for 24 hours.  </string>
                         <outlet property="emailTextField" destination="YZh-jX-yBq" id="8q7-4v-9FN"/>
                         <outlet property="emailValidationMsg" destination="ZhM-yn-cui" id="5nX-Ng-0vZ"/>
                         <outlet property="nicknameTextField" destination="9nY-7I-0Zu" id="vg1-4q-KEW"/>
-                        <outlet property="profileImageButton" destination="c6b-5b-J6i" id="CVC-Tf-XEE"/>
+                        <outlet property="profileImageBox" destination="T6L-86-gKm" id="4vQ-ST-feW"/>
                     </connections>
                 </tableViewController>
             </objects>
@@ -1261,7 +1250,7 @@ It is good for 24 hours.  </string>
                 <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="emailValidationMsg" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="nicknameTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="profileImageButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="profileImageBox" candidateClass="UIView"/>
             </relationships>
         </class>
         <class className="WalletCell" superclassName="UITableViewCell">

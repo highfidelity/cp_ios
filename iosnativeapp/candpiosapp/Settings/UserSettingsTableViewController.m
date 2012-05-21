@@ -32,7 +32,7 @@
 @synthesize imagePicker = _imagePicker;
 @synthesize finishedSync = _finishedSync;
 @synthesize newDataFromSync = _newDataFromSync;
-@synthesize profileImageButton = _profileImageButton;
+@synthesize profileImageBox = _profileImageButton;
 @synthesize profileImage = _profileImage;
 @synthesize emailValidationMsg = _emailValidationMsg;
 
@@ -74,13 +74,13 @@
     self.currentUser = [CPAppDelegate currentUser];
     
     // hide the profile image button, it's going to get shown once we load the image
-    self.profileImageButton.alpha = 0.0;
+    self.profileImageBox.alpha = 0.0;
     
     // add an imageview to the profileImageButton
     self.profileImage = [[UIImageView alloc] initWithFrame:CGRectMake(1, 1, 31, 31)];
     
     // add the profile image imageview to the button
-    [self.profileImageButton addSubview:self.profileImage];
+    [self.profileImageBox addSubview:self.profileImage];
 
     // put the local data on the card so it's there when it spins around
     [self placeCurrentUserData];
@@ -93,7 +93,7 @@
 {
     [self setNicknameTextField:nil];
     [self setEmailTextField:nil];
-    [self setProfileImageButton:nil];
+    [self setProfileImageBox:nil];
     [self setEmailValidationMsg:nil];
     [self setBillingRateTextField:nil];
     [super viewDidUnload];
@@ -174,7 +174,7 @@
                 if (![self.currentUser.urlPhoto isEqual:webSyncUser.urlPhoto]) {
                     // user photo is going to change
                     // show the spinner
-                    [self addSpinnerToTableCell:self.profileImageButton.superview];
+                    [self addSpinnerToTableCell:self.profileImageBox.superview];
                     
                     self.currentUser.urlPhoto = webSyncUser.urlPhoto;
                     self.newDataFromSync = YES;
@@ -360,6 +360,16 @@
     return YES;
 }
 
+# pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // check if this is the cell for the profile photo
+    if (indexPath.row == 1) {
+        [self chooseNewProfileImage:nil];
+    }
+}
+
 #pragma mark - IBActions
 
 -(IBAction)gearPressed:(id)sender
@@ -407,7 +417,7 @@
         __weak UserSettingsTableViewController *thisVC = self;
         [self.profileImage setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"texture-diagonal-noise-dark"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
             // image loaded ... stop the spinner
-            [thisVC stopTableCellSpinner:self.profileImageButton.superview];
+            [thisVC stopTableCellSpinner:self.profileImageBox.superview];
             
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error){
             // failed to load the image
@@ -422,7 +432,7 @@
     // get rid of the image picker
     [picker dismissViewControllerAnimated:YES completion:^{
         // show a spinner on the profile image button now that the modal is gone
-        [self addSpinnerToTableCell:self.profileImageButton.superview];
+        [self addSpinnerToTableCell:self.profileImageBox.superview];
     }];
        
     
