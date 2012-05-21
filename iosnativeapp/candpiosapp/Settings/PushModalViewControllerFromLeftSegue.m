@@ -17,18 +17,20 @@
     UIViewController *dst = (UIViewController *) self.destinationViewController;
     float shift = [UIScreen mainScreen].bounds.size.width;
     
-    src.view.transform = CGAffineTransformMakeTranslation(0, 0);
-    dst.view.transform = CGAffineTransformMakeTranslation(-shift, -20);
-    
-    [UIView animateWithDuration:PUSH_LEFT_AND_POP_ANIMATION_DURATION
-                     animations:^{
-                         [src.view addSubview:dst.view];
-                         src.view.transform = CGAffineTransformMakeTranslation(shift, 0);
-                     }
-                     completion:^(BOOL finished){
-                         [src presentModalViewController:dst animated:NO];
-                     }
-     ];
+    [src presentViewController:dst
+                      animated:NO
+                    completion:^{
+                        [dst.view addSubview:src.view];
+                        
+                        src.view.transform = CGAffineTransformMakeTranslation(shift, 0);
+                        dst.view.transform = CGAffineTransformMakeTranslation(-shift, 0);
+                        
+                        [UIView animateWithDuration:PUSH_LEFT_AND_POP_ANIMATION_DURATION
+                                         animations:^{
+                                             dst.view.transform = CGAffineTransformMakeTranslation(0, 0);
+                                         }
+                         ];
+                    }];
 }
 
 @end
