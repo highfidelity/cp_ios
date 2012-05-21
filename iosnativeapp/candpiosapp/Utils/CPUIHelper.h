@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
+#import "UIColor+EasyRGB.h"
 
 typedef enum {
     CPButtonTurquoise = 0,

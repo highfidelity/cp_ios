@@ -12,12 +12,11 @@
 	#import <UIKit/UIKit.h>
 	#import <Foundation/Foundation.h>
     #import "AFNetworking.h"
-    #import "CPUIHelper.h"
-    #import "UIColor+EasyRGB.h"
-    #import "CPConstants.h" 
     #import "SVProgressHUD.h"
-    #import "CPapi.h"
     #import "AppDelegate.h"
+    #import "CPUIHelper.h"
+    #import "CPConstants.h" 
+    #import "CPapi.h"
     #import "CPUtils.h"
     #import "User.h"
     #import "TestFlight.h"
