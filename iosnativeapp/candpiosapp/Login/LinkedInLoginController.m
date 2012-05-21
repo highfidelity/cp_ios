@@ -313,6 +313,8 @@
     }
     else
     {
+        // TODO: Move this functionality to api.php
+        
         NSMutableDictionary *loginParams = [NSMutableDictionary dictionary];
         
         [loginParams setObject:fullName forKey:@"signupNickname"];
@@ -323,10 +325,9 @@
         [loginParams setObject:oauthSecret forKey:@"oauth_secret"];
         [loginParams setObject:password forKey:@"signupPassword"];
         [loginParams setObject:password forKey:@"signupConfirm"];
-        [loginParams setObject:@"signup" forKey:@"action"];
-        [loginParams setObject:@"json" forKey:@"type"];
+        [loginParams setObject:@"mobileSignup" forKey:@"action"];
 
-        NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
+        NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"api.php" parameters:loginParams];
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
             NSInteger succeeded = [[JSON objectForKey:@"succeeded"] intValue];
             NSLog(@"success: %d", succeeded);
