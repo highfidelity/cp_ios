@@ -7,7 +7,7 @@
 //
 
 #import "ContactListViewController.h"
-#import "UserProfileCheckedInViewController.h"
+#import "UserProfileViewController.h"
 #import "NSString+HTML.h"
 
 #define kContactRequestsSection 0
@@ -339,7 +339,7 @@
     user.urlPhoto = [contact objectForKey:@"imageUrl"];
 
     // instantiate a UserProfileViewController
-    UserProfileCheckedInViewController *vc = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+    UserProfileViewController *vc = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
     vc.user = user;
     [self.navigationController pushViewController:vc animated:YES];
 }

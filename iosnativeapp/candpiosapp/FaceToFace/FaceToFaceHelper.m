@@ -46,7 +46,7 @@
     // instantiate a FacetoFaceInviteViewController to show the F2F invite
     FaceToFaceAcceptDeclineViewController *f2fVC = [f2fstory instantiateInitialViewController];
     
-    // setup a user that we will pass to the UserProfileCheckedInViewController
+    // setup a user that we will pass to the UserProfileViewController
     User *user = [[User alloc] init];
     user.userID = userId;
     

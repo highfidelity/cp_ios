@@ -9,7 +9,7 @@
 #import "VenueInfoViewController.h"
 #import "MapTabController.h"
 #import "CheckInDetailsViewController.h"
-#import "UserProfileCheckedInViewController.h"
+#import "UserProfileViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "MapDataSet.h"
 #import "VenueChat.h"
@@ -1158,7 +1158,7 @@
         [CPAppDelegate showLoginBanner];
 
     }   else {
-        UserProfileCheckedInViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+        UserProfileViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
 
         UIButton *thumbnailButton = (UIButton *)sender;
 

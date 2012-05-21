@@ -18,7 +18,7 @@
 #import "HPTextViewInternal.h"
 #import "TimestampCell.h"
 #import "MapTabController.h"
-#import "UserProfileCheckedInViewController.h"
+#import "UserProfileViewController.h"
 
 #define BLANKSHEET_VIEW_TAG 6582
 
@@ -689,7 +689,7 @@
     VenueChatEntry *entry = [self.venueChat.chatEntries objectAtIndex:button.tag];
     
     // grab a UserProfileVC and set its user object to the user for the entry
-    UserProfileCheckedInViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+    UserProfileViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
     
     // check if this was a love chat cell
     if (button.frame.origin.x > 50) {

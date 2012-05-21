@@ -77,8 +77,9 @@
 		5328939515548DBA007B0157 /* WalletCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939315548DBA007B0157 /* WalletCell.m */; };
 		5328939815548E63007B0157 /* SettingsMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939715548E63007B0157 /* SettingsMenuController.m */; };
 		5328939F15548EB6007B0157 /* UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939A15548EB6007B0157 /* UserListTableViewController.m */; };
-		532893A015548EB6007B0157 /* UserProfileCheckedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939C15548EB6007B0157 /* UserProfileCheckedInViewController.m */; };
+		532893A015548EB6007B0157 /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939C15548EB6007B0157 /* UserProfileViewController.m */; };
 		532893A115548EB6007B0157 /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939E15548EB6007B0157 /* UserTableViewCell.m */; };
+		532F2CBB156AB8950018DB96 /* UserProfileStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 532F2CBA156AB8950018DB96 /* UserProfileStoryboard_iPhone.storyboard */; };
 		5332FB41152141A4002E7035 /* picture-coming-soon-rectangle.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5332FB3F152141A4002E7035 /* picture-coming-soon-rectangle.jpg */; };
 		5332FB42152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5332FB40152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg */; };
 		5335CF6F1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */; };
@@ -224,7 +225,6 @@
 		53C01006150AA9650052069A /* map-refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C01002150AA9650052069A /* map-refresh@2x.png */; };
 		53C0100D150AC01F0052069A /* people-marker-turquoise-circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C0100B150AC01E0052069A /* people-marker-turquoise-circle.png */; };
 		53C0100E150AC01F0052069A /* people-marker-turquoise-circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C0100C150AC01E0052069A /* people-marker-turquoise-circle@2x.png */; };
-		53C4BE41152CC97400A87EF0 /* UserProfileStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53C4BE40152CC97400A87EF0 /* UserProfileStoryboard_iPhone.storyboard */; };
 		53C4BE48152CD0FB00A87EF0 /* VenueStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53C4BE47152CD0FB00A87EF0 /* VenueStoryboard_iPhone.storyboard */; };
 		53C4BE4A152CD1A200A87EF0 /* CheckinStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53C4BE49152CD1A200A87EF0 /* CheckinStoryboard_iPhone.storyboard */; };
 		53CBDCE01565A1CE00BD6059 /* send-love-heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 53CBDCDE1565A1CE00BD6059 /* send-love-heart.png */; };
@@ -571,10 +571,11 @@
 		5328939715548E63007B0157 /* SettingsMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsMenuController.m; path = Settings/SettingsMenuController.m; sourceTree = "<group>"; };
 		5328939915548EB6007B0157 /* UserListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserListTableViewController.h; path = User/UserListTableViewController.h; sourceTree = "<group>"; };
 		5328939A15548EB6007B0157 /* UserListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserListTableViewController.m; path = User/UserListTableViewController.m; sourceTree = "<group>"; };
-		5328939B15548EB6007B0157 /* UserProfileCheckedInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileCheckedInViewController.h; path = User/UserProfileCheckedInViewController.h; sourceTree = "<group>"; };
-		5328939C15548EB6007B0157 /* UserProfileCheckedInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfileCheckedInViewController.m; path = User/UserProfileCheckedInViewController.m; sourceTree = "<group>"; };
+		5328939B15548EB6007B0157 /* UserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileViewController.h; path = User/UserProfileViewController.h; sourceTree = "<group>"; };
+		5328939C15548EB6007B0157 /* UserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfileViewController.m; path = User/UserProfileViewController.m; sourceTree = "<group>"; };
 		5328939D15548EB6007B0157 /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTableViewCell.h; path = User/UserTableViewCell.h; sourceTree = "<group>"; };
 		5328939E15548EB6007B0157 /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTableViewCell.m; path = User/UserTableViewCell.m; sourceTree = "<group>"; };
+		532F2CBA156AB8950018DB96 /* UserProfileStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = UserProfileStoryboard_iPhone.storyboard; path = User/UserProfileStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		5332FB3F152141A4002E7035 /* picture-coming-soon-rectangle.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "picture-coming-soon-rectangle.jpg"; path = "Venue/images/picture-coming-soon-rectangle.jpg"; sourceTree = "<group>"; };
 		5332FB40152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "picture-coming-soon-rectangle@2x.jpg"; path = "Venue/images/picture-coming-soon-rectangle@2x.jpg"; sourceTree = "<group>"; };
 		5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SettingsStoryboard_iPhone.storyboard; path = Settings/SettingsStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
@@ -746,7 +747,6 @@
 		53C01002150AA9650052069A /* map-refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map-refresh@2x.png"; path = "Map/images/map-refresh@2x.png"; sourceTree = "<group>"; };
 		53C0100B150AC01E0052069A /* people-marker-turquoise-circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "people-marker-turquoise-circle.png"; path = "Map/images/people-marker-turquoise-circle.png"; sourceTree = "<group>"; };
 		53C0100C150AC01E0052069A /* people-marker-turquoise-circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "people-marker-turquoise-circle@2x.png"; path = "Map/images/people-marker-turquoise-circle@2x.png"; sourceTree = "<group>"; };
-		53C4BE40152CC97400A87EF0 /* UserProfileStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = UserProfileStoryboard_iPhone.storyboard; path = User/UserProfileStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		53C4BE47152CD0FB00A87EF0 /* VenueStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = VenueStoryboard_iPhone.storyboard; path = Venue/VenueStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		53C4BE49152CD1A200A87EF0 /* CheckinStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CheckinStoryboard_iPhone.storyboard; path = CheckIn/CheckinStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		53CBDCDE1565A1CE00BD6059 /* send-love-heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-love-heart.png"; path = "User/images/send-love-heart.png"; sourceTree = "<group>"; };
@@ -1363,10 +1363,11 @@
 		536DE9271501707400794650 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				532F2CBA156AB8950018DB96 /* UserProfileStoryboard_iPhone.storyboard */,
 				5328939915548EB6007B0157 /* UserListTableViewController.h */,
 				5328939A15548EB6007B0157 /* UserListTableViewController.m */,
-				5328939B15548EB6007B0157 /* UserProfileCheckedInViewController.h */,
-				5328939C15548EB6007B0157 /* UserProfileCheckedInViewController.m */,
+				5328939B15548EB6007B0157 /* UserProfileViewController.h */,
+				5328939C15548EB6007B0157 /* UserProfileViewController.m */,
 				5328939D15548EB6007B0157 /* UserTableViewCell.h */,
 				5328939E15548EB6007B0157 /* UserTableViewCell.m */,
 				5384B2571554831400A4E0C1 /* User.h */,
@@ -1375,7 +1376,6 @@
 				5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */,
 				536DE929150170BB00794650 /* images */,
 				694323A715213D9000EBF585 /* mustaches */,
-				53C4BE40152CC97400A87EF0 /* UserProfileStoryboard_iPhone.storyboard */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -2356,7 +2356,6 @@
 				53D9B1C4152A654800BC1304 /* tab-people@2x.png in Resources */,
 				53D9B1C5152A654800BC1304 /* tab-places.png in Resources */,
 				53D9B1C6152A654800BC1304 /* tab-places@2x.png in Resources */,
-				53C4BE41152CC97400A87EF0 /* UserProfileStoryboard_iPhone.storyboard in Resources */,
 				53C4BE48152CD0FB00A87EF0 /* VenueStoryboard_iPhone.storyboard in Resources */,
 				53C4BE4A152CD1A200A87EF0 /* CheckinStoryboard_iPhone.storyboard in Resources */,
 				53DDB7D9152CE752008703D1 /* SignupStoryboard_iPhone.storyboard in Resources */,
@@ -2511,6 +2510,7 @@
 				53CBDCE61565A1D700BD6059 /* action-button-container@2x.png in Resources */,
 				534EB7351566FD3A00BDBA57 /* cell-shadow-harsh.png in Resources */,
 				534EB7361566FD3A00BDBA57 /* cell-shadow-harsh@2x.png in Resources */,
+				532F2CBB156AB8950018DB96 /* UserProfileStoryboard_iPhone.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2669,7 +2669,7 @@
 				5328939515548DBA007B0157 /* WalletCell.m in Sources */,
 				5328939815548E63007B0157 /* SettingsMenuController.m in Sources */,
 				5328939F15548EB6007B0157 /* UserListTableViewController.m in Sources */,
-				532893A015548EB6007B0157 /* UserProfileCheckedInViewController.m in Sources */,
+				532893A015548EB6007B0157 /* UserProfileViewController.m in Sources */,
 				532893A115548EB6007B0157 /* UserTableViewCell.m in Sources */,
 				E4DFEB4E1554915100AE90F0 /* ProfileNotificationsViewController.m in Sources */,
 				536E1E881554988300052D40 /* ContactListViewController.m in Sources */,

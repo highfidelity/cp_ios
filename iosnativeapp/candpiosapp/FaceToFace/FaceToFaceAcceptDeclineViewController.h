@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UserProfileCheckedInViewController.h"
+#import "UserProfileViewController.h"
 
 @interface FaceToFaceAcceptDeclineViewController : UIViewController <UITextFieldDelegate>
 
@@ -20,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
-@property (strong, nonatomic) UserProfileCheckedInViewController *userProfile;
+@property (strong, nonatomic) UserProfileViewController *userProfile;
 
 - (IBAction)acceptF2F;
 - (IBAction)declineF2F;

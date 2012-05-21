@@ -1,12 +1,12 @@
 //
-//  UserProfileCheckedInViewController.m
+//  UserProfileViewController.m
 //  candpiosapp
 //
 //  Created by Stephen Birarda on 2/1/12.
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import "UserProfileCheckedInViewController.h"
+#import "UserProfileViewController.h"
 #import "AFHTTPClient.h"
 #import "AFNetworking.h"
 #import "UIImageView+WebCache.h"
@@ -20,7 +20,7 @@
 
 #define kRequestToAddToMyContactsActionSheetTitle @"Request to exchange contact info?"
 
-@interface UserProfileCheckedInViewController() <UIWebViewDelegate, UIActionSheetDelegate, UITextFieldDelegate, GRMustacheTemplateDelegate>
+@interface UserProfileViewController() <UIWebViewDelegate, UIActionSheetDelegate, UITextFieldDelegate, GRMustacheTemplateDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UILabel *checkedIn;
 @property (nonatomic, weak) IBOutlet MKMapView *mapView;
@@ -70,7 +70,7 @@
 
 @end
 
-@implementation UserProfileCheckedInViewController
+@implementation UserProfileViewController
 
 @synthesize loadAction = _loadAction;
 @synthesize scrollView = _scrollView;

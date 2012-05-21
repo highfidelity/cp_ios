@@ -9,7 +9,7 @@
 #import "UserListTableViewController.h"
 #import "UIImageView+WebCache.h"
 #import "UserTableViewCell.h"
-#import "UserProfileCheckedInViewController.h"
+#import "UserProfileViewController.h"
 #import "NSString+HTML.h"
 #import "VenueCell.h"
 #import "CheckInDetailsViewController.h"
@@ -327,14 +327,14 @@
 
 - (void)showUserProfileForUser:(User *)selectedUser loadAction:(UserProfileLoadAction)loadAction
 {
-    UserProfileCheckedInViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
-    // set the user object on the UserProfileCheckedInVC to the user we just created
+    UserProfileViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+    // set the user object on the UserProfileVC to the user we just created
     userVC.user = selectedUser;
     
     // set the passed loadAction on the user VC
     userVC.loadAction = loadAction;
 
-    // push the UserProfileCheckedInViewController onto the navigation controller stack
+    // push the UserProfileViewController onto the navigation controller stack
     [self.navigationController pushViewController:userVC animated:YES];
 }
 

@@ -1,5 +1,5 @@
 //
-//  UserProfileCheckedInViewController.h
+//  UserProfileViewController.h
 //  candpiosapp
 //
 //  Created by Stephen Birarda on 2/1/12.
@@ -14,7 +14,7 @@ typedef enum {
 	UserProfileLoadActionLove
 } UserProfileLoadAction;
 
-@interface UserProfileCheckedInViewController : UIViewController
+@interface UserProfileViewController : UIViewController
 
 @property (nonatomic, strong) User *user;
 @property (nonatomic, assign) UserProfileLoadAction loadAction;
