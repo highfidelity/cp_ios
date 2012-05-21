@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AFHTTPClient.h"
 
 @interface BaseLoginController : UIViewController
 

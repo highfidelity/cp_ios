@@ -13,7 +13,6 @@
 #import "LoveChatEntry.h"
 #import "CheckinChatCell.h"
 #import "CheckinChatEntry.h"
-#import "UIImageView+AFNetworking.h"
 #import "HPGrowingTextView.h"
 #import "HPTextViewInternal.h"
 #import "TimestampCell.h"

@@ -22,5 +22,6 @@ typedef enum {
 
 - (IBAction)f2fInvite;
 - (void)placeUserDataOnProfile;
+- (void)refreshForNewLove;
 
 @end

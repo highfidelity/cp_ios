@@ -7,7 +7,6 @@
 //
 
 #import "User.h"
-#import "AFJSONRequestOperation.h"
 #import "MapDataSet.h"
 #import "NSString+HTML.h"
 

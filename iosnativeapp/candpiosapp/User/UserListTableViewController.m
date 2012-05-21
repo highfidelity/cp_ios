@@ -7,7 +7,7 @@
 //
 
 #import "UserListTableViewController.h"
-#import "UIImageView+WebCache.h"
+#import "UserLoveViewController.h"
 #import "UserTableViewCell.h"
 #import "UserProfileViewController.h"
 #import "NSString+HTML.h"
@@ -300,10 +300,17 @@
 
 -(void)quickActionForDirection:(CPSwipeableTableViewCellDirection)direction cell:(CPSwipeableTableViewCell *)sender
 {
-    // only go over to the user profile if this user is logged in
+    // only show the love modal if this user is logged in
     if ([CPAppDelegate currentUser]) {
         User *selectedUser = [self selectedUserForIndexPath:[self.tableView indexPathForCell:sender]];
-        [self showUserProfileForUser:selectedUser loadAction:UserProfileLoadActionLove];
+        
+        // only show the love modal if this isn't the user themselves
+        if (selectedUser.userID != [CPAppDelegate currentUser].userID) {
+            UserLoveViewController *loveModal = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"SendLoveModal"];
+            loveModal.user = selectedUser;
+            
+            [self presentModalViewController:loveModal animated:YES];
+        }
     }
     
 }

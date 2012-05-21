@@ -10,7 +10,6 @@
 #import "MapTabController.h"
 #import "CheckInDetailsViewController.h"
 #import "UserProfileViewController.h"
-#import "UIImageView+AFNetworking.h"
 #import "MapDataSet.h"
 #import "VenueChat.h"
 #import "VenueChatEntry.h"

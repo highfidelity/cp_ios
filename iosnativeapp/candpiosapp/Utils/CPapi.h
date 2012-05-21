@@ -11,7 +11,6 @@
 
 
 #import <Foundation/Foundation.h>
-#import "AFNetworking.h"
 #import "CPVenue.h"
 #import "ChatHistory.h"
 #import <CoreLocation/CoreLocation.h>

@@ -265,31 +265,6 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
-                                    <view hidden="YES" opaque="NO" contentMode="scaleToFill" id="nko-kG-ujj">
-                                        <rect key="frame" x="10" y="120" width="300" height="84"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="16" id="atw-QG-ThQ">
-                                                <rect key="frame" x="7" y="8" width="286" height="46"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="send"/>
-                                                <connections>
-                                                    <segue destination="w1h-4H-NzM" kind="push" identifier="ShowLinkedInProfileWebView" id="a2F-S8-RJt"/>
-                                                </connections>
-                                            </textField>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="90M-rq-Ijk">
-                                                <rect key="frame" x="6" y="52" width="288" height="32"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="12"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                    </view>
                                 </subviews>
                             </scrollView>
                             <view clipsSubviews="YES" userInteractionEnabled="NO" tag="1005" contentMode="scaleToFill" id="sFK-iJ-byY">
@@ -360,7 +335,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="sendloveButtonPressed:" destination="6Bs-xG-Mnl" eventType="touchUpInside" id="Pjm-Yr-o2Q"/>
+                                    <segue destination="GAN-eH-aYE" kind="modal" identifier="SendLoveToUser" id="1pi-dc-n2h"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1009" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4JE-vB-evy">
@@ -416,14 +391,11 @@
                         <outlet property="minutesAvailable" destination="Gye-uK-iuD" id="7Bk-Lm-v7U"/>
                         <outlet property="payButton" destination="LRq-df-2Bf" id="zTG-eM-Qaa"/>
                         <outlet property="plusButton" destination="4JE-vB-evy" id="ue3-O9-3F4"/>
-                        <outlet property="propNoteLabel" destination="90M-rq-Ijk" id="tBn-oC-uO8"/>
                         <outlet property="resumeEarned" destination="sjx-FC-Si0" id="yLF-zl-fSC"/>
                         <outlet property="resumeLabel" destination="Do4-zK-XAE" id="uMQ-Io-0rq"/>
                         <outlet property="resumeView" destination="qvF-Ed-Z1a" id="O6Q-AZ-Qgr"/>
                         <outlet property="resumeWebView" destination="i0u-vy-O1G" id="isH-u2-FQA"/>
                         <outlet property="reviewButton" destination="mO5-jG-n0T" id="Jih-dI-9Kx"/>
-                        <outlet property="reviewDescription" destination="atw-QG-ThQ" id="WRm-DR-FwM"/>
-                        <outlet property="reviewView" destination="nko-kG-ujj" id="hCX-C5-TU7"/>
                         <outlet property="scrollView" destination="FvT-cB-xLT" id="pcL-ZE-SlX"/>
                         <outlet property="userCard" destination="4sO-iN-dSk" id="fec-rS-lGF"/>
                         <outlet property="venueAddress" destination="kT2-bI-cY7" id="3wb-Dv-biX"/>
@@ -787,6 +759,68 @@
             </objects>
             <point key="canvasLocation" x="1694" y="112"/>
         </scene>
+        <!--User Love View Controller-->
+        <scene sceneID="vsn-4t-fy8">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tk5-xB-DAs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="SendLoveModal" id="GAN-eH-aYE" customClass="UserLoveViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wKU-2c-fYf">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" id="Nhw-F2-Jfo">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem id="xt0-Cc-eb6">
+                                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="qRT-dt-GrZ">
+                                            <connections>
+                                                <action selector="cancelButtonPressed:" destination="GAN-eH-aYE" id="cAL-ps-vOe"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <view contentMode="scaleToFill" id="2hh-kk-6yh">
+                                <rect key="frame" x="0.0" y="44" width="320" height="163"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="CLY-yM-MjS">
+                                        <rect key="frame" x="15" y="15" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="43G-dv-hkk" customClass="CPPlaceholderTextView">
+                                        <rect key="frame" x="66" y="6" width="234" height="145"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert" returnKeyType="send"/>
+                                    </textView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="140" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="LbX-Za-MQP">
+                                        <rect key="frame" x="268" y="121" width="42" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.89803921568627454" green="0.8901960784313725" blue="0.85098039215686272" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="charCounterLabel" destination="LbX-Za-MQP" id="AfR-de-hlC"/>
+                        <outlet property="descriptionTextView" destination="43G-dv-hkk" id="Hnl-Qq-0FP"/>
+                        <outlet property="navigationBar" destination="Nhw-F2-Jfo" id="vwG-XF-pGS"/>
+                        <outlet property="profilePicture" destination="CLY-yM-MjS" id="Pfs-ZI-xX8"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1694" y="707"/>
+        </scene>
         <!--Add Funds View Controller - Add Funds-->
         <scene sceneID="dyl-Ko-PWX">
             <objects>
@@ -817,7 +851,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="suE-EA-eOy" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="w1h-4H-NzM" customClass="UserProfileLinkedInViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9XN-r7-CnS">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="secret-society@2x.png" id="nGn-Ia-sd9">
@@ -829,7 +863,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <webView hidden="YES" contentMode="scaleToFill" scalesPageToFit="YES" id="IWy-Y4-2y0">
-                                <rect key="frame" x="0.0" y="-6" width="320" height="422"/>
+                                <rect key="frame" x="0.0" y="-6" width="320" height="466"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
@@ -878,6 +912,9 @@
                 <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
             </relationships>
         </class>
+        <class className="CPPlaceholderTextView" superclassName="UITextView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPPlaceholderTextView.h"/>
+        </class>
         <class className="ChatMessageCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatMessageCell.h"/>
         </class>
@@ -907,6 +944,15 @@
                 <relationship kind="outlet" name="paymentAmount" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="paymentNote" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="userBalance" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="UserLoveViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserLoveViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="charCounterLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionTextView" candidateClass="CPPlaceholderTextView"/>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
             </relationships>
         </class>
         <class className="UserProfileLinkedInViewController" superclassName="UIViewController">
@@ -948,8 +994,6 @@
                 <relationship kind="outlet" name="resumeView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="resumeWebView" candidateClass="UIWebView"/>
                 <relationship kind="outlet" name="reviewButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="reviewDescription" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="reviewView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="userCard" candidateClass="UIView"/>
                 <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>

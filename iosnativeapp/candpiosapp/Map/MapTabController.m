@@ -6,7 +6,6 @@
 //  Copyright (c) 2011 Coffee and Power Inc. All rights reserved.
 //
 
-#import "UIImageView+WebCache.h"
 #import "MapDataSet.h"
 #import "MKAnnotationView+WebCache.h"
 #import "VenueInfoViewController.h"

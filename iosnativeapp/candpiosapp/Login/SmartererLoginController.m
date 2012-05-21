@@ -1,5 +1,4 @@
 #import "SmartererLoginController.h"
-#import "AFNetworking.h"
 #import "FlurryAnalytics.h"
 #import "CPapi.h"
 

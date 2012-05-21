@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import "AFNetworking.h"
 
 @interface FoursquareAPIRequest: NSObject
 

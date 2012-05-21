@@ -7,9 +7,6 @@
 //
 
 #import "UserProfileViewController.h"
-#import "AFHTTPClient.h"
-#import "AFNetworking.h"
-#import "UIImageView+WebCache.h"
 #import "FoursquareAPIRequest.h"
 #import "AFJSONRequestOperation.h"
 #import "GRMustache.h"
@@ -20,7 +17,7 @@
 
 #define kRequestToAddToMyContactsActionSheetTitle @"Request to exchange contact info?"
 
-@interface UserProfileViewController() <UIWebViewDelegate, UIActionSheetDelegate, UITextFieldDelegate, GRMustacheTemplateDelegate>
+@interface UserProfileViewController() <UIWebViewDelegate, UIActionSheetDelegate, GRMustacheTemplateDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UILabel *checkedIn;
 @property (nonatomic, weak) IBOutlet MKMapView *mapView;
@@ -53,8 +50,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *payButton;
 @property (weak, nonatomic) IBOutlet UIButton *reviewButton;
 @property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
-@property (nonatomic, weak) IBOutlet UIView *reviewView;
-@property (weak, nonatomic) IBOutlet UITextField *reviewDescription;
 @property (nonatomic, assign) int othersAtPlace;
 @property (nonatomic, strong) NSNumber *templateCounter;
 @property (nonatomic, assign) NSInteger selectedFavoriteVenueIndex;
@@ -78,8 +73,6 @@
 @synthesize mapView = _mapView;
 @synthesize user = _user;
 @synthesize userCard = _userCard;
-@synthesize reviewView = _reviewView;
-@synthesize reviewDescription = _reviewDescription;
 @synthesize cardImage = _cardImage;
 @synthesize cardStatus = _cardStatus;
 @synthesize cardNickname = _cardNickname;
@@ -169,7 +162,6 @@ UITapGestureRecognizer* _tapRecon = nil;
     // set the paper background color where applicable
     UIColor *paper = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paper-texture.jpg"]];
     self.userCard.backgroundColor = paper;
-    self.reviewView.backgroundColor = paper;
     self.resumeView.backgroundColor = paper;
     self.resumeWebView.opaque = NO;
     self.resumeWebView.backgroundColor = paper;
@@ -178,7 +170,6 @@ UITapGestureRecognizer* _tapRecon = nil;
     
     // set the labels on the user business card
     self.cardNickname.text = self.user.nickname;
-    self.propNoteLabel.text = [NSString stringWithFormat:self.propNoteLabel.text, self.user.nickname];
     
     [self setUserStatusWithQuotes:self.user.status];
     
@@ -422,7 +413,6 @@ UITapGestureRecognizer* _tapRecon = nil;
     [CPUIHelper profileImageView:self.cardImage
              withProfileImageUrl:self.user.urlPhoto];
     self.cardNickname.text = self.user.nickname;
-    self.propNoteLabel.text = [NSString stringWithFormat:self.propNoteLabel.text, self.user.nickname];
 
     self.title = self.user.nickname;  
 
@@ -660,17 +650,13 @@ UITapGestureRecognizer* _tapRecon = nil;
     } else if ([[segue identifier] isEqualToString:@"ShowLinkedInProfileWebView"]) {
         // set the linkedInPublicProfileUrl in the destination VC
         [[segue destinationViewController] setLinkedInProfileUrlAddress:self.user.linkedInPublicProfileUrl];
+    } else if ([[segue identifier] isEqualToString:@"SendLoveToUser"]) {
+        // hide the go menu
+        [self minusButtonPressed:nil];  
+        
+        [[segue destinationViewController] setUser:self.user];
+        [[segue destinationViewController] setDelegate:self];
     }
-}
-
-- (IBAction)sendloveButtonPressed:(id)sender {
-    
-    [self minusButtonPressed:nil];
-    [_scrollView setContentOffset:CGPointMake(0,0) animated:NO];
-    _reviewView.hidden = NO;
-    [_reviewDescription becomeFirstResponder];
-    [_reviewDescription setDelegate:self];
-    [[self reviewDescription] setPlaceholder:[NSString stringWithFormat:@"Recognize %@ here for $1", self.user.nickname]];
 }
 
 -(IBAction)venueViewButtonPressed:(id)sender {
@@ -692,45 +678,6 @@ UITapGestureRecognizer* _tapRecon = nil;
     [self minusButtonPressed:nil];
 }
 
-
-- (void)sendReview {
-    // show a progress HUD
-    [SVProgressHUD showWithStatus:@"Sending..."];
-    // call method in CPapi to send love
-    [CPapi sendLoveToUserWithID:self.user.userID loveMessage:self.reviewDescription.text completion:^(NSDictionary *json, NSError *error){
-        // check for a JSON parse error
-        if (!error) {
-            BOOL respError = [[json objectForKey:@"error"] boolValue];
-            
-            // check for a error according to api response
-            if (respError) {
-                
-                // dismiss the HUD with the error that came back
-                NSString *error = [NSString stringWithFormat:@"%@", [json objectForKey:@"message"]];
-                
-                [SVProgressHUD dismissWithError:error
-                                     afterDelay:kDefaultDimissDelay];
-            }
-            else {
-                // dismiss the HUD with the success message that came back
-                NSString *message = [NSString stringWithFormat:@"You Recognized %@", self.user.nickname];
-                [self performSelector:@selector(viewDidLoad)
-                           withObject:nil
-                           afterDelay:0];
-                [SVProgressHUD dismissWithSuccess:message
-                                       afterDelay:kDefaultDimissDelay];
-                
-            }
-
-        } else {
-            // debug the JSON parse error
-#if DEBUG
-            NSLog(@"AFJSONRequestOperation error: %@", [error localizedDescription]);
-#endif
-        }
-    }];
-}
-
 - (IBAction)f2fInvite {
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                   initWithTitle:kRequestToAddToMyContactsActionSheetTitle
@@ -749,18 +696,6 @@ UITapGestureRecognizer* _tapRecon = nil;
             [CPapi sendContactRequestToUserId:self.user.userID];
         }
     }
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField == _reviewDescription) {
-        [textField resignFirstResponder];
-        _reviewView.hidden = YES;
-        
-        if (_reviewDescription.text && [_reviewDescription.text length]) {
-            [self sendReview];
-        }
-    }
-    return YES;
 }
 
 #pragma mark -

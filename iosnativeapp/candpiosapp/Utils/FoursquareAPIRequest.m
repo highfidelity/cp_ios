@@ -7,7 +7,6 @@
 //
 
 #import "FoursquareAPIRequest.h"
-#import "AFJSONRequestOperation.h"
 
 #define OAUTH_TOKEN @"BCG410DXRKXSBRWUNM1PPQFSLEFQ5ND4HOUTTTWYUB1PXYC4"
 

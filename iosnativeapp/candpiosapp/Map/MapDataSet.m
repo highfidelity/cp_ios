@@ -7,8 +7,6 @@
 //
 
 #import "MapDataSet.h"
-#import "AFHTTPClient.h"
-#import "AFJSONRequestOperation.h"
 
 @interface MapDataSet()
 
