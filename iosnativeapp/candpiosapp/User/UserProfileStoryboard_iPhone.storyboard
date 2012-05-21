@@ -276,6 +276,9 @@
                                                 <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="send"/>
+                                                <connections>
+                                                    <segue destination="w1h-4H-NzM" kind="push" identifier="ShowLinkedInProfileWebView" id="a2F-S8-RJt"/>
+                                                </connections>
                                             </textField>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="90M-rq-Ijk">
                                                 <rect key="frame" x="6" y="52" width="288" height="32"/>
@@ -808,6 +811,41 @@
             </objects>
             <point key="canvasLocation" x="2144" y="117"/>
         </scene>
+        <!--User Profile Linked In View Controller - LinkedIn-->
+        <scene sceneID="mPJ-tO-g2m">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="suE-EA-eOy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="w1h-4H-NzM" customClass="UserProfileLinkedInViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9XN-r7-CnS">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="secret-society@2x.png" id="nGn-Ia-sd9">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="splash-screen-logo.png" id="qVf-Gl-EYC">
+                                <rect key="frame" x="104" y="33" width="112" height="193"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <webView hidden="YES" contentMode="scaleToFill" scalesPageToFit="YES" id="IWy-Y4-2y0">
+                                <rect key="frame" x="0.0" y="-6" width="320" height="422"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.99215686270000003" green="0.99215686270000003" blue="0.99215686270000003" alpha="1" colorSpace="deviceRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="LinkedIn" id="czf-II-71C">
+                        <barButtonItem key="backBarButtonItem" title="C&amp;P" id="bP0-du-hlB"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="socialWebView" destination="IWy-Y4-2y0" id="50K-D5-vKg"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1686" y="-1150"/>
+        </scene>
     </scenes>
     <resources>
         <image name="available-for-icon.png" width="16" height="16"/>
@@ -826,96 +864,11 @@
         <image name="go-menu-button-minus.png" width="75" height="75"/>
         <image name="map-marker.png" width="16" height="16"/>
         <image name="others-at-venue.png" width="16" height="16"/>
+        <image name="secret-society@2x.png" width="640" height="960"/>
         <image name="send-love.png" width="75" height="75"/>
+        <image name="splash-screen-logo.png" width="112" height="193"/>
         <image name="vector-lock.png" width="13" height="13"/>
     </resources>
-    <classes>
-        <class className="AddFundsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFundsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeWindow:"/>
-                <relationship kind="action" name="goBack:"/>
-                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="ChatMessageCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatMessageCell.h"/>
-        </class>
-        <class className="OneOnOneChatViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/OneOnOneChatViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="sendChat"/>
-                <relationship kind="outlet" name="backgroundView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="chatButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="chatContents" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="chatEntryField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="chatInputs" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="PayUserViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PayUserViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeView:" candidateClass="UIButton"/>
-                <relationship kind="action" name="descriptionChanged:"/>
-                <relationship kind="action" name="makePayment:"/>
-                <relationship kind="outlet" name="cancelButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="charsLeft" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="descriptionView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="payButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="payTo" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="payeeImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="paymentAmount" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="paymentNote" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="userBalance" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="UserProfileCheckedInViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserProfileCheckedInViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="chatButtonPressed:"/>
-                <relationship kind="action" name="f2fInvite"/>
-                <relationship kind="action" name="minusButtonPressed:"/>
-                <relationship kind="action" name="plusButtonPressed:"/>
-                <relationship kind="action" name="sendloveButtonPressed:"/>
-                <relationship kind="action" name="venueViewButtonPressed:"/>
-                <relationship kind="outlet" name="availabilityView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="cardImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="cardJobPosition" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="cardNickname" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="cardStatus" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="chatButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="checkedIn" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="distanceLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="f2fButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="goMenuBackground" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="hoursAvailable" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="loveReceived" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="minusButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="minutesAvailable" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="payButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="plusButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="propNoteLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="resumeEarned" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="resumeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="resumeRate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="resumeView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="resumeWebView" candidateClass="UIWebView"/>
-                <relationship kind="outlet" name="reviewButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="reviewDescription" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="reviewView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="userCard" candidateClass="UIView"/>
-                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueIcon" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueOthers" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueOthersIcon" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="venueView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="venueViewButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

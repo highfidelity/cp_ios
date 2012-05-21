@@ -528,10 +528,7 @@ UITapGestureRecognizer* _tapRecon = nil;
         return NO;
     }
     if ([url.scheme isEqualToString:@"linkedin-view"]) {
-        UserProfileLinkedInViewController *profileVC = [[UIStoryboard storyboardWithName:@"UserProfileWebStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
-        [UserProfileLinkedInViewController class];
-        profileVC.linkedInProfileUrlAddress = self.user.linkedInPublicProfileUrl;
-        [self.navigationController pushViewController:profileVC animated:YES];
+        [self performSegueWithIdentifier:@"ShowLinkedInProfileWebView" sender:self];
         return NO;
     }
 
@@ -639,6 +636,9 @@ UITapGestureRecognizer* _tapRecon = nil;
     {
         [[segue destinationViewController] setUser:self.user];
         [self minusButtonPressed:nil];        
+    } else if ([[segue identifier] isEqualToString:@"ShowLinkedInProfileWebView"]) {
+        // set the linkedInPublicProfileUrl in the destination VC
+        [[segue destinationViewController] setLinkedInProfileUrlAddress:self.user.linkedInPublicProfileUrl];
     }
 }
 
