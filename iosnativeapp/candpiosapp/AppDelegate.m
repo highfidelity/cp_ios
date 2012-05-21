@@ -566,7 +566,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
   sourceApplication:(NSString *)sourceApplication
 		 annotation:(id)annotation 
 {
-    BOOL succeeded;
+    BOOL succeeded = NO;
 
     NSString *urlString = [NSString stringWithFormat:@"%@", url];
     
@@ -649,18 +649,16 @@ didReceiveLocalNotification:(UILocalNotification *)notif
 {
     NSDictionary *userDict = notif.userInfo;
     
-    BOOL showAlert = NO;
     BOOL showActionSheet = NO;
     NSString *alertText;
     NSString *cancelText;
     NSString *neverText = @"Never for this location";
     NSString *otherText;
-    NSInteger tagNumber;
+    NSInteger tagNumber = 0;
 
     if (userDict && [[userDict objectForKey:@"type"] isEqualToString:@"didExitRegion"]) {
         if (app.applicationState == UIApplicationStateActive) {
             // Show didExitRegion alert
-            showAlert = YES;
             alertText = notif.alertBody;
             otherText = @"Check Out";
             cancelText = @"Cancel";
@@ -681,7 +679,6 @@ didReceiveLocalNotification:(UILocalNotification *)notif
     }
     else if ([notif.alertAction isEqualToString:@"Check Out"]) {
         // For regular timeout checkouts
-        showAlert = YES;
         alertText = kCheckOutLocalNotificationAlertViewTitle;
         cancelText = @"OK";
         otherText = @"View";

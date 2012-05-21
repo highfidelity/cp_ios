@@ -331,7 +331,7 @@ static char BOOLRevealing;
 #define kMinimumPan      60.0
 		
 		CGFloat velocityX = velocity.x;
-        BOOL push;
+        BOOL push = NO;
         
         // the minimum pan is defined above but is different if it's a quick action
         CGFloat minPan = [self styleForDirectionIsQuickAction:self.lastDirection] ? QUICK_ACTION_MARGIN : kMinimumPan;

@@ -546,7 +546,7 @@
     }
     
     // setup a frame to keep spacing between elements
-    CGRect newFrame;
+    CGRect newFrame = CGRectZero;
     newFrame.origin.y = 9;
     
     // look for currently checked in users to put on screen
