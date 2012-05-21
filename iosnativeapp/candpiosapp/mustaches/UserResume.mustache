@@ -226,7 +226,9 @@
             <div id="joined-on" class="line-top line-bottom">
                 <span class="join-date">Joined on <span class="highlite">{{join_date}}</span></span>
                 {{#sponsorNickname}}
-                <span class="sponsor">Sponsored by <span class="highlite">{{sponsorNickname}}</span></span>
+                <span ontouchstart="" onclick="document.location='sponsor-resume://';" class="sponsor">
+                    Sponsored by <span class="highlite">{{sponsorNickname}}</span>
+                </span>
                 {{/sponsorNickname}}                
             </div>
 

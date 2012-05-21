@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSString *status;
 @property (nonatomic, assign) CLLocationCoordinate2D location;
 @property (nonatomic, strong) NSString *bio;
+@property (nonatomic, assign) int sponsorId;
 @property (nonatomic, strong) NSString *sponsorNickname;
 @property (nonatomic, assign) BOOL facebookVerified;
 @property (nonatomic, assign) BOOL linkedInVerified;

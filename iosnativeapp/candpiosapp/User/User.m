@@ -20,6 +20,7 @@
 @synthesize status = _status;
 @synthesize location = _location;
 @synthesize bio = _bio;
+@synthesize sponsorId = _sponsorId;
 @synthesize sponsorNickname = _sponsorNickname;
 @synthesize facebookVerified = _facebookVerified;
 @synthesize linkedInVerified = _linkedInVerified;
@@ -270,6 +271,10 @@
             
             if ([[userDict objectForKey:@"sponsorNickname"] isKindOfClass:[NSString class]]) {
                 self.sponsorNickname = [userDict objectForKey:@"sponsorNickname"];
+            }
+            
+            if ([[userDict objectForKey:@"sponsorId"] isKindOfClass:[NSString class]]) {
+                self.sponsorId = [[userDict objectForKey:@"sponsorId"] intValue];
             }
             
             if ([[userDict objectForKey:@"job_title"] isKindOfClass:[NSString class]]) {
