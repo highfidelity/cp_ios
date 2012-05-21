@@ -211,7 +211,6 @@
     [json setObject:[NSNumber numberWithDouble:self.coordinate.longitude] forKey:@"lng"];
     if (self.activeUsers) { [json setObject:self.activeUsers forKey:@"users"]; }
 
-    
     return json;
 }
 

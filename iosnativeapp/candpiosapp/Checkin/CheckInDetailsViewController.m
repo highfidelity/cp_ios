@@ -297,9 +297,8 @@
                     localNotif.userInfo = self.place.initializationDictionaryJSON;
                     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
                     
-                    // Include the venue in the userCheckedIn notification
-                    CPVenue *venue = [[CPVenue alloc] initFromDictionary:localNotif.userInfo];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:venue];
+                    // post a notification to say the user has checked in
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
                 }
                 
                 if (!DEFAULTS(bool, kUDFirstCheckIn)) {
