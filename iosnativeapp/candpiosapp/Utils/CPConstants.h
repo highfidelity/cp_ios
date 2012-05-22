@@ -30,6 +30,9 @@ extern  NSString* const kSmartererKey;
 extern  NSString* const kSmartererSecret;
 extern  NSString* const kSmartererCallback;
 extern  NSString* const kTestFlightKey;
+extern  NSString* const kUserVoiceSite;
+extern  NSString* const kUserVoiceKey;
+extern  NSString* const kUserVoiceSecret;
 
 
 // NOTE: We are slowly moving the way we store data to the 

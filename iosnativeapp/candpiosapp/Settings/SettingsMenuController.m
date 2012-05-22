@@ -74,6 +74,7 @@
                              @"Profile",
                              //@"Linked Accounts", DISABLED (alexi)
                              @"Notifications",
+                             @"Support",
                              @"Logout",
                              nil];
     
@@ -84,6 +85,7 @@
                                       @"ShowUserSettingsFromMenu",
                                       // @"ShowFederationFromMenu", DISALBED (alexi)
                                        @"ShowNotificationsFromMenu",
+                                      @"ShowSupportFromMenu",
                                       @"ShowLogoutFromMenu",
                                       nil];
     
