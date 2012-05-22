@@ -1,5 +1,5 @@
 /*
- Copyright 2009-2011 Urban Airship Inc. All rights reserved.
+ Copyright 2009-2012 Urban Airship Inc. All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
@@ -46,7 +46,10 @@ UA_VERSION_INTERFACE(UAPushVersion)
 @protocol UAPushUIProtocol
 + (void)openApnsSettings:(UIViewController *)viewController
                    animated:(BOOL)animated;
++ (void)openTokenSettings:(UIViewController *)viewController //TODO: remove from lib - it's a demo feature
+                   animated:(BOOL)animated;
 + (void)closeApnsSettingsAnimated:(BOOL)animated;
++ (void)closeTokenSettingsAnimated:(BOOL)animated;//TODO: remove from lib - it's a demo feature
 @end
 
 /**
@@ -136,7 +139,10 @@ SINGLETON_INTERFACE(UAPush);
 + (void)useCustomUI:(Class)customUIClass;
 + (void)openApnsSettings:(UIViewController *)viewController
                 animated:(BOOL)animated;
++ (void)openTokenSettings:(UIViewController *)viewController
+                 animated:(BOOL)animated;
 + (void)closeApnsSettingsAnimated:(BOOL)animated;
++ (void)closeTokenSettingsAnimated:(BOOL)animated;
 
 + (void)land;
 
