@@ -544,10 +544,12 @@
                 if (entry.user.userID == [CPAppDelegate currentUser].userID || 
                     ((LoveChatEntry *)entry).recipient.userID == [CPAppDelegate currentUser].userID ||
                     [((LoveChatEntry *)entry).plusOnes objectForKey:[NSString stringWithFormat:@"%d", [CPAppDelegate currentUser].userID]]) {
-                    [((LoveChatCell *)cell) disablePlusOneButton];
+                    [((LoveChatCell *)cell) togglePlusOneButton:NO];
                 } else {
+                    [((LoveChatCell *)cell) togglePlusOneButton:YES];
                     // be the target for the +1 button to fire off an api request
                     [((LoveChatCell *)cell).plusOneButton addTarget:self action:@selector(sendPlusOneForLove:) forControlEvents:UIControlEventTouchUpInside];
+    
                 }
                 
                 // thumbnail button for recipient

@@ -136,12 +136,12 @@
     // Configure the view for the selected state
 }
 
-- (void)disablePlusOneButton
+- (void)togglePlusOneButton:(BOOL)enabled
 {
     // don't let the user click the +1 button
-    self.plusOneButton.userInteractionEnabled = NO;
+    self.plusOneButton.userInteractionEnabled = !enabled;
     // fade the +1 to 50%
-    self.plusOneButton.alpha = 0.5;
+    self.plusOneButton.alpha = enabled ? 1.0 : 0.5;
 }
 
 @end

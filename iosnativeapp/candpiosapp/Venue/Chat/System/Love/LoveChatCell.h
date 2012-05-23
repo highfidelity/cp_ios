@@ -20,6 +20,6 @@
 
 + (CGRect)chatEntryFrame;
 + (UIFont *)chatEntryFont;
-- (void)disablePlusOneButton;
+- (void)togglePlusOneButton:(BOOL)enabled;
 
 @end
