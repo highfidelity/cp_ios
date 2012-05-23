@@ -293,7 +293,7 @@
         return;
     }
     
-    [self showUserProfileForUser:[self selectedUserForIndexPath:indexPath] loadAction:UserProfileLoadActionNone];
+    [self showUserProfileForUser:[self selectedUserForIndexPath:indexPath]];
 }
 
 # pragma mark - CPSwipeableTableViewCellDelegate
@@ -332,14 +332,11 @@
     return selectedUser;
 }
 
-- (void)showUserProfileForUser:(User *)selectedUser loadAction:(UserProfileLoadAction)loadAction
+- (void)showUserProfileForUser:(User *)selectedUser
 {
     UserProfileViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
     // set the user object on the UserProfileVC to the user we just created
     userVC.user = selectedUser;
-    
-    // set the passed loadAction on the user VC
-    userVC.loadAction = loadAction;
 
     // push the UserProfileViewController onto the navigation controller stack
     [self.navigationController pushViewController:userVC animated:YES];
