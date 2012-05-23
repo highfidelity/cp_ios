@@ -279,6 +279,7 @@
 		53FE254E150EA50B00A0D93A /* PaymentHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE254D150EA50A00A0D93A /* PaymentHelper.m */; };
 		53FE254F150EA60D00A0D93A /* PaymentHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE254D150EA50A00A0D93A /* PaymentHelper.m */; };
 		53FE2552150EAC6B00A0D93A /* UserSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE2551150EAC6B00A0D93A /* UserSettingsTableViewController.m */; };
+		53FF95ED156D5D0E0046ADDE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FF95EC156D5D0E0046ADDE /* StoreKit.framework */; };
 		568753F81566CE4F00ED99FE /* action-button-container-glow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 568753F61566CE4F00ED99FE /* action-button-container-glow@2x.png */; };
 		568753F91566CE4F00ED99FE /* action-button-container-glow.png in Resources */ = {isa = PBXBuildFile; fileRef = 568753F71566CE4F00ED99FE /* action-button-container-glow.png */; };
 		5F7D21D9155AF1A200EAA540 /* UserProfileLinkedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */; };
@@ -326,7 +327,6 @@
 		697357C9156BF69000A37A92 /* uv_vote_chicklet_empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 697357A5156BF68F00A37A92 /* uv_vote_chicklet_empty.png */; };
 		697357CA156BF69000A37A92 /* uv_vote_chicklet_empty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 697357A6156BF68F00A37A92 /* uv_vote_chicklet_empty@2x.png */; };
 		697357CC156BFE2800A37A92 /* libUAirship-1.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 697357CB156BFE2800A37A92 /* libUAirship-1.2.1.a */; };
-		697357CE156BFED900A37A92 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697357CD156BFED700A37A92 /* StoreKit.framework */; };
 		697357D1156C198F00A37A92 /* SupportTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 697357D0156C198E00A37A92 /* SupportTableViewController.m */; };
 		697A686B156C3E8D001BEB35 /* TermsOfServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 697A686A156C3E8D001BEB35 /* TermsOfServiceViewController.m */; };
 		697A6870156C4ED4001BEB35 /* TermsOfService.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 697A686F156C4ED4001BEB35 /* TermsOfService.mustache */; };
@@ -842,6 +842,7 @@
 		53FE254D150EA50A00A0D93A /* PaymentHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaymentHelper.m; path = Payment/PaymentHelper.m; sourceTree = "<group>"; };
 		53FE2550150EAC6B00A0D93A /* UserSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSettingsTableViewController.h; path = Settings/UserSettingsTableViewController.h; sourceTree = "<group>"; };
 		53FE2551150EAC6B00A0D93A /* UserSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSettingsTableViewController.m; path = Settings/UserSettingsTableViewController.m; sourceTree = "<group>"; };
+		53FF95EC156D5D0E0046ADDE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		568753F61566CE4F00ED99FE /* action-button-container-glow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "action-button-container-glow@2x.png"; path = "User/images/action-button-container-glow@2x.png"; sourceTree = "<group>"; };
 		568753F71566CE4F00ED99FE /* action-button-container-glow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "action-button-container-glow.png"; path = "User/images/action-button-container-glow.png"; sourceTree = "<group>"; };
 		5F7D21D7155AF1A200EAA540 /* UserProfileLinkedInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileLinkedInViewController.h; path = User/UserProfileLinkedInViewController.h; sourceTree = "<group>"; };
@@ -895,7 +896,6 @@
 		697357A5156BF68F00A37A92 /* uv_vote_chicklet_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uv_vote_chicklet_empty.png; sourceTree = "<group>"; };
 		697357A6156BF68F00A37A92 /* uv_vote_chicklet_empty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uv_vote_chicklet_empty@2x.png"; sourceTree = "<group>"; };
 		697357CB156BFE2800A37A92 /* libUAirship-1.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libUAirship-1.2.1.a"; sourceTree = "<group>"; };
-		697357CD156BFED700A37A92 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		697357CF156C198D00A37A92 /* SupportTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SupportTableViewController.h; path = Settings/SupportTableViewController.h; sourceTree = "<group>"; };
 		697357D0156C198E00A37A92 /* SupportTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SupportTableViewController.m; path = Settings/SupportTableViewController.m; sourceTree = "<group>"; };
 		697A6869156C3E8C001BEB35 /* TermsOfServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TermsOfServiceViewController.h; path = Settings/TermsOfServiceViewController.h; sourceTree = "<group>"; };
@@ -1043,7 +1043,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				697357CE156BFED900A37A92 /* StoreKit.framework in Frameworks */,
+				53FF95ED156D5D0E0046ADDE /* StoreKit.framework in Frameworks */,
 				3267F67C14D91A3600BFFBAA /* CoreTelephony.framework in Frameworks */,
 				3267F67A14D91A2E00BFFBAA /* libsqlite3.dylib in Frameworks */,
 				3267F67814D91A2600BFFBAA /* libz.dylib in Frameworks */,
@@ -2029,7 +2029,6 @@
 		871EFAFB14AE9C810030658B = {
 			isa = PBXGroup;
 			children = (
-				697357CD156BFED700A37A92 /* StoreKit.framework */,
 				871EFB1014AE9C820030658B /* candpiosapp */,
 				871EFB3C14AE9C820030658B /* candpiosappTests */,
 				871EFB0914AE9C820030658B /* Frameworks */,
@@ -2062,6 +2061,7 @@
 				32CE875114D27FFF002D391B /* QuartzCore.framework */,
 				3267F67314D91A1300BFFBAA /* Security.framework */,
 				871EFB3614AE9C820030658B /* SenTestingKit.framework */,
+				53FF95EC156D5D0E0046ADDE /* StoreKit.framework */,
 				3267F67514D91A1900BFFBAA /* SystemConfiguration.framework */,
 				871EFB0A14AE9C820030658B /* UIKit.framework */,
 			);
