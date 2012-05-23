@@ -25,7 +25,7 @@
     
     [SVProgressHUD showWithStatus:@"Loading..."];
     
-    NSURL *termsURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@terms.phpx", kCandPWebServiceUrl]];
+    NSURL *termsURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@terms.php", kCandPWebServiceUrl]];
     NSURLRequest *request = [NSURLRequest requestWithURL:termsURL];
     AFHTTPRequestOperation *httpRequestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     
