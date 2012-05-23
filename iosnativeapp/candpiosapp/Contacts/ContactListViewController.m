@@ -173,11 +173,15 @@
                 
                 [self hidePlaceholder:[payload count] > 0 || [contactRequests count] > 0];
                 
-                NSSortDescriptor *d = [[NSSortDescriptor alloc] initWithKey:@"nickname" ascending:YES];
+                NSSortDescriptor *nicknameSort = [[NSSortDescriptor alloc] initWithKey:@"nickname" ascending:YES];
                 
-                //No reason to sort if there is 1 or less
-                if (payload.count > 1) { [payload sortUsingDescriptors:[NSArray arrayWithObject:d]]; }
-                if (contactRequests.count > 1) {[contactRequests sortUsingDescriptors:[NSArray arrayWithObject:d]]; }
+                // No reason to sort if there is 1 or less
+                if (payload.count > 1) { 
+                    payload = [[payload sortedArrayUsingDescriptors:[NSArray arrayWithObject:nicknameSort]] mutableCopy]; 
+                }
+                if (contactRequests.count > 1) {
+                    contactRequests = [[contactRequests sortedArrayUsingDescriptors:[NSArray arrayWithObject:nicknameSort]] mutableCopy]; 
+                }
                 
                 
                 self.contacts = payload;
