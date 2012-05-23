@@ -225,6 +225,7 @@
         self.coordinate = CLLocationCoordinate2DMake([[decoder decodeObjectForKey:@"lat"] doubleValue], [[decoder decodeObjectForKey:@"lng"] doubleValue]);
         self.address = [decoder decodeObjectForKey:@"address"];
         self.phone = [decoder decodeObjectForKey:@"phone"];
+        self.photoURL = [decoder decodeObjectForKey:@"photoURL"];
         self.checkinTime = [decoder decodeIntegerForKey:@"checkinTime"];
         self.autoCheckin = [[decoder decodeObjectForKey:@"autoCheckin"] boolValue];
     }    
@@ -241,6 +242,7 @@
     [encoder encodeObject:[NSNumber numberWithDouble:self.coordinate.longitude] forKey:@"lng"];
     [encoder encodeObject:self.address forKey:@"address"];
     [encoder encodeObject:self.phone forKey:@"phone"];
+    [encoder encodeObject:self.photoURL forKey:@"photoURL"];
     [encoder encodeInt:self.checkinTime forKey:@"checkinTime"];
     [encoder encodeObject:[NSNumber numberWithBool:self.autoCheckin] forKey:@"autoCheckin"];
 }
