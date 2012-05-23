@@ -43,7 +43,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *placeholderImage;
 - (NSIndexPath *)addToContacts:(NSDictionary *)contactData;
-- (void)animateRemoveContacRequestAtIndex:(NSUInteger)index;
+- (void)animateRemoveContactRequestAtIndex:(NSUInteger)index;
 - (void)handleSendAcceptOrDeclineComletionWithJson:(NSDictionary *)json andError:(NSError *)error;
 - (void)updateBadgeValue;
 - (void)setBadgeNumber:(NSInteger)badgeNumber;
@@ -168,8 +168,8 @@
         [self stopAppropriateLoadingSpinner];
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {
-                NSMutableArray *payload = [json objectForKey:@"payload"];
-                NSMutableArray *contactRequests = [json objectForKey:@"contact_requests"];
+                NSArray *payload = [json objectForKey:@"payload"];
+                NSArray *contactRequests = [json objectForKey:@"contact_requests"];
                 
                 [self hidePlaceholder:[payload count] > 0 || [contactRequests count] > 0];
                 
@@ -177,15 +177,15 @@
                 
                 // No reason to sort if there is 1 or less
                 if (payload.count > 1) { 
-                    payload = [[payload sortedArrayUsingDescriptors:[NSArray arrayWithObject:nicknameSort]] mutableCopy]; 
+                    payload = [payload sortedArrayUsingDescriptors:[NSArray arrayWithObject:nicknameSort]]; 
                 }
                 if (contactRequests.count > 1) {
-                    contactRequests = [[contactRequests sortedArrayUsingDescriptors:[NSArray arrayWithObject:nicknameSort]] mutableCopy]; 
+                    contactRequests = [contactRequests sortedArrayUsingDescriptors:[NSArray arrayWithObject:nicknameSort]]; 
                 }
                 
                 
-                self.contacts = payload;
-                self.contactRequests = contactRequests;
+                self.contacts = [payload mutableCopy];
+                self.contactRequests = [contactRequests mutableCopy];
                 
                 [self.tableView reloadData];
                 [self updateBadgeValue];
@@ -429,13 +429,14 @@
 #pragma mark - UserTableViewCellDelegate
 
 - (void)clickedAcceptButtonInUserTableViewCell:(ContactListCell *)contactListCell {
+    
     NSIndexPath *indexPath = [self.tableView indexPathForCell:contactListCell];
     NSDictionary *contactData = [self.contactRequests objectAtIndex:indexPath.row];
     
     [self.tableView beginUpdates];
     {
         [self.contactRequests removeObjectAtIndex:indexPath.row];
-        [self animateRemoveContacRequestAtIndex:indexPath.row];
+        [self animateRemoveContactRequestAtIndex:indexPath.row];
         
         NSIndexPath *newContactIndexPath = [self addToContacts:contactData];
         
@@ -461,7 +462,7 @@
     NSDictionary *contactData = [self.contactRequests objectAtIndex:indexPath.row];
     
     [self.contactRequests removeObjectAtIndex:indexPath.row];
-    [self animateRemoveContacRequestAtIndex:indexPath.row];
+    [self animateRemoveContactRequestAtIndex:indexPath.row];
     
     [CPapi sendDeclineContactRequestFromUserId:[[contactData objectForKey:@"id"] intValue]
                                     completion:^(NSDictionary *json, NSError *error) {
@@ -498,7 +499,7 @@
     return contactIndexPath;
 }
 
-- (void)animateRemoveContacRequestAtIndex:(NSUInteger)index {
+- (void)animateRemoveContactRequestAtIndex:(NSUInteger)index {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:kContactRequestsSection];
     
     [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
