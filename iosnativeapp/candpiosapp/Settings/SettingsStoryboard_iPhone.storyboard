@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2182" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development version="4300" identifier="xcode"/>
@@ -676,7 +676,7 @@ It is good for 24 hours.  </string>
                         <sections>
                             <tableViewSection id="mg2-bg-GwS">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="S3T-rv-BaG" style="IBUITableViewCellStyleDefault" id="c21-eu-6WO">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="S3T-rv-BaG" style="IBUITableViewCellStyleDefault" id="c21-eu-6WO">
                                         <rect key="frame" x="0.0" y="10" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -687,14 +687,15 @@ It is good for 24 hours.  </string>
                                                     <rect key="frame" x="10" y="0.0" width="280" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.8862745098" green="0.89019607840000003" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <color key="backgroundColor" red="0.24313725489999999" green="0.24313725489999999" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Xdb-pk-3Zj" style="IBUITableViewCellStyleDefault" id="gSo-BI-k9i">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Xdb-pk-3Zj" style="IBUITableViewCellStyleDefault" id="gSo-BI-k9i">
                                         <rect key="frame" x="0.0" y="55" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -705,12 +706,13 @@ It is good for 24 hours.  </string>
                                                     <rect key="frame" x="10" y="0.0" width="260" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.8862745098" green="0.89019607840000003" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <color key="backgroundColor" red="0.24313725489999999" green="0.24313725489999999" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <segue destination="ZUr-wy-cXS" kind="push" id="new-Fr-MNT"/>
                                         </connections>
