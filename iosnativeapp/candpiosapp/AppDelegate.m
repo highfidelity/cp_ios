@@ -436,7 +436,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     
     self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     
-    self.locationManager.distanceFilter = 20;
+    self.locationManager.distanceFilter = 10;
     
     [self.locationManager startMonitoringSignificantLocationChanges];
     
@@ -450,6 +450,13 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
 
     CPVenue *venue = [CPAppDelegate currentVenue];
+
+    NSLog(@"** did enter region: %@, lat: %f, lng: %f, radius: %f, distance filter: %f, desired accuracy: %f, current lat: %f, current lng: %f, horiz: %f, vert: %f", region.identifier, region.center.latitude, region.center.longitude, region.radius, manager.distanceFilter, manager.desiredAccuracy, self.locationManager.location.coordinate.latitude, manager.location.coordinate.longitude, manager.location.horizontalAccuracy, manager.location.verticalAccuracy);
+    
+    // Only show the check in prompt if accuracy is under 20meters
+    if (MAX(manager.location.horizontalAccuracy, manager.location.verticalAccuracy) > 20) {
+        return;
+    }
 
     // Don't show notification if user is currently checked in to this venue
     if ([CPAppDelegate userCheckedIn] && venue && venue.name && [venue.name isEqualToString:region.identifier]) {
