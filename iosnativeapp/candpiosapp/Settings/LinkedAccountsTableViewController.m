@@ -7,12 +7,18 @@
 //
 
 #import "LinkedAccountsTableViewController.h"
+#import "PushModalViewControllerFromLeftSegue.h"
 
 @interface LinkedAccountsTableViewController ()
+@property (assign)BOOL postToLinkedIn;
+@property (weak, nonatomic) IBOutlet UISwitch *postToLinkedInSwitch;
 
+-(IBAction)gearPressed:(id)sender;
 @end
 
 @implementation LinkedAccountsTableViewController
+@synthesize postToLinkedInSwitch = _postToLinkedInSwitch;
+@synthesize postToLinkedIn = _postToLinkedIn;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -26,19 +32,34 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [SVProgressHUD show];
+    
+    [CPapi getLinkedInPostStatus:^(NSDictionary *json, NSError *error) {
+        BOOL respError = [[json objectForKey:@"error"] boolValue];
+        if (!error && !respError) {
+            [self setPostToLinkedIn:[[[json objectForKey:@"payload"] objectForKey:@"post_to_linkedin"] boolValue]];
+            [[self postToLinkedInSwitch] setOn:[self postToLinkedIn]];
+            [SVProgressHUD dismiss];
+        } else {
+            [self dismissPushModalViewControllerFromLeftSegue];
+            NSString *message = [json objectForKey:@"payload"];
+            if (!message) {
+                message = @"Oops. Something went wrong.";    
+            }
+            [SVProgressHUD dismissWithError:message 
+                                 afterDelay:kDefaultDimissDelay];
+        }
+    }];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.tableView.separatorColor = [UIColor colorWithRed:(68/255.0) green:(68/255.0) blue:(68/255.0) alpha:1.0];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void)viewDidUnload
 {
+    [self setPostToLinkedInSwitch:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -46,85 +67,12 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+-(IBAction)gearPressed:(id)sender
 {
-    // Return the number of sections.
-    return 0;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    return 0;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-}
-
-#pragma mark - IBActions
-- (IBAction)gearPressed {
-    [self dismissModalViewControllerAnimated:YES];
+    if ([self postToLinkedIn] != [[self postToLinkedInSwitch] isOn]) {
+        [CPapi saveLinkedInPostStatus:[[self postToLinkedInSwitch] isOn]];
+    }
+    [self dismissPushModalViewControllerFromLeftSegue];
 }
 
 @end

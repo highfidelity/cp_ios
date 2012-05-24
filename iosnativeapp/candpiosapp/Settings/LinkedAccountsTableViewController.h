@@ -10,6 +10,4 @@
 
 @interface LinkedAccountsTableViewController : UITableViewController
 
-- (IBAction)gearPressed;
-
 @end

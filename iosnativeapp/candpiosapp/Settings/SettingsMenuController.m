@@ -72,7 +72,7 @@
                              inviteItemName,
                              // @"Wallet", DISABLED (WL #17339 - andyast)
                              @"Profile",
-                             //@"Linked Accounts", DISABLED (alexi)
+                             @"Linked Accounts",
                              @"Notifications",
                              @"Support",
                              @"Logout",
@@ -83,8 +83,8 @@
                                       // @"ShowFaceToFaceFromMenu", DISABLED (alexi)
                                       // @"ShowBalanceFromMenu", DISABLED (WL #17339 - andyast)
                                       @"ShowUserSettingsFromMenu",
-                                      // @"ShowFederationFromMenu", DISALBED (alexi)
-                                       @"ShowNotificationsFromMenu",
+                                      @"ShowFederationFromMenu",
+                                      @"ShowNotificationsFromMenu",
                                       @"ShowSupportFromMenu",
                                       @"ShowLogoutFromMenu",
                                       nil];

@@ -144,4 +144,7 @@
 
 + (void)saveVenueAutoCheckinStatus:(CPVenue *)venue;
 
++ (void)getLinkedInPostStatus:(void (^)(NSDictionary *, NSError *))completion;
++ (void)saveLinkedInPostStatus:(BOOL)status;
+
 @end

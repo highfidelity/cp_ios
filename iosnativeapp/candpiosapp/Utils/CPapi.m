@@ -1078,4 +1078,22 @@
                     responseHandler:nil];
 }
 
++ (void)getLinkedInPostStatus:(void (^)(NSDictionary *, NSError *))completion
+{
+    [self makeHTTPRequestWithAction:@"getLinkedInPostStatus"
+                     withParameters:nil
+            completion:completion];
+}
+
++ (void)saveLinkedInPostStatus:(BOOL)status
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setValue:(status ? @"1" : @"0") forKey:@"post_to_linkedin"];
+
+    [self makeHTTPRequestWithAction:@"saveLinkedInPostStatus"
+                     withParameters:parameters
+                         completion:nil];
+}
+
+
 @end
