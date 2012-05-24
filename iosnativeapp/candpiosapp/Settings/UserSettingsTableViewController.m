@@ -8,6 +8,7 @@
 
 #import "UserSettingsTableViewController.h"
 #import "JobCategoryViewController.h"
+#import "SkillsTableViewController.h"
 #import "PushModalViewControllerFromLeftSegue.h"
 
 #define tableCellSubviewTag 7909
@@ -147,6 +148,7 @@
     webSyncUser.userID = self.currentUser.userID;
     [SVProgressHUD show];
    
+    // TODO: Let's not load all of the user resume data here, just what can be changed
     [webSyncUser loadUserResumeData:^(NSError *error) {
         if (!error) {
             // TODO: make this a better solution by checking for a problem with the PHP session cookie in CPApi
@@ -200,6 +202,11 @@
 
                 if (![self.currentUser.hourlyRate isEqualToString:webSyncUser.hourlyRate]) {
                     self.currentUser.hourlyRate = webSyncUser.hourlyRate;
+                    self.newDataFromSync = YES;
+                }
+                
+                if (![self.currentUser.skills isEqualToArray:webSyncUser.skills]) {
+                    self.currentUser.skills = webSyncUser.skills;
                     self.newDataFromSync = YES;
                 }
 
@@ -469,10 +476,24 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"SettingsToJobCategoriesSegue"])
-    {
+    if ([[segue identifier] isEqualToString:@"SettingsToJobCategoriesSegue"]) {
         [[segue destinationViewController] setUser:self.currentUser];
+    } else if ([[segue identifier] isEqualToString:@"ShowSkillsListFromSettings"]) {
+        
+        // give whatever skills we have to the SkillsTableViewController
+        [[segue destinationViewController] setSkills:self.currentUser.skills];
+        
+        // be the delegate of the SkillsTableViewController
+        [[segue destinationViewController] setDelegate:self];
     }
+}
+
+# pragma mark - Delegate Methods
+
+- (void)skillUpdateForCurrentUser:(NSArray *)skillArray
+{
+    self.currentUser.skills = skillArray;
+    [CPAppDelegate saveCurrentUserToUserDefaults:self.currentUser];
 }
 
 @end

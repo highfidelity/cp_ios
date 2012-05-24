@@ -918,6 +918,37 @@
     [self makeHTTPRequestWithAction:@"sendPlusOneForLove" withParameters:parameters queue:chatQueue completion:completion];
 }
 
+# pragma mark - Skills
+
++ (void)getSkillsForUser:(NSNumber *)userID 
+              completion:(void (^)(NSDictionary *, NSError *))completion
+{
+    NSMutableDictionary *parameters;
+   
+    // if we have a userID passed then it's not for the current user
+    // so set that param
+    if (userID) {
+        parameters = [NSMutableDictionary dictionaryWithCapacity:1];
+        [parameters setValue:userID forKey:@"user_id"];
+    }
+    
+    [self makeHTTPRequestWithAction:@"getSkillsForUser" withParameters:parameters completion:completion];
+}
+
++ (void)changeSkillStateForSkillWithId:(int)skillID 
+                                 visible:(BOOL)visible
+                            skillQueue:(NSOperationQueue *)skillQueue 
+                            completion:(void (^)(NSDictionary *, NSError *))completion
+{
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:2];
+    [parameters setValue:[NSString stringWithFormat:@"%d", skillID] forKey:@"skill_id"];
+    [parameters setValue:[NSString stringWithFormat:@"%d", visible] forKey:@"visible"];
+    
+    // make the request
+    [self makeHTTPRequestWithAction:@"changeSkillVisibility" withParameters:parameters queue:skillQueue timeout:5 completion:completion];
+
+}
+
 
 # pragma mark - User Settings
 

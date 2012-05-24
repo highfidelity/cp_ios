@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *jobTitle;
 @property (nonatomic, strong) NSString *status;
+@property (nonatomic, strong) NSArray *skills;
 @property (nonatomic, assign) CLLocationCoordinate2D location;
 @property (nonatomic, strong) NSString *bio;
 @property (nonatomic, assign) int sponsorId;
@@ -31,7 +32,6 @@
 @property (nonatomic, assign) int totalHours;
 @property (nonatomic, assign) double totalSpent;
 @property (nonatomic, strong) NSURL *urlPhoto;
-@property (nonatomic, strong) NSString *skills;
 @property (nonatomic, assign) double distance;
 @property (nonatomic, assign) BOOL checkedIn;
 @property (nonatomic, strong) CPVenue *placeCheckedIn;

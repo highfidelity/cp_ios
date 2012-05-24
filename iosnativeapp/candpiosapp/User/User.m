@@ -7,6 +7,7 @@
 //
 
 #import "User.h"
+#import "CPSkill.h"
 #import "MapDataSet.h"
 #import "NSString+HTML.h"
 
@@ -17,6 +18,7 @@
 @synthesize email = _email;
 @synthesize title = _title;
 @synthesize status = _status;
+@synthesize skills = _skills;
 @synthesize location = _location;
 @synthesize bio = _bio;
 @synthesize sponsorId = _sponsorId;
@@ -27,7 +29,6 @@
 @synthesize totalEarned = _totalEarned;
 @synthesize totalSpent = _totalSpent;
 @synthesize urlPhoto = _urlPhoto;
-@synthesize skills = _skills;
 @synthesize distance = _distance;
 @synthesize checkedIn = _checkedIn;
 @synthesize placeCheckedIn = _placeCheckedIn;
@@ -107,6 +108,7 @@
         self.urlPhoto = [decoder decodeObjectForKey:@"urlPhoto"];
         self.enteredInviteCode = [decoder decodeBoolForKey:@"enteredInviteCode"];
         self.joinDate = [decoder decodeObjectForKey:@"joinDate"];
+        self.skills = [decoder decodeObjectForKey:@"skills"];
     }    
     return self;
 }
@@ -119,6 +121,7 @@
     [encoder encodeObject:self.urlPhoto forKey:@"urlPhoto"];
     [encoder encodeBool:self.enteredInviteCode forKey:@"enteredInviteCode"];
     [encoder encodeObject:self.joinDate forKey:@"joinDate"];
+    [encoder encodeObject:self.skills forKey:@"skills"];
 }
 
 // override nickname setter to decode html entities

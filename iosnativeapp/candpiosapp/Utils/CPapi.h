@@ -99,6 +99,15 @@
                        chatQueue:(NSOperationQueue *)chatQueue
                       completion:(void (^)(NSDictionary *, NSError *))completion;
 
+# pragma mark - Skills
++ (void)getSkillsForUser:(NSNumber *)userID 
+              completion:(void (^)(NSDictionary *, NSError *))completion;
+
++ (void)changeSkillStateForSkillWithId:(int)skillID
+                                 visible:(BOOL)visible
+                            skillQueue:(NSOperationQueue *)skillQueue
+                            completion:(void (^)(NSDictionary *, NSError *))completion;
+
 # pragma mark - Contact List
 + (void)getContactListWithCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
