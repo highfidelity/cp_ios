@@ -11,7 +11,6 @@
 
 @interface SkillsTableViewController : UITableViewController
 
-@property (nonatomic, assign) UserSettingsTableViewController *delegate;
 @property (nonatomic, strong) NSMutableArray *skills;
 
 @end

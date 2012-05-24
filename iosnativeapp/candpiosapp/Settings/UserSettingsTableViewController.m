@@ -478,22 +478,7 @@
 {
     if ([[segue identifier] isEqualToString:@"SettingsToJobCategoriesSegue"]) {
         [[segue destinationViewController] setUser:self.currentUser];
-    } else if ([[segue identifier] isEqualToString:@"ShowSkillsListFromSettings"]) {
-        
-        // give whatever skills we have to the SkillsTableViewController
-        [[segue destinationViewController] setSkills:self.currentUser.skills];
-        
-        // be the delegate of the SkillsTableViewController
-        [[segue destinationViewController] setDelegate:self];
     }
-}
-
-# pragma mark - Delegate Methods
-
-- (void)skillUpdateForCurrentUser:(NSArray *)skillArray
-{
-    self.currentUser.skills = skillArray;
-    [CPAppDelegate saveCurrentUserToUserDefaults:self.currentUser];
 }
 
 @end

@@ -20,7 +20,6 @@
 
 @implementation SkillsTableViewController
 
-@synthesize delegate = _delegate;
 @synthesize skills = _skills;
 @synthesize visibleCount = _visibleCount;
 @synthesize skillQueue = _skillQueue;
@@ -50,8 +49,7 @@
     self.tableView.separatorColor = [UIColor colorWithR:68 G:68 B:68 A:1];
     
     // check if we have any user skills
-    // this is only the case if the user has already loaded their skills once
-    // and they have been passed from the UserSettingsTableViewController
+    // this will always be the case as for right now we aren't syncing with NSUserDefaults
     if (!self.skills) {
         // show a loading HUD
         [SVProgressHUD showWithStatus:@"Loading Skills..."];
@@ -71,9 +69,6 @@
                     for (NSDictionary *skillDict in [json objectForKey:@"payload"]) {
                         [self.skills addObject:[[CPSkill alloc] initFromDictionary:skillDict]];
                     }
-                    
-                    // give these skills to our delegate
-                    [self.delegate skillUpdateForCurrentUser:self.skills];
                     
                     // upload the tableView with the new data
                     [self.tableView reloadData];
@@ -195,10 +190,6 @@
             } else {
                 // everything's good here so update the info for the skill in our array
                 skill.isVisible = visibilitySwitch.on;
-                
-                // and tell the delegate that we've updated
-                // so that that info gets stored for the current user
-                [self.delegate skillUpdateForCurrentUser:self.skills];
             }
         } else {    
             [self handleErrorForSwitch:visibilitySwitch errorMessage:errorMessage];
