@@ -8,12 +8,15 @@
 
 #import "UserLoveViewController.h"
 #import "UserProfileViewController.h"
+#import "MKStoreManager.h"
+#import "FlurryAnalytics.h"
 
 #define LOVE_CHAR_LIMIT 140
+#define inAppItem @"com.coffeeandpower.love1"
 
 @interface UserLoveViewController () <UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *charCounterLabel;
-
+@property (nonatomic) BOOL purchasedLove;
 @end
 
 @implementation UserLoveViewController
@@ -23,6 +26,7 @@
 @synthesize descriptionTextView = _descriptionTextView;
 @synthesize navigationBar = _navigationBar;
 @synthesize user = _user;
+@synthesize purchasedLove = _purchasedLove;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -90,6 +94,13 @@
                                      afterDelay:kDefaultDimissDelay];
             }
             else {
+                // Consume the item if purchased
+                if (self.purchasedLove) {
+                    if ([[MKStoreManager sharedManager] canConsumeProduct:inAppItem quantity:1]) {
+                        [[MKStoreManager sharedManager] consumeProduct:inAppItem quantity:1];
+                    }
+                }
+                
                 // dismiss the HUD with the success message that came back
                 NSString *message = [NSString stringWithFormat:@"You Recognized %@", self.user.nickname];
                 
@@ -148,5 +159,47 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
+- (IBAction)addButtonPressed:(UIButton *)sender
+{
+    NSLog(@"Add Button Pressed!");
+    
+    // Check if the user has already purchased love but it failed previously, use it by default here
+    if ([[MKStoreManager sharedManager] canConsumeProduct:inAppItem quantity:1]) {
+        self.purchasedLove = YES;
+        
+        [self sendReview];
+        return;
+    }
+
+    // Loading the store might take a while so pop up a HUD
+    [SVProgressHUD showWithStatus:@"Loading store..."];
+
+    // Automatically hide the HUD after 2 seconds since there is no kind of callback when the app store alertview appears
+    [self performSelector:@selector(dismissHUD:) withObject:nil afterDelay:2.0];
+    
+    // Otherwise prompt the user to purchase Love now
+    [[MKStoreManager sharedManager] buyFeature:inAppItem 
+                                    onComplete:^(NSString* purchasedFeature, NSData* purchasedReceipt)
+     {
+         NSLog(@"Purchased: %@", purchasedFeature);
+         [FlurryAnalytics logEvent:@"purchasedLove"];
+         
+         self.purchasedLove = YES;
+         
+         [self sendReview];
+     }
+                                   onCancelled:^
+     {
+         NSLog(@"User Cancelled Transaction");
+         [FlurryAnalytics logEvent:@"canceledPurchase"];
+         
+         // Might want to tell the user he can still send love for free?
+     }];
+}
+
+- (void)dismissHUD:(id)sender
+{
+    [SVProgressHUD dismiss];
+}
 
 @end

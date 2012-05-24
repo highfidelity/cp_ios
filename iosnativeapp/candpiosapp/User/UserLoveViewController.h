@@ -16,5 +16,8 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (strong, nonatomic) User *user;
 
+- (IBAction)addButtonPressed:(UIButton *)sender;
+
+- (void)dismissHUD:(id)sender;
 
 @end
