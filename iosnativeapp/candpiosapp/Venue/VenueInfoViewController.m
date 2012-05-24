@@ -521,7 +521,6 @@
     // TODO: If this venue wasn't loaded by the map it will appear as if it has no active users
     // Add the ability to make an API call to get that data
     NSMutableDictionary *activeUsers = self.venue.activeUsers;
-    
 
     // init the data structures
     self.currentUsers = [NSMutableDictionary dictionary];
@@ -531,16 +530,21 @@
     
     for (NSString *userID in activeUsers) {
         User *user = [[CPAppDelegate settingsMenuController].mapTabController userFromActiveUsers:[userID integerValue]];
-        if ([[[activeUsers objectForKey:userID] objectForKey:@"checked_in"] boolValue]) {
-            [self addUser:user toArrayForJobCategory:user.majorJobCategory];
-            // if the major and minor job categories differ also add this person to the minor category
-            if (![user.majorJobCategory isEqualToString:user.minorJobCategory] && ![user.minorJobCategory isEqualToString:@"other"]) {
-                [self addUser:user toArrayForJobCategory:user.minorJobCategory];
+        
+        // make sure we get a user here
+        // otherwise we'll crash when trying to add nil to self.previousUsers
+        if (user) {
+            if ([[[activeUsers objectForKey:userID] objectForKey:@"checked_in"] boolValue]) {
+                [self addUser:user toArrayForJobCategory:user.majorJobCategory];
+                // if the major and minor job categories differ also add this person to the minor category
+                if (![user.majorJobCategory isEqualToString:user.minorJobCategory] && ![user.minorJobCategory isEqualToString:@"other"]) {
+                    [self addUser:user toArrayForJobCategory:user.minorJobCategory];
+                }
+            } else {
+                // this is a non-checked in user
+                // add them to the previous users dictionary
+                [self.previousUsers addObject:user];
             }
-        } else {
-            // this is a non-checked in user
-            // add them to the previous users dictionary
-            [self.previousUsers addObject:user];
         }
     }
     

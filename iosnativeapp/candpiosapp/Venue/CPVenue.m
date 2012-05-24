@@ -127,7 +127,6 @@
         self.photoURL = [json objectForKey:@"photo_url"];
         
         if (![[json objectForKey:@"lat"] isKindOfClass:[NSNull class]] && ![[json objectForKey:@"lng"] isKindOfClass:[NSNull class]]) {
-            NSLog(@"We have it!");
             self.coordinate = CLLocationCoordinate2DMake([[json objectForKey:@"lat"] doubleValue], [[json objectForKey:@"lng"] doubleValue]);
         }
         
