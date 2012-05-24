@@ -20,6 +20,4 @@
 @property (strong, nonatomic) UIImageView *profileImage;
 @property (strong, nonatomic) IBOutlet UILabel *emailValidationMsg;
 
-- (void)skillUpdateForCurrentUser:(NSArray *)skillArray;
-
 @end
