@@ -125,7 +125,12 @@
         self.weeklyCheckinCount = [[json objectForKey:@"checkins_for_week"] integerValue];
         self.intervalCheckinCount = [[json objectForKey:@"checkins_for_interval"] integerValue];
         self.photoURL = [json objectForKey:@"photo_url"];
-        self.coordinate = CLLocationCoordinate2DMake([[json objectForKey:@"lat"] doubleValue], [[json objectForKey:@"lng"] doubleValue]);
+        
+        if (![[json objectForKey:@"lat"] isKindOfClass:[NSNull class]] && ![[json objectForKey:@"lng"] isKindOfClass:[NSNull class]]) {
+            NSLog(@"We have it!");
+            self.coordinate = CLLocationCoordinate2DMake([[json objectForKey:@"lat"] doubleValue], [[json objectForKey:@"lng"] doubleValue]);
+        }
+        
         self.activeUsers = [json objectForKey:@"users"];
     }
     return self;
