@@ -192,28 +192,6 @@
     return subtitleString;
 }
 
--(NSDictionary *)initializationDictionaryJSON {
-    NSMutableDictionary *json = [NSMutableDictionary dictionaryWithCapacity:15];
-    
-    if (self.name) { [json setObject:self.name forKey:@"name"]; }
-    if (self.address) { [json setObject:self.address forKey:@"address"]; }
-    if (self.city) { [json setObject:self.city forKey:@"city"]; }
-    if (self.state) { [json setObject:self.state forKey:@"state"]; }
-    if (self.phone) { [json setObject:self.phone forKey:@"phone"]; }
-    if (self.formattedPhone) { [json setObject:self.formattedPhone forKey:@"formatted_phone"]; }
-    [json setObject:[NSNumber numberWithDouble:self.distanceFromUser] forKey:@"distance"];
-    if (self.foursquareID) { [json setObject:self.foursquareID forKey:@"foursquare_id"]; }
-    [json setObject:[NSNumber numberWithInteger:self.checkinCount] forKey:@"checkins"];
-    [json setObject:[NSNumber numberWithInteger:self.weeklyCheckinCount] forKey:@"checkins_for_week"];
-    [json setObject:[NSNumber numberWithInteger:self.intervalCheckinCount] forKey:@"checkins_for_interval"];
-    if (self.photoURL) { [json setObject:self.photoURL forKey:@"photo_url"]; }
-    [json setObject:[NSNumber numberWithDouble:self.coordinate.latitude] forKey:@"lat"];
-    [json setObject:[NSNumber numberWithDouble:self.coordinate.longitude] forKey:@"lng"];
-    if (self.activeUsers) { [json setObject:self.activeUsers forKey:@"users"]; }
-
-    return json;
-}
-
 -(id)initWithCoder:(NSCoder *)decoder
 {
     self = [super init];

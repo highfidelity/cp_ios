@@ -1048,11 +1048,13 @@ void SignalHandler(int sig) {
                                                                                   userInfo:nil 
                                                                                    repeats:NO];
             
-            CPVenue *place = [[CPVenue alloc] initFromDictionary:notif.userInfo];
+            
+            CPVenue *venue = (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:[notif.userInfo objectForKey:@"venue"]];
+            
             CheckInDetailsViewController *vc = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil]
                                                 instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
             vc.checkInIsVirtual = false;
-            [vc setPlace:place];
+            [vc setPlace:venue];
             vc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
                                                                                    style:UIBarButtonItemStylePlain
                                                                                   target:vc

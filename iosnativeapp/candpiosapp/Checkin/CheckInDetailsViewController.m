@@ -294,7 +294,12 @@
                     
                     localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkOutTime - minutesBefore * 60)];
                     localNotif.timeZone = [NSTimeZone defaultTimeZone];
-                    localNotif.userInfo = self.place.initializationDictionaryJSON;
+                    
+                    // encode the venue and store it in an NSDictionary
+                    NSData *venueData = [NSKeyedArchiver archivedDataWithRootObject:self.place];
+                    NSDictionary *venueDataDict = [NSDictionary dictionaryWithObject:venueData forKey:@"venue"];
+                    
+                    localNotif.userInfo = venueDataDict;
                     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
                     
                     // post a notification to say the user has checked in
