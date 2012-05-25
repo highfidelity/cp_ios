@@ -20,6 +20,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *charCounterLabel;
 @property (nonatomic) BOOL purchasedLove;
+@property (nonatomic) BOOL sendLoveWithoutPayment;
 @property (strong, nonatomic) CPSkill *selectedSkill;
 @property (strong, nonatomic) UIView *keyboardBackground;
 @property (nonatomic) BOOL resumeCheckboxActive;
@@ -37,6 +38,7 @@
 @synthesize navigationBar = _navigationBar;
 @synthesize tableView = _tableView;
 @synthesize purchasedLove = _purchasedLove;
+@synthesize sendLoveWithoutPayment = _sendLoveWithoutPayment;
 @synthesize resumeCheckboxActive = _resumeCheckboxActive;
 @synthesize resumeCheckbox = _resumeCheckbox;
 @synthesize selectedSkill = _selectedSkill;
@@ -73,6 +75,9 @@
     // shadow on user profile picture
     [CPUIHelper addShadowToView:self.profilePicture color:[UIColor blackColor] offset:CGSizeMake(1, 1) radius:1 opacity:0.4];
     
+    // Default checkbox to on
+    self.resumeCheckboxActive = YES;
+    
     // reload the tableView 
     // it'll show loading 
     [self.tableView reloadData];
@@ -93,7 +98,7 @@
     
     // add the keyboardBackground to the view
     [self.view addSubview:self.keyboardBackground];
-
+    
     // grab the user's skills
     [CPapi getSkillsForUser:[NSNumber numberWithInt:self.user.userID] completion:^(NSDictionary *json, NSError *error) {
         if (!error) {
@@ -101,7 +106,7 @@
                 
                 // create an array to hold the skills
                 NSMutableArray *userSkills = [NSMutableArray array];
-        
+                
                 // create the general skill
                 CPSkill *generalSkill = [[CPSkill alloc] init];
                 generalSkill.name = @"General";
@@ -159,7 +164,7 @@
 
 - (void)sendReview {
     // If the user wants to add this love to the resume, prompt them to purchase now
-    if (self.resumeCheckboxActive && !self.purchasedLove) {
+    if (self.resumeCheckboxActive && !self.purchasedLove && !self.sendLoveWithoutPayment) {
         [self purchaseLove];
         return;
     }
@@ -206,7 +211,7 @@
                     
                     // show a success HUD
                     [SVProgressHUD showSuccessWithStatus:message
-                                           duration:kDefaultDimissDelay];
+                                                duration:kDefaultDimissDelay];
                 }];
             }
             
@@ -273,6 +278,8 @@
          [FlurryAnalytics logEvent:@"canceledPurchase"];
          
          // Might want to tell the user he can still send love for free?
+         self.sendLoveWithoutPayment = YES;
+         [self sendReview];
      }];    
 }
 
@@ -383,7 +390,7 @@
 {
     static NSString *SkillCellIdentifier = @"SendLoveSkillCell";
     LoveSkillTableViewCell *cell = [[LoveSkillTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SkillCellIdentifier];
-
+    
     CPSkill *cellSkill;
     if (self.user.skills && indexPath.row < self.user.skills.count) {
         // grab this skill out of the array 
@@ -424,7 +431,7 @@
     
     // use the helper method to create a UILabel
     UILabel *skillLabel = [self labelForHeaderOrCell:NO];
-
+    
     // set the text for the skill label, prepend text for the header if required
     skillLabel.text = cellSkill ? cellSkill.name : @"Loading...";
     
