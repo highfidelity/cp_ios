@@ -839,7 +839,7 @@
                                 <rect key="frame" x="215" y="217" width="23" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                                <state key="normal" image="checkbox-checked.png">
+                                <state key="normal" image="checkbox-unchecked.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -933,7 +933,7 @@
         <image name="chat-bubble-right-bottom.png" width="261" height="14"/>
         <image name="chat-bubble-right-middle.png" width="261" height="13"/>
         <image name="chat-bubble-right-top.png" width="261" height="14"/>
-        <image name="checkbox-checked.png" width="23" height="23"/>
+        <image name="checkbox-unchecked.png" width="23" height="23"/>
         <image name="checked-in-location.png" width="16" height="16"/>
         <image name="exchange-cards.png" width="75" height="75"/>
         <image name="go-button.png" width="16" height="16"/>

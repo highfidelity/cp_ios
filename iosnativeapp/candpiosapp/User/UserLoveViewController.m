@@ -75,8 +75,8 @@
     // shadow on user profile picture
     [CPUIHelper addShadowToView:self.profilePicture color:[UIColor blackColor] offset:CGSizeMake(1, 1) radius:1 opacity:0.4];
     
-    // Default checkbox to on
-    self.resumeCheckboxActive = YES;
+    // Default checkbox to off
+    self.resumeCheckboxActive = NO;
     
     // reload the tableView 
     // it'll show loading 
