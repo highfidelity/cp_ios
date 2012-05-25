@@ -29,14 +29,9 @@
 @synthesize sendButton = _sendButton;
 
 - (void)pushNextViewContollerOrDismissWithMessage:(NSString *)message {
-    if ([CPAppDelegate currentUser].enteredInviteCode) {
-        if ([[CPAppDelegate tabBarController] selectedIndex] == 4) {
-            [[CPAppDelegate tabBarController] setSelectedIndex:0];
-        }
-        [self.navigationController dismissModalViewControllerAnimated:YES];
-    } else {
-        [self performSegueWithIdentifier:@"EnterInvitationCodeSegue" sender:nil];
-    }
+    
+    // shouldn't go to invite code anymore, that comes before us
+    [self.navigationController dismissModalViewControllerAnimated:YES];
     
     if (message.length) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" 

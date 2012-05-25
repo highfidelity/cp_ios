@@ -30,6 +30,7 @@
 
 @synthesize dontShowTextNoticeAfterLaterButtonPressed = _dontShowTextNoticeAfterLaterButtonPressed;
 @synthesize isPushedFromLeft = _isPushedFromLeft;
+@synthesize emailConfirmationRequired = _emailConfirmationRequired;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -101,6 +102,16 @@
                                        delegate:nil
                               cancelButtonTitle:@"OK"
                               otherButtonTitles:nil] show];
+            
+            // if we still need an email confirmation
+            if (self.emailConfirmationRequired) {
+                // don't dismiss this viewController
+                dismissModalViewController = NO;
+                
+                [self performSegueWithIdentifier:@"ShowEmailAfterInviteCode" sender:self];
+            }
+            
+            
         }
     }
     

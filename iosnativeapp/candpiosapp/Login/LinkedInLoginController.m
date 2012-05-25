@@ -12,11 +12,20 @@
 #import "OAMutableURLRequest.h"
 #import "OADataFetcher.h"
 #import "SSKeychain.h"
+#import "EnterInvitationCodeViewController.h"
+
+@interface LinkedInLoginController()
+
+@property (nonatomic, assign) BOOL emailConfirmationRequired;
+
+@end
 
 @implementation LinkedInLoginController
 @synthesize myWebView;
 @synthesize requestToken;
 @synthesize activityIndicator;
+@synthesize emailConfirmationRequired = _emailConfirmationRequired;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -359,22 +368,26 @@
 
                 // Perform common post-login operations
                 [BaseLoginController pushAliasUpdate];
+                
+                if (!hasSentConfirmationEmail && (! userEmail ||
+                                                   [@"" isEqualToString:userEmail] ||
+                                                  [generatedEmail isEqualToString:userEmail])) {
+                    self.emailConfirmationRequired = YES;
+                }
 
-                if ( ! hasSentConfirmationEmail && (
-                         ! userEmail ||
-                        [@"" isEqualToString:userEmail] ||
-                        [generatedEmail isEqualToString:userEmail]
-                    )) {
-                    [self performSegueWithIdentifier:@"EnterEmailAfterSignUpSegue" sender:nil];
-                } else {
-                    if ([CPAppDelegate currentUser].enteredInviteCode) {
-                        if ([[CPAppDelegate tabBarController] selectedIndex] == 4) {
-                            [[CPAppDelegate tabBarController] setSelectedIndex:0];
-                        }
-                        [self.navigationController dismissModalViewControllerAnimated:YES];
-                    } else {
-                        [self performSegueWithIdentifier:@"EnterInvitationCodeSegue" sender:nil];
+                if ([CPAppDelegate currentUser].enteredInviteCode) {
+                    if ([[CPAppDelegate tabBarController] selectedIndex] == 4) {
+                        [[CPAppDelegate tabBarController] setSelectedIndex:0];
                     }
+                    
+                    if (self.emailConfirmationRequired) {
+                        [self performSegueWithIdentifier:@"EnterEmailAfterSignUpSegue" sender:nil];
+                    } else {
+                        [self.navigationController dismissModalViewControllerAnimated:YES];
+                    }
+                }
+                else {
+                    [self performSegueWithIdentifier:@"EnterInvitationCodeSegue" sender:nil];
                 }
             }
 
@@ -388,6 +401,13 @@
         
         NSOperationQueue *queue = [[NSOperationQueue alloc] init];
         [queue addOperation:operation];  
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"EnterInvitationCodeSegue"]) {
+        [[segue destinationViewController] setEmailConfirmationRequired:self.emailConfirmationRequired];
     }
 }
 
