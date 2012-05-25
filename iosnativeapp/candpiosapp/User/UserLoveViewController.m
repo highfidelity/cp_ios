@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *charCounterLabel;
 @property (nonatomic) BOOL purchasedLove;
 @property (strong, nonatomic) CPSkill *selectedSkill;
+@property (strong, nonatomic) UIView *keyboardBackground;
 
 @end
 
@@ -34,6 +35,7 @@
 @synthesize tableView = _tableView;
 @synthesize purchasedLove = _purchasedLove;
 @synthesize selectedSkill = _selectedSkill;
+@synthesize keyboardBackground = _keyboardBackground;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -57,7 +59,7 @@
     self.descriptionTextView.delegate = self;
     
     // set the placeholder on our CPPlaceHolderTextView
-    self.descriptionTextView.placeholder = @"Recognize this person for $1";
+    self.descriptionTextView.placeholder = @"Type your recognition text here...";
     self.descriptionTextView.placeholderColor = [UIColor colorWithR:153 G:153 B:153 A:1];
     
     // place the user's profile picture
@@ -69,6 +71,23 @@
     // reload the tableView 
     // it'll show loading 
     [self.tableView reloadData];
+    
+    // Add notifications for keyboard showing / hiding
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+    // add a view so we can have a background behind the keyboard
+    self.keyboardBackground = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 0)];
+    self.keyboardBackground.backgroundColor = [UIColor blackColor];
+    
+    // add the keyboardBackground to the view
+    [self.view addSubview:self.keyboardBackground];
 
     // grab the user's skills
     [CPapi getSkillsForUser:[NSNumber numberWithInt:self.user.userID] completion:^(NSDictionary *json, NSError *error) {
@@ -117,9 +136,14 @@
     [self setProfilePicture:nil];
     [self setDescriptionTextView:nil];
     [self setNavigationBar:nil];
+    [self setTableView:nil];
     [self setCharCounterLabel:nil];
+    [self setKeyboardBackground:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+    
+    // stop observing keyboard notifications
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -449,6 +473,43 @@
     skillLabel.shadowOffset = CGSizeMake(0, -1);
     
     return skillLabel;
+}
+
+# pragma mark - Methods for keyboard hide/show notification
+
+- (void)keyboardWillShow:(NSNotification*)notification
+{
+    CGRect keyboardEndFrame;
+    [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
+    double scrollSpeed = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    CGRect backgroundRect = self.keyboardBackground.frame;
+    backgroundRect.size.height = keyboardEndFrame.size.height;
+    backgroundRect.origin.y = self.view.frame.size.height - backgroundRect.size.height;
+    
+    [UIView animateWithDuration:scrollSpeed
+                          delay:0
+                        options:UIViewAnimationOptionAllowUserInteraction
+                     animations:^{
+                         self.keyboardBackground.frame = backgroundRect;
+                     }
+                     completion:nil];
+}
+
+- (void)keyboardWillHide:(NSNotification*)notification
+{
+    CGRect backgroundRect = self.keyboardBackground.frame;
+    backgroundRect.origin.y = self.view.frame.size.height;
+    backgroundRect.size.height = 0;
+    
+    // Return the chatContents and the inputs to their original position
+    [UIView animateWithDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]
+                          delay:0
+                        options:UIViewAnimationOptionAllowUserInteraction
+                     animations:^{
+                         self.keyboardBackground.frame = backgroundRect;
+                     }
+                     completion:nil];
 }
 
 @end
