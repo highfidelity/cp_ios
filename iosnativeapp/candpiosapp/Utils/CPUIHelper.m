@@ -71,20 +71,14 @@
     return button;
 }
 
-// used by the method above to return a UIImage for the button background
-+ (UIImage *)imageForCPColor:(CPButtonColor)buttonColor
-{
-    switch (buttonColor) {
-        case CPButtonTurquoise:
-            return [[UIImage imageNamed:@"button-turquoise.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 9, 0, 9)];
-        case CPButtonGrey:
-            return [[UIImage imageNamed:@"button-grey.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 9, 0, 9)];
-        default:
-            return nil;
-    }
-}
+
 
 #pragma mark - Color schemes
+
++ (UIColor *)CPTealColor
+{
+    return [UIColor colorWithR:66 G:128 B:128 A:1];
+}
 
 + (UIColor *)colorForCPColor:(CPColor)cpColor
 {
@@ -93,6 +87,19 @@
             return [UIColor colorWithRed:0.259f green:0.549f blue:0.588f alpha:1.0f];
         case CPColorGrey:
             return [UIColor colorWithRed:0.47f green:0.47f blue:0.47f alpha:1.0f];
+        default:
+            return nil;
+    }
+}
+
+// used by the method above to return a UIImage for the button background
++ (UIImage *)imageForCPColor:(CPButtonColor)buttonColor
+{
+    switch (buttonColor) {
+        case CPButtonTurquoise:
+            return [[UIImage imageNamed:@"button-turquoise.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 9, 0, 9)];
+        case CPButtonGrey:
+            return [[UIImage imageNamed:@"button-grey.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 9, 0, 9)];
         default:
             return nil;
     }

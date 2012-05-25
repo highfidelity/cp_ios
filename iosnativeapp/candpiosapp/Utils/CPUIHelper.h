@@ -36,6 +36,7 @@ typedef enum {
 + (UIButton *)makeButtonCPButton:(UIButton *)button withCPButtonColor:(CPButtonColor)buttonColor;
 
 # pragma mark - Color schemes
++ (UIColor *)CPTealColor;
 + (UIColor *)colorForCPColor:(CPColor)cpColor;
 + (UIImage *)imageForCPColor:(CPButtonColor)buttonColor;
 

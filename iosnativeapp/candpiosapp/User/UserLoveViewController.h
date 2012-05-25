@@ -11,10 +11,11 @@
 
 @interface UserLoveViewController : UIViewController
 @property (weak, nonatomic) id delegate;
+@property (strong, nonatomic) User *user;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
 @property (weak, nonatomic) IBOutlet CPPlaceholderTextView *descriptionTextView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
-@property (strong, nonatomic) User *user;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 - (IBAction)addButtonPressed:(UIButton *)sender;
 

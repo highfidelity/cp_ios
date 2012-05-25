@@ -10,23 +10,29 @@
 #import "UserProfileViewController.h"
 #import "MKStoreManager.h"
 #import "FlurryAnalytics.h"
+#import "CPSkill.h"
 
 #define LOVE_CHAR_LIMIT 140
 #define inAppItem @"com.coffeeandpower.love1"
 
-@interface UserLoveViewController () <UITextViewDelegate>
+@interface UserLoveViewController () <UITextViewDelegate, UITableViewDelegate, UITableViewDataSource>
+
 @property (weak, nonatomic) IBOutlet UILabel *charCounterLabel;
 @property (nonatomic) BOOL purchasedLove;
+@property (strong, nonatomic) CPSkill *selectedSkill;
+
 @end
 
 @implementation UserLoveViewController
 @synthesize delegate = _delegate;
+@synthesize user = _user;
 @synthesize charCounterLabel = _charCounterLabel;
 @synthesize profilePicture = _profilePicture;
 @synthesize descriptionTextView = _descriptionTextView;
 @synthesize navigationBar = _navigationBar;
-@synthesize user = _user;
+@synthesize tableView = _tableView;
 @synthesize purchasedLove = _purchasedLove;
+@synthesize selectedSkill = _selectedSkill;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -58,6 +64,51 @@
     
     // shadow on user profile picture
     [CPUIHelper addShadowToView:self.profilePicture color:[UIColor blackColor] offset:CGSizeMake(1, 1) radius:1 opacity:0.4];
+    
+    // reload the tableView 
+    // it'll show loading 
+    [self.tableView reloadData];
+
+    // grab the user's skills
+    [CPapi getSkillsForUser:[NSNumber numberWithInt:self.user.userID] completion:^(NSDictionary *json, NSError *error) {
+        if (!error) {
+            if (![[json objectForKey:@"error"] boolValue]) {
+                
+                // create an array to hold the skills
+                NSMutableArray *userSkills = [NSMutableArray array];
+        
+                // create the general skill
+                CPSkill *generalSkill = [[CPSkill alloc] init];
+                generalSkill.name = @"General";
+                generalSkill.skillID = 0;
+                
+                // at first our selected skill will be the general skill
+                self.selectedSkill = generalSkill;
+                
+                // add the generic skill to the array of skills
+                [userSkills addObject:generalSkill];
+                
+                for (NSDictionary *skillDict in [json objectForKey:@"payload"]) {
+                    // add this skill to the array of user skills
+                    [userSkills addObject:[[CPSkill alloc] initFromDictionary:skillDict]];
+                }
+                
+                // give those skills to the user
+                self.user.skills = userSkills;
+                
+                // reload the tableView with the new data
+                [self.tableView reloadData];
+            } else {
+                // error returned from backend
+                // show that to the user
+                [SVProgressHUD showErrorWithStatus:[error localizedDescription] duration:kDefaultDimissDelay];
+            }
+        } else {
+            // json parse error
+            // show the ugly error to the user, might help us debug
+            [SVProgressHUD showErrorWithStatus:[error localizedDescription] duration:kDefaultDimissDelay];
+        }
+    }];
 }
 
 - (void)viewDidUnload
@@ -79,7 +130,7 @@
     // show a progress HUD
     [SVProgressHUD showWithStatus:@"Sending..."];
     // call method in CPapi to send love
-    [CPapi sendLoveToUserWithID:self.user.userID loveMessage:self.descriptionTextView.text completion:^(NSDictionary *json, NSError *error){
+    [CPapi sendLoveToUserWithID:self.user.userID loveMessage:self.descriptionTextView.text skillID:self.selectedSkill.skillID completion:^(NSDictionary *json, NSError *error){
         // check for a JSON parse error
         if (!error) {
             BOOL respError = [[json objectForKey:@"error"] boolValue];
@@ -197,9 +248,177 @@
      }];
 }
 
+- (IBAction)changeSkillButtonPressed:(id)sender
+{
+    // hide the keyboard if it's around or show it if it's hidden
+    if ([self.descriptionTextView isFirstResponder]) {
+        [self.descriptionTextView resignFirstResponder];
+    } else {
+        [self.descriptionTextView becomeFirstResponder];
+    }
+    
+}
+
 - (void)dismissHUD:(id)sender
 {
     [SVProgressHUD dismiss];
+}
+
+# pragma mark - UITableViewDelegate
+
+#define HEADER_SKILL_CELL_HEIGHT 38
+#define NORMAL_SKILL_CELL_HEIGHT 41
+#define ICON_LEFT_MARGIN 18
+#define ICON_WIDTH 13
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    // alloc-init our table header
+    UIView *tableHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, HEADER_SKILL_CELL_HEIGHT)];
+    
+    // set the background color
+    tableHeader.backgroundColor = [UIColor colorWithR:51 G:51 B:51 A:1];
+    
+    // setup a button for the left side of the header
+    UIButton *changeSkillButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, tableHeader.frame.size.width - 99, tableHeader.frame.size.height)];
+    
+    // add the target for the button as changeSkillButtonPressed
+    [changeSkillButton addTarget:self action:@selector(changeSkillButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    // add the button to the table header
+    [tableHeader addSubview:changeSkillButton];
+    
+    UIImageView *leftIcon = [self imageViewForIcon:YES];
+    
+    // add the left icon to the button
+    [changeSkillButton addSubview:leftIcon];
+    
+    // use the helper method to get the label for the header
+    UILabel *headerLabel = [self labelForHeaderOrCell:YES];
+    
+    headerLabel.text = [NSString stringWithFormat:@"Skill: %@", self.selectedSkill ? self.selectedSkill.name : @"General"];
+    
+    // add the label to the button
+    [changeSkillButton addSubview:headerLabel];
+    
+    return tableHeader;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section 
+{
+    return HEADER_SKILL_CELL_HEIGHT;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NORMAL_SKILL_CELL_HEIGHT;
+}
+
+- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.user.skills ? self.user.skills.count : 6;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *SkillCellIdentifier = @"SendLoveSkillCell";
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SkillCellIdentifier];
+
+    CPSkill *cellSkill;
+    if (self.user.skills && indexPath.row < self.user.skills.count) {
+        // grab this skill out of the array
+        cellSkill = [self.user.skills objectAtIndex:indexPath.row];
+    } 
+    
+    UIImageView *leftIconImageView = [self imageViewForIcon:NO];
+    
+    // add the leftIconImageView to the cell
+    [cell addSubview:leftIconImageView];
+    
+    // use the helper method to create a UILabel
+    UILabel *skillLabel = [self labelForHeaderOrCell:NO];
+
+    // set the text for the skill label, prepend text for the header if required
+    skillLabel.text = cellSkill ? cellSkill.name : @"Loading...";
+    
+    // add the skillLabel to the cell
+    [cell addSubview:skillLabel];
+    
+    UIView *backgroundView = [[UIView alloc] init];
+    backgroundView.backgroundColor = [CPUIHelper CPTealColor];
+    cell.selectedBackgroundView = backgroundView;
+    
+    if (self.selectedSkill == cellSkill) {
+        // this cell should be in the selected state
+        // make sure the bullet is at 100% opacity
+        cell.contentView.layer.backgroundColor = [CPUIHelper CPTealColor].CGColor;
+        leftIconImageView.alpha = 1.0;
+    } else {
+        // this cell isn't selected, set the bullet opacity to 30%
+        cell.contentView.layer.backgroundColor = [UIColor clearColor].CGColor;
+        leftIconImageView.alpha = 0.3;
+    }
+    
+    // return the cell
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // make sure the keyboard is showing
+    [self.descriptionTextView becomeFirstResponder];
+
+    CPSkill *selectedSkill = [self.user.skills objectAtIndex:indexPath.row];
+    
+    // set our selectedSkillID to this ID
+    self.selectedSkill = selectedSkill;
+    
+    // tell the table to reload 
+    // this fixes the text on the header and highlights our cell
+    [self.tableView reloadData];
+}
+
+# pragma mark - Helpers for tableView
+- (UIImageView *)imageViewForIcon:(BOOL)header
+{
+    NSString *imageName = header ? @"expand-arrow-down" : @"bullet";
+    // alloc-init an imageView for the left icon
+    UIImageView *leftIconImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+    
+    // vertically center the left icon 18 pts in from the left of the cell
+    CGRect iconIVFrame = leftIconImageView.frame;
+    iconIVFrame.origin.x = ICON_LEFT_MARGIN;
+    iconIVFrame.origin.y = ((header ? HEADER_SKILL_CELL_HEIGHT : NORMAL_SKILL_CELL_HEIGHT) / 2) - (iconIVFrame.size.height / 2);
+    leftIconImageView.frame = iconIVFrame;
+    
+    return leftIconImageView;
+}
+
+-(UILabel *)labelForHeaderOrCell:(BOOL)header
+{
+    // create the frame for the label, making changes where required if this is the header cell
+    CGRect labelFrame = CGRectZero;
+    labelFrame.origin.x = ICON_WIDTH + ICON_LEFT_MARGIN + 10;
+    labelFrame.origin.y = 0;
+    labelFrame.size.width = [UIScreen mainScreen].bounds.size.width - labelFrame.origin.x - 15 - (header ? 99 : 0);
+    labelFrame.size.height = header ? HEADER_SKILL_CELL_HEIGHT : NORMAL_SKILL_CELL_HEIGHT;
+    
+    // alloc-init the skillLabel and give it the right tag
+    UILabel *skillLabel = [[UILabel alloc] initWithFrame:labelFrame];
+    
+    // set some properties for the text
+    skillLabel.textColor = [UIColor colorWithR:229 G:227 B:217 A:1];
+    skillLabel.backgroundColor = [UIColor clearColor];
+    skillLabel.font = [UIFont systemFontOfSize:13];
+    skillLabel.shadowColor = [UIColor blackColor];
+    skillLabel.shadowOffset = CGSizeMake(0, -1);
+    
+    return skillLabel;
 }
 
 @end

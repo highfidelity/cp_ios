@@ -595,7 +595,7 @@ static char BOOLRevealing;
 - (void)toggleCellActiveState:(BOOL)active
 {
     if (active) {
-        self.contentView.layer.backgroundColor = [UIColor colorWithR:66 G:128 B:128 A:1].CGColor;
+        self.contentView.layer.backgroundColor = [CPUIHelper CPTealColor].CGColor;
     } else {
         self.contentView.layer.backgroundColor = [UIColor colorWithR:51 G:51 B:51 A:1].CGColor;
     }

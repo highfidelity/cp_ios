@@ -881,10 +881,12 @@
 
 + (void)sendLoveToUserWithID:(int)recieverID 
                  loveMessage:(NSString *)message
-                 completion :(void (^)(NSDictionary *, NSError *))completion
+                     skillID:(NSUInteger)skillID 
+                  completion:(void (^)(NSDictionary *, NSError *))completion
 {
     NSMutableDictionary *reviewParams = [NSMutableDictionary dictionaryWithCapacity:2];
     [reviewParams setObject:[NSString stringWithFormat:@"%d", recieverID] forKey:@"recipientID"];
+    [reviewParams setObject:[NSString stringWithFormat:@"%d", skillID] forKey:@"skill_id"];
     [reviewParams setObject:message forKey:@"reviewText"];
     
     [self makeHTTPRequestWithAction:@"sendLove" withParameters:reviewParams completion:completion];
@@ -929,7 +931,7 @@
     // so set that param
     if (userID) {
         parameters = [NSMutableDictionary dictionaryWithCapacity:1];
-        [parameters setValue:userID forKey:@"user_id"];
+        [parameters setValue:userID.stringValue forKey:@"user_id"];
     }
     
     [self makeHTTPRequestWithAction:@"getSkillsForUser" withParameters:parameters completion:completion];

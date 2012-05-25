@@ -88,6 +88,7 @@
 # pragma mark - Love
 + (void)sendLoveToUserWithID:(int)recieverID
                  loveMessage:(NSString *)loveMessage
+                     skillID:(NSUInteger)skillID
                   completion:(void(^)(NSDictionary *json, NSError *error))completion;
 
 + (void)sendPlusOneForLoveWithID:(int)reviewID 
