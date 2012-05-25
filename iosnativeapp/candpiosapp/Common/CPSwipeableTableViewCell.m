@@ -30,7 +30,7 @@
 @property (nonatomic, assign) CPSwipeableTableViewCellDirection currentDirection;
 @property (nonatomic, strong) NSMutableArray *secretImageViews;
 @property (nonatomic, strong) NSMutableArray *secretImages;
-
+@property (nonatomic, assign) BOOL quickActionLocked;
 
 - (BOOL)shouldDragLeft;
 - (BOOL)shouldDragRight;
@@ -56,6 +56,7 @@
 @synthesize currentDirection = _currentDirection;
 @synthesize secretImageViews = _secretImageViews;
 @synthesize secretImages = _secretImages;
+@synthesize quickActionLocked = _quickActionLocked;
 @dynamic revealing;
 
 
@@ -476,17 +477,31 @@ static char BOOLRevealing;
         
         // get the position of the left edge of the cell
         CGFloat leftEdge = centerX - (self.contentView.frame.size.width / 2);
-
-        // grab the UIImageView for the switch
-        UIImageView *switchView = [self.secretImageViews objectAtIndex:0];
         
-        // if the the icon is locked then toggle the switch
+        // use updateImageIndex to see if we need to update the imageView's image
+        int updateImageIndex = -1;
+        
+        // check if we need to toggle the switch
         if (leftEdge >= QUICK_ACTION_MARGIN) {
-            // grab the second secretIcon so the switch is on
-            switchView.image = [[self.secretImages objectAtIndex:0] objectAtIndex:1];
+            // only make changes if we need to
+            if (!self.quickActionLocked) {
+                // use the first secretImage so the switch is on
+                updateImageIndex = 1;
+                self.quickActionLocked = YES;
+            }
         } else {
-            // make sure the switch is off
-            switchView.image = [[self.secretImages objectAtIndex:0] objectAtIndex:0];
+            if (self.quickActionLocked) {
+                // use the first secretImage so the switch is off
+                updateImageIndex = 0;
+                self.quickActionLocked = NO;
+            }
+        }
+        
+        // if updateImageIndex isn't -1 then we need to grab a new image and give it to the UIImageView
+        if (updateImageIndex != -1) {
+            // grab the UIImageView for the switch
+            UIImageView *switchView = [self.secretImageViews objectAtIndex:0];
+            switchView.image = [[self.secretImages objectAtIndex:0] objectAtIndex:updateImageIndex];
         }
     }
 }
