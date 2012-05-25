@@ -392,15 +392,18 @@
 {
     // make sure the keyboard is showing
     [self.descriptionTextView becomeFirstResponder];
-
-    CPSkill *selectedSkill = [self.user.skills objectAtIndex:indexPath.row];
     
-    // set our selectedSkillID to this ID
-    self.selectedSkill = selectedSkill;
-    
-    // tell the table to reload 
-    // this fixes the text on the header and highlights our cell
-    [self.tableView reloadData];
+    // only attempt to select a skill if we actually have skills
+    if (self.user.skills) {
+        CPSkill *selectedSkill = [self.user.skills objectAtIndex:indexPath.row];
+        
+        // set our selectedSkillID to this ID
+        self.selectedSkill = selectedSkill;
+        
+        // tell the table to reload 
+        // this fixes the text on the header and highlights our cell
+        [self.tableView reloadData];
+    }
 }
 
 # pragma mark - Helpers for tableView
