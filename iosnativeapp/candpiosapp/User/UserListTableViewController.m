@@ -200,7 +200,10 @@
     cell.delegate = self;
     
     // set the secretIcons array for this cell 
-    cell.secretIcons = [NSArray arrayWithObject:[UIImage imageNamed:@"send-love-heart"]];
+    // for now this is the two images used in the switch
+    // probably smarter just to send the prefix and have the superclass figure out the rest
+    // if we're using switches for all the quick actions
+    cell.secretIconPrefixes = [NSArray arrayWithObject:@"send-love"];
     
     // Configure the cell...
     User *user;
