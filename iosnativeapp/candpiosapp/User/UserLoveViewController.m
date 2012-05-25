@@ -353,7 +353,7 @@
     backgroundView.backgroundColor = [CPUIHelper CPTealColor];
     cell.selectedBackgroundView = backgroundView;
     
-    if (self.selectedSkill == cellSkill) {
+    if (cellSkill && self.selectedSkill == cellSkill) {
         // this cell should be in the selected state
         // make sure the bullet is at 100% opacity
         cell.contentView.layer.backgroundColor = [CPUIHelper CPTealColor].CGColor;
