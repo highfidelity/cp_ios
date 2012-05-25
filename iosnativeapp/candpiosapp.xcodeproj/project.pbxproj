@@ -61,6 +61,7 @@
 		530A364D155DD3E900392E65 /* love-plus-one.png in Resources */ = {isa = PBXBuildFile; fileRef = 530A364B155DD3E900392E65 /* love-plus-one.png */; };
 		530A364E155DD3E900392E65 /* love-plus-one@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 530A364C155DD3E900392E65 /* love-plus-one@2x.png */; };
 		5319C76115547157005DA299 /* UIButton+AnimatedClockHand.m in Sources */ = {isa = PBXBuildFile; fileRef = 5319C76015547157005DA299 /* UIButton+AnimatedClockHand.m */; };
+		53217F8C156FF89B006258F0 /* LoveSkillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */; };
 		532524CB14F8530F0089F8EA /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 532524C814F8530F0089F8EA /* GTMNSString+HTML.m */; };
 		532524CC14F8530F0089F8EA /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 532524CA14F8530F0089F8EA /* NSString+HTML.m */; };
 		5327E9FA15658CCE005330AD /* UIColor+EasyRGB.m in Sources */ = {isa = PBXBuildFile; fileRef = 5327E9F915658CCD005330AD /* UIColor+EasyRGB.m */; };
@@ -582,6 +583,8 @@
 		530A364C155DD3E900392E65 /* love-plus-one@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "love-plus-one@2x.png"; path = "images/love-plus-one@2x.png"; sourceTree = "<group>"; };
 		5319C75F15547157005DA299 /* UIButton+AnimatedClockHand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+AnimatedClockHand.h"; path = "CheckIn/UIButton+AnimatedClockHand.h"; sourceTree = "<group>"; };
 		5319C76015547157005DA299 /* UIButton+AnimatedClockHand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+AnimatedClockHand.m"; path = "CheckIn/UIButton+AnimatedClockHand.m"; sourceTree = "<group>"; };
+		53217F8A156FF89B006258F0 /* LoveSkillTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoveSkillTableViewCell.h; path = User/LoveSkillTableViewCell.h; sourceTree = "<group>"; };
+		53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoveSkillTableViewCell.m; path = User/LoveSkillTableViewCell.m; sourceTree = "<group>"; };
 		532524C714F8530F0089F8EA /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
 		532524C814F8530F0089F8EA /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
 		532524C914F8530F0089F8EA /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
@@ -1503,6 +1506,8 @@
 				5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */,
 				536DE929150170BB00794650 /* images */,
 				694323A715213D9000EBF585 /* mustaches */,
+				53217F8A156FF89B006258F0 /* LoveSkillTableViewCell.h */,
+				53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -2890,6 +2895,7 @@
 				323A6A7A156DB0FE0099D666 /* MKStoreObserver.m in Sources */,
 				534B6EF0156DAE7900DA9F74 /* SkillsTableViewController.m in Sources */,
 				5361F8C3156EBBEC0099D303 /* CPSkill.m in Sources */,
+				53217F8C156FF89B006258F0 /* LoveSkillTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

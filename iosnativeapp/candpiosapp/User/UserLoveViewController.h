@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "CPPlaceholderTextView.h"
 
+#define ICON_IMAGE_VIEW_TAG 1238
+
 @interface UserLoveViewController : UIViewController
 @property (weak, nonatomic) id delegate;
 @property (strong, nonatomic) User *user;

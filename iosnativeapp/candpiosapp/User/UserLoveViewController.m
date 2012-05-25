@@ -11,6 +11,7 @@
 #import "MKStoreManager.h"
 #import "FlurryAnalytics.h"
 #import "CPSkill.h"
+#import "LoveSkillTableViewCell.h"
 
 #define LOVE_CHAR_LIMIT 140
 #define inAppItem @"com.coffeeandpower.love1"
@@ -327,7 +328,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *SkillCellIdentifier = @"SendLoveSkillCell";
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SkillCellIdentifier];
+    LoveSkillTableViewCell *cell = [[LoveSkillTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SkillCellIdentifier];
 
     CPSkill *cellSkill;
     if (self.user.skills && indexPath.row < self.user.skills.count) {
@@ -336,6 +337,7 @@
     } 
     
     UIImageView *leftIconImageView = [self imageViewForIcon:NO];
+    leftIconImageView.tag = ICON_IMAGE_VIEW_TAG;
     
     // add the leftIconImageView to the cell
     [cell addSubview:leftIconImageView];
@@ -349,20 +351,11 @@
     // add the skillLabel to the cell
     [cell addSubview:skillLabel];
     
-    UIView *backgroundView = [[UIView alloc] init];
-    backgroundView.backgroundColor = [CPUIHelper CPTealColor];
-    cell.selectedBackgroundView = backgroundView;
+    // if this is the selected skill then force it to be active
+    cell.forceActive = (cellSkill && cellSkill == self.selectedSkill);
     
-    if (cellSkill && self.selectedSkill == cellSkill) {
-        // this cell should be in the selected state
-        // make sure the bullet is at 100% opacity
-        cell.contentView.layer.backgroundColor = [CPUIHelper CPTealColor].CGColor;
-        leftIconImageView.alpha = 1.0;
-    } else {
-        // this cell isn't selected, set the bullet opacity to 30%
-        cell.contentView.layer.backgroundColor = [UIColor clearColor].CGColor;
-        leftIconImageView.alpha = 0.3;
-    }
+    // use the cell's setActive method to set the right state for this cell
+    [cell setActive:NO];
     
     // return the cell
     return cell;
