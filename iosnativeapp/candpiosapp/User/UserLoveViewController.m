@@ -367,6 +367,13 @@
     
     // add the seperator line to the tableHeader
     [tableHeader addSubview:sepLine];
+
+    // add a line to separate the + Resume from the Skills selector
+    UIView *vertSepLine = [[UIView alloc] initWithFrame:CGRectMake(self.resumeCheckbox.frame.origin.x - 8, 0, 1, 38)];
+//    vertSepLine.backgroundColor = [UIColor colorWithR:114 G:114 B:114 A:1];
+    vertSepLine.backgroundColor = [UIColor colorWithR:58 G:58 B:58 A:1];
+    [tableHeader addSubview:vertSepLine];
+
     
     return tableHeader;
 }
