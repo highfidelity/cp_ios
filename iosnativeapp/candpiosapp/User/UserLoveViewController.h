@@ -19,8 +19,9 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-- (IBAction)addButtonPressed:(UIButton *)sender;
+- (IBAction)resumeCheckboxPressed:(UIButton *)sender;
 
 - (void)dismissHUD:(id)sender;
+- (void)purchaseLove;
 
 @end

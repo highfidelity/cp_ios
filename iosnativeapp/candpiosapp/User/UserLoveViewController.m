@@ -22,6 +22,9 @@
 @property (nonatomic) BOOL purchasedLove;
 @property (strong, nonatomic) CPSkill *selectedSkill;
 @property (strong, nonatomic) UIView *keyboardBackground;
+@property (nonatomic) BOOL resumeCheckboxActive;
+@property (weak, nonatomic) IBOutlet UIButton *resumeCheckbox;
+
 
 @end
 
@@ -34,6 +37,8 @@
 @synthesize navigationBar = _navigationBar;
 @synthesize tableView = _tableView;
 @synthesize purchasedLove = _purchasedLove;
+@synthesize resumeCheckboxActive = _resumeCheckboxActive;
+@synthesize resumeCheckbox = _resumeCheckbox;
 @synthesize selectedSkill = _selectedSkill;
 @synthesize keyboardBackground = _keyboardBackground;
 
@@ -139,6 +144,7 @@
     [self setTableView:nil];
     [self setCharCounterLabel:nil];
     [self setKeyboardBackground:nil];
+    [self setResumeCheckbox:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     
@@ -152,6 +158,12 @@
 }
 
 - (void)sendReview {
+    // If the user wants to add this love to the resume, prompt them to purchase now
+    if (self.resumeCheckboxActive && !self.purchasedLove) {
+        [self purchaseLove];
+        return;
+    }
+    
     // show a progress HUD
     [SVProgressHUD showWithStatus:@"Sending..."];
     // call method in CPapi to send love
@@ -228,17 +240,8 @@
     self.charCounterLabel.text = [NSString stringWithFormat:@"%d", LOVE_CHAR_LIMIT - textView.text.length];
 }
 
-#pragma mark - IBActions
-
--(IBAction)cancelButtonPressed:(id)sender
+- (void)purchaseLove
 {
-    [self dismissModalViewControllerAnimated:YES];
-}
-
-- (IBAction)addButtonPressed:(UIButton *)sender
-{
-    NSLog(@"Add Button Pressed!");
-    
     // Check if the user has already purchased love but it failed previously, use it by default here
     if ([[MKStoreManager sharedManager] canConsumeProduct:inAppItem quantity:1]) {
         self.purchasedLove = YES;
@@ -246,10 +249,10 @@
         [self sendReview];
         return;
     }
-
+    
     // Loading the store might take a while so pop up a HUD
     [SVProgressHUD showWithStatus:@"Loading store..."];
-
+    
     // Automatically hide the HUD after 2 seconds since there is no kind of callback when the app store alertview appears
     [self performSelector:@selector(dismissHUD:) withObject:nil afterDelay:2.0];
     
@@ -270,7 +273,26 @@
          [FlurryAnalytics logEvent:@"canceledPurchase"];
          
          // Might want to tell the user he can still send love for free?
-     }];
+     }];    
+}
+
+#pragma mark - IBActions
+
+-(IBAction)cancelButtonPressed:(id)sender
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (IBAction)resumeCheckboxPressed:(UIButton *)sender
+{
+    if (self.resumeCheckboxActive) {
+        self.resumeCheckboxActive = NO;
+        self.resumeCheckbox.imageView.image = [UIImage imageNamed:@"checkbox-unchecked"];
+    }
+    else {
+        self.resumeCheckboxActive = YES;
+        self.resumeCheckbox.imageView.image = [UIImage imageNamed:@"checkbox-checked"];
+    }
 }
 
 - (IBAction)changeSkillButtonPressed:(id)sender
