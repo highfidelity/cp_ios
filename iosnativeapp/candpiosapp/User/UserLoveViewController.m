@@ -271,6 +271,7 @@
 #define NORMAL_SKILL_CELL_HEIGHT 41
 #define ICON_LEFT_MARGIN 18
 #define ICON_WIDTH 13
+#define LOADING_SPINNER_TAG 1239
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -332,15 +333,41 @@
 
     CPSkill *cellSkill;
     if (self.user.skills && indexPath.row < self.user.skills.count) {
-        // grab this skill out of the array
+        // grab this skill out of the array 
         cellSkill = [self.user.skills objectAtIndex:indexPath.row];
     } 
     
-    UIImageView *leftIconImageView = [self imageViewForIcon:NO];
-    leftIconImageView.tag = ICON_IMAGE_VIEW_TAG;
-    
-    // add the leftIconImageView to the cell
-    [cell addSubview:leftIconImageView];
+    if (cellSkill) {
+        // remove the loading spinner if it's here from reuse
+        [[cell viewWithTag:LOADING_SPINNER_TAG] removeFromSuperview];
+        
+        // alloc-init the image view to hold the left icon
+        UIImageView *leftIconImageView = [self imageViewForIcon:NO];
+        leftIconImageView.tag = ICON_IMAGE_VIEW_TAG;
+        
+        // add the leftIconImageView to the cell
+        [cell addSubview:leftIconImageView];
+    } else {
+        
+        // remove the left icon image view if it's here from reuse
+        [[cell viewWithTag:ICON_IMAGE_VIEW_TAG] removeFromSuperview];
+        
+        // alloc-init a loading spinner for this cell while we have no skill
+        UIActivityIndicatorView *loadingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        loadingSpinner.tag = LOADING_SPINNER_TAG;
+        
+        // position the loadingSpinner
+        CGRect spinnerMove = loadingSpinner.frame;
+        spinnerMove.origin.x = 11;
+        spinnerMove.origin.y = 10;
+        loadingSpinner.frame = spinnerMove;
+        
+        // start the spinner
+        [loadingSpinner startAnimating];
+        
+        // add the loading spinner to the cell
+        [cell addSubview:loadingSpinner];
+    }
     
     // use the helper method to create a UILabel
     UILabel *skillLabel = [self labelForHeaderOrCell:NO];
