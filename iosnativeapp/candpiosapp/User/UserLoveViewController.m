@@ -308,6 +308,13 @@
     // add the label to the button
     [changeSkillButton addSubview:headerLabel];
     
+    // add a line to the bottom of the view since the header doesn't get a seperator
+    UIView *sepLine = [[UIView alloc] initWithFrame:CGRectMake(0, tableHeader.frame.size.height - 1, tableHeader.frame.size.width, 1)];
+    sepLine.backgroundColor = [UIColor colorWithR:58 G:58 B:58 A:1];
+    
+    // add the seperator line to the tableHeader
+    [tableHeader addSubview:sepLine];
+    
     return tableHeader;
 }
 
