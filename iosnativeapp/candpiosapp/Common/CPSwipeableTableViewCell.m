@@ -19,7 +19,9 @@
 #import <objc/runtime.h>
 
 # define SWITCH_LEFT_MARGIN 15
-# define QUICK_ACTION_MARGIN 138
+# define QUICK_ACTION_MARGIN 128
+# define QUICK_ACTION_LOCK QUICK_ACTION_MARGIN + 10
+
 
 @interface CPSwipeableTableViewCell()
 @property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
@@ -231,7 +233,7 @@ static char BOOLRevealing;
 	if (self.isRevealing)
 		[self performActionInDirection:(self.isRevealing) ? self.currentDirection : self.lastDirection];
 	else
-		[self slideInContentViewFromDirection:(self.isRevealing) ? self.currentDirection : self.lastDirection offsetMultiplier:self.bounceMultiplier];
+		[self slideInContentViewFromDirection:(self.isRevealing) ? self.currentDirection : self.lastDirection offsetMultiplier:self.bounceMultiplier slideDelay:0];
 }
 
 - (void)_setRevealing:(BOOL)revealing
@@ -288,10 +290,10 @@ static char BOOLRevealing;
 			
         
         // if our style is quick action then don't go past the defined margin
-        if (newCenterPosition > originalCenter + QUICK_ACTION_MARGIN && self.rightStyle == CPSwipeableTableViewCellSwipeStyleQuickAction) {
-            newCenterPosition = originalCenter + QUICK_ACTION_MARGIN;
-        } else if (newCenterPosition < originalCenter - QUICK_ACTION_MARGIN && self.leftStyle == CPSwipeableTableViewCellSwipeStyleQuickAction) {
-            newCenterPosition = originalCenter - QUICK_ACTION_MARGIN;
+        if (newCenterPosition > originalCenter + QUICK_ACTION_LOCK && self.rightStyle == CPSwipeableTableViewCellSwipeStyleQuickAction) {
+            newCenterPosition = originalCenter + QUICK_ACTION_LOCK;
+        } else if (newCenterPosition < originalCenter - QUICK_ACTION_LOCK && self.leftStyle == CPSwipeableTableViewCellSwipeStyleQuickAction) {
+            newCenterPosition = originalCenter - QUICK_ACTION_LOCK;
         }
 		
 		// Let's not go waaay out of bounds
@@ -354,7 +356,7 @@ static char BOOLRevealing;
 			if (!self.isRevealing)
 				multiplier *= -1.0;
             
-			[self slideInContentViewFromDirection:self.currentDirection offsetMultiplier:multiplier];
+			[self slideInContentViewFromDirection:self.currentDirection offsetMultiplier:multiplier slideDelay:0];
 			[self _setRevealing:NO];
 			
 		} else if (translation.x != 0) {
@@ -363,7 +365,7 @@ static char BOOLRevealing;
 			if (translation.x < 0)
 				finalDir = CPSwipeableTableViewCellDirectionLeft;
             
-			[self slideInContentViewFromDirection:finalDir offsetMultiplier:-1.0 * self.bounceMultiplier];
+			[self slideInContentViewFromDirection:finalDir offsetMultiplier:-1.0 * self.bounceMultiplier slideDelay:0];
 			[self _setRevealing:NO];
 		}
 	}
@@ -399,7 +401,7 @@ static char BOOLRevealing;
 #pragma mark - Sliding
 #define kBOUNCE_DISTANCE 20.0
 
-- (void)slideInContentViewFromDirection:(CPSwipeableTableViewCellDirection)direction offsetMultiplier:(CGFloat)multiplier
+- (void)slideInContentViewFromDirection:(CPSwipeableTableViewCellDirection)direction offsetMultiplier:(CGFloat)multiplier slideDelay:(CGFloat)slideDelay
 {    
     CGFloat bounceDistance;
     
@@ -425,7 +427,7 @@ static char BOOLRevealing;
 	}
 	
 	[UIView animateWithDuration:0.1
-						  delay:0 
+						  delay:slideDelay
 						options:UIViewAnimationOptionCurveEaseOut|UIViewAnimationOptionAllowUserInteraction 
 					 animations:^{ self.contentView.center = CGPointMake(self.originalCenter, self.contentView.center.y); } 
 					 completion:^(BOOL f) {
@@ -462,9 +464,13 @@ static char BOOLRevealing;
             [self.delegate quickActionForDirection:direction cell:self];
         }
         
+        // flick the switch back
+        // use the CPSwipeableTableViewCellDirection to decide which index to pass to pull the right UIImageView
+        [self changeStateOfQuickActionButton:direction state:0];
+        
         // slide the content view back in
         // by setting revealing to NO using the delegate's method
-        [self slideInContentViewFromDirection:direction offsetMultiplier:[self bounceMultiplier]];
+        [self slideInContentViewFromDirection:direction offsetMultiplier:[self bounceMultiplier] slideDelay:0.15];
     } else {
         // calculate the new center depending on the direction of the swipe
         CGFloat x = direction == CPSwipeableTableViewCellDirectionLeft ? -self.originalCenter : self.contentView.frame.size.width + self.originalCenter; 
@@ -499,11 +505,16 @@ static char BOOLRevealing;
         
         // if updateImageIndex isn't -1 then we need to grab a new image and give it to the UIImageView
         if (updateImageIndex != -1) {
-            // grab the UIImageView for the switch
-            UIImageView *switchView = [self.secretImageViews objectAtIndex:0];
-            switchView.image = [[self.secretImages objectAtIndex:0] objectAtIndex:updateImageIndex];
+            [self changeStateOfQuickActionButton:0 state:updateImageIndex];
         }
     }
+}
+
+- (void)changeStateOfQuickActionButton:(int)buttonIndexInSecretImages state:(BOOL)on
+{
+    // grab the UIImageView for the switch at the given index
+    UIImageView *switchView = [self.secretImageViews objectAtIndex:buttonIndexInSecretImages];
+    switchView.image = [[self.secretImages objectAtIndex:buttonIndexInSecretImages] objectAtIndex:on];
 }
 
 #pragma mark - UIGestureRecognizerDelegate
