@@ -992,10 +992,6 @@
 		871EFB1914AE9C820030658B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		871EFB1A14AE9C820030658B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		871EFB3614AE9C820030658B /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		871EFB3E14AE9C820030658B /* candpiosappTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "candpiosappTests-Info.plist"; sourceTree = "<group>"; };
-		871EFB4014AE9C820030658B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		871EFB4214AE9C820030658B /* candpiosappTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = candpiosappTests.h; sourceTree = "<group>"; };
-		871EFB4314AE9C820030658B /* candpiosappTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = candpiosappTests.m; sourceTree = "<group>"; };
 		871EFB5E14AEB4950030658B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		871EFB6214AF97130030658B /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		871EFB6314AF97130030658B /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
@@ -2127,7 +2123,6 @@
 			isa = PBXGroup;
 			children = (
 				871EFB1014AE9C820030658B /* candpiosapp */,
-				871EFB3C14AE9C820030658B /* candpiosappTests */,
 				871EFB0914AE9C820030658B /* Frameworks */,
 				871EFB0714AE9C820030658B /* Products */,
 			);
@@ -2201,25 +2196,6 @@
 				871EFB1314AE9C820030658B /* InfoPlist.strings */,
 				5396E0D714E466C200E33E0E /* LeagueGothic.otf */,
 				871EFB1614AE9C820030658B /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		871EFB3C14AE9C820030658B /* candpiosappTests */ = {
-			isa = PBXGroup;
-			children = (
-				871EFB4214AE9C820030658B /* candpiosappTests.h */,
-				871EFB4314AE9C820030658B /* candpiosappTests.m */,
-				871EFB3D14AE9C820030658B /* Supporting Files */,
-			);
-			path = candpiosappTests;
-			sourceTree = "<group>";
-		};
-		871EFB3D14AE9C820030658B /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				871EFB3E14AE9C820030658B /* candpiosappTests-Info.plist */,
-				871EFB3F14AE9C820030658B /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2892,14 +2868,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				871EFB1414AE9C820030658B /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		871EFB3F14AE9C820030658B /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				871EFB4014AE9C820030658B /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
