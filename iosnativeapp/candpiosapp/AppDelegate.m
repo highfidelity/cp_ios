@@ -703,32 +703,35 @@ didReceiveLocalNotification:(UILocalNotification *)notif
         otherText = @"View";
     }
 
-    CPAlertView *alertView;
-    
-    if (showActionSheet) {
-        alertView = [[CPAlertView alloc] initWithTitle:alertText
-                                               message:nil
-                                              delegate:self
-                                     cancelButtonTitle:cancelText
-                                     otherButtonTitles:otherText, neverText, nil];
-    }
-    else {
-        alertView = [[CPAlertView alloc] initWithTitle:alertText
-                                               message:nil
-                                              delegate:self
-                                     cancelButtonTitle:cancelText
-                                     otherButtonTitles:otherText, nil];        
-    }
-
-    if (alertView) {
-        alertView.context = notif;
+    // Only show the alert if there's a valid title to ensure that we don't show a blank alert
+    if (alertText && alertText.length > 0) {
+        CPAlertView *alertView;
         
-        if (tagNumber) {
-            alertView.tag = tagNumber;
+        if (showActionSheet) {
+            alertView = [[CPAlertView alloc] initWithTitle:alertText
+                                                   message:nil
+                                                  delegate:self
+                                         cancelButtonTitle:cancelText
+                                         otherButtonTitles:otherText, neverText, nil];
+        }
+        else {
+            alertView = [[CPAlertView alloc] initWithTitle:alertText
+                                                   message:nil
+                                                  delegate:self
+                                         cancelButtonTitle:cancelText
+                                         otherButtonTitles:otherText, nil];        
         }
         
-        [alertView show];
-    }
+        if (alertView) {
+            alertView.context = notif;
+            
+            if (tagNumber) {
+                alertView.tag = tagNumber;
+            }
+            
+            [alertView show];
+        }        
+    }    
 }
 
 // Handle PUSH notifications while the app is running
