@@ -14,6 +14,8 @@
 #import "VenueCell.h"
 #import "CheckInDetailsViewController.h"
 #import "CPVenue.h"
+#import "CPSwipeableQuickActionSwitch.h"
+#import "CPSoundEffectsManager.h"
 
 @implementation UserListTableViewController
 
@@ -38,7 +40,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(refreshFromNewMapData:) 
                                                  name:@"refreshUsersFromNewMapData" 
-                                               object:nil]; 
+                                               object:nil];
 }
 
 - (void)viewDidUnload
@@ -199,12 +201,6 @@
     // be the delegate of the cell for swipe actions
     cell.delegate = self;
     
-    // set the secretIcons array for this cell 
-    // for now this is the two images used in the switch
-    // probably smarter just to send the prefix and have the superclass figure out the rest
-    // if we're using switches for all the quick actions
-    cell.secretIconPrefixes = [NSArray arrayWithObject:@"send-love"];
-    
     // Configure the cell...
     User *user;
 
@@ -299,24 +295,6 @@
     [self showUserProfileForUser:[self selectedUserForIndexPath:indexPath]];
 }
 
-# pragma mark - CPSwipeableTableViewCellDelegate
-
--(void)quickActionForDirection:(CPSwipeableTableViewCellDirection)direction cell:(CPSwipeableTableViewCell *)sender
-{
-    // only show the love modal if this user is logged in
-    if ([CPAppDelegate currentUser]) {
-        User *selectedUser = [self selectedUserForIndexPath:[self.tableView indexPathForCell:sender]];
-        
-        // only show the love modal if this isn't the user themselves
-        if (selectedUser.userID != [CPAppDelegate currentUser].userID) {
-            UserLoveViewController *loveModal = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"SendLoveModal"];
-            loveModal.user = selectedUser;
-            
-            [self presentModalViewController:loveModal animated:YES];
-        }
-    }
-    
-}
 
 - (User *)selectedUserForIndexPath:(NSIndexPath *)indexPath
 {
@@ -340,9 +318,38 @@
     UserProfileViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
     // set the user object on the UserProfileVC to the user we just created
     userVC.user = selectedUser;
-
+    
     // push the UserProfileViewController onto the navigation controller stack
     [self.navigationController pushViewController:userVC animated:YES];
+}
+
+# pragma mark - CPSwipeableTableViewCellDelegate
+
+static NSString *quickActionPrefix = @"send-love-switch";
+static CPSwipeableQuickActionSwitch *quickSwitch = nil;
+
+- (CPSwipeableQuickActionSwitch *)quickActionSwitchForDirection:(CPSwipeableTableViewCellDirection)direction
+{
+    if (!quickSwitch) {
+        quickSwitch = [[CPSwipeableQuickActionSwitch alloc] initWithAssetPrefix:quickActionPrefix];
+    }
+    return quickSwitch;
+}
+
+-(void)performQuickActionForDirection:(CPSwipeableTableViewCellDirection)direction cell:(CPSwipeableTableViewCell *)sender
+{
+    // only show the love modal if this user is logged in
+    if ([CPAppDelegate currentUser]) {
+        User *selectedUser = [self selectedUserForIndexPath:[self.tableView indexPathForCell:sender]];
+        
+        // only show the love modal if this isn't the user themselves
+        if (selectedUser.userID != [CPAppDelegate currentUser].userID) {
+            UserLoveViewController *loveModal = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"SendLoveModal"];
+            loveModal.user = selectedUser;
+            
+            [self presentModalViewController:loveModal animated:YES];
+        }
+    }
 }
 
 @end

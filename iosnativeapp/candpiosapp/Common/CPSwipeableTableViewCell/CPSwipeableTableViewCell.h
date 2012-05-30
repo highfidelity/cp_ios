@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CPSoundEffectsManager.h"
+#import "CPSwipeableQuickActionSwitch.h"
 
 typedef enum {
 	CPSwipeableTableViewCellDirectionRight = 0,
@@ -28,8 +30,8 @@ typedef enum {
 - (BOOL)cellShouldReveal:(CPSwipeableTableViewCell *)cell;
 - (void)cellDidBeginPan:(CPSwipeableTableViewCell *)cell;
 - (void)cellDidReveal:(CPSwipeableTableViewCell *)cell;
-- (void)quickActionForDirection:(CPSwipeableTableViewCellDirection)direction cell:(CPSwipeableTableViewCell *)sender;
-
+- (void)performQuickActionForDirection:(CPSwipeableTableViewCellDirection)direction cell:(CPSwipeableTableViewCell *)sender;
+- (CPSwipeableQuickActionSwitch *)quickActionSwitchForDirection:(CPSwipeableTableViewCellDirection)direction;
 @end
 
 @interface CPSwipeableTableViewCell : UITableViewCell <UIGestureRecognizerDelegate>
@@ -40,9 +42,6 @@ typedef enum {
 @property (nonatomic, assign) BOOL shouldBounce;
 @property (nonatomic, assign) CPSwipeableTableViewCellSwipeStyle leftStyle;
 @property (nonatomic, assign) CPSwipeableTableViewCellSwipeStyle rightStyle;
-@property (nonatomic, strong) NSArray *secretIconPrefixes;
-
-
 
 
 @end

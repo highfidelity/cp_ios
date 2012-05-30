@@ -22,7 +22,6 @@
 # define QUICK_ACTION_MARGIN 128
 # define QUICK_ACTION_LOCK QUICK_ACTION_MARGIN + 10
 
-
 @interface CPSwipeableTableViewCell()
 @property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
 @property (nonatomic, readonly, assign) CGFloat originalCenter;
@@ -30,8 +29,6 @@
 @property (nonatomic, assign) CGFloat initialHorizontalCenter;
 @property (nonatomic, assign) CPSwipeableTableViewCellDirection lastDirection;
 @property (nonatomic, assign) CPSwipeableTableViewCellDirection currentDirection;
-@property (nonatomic, strong) NSMutableArray *secretImageViews;
-@property (nonatomic, strong) NSMutableArray *secretImages;
 @property (nonatomic, assign) BOOL quickActionLocked;
 
 - (BOOL)shouldDragLeft;
@@ -48,7 +45,6 @@
 @synthesize shouldBounce = _shouldBounce;
 @synthesize leftStyle = _leftStyle;
 @synthesize rightStyle = _rightStyle;
-@synthesize secretIconPrefixes = _secretIconPrefixes;
 
 // private attrs
 @synthesize panRecognizer = _panRecognizer;
@@ -56,11 +52,8 @@
 @synthesize initialHorizontalCenter = _initialHorizontalCenter;
 @synthesize lastDirection = _lastDirection;
 @synthesize currentDirection = _currentDirection;
-@synthesize secretImageViews = _secretImageViews;
-@synthesize secretImages = _secretImages;
 @synthesize quickActionLocked = _quickActionLocked;
 @dynamic revealing;
-
 
 - (void)awakeFromNib
 {
@@ -137,80 +130,6 @@
 	[self addSubview:self.hiddenView];
 	[self addSubview:self.contentView];
 	self.hiddenView.frame = self.contentView.frame;
-}
-
-- (NSMutableArray *)secretImageViews
-{
-    // lazily instantiate an NSMutableArray for the secret images
-    if (!_secretImageViews) {
-        _secretImageViews = [NSMutableArray array];
-    }
-    return _secretImageViews;
-}
-
-- (NSMutableArray *)secretImages
-{
-    // lazily instantiate an NSMutableArray for the secret images
-    if (!_secretImages) {
-        _secretImages = [NSMutableArray array];
-    }
-    return _secretImages;
-}
-
-- (void)setSecretIconPrefixes:(NSArray *)secretIconPrefixes
-{    
-    // when our secret icons array gets set we want to add the icons to the background view
-    
-    // let's make sure first we remove all of the buttons and images that might currently be there
-    
-    for (UIImageView *oldImageView in self.secretImageViews) {
-        [oldImageView removeFromSuperview];
-    }
-    
-    // clear the array of secretImageViews
-    [self.secretImageViews removeAllObjects];
-    
-    if (secretIconPrefixes.count > 0) {
-        
-        // start at SWITCH_LEFT_MARGIN
-        CGFloat originX = SWITCH_LEFT_MARGIN;
-        
-        // cycle through the images in the secretIcons array
-        for (NSString *imagePrefix in secretIconPrefixes) {
-
-            // grab the off switch
-            UIImage *offSwitch = [UIImage imageNamed:[imagePrefix stringByAppendingString:@"-toggle-off"]];
-            
-            // grab the on switch
-            UIImage *onSwitch = [UIImage imageNamed:[imagePrefix stringByAppendingString:@"-toggle-on"]];
-            
-            NSArray *imagesArray = [NSArray arrayWithObjects:offSwitch, onSwitch, nil];
-            
-            // add that array of images to the secretImages array
-            [self.secretImages addObject:imagesArray];
-            
-            // alloc-init an imageView to hold the icon
-            UIImageView *secretImageView = [[UIImageView alloc] initWithImage:offSwitch];
-            
-            // move the secretImageView to the right spot
-            CGRect switchFrame = secretImageView.frame;
-            switchFrame.origin.x = originX;
-            switchFrame.origin.y = (self.contentView.frame.size.height / 2) - (switchFrame.size.height / 2);
-            secretImageView.frame = switchFrame;
-            
-            // add the secretImageView to the hiddenView
-            [self.hiddenView addSubview:secretImageView];
-            
-            // add the secret icon to our array of secret icons to grab it later
-            [self.secretImageViews addObject:secretImageView];
-            
-            // add some padding for the next button
-            originX += 20;
-        }
-    }
-
-    // set the instance variable to the passed array
-    _secretIconPrefixes = secretIconPrefixes;
 }
 
 static char BOOLRevealing;
@@ -460,13 +379,13 @@ static char BOOLRevealing;
     if ([self styleForDirectionIsQuickAction:direction]) {
         // make sure the delegate will handle the call
         // and then tell it to perform the quick action
-        if ([self.delegate respondsToSelector:@selector(quickActionForDirection:cell:)]) {
-            [self.delegate quickActionForDirection:direction cell:self];
+        if ([self.delegate respondsToSelector:@selector(performQuickActionForDirection:cell:)]) {
+            [self.delegate performQuickActionForDirection:direction cell:self];
         }
         
         // flick the switch back
         // use the CPSwipeableTableViewCellDirection to decide which index to pass to pull the right UIImageView
-        [self changeStateOfQuickActionButton:direction state:0];
+        [self changeStateOfQuickActionSwitch:[self quickActionImageViewForDirection:direction] direction:direction active:NO];
         
         // slide the content view back in
         // by setting revealing to NO using the delegate's method
@@ -478,43 +397,95 @@ static char BOOLRevealing;
     }
 }
 
+#pragma mark - Methods for quick action
+
 - (void)checkForQuickActionSwitchToggleForNewCenter:(CGFloat)centerX {  
-    if (self.secretIconPrefixes.count > 0) {
+    // currently the app only uses quick action on right swipe
+    // code will need to be refactored if we need to add that functionality on the right side
+    if (self.rightStyle == CPSwipeableTableViewCellSwipeStyleQuickAction) {
+        
+        // grab the UIImageView that holds the switch
+        UIImageView *quickActionImageView = [self quickActionImageViewForDirection:CPSwipeableTableViewCellDirectionRight];
         
         // get the position of the left edge of the cell
         CGFloat leftEdge = centerX - (self.contentView.frame.size.width / 2);
         
         // use updateImageIndex to see if we need to update the imageView's image
-        int updateImageIndex = -1;
+        int changeState = -1;
         
         // check if we need to toggle the switch
         if (leftEdge >= QUICK_ACTION_MARGIN) {
             // only make changes if we need to
             if (!self.quickActionLocked) {
-                // use the first secretImage so the switch is on
-                updateImageIndex = 1;
-                self.quickActionLocked = YES;
+                // turn the switch on
+                changeState = 1;
             }
         } else {
             if (self.quickActionLocked) {
-                // use the first secretImage so the switch is off
-                updateImageIndex = 0;
-                self.quickActionLocked = NO;
+                // turn it back off
+                changeState = 0;
             }
         }
         
-        // if updateImageIndex isn't -1 then we need to grab a new image and give it to the UIImageView
-        if (updateImageIndex != -1) {
-            [self changeStateOfQuickActionButton:0 state:updateImageIndex];
+        // if change isn't -1 then we need to grab a new image and give it to the UIImageView
+        // we'll also play the sound effect
+        if (changeState != -1) {
+            [self changeStateOfQuickActionSwitch:quickActionImageView direction:CPSwipeableTableViewCellDirectionRight active:changeState];
         }
     }
 }
-
-- (void)changeStateOfQuickActionButton:(int)buttonIndexInSecretImages state:(BOOL)on
+- (UIImageView *)quickActionImageViewForDirection:(CPSwipeableTableViewCellDirection)direction
 {
-    // grab the UIImageView for the switch at the given index
-    UIImageView *switchView = [self.secretImageViews objectAtIndex:buttonIndexInSecretImages];
-    switchView.image = [[self.secretImages objectAtIndex:buttonIndexInSecretImages] objectAtIndex:on];
+    int imageViewTag;
+    CGFloat originX;
+    
+#define RIGHT_SWIPE_SWITCH_IMAGE_VIEW_TAG 4293
+#define LEFT_SWIPE_SWITCH_IMAGE_VIEW_TAG 4294
+    
+    // setup the properties that are specific to each direction
+    if (direction == CPSwipeableTableViewCellDirectionRight) {
+        imageViewTag = RIGHT_SWIPE_SWITCH_IMAGE_VIEW_TAG;
+        originX = SWITCH_LEFT_MARGIN;
+    } else if (direction == CPSwipeableTableViewCellDirectionLeft) {
+        // nothing to do here for now, we only have quick actions on swipe to the right
+    }
+    
+    // grab the UIImageView if we already have it
+    UIImageView *quickActionImageView = (UIImageView *)[self viewWithTag:imageViewTag];
+    
+    // if we don't have it then let's create it now
+    if (!quickActionImageView) {
+        
+        // alloc-init an imageView to hold the icon
+        quickActionImageView = [[UIImageView alloc] initWithImage:[self.delegate quickActionSwitchForDirection:direction].offImage];
+        quickActionImageView.tag = imageViewTag;
+        
+        // move the secretImageView to the right spot
+        CGRect switchFrame = quickActionImageView.frame;
+        switchFrame.origin.x = originX;
+        switchFrame.origin.y = (self.contentView.frame.size.height / 2) - (switchFrame.size.height / 2);
+        quickActionImageView.frame = switchFrame;
+        
+        // add the secretImageView to the hiddenView
+        [self.hiddenView addSubview:quickActionImageView];
+    }
+    
+    return quickActionImageView;
+}
+
+- (void)changeStateOfQuickActionSwitch:(UIImageView *)quickSwitchImageView direction:(CPSwipeableTableViewCellDirection)direction active:(BOOL)active
+{
+    // grab the switch for this direction
+    CPSwipeableQuickActionSwitch *quickSwitch = [self.delegate quickActionSwitchForDirection:direction];
+    
+    // switch to the right image
+    quickSwitchImageView.image = active ? quickSwitch.onImage : quickSwitch.offImage;
+    
+    // play the appropriate sound
+    [CPSoundEffectsManager playSoundWithSystemSoundID: (active ? quickSwitch.onSoundID : quickSwitch.offSoundID)];
+    
+    // set our boolean so this instance knows what state the quick action switch is in
+    self.quickActionLocked = active;
 }
 
 #pragma mark - UIGestureRecognizerDelegate
