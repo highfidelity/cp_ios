@@ -323,11 +323,10 @@
                         {{/isNegative}}
                         <div class="review">
                             {{#isLove}}
-                            <div>from {{author}}: "{{review}}"</div>
+                            <div>from {{author}}: "{{review}}"{{#skill}} (Skill: {{skill}}){{/skill}}</div>
                             {{/isLove}}
                             {{^isLove}}
                             <div>{{review}}</div>
-                            <div>{{skill}}</div>
                             {{/isLove}}
                         </div>
                     </li>
