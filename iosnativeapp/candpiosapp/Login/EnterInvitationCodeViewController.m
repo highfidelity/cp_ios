@@ -101,17 +101,7 @@
                                         message:@"If you get an invite from another C&P user you can enter it anytime by going to the Account page/Enter invite code tab."
                                        delegate:nil
                               cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil] show];
-            
-            // if we still need an email confirmation
-            if (self.emailConfirmationRequired) {
-                // don't dismiss this viewController
-                dismissModalViewController = NO;
-                
-                [self performSegueWithIdentifier:@"ShowEmailAfterInviteCode" sender:self];
-            }
-            
-            
+                              otherButtonTitles:nil] show];            
         }
     }
     
@@ -158,7 +148,10 @@
 }
 
 - (void)dismissLeftOrNormalModalViewControllerAnimated:(BOOL)animated {
-    if (self.isPushedFromLeft) {
+    
+    if (self.emailConfirmationRequired) {
+        [self performSegueWithIdentifier:@"ShowEmailAfterInviteCode" sender:self];
+    } else if (self.isPushedFromLeft) {
         [self dismissPushModalViewControllerFromLeftSegue];
     } else {
         [self.navigationController dismissModalViewControllerAnimated:animated];
