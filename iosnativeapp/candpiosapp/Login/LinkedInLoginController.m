@@ -14,6 +14,7 @@
 #import "SSKeychain.h"
 #import "EnterInvitationCodeViewController.h"
 #import "CPLinkedInAPI.h"
+#import "CPapi.h"
 
 typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
@@ -263,8 +264,8 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     NSLog(@"Response: %@", responseBody);
     
     NSError* error;
-    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data                          
-                                                         options:kNilOptions 
+    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
+                                                         options:kNilOptions
                                                            error:&error];
     
     fullName = [NSString stringWithFormat:@"%@ %@",
@@ -414,9 +415,14 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
 - (void)loadLinkedInConnectionsResult:(OAServiceTicket *)ticket didFinish:(NSData *)data
 {
-    NSString *responseBody = [[NSString alloc] initWithData:data
-                                                   encoding:NSUTF8StringEncoding];
-    NSLog(@"Response: %@", responseBody);
+    NSError *error = nil;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
+                                                         options:kNilOptions
+                                                           error:&error];
+    
+    if ( ! error) {
+        [CPapi addContactsByLinkdeInIDs:[json objectForKey:@"values"]];
+    }
     
     LoadLinkedInConnectionsCompletionBlockType completion = self.loadLinkedInConnectionsCompletionBlock;
     self.loadLinkedInConnectionsCompletionBlock = nil;

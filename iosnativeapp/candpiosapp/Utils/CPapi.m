@@ -1128,5 +1128,20 @@
                          completion:nil];
 }
 
++ (void)addContactsByLinkdeInIDs:(NSMutableDictionary *)connections
+{
+    NSError *error = nil;
+    NSData *connectionsJSONData = [NSJSONSerialization dataWithJSONObject:connections
+                                                              options:kNilOptions
+                                                                error:&error];
+    NSString *connectionsJSONString = [[NSString alloc] initWithData:connectionsJSONData
+                                                            encoding:NSUTF8StringEncoding];
+
+    [self makeHTTPRequestWithAction:@"addContactsByLinkdeInIDs"
+                     withParameters:[NSMutableDictionary dictionaryWithObject:connectionsJSONString
+                                                                       forKey:@"connections"]
+                         completion:NULL];
+}
+
 
 @end

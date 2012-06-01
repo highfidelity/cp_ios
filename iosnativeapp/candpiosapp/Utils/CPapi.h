@@ -156,5 +156,6 @@
 
 + (void)getLinkedInPostStatus:(void (^)(NSDictionary *, NSError *))completion;
 + (void)saveLinkedInPostStatus:(BOOL)status;
++ (void)addContactsByLinkdeInIDs:(NSMutableDictionary *)connections;
 
 @end
