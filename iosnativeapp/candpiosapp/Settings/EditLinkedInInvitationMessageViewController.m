@@ -28,6 +28,7 @@ Welcome!";
 
 - (IBAction)cancelAction;
 - (IBAction)sendAction;
+- (void)adjustViewForKeyboardVisible:(BOOL)visible withKeyboadrNotification:(NSNotification *)aNotification;
 
 @end
 
@@ -48,6 +49,32 @@ Welcome!";
     self.bodyTextView.text = [NSString stringWithFormat:kBodyTemplate, code, nickname];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillShowNotification
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
+}
+
 #pragma mark - actions
 
 - (IBAction)cancelAction {
@@ -55,7 +82,48 @@ Welcome!";
 }
 
 - (IBAction)sendAction {
+    [self.subjectTextField resignFirstResponder];
+    [self.bodyTextView resignFirstResponder];
+}
+
+#pragma mark - notifications
+
+- (void)keyboardWillShow:(NSNotification *)aNotification {
+    [self adjustViewForKeyboardVisible:YES
+              withKeyboadrNotification:aNotification];
+}
+
+- (void)keyboardWillHide:(NSNotification *)aNotification {
+    [self adjustViewForKeyboardVisible:NO
+              withKeyboadrNotification:aNotification];
+}
+
+#pragma mark - private
+
+- (void)adjustViewForKeyboardVisible:(BOOL)visible withKeyboadrNotification:(NSNotification *)aNotification {
+    NSDictionary* userInfo = [aNotification userInfo];
     
+    NSTimeInterval animationDuration;
+    UIViewAnimationCurve animationCurve;
+    CGRect keyboardEndFrame;
+    
+    [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&animationCurve];
+    [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
+    [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    [UIView setAnimationCurve:animationCurve];
+    
+    if (visible) {
+        self.bodyTextView.contentInset = UIEdgeInsetsMake(0, 0, keyboardEndFrame.size.height, 0);
+    } else {
+        self.bodyTextView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    }
+    
+    self.bodyTextView.scrollIndicatorInsets = self.bodyTextView.contentInset;
+    
+    [UIView commitAnimations];
 }
 
 @end
