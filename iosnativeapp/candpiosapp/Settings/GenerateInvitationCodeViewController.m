@@ -15,7 +15,7 @@
 @property (nonatomic, weak) IBOutlet UIImageView *codeLabelBackground;
 @property (nonatomic, weak) IBOutlet UIButton *doneButton;
 
-- (IBAction)donePressed:(id)sender;
+- (IBAction)gearPressed:(id)sender;
 
 #pragma mark -
 #pragma mark private
@@ -54,7 +54,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
     
     [self loadCode];
 }
@@ -62,7 +61,7 @@
 #pragma mark -
 #pragma mark actions
 
-- (IBAction)donePressed:(id)sender {
+- (IBAction)gearPressed:(id)sender {
     [self dismissPushModalViewControllerFromLeftSegue];
 }
 
