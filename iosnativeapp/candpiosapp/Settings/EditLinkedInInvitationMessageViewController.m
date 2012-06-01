@@ -6,6 +6,10 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
+#import "OAuthConsumer.h"
+#import "CPLinkedInAPI.h"
+#import "EditLinkedInInvitationMessageViewController.h"
+
 NSString * const kSubjectTemplate = @"%@ is inviting you to Coffee & Power";
 NSString * const kBodyTemplate = @"Hi! %@ is inviting you to join Coffee & Power, the mobile work network.\n\
 \n\
@@ -19,8 +23,6 @@ Once signed up, you may sponsor other users with the 'Invite' button in the app 
 \n\
 Welcome!";
 
-#import "EditLinkedInInvitationMessageViewController.h"
-
 @interface EditLinkedInInvitationMessageViewController ()
 
 @property (nonatomic, weak) IBOutlet UITextField *subjectTextField;
@@ -29,6 +31,8 @@ Welcome!";
 - (IBAction)cancelAction;
 - (IBAction)sendAction;
 - (void)adjustViewForKeyboardVisible:(BOOL)visible withKeyboadrNotification:(NSNotification *)aNotification;
+- (NSData *)messageBodyData;
+- (void)setSendButtonEnabled:(BOOL)enabled;
 
 @end
 
@@ -104,6 +108,44 @@ Welcome!";
 - (IBAction)sendAction {
     [self.subjectTextField resignFirstResponder];
     [self.bodyTextView resignFirstResponder];
+    
+    OAMutableURLRequest *request = [[CPLinkedInAPI shared] linkedInJSONAPIRequestWithRelativeURL:
+                                    @"v1/people/~/mailbox"];
+    
+    [request setHTTPMethod:@"POST"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:[self messageBodyData]];
+    
+    OADataFetcher *fetcher = [[OADataFetcher alloc] init];
+    [fetcher fetchDataWithRequest:request
+                         delegate:self
+                didFinishSelector:@selector(sendLinkedInInvitationMessageResult:didFinish:)
+                  didFailSelector:@selector(sendLinkedInInvitationMessageResult:didFail:)];
+    
+    [self setSendButtonEnabled:NO];
+    [SVProgressHUD showWithStatus:@"Loading..."];
+}
+
+- (void)sendLinkedInInvitationMessageResult:(OAServiceTicket *)ticket didFinish:(NSData *)data {
+    NSError *error = nil;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
+                                                         options:kNilOptions
+                                                           error:&error];
+    
+    NSInteger statusCode = [[json objectForKey:@"status"] integerValue];
+    
+    if (statusCode < 300) {
+        [SVProgressHUD dismissWithSuccess:@"Invitation has been sent"];
+    } else {
+        [SVProgressHUD dismissWithError:[json objectForKey:@"message"] afterDelay:kDefaultDimissDelay];
+        
+        [self setSendButtonEnabled:YES];
+    }
+}
+
+- (void)sendLinkedInInvitationMessageResult:(OAServiceTicket *)ticket didFail:(NSError *)error {
+    [SVProgressHUD dismissWithError:[error localizedDescription] afterDelay:kDefaultDimissDelay];
+    [self setSendButtonEnabled:YES];
 }
 
 #pragma mark - notifications
@@ -144,6 +186,32 @@ Welcome!";
     self.bodyTextView.scrollIndicatorInsets = self.bodyTextView.contentInset;
     
     [UIView commitAnimations];
+}
+          
+- (NSData *)messageBodyData {
+    
+    NSMutableArray *recipientsValues = [NSMutableArray arrayWithCapacity:[self.connectionIDs count]];
+    for (NSString *connectionID in self.connectionIDs) {
+        NSString *connectionPath = [NSString stringWithFormat:@"/people/%@", connectionID];
+        [recipientsValues addObject:[NSDictionary dictionaryWithObject:[NSDictionary dictionaryWithObject:connectionPath
+                                                                                                   forKey:@"_path"]
+                                                                forKey:@"person"]];
+    }
+    
+    NSDictionary *messageData = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 [NSDictionary dictionaryWithObject:recipientsValues forKey:@"values"], @"recipients",
+                                 self.subjectTextField.text, @"subject",
+                                 self.bodyTextView.text, @"body",
+                                 nil];
+    
+    NSError *error;
+    return [NSJSONSerialization dataWithJSONObject:messageData
+                                           options:kNilOptions
+                                             error:&error];
+}
+    
+- (void)setSendButtonEnabled:(BOOL)enabled {
+    self.navigationItem.leftBarButtonItem.enabled = enabled;
 }
 
 @end

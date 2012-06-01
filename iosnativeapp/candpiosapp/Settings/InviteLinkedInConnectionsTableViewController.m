@@ -7,8 +7,7 @@
 //
 
 #import "InviteLinkedInConnectionsTableViewController.h"
-#import "OAMutableURLRequest.h"
-#import "OADataFetcher.h"
+#import "OAuthConsumer.h"
 #import "CPLinkedInAPI.h"
 #import "ContactListCell.h"
 #import "EditLinkedInInvitationMessageViewController.h"
@@ -56,7 +55,7 @@
         UINavigationController *navigationController = segue.destinationViewController;
         EditLinkedInInvitationMessageViewController *editInvitationViewController = (EditLinkedInInvitationMessageViewController *)navigationController.topViewController;
         
-        editInvitationViewController.nickname = @"Able";
+        editInvitationViewController.nickname = [AppDelegate instance].currentUser.nickname;
         editInvitationViewController.connectionIDs = [self arrayOfSlectedConnectionIDs];
     }
 }
