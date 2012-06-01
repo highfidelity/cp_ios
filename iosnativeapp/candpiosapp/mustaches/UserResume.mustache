@@ -34,7 +34,7 @@
 
     a {
         color: #333;
-    }
+    }   
 
     #f2f-met {
         font-family: LeagueGothic;
@@ -49,6 +49,18 @@
 
     #summary-header {
         margin-bottom: 0;
+    }
+    
+    #skills-table {
+        width: 100%;
+    }
+    
+    #skills-table th {
+        text-align: left;
+    }
+    
+    #skills-table tr {
+        padding-left: 5px;
     }
 
     #favorite-places-header {
@@ -202,7 +214,24 @@
 <body>
     <div id="content">
         {{#user}}
-
+            {{#hasAnySkills}}
+                <h2 class="line-bottom">Skills</h2>
+                <table id="skills-table">
+                    <tr>
+                        <th>Skill</th>
+                        <th>Love</th>
+                        <th>Top</th>
+                    </tr>    
+                    {{#skills}}
+                        <tr>
+                            <td>{{name}}</td>
+                            <td>{{love}}</td>
+                            <td>{{rank}}</td>
+                        </tr>
+                    {{/skills}}
+                </table>
+            {{/hasAnySkills}}    
+            
             {{#bio}}
             <h2 id="summary-header">Summary</h2>
             <div>{{bio}}</div>

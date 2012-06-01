@@ -185,6 +185,10 @@
     return firstName;
 }
 
+- (BOOL)hasAnySkills {
+    return self.skills.count > 0;
+}
+
 - (BOOL)hasAnyListingsAsClient {
     return self.listingsAsClient.count > 0;
 }
@@ -319,6 +323,7 @@
             self.listingsAsAgent = [userDict objectForKey:@"listingsAsAgent"];
             
             self.reviews = [userDict objectForKey:@"reviews"];
+            self.skills = [userDict objectForKey:@"skills"];
             
             // work and education
             self.workInformation = [userDict objectForKey:@"work"];
