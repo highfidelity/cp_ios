@@ -139,7 +139,7 @@
 - (void)togglePlusOneButton:(BOOL)enabled
 {
     // don't let the user click the +1 button
-    self.plusOneButton.userInteractionEnabled = !enabled;
+    self.plusOneButton.userInteractionEnabled = enabled;
     // fade the +1 to 50%
     self.plusOneButton.alpha = enabled ? 1.0 : 0.5;
 }
