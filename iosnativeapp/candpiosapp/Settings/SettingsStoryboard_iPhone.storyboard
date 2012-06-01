@@ -269,10 +269,81 @@
                             <outlet property="delegate" destination="76A-7a-UMN" id="Tpo-oB-0qt"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Invite LinkedIn Connections" id="oHT-sY-Dl3"/>
+                    <navigationItem key="navigationItem" title="Invite LinkedIn Connections" id="oHT-sY-Dl3">
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="oZU-nj-o6Y">
+                            <connections>
+                                <segue destination="g5I-1x-LsX" kind="modal" id="ZqB-XF-3hD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="-198" y="-1716"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="laJ-vZ-9JA">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fg5-NQ-JJn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController definesPresentationContext="YES" id="g5I-1x-LsX" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Srr-Ju-exg">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="6Iv-eA-29n" kind="relationship" relationship="rootViewController" id="zux-Pd-BdF"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="284" y="-1716"/>
+        </scene>
+        <!--Edit Linked In Invitation Message View Controller - Send LinkedIn Invitation-->
+        <scene sceneID="95r-lC-h93">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oKt-OD-cQB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="6Iv-eA-29n" customClass="EditLinkedInInvitationMessageViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hrg-je-brs">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="14" id="BwN-8y-Pmc" userLabel="Text Field - [name of sender] is inviting you to Coffee &amp; Power">
+                                <rect key="frame" x="8" y="0.0" width="304" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3UP-3y-pDh">
+                                <rect key="frame" x="0.0" y="41" width="320" height="375"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <view contentMode="scaleToFill" id="Bs8-e3-8TP">
+                                <rect key="frame" x="0.0" y="40" width="320" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.79215686269999996" green="0.79215686269999996" blue="0.79215686269999996" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Send LinkedIn Invitation" id="dn0-GG-jcn">
+                        <barButtonItem key="leftBarButtonItem" title="Send" style="done" id="nJm-nq-VBP">
+                            <connections>
+                                <action selector="sendAction" destination="6Iv-eA-29n" id="JGf-99-WRf"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="QUF-gR-wW1">
+                            <connections>
+                                <action selector="cancelAction" destination="6Iv-eA-29n" id="etR-RL-8MM"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="bodyTextView" destination="3UP-3y-pDh" id="sIN-AN-zgw"/>
+                        <outlet property="subjectTextField" destination="BwN-8y-Pmc" id="YgQ-CN-5LI"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="818" y="-1716"/>
         </scene>
         <!--Balance View Controller-->
         <scene sceneID="d1R-FS-22a">
@@ -1484,6 +1555,15 @@
                 <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="EditLinkedInInvitationMessageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EditLinkedInInvitationMessageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancelAction"/>
+                <relationship kind="action" name="sendAction"/>
+                <relationship kind="outlet" name="bodyTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="subjectTextField" candidateClass="UITextField"/>
             </relationships>
         </class>
         <class className="GenerateInvitationCodeViewController" superclassName="UIViewController">
