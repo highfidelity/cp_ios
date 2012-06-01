@@ -14,6 +14,6 @@
 @property (nonatomic, readonly) OAConsumer *consumer;
 
 + (CPLinkedInAPI *)shared;
-- (OAMutableURLRequest *)LinkedInJSONAPIRequestWithRelativeURL:(NSString *)urlString;
+- (OAMutableURLRequest *)linkedInJSONAPIRequestWithRelativeURL:(NSString *)urlString;
 
 @end

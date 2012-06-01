@@ -245,7 +245,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 - (void)loadLinkedInUserProfile
 {
     self.requestToken = [CPLinkedInAPI shared].token;
-    OAMutableURLRequest *request = [[CPLinkedInAPI shared] LinkedInJSONAPIRequestWithRelativeURL:
+    OAMutableURLRequest *request = [[CPLinkedInAPI shared] linkedInJSONAPIRequestWithRelativeURL:
                                     @"v1/people/~:(id,first-name,last-name,headline,site-standard-profile-request,num-connections)"];
     
     OADataFetcher *fetcher = [[OADataFetcher alloc] init];
@@ -403,7 +403,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 - (void)loadLinkedInConnectionsWithCompletion:(void(^)(void))completionBlock {
     self.loadLinkedInConnectionsCompletionBlock = completionBlock;
     
-    OAMutableURLRequest *request = [[CPLinkedInAPI shared] LinkedInJSONAPIRequestWithRelativeURL:
+    OAMutableURLRequest *request = [[CPLinkedInAPI shared] linkedInJSONAPIRequestWithRelativeURL:
                                                                         @"v1/people/~/connections:(id)"];
     
     OADataFetcher *fetcher = [[OADataFetcher alloc] init];

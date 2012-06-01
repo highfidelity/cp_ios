@@ -36,7 +36,7 @@ static CPLinkedInAPI *sharedCPLinkedInAPI = nil;
     return self;
 }
 
-- (OAMutableURLRequest *)LinkedInJSONAPIRequestWithRelativeURL:(NSString *)urlString {
+- (OAMutableURLRequest *)linkedInJSONAPIRequestWithRelativeURL:(NSString *)urlString {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.linkedin.com/%@", urlString]];
     
     OAMutableURLRequest *linkedInAPIRequest = [[OAMutableURLRequest alloc] initWithURL:url
