@@ -12,7 +12,6 @@
 #import "User.h"
 
 #define qHideTopNavigationBarOnMapView			0
-#define kCheckinThresholdForSmallPin            2
 
 @interface MapTabController() 
 -(void)zoomTo:(CLLocationCoordinate2D)loc;
@@ -374,7 +373,6 @@ BOOL clearLocations = NO;
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {   
 	MKAnnotationView *pinToReturn = nil;
-    BOOL smallPin = NO;
     
     if ([annotation isKindOfClass:[CPVenue class]]) {
         CPVenue *placeAnn = (CPVenue *)annotation;
@@ -395,25 +393,18 @@ BOOL clearLocations = NO;
         }
         
         if (!placeAnn.checkinCount > 0) {
-            if (placeAnn.weeklyCheckinCount < kCheckinThresholdForSmallPin) {
-                smallPin = YES;
-                [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO hasVirtual:NO smallPin:smallPin withLabel:NO];
-            }
-            else {
-                smallPin = NO;
-                [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO hasVirtual:NO smallPin:smallPin withLabel:NO];
-                pin.centerOffset = CGPointMake(0, -18);
-            }            
+            [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO hasVirtual:NO withLabel:NO];
+            [self adjustScaleForPin:pin forNumberOfPeople:placeAnn.weeklyCheckinCount];
         } 
         else {
             if(placeAnn.hasContactAtVenue)
             {
-                [pin setPin:placeAnn.checkinCount hasCheckins:YES hasVirtual:YES smallPin:smallPin withLabel:YES];
+                [pin setPin:placeAnn.checkinCount hasCheckins:YES hasVirtual:YES withLabel:YES];
                 pin.centerOffset = CGPointMake(0, -31);
             }
             else
             {
-                [pin setPin:placeAnn.checkinCount hasCheckins:YES hasVirtual:NO smallPin:smallPin withLabel:YES];
+                [pin setPin:placeAnn.checkinCount hasCheckins:YES hasVirtual:NO withLabel:YES];
                 pin.centerOffset = CGPointMake(0, -31);
 
             }
@@ -432,8 +423,44 @@ BOOL clearLocations = NO;
         pinToReturn.calloutOffset = CGPointMake(0,0);
     
     }
-    return pinToReturn;   
+    return pinToReturn;
 }
+
+- (float)getPinScaleForNumberOfPeople:(NSInteger)number {
+    if (pinScales == nil) {
+        pinScales = [NSArray arrayWithObjects: 
+                     [NSNumber numberWithFloat:0.31f],   // for 1 person
+                     [NSNumber numberWithFloat:0.57f],
+                     [NSNumber numberWithFloat:0.74f],
+                     [NSNumber numberWithFloat:0.855f],
+                     [NSNumber numberWithFloat:0.932f],
+                     [NSNumber numberWithFloat:0.976f],
+                     [NSNumber numberWithFloat:1.0f],   // for 7 or more people
+                     nil];
+    }
+    
+    if (number <= 0) {
+        return [[pinScales objectAtIndex:0] floatValue];
+    } else if (number >= [pinScales count]) {
+        return [[pinScales objectAtIndex:[pinScales count] - 1] floatValue];
+    } else {
+        return [[pinScales objectAtIndex:number - 1] floatValue];
+    }
+    
+}
+
+- (void)adjustScaleForPin:(MKAnnotationView *)pin forNumberOfPeople:(NSInteger)number {
+    if (pin.image != nil) {    
+        float scale = [self getPinScaleForNumberOfPeople:number];
+        
+        // can't simply adjust the pin's transform since that will also scale the callout bubble
+        // TODO: if we want to keep the pin touch area the same, we should only scale the image instead
+        CGRect newFrame = CGRectMake(0, 0, roundf(pin.image.size.width * scale), roundf(pin.image.size.height * scale));
+        [pin setFrame:newFrame];
+        [pin setCenterOffset: CGPointMake(0, - roundf(newFrame.size.height / 2.4f))];
+    }
+}
+
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
 

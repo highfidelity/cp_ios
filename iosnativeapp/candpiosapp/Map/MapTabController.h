@@ -19,6 +19,7 @@
 @interface MapTabController : UIViewController <MKMapViewDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate>
 {
 	bool hasUpdatedUserLocation;
+    NSArray *pinScales;
 }
 
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;

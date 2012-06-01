@@ -13,34 +13,27 @@
 
 @implementation MKAnnotationView(WebCache)
 
-- (void)setPin:(NSInteger)number hasCheckins:(BOOL)checkins hasVirtual:(BOOL)virtual smallPin:(BOOL)smallPin withLabel:(BOOL)withLabel {
+- (void)setPin:(NSInteger)number hasCheckins:(BOOL)checkins hasVirtual:(BOOL)virtual withLabel:(BOOL)withLabel {
     CGFloat fontSize = 20;
     NSString *imageName;
+    CGRect labelFrame;
     
-    UILabel *numberLabel = [[UILabel alloc] init];
-
-    // If no one is currently checked in, use smaller image + font size
+    // If no one is currently checked in, use the smaller image
     if (checkins) {
         if(virtual)
         {
             imageName = @"pin-virtual-checkedin";
-            numberLabel.frame = CGRectMake(0, 23, 93, 20);
+            labelFrame = CGRectMake(0, 23, 93, 20);
         }
         else
         {
             imageName = @"pin-checkedin";
-            numberLabel.frame = CGRectMake(0, 15, 93, 20);
+            labelFrame = CGRectMake(0, 15, 93, 20);
         }
-    }
-    else {
-//        self.alpha = 0.4;        
-        numberLabel.frame = CGRectMake(0, 9, 54, 12);
+    } else {       
+        labelFrame = CGRectMake(0, 9, 54, 12);
         imageName = @"pin-checkedout";
         fontSize = 12;
-    }
-    
-    if (smallPin && !checkins) {
-        imageName = @"people-marker-turquoise-circle";
     }
     
     [self setImage:[UIImage imageNamed:imageName]];
@@ -56,10 +49,10 @@
         [[self.subviews objectAtIndex:0] removeFromSuperview];
         
     }
-
     
     // Add number label
-    if (!smallPin && withLabel) {
+    if (withLabel && !CGRectIsNull(labelFrame)) {
+        UILabel *numberLabel = [[UILabel alloc] initWithFrame:labelFrame];
         numberLabel.backgroundColor = [UIColor clearColor];
         numberLabel.opaque = NO;
         numberLabel.textColor = [UIColor whiteColor];

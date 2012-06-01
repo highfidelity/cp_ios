@@ -12,7 +12,7 @@
 
 @interface MKAnnotationView (WebCache) <SDWebImageManagerDelegate>
 
-- (void)setPin:(NSInteger)number hasCheckins:(BOOL)checkins hasVirtual:(BOOL)virtual smallPin:(BOOL)smallPin withLabel:(BOOL)withLabel;
+- (void)setPin:(NSInteger)number hasCheckins:(BOOL)checkins hasVirtual:(BOOL)virtual withLabel:(BOOL)withLabel;
 - (void)setImage:(UIImage *)image fancy:(BOOL)fancyImage;
 - (void)setImageWithURL:(NSURL *)url;
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder fancy:(BOOL)fancyImage;
