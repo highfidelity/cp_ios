@@ -15,11 +15,15 @@
 #import "EnterInvitationCodeViewController.h"
 #import "CPLinkedInAPI.h"
 
-@interface LinkedInLoginController()
+typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
+
+@interface LinkedInLoginController ()
 
 @property (nonatomic, assign) BOOL emailConfirmationRequired;
+@property (nonatomic, strong) LoadLinkedInConnectionsCompletionBlockType loadLinkedInConnectionsCompletionBlock;
 
 @end
+
 
 @implementation LinkedInLoginController
 
@@ -27,6 +31,7 @@
 @synthesize requestToken;
 @synthesize activityIndicator;
 @synthesize emailConfirmationRequired = _emailConfirmationRequired;
+@synthesize loadLinkedInConnectionsCompletionBlock;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -61,7 +66,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:keyTokenSecret forKey:@"linkedin_secret"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        [self loadLinkedInConnections];
+        [self loadLinkedInUserProfile];
         //[self linkedInLogin];
     }
     else
@@ -232,24 +237,24 @@
         [[NSUserDefaults standardUserDefaults] setObject:secret forKey:@"linkedin_secret"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        [self loadLinkedInConnections];
+        [self loadLinkedInUserProfile];
     }
 }
 
-- (void)loadLinkedInConnections
+- (void)loadLinkedInUserProfile
 {
     self.requestToken = [CPLinkedInAPI shared].token;
     OAMutableURLRequest *request = [[CPLinkedInAPI shared] LinkedInJSONAPIRequestWithRelativeURL:
-                                    @"v1/people/~:(id,first-name,last-name,headline,site-standard-profile-request)"];
+                                    @"v1/people/~:(id,first-name,last-name,headline,site-standard-profile-request,num-connections)"];
     
     OADataFetcher *fetcher = [[OADataFetcher alloc] init];
     [fetcher fetchDataWithRequest:request
                          delegate:self
-                didFinishSelector:@selector(loadLinkedInConnectionsResult:didFinish:)
-                  didFailSelector:@selector(loadLinkedInConnectionsResult:didFail:)];    
+                didFinishSelector:@selector(loadLinkedInUserProfileResult:didFinish:)
+                  didFailSelector:@selector(loadLinkedInUserProfileResult:didFail:)];
 }
 
-- (void)loadLinkedInConnectionsResult:(OAServiceTicket *)ticket didFinish:(NSData *)data 
+- (void)loadLinkedInUserProfileResult:(OAServiceTicket *)ticket didFinish:(NSData *)data
 {
     NSString *fullName, *linkedinId, *password, *email, *oauthToken, *oauthSecret;
     
@@ -345,26 +350,28 @@
                 // Perform common post-login operations
                 [BaseLoginController pushAliasUpdate];
                 
-                if (!hasSentConfirmationEmail && (! userEmail ||
-                                                   [@"" isEqualToString:userEmail] ||
-                                                  [generatedEmail isEqualToString:userEmail])) {
-                    self.emailConfirmationRequired = YES;
-                }
+                [self loadLinkedInConnectionsWithCompletion:^{
+                    if (!hasSentConfirmationEmail && (! userEmail ||
+                                                       [@"" isEqualToString:userEmail] ||
+                                                      [generatedEmail isEqualToString:userEmail])) {
+                        self.emailConfirmationRequired = YES;
+                    }
 
-                if ([CPAppDelegate currentUser].enteredInviteCode) {
-                    if ([[CPAppDelegate tabBarController] selectedIndex] == 4) {
-                        [[CPAppDelegate tabBarController] setSelectedIndex:0];
+                    if ([CPAppDelegate currentUser].enteredInviteCode) {
+                        if ([[CPAppDelegate tabBarController] selectedIndex] == 4) {
+                            [[CPAppDelegate tabBarController] setSelectedIndex:0];
+                        }
+                        
+                        if (self.emailConfirmationRequired) {
+                            [self performSegueWithIdentifier:@"EnterEmailAfterSignUpSegue" sender:nil];
+                        } else {
+                            [self.navigationController dismissModalViewControllerAnimated:YES];
+                        }
                     }
-                    
-                    if (self.emailConfirmationRequired) {
-                        [self performSegueWithIdentifier:@"EnterEmailAfterSignUpSegue" sender:nil];
-                    } else {
-                        [self.navigationController dismissModalViewControllerAnimated:YES];
+                    else {
+                        [self performSegueWithIdentifier:@"EnterInvitationCodeSegue" sender:nil];
                     }
-                }
-                else {
-                    [self performSegueWithIdentifier:@"EnterInvitationCodeSegue" sender:nil];
-                }
+                }];
             }
 
             // Remove NSNotification as it's no longer needed once logged in
@@ -387,9 +394,42 @@
     }
 }
 
-- (void)loadLinkedInConnectionsResult:(OAServiceTicket *)ticket didFail:(NSData *)error 
+- (void)loadLinkedInUserProfileResult:(OAServiceTicket *)ticket didFail:(NSData *)error
 {
     NSLog(@"%@",[error description]);
+}
+
+- (void)loadLinkedInConnectionsWithCompletion:(void(^)(void))completionBlock {
+    self.loadLinkedInConnectionsCompletionBlock = completionBlock;
+    
+    OAMutableURLRequest *request = [[CPLinkedInAPI shared] LinkedInJSONAPIRequestWithRelativeURL:
+                                                                        @"v1/people/~/connections:(id)"];
+    
+    OADataFetcher *fetcher = [[OADataFetcher alloc] init];
+    [fetcher fetchDataWithRequest:request
+                         delegate:self
+                didFinishSelector:@selector(loadLinkedInConnectionsResult:didFinish:)
+                  didFailSelector:@selector(loadLinkedInConnectionsResult:didFail:)];
+}
+
+- (void)loadLinkedInConnectionsResult:(OAServiceTicket *)ticket didFinish:(NSData *)data
+{
+    NSString *responseBody = [[NSString alloc] initWithData:data
+                                                   encoding:NSUTF8StringEncoding];
+    NSLog(@"Response: %@", responseBody);
+    
+    LoadLinkedInConnectionsCompletionBlockType completion = self.loadLinkedInConnectionsCompletionBlock;
+    self.loadLinkedInConnectionsCompletionBlock = nil;
+    
+    completion();
+}
+
+- (void)loadLinkedInConnectionsResult:(OAServiceTicket *)ticket didFail:(NSData *)error
+{
+    LoadLinkedInConnectionsCompletionBlockType completion = self.loadLinkedInConnectionsCompletionBlock;
+    self.loadLinkedInConnectionsCompletionBlock = nil;
+    
+    completion();
 }
 
 #pragma mark UIWebViewDelegate methods

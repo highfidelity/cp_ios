@@ -653,7 +653,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
         
 //        [singleton addService:@"LinkedIn" id:2 accessToken:token accessSecret:secret expirationDate:nil];
         
-//        [self loadLinkedInConnections];
+//        [self loadLinkedInUserProfile];
     }
     else {
         NSLog(@"ERROR responseBody: %@", responseBody);
