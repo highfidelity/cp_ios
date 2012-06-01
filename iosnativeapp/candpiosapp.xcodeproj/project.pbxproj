@@ -305,6 +305,9 @@
 		5F8413E115619721003B43B8 /* UserProfileLinkedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */; };
 		5FAF891F1555FA6600247B95 /* virtual-check-in-badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAF891D1555FA6600247B95 /* virtual-check-in-badge.png */; };
 		5FAF89201555FA6600247B95 /* virtual-check-in-badge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAF891E1555FA6600247B95 /* virtual-check-in-badge@2x.png */; };
+		5FAF89241555FA8300247B95 /* pin-virtual-checkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAF89221555FA8300247B95 /* pin-virtual-checkedin.png */; };
+		5FAF89251555FA8300247B95 /* pin-virtual-checkedin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAF89231555FA8300247B95 /* pin-virtual-checkedin@2x.png */; };
+		69120B73156D3EA900521E3F /* CPLinkedInAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 69120B71156D3C2200521E3F /* CPLinkedInAPI.m */; };
 		692552E0155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 692552DF155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m */; };
 		694323A915213D9000EBF585 /* UserResume.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 694323A815213D9000EBF585 /* UserResume.mustache */; };
 		6947F40015372B59005D9958 /* exchange-cards.png in Resources */ = {isa = PBXBuildFile; fileRef = 6947F3FE15372B59005D9958 /* exchange-cards.png */; };
@@ -887,6 +890,10 @@
 		5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfileLinkedInViewController.m; path = User/UserProfileLinkedInViewController.m; sourceTree = "<group>"; };
 		5FAF891D1555FA6600247B95 /* virtual-check-in-badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "virtual-check-in-badge.png"; sourceTree = "<group>"; };
 		5FAF891E1555FA6600247B95 /* virtual-check-in-badge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "virtual-check-in-badge@2x.png"; sourceTree = "<group>"; };
+		5FAF89221555FA8300247B95 /* pin-virtual-checkedin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-virtual-checkedin.png"; sourceTree = "<group>"; };
+		5FAF89231555FA8300247B95 /* pin-virtual-checkedin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-virtual-checkedin@2x.png"; sourceTree = "<group>"; };
+		69120B70156D3C2200521E3F /* CPLinkedInAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPLinkedInAPI.h; path = Utils/CPLinkedInAPI.h; sourceTree = "<group>"; };
+		69120B71156D3C2200521E3F /* CPLinkedInAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPLinkedInAPI.m; path = Utils/CPLinkedInAPI.m; sourceTree = "<group>"; };
 		692552DE155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushModalViewControllerFromLeftSegue.h; path = Settings/PushModalViewControllerFromLeftSegue.h; sourceTree = "<group>"; };
 		692552DF155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushModalViewControllerFromLeftSegue.m; path = Settings/PushModalViewControllerFromLeftSegue.m; sourceTree = "<group>"; };
 		694323A815213D9000EBF585 /* UserResume.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserResume.mustache; sourceTree = "<group>"; };
@@ -1464,6 +1471,8 @@
 				53463F5015336EA5001CA16D /* UIViewController+isModal.m */,
 				5327E9F815658CCD005330AD /* UIColor+EasyRGB.h */,
 				5327E9F915658CCD005330AD /* UIColor+EasyRGB.m */,
+				69120B70156D3C2200521E3F /* CPLinkedInAPI.h */,
+				69120B71156D3C2200521E3F /* CPLinkedInAPI.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -2841,6 +2850,18 @@
 				530C5DB31575E4F3003505AC /* CPSwipeableQuickActionSwitch.m in Sources */,
 				530C5DB41575E4F3003505AC /* CPSwipeableTableViewCell.m in Sources */,
 				530C5DB71575E4FC003505AC /* CPSoundEffectsManager.m in Sources */,
+				69120B73156D3EA900521E3F /* CPLinkedInAPI.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		871EFB3014AE9C820030658B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				871EFB4414AE9C820030658B /* candpiosappTests.m in Sources */,
+				53FE254E150EA50B00A0D93A /* PaymentHelper.m in Sources */,
+				53FE2552150EAC6B00A0D93A /* UserSettingsTableViewController.m in Sources */,
+				5F7D21D9155AF1A200EAA540 /* UserProfileLinkedInViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

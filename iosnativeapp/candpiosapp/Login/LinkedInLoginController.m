@@ -13,6 +13,7 @@
 #import "OADataFetcher.h"
 #import "SSKeychain.h"
 #import "EnterInvitationCodeViewController.h"
+#import "CPLinkedInAPI.h"
 
 @interface LinkedInLoginController()
 
@@ -21,6 +22,7 @@
 @end
 
 @implementation LinkedInLoginController
+
 @synthesize myWebView;
 @synthesize requestToken;
 @synthesize activityIndicator;
@@ -33,14 +35,6 @@
         // Custom initialization
     }
     return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark - View lifecycle
@@ -148,7 +142,6 @@
 
 -(void)initiateLogin
 {
-    
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(linkedInCredentialsCapture:)
                                                  name:@"linkedInCredentials"
@@ -245,25 +238,9 @@
 
 - (void)loadLinkedInConnections
 {
-    OAConsumer *consumer = [[OAConsumer alloc] initWithKey:kLinkedInKey secret:kLinkedInSecret];
-    
-    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"linkedin_token"];
-    NSString *secret = [[NSUserDefaults standardUserDefaults] objectForKey:@"linkedin_secret"];
-
-    self.requestToken = [[OAToken alloc] initWithKey:token secret:secret];
-
-    NSLog(@"Final token: %@", self.requestToken);
-    
-    NSURL *url = [NSURL URLWithString:@"https://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,site-standard-profile-request)"];
-    
-    OAMutableURLRequest *request = 
-    [[OAMutableURLRequest alloc] initWithURL:url
-                                    consumer:consumer
-                                       token:self.requestToken
-                                       realm:nil
-                           signatureProvider:nil];
-    
-    [request setValue:@"json" forHTTPHeaderField:@"x-li-format"];
+    self.requestToken = [CPLinkedInAPI shared].token;
+    OAMutableURLRequest *request = [[CPLinkedInAPI shared] LinkedInJSONAPIRequestWithRelativeURL:
+                                    @"v1/people/~:(id,first-name,last-name,headline,site-standard-profile-request)"];
     
     OADataFetcher *fetcher = [[OADataFetcher alloc] init];
     [fetcher fetchDataWithRequest:request
@@ -281,12 +258,11 @@
     NSLog(@"Response: %@", responseBody);
     
     NSError* error;
-    NSDictionary* json = [NSJSONSerialization 
-                          JSONObjectWithData:data                          
-                          options:kNilOptions 
-                          error:&error];
+    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data                          
+                                                         options:kNilOptions 
+                                                           error:&error];
     
-    fullName = [NSString stringWithFormat:@"%@ %@", 
+    fullName = [NSString stringWithFormat:@"%@ %@",
                 [json objectForKey:@"firstName"],
                 [json objectForKey:@"lastName"]];
     
