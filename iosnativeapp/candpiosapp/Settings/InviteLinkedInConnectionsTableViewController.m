@@ -14,17 +14,32 @@
 
 @interface InviteLinkedInConnectionsTableViewController () {
     NSArray *_connections;
+    NSMutableDictionary *_selectedConnections;
 }
 
 @property (nonatomic, strong) NSArray *connections;
+@property (nonatomic, strong) NSMutableDictionary *selectedConnections;
 
 - (void)loadLinkedInConnections;
+- (NSMutableArray *)filterOutInvalidConnections:(NSArray *)connections;
+- (NSDictionary *)connectionForIndexPath:(NSIndexPath *)indexPath;
+- (void)setConnection:(NSDictionary *)connection isSelected:(BOOL)selected;
+- (BOOL)isConnectionSelected:(NSDictionary *)connection;
 
 @end
 
 @implementation InviteLinkedInConnectionsTableViewController
 
 @synthesize connections = _connections;
+@synthesize selectedConnections = _selectedConnections;
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        self.selectedConnections = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
 
 #pragma mark - UIView
 
@@ -45,7 +60,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *connectionData = [self.connections objectAtIndex:indexPath.row];
+    NSDictionary *connectionData = [self connectionForIndexPath:indexPath];
     
     static NSString *CellIdentifier = @"LinkedInConnectionCell";
     ContactListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -62,12 +77,29 @@
         imageView.image = [CPUIHelper defaultProfileImage];
     }
     
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    if ([self isConnectionSelected:connectionData]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
+    
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    BOOL selected = NO;
+    if (cell.accessoryType == UITableViewCellAccessoryNone) {
+        selected = YES;
+    }
+    
+    [self setConnection:[self connectionForIndexPath:indexPath]
+             isSelected:selected];
+    
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                          withRowAnimation:UITableViewRowAnimationFade];
+    
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -117,6 +149,29 @@
     }
     
     return filteredConnections;
+}
+
+- (NSDictionary *)connectionForIndexPath:(NSIndexPath *)indexPath {
+    return [self.connections objectAtIndex:indexPath.row];
+}
+
+- (void)setConnection:(NSDictionary *)connection isSelected:(BOOL)selected {
+    NSString *connectionID = [connection objectForKey:@"id"];
+    
+    if (selected) {
+        [self.selectedConnections setObject:connection forKey:connectionID];
+    } else {
+        [self.selectedConnections removeObjectForKey:connectionID];
+    }
+}
+
+- (BOOL)isConnectionSelected:(NSDictionary *)connection {
+    NSString *connectionID = [connection objectForKey:@"id"];
+    
+    if ([self.selectedConnections objectForKey:connectionID]) {
+        return YES;
+    }
+    return NO;
 }
 
 @end
