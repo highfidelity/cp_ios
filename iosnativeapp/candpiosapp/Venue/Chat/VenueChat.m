@@ -185,6 +185,11 @@
                 entryClass = [LoveChatEntry class];
             } else if ([systemType isEqualToString:CHECKIN_SYSTEM_CHAT_TYPE]) {
                 entryClass = [CheckinChatEntry class];
+            } else {
+                // we have a system type that is unrecognized
+                // maybe because it's being used on web and not here
+                // so skip this one
+                continue;
             }
             
             VenueChatEntry *entry = [[entryClass alloc] initFromJSON:entryJSON dateFormatter:self.entryDateFormatter];
@@ -211,7 +216,9 @@
                     // check if we already have a timestamp for this day
                     [self.timestampDateFormatter setDateFormat:MAJOR_TIMESTAMP_INTERVAL_FORMAT];
                     if (![self.previousTimestamp isEqualToString:[self.timestampDateFormatter stringFromDate:entry.date]]) {
+                        NSLog(@"%@", entryJSON);
                         self.previousTimestamp = [self.timestampDateFormatter stringFromDate:entry.date];
+                        NSLog(@"%@", self.previousTimestamp);
                         [mutableChatEntries addObject:self.previousTimestamp];
                     }
                 } else {
