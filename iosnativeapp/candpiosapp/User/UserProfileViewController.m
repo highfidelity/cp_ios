@@ -185,7 +185,7 @@ UITapGestureRecognizer* _tapRecon = nil;
     if (self.isF2FInvite) {
         // we're in an F2F invite
         [self placeUserDataOnProfile];
-    } else {        
+    } else {  
         // lock the scrollView
         self.scrollView.scrollEnabled = NO;
         // put three animated dots after the Loading Resume text
@@ -386,6 +386,7 @@ UITapGestureRecognizer* _tapRecon = nil;
 
 - (void)placeUserDataOnProfile
 {    
+    
     // dismiss the SVProgressHUD if it's up
     [SVProgressHUD dismiss];
     
@@ -526,7 +527,6 @@ UITapGestureRecognizer* _tapRecon = nil;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)aWebView {
-    
     // tell the webview not to scroll to top when status bar is clicked
     aWebView.scrollView.scrollsToTop = NO;
     aWebView.userInteractionEnabled = YES;
@@ -558,6 +558,9 @@ UITapGestureRecognizer* _tapRecon = nil;
     UIView *blueOverlayExtend = [[UIView alloc] initWithFrame:CGRectMake(0, 416, 320, self.scrollView.contentSize.height - 416)];
     blueOverlayExtend.backgroundColor = [UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0];
     [self.scrollView insertSubview:blueOverlayExtend atIndex:0];
+    
+    // call the JS function in the mustache file that will lazyload the images
+    [aWebView stringByEvaluatingJavaScriptFromString:@"lazyLoad();"];
 }
 
 -(IBAction)plusButtonPressed:(id)sender {

@@ -210,6 +210,23 @@
         overflow: hidden;
     }
 </style>
+
+<script type="text/javascript">
+    function lazyLoad() {
+        var lazyImgs, imgUrl;
+        lazyImgs = document.getElementsByClassName('lazyImg');
+        for (var i = 0; i < lazyImgs.length; i++) {
+            var lazyImg = lazyImgs[i];
+            imgUrl = lazyImg.getAttribute('data-lazyUrl');
+            if (imgUrl) {
+                lazyImg.src = imgUrl;
+                lazyImg.removeAttribute('data-lazyUrl');
+            }
+        }       
+        
+    }    
+</script>
+
 </head>
 <body>
     <div id="content">
@@ -242,7 +259,7 @@
                 <table id="favorite-places">
                     {{#favoritePlaces}}
                         <tr ontouchstart="" onclick="document.location = 'favorite-venue-index://{{index}}';">
-                            <td><img src="{{#photoURL}}{{photoURL}}{{/photoURL}}{{^photoURL}}picture-coming-soon@2x.jpg{{/photoURL}}" width="100" height="100"/></td>
+                            <td><img class="lazyImg" src="picture-coming-soon@2x.jpg" data-lazyUrl="{{#photoURL}}{{photoURL}}{{/photoURL}}" width="100" height="100"/></td>
                             <th>
                                 <h3>{{name}}</h3>
                                 <div class="place-checkins">{{checkinTimeString}}</div>
@@ -281,7 +298,7 @@
                 <dl id="smarterer-list">
                     {{#badges}}
                         <dt>
-                            <img src="{{#badgeURL}}{{badgeURL}}{{/badgeURL}}" width="100" height="90"/>
+                            <img class="lazyImg" data-lazyUrl="{{#badgeURL}}{{badgeURL}}{{/badgeURL}}" width="100" height="90"/>
                         </dt>
                     {{/badges}}
                 </dl>
