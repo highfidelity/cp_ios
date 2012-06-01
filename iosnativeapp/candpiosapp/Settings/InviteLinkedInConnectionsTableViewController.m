@@ -60,6 +60,12 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self resetNextButtonEnabledState];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -112,6 +118,8 @@
                           withRowAnimation:UITableViewRowAnimationFade];
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    [self resetNextButtonEnabledState];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -187,6 +195,11 @@
 
 - (NSArray *)arrayOfSlectedConnectionIDs {
     return [[self.selectedConnections keyEnumerator] allObjects];
+}
+
+- (void)resetNextButtonEnabledState {
+    BOOL enabled = [self.selectedConnections count] > 0;
+    self.navigationItem.rightBarButtonItem.enabled = enabled;
 }
 
 @end
