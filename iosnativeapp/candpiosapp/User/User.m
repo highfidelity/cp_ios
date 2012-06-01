@@ -325,11 +325,6 @@
             self.reviews = [userDict objectForKey:@"reviews"];
             self.skills = [userDict objectForKey:@"skills"];
             
-            // sort the skills array by the number of love
-            NSSortDescriptor *loveDescriptor = [[NSSortDescriptor alloc] initWithKey:@"love"
-                                                                           ascending:NO];
-            self.skills = [self.skills sortedArrayUsingDescriptors:[NSArray arrayWithObject:loveDescriptor]];
-            
             // work and education
             self.workInformation = [userDict objectForKey:@"work"];
             self.educationInformation = [userDict objectForKey:@"education"];
