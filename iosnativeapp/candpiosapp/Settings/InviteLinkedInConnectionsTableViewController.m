@@ -11,6 +11,7 @@
 #import "OADataFetcher.h"
 #import "CPLinkedInAPI.h"
 #import "ContactListCell.h"
+#import "EditLinkedInInvitationMessageViewController.h"
 
 @interface InviteLinkedInConnectionsTableViewController () {
     NSArray *_connections;
@@ -25,6 +26,7 @@
 - (NSDictionary *)connectionForIndexPath:(NSIndexPath *)indexPath;
 - (void)setConnection:(NSDictionary *)connection isSelected:(BOOL)selected;
 - (BOOL)isConnectionSelected:(NSDictionary *)connection;
+- (NSArray *)arrayOfSlectedConnectionIDs;
 
 @end
 
@@ -41,12 +43,22 @@
     return self;
 }
 
-#pragma mark - UIView
+#pragma mark - UIViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self loadLinkedInConnections];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"EditLinkedInInvitationMessageViewControllerSegue"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        EditLinkedInInvitationMessageViewController *editInvitationViewController = (EditLinkedInInvitationMessageViewController *)navigationController.topViewController;
+        
+        editInvitationViewController.nickname = @"Able";
+        editInvitationViewController.connectionIDs = [self arrayOfSlectedConnectionIDs];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -172,6 +184,10 @@
         return YES;
     }
     return NO;
+}
+
+- (NSArray *)arrayOfSlectedConnectionIDs {
+    return [[self.selectedConnections keyEnumerator] allObjects];
 }
 
 @end

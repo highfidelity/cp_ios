@@ -1065,6 +1065,22 @@
                          completion:completion];
 }
 
++ (void)getInvitationCodeForLinkedInConnections:(NSArray *)connectionsIDs
+                            wihtCompletionBlock:(void(^)(NSDictionary *json, NSError *error))completion
+{
+    NSError *error;
+    NSData *connectionIDsData = [NSJSONSerialization dataWithJSONObject:connectionsIDs
+                                                                options:kNilOptions
+                                                                  error:&error];
+    NSString *connectionIDsString = [[NSString alloc] initWithData:connectionIDsData
+                                                          encoding:NSUTF8StringEncoding];
+    
+    [self makeHTTPRequestWithAction:@"getInvitationCodeForLinkedInConnections"
+                     withParameters:[NSMutableDictionary dictionaryWithObject:connectionIDsString
+                                                                       forKey:@"connectionIDs"]
+                         completion:completion];
+}
+
 # pragma mark - Venue Chat
 
 + (void)getVenueChatForVenueWithID:(int)venueID

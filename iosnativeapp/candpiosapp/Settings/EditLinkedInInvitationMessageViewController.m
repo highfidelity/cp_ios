@@ -7,7 +7,7 @@
 //
 
 NSString * const kSubjectTemplate = @"%@ is inviting you to Coffee & Power";
-NSString * const kBodyTemplate = @"Hi! [name of sender] is inviting you to join Coffee & Power, the mobile work network.\n\
+NSString * const kBodyTemplate = @"Hi! %@ is inviting you to join Coffee & Power, the mobile work network.\n\
 \n\
 If you haven't already, first download the <iPhone> or <Android> Coffee & Power app.\n\
 \n\
@@ -36,17 +36,37 @@ Welcome!";
 
 @synthesize subjectTextField = _subjectTextField;
 @synthesize bodyTextView = _bodyTextView;
+@synthesize nickname = _nickname;
+@synthesize connectionIDs = _connectionIDs;
 
 #pragma mark - UIView
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSString *nickname = @"abc";
-    NSString *code = @"AAAA";
+    [SVProgressHUD showWithStatus:@"Loading..."];
     
-    self.subjectTextField.text = [NSString stringWithFormat:kSubjectTemplate, nickname];
-    self.bodyTextView.text = [NSString stringWithFormat:kBodyTemplate, code, nickname];
+    [CPapi getInvitationCodeForLinkedInConnections:self.connectionIDs
+                               wihtCompletionBlock:
+     ^(NSDictionary *json, NSError *error) {
+         if (error) {
+             [SVProgressHUD dismissWithError:[error localizedDescription] afterDelay:kDefaultDimissDelay];
+             return;
+         }
+         
+         if ([[json objectForKey:@"error"] intValue]) {
+             [SVProgressHUD dismissWithError:[json objectForKey:@"payload"] afterDelay:kDefaultDimissDelay];
+             return;
+         }
+         
+         NSString *invitationCode = [[json objectForKey:@"payload"] objectForKey:@"code"];
+         
+         self.subjectTextField.text = [NSString stringWithFormat:kSubjectTemplate, self.nickname];
+         self.bodyTextView.text = [NSString stringWithFormat:kBodyTemplate,
+                                   self.nickname, invitationCode, self.nickname];
+         
+         [SVProgressHUD dismiss];
+     }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

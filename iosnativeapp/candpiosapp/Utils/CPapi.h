@@ -138,7 +138,10 @@
              andMinorJobCategory:(NSString *)minorJobCategory;
 
 + (void)saveUserSmartererName:(NSString *)name
-                                       :(void(^)(NSDictionary *json, NSError *error))completion; 
+                                       :(void(^)(NSDictionary *json, NSError *error))completion;
+
++ (void)getInvitationCodeForLinkedInConnections:(NSArray *)connectionsIDs
+                            wihtCompletionBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
 # pragma mark - Venue Chat
 + (void)getVenueChatForVenueWithID:(int)venueID

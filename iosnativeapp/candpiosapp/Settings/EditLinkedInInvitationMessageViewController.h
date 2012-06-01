@@ -8,4 +8,7 @@
 
 @interface EditLinkedInInvitationMessageViewController : UIViewController
 
+@property (nonatomic, strong) NSString *nickname;
+@property (nonatomic, strong) NSArray *connectionIDs;
+
 @end

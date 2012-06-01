@@ -272,7 +272,7 @@
                     <navigationItem key="navigationItem" title="Invite LinkedIn Connections" id="oHT-sY-Dl3">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="oZU-nj-o6Y">
                             <connections>
-                                <segue destination="g5I-1x-LsX" kind="modal" id="ZqB-XF-3hD"/>
+                                <segue destination="g5I-1x-LsX" kind="modal" identifier="EditLinkedInInvitationMessageViewControllerSegue" id="ZqB-XF-3hD"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
