@@ -9,6 +9,7 @@
 #import "OAuthConsumer.h"
 #import "CPLinkedInAPI.h"
 #import "EditLinkedInInvitationMessageViewController.h"
+#import "AppDelegate.h"
 
 NSString * const kSubjectTemplate = @"%@ is inviting you to Coffee & Power";
 NSString * const kBodyTemplate = @"Hi! %@ is inviting you to join Coffee & Power, the mobile work network.\n\
@@ -48,6 +49,8 @@ Welcome!";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setSendButtonEnabled:NO];
+    
     [SVProgressHUD showWithStatus:@"Loading..."];
     
     [CPapi getInvitationCodeForLinkedInConnections:self.connectionIDs
@@ -70,6 +73,7 @@ Welcome!";
                                    self.nickname, invitationCode, self.nickname];
          
          [SVProgressHUD dismiss];
+         [self setSendButtonEnabled:YES];
      }];
 }
 
@@ -135,6 +139,8 @@ Welcome!";
     NSInteger statusCode = [[json objectForKey:@"status"] integerValue];
     
     if (statusCode < 300) {
+        [[AppDelegate instance].settingsMenuController dismissViewControllerAnimated:YES
+                                                                          completion:NULL];
         [SVProgressHUD dismissWithSuccess:@"Invitation has been sent"];
     } else {
         [SVProgressHUD dismissWithError:[json objectForKey:@"message"] afterDelay:kDefaultDimissDelay];
