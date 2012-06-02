@@ -187,7 +187,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
         NSString *responseBody = [[NSString alloc] initWithData:data
                                                        encoding:NSUTF8StringEncoding];
         self.requestToken = [[OAToken alloc] initWithHTTPResponseBody:responseBody];
-        // NSLog(@"*** Response: %@", responseBody);
         
         NSString *authorizationURL = [NSString stringWithFormat:@"https://www.linkedin.com/uas/oauth/authorize?oauth_token=%@", requestToken.key];
         
@@ -195,10 +194,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
         NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
         self.myWebView.delegate = self;
         [self.myWebView loadRequest:requestObj];
-        
-        //        ModalWebViewController *myWebView = [[ModalWebViewController alloc] init];
-        //        myWebView.urlAddress = authorizationURL;
-        //        [self.navigationController presentModalViewController:myWebView animated:YES];
     }
 }
 
