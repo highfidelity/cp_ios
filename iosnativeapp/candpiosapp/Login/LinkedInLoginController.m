@@ -416,7 +416,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                                                            error:&error];
     
     if ( ! error) {
-        [CPapi addContactsByLinkdeInIDs:[json objectForKey:@"values"]];
+        [CPapi addContactsByLinkedInIDs:[json objectForKey:@"values"]];
     }
     
     LoadLinkedInConnectionsCompletionBlockType completion = self.loadLinkedInConnectionsCompletionBlock;

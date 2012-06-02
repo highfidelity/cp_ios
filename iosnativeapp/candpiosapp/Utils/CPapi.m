@@ -1144,8 +1144,12 @@
                          completion:nil];
 }
 
-+ (void)addContactsByLinkdeInIDs:(NSMutableDictionary *)connections
++ (void)addContactsByLinkedInIDs:(NSArray *)connections
 {
+    if ( ! [connections isKindOfClass:[NSArray class]]) {
+        return;
+    }
+    
     NSError *error = nil;
     NSData *connectionsJSONData = [NSJSONSerialization dataWithJSONObject:connections
                                                               options:kNilOptions
@@ -1153,7 +1157,7 @@
     NSString *connectionsJSONString = [[NSString alloc] initWithData:connectionsJSONData
                                                             encoding:NSUTF8StringEncoding];
 
-    [self makeHTTPRequestWithAction:@"addContactsByLinkdeInIDs"
+    [self makeHTTPRequestWithAction:@"addContactsByLinkedInIDs"
                      withParameters:[NSMutableDictionary dictionaryWithObject:connectionsJSONString
                                                                        forKey:@"connections"]
                          completion:NULL];

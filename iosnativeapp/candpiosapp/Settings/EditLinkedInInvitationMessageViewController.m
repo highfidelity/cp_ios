@@ -217,7 +217,7 @@ Welcome!";
 }
     
 - (void)setSendButtonEnabled:(BOOL)enabled {
-    self.navigationItem.leftBarButtonItem.enabled = enabled;
+    self.navigationItem.rightBarButtonItem.enabled = enabled;
 }
 
 @end
