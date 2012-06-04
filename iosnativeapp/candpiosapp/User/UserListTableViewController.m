@@ -17,8 +17,17 @@
 #import "CPSwipeableQuickActionSwitch.h"
 #import "CPSoundEffectsManager.h"
 
+@interface UserListTableViewController()
+
+@property (nonatomic, assign) BOOL userIsPerformingQuickAction;
+@property (nonatomic, assign) BOOL reloadPrevented;
+
+@end
+
 @implementation UserListTableViewController
 
+@synthesize userIsPerformingQuickAction = _userIsPerformingQuickAction;
+@synthesize reloadPrevented = _reloadPrevented;
 @synthesize weeklyUsers = _weeklyUsers;
 @synthesize checkedInUsers = _checkedInUsers;
 
@@ -104,7 +113,12 @@
     self.checkedInUsers = [[self.checkedInUsers sortedArrayUsingSelector:@selector(compareDistanceToUser:)] mutableCopy];
     self.weeklyUsers = [[self.weeklyUsers sortedArrayUsingSelector:@selector(compareDistanceToUser:)] mutableCopy];    
     
-    [self.tableView reloadData];
+    // we only want to reload the table view here if the user isn't in the process of performing a quick action
+    if (!self.userIsPerformingQuickAction) {
+        [self.tableView reloadData];
+    } else {
+        self.reloadPrevented = YES;
+    }
 }
 
 -(void)newDataBeingLoaded:(NSNotification *)notification
@@ -349,6 +363,24 @@ static CPSwipeableQuickActionSwitch *quickSwitch = nil;
             
             [self presentModalViewController:loveModal animated:YES];
         }
+    }
+}
+
+-(void)cellDidBeginPan:(CPSwipeableTableViewCell *)cell
+{
+    self.userIsPerformingQuickAction = YES;
+}
+
+-(void)cellDidFinishPan:(CPSwipeableTableViewCell *)cell
+{
+    self.userIsPerformingQuickAction = NO;
+    
+    if (self.reloadPrevented) {
+        // we prevented our UITableView from reloading before so fire it now
+        [self.tableView reloadData];
+        
+        // reset the boolean
+        self.reloadPrevented = NO;
     }
 }
 

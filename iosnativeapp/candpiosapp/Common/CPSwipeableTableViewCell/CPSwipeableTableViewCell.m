@@ -232,6 +232,9 @@ static char BOOLRevealing;
 		
 	} else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
         
+        if ([self.delegate respondsToSelector:@selector(cellDidFinishPan:)])
+			[self.delegate cellDidFinishPan:self];
+        
 		// Swiping left, velocity is below 0.
 		// Swiping right, it is above 0
 		// If the velocity is above the width in points per second at any point in the pan, push it to the acceptable side
