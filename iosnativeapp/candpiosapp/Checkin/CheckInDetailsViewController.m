@@ -275,7 +275,7 @@
     [SVProgressHUD showWithStatus:@"Checking In ..."];
     
     // use CPapi to checkin
-    [CPapi checkInToLocation:self.place checkInTime:checkInTime checkOutTime:checkOutTime statusText:statusText isVirtual:self.checkInIsVirtual completionBlock:^(NSDictionary *json, NSError *error){
+    [CPapi checkInToLocation:self.place checkInTime:checkInTime checkOutTime:checkOutTime statusText:statusText isVirtual:self.checkInIsVirtual isAutomatic:NO completionBlock:^(NSDictionary *json, NSError *error){
         // hide the SVProgressHUD
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {
@@ -284,6 +284,8 @@
                 // Fire a notification 5 minutes before checkout time
                 NSInteger minutesBefore = 5;
                 UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+                NSDictionary *venueDataDict;
+                
                 if (localNotif) {
                     // Cancel all old local notifications
                     [[UIApplication sharedApplication] cancelAllLocalNotifications];
@@ -297,7 +299,7 @@
                     
                     // encode the venue and store it in an NSDictionary
                     NSData *venueData = [NSKeyedArchiver archivedDataWithRootObject:self.place];
-                    NSDictionary *venueDataDict = [NSDictionary dictionaryWithObject:venueData forKey:@"venue"];
+                    venueDataDict = [NSDictionary dictionaryWithObject:venueData forKey:@"venue"];
                     
                     localNotif.userInfo = venueDataDict;
                     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
@@ -321,14 +323,28 @@
                 
                 // Store the current time as lastCheckinTime, used to only monitor the 20 most recent checkins with geofences due to device limitations
                 self.place.checkinTime = checkInTime;
-                
-                // Start monitoring the new location to allow auto-checkout and checkin (if enabled) 
-                // put the venue ID for the venue the user is checked into in NSUserDefaults
-                // used across the app to check if the user is checked into the venue they're looking at
-                [CPAppDelegate startMonitoringVenue:self.place];
 
+                // Save current place to venue defaults as it's used in several places in the app
+                [CPAppDelegate saveCurrentVenueUserDefaults:self.place];
+
+                // If this is the user's first check in to this venue and auto-checkins are enabled,
+                // ask the user about checking in automatically to this venue in the future
+                BOOL automaticCheckins = [DEFAULTS(object, kAutomaticCheckins) boolValue];
+                                
                 [CPAppDelegate refreshCheckInButton];
-            
+
+                if (automaticCheckins) {
+                    // Only show the alert if the current venue isn't currently in the list of monitored venues
+                    
+                    CPVenue *matchedVenue = [CPAppDelegate venueWithName:self.place.name];
+                    
+                    if (!matchedVenue) {                    
+                        UIAlertView *autoCheckinAlert = [[UIAlertView alloc] initWithTitle:nil message:@"Automatically check in to this venue in the future?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+                        
+                        [autoCheckinAlert show];
+                    }
+                }
+
                 // hide the checkin screen, we're checked in
                 if ([self isModal]) {
                     [self dismissModalViewControllerAnimated:YES];
@@ -654,6 +670,21 @@
 
 - (void)dismissViewControllerAnimated {
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.firstOtherButtonIndex == buttonIndex) {
+        // Start monitoring the new location to allow auto-checkout and checkin (if enabled) 
+        // put the venue ID for the venue the user is checked into in NSUserDefaults
+        // used across the app to check if the user is checked into the venue they're looking at
+        [CPAppDelegate startMonitoringVenue:self.place];
+        
+    }
+    else if (buttonIndex == 2) {
+        // User does NOT want to automatically check in to this venue        
+        [CPAppDelegate stopMonitoringVenue:self.place];
+        [CPAppDelegate updatePastVenue:self.place];
+    }
 }
 
 @end

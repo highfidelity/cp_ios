@@ -687,6 +687,7 @@
              checkOutTime:(NSInteger)checkOutTime
                statusText:(NSString *)statusText
                 isVirtual:(BOOL)isVirtual
+              isAutomatic:(BOOL)isAutomatic
           completionBlock:(void (^)(NSDictionary *, NSError *))completion
 {        
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
@@ -714,6 +715,8 @@
         [parameters setValue:@"0" forKey:@"is_virtual"];
 
     }
+
+    [parameters setValue:[NSString stringWithFormat:@"%d", isAutomatic] forKey:@"is_automatic"];
     
     // Set "async" param to beforeCheckin to actually check the user in
     // When this request returns, we'll fire another request without

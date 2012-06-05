@@ -84,8 +84,64 @@
     [alert show];
 }
 
+- (void)checkInNow:(CPVenue *)venue
+{
+    // Check the user in automatically now
+
+    [FlurryAnalytics logEvent:@"autoCheckedIn"];
+    
+    NSInteger checkInTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
+    // Set a maximum checkInDuration to 24 hours
+    NSInteger checkInDuration = 24;
+    
+    NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
+    NSString *statusText = @"";
+
+    // use CPapi to checkin
+    [CPapi checkInToLocation:venue checkInTime:checkInTime checkOutTime:checkOutTime statusText:statusText isVirtual:NO isAutomatic:YES completionBlock:^(NSDictionary *json, NSError *error){
+
+        if (!error) {
+            if (![[json objectForKey:@"error"] boolValue]) {
+
+                // Cancel all old local notifications
+                [[UIApplication sharedApplication] cancelAllLocalNotifications];
+
+                // post a notification to say the user has checked in
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
+
+                [self setCheckedOut];
+                // set the NSUserDefault to the user checkout time
+                SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
+                
+                // a successful checkin passes back venue_id
+                // give that to this venue before we store it in NSUserDefaults
+                // in case we came from foursquare venue list and didn't have it
+                venue.venueID = [[json objectForKey:@"venue_id"] intValue];
+                
+                // Store the current time as lastCheckinTime, used to only monitor the 20 most recent checkins with geofences due to device limitations
+                venue.checkinTime = checkInTime;
+                
+                // Save current place to venue defaults as it's used in several places in the app
+                [self saveCurrentVenueUserDefaults:venue];
+
+                // Update past venue list so that the most recent checkin is placed in the right order of the priority list
+                [self updatePastVenue:venue];
+                
+                [self refreshCheckInButton];
+            }
+            else {
+                // There was an error checking in; probably safe to ignore
+            }
+        } else {
+                // There was an error in the main call while checking in; probably safe to ignore
+        }
+    }];
+}
+
 - (void)checkOutNow
 {
+    [FlurryAnalytics logEvent:@"autoCheckedOut"];
+    
     [SVProgressHUD showWithStatus:@"Checking out..."];
     
     [CPapi checkOutWithCompletion:^(NSDictionary *json, NSError *error) {
@@ -455,15 +511,11 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 
     CPVenue *venue = [CPAppDelegate currentVenue];
 
-    NSLog(@"** did enter region: %@, lat: %f, lng: %f, radius: %f, distance filter: %f, desired accuracy: %f, current lat: %f, current lng: %f, horiz: %f, vert: %f", region.identifier, region.center.latitude, region.center.longitude, region.radius, manager.distanceFilter, manager.desiredAccuracy, self.locationManager.location.coordinate.latitude, manager.location.coordinate.longitude, manager.location.horizontalAccuracy, manager.location.verticalAccuracy);
-
     CLLocation *currentLocation = [[CLLocation alloc] initWithLatitude:manager.location.coordinate.latitude longitude:manager.location.coordinate.longitude];
 
     CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:region.center.latitude longitude:region.center.longitude];
         
     CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
-
-    NSLog(@"distance: %f", distance);
 
     // Only show the check in prompt if didEnter location is within 200 meters (in order to fix iOS 5.1+ location quirk)
     if (distance > 200) {
@@ -475,10 +527,13 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
         return;
     }
     else if (localNotif) {
-        NSString *alertText = [NSString stringWithFormat:@"Do you want to check in at %@?", region.identifier];
+        // Check in the user immediately
+        [self checkInNow:venue];
+
+        NSString *alertText = [NSString stringWithFormat:@"You were checked in to %@", region.identifier];
         
         localNotif.alertBody = alertText;
-        localNotif.alertAction = @"Open";
+        localNotif.alertAction = @"View";
         localNotif.soundName = UILocalNotificationDefaultSoundName;
         
         localNotif.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -497,10 +552,13 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     CPVenue *venue = [CPAppDelegate currentVenue];
     
     if ([CPAppDelegate userCheckedIn] && venue && venue.name && [venue.name isEqualToString:region.identifier] && localNotif) {
-        NSString *alertText = [NSString stringWithFormat:@"Do you want to check out of %@?", region.identifier];
+        // Log user out immediately
+        [self checkOutNow];
+
+        NSString *alertText = [NSString stringWithFormat:@"You were checked out of %@", region.identifier];
         
         localNotif.alertBody = alertText;
-        localNotif.alertAction = @"Check Out";
+        localNotif.alertAction = @"View";
         localNotif.soundName = UILocalNotificationDefaultSoundName;
         
         localNotif.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -668,38 +726,46 @@ didReceiveLocalNotification:(UILocalNotification *)notif
 {
     NSDictionary *userDict = notif.userInfo;
     
-    BOOL showActionSheet = NO;
     NSString *alertText;
     NSString *cancelText;
-    NSString *neverText = @"Never for this location";
     NSString *otherText;
     NSInteger tagNumber = 0;
 
     if (userDict && [[userDict objectForKey:@"type"] isEqualToString:@"didExitRegion"]) {
         if (app.applicationState == UIApplicationStateActive) {
-            // Show didExitRegion alert
+            // Show didExitRegion alert as app is in the foreground
             alertText = notif.alertBody;
-            otherText = @"Check Out";
-            cancelText = @"Cancel";
+            otherText = @"View";
+            cancelText = @"Ignore";
             tagNumber = 601;
         }
         else {
-            // Log out immediately if user tapped Check Out from notification
-            [self checkOutNow];
+            // User tapped/swiped from the notification, so take the user right to the venue to facilitate checking back in
+                if (userDict) {
+                    [self loadVenueView:[userDict objectForKey:@"name"]];
+                }
         }
     }
     else if (userDict && [[userDict objectForKey:@"type"] isEqualToString:@"didEnterRegion"]) {
         // Show didEnterRegion alert
-        showActionSheet = YES;
-        alertText = notif.alertBody;
-        otherText = @"Check In";
-        cancelText = @"Cancel";
-        tagNumber = 602;
+        if (app.applicationState == UIApplicationStateActive) {
+            // Show didExitRegion alert as app is in the foreground
+            alertText = notif.alertBody;
+            otherText = @"View";
+            cancelText = @"Ignore";
+            tagNumber = 602;
+        }
+        else {
+            // User tapped/swiped from the notification, so take the user right to the venue to facilitate checking back in
+            if (userDict) {
+                [self loadVenueView:[userDict objectForKey:@"name"]];
+            }
+        }
     }
     else if ([notif.alertAction isEqualToString:@"Check Out"]) {
         // For regular timeout checkouts
         alertText = kCheckOutLocalNotificationAlertViewTitle;
-        cancelText = @"OK";
+        cancelText = @"Ignore";
         otherText = @"View";
     }
 
@@ -707,20 +773,11 @@ didReceiveLocalNotification:(UILocalNotification *)notif
     if (alertText && alertText.length > 0) {
         CPAlertView *alertView;
         
-        if (showActionSheet) {
-            alertView = [[CPAlertView alloc] initWithTitle:alertText
-                                                   message:nil
-                                                  delegate:self
-                                         cancelButtonTitle:cancelText
-                                         otherButtonTitles:otherText, neverText, nil];
-        }
-        else {
-            alertView = [[CPAlertView alloc] initWithTitle:alertText
-                                                   message:nil
-                                                  delegate:self
-                                         cancelButtonTitle:cancelText
-                                         otherButtonTitles:otherText, nil];        
-        }
+        alertView = [[CPAlertView alloc] initWithTitle:alertText
+                                               message:nil
+                                              delegate:self
+                                     cancelButtonTitle:cancelText
+                                     otherButtonTitles:otherText, nil];        
         
         if (alertView) {
             alertView.context = notif;
@@ -1044,11 +1101,12 @@ void SignalHandler(int sig) {
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+
+    CPAlertView *cpAlertView = (CPAlertView *)alertView;
+    UILocalNotification *notif = cpAlertView.context;
+
     if ([alertView.title isEqualToString:kCheckOutLocalNotificationAlertViewTitle]) {
-        if (alertView.firstOtherButtonIndex == buttonIndex) {
-            CPAlertView *cpAlertView = (CPAlertView *)alertView;
-            UILocalNotification *notif = cpAlertView.context;
-            
+        if (alertView.firstOtherButtonIndex == buttonIndex) {            
             [AppDelegate instance].checkOutTimer = [NSTimer scheduledTimerWithTimeInterval:300
                                                                                     target:self
                                                                                   selector:@selector(setCheckedOut) 
@@ -1072,28 +1130,16 @@ void SignalHandler(int sig) {
         }
     }
     else if (alertView.tag == 601 && alertView.firstOtherButtonIndex == buttonIndex) {
-        // Log user out immediately if they tapped Check Out
-        [self checkOutNow];
-    }
-    else if (alertView.tag == 602) {
-        // didEnter action chosen, user can either check in or choose to always ignore this location
-
-        CPAlertView *cpAlertView = (CPAlertView *)alertView;
-        UILocalNotification *notif = cpAlertView.context;
-
-        if (alertView.firstOtherButtonIndex == buttonIndex) {
-            // Take that person to the check in screen
-
-            if (notif && notif.userInfo) {
-                [self loadVenueView:[notif.userInfo objectForKey:@"name"]];
-            }
+        // Load the venue if the user tapped on View from the didExit auto checkout alert
+        if (notif && notif.userInfo) {
+            [self loadVenueView:[notif.userInfo objectForKey:@"name"]];
         }
-        else if (buttonIndex == 2) {
-            // Set auto check in to off for this venue
-            
-            CPVenue *venue = [self venueWithName:[notif.userInfo objectForKey:@"name"]];
-            [self stopMonitoringVenue:venue];
-            [self updatePastVenue:venue];
+    }
+    else if (alertView.tag == 602 && alertView.firstOtherButtonIndex == buttonIndex) {
+        // didEnter action chosen, allow user to view the auto-checked in venue
+
+        if (notif && notif.userInfo) {
+            [self loadVenueView:[notif.userInfo objectForKey:@"name"]];
         }
     }
 }

@@ -9,7 +9,7 @@
 #import <MapKit/MapKit.h>
 #import "CPVenue.h"
 
-@interface CheckInDetailsViewController : UIViewController
+@interface CheckInDetailsViewController : UIViewController <UIAlertViewDelegate>
 
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, strong) CPVenue *place;

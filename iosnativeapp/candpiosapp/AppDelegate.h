@@ -41,10 +41,12 @@
 - (void)updatePastVenue:(CPVenue *)venue;
 - (void)saveCurrentVenueUserDefaults:(CPVenue *)venue;
 - (CPVenue *)currentVenue;
+- (CPVenue *)venueWithName:(NSString *)name;
 - (void)toggleSettingsMenu;
 - (void)refreshCheckInButton;
 - (void)promptForCheckout;
 - (void)setCheckedOut;
+- (void)checkInNow:(CPVenue *)venue;
 - (void)checkOutNow;
 - (void)showSignupModalFromViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
