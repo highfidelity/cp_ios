@@ -686,7 +686,7 @@
     }
 
     [CPUIHelper profileImageView:userThumbnail
-             withProfileImageUrl:user.urlPhoto];
+             withProfileImageUrl:user.photoURL];
     // add a shadow to the imageview
     [CPUIHelper addShadowToView:userThumbnail color:[UIColor blackColor] offset:CGSizeMake(1, 1) radius:3 opacity:0.40];
 

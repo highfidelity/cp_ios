@@ -70,7 +70,8 @@
     self.descriptionTextView.placeholderColor = [UIColor colorWithR:153 G:153 B:153 A:1];
     
     // place the user's profile picture
-    [self.profilePicture setImageWithURL:self.user.urlPhoto placeholderImage:[CPUIHelper defaultProfileImage]];
+    [self.profilePicture setImageWithURL:self.user.photoURL
+                        placeholderImage:[CPUIHelper defaultProfileImage]];
     
     // shadow on user profile picture
     [CPUIHelper addShadowToView:self.profilePicture color:[UIColor blackColor] offset:CGSizeMake(1, 1) radius:1 opacity:0.4];

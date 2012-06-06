@@ -28,7 +28,7 @@
 @synthesize hourlyRate = _hourlyRate;
 @synthesize totalEarned = _totalEarned;
 @synthesize totalSpent = _totalSpent;
-@synthesize urlPhoto = _urlPhoto;
+@synthesize photoURLString = _photoURLString;
 @synthesize distance = _distance;
 @synthesize checkedIn = _checkedIn;
 @synthesize placeCheckedIn = _placeCheckedIn;
@@ -81,10 +81,7 @@
         self.minorJobCategory = [userDict objectForKey:@"minor_job_category"];
         self.jobTitle = [userDict objectForKey:@"headline"];
         
-        NSString *photoString = [userDict objectForKey:@"filename"];
-        if (![photoString isKindOfClass:[NSNull class]]) {
-            self.urlPhoto = [NSURL URLWithString:photoString];
-        }        
+        self.photoURLString = [userDict objectForKey:@"filename"];
         
         double lat = [[userDict objectForKey:@"lat"] doubleValue];
         double lng = [[userDict objectForKey:@"lng"] doubleValue];
@@ -105,7 +102,7 @@
         self.userID = [decoder decodeIntForKey:@"userID"];
         self.nickname = [decoder decodeObjectForKey:@"nickname"];
         self.email = [decoder decodeObjectForKey:@"email"];
-        self.urlPhoto = [decoder decodeObjectForKey:@"urlPhoto"];
+        self.photoURLString = [decoder decodeObjectForKey:@"photoURL"];
         self.enteredInviteCode = [decoder decodeBoolForKey:@"enteredInviteCode"];
         self.joinDate = [decoder decodeObjectForKey:@"joinDate"];
         self.skills = [decoder decodeObjectForKey:@"skills"];
@@ -118,7 +115,7 @@
     [encoder encodeInt:self.userID forKey:@"userID"];
     [encoder encodeObject:self.nickname forKey:@"nickname"];
     [encoder encodeObject:self.email forKey:@"email"];
-    [encoder encodeObject:self.urlPhoto forKey:@"urlPhoto"];
+    [encoder encodeObject:self.photoURLString forKey:@"photoURL"];
     [encoder encodeBool:self.enteredInviteCode forKey:@"enteredInviteCode"];
     [encoder encodeObject:self.joinDate forKey:@"joinDate"];
     [encoder encodeObject:self.skills forKey:@"skills"];
@@ -168,6 +165,17 @@
     } else {
         _jobTitle = [jobTitle stringByDecodingHTMLEntities];
     }
+}
+
+// override setter for photoURLString so that we handle when it is nil
+-(void)setPhotoURLString:(NSString *)photoURLString
+{
+    _photoURLString = [photoURLString isKindOfClass:[NSNull class]] ? nil : photoURLString;
+}
+
+-(NSURL *)photoURL
+{
+    return self.photoURLString ? [NSURL URLWithString:self.photoURLString] : nil;
 }
 
 - (NSString *)firstName
@@ -287,7 +295,7 @@
                 self.jobTitle = [userDict objectForKey:@"job_title"];
             }
             // set the user's photo url        
-            self.urlPhoto = [NSURL URLWithString:[userDict objectForKey:@"urlPhoto"]];
+            self.photoURLString = [userDict objectForKey:@"urlPhoto"];
             self.location = CLLocationCoordinate2DMake(
                                                        [[userDict valueForKeyPath:@"location.lat"] doubleValue],
                                                        [[userDict valueForKeyPath:@"location.lng"] doubleValue]);

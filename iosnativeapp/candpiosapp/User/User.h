@@ -32,7 +32,7 @@
 @property (nonatomic, assign) double totalEarned;
 @property (nonatomic, assign) int totalHours;
 @property (nonatomic, assign) double totalSpent;
-@property (nonatomic, strong) NSURL *urlPhoto;
+@property (nonatomic, strong) NSString *photoURLString;
 @property (nonatomic, assign) double distance;
 @property (nonatomic, assign) BOOL checkedIn;
 @property (nonatomic, strong) CPVenue *placeCheckedIn;
@@ -68,6 +68,8 @@
 -(void)loadUserResumeData:(void (^)(NSError *error))completion;
 -(id)initFromDictionary:(NSDictionary *)userDict;
 -(NSString *)firstName;
+
+-(NSURL *)photoURL;
 
 - (void)setEnteredInviteCodeFromJSONString:(NSString *)enteredInviteCodeString;
 - (void)setJoinDateFromJSONString:(NSString *)dateString;

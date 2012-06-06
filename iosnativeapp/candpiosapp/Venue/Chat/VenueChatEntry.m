@@ -47,11 +47,7 @@
         entryUser = [[User alloc] init];
         entryUser.userID = [userID intValue];
         entryUser.nickname = [userDict objectForKey:@"author"];
-        
-        NSString *photoString = [userDict objectForKey:@"filename"];
-        if (![photoString isKindOfClass:[NSNull class]]) {
-            entryUser.urlPhoto = [NSURL URLWithString:photoString];
-        }            
+        entryUser.photoURLString = [userDict objectForKey:@"filename"];
     }
     
     return entryUser;

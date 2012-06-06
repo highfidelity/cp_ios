@@ -54,7 +54,7 @@
 
     
     [payTo setText: self.user.nickname];
-    [payeeImage setImageWithURL: self.user.urlPhoto];
+    [payeeImage setImageWithURL:self.user.photoURL];
 }
 
 - (void)viewDidAppear:(BOOL)animated

@@ -252,7 +252,7 @@
     cell.checkInLabel.text = user.placeCheckedIn.name;
 
     [CPUIHelper profileImageView:cell.profilePictureImageView
-             withProfileImageUrl:user.urlPhoto];
+             withProfileImageUrl:user.photoURL];
     cell.nicknameLabel.text = [CPUIHelper profileNickname:user.nickname];
     
     //If user is virtually checkedIn then add virtual badge to their profile image

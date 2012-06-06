@@ -131,7 +131,7 @@ UITapGestureRecognizer* _tapRecon = nil;
 
     // set the card image to the user's profile image
     [CPUIHelper profileImageView:self.cardImage
-             withProfileImageUrl:self.user.urlPhoto];
+             withProfileImageUrl:self.user.photoURL];
     
     // hide the go menu if this profile is current user's profile
     if (self.user.userID == [CPAppDelegate currentUser].userID || self.isF2FInvite) {
@@ -391,7 +391,7 @@ UITapGestureRecognizer* _tapRecon = nil;
     [SVProgressHUD dismiss];
     
     [CPUIHelper profileImageView:self.cardImage
-             withProfileImageUrl:self.user.urlPhoto];
+             withProfileImageUrl:self.user.photoURL];
     self.cardNickname.text = self.user.nickname;
 
     self.title = self.user.nickname;  

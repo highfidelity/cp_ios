@@ -173,12 +173,12 @@
                 }
                 
                 // check photo url
-                if (![self.currentUser.urlPhoto isEqual:webSyncUser.urlPhoto]) {
+                if (![self.currentUser.photoURLString isEqual:webSyncUser.photoURLString]) {
                     // user photo is going to change
                     // show the spinner
                     [self addSpinnerToTableCell:self.profileImageBox.superview];
                     
-                    self.currentUser.urlPhoto = webSyncUser.urlPhoto;
+                    self.currentUser.photoURLString = webSyncUser.photoURLString;
                     self.newDataFromSync = YES;
                 }
                 
@@ -253,12 +253,8 @@
             self.pendingEmail = pendingEmail;
             [SVProgressHUD showErrorWithStatus:[json objectForKey:@"message"] duration:kDefaultDimissDelay];
         }
-        NSURL *newPhoto = [NSURL URLWithString:[paramsDict objectForKey:@"picture"]];
-        if (newPhoto) {
-            // we have a new profile picture
-            // update the user's photo url
-            self.currentUser.urlPhoto = newPhoto;
-        }
+        // update the user's photo url
+        self.currentUser.photoURLString = [paramsDict objectForKey:@"picture"];
         
         // store the updated user in NSUserDefaults
         [CPAppDelegate saveCurrentUserToUserDefaults:self.currentUser];
@@ -417,8 +413,8 @@
 
 - (void)changeProfileImageAndStopSpinner
 {
-    if (self.currentUser.urlPhoto) {
-        NSURLRequest *request = [NSURLRequest requestWithURL:self.currentUser.urlPhoto];
+    if (self.currentUser.photoURLString) {
+        NSURLRequest *request = [NSURLRequest requestWithURL:self.currentUser.photoURL];
         
         // avoid a retain cycle by using a weak pointer to call back to self
         __weak UserSettingsTableViewController *thisVC = self;

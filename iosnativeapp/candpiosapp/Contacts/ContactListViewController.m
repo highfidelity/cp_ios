@@ -311,10 +311,9 @@
     }
 
     UIImageView *imageView = cell.profilePicture;
-    if ([contact objectForKey:@"imageUrl"] != [NSNull null]) {
+    if (![[contact objectForKey:@"imageUrl"] isKindOfClass:[NSNull class]]) {
 
         imageView.contentMode = UIViewContentModeScaleAspectFill;
-
         [imageView setImageWithURL:[NSURL URLWithString:[contact objectForKey:@"imageUrl"]]
                        placeholderImage:[CPUIHelper defaultProfileImage]];
     } else {
@@ -343,7 +342,7 @@
     user.nickname = [contact objectForKey:@"nickname"];
     user.userID = [[contact objectForKey:@"id"] intValue];
     user.status = [contact objectForKey:@"status_text"];
-    user.urlPhoto = [contact objectForKey:@"imageUrl"];
+    user.photoURLString = [contact objectForKey:@"imageUrl"];
 
     // instantiate a UserProfileViewController
     UserProfileViewController *vc = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];

@@ -554,7 +554,7 @@
                 
                 // thumbnail button for recipient
                 // sender gets taken care below as the entry user
-                [self thumbnailButtonForButton:((LoveChatCell *) cell).recipientThumbnail photoURL:((LoveChatEntry *) entry).recipient.urlPhoto row:indexPath.row];
+                [self thumbnailButtonForButton:((LoveChatCell *) cell).recipientThumbnail photoURL:((LoveChatEntry *) entry).recipient.photoURL row:indexPath.row];
             };
         } else if ([entry isKindOfClass:[CheckinChatEntry class]]) {
             // checkin system chat entry
@@ -571,7 +571,7 @@
         }
         
         // setup thumbnail buttons for the entry user
-        [self thumbnailButtonForButton:cell.userThumbnail photoURL:entry.user.urlPhoto row:indexPath.row];
+        [self thumbnailButtonForButton:cell.userThumbnail photoURL:entry.user.photoURL row:indexPath.row];
         
         // set the text property on the entry label
         cell.chatEntry.text = entry.text;
