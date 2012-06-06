@@ -278,9 +278,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     oauthToken = self.requestToken.key;
     oauthSecret = self.requestToken.secret;
     
-    [CPapi updateLiDataWithToken:oauthToken 
-                       andSecret:oauthSecret];
-    
     // Now that we have the user's basic information, log them in with their new/existing account
     
     [self handleLinkedInLogin:fullName linkedinID:linkedinId password:password email:email oauthToken:oauthToken oauthSecret:oauthSecret];

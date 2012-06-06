@@ -84,8 +84,6 @@
                 forLocation:(CLLocation *)location
        withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
-+ (void)updateLiDataWithToken:(NSString *)token andSecret:(NSString *)secret;
-
 # pragma mark - Love
 + (void)sendLoveToUserWithID:(int)recieverID
                  loveMessage:(NSString *)loveMessage
