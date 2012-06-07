@@ -13,6 +13,8 @@
 @synthesize skillID = _skillID;
 @synthesize name = _name;
 @synthesize isVisible = _isVisible;
+@synthesize loveCount = _loveCount;
+@synthesize rank = _rank;
 
 - (CPSkill *)initFromDictionary:(NSDictionary *)skillDict
 {
@@ -20,6 +22,8 @@
         self.skillID = [[skillDict objectForKey:@"id"] integerValue];
         self.name = [skillDict objectForKey:@"name"];  
         self.isVisible = [[skillDict objectForKey:@"visible"] boolValue];
+        self.loveCount = [skillDict objectForKey:@"love"] ? [[skillDict objectForKey:@"love"] intValue] : 0;
+        self.rank = [skillDict objectForKey:@"rank"];
     }
     
     return self;
@@ -40,6 +44,11 @@
     [encoder encodeInteger:self.skillID forKey:@"id"];
     [encoder encodeObject:self.name forKey:@"name"];
     [encoder encodeBool:self.isVisible forKey:@"isVisible"];
+}
+
+- (void)setRank:(NSString *)rank 
+{
+    _rank = [rank isKindOfClass:[NSNull class]] ? nil : rank;
 }
 
 @end

@@ -13,6 +13,8 @@
 @property (nonatomic, assign) NSUInteger skillID;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, assign) BOOL isVisible;
+@property (nonatomic, assign) int loveCount;
+@property (nonatomic, strong) NSString *rank;
 
 - (CPSkill *)initFromDictionary:(NSDictionary *)skillDict;
 
