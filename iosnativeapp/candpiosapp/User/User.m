@@ -55,8 +55,6 @@
 @synthesize linkedInPublicProfileUrl = _linkedInPublicProfileUrl;
 @synthesize numberOfContactRequests = _numberOfContactRequests;
 
-
-
 -(id)init
 {
 	self = [super init];
@@ -331,7 +329,13 @@
             self.listingsAsAgent = [userDict objectForKey:@"listingsAsAgent"];
             
             self.reviews = [userDict objectForKey:@"reviews"];
-            self.skills = [userDict objectForKey:@"skills"];
+            
+            // create a CPSkill object for each of the skills we get back for this user
+            NSMutableArray *skills = [NSMutableArray array];
+            for (NSDictionary *skillDict in [userDict objectForKey:@"skills"]) {
+                [skills addObject:[[CPSkill alloc] initFromDictionary:skillDict]];
+            }
+            self.skills = skills;
             
             // work and education
             self.workInformation = [userDict objectForKey:@"work"];
