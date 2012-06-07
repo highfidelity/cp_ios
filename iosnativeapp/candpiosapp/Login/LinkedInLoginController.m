@@ -285,7 +285,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
 - (void)handleLinkedInLogin:(NSString*)fullName linkedinID:(NSString *)linkedinID password:(NSString*)password email:(NSString *)email oauthToken:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret {
     // kick off the request to the candp server
-    
     NSString *generatedEmail = email;
     
     if (!linkedinID)
@@ -307,6 +306,8 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
         [loginParams setObject:password forKey:@"signupPassword"];
         [loginParams setObject:password forKey:@"signupConfirm"];
         [loginParams setObject:@"mobileSignup" forKey:@"action"];
+        
+        [SVProgressHUD showWithStatus:@"Logging in..."];        
 
         NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"api.php" parameters:loginParams];
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
@@ -349,6 +350,9 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                                                       [generatedEmail isEqualToString:userEmail])) {
                         self.emailConfirmationRequired = YES;
                     }
+                    
+                    // hide the login progress HUD
+                    [SVProgressHUD dismiss];
 
                     if ([CPAppDelegate currentUser].enteredInviteCode) {
                         if ([[CPAppDelegate tabBarController] selectedIndex] == 4) {
