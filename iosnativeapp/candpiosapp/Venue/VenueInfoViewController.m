@@ -1068,6 +1068,11 @@
         self.phoneButton.frame = phoneFrame; 
         self.addressButton.frame = addressFrame;
     } else {
+        
+        // hide both buttons - no need to show two "N/A" labels
+        self.addressButton.hidden = YES;
+        self.phoneButton.hidden = YES;
+        
         if (checkinButtonIsShown) {
             // fade in the bottom bar
             self.bottomPhotoOverlayView.userInteractionEnabled = YES;
