@@ -16,7 +16,7 @@
 #define LOVE_CHAR_LIMIT 140
 #define inAppItem @"com.coffeeandpower.love1"
 
-@interface UserLoveViewController () <UITextViewDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface UserLoveViewController () <UITextViewDelegate, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *charCounterLabel;
 @property (nonatomic) BOOL purchasedLove;
@@ -194,26 +194,37 @@
                         [[MKStoreManager sharedManager] consumeProduct:inAppItem quantity:1];
                     }
                 }
-                
+
                 // dismiss the HUD with the success message that came back
                 NSString *message = [NSString stringWithFormat:@"You Recognized %@", self.user.nickname];
-                
+
                 // kill the progress HUD
                 [SVProgressHUD dismiss];
-                
+
                 // if we have a delegate that is user profile VC
                 // tell our delegate to reload data for the new review
                 if ([self.delegate isKindOfClass:[UserProfileViewController class]]) {
                     [self.delegate placeUserDataOnProfile];
                 }
-                
-                // dismiss the modal
-                [self dismissViewControllerAnimated:YES completion:^{
-                    
-                    // show a success HUD
-                    [SVProgressHUD showSuccessWithStatus:message
-                                                duration:kDefaultDimissDelay];
-                }];
+
+                BOOL isContact = [[[json objectForKey:@"payload"] objectForKey:@"is_contact"] boolValue];
+                if (!isContact) {
+                    NSString *alertMessage = [NSString stringWithFormat:@"Would you also like to exchange contact information with  %@?", self.user.nickname];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:message
+                                                                        message:alertMessage
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"NO"
+                                                              otherButtonTitles:@"YES", nil];
+                    [alertView show];
+                } else {
+                    // dismiss the modal
+                    [self dismissViewControllerAnimated:YES completion:^{
+
+                        // show a success HUD
+                        [SVProgressHUD showSuccessWithStatus:message
+                                                    duration:kDefaultDimissDelay];
+                    }];
+                }
             }
             
         } else {
@@ -547,6 +558,17 @@
                          self.keyboardBackground.frame = backgroundRect;
                      }
                      completion:nil];
+}
+
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self dismissViewControllerAnimated:YES
+                             completion:^{
+                                 if (buttonIndex == alertView.firstOtherButtonIndex) {
+                                     [CPapi sendContactRequestToUserId:self.user.userID];
+                                 }
+                             }];
 }
 
 @end
