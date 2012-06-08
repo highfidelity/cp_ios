@@ -305,6 +305,8 @@
 		5F8413E115619721003B43B8 /* UserProfileLinkedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */; };
 		5FAF891F1555FA6600247B95 /* virtual-check-in-badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAF891D1555FA6600247B95 /* virtual-check-in-badge.png */; };
 		5FAF89201555FA6600247B95 /* virtual-check-in-badge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAF891E1555FA6600247B95 /* virtual-check-in-badge@2x.png */; };
+		69112E6A1580D41B009CCBD0 /* contact-cell-bg-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 69112E681580D41B009CCBD0 /* contact-cell-bg-selected.png */; };
+		69112E6B1580D41B009CCBD0 /* contact-cell-bg-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69112E691580D41B009CCBD0 /* contact-cell-bg-selected@2x.png */; };
 		69120B73156D3EA900521E3F /* CPLinkedInAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 69120B71156D3C2200521E3F /* CPLinkedInAPI.m */; };
 		692552E0155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 692552DF155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m */; };
 		694323A915213D9000EBF585 /* UserResume.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 694323A815213D9000EBF585 /* UserResume.mustache */; };
@@ -892,6 +894,8 @@
 		5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfileLinkedInViewController.m; path = User/UserProfileLinkedInViewController.m; sourceTree = "<group>"; };
 		5FAF891D1555FA6600247B95 /* virtual-check-in-badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "virtual-check-in-badge.png"; sourceTree = "<group>"; };
 		5FAF891E1555FA6600247B95 /* virtual-check-in-badge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "virtual-check-in-badge@2x.png"; sourceTree = "<group>"; };
+		69112E681580D41B009CCBD0 /* contact-cell-bg-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-cell-bg-selected.png"; sourceTree = "<group>"; };
+		69112E691580D41B009CCBD0 /* contact-cell-bg-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-cell-bg-selected@2x.png"; sourceTree = "<group>"; };
 		69120B70156D3C2200521E3F /* CPLinkedInAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPLinkedInAPI.h; path = Utils/CPLinkedInAPI.h; sourceTree = "<group>"; };
 		69120B71156D3C2200521E3F /* CPLinkedInAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPLinkedInAPI.m; path = Utils/CPLinkedInAPI.m; sourceTree = "<group>"; };
 		692552DE155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushModalViewControllerFromLeftSegue.h; path = Settings/PushModalViewControllerFromLeftSegue.h; sourceTree = "<group>"; };
@@ -1729,6 +1733,8 @@
 			children = (
 				6983394615641509007CD32F /* contact-accept.png */,
 				6983394715641509007CD32F /* contact-accept@2x.png */,
+				69112E681580D41B009CCBD0 /* contact-cell-bg-selected.png */,
+				69112E691580D41B009CCBD0 /* contact-cell-bg-selected@2x.png */,
 				6983394815641509007CD32F /* contact-ignore.png */,
 				6983394915641509007CD32F /* contact-ignore@2x.png */,
 				5FAF891D1555FA6600247B95 /* virtual-check-in-badge.png */,
@@ -2721,6 +2727,8 @@
 				530C5DC41575E52D003505AC /* send-love-switch-on@2x.png in Resources */,
 				69E3A73D1573CAC90046E687 /* linkedin-invite.png in Resources */,
 				69E3A73E1573CAC90046E687 /* linkedin-invite@2x.png in Resources */,
+				69112E6A1580D41B009CCBD0 /* contact-cell-bg-selected.png in Resources */,
+				69112E6B1580D41B009CCBD0 /* contact-cell-bg-selected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

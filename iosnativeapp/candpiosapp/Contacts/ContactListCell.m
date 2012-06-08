@@ -8,6 +8,12 @@
 
 #import "ContactListCell.h"
 
+@interface ContactListCell ()
+
+- (void)fixCellIsNotFullWidthDueToTableViewSectionIndexes;
+
+@end
+
 @implementation ContactListCell
 
 @synthesize contactListTVC = _contactListTVC;
@@ -32,7 +38,17 @@
                                              action:@selector(declineButtonAction)
                                    forControlEvents:UIControlEventTouchUpInside];
     }
+    
+    self.rightStyle = CPSwipeableTableViewCellSwipeStyleNone;
+    self.leftStyle = CPSwipeableTableViewCellSwipeStyleNone;
 }
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    [self fixCellIsNotFullWidthDueToTableViewSectionIndexes];
+}
+
+#pragma mark - UITableViewCell
 
 - (void)prepareForReuse {
     [super prepareForReuse];
@@ -42,12 +58,31 @@
     self.declineContactRequestButton.hidden = YES;
 }
 
+#pragma mark - CPSwipeableTableViewCell
+
+- (void)toggleCellActiveState:(BOOL)active {
+    if (active) {
+        self.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"contact-cell-bg-selected.png"]];
+    } else {
+        self.contentView.backgroundColor = [UIColor colorWithR:51 G:51 B:51 A:1];
+    }
+}
+
 - (IBAction)acceptButtonAction {
     [self.contactListTVC clickedAcceptButtonInUserTableViewCell:self];
 }
 
 - (IBAction)declineButtonAction {
     [self.contactListTVC clickedDeclineButtonInUserTableViewCell:self];
+}
+
+#pragma mark - private
+
+- (void)fixCellIsNotFullWidthDueToTableViewSectionIndexes {
+    CGRect frame = self.contentView.frame;
+    frame.size.width = self.frame.size.width;
+    self.contentView.frame = frame;
+    self.hiddenView.frame = frame;
 }
 
 @end

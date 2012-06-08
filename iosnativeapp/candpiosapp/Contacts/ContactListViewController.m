@@ -9,11 +9,13 @@
 #import "ContactListViewController.h"
 #import "UserProfileViewController.h"
 #import "NSString+HTML.h"
+#import "UserLoveViewController.h"
 
 #define kContactRequestsSection 0
 #define kExtraContactRequestsSections 1
 #define kHeightForHeader 22.0
 #define kContactRequestsCellIdentifier @"ContactRequestCell"
+NSString *const kQuickActionPrefix = @"send-love-switch";
 
 // add a nickname selector to NSDictionary so we can sort the contact list
 @interface NSDictionary (nickname)
@@ -42,11 +44,16 @@
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *placeholderImage;
+@property (nonatomic, assign) BOOL userIsPerformingQuickAction;
+@property (nonatomic, assign) BOOL reloadPrevented;
+
 - (NSIndexPath *)addToContacts:(NSDictionary *)contactData;
 - (void)animateRemoveContactRequestAtIndex:(NSUInteger)index;
 - (void)handleSendAcceptOrDeclineComletionWithJson:(NSDictionary *)json andError:(NSError *)error;
 - (void)updateBadgeValue;
 - (void)setBadgeNumber:(NSInteger)badgeNumber;
+- (NSDictionary *)contactForIndexPath:(NSIndexPath *)indexPath;
+- (User *)userForIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
@@ -54,6 +61,8 @@
 @implementation ContactListViewController
 
 @synthesize placeholderImage;
+@synthesize userIsPerformingQuickAction = _userIsPerformingQuickAction;
+@synthesize reloadPrevented = _reloadPrevented;
 @synthesize contacts, searchBar;
 @synthesize contactRequests = _contactRequests;
 
@@ -187,7 +196,11 @@
                 self.contacts = [payload mutableCopy];
                 self.contactRequests = [contactRequests mutableCopy];
                 
-                [self.tableView reloadData];
+                if (!self.userIsPerformingQuickAction) {
+                    [self.tableView reloadData];
+                } else {
+                    self.reloadPrevented = YES;
+                }
                 [self updateBadgeValue];
             }
             else {
@@ -272,19 +285,6 @@
     return 60;
 }
 
-- (NSDictionary *)contactForIndexPath:(NSIndexPath *)indexPath {
-    if (isSearching) {
-        return [searchResults objectAtIndex:(NSUInteger)[indexPath row]];
-    }
-    
-    if (kContactRequestsSection == indexPath.section) {
-        return [self.contactRequests objectAtIndex:indexPath.row];
-    }
-    
-    return [[self.contacts objectAtIndex:(NSUInteger)indexPath.section - kExtraContactRequestsSections]
-            objectAtIndex:(NSUInteger)indexPath.row];
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *CellIdentifier = @"ContactListCell";
@@ -327,6 +327,11 @@
         cell.contactListTVC = self;
         cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
         cell.backgroundView.backgroundColor = RGBA(66, 128, 128, 1);
+        
+        cell.rightStyle = CPSwipeableTableViewCellSwipeStyleNone;
+    } else {
+        cell.rightStyle = CPSwipeableTableViewCellSwipeStyleQuickAction;
+        cell.delegate = self;
     }
 
     return cell;
@@ -337,13 +342,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *contact = [self contactForIndexPath:indexPath];
-    User *user = [[User alloc] init];
-    user.nickname = [contact objectForKey:@"nickname"];
-    user.userID = [[contact objectForKey:@"id"] intValue];
-    user.status = [contact objectForKey:@"status_text"];
-    user.photoURLString = [contact objectForKey:@"imageUrl"];
-
+    User *user = [self userForIndexPath:indexPath];
+    
     // instantiate a UserProfileViewController
     UserProfileViewController *vc = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
     vc.user = user;
@@ -411,6 +411,7 @@
     [aSearchBar setShowsCancelButton:YES animated:YES];
     [self performSearch:aSearchBar.text];
 }
+
 - (void)searchBarCancelButtonClicked:(UISearchBar *)aSearchBar {
     [self.searchBar setShowsCancelButton:NO animated:YES];
     [self.searchBar setText:@""];
@@ -418,9 +419,11 @@
     isSearching = NO;
     [self.tableView reloadData];
 }
+
 - (void)searchBar:(UISearchBar *)aSearchBar textDidChange:(NSString *)searchText {
     [self performSearch:searchText];
 }
+
 - (void)searchBarSearchButtonClicked:(UISearchBar *)aSearchBar {
     [self.searchBar resignFirstResponder];
 }
@@ -469,6 +472,47 @@
                                     }];
     
     [self updateBadgeValue];
+}
+
+# pragma mark - CPSwipeableTableViewCellDelegate
+
+- (CPSwipeableQuickActionSwitch *)quickActionSwitchForDirection:(CPSwipeableTableViewCellDirection)direction {
+    static CPSwipeableQuickActionSwitch *quickSwitch = nil;
+    if ( ! quickSwitch) {
+        quickSwitch = [[CPSwipeableQuickActionSwitch alloc] initWithAssetPrefix:kQuickActionPrefix];
+    }
+    return quickSwitch;
+}
+
+-(void)performQuickActionForDirection:(CPSwipeableTableViewCellDirection)direction cell:(CPSwipeableTableViewCell *)sender {
+    if ([CPAppDelegate currentUser]) {
+        User *selectedUser = [self userForIndexPath:[self.tableView indexPathForCell:sender]];
+        
+        // only show the love modal if this isn't the user themselves
+        if (selectedUser.userID != [CPAppDelegate currentUser].userID) {
+            UserLoveViewController *loveModal = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil]
+                                                 instantiateViewControllerWithIdentifier:@"SendLoveModal"];
+            loveModal.user = selectedUser;
+            
+            [self presentModalViewController:loveModal animated:YES];
+        }
+    }
+}
+
+-(void)cellDidBeginPan:(CPSwipeableTableViewCell *)cell {
+    self.userIsPerformingQuickAction = YES;
+}
+
+-(void)cellDidFinishPan:(CPSwipeableTableViewCell *)cell {
+    self.userIsPerformingQuickAction = NO;
+    
+    if (self.reloadPrevented) {
+        // we prevented our UITableView from reloading before so fire it now
+        [self.tableView reloadData];
+        
+        // reset the boolean
+        self.reloadPrevented = NO;
+    }
 }
 
 #pragma mark - actions
@@ -538,6 +582,30 @@
         badgeValue = [NSString stringWithFormat:@"%d", badgeNumber];
     }
     self.navigationController.tabBarItem.badgeValue = badgeValue;
+}
+
+- (NSDictionary *)contactForIndexPath:(NSIndexPath *)indexPath {
+    if (isSearching) {
+        return [searchResults objectAtIndex:(NSUInteger)[indexPath row]];
+    }
+    
+    if (kContactRequestsSection == indexPath.section) {
+        return [self.contactRequests objectAtIndex:indexPath.row];
+    }
+    
+    return [[self.contacts objectAtIndex:(NSUInteger)indexPath.section - kExtraContactRequestsSections]
+            objectAtIndex:(NSUInteger)indexPath.row];
+}
+
+- (User *)userForIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *contact = [self contactForIndexPath:indexPath];
+    User *user = [[User alloc] init];
+    user.nickname = [contact objectForKey:@"nickname"];
+    user.userID = [[contact objectForKey:@"id"] intValue];
+    user.status = [contact objectForKey:@"status_text"];
+    user.photoURLString = [contact objectForKey:@"imageUrl"];
+    
+    return user;
 }
 
 @end
