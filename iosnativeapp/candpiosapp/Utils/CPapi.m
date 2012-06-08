@@ -683,8 +683,7 @@
 }
 
 + (void)checkInToLocation:(CPVenue *)place
-              checkInTime:(NSInteger)checkInTime
-             checkOutTime:(NSInteger)checkOutTime
+                hoursHere:(int)hoursHere
                statusText:(NSString *)statusText
                 isVirtual:(BOOL)isVirtual
               isAutomatic:(BOOL)isAutomatic
@@ -696,10 +695,7 @@
     [parameters setValue:[NSString stringWithFormat:@"%.7lf", place.coordinate.longitude]
                   forKey:@"lng"];
     [parameters setValue:place.name forKey:@"venue_name"];
-    [parameters setValue:[NSString stringWithFormat:@"%d", checkInTime]
-                  forKey:@"checkin"];
-    [parameters setValue:[NSString stringWithFormat:@"%d", checkOutTime]
-                  forKey:@"checkout"];
+    [parameters setValue:[NSString stringWithFormat:@"%d", hoursHere] forKey:@"hours_here"];
     [parameters setValue:place.foursquareID forKey:@"foursquare"];
     [parameters setValue:place.address forKey:@"address"];
     [parameters setValue:place.city forKey:@"city"];

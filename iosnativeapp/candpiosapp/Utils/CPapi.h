@@ -63,8 +63,7 @@
                                        :(void(^)(NSDictionary *json, NSError *error))completion; 
 
 + (void)checkInToLocation:(CPVenue *)place
-              checkInTime:(NSInteger)checkInTime
-             checkOutTime:(NSInteger)checkOutTime
+                hoursHere:(int)hoursHere
                statusText:(NSString *)stausText
                 isVirtual:(BOOL)isVirtual
               isAutomatic:(BOOL)isAutomatic

@@ -262,11 +262,9 @@
 
 - (IBAction)checkInPressed:(id)sender {
     
-    // send the server your lat/lon, checkin_time (now), checkout_time (now + duration from slider), and the venue data from the place. 
+    // send the server your lat/lon, number of hours to checkin for and the venue data from the place. 
     // url encode the appropriate values using the functions in CPapi
-    NSInteger checkInTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
-    NSInteger checkInDuration = self.checkInDuration;    
-    NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
+    
     NSString *statusText = @"";
     if (self.statusTextField.text) {
         statusText = self.statusTextField.text;
@@ -274,8 +272,12 @@
     
     [SVProgressHUD showWithStatus:@"Checking In ..."];
     
+    NSInteger checkInTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
+    NSInteger checkInDuration = self.checkInDuration;    
+    NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
+    
     // use CPapi to checkin
-    [CPapi checkInToLocation:self.place checkInTime:checkInTime checkOutTime:checkOutTime statusText:statusText isVirtual:self.checkInIsVirtual isAutomatic:NO completionBlock:^(NSDictionary *json, NSError *error){
+    [CPapi checkInToLocation:self.place hoursHere:self.checkInDuration statusText:statusText isVirtual:self.checkInIsVirtual isAutomatic:NO completionBlock:^(NSDictionary *json, NSError *error){
         // hide the SVProgressHUD
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {

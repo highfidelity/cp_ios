@@ -98,7 +98,7 @@
     NSString *statusText = @"";
 
     // use CPapi to checkin
-    [CPapi checkInToLocation:venue checkInTime:checkInTime checkOutTime:checkOutTime statusText:statusText isVirtual:NO isAutomatic:YES completionBlock:^(NSDictionary *json, NSError *error){
+    [CPapi checkInToLocation:venue hoursHere:checkInDuration statusText:statusText isVirtual:NO isAutomatic:YES completionBlock:^(NSDictionary *json, NSError *error){
 
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {
@@ -110,13 +110,9 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
 
                 [self setCheckedOut];
+                
                 // set the NSUserDefault to the user checkout time
                 SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
-                
-                // a successful checkin passes back venue_id
-                // give that to this venue before we store it in NSUserDefaults
-                // in case we came from foursquare venue list and didn't have it
-                venue.venueID = [[json objectForKey:@"venue_id"] intValue];
                 
                 // Store the current time as lastCheckinTime, used to only monitor the 20 most recent checkins with geofences due to device limitations
                 venue.checkinTime = checkInTime;
@@ -507,14 +503,9 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 }
  
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-
-    CPVenue *venue = [CPAppDelegate currentVenue];
 
     CLLocation *currentLocation = [[CLLocation alloc] initWithLatitude:manager.location.coordinate.latitude longitude:manager.location.coordinate.longitude];
-
     CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:region.center.latitude longitude:region.center.longitude];
-        
     CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
 
     // Only show the check in prompt if didEnter location is within 200 meters (in order to fix iOS 5.1+ location quirk)
@@ -523,53 +514,20 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     }
 
     // Don't show notification if user is currently checked in to this venue
-    if ([CPAppDelegate userCheckedIn] && venue && venue.name && [venue.name isEqualToString:region.identifier]) {
+    if ([CPAppDelegate userCheckedIn] && [[CPAppDelegate currentVenue].name isEqualToString:region.identifier]) {
         return;
-    }
-    else if (localNotif) {
+    } else {
+        // grab the right venue from our past venues
+        CPVenue * autoVenue = [self venueWithName:region.identifier];
         // Check in the user immediately
-        [self checkInNow:venue];
-
-        NSString *alertText = [NSString stringWithFormat:@"You were checked in to %@", region.identifier];
-        
-        localNotif.alertBody = alertText;
-        localNotif.alertAction = @"View";
-        localNotif.soundName = UILocalNotificationDefaultSoundName;
-        
-        localNotif.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @"didEnterRegion", @"type",
-                               region.identifier, @"name",
-                               nil];
-        
-        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];        
+        [self checkInNow:autoVenue];
     }
 }
  
-- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
-    // Only show check out prompt if user is currently logged in to the venue in question
-    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-    
-    CPVenue *venue = [CPAppDelegate currentVenue];
-    
-    if ([CPAppDelegate userCheckedIn] && venue && venue.name && [venue.name isEqualToString:region.identifier] && localNotif) {
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {    
+    if ([CPAppDelegate userCheckedIn] && [[CPAppDelegate currentVenue].name isEqualToString:region.identifier]) {
         // Log user out immediately
         [self checkOutNow];
-
-        NSString *alertText = [NSString stringWithFormat:@"You were checked out of %@", region.identifier];
-        
-        localNotif.alertBody = alertText;
-        localNotif.alertAction = @"View";
-        localNotif.soundName = UILocalNotificationDefaultSoundName;
-        
-        localNotif.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @"didExitRegion", @"type",
-                               region.identifier, @"name",
-                               nil];
-        
-        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
-        
-        // Cancel the "you will be checked out of C&P in 5 minutes" notification so that user isn't prompted to check out twice
-        [[UIApplication sharedApplication] cancelAllLocalNotifications];
     }
 }
  
