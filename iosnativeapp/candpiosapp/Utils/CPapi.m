@@ -718,61 +718,12 @@
 
     [parameters setValue:[NSString stringWithFormat:@"%d", isAutomatic] forKey:@"is_automatic"];
     
-    // Set "async" param to beforeCheckin to actually check the user in
-    // When this request returns, we'll fire another request without
-    // blocking the user's UI with async set to afterCheckin to 
-    // actually fire off the push and chat notifications for this checkin.
-    // For mre info see api.php->checkin()
-    [parameters setValue:@"beforeCheckin" forKey:@"async"];
-    
     // Don't pass the place icon - it's a dictionary and this crashes the request
     // [parameters setValue:place.icon forKey:@"icon"];
     [parameters setValue:statusText forKey:@"status"];
     
         
-    [self makeHTTPRequestWithAction:@"checkin" withParameters:parameters
-        completion:^(NSDictionary *json, NSError *error){
-            // If we have successfully checked in, fire off the checkin notifications.
-            // No need for completion block, since we don't really need to show
-            // any push / chat notification related errors to users (they can't do anything about
-            // them and these errors don't affect their checkin status.
-            if (!error && !([[json objectForKey:@"error"] boolValue])) {
-                [parameters setValue:@"afterCheckin" forKey:@"async"];
-                [self sendCheckinNotificationsWithParameters:parameters completionBlock:nil];
-            }
-                             
-            if (completion != nil) { 
-                completion(json, error);
-            }                 
-        }
-    ];
-}
-
-+ (void)sendCheckinNotificationsWithParameters:(NSMutableDictionary *)parameters
-                               completionBlock:(void (^)(NSDictionary *, NSError *))completion
-{
-    // just show the network activity indicator in status bar, not the status HUD
-    // TODO: Should we use AFNetworkActivityIndicatorManager for this? 
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    });
- 
-#if DEBUG
-    NSLog(@"Sending request for checkin notifications");
-#endif
-    
-    [self makeHTTPRequestWithAction:@"checkin" withParameters:parameters
-        completion:^(NSDictionary *json, NSError *error){
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            });
-            
-            if (completion != nil) { 
-                completion(json, error);
-            }
-        }
-    ];    
+    [self makeHTTPRequestWithAction:@"checkin" withParameters:parameters completion:completion];
 }
 
 + (void)checkOutWithCompletion:(void (^)(NSDictionary *, NSError *))completion
