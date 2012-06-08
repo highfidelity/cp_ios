@@ -681,46 +681,12 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 
 - (void)application:(UIApplication *)app
 didReceiveLocalNotification:(UILocalNotification *)notif
-{
-    NSDictionary *userDict = notif.userInfo;
-    
+{    
     NSString *alertText;
     NSString *cancelText;
     NSString *otherText;
-    NSInteger tagNumber = 0;
 
-    if (userDict && [[userDict objectForKey:@"type"] isEqualToString:@"didExitRegion"]) {
-        if (app.applicationState == UIApplicationStateActive) {
-            // Show didExitRegion alert as app is in the foreground
-            alertText = notif.alertBody;
-            otherText = @"View";
-            cancelText = @"Ignore";
-            tagNumber = 601;
-        }
-        else {
-            // User tapped/swiped from the notification, so take the user right to the venue to facilitate checking back in
-                if (userDict) {
-                    [self loadVenueView:[userDict objectForKey:@"name"]];
-                }
-        }
-    }
-    else if (userDict && [[userDict objectForKey:@"type"] isEqualToString:@"didEnterRegion"]) {
-        // Show didEnterRegion alert
-        if (app.applicationState == UIApplicationStateActive) {
-            // Show didExitRegion alert as app is in the foreground
-            alertText = notif.alertBody;
-            otherText = @"View";
-            cancelText = @"Ignore";
-            tagNumber = 602;
-        }
-        else {
-            // User tapped/swiped from the notification, so take the user right to the venue to facilitate checking back in
-            if (userDict) {
-                [self loadVenueView:[userDict objectForKey:@"name"]];
-            }
-        }
-    }
-    else if ([notif.alertAction isEqualToString:@"Check Out"]) {
+    if ([notif.alertAction isEqualToString:@"Check Out"]) {
         // For regular timeout checkouts
         alertText = kCheckOutLocalNotificationAlertViewTitle;
         cancelText = @"Ignore";
@@ -738,12 +704,7 @@ didReceiveLocalNotification:(UILocalNotification *)notif
                                      otherButtonTitles:otherText, nil];        
         
         if (alertView) {
-            alertView.context = notif;
-            
-            if (tagNumber) {
-                alertView.tag = tagNumber;
-            }
-            
+            alertView.context = notif;            
             [alertView show];
         }        
     }    
@@ -773,14 +734,36 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
                                          fromNickname:nickname
                                            fromUserId:userId
                                          withRootView:self.tabBarController];
-    }
-    else if ([userInfo valueForKey:kContactRequestAPNSKey] != nil)
-    {        
+    } else if ([userInfo valueForKey:@"geofence"]) {
+        // if the app is open then show an alert to the user
+        if (application.applicationState == UIApplicationStateActive) {
+            NSString *alertText = alertMessage;
+            NSString *cancelText = @"View";
+            NSString *otherText = @"Ignore";
+            
+            // alloc-init a CPAlertView
+            CPAlertView *alertView = [[CPAlertView alloc] initWithTitle:alertText
+                                                   message:nil
+                                                  delegate:self
+                                         cancelButtonTitle:cancelText
+                                         otherButtonTitles:otherText, nil];    
+            
+            // add our userInfo to the alertView
+            // be the delegate, give it a tag so we can recognize it
+            // and show it
+            alertView.context = userInfo;
+            alertView.delegate = self;
+            alertView.tag = 601;
+            [alertView show];
+        } else {
+            // otherwise when they slide the notification bring them to the venue
+            [self loadVenueView:[userInfo objectForKey:@"name"]];
+        }
+    } else if ([userInfo valueForKey:kContactRequestAPNSKey] != nil) {        
         [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:kContactRequestAPNSKey] intValue]
                                           fromView:self.settingsMenuController];
     }
-    else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey] != nil)
-    {        
+    else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey] != nil) {        
         [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"acceptor"]
                                        fromView:self.settingsMenuController];
     }
@@ -1090,14 +1073,7 @@ void SignalHandler(int sig) {
     else if (alertView.tag == 601 && alertView.firstOtherButtonIndex == buttonIndex) {
         // Load the venue if the user tapped on View from the didExit auto checkout alert
         if (notif && notif.userInfo) {
-            [self loadVenueView:[notif.userInfo objectForKey:@"name"]];
-        }
-    }
-    else if (alertView.tag == 602 && alertView.firstOtherButtonIndex == buttonIndex) {
-        // didEnter action chosen, allow user to view the auto-checked in venue
-
-        if (notif && notif.userInfo) {
-            [self loadVenueView:[notif.userInfo objectForKey:@"name"]];
+            [self loadVenueView:[notif.userInfo objectForKey:@"venue_name"]];
         }
     }
 }
