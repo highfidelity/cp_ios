@@ -50,245 +50,6 @@
 
 @synthesize window = _window;
 
-
-# pragma mark - Settings Menu
-- (void)toggleSettingsMenu
-{
-    [self.settingsMenuController showMenu: !self.settingsMenuController.isMenuShowing];
-}
-
-# pragma mark - Check-in/out Stuff
-
--(void)refreshCheckInButton
-{
-    // helper to grab center button and refresh state
-    [self.tabBarController.centerButton refreshButtonStateFromCheckinStatus];
-}
-
-// TODO: consolidate this with the checkedIn property on the current user in NSUserDefaults
-- (BOOL)userCheckedIn 
-{
-    NSNumber *checkoutEpoch = DEFAULTS(object, kUDCheckoutTime);
-    return [checkoutEpoch intValue] > [[NSDate date]timeIntervalSince1970];
-}
-
-- (void)promptForCheckout
-{
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Check Out"
-                          message:@"Are you sure you want to be checked out?"
-                          delegate:self.settingsMenuController
-                          cancelButtonTitle:@"Cancel"
-                          otherButtonTitles: @"Check Out", nil];
-    alert.tag = 904;
-    [alert show];
-}
-
-- (void)checkInNow:(CPVenue *)venue
-{
-    // Check the user in automatically now
-
-    [FlurryAnalytics logEvent:@"autoCheckedIn"];
-    
-    NSInteger checkInTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
-    // Set a maximum checkInDuration to 24 hours
-    NSInteger checkInDuration = 24;
-    
-    NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
-    NSString *statusText = @"";
-
-    // use CPapi to checkin
-    [CPapi checkInToLocation:venue hoursHere:checkInDuration statusText:statusText isVirtual:NO isAutomatic:YES completionBlock:^(NSDictionary *json, NSError *error){
-
-        if (!error) {
-            if (![[json objectForKey:@"error"] boolValue]) {
-
-                // Cancel all old local notifications
-                [[UIApplication sharedApplication] cancelAllLocalNotifications];
-
-                // post a notification to say the user has checked in
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
-
-                [self setCheckedOut];
-                
-                // set the NSUserDefault to the user checkout time
-                SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
-                
-                // Store the current time as lastCheckinTime, used to only monitor the 20 most recent checkins with geofences due to device limitations
-                venue.checkinTime = checkInTime;
-                
-                // Save current place to venue defaults as it's used in several places in the app
-                [self saveCurrentVenueUserDefaults:venue];
-
-                // Update past venue list so that the most recent checkin is placed in the right order of the priority list
-                [self updatePastVenue:venue];
-                
-                [self refreshCheckInButton];
-            }
-            else {
-                // There was an error checking in; probably safe to ignore
-            }
-        } else {
-                // There was an error in the main call while checking in; probably safe to ignore
-        }
-    }];
-}
-
-- (void)checkOutNow
-{
-    [FlurryAnalytics logEvent:@"autoCheckedOut"];
-    
-    [SVProgressHUD showWithStatus:@"Checking out..."];
-    
-    [CPapi checkOutWithCompletion:^(NSDictionary *json, NSError *error) {
-        
-        BOOL respError = [[json objectForKey:@"error"] boolValue];
-
-        if (!error && !respError) {
-            [[UIApplication sharedApplication] cancelAllLocalNotifications];
-            [self setCheckedOut];
-            [SVProgressHUD dismissWithSuccess:@"You have been sucessfully checked out." 
-                                   afterDelay:kDefaultDimissDelay];
-        } else {
-            NSString *message = [json objectForKey:@"payload"];
-            if (!message) {
-                message = @"Oops. Something went wrong.";    
-            }
-            [SVProgressHUD dismissWithError:message 
-                                 afterDelay:kDefaultDimissDelay];
-        }
-    }];    
-}
-
-- (void)setCheckedOut
-{
-    NSInteger checkOutTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
-    SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
-    // nil out the venue in NSUserDefaults
-    [self saveCurrentVenueUserDefaults:nil];
-    [self refreshCheckInButton];
-    if (self.checkOutTimer != nil) {
-        [[self checkOutTimer] invalidate];
-        self.checkOutTimer = nil;   
-    }
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
-}
-
-- (void)checkInButtonPressed:(id)sender
-{
-    if (![CPAppDelegate currentUser]) {
-        [CPAppDelegate showLoginBanner];
-    } else if (self.userCheckedIn) {
-        [self promptForCheckout];
-    } else {
-        UINavigationController *checkInNC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
-        [self.tabBarController presentModalViewController:checkInNC animated:YES];
-    }
-}
-
-# pragma mark - Signup 
-
-- (void)showSignupModalFromViewController:(UIViewController *)viewController
-                                 animated:(BOOL)animated
-{
-    [self logoutEverything];
-    UIStoryboard *signupStoryboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
-    UINavigationController *signupController = [signupStoryboard instantiateInitialViewController];
-    
-    [viewController presentModalViewController:signupController animated:animated];
-}
-
-- (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
-         withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed
-                                          pushFromLeft:(BOOL)pushFromLeft
-                                              animated:(BOOL)animated
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
-    UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:
-                                                    @"EnterInvitationCodeNavigationController"];
-    
-    EnterInvitationCodeViewController *controller = (EnterInvitationCodeViewController *)navigationController.topViewController;
-    controller.dontShowTextNoticeAfterLaterButtonPressed = dontShowTextNoticeAfterLaterButtonPressed;
-    
-    if (pushFromLeft) {
-        controller.isPushedFromLeft = YES;
-        PushModalViewControllerFromLeftSegue *segue = [[PushModalViewControllerFromLeftSegue alloc] initWithIdentifier:nil
-                                                                                                                source:viewController
-                                                                                                           destination:navigationController];
-        [segue perform];
-    } else {
-        [viewController presentModalViewController:navigationController animated:animated];
-    }
-}
-
-- (void)syncCurrentUserWithWebAndCheckValidLogin {
-    if (self.currentUser.userID) {        
-        User *webSyncUser = [[User alloc] init];
-        webSyncUser.userID = self.currentUser.userID;
-        
-        [webSyncUser loadUserResumeData:^(NSError *error) {
-            if (!error) {
-                // TODO: make this a better solution by checking for a problem with the PHP session cookie in CPApi
-                // for now if the email comes back null this person isn't logged in so we're going to send them to do that.
-                if ( ! [webSyncUser.email isKindOfClass:[NSNull class]]) {
-                    [self saveCurrentUserToUserDefaults:webSyncUser];
-                    
-                    if ( ! self.currentUser.isDaysOfTrialAccessWithoutInviteCodeOK) {
-                        [self showSignupModalFromViewController:self.tabBarController animated:NO];
-                        
-                        [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Your %d days trial has ended.", kDaysOfTrialAccessWithoutInviteCode]
-                                                    message:@"Please login and enter invite code."
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil] show];
-                    }
-                }
-            }
-        }];
-    }
-}
-
-- (void)showLoginBanner
-{
-    if (self.tabBarController.selectedIndex == 4) {
-        return;
-    }
-
-    self.settingsMenuController.blockUIButton.frame = CGRectMake(0.0,
-            self.settingsMenuController.loginBanner.frame.size.height,
-            self.window.frame.size.width,
-            self.window.frame.size.height);
-
-    [self.settingsMenuController.view bringSubviewToFront: self.settingsMenuController.blockUIButton];
-    [self.settingsMenuController.view bringSubviewToFront: self.settingsMenuController.loginBanner];
-
-    [UIView animateWithDuration:0.3 animations:^ {
-        self.settingsMenuController.loginBanner.frame = CGRectMake(0.0, 0.0,
-                self.settingsMenuController.loginBanner.frame.size.width,
-                self.settingsMenuController.loginBanner.frame.size.height);
-    }];
-}
-
-- (void)hideLoginBannerWithCompletion:(void (^)(void))completion
-{
-    self.settingsMenuController.blockUIButton.frame = CGRectMake(0.0, 0.0, 0.0, 0.0);
-    [self.settingsMenuController.view sendSubviewToBack:self.settingsMenuController.blockUIButton];
-
-    [UIView animateWithDuration:0.3 animations:^ {
-        self.settingsMenuController.loginBanner.frame = CGRectMake(0.0,
-                -self.settingsMenuController.loginBanner.frame.size.height,
-                self.settingsMenuController.loginBanner.frame.size.width,
-                self.settingsMenuController.loginBanner.frame.size.height);
-
-        if (completion) {
-            completion();
-        }
-    }];
-}
-
-
-
-
 #pragma mark - View Lifecycle
 
 - (BOOL)application:(UIApplication *)application
@@ -438,107 +199,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     [MKStoreManager sharedManager];
     
     return YES;
-}
-
-- (CLRegion *)getRegionForVenue:(CPVenue *)venue
-{
-    CLRegion* region = [[CLRegion alloc] initCircularRegionWithCenter:venue.coordinate
-                                                               radius:kRadiusForCheckins identifier:venue.name];
-    
-    return region;
-}
-
-- (void)startMonitoringVenue:(CPVenue *)venue
-{
-    // Set default autoCheckin to yes, so if the user re-enables it later it'll default to On to cut down on time to restore auto checkins
-    venue.autoCheckin = YES;
-
-    // Save current venue to be able to auto checkout in the future, and also used in other places in the app to determine checkin status
-    [self saveCurrentVenueUserDefaults:venue];
-
-    // Only start monitoring a region if automaticCheckins is YES
-    BOOL automaticCheckins = [DEFAULTS(object, kAutomaticCheckins) boolValue];
-
-    if (automaticCheckins) {        
-        CLRegion* region = [self getRegionForVenue:venue];
-        
-        [self.locationManager startMonitoringForRegion:region
-                                       desiredAccuracy:kCLLocationAccuracyNearestTenMeters];
-
-        [CPapi saveVenueAutoCheckinStatus:venue];
-    }
-}
-
-- (void)stopMonitoringVenue:(CPVenue *)venue
-{
-    venue.autoCheckin = NO;
-    
-    CLRegion* region = [self getRegionForVenue:venue];
-    [self.locationManager stopMonitoringForRegion:region];
-
-    [CPapi saveVenueAutoCheckinStatus:venue];
-    
-    [FlurryAnalytics logEvent:@"automaticCheckinLocationDisabled"];
-}
-
-- (void)startStandardUpdates
-{
-    // Create the location manager if this object does not already have one.
-
-    if (nil == self.locationManager)
-        self.locationManager = [[CLLocationManager alloc] init];
-    
-    self.locationManager.delegate = self;
-    
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    
-    self.locationManager.distanceFilter = 20;
-    
-    [self.locationManager startMonitoringSignificantLocationChanges];
-    
-    // Do not create regions if support is unavailable or disabled.
-    if (![CLLocationManager regionMonitoringAvailable] || ![CLLocationManager regionMonitoringEnabled]) {
-        return;
-    }
-}
- 
-- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-
-    CLLocation *currentLocation = [[CLLocation alloc] initWithLatitude:manager.location.coordinate.latitude longitude:manager.location.coordinate.longitude];
-    CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:region.center.latitude longitude:region.center.longitude];
-    CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
-
-    // Only show the check in prompt if didEnter location is within 200 meters (in order to fix iOS 5.1+ location quirk)
-    if (distance > 200) {
-        return;
-    }
-
-    // Don't show notification if user is currently checked in to this venue
-    if ([CPAppDelegate userCheckedIn] && [[CPAppDelegate currentVenue].name isEqualToString:region.identifier]) {
-        return;
-    } else {
-        // grab the right venue from our past venues
-        CPVenue * autoVenue = [self venueWithName:region.identifier];
-        // Check in the user immediately
-        [self checkInNow:autoVenue];
-    }
-}
- 
-- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {    
-    if ([CPAppDelegate userCheckedIn] && [[CPAppDelegate currentVenue].name isEqualToString:region.identifier]) {
-        // Log user out immediately
-        [self checkOutNow];
-    }
-}
- 
-- (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error
-{
-    NSLog(@"monitoringDidFailForRegion, ERROR: %@", error);
-}
- 
- - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    NSLog(@"didfailwitherror");
 }
      
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -691,6 +351,8 @@ didReceiveLocalNotification:(UILocalNotification *)notif
         alertText = kCheckOutLocalNotificationAlertViewTitle;
         cancelText = @"Ignore";
         otherText = @"View";
+    } else if ([notif.userInfo valueForKey:@"geofence"]) {
+        [self handleGeofenceNotification:notif.alertBody userInfo:notif.userInfo];
     }
 
     // Only show the alert if there's a valid title to ensure that we don't show a blank alert
@@ -704,7 +366,7 @@ didReceiveLocalNotification:(UILocalNotification *)notif
                                      otherButtonTitles:otherText, nil];        
         
         if (alertView) {
-            alertView.context = notif;            
+            alertView.context = notif.userInfo;            
             [alertView show];
         }        
     }    
@@ -735,30 +397,7 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
                                            fromUserId:userId
                                          withRootView:self.tabBarController];
     } else if ([userInfo valueForKey:@"geofence"]) {
-        // if the app is open then show an alert to the user
-        if (application.applicationState == UIApplicationStateActive) {
-            NSString *alertText = alertMessage;
-            NSString *cancelText = @"View";
-            NSString *otherText = @"Ignore";
-            
-            // alloc-init a CPAlertView
-            CPAlertView *alertView = [[CPAlertView alloc] initWithTitle:alertText
-                                                   message:nil
-                                                  delegate:self
-                                         cancelButtonTitle:cancelText
-                                         otherButtonTitles:otherText, nil];    
-            
-            // add our userInfo to the alertView
-            // be the delegate, give it a tag so we can recognize it
-            // and show it
-            alertView.context = userInfo;
-            alertView.delegate = self;
-            alertView.tag = 601;
-            [alertView show];
-        } else {
-            // otherwise when they slide the notification bring them to the venue
-            [self loadVenueView:[userInfo objectForKey:@"name"]];
-        }
+        [self handleGeofenceNotification:alertMessage userInfo:userInfo];
     } else if ([userInfo valueForKey:kContactRequestAPNSKey] != nil) {        
         [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:kContactRequestAPNSKey] intValue]
                                           fromView:self.settingsMenuController];
@@ -797,6 +436,384 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     NSLog(@"Error in registration. Error: %@", err);
 }
 
+#pragma mark - Geofencing
+
+- (CLRegion *)getRegionForVenue:(CPVenue *)venue
+{
+    CLRegion* region = [[CLRegion alloc] initCircularRegionWithCenter:venue.coordinate
+                                                               radius:kRadiusForCheckins identifier:venue.name];
+    
+    return region;
+}
+
+- (void)startMonitoringVenue:(CPVenue *)venue
+{
+    // Set default autoCheckin to yes, so if the user re-enables it later it'll default to On to cut down on time to restore auto checkins
+    venue.autoCheckin = YES;
+    
+    // Save current venue to be able to auto checkout in the future, and also used in other places in the app to determine checkin status
+    [self saveCurrentVenueUserDefaults:venue];
+    
+    // Only start monitoring a region if automaticCheckins is YES
+    BOOL automaticCheckins = [DEFAULTS(object, kAutomaticCheckins) boolValue];
+    
+    if (automaticCheckins) {        
+        CLRegion* region = [self getRegionForVenue:venue];
+        
+        [self.locationManager startMonitoringForRegion:region
+                                       desiredAccuracy:kCLLocationAccuracyNearestTenMeters];
+        
+        [CPapi saveVenueAutoCheckinStatus:venue];
+    }
+}
+
+- (void)stopMonitoringVenue:(CPVenue *)venue
+{
+    venue.autoCheckin = NO;
+    
+    CLRegion* region = [self getRegionForVenue:venue];
+    [self.locationManager stopMonitoringForRegion:region];
+    
+    [CPapi saveVenueAutoCheckinStatus:venue];
+    
+    [FlurryAnalytics logEvent:@"automaticCheckinLocationDisabled"];
+}
+
+- (void)startStandardUpdates
+{
+    // Create the location manager if this object does not already have one.
+    
+    if (nil == self.locationManager)
+        self.locationManager = [[CLLocationManager alloc] init];
+    
+    self.locationManager.delegate = self;
+    
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    
+    self.locationManager.distanceFilter = 20;
+    
+    [self.locationManager startMonitoringSignificantLocationChanges];
+    
+    // Do not create regions if support is unavailable or disabled.
+    if (![CLLocationManager regionMonitoringAvailable] || ![CLLocationManager regionMonitoringEnabled]) {
+        return;
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
+    
+    CLLocation *currentLocation = [[CLLocation alloc] initWithLatitude:manager.location.coordinate.latitude longitude:manager.location.coordinate.longitude];
+    CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:region.center.latitude longitude:region.center.longitude];
+    CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
+    
+    // Only show the check in prompt if didEnter location is within 200 meters (in order to fix iOS 5.1+ location quirk)
+    if (distance > 200) {
+        return;
+    }
+    
+    // Don't show notification if user is currently checked in to this venue
+    if ([CPAppDelegate userCheckedIn] && [[CPAppDelegate currentVenue].name isEqualToString:region.identifier]) {
+        return;
+    } else {
+        // grab the right venue from our past venues
+        CPVenue * autoVenue = [self venueWithName:region.identifier];
+        // Check in the user immediately
+        [self autoCheckinForVenue:autoVenue];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {    
+    if ([CPAppDelegate userCheckedIn] && [[CPAppDelegate currentVenue].name isEqualToString:region.identifier]) {
+        // Log user out immediately
+        [self autoCheckoutForCLRegion:region];
+    }
+}
+
+- (void)autoCheckinForVenue:(CPVenue *)venue
+{
+    // Check the user in automatically now
+    
+    [FlurryAnalytics logEvent:@"autoCheckedIn"];
+    
+    NSInteger checkInTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
+    // Set a maximum checkInDuration to 24 hours
+    NSInteger checkInDuration = 24;
+    
+    NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
+    NSString *statusText = @"";
+    
+    // use CPapi to checkin
+    [CPapi checkInToLocation:venue hoursHere:checkInDuration statusText:statusText isVirtual:NO isAutomatic:YES completionBlock:^(NSDictionary *json, NSError *error){
+        
+        if (!error) {
+            if (![[json objectForKey:@"error"] boolValue]) {
+                
+                // Cancel all old local notifications
+                [[UIApplication sharedApplication] cancelAllLocalNotifications];
+                
+                // post a notification to say the user has checked in
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
+                
+                [self setCheckedOut];
+                
+                // set the NSUserDefault to the user checkout time
+                SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
+                
+                // Store the current time as lastCheckinTime, used to only monitor the 20 most recent checkins with geofences due to device limitations
+                venue.checkinTime = checkInTime;
+                
+                // Save current place to venue defaults as it's used in several places in the app
+                [self saveCurrentVenueUserDefaults:venue];
+                
+                // Update past venue list so that the most recent checkin is placed in the right order of the priority list
+                [self updatePastVenue:venue];
+                
+                [self refreshCheckInButton];
+            }
+            else {
+                // There was an error checking in; probably safe to ignore
+            }
+        } else {
+            // There was an error in the main call while checking in; probably safe to ignore
+        }
+    }];
+}
+
+- (void)autoCheckoutForCLRegion:(CLRegion *)region
+{
+    [FlurryAnalytics logEvent:@"autoCheckedOut"];
+    
+    [SVProgressHUD showWithStatus:@"Checking out..."];
+    
+    [CPapi checkOutWithCompletion:^(NSDictionary *json, NSError *error) {
+        
+        BOOL respError = [[json objectForKey:@"error"] boolValue];
+        
+        if (!error && !respError) {
+            [[UIApplication sharedApplication] cancelAllLocalNotifications];
+            
+            NSString *alertText = [NSString stringWithFormat:@"You were checked out of %@.", region.identifier];
+            
+            UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+            localNotif.alertBody = alertText;
+            localNotif.alertAction = @"View";
+            localNotif.soundName = UILocalNotificationDefaultSoundName;
+            
+            localNotif.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"exit", @"geofence",
+                                   region.identifier, @"venue_name",
+                                   nil];
+            
+            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+            
+            [self setCheckedOut];
+            [SVProgressHUD dismissWithSuccess:@"You have been sucessfully checked out." 
+                                   afterDelay:kDefaultDimissDelay];
+        } else {
+            NSString *message = [json objectForKey:@"payload"];
+            if (!message) {
+                message = @"Oops. Something went wrong.";    
+            }
+            [SVProgressHUD dismissWithError:message 
+                                 afterDelay:kDefaultDimissDelay];
+        }
+    }];    
+}
+
+-(void)handleGeofenceNotification:(NSString *)message userInfo:(NSDictionary *)userInfo
+{
+    // check if the app is currently active
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+        // alloc-init a CPAlertView
+        CPAlertView *alertView = [[CPAlertView alloc] initWithTitle:message
+                                                            message:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:@"View"
+                                                  otherButtonTitles:@"Ignore", nil];    
+        
+        // add our userInfo to the alertView
+        // be the delegate, give it a tag so we can recognize it
+        // and return it
+        alertView.context = userInfo;
+        alertView.delegate = self;
+        alertView.tag = 601;
+        
+        [alertView show];
+    } else {
+        // otherwise when they slide the notification bring them to the venue
+        [self loadVenueView:[userInfo objectForKey:@"venue_name"]];
+    }
+}
+
+
+- (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error
+{
+    NSLog(@"monitoringDidFailForRegion, ERROR: %@", error);
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"didfailwitherror");
+}
+
+# pragma mark - Settings Menu
+- (void)toggleSettingsMenu
+{
+    [self.settingsMenuController showMenu: !self.settingsMenuController.isMenuShowing];
+}
+
+# pragma mark - Check-in/out Stuff
+
+-(void)refreshCheckInButton
+{
+    // helper to grab center button and refresh state
+    [self.tabBarController.centerButton refreshButtonStateFromCheckinStatus];
+}
+
+// TODO: consolidate this with the checkedIn property on the current user in NSUserDefaults
+- (BOOL)userCheckedIn 
+{
+    NSNumber *checkoutEpoch = DEFAULTS(object, kUDCheckoutTime);
+    return [checkoutEpoch intValue] > [[NSDate date]timeIntervalSince1970];
+}
+
+- (void)promptForCheckout
+{
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Check Out"
+                          message:@"Are you sure you want to be checked out?"
+                          delegate:self.settingsMenuController
+                          cancelButtonTitle:@"Cancel"
+                          otherButtonTitles: @"Check Out", nil];
+    alert.tag = 904;
+    [alert show];
+}
+
+- (void)setCheckedOut
+{
+    NSInteger checkOutTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
+    SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
+    // nil out the venue in NSUserDefaults
+    [self saveCurrentVenueUserDefaults:nil];
+    [self refreshCheckInButton];
+    if (self.checkOutTimer != nil) {
+        [[self checkOutTimer] invalidate];
+        self.checkOutTimer = nil;   
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
+}
+
+- (void)checkInButtonPressed:(id)sender
+{
+    if (![CPAppDelegate currentUser]) {
+        [CPAppDelegate showLoginBanner];
+    } else if (self.userCheckedIn) {
+        [self promptForCheckout];
+    } else {
+        UINavigationController *checkInNC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+        [self.tabBarController presentModalViewController:checkInNC animated:YES];
+    }
+}
+
+# pragma mark - Signup 
+
+- (void)showSignupModalFromViewController:(UIViewController *)viewController
+                                 animated:(BOOL)animated
+{
+    [self logoutEverything];
+    UIStoryboard *signupStoryboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
+    UINavigationController *signupController = [signupStoryboard instantiateInitialViewController];
+    
+    [viewController presentModalViewController:signupController animated:animated];
+}
+
+- (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
+         withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed
+                                          pushFromLeft:(BOOL)pushFromLeft
+                                              animated:(BOOL)animated
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
+    UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:
+                                                    @"EnterInvitationCodeNavigationController"];
+    
+    EnterInvitationCodeViewController *controller = (EnterInvitationCodeViewController *)navigationController.topViewController;
+    controller.dontShowTextNoticeAfterLaterButtonPressed = dontShowTextNoticeAfterLaterButtonPressed;
+    
+    if (pushFromLeft) {
+        controller.isPushedFromLeft = YES;
+        PushModalViewControllerFromLeftSegue *segue = [[PushModalViewControllerFromLeftSegue alloc] initWithIdentifier:nil
+                                                                                                                source:viewController
+                                                                                                           destination:navigationController];
+        [segue perform];
+    } else {
+        [viewController presentModalViewController:navigationController animated:animated];
+    }
+}
+
+- (void)syncCurrentUserWithWebAndCheckValidLogin {
+    if (self.currentUser.userID) {        
+        User *webSyncUser = [[User alloc] init];
+        webSyncUser.userID = self.currentUser.userID;
+        
+        [webSyncUser loadUserResumeData:^(NSError *error) {
+            if (!error) {
+                // TODO: make this a better solution by checking for a problem with the PHP session cookie in CPApi
+                // for now if the email comes back null this person isn't logged in so we're going to send them to do that.
+                if ( ! [webSyncUser.email isKindOfClass:[NSNull class]]) {
+                    [self saveCurrentUserToUserDefaults:webSyncUser];
+                    
+                    if ( ! self.currentUser.isDaysOfTrialAccessWithoutInviteCodeOK) {
+                        [self showSignupModalFromViewController:self.tabBarController animated:NO];
+                        
+                        [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Your %d days trial has ended.", kDaysOfTrialAccessWithoutInviteCode]
+                                                    message:@"Please login and enter invite code."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil] show];
+                    }
+                }
+            }
+        }];
+    }
+}
+
+- (void)showLoginBanner
+{
+    if (self.tabBarController.selectedIndex == 4) {
+        return;
+    }
+    
+    self.settingsMenuController.blockUIButton.frame = CGRectMake(0.0,
+                                                                 self.settingsMenuController.loginBanner.frame.size.height,
+                                                                 self.window.frame.size.width,
+                                                                 self.window.frame.size.height);
+    
+    [self.settingsMenuController.view bringSubviewToFront: self.settingsMenuController.blockUIButton];
+    [self.settingsMenuController.view bringSubviewToFront: self.settingsMenuController.loginBanner];
+    
+    [UIView animateWithDuration:0.3 animations:^ {
+        self.settingsMenuController.loginBanner.frame = CGRectMake(0.0, 0.0,
+                                                                   self.settingsMenuController.loginBanner.frame.size.width,
+                                                                   self.settingsMenuController.loginBanner.frame.size.height);
+    }];
+}
+
+- (void)hideLoginBannerWithCompletion:(void (^)(void))completion
+{
+    self.settingsMenuController.blockUIButton.frame = CGRectMake(0.0, 0.0, 0.0, 0.0);
+    [self.settingsMenuController.view sendSubviewToBack:self.settingsMenuController.blockUIButton];
+    
+    [UIView animateWithDuration:0.3 animations:^ {
+        self.settingsMenuController.loginBanner.frame = CGRectMake(0.0,
+                                                                   -self.settingsMenuController.loginBanner.frame.size.height,
+                                                                   self.settingsMenuController.loginBanner.frame.size.width,
+                                                                   self.settingsMenuController.loginBanner.frame.size.height);
+        
+        if (completion) {
+            completion();
+        }
+    }];
+}
 
 #pragma mark - Login Stuff
 
@@ -1044,7 +1061,7 @@ void SignalHandler(int sig) {
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 
     CPAlertView *cpAlertView = (CPAlertView *)alertView;
-    UILocalNotification *notif = cpAlertView.context;
+    NSDictionary *userInfo = cpAlertView.context;
 
     if ([alertView.title isEqualToString:kCheckOutLocalNotificationAlertViewTitle]) {
         if (alertView.firstOtherButtonIndex == buttonIndex) {            
@@ -1055,7 +1072,7 @@ void SignalHandler(int sig) {
                                                                                    repeats:NO];
             
             
-            CPVenue *venue = (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:[notif.userInfo objectForKey:@"venue"]];
+            CPVenue *venue = (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:[userInfo objectForKey:@"venue"]];
             
             CheckInDetailsViewController *vc = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil]
                                                 instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
@@ -1070,10 +1087,10 @@ void SignalHandler(int sig) {
             [self.tabBarController presentModalViewController:navigationController animated:YES];
         }
     }
-    else if (alertView.tag == 601 && alertView.firstOtherButtonIndex == buttonIndex) {
+    else if (alertView.tag == 601 && alertView.cancelButtonIndex == buttonIndex) {
         // Load the venue if the user tapped on View from the didExit auto checkout alert
-        if (notif && notif.userInfo) {
-            [self loadVenueView:[notif.userInfo objectForKey:@"venue_name"]];
+        if (userInfo) {
+            [self loadVenueView:[userInfo objectForKey:@"venue_name"]];
         }
     }
 }

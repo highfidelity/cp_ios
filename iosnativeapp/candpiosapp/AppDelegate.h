@@ -46,8 +46,8 @@
 - (void)refreshCheckInButton;
 - (void)promptForCheckout;
 - (void)setCheckedOut;
-- (void)checkInNow:(CPVenue *)venue;
-- (void)checkOutNow;
+- (void)autoCheckinForVenue:(CPVenue *)venue;
+- (void)autoCheckoutForCLRegion:(CLRegion *)region;
 - (void)showSignupModalFromViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
          withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed
