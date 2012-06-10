@@ -191,8 +191,15 @@
     return firstName;
 }
 
-- (BOOL)hasAnySkills {
-    return self.skills.count > 0;
+- (BOOL)hasAnyTopSkills {
+    BOOL topSkill = NO;
+    for (CPSkill *skill in self.skills) {
+        if (skill.loveCount > 0) {
+            topSkill = YES;
+            break;
+        }
+    }
+    return topSkill;
 }
 
 - (BOOL)hasAnyListingsAsClient {

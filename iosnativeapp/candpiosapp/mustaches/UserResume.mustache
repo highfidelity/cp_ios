@@ -246,7 +246,7 @@
 <body>
     <div id="content">
         {{#user}}
-            {{#hasAnySkills}}
+            {{#hasAnyTopSkills}}
                 <h2 class="line-bottom first-header">Skills</h2>
                 <table id="skills-table">
                     <tr>
@@ -255,14 +255,16 @@
                         <th>Top</th>
                     </tr>    
                     {{#skills}}
-                        <tr>
-                            <td>{{name}}</td>
-                            <td>{{loveCount}}</td>
-                            <td class="last">{{rank}}</td>
-                        </tr>
+                        {{#loveCount}}
+                            <tr>
+                                <td>{{name}}</td>
+                                <td>{{loveCount}}</td>
+                                <td class="last">{{rank}}</td>
+                            </tr>
+                        {{/loveCount}}    
                     {{/skills}}
                 </table>
-            {{/hasAnySkills}}    
+            {{/hasAnyTopSkills}}    
             
             {{#bio}}
             <h2 id="summary-header">Summary</h2>
