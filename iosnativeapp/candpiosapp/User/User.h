@@ -21,7 +21,7 @@
 @property (nonatomic, strong) NSString *jobTitle;
 @property (nonatomic, strong) NSString *status;
 @property (nonatomic, strong) NSArray *skills;
-@property (nonatomic, readonly) BOOL hasAnySkills;
+@property (nonatomic, readonly) BOOL hasAnyTopSkills;
 @property (nonatomic, assign) CLLocationCoordinate2D location;
 @property (nonatomic, strong) NSString *bio;
 @property (nonatomic, assign) int sponsorId;
