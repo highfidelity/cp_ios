@@ -10,6 +10,8 @@
 #import "MapTabController.h"
 #import "CPTabBarController.h"
 
+#define AUTOCHECKIN_PROMPT_TAG 4829
+
 @interface SettingsMenuController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) CPTabBarController *cpTabBarController;

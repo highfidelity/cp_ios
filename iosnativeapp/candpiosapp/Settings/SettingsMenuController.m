@@ -391,8 +391,7 @@
     if (buttonIndex == 1 && [[alertView buttonTitleAtIndex:1] isEqualToString:@"Wallet"]) {
         // the user wants to see their wallet, so let's do that
         [self performSegueWithIdentifier:@"ShowBalanceFromMenu" sender:self];
-    }
-    if (alertView.tag == 904 && buttonIndex == 1) {
+    } else if (alertView.tag == 904 && buttonIndex == 1) {
         [SVProgressHUD showWithStatus:@"Checking out..."];
         
         [CPapi checkOutWithCompletion:^(NSDictionary *json, NSError *error) {
@@ -412,6 +411,25 @@
                                      afterDelay:kDefaultDimissDelay];
             }
         }];
+    } else if (alertView.tag = AUTOCHECKIN_PROMPT_TAG) {
+        // this alert view is shown if the user has just checked into a new venue
+        // and we want to ask them if they'd like to autocheckin here in the future
+        
+        CPVenue *autoPromptVenue = [CPAppDelegate currentVenue];
+        if (alertView.firstOtherButtonIndex == buttonIndex) {
+            // Start monitoring the new location to allow auto-checkout and checkin (if enabled) 
+            autoPromptVenue.autoCheckin = YES;
+            [CPAppDelegate startMonitoringVenue:autoPromptVenue];
+        }
+        else if (buttonIndex == 2) {
+            autoPromptVenue.autoCheckin = NO;
+            // User does NOT want to automatically check in to this venue        
+            [CPAppDelegate stopMonitoringVenue:autoPromptVenue];
+        }
+    
+        // add this venue to the array of past venues in NSUserDefaults
+        // with the correct autoCheckin status
+        [CPAppDelegate updatePastVenue:autoPromptVenue];
     }
 }
 

@@ -447,13 +447,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 }
 
 - (void)startMonitoringVenue:(CPVenue *)venue
-{
-    // Set default autoCheckin to yes, so if the user re-enables it later it'll default to On to cut down on time to restore auto checkins
-    venue.autoCheckin = YES;
-    
-    // Save current venue to be able to auto checkout in the future, and also used in other places in the app to determine checkin status
-    [self saveCurrentVenueUserDefaults:venue];
-    
+{    
     // Only start monitoring a region if automaticCheckins is YES
     BOOL automaticCheckins = [DEFAULTS(object, kAutomaticCheckins) boolValue];
     
@@ -468,9 +462,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 }
 
 - (void)stopMonitoringVenue:(CPVenue *)venue
-{
-    venue.autoCheckin = NO;
-    
+{    
     CLRegion* region = [self getRegionForVenue:venue];
     [self.locationManager stopMonitoringForRegion:region];
     
@@ -559,13 +551,10 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
                 // set the NSUserDefault to the user checkout time
                 SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
                 
-                // Store the current time as lastCheckinTime, used to only monitor the 20 most recent checkins with geofences due to device limitations
-                venue.checkinTime = checkInTime;
-                
                 // Save current place to venue defaults as it's used in several places in the app
                 [self saveCurrentVenueUserDefaults:venue];
                 
-                // Update past venue list so that the most recent checkin is placed in the right order of the priority list
+                // update this venue in the list of past venues
                 [self updatePastVenue:venue];
                 
                 [self refreshCheckInButton];
@@ -932,8 +921,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     
     // store it in user defaults
     SET_DEFAULTS(Object, kUDCurrentVenue, newVenueData);
-
-    [self updatePastVenue:venue];
 }
 
 - (CPVenue *)currentVenue

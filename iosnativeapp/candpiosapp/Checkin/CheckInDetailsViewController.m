@@ -322,9 +322,6 @@
                 // give that to this venue before we store it in NSUserDefaults
                 // in case we came from foursquare venue list and didn't have it
                 self.place.venueID = [[json objectForKey:@"venue_id"] intValue];
-                
-                // Store the current time as lastCheckinTime, used to only monitor the 20 most recent checkins with geofences due to device limitations
-                self.place.checkinTime = checkInTime;
 
                 // Save current place to venue defaults as it's used in several places in the app
                 [CPAppDelegate saveCurrentVenueUserDefaults:self.place];
@@ -337,16 +334,19 @@
 
                 if (automaticCheckins) {
                     // Only show the alert if the current venue isn't currently in the list of monitored venues
-                    
                     CPVenue *matchedVenue = [CPAppDelegate venueWithName:self.place.name];
                     
                     if (!matchedVenue) {                    
-                        UIAlertView *autoCheckinAlert = [[UIAlertView alloc] initWithTitle:nil message:@"Automatically check in to this venue in the future?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
-                        
+                        UIAlertView *autoCheckinAlert = [[UIAlertView alloc] initWithTitle:nil 
+                                                                                   message:@"Automatically check in to this venue in the future?" 
+                                                                                  delegate:[CPAppDelegate settingsMenuController]
+                                                                        cancelButtonTitle:@"No" 
+                                                                         otherButtonTitles:@"Yes", nil];
+                        autoCheckinAlert.tag = AUTOCHECKIN_PROMPT_TAG;
                         [autoCheckinAlert show];
                     }
                 }
-
+                
                 // hide the checkin screen, we're checked in
                 if ([self isModal]) {
                     [self dismissModalViewControllerAnimated:YES];
@@ -672,21 +672,6 @@
 
 - (void)dismissViewControllerAnimated {
     [self dismissModalViewControllerAnimated:YES];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (alertView.firstOtherButtonIndex == buttonIndex) {
-        // Start monitoring the new location to allow auto-checkout and checkin (if enabled) 
-        // put the venue ID for the venue the user is checked into in NSUserDefaults
-        // used across the app to check if the user is checked into the venue they're looking at
-        [CPAppDelegate startMonitoringVenue:self.place];
-        
-    }
-    else if (buttonIndex == 2) {
-        // User does NOT want to automatically check in to this venue        
-        [CPAppDelegate stopMonitoringVenue:self.place];
-        [CPAppDelegate updatePastVenue:self.place];
-    }
 }
 
 @end
