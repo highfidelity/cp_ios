@@ -9,7 +9,7 @@
 #import "InviteLinkedInConnectionsTableViewController.h"
 #import "OAuthConsumer.h"
 #import "CPLinkedInAPI.h"
-#import "ContactListCell.h"
+#import "LinkedInConnectionCell.h"
 #import "EditLinkedInInvitationMessageViewController.h"
 
 @interface InviteLinkedInConnectionsTableViewController () {
@@ -80,11 +80,11 @@
     NSDictionary *connectionData = [self connectionForIndexPath:indexPath];
     
     static NSString *CellIdentifier = @"LinkedInConnectionCell";
-    ContactListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    LinkedInConnectionCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    cell.nicknameLabel.text = [connectionData objectForKey:@"formattedName"];
+    cell.linkedInName.text = [connectionData objectForKey:@"formattedName"];
     
-    UIImageView *imageView = cell.profilePicture;
+    UIImageView *imageView = cell.linkedInProfileImage;
     if ([connectionData objectForKey:@"pictureUrl"] != [NSNull null]) {
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2182" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development version="4300" identifier="xcode"/>
@@ -226,7 +226,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LinkedInConnectionCell" rowHeight="60" id="3kC-U3-Bzb" customClass="ContactListCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LinkedInConnectionCell" rowHeight="60" id="3kC-U3-Bzb" customClass="LinkedInConnectionCell">
                                 <rect key="frame" x="0.0" y="22" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -259,8 +259,8 @@
                                 </view>
                                 <color key="backgroundColor" red="0.25098039220000001" green="0.25098039220000001" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <outlet property="nicknameLabel" destination="PCv-q0-Q1g" id="VDH-kx-qWP"/>
-                                    <outlet property="profilePicture" destination="800-5g-Gty" id="doW-xX-Z7f"/>
+                                    <outlet property="linkedInName" destination="PCv-q0-Q1g" id="GUF-IN-jLT"/>
+                                    <outlet property="linkedInProfileImage" destination="800-5g-Gty" id="Eyb-S0-AlG"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1545,18 +1545,6 @@
         <class className="BaseLoginController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BaseLoginController.h"/>
         </class>
-        <class className="ContactListCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ContactListCell.h"/>
-            <relationships>
-                <relationship kind="action" name="acceptButtonAction"/>
-                <relationship kind="action" name="declineButtonAction"/>
-                <relationship kind="outlet" name="acceptContactRequestButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="declineContactRequestButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
         <class className="EditLinkedInInvitationMessageViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EditLinkedInInvitationMessageViewController.h"/>
             <relationships>
@@ -1592,6 +1580,13 @@
             <relationships>
                 <relationship kind="action" name="gearPressed:"/>
                 <relationship kind="outlet" name="postToLinkedInSwitch" candidateClass="UISwitch"/>
+            </relationships>
+        </class>
+        <class className="LinkedInConnectionCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedInConnectionCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="linkedInName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="linkedInProfileImage" candidateClass="UIImageView"/>
             </relationships>
         </class>
         <class className="ProfileNotificationsViewController" superclassName="UIViewController">
