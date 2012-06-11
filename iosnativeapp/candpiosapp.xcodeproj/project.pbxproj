@@ -109,6 +109,8 @@
 		533A5784155DBF68009DEF22 /* CheckinChatEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 533A5783155DBF68009DEF22 /* CheckinChatEntry.m */; };
 		533AFECE1523E87200D6E6A9 /* default-avatar-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 533AFECC1523E87200D6E6A9 /* default-avatar-256.png */; };
 		533AFECF1523E87200D6E6A9 /* default-avatar-256@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */; };
+		53448F8B1586902700F53C70 /* LogStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53448F8A1586902700F53C70 /* LogStoryboard_iPhone.storyboard */; };
+		53448F8E158690C700F53C70 /* LogCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53448F8D158690C700F53C70 /* LogCreateViewController.m */; };
 		53463F5115336EA5001CA16D /* UIViewController+isModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 53463F5015336EA5001CA16D /* UIViewController+isModal.m */; };
 		534B6EF0156DAE7900DA9F74 /* SkillsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534B6EEF156DAE7900DA9F74 /* SkillsTableViewController.m */; };
 		534EB7351566FD3A00BDBA57 /* cell-shadow-harsh.png in Resources */ = {isa = PBXBuildFile; fileRef = 534EB7331566FD3A00BDBA57 /* cell-shadow-harsh.png */; };
@@ -660,6 +662,9 @@
 		533A5783155DBF68009DEF22 /* CheckinChatEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckinChatEntry.m; sourceTree = "<group>"; };
 		533AFECC1523E87200D6E6A9 /* default-avatar-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default-avatar-256.png"; path = "User/images/default-avatar-256.png"; sourceTree = "<group>"; };
 		533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default-avatar-256@2x.png"; path = "User/images/default-avatar-256@2x.png"; sourceTree = "<group>"; };
+		53448F8A1586902700F53C70 /* LogStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LogStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		53448F8C158690C700F53C70 /* LogCreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogCreateViewController.h; sourceTree = "<group>"; };
+		53448F8D158690C700F53C70 /* LogCreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogCreateViewController.m; sourceTree = "<group>"; };
 		53463F4F15336EA5001CA16D /* UIViewController+isModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+isModal.h"; path = "Utils/UIViewController+isModal.h"; sourceTree = "<group>"; };
 		53463F5015336EA5001CA16D /* UIViewController+isModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+isModal.m"; path = "Utils/UIViewController+isModal.m"; sourceTree = "<group>"; };
 		534B6EEE156DAE7900DA9F74 /* SkillsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillsTableViewController.h; path = Settings/SkillsTableViewController.h; sourceTree = "<group>"; };
@@ -1472,6 +1477,16 @@
 			name = images;
 			sourceTree = "<group>";
 		};
+		53448F881586901300F53C70 /* Log */ = {
+			isa = PBXGroup;
+			children = (
+				53448F8C158690C700F53C70 /* LogCreateViewController.h */,
+				53448F8D158690C700F53C70 /* LogCreateViewController.m */,
+				53448F8A1586902700F53C70 /* LogStoryboard_iPhone.storyboard */,
+			);
+			path = Log;
+			sourceTree = "<group>";
+		};
 		534FC97C14EF1E53008C87B9 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -2233,6 +2248,7 @@
 				6F3651DA14EAE8BB00E9322B /* FaceToFace */,
 				536E1E4D1554908800052D40 /* Icon */,
 				87F657F314B0D2D000F4AB6C /* images */,
+				53448F881586901300F53C70 /* Log */,
 				6F368D9B14F86F8900CA1A41 /* Login */,
 				53E2062A150596180000FA8D /* MainStoryboard_iPhone.storyboard */,
 				536DE93A1501737000794650 /* Map */,
@@ -2759,6 +2775,7 @@
 				537BF21115868EA700A23DA3 /* tab-venues@2x.png in Resources */,
 				537BF21215868EA700A23DA3 /* nav-bar-bg.png in Resources */,
 				537BF21315868EA700A23DA3 /* nav-bar-bg@2x.png in Resources */,
+				53448F8B1586902700F53C70 /* LogStoryboard_iPhone.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2914,6 +2931,7 @@
 				538EF4341585352E00249AAF /* GenerateInvitationCodeViewController.m in Sources */,
 				538EF4351585352E00249AAF /* InviteLinkedInConnectionsTableViewController.m in Sources */,
 				538EF4381585354100249AAF /* LinkedInConnectionCell.m in Sources */,
+				53448F8E158690C700F53C70 /* LogCreateViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

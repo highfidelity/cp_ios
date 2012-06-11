@@ -670,6 +670,17 @@
     [self makeHTTPRequestWithAction:@"getNearestVenuesAndUsersWithCheckinsDuringInterval" withParameters:params queue:mapQueue timeout:9 completion:completion];
 }
 
+#pragma mark - Logging
++ (void)sendLogUpdate:(NSString *)updateText 
+           completion:(void (^)(NSDictionary *, NSError *))completion
+{
+    // setup the params dictionary
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:updateText forKey:@"entry"];
+    
+    // make the request
+    [self makeHTTPRequestWithAction:@"newLogUpdate" withParameters:params completion:completion];
+}
 
 #pragma mark - Checkins
 

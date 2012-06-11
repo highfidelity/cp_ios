@@ -7,7 +7,7 @@
 //
 
 #import "CPTabBarController.h"
-#import "UIButton+AnimatedClockHand.h"
+#import "LogCreateViewController.h"
 
 #define TAB_SIZE self.tabBar.frame.size.width / 5
 
@@ -122,7 +122,7 @@
     button.tag = 901;
     
     // add the target for the button
-    [button addTarget:CPAppDelegate action:@selector(checkInButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(logButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     // we need a useless view controller at index 2 in the tab bar controller
     UIViewController *placeHolder = [[UIViewController alloc] init];
@@ -158,6 +158,12 @@
         [tabVCArray replaceObjectAtIndex:4 withObject:contactsController];
         self.viewControllers = tabVCArray;
     }
+}
+
+- (void)logButtonPressed:(id)sender
+{
+    LogCreateViewController *logVC = [[UIStoryboard storyboardWithName:@"LogStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+    [self presentModalViewController:logVC animated:YES];
 }
 
 @end

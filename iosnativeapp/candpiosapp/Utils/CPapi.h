@@ -32,7 +32,7 @@
 + (void)oneOnOneChatGetHistoryWith:(User *)User
                         completion:(void (^)(NSDictionary *, NSError *))completion;
 
-# pragma mark - Map Dataset
+#pragma mark - Map Dataset
 + (void)getVenuesWithCheckinsWithinSWCoordinate:(CLLocationCoordinate2D)swCoord
                       NECoordinate:(CLLocationCoordinate2D)neCoord
                       userLocation:(CLLocationCoordinate2D)userLocation
@@ -51,14 +51,19 @@
 + (void)sendDeclineContactRequestFromUserId:(int)userId
                                  completion:(void (^)(NSDictionary *, NSError *))completion;
 
-# pragma mark - Face to Face
+#pragma mark - Face to Face
 + (void)sendF2FInvite:(int) userId;
 + (void)sendF2FAccept:(int) userId;
 + (void)sendF2FDecline:(int) userId;
 + (void)sendF2FVerify:(int) userId
              password:(NSString *) password;
 
-# pragma mark - Checkins
+#pragma mark - Logging
++ (void)sendLogUpdate:(NSString *)updateText 
+           completion:(void(^)(NSDictionary *json, NSError *error))completion;
+
+
+#pragma mark - Checkins
 + (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID
                                        :(void(^)(NSDictionary *json, NSError *error))completion; 
 
@@ -71,7 +76,7 @@
 
 + (void)checkOutWithCompletion:(void(^)(NSDictionary *json, NSError *error))completion;
 
-# pragma mark - User Profile
+#pragma mark - User Profile
 + (void)getResumeForUserId:(int)userId andCompletion:(void(^)(NSDictionary *json, NSError *error))completion;
 + (void)getUserProfileWithCompletionBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 + (void)getUserTrasactionDataWithCompletitonBlock:(void(^)(NSDictionary *json, NSError *error))completion;
@@ -83,7 +88,7 @@
                 forLocation:(CLLocation *)location
        withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
-# pragma mark - Love
+#pragma mark - Love
 + (void)sendLoveToUserWithID:(int)recieverID
                  loveMessage:(NSString *)loveMessage
                      skillID:(NSUInteger)skillID
@@ -98,7 +103,7 @@
                        chatQueue:(NSOperationQueue *)chatQueue
                       completion:(void (^)(NSDictionary *, NSError *))completion;
 
-# pragma mark - Skills
+#pragma mark - Skills
 + (void)getSkillsForUser:(NSNumber *)userID 
               completion:(void (^)(NSDictionary *, NSError *))completion;
 
@@ -107,7 +112,7 @@
                             skillQueue:(NSOperationQueue *)skillQueue
                             completion:(void (^)(NSDictionary *, NSError *))completion;
 
-# pragma mark - Contact List
+#pragma mark - Contact List
 + (void)getContactListWithCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
 + (void)getVenuesInSWCoords:(CLLocationCoordinate2D)SWCoord
@@ -115,7 +120,7 @@
                userLocation:(CLLocation *)userLocation
               withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
-# pragma mark - User Settings
+#pragma mark - User Settings
 
 + (void)getNotificationSettingsWithCompletition:(void(^)(NSDictionary *json, NSError *error))completion;
 
@@ -141,7 +146,7 @@
 + (void)getInvitationCodeForLinkedInConnections:(NSArray *)connectionsIDs
                             wihtCompletionBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
-# pragma mark - Venue Chat
+#pragma mark - Venue Chat
 + (void)getVenueChatForVenueWithID:(int)venueID
                         lastChatID:(int)lastChatID
                              queue:(NSOperationQueue *)chatQueue
