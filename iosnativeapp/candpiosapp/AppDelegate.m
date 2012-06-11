@@ -234,10 +234,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"applicationDidBecomeActive" object:nil];
-    
-    // make sure the check in button starts spinning if it's supposed to
-    // or that we switch to the right button if the check in state has changed
-    [self refreshCheckInButton];
 
 	/*
 	 Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
@@ -556,8 +552,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
                 
                 // update this venue in the list of past venues
                 [self updatePastVenue:venue];
-                
-                [self refreshCheckInButton];
             }
             else {
                 // There was an error checking in; probably safe to ignore
@@ -653,12 +647,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 # pragma mark - Check-in/out Stuff
 
--(void)refreshCheckInButton
-{
-    // helper to grab center button and refresh state
-    [self.tabBarController.centerButton refreshButtonStateFromCheckinStatus];
-}
-
 // TODO: consolidate this with the checkedIn property on the current user in NSUserDefaults
 - (BOOL)userCheckedIn 
 {
@@ -684,7 +672,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
     // nil out the venue in NSUserDefaults
     [self saveCurrentVenueUserDefaults:nil];
-    [self refreshCheckInButton];
     if (self.checkOutTimer != nil) {
         [[self checkOutTimer] invalidate];
         self.checkOutTimer = nil;   

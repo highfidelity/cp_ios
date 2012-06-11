@@ -43,7 +43,6 @@
 - (CPVenue *)currentVenue;
 - (CPVenue *)venueWithName:(NSString *)name;
 - (void)toggleSettingsMenu;
-- (void)refreshCheckInButton;
 - (void)promptForCheckout;
 - (void)setCheckedOut;
 - (void)autoCheckinForVenue:(CPVenue *)venue;

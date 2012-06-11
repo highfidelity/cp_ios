@@ -164,7 +164,7 @@
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rwp-GN-MPg" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController definesPresentationContext="YES" id="fZd-hY-lQn" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Venues" image="tab-places.png" id="z8m-ZB-aNx"/>
+                    <tabBarItem key="tabBarItem" title="Venues" image="tab-venues.png" id="z8m-ZB-aNx"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="eeV-VD-mqs">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -497,12 +497,15 @@
         <image name="map-refresh.png" width="40" height="41"/>
         <image name="map-shadow.png" width="10" height="320"/>
         <image name="picture-coming-soon.jpg" width="100" height="100"/>
-        <image name="tab-contacts.png" width="56" height="51"/>
-        <image name="tab-map.png" width="56" height="51"/>
-        <image name="tab-people.png" width="56" height="51"/>
-        <image name="tab-places.png" width="56" height="51"/>
+        <image name="tab-contacts.png" width="43" height="30"/>
+        <image name="tab-map.png" width="43" height="30"/>
+        <image name="tab-people.png" width="43" height="30"/>
+        <image name="tab-venues.png" width="43" height="30"/>
     </resources>
     <classes>
+        <class className="CPBaseTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPBaseTableViewController.h"/>
+        </class>
         <class className="CPSwipeableTableViewCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CPSwipeableTableViewCell.h"/>
         </class>
@@ -521,7 +524,7 @@
                 <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
-        <class className="ContactListViewController" superclassName="UITableViewController">
+        <class className="ContactListViewController" superclassName="CPBaseTableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ContactListViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="placeholderImage" candidateClass="UIImageView"/>
@@ -538,7 +541,7 @@
                 <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
             </relationships>
         </class>
-        <class className="UserListTableViewController" superclassName="UITableViewController">
+        <class className="UserListTableViewController" superclassName="CPBaseTableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UserListTableViewController.h"/>
         </class>
         <class className="UserTableViewCell" superclassName="CPSwipeableTableViewCell">
@@ -563,7 +566,7 @@
                 <relationship kind="outlet" name="venuePicture" candidateClass="UIImageView"/>
             </relationships>
         </class>
-        <class className="VenueListTableViewController" superclassName="UITableViewController">
+        <class className="VenueListTableViewController" superclassName="CPBaseTableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueListTableViewController.h"/>
         </class>
     </classes>
