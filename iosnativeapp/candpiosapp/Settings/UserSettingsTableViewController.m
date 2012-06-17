@@ -13,6 +13,8 @@
 
 #define tableCellSubviewTag 7909
 #define spinnerTag  7910
+#define kActionSheetDeleteAccountTag 7911
+#define kActionSheetChooseNewProfileImageTag 7912
 
 @interface UserSettingsTableViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
 
@@ -372,9 +374,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // check if this is the cell for the profile photo
+    UITableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:indexPath];
     if (indexPath.row == 1) {
         [self chooseNewProfileImage:nil];
+    } else if ([selectedCell.textLabel.text isEqualToString:@"Delete Account"]) {
+        [self deleteAccountAction:selectedCell];
     }
 }
 
@@ -388,30 +392,61 @@
 -(IBAction)chooseNewProfileImage:(id)sender
 {
     UIActionSheet *cameraSheet = [[UIActionSheet alloc] initWithTitle:@"Image Source" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera", @"Photo Library", nil];
+    cameraSheet.tag = kActionSheetChooseNewProfileImageTag;
     [cameraSheet showInView:self.view];
+}
+
+-(IBAction)deleteAccountAction:(id)sender {
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForCell:sender] animated:YES];
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Once you delete your account you can't get it back!"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:@"Delete Account"
+                                                    otherButtonTitles:nil];
+    actionSheet.tag = kActionSheetDeleteAccountTag;
+    [actionSheet showInView:self.view];
 }
 
 #pragma mark - Action Sheet Delegate
 
 -(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 0 || buttonIndex == 1) {
-        if (buttonIndex == 0) {
-            // user wants to pick from camera
-            self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            // use the front camera by default (if we have one)
-            // if there's no front camera we'll use the back (3GS)
-            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerCameraDeviceFront]) {
-                 self.imagePicker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+    if (kActionSheetChooseNewProfileImageTag == actionSheet.tag) {
+        if (buttonIndex == 0 || buttonIndex == 1) {
+            if (buttonIndex == 0) {
+                // user wants to pick from camera
+                self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+                // use the front camera by default (if we have one)
+                // if there's no front camera we'll use the back (3GS)
+                if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerCameraDeviceFront]) {
+                     self.imagePicker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+                }
+               
+            } else if (buttonIndex == 1) {
+                // user wants to pick from photo library
+                self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
             }
-           
-        } else if (buttonIndex == 1) {
-            // user wants to pick from photo library
-            self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            // show the image picker
+            [self presentModalViewController:self.imagePicker animated:YES];
         }
-        // show the image picker
-        [self presentModalViewController:self.imagePicker animated:YES];
-    }    
+    } else if (kActionSheetDeleteAccountTag == actionSheet.tag) {
+        if (actionSheet.destructiveButtonIndex == buttonIndex) {
+            [CPapi deleteAccountWithParameters:nil completion:nil];
+            
+            [[AppDelegate instance] logoutEverything];
+            
+            SettingsMenuController *presentingViewController = (SettingsMenuController *)self.presentingViewController;
+            if (presentingViewController.isMenuShowing) {
+                [presentingViewController showMenu:NO];
+            }
+            
+            [self dismissModalViewControllerAnimated:NO];
+            
+            [CPAppDelegate showSignupModalFromViewController:presentingViewController
+                                                    animated:YES];
+        }
+    }
 }
 
 #pragma mark - Image Picker Controller Delegate

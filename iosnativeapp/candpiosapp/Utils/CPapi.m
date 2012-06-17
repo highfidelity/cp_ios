@@ -1030,6 +1030,13 @@
                          completion:completion];
 }
 
++ (void)deleteAccountWithParameters:(NSMutableDictionary *)parameters completion:(void(^)(NSDictionary *json, NSError *error))completion {
+    [self makeHTTPRequestWithAction:@"deleteAccount"
+                     withParameters:parameters
+                         completion:completion];
+
+}
+
 # pragma mark - Venue Chat
 
 + (void)getVenueChatForVenueWithID:(int)venueID

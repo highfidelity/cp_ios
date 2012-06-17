@@ -146,6 +146,9 @@
 + (void)getInvitationCodeForLinkedInConnections:(NSArray *)connectionsIDs
                             wihtCompletionBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
++ (void)deleteAccountWithParameters:(NSMutableDictionary *)parameters
+                         completion:(void(^)(NSDictionary *json, NSError *error))completion;
+
 #pragma mark - Venue Chat
 + (void)getVenueChatForVenueWithID:(int)venueID
                         lastChatID:(int)lastChatID
