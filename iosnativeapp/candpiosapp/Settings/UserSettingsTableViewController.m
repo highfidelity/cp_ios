@@ -209,6 +209,11 @@
                     self.currentUser.skills = webSyncUser.skills;
                     self.newDataFromSync = YES;
                 }
+                
+                if (![self.currentUser.profileURLVisibility isEqualToString:webSyncUser.profileURLVisibility]) {
+                    self.currentUser.profileURLVisibility = webSyncUser.profileURLVisibility;
+                    self.newDataFromSync = YES;
+                }
 
                 // if the sync brought us new data
                 if (self.newDataFromSync) {
@@ -473,6 +478,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"SettingsToJobCategoriesSegue"]) {
+        [[segue destinationViewController] setUser:self.currentUser];
+    } else if ([[segue identifier] isEqualToString:@"ResumeVisibilityViewController"]) {
         [[segue destinationViewController] setUser:self.currentUser];
     }
 }

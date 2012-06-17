@@ -63,6 +63,7 @@
 @property (nonatomic, assign) BOOL isContact;
 @property (nonatomic, strong) NSString *linkedInPublicProfileUrl;
 @property (nonatomic, strong) NSNumber *numberOfContactRequests;
+@property (nonatomic, strong) NSString *profileURLVisibility;
 
 
 -(void)loadUserResumeData:(void (^)(NSError *error))completion;

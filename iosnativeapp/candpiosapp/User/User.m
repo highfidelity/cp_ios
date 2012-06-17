@@ -54,6 +54,7 @@
 @synthesize totalHours = _totalHours;
 @synthesize linkedInPublicProfileUrl = _linkedInPublicProfileUrl;
 @synthesize numberOfContactRequests = _numberOfContactRequests;
+@synthesize profileURLVisibility = _profileURLVisibility;
 
 -(id)init
 {
@@ -104,6 +105,7 @@
         self.enteredInviteCode = [decoder decodeBoolForKey:@"enteredInviteCode"];
         self.joinDate = [decoder decodeObjectForKey:@"joinDate"];
         self.skills = [decoder decodeObjectForKey:@"skills"];
+        self.profileURLVisibility = [decoder decodeObjectForKey:@"profileURLVisibility"];
     }    
     return self;
 }
@@ -117,6 +119,7 @@
     [encoder encodeBool:self.enteredInviteCode forKey:@"enteredInviteCode"];
     [encoder encodeObject:self.joinDate forKey:@"joinDate"];
     [encoder encodeObject:self.skills forKey:@"skills"];
+    [encoder encodeObject:self.profileURLVisibility forKey:@"profileURLVisibility"];
 }
 
 // override nickname setter to decode html entities
@@ -392,6 +395,8 @@
             // user email
             self.email = [userDict objectForKey:@"email"];
             
+            self.profileURLVisibility = [userDict objectForKey:@"profileURL_visibility"];
+            
             [self setEnteredInviteCodeFromJSONString:[userDict objectForKey:@"entered_invite_code"]];
             [self setJoinDateFromJSONString:[userDict objectForKey:@"join_date"]];
 
@@ -400,8 +405,9 @@
             }
             
             // call the completion block passed by the caller
-            if(completion)
-                completion(nil); 
+            if(completion) {
+                completion(nil);
+            }
         } else {
             if (completion) 
                 completion(error);

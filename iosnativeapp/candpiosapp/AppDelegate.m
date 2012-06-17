@@ -820,6 +820,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     [currUser setEnteredInviteCodeFromJSONString:[userInfo objectForKey:@"entered_invite_code"]];
     [currUser setJoinDateFromJSONString:[userInfo objectForKey:@"join_date"]];
     currUser.numberOfContactRequests = [userInfo objectForKey:@"number_of_contact_requests"];
+    currUser.profileURLVisibility = [userInfo objectForKey:@"profileURL_visibility"];
     
     // Reset the Automatic Checkins default to YES
     SET_DEFAULTS(Object, kAutomaticCheckins, [NSNumber numberWithBool:YES]);
