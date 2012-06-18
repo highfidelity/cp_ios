@@ -1544,8 +1544,8 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Major Job Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="w8g-n0-Q8c">
-                                <rect key="frame" x="20" y="20" width="152" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="People allowed to see my profile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="w8g-n0-Q8c">
+                                <rect key="frame" x="20" y="20" width="280" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" red="0.78823529410000004" green="0.78823529410000004" blue="0.78823529410000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -1567,11 +1567,22 @@
                                     <action selector="resumeVisibilityButtonClick:" destination="MVm-85-2NW" eventType="touchUpInside" id="kpr-ur-eSO"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="G6g-f8-QxF">
+                                <rect key="frame" x="12" y="76" width="296" height="97"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <string key="text">My profile:
+http://www.candp.me/Ryan_Downe</string>
+                                <color key="textColor" red="0.78823529410000004" green="0.78823529410000004" blue="0.78823529410000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Resume Visibility" id="hiR-md-nrv"/>
                     <connections>
+                        <outlet property="profileURLTextView" destination="G6g-f8-QxF" id="PLu-2h-zPQ"/>
                         <outlet property="resumeVisibilityButton" destination="sWC-di-LSO" id="xOZ-MN-8He"/>
                     </connections>
                 </viewController>
@@ -1590,6 +1601,171 @@
         <image name="wallet-cell-arrow-down.png" width="14" height="9"/>
         <image name="wallet-lock.png" width="25" height="25"/>
     </resources>
+    <classes>
+        <class className="AddFundsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFundsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="closeWindow:"/>
+                <relationship kind="action" name="goBack:"/>
+                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="AutoCheckinCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AutoCheckinCell.h"/>
+            <relationships>
+                <relationship kind="action" name="venueSwitchChanged:"/>
+                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueSwitch" candidateClass="UISwitch"/>
+            </relationships>
+        </class>
+        <class className="AutoCheckinTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AutoCheckinTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="globalCheckinChanged:"/>
+                <relationship kind="outlet" name="globalCheckinSwitch" candidateClass="UISwitch"/>
+            </relationships>
+        </class>
+        <class className="BalanceViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BalanceViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="balanceScrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="pullDownLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="pullIcon" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="transTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="updateTimeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userBalance" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="BaseLoginController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BaseLoginController.h"/>
+        </class>
+        <class className="EditLinkedInInvitationMessageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EditLinkedInInvitationMessageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancelAction"/>
+                <relationship kind="action" name="sendAction"/>
+                <relationship kind="outlet" name="bodyTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="subjectTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="GenerateInvitationCodeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GenerateInvitationCodeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="gearPressed:"/>
+                <relationship kind="outlet" name="codeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="codeLabelBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="InviteLinkedInConnectionsTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/InviteLinkedInConnectionsTableViewController.h"/>
+        </class>
+        <class className="JobCategoryViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/JobCategoryViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="majorCategoryButtonClick:"/>
+                <relationship kind="action" name="minorCategoryButtonClick:"/>
+                <relationship kind="outlet" name="majorCategoryButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="minorCategoryButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="LinkedAccountsTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedAccountsTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="gearPressed:"/>
+                <relationship kind="outlet" name="postToLinkedInSwitch" candidateClass="UISwitch"/>
+            </relationships>
+        </class>
+        <class className="LinkedInConnectionCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedInConnectionCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="linkedInName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="linkedInProfileImage" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="ProfileNotificationsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ProfileNotificationsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="anyoneChatSwitchChanged:"/>
+                <relationship kind="action" name="quietFromClicked:" candidateClass="UIButton"/>
+                <relationship kind="action" name="quietTimeValueChanged:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="quietToClicked:" candidateClass="UIButton"/>
+                <relationship kind="action" name="selectVenueCity:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="anyoneChatView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="chatNotificationLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="checkedInOnlySwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="contactsOnlyChatSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="headerView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="quietFromButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="quietTimeSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="quietToButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="venueButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="ResumeVisibilityViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ResumeVisibilityViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="resumeVisibilityButtonClick:"/>
+                <relationship kind="outlet" name="profileURLTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="resumeVisibilityButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="SettingsMenuController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsMenuController.h"/>
+            <relationships>
+                <relationship kind="action" name="blockUIButtonClick:"/>
+                <relationship kind="action" name="loginButtonClick:"/>
+                <relationship kind="outlet" name="blockUIButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="edgeShadow" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="loginBanner" candidateClass="UIView"/>
+                <relationship kind="outlet" name="loginButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="SkillsTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SkillsTableViewController.h"/>
+        </class>
+        <class className="SmartererLoginController" superclassName="BaseLoginController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SmartererLoginController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="myWebView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="SupportTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SupportTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="gearPressed:"/>
+            </relationships>
+        </class>
+        <class className="TermsOfServiceViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TermsOfServiceViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="UserSettingsTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserSettingsTableViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="billingRateTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="emailValidationMsg" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nicknameTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="profileImageBox" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="WalletCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/WalletCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="amountLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="profileImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="stateImage" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

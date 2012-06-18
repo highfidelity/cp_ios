@@ -432,19 +432,37 @@
         }
     } else if (kActionSheetDeleteAccountTag == actionSheet.tag) {
         if (actionSheet.destructiveButtonIndex == buttonIndex) {
-            [CPapi deleteAccountWithParameters:nil completion:nil];
+            [SVProgressHUD showWithStatus:@"Loading..."];
             
-            [[AppDelegate instance] logoutEverything];
-            
-            SettingsMenuController *presentingViewController = (SettingsMenuController *)self.presentingViewController;
-            if (presentingViewController.isMenuShowing) {
-                [presentingViewController showMenu:NO];
-            }
-            
-            [self dismissModalViewControllerAnimated:NO];
-            
-            [CPAppDelegate showSignupModalFromViewController:presentingViewController
-                                                    animated:YES];
+            [CPapi deleteAccountWithParameters:nil
+                                    completion:
+             ^(NSDictionary *json, NSError *error) {
+                 if (error) {
+                     [SVProgressHUD dismissWithError:[error localizedDescription]
+                                          afterDelay:kDefaultDimissDelay];
+                     return;
+                 }
+                 
+                 if (NO == [[json objectForKey:@"succeeded"] boolValue]) {
+                     [SVProgressHUD dismissWithError:[json objectForKey:@"message"]
+                                          afterDelay:kDefaultDimissDelay];
+                     return;
+                 }
+                 
+                 [[AppDelegate instance] logoutEverything];
+                 
+                 SettingsMenuController *presentingViewController = (SettingsMenuController *)self.presentingViewController;
+                 if (presentingViewController.isMenuShowing) {
+                     [presentingViewController showMenu:NO];
+                 }
+                 
+                 [self dismissModalViewControllerAnimated:NO];
+                 
+                 [CPAppDelegate showSignupModalFromViewController:presentingViewController
+                                                         animated:YES];
+                 
+                 [SVProgressHUD dismissWithSuccess:[json objectForKey:@"message"]];
+            }];
         }
     }
 }
