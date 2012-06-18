@@ -299,21 +299,24 @@
 #pragma mark - IBActions
 - (IBAction)addLogButtonPressed:(id)sender
 {
-    // let's make sure the selected index of the CPTabBarController is the logbook's
-    self.tabBarController.selectedIndex = 0;
-    
-    // we need to add a new cell to the table with a textView that the user can edit
-    // first create a new CPLogEntry object
-    self.pendingLogEntry = [[CPLogEntry alloc] init];
-    
-    [self.logEntries addObject:self.pendingLogEntry];
-    
-    // add a cancel button to our nav bar so the user can drop out of creation
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelLogEntry:)];
-    
-    // show the keyboard so the user can start input
-    // by using our fakeTextView to slide up the keyboard
-    [self.fakeTextView becomeFirstResponder];
+    if (self.tabBarController.selectedIndex != 0) {
+        // let's make sure the selected index of the CPTabBarController is the logbook's
+        // before allowing update
+        self.tabBarController.selectedIndex = 0;
+    } else {
+        // we need to add a new cell to the table with a textView that the user can edit
+        // first create a new CPLogEntry object
+        self.pendingLogEntry = [[CPLogEntry alloc] init];
+        
+        [self.logEntries addObject:self.pendingLogEntry];
+        
+        // add a cancel button to our nav bar so the user can drop out of creation
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelLogEntry:)];
+        
+        // show the keyboard so the user can start input
+        // by using our fakeTextView to slide up the keyboard
+        [self.fakeTextView becomeFirstResponder];
+    }
 }
 
 - (IBAction)cancelLogEntry:(id)sender {
