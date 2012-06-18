@@ -60,12 +60,9 @@
 	int minNumberOfLines;
 	
 	BOOL animateHeightChange;
-	
+	 
 	//uitextview properties
-	NSObject <HPGrowingTextViewDelegate> *delegate;
-	NSString *text;
-	UIFont *font;
-	UIColor *textColor;
+	NSObject <HPGrowingTextViewDelegate> *__unsafe_unretained delegate;
 	UITextAlignment textAlignment; 
 	NSRange selectedRange;
 	BOOL editable;
@@ -79,25 +76,28 @@
 @property int maxNumberOfLines;
 @property int minNumberOfLines;
 @property BOOL animateHeightChange;
-@property (retain) UITextView *internalTextView;	
+@property (strong) UITextView *internalTextView;	
 
 
 //uitextview properties
-@property(assign) NSObject<HPGrowingTextViewDelegate> *delegate;
-@property(nonatomic,assign) NSString *text;
-@property(nonatomic,assign) UIFont *font;
-@property(nonatomic,assign) UIColor *textColor;
+@property(unsafe_unretained) NSObject<HPGrowingTextViewDelegate> *delegate;
+@property(nonatomic,strong) NSString *text;
+@property(nonatomic,strong) UIFont *font;
+@property(nonatomic,strong) UIColor *textColor;
 @property(nonatomic) UITextAlignment textAlignment;    // default is UITextAlignmentLeft
 @property(nonatomic) NSRange selectedRange;            // only ranges of length 0 are supported
 @property(nonatomic,getter=isEditable) BOOL editable;
 @property(nonatomic) UIDataDetectorTypes dataDetectorTypes __OSX_AVAILABLE_STARTING(__MAC_NA, __IPHONE_3_0);
 @property (nonatomic) UIReturnKeyType returnKeyType;
 @property (assign) UIEdgeInsets contentInset;
+@property(nonatomic) BOOL enablesReturnKeyAutomatically;
+@property (nonatomic) UIKeyboardAppearance keyboardAppearance;
 
 //uitextview methods
 //need others? use .internalTextView
 - (BOOL)becomeFirstResponder;
 - (BOOL)resignFirstResponder;
+- (BOOL)isFirstResponder;
 
 - (BOOL)hasText;
 - (void)scrollRangeToVisible:(NSRange)range;

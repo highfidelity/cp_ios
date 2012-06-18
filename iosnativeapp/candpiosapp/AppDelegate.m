@@ -140,6 +140,11 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     [settingsMenuController addChildViewController:self.tabBarController];
     self.window.rootViewController = settingsMenuController;
     
+    // TODO: move the data that we take from the map to a different class so that we have a model for the data that the map and other views can pull from
+    // for now we're forcing the map view to get loaded here so that the data is ready
+    // because it's no longer the first view in the app
+    self.settingsMenuController.mapTabController = [[self.tabBarController storyboard] instantiateViewControllerWithIdentifier:@"venueMapController"];
+    
     // make the status bar the black style
     application.statusBarStyle = UIStatusBarStyleBlackOpaque;
 
@@ -177,22 +182,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     }
     [self syncCurrentUserWithWebAndCheckValidLogin];
     
-    // let's use UIAppearance to set our styles on UINavigationBars
-    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"header.png"] forBarMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIFont fontWithName:@"LeagueGothic" size:22] forKey:UITextAttributeFont]];
-    
-    
-    [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIFont fontWithName:@"LeagueGothic" size:16]
-                                                                                     forKey:UITextAttributeFont]
-                                                forState:UIControlStateNormal];
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(1, -1)
-                                                         forBarMetrics:UIBarMetricsDefault];
-    [[UIBarButtonItem appearance] setTitlePositionAdjustment:UIOffsetMake(0, 0)
-                                               forBarMetrics:UIBarMetricsDefault];
-    
+    [self customAppearanceStyles];
     [self hideLoginBannerWithCompletion:nil];
-
     [self startStandardUpdates];
     
     // Initialize MKStoreKit
@@ -637,6 +628,24 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     NSLog(@"didfailwitherror");
+}
+
+#pragma mark - Appearance Styles
+- (void)customAppearanceStyles
+{
+    // let's use UIAppearance to set our styles on UINavigationBars
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"header.png"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIFont fontWithName:@"LeagueGothic" size:22] forKey:UITextAttributeFont]];
+    
+    // UIAppearance styles on UIBarButtonItems
+    [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIFont fontWithName:@"LeagueGothic" size:16]
+                                                                                     forKey:UITextAttributeFont]
+                                                forState:UIControlStateNormal];
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(1, -1)
+                                                         forBarMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance] setTitlePositionAdjustment:UIOffsetMake(0, 0)
+                                               forBarMetrics:UIBarMetricsDefault];
 }
 
 # pragma mark - Settings Menu

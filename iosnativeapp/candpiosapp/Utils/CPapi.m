@@ -671,6 +671,12 @@
 }
 
 #pragma mark - Logging
++ (void)getLogEntriesWithCompletion:(void (^)(NSDictionary *, NSError *))completion
+{
+    // pretty simple, call action getUserLog in api.php
+    [self makeHTTPRequestWithAction:@"getUserLog" withParameters:nil completion:completion];
+}
+
 + (void)sendLogUpdate:(NSString *)updateText 
            completion:(void (^)(NSDictionary *, NSError *))completion
 {

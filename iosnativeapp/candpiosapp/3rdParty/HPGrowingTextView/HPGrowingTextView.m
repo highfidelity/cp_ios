@@ -46,6 +46,7 @@
 @synthesize dataDetectorTypes; 
 @synthesize animateHeightChange;
 @synthesize returnKeyType;
+@synthesize keyboardAppearance;
 
 // having initwithcoder allows us to use HPGrowingTextView in a Nib. -- aob, 9/2011
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -78,8 +79,7 @@
     internalTextView.text = @"-";
     [self addSubview:internalTextView];
     
-    UIView *internal = (UIView*)[[internalTextView subviews] objectAtIndex:0];
-    minHeight = internal.frame.size.height;
+    minHeight = internalTextView.frame.size.height;
     minNumberOfLines = 1;
     
     animateHeightChange = YES;
@@ -89,30 +89,24 @@
     [self setMaxNumberOfLines:3];
 }
 
--(void)sizeToFit
+-(CGSize)sizeThatFits:(CGSize)size
 {
-	CGRect r = self.frame;
-    
-    // check if the text is available in text view or not, if it is available, no need to set it to minimum lenth, it could vary as per the text length
-    // fix from Ankit Thakur
-    if ([self.text length] > 0) {
-        return;
-    } else {
-        r.size.height = minHeight;
-        self.frame = r;
+    if (self.text.length == 0) {
+        size.height = minHeight;
     }
+    return size;
 }
 
--(void)setFrame:(CGRect)aframe
+-(void)layoutSubviews
 {
-	CGRect r = aframe;
+    [super layoutSubviews];
+    
+	CGRect r = self.bounds;
 	r.origin.y = 0;
 	r.origin.x = contentInset.left;
     r.size.width -= contentInset.left + contentInset.right;
     
-	internalTextView.frame = r;
-	
-	[super setFrame:aframe];
+    internalTextView.frame = r;
 }
 
 -(void)setContentInset:(UIEdgeInsets)inset
@@ -316,10 +310,11 @@
 	return [internalTextView resignFirstResponder];
 }
 
-- (void)dealloc {
-	[internalTextView release];
-    [super dealloc];
+-(BOOL)isFirstResponder
+{
+  return [self.internalTextView isFirstResponder];
 }
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -366,15 +361,17 @@
 	return internalTextView.textColor;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 -(void)setBackgroundColor:(UIColor *)backgroundColor
 {
-    [super setBackgroundColor:backgroundColor];
+  [super setBackgroundColor:backgroundColor];
 	internalTextView.backgroundColor = backgroundColor;
 }
 
 -(UIColor*)backgroundColor
 {
-    return internalTextView.backgroundColor;
+  return internalTextView.backgroundColor;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -423,6 +420,30 @@
 -(UIReturnKeyType)returnKeyType
 {
 	return internalTextView.returnKeyType;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (void)setEnablesReturnKeyAutomatically:(BOOL)enablesReturnKeyAutomatically
+{
+  internalTextView.enablesReturnKeyAutomatically = enablesReturnKeyAutomatically;
+}
+
+- (BOOL)enablesReturnKeyAutomatically
+{
+  return internalTextView.enablesReturnKeyAutomatically;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+-(void)setKeyboardAppearance:(UIKeyboardAppearance)keyAppearance
+{
+	internalTextView.keyboardAppearance = keyAppearance;
+}
+
+-(UIKeyboardAppearance)keyboardAppearance
+{
+	return internalTextView.keyboardAppearance;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

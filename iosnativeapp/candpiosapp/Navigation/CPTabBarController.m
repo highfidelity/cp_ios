@@ -7,58 +7,48 @@
 //
 
 #import "CPTabBarController.h"
-#import "LogCreateViewController.h"
-
-#define TAB_SIZE self.tabBar.frame.size.width / 5
-
-@interface CPTabBarController ()
-
-@property (nonatomic, strong) UIView *greenLine;
-
-@end
+#import "LogTableViewController.h"
 
 @implementation CPTabBarController
 
-@synthesize centerButton = _centerButton;
+// TODO: get rid of the currentVenueID here, let's keep that in NSUserDefaults (my bad)
+
+@synthesize thinBar = _thinBar;
 @synthesize currentVenueID = _currentVenueID;
-@synthesize greenLine = _greenLine;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    // change the background image for the tab bar
-    [self.tabBar setBackgroundImage:[UIImage imageNamed:@"nav-bar-bg"]];
+    UIImage *bgImage = [UIImage imageNamed:@"thin-nav-bg"];
     
-    // create a blank image
-    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
-    UIGraphicsBeginImageContext(rect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGFloat heightDiff = self.tabBar.frame.size.height - bgImage.size.height;
+    // change the frame of the regular tab bar
+    self.tabBar.frame = CGRectMake(self.tabBar.frame.origin.x, 
+                                   self.tabBar.frame.origin.y + heightDiff, 
+                                   self.tabBar.frame.size.width, 
+                                   self.tabBar.frame.size.height - heightDiff);
     
-    CGContextSetFillColorWithColor(context, [UIColor clearColor].CGColor);
-    CGContextFillRect(context, rect);
+    // add our custom thin bar
+    // alloc-init a UIImageView and give it the background image
+    self.thinBar = [[CPThinTabBar alloc] initWithFrame:CGRectMake(0, 0, self.tabBar.frame.size.width, self.tabBar.frame.size.height) backgroundImage:bgImage];
+    // be the tabBarController for the thinBar
+    self.thinBar.tabBarController = self;
     
-    UIImage *blankImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    // add the UIView to the CPTabBarController's view
+    [self.tabBar addSubview:self.thinBar];
     
-    // use that blankImage to have no difference for selectionIndicator
-    [self.tabBar setSelectionIndicatorImage:blankImage];
+    // make sure the CPTabBarController's views take up the extra space
+    CGRect viewFrame = [[self.view.subviews objectAtIndex:0] frame];
+    viewFrame.size.height += heightDiff;
+    [[self.view.subviews objectAtIndex:0] setFrame:viewFrame];
     
-    // add the green line to the bottom of the tab bar
-    self.greenLine = [[UIView alloc] initWithFrame:CGRectMake(0, self.tabBar.frame.size.height - 2, TAB_SIZE, 2)];
-    self.greenLine.backgroundColor = [CPUIHelper CPTealColor];
-    [self.tabBar addSubview:self.greenLine];
-    
-    // move the title up one point
-    [[UITabBarItem appearance] setTitlePositionAdjustment:UIOffsetMake(0, -2)];
-    
-    [self addCenterButtonWithImage:[UIImage imageNamed:@"tab-log"]];
-    [self refreshTabBar];
+//    [self refreshTabBar];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(refreshTabBar)
-                                                 name:@"LoginStateChanged"
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(refreshTabBar)
+//                                                 name:@"LoginStateChanged"
+//                                               object:nil];
 }
 
 - (void)viewDidUnload
@@ -68,76 +58,21 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LoginStateChanged" object:nil];
 }
 
-// override setter for selectedIndex so we can animate the green line along the bottom
-- (void)setSelectedViewController:(UIViewController *)selectedViewController
+- (void)setSelectedIndex:(NSUInteger)selectedIndex
 {
-    // call super's method so that the tab actually gets switched
-    [super setSelectedViewController:selectedViewController];
+    // we have no VC at index 0 so make it go to the logbook
     
-    // call our method that will slide the green line to the right spot
-    [self moveGreenLineToSelectedIndex:[self.viewControllers indexOfObject:selectedViewController]];
+    [super setSelectedIndex:selectedIndex];
+    
+    // move the green line to the right spot
+    [self.thinBar moveGreenLineToSelectedIndex:selectedIndex];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (void)tabBarButtonPressed:(id)sender
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (void)moveGreenLineToSelectedIndex:(NSUInteger)selectedIndex
-{
-    CGFloat xPosition = selectedIndex * TAB_SIZE;
-    
-    // setup a CGRect with the frame of the green line but a new x-origin
-    CGRect greenFrame = self.greenLine.frame;
-    greenFrame.origin.x = xPosition;
-    
-    NSLog(@"moving line x origin to %f", xPosition);
-    
-    // animate the change of self.greenLine.frame to the new frame
-    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationCurveEaseInOut animations:^{
-        self.greenLine.frame = greenFrame;
-    } completion:nil];
-}
-
-- (void)addCenterButtonWithImage:(UIImage *)buttonImage
-{
-    // setup a UIButton with the image
-    UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
-    button.frame = CGRectMake(0.0, 0.0, buttonImage.size.width, buttonImage.size.height);
-    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    
-    // figure out where to position the button
-    CGFloat heightDifference = buttonImage.size.height - self.tabBar.frame.size.height;
-    if (heightDifference < 0)
-        button.center = self.tabBar.center;
-    else
-    {
-        CGPoint center = self.tabBar.center;
-        center.y = center.y - self.tabBar.frame.origin.y - heightDifference/2.0;
-        button.center = center;
-    }
-    
-    // add a tag to the button so we can grab it and hide it later
-    button.tag = 901;
-    
-    // add the target for the button
-    [button addTarget:self action:@selector(logButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
-    // we need a useless view controller at index 2 in the tab bar controller
-    UIViewController *placeHolder = [[UIViewController alloc] init];
-    placeHolder.tabBarItem = [[UITabBarItem alloc] init];
-    
-    NSMutableArray *tabVCArray = [self.viewControllers mutableCopy];
-    [tabVCArray insertObject:placeHolder atIndex:2];
-    self.viewControllers = tabVCArray;
-    
-    placeHolder.tabBarItem.enabled = NO;
-    
-    // add the button to the tab bar controller
-    [self.tabBar addSubview:button];
-    
-    self.centerButton = button;
+    // switch to the tab the user just tapped
+    int tabIndex = ((UIButton *)sender).tag;
+    self.selectedIndex = tabIndex;
 }
 
 - (void)refreshTabBar
@@ -160,10 +95,5 @@
     }
 }
 
-- (void)logButtonPressed:(id)sender
-{
-    LogCreateViewController *logVC = [[UIStoryboard storyboardWithName:@"LogStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
-    [self presentModalViewController:logVC animated:YES];
-}
 
 @end

@@ -13,7 +13,9 @@
 @property (nonatomic, strong) UIActivityIndicatorView *barSpinner;
 @property (nonatomic, assign) id delegate;
 
+- (void)placeSpinnerOnRightBarButtonItem;
 - (void)showCorrectLoadingSpinnerForCount:(int)count;
 - (void)stopAppropriateLoadingSpinner;
+- (void)scrollTableViewToBottomAnimated:(BOOL)animated;
 
 @end

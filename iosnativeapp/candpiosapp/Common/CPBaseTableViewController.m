@@ -36,7 +36,7 @@
     self.barSpinner.hidesWhenStopped = YES;
     
     // set the rightBarButtonItem to that UIActivityIndicatorView 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.barSpinner]; 
+    [self placeSpinnerOnRightBarButtonItem];
 }
 
 - (void)viewDidUnload
@@ -69,6 +69,11 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)placeSpinnerOnRightBarButtonItem
+{
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.barSpinner]; 
+}
+
 - (void)showCorrectLoadingSpinnerForCount:(int)count
 {
     // show a progress hud if we don't have anybody
@@ -91,8 +96,12 @@
     } else {
         [self.barSpinner stopAnimating];
     }
-    
-    
+}
+
+- (void)scrollTableViewToBottomAnimated:(BOOL)animated
+{
+    // scroll to the bottom of the tableView
+    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height) animated:animated];
 }
 
 @end

@@ -59,6 +59,7 @@
              password:(NSString *) password;
 
 #pragma mark - Logging
++ (void)getLogEntriesWithCompletion:(void(^)(NSDictionary *json, NSError *error))completion;
 + (void)sendLogUpdate:(NSString *)updateText 
            completion:(void(^)(NSDictionary *json, NSError *error))completion;
 

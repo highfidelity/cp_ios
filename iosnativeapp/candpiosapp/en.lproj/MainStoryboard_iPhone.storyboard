@@ -10,7 +10,7 @@
         <scene sceneID="Q7p-8T-DVG">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WIW-bY-l8z" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="1pt-yI-hCV" customClass="MapTabController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="venueMapController" id="1pt-yI-hCV" customClass="MapTabController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HAH-lT-A7G">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -67,23 +67,55 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Map" image="tab-map.png" id="nqB-5e-TMy"/>
-                    <navigationItem key="navigationItem" id="mZs-pB-Rfc">
-                        <nil key="title"/>
-                    </navigationItem>
+                    <tabBarItem key="tabBarItem" title="Map" id="nqB-5e-TMy"/>
+                    <navigationItem key="navigationItem" id="mZs-pB-Rfc"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="fm6-PX-4Yv" id="Dvs-wL-oEc"/>
                         <outlet property="refreshButton" destination="Gp4-X8-S05" id="aco-wZ-Y3B"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-272" y="-1130"/>
+            <point key="canvasLocation" x="83" y="-1404"/>
         </scene>
-        <!--Venue List Table View Controller - Venues-->
+        <!--Venue View Toggle View Controller - Venues-->
+        <scene sceneID="0FS-Ee-RH7">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qn2-R4-DaQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="SDa-jH-fe5" customClass="VenueViewToggleViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hI0-8A-jXv">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Venues" id="UoU-aa-7Xt">
+                        <barButtonItem key="rightBarButtonItem" id="Agh-mq-UdG">
+                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="FV5-Bf-Ljg">
+                                <rect key="frame" x="238" y="7" width="77" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Map"/>
+                                    <segment title="List"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentChanged:" destination="SDa-jH-fe5" eventType="valueChanged" id="DaW-cv-NWq"/>
+                                </connections>
+                            </segmentedControl>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="segmentedControl" destination="FV5-Bf-Ljg" id="hdP-75-HYR"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-385" y="-1124"/>
+        </scene>
+        <!--Venue List Table View Controller-->
         <scene sceneID="JpK-kY-M1k">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AOe-xt-Mo3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController wantsFullScreenLayout="YES" id="qhQ-fU-mds" customClass="VenueListTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="venueListController" wantsFullScreenLayout="YES" id="qhQ-fU-mds" customClass="VenueListTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ijx-AQ-lta">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -154,45 +186,145 @@
                             <outlet property="delegate" destination="qhQ-fU-mds" id="lOU-Jx-NZ0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Venues" id="5Mv-wG-Tqt"/>
+                    <navigationItem key="navigationItem" id="5Mv-wG-Tqt"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="-272" y="-492"/>
+            <point key="canvasLocation" x="83" y="-808"/>
         </scene>
-        <!--Navigation Controller - Venues-->
+        <!--Navigation Controller-->
+        <scene sceneID="viu-lv-1Bb">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wo2-ah-pBe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController definesPresentationContext="YES" id="7lJ-uf-W4C" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" id="Uxr-Qe-Zsj"/>
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="5KG-SA-8SJ">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="AZv-ks-7iE" kind="relationship" relationship="rootViewController" id="9Q8-MP-ndy"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="-831" y="-1726"/>
+        </scene>
+        <!--Log Table View Controller - My Logbook-->
+        <scene sceneID="MPs-L7-sRU">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HBF-Ba-Ryx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="AZv-ks-7iE" customClass="LogTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="38" sectionHeaderHeight="22" sectionFooterHeight="22" id="eVp-Jz-FrX">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogEntryCell" id="VQG-Nh-eGn" customClass="LogEntryCell">
+                                <rect key="frame" x="0.0" y="22" width="320" height="38"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="37"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="5:30a" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="yDm-pe-eaK">
+                                            <rect key="frame" x="0.0" y="3" width="42" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                            <color key="textColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Jul 5" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="H43-Bv-fQT">
+                                            <rect key="frame" x="4" y="15" width="38" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                            <color key="textColor" red="0.67843137254901964" green="0.67843137254901964" blue="0.67843137254901964" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="log-update-icon.png" id="XfQ-Iz-GXw">
+                                            <rect key="frame" x="44" y="5" width="15" height="15"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Log text goes here" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="DiI-hT-56q">
+                                            <rect key="frame" x="66" y="4" width="234" height="15"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dateLabel" destination="H43-Bv-fQT" id="6d2-eU-VBD"/>
+                                    <outlet property="entryLabel" destination="DiI-hT-56q" id="kl0-Jy-vkY"/>
+                                    <outlet property="timeLabel" destination="yDm-pe-eaK" id="Vo5-bK-9Ah"/>
+                                    <outlet property="typeImageView" destination="XfQ-Iz-GXw" id="x3W-g1-tGp"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewLogEntryCell" id="RqY-S2-RGs" customClass="NewLogEntryCell">
+                                <rect key="frame" x="0.0" y="60" width="320" height="38"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="37"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="log-update-icon.png" id="IBk-iy-pAl">
+                                            <rect key="frame" x="44" y="5" width="15" height="15"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <view contentMode="scaleToFill" id="WfH-tm-isx" customClass="HPGrowingTextView">
+                                            <rect key="frame" x="66" y="-4" width="234" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Update:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="TVv-Le-rw5">
+                                            <rect key="frame" x="66" y="3" width="46" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="entryLabel" destination="TVv-Le-rw5" id="B42-rk-nNP"/>
+                                    <outlet property="logTextView" destination="WfH-tm-isx" id="Yhl-a0-L5H"/>
+                                    <outlet property="typeImageView" destination="IBk-iy-pAl" id="stS-Mp-rbf"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="AZv-ks-7iE" id="gJ3-Ma-j3Y"/>
+                            <outlet property="delegate" destination="AZv-ks-7iE" id="Djc-Je-eyn"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="My Logbook" id="Egs-si-8d4"/>
+                </tableViewController>
+            </objects>
+            <point key="canvasLocation" x="-385" y="-1726"/>
+        </scene>
+        <!--Navigation Controller-->
         <scene sceneID="xFZ-aJ-dUu">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rwp-GN-MPg" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController definesPresentationContext="YES" id="fZd-hY-lQn" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Venues" image="tab-venues.png" id="z8m-ZB-aNx"/>
+                    <tabBarItem key="tabBarItem" title="" id="z8m-ZB-aNx"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="eeV-VD-mqs">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="qhQ-fU-mds" kind="relationship" relationship="rootViewController" id="Xhd-Pa-qBT"/>
+                        <segue destination="SDa-jH-fe5" kind="relationship" relationship="rootViewController" id="vmr-Pr-hCB"/>
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-822" y="-492"/>
-        </scene>
-        <!--Navigation Controller - Map-->
-        <scene sceneID="X1z-oT-wPh">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="flw-Jh-D1t" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController id="86X-eE-gGo" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Map" image="tab-map.png" id="mXd-OI-Wox"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="US3-0t-kpP">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="1pt-yI-hCV" kind="relationship" relationship="rootViewController" id="TvV-S4-p4h"/>
-                    </connections>
-                </navigationController>
-            </objects>
-            <point key="canvasLocation" x="-822" y="-1112"/>
+            <point key="canvasLocation" x="-838" y="-1124"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="f2o-1k-FZ2">
@@ -208,7 +340,7 @@
                         <color key="selectedImageTintColor" red="0.074509803920000006" green="0.50196078430000002" blue="0.51372549020000002" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
-                        <segue destination="86X-eE-gGo" kind="relationship" relationship="viewControllers" id="Gpf-GT-sNV"/>
+                        <segue destination="7lJ-uf-W4C" kind="relationship" relationship="viewControllers" id="Jmg-9O-66F"/>
                         <segue destination="fZd-hY-lQn" kind="relationship" relationship="viewControllers" id="7SI-IK-TQc"/>
                         <segue destination="T1v-F0-iYl" kind="relationship" relationship="viewControllers" id="iig-fY-IdY"/>
                         <segue destination="3wd-LB-QpZ" kind="relationship" relationship="viewControllers" id="FLd-Aa-fI5"/>
@@ -217,12 +349,12 @@
             </objects>
             <point key="canvasLocation" x="-1367" y="-1100"/>
         </scene>
-        <!--Navigation Controller - People-->
+        <!--Navigation Controller-->
         <scene sceneID="9lf-Nr-gjX">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eRV-nq-SQg" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController definesPresentationContext="YES" id="T1v-F0-iYl" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="People" image="tab-people.png" id="Sxl-M5-oLE"/>
+                    <tabBarItem key="tabBarItem" title="" id="Sxl-M5-oLE"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Jfx-fp-Bn8">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -231,7 +363,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-822" y="91"/>
+            <point key="canvasLocation" x="-838" y="36"/>
         </scene>
         <!--User List Table View Controller - People-->
         <scene sceneID="YQP-0z-9N9">
@@ -317,7 +449,7 @@
                     <navigationItem key="navigationItem" title="People" id="9lv-b0-9v0"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="-264" y="96"/>
+            <point key="canvasLocation" x="-288" y="36"/>
         </scene>
         <!--Contact List View Controller - Contacts-->
         <scene sceneID="pcU-Dh-0ng">
@@ -468,14 +600,14 @@
                     </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="-329" y="680"/>
+            <point key="canvasLocation" x="-293" y="620"/>
         </scene>
-        <!--Navigation Controller - Contacts-->
+        <!--Navigation Controller-->
         <scene sceneID="Xu3-L0-Z0g">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BcZ-Ly-gbh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="contactsNavigationController" definesPresentationContext="YES" id="3wd-LB-QpZ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Contacts" image="tab-contacts.png" id="wP6-iI-SD4"/>
+                    <tabBarItem key="tabBarItem" title="" id="wP6-iI-SD4"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="VSo-Uy-AfC">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -484,7 +616,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-806" y="680"/>
+            <point key="canvasLocation" x="-838" y="632"/>
         </scene>
     </scenes>
     <resources>
@@ -492,15 +624,12 @@
         <image name="contact-ignore.png" width="38" height="38"/>
         <image name="contacts-blank-slate.png" width="320" height="340"/>
         <image name="default-avatar-256.png" width="256" height="256"/>
+        <image name="log-update-icon.png" width="20" height="20"/>
         <image name="map-locate.png" width="40" height="41"/>
         <image name="map-refresh-progress-arrow.png" width="24" height="24"/>
         <image name="map-refresh.png" width="40" height="41"/>
         <image name="map-shadow.png" width="10" height="320"/>
         <image name="picture-coming-soon.jpg" width="100" height="100"/>
-        <image name="tab-contacts.png" width="43" height="30"/>
-        <image name="tab-map.png" width="43" height="30"/>
-        <image name="tab-people.png" width="43" height="30"/>
-        <image name="tab-venues.png" width="43" height="30"/>
     </resources>
     <classes>
         <class className="CPBaseTableViewController" superclassName="UITableViewController">
@@ -512,7 +641,7 @@
         <class className="CPTabBarController" superclassName="UITabBarController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CPTabBarController.h"/>
         </class>
-        <class className="ContactListCell" superclassName="UITableViewCell">
+        <class className="ContactListCell" superclassName="CPSwipeableTableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ContactListCell.h"/>
             <relationships>
                 <relationship kind="action" name="acceptButtonAction"/>
@@ -531,6 +660,24 @@
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
             </relationships>
         </class>
+        <class className="HPGrowingTextView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HPGrowingTextView.h"/>
+        </class>
+        <class className="LogEntryCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogEntryCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="entryLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="typeImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="LogTableViewController" superclassName="CPBaseTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addLogButtonPressed:"/>
+            </relationships>
+        </class>
         <class className="MapTabController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MapTabController.h"/>
             <relationships>
@@ -539,6 +686,12 @@
                 <relationship kind="outlet" name="mapAndButtonsView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
                 <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="NewLogEntryCell" superclassName="LogEntryCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NewLogEntryCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="logTextView" candidateClass="HPGrowingTextView"/>
             </relationships>
         </class>
         <class className="UserListTableViewController" superclassName="CPBaseTableViewController">
@@ -568,6 +721,12 @@
         </class>
         <class className="VenueListTableViewController" superclassName="CPBaseTableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueListTableViewController.h"/>
+        </class>
+        <class className="VenueViewToggleViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueViewToggleViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="segmentedControl" candidateClass="UISegmentedControl"/>
+            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
