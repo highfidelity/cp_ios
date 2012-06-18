@@ -7,7 +7,6 @@
 //
 
 #import "LogTableViewController.h"
-#import "SVPullToRefresh.h"
 #import "CPLogEntry.h"
 #import "LogEntryCell.h"
 #import "NewLogEntryCell.h"
