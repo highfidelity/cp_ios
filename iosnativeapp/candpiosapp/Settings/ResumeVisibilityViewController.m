@@ -12,7 +12,6 @@
 @interface ResumeVisibilityViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton *resumeVisibilityButton;
-@property (weak, nonatomic) IBOutlet UITextView *profileURLTextView;
 @property (nonatomic, strong) NSArray *resumeVisibilityOptions;
 @property (nonatomic, strong) NSArray *resumeVisibilityOptionsKeys;
 @property (nonatomic, strong) NSString *originalProfileURLVisibility;
@@ -27,7 +26,6 @@
 
 @synthesize user = _user;
 @synthesize resumeVisibilityButton = _resumeVisibilityButton;
-@synthesize profileURLTextView = _profileURLTextView;
 @synthesize resumeVisibilityOptions = _resumeVisibilityOptions;
 @synthesize resumeVisibilityOptionsKeys= _resumeVisibilityOptionsKeys;
 @synthesize originalProfileURLVisibility = _originalProfileURLVisibility;
@@ -54,12 +52,6 @@
     self.resumeVisibilityButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
     
     [self updateResumeVisibilityButtonText];
-    
-    self.profileURLTextView.text = [NSString stringWithFormat:@"My profile:\n%@%@",
-                                    [kCandPWebServiceUrl stringByReplacingOccurrencesOfString:@"https://"
-                                                                                   withString:@"http://"],
-                                    [self.user.nickname stringByReplacingOccurrencesOfString:@" "
-                                                                                  withString:@"_"]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

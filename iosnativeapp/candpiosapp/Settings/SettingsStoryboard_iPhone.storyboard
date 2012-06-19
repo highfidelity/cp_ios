@@ -1567,22 +1567,11 @@
                                     <action selector="resumeVisibilityButtonClick:" destination="MVm-85-2NW" eventType="touchUpInside" id="kpr-ur-eSO"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="G6g-f8-QxF">
-                                <rect key="frame" x="12" y="76" width="296" height="97"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <string key="text">My profile:
-http://www.candp.me/Ryan_Downe</string>
-                                <color key="textColor" red="0.78823529410000004" green="0.78823529410000004" blue="0.78823529410000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
-                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Resume Visibility" id="hiR-md-nrv"/>
                     <connections>
-                        <outlet property="profileURLTextView" destination="G6g-f8-QxF" id="PLu-2h-zPQ"/>
                         <outlet property="resumeVisibilityButton" destination="sWC-di-LSO" id="xOZ-MN-8He"/>
                     </connections>
                 </viewController>
@@ -1707,7 +1696,6 @@ http://www.candp.me/Ryan_Downe</string>
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ResumeVisibilityViewController.h"/>
             <relationships>
                 <relationship kind="action" name="resumeVisibilityButtonClick:"/>
-                <relationship kind="outlet" name="profileURLTextView" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="resumeVisibilityButton" candidateClass="UIButton"/>
             </relationships>
         </class>
