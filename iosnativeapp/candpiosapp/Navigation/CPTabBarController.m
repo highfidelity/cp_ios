@@ -44,12 +44,12 @@
     viewFrame.size.height += heightDiff;
     [[self.view.subviews objectAtIndex:0] setFrame:viewFrame];
     
-//    [self refreshTabBar];
+    [self refreshTabBar];
 
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(refreshTabBar)
-//                                                 name:@"LoginStateChanged"
-//                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshTabBar)
+                                                 name:@"LoginStateChanged"
+                                               object:nil];
 }
 
 - (void)viewDidUnload
@@ -83,17 +83,27 @@
         UINavigationController *signupController = [signUpStoryboard instantiateInitialViewController];
 
         NSMutableArray *tabVCArray = [self.viewControllers mutableCopy];
-        [tabVCArray replaceObjectAtIndex:4 withObject:signupController];
+        [tabVCArray replaceObjectAtIndex:3 withObject:signupController];
         self.viewControllers = tabVCArray;
+        
+        // tell the thinBar to update the button
+        [self.thinBar refreshLastTab:NO];
     } else {
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone"
                                                                  bundle:nil];
         UINavigationController *contactsController = [mainStoryboard instantiateViewControllerWithIdentifier:@"contactsNavigationController"];
 
         NSMutableArray *tabVCArray = [self.viewControllers mutableCopy];
-        [tabVCArray replaceObjectAtIndex:4 withObject:contactsController];
+        [tabVCArray replaceObjectAtIndex:3 withObject:contactsController];
         self.viewControllers = tabVCArray;
-    }
+        
+        // tell the thinBar to update the button
+        [self.thinBar refreshLastTab:YES];
+    }  
+    
+    // make sure the thinBar is in front of the new button
+    [self.tabBar bringSubviewToFront:self.thinBar];
+    
 }
 
 

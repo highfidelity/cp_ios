@@ -27,7 +27,8 @@ static NSArray *tabBarIcons;
         tabBarIcons = [NSArray arrayWithObjects:[UIImage imageNamed:@"tab-logbook"], 
                        [UIImage imageNamed:@"tab-venues"], 
                        [UIImage imageNamed:@"tab-people"], 
-                       [UIImage imageNamed:@"tab-contacts"], nil];
+                       [UIImage imageNamed:@"tab-contacts"],
+                       [UIImage imageNamed:@"tab-login"], nil];
     }
 }
 
@@ -91,6 +92,14 @@ static NSArray *tabBarIcons;
     
     // add the button to the tab bar controller
     [self addSubview:self.leftButton];    
+}
+
+- (void)refreshLastTab:(BOOL)loggedIn
+{
+    // grab the new image from our array of tabBarIcons
+    UIImage *newImage = [tabBarIcons objectAtIndex:(loggedIn ? 3 : 4)];
+    // give the new image to the button
+    [self.barButton4 setImage:newImage forState:UIControlStateNormal];
 }
 
 - (void)addCustomButtons 

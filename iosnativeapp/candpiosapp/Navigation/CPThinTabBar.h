@@ -25,5 +25,6 @@
 - (id)initWithFrame:(CGRect)frame backgroundImage:(UIImage *)backgroundImage;
 - (void)moveGreenLineToSelectedIndex:(NSUInteger)selectedIndex;
 - (void)toggleRightSide:(BOOL)shown;
+- (void)refreshLastTab:(BOOL)loggedIn;
 
 @end
