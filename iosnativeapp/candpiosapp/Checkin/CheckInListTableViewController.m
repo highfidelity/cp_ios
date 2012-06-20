@@ -201,22 +201,17 @@
     // we'd catch that before going to the store, but be careful
     CheckInListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCell"];
     
-    // if this is the "place not listed" cell then we have a different identifier
-    if (indexPath.row == [self.places count] - 1) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCellNotListed"];
+    // get the localized distance string based on the distance of this venue from the user
+    // which we set when we sort the places
+    cell.distanceString.text = [CPUtils localizedDistanceStringForDistance:[[self.places objectAtIndex:indexPath.row] distanceFromUser]];
+    
+    cell.venueAddress.text = [[[self.places objectAtIndex:indexPath.row] address] description];
+    if (!cell.venueAddress.text) {
+        // if we don't have an address then move the venuename down
+        cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 19, cell.venueName.frame.size.width, cell.venueName.frame.size.height);
     } else {
-        // get the localized distance string based on the distance of this venue from the user
-        // which we set when we sort the places
-        cell.distanceString.text = [CPUtils localizedDistanceStringForDistance:[[self.places objectAtIndex:indexPath.row] distanceFromUser]];
-        
-        cell.venueAddress.text = [[[self.places objectAtIndex:indexPath.row] address] description];
-        if (!cell.venueAddress.text) {
-            // if we don't have an address then move the venuename down
-            cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 19, cell.venueName.frame.size.width, cell.venueName.frame.size.height);
-        } else {
-            // otherwise put it back since we re-use the cells
-            cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 11, cell.venueName.frame.size.width, cell.venueName.frame.size.height);
-        }
+        // otherwise put it back since we re-use the cells
+        cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 11, cell.venueName.frame.size.width, cell.venueName.frame.size.height);
     }
     
     cell.venueName.text = [[self.places objectAtIndex:indexPath.row] name];
@@ -236,11 +231,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // if this is the last row it's the 'place not listed' row so make it smaller
-    if (indexPath.row == [self.places count] - 1) {
-        return 40;
-    } else {
-        return 60;
-    }    
+    return 60;    
 }
 
 # pragma mark - AlertView
