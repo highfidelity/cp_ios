@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CPBaseTableViewController.h"
 
 @interface LogViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
