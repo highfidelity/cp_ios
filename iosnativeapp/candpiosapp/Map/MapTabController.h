@@ -16,7 +16,7 @@
 
 @class MapDataSet;
 
-@interface MapTabController : UIViewController <MKMapViewDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate>
+@interface MapTabController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate>
 {
 	bool hasUpdatedUserLocation;
     NSArray *pinScales;

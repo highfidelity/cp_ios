@@ -60,7 +60,8 @@
 
 #pragma mark - Logging
 + (void)getLogEntriesWithCompletion:(void(^)(NSDictionary *json, NSError *error))completion;
-+ (void)sendLogUpdate:(NSString *)updateText 
++ (void)sendLogUpdate:(NSString *)updateText
+              atVenue:(CPVenue *)logVenue
            completion:(void(^)(NSDictionary *json, NSError *error))completion;
 
 

@@ -11,8 +11,6 @@
 #import "VenueInfoViewController.h"
 #import "User.h"
 
-#define qHideTopNavigationBarOnMapView			0
-
 @interface MapTabController() 
 -(void)zoomTo:(CLLocationCoordinate2D)loc;
 
@@ -90,7 +88,6 @@ BOOL clearLocations = NO;
     
     self.mapHasLoaded = NO;
     
-    self.navigationController.delegate = self;
 	hasUpdatedUserLocation = false;
     
 	// let's assume when this view loads we don't know the location status
@@ -308,24 +305,6 @@ BOOL clearLocations = NO;
 - (MKUserLocation *)currentUserLocationInMapView
 {
     return mapView.userLocation;
-}
-
-// called just before a controller pops us
-- (void)navigationController:(UINavigationController *)navigationControllerArg willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-#if qHideTopNavigationBarOnMapView
-	if(viewController == self)
-	{
-		// we're about to be revealed
-		// (happens after a pop back, but also on initial appearance)
-		navigationControllerArg.navigationBarHidden = YES;
-	}
-	else
-	{
-		navigationControllerArg.navigationBarHidden = NO;
-	}
-#endif
-	
 }
 
 -(void)loginButtonTapped

@@ -16,6 +16,5 @@
 - (void)placeSpinnerOnRightBarButtonItem;
 - (void)showCorrectLoadingSpinnerForCount:(int)count;
 - (void)stopAppropriateLoadingSpinner;
-- (void)scrollTableViewToBottomAnimated:(BOOL)animated;
 
 @end

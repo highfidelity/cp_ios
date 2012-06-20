@@ -7,7 +7,6 @@
 //
 
 #import "CPTabBarController.h"
-#import "LogTableViewController.h"
 
 @implementation CPTabBarController
 
@@ -31,7 +30,9 @@
     
     // add our custom thin bar
     // alloc-init a UIImageView and give it the background image
-    self.thinBar = [[CPThinTabBar alloc] initWithFrame:CGRectMake(0, 0, self.tabBar.frame.size.width, self.tabBar.frame.size.height) backgroundImage:bgImage];
+    self.thinBar = [[CPThinTabBar alloc] initWithFrame:CGRectMake(0, 0, self.tabBar.frame.size.width, self.tabBar.frame.size.height)
+                                       backgroundImage:bgImage];
+    
     // be the tabBarController for the thinBar
     self.thinBar.tabBarController = self;
     

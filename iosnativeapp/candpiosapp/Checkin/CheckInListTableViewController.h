@@ -7,11 +7,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CheckInListTableViewController : UITableViewController <UIAlertViewDelegate, UITextFieldDelegate> {
-    NSMutableArray *places;
-}
+@interface CheckInListTableViewController : UITableViewController <UIAlertViewDelegate, UITextFieldDelegate>
 
-@property (nonatomic, retain) NSMutableArray *places;
+@property (nonatomic, assign) id delegate;
+@property (nonatomic, strong) NSMutableArray *places;
 @property BOOL refreshLocationsNow;
 
 - (IBAction)closeWindow:(id)sender;

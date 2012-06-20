@@ -678,11 +678,17 @@
 }
 
 + (void)sendLogUpdate:(NSString *)updateText 
+              atVenue:(CPVenue *)logVenue
            completion:(void (^)(NSDictionary *, NSError *))completion
 {
     // setup the params dictionary
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setObject:updateText forKey:@"entry"];
+    
+    // if we have a venue attached to the log then give that to the backend
+    if (logVenue) {
+        [params setObject:logVenue.foursquareID forKey:@"foursquareID"];
+    }
     
     // make the request
     [self makeHTTPRequestWithAction:@"newLogUpdate" withParameters:params completion:completion];

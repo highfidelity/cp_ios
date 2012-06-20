@@ -47,6 +47,14 @@
     // Release any retained subviews of the main view.
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    // place the settings button on the navigation item if required
+    // or remove it if the user isn't logged in
+    [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
+}
+
 - (IBAction)segmentChanged:(UISegmentedControl *)sender {
     UIViewController *currentVC = sender.selectedSegmentIndex ? self.venueMapController : self.venueListController;
     UIViewController *nextVC = sender.selectedSegmentIndex ? self.venueListController : self.venueMapController;

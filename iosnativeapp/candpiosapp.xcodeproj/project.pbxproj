@@ -237,7 +237,7 @@
 		539102EC1545DA7600D000BD /* button-orange-32pt.png in Resources */ = {isa = PBXBuildFile; fileRef = 539102EA1545DA7600D000BD /* button-orange-32pt.png */; };
 		539102ED1545DA7600D000BD /* button-orange-32pt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 539102EB1545DA7600D000BD /* button-orange-32pt@2x.png */; };
 		5396E0D814E466C200E33E0E /* LeagueGothic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5396E0D714E466C200E33E0E /* LeagueGothic.otf */; };
-		53A1EA901587B377009D8E31 /* LogTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A1EA8F1587B377009D8E31 /* LogTableViewController.m */; };
+		53A1EA901587B377009D8E31 /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A1EA8F1587B377009D8E31 /* LogViewController.m */; };
 		53A1EA971587B418009D8E31 /* thin-nav-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A1EA951587B418009D8E31 /* thin-nav-bg.png */; };
 		53A1EA981587B418009D8E31 /* thin-nav-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A1EA961587B418009D8E31 /* thin-nav-bg@2x.png */; };
 		53A1EAA11587B496009D8E31 /* tab-contacts.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A1EA991587B496009D8E31 /* tab-contacts.png */; };
@@ -290,11 +290,11 @@
 		53C01006150AA9650052069A /* map-refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C01002150AA9650052069A /* map-refresh@2x.png */; };
 		53C0100D150AC01F0052069A /* people-marker-turquoise-circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C0100B150AC01E0052069A /* people-marker-turquoise-circle.png */; };
 		53C0100E150AC01F0052069A /* people-marker-turquoise-circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C0100C150AC01E0052069A /* people-marker-turquoise-circle@2x.png */; };
+		53C4A2A5159107FB00711EC7 /* CPThinTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 53C4A2A4159107FB00711EC7 /* CPThinTabBar.m */; };
 		53C4BE48152CD0FB00A87EF0 /* VenueStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53C4BE47152CD0FB00A87EF0 /* VenueStoryboard_iPhone.storyboard */; };
 		53C4BE4A152CD1A200A87EF0 /* CheckinStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53C4BE49152CD1A200A87EF0 /* CheckinStoryboard_iPhone.storyboard */; };
 		53C9709F15700FCF00686B8F /* pin-virtual-checkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C9709D15700FCF00686B8F /* pin-virtual-checkedin.png */; };
 		53C970A015700FCF00686B8F /* pin-virtual-checkedin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53C9709E15700FCF00686B8F /* pin-virtual-checkedin@2x.png */; };
-		53CBFD2D158A768B003FDD65 /* CPThinTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CBFD2C158A768B003FDD65 /* CPThinTabBar.m */; };
 		53D4F21C1548AA7500A30473 /* list-arrow-dark-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D4F21A1548AA7500A30473 /* list-arrow-dark-grey.png */; };
 		53D4F21D1548AA7500A30473 /* list-arrow-dark-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D4F21B1548AA7500A30473 /* list-arrow-dark-grey@2x.png */; };
 		53D4F2211548AB4F00A30473 /* venue-chat-blank-slate.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D4F21F1548AB4F00A30473 /* venue-chat-blank-slate.png */; };
@@ -320,7 +320,6 @@
 		53DDBD22153F5C2800306F8B /* VenueChatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DDBD21153F5C2800306F8B /* VenueChatCell.m */; };
 		53E1F0C91546430C00131042 /* splash-screen-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 53E1F0C71546430C00131042 /* splash-screen-logo.png */; };
 		53E1F0CA1546430C00131042 /* splash-screen-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53E1F0C81546430C00131042 /* splash-screen-logo@2x.png */; };
-		53E20621150591600000FA8D /* DismissHUDAfterReloadData.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E20620150591600000FA8D /* DismissHUDAfterReloadData.m */; };
 		53E2062C150596180000FA8D /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53E2062A150596180000FA8D /* MainStoryboard_iPhone.storyboard */; };
 		53E4EC0A150EDD6100DB236A /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 53E4EC09150EDD6100DB236A /* SVProgressHUD.bundle */; };
 		53E9224A154B3B6400130864 /* TimestampCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E92249154B3B6400130864 /* TimestampCell.m */; };
@@ -835,8 +834,8 @@
 		539102EA1545DA7600D000BD /* button-orange-32pt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-orange-32pt.png"; sourceTree = "<group>"; };
 		539102EB1545DA7600D000BD /* button-orange-32pt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-orange-32pt@2x.png"; sourceTree = "<group>"; };
 		5396E0D714E466C200E33E0E /* LeagueGothic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LeagueGothic.otf; sourceTree = "<group>"; };
-		53A1EA8E1587B377009D8E31 /* LogTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogTableViewController.h; sourceTree = "<group>"; };
-		53A1EA8F1587B377009D8E31 /* LogTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogTableViewController.m; sourceTree = "<group>"; };
+		53A1EA8E1587B377009D8E31 /* LogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogViewController.h; sourceTree = "<group>"; };
+		53A1EA8F1587B377009D8E31 /* LogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogViewController.m; sourceTree = "<group>"; };
 		53A1EA951587B418009D8E31 /* thin-nav-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thin-nav-bg.png"; sourceTree = "<group>"; };
 		53A1EA961587B418009D8E31 /* thin-nav-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thin-nav-bg@2x.png"; sourceTree = "<group>"; };
 		53A1EA991587B496009D8E31 /* tab-contacts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-contacts.png"; sourceTree = "<group>"; };
@@ -892,12 +891,12 @@
 		53C01002150AA9650052069A /* map-refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map-refresh@2x.png"; path = "Map/images/map-refresh@2x.png"; sourceTree = "<group>"; };
 		53C0100B150AC01E0052069A /* people-marker-turquoise-circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "people-marker-turquoise-circle.png"; path = "Map/images/people-marker-turquoise-circle.png"; sourceTree = "<group>"; };
 		53C0100C150AC01E0052069A /* people-marker-turquoise-circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "people-marker-turquoise-circle@2x.png"; path = "Map/images/people-marker-turquoise-circle@2x.png"; sourceTree = "<group>"; };
+		53C4A2A3159107FB00711EC7 /* CPThinTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPThinTabBar.h; sourceTree = "<group>"; };
+		53C4A2A4159107FB00711EC7 /* CPThinTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPThinTabBar.m; sourceTree = "<group>"; };
 		53C4BE47152CD0FB00A87EF0 /* VenueStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = VenueStoryboard_iPhone.storyboard; path = Venue/VenueStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		53C4BE49152CD1A200A87EF0 /* CheckinStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CheckinStoryboard_iPhone.storyboard; path = CheckIn/CheckinStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		53C9709D15700FCF00686B8F /* pin-virtual-checkedin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pin-virtual-checkedin.png"; path = "Map/images/pin-virtual-checkedin.png"; sourceTree = "<group>"; };
 		53C9709E15700FCF00686B8F /* pin-virtual-checkedin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pin-virtual-checkedin@2x.png"; path = "Map/images/pin-virtual-checkedin@2x.png"; sourceTree = "<group>"; };
-		53CBFD2B158A768B003FDD65 /* CPThinTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPThinTabBar.h; sourceTree = "<group>"; };
-		53CBFD2C158A768B003FDD65 /* CPThinTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPThinTabBar.m; sourceTree = "<group>"; };
 		53D4F21A1548AA7500A30473 /* list-arrow-dark-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "list-arrow-dark-grey.png"; path = "Venue/images/list-arrow-dark-grey.png"; sourceTree = "<group>"; };
 		53D4F21B1548AA7500A30473 /* list-arrow-dark-grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "list-arrow-dark-grey@2x.png"; path = "Venue/images/list-arrow-dark-grey@2x.png"; sourceTree = "<group>"; };
 		53D4F21F1548AB4F00A30473 /* venue-chat-blank-slate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "venue-chat-blank-slate.png"; sourceTree = "<group>"; };
@@ -933,8 +932,6 @@
 		53DDBD21153F5C2800306F8B /* VenueChatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenueChatCell.m; sourceTree = "<group>"; };
 		53E1F0C71546430C00131042 /* splash-screen-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "splash-screen-logo.png"; path = "candpiosapp/Login/images/splash-screen-logo.png"; sourceTree = SOURCE_ROOT; };
 		53E1F0C81546430C00131042 /* splash-screen-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "splash-screen-logo@2x.png"; path = "candpiosapp/Login/images/splash-screen-logo@2x.png"; sourceTree = SOURCE_ROOT; };
-		53E2061F150591600000FA8D /* DismissHUDAfterReloadData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DismissHUDAfterReloadData.h; path = CheckIn/DismissHUDAfterReloadData.h; sourceTree = "<group>"; };
-		53E20620150591600000FA8D /* DismissHUDAfterReloadData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DismissHUDAfterReloadData.m; path = CheckIn/DismissHUDAfterReloadData.m; sourceTree = "<group>"; };
 		53E2062B150596180000FA8D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		53E4EC09150EDD6100DB236A /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		53E92248154B3B6400130864 /* TimestampCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimestampCell.h; sourceTree = "<group>"; };
@@ -1513,8 +1510,8 @@
 			isa = PBXGroup;
 			children = (
 				53A1EAC31587EFBD009D8E31 /* images */,
-				53A1EA8E1587B377009D8E31 /* LogTableViewController.h */,
-				53A1EA8F1587B377009D8E31 /* LogTableViewController.m */,
+				53A1EA8E1587B377009D8E31 /* LogViewController.h */,
+				53A1EA8F1587B377009D8E31 /* LogViewController.m */,
 				53A1EAB91587E79B009D8E31 /* CPLogEntry.h */,
 				53A1EABA1587E79B009D8E31 /* CPLogEntry.m */,
 				53A1EAC01587ED62009D8E31 /* LogEntryCell.h */,
@@ -2016,8 +2013,6 @@
 				5328935F15548902007B0157 /* CheckInListCell.h */,
 				5328936015548902007B0157 /* CheckInListCell.m */,
 				53C4BE49152CD1A200A87EF0 /* CheckinStoryboard_iPhone.storyboard */,
-				53E2061F150591600000FA8D /* DismissHUDAfterReloadData.h */,
-				53E20620150591600000FA8D /* DismissHUDAfterReloadData.m */,
 				536DE92A150170CC00794650 /* images */,
 				5319C75F15547157005DA299 /* UIButton+AnimatedClockHand.h */,
 				5319C76015547157005DA299 /* UIButton+AnimatedClockHand.m */,
@@ -2028,11 +2023,11 @@
 		53D9B199152A5E6100BC1304 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				53C4A2A3159107FB00711EC7 /* CPThinTabBar.h */,
+				53C4A2A4159107FB00711EC7 /* CPThinTabBar.m */,
 				537BF1EA15868EA700A23DA3 /* images */,
 				53D9B19A152A5E8600BC1304 /* CPTabBarController.h */,
 				53D9B19B152A5E8600BC1304 /* CPTabBarController.m */,
-				53CBFD2B158A768B003FDD65 /* CPThinTabBar.h */,
-				53CBFD2C158A768B003FDD65 /* CPThinTabBar.m */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -2908,7 +2903,6 @@
 				32A7999514F9867D00A0D4CB /* UIImage+RoundedCorner.m in Sources */,
 				3278800014FAD7070055A991 /* MKAnnotationView+WebCache.m in Sources */,
 				6FF5891F14FEE7E300EFDB56 /* ChatMessageCell.m in Sources */,
-				53E20621150591600000FA8D /* DismissHUDAfterReloadData.m in Sources */,
 				6FB06648150ACFD00064DC42 /* OneOnOneChatHistory.m in Sources */,
 				6FC4EF10151928BC003C63A5 /* LinkedAccountsTableViewController.m in Sources */,
 				E48C32B6151A7C3600A98427 /* VenueCell.m in Sources */,
@@ -2998,12 +2992,12 @@
 				538EF4351585352E00249AAF /* InviteLinkedInConnectionsTableViewController.m in Sources */,
 				538EF4381585354100249AAF /* LinkedInConnectionCell.m in Sources */,
 				699249E3158A3CFC00EC273A /* ResumeVisibilityViewController.m in Sources */,
-				53A1EA901587B377009D8E31 /* LogTableViewController.m in Sources */,
+				53A1EA901587B377009D8E31 /* LogViewController.m in Sources */,
 				53A1EABB1587E79B009D8E31 /* CPLogEntry.m in Sources */,
 				53A1EAC21587ED63009D8E31 /* LogEntryCell.m in Sources */,
 				53A1EACE15880C5C009D8E31 /* NewLogEntryCell.m in Sources */,
-				53CBFD2D158A768B003FDD65 /* CPThinTabBar.m in Sources */,
 				532B4159158FD293005B55C0 /* VenueViewToggleViewController.m in Sources */,
+				53C4A2A5159107FB00711EC7 /* CPThinTabBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3096,8 +3090,8 @@
 		871EFB4814AE9C820030658B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Stephen Birarda (5324RNLMV4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Stephen Birarda (5324RNLMV4)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3117,8 +3111,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "3AEA1087-0E02-4737-A58D-792999A6E3C2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3AEA1087-0E02-4737-A58D-792999A6E3C2";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
