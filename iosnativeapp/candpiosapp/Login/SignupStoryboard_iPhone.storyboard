@@ -81,7 +81,7 @@
                                 <rect key="frame" x="45" y="55" width="230" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="send"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" keyboardAppearance="alert" returnKeyType="send"/>
                                 <connections>
                                     <outlet property="delegate" destination="QMd-8J-H38" id="Q4K-eq-qsa"/>
                                 </connections>
@@ -279,7 +279,7 @@
         <image name="plug-logo.png" width="96" height="96"/>
         <image name="secret-society@2x.png" width="640" height="960"/>
         <image name="splash-screen-logo.png" width="112" height="193"/>
-        <image name="tab-login.png" width="56" height="51"/>
+        <image name="tab-login.png" width="34" height="26"/>
     </resources>
     <classes>
         <class className="BaseLoginController" superclassName="UIViewController">
