@@ -569,7 +569,9 @@
                              // call scrollTableViewToBottomAnimated again because otherwise its off by a couple of points
                              [self scrollTableViewToBottomAnimated:NO];
                              // grab the new cell and make its growingTextView the first responder
-                             [((NewLogEntryCell *)[self.tableView cellForRowAtIndexPath:lastIndexPath]).logTextView becomeFirstResponder];
+                             if (self.pendingLogEntry) {
+                                 [[self pendingLogEntryCell].logTextView becomeFirstResponder];
+                             }
                          } else {
                              [self.lowerButton removeFromSuperview];
                          }
