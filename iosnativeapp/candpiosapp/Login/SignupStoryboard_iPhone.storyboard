@@ -130,7 +130,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" red="0.79215686269999996" green="0.79215686269999996" blue="0.79215686269999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="86"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" returnKeyType="send"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" keyboardAppearance="alert" returnKeyType="send"/>
                                 <connections>
                                     <outlet property="delegate" destination="YTE-Yd-6dA" id="gce-aR-tQE"/>
                                 </connections>
@@ -281,6 +281,44 @@
         <image name="splash-screen-logo.png" width="112" height="193"/>
         <image name="tab-login.png" width="56" height="51"/>
     </resources>
+    <classes>
+        <class className="BaseLoginController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BaseLoginController.h"/>
+        </class>
+        <class className="EnterEmailAfterSingUpController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EnterEmailAfterSingUpController.h"/>
+            <relationships>
+                <relationship kind="action" name="sendButtonPressed:"/>
+                <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="emailValidationMessage" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="sendButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="weWillNotSpamYouLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="EnterInvitationCodeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EnterInvitationCodeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="laterButtonAction:"/>
+                <relationship kind="outlet" name="codeTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="laterButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="LinkedInLoginController" superclassName="BaseLoginController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedInLoginController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="myWebView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="SignupController" superclassName="BaseLoginController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupController.h"/>
+            <relationships>
+                <relationship kind="action" name="dismissClick:"/>
+                <relationship kind="action" name="loginWithLinkedInTapped:"/>
+                <relationship kind="outlet" name="dismissButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="linkedinLoginButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
