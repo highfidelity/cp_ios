@@ -36,8 +36,6 @@
 - (void)userCheckedIn:(NSNotification *)notification;
 - (IBAction)refreshButtonClicked:(id)sender;
 - (IBAction)locateMe:(id)sender;
-- (void)loginButtonTapped;
-- (void)logoutButtonTapped;
 
 # pragma mark - Active Venue and Active User grabbing
 - (User *)userFromActiveUsers:(int)userID;

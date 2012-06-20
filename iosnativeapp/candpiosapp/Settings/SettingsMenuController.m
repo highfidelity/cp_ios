@@ -368,9 +368,14 @@
     NSInteger logoutRowIndex = [self.menuStringsArray indexOfObject:@"Logout"];
     if (indexPath.row == logoutRowIndex) { 
         //TODO: Merge logout xib with storyboard, adding segue for logout
-        if (self.isMenuShowing) { [self showMenu:NO]; }
-        [self.mapTabController logoutButtonTapped];
-        [self.mapTabController loginButtonTapped];
+        if (self.isMenuShowing) { 
+            [self showMenu:NO]; 
+        }
+        
+        // logout of *all* accounts
+        [CPAppDelegate logoutEverything];
+        [CPAppDelegate showSignupModalFromViewController:self animated:YES];
+
     } else {
         NSString *segueID = [self.menuSegueIdentifiersArray objectAtIndex:indexPath.row];
         NSLog(@"You clicked on %@", segueID);

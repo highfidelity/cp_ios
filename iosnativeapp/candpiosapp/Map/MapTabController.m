@@ -307,18 +307,6 @@ BOOL clearLocations = NO;
     return mapView.userLocation;
 }
 
--(void)loginButtonTapped
-{
-	[CPAppDelegate showSignupModalFromViewController:self animated:YES];
-}
-
--(void)logoutButtonTapped
-{
-	// logout of *all* accounts
-	[[AppDelegate instance] logoutEverything];
-	
-}
-
 - (void) mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     for (MKAnnotationView *view in views) {
         CGFloat startingAlpha = view.alpha;
