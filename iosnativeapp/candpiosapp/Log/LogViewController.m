@@ -134,7 +134,16 @@
     if (!self.pendingLogEntry) {
         [self getUserLogEntries];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     
+    if (self.pendingLogEntry) {
+        // if we have a pending log entry then show the keyboard
+        [self.fakeTextView becomeFirstResponder];
+    }
 }
 
 - (NSMutableArray *)logEntries
@@ -396,32 +405,34 @@
 
 #pragma mark - IBActions
 - (IBAction)addLogButtonPressed:(id)sender
-{
+{   
+    // we need to add a new cell to the table with a textView that the user can edit
+    // first create a new CPLogEntry object
+    self.pendingLogEntry = [[CPLogEntry alloc] init];
+    
+    // the author for this log message is the current user
+    self.pendingLogEntry.author = [CPAppDelegate currentUser];
+    
+    // if the user is currently at a venue then use that as the venue for this log
+    self.pendingLogEntry.venue = [CPAppDelegate currentVenue];
+    
+    [self.logEntries addObject:self.pendingLogEntry];
+    // we need the keyboard to know that we're asking for this change
+    self.pendingEntryRemovedOrAdded = YES;
+    
+    // add a cancel button to our nav bar so the user can drop out of creation
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelLogEntry:)];
+    
+    // tell the tableView to stop scrolling, it'll be completed by the keyboard being displayed
+    self.tableView.contentOffset = self.tableView.contentOffset;
+    
+    // only become firstResponder if this view is currently on screen
+    // otherwise that gets taken care once the view appears
     if (self.tabBarController.selectedIndex != 0) {
         // let's make sure the selected index of the CPTabBarController is the logbook's
         // before allowing update
         self.tabBarController.selectedIndex = 0;
-    } else if (!self.pendingLogEntry && self.logEntries.count > 0) {
-        // we need to add a new cell to the table with a textView that the user can edit
-        // first create a new CPLogEntry object
-        self.pendingLogEntry = [[CPLogEntry alloc] init];
-        
-        // the author for this log message is the current user
-        self.pendingLogEntry.author = [CPAppDelegate currentUser];
-        
-        // if the user is currently at a venue then use that as the venue for this log
-        self.pendingLogEntry.venue = [CPAppDelegate currentVenue];
-        
-        [self.logEntries addObject:self.pendingLogEntry];
-        // we need the keyboard to know that we're asking for this change
-        self.pendingEntryRemovedOrAdded = YES;
-        
-        // add a cancel button to our nav bar so the user can drop out of creation
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelLogEntry:)];
-        
-        // tell the tableView to stop scrolling, it'll be completed by the keyboard being displayed
-        self.tableView.contentOffset = self.tableView.contentOffset;
-        
+    } else {
         // show the keyboard so the user can start input
         // by using our fakeTextView to slide up the keyboard
         [self.fakeTextView becomeFirstResponder];
