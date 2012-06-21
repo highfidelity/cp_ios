@@ -9,6 +9,7 @@
 #import "LogViewController.h"
 #import "CPLogEntry.h"
 #import "LogEntryCell.h"
+#import "LogEntryOtherUserCell.h"
 #import "NewLogEntryCell.h"
 #import "CheckInListTableViewController.h"
 
@@ -144,11 +145,22 @@
 #pragma mark - Table view delegate
 
 #define MIN_CELL_HEIGHT 38
+#define MY_ENTRY_LABEL_WIDTH 234
+#define THEIR_ENTRY_LABEL_WIDTH 201
 
-- (CGFloat)labelHeightWithText:(NSString *)text
+- (NSString *)textForLogEntry:(CPLogEntry *)logEntry
+{
+    if (logEntry.author.userID == [CPAppDelegate currentUser].userID) {
+        return logEntry.entry;
+    } else {
+        return [NSString stringWithFormat:@"%@ logged: %@", logEntry.author.nickname, logEntry.entry];
+    }
+}
+
+- (CGFloat)labelHeightWithText:(NSString *)text labelWidth:(CGFloat)labelWidth
 {
     return [text sizeWithFont:[UIFont systemFontOfSize:12] 
-            constrainedToSize:CGSizeMake(234, MAXFLOAT) 
+            constrainedToSize:CGSizeMake(labelWidth, MAXFLOAT) 
                 lineBreakMode:UILineBreakModeWordWrap].height;
     
 }
@@ -171,7 +183,8 @@
         // grab the entry this is for so we can change the height of the cell accordingly
         CPLogEntry *logEntry = [self.logEntries objectAtIndex:indexPath.row];
         
-        labelHeight = [self labelHeightWithText:logEntry.entry];
+        CGFloat labelWidth = logEntry.author.userID == [CPAppDelegate currentUser].userID ? MY_ENTRY_LABEL_WIDTH : THEIR_ENTRY_LABEL_WIDTH;
+        labelHeight = [self labelHeightWithText:[self textForLogEntry:logEntry] labelWidth:labelWidth];
                 
         // keep a 17 pt margin
         labelHeight += 17;
@@ -230,34 +243,49 @@
         cell = newEntryCell;
         
     } else {
-        static NSString *EntryCellIdentifier = @"LogEntryCell";
-        cell = [tableView dequeueReusableCellWithIdentifier:EntryCellIdentifier];
+        CGFloat labelWidth;
+        if (logEntry.author.userID == [CPAppDelegate currentUser].userID){
+            static NSString *EntryCellIdentifier = @"LogEntryCell";
+            cell = [tableView dequeueReusableCellWithIdentifier:EntryCellIdentifier];
+            
+            // create a singleton NSDateFormatter that we'll keep using
+            static NSDateFormatter *logFormatter = nil;
+            
+            if (!logFormatter) {
+                logFormatter = [[NSDateFormatter alloc] init];
+                [logFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+            }
+            
+            // setup the format for the time label
+            logFormatter.dateFormat = @"h:mma";
+            cell.timeLabel.text = [logFormatter stringFromDate:logEntry.date];
+            // replace either AM or PM with lowercase a or p
+            cell.timeLabel.text = [cell.timeLabel.text stringByReplacingOccurrencesOfString:@"AM" withString:@"a"];
+            cell.timeLabel.text = [cell.timeLabel.text stringByReplacingOccurrencesOfString:@"PM" withString:@"p"];        
+            
+            // setup the format for the date label
+            logFormatter.dateFormat = @"MMM d";
+            cell.dateLabel.text = [logFormatter stringFromDate:logEntry.date];
+            
+            labelWidth = MY_ENTRY_LABEL_WIDTH;
+        } else {
+            // this is an update from another user
+            static NSString *OtherUserEntryCellIdentifier = @"LogEntryOtherUserCell";
+            cell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];
+            
+            // set the profile image for this log entry
+            [((LogEntryOtherUserCell *)cell).profileImageView setImageWithURL:logEntry.author.photoURL placeholderImage:[CPUIHelper defaultProfileImage]];            
+            
+            labelWidth = THEIR_ENTRY_LABEL_WIDTH;
+        }
+        
+        // the text for this entry is prepended with NICKNAME logged:
+        cell.entryLabel.text = [self textForLogEntry:logEntry];
         
         // make the frame of the label larger if required for a multi-line entry
         CGRect entryFrame = cell.entryLabel.frame;
-        entryFrame.size.height = [self labelHeightWithText:logEntry.entry];
+        entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text labelWidth:labelWidth];
         cell.entryLabel.frame = entryFrame;
-        
-        cell.entryLabel.text = logEntry.entry; 
-
-        // create a singleton NSDateFormatter that we'll keep using
-        static NSDateFormatter *logFormatter = nil;
-        
-        if (!logFormatter) {
-            logFormatter = [[NSDateFormatter alloc] init];
-            [logFormatter setTimeZone:[NSTimeZone systemTimeZone]];
-        }
-        
-        // setup the format for the time label
-        logFormatter.dateFormat = @"h:mma";
-        cell.timeLabel.text = [logFormatter stringFromDate:logEntry.date];
-        // replace either AM or PM with lowercase a or p
-        cell.timeLabel.text = [cell.timeLabel.text stringByReplacingOccurrencesOfString:@"AM" withString:@"a"];
-        cell.timeLabel.text = [cell.timeLabel.text stringByReplacingOccurrencesOfString:@"PM" withString:@"p"];        
-        
-        // setup the format for the date label
-        logFormatter.dateFormat = @"MMM d";
-        cell.dateLabel.text = [logFormatter stringFromDate:logEntry.date];
     }
     
     // return the cell
