@@ -363,6 +363,11 @@
     // let's grab the cell that this entry is for
     self.pendingLogEntry.entry = [self.pendingLogEntryCell.logTextView.text stringByReplacingCharactersInRange:NSMakeRange(0, 15) withString:@""];
     
+    // create a spinner to use in the top right of the navigation controller
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    [spinner startAnimating];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    
     // send a log entry as long as it's not blank
     if (![self.pendingLogEntry.entry isEqualToString:@""]) {
         [CPapi sendLogUpdate:self.pendingLogEntry.entry atVenue:self.pendingLogEntry.venue completion:^(NSDictionary *json, NSError *error) {
