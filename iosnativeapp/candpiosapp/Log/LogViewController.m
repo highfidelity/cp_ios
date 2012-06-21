@@ -52,7 +52,8 @@
     // we need to be the target of that button
     [[CPAppDelegate tabBarController].thinBar.leftButton addTarget:self action:@selector(addLogButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
-    // use the lightpaperfibers texture as the background pattern image
+    // refresh button in top right
+    [self addRefreshButtonToNavigationItem];
     
     // setup a background view that uses the texture
     UIView *backgroundView = [[UIView alloc] initWithFrame:self.tableView.frame];
@@ -311,6 +312,11 @@
 }
 
 #pragma mark - VC Helper Methods
+- (void)addRefreshButtonToNavigationItem
+{
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(getUserLogEntries)];
+}
+
 - (NewLogEntryCell *)pendingLogEntryCell
 {
     if (self.pendingLogEntry) {
@@ -422,8 +428,8 @@
 - (IBAction)cancelLogEntry:(id)sender {
     // user is cancelling log entry
     
-    // remove the cancel button
-    self.navigationItem.rightBarButtonItem = nil;
+    // remove the cancel button and replace it with the reload button
+    [self addRefreshButtonToNavigationItem];
     
     // remove the pending log entry from our array of entries
     [self.logEntries removeObject:self.pendingLogEntry];
