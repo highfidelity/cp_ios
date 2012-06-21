@@ -313,12 +313,6 @@
         self.pendingLogEntry.venue = selectedVenue;
     }
     
-    // if we have a new venue then update the log bar label
-    if (selectedVenue) {
-        // if the user is currently at a venue or has just chosen a new venue then use that venue name on the button label
-        ((UILabel *)[self.lowerButton viewWithTag:LOWER_BUTTON_LABEL_TAG]).text = selectedVenue.name;
-    }
-    
     // grab the HPGrowingTextView for the selectedVenue and make it the first responder
     [[self pendingLogEntryCell].logTextView becomeFirstResponder];
 }
@@ -334,7 +328,7 @@
     if (self.pendingLogEntry) {
         return (NewLogEntryCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:(self.logEntries.count - 1) inSection:0]];
     } else {
-        return 0;
+        return nil;
     }
 }
 
@@ -558,6 +552,9 @@
         // add the selectedVenueButton to the thinBar
         [thinBar addSubview:self.lowerButton];
     }
+    
+    // update the logBar label with the right text
+    ((UILabel *)[self.lowerButton viewWithTag:LOWER_BUTTON_LABEL_TAG]).text = self.pendingLogEntry.venue ? self.pendingLogEntry.venue.name : @"Choose Venue";
     
     // only try and update the tableView if we've asked for this change by adding or removing an entry
     if (self.pendingEntryRemovedOrAdded) {
