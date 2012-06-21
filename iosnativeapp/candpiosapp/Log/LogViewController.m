@@ -72,15 +72,14 @@
     // we need a footer a the bottom of the tableView so the bottom log entry clears the button
     CGFloat buttonHalf = [CPAppDelegate tabBarController].thinBar.leftButton.frame.size.width / 2;
     UIView *tableFooter = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, buttonHalf)];
+    self.tableView.tableFooterView = tableFooter;
     
     // add a hidden UITextView so we can use it to become the first responder
     self.fakeTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
     self.fakeTextView.hidden = YES;
     self.fakeTextView.keyboardAppearance = UIKeyboardAppearanceAlert;
     self.fakeTextView.returnKeyType = UIReturnKeyDone;
-    [tableFooter addSubview:self.fakeTextView];
-    
-    self.tableView.tableFooterView = tableFooter;
+    [self.view insertSubview:self.fakeTextView belowSubview:self.tableView];
     
     // Add notifications for keyboard showing / hiding
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -182,7 +181,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat labelHeight;
-    if (indexPath.row == self.logEntries.count - 1) {
+    if (self.pendingLogEntry && indexPath.row == self.logEntries.count - 1) {
         // this is an editable cell
         // for which we might have a changed height
         
