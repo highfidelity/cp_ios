@@ -15,7 +15,7 @@
 @property (nonatomic, strong) NSString *entry;
 @property (nonatomic, strong) User *author;
 @property (nonatomic, strong) NSDate *date;
-@property (nonatomic, assign) CPVenue *venue;
+@property (nonatomic, strong) CPVenue *venue;
 @property (nonatomic, assign) double *lat;
 @property (nonatomic, assign) double *lng;
 @property (nonatomic, strong) User *receiver;

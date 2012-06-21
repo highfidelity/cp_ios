@@ -13,6 +13,8 @@
 #import "NewLogEntryCell.h"
 #import "CheckInListTableViewController.h"
 
+#define LOWER_BUTTON_LABEL_TAG 5463
+
 @interface LogViewController () <HPGrowingTextViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *logEntries;
@@ -301,6 +303,9 @@
         self.pendingLogEntry.venue = selectedVenue;
     }
     
+    // if the user is currently at a venue or has just chosen a new venue then use that venue name on the button label
+    ((UILabel *)[self.lowerButton viewWithTag:LOWER_BUTTON_LABEL_TAG]).text = selectedVenue.name;
+    
     // grab the HPGrowingTextView for the selectedVenue and make it the first responder
     [[self pendingLogEntryCell].logTextView becomeFirstResponder];
 }
@@ -392,6 +397,12 @@
         // first create a new CPLogEntry object
         self.pendingLogEntry = [[CPLogEntry alloc] init];
         
+        // the author for this log message is the current user
+        self.pendingLogEntry.author = [CPAppDelegate currentUser];
+        
+        // if the user is currently at a venue then use that as the venue for this log
+        self.pendingLogEntry.venue = [CPAppDelegate currentVenue];
+        
         [self.logEntries addObject:self.pendingLogEntry];
         // we need the keyboard to know that we're asking for this change
         self.pendingEntryRemovedOrAdded = YES;
@@ -482,9 +493,6 @@
     
     CGRect newHiddenTVCViewFrame = self.venueListVC.view.frame;
     
-    
-#define LOWER_BUTTON_LABEL_TAG 5463
-    
     if (self.showingOrHidingHiddenTVC) {        
         // we are showing our hidden TVC
         // so get a new frame ready to put it in the right spot
@@ -495,12 +503,7 @@
         if (!beingShown) {
             // give the new frame to the venueListVC right away so its waiting when the keyboard drops
             self.venueListVC.view.frame = newHiddenTVCViewFrame;
-        }
-    
-        if (self.pendingLogEntry.venue) {
-            ((UILabel *)[self.lowerButton viewWithTag:LOWER_BUTTON_LABEL_TAG]).text = self.pendingLogEntry.venue.name;
-        }
-        
+        }        
     } else if (beingShown) {
         // we want to show the button to choose location
         // so make sure it exists
@@ -526,7 +529,7 @@
             venueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13];
             venueLabel.shadowColor = [UIColor colorWithR:51 G:51 B:51 A:0.40];
             venueLabel.shadowOffset = CGSizeMake(0, -2);
-            venueLabel.text = @"Choose Venue";
+            venueLabel.text = self.pendingLogEntry.venue ? self.pendingLogEntry.venue.name : @"Choose Venue";
             
             [self.lowerButton addTarget:self action:@selector(showVenueList:) forControlEvents:UIControlEventTouchUpInside];
             
