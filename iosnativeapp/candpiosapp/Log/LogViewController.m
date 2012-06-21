@@ -213,12 +213,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"Returning %d rows", self.logEntries.count);
     // Return the number of rows in the section.
     return self.logEntries.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"Trying to get cell at row %d", indexPath.row);
     // pull the right log entry from the array
     CPLogEntry *logEntry = [self.logEntries objectAtIndex:indexPath.row];
     
@@ -327,6 +329,7 @@
 - (NewLogEntryCell *)pendingLogEntryCell
 {
     if (self.pendingLogEntry) {
+        NSLog(@"Pending Log Entry Cell row is %d", self.logEntries.count - 1);
         return (NewLogEntryCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:(self.logEntries.count - 1) inSection:0]];
     } else {
         return nil;
@@ -414,6 +417,7 @@
         self.pendingLogEntry.venue = [CPAppDelegate currentVenue];
         
         [self.logEntries addObject:self.pendingLogEntry];
+        
         // we need the keyboard to know that we're asking for this change
         self.pendingEntryRemovedOrAdded = YES;
         
