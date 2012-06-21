@@ -304,8 +304,11 @@
         self.pendingLogEntry.venue = selectedVenue;
     }
     
-    // if the user is currently at a venue or has just chosen a new venue then use that venue name on the button label
-    ((UILabel *)[self.lowerButton viewWithTag:LOWER_BUTTON_LABEL_TAG]).text = selectedVenue.name;
+    // if we have a new venue then update the log bar label
+    if (selectedVenue) {
+        // if the user is currently at a venue or has just chosen a new venue then use that venue name on the button label
+        ((UILabel *)[self.lowerButton viewWithTag:LOWER_BUTTON_LABEL_TAG]).text = selectedVenue.name;
+    }
     
     // grab the HPGrowingTextView for the selectedVenue and make it the first responder
     [[self pendingLogEntryCell].logTextView becomeFirstResponder];
