@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSMutableArray *logEntries;
 @property (nonatomic, assign) float newEditableCellHeight;
 @property (nonatomic, strong) CPLogEntry *pendingLogEntry;
+@property (nonatomic, strong) NewLogEntryCell *pendingLogEntryCell;
 @property (nonatomic, strong) UIView *keyboardBackground;
 @property (nonatomic, strong) UITextView *fakeTextView;
 @property (nonatomic, strong) UIButton *lowerButton;
@@ -35,6 +36,7 @@
 @synthesize logEntries = _logEntries;
 @synthesize newEditableCellHeight = _newEditableCellHeight;
 @synthesize pendingLogEntry = _pendingLogEntry;
+@synthesize pendingLogEntryCell = _pendingLogEntryCell;
 @synthesize keyboardBackground = _keyboardBackground;
 @synthesize fakeTextView = _fakeTextView;
 @synthesize lowerButton = _lowerButton;
@@ -180,7 +182,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat labelHeight;
-    
     if (indexPath.row == self.logEntries.count - 1) {
         // this is an editable cell
         // for which we might have a changed height
@@ -213,14 +214,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"Returning %d rows", self.logEntries.count);
     // Return the number of rows in the section.
     return self.logEntries.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Trying to get cell at row %d", indexPath.row);
     // pull the right log entry from the array
     CPLogEntry *logEntry = [self.logEntries objectAtIndex:indexPath.row];
     
@@ -252,6 +251,9 @@
         // get the cursor to the right place
         // by padding it with leading spaces
         newEntryCell.logTextView.text = @"               ";
+        
+        // this is our pending entry cell
+        self.pendingLogEntryCell = newEntryCell;
         
         // the cell to be returned is the newEntryCell
         cell = newEntryCell;
@@ -326,17 +328,6 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(getUserLogEntries)];
 }
 
-- (NewLogEntryCell *)pendingLogEntryCell
-{
-    if (self.pendingLogEntry) {
-        NSLog(@"Pending Log Entry Cell row is %d", self.logEntries.count - 1);
-        return (NewLogEntryCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:(self.logEntries.count - 1) inSection:0]];
-    } else {
-        return nil;
-    }
-}
-
-
 - (void)getUserLogEntries
 {    
     [SVProgressHUD showWithStatus:@"Loading..."];
@@ -371,8 +362,7 @@
 - (void)sendNewLog
 {
     // let's grab the cell that this entry is for
-    NewLogEntryCell *newEntryCell = (NewLogEntryCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.logEntries.count - 1 inSection:0]];
-    self.pendingLogEntry.entry = [newEntryCell.logTextView.text stringByReplacingCharactersInRange:NSMakeRange(0, 15) withString:@""];
+    self.pendingLogEntry.entry = [self.pendingLogEntryCell.logTextView.text stringByReplacingCharactersInRange:NSMakeRange(0, 15) withString:@""];
     
     // send a log entry as long as it's not blank
     if (![self.pendingLogEntry.entry isEqualToString:@""]) {
@@ -444,9 +434,6 @@
 - (IBAction)cancelLogEntry:(id)sender {
     // user is cancelling log entry
     
-    // remove the cancel button and replace it with the reload button
-    [self addRefreshButtonToNavigationItem];
-    
     // remove the pending log entry from our array of entries
     [self.logEntries removeObject:self.pendingLogEntry];
     // we need the keyboard to know that we're asking for this change
@@ -460,7 +447,7 @@
 - (IBAction)showVenueList:(id)sender
 {
     // check if the keyboard is around
-    if ([self pendingLogEntryCell].logTextView.isFirstResponder) {
+    if (self.pendingLogEntryCell.logTextView.isFirstResponder) {
         // we need to have the keyboard drop
         // but we do not want to move everything else down as we normally would, just drop the black backdrop and show the venue list
         self.showingOrHidingHiddenTVC = YES;
@@ -551,7 +538,6 @@
             venueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13];
             venueLabel.shadowColor = [UIColor colorWithR:51 G:51 B:51 A:0.40];
             venueLabel.shadowOffset = CGSizeMake(0, -2);
-            venueLabel.text = self.pendingLogEntry.venue ? self.pendingLogEntry.venue.name : @"Choose Venue";
             
             [self.lowerButton addTarget:self action:@selector(showVenueList:) forControlEvents:UIControlEventTouchUpInside];
             
@@ -630,6 +616,8 @@
                              }
                          } else {
                              [self.lowerButton removeFromSuperview];
+                             // remove the cancel button and replace it with the reload button
+                             [self addRefreshButtonToNavigationItem];
                          }
                      }];
 }
