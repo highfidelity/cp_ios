@@ -453,7 +453,7 @@
         self.showingOrHidingHiddenTVC = YES;
         
         // tell the HPGrowingTextView to resign first responder
-        [((NewLogEntryCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.logEntries.count - 1 inSection:0]]).logTextView resignFirstResponder];
+        [self.pendingLogEntryCell.logTextView resignFirstResponder];
     } else {
         // no venue selected, just bring the keyboard back up
         [self setSelectedVenue:nil];
@@ -655,19 +655,21 @@
     // get the difference in height
     float diff = (growingTextView.frame.size.height - height);
     
-    // grab the contentView of the cell
-    UIView *cellContentView = [growingTextView superview];
-    
-    // set the newEditableCellHeight property so we can grab it when the tableView asks for the cell height
-    self.newEditableCellHeight = cellContentView.frame.size.height - diff;
-    
-    // call beginUpdates and endUpdates to get the tableView to change the height of the first cell
-    [self.tableView beginUpdates];
-    if (diff < 0) {
-        [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentOffset.y - diff) animated:YES];
+    if (diff != 0) {
+        // grab the contentView of the cell
+        UIView *cellContentView = [growingTextView superview];
+        
+        // set the newEditableCellHeight property so we can grab it when the tableView asks for the cell height
+        self.newEditableCellHeight = cellContentView.frame.size.height - diff;
+        
+        // call beginUpdates and endUpdates to get the tableView to change the height of the first cell
+        [self.tableView beginUpdates];
+        if (diff < 0) {
+            [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentOffset.y - diff) animated:YES];
+        }
+        
+        [self.tableView endUpdates];  
     }
-    
-    [self.tableView endUpdates];       
 }
 
 
