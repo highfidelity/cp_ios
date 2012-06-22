@@ -249,6 +249,7 @@
     [self makeHTTPRequestWithAction:@"oneOnOneChatFromMobile"
                      withParameters:parameters
                     responseHandler:@selector(oneOnOneChatResponseHandler:)];
+    [FlurryAnalytics logEvent:@"sentChatMessage"];
 }
 
 + (void)oneOnOneChatResponseHandler:(NSData *)response
