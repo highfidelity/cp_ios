@@ -193,23 +193,6 @@
         margin-top: 5px;
     }
 
-    .listings-as-header {
-        margin-bottom: 0;
-    }
-    .listings-as {
-        width: 100%;
-    }
-    .listings-as td {
-        border-top: 1px solid rgba(153, 153, 153, 0.30);
-        padding: 10px 5px 10px 0;
-    }
-    .listings-as th {
-        border-top: 1px solid rgba(153, 153, 153, 0.30);
-        border-left: 1px solid rgba(153, 153, 153, 0.30);
-        width: 36px;
-        padding: 10px 0 10px 10px;
-        text-align: left;
-    }
     .sponsor {
         float: right;
         display: inline-block;
@@ -396,32 +379,6 @@
                 {{/reviews}}
             </ul>
         {{/hasAnyReview}}
-        
-        {{#user}}
-            {{#hasAnyListingsAsAgent}}
-                <h2 class="listings-as-header">Listings as Agent</h2>
-                <table class="listings-as">
-                    {{#listingsAsAgent}}
-                        <tr>
-                            <td>{{listing}}</td>
-                            <th>${{price}}</th>
-                        </tr>
-                    {{/listingsAsAgent}}
-                </table>
-            {{/hasAnyListingsAsAgent}}
-
-            {{#hasAnyListingsAsClient}}
-                <h2 class="listings-as-header">Listings as Client</h2>
-                <table class="listings-as">
-                    {{#listingsAsClient}}
-                        <tr>
-                            <td>{{listing}}</td>
-                            <th>${{price}}</th>
-                        </tr>
-                    {{/listingsAsClient}}
-                </table>
-            {{/hasAnyListingsAsClient}}
-        {{/user}}
     </div>
 </body>
 </html>

@@ -39,10 +39,6 @@
 @property (nonatomic, strong) NSDate *checkoutEpoch;
 @property (nonatomic, strong) NSString *join_date;
 @property (nonatomic, assign) int trusted_by;
-@property (nonatomic, strong) NSDictionary *listingsAsClient;
-@property (nonatomic, readonly) BOOL hasAnyListingsAsClient;
-@property (nonatomic, strong) NSDictionary *listingsAsAgent;
-@property (nonatomic, readonly) BOOL hasAnyListingsAsAgent;
 @property (nonatomic, strong) NSArray *workInformation;
 @property (nonatomic, readonly) BOOL hasAnyWorkInformation;
 @property (nonatomic, strong) NSArray *educationInformation;

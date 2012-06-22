@@ -35,8 +35,6 @@
 @synthesize checkoutEpoch = _checkoutEpoch;
 @synthesize join_date = _join_date;
 @synthesize trusted_by = _trusted_by;
-@synthesize listingsAsClient = _listingsAsClient;
-@synthesize listingsAsAgent = _listingsAsAgent;
 @synthesize workInformation = _workInformation;
 @synthesize educationInformation  = _educationInformation;
 @synthesize jobTitle = _jobTitle;
@@ -205,14 +203,6 @@
     return topSkill;
 }
 
-- (BOOL)hasAnyListingsAsClient {
-    return self.listingsAsClient.count > 0;
-}
-
-- (BOOL)hasAnyListingsAsAgent {
-    return self.listingsAsAgent.count > 0;
-}
-
 - (BOOL)hasAnyWorkInformation {
     return self.workInformation.count > 0;
 }
@@ -333,10 +323,6 @@
             self.bio = [userDict objectForKey:@"bio"];
             self.join_date = [userDict objectForKey:@"joined"];
             self.trusted_by = [[userDict objectForKey:@"trusted"] intValue];
-            
-            // listings information
-            self.listingsAsClient = [userDict objectForKey:@"listingsAsClient"];
-            self.listingsAsAgent = [userDict objectForKey:@"listingsAsAgent"];
             
             self.reviews = [userDict objectForKey:@"reviews"];
             
