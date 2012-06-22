@@ -13,6 +13,7 @@
 #import "SettingsMenuController.h"
 #import "CPTabBarController.h"
 #import <CoreLocation/CoreLocation.h>
+#import "FlurryAnalytics.h"
 
 // Constants have been moved to CPConstants.m
 

@@ -122,7 +122,7 @@
 {
     [SVProgressHUD showWithStatus:@"Loading..."];
     
-    [CPapi getUserTrasactionDataWithCompletitonBlock:^(NSDictionary *json, NSError *error) {
+    [CPapi getUserTransactionDataWithCompletitonBlock:^(NSDictionary *json, NSError *error) {
         
         BOOL respError = [[json objectForKey:@"error"] boolValue];
         

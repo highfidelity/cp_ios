@@ -324,6 +324,8 @@
              // avoid stacking the f2f alerts
              [AppDelegate instance].settingsMenuController.f2fInviteAlert = alert;
          }
+         
+         [FlurryAnalytics logEvent:@"contactRequestSent"];
     }];
 }
 
@@ -336,6 +338,7 @@
     [self makeHTTPRequestWithAction:@"acceptContactRequest"
                      withParameters:params
                          completion:completion];
+    [FlurryAnalytics logEvent:@"contactRequestAccepted"];
 }
 
 + (void)sendDeclineContactRequestFromUserId:(int)userId
@@ -347,6 +350,7 @@
     [self makeHTTPRequestWithAction:@"declineContactRequest"
                      withParameters:params
                          completion:completion];
+    [FlurryAnalytics logEvent:@"contactRequestDeclined"];    
 }
 
 
@@ -743,6 +747,7 @@
     
         
     [self makeHTTPRequestWithAction:@"checkin" withParameters:parameters completion:completion];
+    [FlurryAnalytics logEvent:@"checkedIn"];
 }
 
 + (void)checkOutWithCompletion:(void (^)(NSDictionary *, NSError *))completion
@@ -790,7 +795,7 @@
                          completion:completion];
 }
 
-+ (void)getUserTrasactionDataWithCompletitonBlock:(void (^)(NSDictionary *, NSError *))completion
++ (void)getUserTransactionDataWithCompletitonBlock:(void (^)(NSDictionary *, NSError *))completion
 {
     [self makeHTTPRequestWithAction:@"getTransactionData"
                      withParameters:nil
@@ -851,6 +856,7 @@
     [reviewParams setObject:message forKey:@"reviewText"];
     
     [self makeHTTPRequestWithAction:@"sendLove" withParameters:reviewParams completion:completion];
+    [FlurryAnalytics logEvent:@"sentLove"];
 }
 
 
@@ -863,6 +869,7 @@
     
     // make the request
     [self makeHTTPRequestWithAction:@"sendPlusOneForLove" withParameters:parameters completion:completion];
+    [FlurryAnalytics logEvent:@"sentPlusOneForLove"];
 }
 
 + (void)sendPlusOneForLoveWithID:(int)reviewID 
@@ -879,6 +886,7 @@
     
     // make the request
     [self makeHTTPRequestWithAction:@"sendPlusOneForLove" withParameters:parameters queue:chatQueue completion:completion];
+    [FlurryAnalytics logEvent:@"sentPlusOneForLoveFromVenueChat"];
 }
 
 # pragma mark - Skills

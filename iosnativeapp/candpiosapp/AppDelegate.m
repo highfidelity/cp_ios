@@ -9,7 +9,6 @@
 #import "SignupController.h"
 #import "FaceToFaceHelper.h"
 #import "ChatHelper.h"
-#import "FlurryAnalytics.h"
 #import "OAuthConsumer.h"
 #import "PaymentHelper.h"
 #import "EnterInvitationCodeViewController.h"
