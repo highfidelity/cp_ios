@@ -696,6 +696,7 @@
     
     // make the request
     [self makeHTTPRequestWithAction:@"newLogUpdate" withParameters:params completion:completion];
+    [FlurryAnalytics logEvent:@"newLogEntry"];
 }
 
 #pragma mark - Checkins
