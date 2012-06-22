@@ -244,7 +244,7 @@ BOOL clearLocations = NO;
             for (CPVenue *ann in [self.mapView.annotations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"!(self isKindOfClass: %@)", [MKUserLocation class]]]) {
                 foundIt = NO;                                            
                 for (CPVenue *newAnn in newDataset.annotations) {
-                    if ([ann.foursquareID isEqualToString:newAnn.foursquareID]) {
+                    if ([ann.foursquareID isEqual:newAnn.foursquareID]) {
                         foundIt = YES;
                         if (ann.checkinCount != newAnn.checkinCount || ann.weeklyCheckinCount != newAnn.weeklyCheckinCount) {
                             // the annotation will be added again
@@ -360,19 +360,21 @@ BOOL clearLocations = NO;
             pin.annotation = annotation;
         }
         
+        BOOL solar = [placeAnn.specialVenueType isEqual:@"solar"];
+        
         if (!placeAnn.checkinCount > 0) {
-            [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO hasVirtual:NO withLabel:NO];
+            [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO hasVirtual:NO isSolar:solar withLabel:NO];
             [self adjustScaleForPin:pin forNumberOfPeople:placeAnn.weeklyCheckinCount];
         } 
         else {
             if(placeAnn.hasContactAtVenue)
             {
-                [pin setPin:placeAnn.checkinCount hasCheckins:YES hasVirtual:YES withLabel:YES];
+                [pin setPin:placeAnn.checkinCount hasCheckins:YES hasVirtual:YES isSolar:solar withLabel:YES];
                 pin.centerOffset = CGPointMake(0, -31);
             }
             else
             {
-                [pin setPin:placeAnn.checkinCount hasCheckins:YES hasVirtual:NO withLabel:YES];
+                [pin setPin:placeAnn.checkinCount hasCheckins:YES hasVirtual:NO isSolar:solar withLabel:YES];
                 pin.centerOffset = CGPointMake(0, -31);
 
             }

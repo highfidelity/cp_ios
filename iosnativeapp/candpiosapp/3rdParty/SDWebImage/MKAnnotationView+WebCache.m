@@ -13,28 +13,33 @@
 
 @implementation MKAnnotationView(WebCache)
 
-- (void)setPin:(NSInteger)number hasCheckins:(BOOL)checkins hasVirtual:(BOOL)virtual withLabel:(BOOL)withLabel {
+- (void)setPin:(NSInteger)number hasCheckins:(BOOL)checkins hasVirtual:(BOOL)virtual isSolar:(BOOL)solar withLabel:(BOOL)withLabel {
     CGFloat fontSize = 20;
     NSString *imageName;
-    CGRect labelFrame;
+    CGRect labelFrame = CGRectNull;
     
-    // If no one is currently checked in, use the smaller image
-    if (checkins) {
-        if(virtual)
-        {
-            imageName = @"pin-virtual-checkedin";
-            labelFrame = CGRectMake(0, 23, 93, 20);
+    if (solar) {
+        imageName = @"pin-solar";
+    } else {
+        // If no one is currently checked in, use the smaller image
+        if (checkins) {
+            if(virtual)
+            {
+                imageName = @"pin-virtual-checkedin";
+                labelFrame = CGRectMake(0, 23, 93, 20);
+            }
+            else
+            {
+                imageName = @"pin-checkedin";
+                labelFrame = CGRectMake(0, 15, 93, 20);
+            }
+        } else {       
+            labelFrame = CGRectMake(0, 9, 54, 12);
+            imageName = @"pin-checkedout";
+            fontSize = 12;
         }
-        else
-        {
-            imageName = @"pin-checkedin";
-            labelFrame = CGRectMake(0, 15, 93, 20);
-        }
-    } else {       
-        labelFrame = CGRectMake(0, 9, 54, 12);
-        imageName = @"pin-checkedout";
-        fontSize = 12;
     }
+    
     
     [self setImage:[UIImage imageNamed:imageName]];
     

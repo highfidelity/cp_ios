@@ -132,7 +132,7 @@ static NSOperationQueue *sMapQueue = nil;
                             
                         }
                     }
-               }
+                }
                 
                 MKMapPoint venuePoint = MKMapPointForCoordinate(venue.coordinate);
                 MKMapRect pointRect = MKMapRectMake(venuePoint.x, venuePoint.y, 0, 0);
@@ -147,7 +147,7 @@ static NSOperationQueue *sMapQueue = nil;
                 
                 // post a notification with this venue if there's currently a venue shown by a VenueInfoViewController
                 if ([CPAppDelegate tabBarController].currentVenueID) {
-                    if ([[CPAppDelegate tabBarController].currentVenueID isEqualToString:venue.foursquareID]) {
+                    if ([[CPAppDelegate tabBarController].currentVenueID isEqual:venue.foursquareID]) {
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshVenueAfterCheckin" object:venue];
                     }                    
                 }

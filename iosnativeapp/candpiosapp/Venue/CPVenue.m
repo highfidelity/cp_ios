@@ -31,6 +31,7 @@
 @synthesize activeUsers = _activeUsers;
 @synthesize hasContactAtVenue = _hasContactAtVenue;
 @synthesize autoCheckin = _autoCheckin;
+@synthesize specialVenueType = _specialVenueType;
 
 // override setters here to that when we parse JSON to set values we don't set things to null
 
@@ -100,6 +101,15 @@
     
 }
 
+- (void)setSpecialVenueType:(NSString *)specialVenueType
+{
+    if (![specialVenueType isKindOfClass:[NSNull class]]) {
+        _specialVenueType = specialVenueType;
+    } else {
+        _specialVenueType = nil;
+    }
+}
+
 - (NSMutableDictionary *)activeUsers
 {
     if (!_activeUsers) {
@@ -125,6 +135,7 @@
         self.weeklyCheckinCount = [[json objectForKey:@"checkins_for_week"] integerValue];
         self.intervalCheckinCount = [[json objectForKey:@"checkins_for_interval"] integerValue];
         self.photoURL = [json objectForKey:@"photo_url"];
+        self.specialVenueType = [json objectForKey:@"special_venue_type"];
         
         if (![[json objectForKey:@"lat"] isKindOfClass:[NSNull class]] && ![[json objectForKey:@"lng"] isKindOfClass:[NSNull class]]) {
             self.coordinate = CLLocationCoordinate2DMake([[json objectForKey:@"lat"] doubleValue], [[json objectForKey:@"lng"] doubleValue]);
@@ -210,6 +221,7 @@
         self.photoURL = [decoder decodeObjectForKey:@"photoURL"];
         self.checkinTime = [decoder decodeIntegerForKey:@"checkinTime"];
         self.autoCheckin = [[decoder decodeObjectForKey:@"autoCheckin"] boolValue];
+        self.specialVenueType = [decoder decodeObjectForKey:@"specialVenueType"];
     }    
     return self;
 }
@@ -227,6 +239,7 @@
     [encoder encodeObject:self.photoURL forKey:@"photoURL"];
     [encoder encodeInt:self.checkinTime forKey:@"checkinTime"];
     [encoder encodeObject:[NSNumber numberWithBool:self.autoCheckin] forKey:@"autoCheckin"];
+    [encoder encodeObject:self.specialVenueType forKey:@"specialVenueType"];
 }
 
 @end

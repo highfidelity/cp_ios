@@ -5,7 +5,6 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
 @interface CPVenue : NSObject <MKAnnotation, NSCoding>
@@ -33,6 +32,7 @@
 @property (nonatomic, strong) NSMutableDictionary *activeUsers;
 @property (nonatomic, assign) bool hasContactAtVenue;
 @property (nonatomic, assign) bool autoCheckin;
+@property (nonatomic, strong) NSString *specialVenueType;
 
 - (CPVenue *)initFromDictionary:(NSDictionary *)json;
 - (NSComparisonResult)sortByDistanceToUser:(CPVenue *)place;

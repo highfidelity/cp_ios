@@ -383,6 +383,8 @@
 		6983394C15641509007CD32F /* contact-ignore.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983394815641509007CD32F /* contact-ignore.png */; };
 		6983394D15641509007CD32F /* contact-ignore@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983394915641509007CD32F /* contact-ignore@2x.png */; };
 		699249E3158A3CFC00EC273A /* ResumeVisibilityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 699249E2158A3CFC00EC273A /* ResumeVisibilityViewController.m */; };
+		69A030B7158F95F600BBCB4C /* pin-solar.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A030B5158F95F600BBCB4C /* pin-solar.png */; };
+		69A030B8158F95F600BBCB4C /* pin-solar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A030B6158F95F600BBCB4C /* pin-solar@2x.png */; };
 		69D5C3561533911300B3530F /* invite-code-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D5C3521533911300B3530F /* invite-code-background.png */; };
 		69D5C3571533911300B3530F /* invite-code-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D5C3531533911300B3530F /* invite-code-background@2x.png */; };
 		69D5C3581533911300B3530F /* plug-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D5C3541533911300B3530F /* plug-logo.png */; };
@@ -1016,6 +1018,8 @@
 		6983394915641509007CD32F /* contact-ignore@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-ignore@2x.png"; sourceTree = "<group>"; };
 		699249E1158A3CFC00EC273A /* ResumeVisibilityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResumeVisibilityViewController.h; path = Settings/ResumeVisibilityViewController.h; sourceTree = "<group>"; };
 		699249E2158A3CFC00EC273A /* ResumeVisibilityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResumeVisibilityViewController.m; path = Settings/ResumeVisibilityViewController.m; sourceTree = "<group>"; };
+		69A030B5158F95F600BBCB4C /* pin-solar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pin-solar.png"; path = "Map/images/pin-solar.png"; sourceTree = "<group>"; };
+		69A030B6158F95F600BBCB4C /* pin-solar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pin-solar@2x.png"; path = "Map/images/pin-solar@2x.png"; sourceTree = "<group>"; };
 		69D5C3521533911300B3530F /* invite-code-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "invite-code-background.png"; path = "Settings/images/invite-code-background.png"; sourceTree = "<group>"; };
 		69D5C3531533911300B3530F /* invite-code-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "invite-code-background@2x.png"; path = "Settings/images/invite-code-background@2x.png"; sourceTree = "<group>"; };
 		69D5C3541533911300B3530F /* plug-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "plug-logo.png"; path = "Settings/images/plug-logo.png"; sourceTree = "<group>"; };
@@ -1758,6 +1762,8 @@
 				536E1EDB15549B1400052D40 /* pin-checkedin@2x.png */,
 				536E1EDC15549B1400052D40 /* pin-checkedout.png */,
 				536E1EDD15549B1400052D40 /* pin-checkedout@2x.png */,
+				69A030B5158F95F600BBCB4C /* pin-solar.png */,
+				69A030B6158F95F600BBCB4C /* pin-solar@2x.png */,
 				53C0100B150AC01E0052069A /* people-marker-turquoise-circle.png */,
 				53C0100C150AC01E0052069A /* people-marker-turquoise-circle@2x.png */,
 				53BA0A1E150A9BF2006F5B98 /* map-locate.png */,
@@ -2858,6 +2864,8 @@
 				53FD32F815915102000448EF /* tab-login@2x.png in Resources */,
 				534153DE1593A21D00E58EB1 /* update-icon.png in Resources */,
 				534153DF1593A21D00E58EB1 /* update-icon@2x.png in Resources */,
+				69A030B7158F95F600BBCB4C /* pin-solar.png in Resources */,
+				69A030B8158F95F600BBCB4C /* pin-solar@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
