@@ -67,6 +67,7 @@
     // Do any additional setup after loading the view from its nib.
     [CPUIHelper makeButtonCPButton:self.dismissButton
                  withCPButtonColor:CPButtonGrey];
+    [FlurryAnalytics logEvent:@"signupScreen"];
 }
 
 - (void)viewDidUnload
@@ -89,11 +90,13 @@
 	// Handle LinkedIn login
 	// The LinkedIn login object will handle the sequence that follows
     [self performSegueWithIdentifier:@"ShowLinkedInLoginController" sender:sender];
+    [FlurryAnalytics logEvent:@"startedLinkedInLogin"];
 }
 
 - (IBAction) dismissClick:(id)sender
 {
     [self dismissModalViewControllerAnimated:YES];
+    [FlurryAnalytics logEvent:@"skippedSignup"];
 }
 
 @end

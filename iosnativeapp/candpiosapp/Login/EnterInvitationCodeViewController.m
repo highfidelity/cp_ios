@@ -95,6 +95,7 @@
                               otherButtonTitles:@"Logout", nil] show];
             
             dismissModalViewController = NO;
+            [FlurryAnalytics logEvent:@"trialEnded"];
             
         } else {
             [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Coffee & Power requires an invite for full membership but you have %d days of full access to try us out.", kDaysOfTrialAccessWithoutInviteCode]
@@ -134,6 +135,7 @@
                                        delegate:nil 
                               cancelButtonTitle:@"OK" 
                               otherButtonTitles:nil] show];
+            [FlurryAnalytics logEvent:@"inviteCodeAccepted"];
         } else {
             [[[UIAlertView alloc] initWithTitle:@"Error" 
                                         message:[json objectForKey:@"payload"]

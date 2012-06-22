@@ -425,11 +425,13 @@
             // Start monitoring the new location to allow auto-checkout and checkin (if enabled) 
             autoPromptVenue.autoCheckin = YES;
             [CPAppDelegate startMonitoringVenue:autoPromptVenue];
+            [FlurryAnalytics logEvent:@"autoCheckInPromptAccepted"];
         }
         else if (buttonIndex == 2) {
             autoPromptVenue.autoCheckin = NO;
             // User does NOT want to automatically check in to this venue        
             [CPAppDelegate stopMonitoringVenue:autoPromptVenue];
+            [FlurryAnalytics logEvent:@"autoCheckInPromptDenied"];
         }
     
         // add this venue to the array of past venues in NSUserDefaults

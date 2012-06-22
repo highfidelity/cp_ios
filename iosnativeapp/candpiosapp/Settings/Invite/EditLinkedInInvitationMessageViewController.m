@@ -142,6 +142,7 @@ Welcome!";
         [[AppDelegate instance].settingsMenuController dismissViewControllerAnimated:YES
                                                                           completion:NULL];
         [SVProgressHUD dismissWithSuccess:@"Invitation has been sent"];
+        [FlurryAnalytics logEvent:@"invitedLinkedInConnections"];
     } else {
         [SVProgressHUD dismissWithError:[json objectForKey:@"message"] afterDelay:kDefaultDimissDelay];
         
