@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "LogViewController.h"
 #import "CPLogEntry.h"
 #import "LogUpdateCell.h"
@@ -158,14 +159,14 @@
 #pragma mark - Table view delegate
 
 #define MIN_CELL_HEIGHT 38
-#define UPDATE_LABEL_WIDTH 234
-#define LOVE_LABEL_WIDTH 95
-#define LOVE_PLUS_ONE_LABEL_WIDTH 152
+#define UPDATE_LABEL_WIDTH 228
+#define LOVE_LABEL_WIDTH 178
+#define LOVE_PLUS_ONE_LABEL_WIDTH 178
 
 - (NSString *)textForLogEntry:(CPLogEntry *)logEntry
 {
     if (logEntry.type == CPLogEntryTypeUpdate && logEntry.author.userID != [CPAppDelegate currentUser].userID) {
-        return [NSString stringWithFormat:@"%@ logged: %@", logEntry.author.nickname, logEntry.entry];
+        return [NSString stringWithFormat:@"%@ logged: %@", logEntry.author.firstName, logEntry.entry];
     } else {
         if (logEntry.type == CPLogEntryTypeLove && logEntry.originalLogID > 0) {
             return [NSString stringWithFormat:@"%@ +1'd recognition: %@", logEntry.author.firstName, logEntry.entry];
@@ -317,12 +318,11 @@
             } else {
                 // this is an update from another user
                 static NSString *OtherUserEntryCellIdentifier = @"LogEntryOtherUserCell";
-                updateCell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];
-                
-                // set the profile image for this log entry
-                [updateCell.senderProfileImageView setImageWithURL:logEntry.author.photoURL placeholderImage:[CPUIHelper defaultProfileImage]];            
-        
+                updateCell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];        
             }
+            
+            // set the profile image for this log entry
+            [updateCell.senderProfileImageView setImageWithURL:logEntry.author.photoURL placeholderImage:[CPUIHelper defaultProfileImage]]; 
             
             // the cell to return is the updateCell
             cell = updateCell;
@@ -344,6 +344,9 @@
             CGRect loveLabelFrame = loveCell.entryLabel.frame;
             loveLabelFrame.size.width = logEntry.originalLogID > 0 ? LOVE_PLUS_ONE_LABEL_WIDTH : LOVE_LABEL_WIDTH;
             loveCell.entryLabel.frame = loveLabelFrame;
+            
+            // rounded style for receiver's UIImageView
+            [self roundedStyleForImageView:loveCell.receiverProfileImageView];
 
             // the cell to return is the loveCell
             cell = loveCell;
@@ -357,6 +360,8 @@
         entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text labelWidth:[self widthForLabelForLogEntry:logEntry] labelFont:[self fontForLogEntry:logEntry]];
         cell.entryLabel.frame = entryFrame;
     }
+    
+    [self roundedStyleForImageView:cell.senderProfileImageView];
     
     // return the cell
     return cell;
@@ -377,6 +382,12 @@
 }
 
 #pragma mark - VC Helper Methods
+- (void)roundedStyleForImageView:(UIImageView *)imageView
+{
+    imageView.layer.cornerRadius = imageView.frame.size.width / 2;
+    imageView.layer.masksToBounds = YES;
+}
+
 - (void)addRefreshButtonToNavigationItem
 {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(getUserLogEntries)];
