@@ -185,7 +185,7 @@
     NSString *firstName;
     
     if (spaceRange.location != NSNotFound) {
-        firstName = [self.nickname substringToIndex:spaceRange.location + 1];
+        firstName = [self.nickname substringToIndex:spaceRange.location];
     } else {
         firstName = self.nickname;
     }

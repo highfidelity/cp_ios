@@ -8,9 +8,9 @@
 
 #import "LogViewController.h"
 #import "CPLogEntry.h"
-#import "LogEntryCell.h"
-#import "LogEntryOtherUserCell.h"
-#import "NewLogEntryCell.h"
+#import "LogUpdateCell.h"
+#import "LogNewEntryCell.h"
+#import "LogLoveCell.h"
 #import "CheckInListTableViewController.h"
 
 #define LOWER_BUTTON_LABEL_TAG 5463
@@ -20,10 +20,10 @@
 @property (nonatomic, strong) NSMutableArray *logEntries;
 @property (nonatomic, assign) float newEditableCellHeight;
 @property (nonatomic, strong) CPLogEntry *pendingLogEntry;
-@property (nonatomic, strong) NewLogEntryCell *pendingLogEntryCell;
+@property (nonatomic, strong) LogNewEntryCell *pendingLogEntryCell;
 @property (nonatomic, strong) UIView *keyboardBackground;
 @property (nonatomic, strong) UITextView *fakeTextView;
-@property (nonatomic, strong) UIButton *lowerButton;
+@property (nonatomic, strong) UIButton *logBarButton;
 @property (nonatomic, assign) BOOL pendingEntryRemovedOrAdded;
 @property (nonatomic, strong) CheckInListTableViewController *venueListVC;
 @property (nonatomic, assign) BOOL showingOrHidingHiddenTVC;
@@ -39,7 +39,7 @@
 @synthesize pendingLogEntryCell = _pendingLogEntryCell;
 @synthesize keyboardBackground = _keyboardBackground;
 @synthesize fakeTextView = _fakeTextView;
-@synthesize lowerButton = _lowerButton;
+@synthesize logBarButton = _lowerButton;
 @synthesize pendingEntryRemovedOrAdded = _pendingEntryRemovedOrAdded;
 @synthesize venueListVC = _venueListVC;
 @synthesize showingOrHidingHiddenTVC = _showingOrHidingHiddenTVC;
@@ -158,21 +158,48 @@
 #pragma mark - Table view delegate
 
 #define MIN_CELL_HEIGHT 38
-#define MY_ENTRY_LABEL_WIDTH 234
-#define THEIR_ENTRY_LABEL_WIDTH 201
+#define UPDATE_LABEL_WIDTH 234
+#define LOVE_LABEL_WIDTH 95
+#define LOVE_PLUS_ONE_LABEL_WIDTH 152
 
 - (NSString *)textForLogEntry:(CPLogEntry *)logEntry
 {
-    if (logEntry.author.userID == [CPAppDelegate currentUser].userID) {
-        return logEntry.entry;
-    } else {
+    if (logEntry.type == CPLogEntryTypeUpdate && logEntry.author.userID != [CPAppDelegate currentUser].userID) {
         return [NSString stringWithFormat:@"%@ logged: %@", logEntry.author.nickname, logEntry.entry];
+    } else {
+        if (logEntry.type == CPLogEntryTypeLove && logEntry.originalLogID > 0) {
+            return [NSString stringWithFormat:@"%@ +1'd recognition: %@", logEntry.author.firstName, logEntry.entry];
+        } else {
+            return logEntry.entry;
+        }
     }
 }
 
-- (CGFloat)labelHeightWithText:(NSString *)text labelWidth:(CGFloat)labelWidth
+- (UIFont *)fontForLogEntry:(CPLogEntry *)logEntry
 {
-    return [text sizeWithFont:[UIFont systemFontOfSize:12] 
+    if (logEntry.type == CPLogEntryTypeUpdate) {
+        return [UIFont systemFontOfSize:12];
+    } else {
+        return [UIFont boldSystemFontOfSize:10];
+    }
+}
+
+- (CGFloat)widthForLabelForLogEntry:(CPLogEntry *)logEntry
+{
+    if (logEntry.type == CPLogEntryTypeUpdate) {
+        return UPDATE_LABEL_WIDTH;
+    } else {
+        if (logEntry.originalLogID > 0) {
+            return LOVE_PLUS_ONE_LABEL_WIDTH;
+        } else {
+            return LOVE_LABEL_WIDTH;
+        }
+    }
+}
+
+- (CGFloat)labelHeightWithText:(NSString *)text labelWidth:(CGFloat)labelWidth labelFont:(UIFont *)labelFont
+{
+    return [text sizeWithFont:labelFont
             constrainedToSize:CGSizeMake(labelWidth, MAXFLOAT) 
                 lineBreakMode:UILineBreakModeWordWrap].height;
     
@@ -195,8 +222,7 @@
         // grab the entry this is for so we can change the height of the cell accordingly
         CPLogEntry *logEntry = [self.logEntries objectAtIndex:indexPath.row];
         
-        CGFloat labelWidth = logEntry.author.userID == [CPAppDelegate currentUser].userID ? MY_ENTRY_LABEL_WIDTH : THEIR_ENTRY_LABEL_WIDTH;
-        labelHeight = [self labelHeightWithText:[self textForLogEntry:logEntry] labelWidth:labelWidth];
+        labelHeight = [self labelHeightWithText:[self textForLogEntry:logEntry] labelWidth:[self widthForLabelForLogEntry:logEntry] labelFont:[self fontForLogEntry:logEntry]];
                 
         // keep a 17 pt margin
         labelHeight += 17;
@@ -222,12 +248,12 @@
     // pull the right log entry from the array
     CPLogEntry *logEntry = [self.logEntries objectAtIndex:indexPath.row];
     
-    LogEntryCell *cell;
-    // for our current implementation an empty entry means this is a fresh entry the user is adding
-    if (!logEntry.entry) {
+    LogBaseEntryCell *cell;
+    // check if this is a pending entry cell
+    if (self.pendingLogEntry && !logEntry.entry) {
         
         static NSString *NewEntryCellIdentifier = @"NewLogEntryCell";
-        NewLogEntryCell *newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewEntryCellIdentifier];
+        LogNewEntryCell *newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewEntryCellIdentifier];
         
         newEntryCell.entryLabel.text = @"Update:";
         newEntryCell.entryLabel.textColor = [CPUIHelper CPTealColor];
@@ -257,49 +283,78 @@
         // the cell to be returned is the newEntryCell
         cell = newEntryCell;
         
-    } else {
-        CGFloat labelWidth;
-        if (logEntry.author.userID == [CPAppDelegate currentUser].userID){
-            static NSString *EntryCellIdentifier = @"LogEntryCell";
-            cell = [tableView dequeueReusableCellWithIdentifier:EntryCellIdentifier];
+    } else {        
+        // check which type of cell we are dealing with
+        if (logEntry.type == CPLogEntryTypeUpdate) {
             
-            // create a singleton NSDateFormatter that we'll keep using
-            static NSDateFormatter *logFormatter = nil;
+            // this is an update cell
+            // so check if it's this user's or somebody else's
+            LogUpdateCell *updateCell;
             
-            if (!logFormatter) {
-                logFormatter = [[NSDateFormatter alloc] init];
-                [logFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+            if (logEntry.author.userID == [CPAppDelegate currentUser].userID){
+                static NSString *EntryCellIdentifier = @"LogEntryCell";
+                updateCell = [tableView dequeueReusableCellWithIdentifier:EntryCellIdentifier];
+                
+                // create a singleton NSDateFormatter that we'll keep using
+                static NSDateFormatter *logFormatter = nil;
+                
+                if (!logFormatter) {
+                    logFormatter = [[NSDateFormatter alloc] init];
+                    [logFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+                }
+                
+                // setup the format for the time label
+                logFormatter.dateFormat = @"h:mma";
+                updateCell.timeLabel.text = [logFormatter stringFromDate:logEntry.date];
+                // replace either AM or PM with lowercase a or p
+                updateCell.timeLabel.text = [updateCell.timeLabel.text stringByReplacingOccurrencesOfString:@"AM" withString:@"a"];
+                updateCell.timeLabel.text = [updateCell.timeLabel.text stringByReplacingOccurrencesOfString:@"PM" withString:@"p"];        
+                
+                // setup the format for the date label
+                logFormatter.dateFormat = @"MMM d";
+                updateCell.dateLabel.text = [logFormatter stringFromDate:logEntry.date];
+                
+            } else {
+                // this is an update from another user
+                static NSString *OtherUserEntryCellIdentifier = @"LogEntryOtherUserCell";
+                updateCell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];
+                
+                // set the profile image for this log entry
+                [updateCell.senderProfileImageView setImageWithURL:logEntry.author.photoURL placeholderImage:[CPUIHelper defaultProfileImage]];            
+        
             }
             
-            // setup the format for the time label
-            logFormatter.dateFormat = @"h:mma";
-            cell.timeLabel.text = [logFormatter stringFromDate:logEntry.date];
-            // replace either AM or PM with lowercase a or p
-            cell.timeLabel.text = [cell.timeLabel.text stringByReplacingOccurrencesOfString:@"AM" withString:@"a"];
-            cell.timeLabel.text = [cell.timeLabel.text stringByReplacingOccurrencesOfString:@"PM" withString:@"p"];        
+            // the cell to return is the updateCell
+            cell = updateCell;
             
-            // setup the format for the date label
-            logFormatter.dateFormat = @"MMM d";
-            cell.dateLabel.text = [logFormatter stringFromDate:logEntry.date];
-            
-            labelWidth = MY_ENTRY_LABEL_WIDTH;
         } else {
-            // this is an update from another user
-            static NSString *OtherUserEntryCellIdentifier = @"LogEntryOtherUserCell";
-            cell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];
+            // this is a love cell
+            static NSString *loveCellIdentifier = @"LogLoveCell";
+            LogLoveCell *loveCell = [tableView dequeueReusableCellWithIdentifier:loveCellIdentifier];
             
-            // set the profile image for this log entry
-            [((LogEntryOtherUserCell *)cell).profileImageView setImageWithURL:logEntry.author.photoURL placeholderImage:[CPUIHelper defaultProfileImage]];            
+            // lazy load the sender's profile image
+            [loveCell.senderProfileImageView setImageWithURL:logEntry.author.photoURL placeholderImage:[CPUIHelper defaultProfileImage]];
+            // lazy load the receiver's profile image
+            [loveCell.receiverProfileImageView setImageWithURL:logEntry.receiver.photoURL placeholderImage:[CPUIHelper defaultProfileImage]];
             
-            labelWidth = THEIR_ENTRY_LABEL_WIDTH;
-        }
+            loveCell.entryLabel.text = logEntry.entry.description;
+            
+            // if this is a plus one we need to make the label wider
+            // or reset it if it's not
+            CGRect loveLabelFrame = loveCell.entryLabel.frame;
+            loveLabelFrame.size.width = logEntry.originalLogID > 0 ? LOVE_PLUS_ONE_LABEL_WIDTH : LOVE_LABEL_WIDTH;
+            loveCell.entryLabel.frame = loveLabelFrame;
+
+            // the cell to return is the loveCell
+            cell = loveCell;
+        }  
         
         // the text for this entry is prepended with NICKNAME logged:
         cell.entryLabel.text = [self textForLogEntry:logEntry];
         
         // make the frame of the label larger if required for a multi-line entry
         CGRect entryFrame = cell.entryLabel.frame;
-        entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text labelWidth:labelWidth];
+        entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text labelWidth:[self widthForLabelForLogEntry:logEntry] labelFont:[self fontForLogEntry:logEntry]];
         cell.entryLabel.frame = entryFrame;
     }
     
@@ -522,22 +577,22 @@
     } else if (beingShown) {
         // we want to show the button to choose location
         // so make sure it exists
-        if (!self.lowerButton) {
-            self.lowerButton = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_AREA_WIDTH + 10, 0, thinBar.frame.size.width - (LEFT_AREA_WIDTH + 10), thinBar.frame.size.height)];
+        if (!self.logBarButton) {
+            self.logBarButton = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_AREA_WIDTH + 10, 0, thinBar.frame.size.width - (LEFT_AREA_WIDTH + 10), thinBar.frame.size.height)];
             
             // add a line on the left of the button
-            UIView *seperator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, self.lowerButton.frame.size.height)];
+            UIView *seperator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, self.logBarButton.frame.size.height)];
             seperator.backgroundColor = [UIColor colorWithR:148 G:148 B:148 A:0.3];
-            [self.lowerButton addSubview:seperator];
+            [self.logBarButton addSubview:seperator];
             
             // add the small down arrow
             UIImage *downArrow = [UIImage imageNamed:@"expand-arrow-down"];
             UIImageView *smallArrow = [[UIImageView alloc] initWithImage:downArrow];
-            smallArrow.center = CGPointMake(20, self.lowerButton.frame.size.height / 2);
-            [self.lowerButton addSubview:smallArrow];
+            smallArrow.center = CGPointMake(20, self.logBarButton.frame.size.height / 2);
+            [self.logBarButton addSubview:smallArrow];
             
             // add the label for the chosen venue name
-            UILabel *venueLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 0, self.lowerButton.frame.size.width - 45, self.lowerButton.frame.size.height)];
+            UILabel *venueLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 0, self.logBarButton.frame.size.width - 45, self.logBarButton.frame.size.height)];
             venueLabel.tag = LOWER_BUTTON_LABEL_TAG;
             venueLabel.backgroundColor = [UIColor clearColor];
             venueLabel.textColor = [UIColor colorWithR:224 G:222 B:212 A:1.0];
@@ -545,16 +600,16 @@
             venueLabel.shadowColor = [UIColor colorWithR:51 G:51 B:51 A:0.40];
             venueLabel.shadowOffset = CGSizeMake(0, -2);
             
-            [self.lowerButton addTarget:self action:@selector(showVenueList:) forControlEvents:UIControlEventTouchUpInside];
+            [self.logBarButton addTarget:self action:@selector(showVenueList:) forControlEvents:UIControlEventTouchUpInside];
             
-            [self.lowerButton addSubview:venueLabel];
+            [self.logBarButton addSubview:venueLabel];
         }
         // add the selectedVenueButton to the thinBar
-        [thinBar addSubview:self.lowerButton];
+        [thinBar addSubview:self.logBarButton];
     }
     
     // update the logBar label with the right text
-    ((UILabel *)[self.lowerButton viewWithTag:LOWER_BUTTON_LABEL_TAG]).text = self.pendingLogEntry.venue ? self.pendingLogEntry.venue.name : @"Choose Venue";
+    ((UILabel *)[self.logBarButton viewWithTag:LOWER_BUTTON_LABEL_TAG]).text = self.pendingLogEntry.venue ? self.pendingLogEntry.venue.name : @"Choose Venue";
     
     // only try and update the tableView if we've asked for this change by adding or removing an entry
     if (self.pendingEntryRemovedOrAdded) {
@@ -592,7 +647,7 @@
                              self.tableView.frame = newTableViewFrame;
                              
                              // show the button to allow selection of venue (if required)
-                             self.lowerButton.alpha = beingShown;
+                             self.logBarButton.alpha = beingShown;
                              
                              if (beingShown) {
                                  // get the tableView to scroll while the keyboard is appearing
@@ -621,7 +676,7 @@
                                  [[self pendingLogEntryCell].logTextView becomeFirstResponder];
                              }
                          } else {
-                             [self.lowerButton removeFromSuperview];
+                             [self.logBarButton removeFromSuperview];
                              // remove the cancel button and replace it with the reload button
                              [self addRefreshButtonToNavigationItem];
                          }

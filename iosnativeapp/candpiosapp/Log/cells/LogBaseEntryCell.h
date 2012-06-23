@@ -8,11 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LogEntryCell : UITableViewCell
+@interface LogBaseEntryCell : UITableViewCell
 
-@property (nonatomic, assign) IBOutlet UIImageView *typeImageView;
+@property (nonatomic, assign) IBOutlet UIImageView *senderProfileImageView;
 @property (nonatomic, assign) IBOutlet UILabel *entryLabel;
-@property (nonatomic, assign) IBOutlet UILabel *timeLabel;
-@property (nonatomic, assign) IBOutlet UILabel *dateLabel;
 
 @end

@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import "NewLogEntryCell.h"
+#import "LogNewEntryCell.h"
 
-@implementation NewLogEntryCell
+@implementation LogNewEntryCell
 
 @synthesize logTextView = _logTextView;
 

@@ -223,7 +223,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogEntryCell" id="VQG-Nh-eGn" customClass="LogEntryCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogEntryCell" id="VQG-Nh-eGn" customClass="LogUpdateCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -266,10 +266,9 @@
                                             <outlet property="dateLabel" destination="H43-Bv-fQT" id="6d2-eU-VBD"/>
                                             <outlet property="entryLabel" destination="DiI-hT-56q" id="kl0-Jy-vkY"/>
                                             <outlet property="timeLabel" destination="yDm-pe-eaK" id="Vo5-bK-9Ah"/>
-                                            <outlet property="typeImageView" destination="XfQ-Iz-GXw" id="x3W-g1-tGp"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogEntryOtherUserCell" id="hYJ-Fw-y5V" customClass="LogEntryOtherUserCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogEntryOtherUserCell" id="hYJ-Fw-y5V" customClass="LogUpdateCell">
                                         <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -294,11 +293,50 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="entryLabel" destination="w5J-Sp-z5g" id="CDO-hF-wS2"/>
-                                            <outlet property="profileImageView" destination="zgz-xX-fBP" id="80Q-0u-l9Q"/>
+                                            <outlet property="senderProfileImageView" destination="zgz-xX-fBP" id="C4g-m9-HD1"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewLogEntryCell" id="RqY-S2-RGs" customClass="NewLogEntryCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LogLoveCell" id="LSp-29-kRX" customClass="LogLoveCell">
                                         <rect key="frame" x="0.0" y="110" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="log-love-icon.png" id="m6d-OQ-KbA">
+                                                    <rect key="frame" x="44" y="13" width="15" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="XKD-QV-x79">
+                                                    <rect key="frame" x="66" y="8" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="FRD-te-y4d">
+                                                    <rect key="frame" x="115" y="8" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="love-sent.png" id="As2-O4-rDp">
+                                                    <rect key="frame" x="95" y="15" width="17" height="11"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Good work!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="XKz-eK-Gwv">
+                                                    <rect key="frame" x="148" y="6" width="95" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="entryLabel" destination="XKz-eK-Gwv" id="Rmm-eM-etp"/>
+                                            <outlet property="receiverProfileImageView" destination="FRD-te-y4d" id="1hb-S6-i5K"/>
+                                            <outlet property="senderProfileImageView" destination="XKD-QV-x79" id="khM-k1-Klv"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewLogEntryCell" id="RqY-S2-RGs" customClass="LogNewEntryCell">
+                                        <rect key="frame" x="0.0" y="154" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -328,7 +366,6 @@
                                         <connections>
                                             <outlet property="entryLabel" destination="TVv-Le-rw5" id="B42-rk-nNP"/>
                                             <outlet property="logTextView" destination="WfH-tm-isx" id="Yhl-a0-L5H"/>
-                                            <outlet property="typeImageView" destination="IBk-iy-pAl" id="stS-Mp-rbf"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -662,7 +699,9 @@
         <image name="contact-ignore.png" width="38" height="38"/>
         <image name="contacts-blank-slate.png" width="320" height="340"/>
         <image name="default-avatar-256.png" width="256" height="256"/>
+        <image name="log-love-icon.png" width="20" height="20"/>
         <image name="log-update-icon.png" width="20" height="20"/>
+        <image name="love-sent.png" width="17" height="11"/>
         <image name="map-locate.png" width="40" height="41"/>
         <image name="map-refresh-progress-arrow.png" width="24" height="24"/>
         <image name="map-refresh.png" width="40" height="41"/>
@@ -702,19 +741,30 @@
         <class className="HPGrowingTextView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/HPGrowingTextView.h"/>
         </class>
-        <class className="LogEntryCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogEntryCell.h"/>
+        <class className="LogBaseEntryCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogBaseEntryCell.h"/>
             <relationships>
-                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="entryLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="typeImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="senderProfileImageView" candidateClass="UIImageView"/>
             </relationships>
         </class>
-        <class className="LogEntryOtherUserCell" superclassName="LogEntryCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogEntryOtherUserCell.h"/>
+        <class className="LogLoveCell" superclassName="LogBaseEntryCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogLoveCell.h"/>
             <relationships>
-                <relationship kind="outlet" name="profileImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="receiverProfileImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="LogNewEntryCell" superclassName="LogBaseEntryCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogNewEntryCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="logTextView" candidateClass="HPGrowingTextView"/>
+            </relationships>
+        </class>
+        <class className="LogUpdateCell" superclassName="LogBaseEntryCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogUpdateCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="LogViewController" superclassName="UIViewController">
@@ -732,12 +782,6 @@
                 <relationship kind="outlet" name="mapAndButtonsView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
                 <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="NewLogEntryCell" superclassName="LogEntryCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NewLogEntryCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="logTextView" candidateClass="HPGrowingTextView"/>
             </relationships>
         </class>
         <class className="UserListTableViewController" superclassName="CPBaseTableViewController">

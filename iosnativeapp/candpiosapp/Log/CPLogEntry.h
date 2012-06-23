@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "CPSkill.h"
 
+typedef enum {
+    CPLogEntryTypeUpdate,
+    CPLogEntryTypeLove
+} CPLogEntryType;
+
 @interface CPLogEntry : NSObject
 
 @property (nonatomic, assign) NSUInteger logID;
@@ -20,6 +25,8 @@
 @property (nonatomic, assign) double *lng;
 @property (nonatomic, strong) User *receiver;
 @property (nonatomic, strong) CPSkill *skill;
+@property (nonatomic, assign) CPLogEntryType type;
+@property (nonatomic, assign) NSUInteger originalLogID;
 
 - (id)initFromDictionary:(NSDictionary *)logDict;
 

@@ -6,10 +6,10 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import "LogEntryCell.h"
+#import "LogBaseEntryCell.h"
 #import "HPGrowingTextView.h"
 
-@interface NewLogEntryCell : LogEntryCell
+@interface LogNewEntryCell : LogBaseEntryCell
 
 @property (nonatomic, assign) IBOutlet HPGrowingTextView *logTextView;
 
