@@ -8,6 +8,7 @@
 
 #import "SignupController.h"
 #import "FlurryAnalytics.h"
+#import "UIViewController+isModal.h"
 
 @interface SignupController ()
 @end
@@ -23,6 +24,42 @@
         // Custom initialization
     }
     return self;
+}
+
+
+- (void)didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+}
+
+#pragma mark - View lifecycle
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    // Do any additional setup after loading the view from its nib.
+    [CPUIHelper makeButtonCPButton:self.dismissButton
+                 withCPButtonColor:CPButtonGrey];
+    [FlurryAnalytics logEvent:@"signupScreen"];
+    
+    // if this is being presented inside the app from the UITabBarController
+    // then don't show the later button
+    if (!self.isModal) {
+        [self.dismissButton removeFromSuperview];
+    }
+}
+
+- (void)viewDidUnload
+{
+    [self setLinkedinLoginButton:nil];
+    [self setDismissButton:nil];
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -51,33 +88,6 @@
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
-#pragma mark - View lifecycle
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    [CPUIHelper makeButtonCPButton:self.dismissButton
-                 withCPButtonColor:CPButtonGrey];
-    [FlurryAnalytics logEvent:@"signupScreen"];
-}
-
-- (void)viewDidUnload
-{
-    [self setLinkedinLoginButton:nil];
-    [self setDismissButton:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
