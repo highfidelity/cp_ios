@@ -52,9 +52,13 @@
 {
     [super viewDidLoad];
 
+    // remove existing target on leftButton of the CPTabBarController 
+    UIButton *leftButton = [CPAppDelegate tabBarController].thinBar.leftButton;
+    [leftButton removeTarget:self.tabBarController action:@selector(addLogButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
     // the left button on the CPTabBarController has no current target
     // we need to be the target of that button
-    [[CPAppDelegate tabBarController].thinBar.leftButton addTarget:self action:@selector(addLogButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [leftButton addTarget:self action:@selector(addLogButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     // refresh button in top right
     [self addRefreshButtonToNavigationItem];
