@@ -331,7 +331,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                 // remember that we're logged in!
                 // (it's really the persistent cookie that tracks our login, but we need a superficial indicator, too)
                 NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"params"];
-
+                
                 [CPAppDelegate storeUserLoginDataFromDictionary:userInfo];
 
                 NSString *userId = [userInfo objectForKey:@"id"];
@@ -355,10 +355,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                     [SVProgressHUD dismiss];
 
                     if ([CPAppDelegate currentUser].enteredInviteCode) {
-                        if ([[CPAppDelegate tabBarController] selectedIndex] == 4) {
-                            [[CPAppDelegate tabBarController] setSelectedIndex:0];
-                        }
-                        
                         if (self.emailConfirmationRequired) {
                             [self performSegueWithIdentifier:@"EnterEmailAfterSignUpSegue" sender:nil];
                         } else {

@@ -50,6 +50,10 @@
     // then don't show the later button
     if (!self.isModal) {
         [self.dismissButton removeFromSuperview];
+        
+        // if the user is currently on the 4th tab
+        // then bring them to the map once they login
+        [CPAppDelegate settingsMenuController].afterLoginAction = CPAfterLoginActionShowMap;
     }
 }
 

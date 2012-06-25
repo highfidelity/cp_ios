@@ -11,6 +11,7 @@
 @interface LogViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, assign) IBOutlet UITableView *tableView;
+@property (nonatomic, assign) BOOL newLogEntryAfterLoad;
 
 - (IBAction)addLogButtonPressed:(id)sender;
 - (void)setSelectedVenue:(CPVenue *)selectedVenue;

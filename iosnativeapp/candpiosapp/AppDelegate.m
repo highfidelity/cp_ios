@@ -859,6 +859,12 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     }
 }
 
+// TODO: In a lot of places in the app we are using this just to see if someone is logged in
+// without caring about the return
+// there's likely a way just to tell if we have an object at the kUDCurrentUser key
+// without pulling it out and decoding it
+// so use that for the case where we just want BOOL YES/NO for logged in status
+
 - (User *)currentUser
 {
     if (DEFAULTS(object, kUDCurrentUser)) {

@@ -45,6 +45,7 @@
 @synthesize f2fPasswordAlert = _f2fPasswordAlert;
 @synthesize loginButton = _loginButton;
 @synthesize blockUIButton = _blockUIButton;
+@synthesize afterLoginAction = _afterLoginAction;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -133,6 +134,11 @@
     
     [CPUIHelper makeButtonCPButton:self.loginButton
                  withCPButtonColor:CPButtonTurquoise];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(performAfterLoginActionIfRequired)
+                                                 name:@"LoginStateChanged"
+                                               object:nil];
 }
 
 - (void)viewDidUnload
@@ -142,6 +148,8 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LoginStateChanged" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -443,6 +451,10 @@
 #pragma mark - Login banner
 - (IBAction)blockUIButtonClick:(id)sender
 {
+    // reset the after login action
+    self.afterLoginAction = CPAfterLoginActionNone;
+    
+    // hide the login banner
     [CPAppDelegate hideLoginBannerWithCompletion:nil];
 }
 
@@ -452,6 +464,29 @@
         [CPAppDelegate showSignupModalFromViewController:[CPAppDelegate tabBarController]
                                                 animated:YES];
     }];
+}
+
+#pragma mark - CPAfterLoginAction Handler
+- (void)performAfterLoginActionIfRequired
+{
+    if ([CPAppDelegate currentUser]) {
+        // we have a current user so check if the settings menu controller has an action to perform after login
+        switch (self.afterLoginAction) {
+            case CPAfterLoginActionShowLogbook:
+                // show the logbook
+                [CPAppDelegate tabBarController].selectedIndex = 0;
+                break;
+            case CPAfterLoginActionAddNewLog:
+                // show the logbook and allow the user to enter a new log entry
+                [[CPAppDelegate tabBarController] addLogButtonPressed:nil];
+                break;
+            case CPAfterLoginActionShowMap:
+                [CPAppDelegate tabBarController].selectedIndex = 1;
+            default:
+                // do nothing, the action is CPAfterLoginActionNone
+                break;
+        }
+    }
 }
 
 @end

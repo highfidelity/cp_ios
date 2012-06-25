@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "CPThinTabBar.h"
 
+
+
 @interface CPTabBarController : UITabBarController
 
 @property (nonatomic, strong) CPThinTabBar *thinBar;
 @property (nonatomic, strong) NSString *currentVenueID;
+
+- (IBAction)addLogButtonPressed:(id)sender;
 
 @end

@@ -109,7 +109,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-385" y="-1124"/>
+            <point key="canvasLocation" x="-455" y="-1124"/>
         </scene>
         <!--Venue List Table View Controller-->
         <scene sceneID="JpK-kY-M1k">
@@ -197,7 +197,7 @@
         <scene sceneID="viu-lv-1Bb">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wo2-ah-pBe" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController definesPresentationContext="YES" id="7lJ-uf-W4C" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="LogNavigationController" definesPresentationContext="YES" id="7lJ-uf-W4C" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" id="Uxr-Qe-Zsj"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="5KG-SA-8SJ">
                         <autoresizingMask key="autoresizingMask"/>
@@ -380,7 +380,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-399" y="-1803"/>
+            <point key="canvasLocation" x="-443" y="-1726"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xFZ-aJ-dUu">
@@ -704,116 +704,6 @@
         <image name="map-shadow.png" width="10" height="320"/>
         <image name="picture-coming-soon.jpg" width="100" height="100"/>
     </resources>
-    <classes>
-        <class className="CPBaseTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPBaseTableViewController.h"/>
-        </class>
-        <class className="CPSwipeableTableViewCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPSwipeableTableViewCell.h"/>
-        </class>
-        <class className="CPTabBarController" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPTabBarController.h"/>
-        </class>
-        <class className="ContactListCell" superclassName="CPSwipeableTableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ContactListCell.h"/>
-            <relationships>
-                <relationship kind="action" name="acceptButtonAction"/>
-                <relationship kind="action" name="declineButtonAction"/>
-                <relationship kind="outlet" name="acceptContactRequestButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="declineContactRequestButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="ContactListViewController" superclassName="CPBaseTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ContactListViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="placeholderImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-            </relationships>
-        </class>
-        <class className="HPGrowingTextView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HPGrowingTextView.h"/>
-        </class>
-        <class className="LogBaseEntryCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogBaseEntryCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="entryLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="senderProfileImageView" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="LogLoveCell" superclassName="LogBaseEntryCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogLoveCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="receiverProfileImageView" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="LogNewEntryCell" superclassName="LogBaseEntryCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogNewEntryCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="logTextView" candidateClass="HPGrowingTextView"/>
-            </relationships>
-        </class>
-        <class className="LogUpdateCell" superclassName="LogBaseEntryCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogUpdateCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="LogViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addLogButtonPressed:"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="MapTabController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapTabController.h"/>
-            <relationships>
-                <relationship kind="action" name="locateMe:"/>
-                <relationship kind="action" name="refreshButtonClicked:"/>
-                <relationship kind="outlet" name="mapAndButtonsView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="UserListTableViewController" superclassName="CPBaseTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserListTableViewController.h"/>
-        </class>
-        <class className="UserTableViewCell" superclassName="CPSwipeableTableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserTableViewCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="categoryLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="checkInCountLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="checkInLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="distanceLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="profilePictureImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="VenueCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueCheckins" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueDistance" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venuePicture" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="VenueListTableViewController" superclassName="CPBaseTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueListTableViewController.h"/>
-        </class>
-        <class className="VenueViewToggleViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueViewToggleViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="segmentedControl" candidateClass="UISegmentedControl"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

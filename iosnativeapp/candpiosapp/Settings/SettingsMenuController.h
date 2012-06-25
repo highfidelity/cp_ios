@@ -12,6 +12,13 @@
 
 #define AUTOCHECKIN_PROMPT_TAG 4829
 
+typedef enum {
+    CPAfterLoginActionNone,
+    CPAfterLoginActionShowLogbook,
+    CPAfterLoginActionAddNewLog,
+    CPAfterLoginActionShowMap
+} CPAfterLoginAction;
+
 @interface SettingsMenuController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) CPTabBarController *cpTabBarController;
@@ -19,6 +26,7 @@
 @property (nonatomic) BOOL isMenuShowing;
 @property (weak, nonatomic) IBOutlet UIImageView *edgeShadow;
 @property (weak, nonatomic) IBOutlet UIView *loginBanner;
+@property (nonatomic, assign) CPAfterLoginAction afterLoginAction;
 
 // the following properties are used to dismiss F2F alerts that don't need to still be showing once new ones come in
 @property (nonatomic, strong) UIAlertView *f2fInviteAlert;

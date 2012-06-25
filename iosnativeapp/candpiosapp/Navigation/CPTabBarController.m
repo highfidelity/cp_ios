@@ -7,6 +7,7 @@
 //
 
 #import "CPTabBarController.h"
+#import "LogViewController.h"
 
 @implementation CPTabBarController
 
@@ -44,6 +45,11 @@
     viewFrame.size.height += heightDiff;
     [[self.view.subviews objectAtIndex:0] setFrame:viewFrame];
     
+    // if we don't have a current user object then we need to be a target for the left add log button
+    if (![CPAppDelegate currentUser]) {
+        [self.thinBar.leftButton addTarget:self action:@selector(addLogButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
     [self refreshTabBar];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -61,12 +67,21 @@
 
 - (void)setSelectedIndex:(NSUInteger)selectedIndex
 {
-    // we have no VC at index 0 so make it go to the logbook
-    
-    [super setSelectedIndex:selectedIndex];
-    
-    // move the green line to the right spot
-    [self.thinBar moveGreenLineToSelectedIndex:selectedIndex];
+    if (self.selectedIndex > 0 && 
+        self.selectedIndex <= 4 && 
+        selectedIndex == 0 && 
+        ![CPAppDelegate currentUser]) {
+        // don't change the selected index here
+        // just show the login banner
+        [self promptForLoginToSeeLogbook:CPAfterLoginActionShowLogbook];
+    } else {
+        // switch to the designated VC
+        [super setSelectedIndex:selectedIndex];
+        
+        // move the green line to the right spot
+        [self.thinBar moveGreenLineToSelectedIndex:selectedIndex];
+    }
+   
 }
 
 - (void)tabBarButtonPressed:(id)sender
@@ -106,5 +121,46 @@
     
 }
 
+- (IBAction)addLogButtonPressed:(id)sender
+{
+    // we only get this if the logbook hasn't loaded
+    // otherwise the logbook is the new target for that button
+    
+    // if we don't have a current user then we need to just show the login banner
+    if (![CPAppDelegate currentUser]) {
+        [self promptForLoginToSeeLogbook:CPAfterLoginActionAddNewLog];
+    } else {
+        // otherwise they user is logged but we've not yet loaded the logbook
+        // we need to tell the logbook that when it finishes loading the user wants to add a new entry
+        
+        // instantiate a the logbook navigation controller and logbook view controller from the storyboard
+        UINavigationController *logNavVC = [self.storyboard instantiateViewControllerWithIdentifier:@"LogNavigationController"];
+        LogViewController *logVC = [logNavVC.viewControllers objectAtIndex:0];
+        
+        // tell the log view controller that it needs to bring up the keyboard for a new log entry once it loads
+        logVC.newLogEntryAfterLoad = YES;
+        
+        // replace the unloaded previous logbook view controller that is found at index 0 
+        // with the one that we instantiated
+        NSMutableArray *mutableVCArray = [self.viewControllers mutableCopy];
+        [mutableVCArray replaceObjectAtIndex:0 withObject:logNavVC];
+        self.viewControllers = mutableVCArray;
+        
+        // make sure the thinBar is in front of the button for the new VC
+        [self.tabBar bringSubviewToFront:self.thinBar];
+        
+        // switch to the logbook 
+        [self setSelectedIndex:0];
+    }
+}
+
+- (void)promptForLoginToSeeLogbook:(CPAfterLoginAction)action
+{
+    // set the settingsMenuController CPAfterLoginAction so it knows where to go after login
+    [CPAppDelegate settingsMenuController].afterLoginAction = action;
+    
+    // show the login banner
+    [CPAppDelegate showLoginBanner];
+}
 
 @end

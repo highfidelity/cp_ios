@@ -34,6 +34,7 @@
 @implementation LogViewController 
 
 @synthesize tableView = _tableView;
+@synthesize newLogEntryAfterLoad = _newLogEntryAfterLoad;
 @synthesize logEntries = _logEntries;
 @synthesize newEditableCellHeight = _newEditableCellHeight;
 @synthesize pendingLogEntry = _pendingLogEntry;
@@ -136,6 +137,14 @@
     if (!self.pendingLogEntry) {
         [self getUserLogEntries];
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    // dismiss our progress HUD if it's up
+    [SVProgressHUD dismiss];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -417,8 +426,16 @@
                 // reload the tableView
                 [self.tableView reloadData];
                 
-                // go to the bottom of the tableView
-                [self scrollTableViewToBottomAnimated:YES];
+                // check if we were loaded because the user immediately wants to add a new entry
+                if (self.newLogEntryAfterLoad) {
+                    // click the addLogButton now that we are the target
+                    [self addLogButtonPressed:nil];
+                    // reset the newLogEntryAfterLoad property so it doesn't fire again
+                    self.newLogEntryAfterLoad = NO;
+                } else {
+                    // go to the bottom of the tableView
+                    [self scrollTableViewToBottomAnimated:YES];
+                }
             }
         }
     }];
