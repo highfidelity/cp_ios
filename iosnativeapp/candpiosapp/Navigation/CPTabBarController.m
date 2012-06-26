@@ -45,10 +45,8 @@
     viewFrame.size.height += heightDiff;
     [[self.view.subviews objectAtIndex:0] setFrame:viewFrame];
     
-    // if we don't have a current user object then we need to be a target for the left add log button
-    if (![CPAppDelegate currentUser]) {
-        [self.thinBar.leftButton addTarget:self action:@selector(addLogButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    }
+    // we are always the target for the left button
+    [self.thinBar.leftButton addTarget:self action:@selector(addLogButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     [self refreshTabBar];
 
@@ -130,27 +128,31 @@
     if (![CPAppDelegate currentUser]) {
         [self promptForLoginToSeeLogbook:CPAfterLoginActionAddNewLog];
     } else {
-        // otherwise they user is logged but we've not yet loaded the logbook
-        // we need to tell the logbook that when it finishes loading the user wants to add a new entry
+        // let's check if the log has already been loaded
         
-        // instantiate a the logbook navigation controller and logbook view controller from the storyboard
-        UINavigationController *logNavVC = [self.storyboard instantiateViewControllerWithIdentifier:@"LogNavigationController"];
+        // grab the logbook navigation controller and logbook view controller
+        UINavigationController *logNavVC = [self.viewControllers objectAtIndex:0];
         LogViewController *logVC = [logNavVC.viewControllers objectAtIndex:0];
-        
-        // tell the log view controller that it needs to bring up the keyboard for a new log entry once it loads
-        logVC.newLogEntryAfterLoad = YES;
-        
-        // replace the unloaded previous logbook view controller that is found at index 0 
-        // with the one that we instantiated
-        NSMutableArray *mutableVCArray = [self.viewControllers mutableCopy];
-        [mutableVCArray replaceObjectAtIndex:0 withObject:logNavVC];
-        self.viewControllers = mutableVCArray;
-        
-        // make sure the thinBar is in front of the button for the new VC
-        [self.tabBar bringSubviewToFront:self.thinBar];
-        
-        // switch to the logbook 
-        [self setSelectedIndex:0];
+    
+        if (self.selectedIndex == 0) {
+            // the log view controller is loaded
+            // forward the fact that the button has been touched to that VC
+            [logVC newLogEntry];
+        } else {
+            // otherwise they user is logged but we've not yet loaded the logbook
+            // we need to tell the logbook that when it finishes loading the user wants to add a new entry
+            
+            if (!logVC.isViewLoaded) {
+                // make the logVC load its view
+                [logVC view];
+            }
+            
+            // tell the log view controller that it needs to bring up the keyboard for a new log entry once it loads
+            logVC.newLogEntryAfterLoad = YES;
+            
+            // switch to the logbook 
+            self.selectedIndex = 0;
+        }       
     }
 }
 

@@ -13,7 +13,7 @@
 @property (nonatomic, assign) IBOutlet UITableView *tableView;
 @property (nonatomic, assign) BOOL newLogEntryAfterLoad;
 
-- (IBAction)addLogButtonPressed:(id)sender;
+- (void)newLogEntry;
 - (void)setSelectedVenue:(CPVenue *)selectedVenue;
 
 @end

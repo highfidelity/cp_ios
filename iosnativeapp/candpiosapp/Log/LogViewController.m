@@ -51,14 +51,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // remove existing target on leftButton of the CPTabBarController 
-    UIButton *leftButton = [CPAppDelegate tabBarController].thinBar.leftButton;
-    [leftButton removeTarget:self.tabBarController action:@selector(addLogButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
-    // the left button on the CPTabBarController has no current target
-    // we need to be the target of that button
-    [leftButton addTarget:self action:@selector(addLogButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     // refresh button in top right
     [self addRefreshButtonToNavigationItem];
@@ -137,10 +129,6 @@
     // place the settings button on the navigation item if required
     // or remove it if the user isn't logged in
     [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
-    
-    if (!self.pendingLogEntry) {
-        [self getUserLogEntries];
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -432,8 +420,8 @@
                 
                 // check if we were loaded because the user immediately wants to add a new entry
                 if (self.newLogEntryAfterLoad) {
-                    // click the addLogButton now that we are the target
-                    [self addLogButtonPressed:nil];
+                    // if that's the case then pull let the user add a new entry
+                    [self newLogEntry];
                     // reset the newLogEntryAfterLoad property so it doesn't fire again
                     self.newLogEntryAfterLoad = NO;
                 } else {
@@ -485,7 +473,7 @@
 }
 
 #pragma mark - IBActions
-- (IBAction)addLogButtonPressed:(id)sender
+- (void)newLogEntry
 {   
     // only try to add a new log if we aren't in the middle of adding one now
     if (!self.pendingLogEntry) {
