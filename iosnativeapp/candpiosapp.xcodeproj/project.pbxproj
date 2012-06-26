@@ -269,6 +269,7 @@
 		53A1EACB1587F006009D8E31 /* log-type-update@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A1EAC91587F006009D8E31 /* log-type-update@2x.png */; };
 		53A1EAD1158813B3009D8E31 /* texture-lightpaperfibers.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A1EACF158813B3009D8E31 /* texture-lightpaperfibers.png */; };
 		53A1EAD2158813B3009D8E31 /* texture-lightpaperfibers@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A1EAD0158813B3009D8E31 /* texture-lightpaperfibers@2x.png */; };
+		53A3C78C159A4B73008459B0 /* CPCheckinHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A3C78B159A4B73008459B0 /* CPCheckinHandler.m */; };
 		53A96DCB156EED3A00A8CF2E /* bullet.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A96DC7156EED3A00A8CF2E /* bullet.png */; };
 		53A96DCC156EED3A00A8CF2E /* bullet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A96DC8156EED3A00A8CF2E /* bullet@2x.png */; };
 		53A96DCD156EED3A00A8CF2E /* expand-arrow-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A96DC9156EED3A00A8CF2E /* expand-arrow-down.png */; };
@@ -880,6 +881,8 @@
 		53A1EAC91587F006009D8E31 /* log-type-update@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-type-update@2x.png"; sourceTree = "<group>"; };
 		53A1EACF158813B3009D8E31 /* texture-lightpaperfibers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-lightpaperfibers.png"; path = "Utils/images/textures/texture-lightpaperfibers.png"; sourceTree = "<group>"; };
 		53A1EAD0158813B3009D8E31 /* texture-lightpaperfibers@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-lightpaperfibers@2x.png"; path = "Utils/images/textures/texture-lightpaperfibers@2x.png"; sourceTree = "<group>"; };
+		53A3C78A159A4B73008459B0 /* CPCheckinHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPCheckinHandler.h; path = Checkin/CPCheckinHandler.h; sourceTree = "<group>"; };
+		53A3C78B159A4B73008459B0 /* CPCheckinHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPCheckinHandler.m; path = Checkin/CPCheckinHandler.m; sourceTree = "<group>"; };
 		53A96DC7156EED3A00A8CF2E /* bullet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bullet.png; sourceTree = "<group>"; };
 		53A96DC8156EED3A00A8CF2E /* bullet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bullet@2x.png"; sourceTree = "<group>"; };
 		53A96DC9156EED3A00A8CF2E /* expand-arrow-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "expand-arrow-down.png"; sourceTree = "<group>"; };
@@ -2052,6 +2055,8 @@
 				536DE92A150170CC00794650 /* images */,
 				5319C75F15547157005DA299 /* UIButton+AnimatedClockHand.h */,
 				5319C76015547157005DA299 /* UIButton+AnimatedClockHand.m */,
+				53A3C78A159A4B73008459B0 /* CPCheckinHandler.h */,
+				53A3C78B159A4B73008459B0 /* CPCheckinHandler.m */,
 			);
 			name = Checkin;
 			sourceTree = "<group>";
@@ -3042,6 +3047,7 @@
 				535E9785159522AC00FDA26A /* LogLoveCell.m in Sources */,
 				535E9786159522AC00FDA26A /* LogNewEntryCell.m in Sources */,
 				535E9787159522AC00FDA26A /* LogUpdateCell.m in Sources */,
+				53A3C78C159A4B73008459B0 /* CPCheckinHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

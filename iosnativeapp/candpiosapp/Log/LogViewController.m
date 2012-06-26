@@ -13,6 +13,7 @@
 #import "LogNewEntryCell.h"
 #import "LogLoveCell.h"
 #import "CheckInListTableViewController.h"
+#import "CPCheckinHandler.h"
 
 #define LOWER_BUTTON_LABEL_TAG 5463
 
@@ -449,6 +450,11 @@
         [CPapi sendLogUpdate:self.pendingLogEntry.entry atVenue:self.pendingLogEntry.venue completion:^(NSDictionary *json, NSError *error) {
             if (!error) {
                 if (![[json objectForKey:@"error"] boolValue]) {
+                    // if the user chose a venue for the log we need to check them in there
+                    // unless it's the same venue that we already have them checked into
+                    if (self.pendingLogEntry.venue && ![self.pendingLogEntry.venue.foursquareID isEqualToString:[CPAppDelegate currentVenue].foursquareID]) {
+                        [self checkinUserToVenue:self.pendingLogEntry.venue];
+                    }
                     
                     // drop the self.pendingLogEntry to the pending entry now that it's sent
                     CPLogEntry *sentEntry = self.pendingLogEntry;
@@ -469,6 +475,28 @@
 {
     // scroll to the bottom of the tableView
     [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height) animated:animated];
+}
+
+- (void)checkinUserToVenue:(CPVenue *)venue
+{
+    NSInteger hoursHere = 24;
+    [CPapi checkInToLocation:self.pendingLogEntry.venue hoursHere:hoursHere statusText:nil isVirtual:NO isAutomatic:NO completionBlock:^(NSDictionary *json, NSError *error){
+        if (!error) {
+            if (![[json objectForKey:@"error"] boolValue]) {
+                // give the venue_id that came back with this request to the venue
+                self.pendingLogEntry.venue.venueID = [[json objectForKey:@"venue_id"] intValue];
+                
+                // tell the CPCheckinHandler to do what it needs for successful checkin
+                NSInteger checkoutTime = [[NSDate dateWithTimeIntervalSinceNow:(60*60*hoursHere)] timeIntervalSince1970];
+                [CPCheckinHandler handleSuccessfulCheckinToVenue:self.pendingLogEntry.venue checkoutTime:checkoutTime];
+            } else {
+                // TODO: handle this error
+            }
+        } else {
+            // TODO: handle error here
+            // all of these errors (JSON parse, etc.) should be handled by a single method somewhere
+        }
+    }];
 }
 
 #pragma mark - IBActions

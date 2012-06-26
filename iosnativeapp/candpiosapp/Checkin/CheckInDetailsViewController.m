@@ -10,6 +10,7 @@
 #import "VenueInfoViewController.h"
 #import "TPKeyboardAvoidingScrollView.h"
 #import "UIViewController+isModal.h"
+#import "CPCheckinHandler.h"
 
 @interface CheckInDetailsViewController() <UITextFieldDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *blueOverlay;
@@ -283,67 +284,13 @@
             if (![[json objectForKey:@"error"] boolValue]) {
                 [SVProgressHUD dismiss];
                 
-                // Fire a notification 5 minutes before checkout time
-                NSInteger minutesBefore = 5;
-                UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-                NSDictionary *venueDataDict;
-                
-                if (localNotif) {
-                    // Cancel all old local notifications
-                    [[UIApplication sharedApplication] cancelAllLocalNotifications];
-                    
-                    localNotif.alertBody = @"You will be checked out of C&P in 5 min.";
-                    localNotif.alertAction = @"Check Out";
-                    localNotif.soundName = UILocalNotificationDefaultSoundName;
-                    
-                    localNotif.fireDate = [NSDate dateWithTimeIntervalSince1970:(checkOutTime - minutesBefore * 60)];
-                    localNotif.timeZone = [NSTimeZone defaultTimeZone];
-                    
-                    // encode the venue and store it in an NSDictionary
-                    NSData *venueData = [NSKeyedArchiver archivedDataWithRootObject:self.place];
-                    venueDataDict = [NSDictionary dictionaryWithObject:venueData forKey:@"venue"];
-                    
-                    localNotif.userInfo = venueDataDict;
-                    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
-                    
-                    // post a notification to say the user has checked in
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
-                }
-                
-                if (!DEFAULTS(bool, kUDFirstCheckIn)) {
-                    // use the define in CPConstants to say that the user has now done their first checkin
-                    SET_DEFAULTS(Bool, kUDFirstCheckIn, YES);
-                }
-                [CPAppDelegate setCheckedOut];
-                // set the NSUserDefault to the user checkout time
-                SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
-                
                 // a successful checkin passes back venue_id
                 // give that to this venue before we store it in NSUserDefaults
                 // in case we came from foursquare venue list and didn't have it
                 self.place.venueID = [[json objectForKey:@"venue_id"] intValue];
-
-                // Save current place to venue defaults as it's used in several places in the app
-                [CPAppDelegate saveCurrentVenueUserDefaults:self.place];
-
-                // If this is the user's first check in to this venue and auto-checkins are enabled,
-                // ask the user about checking in automatically to this venue in the future
-                BOOL automaticCheckins = [DEFAULTS(object, kAutomaticCheckins) boolValue];
-
-                if (automaticCheckins) {
-                    // Only show the alert if the current venue isn't currently in the list of monitored venues
-                    CPVenue *matchedVenue = [CPAppDelegate venueWithName:self.place.name];
-                    
-                    if (!matchedVenue) {                    
-                        UIAlertView *autoCheckinAlert = [[UIAlertView alloc] initWithTitle:nil 
-                                                                                   message:@"Automatically check in to this venue in the future?" 
-                                                                                  delegate:[CPAppDelegate settingsMenuController]
-                                                                        cancelButtonTitle:@"No" 
-                                                                         otherButtonTitles:@"Yes", nil];
-                        autoCheckinAlert.tag = AUTOCHECKIN_PROMPT_TAG;
-                        [autoCheckinAlert show];
-                    }
-                }
+                
+                [CPCheckinHandler queueLocalNotificationForVenue:self.place checkoutTime:checkOutTime];
+                [CPCheckinHandler handleSuccessfulCheckinToVenue:self.place checkoutTime:checkOutTime];                
                 
                 // hide the checkin screen, we're checked in
                 if ([self isModal]) {
