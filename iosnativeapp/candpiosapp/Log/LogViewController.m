@@ -109,6 +109,9 @@
 
     // add the keyboardBackground to the view
     [[CPAppDelegate window] addSubview:self.keyboardBackground];
+    
+    // subscribe to the applicationDidBecomeActive notification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getUserLogEntries) name:@"applicationDidBecomeActive" object:nil];
 }
 
 - (void)viewDidUnload
@@ -118,8 +121,8 @@
     [self.keyboardBackground removeFromSuperview];
     [self.venueListVC.view removeFromSuperview];
     
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    // unsubscribe from the applicationDidBecomeActive notification
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"applicationDidBecomeActive"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -142,11 +145,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    if (self.pendingLogEntry) {
-        // if we have a pending log entry then show the keyboard
-        [self.fakeTextView becomeFirstResponder];
-    }
+    [self getUserLogEntries];
 }
 
 - (NSMutableArray *)logEntries
