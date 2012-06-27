@@ -730,14 +730,22 @@ typedef enum {
                                  if (beingShown) {
                                      // call scrollTableViewToBottomAnimated again because otherwise its off by a couple of points
                                      [self scrollTableViewToBottomAnimated:NO];
+                                     
                                      // grab the new cell and make its growingTextView the first responder
                                      if (self.pendingLogEntry) {
                                          [[self pendingLogEntryCell].logTextView becomeFirstResponder];
                                      }
+                                     
+                                     // remove the left bar button to go to settings
+                                     self.navigationItem.leftBarButtonItem = nil;
                                  } else {
                                      [self.logBarButton removeFromSuperview];
+                                     
                                      // remove the cancel button and replace it with the reload button
                                      [self addRefreshButtonToNavigationItem];
+                                     
+                                     // put back the left bar button item to go to settings
+                                     [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
                                  }
                              }
                              
