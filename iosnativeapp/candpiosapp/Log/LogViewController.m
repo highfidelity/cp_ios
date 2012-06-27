@@ -17,6 +17,13 @@
 
 #define LOWER_BUTTON_LABEL_TAG 5463
 
+typedef enum {
+    LogVCStateDefault,
+    LogVCStateAddingOrRemovingPendingEntry,
+    LogVCStateTogglingHiddenTVC,
+    LogVCStateSentNewLogEntry    
+} LogVCState;
+
 @interface LogViewController () <HPGrowingTextViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *logEntries;
@@ -26,9 +33,8 @@
 @property (nonatomic, strong) UIView *keyboardBackground;
 @property (nonatomic, strong) UITextView *fakeTextView;
 @property (nonatomic, strong) UIButton *logBarButton;
-@property (nonatomic, assign) BOOL pendingEntryRemovedOrAdded;
 @property (nonatomic, strong) CheckInListTableViewController *venueListVC;
-@property (nonatomic, assign) BOOL showingOrHidingHiddenTVC;
+@property (nonatomic, assign) LogVCState currentState;
 
 @end
 
@@ -43,9 +49,8 @@
 @synthesize keyboardBackground = _keyboardBackground;
 @synthesize fakeTextView = _fakeTextView;
 @synthesize logBarButton = _lowerButton;
-@synthesize pendingEntryRemovedOrAdded = _pendingEntryRemovedOrAdded;
 @synthesize venueListVC = _venueListVC;
-@synthesize showingOrHidingHiddenTVC = _showingOrHidingHiddenTVC;
+@synthesize currentState = _currentState;
 
 #pragma mark - View Lifecycle
 
@@ -368,6 +373,9 @@
 #pragma mark - Delegate methods
 - (void)setSelectedVenue:(CPVenue *)selectedVenue
 {
+    // we're going to hide the hidden TVC so set that as our current state
+    self.currentState = LogVCStateTogglingHiddenTVC;
+    
     // we should have a pending log entry if we are here
     // if we've recieved a venue then make that the venue for the log entry
     if (self.pendingLogEntry && selectedVenue) {
@@ -447,6 +455,8 @@
         [CPapi sendLogUpdate:self.pendingLogEntry.entry atVenue:self.pendingLogEntry.venue completion:^(NSDictionary *json, NSError *error) {
             if (!error) {
                 if (![[json objectForKey:@"error"] boolValue]) {
+                    self.currentState = LogVCStateSentNewLogEntry;
+                    
                     // if the user chose a venue for the log we need to check them in there
                     // unless it's the same venue that we already have them checked into
                     if (self.pendingLogEntry.venue && ![self.pendingLogEntry.venue.foursquareID isEqualToString:[CPAppDelegate currentVenue].foursquareID]) {
@@ -457,7 +467,7 @@
                     CPLogEntry *sentEntry = self.pendingLogEntry;
                     self.pendingLogEntry = nil;
                     
-                    // no error, log sent sucessfully. let's add the completed log object to the array and reload the table
+                    // no error, log sent successfully. let's add the completed log object to the array and reload the table
                     sentEntry.date = [NSDate date];
                     [self.tableView reloadData];
                 } else {
@@ -514,7 +524,7 @@
         [self.logEntries addObject:self.pendingLogEntry];
         
         // we need the keyboard to know that we're asking for this change
-        self.pendingEntryRemovedOrAdded = YES;
+        self.currentState = LogVCStateAddingOrRemovingPendingEntry;
         
         // add a cancel button to our nav bar so the user can drop out of creation
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelLogEntry:)];
@@ -539,10 +549,19 @@
 - (IBAction)cancelLogEntry:(id)sender {
     // user is cancelling log entry
     
+    // if the user has hit cancel
+    // and our pending log entry cell's textView isn't the first responder
+    // then our hidden TVC is showing and we need to hide that first
+    if (!self.pendingLogEntryCell.logTextView.isFirstResponder) {
+        // this is done by just giving the pendingLogEntry the venue it already has
+        [self setSelectedVenue:self.pendingLogEntry.venue];
+    }
+    
     // remove the pending log entry from our array of entries
     [self.logEntries removeObject:self.pendingLogEntry];
+    
     // we need the keyboard to know that we're asking for this change
-    self.pendingEntryRemovedOrAdded = YES;
+    self.currentState = LogVCStateAddingOrRemovingPendingEntry;
 
     // switch first responder to our fake textView and then resign it so we can drop the keyboard
     [self.fakeTextView becomeFirstResponder];
@@ -551,11 +570,13 @@
 
 - (IBAction)showVenueList:(id)sender
 {
+    // the hidden TVC is being shown or hidden
+    self.currentState = LogVCStateTogglingHiddenTVC;
+    
     // check if the keyboard is around
     if (self.pendingLogEntryCell.logTextView.isFirstResponder) {
         // we need to have the keyboard drop
         // but we do not want to move everything else down as we normally would, just drop the black backdrop and show the venue list
-        self.showingOrHidingHiddenTVC = YES;
         
         // tell the HPGrowingTextView to resign first responder
         [self.pendingLogEntryCell.logTextView resignFirstResponder];
@@ -614,7 +635,7 @@
     
     
     // don't move anything if the keyboard isn't being moved because of us
-    if (self.pendingEntryRemovedOrAdded || self.showingOrHidingHiddenTVC) {
+    if (self.currentState != LogVCStateDefault) {
         // Grab the dimensions of the keyboard
         CGRect keyboardRect = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
         CGFloat keyboardHeight = beingShown ? keyboardRect.size.height : -keyboardRect.size.height;
@@ -640,20 +661,12 @@
         newBackgroundFrame.origin.y -= keyboardHeight;
         newBackgroundFrame.size.height += keyboardHeight;
         
+        // new CGRect for the hidden TVC
         CGRect newHiddenTVCViewFrame = self.venueListVC.view.frame;
+        newHiddenTVCViewFrame.origin.y -= keyboardHeight;
+        newHiddenTVCViewFrame.size.height += keyboardHeight;
         
-        if (self.showingOrHidingHiddenTVC) {        
-            // we are showing our hidden TVC
-            // so get a new frame ready to put it in the right spot
-            
-            newHiddenTVCViewFrame.origin.y += keyboardHeight;
-            newHiddenTVCViewFrame.size.height -= keyboardHeight;
-            
-            if (!beingShown) {
-                // give the new frame to the venueListVC right away so its waiting when the keyboard drops
-                self.venueListVC.view.frame = newHiddenTVCViewFrame;
-            }        
-        } else if (beingShown) {
+        if (beingShown) {
             // we want to show the button to choose location
             // so make sure it exists
             [self addLogBarButtonIfRequired];
@@ -666,7 +679,7 @@
         ((UILabel *)[self.logBarButton viewWithTag:LOWER_BUTTON_LABEL_TAG]).text = self.pendingLogEntry.venue ? self.pendingLogEntry.venue.name : @"Choose Venue";
         
         // only try and update the tableView if we've asked for this change by adding or removing an entry
-        if (self.pendingEntryRemovedOrAdded) {
+        if (self.currentState == LogVCStateAddingOrRemovingPendingEntry) {
             [self.tableView beginUpdates];
             
             // if the keyboard is being shown then we need to add an entry
@@ -680,17 +693,14 @@
                 self.pendingLogEntry = nil;
             }
             [self.tableView endUpdates];
-            
-            // reset the boolean so if something else moves the keyboard the tableView doesn't freak out
-            self.pendingEntryRemovedOrAdded = NO;
         }
-        
         
         [UIView animateWithDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]
                               delay:0
                             options:(UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState)
                          animations:^{
-                             if (!self.showingOrHidingHiddenTVC) {
+                             if (self.currentState == LogVCStateAddingOrRemovingPendingEntry ||
+                                 self.currentState == LogVCStateSentNewLogEntry) {
                                  // give the tabBar its new frame
                                  tabBar.frame = newTabBarFrame;
                                  
@@ -703,6 +713,9 @@
                                  // show the button to allow selection of venue (if required)
                                  self.logBarButton.alpha = beingShown;
                                  
+                                 // give the new frame to the hidden TVC
+                                 self.venueListVC.view.frame = newHiddenTVCViewFrame;
+                                 
                                  if (beingShown) {
                                      // get the tableView to scroll while the keyboard is appearing
                                      [self scrollTableViewToBottomAnimated:NO];
@@ -713,27 +726,23 @@
                              self.keyboardBackground.frame = newBackgroundFrame;                         
                          }
                          completion:^(BOOL finished){
-                             if (self.showingOrHidingHiddenTVC) {
-                                 
-                                 // if we're being shown again the process with the hidden TVC is complete
-                                 // so reset the boolean
+                             if (self.currentState != LogVCStateTogglingHiddenTVC) {
                                  if (beingShown) {
-                                     // now that the keyboard is up push the hidden TVC to the bottom again
-                                     self.venueListVC.view.frame = newHiddenTVCViewFrame;
-                                     self.showingOrHidingHiddenTVC = NO;
+                                     // call scrollTableViewToBottomAnimated again because otherwise its off by a couple of points
+                                     [self scrollTableViewToBottomAnimated:NO];
+                                     // grab the new cell and make its growingTextView the first responder
+                                     if (self.pendingLogEntry) {
+                                         [[self pendingLogEntryCell].logTextView becomeFirstResponder];
+                                     }
+                                 } else {
+                                     [self.logBarButton removeFromSuperview];
+                                     // remove the cancel button and replace it with the reload button
+                                     [self addRefreshButtonToNavigationItem];
                                  }
-                             } else if (beingShown) {
-                                 // call scrollTableViewToBottomAnimated again because otherwise its off by a couple of points
-                                 [self scrollTableViewToBottomAnimated:NO];
-                                 // grab the new cell and make its growingTextView the first responder
-                                 if (self.pendingLogEntry) {
-                                     [[self pendingLogEntryCell].logTextView becomeFirstResponder];
-                                 }
-                             } else {
-                                 [self.logBarButton removeFromSuperview];
-                                 // remove the cancel button and replace it with the reload button
-                                 [self addRefreshButtonToNavigationItem];
                              }
+                             
+                             // reset the LogVCState
+                             self.currentState = LogVCStateDefault;
                          }];
     }
 
