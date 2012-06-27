@@ -480,15 +480,15 @@
 - (void)checkinUserToVenue:(CPVenue *)venue
 {
     NSInteger hoursHere = 24;
-    [CPapi checkInToLocation:self.pendingLogEntry.venue hoursHere:hoursHere statusText:nil isVirtual:NO isAutomatic:NO completionBlock:^(NSDictionary *json, NSError *error){
+    [CPapi checkInToLocation:venue hoursHere:hoursHere statusText:nil isVirtual:NO isAutomatic:NO completionBlock:^(NSDictionary *json, NSError *error){
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {
                 // give the venue_id that came back with this request to the venue
-                self.pendingLogEntry.venue.venueID = [[json objectForKey:@"venue_id"] intValue];
+                venue.venueID = [[json objectForKey:@"venue_id"] intValue];
                 
                 // tell the CPCheckinHandler to do what it needs for successful checkin
                 NSInteger checkoutTime = [[NSDate dateWithTimeIntervalSinceNow:(60*60*hoursHere)] timeIntervalSince1970];
-                [CPCheckinHandler handleSuccessfulCheckinToVenue:self.pendingLogEntry.venue checkoutTime:checkoutTime];
+                [CPCheckinHandler handleSuccessfulCheckinToVenue:venue checkoutTime:checkoutTime];
             } else {
                 // TODO: handle this error
             }

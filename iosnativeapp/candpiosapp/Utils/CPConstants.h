@@ -41,7 +41,6 @@ extern  NSString* const kUserVoiceSecret;
 extern NSString* const kUDCurrentUser;
 extern NSString* const kUDCurrentVenue;
 extern NSString* const kUDPastVenues;
-extern NSString* const kUDFirstCheckIn;
 extern NSString* const kUDCheckoutTime;
 extern NSString* const kUDLastLoggedAppVersion;
 extern NSString* const kAutomaticCheckins;
