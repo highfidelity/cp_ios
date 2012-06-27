@@ -583,151 +583,156 @@
     // NOTE: it's pretty odd to be moving the UITabBar up and down and using it in our view
     // it's convenient though because it gives us the background and the log button
     
-    // Grab the dimensions of the keyboard
-    CGRect keyboardRect = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGFloat keyboardHeight = beingShown ? keyboardRect.size.height : -keyboardRect.size.height;
     
-    // create the indexPath for the last row
-    int row = self.logEntries.count - (beingShown ? 1 : 0);
-    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
-    NSArray *indexPathArray = [NSArray arrayWithObject:lastIndexPath];
-    
-    UITabBar *tabBar = [CPAppDelegate tabBarController].tabBar;
-    CPThinTabBar *thinBar = [CPAppDelegate tabBarController].thinBar;
-    
-    // new CGRect for the UITabBar
-    CGRect newTabBarFrame = tabBar.frame;
-    newTabBarFrame.origin.y -= keyboardHeight;
-    
-    // setup a new CGRect for the tableView
-    CGRect newTableViewFrame = self.tableView.frame;
-    newTableViewFrame.size.height -= keyboardHeight;
-    
-    // new CGRect for keyboardBackground
-    CGRect newBackgroundFrame = self.keyboardBackground.frame;
-    newBackgroundFrame.origin.y -= keyboardHeight;
-    newBackgroundFrame.size.height += keyboardHeight;
-    
-    CGRect newHiddenTVCViewFrame = self.venueListVC.view.frame;
-    
-    if (self.showingOrHidingHiddenTVC) {        
-        // we are showing our hidden TVC
-        // so get a new frame ready to put it in the right spot
+    // don't move anything if the keyboard isn't being moved because of us
+    if (self.pendingEntryRemovedOrAdded || self.showingOrHidingHiddenTVC) {
+        // Grab the dimensions of the keyboard
+        CGRect keyboardRect = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+        CGFloat keyboardHeight = beingShown ? keyboardRect.size.height : -keyboardRect.size.height;
+        
+        // create the indexPath for the last row
+        int row = self.logEntries.count - (beingShown ? 1 : 0);
+        NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
+        NSArray *indexPathArray = [NSArray arrayWithObject:lastIndexPath];
+        
+        UITabBar *tabBar = [CPAppDelegate tabBarController].tabBar;
+        CPThinTabBar *thinBar = [CPAppDelegate tabBarController].thinBar;
+        
+        // new CGRect for the UITabBar
+        CGRect newTabBarFrame = tabBar.frame;
+        newTabBarFrame.origin.y -= keyboardHeight;
+        
+        // setup a new CGRect for the tableView
+        CGRect newTableViewFrame = self.tableView.frame;
+        newTableViewFrame.size.height -= keyboardHeight;
+        
+        // new CGRect for keyboardBackground
+        CGRect newBackgroundFrame = self.keyboardBackground.frame;
+        newBackgroundFrame.origin.y -= keyboardHeight;
+        newBackgroundFrame.size.height += keyboardHeight;
+        
+        CGRect newHiddenTVCViewFrame = self.venueListVC.view.frame;
+        
+        if (self.showingOrHidingHiddenTVC) {        
+            // we are showing our hidden TVC
+            // so get a new frame ready to put it in the right spot
+            
+            newHiddenTVCViewFrame.origin.y += keyboardHeight;
+            newHiddenTVCViewFrame.size.height -= keyboardHeight;
+            
+            if (!beingShown) {
+                // give the new frame to the venueListVC right away so its waiting when the keyboard drops
+                self.venueListVC.view.frame = newHiddenTVCViewFrame;
+            }        
+        } else if (beingShown) {
+            // we want to show the button to choose location
+            // so make sure it exists
+            if (!self.logBarButton) {
+                self.logBarButton = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_AREA_WIDTH + 10, 0, thinBar.frame.size.width - (LEFT_AREA_WIDTH + 10), thinBar.frame.size.height)];
                 
-        newHiddenTVCViewFrame.origin.y += keyboardHeight;
-        newHiddenTVCViewFrame.size.height -= keyboardHeight;
-        
-        if (!beingShown) {
-            // give the new frame to the venueListVC right away so its waiting when the keyboard drops
-            self.venueListVC.view.frame = newHiddenTVCViewFrame;
-        }        
-    } else if (beingShown) {
-        // we want to show the button to choose location
-        // so make sure it exists
-        if (!self.logBarButton) {
-            self.logBarButton = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_AREA_WIDTH + 10, 0, thinBar.frame.size.width - (LEFT_AREA_WIDTH + 10), thinBar.frame.size.height)];
-            
-            // add a line on the left of the button
-            UIView *seperator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, self.logBarButton.frame.size.height)];
-            seperator.backgroundColor = [UIColor colorWithR:148 G:148 B:148 A:0.3];
-            [self.logBarButton addSubview:seperator];
-            
-            // add the small down arrow
-            UIImage *downArrow = [UIImage imageNamed:@"expand-arrow-down"];
-            UIImageView *smallArrow = [[UIImageView alloc] initWithImage:downArrow];
-            smallArrow.center = CGPointMake(20, self.logBarButton.frame.size.height / 2);
-            [self.logBarButton addSubview:smallArrow];
-            
-            // add the label for the chosen venue name
-            UILabel *venueLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 0, self.logBarButton.frame.size.width - 45, self.logBarButton.frame.size.height)];
-            venueLabel.tag = LOWER_BUTTON_LABEL_TAG;
-            venueLabel.backgroundColor = [UIColor clearColor];
-            venueLabel.textColor = [UIColor colorWithR:224 G:222 B:212 A:1.0];
-            venueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13];
-            venueLabel.shadowColor = [UIColor colorWithR:51 G:51 B:51 A:0.40];
-            venueLabel.shadowOffset = CGSizeMake(0, -2);
-            
-            [self.logBarButton addTarget:self action:@selector(showVenueList:) forControlEvents:UIControlEventTouchUpInside];
-            
-            [self.logBarButton addSubview:venueLabel];
+                // add a line on the left of the button
+                UIView *seperator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, self.logBarButton.frame.size.height)];
+                seperator.backgroundColor = [UIColor colorWithR:148 G:148 B:148 A:0.3];
+                [self.logBarButton addSubview:seperator];
+                
+                // add the small down arrow
+                UIImage *downArrow = [UIImage imageNamed:@"expand-arrow-down"];
+                UIImageView *smallArrow = [[UIImageView alloc] initWithImage:downArrow];
+                smallArrow.center = CGPointMake(20, self.logBarButton.frame.size.height / 2);
+                [self.logBarButton addSubview:smallArrow];
+                
+                // add the label for the chosen venue name
+                UILabel *venueLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 0, self.logBarButton.frame.size.width - 45, self.logBarButton.frame.size.height)];
+                venueLabel.tag = LOWER_BUTTON_LABEL_TAG;
+                venueLabel.backgroundColor = [UIColor clearColor];
+                venueLabel.textColor = [UIColor colorWithR:224 G:222 B:212 A:1.0];
+                venueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13];
+                venueLabel.shadowColor = [UIColor colorWithR:51 G:51 B:51 A:0.40];
+                venueLabel.shadowOffset = CGSizeMake(0, -2);
+                
+                [self.logBarButton addTarget:self action:@selector(showVenueList:) forControlEvents:UIControlEventTouchUpInside];
+                
+                [self.logBarButton addSubview:venueLabel];
+            }
+            // add the selectedVenueButton to the thinBar
+            [thinBar addSubview:self.logBarButton];
         }
-        // add the selectedVenueButton to the thinBar
-        [thinBar addSubview:self.logBarButton];
-    }
-    
-    // update the logBar label with the right text
-    ((UILabel *)[self.logBarButton viewWithTag:LOWER_BUTTON_LABEL_TAG]).text = self.pendingLogEntry.venue ? self.pendingLogEntry.venue.name : @"Choose Venue";
-    
-    // only try and update the tableView if we've asked for this change by adding or removing an entry
-    if (self.pendingEntryRemovedOrAdded) {
-        [self.tableView beginUpdates];
         
-        // if the keyboard is being shown then we need to add an entry
-        if (beingShown) {
-            [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationFade];
-        } else {
-            // otherwise  we're removing one
-            [self.tableView deleteRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationFade];
+        // update the logBar label with the right text
+        ((UILabel *)[self.logBarButton viewWithTag:LOWER_BUTTON_LABEL_TAG]).text = self.pendingLogEntry.venue ? self.pendingLogEntry.venue.name : @"Choose Venue";
+        
+        // only try and update the tableView if we've asked for this change by adding or removing an entry
+        if (self.pendingEntryRemovedOrAdded) {
+            [self.tableView beginUpdates];
             
-            // remove our pointer to the previous pendingLogEntry object now that the row is gone
-            self.pendingLogEntry = nil;
+            // if the keyboard is being shown then we need to add an entry
+            if (beingShown) {
+                [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationFade];
+            } else {
+                // otherwise  we're removing one
+                [self.tableView deleteRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationFade];
+                
+                // remove our pointer to the previous pendingLogEntry object now that the row is gone
+                self.pendingLogEntry = nil;
+            }
+            [self.tableView endUpdates];
+            
+            // reset the boolean so if something else moves the keyboard the tableView doesn't freak out
+            self.pendingEntryRemovedOrAdded = NO;
         }
-        [self.tableView endUpdates];
         
-        // reset the boolean so if something else moves the keyboard the tableView doesn't freak out
-        self.pendingEntryRemovedOrAdded = NO;
-    }
-    
-    
-    [UIView animateWithDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]
-                          delay:0
-                        options:(UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState)
-                     animations:^{
-                         if (!self.showingOrHidingHiddenTVC) {
-                             // give the tabBar its new frame
-                             tabBar.frame = newTabBarFrame;
+        
+        [UIView animateWithDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]
+                              delay:0
+                            options:(UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState)
+                         animations:^{
+                             if (!self.showingOrHidingHiddenTVC) {
+                                 // give the tabBar its new frame
+                                 tabBar.frame = newTabBarFrame;
+                                 
+                                 // toggle the alpha of the right side buttons and green line
+                                 [thinBar toggleRightSide:!beingShown];
+                                 
+                                 // give the tableView its new Frame
+                                 self.tableView.frame = newTableViewFrame;
+                                 
+                                 // show the button to allow selection of venue (if required)
+                                 self.logBarButton.alpha = beingShown;
+                                 
+                                 if (beingShown) {
+                                     // get the tableView to scroll while the keyboard is appearing
+                                     [self scrollTableViewToBottomAnimated:NO];
+                                 }
+                             }
                              
-                             // toggle the alpha of the right side buttons and green line
-                             [thinBar toggleRightSide:!beingShown];
-                             
-                             // give the tableView its new Frame
-                             self.tableView.frame = newTableViewFrame;
-                             
-                             // show the button to allow selection of venue (if required)
-                             self.logBarButton.alpha = beingShown;
-                             
-                             if (beingShown) {
-                                 // get the tableView to scroll while the keyboard is appearing
+                             // give the keyboard background its new frame
+                             self.keyboardBackground.frame = newBackgroundFrame;                         
+                         }
+                         completion:^(BOOL finished){
+                             if (self.showingOrHidingHiddenTVC) {
+                                 
+                                 // if we're being shown again the process with the hidden TVC is complete
+                                 // so reset the boolean
+                                 if (beingShown) {
+                                     // now that the keyboard is up push the hidden TVC to the bottom again
+                                     self.venueListVC.view.frame = newHiddenTVCViewFrame;
+                                     self.showingOrHidingHiddenTVC = NO;
+                                 }
+                             } else if (beingShown) {
+                                 // call scrollTableViewToBottomAnimated again because otherwise its off by a couple of points
                                  [self scrollTableViewToBottomAnimated:NO];
+                                 // grab the new cell and make its growingTextView the first responder
+                                 if (self.pendingLogEntry) {
+                                     [[self pendingLogEntryCell].logTextView becomeFirstResponder];
+                                 }
+                             } else {
+                                 [self.logBarButton removeFromSuperview];
+                                 // remove the cancel button and replace it with the reload button
+                                 [self addRefreshButtonToNavigationItem];
                              }
-                         }
-                                                  
-                         // give the keyboard background its new frame
-                         self.keyboardBackground.frame = newBackgroundFrame;                         
-                     }
-                     completion:^(BOOL finished){
-                         if (self.showingOrHidingHiddenTVC) {
-                             
-                             // if we're being shown again the process with the hidden TVC is complete
-                             // so reset the boolean
-                             if (beingShown) {
-                                 // now that the keyboard is up push the hidden TVC to the bottom again
-                                 self.venueListVC.view.frame = newHiddenTVCViewFrame;
-                                 self.showingOrHidingHiddenTVC = NO;
-                             }
-                         } else if (beingShown) {
-                             // call scrollTableViewToBottomAnimated again because otherwise its off by a couple of points
-                             [self scrollTableViewToBottomAnimated:NO];
-                             // grab the new cell and make its growingTextView the first responder
-                             if (self.pendingLogEntry) {
-                                 [[self pendingLogEntryCell].logTextView becomeFirstResponder];
-                             }
-                         } else {
-                             [self.logBarButton removeFromSuperview];
-                             // remove the cancel button and replace it with the reload button
-                             [self addRefreshButtonToNavigationItem];
-                         }
-                     }];
+                         }];
+    }
+
 }
 
 #pragma mark - HPGrowingTextViewDelegate
