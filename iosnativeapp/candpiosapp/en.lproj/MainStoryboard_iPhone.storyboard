@@ -339,23 +339,23 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="log-update-icon.png" id="IBk-iy-pAl">
-                                                    <rect key="frame" x="44" y="5" width="15" height="15"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
                                                 <view contentMode="scaleToFill" id="WfH-tm-isx" customClass="HPGrowingTextView">
-                                                    <rect key="frame" x="66" y="-4" width="234" height="30"/>
+                                                    <rect key="frame" x="72" y="-4" width="234" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Update:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="TVv-Le-rw5">
-                                                    <rect key="frame" x="66" y="3" width="46" height="16"/>
+                                                    <rect key="frame" x="72" y="3" width="46" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="tq3-cu-5V2">
+                                                    <rect key="frame" x="39" y="2" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -363,6 +363,7 @@
                                         <connections>
                                             <outlet property="entryLabel" destination="TVv-Le-rw5" id="B42-rk-nNP"/>
                                             <outlet property="logTextView" destination="WfH-tm-isx" id="Yhl-a0-L5H"/>
+                                            <outlet property="senderProfileImageView" destination="tq3-cu-5V2" id="H4c-AD-yU6"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -696,7 +697,6 @@
         <image name="contact-ignore.png" width="38" height="38"/>
         <image name="contacts-blank-slate.png" width="320" height="340"/>
         <image name="default-avatar-256.png" width="256" height="256"/>
-        <image name="log-update-icon.png" width="20" height="20"/>
         <image name="love-sent.png" width="17" height="11"/>
         <image name="map-locate.png" width="40" height="41"/>
         <image name="map-refresh-progress-arrow.png" width="24" height="24"/>
@@ -704,6 +704,118 @@
         <image name="map-shadow.png" width="10" height="320"/>
         <image name="picture-coming-soon.jpg" width="100" height="100"/>
     </resources>
+    <classes>
+        <class className="CPBaseTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPBaseTableViewController.h"/>
+        </class>
+        <class className="CPSwipeableTableViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPSwipeableTableViewCell.h"/>
+        </class>
+        <class className="CPTabBarController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPTabBarController.h"/>
+            <relationships>
+                <relationship kind="action" name="addLogButtonPressed:"/>
+            </relationships>
+        </class>
+        <class className="ContactListCell" superclassName="CPSwipeableTableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ContactListCell.h"/>
+            <relationships>
+                <relationship kind="action" name="acceptButtonAction"/>
+                <relationship kind="action" name="declineButtonAction"/>
+                <relationship kind="outlet" name="acceptContactRequestButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="declineContactRequestButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="ContactListViewController" superclassName="CPBaseTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ContactListViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="placeholderImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="HPGrowingTextView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HPGrowingTextView.h"/>
+        </class>
+        <class className="LogBaseEntryCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogBaseEntryCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="entryLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="senderProfileImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="LogLoveCell" superclassName="LogBaseEntryCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogLoveCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="receiverProfileImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="LogNewEntryCell" superclassName="LogBaseEntryCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogNewEntryCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="logTextView" candidateClass="HPGrowingTextView"/>
+            </relationships>
+        </class>
+        <class className="LogUpdateCell" superclassName="LogBaseEntryCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogUpdateCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LogViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="MapTabController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapTabController.h"/>
+            <relationships>
+                <relationship kind="action" name="locateMe:"/>
+                <relationship kind="action" name="refreshButtonClicked:"/>
+                <relationship kind="outlet" name="mapAndButtonsView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="UserListTableViewController" superclassName="CPBaseTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserListTableViewController.h"/>
+        </class>
+        <class className="UserTableViewCell" superclassName="CPSwipeableTableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserTableViewCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="categoryLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="checkInCountLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="checkInLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="distanceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="profilePictureImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="VenueCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueCheckins" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueDistance" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venuePicture" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="VenueListTableViewController" superclassName="CPBaseTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueListTableViewController.h"/>
+        </class>
+        <class className="VenueViewToggleViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueViewToggleViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="segmentedControl" candidateClass="UISegmentedControl"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

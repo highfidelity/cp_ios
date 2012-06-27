@@ -322,9 +322,6 @@
                 updateCell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];        
             }
             
-            // set the profile image for this log entry
-            [updateCell.senderProfileImageView setImageWithURL:logEntry.author.photoURL placeholderImage:[CPUIHelper defaultProfileImage]]; 
-            
             // the cell to return is the updateCell
             cell = updateCell;
             
@@ -333,8 +330,6 @@
             static NSString *loveCellIdentifier = @"LogLoveCell";
             LogLoveCell *loveCell = [tableView dequeueReusableCellWithIdentifier:loveCellIdentifier];
             
-            // lazy load the sender's profile image
-            [loveCell.senderProfileImageView setImageWithURL:logEntry.author.photoURL placeholderImage:[CPUIHelper defaultProfileImage]];
             // lazy load the receiver's profile image
             [loveCell.receiverProfileImageView setImageWithURL:logEntry.receiver.photoURL placeholderImage:[CPUIHelper defaultProfileImage]];
             
@@ -351,7 +346,7 @@
 
             // the cell to return is the loveCell
             cell = loveCell;
-        }  
+        } 
         
         // the text for this entry is prepended with NICKNAME logged:
         cell.entryLabel.text = [self textForLogEntry:logEntry];
@@ -362,6 +357,8 @@
         cell.entryLabel.frame = entryFrame;
     }
     
+    // every cell has the log entry author's profile image as the senderProfileImageView
+    [cell.senderProfileImageView setImageWithURL:logEntry.author.photoURL placeholderImage:[CPUIHelper defaultProfileImage]];
     [self roundedStyleForImageView:cell.senderProfileImageView];
     
     // return the cell
@@ -568,6 +565,38 @@
     }
 }
 
+- (void)addLogBarButtonIfRequired
+{
+    if (!self.logBarButton) {
+        CPThinTabBar *thinBar = [CPAppDelegate tabBarController].thinBar;
+        self.logBarButton = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_AREA_WIDTH + 10, 0, thinBar.frame.size.width - (LEFT_AREA_WIDTH + 10), thinBar.frame.size.height)];
+        
+        // add a line on the left of the button
+        UIView *seperator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, self.logBarButton.frame.size.height)];
+        seperator.backgroundColor = [UIColor colorWithR:148 G:148 B:148 A:0.3];
+        [self.logBarButton addSubview:seperator];
+        
+        // add the small down arrow
+        UIImage *downArrow = [UIImage imageNamed:@"expand-arrow-down"];
+        UIImageView *smallArrow = [[UIImageView alloc] initWithImage:downArrow];
+        smallArrow.center = CGPointMake(20, self.logBarButton.frame.size.height / 2);
+        [self.logBarButton addSubview:smallArrow];
+        
+        // add the label for the chosen venue name
+        UILabel *venueLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 0, self.logBarButton.frame.size.width - 45, self.logBarButton.frame.size.height)];
+        venueLabel.tag = LOWER_BUTTON_LABEL_TAG;
+        venueLabel.backgroundColor = [UIColor clearColor];
+        venueLabel.textColor = [UIColor colorWithR:224 G:222 B:212 A:1.0];
+        venueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13];
+        venueLabel.shadowColor = [UIColor colorWithR:51 G:51 B:51 A:0.40];
+        venueLabel.shadowOffset = CGSizeMake(0, -2);
+        
+        [self.logBarButton addTarget:self action:@selector(showVenueList:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.logBarButton addSubview:venueLabel];
+    }
+}
+
 # pragma mark - Keyboard hide/show notification
 
 - (void) keyboardWillShow:(NSNotification *)notification{
@@ -627,33 +656,8 @@
         } else if (beingShown) {
             // we want to show the button to choose location
             // so make sure it exists
-            if (!self.logBarButton) {
-                self.logBarButton = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_AREA_WIDTH + 10, 0, thinBar.frame.size.width - (LEFT_AREA_WIDTH + 10), thinBar.frame.size.height)];
-                
-                // add a line on the left of the button
-                UIView *seperator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, self.logBarButton.frame.size.height)];
-                seperator.backgroundColor = [UIColor colorWithR:148 G:148 B:148 A:0.3];
-                [self.logBarButton addSubview:seperator];
-                
-                // add the small down arrow
-                UIImage *downArrow = [UIImage imageNamed:@"expand-arrow-down"];
-                UIImageView *smallArrow = [[UIImageView alloc] initWithImage:downArrow];
-                smallArrow.center = CGPointMake(20, self.logBarButton.frame.size.height / 2);
-                [self.logBarButton addSubview:smallArrow];
-                
-                // add the label for the chosen venue name
-                UILabel *venueLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 0, self.logBarButton.frame.size.width - 45, self.logBarButton.frame.size.height)];
-                venueLabel.tag = LOWER_BUTTON_LABEL_TAG;
-                venueLabel.backgroundColor = [UIColor clearColor];
-                venueLabel.textColor = [UIColor colorWithR:224 G:222 B:212 A:1.0];
-                venueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13];
-                venueLabel.shadowColor = [UIColor colorWithR:51 G:51 B:51 A:0.40];
-                venueLabel.shadowOffset = CGSizeMake(0, -2);
-                
-                [self.logBarButton addTarget:self action:@selector(showVenueList:) forControlEvents:UIControlEventTouchUpInside];
-                
-                [self.logBarButton addSubview:venueLabel];
-            }
+            [self addLogBarButtonIfRequired];
+
             // add the selectedVenueButton to the thinBar
             [thinBar addSubview:self.logBarButton];
         }
