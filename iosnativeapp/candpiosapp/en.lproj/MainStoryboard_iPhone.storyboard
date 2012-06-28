@@ -209,7 +209,7 @@
             </objects>
             <point key="canvasLocation" x="-831" y="-1726"/>
         </scene>
-        <!--Log View Controller - My Logbook-->
+        <!--Log View Controller - Activity-->
         <scene sceneID="TLA-K8-9xx">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kQN-dH-rA9" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -375,7 +375,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="My Logbook" id="61X-eH-TNO"/>
+                    <navigationItem key="navigationItem" title="Activity" id="61X-eH-TNO"/>
                     <connections>
                         <outlet property="tableView" destination="seB-8X-LdH" id="X5d-e2-cle"/>
                     </connections>
