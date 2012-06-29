@@ -227,7 +227,7 @@ static char BOOLRevealing;
 		
 		CGPoint center = self.contentView.center;
 		center.x = newCenterPosition;
-		
+        
 		self.contentView.layer.position = center;
 		
 	} else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
@@ -489,6 +489,24 @@ static char BOOLRevealing;
     
     // set our boolean so this instance knows what state the quick action switch is in
     self.quickActionLocked = active;
+}
+
+#pragma mark - Quick action peekabo
+
+#define PEEKABOO_OFFSET 122
+
+- (void)peekaboForQuickActionCell:(BOOL)peekOut
+{
+    if (peekOut) {
+        // calculate the new center position
+        CGFloat peekCenter = self.contentView.center.x + PEEKABOO_OFFSET;
+        // move the content view to the new center
+        self.contentView.layer.position = CGPointMake(peekCenter, self.contentView.center.y);
+        // make sure the rocker switch is shown
+        [self checkForQuickActionSwitchToggleForNewCenter:peekCenter];
+    } else {
+        // slide the cell back in
+    }
 }
 
 #pragma mark - UIGestureRecognizerDelegate

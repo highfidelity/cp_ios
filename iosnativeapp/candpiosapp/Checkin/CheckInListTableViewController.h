@@ -8,10 +8,11 @@
 #import <UIKit/UIKit.h>
 #import "SVPullToRefresh.h"
 
-@interface CheckInListTableViewController : UITableViewController <UIAlertViewDelegate, UITextFieldDelegate>
+@interface CheckInListTableViewController : UIViewController <UIAlertViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, strong) NSMutableArray *places;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 - (void)refreshLocations;
 

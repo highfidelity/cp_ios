@@ -44,4 +44,6 @@ typedef enum {
 @property (nonatomic, assign) CPSwipeableTableViewCellSwipeStyle leftStyle;
 @property (nonatomic, assign) CPSwipeableTableViewCellSwipeStyle rightStyle;
 
+- (void)peekaboForQuickActionCell:(BOOL)peekOut;
+
 @end
