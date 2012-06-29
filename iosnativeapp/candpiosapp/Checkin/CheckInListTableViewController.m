@@ -51,6 +51,11 @@
     UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 1)];
     topLine.backgroundColor = [UIColor colorWithRed:(68.0/255.0) green:(68.0/255.0) blue:(68.0/255.0) alpha:1.0];
     [self.view addSubview:topLine];
+    
+    __block CheckInListTableViewController *checkinTVC = self;
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        [checkinTVC refreshLocations]; 
+    }];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -105,8 +110,9 @@
             
             // sort the places array by distance from user
             [self.places sortUsingSelector:@selector(sortByDistanceToUser:)];
-            
             [self.tableView reloadData];            
+            
+            [self.tableView.pullToRefreshView stopAnimating];
         }
     }];
 }

@@ -687,7 +687,7 @@ typedef enum {
                 [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationFade];
                 
                 // tell the hidden TVC to reload the venue list
-                [self.venueListVC refreshLocations];
+                [self.venueListVC.tableView.pullToRefreshView triggerRefresh];
             } else {
                 // otherwise  we're removing one
                 [self.tableView deleteRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationFade];
