@@ -271,31 +271,40 @@
 
 #pragma mark - Table view delegate
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 22;
+    return 30;
 }
 
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-
-    NSString *title = [self tableView:tableView titleForHeaderInSection:section];
-
-    UIView *theView = [[UIView alloc] init];
-    theView.backgroundColor = RGBA(66, 66, 66, 1);
-
-    UILabel *label = [[UILabel alloc] init];
-    label.text = title;
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor whiteColor];
-    label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
-    [label sizeToFit];
-
-    label.frame = CGRectMake(label.frame.origin.x+10, label.frame.origin.y+1, label.frame.size.width, label.frame.size.height);
-
-    [theView addSubview:label];
     
-    return theView;
+    // alloc-init a header UIView and give it the right background color
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, [self tableView:tableView heightForHeaderInSection:section])];
+    headerView.backgroundColor = [UIColor colorWithR:68 G:68 B:68 A:1];
+    
+    // alloc-init a UILabel to place in the header view
+    CGFloat labelLeft = 15;
+    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(labelLeft, 0, headerView.frame.size.width - labelLeft, headerView.frame.size.height)];
+    
+    // change the font to league gothic
+    [CPUIHelper changeFontForLabel:headerLabel toLeagueGothicOfSize:18];
+    
+    // change the text color and shadow for the label
+    headerLabel.textColor = [UIColor colorWithR:193 G:193 B:193 A:1];
+    headerLabel.shadowColor = [UIColor colorWithR:0 G:0 B:0 A:0.5];
+    headerLabel.shadowOffset = CGSizeMake(0, -1);
+    
+    // clear the background color on the label
+    headerLabel.backgroundColor = [UIColor clearColor];
+    
+    // give the headerLabel the right text
+    headerLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+
+    // add the label to the header
+    [headerView addSubview:headerLabel];
+    
+    // return the headerView
+    return headerView;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
