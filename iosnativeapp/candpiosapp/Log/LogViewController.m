@@ -186,7 +186,7 @@ typedef enum {
 - (UIFont *)fontForLogEntry:(CPLogEntry *)logEntry
 {
     if (logEntry.type == CPLogEntryTypeUpdate) {
-        return [UIFont systemFontOfSize:12];
+        return [UIFont systemFontOfSize:(logEntry.author.userID == [CPAppDelegate currentUser].userID ? 13 : 12)];
     } else {
         return [UIFont boldSystemFontOfSize:10];
     }
