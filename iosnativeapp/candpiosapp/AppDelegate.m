@@ -148,33 +148,9 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     application.statusBarStyle = UIStatusBarStyleBlackOpaque;
 
     [self.window makeKeyAndVisible];
-
-    // here we're going to check what the user's previously registered app version was
-    // this allows us to force them to login again if required
-    // or to tell them to update
-    NSString *appVersion = DEFAULTS(object, kUDLastLoggedAppVersion);
-
-#if DEBUG
-    NSLog(@"The last logged app version for this user is %@.", appVersion);
-#endif
-            
-    if (!appVersion || [appVersion doubleValue] < 1.3) {
-        // we either don't have a logged version or it's less than our current baseline
-        // kill the current user object
-#if DEBUG
-        NSLog(@"Forcing logout based on app version check."); 
-#endif
-        [self logoutEverything];
-    }
     
-    NSString *currentVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    // set the kUDLastLoggedAppVersion to the current version if there has been a change
-    if (!appVersion || [appVersion doubleValue] < [currentVersion doubleValue]) {
-#if DEBUG
-        NSLog(@"Storing app version %@ in NSUserDefaults.", currentVersion);
-#endif
-        SET_DEFAULTS(Object, kUDLastLoggedAppVersion, currentVersion);
-    }    
+    // check if we need to force a user logout if their version of the app is too old
+    [self performAppVersionCheck];
     
     if ( ! [CPAppDelegate currentUser]) {
         [self showSignupModalFromViewController:self.tabBarController animated:NO];
@@ -800,6 +776,36 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 }
 
 #pragma mark - Login Stuff
+
+-(void)performAppVersionCheck
+{
+    // here we're going to check what the user's previously registered app version was
+    // this allows us to force them to login again if required
+    // or to tell them to update
+    NSString *appVersion = DEFAULTS(object, kUDLastLoggedAppVersion);
+    
+#if DEBUG
+    NSLog(@"The last logged app version for this user is %@.", appVersion);
+#endif
+    
+    if (!appVersion || [appVersion doubleValue] < 1.3) {
+        // we either don't have a logged version or it's less than our current baseline
+        // kill the current user object
+#if DEBUG
+        NSLog(@"Forcing logout based on app version check."); 
+#endif
+        [self logoutEverything];
+    }
+    
+    NSString *currentVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    // set the kUDLastLoggedAppVersion to the current version if there has been a change
+    if (!appVersion || [appVersion doubleValue] < [currentVersion doubleValue]) {
+#if DEBUG
+        NSLog(@"Storing app version %@ in NSUserDefaults.", currentVersion);
+#endif
+        SET_DEFAULTS(Object, kUDLastLoggedAppVersion, currentVersion);
+    }   
+}
 
 -(void)logoutEverything
 {
