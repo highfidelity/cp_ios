@@ -98,7 +98,7 @@
     
     // Iterate through the passed missions and only show the ones that were within the map bounds, ordered by distance
 
-    CLLocation *currentLocation = [AppDelegate instance].settings.lastKnownLocation;
+    CLLocation *currentLocation = [CPAppDelegate locationManager].location;
     
     for (User *user in [self.weeklyUsers copy]) {
         CLLocation *location = [[CLLocation alloc] initWithLatitude:user.location.latitude longitude:user.location.longitude];

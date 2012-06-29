@@ -61,7 +61,7 @@
 - (CLRegion *)getRegionForVenue:(CPVenue *)venue;
 - (void)startMonitoringVenue:(CPVenue *)venue;
 - (void)stopMonitoringVenue:(CPVenue *)venue;
-- (void)startStandardUpdates;
+- (void)startLocationMonitoring;
 
 void uncaughtExceptionHandler(NSException *exception);
 void SignalHandler(int sig);

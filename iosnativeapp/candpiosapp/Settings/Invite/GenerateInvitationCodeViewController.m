@@ -84,7 +84,7 @@
 - (void)loadCode {
     [SVProgressHUD showWithStatus:@"Loading..."];
     
-    CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
+    CLLocation *location = [CPAppDelegate locationManager].location;
     
     [CPapi getInvitationCodeForLocation:location
                    withCompletionsBlock:^(NSDictionary *json, NSError *error) {

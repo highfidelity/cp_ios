@@ -13,14 +13,12 @@
 
 @interface AutoCheckinTableViewController ()
 @property (nonatomic, strong) NSMutableArray *placesArray;
-@property (nonatomic, strong) CLLocationManager *locationManager;
 @end
 
 @implementation AutoCheckinTableViewController
 
 @synthesize globalCheckinSwitch = _globalCheckinSwitch;
 @synthesize placesArray = _placesArray;
-@synthesize locationManager = _locationManager;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {

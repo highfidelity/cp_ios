@@ -365,13 +365,10 @@ UITapGestureRecognizer* _tapRecon = nil;
         CLLocationCoordinate2D coordinate = [self.mapView convertPoint:rightAndUp toCoordinateFromView:self.mapView];
         [self.mapView setCenterCoordinate:coordinate animated:NO];
         
-        // if we have a location from this user then set the distance label to show how far the other user is
-        if ([AppDelegate instance].settings.hasLocation) {
-            CLLocation *myLocation = [[AppDelegate instance].settings lastKnownLocation];
-            CLLocation *otherUserLocation = [[CLLocation alloc] initWithLatitude:self.user.location.latitude longitude:self.user.location.longitude];
-            NSString *distance = [CPUtils localizedDistanceofLocationA:myLocation awayFromLocationB:otherUserLocation];
-            self.distanceLabel.text = distance;
-        }
+        CLLocation *myLocation = [CPAppDelegate locationManager].location;
+        CLLocation *otherUserLocation = [[CLLocation alloc] initWithLatitude:self.user.location.latitude longitude:self.user.location.longitude];
+        NSString *distance = [CPUtils localizedDistanceofLocationA:myLocation awayFromLocationB:otherUserLocation];
+        self.distanceLabel.text = distance;
         
         self.mapAndDistanceLoaded = YES;
     }

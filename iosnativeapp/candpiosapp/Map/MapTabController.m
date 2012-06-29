@@ -106,12 +106,7 @@ BOOL clearLocations = NO;
     [self checkIfUserHasDismissedLocationAlert];
     
     // center on the last known user location
-	if([AppDelegate instance].settings.hasLocation)
-	{
-		//[mapView setCenterCoordinate:[AppDelegate instance].settings.lastKnownLocation.coordinate];
-		NSLog(@"MapTab: viewDidLoad zoomto (lat %f, lon %f)", [AppDelegate instance].settings.lastKnownLocation.coordinate.latitude, [AppDelegate instance].settings.lastKnownLocation.coordinate.longitude);
-		[self zoomTo: [AppDelegate instance].settings.lastKnownLocation.coordinate];
-	}
+	[self zoomTo:[CPAppDelegate locationManager].location.coordinate];
 
 	NSOperationQueue *queue = [NSOperationQueue mainQueue];
 	//NSOperationQueue *queue = [[NSOperationQueue alloc] init];
@@ -469,18 +464,10 @@ BOOL clearLocations = NO;
 }
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-//	NSLog(@"MapTab: didUpdateUserLocation (lat %f, lon %f)",
-//          userLocation.location.coordinate.latitude,
-//          userLocation.location.coordinate.longitude);
 	
 	if(userLocation.location.coordinate.latitude != 0 &&
        userLocation.location.coordinate.longitude != 0)
-	{
-		// save the location for the next time
-		[AppDelegate instance].settings.hasLocation = true;
-		[AppDelegate instance].settings.lastKnownLocation = userLocation.location;
-		[[AppDelegate instance] saveSettings];
-		
+	{		
         if (!hasUpdatedUserLocation) {
             NSLog(@"MapTab: didUpdateUserLocation a zoomto (lat %f, lon %f)",
                   userLocation.location.coordinate.latitude,

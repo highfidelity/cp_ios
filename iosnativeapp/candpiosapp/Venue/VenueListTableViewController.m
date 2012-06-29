@@ -106,7 +106,7 @@
         return [first compare:second];
     }] mutableCopy];
     
-    CLLocation *currentLocation = [AppDelegate instance].settings.lastKnownLocation;
+    CLLocation *currentLocation = [CPAppDelegate locationManager].location;
     
     // although distanceFromUser has already been set after the API call in the map
     // it's been set to distance from the center of the map, which isn't necessarily the user's location

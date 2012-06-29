@@ -10,8 +10,6 @@
 
 @implementation Settings
 @synthesize flag;
-@synthesize hasLocation;
-@synthesize lastKnownLocation;
 @synthesize registeredForApnsSuccessfully;
 //@synthesize candpLoginToken;
 @synthesize userEmailAddress, userPassword, userBalance;
@@ -36,9 +34,7 @@
 - (void)encodeWithCoder:(NSCoder *)encoder 
 {
     [encoder encodeBool:flag forKey:@"flag"];
-    [encoder encodeBool:hasLocation forKey:@"hasLocation"];
     [encoder encodeBool:registeredForApnsSuccessfully forKey:@"registeredForApnsSuccessfully"];
-    [encoder encodeObject:lastKnownLocation forKey:@"lastKnownLocation"];
 	[encoder encodeObject:userEmailAddress	forKey:@"userEmailAddress"];
 	[encoder encodeObject:userPassword	forKey:@"userPassword"];
 	[encoder encodeFloat:userBalance forKey:@"userBalance"];
@@ -50,9 +46,7 @@
 {
     if ((self = [super init])) {
         flag = [decoder decodeBoolForKey:@"flag"];
-        hasLocation = [decoder decodeBoolForKey:@"hasLocation"];
         registeredForApnsSuccessfully = [decoder decodeBoolForKey:@"registeredForApnsSuccessfully"];
-        lastKnownLocation = [decoder decodeObjectForKey:@"lastKnownLocation"];
 		
 		userEmailAddress = [decoder decodeObjectForKey:@"userEmailAddress"];
 		userPassword = [decoder decodeObjectForKey:@"userPassword"];

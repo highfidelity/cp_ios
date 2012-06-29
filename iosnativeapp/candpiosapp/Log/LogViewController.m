@@ -679,12 +679,15 @@ typedef enum {
         ((UILabel *)[self.logBarButton viewWithTag:LOWER_BUTTON_LABEL_TAG]).text = self.pendingLogEntry.venue ? self.pendingLogEntry.venue.name : @"Choose Venue";
         
         // only try and update the tableView if we've asked for this change by adding or removing an entry
-        if (self.currentState == LogVCStateAddingOrRemovingPendingEntry) {
+        if (self.currentState == LogVCStateAddingOrRemovingPendingEntry) {            
             [self.tableView beginUpdates];
             
             // if the keyboard is being shown then we need to add an entry
             if (beingShown) {
                 [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationFade];
+                
+                // tell the hidden TVC to reload the venue list
+                [self.venueListVC refreshLocations];
             } else {
                 // otherwise  we're removing one
                 [self.tableView deleteRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationFade];

@@ -12,9 +12,7 @@
 @interface Settings : NSObject< NSCoding, NSCopying >
 
 @property (nonatomic, assign) bool flag;
-@property (nonatomic, assign) bool hasLocation;
 @property (nonatomic, assign) bool registeredForApnsSuccessfully;
-@property (nonatomic, copy) CLLocation *lastKnownLocation;
 
 //@property (nonatomic, copy) NSString *candpLoginToken;
 

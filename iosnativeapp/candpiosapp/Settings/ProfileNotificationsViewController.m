@@ -27,7 +27,6 @@
 @property (weak, nonatomic) IBOutlet UISwitch *contactsOnlyChatSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *chatNotificationLabel;
 @property (nonatomic, strong) NSMutableArray *placesArray;
-@property (nonatomic, strong) CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 
 
@@ -57,7 +56,6 @@
 @synthesize quietTimeFromDate = _quietTimeFromDate;
 @synthesize quietTimeToDate = _quietTimeToDate;
 @synthesize placesArray = _placesArray;
-@synthesize locationManager = _locationManager;
 @synthesize headerView = _headerView;
 
 #pragma mark - View lifecycle

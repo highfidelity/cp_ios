@@ -942,7 +942,7 @@
     
     //Find the distance between the user and the venue in Meters
     CLLocation *venueLocation= [[CLLocation alloc] initWithLatitude:self.venue.coordinate.latitude longitude:self.venue.coordinate.longitude];
-    double distanceFromUserMeters = [venueLocation distanceFromLocation:[[AppDelegate instance].settings lastKnownLocation]];
+    double distanceFromUserMeters = [venueLocation distanceFromLocation:[CPAppDelegate locationManager].location];
     //double venueDistance = self.venue.distanceFromUser;
     if(distanceFromUserMeters>300)
     {
@@ -1187,7 +1187,7 @@
         
         if (alertView.tag == 1045) {
             // get the user's current location
-            CLLocationCoordinate2D currentLocation = [CPAppDelegate settings].lastKnownLocation.coordinate;
+            CLLocationCoordinate2D currentLocation = [CPAppDelegate locationManager].location.coordinate;
             NSString *fullAddress = [NSString stringWithFormat:@"%@, %@, %@", self.venue.address, self.venue.city, self.venue.state];
             // setup the url to open google maps
             urlString = [NSString stringWithFormat: @"http://maps.google.com/maps?saddr=%f,%f&daddr=%@",

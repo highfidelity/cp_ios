@@ -159,7 +159,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     
     [self customAppearanceStyles];
     [self hideLoginBannerWithCompletion:nil];
-    [self startStandardUpdates];
+    [self startLocationMonitoring];
     
     // Initialize MKStoreKit
     [MKStoreManager sharedManager];
@@ -177,16 +177,13 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-//    if (self.locationManager.monitoredRegions.count == 0) {
-//        [self.locationManager stopMonitoringSignificantLocationChanges];
-//    }
-//    else {
-//        [self.locationManager startMonitoringSignificantLocationChanges];        
-//    }
-
-    // Stop monitoring for locations; if geofences are set up, they'll automatically work in the background    
-    [self.locationManager stopMonitoringSignificantLocationChanges];    
-//    [self.locationManager stopUpdatingLocation];
+    // in order to make sure we don't have stray significant change monitoring
+    // from previous app versions
+    // we need to call stopMonitoringSignificantLocationChanges here
+    [self.locationManager stopMonitoringSignificantLocationChanges];
+    
+    // stop monitoring user location, we're going to the background
+    [self.locationManager stopUpdatingLocation];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -433,25 +430,18 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     [FlurryAnalytics logEvent:@"automaticCheckinLocationDisabled"];
 }
 
-- (void)startStandardUpdates
+- (void)startLocationMonitoring
 {
     // Create the location manager if this object does not already have one.
-    
-    if (nil == self.locationManager)
+    if (!self.locationManager) {
         self.locationManager = [[CLLocationManager alloc] init];
+    }
     
     self.locationManager.delegate = self;
-    
     self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    
     self.locationManager.distanceFilter = 20;
     
-    [self.locationManager startMonitoringSignificantLocationChanges];
-    
-    // Do not create regions if support is unavailable or disabled.
-    if (![CLLocationManager regionMonitoringAvailable] || ![CLLocationManager regionMonitoringEnabled]) {
-        return;
-    }
+    [self.locationManager startUpdatingLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {

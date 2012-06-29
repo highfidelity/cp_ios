@@ -19,7 +19,6 @@
 
 @synthesize delegate = _delegate;
 @synthesize places = _places;
-@synthesize refreshLocationsNow = _refreshLocationsNow;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -45,61 +44,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.refreshLocationsNow = YES;
-        
+    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // add the separator line above each cell
     UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 1)];
     topLine.backgroundColor = [UIColor colorWithRed:(68.0/255.0) green:(68.0/255.0) blue:(68.0/255.0) alpha:1.0];
     [self.view addSubview:topLine];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reloadData)
-                                                 name:@"LoginStateChanged"
-                                               object:nil];
-}
-
-- (IBAction)closeWindow:(id)sender {
-    [SVProgressHUD dismiss];
-    [self dismissModalViewControllerAnimated:YES];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LoginStateChanged" object:nil];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    if (self.navigationItem.rightBarButtonItem) {
-        self.navigationItem.rightBarButtonItem = nil;
-    }
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-    // Load the list of nearby venues
-    if (self.refreshLocationsNow) {
-        [self refreshLocations];
-        self.refreshLocationsNow = NO;
-    }
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -117,15 +68,13 @@
     
     self.places = [[NSMutableArray alloc] init];
 
-    CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
-    [FoursquareAPIRequest getVenuesCloseToLocation:location :^(NSDictionary *json, NSError *error){
+    CLLocation *userLocation = [CPAppDelegate locationManager].location;
+    [FoursquareAPIRequest getVenuesCloseToLocation:userLocation :^(NSDictionary *json, NSError *error){
         // Do error checking here, in case Foursquare is down
         if (!error || [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
             
             // get the array of places that foursquare returned
             NSArray *itemsArray = [[json valueForKey:@"response"] valueForKey:@"venues"];
-            
-            CLLocation *userLocation = [[AppDelegate instance].settings lastKnownLocation];
             
             // iterate through the results and add them to the places array
             for (NSMutableDictionary *item in itemsArray) {
@@ -157,20 +106,7 @@
             // sort the places array by distance from user
             [self.places sortUsingSelector:@selector(sortByDistanceToUser:)];
             
-//            // add a custom place so people can checkin if foursquare doesn't have the venue
-//            CPVenue *place = [[CPVenue alloc] init];
-//            place.name = @"Add Place...";
-//            place.foursquareID = @"0";
-//            
-//            CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
-//            place.coordinate = location.coordinate;
-//            
-//            [places insertObject:place atIndex:[places count]];
-            
             [self.tableView reloadData];            
-        } else {            
-            UIBarButtonItem *refresh = [[UIBarButtonItem alloc] initWithTitle:@"Refresh" style:UIBarButtonItemStylePlain target:self action:@selector(refreshLocations)];
-            self.navigationItem.rightBarButtonItem = refresh;
         }
     }];
 }
@@ -263,7 +199,7 @@
     
     // Send Add request to Foursquare and use the new Venue ID here
     
-    CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
+    CLLocation *location = [CPAppDelegate locationManager].location;
     [FoursquareAPIRequest addNewPlace:name atLocation:location :^(NSDictionary *json, NSError *error){
         // Do error checking here, in case Foursquare is down
         if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {

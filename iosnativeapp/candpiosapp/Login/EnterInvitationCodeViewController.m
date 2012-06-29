@@ -117,7 +117,7 @@
 - (void)sendCode:(NSString *)code {
     [SVProgressHUD showWithStatus:@"Checking..."];
     
-    CLLocation *location = [AppDelegate instance].settings.lastKnownLocation;
+    CLLocation *location = [CPAppDelegate locationManager].location;
     
     [CPapi enterInvitationCode:code
                    forLocation:location
