@@ -19,6 +19,7 @@
 
 typedef enum {
     LogVCStateDefault,
+    LogVCStateReloadingLog,
     LogVCStateAddingOrRemovingPendingEntry,
     LogVCStateTogglingHiddenTVC,
     LogVCStateSentNewLogEntry    
@@ -399,9 +400,25 @@ typedef enum {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(getUserLogEntries)];
 }
 
+- (void)toggleLoadingState:(BOOL)loading
+{
+    if (loading) {
+        // our current state is log reload
+        self.currentState = LogVCStateReloadingLog;
+        // show a progress HUD
+        [SVProgressHUD showWithStatus:@"Loading..."];
+    } else {
+        // our current state is now the default
+        self.currentState = LogVCStateDefault;
+        
+        // dismiss the progress HUD
+        [SVProgressHUD dismiss];
+    } 
+}
+
 - (void)getUserLogEntries
-{    
-    [SVProgressHUD showWithStatus:@"Loading..."];
+{   
+    [self toggleLoadingState:YES];
     // make the request with CPapi to get log entries for this user
     [CPapi getLogEntriesWithCompletion:^(NSDictionary *json, NSError *error) { 
         if (!error) {
@@ -418,7 +435,7 @@ typedef enum {
                     [self.logEntries addObject:logEntry];
                 }
                 
-                [SVProgressHUD dismiss];
+                [self toggleLoadingState:NO];
                 
                 // reload the tableView
                 [self.tableView reloadData];
@@ -509,7 +526,18 @@ typedef enum {
 #pragma mark - IBActions
 - (void)newLogEntry
 {   
+    // if the log is currently reloading
+    // then don't try to add a newLogEntry right away
+    // set our property that will pull up the keyboard after the load is complete
+    if (self.currentState == LogVCStateReloadingLog) {
+        self.newLogEntryAfterLoad = YES;
+        
+        // don't continue execution of this method, get out of here
+        return;
+    }
+    
     // only try to add a new log if we aren't in the middle of adding one now
+    // or if we aren't reloading the user's logs
     if (!self.pendingLogEntry) {
         // we need to add a new cell to the table with a textView that the user can edit
         // first create a new CPLogEntry object
