@@ -71,10 +71,11 @@
 
     // Reset the Places array
     
-    self.places = [[NSMutableArray alloc] init];
+    NSMutableArray *newPlaces = [[NSMutableArray alloc] init];
 
     CLLocation *userLocation = [CPAppDelegate locationManager].location;
     [FoursquareAPIRequest getVenuesCloseToLocation:userLocation :^(NSDictionary *json, NSError *error){
+        
         // Do error checking here, in case Foursquare is down
         if (!error || [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
             
@@ -105,13 +106,14 @@
                 
                 
                 place.distanceFromUser = [placeLocation distanceFromLocation:userLocation];
-                [self.places addObject:place];
+                [newPlaces addObject:place];
             }
             
             // sort the places array by distance from user
-            [self.places sortUsingSelector:@selector(sortByDistanceToUser:)];
-            [self.tableView reloadData];            
+            [newPlaces sortUsingSelector:@selector(sortByDistanceToUser:)];
+            self.places = newPlaces;
             
+            [self.tableView reloadData];            
             [self.tableView.pullToRefreshView stopAnimating];
         }
     }];
