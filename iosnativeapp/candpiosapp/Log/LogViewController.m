@@ -22,7 +22,7 @@ typedef enum {
     LogVCStateReloadingLog,
     LogVCStateAddingOrRemovingPendingEntry,
     LogVCStateTogglingHiddenTVC,
-    LogVCStateSentNewLogEntry    
+    LogVCStateSentNewLogEntry
 } LogVCState;
 
 @interface LogViewController () <HPGrowingTextViewDelegate>
@@ -726,6 +726,9 @@ typedef enum {
             [self.tableView endUpdates];
         }
         
+        // the keyboard is about to move so disable interaction with the logBarButton
+        self.logBarButton.userInteractionEnabled = NO;
+        
         [UIView animateWithDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]
                               delay:0
                             options:(UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState)
@@ -780,6 +783,9 @@ typedef enum {
                                  }
                              }
                              
+                             // keyboard has finished moving, allow interaction with logBarButton again
+                             self.logBarButton.userInteractionEnabled = YES;
+                                                          
                              // reset the LogVCState
                              self.currentState = LogVCStateDefault;
                          }];
