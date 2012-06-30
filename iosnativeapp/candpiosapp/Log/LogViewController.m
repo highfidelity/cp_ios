@@ -173,7 +173,7 @@ typedef enum {
 - (NSString *)textForLogEntry:(CPLogEntry *)logEntry
 {
     if (logEntry.type == CPLogEntryTypeUpdate && logEntry.author.userID != [CPAppDelegate currentUser].userID) {
-        return [NSString stringWithFormat:@"%@ logged: %@", logEntry.author.firstName, logEntry.entry];
+        return [NSString stringWithFormat:@"%@: %@", logEntry.author.firstName, logEntry.entry];
     } else {
         if (logEntry.type == CPLogEntryTypeLove && logEntry.originalLogID > 0) {
             return [NSString stringWithFormat:@"%@ +1'd recognition: %@", logEntry.author.firstName, logEntry.entry];
