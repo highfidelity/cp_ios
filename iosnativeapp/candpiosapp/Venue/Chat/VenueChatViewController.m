@@ -668,15 +668,19 @@
 
 - (void)thumbnailButtonForButton:(UIButton *)thumbnailButton photoURL:(NSURL *)photoURL row:(NSInteger)row
 {
-    // make a request for the profile image
-    NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:photoURL];
-    UIImageView *thumbnail = [[UIImageView alloc] init];
-    
-    [thumbnail setImageWithURLRequest:thumbnailRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
-        [thumbnailButton setBackgroundImage:image forState:UIControlStateNormal];
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        // nothing to do here, let's just leave it as the default
-    }];
+    // only try and grab the user's profile photo if we actually have it
+    if (photoURL) {
+        
+        // make a request for the profile image
+        NSURLRequest *thumbnailRequest = [NSURLRequest requestWithURL:photoURL];
+        UIImageView *thumbnail = [[UIImageView alloc] init];
+        
+        [thumbnail setImageWithURLRequest:thumbnailRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
+            [thumbnailButton setBackgroundImage:image forState:UIControlStateNormal];
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+            // nothing to do here, let's just leave it as the default
+        }];
+    }    
     
     // set the tag of the cell button to be row so we can grab the entry when it is tapped
     thumbnailButton.tag = row;
