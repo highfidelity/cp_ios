@@ -29,10 +29,31 @@
     view.layer.shadowPath = [UIBezierPath bezierPathWithRect:view.bounds].CGPath;
 }
 
++ (void)setDefaultCorners:(UIView *)view andAlpha:(CGFloat)alpha
+{
+    [self setCorners:view withRadius:8.0f andBackgroundColor:[view.backgroundColor colorWithAlphaComponent:alpha]];
+}
+
++ (void)setCorners:(UIView *)view withRadius:(CGFloat)radius andBackgroundColor:(UIColor *)color
+{
+    [view.layer setCornerRadius:radius];
+    [view.layer setBorderColor:[UIColor colorWithR:171 G:169 B:164 A:1].CGColor];
+    [view.layer setBorderWidth:1];
+    [view setBackgroundColor: color];
+}
+
 // apparently it is a bad idea to subclass UIButton
 // this method will give you a UIButton with C&P styling
 
-// NOTE: frame.size.height will always be overriden to be 43pts 
++ (CGFloat)expectedHeightForLabel:(UILabel *)label
+{
+    CGSize expectedLabelSize = [label.text sizeWithFont:label.font
+                                      constrainedToSize:CGSizeMake([label frame].size.width, 9999)
+                                          lineBreakMode:label.lineBreakMode];
+    return expectedLabelSize.height;
+}
+
+// NOTE: frame.size.height will always be overriden to be 43pts
 // as the height cannot be resized because it will muck with the 
 // gradient. Grayson has said that CPButtons he designs will always
 // be of that height

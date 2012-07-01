@@ -11,6 +11,15 @@
 
 @interface JobCategoryViewController ()
 
+
+@property (weak, nonatomic) IBOutlet UIButton *majorCategoryButton;
+@property (weak, nonatomic) IBOutlet UIButton *minorCategoryButton;
+
+- (IBAction)majorCategoryButtonClick:(id)sender;
+- (IBAction)minorCategoryButtonClick:(id)sender;
+
+
+@property (strong, nonatomic) User *user;
 @property (nonatomic, strong) NSArray *jobCategories;
 - (void)saveUserJobCategories;
 
@@ -36,6 +45,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.user = [CPAppDelegate currentUser];
 
     self.jobCategories = [NSArray arrayWithObjects:
                           @"engineering",
@@ -61,6 +71,7 @@
     [self setJobCategories:nil];
     [self setMajorCategoryButton:nil];
     [self setMinorCategoryButton:nil];
+    [self setUser:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -82,6 +93,8 @@
 
         [self.user setMajorJobCategory:[[self.majorCategoryButton titleLabel] text]];
         [self.user setMinorJobCategory:[[self.minorCategoryButton titleLabel] text]];
+
+        [SVProgressHUD show];
 
         [CPapi saveUserMajorJobCategory:[self.user majorJobCategory]
                     andMinorJobCategory:[self.user minorJobCategory]];

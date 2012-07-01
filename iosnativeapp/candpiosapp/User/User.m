@@ -104,6 +104,9 @@
         self.joinDate = [decoder decodeObjectForKey:@"joinDate"];
         self.skills = [decoder decodeObjectForKey:@"skills"];
         self.profileURLVisibility = [decoder decodeObjectForKey:@"profileURLVisibility"];
+
+        self.majorJobCategory = [decoder decodeObjectForKey:@"majorJobCategory"];
+        self.minorJobCategory = [decoder decodeObjectForKey:@"minorJobCategory"];
     }    
     return self;
 }
@@ -118,6 +121,9 @@
     [encoder encodeObject:self.joinDate forKey:@"joinDate"];
     [encoder encodeObject:self.skills forKey:@"skills"];
     [encoder encodeObject:self.profileURLVisibility forKey:@"profileURLVisibility"];
+
+    [encoder encodeObject:self.majorJobCategory forKey:@"majorJobCategory"];
+    [encoder encodeObject:self.minorJobCategory forKey:@"minorJobCategory"];
 }
 
 // override nickname setter to decode html entities

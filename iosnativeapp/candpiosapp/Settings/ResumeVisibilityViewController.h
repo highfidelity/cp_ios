@@ -8,6 +8,4 @@
 
 @interface ResumeVisibilityViewController : UIViewController
 
-@property (nonatomic, strong) User *user;
-
 @end

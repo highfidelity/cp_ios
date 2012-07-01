@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSArray *resumeVisibilityOptions;
 @property (nonatomic, strong) NSArray *resumeVisibilityOptionsKeys;
 @property (nonatomic, strong) NSString *originalProfileURLVisibility;
+@property (nonatomic, strong) User *user;
 
 - (IBAction)resumeVisibilityButtonClick:(id)sender;
 - (void)updateResumeVisibilityButtonText;
@@ -48,6 +49,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.user = [CPAppDelegate currentUser];
     
     self.resumeVisibilityButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
     
@@ -78,7 +80,7 @@
 }
 
 - (void)resumeVisibilityOptionsSuccessAction:(NSNumber *)selectedIndex element:(UIButton *)element {
-    self.user.profileURLVisibility = [self.resumeVisibilityOptionsKeys objectAtIndex:[selectedIndex integerValue]];
+    self.user.profileURLVisibility = [self.resumeVisibilityOptionsKeys objectAtIndex:[selectedIndex unsignedIntegerValue]];
     [self updateResumeVisibilityButtonText];
 }
 

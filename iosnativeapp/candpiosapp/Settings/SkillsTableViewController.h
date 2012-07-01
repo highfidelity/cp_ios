@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UserSettingsTableViewController.h"
 
 @interface SkillsTableViewController : UITableViewController
 

@@ -112,7 +112,7 @@
     // grab a cell
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    CPSkill *skill = [self.skills objectAtIndex:indexPath.row];
+    CPSkill *skill = [self.skills objectAtIndex:(NSUInteger) indexPath.row];
     
     // set our textLabel to the skill name
     cell.textLabel.text = skill.name;
@@ -149,7 +149,7 @@
     NSIndexPath *cellPath = [self.tableView indexPathForCell:(UITableViewCell *)[[visibilitySwitch superview] superview]];
     
     // get the skill that this switch is for
-    CPSkill __block *skill = [self.skills objectAtIndex:cellPath.row];
+    CPSkill __block *skill = [self.skills objectAtIndex:(NSUInteger) cellPath.row];
     
     // if the switch is now on let's make sure we won't have more than 5
     if (visibilitySwitch.on) {

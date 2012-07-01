@@ -9,11 +9,4 @@
 #import <UIKit/UIKit.h>
 
 @interface JobCategoryViewController : UIViewController
-@property (weak) User * user;
-
-@property (weak, nonatomic) IBOutlet UIButton *majorCategoryButton;
-@property (weak, nonatomic) IBOutlet UIButton *minorCategoryButton;
-
-- (IBAction)majorCategoryButtonClick:(id)sender;
-- (IBAction)minorCategoryButtonClick:(id)sender;
 @end
