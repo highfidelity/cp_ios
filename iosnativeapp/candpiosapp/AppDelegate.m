@@ -68,67 +68,13 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     sigaction(SIGILL, &newSignalAction, NULL);
     sigaction(SIGBUS, &newSignalAction, NULL);
     
-    [TestFlight takeOff:kTestFlightKey];
-
-//#warning Disable for App Store builds!
-//#define TESTING 1
-//#ifdef TESTING
-//    [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
-//#endif
+    [self setupTestFlightSDK];
+    [self setupUrbanAirshipWithLaunchOptions:launchOptions];
+    [self setupFlurryAnalytics];
     
-	[self loadSettings];  
-    
-    [FlurryAnalytics startSession:flurryAnalyticsKey];
-    
-    // Init Airship launch options
-    NSMutableDictionary *takeOffOptions = [[NSMutableDictionary alloc] init];
-    [takeOffOptions setValue:launchOptions forKey:UAirshipTakeOffOptionsLaunchOptionsKey];
-    
-    // Create Airship singleton that's used to talk to Urban Airship servers.
-    // Please populate AirshipConfig.plist with your info from http://go.urbanairship.com
-    [UAirship takeOff:takeOffOptions];
-    
-    urbanAirshipClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://go.urbanairship.com/api"]];
-    
-	// register for push 
-    [[UAPush shared] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     [BaseLoginController pushAliasUpdate];
     
-    // See what notifications the user has set and push to Flurry
-    UIRemoteNotificationType types = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
-    NSMutableDictionary *flurryParams = [[NSMutableDictionary alloc] init];
-    NSString *alertValue = [[NSString alloc] init];
-
-    if (types == UIRemoteNotificationTypeNone) {
-        alertValue = @"None";
-    }
-    else
-    {
-        if ((types & UIRemoteNotificationTypeBadge) == UIRemoteNotificationTypeBadge) {
-            alertValue = @"+Badges";
-        }
-        if ((types & UIRemoteNotificationTypeAlert) == UIRemoteNotificationTypeAlert) {
-            alertValue = [alertValue stringByAppendingString:@"+Alerts"];
-        }
-        if ((types & UIRemoteNotificationTypeSound) == UIRemoteNotificationTypeSound) {
-            alertValue = [alertValue stringByAppendingString:@"+Sounds"];
-        }
-    }
-    [flurryParams setValue:alertValue forKey:@"Notifications"];
-    [FlurryAnalytics logEvent:@"enabled_notifications" withParameters:flurryParams];
-    NSLog(@"Notification types: %@", flurryParams);
-
-    // Handle the case where we were launched from a PUSH notification
-    if (launchOptions != nil)
-	{
-		NSDictionary* dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-		if (dictionary != nil)
-		{
-			NSLog(@"Launched from push notification: %@", dictionary);
-			//[self addMessageFromRemoteNotification:dictionary updateUI:NO];
-		}
-	}
+	[self loadSettings];  
         
     // Switch out the UINavigationController in the rootviewcontroller for the SettingsMenuController
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"SettingsStoryboard_iPhone" bundle:nil];
@@ -393,6 +339,70 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 {
     settings.registeredForApnsSuccessfully = NO;
     NSLog(@"Error in registration. Error: %@", err);
+}
+
+#pragma mark - Third Party SDKs
+
+- (void)setupTestFlightSDK
+{
+    // if this is a build for TestFlight then set the user's UDID so sessions in testflight are associated with them
+#define TESTING 1
+#ifdef TESTING
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+#pragma clang diagnostic pop   
+
+#endif
+    
+    [TestFlight takeOff:kTestFlightKey];
+}
+
+- (void)setupUrbanAirshipWithLaunchOptions:(NSDictionary *)launchOptions
+{
+    // Init Airship launch options
+    NSMutableDictionary *takeOffOptions = [[NSMutableDictionary alloc] init];
+    [takeOffOptions setValue:launchOptions forKey:UAirshipTakeOffOptionsLaunchOptionsKey];
+    
+    // Create Airship singleton that's used to talk to Urban Airship servers.
+    // Please populate AirshipConfig.plist with your info from http://go.urbanairship.com
+    [UAirship takeOff:takeOffOptions];
+    
+    urbanAirshipClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://go.urbanairship.com/api"]];
+    
+	// register for push 
+    [[UAPush shared] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+}
+
+- (void)setupFlurryAnalytics
+{
+    [FlurryAnalytics startSession:flurryAnalyticsKey];
+    
+    // See what notifications the user has set and push to Flurry
+    UIRemoteNotificationType types = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+    NSMutableDictionary *flurryParams = [[NSMutableDictionary alloc] init];
+    NSString *alertValue = [[NSString alloc] init];
+    
+    if (types == UIRemoteNotificationTypeNone) {
+        alertValue = @"None";
+    }
+    else
+    {
+        if ((types & UIRemoteNotificationTypeBadge) == UIRemoteNotificationTypeBadge) {
+            alertValue = @"+Badges";
+        }
+        if ((types & UIRemoteNotificationTypeAlert) == UIRemoteNotificationTypeAlert) {
+            alertValue = [alertValue stringByAppendingString:@"+Alerts"];
+        }
+        if ((types & UIRemoteNotificationTypeSound) == UIRemoteNotificationTypeSound) {
+            alertValue = [alertValue stringByAppendingString:@"+Sounds"];
+        }
+    }
+    [flurryParams setValue:alertValue forKey:@"Notifications"];
+    [FlurryAnalytics logEvent:@"enabled_notifications" withParameters:flurryParams];
+    NSLog(@"Notification types: %@", flurryParams);
 }
 
 #pragma mark - Geofencing
