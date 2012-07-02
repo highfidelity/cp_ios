@@ -55,7 +55,7 @@
         UINavigationController *navigationController = segue.destinationViewController;
         EditLinkedInInvitationMessageViewController *editInvitationViewController = (EditLinkedInInvitationMessageViewController *)navigationController.topViewController;
         
-        editInvitationViewController.nickname = [AppDelegate instance].currentUser.nickname;
+        editInvitationViewController.nickname = [CPAppDelegate currentUser].nickname;
         editInvitationViewController.connectionIDs = [self arrayOfSlectedConnectionIDs];
     }
 }

@@ -152,7 +152,7 @@ BOOL clearLocations = NO;
 	self.mapHasLoaded = YES;
 
     // Update for login name in header field
-    [[AppDelegate instance].settingsMenuController.tableView reloadData];
+    [[CPAppDelegate settingsMenuController].tableView reloadData];
     
     // Refresh all locations when view will re-appear after being in another area of the app; don't do it on the first launch though
     if (self.locationStatusKnown) {

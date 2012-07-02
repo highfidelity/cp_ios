@@ -153,7 +153,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                                                  name:@"linkedInCredentials"
                                                object:nil];
 	
-	[[AppDelegate instance] logoutEverything];
+	[CPAppDelegate logoutEverything];
     [self linkedInLogin];
 }
 
@@ -320,7 +320,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                 // we get here if we failed to login
                 NSString *errorMessage = [NSString stringWithFormat:@"The error was: %@", outerErrorMessage];\
                 [SVProgressHUD showErrorWithStatus:errorMessage duration:kDefaultDimissDelay];
-                [[AppDelegate instance].tabBarController
+                [[CPAppDelegate tabBarController]
                         performSelector:@selector(dismissModalViewControllerAnimated:)
                              withObject:[NSNumber numberWithBool:YES]
                              afterDelay:kDefaultDimissDelay];

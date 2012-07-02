@@ -37,7 +37,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     
-    [[self userBalance] setText: [NSString stringWithFormat:@"$%.2f", [AppDelegate instance].settings.userBalance]];
+    [[self userBalance] setText: [NSString stringWithFormat:@"$%.2f", [CPAppDelegate settings].userBalance]];
     
     [self.balanceScrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"perforated-skin.png"]]]; 
     [self loadTransactionData];
@@ -131,8 +131,8 @@
             
             float balance = [[jsonDict objectForKey:@"balance"] floatValue];
             
-            [AppDelegate instance].settings.userBalance = balance;
-            [[AppDelegate instance] saveSettings];
+            [CPAppDelegate settings].userBalance = balance;
+            [CPAppDelegate saveSettings];
             
             [[self userBalance] setText:[NSString stringWithFormat:@"$%.2f", balance]];
 

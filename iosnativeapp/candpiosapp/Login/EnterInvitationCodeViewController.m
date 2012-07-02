@@ -74,7 +74,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView.firstOtherButtonIndex == buttonIndex) {
-        [[AppDelegate instance] logoutEverything];
+        [CPAppDelegate logoutEverything];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
@@ -86,7 +86,7 @@
     BOOL dismissModalViewController = YES;
     
     if ( ! self.dontShowTextNoticeAfterLaterButtonPressed) {
-        if ( ! [[AppDelegate instance].currentUser isDaysOfTrialAccessWithoutInviteCodeOK]) {
+        if ( ! [[CPAppDelegate currentUser] isDaysOfTrialAccessWithoutInviteCodeOK]) {
             
             [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Your %d days trial has ended.", kDaysOfTrialAccessWithoutInviteCode]
                                         message:@"Please enter code or logout."

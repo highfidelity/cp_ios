@@ -62,7 +62,7 @@
     NSString *inviteItemName = @"Invite";
     NSString *inviteItemSegue = @"ShowInvitationCodeMenu";
     
-    if ( ! [[AppDelegate instance] currentUser].enteredInviteCode) {
+    if (![CPAppDelegate currentUser].enteredInviteCode) {
         inviteItemName = @"Enter invite code";
         inviteItemSegue = kEnterInviteFakeSegueID;
     }
@@ -389,7 +389,7 @@
         NSLog(@"You clicked on %@", segueID);
         
         if ([kEnterInviteFakeSegueID isEqual:segueID]) {
-            [[AppDelegate instance] showEnterInvitationCodeModalFromViewController:self
+            [CPAppDelegate showEnterInvitationCodeModalFromViewController:self
                                      withDontShowTextNoticeAfterLaterButtonPressed:YES
                                                                       pushFromLeft:YES
                                                                           animated:YES];
@@ -412,7 +412,7 @@
             BOOL respError = [[json objectForKey:@"error"] boolValue];
             if (!error && !respError) {
                 [[UIApplication sharedApplication] cancelAllLocalNotifications];
-                [[AppDelegate instance] setCheckedOut];
+                [CPAppDelegate setCheckedOut];
                 [SVProgressHUD dismissWithSuccess:@"You have been sucessfully checked out."
                                        afterDelay:kDefaultDimissDelay];
             } else {

@@ -139,7 +139,7 @@ Welcome!";
     NSInteger statusCode = [[json objectForKey:@"status"] integerValue];
     
     if (statusCode < 300) {
-        [[AppDelegate instance].settingsMenuController dismissViewControllerAnimated:YES
+        [[CPAppDelegate settingsMenuController] dismissViewControllerAnimated:YES
                                                                           completion:NULL];
         [SVProgressHUD dismissWithSuccess:@"Invitation has been sent"];
         [FlurryAnalytics logEvent:@"invitedLinkedInConnections"];

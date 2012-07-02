@@ -34,7 +34,6 @@
            
 -(void)saveSettings;
 - (void)loadVenueView:(NSString *)venueName;
-+(AppDelegate *)instance;
 -(void)logoutEverything;
 -(void)storeUserLoginDataFromDictionary:(NSDictionary *)userDictionary;
 -(void)saveCurrentUserToUserDefaults:(User *)user;

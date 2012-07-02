@@ -42,11 +42,6 @@
 // TODO: Store what we're storing now in settings in NSUSERDefaults
 // Why make our own class when there's an iOS Api for this?
 
-+(AppDelegate*)instance
-{
-	return (AppDelegate*)[UIApplication sharedApplication].delegate;
-}
-
 @synthesize window = _window;
 
 #pragma mark - View Lifecycle
@@ -1060,7 +1055,7 @@ void SignalHandler(int sig) {
 
     if ([alertView.title isEqualToString:kCheckOutLocalNotificationAlertViewTitle]) {
         if (alertView.firstOtherButtonIndex == buttonIndex) {            
-            [AppDelegate instance].checkOutTimer = [NSTimer scheduledTimerWithTimeInterval:300
+            (CPAppDelegate).checkOutTimer = [NSTimer scheduledTimerWithTimeInterval:300
                                                                                     target:self
                                                                                   selector:@selector(setCheckedOut) 
                                                                                   userInfo:nil 

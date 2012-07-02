@@ -109,7 +109,6 @@
                                                  name:@"smartererCredentials"
                                                object:nil];
 	
-//	[[AppDelegate instance] logoutEverything];
     [self smartererLogin];
 }
 

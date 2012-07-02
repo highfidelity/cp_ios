@@ -323,7 +323,7 @@
              [alert show];
              
              // avoid stacking the f2f alerts
-             [AppDelegate instance].settingsMenuController.f2fInviteAlert = alert;
+             [CPAppDelegate settingsMenuController].f2fInviteAlert = alert;
          }
          
          [FlurryAnalytics logEvent:@"contactRequestSent"];
@@ -421,7 +421,7 @@
             [alert show];
             // set the invite alert property on the SettingsMenuController
             // allows us to avoid stacking the f2f alerts
-            [AppDelegate instance].settingsMenuController.f2fInviteAlert = alert;
+            [CPAppDelegate settingsMenuController].f2fInviteAlert = alert;
         }
         else if ([[json objectForKey:@"error"] isEqualToString:@"6"])
         {
@@ -615,7 +615,7 @@
         {
             alertMsg = @"You have been added as a Contact!";
             [SVProgressHUD dismissWithSuccess:alertMsg afterDelay:kDefaultDimissDelay];
-            [[AppDelegate instance].tabBarController
+            [[CPAppDelegate tabBarController]
                     performSelector:@selector(dismissModalViewControllerAnimated:)
                          withObject:[NSNumber numberWithBool:YES]
                          afterDelay:kDefaultDimissDelay];

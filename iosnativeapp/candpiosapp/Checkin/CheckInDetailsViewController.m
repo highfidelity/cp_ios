@@ -194,26 +194,7 @@
     
     // set the light diagonal noise texture on the bottom UIView
     UIColor *lightTexture = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-light.png"]];
-    self.checkInDetails.backgroundColor = lightTexture; 
-    
-    /*
-    Removed WL 17349 - andyast
-    User *user = [[AppDelegate instance] currentUser];
-   
-    
-    [user loadUserResumeData:^(NSError *error) {
-        if (!error) {
-            
-            //CPPlace *place = [user.checkInHistory objectAtIndex:0];
-            //place.
-            self.statusTextField.text = user.status;
-            
-        } else {
-            // error checking for load of user 
-        }
-    }];
-    */
-    
+    self.checkInDetails.backgroundColor = lightTexture;     
 
     // set the delegates for the textField and the otherUsersScrollView
     self.statusTextField.delegate = self;

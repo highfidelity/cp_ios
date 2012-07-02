@@ -467,7 +467,7 @@
                                                     return;
                                                 }
 
-                                                [[AppDelegate instance] logoutEverything];
+                                                [CPAppDelegate logoutEverything];
 
                                                 SettingsMenuController *presentingViewController = (SettingsMenuController *)self.presentingViewController;
                                                 if (presentingViewController.isMenuShowing) {
