@@ -25,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *skillsTitle;
 @property (weak, nonatomic) IBOutlet UILabel *visibilityLabel;
 @property (weak, nonatomic) IBOutlet UIView *emailView;
+@property (weak, nonatomic) IBOutlet UILabel *changePhotoLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 
 @property (strong, nonatomic) IBOutlet UILabel *emailValidationMsg;
 
@@ -82,6 +84,8 @@
 @synthesize pendingEmail = _pendingEmail;
 @synthesize nicknameTextField = _nicknameTextField;
 @synthesize gearButton = _gearButton;
+@synthesize changePhotoLabel = _changePhotoLabel;
+@synthesize profileImageView = _profileImageView;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -119,8 +123,9 @@
     self.profileHeaderView.backgroundColor = paper;
     self.detailsView.backgroundColor = [paper colorWithAlphaComponent:0.8f];
     self.detailsView.frame = CGRectOffset(self.detailsView.frame, 0, 120);
-
+    
     [CPUIHelper changeFontForTextField:self.nicknameTextField toLeagueGothicOfSize:30];
+    [CPUIHelper changeFontForLabel:self.changePhotoLabel toLeagueGothicOfSize:20];
 
     [CPUIHelper setDefaultCorners:self.skillsView andAlpha:0.3];
     [CPUIHelper setDefaultCorners:self.categoryView andAlpha:0.3];
@@ -135,7 +140,7 @@
     self.scrollView.contentSize = CGSizeMake(320, 485);
 
     self.currentUser = [CPAppDelegate currentUser];
-    [self placeCurrentUserData];
+    [self placeCurrentUserData:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -146,6 +151,13 @@
         [SVProgressHUD showWithStatus:@"Loading..."];
     }
     [self syncWithWebData];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    CGRect profileImageFrame = self.profileImageView.frame;
+    profileImageFrame.origin.x = -100;
+    self.profileImageView.frame = profileImageFrame;
 }
 
 - (void)viewDidUnload
@@ -179,7 +191,7 @@
 
 #pragma mark - Web Data Sync
 
-- (void)placeCurrentUserData
+- (void)placeCurrentUserData:(void(^)(void))completion
 {
     // put the nickname
     self.nicknameTextField.text = self.currentUser.nickname;
@@ -239,9 +251,7 @@
     //This validates the current email address.  Should be valid, but just in case.
     [self emailTextField_ValueChanged:_emailTextField];
 
-    [self.profileImageButton setBackgroundImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:self.currentUser.photoURL]]
-                                       forState:UIControlStateNormal];
-
+    [self.profileImageView setImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:self.currentUser.photoURL]]];
 
     GRMustacheTemplate *template = [GRMustacheTemplate templateFromResource:@"ProfileBackground"
                                                                      bundle:nil
@@ -258,6 +268,9 @@
         [self.categoriesLabel setText:[NSString stringWithFormat:@"%@, %@", [self.currentUser.majorJobCategory capitalizedString], [self.currentUser.minorJobCategory capitalizedString]]];
     }
 
+    if (completion) {
+        completion();
+    }
 }
 
 - (void)syncWithWebData
@@ -336,7 +349,17 @@
                     [CPAppDelegate saveCurrentUserToUserDefaults:self.currentUser];
                 }
 
-                [self placeCurrentUserData];
+                [self placeCurrentUserData:^{
+                    [UIView animateWithDuration:0.3f
+                                          delay:1.0f
+                                        options:UIViewAnimationOptionCurveEaseIn
+                                     animations:^(void) {
+                                         CGRect profileImageFrame = self.profileImageView.frame;
+                                         profileImageFrame.origin.x = 0;
+                                         self.profileImageView.frame = profileImageFrame;
+                                     }
+                                     completion:nil];
+                }];
 
                 self.newDataFromSync = NO;
                 self.finishedSync = YES;
@@ -411,7 +434,7 @@
         // store the updated user in NSUserDefaults
         [CPAppDelegate saveCurrentUserToUserDefaults:self.currentUser];
     }
-    [self placeCurrentUserData];
+    [self placeCurrentUserData:nil];
 }
 
 #pragma mark - Email Text Field Validation
