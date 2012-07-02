@@ -577,23 +577,26 @@ typedef enum {
 - (IBAction)cancelLogEntry:(id)sender {
     // user is cancelling log entry
     
-    // if the user has hit cancel
-    // and our pending log entry cell's textView isn't the first responder
-    // then our hidden TVC is showing and we need to hide that first
-    if (!self.pendingLogEntryCell.logTextView.isFirstResponder) {
-        // this is done by just giving the pendingLogEntry the venue it already has
-        [self setSelectedVenue:self.pendingLogEntry.venue];
-    }
-    
     // remove the pending log entry from our array of entries
     [self.logEntries removeObject:self.pendingLogEntry];
     
     // we need the keyboard to know that we're asking for this change
     self.currentState = LogVCStateAddingOrRemovingPendingEntry;
+       
+    if (!self.pendingLogEntryCell.logTextView.isFirstResponder) {
+        // our pending log entry cell's textView isn't the first responder
+        // then our hidden TVC is showing
+        
+        // so call the helper method to slide down the elements
+        // using a manual animation duration and the height of the hiddenTVC as the keyboardHeight
+        [self slideUIElementsBasedOnKeyboardHeight:self.venueListVC.view.frame.size.height animationDuration:0.2 beingShown:NO];
+    } else {
+        // switch first responder to our fake textView and then resign it so we can drop the keyboard
+        [self.fakeTextView becomeFirstResponder];
+        [self.fakeTextView resignFirstResponder];
+    }
 
-    // switch first responder to our fake textView and then resign it so we can drop the keyboard
-    [self.fakeTextView becomeFirstResponder];
-    [self.fakeTextView resignFirstResponder];
+    
 }
 
 - (IBAction)showVenueList:(id)sender
@@ -648,25 +651,33 @@ typedef enum {
 
 # pragma mark - Keyboard hide/show notification
 
-- (void) keyboardWillShow:(NSNotification *)notification{
+- (void)keyboardWillShow:(NSNotification *)notification{
     [self fixChatBoxAndTableViewDuringKeyboardMovementFromNotification:notification beingShown:YES];
 }
 
-- (void) keyboardWillHide:(NSNotification *)notification {
+- (void)keyboardWillHide:(NSNotification *)notification {
     [self fixChatBoxAndTableViewDuringKeyboardMovementFromNotification:notification beingShown:NO];
 }
 
 - (void)fixChatBoxAndTableViewDuringKeyboardMovementFromNotification:(NSNotification *)notification beingShown:(BOOL)beingShown
 {    
+    CGRect keyboardRect = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    // call our helper method to slide the UI elements
+    [self slideUIElementsBasedOnKeyboardHeight:keyboardRect.size.height 
+                             animationDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue] 
+                                    beingShown:beingShown];
+}
+
+- (void)slideUIElementsBasedOnKeyboardHeight:(CGFloat)keyboardHeight animationDuration:(CGFloat)animationDuration beingShown:(BOOL)beingShown
+{
     // NOTE: it's pretty odd to be moving the UITabBar up and down and using it in our view
     // it's convenient though because it gives us the background and the log button
     
+    keyboardHeight = beingShown ? keyboardHeight : -keyboardHeight;
     
     // don't move anything if the keyboard isn't being moved because of us
     if (self.currentState != LogVCStateDefault) {
-        // Grab the dimensions of the keyboard
-        CGRect keyboardRect = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-        CGFloat keyboardHeight = beingShown ? keyboardRect.size.height : -keyboardRect.size.height;
         
         // create the indexPath for the last row
         int row = self.logEntries.count - (beingShown ? 1 : 0);
@@ -698,7 +709,7 @@ typedef enum {
             // we want to show the button to choose location
             // so make sure it exists
             [self addLogBarButtonIfRequired];
-
+            
             // add the selectedVenueButton to the thinBar
             [thinBar addSubview:self.logBarButton];
         }
@@ -729,7 +740,7 @@ typedef enum {
         // the keyboard is about to move so disable interaction with the logBarButton
         self.logBarButton.userInteractionEnabled = NO;
         
-        [UIView animateWithDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]
+        [UIView animateWithDuration:animationDuration
                               delay:0
                             options:(UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState)
                          animations:^{
@@ -785,12 +796,11 @@ typedef enum {
                              
                              // keyboard has finished moving, allow interaction with logBarButton again
                              self.logBarButton.userInteractionEnabled = YES;
-                                                          
+                             
                              // reset the LogVCState
                              self.currentState = LogVCStateDefault;
                          }];
     }
-
 }
 
 #pragma mark - HPGrowingTextViewDelegate
