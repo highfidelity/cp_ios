@@ -29,8 +29,8 @@ typedef enum {
                  radius:(double)radius
                 opacity:(double)opacity;
 
-+ (void)setDefaultCorners:(UIView *)view andAlpha:(CGFloat)aplpha;
-+ (void)setCorners:(UIView *)view withRadius: (CGFloat)radius andBackgroundColor:(UIColor *)color;
++ (void)setDefaultCorners:(UIView *)view andAlpha:(CGFloat)alpha;
++ (void)setCorners:(UIView *)view withBorder:(UIColor *)borderColor Radius: (CGFloat)radius andBackgroundColor:(UIColor *)color;
 
 + (CGFloat)expectedHeightForLabel:(UILabel *)label;
 

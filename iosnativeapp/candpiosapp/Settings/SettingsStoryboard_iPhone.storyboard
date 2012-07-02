@@ -673,7 +673,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="textColor" red="0.29803921570000003" green="0.29803921570000003" blue="0.29803921570000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardAppearance="alert" returnKeyType="send"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardAppearance="alert" returnKeyType="done"/>
                                         <connections>
                                             <outlet property="delegate" destination="NLt-KB-bR8" id="0b2-fJ-niz"/>
                                         </connections>
@@ -818,15 +818,6 @@
                                                 <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <size key="shadowOffset" width="0.0" height="1"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="email@test.com" borderStyle="line" minimumFontSize="17" id="9tR-za-Rk3">
-                                                <rect key="frame" x="10" y="152" width="280" height="31"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" keyboardAppearance="alert" returnKeyType="send"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="NLt-KB-bR8" id="L7a-ht-oIv"/>
-                                                </connections>
-                                            </textField>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="oAe-Yh-7tx">
                                                 <rect key="frame" x="22" y="186" width="257" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -834,6 +825,22 @@
                                                 <color key="textColor" red="0.88235294119999996" green="0.0" blue="0.1176470588" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <view contentMode="scaleToFill" id="bJC-rD-suX">
+                                                <rect key="frame" x="10" y="152" width="280" height="31"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="email@test.com" minimumFontSize="17" id="9tR-za-Rk3">
+                                                        <rect key="frame" x="11" y="6" width="258" height="20"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" keyboardAppearance="alert" returnKeyType="done"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="NLt-KB-bR8" id="L7a-ht-oIv"/>
+                                                        </connections>
+                                                    </textField>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
@@ -871,6 +878,7 @@
                         <outlet property="detailsView" destination="h0X-vM-HGh" id="XML-dx-RrK"/>
                         <outlet property="emailTextField" destination="9tR-za-Rk3" id="vZx-zd-IGy"/>
                         <outlet property="emailValidationMsg" destination="oAe-Yh-7tx" id="f3V-PZ-fEE"/>
+                        <outlet property="emailView" destination="bJC-rD-suX" id="f5C-QK-dzq"/>
                         <outlet property="floatView" destination="Fxj-7Y-1yW" id="hjh-Ib-V6I"/>
                         <outlet property="nicknameTextField" destination="oK8-OI-GYf" id="7tf-TT-aGT"/>
                         <outlet property="profileHeaderView" destination="wSJ-cC-czs" id="jk4-FB-k7G"/>
@@ -1725,6 +1733,7 @@
                 <relationship kind="outlet" name="detailsView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="emailValidationMsg" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="emailView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="floatView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="nicknameTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="profileHeaderView" candidateClass="UIView"/>

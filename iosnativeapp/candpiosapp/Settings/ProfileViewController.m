@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UILabel *skillsTitle;
 @property (weak, nonatomic) IBOutlet UILabel *visibilityLabel;
+@property (weak, nonatomic) IBOutlet UIView *emailView;
 
 @property (strong, nonatomic) IBOutlet UILabel *emailValidationMsg;
 
@@ -70,6 +71,7 @@
 @synthesize emailTextField = _emailTextField;
 @synthesize skillsTitle = _skillsTitle;
 @synthesize visibilityLabel = _visibilityLabel;
+@synthesize emailView = _emailView;
 @synthesize emailValidationMsg = _emailValidationMsg;
 @synthesize profileImageButton = _profileImageButton;
 
@@ -123,24 +125,17 @@
     [CPUIHelper setDefaultCorners:self.skillsView andAlpha:0.3];
     [CPUIHelper setDefaultCorners:self.categoryView andAlpha:0.3];
     [CPUIHelper setDefaultCorners:self.visibilityView andAlpha:0.3];
-    [CPUIHelper setDefaultCorners:self.emailTextField andAlpha:0];
-    [CPUIHelper setDefaultCorners:self.deleteTouchable andAlpha:1];
+    [CPUIHelper setDefaultCorners:self.emailView andAlpha:0];
 
-    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 12, 20)];
-    self.emailTextField.leftView = paddingView;
-    self.emailTextField.leftViewMode = UITextFieldViewModeAlways;
+    [CPUIHelper setCorners:self.deleteTouchable
+                withBorder:self.deleteTouchable.backgroundColor
+                    Radius:8.0f
+        andBackgroundColor:self.deleteTouchable.backgroundColor];
 
     self.scrollView.contentSize = CGSizeMake(320, 485);
 
     self.currentUser = [CPAppDelegate currentUser];
     [self placeCurrentUserData];
-    
-    NSLog(@"did");
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    NSLog(@"will");
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -173,6 +168,7 @@
     [self setVisibilityLabel:nil];
     [self setFloatView:nil];
     [self setArrowImageView:nil];
+    [self setEmailView:nil];
     [super viewDidUnload];
 }
 

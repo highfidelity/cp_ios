@@ -31,13 +31,16 @@
 
 + (void)setDefaultCorners:(UIView *)view andAlpha:(CGFloat)alpha
 {
-    [self setCorners:view withRadius:8.0f andBackgroundColor:[view.backgroundColor colorWithAlphaComponent:alpha]];
+    [self setCorners:view 
+          withBorder:[UIColor colorWithR:171 G:169 B:164 A:1]
+              Radius:8.0f 
+  andBackgroundColor:[view.backgroundColor colorWithAlphaComponent:alpha]];
 }
 
-+ (void)setCorners:(UIView *)view withRadius:(CGFloat)radius andBackgroundColor:(UIColor *)color
++ (void)setCorners:(UIView *)view withBorder:(UIColor *)borderColor Radius:(CGFloat)radius andBackgroundColor:(UIColor *)color
 {
     [view.layer setCornerRadius:radius];
-    [view.layer setBorderColor:[UIColor colorWithR:171 G:169 B:164 A:1].CGColor];
+    [view.layer setBorderColor:borderColor.CGColor];
     [view.layer setBorderWidth:1];
     [view setBackgroundColor: color];
 }
@@ -307,10 +310,6 @@
             [profileImageView addSubview:badgeImageView];
         }
     }
-
-
-    
-    
 }
 
 + (void)profileImageView:(UIImageView *)imageView
