@@ -38,7 +38,9 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.delegate touchUp:self];
-    self.backgroundColor = oldBackgroundColor;
+    [UIView animateWithDuration:0.3f delay:0.3f options:UIViewAnimationOptionCurveEaseIn animations:^{
+        self.backgroundColor = oldBackgroundColor;
+    } completion:nil];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

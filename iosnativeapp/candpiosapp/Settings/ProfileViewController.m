@@ -11,6 +11,8 @@
 #import "GRMustacheTemplate.h"
 #import "CPTouchableView.h"
 #import "CPSkill.h"
+#import "UIImage+ImageBlur.h"
+#import "NSData+Base64.h"
 
 #define kActionSheetDeleteAccountTag 7911
 #define kActionSheetChooseNewProfileImageTag 7912
@@ -236,7 +238,7 @@
     if ([self.currentUser.profileURLVisibility isEqualToString:@"global"]) {
         self.visibilityLabel.text = @"Publicly Visible";
     } else {
-        self.visibilityLabel.text = @"Members Only";
+        self.visibilityLabel.text = @"Only people logged in";
     }
 
     if (!self.pendingEmail) {
@@ -250,18 +252,25 @@
     [_emailTextField addTarget:self action:@selector(emailTextField_ValueChanged:) forControlEvents:UIControlEventEditingChanged];
     //This validates the current email address.  Should be valid, but just in case.
     [self emailTextField_ValueChanged:_emailTextField];
-
-    [self.profileImageView setImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:self.currentUser.photoURL]]];
-
+    
+    //TODO: setup a cache
+    UIImage *profilePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.currentUser.photoURL]];
+    [self.profileImageView setImage:profilePhoto];
+    
     GRMustacheTemplate *template = [GRMustacheTemplate templateFromResource:@"ProfileBackground"
                                                                      bundle:nil
                                                                       error:NULL];
+    
+    UIImage *blurredImage = [profilePhoto imageWithGaussianBlur];
+    NSData *imageData = UIImageJPEGRepresentation(blurredImage, 1.0);
 
-    NSString *fullHTML = [template renderObject:[NSDictionary dictionaryWithObjectsAndKeys:
-            self.currentUser.photoURLString, @"photo-url",
-            nil]];
+    NSString *fullHTML = [template renderObject:[NSDictionary dictionaryWithObjectsAndKeys: 
+                                                 [imageData base64EncodedString], 
+                                                 @"photo-string",
+                                                 nil]];
+    
     [self.backgroundWebView loadHTMLString:fullHTML baseURL:nil];
-
+    
     if ([self.currentUser.majorJobCategory isEqualToString:self.currentUser.minorJobCategory]) {
         [self.categoriesLabel setText:[self.currentUser.majorJobCategory capitalizedString]];
     } else {
@@ -353,7 +362,7 @@
                     [UIView animateWithDuration:0.3f
                                           delay:1.0f
                                         options:UIViewAnimationOptionCurveEaseIn
-                                     animations:^(void) {
+                                     animations:^{
                                          CGRect profileImageFrame = self.profileImageView.frame;
                                          profileImageFrame.origin.x = 0;
                                          self.profileImageView.frame = profileImageFrame;
@@ -513,6 +522,7 @@
 {
     if (textField == self.emailTextField) {
         self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 250, 0);
+        [self.scrollView setContentOffset: CGPointMake(0, 250) animated:YES];
     }
 
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
@@ -523,7 +533,9 @@
 
 - (void)cancelTextEntry:(id)sender
 {
-    self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    [UIView animateWithDuration:0.3f animations:^{
+        self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    }];
     [self.nicknameTextField setText:self.currentUser.nickname];
     [self.emailTextField setText:self.currentUser.email];
     

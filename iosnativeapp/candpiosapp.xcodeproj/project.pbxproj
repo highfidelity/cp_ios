@@ -449,6 +449,7 @@
 		E41080711539AB2200D7EAA8 /* JobCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E41080701539AB2200D7EAA8 /* JobCategoryViewController.m */; };
 		E410F9DC159DF0A500D32F86 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E410F9DB159DF0A500D32F86 /* ProfileViewController.m */; };
 		E410F9DF159E018900D32F86 /* ProfileBackground.mustache in Resources */ = {isa = PBXBuildFile; fileRef = E410F9DE159E018900D32F86 /* ProfileBackground.mustache */; };
+		E41AD9CC15A25D9500B6E360 /* UIImage+ImageBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = E41AD9CB15A25D9500B6E360 /* UIImage+ImageBlur.m */; };
 		E43CFC32153756C300A3A716 /* person-login-to-view.png in Resources */ = {isa = PBXBuildFile; fileRef = E43CFC30153756C300A3A716 /* person-login-to-view.png */; };
 		E43CFC33153756C300A3A716 /* person-login-to-view@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E43CFC31153756C300A3A716 /* person-login-to-view@2x.png */; };
 		E4693161153774730089E9B9 /* linked-in-connect.png in Resources */ = {isa = PBXBuildFile; fileRef = E469315F153774730089E9B9 /* linked-in-connect.png */; };
@@ -1137,6 +1138,8 @@
 		E410F9DA159DF0A500D32F86 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileViewController.h; path = Settings/ProfileViewController.h; sourceTree = "<group>"; };
 		E410F9DB159DF0A500D32F86 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileViewController.m; path = Settings/ProfileViewController.m; sourceTree = "<group>"; };
 		E410F9DE159E018900D32F86 /* ProfileBackground.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ProfileBackground.mustache; sourceTree = "<group>"; };
+		E41AD9CA15A25D9500B6E360 /* UIImage+ImageBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+ImageBlur.h"; path = "Utils/UIImage+ImageBlur.h"; sourceTree = "<group>"; };
+		E41AD9CB15A25D9500B6E360 /* UIImage+ImageBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+ImageBlur.m"; path = "Utils/UIImage+ImageBlur.m"; sourceTree = "<group>"; };
 		E43CFC30153756C300A3A716 /* person-login-to-view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "person-login-to-view.png"; path = "User/images/person-login-to-view.png"; sourceTree = "<group>"; };
 		E43CFC31153756C300A3A716 /* person-login-to-view@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "person-login-to-view@2x.png"; path = "User/images/person-login-to-view@2x.png"; sourceTree = "<group>"; };
 		E469315F153774730089E9B9 /* linked-in-connect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "linked-in-connect.png"; path = "candpiosapp/Login/images/linked-in-connect.png"; sourceTree = SOURCE_ROOT; };
@@ -1578,6 +1581,8 @@
 				5327E9F915658CCD005330AD /* UIColor+EasyRGB.m */,
 				69120B70156D3C2200521E3F /* CPLinkedInAPI.h */,
 				69120B71156D3C2200521E3F /* CPLinkedInAPI.m */,
+				E41AD9CA15A25D9500B6E360 /* UIImage+ImageBlur.h */,
+				E41AD9CB15A25D9500B6E360 /* UIImage+ImageBlur.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -3084,6 +3089,7 @@
 				E410F9DC159DF0A500D32F86 /* ProfileViewController.m in Sources */,
 				53ABBCB5159E5ED800C6ED8B /* SVPullToRefresh.m in Sources */,
 				E4E74E07153B08710022F405 /* CPTouchableView.m in Sources */,
+				E41AD9CC15A25D9500B6E360 /* UIImage+ImageBlur.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
