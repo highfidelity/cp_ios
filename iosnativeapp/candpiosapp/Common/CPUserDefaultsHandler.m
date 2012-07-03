@@ -59,7 +59,7 @@ NSString* const kUDCurrentVenue = @"currentCheckIn";
 
 + (void)setCurrentVenue:(CPVenue *)venue
 {
-    // encode the user object
+    // encode the venue object
     NSData *newVenueData = [NSKeyedArchiver archivedDataWithRootObject:venue];
     
     // store it in user defaults
@@ -133,7 +133,38 @@ NSString* const kAutomaticCheckins = @"automaticCheckins";
     return [DEFAULTS(object, kAutomaticCheckins) boolValue];
 }
 
-
 NSString* const kUDLogVenues = @"logVenues";
+
++ (void)addLogVenue:(CPVenue *)venue
+{
+    // setup an NSString object with the venue ID
+    NSString *venueIDString = [NSString stringWithFormat:@"%d", venue.venueID];
+    
+    // encode the venue object
+    NSData *encodedVenue = [NSKeyedArchiver archivedDataWithRootObject:venue];
+    
+    // grab the array of logVenues
+    NSMutableDictionary *mutableLogVenues = [[self logVenues] mutableCopy];
+    
+    // make sure we don't already have a venue for with this ID
+    if (![mutableLogVenues objectForKey:venueIDString]) {
+        // add the NSData representation of this venue at the venue ID string key
+        [mutableLogVenues setObject:encodedVenue forKey:venueIDString];
+    }
+    
+    SET_DEFAULTS(Object, kUDLogVenues, [NSDictionary dictionaryWithDictionary:mutableLogVenues]);
+}
+
++ (NSDictionary *)logVenues
+{
+    // pull the array of logVenues from NSUserDefaults
+    // create one if it does not exist
+    NSDictionary *logVenues;
+    if (!(logVenues = DEFAULTS(object, kUDLogVenues))) {   
+        logVenues = [NSDictionary dictionary];
+    }
+    
+    return logVenues;
+}
 
 @end
