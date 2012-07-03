@@ -35,7 +35,6 @@
 @synthesize urbanAirshipClient;
 @synthesize settingsMenuController;
 @synthesize tabBarController;
-@synthesize userCheckedIn = _userCheckedIn;
 @synthesize checkOutTimer = _checkOutTimer;
 @synthesize locationManager;
 
@@ -93,7 +92,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     // check if we need to force a user logout if their version of the app is too old
     [self performAppVersionCheck];
     
-    if ( ! [CPAppDelegate currentUser]) {
+    if (![CPUserDefaultsHandler currentUser]) {
         [self showSignupModalFromViewController:self.tabBarController animated:NO];
     }
     [self syncCurrentUserWithWebAndCheckValidLogin];
@@ -412,10 +411,8 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 - (void)startMonitoringVenue:(CPVenue *)venue
 {    
-    // Only start monitoring a region if automaticCheckins is YES
-    BOOL automaticCheckins = [DEFAULTS(object, kAutomaticCheckins) boolValue];
-    
-    if (automaticCheckins) {        
+    // Only start monitoring a region if automaticCheckins is YES    
+    if ([CPUserDefaultsHandler automaticCheckins]) {        
         CLRegion* region = [self getRegionForVenue:venue];
         
         [self.locationManager startMonitoringForRegion:region
@@ -461,7 +458,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     }
     
     // Don't show notification if user is currently checked in to this venue
-    if ([CPAppDelegate userCheckedIn] && [[CPAppDelegate currentVenue].name isEqualToString:region.identifier]) {
+    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [[CPUserDefaultsHandler currentVenue].name isEqualToString:region.identifier]) {
         return;
     } else {
         // grab the right venue from our past venues
@@ -472,7 +469,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 }
 
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {    
-    if ([CPAppDelegate userCheckedIn] && [[CPAppDelegate currentVenue].name isEqualToString:region.identifier]) {
+    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [[CPUserDefaultsHandler currentVenue].name isEqualToString:region.identifier]) {
         // Log user out immediately
         [self autoCheckoutForCLRegion:region];
     }
@@ -505,11 +502,10 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
                 
                 [self setCheckedOut];
                 
-                // set the NSUserDefault to the user checkout time
-                SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
+                [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
                 
                 // Save current place to venue defaults as it's used in several places in the app
-                [self saveCurrentVenueUserDefaults:venue];
+                [CPUserDefaultsHandler setCurrentVenue:venue];
                 
                 // update this venue in the list of past venues
                 [self updatePastVenue:venue];
@@ -627,11 +623,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 # pragma mark - Check-in/out Stuff
 
 // TODO: consolidate this with the checkedIn property on the current user in NSUserDefaults
-- (BOOL)userCheckedIn 
-{
-    NSNumber *checkoutEpoch = DEFAULTS(object, kUDCheckoutTime);
-    return [checkoutEpoch intValue] > [[NSDate date]timeIntervalSince1970];
-}
 
 - (void)promptForCheckout
 {
@@ -647,10 +638,12 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 - (void)setCheckedOut
 {
+    // set user checkout time to now
     NSInteger checkOutTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
-    SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkOutTime]);
+    [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
+    
     // nil out the venue in NSUserDefaults
-    [self saveCurrentVenueUserDefaults:nil];
+    [CPUserDefaultsHandler setCurrentVenue:nil];
     if (self.checkOutTimer != nil) {
         [[self checkOutTimer] invalidate];
         self.checkOutTimer = nil;   
@@ -660,9 +653,9 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 - (void)checkInButtonPressed:(id)sender
 {
-    if (![CPAppDelegate currentUser]) {
+    if (![CPUserDefaultsHandler currentUser]) {
         [CPAppDelegate showLoginBanner];
-    } else if (self.userCheckedIn) {
+    } else if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
         [self promptForCheckout];
     } else {
         UINavigationController *checkInNC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
@@ -706,18 +699,19 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 }
 
 - (void)syncCurrentUserWithWebAndCheckValidLogin {
-    if (self.currentUser.userID) {        
+    User *currentUser = [CPUserDefaultsHandler currentUser];
+    if (currentUser.userID) {        
         User *webSyncUser = [[User alloc] init];
-        webSyncUser.userID = self.currentUser.userID;
+        webSyncUser.userID = currentUser.userID;
         
         [webSyncUser loadUserResumeData:^(NSError *error) {
             if (!error) {
                 // TODO: make this a better solution by checking for a problem with the PHP session cookie in CPApi
                 // for now if the email comes back null this person isn't logged in so we're going to send them to do that.
-                if ( ! [webSyncUser.email isKindOfClass:[NSNull class]]) {
-                    [self saveCurrentUserToUserDefaults:webSyncUser];
+                if (![webSyncUser.email isKindOfClass:[NSNull class]]) {
+                    [CPUserDefaultsHandler setCurrentUser:webSyncUser];
                     
-                    if ( ! self.currentUser.isDaysOfTrialAccessWithoutInviteCodeOK) {
+                    if (!currentUser.isDaysOfTrialAccessWithoutInviteCodeOK) {
                         [self showSignupModalFromViewController:self.tabBarController animated:NO];
                         
                         [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Your %d days trial has ended.", kDaysOfTrialAccessWithoutInviteCode]
@@ -777,7 +771,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     // here we're going to check what the user's previously registered app version was
     // this allows us to force them to login again if required
     // or to tell them to update
-    NSString *appVersion = DEFAULTS(object, kUDLastLoggedAppVersion);
+    NSString *appVersion = [CPUserDefaultsHandler lastLoggedAppVersion];
     
 #if DEBUG
     NSLog(@"The last logged app version for this user is %@.", appVersion);
@@ -798,7 +792,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 #if DEBUG
         NSLog(@"Storing app version %@ in NSUserDefaults.", currentVersion);
 #endif
-        SET_DEFAULTS(Object, kUDLastLoggedAppVersion, currentVersion);
+        [CPUserDefaultsHandler setLastLoggedAppVersion:currentVersion];
     }   
 }
 
@@ -812,8 +806,8 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 		[[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
 	}];
 
-    if ([CPAppDelegate currentUser]) {
-        SET_DEFAULTS(Object, kUDCurrentUser, nil);
+    if ([CPUserDefaultsHandler currentUser]) {
+        [CPUserDefaultsHandler setCurrentUser:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
     }
 }
@@ -832,32 +826,8 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     currUser.profileURLVisibility = [userInfo objectForKey:@"profileURL_visibility"];
     
     // Reset the Automatic Checkins default to YES
-    SET_DEFAULTS(Object, kAutomaticCheckins, [NSNumber numberWithBool:YES]);
-    
-    [self saveCurrentUserToUserDefaults:currUser];
-}
-
-- (void)saveCurrentUserToUserDefaults:(User *)user
-{
-#if DEBUG
-    NSLog(@"Storing user data for user with ID %d and nickname %@ to NSUserDefaults", user.userID, user.nickname);
-#endif
-    
-    // encode the user object
-    NSData *encodedUser = [NSKeyedArchiver archivedDataWithRootObject:user];
-
-    // store it in user defaults
-    SET_DEFAULTS(Object, kUDCurrentUser, encodedUser);
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
-    
-    if (user.numberOfContactRequests) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNumberOfContactRequestsNotification
-                                                            object:self
-                                                          userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                    user.numberOfContactRequests, @"numberOfContactRequests",
-                                                                    nil]];
-    }
+    [CPUserDefaultsHandler setAutomaticCheckins:YES];
+    [CPUserDefaultsHandler setCurrentUser:currUser];
 }
 
 // TODO: In a lot of places in the app we are using this just to see if someone is logged in
@@ -866,18 +836,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 // without pulling it out and decoding it
 // so use that for the case where we just want BOOL YES/NO for logged in status
 
-- (User *)currentUser
-{
-    if (DEFAULTS(object, kUDCurrentUser)) {
-        // grab the coded user from NSUserDefaults
-        NSData *myEncodedObject = DEFAULTS(object, kUDCurrentUser);
-        // return it
-        return (User *)[NSKeyedUnarchiver unarchiveObjectWithData:myEncodedObject];
-    } else {
-        return nil;
-    }
-}
-
 - (void)updatePastVenue:(CPVenue *)venue
 {
     // Store updated venue in pastVenues array
@@ -885,7 +843,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     // encode the user object
     NSData *newVenueData = [NSKeyedArchiver archivedDataWithRootObject:venue];
 
-    NSArray *pastVenues = DEFAULTS(object, kUDPastVenues);
+    NSArray *pastVenues = [CPUserDefaultsHandler pastVenues];
     
     // Reverse order so that the oldest venues are knocked out
     pastVenues = [[pastVenues reverseObjectEnumerator] allObjects];
@@ -913,34 +871,12 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     }
     
     [mutablePastVenues addObject:newVenueData];
-    
-    SET_DEFAULTS(Object, kUDPastVenues, mutablePastVenues);    
-}
-
-- (void)saveCurrentVenueUserDefaults:(CPVenue *)venue
-{
-    // encode the user object
-    NSData *newVenueData = [NSKeyedArchiver archivedDataWithRootObject:venue];
-    
-    // store it in user defaults
-    SET_DEFAULTS(Object, kUDCurrentVenue, newVenueData);
-}
-
-- (CPVenue *)currentVenue
-{
-    if (DEFAULTS(object, kUDCurrentVenue)) {
-        // grab the coded user from NSUserDefaults
-        NSData *myEncodedObject = DEFAULTS(object, kUDCurrentVenue);
-        // return it
-        return (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:myEncodedObject];
-    } else {
-        return nil;
-    }
+    [CPUserDefaultsHandler setPastVenues:mutablePastVenues];  
 }
 
 - (CPVenue *)venueWithName:(NSString *)name
 {
-    NSArray *pastVenues = DEFAULTS(object, kUDPastVenues);
+    NSArray *pastVenues = [CPUserDefaultsHandler pastVenues];
 
     CPVenue *venueMatch;
 

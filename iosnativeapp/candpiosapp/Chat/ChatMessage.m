@@ -33,7 +33,7 @@
     self.date = [NSDate date];
     
     // Automatically determine if this is my message
-    if ([CPAppDelegate currentUser].userID ==
+    if ([CPUserDefaultsHandler currentUser].userID ==
         fromUser.userID)
     {
         self.fromMe = YES;

@@ -309,7 +309,7 @@ static UIImage *defaultProfileImage;
 + (void)profileImageView:(UIImageView *)imageView
      withProfileImageUrl:(NSURL *)photoUrl
 {
-    if (![CPAppDelegate currentUser]) {
+    if (![CPUserDefaultsHandler currentUser]) {
         imageView.image = [UIImage imageNamed:@"person-login-to-view.png"];
     } else  {
         if (photoUrl) {
@@ -324,7 +324,7 @@ static UIImage *defaultProfileImage;
 
 + (NSString *)profileNickname:(NSString *)nickname {
 
-    if (![CPAppDelegate currentUser]) {
+    if (![CPUserDefaultsHandler currentUser]) {
         return @"Name Hidden";
     } else  {
         return nickname;
@@ -335,7 +335,7 @@ static UIImage *defaultProfileImage;
 
 + (void)settingsButtonForNavigationItem:(UINavigationItem *)navigationItem
 {
-    if ([CPAppDelegate currentUser]) {
+    if ([CPUserDefaultsHandler currentUser]) {
         // we have a current user so we need a button
         // but only if we don't have it
         if (!navigationItem.leftBarButtonItem) {

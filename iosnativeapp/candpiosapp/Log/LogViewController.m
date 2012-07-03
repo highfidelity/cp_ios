@@ -172,7 +172,7 @@ typedef enum {
 
 - (NSString *)textForLogEntry:(CPLogEntry *)logEntry
 {
-    if (logEntry.type == CPLogEntryTypeUpdate && logEntry.author.userID != [CPAppDelegate currentUser].userID) {
+    if (logEntry.type == CPLogEntryTypeUpdate && logEntry.author.userID != [CPUserDefaultsHandler currentUser].userID) {
         return [NSString stringWithFormat:@"%@: %@", logEntry.author.firstName, logEntry.entry];
     } else {
         if (logEntry.type == CPLogEntryTypeLove && logEntry.originalLogID > 0) {
@@ -186,7 +186,7 @@ typedef enum {
 - (UIFont *)fontForLogEntry:(CPLogEntry *)logEntry
 {
     if (logEntry.type == CPLogEntryTypeUpdate) {
-        return [UIFont systemFontOfSize:(logEntry.author.userID == [CPAppDelegate currentUser].userID ? 13 : 12)];
+        return [UIFont systemFontOfSize:(logEntry.author.userID == [CPUserDefaultsHandler currentUser].userID ? 13 : 12)];
     } else {
         return [UIFont boldSystemFontOfSize:10];
     }
@@ -299,7 +299,7 @@ typedef enum {
             // so check if it's this user's or somebody else's
             LogUpdateCell *updateCell;
             
-            if (logEntry.author.userID == [CPAppDelegate currentUser].userID){
+            if (logEntry.author.userID == [CPUserDefaultsHandler currentUser].userID){
                 static NSString *EntryCellIdentifier = @"LogEntryCell";
                 updateCell = [tableView dequeueReusableCellWithIdentifier:EntryCellIdentifier];
                 
@@ -505,7 +505,7 @@ typedef enum {
                     
                     // if the user chose a venue for the log we need to check them in there
                     // unless it's the same venue that we already have them checked into
-                    if (self.pendingLogEntry.venue && ![self.pendingLogEntry.venue.foursquareID isEqualToString:[CPAppDelegate currentVenue].foursquareID]) {
+                    if (self.pendingLogEntry.venue && ![self.pendingLogEntry.venue.foursquareID isEqualToString:[CPUserDefaultsHandler currentVenue].foursquareID]) {
                         [self checkinUserToVenue:self.pendingLogEntry.venue];
                     }
                     
@@ -573,10 +573,10 @@ typedef enum {
         self.pendingLogEntry = [[CPLogEntry alloc] init];
         
         // the author for this log message is the current user
-        self.pendingLogEntry.author = [CPAppDelegate currentUser];
+        self.pendingLogEntry.author = [CPUserDefaultsHandler currentUser];
         
         // if the user is currently at a venue then use that as the venue for this log
-        self.pendingLogEntry.venue = [CPAppDelegate currentVenue];
+        self.pendingLogEntry.venue = [CPUserDefaultsHandler currentVenue];
         
         [self.logEntries addObject:self.pendingLogEntry];
         

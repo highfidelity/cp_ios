@@ -62,7 +62,7 @@
     NSString *inviteItemName = @"Invite";
     NSString *inviteItemSegue = @"ShowInvitationCodeMenu";
     
-    if (![CPAppDelegate currentUser].enteredInviteCode) {
+    if (![CPUserDefaultsHandler currentUser].enteredInviteCode) {
         inviteItemName = @"Enter invite code";
         inviteItemSegue = kEnterInviteFakeSegueID;
     }
@@ -337,9 +337,9 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     // Check to see if our login is valid, using the user name for the header
-	if([CPAppDelegate currentUser])
+	if([CPUserDefaultsHandler currentUser])
 	{
-		return [CPAppDelegate currentUser].nickname;
+		return [CPUserDefaultsHandler currentUser].nickname;
 	}
 	else
 	{
@@ -428,7 +428,7 @@
         // this alert view is shown if the user has just checked into a new venue
         // and we want to ask them if they'd like to autocheckin here in the future
         
-        CPVenue *autoPromptVenue = [CPAppDelegate currentVenue];
+        CPVenue *autoPromptVenue = [CPUserDefaultsHandler currentVenue];
         if (alertView.firstOtherButtonIndex == buttonIndex) {
             // Start monitoring the new location to allow auto-checkout and checkin (if enabled) 
             autoPromptVenue.autoCheckin = YES;
@@ -469,7 +469,7 @@
 #pragma mark - CPAfterLoginAction Handler
 - (void)performAfterLoginActionIfRequired
 {
-    if ([CPAppDelegate currentUser]) {
+    if ([CPUserDefaultsHandler currentUser]) {
         // we have a current user so check if the settings menu controller has an action to perform after login
         switch (self.afterLoginAction) {
             case CPAfterLoginActionShowLogbook:

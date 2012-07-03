@@ -45,7 +45,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.user = [CPAppDelegate currentUser];
+    self.user = [CPUserDefaultsHandler currentUser];
 
     self.jobCategories = [NSArray arrayWithObjects:
                           @"engineering",

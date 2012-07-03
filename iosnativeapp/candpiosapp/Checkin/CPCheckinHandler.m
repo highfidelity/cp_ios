@@ -14,14 +14,14 @@
 {       
     [CPAppDelegate setCheckedOut];
     // set the NSUserDefault to the user checkout time
-    SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkoutTime]);
+    [CPUserDefaultsHandler setCheckoutTime:checkoutTime];
     
     // Save current place to venue defaults as it's used in several places in the app
-    [CPAppDelegate saveCurrentVenueUserDefaults:venue];
+    [CPUserDefaultsHandler setCurrentVenue:venue];
     
     // If this is the user's first check in to this venue and auto-checkins are enabled,
     // ask the user about checking in automatically to this venue in the future
-    BOOL automaticCheckins = [DEFAULTS(object, kAutomaticCheckins) boolValue];
+    BOOL automaticCheckins = [CPUserDefaultsHandler automaticCheckins];
     
     if (automaticCheckins) {
         // Only show the alert if the current venue isn't currently in the list of monitored venues

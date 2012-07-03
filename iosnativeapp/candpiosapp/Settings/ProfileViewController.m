@@ -141,7 +141,7 @@
 
     self.scrollView.contentSize = CGSizeMake(320, 485);
 
-    self.currentUser = [CPAppDelegate currentUser];
+    self.currentUser = [CPUserDefaultsHandler currentUser];
     [self placeCurrentUserData:nil];
 }
 
@@ -355,7 +355,7 @@
                 }
 
                 if (self.newDataFromSync) {
-                    [CPAppDelegate saveCurrentUserToUserDefaults:self.currentUser];
+                    [CPUserDefaultsHandler setCurrentUser:self.currentUser];
                 }
 
                 [self placeCurrentUserData:^{
@@ -441,7 +441,7 @@
         }
 
         // store the updated user in NSUserDefaults
-        [CPAppDelegate saveCurrentUserToUserDefaults:self.currentUser];
+        [CPUserDefaultsHandler setCurrentUser:self.currentUser];
     }
     [self placeCurrentUserData:nil];
 }

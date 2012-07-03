@@ -1,0 +1,139 @@
+//
+//  CPUserDefaultsHandler.m
+//  candpiosapp
+//
+//  Created by Stephen Birarda on 7/3/12.
+//  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
+//
+
+#import "CPUserDefaultsHandler.h"
+#import "ContactListViewController.h"
+
+// define a way to quickly grab and set NSUserDefaults
+#define DEFAULTS(type, key) ([[NSUserDefaults standardUserDefaults] type##ForKey:key])
+#define SET_DEFAULTS(Type, key, val) do {\
+[[NSUserDefaults standardUserDefaults] set##Type:val forKey:key];\
+[[NSUserDefaults standardUserDefaults] synchronize];\
+} while (0)
+
+@implementation CPUserDefaultsHandler
+
+NSString* const kUDCurrentUser = @"loggedUser";
+
++ (void)setCurrentUser:(User *)currentUser
+{
+#if DEBUG
+    NSLog(@"Storing user data for user with ID %d and nickname %@ to NSUserDefaults", currentUser.userID, currentUser.nickname);
+#endif
+    
+    // encode the user object
+    NSData *encodedUser = [NSKeyedArchiver archivedDataWithRootObject:currentUser];
+    
+    // store it in user defaults
+    SET_DEFAULTS(Object, kUDCurrentUser, encodedUser);
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
+    
+    if (currentUser.numberOfContactRequests) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNumberOfContactRequestsNotification
+                                                            object:self
+                                                          userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                    currentUser.numberOfContactRequests, @"numberOfContactRequests",
+                                                                    nil]];
+    }
+}
+
++ (User *)currentUser
+{
+    if (DEFAULTS(object, kUDCurrentUser)) {
+        // grab the coded user from NSUserDefaults
+        NSData *myEncodedObject = DEFAULTS(object, kUDCurrentUser);
+        // return it
+        return (User *)[NSKeyedUnarchiver unarchiveObjectWithData:myEncodedObject];
+    } else {
+        return nil;
+    }
+}
+
+NSString* const kUDCurrentVenue = @"currentCheckIn";
+
++ (void)setCurrentVenue:(CPVenue *)venue
+{
+    // encode the user object
+    NSData *newVenueData = [NSKeyedArchiver archivedDataWithRootObject:venue];
+    
+    // store it in user defaults
+    SET_DEFAULTS(Object, kUDCurrentVenue, newVenueData);
+}
+
++ (CPVenue *)currentVenue
+{
+    if (DEFAULTS(object, kUDCurrentVenue)) {
+        // grab the coded user from NSUserDefaults
+        NSData *myEncodedObject = DEFAULTS(object, kUDCurrentVenue);
+        // return it
+        return (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:myEncodedObject];
+    } else {
+        return nil;
+    }
+}
+
+
+NSString* const kUDPastVenues = @"pastVenues";
++ (void)setPastVenues:(NSArray *)pastVenues
+{
+    SET_DEFAULTS(Object, kUDPastVenues, pastVenues);  
+}
+
++ (NSArray *)pastVenues
+{
+    return DEFAULTS(object, kUDPastVenues);
+}
+
+
+NSString* const kUDCheckoutTime = @"localUserCheckoutTime";
+
++ (void)setCheckoutTime:(NSInteger)checkoutTime
+{
+    // set the NSUserDefault to the user checkout time
+    SET_DEFAULTS(Object, kUDCheckoutTime, [NSNumber numberWithInt:checkoutTime]);
+}
+
++ (NSInteger)checkoutTime
+{
+    return [DEFAULTS(object, kUDCheckoutTime) intValue];
+}
+
++ (BOOL)isUserCurrentlyCheckedIn
+{
+    return [self checkoutTime] > [[NSDate date]timeIntervalSince1970];
+}
+
+
+NSString* const kUDLastLoggedAppVersion = @"lastLoggedAppVersion";
++ (void)setLastLoggedAppVersion:(NSString *)appVersionString
+{
+    SET_DEFAULTS(Object, kUDLastLoggedAppVersion, appVersionString);
+}
+
++ (NSString *)lastLoggedAppVersion
+{
+    return DEFAULTS(object, kUDLastLoggedAppVersion);
+}
+
+NSString* const kAutomaticCheckins = @"automaticCheckins";
+
++ (void)setAutomaticCheckins:(BOOL)on
+{
+    SET_DEFAULTS(Object, kAutomaticCheckins, [NSNumber numberWithBool:on]);
+}
+
++ (BOOL)automaticCheckins
+{
+    return [DEFAULTS(object, kAutomaticCheckins) boolValue];
+}
+
+
+NSString* const kUDLogVenues = @"logVenues";
+
+@end

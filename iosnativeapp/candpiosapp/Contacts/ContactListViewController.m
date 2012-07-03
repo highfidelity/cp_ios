@@ -485,11 +485,11 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 }
 
 -(void)performQuickActionForDirection:(CPSwipeableTableViewCellDirection)direction cell:(CPSwipeableTableViewCell *)sender {
-    if ([CPAppDelegate currentUser]) {
+    if ([CPUserDefaultsHandler currentUser]) {
         User *selectedUser = [self userForIndexPath:[self.tableView indexPathForCell:sender]];
         
         // only show the love modal if this isn't the user themselves
-        if (selectedUser.userID != [CPAppDelegate currentUser].userID) {
+        if (selectedUser.userID != [CPUserDefaultsHandler currentUser].userID) {
             UserLoveViewController *loveModal = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil]
                                                  instantiateViewControllerWithIdentifier:@"SendLoveModal"];
             loveModal.user = selectedUser;

@@ -28,7 +28,6 @@
 @property (strong, nonatomic, readonly) AFHTTPClient *urbanAirshipClient;
 @property (strong, nonatomic) SettingsMenuController *settingsMenuController;
 @property (strong, nonatomic) CPTabBarController *tabBarController;
-@property (readonly) BOOL userCheckedIn;
 @property (strong) NSTimer *checkOutTimer;
 @property (strong) CLLocationManager *locationManager;
            
@@ -36,11 +35,7 @@
 - (void)loadVenueView:(NSString *)venueName;
 -(void)logoutEverything;
 -(void)storeUserLoginDataFromDictionary:(NSDictionary *)userDictionary;
--(void)saveCurrentUserToUserDefaults:(User *)user;
--(User *)currentUser;
 - (void)updatePastVenue:(CPVenue *)venue;
-- (void)saveCurrentVenueUserDefaults:(CPVenue *)venue;
-- (CPVenue *)currentVenue;
 - (CPVenue *)venueWithName:(NSString *)name;
 - (void)toggleSettingsMenu;
 - (void)promptForCheckout;

@@ -386,7 +386,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     [super viewDidLoad];
     
     // Setup the "me" object. It's a wonder why we don't just hae
-    self.me = [CPAppDelegate currentUser];
+    self.me = [CPUserDefaultsHandler currentUser];
 
     self.title = self.user.nickname;
     

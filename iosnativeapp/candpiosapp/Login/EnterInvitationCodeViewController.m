@@ -86,7 +86,7 @@
     BOOL dismissModalViewController = YES;
     
     if ( ! self.dontShowTextNoticeAfterLaterButtonPressed) {
-        if ( ! [[CPAppDelegate currentUser] isDaysOfTrialAccessWithoutInviteCodeOK]) {
+        if ( ![[CPUserDefaultsHandler currentUser] isDaysOfTrialAccessWithoutInviteCodeOK]) {
             
             [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Your %d days trial has ended.", kDaysOfTrialAccessWithoutInviteCode]
                                         message:@"Please enter code or logout."

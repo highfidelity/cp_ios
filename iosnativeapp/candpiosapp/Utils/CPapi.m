@@ -997,13 +997,13 @@
         
         // setup the request to pass the image
         NSURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:@"api.php" parameters:params constructingBodyWithBlock: ^(id <AFMultipartFormData> formData) {
-            [formData appendPartWithFileData:imageData name:@"profile" fileName:[NSString stringWithFormat:@"%d_iPhone_Profile_Upload.jpeg", [CPAppDelegate currentUser].userID] mimeType:@"image/jpeg"];
+            [formData appendPartWithFileData:imageData name:@"profile" fileName:[NSString stringWithFormat:@"%d_iPhone_Profile_Upload.jpeg", [CPUserDefaultsHandler currentUser].userID] mimeType:@"image/jpeg"];
         }];
         
         // go back to the main queue and make the request (the makeHTTPRequest method will queue it in an operation queue)
         dispatch_async(dispatch_get_main_queue(), ^{
 #if DEBUG
-            NSLog(@"Uploading profile image for user with id %d", [CPAppDelegate currentUser].userID);
+            NSLog(@"Uploading profile image for user with id %d", [CPUserDefaultsHandler currentUser].userID);
 #endif
             
             // make the request
@@ -1091,7 +1091,7 @@
 {
     NSLog(@"Saving checkin status of %d for venue: %@", venue.autoCheckin, venue.name);
 
-    NSInteger currentUserID = [[CPAppDelegate currentUser] userID];
+    NSInteger currentUserID = [[CPUserDefaultsHandler currentUser] userID];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setValue:[NSString stringWithFormat:@"%d", currentUserID] forKey:@"user_id"];

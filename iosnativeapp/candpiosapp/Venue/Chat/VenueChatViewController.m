@@ -125,7 +125,7 @@
     
     [self.chatBox addSubview:self.sendButton];
     
-    if ([CPAppDelegate userCheckedIn] && [CPAppDelegate currentVenue].venueID == self.venue.venueID) {
+    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [CPUserDefaultsHandler currentVenue].venueID == self.venue.venueID) {
         // this user is checked in here
         // show them the textView and an enabled send button
         
@@ -321,7 +321,7 @@
             
             // let's make sure that the message the user is sending hasn't just come back
             for (VenueChatEntry *entry in newEntries) {
-                if ([entry.text isEqualToString:self.growingTextView.text] && entry.user.userID == [CPAppDelegate currentUser].userID) {
+                if ([entry.text isEqualToString:self.growingTextView.text] && entry.user.userID == [CPUserDefaultsHandler currentUser].userID) {
                     // clear the growing text view since we just got the message back
                     [self resetGrowingTextView:YES];
                 }
@@ -541,9 +541,9 @@
                 // or if this user was the recipient of the love sent
                 // or if this user already has a +1
                 // and disable the +1 button if that is the case
-                if (entry.user.userID == [CPAppDelegate currentUser].userID || 
-                    ((LoveChatEntry *)entry).recipient.userID == [CPAppDelegate currentUser].userID ||
-                    [((LoveChatEntry *)entry).plusOnes objectForKey:[NSString stringWithFormat:@"%d", [CPAppDelegate currentUser].userID]]) {
+                if (entry.user.userID == [CPUserDefaultsHandler currentUser].userID || 
+                    ((LoveChatEntry *)entry).recipient.userID == [CPUserDefaultsHandler currentUser].userID ||
+                    [((LoveChatEntry *)entry).plusOnes objectForKey:[NSString stringWithFormat:@"%d", [CPUserDefaultsHandler currentUser].userID]]) {
                     [((LoveChatCell *)cell) togglePlusOneButton:NO];
                 } else {
                     [((LoveChatCell *)cell) togglePlusOneButton:YES];

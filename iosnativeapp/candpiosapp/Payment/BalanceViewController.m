@@ -226,7 +226,7 @@
     [[cell amountLabel] setText:[NSString stringWithFormat:@"$%@", [transaction objectForKey:@"amount"]]];
     
     NSString *from_to = @"to";    
-    if ([[transaction objectForKey:@"payer"] intValue] != [CPAppDelegate currentUser].userID) {
+    if ([[transaction objectForKey:@"payer"] intValue] != [CPUserDefaultsHandler currentUser].userID) {
         from_to = @"from";
     }
     

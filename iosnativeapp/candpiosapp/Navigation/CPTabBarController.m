@@ -68,7 +68,7 @@
     if (self.selectedIndex > 0 && 
         self.selectedIndex <= 4 && 
         selectedIndex == 0 && 
-        ![CPAppDelegate currentUser]) {
+        ![CPUserDefaultsHandler currentUser]) {
         // don't change the selected index here
         // just show the login banner
         [self promptForLoginToSeeLogbook:CPAfterLoginActionShowLogbook];
@@ -91,7 +91,7 @@
 
 - (void)refreshTabBar
 {
-    if (![CPAppDelegate currentUser]) {
+    if (![CPUserDefaultsHandler currentUser]) {
         UIStoryboard *signUpStoryboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
         UINavigationController *signupController = [signUpStoryboard instantiateInitialViewController];
         
@@ -125,7 +125,7 @@
     // otherwise the logbook is the new target for that button
     
     // if we don't have a current user then we need to just show the login banner
-    if (![CPAppDelegate currentUser]) {
+    if (![CPUserDefaultsHandler currentUser]) {
         [self promptForLoginToSeeLogbook:CPAfterLoginActionAddNewLog];
     } else {
         // let's check if the log has already been loaded

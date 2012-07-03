@@ -49,7 +49,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.user = [CPAppDelegate currentUser];
+    self.user = [CPUserDefaultsHandler currentUser];
     
     self.resumeVisibilityButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
     

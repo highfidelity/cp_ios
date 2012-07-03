@@ -34,7 +34,7 @@
     [super viewDidLoad];
 
     // If automaticCheckins is disabled, hide the table view unless changed
-    BOOL automaticCheckins = [DEFAULTS(object, kAutomaticCheckins) boolValue];
+    BOOL automaticCheckins = [CPUserDefaultsHandler automaticCheckins];
         
     self.globalCheckinSwitch.on = automaticCheckins;
 
@@ -56,13 +56,12 @@
         self.placesArray = [[NSMutableArray alloc] init];
     }
     
-    NSArray *pastVenues = DEFAULTS(object, kUDPastVenues);
+    NSArray *pastVenues = [CPUserDefaultsHandler pastVenues];
     
     for (NSData *encodedObject in pastVenues) {
         CPVenue *venue = (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
         
         if (venue && venue.name) {
-//            NSLog(@"venue found: %@", venue.name);
             [self.placesArray addObject:venue];
         }
     }
@@ -149,7 +148,7 @@
 
 - (IBAction)globalCheckinChanged:(UISwitch *)sender {
     // Store the choice in NSUserDefaults
-    SET_DEFAULTS(Object, kAutomaticCheckins, [NSNumber numberWithBool:sender.on]);
+    [CPUserDefaultsHandler setAutomaticCheckins:sender.on];
     
     if (!sender.on) {
         // Disable auto checkins

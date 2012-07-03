@@ -41,7 +41,7 @@
 -(void)refreshButtonStateFromCheckinStatus
 {
     // change the image and the text on the button
-    if ([CPAppDelegate userCheckedIn]) {
+    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
         [self refreshButtonStateWithBoolean:YES];
     } else {
         [self refreshButtonStateWithBoolean:NO];

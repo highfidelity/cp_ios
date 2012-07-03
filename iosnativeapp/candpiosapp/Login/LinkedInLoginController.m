@@ -354,7 +354,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                     // hide the login progress HUD
                     [SVProgressHUD dismiss];
 
-                    if ([CPAppDelegate currentUser].enteredInviteCode) {
+                    if ([CPUserDefaultsHandler currentUser].enteredInviteCode) {
                         if (self.emailConfirmationRequired) {
                             [self performSegueWithIdentifier:@"EnterEmailAfterSignUpSegue" sender:nil];
                         } else {

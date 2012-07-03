@@ -219,7 +219,7 @@
 {
     [super viewWillAppear:animated];
     
-    if ([CPAppDelegate currentUser]) {
+    if ([CPUserDefaultsHandler currentUser]) {
         [self reloadVenueChat];
         self.chatReloadTimer = [NSTimer scheduledTimerWithTimeInterval:VENUE_CHAT_RELOAD_INTERVAL target:self selector:@selector(reloadVenueChat) userInfo:nil repeats:YES];
     } else {
@@ -273,7 +273,7 @@
 
 - (BOOL)isCheckedInHere
 {
-    return [CPAppDelegate userCheckedIn] && [CPAppDelegate currentVenue].venueID == self.venue.venueID;
+    return [CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [CPUserDefaultsHandler currentVenue].venueID == self.venue.venueID;
 }
 
 - (void)refreshVenueViewCheckinButton
@@ -483,7 +483,7 @@
 
 - (void)showVenueChat
 {
-    if ([CPAppDelegate currentUser]) {
+    if ([CPUserDefaultsHandler currentUser]) {
         [self performSegueWithIdentifier:@"ShowVenueChatFromVenue" sender:self];
     } else {
         // prompt the user to login
@@ -605,7 +605,7 @@
     
     if (self.scrollToUserThumbnail) {
         // we need to find the userThumbnail and scroll to it
-        UIButton *userButton = (UIButton *)[self.view viewWithTag:[CPAppDelegate currentUser].userID];
+        UIButton *userButton = (UIButton *)[self.view viewWithTag:[CPUserDefaultsHandler currentUser].userID];
         UIScrollView *parentScroll = (UIScrollView *)userButton.superview;
         UIView *categoryView = parentScroll.superview;
         
@@ -990,10 +990,10 @@
 
 - (void)checkInPressed:(id)sender
 {
-    if (![CPAppDelegate currentUser]) {
+    if (![CPUserDefaultsHandler currentUser]) {
         [CPAppDelegate showLoginBanner];
     } else {
-        if ([CPAppDelegate userCheckedIn] && [CPAppDelegate currentVenue].venueID == self.venue.venueID){
+        if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [CPUserDefaultsHandler currentVenue].venueID == self.venue.venueID){
             // user is checked in here so ask them if they want to be checked out
             [CPAppDelegate promptForCheckout];
         } else {
@@ -1162,7 +1162,7 @@
 
 - (IBAction)userImageButtonPressed:(id)sender
 {
-    if (![CPAppDelegate currentUser]) {
+    if (![CPUserDefaultsHandler currentUser]) {
         [CPAppDelegate showLoginBanner];
 
     }   else {

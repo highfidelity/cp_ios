@@ -35,7 +35,7 @@
 
 +(void) pushAliasUpdate {
     // Set my UserID as an UrbanAirship alias for push notifications
-    NSString *userid = [NSString stringWithFormat:@"%d", [CPAppDelegate currentUser].userID];
+    NSString *userid = [NSString stringWithFormat:@"%d", [CPUserDefaultsHandler currentUser].userID];
     if (![userid isEqualToString:@""])
     {
         // Only push user id if it's not blank

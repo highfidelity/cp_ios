@@ -134,7 +134,7 @@ UITapGestureRecognizer* _tapRecon = nil;
              withProfileImageUrl:self.user.photoURL];
     
     // hide the go menu if this profile is current user's profile
-    if (self.user.userID == [CPAppDelegate currentUser].userID || self.isF2FInvite) {
+    if (self.user.userID == [CPUserDefaultsHandler currentUser].userID || self.isF2FInvite) {
         for (NSNumber *viewID in [NSArray arrayWithObjects:[NSNumber numberWithInt:1005], [NSNumber numberWithInt:1006], [NSNumber numberWithInt:1007], [NSNumber numberWithInt:1008], [NSNumber numberWithInt:1009], [NSNumber numberWithInt:1010], [NSNumber numberWithInt:1020], nil]) {
             [[self.view viewWithTag:[viewID intValue]] removeFromSuperview];
         }
