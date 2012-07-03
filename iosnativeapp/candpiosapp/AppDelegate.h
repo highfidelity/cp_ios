@@ -15,8 +15,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import "FlurryAnalytics.h"
 
-// Constants have been moved to CPConstants.m
-
 @class AFHTTPClient;
 @class SignupController;
 @class User;
