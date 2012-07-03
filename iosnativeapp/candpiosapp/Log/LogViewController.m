@@ -388,8 +388,11 @@ typedef enum {
 - (void)loadProfileImageForButton:(UIButton *)button photoURL:(NSURL *)photoURL buttonTag:(NSInteger)buttonTag
 {   
     __block UIButton *profileButton = button;
+    
     // call setImageWithURLRequest and use the success block to set the downloaded image as the background image of the button
     // on failure do nothing since the background image on the button has been reset to the default profile image in prepare for reuse
+    
+    // we use the button's read-only imageView just to be able to peform the request using AFNetworking's caching
     [button.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:photoURL] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         // give the downloaded image to the button
         [profileButton setBackgroundImage:image forState:UIControlStateNormal];
@@ -412,6 +415,9 @@ typedef enum {
     UserProfileViewController *userProfileVC = (UserProfileViewController *)[[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
     
     // give the log's user object to the UserProfileVC
+    
+    // if this button's origin is left of the timeline then it's the log's author
+    // otherwise it's the log's receiver
     userProfileVC.user = button.frame.origin.x < TIMELINE_ORIGIN_X ? userEntry.author : userEntry.receiver;
     
     // ask our navigation controller to push to the UserProfileVC
