@@ -14,8 +14,10 @@
 #import "LogLoveCell.h"
 #import "CheckInListTableViewController.h"
 #import "CPCheckinHandler.h"
+#import "UserProfileViewController.h"
 
 #define LOWER_BUTTON_LABEL_TAG 5463
+#define TIMELINE_ORIGIN_X 50
 
 typedef enum {
     LogVCStateDefault,
@@ -62,12 +64,10 @@ typedef enum {
     // refresh button in top right
     [self addRefreshButtonToNavigationItem];
     
-    // setup a background view that uses the texture
+    // setup a background view
+    // and add the timeline to the backgroundView
     UIView *backgroundView = [[UIView alloc] initWithFrame:self.tableView.frame];
-    backgroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-lightpaperfibers"]];
-    
-    // add the timeline to the backgroundView
-    UIView *timeLine = [[UIView alloc] initWithFrame:CGRectMake(50, 0, 2, backgroundView.frame.size.height)];
+    UIView *timeLine = [[UIView alloc] initWithFrame:CGRectMake(TIMELINE_ORIGIN_X, 0, 2, backgroundView.frame.size.height)];
     timeLine.backgroundColor = [UIColor colorWithR:234 G:234 B:234 A:1];
     [backgroundView addSubview:timeLine];
     
@@ -336,8 +336,8 @@ typedef enum {
             static NSString *loveCellIdentifier = @"LogLoveCell";
             LogLoveCell *loveCell = [tableView dequeueReusableCellWithIdentifier:loveCellIdentifier];
             
-            // lazy load the receiver's profile image
-            [loveCell.receiverProfileImageView setImageWithURL:logEntry.receiver.photoURL placeholderImage:[CPUIHelper defaultProfileImage]];
+            // setup the receiver's profile button
+            [self loadProfileImageForButton:loveCell.receiverProfileButton photoURL:logEntry.receiver.photoURL buttonTag:indexPath.row];
             
             loveCell.entryLabel.text = logEntry.entry.description;
             
@@ -346,9 +346,6 @@ typedef enum {
             CGRect loveLabelFrame = loveCell.entryLabel.frame;
             loveLabelFrame.size.width = logEntry.originalLogID > 0 ? LOVE_PLUS_ONE_LABEL_WIDTH : LOVE_LABEL_WIDTH;
             loveCell.entryLabel.frame = loveLabelFrame;
-            
-            // rounded style for receiver's UIImageView
-            [self roundedStyleForImageView:loveCell.receiverProfileImageView];
 
             // the cell to return is the loveCell
             cell = loveCell;
@@ -363,9 +360,8 @@ typedef enum {
         cell.entryLabel.frame = entryFrame;
     }
     
-    // every cell has the log entry author's profile image as the senderProfileImageView
-    [cell.senderProfileImageView setImageWithURL:logEntry.author.photoURL placeholderImage:[CPUIHelper defaultProfileImage]];
-    [self roundedStyleForImageView:cell.senderProfileImageView];
+    // setup the entry sender's profile button
+    [self loadProfileImageForButton:cell.senderProfileButton photoURL:logEntry.author.photoURL buttonTag:indexPath.row];
     
     // return the cell
     return cell;
@@ -389,10 +385,37 @@ typedef enum {
 }
 
 #pragma mark - VC Helper Methods
-- (void)roundedStyleForImageView:(UIImageView *)imageView
+- (void)loadProfileImageForButton:(UIButton *)button photoURL:(NSURL *)photoURL buttonTag:(NSInteger)buttonTag
+{   
+    __block UIButton *profileButton = button;
+    // call setImageWithURLRequest and use the success block to set the downloaded image as the background image of the button
+    // on failure do nothing since the background image on the button has been reset to the default profile image in prepare for reuse
+    [button.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:photoURL] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        // give the downloaded image to the button
+        [profileButton setBackgroundImage:image forState:UIControlStateNormal];
+    } failure:nil];
+    
+    // the row of this cell is the tag for the button
+    // we need to be able to grab the cell later and go to the user's profile
+    button.tag = buttonTag;
+    
+    // be the target of the button
+    [button addTarget:self action:@selector(pushToUserProfileFromButton:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (IBAction)pushToUserProfileFromButton:(UIButton *)button
 {
-    imageView.layer.cornerRadius = imageView.frame.size.width / 2;
-    imageView.layer.masksToBounds = YES;
+    // grab the log entry that is associated to this button
+    CPLogEntry *userEntry = [self.logEntries objectAtIndex:button.tag];
+    
+    // grab a UserProfileViewController from the UserStoryboard
+    UserProfileViewController *userProfileVC = (UserProfileViewController *)[[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
+    
+    // give the log's user object to the UserProfileVC
+    userProfileVC.user = button.frame.origin.x < TIMELINE_ORIGIN_X ? userEntry.author : userEntry.receiver;
+    
+    // ask our navigation controller to push to the UserProfileVC
+    [self.navigationController pushViewController:userProfileVC animated:YES];
 }
 
 - (void)addRefreshButtonToNavigationItem

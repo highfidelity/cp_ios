@@ -248,21 +248,15 @@
 
 // returns a UIImage with our default profile pic
 // might need to be changed a to larger version if used somewhere that frame is larger than 256x256
+
+static UIImage *defaultProfileImage;
 + (UIImage *)defaultProfileImage
 {
-    return [UIImage imageNamed:@"default-avatar-256"];
+    if (!defaultProfileImage) {
+        defaultProfileImage = [UIImage imageNamed:@"default-avatar-256"];
+    }
+    return defaultProfileImage;
 }
-
-+ (UIImage *)buttonCheckinImage
-{
-    return [UIImage imageNamed:@"tab-check-in.png"];
-}
-
-+ (UIImage *)buttonCheckoutImage
-{
-    return [UIImage imageNamed:@"tab-check-out.png"];
-}
-
 
 + (void)manageVirtualBadgeForProfileImageView:(UIImageView *)profileImageView
                              checkInIsVirtual:(BOOL)checkInIsVirtual

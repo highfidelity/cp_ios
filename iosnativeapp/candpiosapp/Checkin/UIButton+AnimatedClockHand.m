@@ -55,11 +55,11 @@
     if (checkedIn) {
         // start animating the clock hand
         [self toggleAnimationOfClockHand:YES];
-        [self setBackgroundImage:[CPUIHelper buttonCheckoutImage] forState:UIControlStateNormal];
+        [self setBackgroundImage:[UIImage imageNamed:@"tab-check-in.png"] forState:UIControlStateNormal];
     } else {
         // stop animating the clock hand
         [self toggleAnimationOfClockHand:NO];
-        [self setBackgroundImage:[CPUIHelper buttonCheckinImage] forState:UIControlStateNormal];
+        [self setBackgroundImage:[UIImage imageNamed:@"tab-check-in.png"] forState:UIControlStateNormal];
     }
 }
 @end

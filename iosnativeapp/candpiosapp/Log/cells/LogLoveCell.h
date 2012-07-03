@@ -11,6 +11,6 @@
 
 @interface LogLoveCell : LogBaseEntryCell
 
-@property (nonatomic, assign) IBOutlet UIImageView *receiverProfileImageView;
+@property (nonatomic, assign) IBOutlet UIButton *receiverProfileButton;
 
 @end

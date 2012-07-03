@@ -285,7 +285,7 @@
         [self.checkInButton refreshButtonStateWithBoolean:[self isCheckedInHere]];
     
         CGRect checkInButtonFrame = self.bottomPhotoOverlayView.frame;
-        checkInButtonFrame.size = [CPUIHelper buttonCheckinImage].size;
+        checkInButtonFrame.size = self.checkInButton.currentBackgroundImage.size;
         checkInButtonFrame.origin.x = ((self.bottomPhotoOverlayView.frame.size.width - checkInButtonFrame.size.width) / 2);
         checkInButtonFrame.origin.y -= 25;
         

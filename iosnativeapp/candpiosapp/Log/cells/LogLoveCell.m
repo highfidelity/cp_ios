@@ -10,6 +10,12 @@
 
 @implementation LogLoveCell
 
-@synthesize receiverProfileImageView = _receiverProfileImageView;
+@synthesize receiverProfileButton = _receiverProfileButton;
+
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    [self.receiverProfileButton setBackgroundImage:[CPUIHelper defaultProfileImage] forState:UIControlStateNormal];
+}
 
 @end

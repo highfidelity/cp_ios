@@ -221,7 +221,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="seB-8X-LdH">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.96470588235294119" green="0.96862745098039216" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogEntryCell" id="VQG-Nh-eGn" customClass="LogUpdateCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="44"/>
@@ -254,7 +254,19 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="X2J-CP-42Q">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IeA-2a-OVX">
+                                                    <rect key="frame" x="39" y="2" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" backgroundImage="default-avatar-256.png">
+                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="user-image-mask.png" id="fWn-19-wYK">
                                                     <rect key="frame" x="39" y="2" width="25" height="25"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -265,7 +277,7 @@
                                         <connections>
                                             <outlet property="dateLabel" destination="H43-Bv-fQT" id="6d2-eU-VBD"/>
                                             <outlet property="entryLabel" destination="DiI-hT-56q" id="kl0-Jy-vkY"/>
-                                            <outlet property="senderProfileImageView" destination="X2J-CP-42Q" id="Dai-8g-MUg"/>
+                                            <outlet property="senderProfileButton" destination="IeA-2a-OVX" id="uKD-eZ-0TX"/>
                                             <outlet property="timeLabel" destination="yDm-pe-eaK" id="Vo5-bK-9Ah"/>
                                         </connections>
                                     </tableViewCell>
@@ -284,17 +296,29 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="zgz-xX-fBP">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="user-image-mask.png" id="1ZJ-H5-Wo1">
                                                     <rect key="frame" x="39" y="2" width="25" height="25"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1nH-BL-MeD">
+                                                    <rect key="frame" x="39" y="2" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" backgroundImage="default-avatar-256.png">
+                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="entryLabel" destination="w5J-Sp-z5g" id="CDO-hF-wS2"/>
-                                            <outlet property="senderProfileImageView" destination="zgz-xX-fBP" id="C4g-m9-HD1"/>
+                                            <outlet property="senderProfileButton" destination="1nH-BL-MeD" id="Dyn-VQ-l9N"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LogLoveCell" id="LSp-29-kRX" customClass="LogLoveCell">
@@ -304,14 +328,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="XKD-QV-x79">
-                                                    <rect key="frame" x="39" y="2" width="25" height="25"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="FRD-te-y4d">
-                                                    <rect key="frame" x="89" y="2" width="25" height="25"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
                                                 <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" image="love-sent.png" id="As2-O4-rDp">
                                                     <rect key="frame" x="69" y="9" width="17" height="11"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -324,13 +340,45 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kWu-Le-JWA">
+                                                    <rect key="frame" x="39" y="2" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" backgroundImage="default-avatar-256.png">
+                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JUo-rE-KMh">
+                                                    <rect key="frame" x="89" y="2" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" backgroundImage="default-avatar-256.png">
+                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="user-image-mask.png" id="jfF-T8-Jve">
+                                                    <rect key="frame" x="39" y="2" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="user-image-mask.png" id="Cep-B4-7W6">
+                                                    <rect key="frame" x="89" y="2" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
                                             <outlet property="entryLabel" destination="XKz-eK-Gwv" id="Rmm-eM-etp"/>
-                                            <outlet property="receiverProfileImageView" destination="FRD-te-y4d" id="1hb-S6-i5K"/>
-                                            <outlet property="senderProfileImageView" destination="XKD-QV-x79" id="khM-k1-Klv"/>
+                                            <outlet property="receiverProfileButton" destination="JUo-rE-KMh" id="8vx-SH-NN9"/>
+                                            <outlet property="senderProfileButton" destination="kWu-Le-JWA" id="9Bq-iX-8Ay"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewLogEntryCell" id="RqY-S2-RGs" customClass="LogNewEntryCell">
@@ -353,7 +401,19 @@
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="tq3-cu-5V2">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Ccr-Jb-jpd">
+                                                    <rect key="frame" x="39" y="2" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" backgroundImage="default-avatar-256.png">
+                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="user-image-mask.png" id="bXR-LK-FOu">
                                                     <rect key="frame" x="39" y="2" width="25" height="25"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -364,7 +424,7 @@
                                         <connections>
                                             <outlet property="entryLabel" destination="TVv-Le-rw5" id="B42-rk-nNP"/>
                                             <outlet property="logTextView" destination="WfH-tm-isx" id="Yhl-a0-L5H"/>
-                                            <outlet property="senderProfileImageView" destination="tq3-cu-5V2" id="H4c-AD-yU6"/>
+                                            <outlet property="senderProfileButton" destination="Ccr-Jb-jpd" id="env-In-p51"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -704,7 +764,120 @@
         <image name="map-refresh.png" width="40" height="41"/>
         <image name="map-shadow.png" width="10" height="320"/>
         <image name="picture-coming-soon.jpg" width="100" height="100"/>
+        <image name="user-image-mask.png" width="25" height="25"/>
     </resources>
+    <classes>
+        <class className="CPBaseTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPBaseTableViewController.h"/>
+        </class>
+        <class className="CPSwipeableTableViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPSwipeableTableViewCell.h"/>
+        </class>
+        <class className="CPTabBarController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPTabBarController.h"/>
+            <relationships>
+                <relationship kind="action" name="addLogButtonPressed:"/>
+            </relationships>
+        </class>
+        <class className="ContactListCell" superclassName="CPSwipeableTableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ContactListCell.h"/>
+            <relationships>
+                <relationship kind="action" name="acceptButtonAction"/>
+                <relationship kind="action" name="declineButtonAction"/>
+                <relationship kind="outlet" name="acceptContactRequestButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="declineContactRequestButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="ContactListViewController" superclassName="CPBaseTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ContactListViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="placeholderImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="HPGrowingTextView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HPGrowingTextView.h"/>
+        </class>
+        <class className="LogBaseEntryCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogBaseEntryCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="entryLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="senderProfileButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="LogLoveCell" superclassName="LogBaseEntryCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogLoveCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="receiverProfileButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="LogNewEntryCell" superclassName="LogBaseEntryCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogNewEntryCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="logTextView" candidateClass="HPGrowingTextView"/>
+            </relationships>
+        </class>
+        <class className="LogUpdateCell" superclassName="LogBaseEntryCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogUpdateCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LogViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LogViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="MapTabController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapTabController.h"/>
+            <relationships>
+                <relationship kind="action" name="locateMe:"/>
+                <relationship kind="action" name="refreshButtonClicked:"/>
+                <relationship kind="outlet" name="mapAndButtonsView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="UserListTableViewController" superclassName="CPBaseTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserListTableViewController.h"/>
+        </class>
+        <class className="UserTableViewCell" superclassName="CPSwipeableTableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserTableViewCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="categoryLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="checkInCountLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="checkInLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="distanceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="profilePictureImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="VenueCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueCheckins" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueDistance" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venuePicture" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="VenueListTableViewController" superclassName="CPBaseTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueListTableViewController.h"/>
+        </class>
+        <class className="VenueViewToggleViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueViewToggleViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="segmentedControl" candidateClass="UISegmentedControl"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

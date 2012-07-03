@@ -10,8 +10,14 @@
 
 @implementation LogBaseEntryCell
 
-@synthesize senderProfileImageView = _senderProfileImageView;
+@synthesize senderProfileButton = _senderProfileButton;
 @synthesize entryLabel = _entryLabel;
+
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    [self.senderProfileButton setBackgroundImage:[CPUIHelper defaultProfileImage] forState:UIControlStateNormal];
+}
 
 
 @end

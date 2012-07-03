@@ -10,7 +10,7 @@
 
 @interface LogBaseEntryCell : UITableViewCell
 
-@property (nonatomic, assign) IBOutlet UIImageView *senderProfileImageView;
+@property (nonatomic, assign) IBOutlet UIButton *senderProfileButton;
 @property (nonatomic, assign) IBOutlet UILabel *entryLabel;
 
 @end
