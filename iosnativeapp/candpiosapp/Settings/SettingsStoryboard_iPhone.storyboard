@@ -658,7 +658,7 @@
                         </userGuides>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
-                            <webView alpha="0.40000000000000013" contentMode="scaleToFill" id="YBV-n6-x1r">
+                            <webView alpha="0.8" contentMode="scaleToFill" id="YBV-n6-x1r">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="640"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.8862745098" green="0.89019607840000003" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>

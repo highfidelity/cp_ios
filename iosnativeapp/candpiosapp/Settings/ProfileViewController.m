@@ -52,11 +52,12 @@
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
 @property (strong, nonatomic) NSString *pendingEmail;
 
+@property (strong, nonatomic) UIBarButtonItem *gearButton;
+
 @property (assign, nonatomic) BOOL finishedSync;
 @property (assign, nonatomic) BOOL newDataFromSync;
 
-@property (strong, nonatomic) UIBarButtonItem *gearButton;
-
+@property (strong, nonatomic, getter = cacheManager) NSCache *cache;
 @end
 
 @implementation ProfileViewController
@@ -88,6 +89,7 @@
 @synthesize gearButton = _gearButton;
 @synthesize changePhotoLabel = _changePhotoLabel;
 @synthesize profileImageView = _profileImageView;
+@synthesize cache = _cache;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -106,6 +108,14 @@
         _imagePicker = [[UIImagePickerController alloc] init];
     }
     return _imagePicker;
+}
+
+- (NSCache *)cacheManager
+{
+    if (!_cache) {
+        _cache = [[NSCache alloc] init];
+    }
+    return _cache;
 }
 
 - (void)viewDidLoad
@@ -142,7 +152,7 @@
     self.scrollView.contentSize = CGSizeMake(320, 485);
 
     self.currentUser = [CPUserDefaultsHandler currentUser];
-    [self placeCurrentUserData:nil];
+    [self placeCurrentUserDataAnimated:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -151,8 +161,8 @@
     if (!self.finishedSync) {
         // show a loading HUD
         [SVProgressHUD showWithStatus:@"Loading..."];
+        [self syncWithWebData];
     }
-    [self syncWithWebData];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -193,8 +203,38 @@
 
 #pragma mark - Web Data Sync
 
-- (void)placeCurrentUserData:(void(^)(void))completion
+- (void)placeCurrentUserDataAnimated:(BOOL)animated
 {
+    
+    UIImage *profilePhoto = [self.cache objectForKey:@"profilePhoto"];
+    
+    if (!profilePhoto) {    
+        profilePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.currentUser.photoURL]];    
+        [self.cache setObject:profilePhoto forKey:@"profilePhoto"];
+    }
+    
+    [self.profileImageView setImage:profilePhoto];
+    
+    NSString *fullHTML = [self.cache objectForKey:@"fullHTML"];
+    
+    if (!fullHTML) {
+        
+        GRMustacheTemplate *template = [GRMustacheTemplate templateFromResource:@"ProfileBackground"
+                                                                         bundle:nil
+                                                                          error:NULL];
+        
+        UIImage *blurredImage = [profilePhoto imageWithGaussianBlur];
+        NSData *imageData = UIImageJPEGRepresentation(blurredImage, 1.0);
+        
+        fullHTML = [template renderObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                                           [imageData base64EncodedString],
+                                           @"photo-string",
+                                           nil]];
+        
+        [self.cache setObject:fullHTML forKey:@"fullHTML"];
+    }
+    
+    [self.backgroundWebView loadHTMLString:fullHTML baseURL:nil];
     // put the nickname
     self.nicknameTextField.text = self.currentUser.nickname;
 
@@ -252,24 +292,7 @@
     [_emailTextField addTarget:self action:@selector(emailTextField_ValueChanged:) forControlEvents:UIControlEventEditingChanged];
     //This validates the current email address.  Should be valid, but just in case.
     [self emailTextField_ValueChanged:_emailTextField];
-    
-    //TODO: setup a cache
-    UIImage *profilePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.currentUser.photoURL]];
-    [self.profileImageView setImage:profilePhoto];
-    
-    GRMustacheTemplate *template = [GRMustacheTemplate templateFromResource:@"ProfileBackground"
-                                                                     bundle:nil
-                                                                      error:NULL];
-    
-    UIImage *blurredImage = [profilePhoto imageWithGaussianBlur];
-    NSData *imageData = UIImageJPEGRepresentation(blurredImage, 1.0);
 
-    NSString *fullHTML = [template renderObject:[NSDictionary dictionaryWithObjectsAndKeys: 
-                                                 [imageData base64EncodedString], 
-                                                 @"photo-string",
-                                                 nil]];
-    
-    [self.backgroundWebView loadHTMLString:fullHTML baseURL:nil];
     
     if ([self.currentUser.majorJobCategory isEqualToString:self.currentUser.minorJobCategory]) {
         [self.categoriesLabel setText:[self.currentUser.majorJobCategory capitalizedString]];
@@ -277,8 +300,16 @@
         [self.categoriesLabel setText:[NSString stringWithFormat:@"%@, %@", [self.currentUser.majorJobCategory capitalizedString], [self.currentUser.minorJobCategory capitalizedString]]];
     }
 
-    if (completion) {
-        completion();
+    if (animated) {
+        [UIView animateWithDuration:0.3f
+                              delay:1.0f
+                            options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{
+                             CGRect profileImageFrame = self.profileImageView.frame;
+                             profileImageFrame.origin.x = 0;
+                             self.profileImageView.frame = profileImageFrame;
+                         }
+                         completion:nil];
     }
 }
 
@@ -356,23 +387,12 @@
 
                 if (self.newDataFromSync) {
                     [CPUserDefaultsHandler setCurrentUser:self.currentUser];
+                    [self placeCurrentUserDataAnimated:YES];
                 }
-
-                [self placeCurrentUserData:^{
-                    [UIView animateWithDuration:0.3f
-                                          delay:1.0f
-                                        options:UIViewAnimationOptionCurveEaseIn
-                                     animations:^{
-                                         CGRect profileImageFrame = self.profileImageView.frame;
-                                         profileImageFrame.origin.x = 0;
-                                         self.profileImageView.frame = profileImageFrame;
-                                     }
-                                     completion:nil];
-                }];
-
+                
+                [SVProgressHUD dismiss];
                 self.newDataFromSync = NO;
                 self.finishedSync = YES;
-                [SVProgressHUD dismiss];
             }
         } else {
             [self dismissModalViewControllerAnimated:YES];
@@ -385,20 +405,26 @@
 
 #pragma mark - Image Picker Controller Delegate
 
--(void)imagePickerController:(UIImagePickerController *)picker
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissModalViewControllerAnimated:YES];
+    [self placeCurrentUserDataAnimated:YES];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker
        didFinishPickingImage:(UIImage *)image
                  editingInfo:(NSDictionary *)editingInfo
 {
+    [self.cache removeAllObjects];
     // get rid of the image picker
-    [picker dismissViewControllerAnimated:YES completion:^{
-        [SVProgressHUD show];
-    }];
-
+    [picker dismissModalViewControllerAnimated:YES];
+    [SVProgressHUD showWithStatus:@"Uploading photo"];
     // upload the image
     [CPapi uploadUserProfilePhoto:image withCompletion:^(NSDictionary *json, NSError *error) {
         if ([[json objectForKey:@"succeeded"] boolValue]) {
             // response was success ... we uploaded a new profile picture
             [self updateCurrentUserWithNewData:json];
+            [SVProgressHUD dismiss];
         } else {
 #if DEBUG
             NSLog(@"Error while uploading file. Here's the json: %@", json);
@@ -419,7 +445,8 @@
 
 - (void)updateCurrentUserWithNewData:(NSDictionary *)json
 {
-    [SVProgressHUD dismiss];
+    BOOL animated = NO;
+
     NSDictionary *paramsDict = [json objectForKey:@"params"];
     if (paramsDict) {
         // update the current user in NSUserDefaults with the change
@@ -438,12 +465,13 @@
         NSString *newPhoto = [paramsDict objectForKey:@"picture"];
         if (newPhoto) {
             self.currentUser.photoURLString = [paramsDict objectForKey:@"picture"];
+            animated = YES;
         }
 
         // store the updated user in NSUserDefaults
         [CPUserDefaultsHandler setCurrentUser:self.currentUser];
     }
-    [self placeCurrentUserData:nil];
+    [self placeCurrentUserDataAnimated:animated];
 }
 
 #pragma mark - Email Text Field Validation
@@ -584,6 +612,7 @@
     }
 
     [CPapi setUserProfileDataWithDictionary:params andCompletion:^(NSDictionary *json, NSError *error) {
+        [SVProgressHUD dismiss];
         if (!error) {
             // let's see if there was a successful change
             if ([[json objectForKey:@"succeeded"] boolValue]) {
@@ -618,6 +647,7 @@
 
 - (void)touchUp:(id)sender
 {
+    self.finishedSync = NO;
     if (sender == self.skillsView) {
         [self performSegueWithIdentifier:@"ProfileToSkillsSegue" sender:self];
     }
