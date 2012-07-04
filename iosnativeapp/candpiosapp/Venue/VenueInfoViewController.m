@@ -200,7 +200,7 @@
 
     [self populateUserSection]; 
     
-    self.activeChatText.text = @"Tap here to see log.";
+    self.activeChatText.text = @"Tap here to see feed.";
 }
 
 - (void)viewWillAppear:(BOOL)animated
