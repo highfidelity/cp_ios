@@ -1,5 +1,5 @@
 //
-//  LogLoveCell.h
+//  PostLoveCell.h
 //  candpiosapp
 //
 //  Created by Stephen Birarda on 6/22/12.
@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LogBaseEntryCell.h"
+#import "PostBaseCell.h"
 
-@interface LogLoveCell : LogBaseEntryCell
+@interface PostLoveCell : PostBaseCell
 
 @property (nonatomic, assign) IBOutlet UIButton *receiverProfileButton;
 

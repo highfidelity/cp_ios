@@ -58,9 +58,9 @@
 + (void)sendF2FVerify:(int) userId
              password:(NSString *) password;
 
-#pragma mark - Logging
-+ (void)getLogEntriesWithCompletion:(void(^)(NSDictionary *json, NSError *error))completion;
-+ (void)sendLogUpdate:(NSString *)updateText
+#pragma mark - Feeds
++ (void)getFeedForVenueID:(NSUInteger)venueID WithCompletion:(void (^)(NSDictionary *, NSError *))completion;
++ (void)sendUpdate:(NSString *)updateText
               atVenue:(CPVenue *)logVenue
            completion:(void(^)(NSDictionary *json, NSError *error))completion;
 

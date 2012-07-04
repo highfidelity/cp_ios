@@ -133,9 +133,9 @@ NSString* const kAutomaticCheckins = @"automaticCheckins";
     return [DEFAULTS(object, kAutomaticCheckins) boolValue];
 }
 
-NSString* const kUDLogVenues = @"logVenues";
+NSString* const kUDFeedVenues = @"feedVenues";
 
-+ (void)addLogVenue:(CPVenue *)venue
++ (void)addFeedVenue:(CPVenue *)venue
 {
     // setup an NSString object with the venue ID
     NSString *venueIDString = [NSString stringWithFormat:@"%d", venue.venueID];
@@ -144,27 +144,29 @@ NSString* const kUDLogVenues = @"logVenues";
     NSData *encodedVenue = [NSKeyedArchiver archivedDataWithRootObject:venue];
     
     // grab the array of logVenues
-    NSMutableDictionary *mutableLogVenues = [[self logVenues] mutableCopy];
+    NSMutableDictionary *mutableFeedVenues = [[self feedVenues] mutableCopy];
     
     // make sure we don't already have a venue for with this ID
-    if (![mutableLogVenues objectForKey:venueIDString]) {
+    if (![mutableFeedVenues objectForKey:venueIDString]) {
         // add the NSData representation of this venue at the venue ID string key
-        [mutableLogVenues setObject:encodedVenue forKey:venueIDString];
+        [mutableFeedVenues setObject:encodedVenue forKey:venueIDString];
     }
     
-    SET_DEFAULTS(Object, kUDLogVenues, [NSDictionary dictionaryWithDictionary:mutableLogVenues]);
+    SET_DEFAULTS(Object, kUDFeedVenues, [NSDictionary dictionaryWithDictionary:mutableFeedVenues]);
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"feedVenueAdded" object:nil];
 }
 
-+ (NSDictionary *)logVenues
++ (NSDictionary *)feedVenues
 {
     // pull the array of logVenues from NSUserDefaults
     // create one if it does not exist
-    NSDictionary *logVenues;
-    if (!(logVenues = DEFAULTS(object, kUDLogVenues))) {   
-        logVenues = [NSDictionary dictionary];
+    NSDictionary *feedVenues;
+    if (!(feedVenues = DEFAULTS(object, kUDFeedVenues))) {   
+        feedVenues = [NSDictionary dictionary];
     }
     
-    return logVenues;
+    return feedVenues;
 }
 
 @end

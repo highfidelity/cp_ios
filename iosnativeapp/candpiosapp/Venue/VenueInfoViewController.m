@@ -11,9 +11,6 @@
 #import "CheckInDetailsViewController.h"
 #import "UserProfileViewController.h"
 #import "MapDataSet.h"
-#import "VenueChat.h"
-#import "VenueChatEntry.h"
-#import "CheckinChatEntry.h"
 #import "UIButton+AnimatedClockHand.h"
 
 #define CHAT_MESSAGE_ORIGIN_X 11
@@ -21,7 +18,6 @@
 @interface VenueInfoViewController () <UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSTimer *chatReloadTimer;
-@property (nonatomic, strong) VenueChat *venueChat;
 @property (weak, nonatomic) IBOutlet UIView *bottomPhotoOverlayView;
 @property (weak, nonatomic) IBOutlet UIView *venueChatBox;
 @property (weak, nonatomic) IBOutlet UIView *venueChatBoxVerticalLine;
@@ -42,7 +38,6 @@
 - (void)refreshVenueData:(CPVenue *)venue;
 - (void)populateUserSection;
 - (void)checkInPressed:(id)sender;
-- (void)reloadVenueChat;
 
 - (void)addUser:(User *)user
     toArrayForJobCategory:(NSString *)jobCategory;
@@ -74,7 +69,6 @@
 @synthesize userObjectsForUsersOnScreen = _userObjectsForUsersOnScreen;
 @synthesize scrollToUserThumbnail = _scrollToUserThumbnail;
 @synthesize chatReloadTimer = _chatReloadTimer;
-@synthesize venueChat = _venueChat;
 @synthesize venueChatBox = _venueChatBox;
 @synthesize venueChatBoxVerticalLine = _venueChatBoxVerticalLine;
 @synthesize activeChatters = _activeChatters;
@@ -104,14 +98,6 @@
         // Custom initialization
     }
     return self;
-}
-
-- (VenueChat *)venueChat
-{
-    if (!_venueChat) {
-        _venueChat = [[VenueChat alloc] initWithVenueID:self.venue.venueID];
-    }
-    return _venueChat;
 }
 
 - (void)viewDidLoad
@@ -213,6 +199,8 @@
     self.hadNoChat = NO;
 
     [self populateUserSection]; 
+    
+    self.activeChatText.text = @"Tap here to see log.";
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -220,8 +208,6 @@
     [super viewWillAppear:animated];
     
     if ([CPUserDefaultsHandler currentUser]) {
-        [self reloadVenueChat];
-        self.chatReloadTimer = [NSTimer scheduledTimerWithTimeInterval:VENUE_CHAT_RELOAD_INTERVAL target:self selector:@selector(reloadVenueChat) userInfo:nil repeats:YES];
     } else {
         [self hideVenueChatFromAnonymousUser];
     }
@@ -240,10 +226,6 @@
         [self.chatReloadTimer invalidate];
         self.chatReloadTimer = nil;
     }    
-    
-    // stop a request to get venue chat if this view is dissapearing as that fudges up the next view controller
-    [self.venueChat.chatQueue cancelAllOperations];
-
 }
 
 - (void)viewDidUnload
@@ -336,133 +318,6 @@
     }
 }
 
-- (void)reloadVenueChat
-{    
-    [self.venueChat getNewChatEntriesWithCompletion:^(BOOL authenticated, NSArray *newEntries){
-        if (authenticated) {
-            if (newEntries) {
-                
-                // there are new entries so it's time to update
-                if (self.hadNoChat) {
-                    // move the icon back over
-                    CGRect moveRight = self.activeChattersIcon.frame;
-                    moveRight.origin.x += 9;
-                    self.activeChattersIcon.frame = moveRight;
-                    
-                    // unhide the number of active chatters
-                    self.activeChatters.hidden = NO;
-                }
-                
-                self.activeChatters.text = [NSString stringWithFormat:@"%d", self.venueChat.activeChattersDuringInterval];
-                
-                // display the new chat message
-                [self slideAwayChatMessageAndDisplayNewChat:YES];
-                
-            } else if (self.venueChat.activeChattersDuringInterval > 0) {
-                
-                // we didn't get a new message but we need to make sure the latest is showing
-                [self slideAwayChatMessageAndDisplayNewChat:NO];
-                
-            } else if (self.venueChat.activeChattersDuringInterval == 0) {
-                [self showTapToChat];
-            } 
-            
-            [self stopActiveChattersLoadingIndicator];
-        } else {
-            // user isn't actually logged in
-            [self hideVenueChatFromAnonymousUser];
-            // make sure nothing is lingering ... this user isn't logged in
-            [CPAppDelegate logoutEverything];
-        }   
-     
-        
-    }];
-}
-
-- (void)slideAwayChatMessageAndDisplayNewChat:(BOOL)newEntry
-{
-    // reset the frame of the chat message
-    CGRect originalFrame = self.activeChatText.frame;
-    originalFrame.origin.x = CHAT_MESSAGE_ORIGIN_X;
-    self.activeChatText.frame = originalFrame;
-    
-    VenueChatEntry *lastEntry = [self.venueChat.chatEntries lastObject];
-    BOOL entryToShow = YES;
-    
-    if ([lastEntry isKindOfClass:[CheckinChatEntry class]]) {
-        if (self.venueChat.chatEntries.count == 1) {
-            // the only entry we have is a checkin message so don't show it
-            entryToShow = NO;
-        } else {
-            // enumerate through the chat entries to make sure we have a message that isn't a checkin message to show
-            for (VenueChatEntry *possibleLast in [self.venueChat.chatEntries reverseObjectEnumerator]) {
-                if (![possibleLast isKindOfClass:[CheckinChatEntry class]] && ![possibleLast isKindOfClass:[NSString class]]) {
-                    // indicate that we'll show an entry
-                    entryToShow = YES;
-                    // change the lastEntry variable to this entry
-                    lastEntry = possibleLast;
-                    // break from the for loop
-                    break;
-                } else {
-                    entryToShow = NO;
-                }
-            }
-        }
-    } 
-    
-    if (entryToShow) {
-        if (newEntry) {
-            // we have a new entry so let's slide this old thing over and show it
-            CGRect newFrame = originalFrame;
-            newFrame.origin.x = newFrame.origin.x - [self.activeChatText sizeThatFits:self.activeChatText.frame.size].width - 10; 
-            
-            // animation to slide away the currently displayed chat
-            [UIView animateWithDuration:1.5 delay:1.0 options:UIViewAnimationCurveEaseInOut animations:^{
-                self.activeChatText.frame = newFrame;
-            } completion:^(BOOL finished) {
-                if (finished) {            
-                    // hide it and move it into place
-                    self.activeChatText.alpha = 0;
-                    self.activeChatText.frame = originalFrame;
-                    
-                    // set the new text to the next entry
-                    self.activeChatText.text = [NSString stringWithFormat:@"\"%@\"", lastEntry.text];
-                    
-                    // fade in the text
-                    [UIView animateWithDuration:0.3 animations:^{
-                        self.activeChatText.alpha = 1.0;
-                    } completion:nil];
-                }
-            }];
-        } else {
-            // didn't get a newEntry but let's make sure the latest is showing
-            self.activeChatText.text = [NSString stringWithFormat:@"\"%@\"", lastEntry.text];
-        }
-    } else {
-        [self showTapToChat];
-    }
-}
-
-- (void)showTapToChat
-{
-    // move the active chatters icon over if required
-    if (!self.hadNoChat) {
-        // center the icon
-        CGRect newFrame = self.activeChattersIcon.frame;
-        newFrame.origin.x -= 9;
-        self.activeChattersIcon.frame = newFrame;
-        
-        // hide the number of active chatters
-        self.activeChatters.hidden = YES;
-        
-        // set the hadNoChat boolean so we know we need to move things if we get chat
-        self.hadNoChat = YES;
-    }           
-    
-    // static message for no chat
-    self.activeChatText.text = @"Tap here to chat.";
-}
-
 - (void)highlightedVenueChatButton
 {
     // the button is currently highlighted so make the borders orange
@@ -484,29 +339,13 @@
 - (void)showVenueChat
 {
     if ([CPUserDefaultsHandler currentUser]) {
-        [self performSegueWithIdentifier:@"ShowVenueChatFromVenue" sender:self];
+        [CPUserDefaultsHandler addFeedVenue:self.venue];
     } else {
         // prompt the user to login
         [CPAppDelegate showLoginBanner];
         [self normalVenueChatButton];
     }
     
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // back button should say back and not the venue name for this transition
-    UIBarButtonItem *backButton = [[ UIBarButtonItem alloc] init];
-    backButton.title = @"Back";
-    self.navigationItem.backBarButtonItem = backButton;
-    
-    // give the venue and venue chat to the VenueChatViewController
-    [segue.destinationViewController setVenue:self.venue];
-    
-    // only pass the venue chat to the VenueChatViewController if it's ready
-    if (self.venueChat.hasLoaded) {
-        [segue.destinationViewController setVenueChat:self.venueChat];
-    }
 }
 
 - (void)populateUserSection

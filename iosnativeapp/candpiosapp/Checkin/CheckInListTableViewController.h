@@ -6,14 +6,15 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 
 #import <UIKit/UIKit.h>
-#import "SVPullToRefresh.h"
 
-@interface CheckInListTableViewController : UIViewController <UIAlertViewDelegate, UITextFieldDelegate>
+@interface CheckInListTableViewController : UITableViewController <UIAlertViewDelegate, UITextFieldDelegate> {
+    NSMutableArray *places;
+}
 
-@property (nonatomic, assign) id delegate;
-@property (nonatomic, strong) NSMutableArray *places;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, retain) NSMutableArray *places;
+@property BOOL refreshLocationsNow;
 
+- (IBAction)closeWindow:(id)sender;
 - (void)refreshLocations;
 
 @end

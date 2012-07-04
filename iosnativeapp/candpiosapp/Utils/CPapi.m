@@ -674,13 +674,16 @@
 }
 
 #pragma mark - Logging
-+ (void)getLogEntriesWithCompletion:(void (^)(NSDictionary *, NSError *))completion
++ (void)getFeedForVenueID:(NSUInteger)venueID WithCompletion:(void (^)(NSDictionary *, NSError *))completion
 {
-    // pretty simple, call action getUserLog in api.php
-    [self makeHTTPRequestWithAction:@"getUserLog" withParameters:nil completion:completion];
+    // our params dict contains one parameter, the ID of the venue we want log entries for
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"%d", venueID] forKey:@"venue_id"];
+    
+    // pretty simple, call action getLog in api.php
+    [self makeHTTPRequestWithAction:@"getVenueFeed" withParameters:params completion:completion];
 }
 
-+ (void)sendLogUpdate:(NSString *)updateText 
++ (void)sendUpdate:(NSString *)updateText 
               atVenue:(CPVenue *)logVenue
            completion:(void (^)(NSDictionary *, NSError *))completion
 {

@@ -1,5 +1,5 @@
 //
-//  LogEntryCell.h
+//  PostBaseCell.h
 //  candpiosapp
 //
 //  Created by Stephen Birarda on 6/12/12.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LogBaseEntryCell : UITableViewCell
+@interface PostBaseCell : UITableViewCell
 
 @property (nonatomic, assign) IBOutlet UIButton *senderProfileButton;
 @property (nonatomic, assign) IBOutlet UILabel *entryLabel;

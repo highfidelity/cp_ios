@@ -1,5 +1,5 @@
 //
-//  CPLogEntry.h
+//  CPPost.h
 //  candpiosapp
 //
 //  Created by Stephen Birarda on 6/12/12.
@@ -10,24 +10,23 @@
 #import "CPSkill.h"
 
 typedef enum {
-    CPLogEntryTypeUpdate,
-    CPLogEntryTypeLove
-} CPLogEntryType;
+    CPPostTypeUpdate,
+    CPPostTypeLove
+} CPPostType;
 
-@interface CPLogEntry : NSObject
+@interface CPPost : NSObject
 
-@property (nonatomic, assign) NSUInteger logID;
+@property (nonatomic, assign) NSUInteger postID;
 @property (nonatomic, strong) NSString *entry;
 @property (nonatomic, strong) User *author;
 @property (nonatomic, strong) NSDate *date;
-@property (nonatomic, strong) CPVenue *venue;
 @property (nonatomic, assign) double *lat;
 @property (nonatomic, assign) double *lng;
 @property (nonatomic, strong) User *receiver;
 @property (nonatomic, strong) CPSkill *skill;
-@property (nonatomic, assign) CPLogEntryType type;
-@property (nonatomic, assign) NSUInteger originalLogID;
+@property (nonatomic, assign) CPPostType type;
+@property (nonatomic, assign) NSUInteger originalPostID;
 
-- (id)initFromDictionary:(NSDictionary *)logDict;
+- (id)initFromDictionary:(NSDictionary *)postDict;
 
 @end

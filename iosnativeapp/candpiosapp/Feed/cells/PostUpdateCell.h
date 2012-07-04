@@ -1,5 +1,5 @@
 //
-//  LogMyUpdateCell.h
+//  PostUpdateCell.h
 //  candpiosapp
 //
 //  Created by Stephen Birarda on 6/22/12.
@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LogBaseEntryCell.h"
+#import "PostBaseCell.h"
 
-@interface LogUpdateCell : LogBaseEntryCell
+@interface PostUpdateCell : PostBaseCell
 
 @property (nonatomic, assign) IBOutlet UILabel *timeLabel;
 @property (nonatomic, assign) IBOutlet UILabel *dateLabel;

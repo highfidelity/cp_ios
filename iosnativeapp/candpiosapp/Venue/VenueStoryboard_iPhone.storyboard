@@ -47,10 +47,6 @@
                                                                 <color key="textColor" red="0.76862745098039209" green="0.41960784313725491" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="list-arrow-light-grey.png" id="idP-YG-8kQ">
-                                                                <rect key="frame" x="218" y="11" width="12" height="18"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            </imageView>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="azk-sU-Xjr">
                                                                 <rect key="frame" x="-60" y="0.0" width="300" height="37"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -118,124 +114,15 @@
                         <outlet property="venueChatBox" destination="63A-NG-4u2" id="IJi-e2-LKz"/>
                         <outlet property="venueChatBoxVerticalLine" destination="XS7-WP-9j6" id="UPA-Dt-khf"/>
                         <outlet property="venuePhoto" destination="VpL-4s-UAd" id="rMq-Mr-Jd2"/>
-                        <segue destination="HLC-7w-cEe" kind="push" identifier="ShowVenueChatFromVenue" id="zEo-JV-HUw"/>
                     </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="55" y="-495"/>
         </scene>
-        <!--Venue Chat View Controller-->
-        <scene sceneID="sv6-bo-aqj">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ydc-ew-kwD" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="HLC-7w-cEe" customClass="VenueChatViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="gvR-9z-FVw">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="hcK-sa-ySL">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="377"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ChatTimestampCell" rowHeight="22" id="Jz9-XC-7g4" customClass="TimestampCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="2Bt-HC-4Sz">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="22"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <connections>
-                                            <outlet property="timestampLabel" destination="2Bt-HC-4Sz" id="O27-x1-oNc"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="HLC-7w-cEe" id="EZ7-Cc-IMc"/>
-                                    <outlet property="delegate" destination="HLC-7w-cEe" id="Me4-zU-uju"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="mdN-9o-Af7">
-                        <barButtonItem key="rightBarButtonItem" id="qrl-OD-xWl">
-                            <view key="customView" contentMode="scaleToFill" id="Ppo-kv-NED">
-                                <rect key="frame" x="244" y="5" width="71" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="number-of-people-here.png" id="bkk-Vm-bLY">
-                                        <rect key="frame" x="40" y="2" width="29" height="26"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="8D4-M7-AiM">
-                                        <rect key="frame" x="3" y="5" width="35" height="26"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="24"/>
-                                        <color key="textColor" red="0.76862745098039209" green="0.41960784313725491" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="activeChatters" destination="8D4-M7-AiM" id="Zp2-BO-DrH"/>
-                        <outlet property="tableView" destination="hcK-sa-ySL" id="9nz-Vv-3qK"/>
-                    </connections>
-                </viewController>
-            </objects>
-            <point key="canvasLocation" x="476" y="-495"/>
-        </scene>
     </scenes>
     <resources>
-        <image name="list-arrow-light-grey.png" width="12" height="18"/>
         <image name="number-of-people-here.png" width="29" height="26"/>
     </resources>
-    <classes>
-        <class className="TimestampCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TimestampCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="timestampLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="VenueChatViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueChatViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activeChatters" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="VenueInfoViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueInfoViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="tappedAddress:"/>
-                <relationship kind="action" name="tappedPhone:"/>
-                <relationship kind="outlet" name="activeChatText" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="activeChatters" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="activeChattersIcon" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="activeChattersIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="bottomPhotoOverlayView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="firstAidSection" candidateClass="UIView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="userSection" candidateClass="UIView"/>
-                <relationship kind="outlet" name="venueChatBox" candidateClass="UIView"/>
-                <relationship kind="outlet" name="venueChatBoxVerticalLine" candidateClass="UIView"/>
-                <relationship kind="outlet" name="venuePhoto" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -7,8 +7,9 @@
 //
 
 #import "CPTabBarController.h"
-#import "LogViewController.h"
-
+#import "FeedVenuesTableViewController.h"
+#import "FeedViewController.h"
+ 
 @implementation CPTabBarController
 
 // TODO: get rid of the currentVenueID here, let's keep that in NSUserDefaults (my bad)
@@ -45,8 +46,8 @@
     viewFrame.size.height += heightDiff;
     [[self.view.subviews objectAtIndex:0] setFrame:viewFrame];
     
-    // we are always the target for the left button
-    [self.thinBar.leftButton addTarget:self action:@selector(addLogButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    // we are the target for the leftButton
+    [self.thinBar.leftButton addTarget:self action:@selector(postUpdateButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     [self refreshTabBar];
 
@@ -119,40 +120,71 @@
     
 }
 
-- (IBAction)addLogButtonPressed:(id)sender
-{
-    // we only get this if the logbook hasn't loaded
-    // otherwise the logbook is the new target for that button
-    
-    // if we don't have a current user then we need to just show the login banner
+- (IBAction)postUpdateButtonPressed:(id)sender
+{   
     if (![CPUserDefaultsHandler currentUser]) {
+        // if we don't have a current user then we need to just show the login banner
         [self promptForLoginToSeeLogbook:CPAfterLoginActionAddNewLog];
+    } else if (![CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
+        // if we have a user but they aren't checked in
+        // they need to be checked in before they can log
+        
+        NSString *alertMessage = @"You must be checked in to post an update. Want to checkin now?";
+        
+        UIAlertView *checkinAlert =  [[UIAlertView alloc] initWithTitle:@"Wait!"
+                                                                message:alertMessage 
+                                                               delegate:self 
+                                                      cancelButtonTitle:@"Cancel" 
+                                                      otherButtonTitles:@"Checkin", nil];
+        [checkinAlert show];
+        
     } else {
-        // let's check if the log has already been loaded
+        // the user is logged in and checked in
+        
+        // we need to bring them to the feed VC for the venue they are checked into
+        // and then tell that VC that the user wants to add a new log
+        
+        // assume that the venue the user is currently checked into is the first
+        // in the UITableView of the FeedVenuesTableViewController
         
         // grab the logbook navigation controller and logbook view controller
-        UINavigationController *logNavVC = [self.viewControllers objectAtIndex:0];
-        LogViewController *logVC = [logNavVC.viewControllers objectAtIndex:0];
-    
-        if (self.selectedIndex == 0) {
-            // the log view controller is loaded
-            // forward the fact that the button has been touched to that VC
-            [logVC newLogEntry];
-        } else {
-            // otherwise they user is logged but we've not yet loaded the logbook
-            // we need to tell the logbook that when it finishes loading the user wants to add a new entry
+        UINavigationController *feedNC = [self.viewControllers objectAtIndex:0];
             
-            if (!logVC.isViewLoaded) {
-                // make the logVC load its view
-                [logVC view];
+        if (feedNC.viewControllers.count > 1) {
+            FeedViewController *feedVC = [feedNC.viewControllers objectAtIndex:1];
+            
+            if ([CPUserDefaultsHandler currentVenue].venueID == feedVC.venue.venueID) {
+                // the user is already on the feed for the right venue
+                // so tell the feedVC that we want to add a new post
+                
+                if (self.selectedIndex == 0) {
+                    // the feedVC is on screen so we want a new post right now
+                    [feedVC newPost];
+                } else {
+                    // the feedVC isn't on screen yet so tell we want a new post after it loads
+                    feedVC.newPostAfterLoad = YES;
+                    self.selectedIndex = 0;
+                }
+                
+                // we're done with the execution of this method, get out of here
+                return;
+            } else {
+                // we need to pop the wrong feed off the navigation controller
+                // so it can segue to the right one below
+                [feedNC popViewControllerAnimated:NO];
             }
-            
-            // tell the log view controller that it needs to bring up the keyboard for a new log entry once it loads
-            logVC.newLogEntryAfterLoad = YES;
-            
-            // switch to the logbook 
+        }
+        
+        // grab the FeedVenuesTableViewController
+        FeedVenuesTableViewController *feedTVC = [feedNC.viewControllers objectAtIndex:0];
+        
+        // now that we're on the feeds TVC tell it to perform ShowVenueFeedForNewPost segue
+        [feedTVC performSegueWithIdentifier:@"ShowVenueFeedForNewPost" sender:self]; 
+        
+        // switch to the feeds TVC if we weren't on it
+        if (self.selectedIndex != 0) {
             self.selectedIndex = 0;
-        }       
+        }
     }
 }
 
@@ -163,6 +195,19 @@
     
     // show the login banner
     [CPAppDelegate showLoginBanner];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == alertView.firstOtherButtonIndex) {
+        // the user wants to checkin
+        
+        // grab the inital view controller of the checkin storyboard
+        UINavigationController *checkinNVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+        
+        // present that VC modally
+        [self presentModalViewController:checkinNVC animated:YES];
+    }
 }
 
 @end
