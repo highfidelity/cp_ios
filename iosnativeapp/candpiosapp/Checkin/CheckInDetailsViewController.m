@@ -271,7 +271,7 @@
                 self.place.venueID = [[json objectForKey:@"venue_id"] intValue];
                 
                 [CPCheckinHandler queueLocalNotificationForVenue:self.place checkoutTime:checkOutTime];
-                [CPCheckinHandler handleSuccessfulCheckinToVenue:self.place checkoutTime:checkOutTime checkinType:CPCheckinTypeForced];                
+                [CPCheckinHandler handleSuccessfulCheckinToVenue:self.place checkoutTime:checkOutTime checkinType:([CPAppDelegate tabBarController].forcedCheckin ? CPCheckinTypeForced : CPCheckinTypeDefault)];                
                 
                 // hide the checkin screen, we're checked in
                 if ([self isModal]) {
