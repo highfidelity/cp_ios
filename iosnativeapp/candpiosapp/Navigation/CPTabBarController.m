@@ -15,6 +15,7 @@
 // TODO: get rid of the currentVenueID here, let's keep that in NSUserDefaults (my bad)
 
 @synthesize thinBar = _thinBar;
+@synthesize forcedCheckin = _forcedCheckin;
 @synthesize currentVenueID = _currentVenueID;
 
 - (void)viewDidLoad
@@ -201,6 +202,8 @@
 {
     if (buttonIndex == alertView.firstOtherButtonIndex) {
         // the user wants to checkin
+        // this is a forced checkin
+        self.forcedCheckin = YES;
         
         // grab the inital view controller of the checkin storyboard
         UINavigationController *checkinNVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateInitialViewController];

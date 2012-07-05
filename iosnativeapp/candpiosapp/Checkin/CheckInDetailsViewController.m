@@ -271,7 +271,7 @@
                 self.place.venueID = [[json objectForKey:@"venue_id"] intValue];
                 
                 [CPCheckinHandler queueLocalNotificationForVenue:self.place checkoutTime:checkOutTime];
-                [CPCheckinHandler handleSuccessfulCheckinToVenue:self.place checkoutTime:checkOutTime];                
+                [CPCheckinHandler handleSuccessfulCheckinToVenue:self.place checkoutTime:checkOutTime checkinType:CPCheckinTypeForced];                
                 
                 // hide the checkin screen, we're checked in
                 if ([self isModal]) {
@@ -293,6 +293,7 @@
                 // show an alertView if the user isn't checked in
                 [SVProgressHUD dismissWithError:@"You must be logged in to C&P in order to check in."
                                      afterDelay:kDefaultDimissDelay];
+                [CPAppDelegate tabBarController].forcedCheckin = NO;
                 [CPAppDelegate performSelector:@selector(showSignupModalFromViewController:animated:) withObject:self afterDelay:kDefaultDimissDelay];
             }
         } else {

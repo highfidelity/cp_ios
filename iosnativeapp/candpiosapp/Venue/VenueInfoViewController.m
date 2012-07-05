@@ -20,10 +20,6 @@
 @property (nonatomic, strong) NSTimer *chatReloadTimer;
 @property (weak, nonatomic) IBOutlet UIView *bottomPhotoOverlayView;
 @property (weak, nonatomic) IBOutlet UIView *venueChatBox;
-@property (weak, nonatomic) IBOutlet UIView *venueChatBoxVerticalLine;
-@property (weak, nonatomic) IBOutlet UILabel *activeChatters;
-@property (weak, nonatomic) IBOutlet UIImageView *activeChattersIcon;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activeChattersIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *activeChatText;
 @property (weak, nonatomic) UIButton *checkInButton;
 @property (weak, nonatomic) UIButton *phoneButton;
@@ -70,10 +66,6 @@
 @synthesize scrollToUserThumbnail = _scrollToUserThumbnail;
 @synthesize chatReloadTimer = _chatReloadTimer;
 @synthesize venueChatBox = _venueChatBox;
-@synthesize venueChatBoxVerticalLine = _venueChatBoxVerticalLine;
-@synthesize activeChatters = _activeChatters;
-@synthesize activeChattersIcon = _activeChattersIcon;
-@synthesize activeChattersIndicator = _activeChattersIndicator;
 @synthesize activeChatText = _activeChatText;
 @synthesize checkInButton = _checkInButton;
 @synthesize hadNoChat = _hadNoChat;
@@ -174,7 +166,6 @@
     self.venueChatBox.layer.borderWidth = 1.0;
     
     // change the active chat labels to league gothic
-    [CPUIHelper changeFontForLabel:self.activeChatters toLeagueGothicOfSize:18];
     [CPUIHelper changeFontForLabel:self.activeChatText toLeagueGothicOfSize:18];
     
     // setup a UIButton to hold the venue chat box
@@ -185,9 +176,6 @@
     [venueChatButton addTarget:self action:@selector(highlightedVenueChatButton) forControlEvents:UIControlEventTouchDown];
     [venueChatButton addTarget:self action:@selector(normalVenueChatButton) forControlEvents:UIControlEventTouchUpOutside];
     
-    // hide the activeChatters text and icon when we're loading chat history
-    self.activeChatters.alpha = 0.0;
-    self.activeChattersIcon.alpha = 0.0;
     
     // disable user interaction on the chat box so the button gets the touch events
     self.venueChatBox.userInteractionEnabled = NO;
@@ -199,8 +187,6 @@
     self.hadNoChat = NO;
 
     [self populateUserSection]; 
-    
-    self.activeChatText.text = @"Tap here to see feed.";
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -232,14 +218,10 @@
 {
     [self setVenuePhoto:nil];
     [self setUserSection:nil];
-    [self setActiveChatters:nil];
     [self setFirstAidSection:nil];
     [self setVenueChatBox:nil];
-    [self setActiveChattersIcon:nil];
-    [self setActiveChattersIndicator:nil];
     [self setActiveChatText:nil];
     [self setCheckInButton:nil];
-    [self setVenueChatBoxVerticalLine:nil];
     [super viewDidUnload];
     [CPAppDelegate tabBarController].currentVenueID = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshVenueAfterCheckin" object:nil];
@@ -295,27 +277,7 @@
     // this is hard coded to 10 for now
     // not an actual representation of the number of active people chatting
     // just here to entice users who aren't logged in
-    self.activeChatters.text = @"10";
-    self.activeChatText.text = @"Please login to chat.";
-    
-    // stop the loading spinner
-    [self stopActiveChattersLoadingIndicator];
-}
-
-- (void)stopActiveChattersLoadingIndicator
-{
-    if ([self.activeChattersIndicator isAnimating]) {
-        
-        [UIView animateWithDuration:0.5 animations:^{
-            // stop the spinner
-            [self.activeChattersIndicator stopAnimating];
-            
-            // show the number of active chatters and the number of active
-            self.activeChatters.alpha = 1.0;
-            self.activeChattersIcon.alpha = 1.0;
-        }];
-        
-    }
+    self.activeChatText.text = @"Please login to see the venue feed.";
 }
 
 - (void)highlightedVenueChatButton
@@ -324,7 +286,6 @@
     // border on venue chat box
     UIColor *orange = [UIColor colorWithRed:(181.0/255.0) green:(107.0/255.0) blue:(0/255.0) alpha:1.0];
     self.venueChatBox.layer.borderColor = [orange CGColor];
-    self.venueChatBoxVerticalLine.backgroundColor = orange;
 }
 
 - (void)normalVenueChatButton
@@ -333,7 +294,6 @@
     // border on venue chat box
     UIColor *grey = [UIColor colorWithRed:(198.0/255.0) green:(198.0/255.0) blue:(198.0/255.0) alpha:1.0];
     self.venueChatBox.layer.borderColor = [grey CGColor];
-    self.venueChatBoxVerticalLine.backgroundColor = grey;
 }
 
 - (void)showVenueChat

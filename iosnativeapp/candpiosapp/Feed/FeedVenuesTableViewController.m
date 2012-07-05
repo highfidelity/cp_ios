@@ -89,6 +89,14 @@
     }
     
     [[segue destinationViewController] setVenue:selectedVenue];
+    
+    if ([CPAppDelegate tabBarController].forcedCheckin) {
+        // if this was a forcedCheckin then the user wants to post an update right away
+        [[segue destinationViewController] setNewPostAfterLoad:YES];
+        
+        // reset the tabBarController's forced checkin variable
+        [CPAppDelegate tabBarController].forcedCheckin = NO;
+    }
 }
 
 #pragma mark - Table view data source

@@ -8,9 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    CPCheckinTypeDefault,
+    CPCheckinTypeForced,
+    CPCheckinTypeAuto
+} CPCheckinType;
+
 @interface CPCheckinHandler : NSObject
 
-+ (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime;
++ (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime checkinType:(CPCheckinType)checkinType;
 + (void)queueLocalNotificationForVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime;
 
 @end

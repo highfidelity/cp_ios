@@ -64,6 +64,7 @@
 
 - (IBAction)closeWindow:(id)sender {
     [SVProgressHUD dismiss];
+    [CPAppDelegate tabBarController].forcedCheckin = NO;
     [self dismissModalViewControllerAnimated:YES];
 }
 

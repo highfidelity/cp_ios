@@ -10,7 +10,7 @@
 
 @implementation CPCheckinHandler
 
-+ (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime
++ (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime checkinType:(CPCheckinType)checkinType
 {       
     [CPAppDelegate setCheckedOut];
     // set the NSUserDefault to the user checkout time
@@ -19,8 +19,10 @@
     // Save current place to venue defaults as it's used in several places in the app
     [CPUserDefaultsHandler setCurrentVenue:venue];
     
-    // Add this venue to the list of recent venues for the feed TVC
-    [CPUserDefaultsHandler addFeedVenue:venue];
+    if (checkinType == CPCheckinTypeForced) {
+        // Add this venue to the list of recent venues for the feed TVC
+        [CPUserDefaultsHandler addFeedVenue:venue];
+    }
     
     // If this is the user's first check in to this venue and auto-checkins are enabled,
     // ask the user about checking in automatically to this venue in the future

@@ -514,7 +514,7 @@ typedef enum {
                 
                 // tell the CPCheckinHandler to do what it needs for successful checkin
                 NSInteger checkoutTime = [[NSDate dateWithTimeIntervalSinceNow:(60*60*hoursHere)] timeIntervalSince1970];
-                [CPCheckinHandler handleSuccessfulCheckinToVenue:venue checkoutTime:checkoutTime];
+                [CPCheckinHandler handleSuccessfulCheckinToVenue:venue checkoutTime:checkoutTime checkinType:CPCheckinTypeAuto];
             } else {
                 // TODO: handle this error
             }
