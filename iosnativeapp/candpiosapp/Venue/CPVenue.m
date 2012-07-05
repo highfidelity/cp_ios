@@ -242,4 +242,17 @@
     [encoder encodeObject:self.specialVenueType forKey:@"specialVenueType"];
 }
 
+-(BOOL)isEqual:(id)object
+{
+    if (self == object) {
+        return YES;
+    } else if (![object isKindOfClass:[self class]]) {
+        return NO;
+    } else if (self.venueID == [object venueID]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 @end

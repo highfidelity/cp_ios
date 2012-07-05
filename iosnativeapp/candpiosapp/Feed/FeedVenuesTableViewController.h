@@ -13,6 +13,4 @@
 
 @property (nonatomic, strong) NSMutableArray *venues;
 
-- (void)reloadDefaultVenues;
-
 @end

@@ -154,7 +154,7 @@ NSString* const kUDFeedVenues = @"feedVenues";
     
     SET_DEFAULTS(Object, kUDFeedVenues, [NSDictionary dictionaryWithDictionary:mutableFeedVenues]);
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"feedVenueAdded" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"feedVenueAdded" object:venue];
 }
 
 + (NSDictionary *)feedVenues

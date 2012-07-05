@@ -9,6 +9,8 @@
 #import "FeedVenuesTableViewController.h"
 #import "FeedViewController.h"
 
+#define SHOW_FEED_SEGUE @"ShowVenueFeed"
+
 @interface FeedVenuesTableViewController ()
 
 @end
@@ -20,9 +22,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self reloadDefaultVenues];
+    [self reloadDefaultVenues:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newFeedVenueAdded) name:@"feedVenueAdded" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newFeedVenueAdded:) name:@"feedVenueAdded" object:nil];
 }
 
 - (void)viewDidUnload
@@ -31,12 +33,15 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)newFeedVenueAdded
+- (void)newFeedVenueAdded:(NSNotification *)notification
 {
-    [self reloadDefaultVenues];
+    [self reloadDefaultVenues:notification.object];
+    if (self.tabBarController.selectedIndex != 0) {
+        self.tabBarController.selectedIndex = 0;
+    }
 }
 
-- (void)reloadDefaultVenues
+- (void)reloadDefaultVenues:(CPVenue *)venueToShow
 {
     self.venues = [[NSMutableArray alloc] init];
     
@@ -59,6 +64,15 @@
     }
     
     [self.tableView reloadData];
+    
+    // perform segue to venue feed if we have a venue to show
+    if (venueToShow) {
+        // select the right cell
+        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:[self.venues indexOfObject:venueToShow] inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
+        
+        // perform segue to that venue feed
+        [self performSegueWithIdentifier:SHOW_FEED_SEGUE sender:self];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -99,7 +113,7 @@
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"ShowVenueFeed" sender:self];
+    [self performSegueWithIdentifier:SHOW_FEED_SEGUE sender:self];
 }
 
 @end

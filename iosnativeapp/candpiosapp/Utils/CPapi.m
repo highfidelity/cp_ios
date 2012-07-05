@@ -684,21 +684,17 @@
 }
 
 + (void)sendUpdate:(NSString *)updateText 
-              atVenue:(CPVenue *)logVenue
+              atVenue:(CPVenue *)venue
            completion:(void (^)(NSDictionary *, NSError *))completion
 {
     // setup the params dictionary
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setObject:updateText forKey:@"entry"];
-    
-    // if we have a venue attached to the log then give that to the backend
-    if (logVenue) {
-        [params setObject:logVenue.foursquareID forKey:@"foursquareID"];
-    }
+    [params setObject:[NSString stringWithFormat:@"%d", venue.venueID] forKey:@"venue_id"];
     
     // make the request
-    [self makeHTTPRequestWithAction:@"newLogUpdate" withParameters:params completion:completion];
-    [FlurryAnalytics logEvent:@"newLogEntry"];
+    [self makeHTTPRequestWithAction:@"sendUpdate" withParameters:params completion:completion];
+    [FlurryAnalytics logEvent:@"newUpdatePost"];
 }
 
 #pragma mark - Checkins
