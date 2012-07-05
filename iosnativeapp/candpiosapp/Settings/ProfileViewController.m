@@ -210,7 +210,6 @@
     
     if (!profilePhoto) {    
         profilePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.currentUser.photoURL]];    
-        [self.cache setObject:profilePhoto forKey:@"profilePhoto"];
     }
     
     [self.profileImageView setImage:profilePhoto];
@@ -230,8 +229,10 @@
                                            [imageData base64EncodedString],
                                            @"photo-string",
                                            nil]];
-        
-        [self.cache setObject:fullHTML forKey:@"fullHTML"];
+        if (profilePhoto) {
+            [self.cache setObject:profilePhoto forKey:@"profilePhoto"];
+            [self.cache setObject:fullHTML forKey:@"fullHTML"];
+        }
     }
     
     [self.backgroundWebView loadHTMLString:fullHTML baseURL:nil];
