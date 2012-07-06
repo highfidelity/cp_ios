@@ -15,7 +15,6 @@
 #import "UserProfileLinkedInViewController.h"
 
 
-#define kRequestToAddToMyContactsActionSheetTitle @"Request to exchange contact info?"
 
 @interface UserProfileViewController() <UIWebViewDelegate, UIActionSheetDelegate, GRMustacheTemplateDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;

@@ -16,6 +16,7 @@
 #import "CPVenue.h"
 #import "CPSwipeableQuickActionSwitch.h"
 #import "CPSoundEffectsManager.h"
+#import "OneOnOneChatViewController.h"
 
 @interface UserListTableViewController()
 
@@ -304,13 +305,68 @@
     return cell;
 }
 
-- (void) chatRequest:(id)sender {
+- (User*) closeTrayAndReturnUser:(id)sender {
+    // close the open slide tray
     [self closeOpenCellsExceptForIndexPath:nil];
+    
+    // return the selected user
+    UITableViewCell *cell = (UITableViewCell*)[[sender superview] superview];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    return [self selectedUserForIndexPath:indexPath];
+}
+
+- (void) chatRequest:(id)sender {
+    // handle chat request to the selected user
+    User *user = [self closeTrayAndReturnUser:sender];
+    
+    // get a user object with resume data.. which includes its contact settings
+    [user loadUserResumeData:^(NSError *error) {
+        if (!error) {
+            if (user.contactsOnlyChat && !user.isContact) {
+                NSString *errorMessage = [NSString stringWithFormat:@"You can not chat with %@ until the two of you have exchanged contact information", user.nickname];
+                [SVProgressHUD showErrorWithStatus:errorMessage
+                                          duration:kDefaultDimissDelay];
+            } else {
+                // push the UserProfileViewController onto the navigation controller stack
+                OneOnOneChatViewController *chatViewController = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"OneOnOneChatView"];
+                chatViewController.user = user; 
+                [self.navigationController pushViewController:chatViewController animated:YES];
+            }
+        } else {
+            // error checking for load of user
+            NSLog(@"Error in user load during chat request.");
+        }
+    }];
+   
+    
+    
 }
 
 - (void) exchangeContactInfoRequest:(id)sender { 
-    [self closeOpenCellsExceptForIndexPath:nil];
+    // handle chat request to the selected user
+    User *user = [self closeTrayAndReturnUser:sender];
+
+    // Offer to exchange contacts
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:kRequestToAddToMyContactsActionSheetTitle
+                                  delegate:self
+                                  cancelButtonTitle:@"Cancel"
+                                  destructiveButtonTitle:@"Send"
+                                  otherButtonTitles: nil
+                                  ];
+    actionSheet.tag = user.userID;
+    [actionSheet showInView:self.view];
 }
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    // Exchange contacts if accepted
+    if ([actionSheet title] == kRequestToAddToMyContactsActionSheetTitle) {
+        if (buttonIndex != [actionSheet cancelButtonIndex]) {
+            [CPapi sendContactRequestToUserId:actionSheet.tag];
+        }
+    }
+}
+
 
 - (void) switchSound:(id)sender {    
     UIButton *button = (UIButton*)sender;
