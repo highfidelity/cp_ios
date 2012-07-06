@@ -34,7 +34,7 @@
     
     // these cells only have the quick action on a swipe to the right
     self.rightStyle = CPSwipeableTableViewCellSwipeStyleQuickAction;    
-    self.leftStyle = CPSwipeableTableViewCellSwipeStyleNone;
+    self.leftStyle = CPSwipeableTableViewCellSwipeStyleFull;
     
     [CPUIHelper addShadowToView:self.profilePictureImageView color:[UIColor blackColor] offset:CGSizeMake(1, 1) radius:0.5 opacity:1.0];
     

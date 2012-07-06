@@ -21,9 +21,14 @@
 # define SWITCH_LEFT_MARGIN 15
 # define QUICK_ACTION_MARGIN 128
 # define QUICK_ACTION_LOCK QUICK_ACTION_MARGIN + 10
+#define RIGHT_SWIPE_SWITCH_IMAGE_VIEW_TAG 4293
+#define LEFT_SWIPE_SWITCH_IMAGE_VIEW_TAG 4294
+#define SWITCH_BUTTON_TAG 4295
+#define FULL_PADDING 10.0
 
 @interface CPSwipeableTableViewCell()
 @property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer *tapRecognizer;
 @property (nonatomic, readonly, assign) CGFloat originalCenter;
 @property (nonatomic, assign) CGFloat initialTouchPositionX;
 @property (nonatomic, assign) CGFloat initialHorizontalCenter;
@@ -54,6 +59,7 @@
 @synthesize currentDirection = _currentDirection;
 @synthesize quickActionLocked = _quickActionLocked;
 @dynamic revealing;
+@synthesize tapRecognizer;
 
 - (void)awakeFromNib
 {
@@ -71,6 +77,13 @@
     self.panRecognizer.delegate = self;
     
     [self addGestureRecognizer:self.panRecognizer];
+
+    // setup our tap gesture recognizer
+    self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+    self.tapRecognizer.delegate = self;
+    self.tapRecognizer.cancelsTouchesInView = NO;
+    
+    [self addGestureRecognizer:self.tapRecognizer];
     
     // setup the background view
     self.hiddenView = [[UIView alloc] initWithFrame:self.contentView.frame];
@@ -172,6 +185,26 @@ static char BOOLRevealing;
 }
 
 #pragma mark - Handing Touch
+- (void)tap:(UITapGestureRecognizer *)recognizer 
+{
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+        if (self.isRevealing) {
+            // noop
+        } else {
+            // mimic row selection - highlight and push the child view
+            UITableView *tableView = (UITableView*)self.superview;
+            NSIndexPath *indexPath = [tableView indexPathForCell: self];
+            [self setHighlighted:YES animated:YES];
+            // for some reason selectRowAtIndexPath:indexPath was not invoking the delegate :( Notifications not sent by this.
+            if ([[tableView delegate] respondsToSelector:@selector(tableView:willSelectRowAtIndexPath:)]) { 
+                indexPath = [[tableView delegate] tableView:tableView willSelectRowAtIndexPath:indexPath];
+            }
+            if (indexPath) { 
+                [[tableView delegate] tableView:tableView didSelectRowAtIndexPath:indexPath];
+            }
+        }
+    }
+}
 
 - (void)pan:(UIPanGestureRecognizer *)recognizer
 {
@@ -208,13 +241,21 @@ static char BOOLRevealing;
         }
 			
         
+        // if our style is full slide then don't go past the defined margin
+        CGFloat fullLock = self.bounds.size.width - FULL_PADDING;
+        if (newCenterPosition > originalCenter + fullLock && self.rightStyle == CPSwipeableTableViewCellSwipeStyleFull) {
+            newCenterPosition = originalCenter + fullLock;
+        } else if (newCenterPosition < originalCenter - fullLock && self.leftStyle == CPSwipeableTableViewCellSwipeStyleFull) {
+            newCenterPosition = originalCenter - fullLock;
+        }
+
         // if our style is quick action then don't go past the defined margin
         if (newCenterPosition > originalCenter + QUICK_ACTION_LOCK && self.rightStyle == CPSwipeableTableViewCellSwipeStyleQuickAction) {
             newCenterPosition = originalCenter + QUICK_ACTION_LOCK;
         } else if (newCenterPosition < originalCenter - QUICK_ACTION_LOCK && self.leftStyle == CPSwipeableTableViewCellSwipeStyleQuickAction) {
             newCenterPosition = originalCenter - QUICK_ACTION_LOCK;
         }
-		
+        
 		// Let's not go waaay out of bounds
 		if (newCenterPosition > self.bounds.size.width + originalCenter)
 			newCenterPosition = self.bounds.size.width + originalCenter;
@@ -388,14 +429,14 @@ static char BOOLRevealing;
         
         // flick the switch back
         // use the CPSwipeableTableViewCellDirection to decide which index to pass to pull the right UIImageView
-        [self changeStateOfQuickActionSwitch:[self quickActionImageViewForDirection:direction] direction:direction active:NO];
+        [self changeStateOfQuickActionSwitchForDirection:direction active:NO];
         
         // slide the content view back in
         // by setting revealing to NO using the delegate's method
         [self slideInContentViewFromDirection:direction offsetMultiplier:[self bounceMultiplier] slideDelay:0.15];
     } else {
         // calculate the new center depending on the direction of the swipe
-        CGFloat x = direction == CPSwipeableTableViewCellDirectionLeft ? -self.originalCenter : self.contentView.frame.size.width + self.originalCenter; 
+        CGFloat x = direction == CPSwipeableTableViewCellDirectionLeft ? -self.originalCenter +  FULL_PADDING: self.contentView.frame.size.width + self.originalCenter - FULL_PADDING; 
         [self slideOutContentViewToNewCenterX:x];
     }
 }
@@ -407,8 +448,8 @@ static char BOOLRevealing;
     // code will need to be refactored if we need to add that functionality on the right side
     if (self.rightStyle == CPSwipeableTableViewCellSwipeStyleQuickAction) {
         
-        // grab the UIImageView that holds the switch
-        UIImageView *quickActionImageView = [self quickActionImageViewForDirection:CPSwipeableTableViewCellDirectionRight];
+        // Add the button if needed
+       [self quickActionImageViewForDirection:CPSwipeableTableViewCellDirectionRight];
         
         // get the position of the left edge of the cell
         CGFloat leftEdge = centerX - (self.contentView.frame.size.width / 2);
@@ -433,17 +474,14 @@ static char BOOLRevealing;
         // if change isn't -1 then we need to grab a new image and give it to the UIImageView
         // we'll also play the sound effect
         if (changeState != -1) {
-            [self changeStateOfQuickActionSwitch:quickActionImageView direction:CPSwipeableTableViewCellDirectionRight active:changeState];
+            [self changeStateOfQuickActionSwitchForDirection:CPSwipeableTableViewCellDirectionRight active:changeState];
         }
     }
 }
-- (UIImageView *)quickActionImageViewForDirection:(CPSwipeableTableViewCellDirection)direction
+- (void)quickActionImageViewForDirection:(CPSwipeableTableViewCellDirection)direction
 {
     int imageViewTag;
     CGFloat originX;
-    
-#define RIGHT_SWIPE_SWITCH_IMAGE_VIEW_TAG 4293
-#define LEFT_SWIPE_SWITCH_IMAGE_VIEW_TAG 4294
     
     // setup the properties that are specific to each direction
     if (direction == CPSwipeableTableViewCellDirectionRight) {
@@ -453,40 +491,62 @@ static char BOOLRevealing;
         // nothing to do here for now, we only have quick actions on swipe to the right
     }
     
-    // grab the UIImageView if we already have it
-    UIImageView *quickActionImageView = (UIImageView *)[self viewWithTag:imageViewTag];
-    
-    // if we don't have it then let's create it now
-    if (!quickActionImageView) {
+    // Create the switch button if it does not already exist
+    UIButton *button = (UIButton *) [self viewWithTag:SWITCH_BUTTON_TAG];
+    if (!button) {
         
         // alloc-init an imageView to hold the icon
-        quickActionImageView = [[UIImageView alloc] initWithImage:[self.delegate quickActionSwitchForDirection:direction].offImage];
-        quickActionImageView.tag = imageViewTag;
+        CPSwipeableQuickActionSwitch *quickActionSwitch = [self.delegate quickActionSwitchForDirection:direction];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setImage:quickActionSwitch.offImage forState:UIControlStateNormal];
+        [button setImage:quickActionSwitch.onImage forState:UIControlStateHighlighted];
+        [button setImage:quickActionSwitch.onImage forState:UIControlStateSelected];
         
+        UIImageView *quickActionImageView = [[UIImageView alloc] initWithImage:quickActionSwitch.offImage];
+        button.tag = SWITCH_BUTTON_TAG;
         // move the secretImageView to the right spot
         CGRect switchFrame = quickActionImageView.frame;
         switchFrame.origin.x = originX;
         switchFrame.origin.y = (self.contentView.frame.size.height / 2) - (switchFrame.size.height / 2);
-        quickActionImageView.frame = switchFrame;
+        button.frame = switchFrame;
+        [button addTarget:self 
+                   action:@selector(switchSound:) 
+         forControlEvents:UIControlEventTouchDown | UIControlEventTouchUpInside | UIControlEventTouchCancel];
         
-        // add the secretImageView to the hiddenView
-        [self.hiddenView addSubview:quickActionImageView];
-    }
-    
-    return quickActionImageView;
+        [button addTarget:self 
+                   action:@selector(switchAction) 
+         forControlEvents:UIControlEventTouchUpInside];
+        [self.hiddenView addSubview:button];
+    }    
 }
 
-- (void)changeStateOfQuickActionSwitch:(UIImageView *)quickSwitchImageView direction:(CPSwipeableTableViewCellDirection)direction active:(BOOL)active
+- (void)switchSound:(id)sender {
+    UIButton *button = (UIButton*)sender;
+    // play the appropriate sound // TODO: Generalize to left/right
+    CPSwipeableQuickActionSwitch *quickActionSwitch = [self.delegate quickActionSwitchForDirection:CPSwipeableTableViewCellDirectionRight];
+    if (button.isHighlighted) { 
+        [CPSoundEffectsManager playSoundWithSystemSoundID:quickActionSwitch.onSoundID];
+    } else { 
+        [CPSoundEffectsManager playSoundWithSystemSoundID:quickActionSwitch.offSoundID];
+    }
+}
+     
+ - (void) switchAction {
+     [self performActionInDirection:CPSwipeableTableViewCellDirectionRight];
+ }
+
+
+- (void)changeStateOfQuickActionSwitchForDirection:(CPSwipeableTableViewCellDirection)direction active:(BOOL)active
 {
-    // grab the switch for this direction
-    CPSwipeableQuickActionSwitch *quickSwitch = [self.delegate quickActionSwitchForDirection:direction];
-    
-    // switch to the right image
-    quickSwitchImageView.image = active ? quickSwitch.onImage : quickSwitch.offImage;
-    
-    // play the appropriate sound
-    [CPSoundEffectsManager playSoundWithSystemSoundID: (active ? quickSwitch.onSoundID : quickSwitch.offSoundID)];
-    
+    // toggle the switch as appropriate while sliding
+    UIButton *button = (UIButton*)[self viewWithTag:SWITCH_BUTTON_TAG];
+    if (active) { 
+        button.highlighted = YES;
+        [button sendActionsForControlEvents:UIControlEventTouchDown];
+    } else {
+        button.highlighted = NO;
+        [button sendActionsForControlEvents:UIControlEventTouchUpOutside];
+    }
     // set our boolean so this instance knows what state the quick action switch is in
     self.quickActionLocked = active;
 }
@@ -522,7 +582,10 @@ static char BOOLRevealing;
 		
 		// make sure it's scrolling horizontally
 		return ((fabs(translation.x) / fabs(translation.y) > 1) ? YES : NO && (superview.contentOffset.y == 0.0 && superview.contentOffset.x == 0.0));
-	}
+	} else if ([gestureRecognizer class] == [UITapGestureRecognizer class]) {
+        // allow any tap handling to occur via the tap gesture recognizer
+        return YES;
+    }
 	return NO;
 }
 
@@ -545,6 +608,13 @@ static char BOOLRevealing;
 {
     [super setSelected:selected animated:animated];
     [self toggleCellActiveState:selected];
+}
+
+- (void) close {
+    if (self.isRevealing) {
+        [self slideInContentViewFromDirection:self.lastDirection offsetMultiplier:self.bounceMultiplier slideDelay:0];
+        [self _setRevealing:NO];
+    }
 }
 
 @end

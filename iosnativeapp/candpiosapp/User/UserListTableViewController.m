@@ -36,7 +36,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    // we are using swipe cells.. which will need to handle the selection themselves
+    self.tableView.allowsSelection = NO;
+
     // the map is our delegate
     self.delegate = [[CPAppDelegate settingsMenuController] mapTabController];
     
@@ -265,8 +267,61 @@
         [CPUIHelper manageVirtualBadgeForProfileImageView:cell.profilePictureImageView
                                          checkInIsVirtual:NO];
     }
+    // Additional buttons for contact exchange and chat
+    UIButton *chatButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage * buttonImage = [UIImage imageNamed:@"go-menu-button-2.png"];
+    [chatButton setImage:buttonImage 
+                forState:UIControlStateNormal];
+    [chatButton addTarget:self 
+                   action:@selector(chatRequest:) 
+         forControlEvents:UIControlEventTouchUpInside];
+    [chatButton addTarget:self 
+                   action:@selector(switchSound:) 
+         forControlEvents:UIControlEventTouchDown | UIControlEventTouchUpInside | UIControlEventTouchCancel];
+    
+    chatButton.frame = CGRectMake(cell.contentView.frame.size.width * 0.45, 
+                                  (cell.contentView.frame.size.height / 2) - (buttonImage.size.height / 2), 
+                                  buttonImage.size.width, 
+                                  buttonImage.size.height);
+    [cell.hiddenView addSubview:chatButton];
+        
+    UIButton *exchangeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonImage = [UIImage imageNamed:@"exchange-cards.png"];
+    [exchangeButton setImage:buttonImage 
+                    forState:UIControlStateNormal];
+    [exchangeButton addTarget:self 
+                       action:@selector(exchangeContactInfoRequest:) 
+             forControlEvents:UIControlEventTouchUpInside];
+    [exchangeButton addTarget:self 
+                   action:@selector(switchSound:) 
+         forControlEvents:UIControlEventTouchDown | UIControlEventTouchUpInside | UIControlEventTouchCancel];
+    exchangeButton.frame = CGRectMake(cell.contentView.frame.size.width * 0.7, 
+                                  (cell.contentView.frame.size.height / 2) - (buttonImage.size.height / 2), 
+                                  buttonImage.size.width, 
+                                  buttonImage.size.height);
+    [cell.hiddenView addSubview:exchangeButton];
     
     return cell;
+}
+
+- (void) chatRequest:(id)sender {
+    [self closeOpenCellsExceptForIndexPath:nil];
+}
+
+- (void) exchangeContactInfoRequest:(id)sender { 
+    [self closeOpenCellsExceptForIndexPath:nil];
+}
+
+- (void) switchSound:(id)sender {    
+    UIButton *button = (UIButton*)sender;
+    NSString *prefix = quickActionPrefix;
+    if (button.isHighlighted) { 
+        [CPSoundEffectsManager playSoundWithSystemSoundID:
+         [CPSoundEffectsManager systemSoundIDForSoundWithName:[prefix stringByAppendingString:@"-sound-on"] type:@"wav"]];
+    } else { 
+        [CPSoundEffectsManager playSoundWithSystemSoundID:
+         [CPSoundEffectsManager systemSoundIDForSoundWithName:[prefix stringByAppendingString:@"-sound-off"] type:@"wav"]];
+    }
 }
 
 #pragma mark - Table view delegate
@@ -314,7 +369,7 @@
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         return;
     }
-    
+    [self closeOpenCellsExceptForIndexPath:indexPath];
     [self showUserProfileForUser:[self selectedUserForIndexPath:indexPath]];
 }
 
@@ -377,6 +432,8 @@ static CPSwipeableQuickActionSwitch *quickSwitch = nil;
 
 -(void)cellDidBeginPan:(CPSwipeableTableViewCell *)cell
 {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    [self closeOpenCellsExceptForIndexPath:indexPath];
     self.userIsPerformingQuickAction = YES;
 }
 
@@ -391,6 +448,21 @@ static CPSwipeableQuickActionSwitch *quickSwitch = nil;
         // reset the boolean
         self.reloadPrevented = NO;
     }
+}
+
+- (void)closeOpenCellsExceptForIndexPath:(NSIndexPath*)openIndexPath {
+    for (UITableViewCell *cell in self.tableView.visibleCells) {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        if (!openIndexPath ||
+            (openIndexPath.section != indexPath.section || 
+             openIndexPath.row != indexPath.row)) {
+            UserTableViewCell *cell = (UserTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+            [cell close];
+        }
+    }
+}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self closeOpenCellsExceptForIndexPath:nil];    
 }
 
 @end
