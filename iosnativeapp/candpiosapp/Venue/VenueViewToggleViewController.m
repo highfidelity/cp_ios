@@ -27,7 +27,20 @@
     
     // use league gothic for the text in the segmented control
     [self.segmentedControl setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIFont fontWithName:@"LeagueGothic" size:16] forKey:UITextAttributeFont] forState:UIControlStateNormal];
-	
+
+    UIImage *headerButtonImage = [UIImage imageNamed:@"header-button.png"];
+    headerButtonImage = [headerButtonImage stretchableImageWithLeftCapWidth:7
+                                                               topCapHeight:0];
+    [self.segmentedControl setBackgroundImage:headerButtonImage
+                                     forState:UIControlStateNormal
+                                   barMetrics:UIBarMetricsDefault];
+
+    UIImage *dividerImage = [UIImage imageNamed:@"divider-button.png"];
+    [self.segmentedControl setDividerImage:dividerImage
+                       forLeftSegmentState:UIControlStateNormal
+                         rightSegmentState:UIControlStateNormal
+                                barMetrics:UIBarMetricsDefault];
+
     // grab both view controllers from the storyboard
     self.venueMapController = [CPAppDelegate settingsMenuController].mapTabController;
     self.venueListController = [self.storyboard instantiateViewControllerWithIdentifier:@"venueListController"];
