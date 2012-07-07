@@ -603,7 +603,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"header.png"] forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIFont fontWithName:@"LeagueGothic" size:22] forKey:UITextAttributeFont]];
-    
+
     // UIAppearance styles on UIBarButtonItems
     [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIFont fontWithName:@"LeagueGothic" size:16]
                                                                                      forKey:UITextAttributeFont]
@@ -612,6 +612,14 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
                                                          forBarMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearance] setTitlePositionAdjustment:UIOffsetMake(0, 0)
                                                forBarMetrics:UIBarMetricsDefault];
+
+    UIImage *backImage = [UIImage imageNamed:@"back-button.png"];
+    backImage = [backImage stretchableImageWithLeftCapWidth:17 topCapHeight:0];
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+
+    UIImage *headerButtonImage = [UIImage imageNamed:@"header-button.png"];
+    headerButtonImage = [headerButtonImage stretchableImageWithLeftCapWidth:7 topCapHeight:0];
+    [[UIBarButtonItem appearance] setBackgroundImage:headerButtonImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 }
 
 # pragma mark - Settings Menu
