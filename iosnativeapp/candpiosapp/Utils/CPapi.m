@@ -935,6 +935,7 @@
                                quietTimeTo:(NSDate *)quietTimeTo  
                    timezoneOffsetInSeconds:(NSInteger)tzOffsetSeconds                            
                       chatFromContactsOnly:(BOOL)chatFromContactsOnly
+                      contactsOnlyCheckIns:(BOOL)contactsOnlyCheckIns
 {
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
@@ -948,6 +949,7 @@
     [parameters setValue:[formatter stringFromDate:quietTimeTo] forKey:@"quiet_time_to"];
     [parameters setValue:[NSString stringWithFormat:@"%d", tzOffsetSeconds] forKey:@"tz_offset_seconds"];
     [parameters setValue:chatFromContactsOnly ? @"1" : @"0" forKey:@"contacts_only_chat"];
+    [parameters setValue:contactsOnlyCheckIns ? @"1" : @"0" forKey:@"contacts_only_check_ins"];
     
     [self makeHTTPRequestWithAction:@"setNotificationSettings"
                          withParameters:parameters

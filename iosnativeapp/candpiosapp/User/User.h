@@ -56,6 +56,7 @@
 @property (nonatomic, strong) NSString *smartererName;
 @property (nonatomic, assign) BOOL checkInIsVirtual;
 @property (nonatomic, assign) BOOL contactsOnlyChat;
+@property (nonatomic, assign) BOOL contactsOnlyCheckIns;
 @property (nonatomic, assign) BOOL isContact;
 @property (nonatomic, strong) NSString *linkedInPublicProfileUrl;
 @property (nonatomic, strong) NSNumber *numberOfContactRequests;

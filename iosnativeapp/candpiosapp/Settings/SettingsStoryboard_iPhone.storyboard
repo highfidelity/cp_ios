@@ -658,7 +658,7 @@
                         </userGuides>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
-                            <webView alpha="0.8" contentMode="scaleToFill" id="YBV-n6-x1r">
+                            <webView alpha="0.80000000000000004" contentMode="scaleToFill" id="YBV-n6-x1r">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="640"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.8862745098" green="0.89019607840000003" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -1079,7 +1079,14 @@ photo?</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Only when I am checked in" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="KAA-nj-Dpl">
-                                <rect key="frame" x="20" y="81" width="177" height="44"/>
+                                <rect key="frame" x="20" y="93" width="177" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="From contacts" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="T11-Rh-ZRG">
+                                <rect key="frame" x="20" y="131" width="177" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -1102,14 +1109,14 @@ photo?</string>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Quiet time" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="jQz-GS-m06">
-                                <rect key="frame" x="20" y="125" width="129" height="44"/>
+                                <rect key="frame" x="20" y="171" width="129" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" id="cX0-GX-mm2">
-                                <rect key="frame" x="0.0" y="168" width="320" height="45"/>
+                                <rect key="frame" x="0.0" y="198" width="320" height="45"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="From" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" id="Aj4-Uy-yzx">
@@ -1160,38 +1167,38 @@ photo?</string>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="oHx-V4-TMp">
-                                <rect key="frame" x="0.0" y="213" width="320" height="203"/>
+                                <rect key="frame" x="0.0" y="239" width="320" height="203"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Allow anyone to send me 1:1 chat" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="uSk-Wv-06w">
-                                        <rect key="frame" x="20" y="2" width="157" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <view contentMode="scaleToFill" id="416-pJ-fQf">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
                                     <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="Rhs-hN-YNW" userLabel="Switch - chat from anyone">
-                                        <rect key="frame" x="221" y="10" width="79" height="27"/>
+                                        <rect key="frame" x="221" y="7" width="79" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="anyoneChatSwitchChanged:" destination="Oyl-sh-T3U" eventType="valueChanged" id="1uT-sW-OKE"/>
                                         </connections>
                                     </switch>
-                                    <view contentMode="scaleToFill" id="416-pJ-fQf">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Allow anyone to send me 1:1 chat" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="uSk-Wv-06w">
+                                        <rect key="frame" x="20" y="3" width="157" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Only people in your Contact list will be able to send you 1:1 chat." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="tmc-Qs-3bj">
-                                        <rect key="frame" x="20" y="36" width="280" height="41"/>
+                                        <rect key="frame" x="20" y="37" width="280" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="0.0" shouldIndentWhileEditing="NO" textLabel="RMc-s5-vpd" style="IBUITableViewCellStyleDefault" id="Lof-C7-w6S">
-                                        <rect key="frame" x="0.0" y="85" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="74" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
@@ -1210,7 +1217,7 @@ photo?</string>
                                         <color key="backgroundColor" red="0.24313725529999999" green="0.24313725529999999" blue="0.24313725529999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="A2r-1R-2TX">
-                                        <rect key="frame" x="0.0" y="85" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="74" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal">
@@ -1232,8 +1239,13 @@ photo?</string>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
                             </switch>
+                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="dcM-1p-qd1">
+                                <rect key="frame" x="221" y="128" width="79" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
+                            </switch>
                             <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="CzO-7x-w0O">
-                                <rect key="frame" x="221" y="133" width="79" height="27"/>
+                                <rect key="frame" x="221" y="167" width="79" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -1267,6 +1279,7 @@ photo?</string>
                         <outlet property="chatNotificationLabel" destination="tmc-Qs-3bj" id="PeE-Sy-oBs"/>
                         <outlet property="checkedInOnlySwitch" destination="6Kq-XY-CWZ" id="KAg-5q-0k6"/>
                         <outlet property="contactsOnlyChatSwitch" destination="Rhs-hN-YNW" id="cqq-sR-Eom"/>
+                        <outlet property="contactsOnlyCheckInsSwitch" destination="dcM-1p-qd1" id="AOL-ex-Gch"/>
                         <outlet property="headerView" destination="29t-LB-tsx" id="XD9-eS-NQk"/>
                         <outlet property="quietFromButton" destination="wxb-H5-mQy" id="X3M-R0-zF8"/>
                         <outlet property="quietTimeSwitch" destination="CzO-7x-w0O" id="qaa-jB-XdP"/>
@@ -1735,6 +1748,7 @@ photo?</string>
                 <relationship kind="outlet" name="chatNotificationLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="checkedInOnlySwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="contactsOnlyChatSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="contactsOnlyCheckInsSwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="headerView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="quietFromButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="quietTimeSwitch" candidateClass="UISwitch"/>

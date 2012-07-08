@@ -9,9 +9,6 @@
 #import "ProfileNotificationsViewController.h"
 #import "ActionSheetDatePicker.h"
 #import "PushModalViewControllerFromLeftSegue.h"
-#import "CPVenue.h"
-#import "AutoCheckinCell.h"
-#import "FlurryAnalytics.h"
 
 #define kInVenueText @"in venue"
 #define kInCityText @"in city"
@@ -26,10 +23,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *quietToButton;
 @property (weak, nonatomic) IBOutlet UISwitch *contactsOnlyChatSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *chatNotificationLabel;
-@property (nonatomic, strong) NSMutableArray *placesArray;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
-
-
+@property (weak, nonatomic) IBOutlet UISwitch *contactsOnlyCheckInsSwitch;
 
 - (IBAction)selectVenueCity:(UIButton *)sender;
 - (IBAction)quietFromClicked:(UIButton *)sender;
@@ -37,6 +32,7 @@
 - (IBAction)quietTimeValueChanged:(UISwitch *)sender;
 - (IBAction)anyoneChatSwitchChanged:(id)sender;
 
+- (void)setVenue:(BOOL)inVenue;
 
 @property(strong) NSDate *quietTimeFromDate;
 @property(strong) NSDate *quietTimeToDate;
@@ -55,8 +51,8 @@
 @synthesize chatNotificationLabel = _chatNotificationLabel;
 @synthesize quietTimeFromDate = _quietTimeFromDate;
 @synthesize quietTimeToDate = _quietTimeToDate;
-@synthesize placesArray = _placesArray;
 @synthesize headerView = _headerView;
+@synthesize contactsOnlyCheckInsSwitch = _contactsOnlyCheckInsSwitch;
 
 #pragma mark - View lifecycle
 
@@ -96,6 +92,7 @@
     [self setQuietTimeToDate:nil];
     [self setChatNotificationLabel:nil];
     [self setHeaderView:nil];
+    [self setContactsOnlyCheckInsSwitch:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -175,6 +172,10 @@
             [[self contactsOnlyChatSwitch] setOn:[contactsOnlyChat isEqualToString:@"0"]];
 
             [[self chatNotificationLabel] setHidden:self.contactsOnlyChatSwitch.on];
+
+            NSString *contactsOnlyCheckIns = (NSString *)[dict objectForKey:@"contacts_only_check_ins"];
+            [[self contactsOnlyCheckInsSwitch] setOn:[contactsOnlyCheckIns isEqualToString:@"1"]];
+
             [SVProgressHUD dismiss];
         }
     }];
@@ -184,24 +185,24 @@
 {
     BOOL notifyInVenue = [self.venueButton.currentTitle isEqualToString:kInVenueText];
     NSString *distance = notifyInVenue ? @"venue" : @"city";
-    
+
     [CPapi setNotificationSettingsForDistance:distance
                                  andCheckedId:self.checkedInOnlySwitch.on
                                     quietTime:self.quietTimeSwitch.on
                                 quietTimeFrom:[self quietTimeFromDate]
                                   quietTimeTo:[self quietTimeToDate]
                       timezoneOffsetInSeconds:[[NSTimeZone defaultTimeZone] secondsFromGMT]
-                         chatFromContactsOnly:!self.contactsOnlyChatSwitch.on];
+                         chatFromContactsOnly:!self.contactsOnlyChatSwitch.on
+                         contactsOnlyCheckIns:self.contactsOnlyCheckInsSwitch.on];
 }
 
 #pragma mark - UI Events
 -(IBAction)gearPressed:(id)sender
 {
-    [self saveNotificationSettings];
     [self dismissPushModalViewControllerFromLeftSegue];
 }
 
-- (IBAction)quietFromClicked:(UITextField *)sender 
+- (IBAction)quietFromClicked:(UIButton *)sender
 {
     [ActionSheetDatePicker showPickerWithTitle:@"Select Quiet Time From"
                                 datePickerMode:UIDatePickerModeTime
@@ -266,18 +267,14 @@
 }
 
 - (void)setQuietTime:(BOOL)quietTime
-{   
-    
+{
     [UIView animateWithDuration:0.3 animations:^ {
         self.anyoneChatView.frame = CGRectMake(self.anyoneChatView.frame.origin.x, 
-                                               quietTime ? 210 : 170,
+                                               quietTime ? 239 : 200,
                                                self.anyoneChatView.frame.size.width,
                                                self.anyoneChatView.frame.size.height);
         
     }];
-    
-    
-    
 }
 
 - (NSString *)setTimeText:(NSDate *)timeValue

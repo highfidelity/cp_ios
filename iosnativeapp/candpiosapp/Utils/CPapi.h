@@ -131,8 +131,9 @@
                                  quietTime:(BOOL)quietTime
                              quietTimeFrom:(NSDate *)quietTimeFrom
                                quietTimeTo:(NSDate *)quietTimeTo
-                   timezoneOffsetInSeconds:(NSInteger)tzOffsetSeconds                                  
-                      chatFromContactsOnly:(BOOL)chatFromContactsOnly;
+                   timezoneOffsetInSeconds:(NSInteger)tzOffsetSeconds
+                      chatFromContactsOnly:(BOOL)chatFromContactsOnly
+                      contactsOnlyCheckIns:(BOOL)contactsOnlyCheckIns;
 
 + (void)setUserProfileDataWithDictionary:(NSMutableDictionary *)dataDict
                             andCompletion:(void (^)(NSDictionary *, NSError *))completion;
