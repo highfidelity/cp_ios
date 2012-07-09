@@ -60,7 +60,7 @@
 
 #pragma mark - Feeds
 + (void)getFeedPreviewsForVenueIDs:(NSArray *)venueIDs withCompletion:(void (^)(NSDictionary *, NSError *))completion;
-+ (void)getFeedForVenueID:(NSUInteger)venueID WithCompletion:(void (^)(NSDictionary *, NSError *))completion;
++ (void)getFeedForVenueID:(NSUInteger)venueID withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 + (void)sendUpdate:(NSString *)updateText
               atVenue:(CPVenue *)venue
            completion:(void(^)(NSDictionary *json, NSError *error))completion;

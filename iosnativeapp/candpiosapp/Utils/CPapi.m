@@ -676,11 +676,21 @@
 #pragma mark - Logging
 + (void)getFeedPreviewsForVenueIDs:(NSArray *)venueIDs withCompletion:(void (^)(NSDictionary *, NSError *))completion
 {
-    // setup the params dict with a comma seperated list of venue IDs
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:[venueIDs componentsJoinedByString:@","] forKey:@"venue_IDs"];
-    
-    // make the call
-    [self makeHTTPRequestWithAction:@"getVenueFeedPreviews" withParameters:params completion:completion];
+    NSError *error;
+    NSData *venueIDsData = [NSJSONSerialization dataWithJSONObject:venueIDs
+                                                                options:kNilOptions
+                                                                  error:&error];
+    if (!error) {
+        NSString *venueIDsJSONString = [[NSString alloc] initWithData:venueIDsData
+                                                              encoding:NSUTF8StringEncoding];
+        // setup the params dict with a comma seperated list of venue IDs
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:venueIDsJSONString forKey:@"venue_IDs"];
+        
+        // make the call
+        [self makeHTTPRequestWithAction:@"getVenueFeedPreviews" withParameters:params completion:completion];
+    } else {
+        completion(nil, error);
+    }
 }
 
 + (void)getFeedForVenueID:(NSUInteger)venueID withCompletion:(void (^)(NSDictionary *, NSError *))completion
