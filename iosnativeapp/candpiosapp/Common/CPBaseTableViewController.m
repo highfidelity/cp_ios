@@ -119,6 +119,17 @@
 }
 - (void)cell:(CPUserActionCell*)cell didSelectSendMessageToUser:(User*)user 
 {
+    // handle chat
+    if (user.userID == [CPUserDefaultsHandler currentUser].userID) {
+        // cheeky response for self-talk
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Self-Chat" 
+                                                            message:@"It's quicker to chat with yourself in person." 
+                                                           delegate:nil 
+                                                  cancelButtonTitle:@"OK" 
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        return;
+    }
     // get a user object with resume data.. which includes its contact settings
     [user loadUserResumeData:^(NSError *error) {
         if (!error) {

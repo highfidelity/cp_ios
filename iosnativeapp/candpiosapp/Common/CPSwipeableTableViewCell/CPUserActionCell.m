@@ -565,8 +565,8 @@ static char BOOLRevealing;
         [CPSoundEffectsManager playSoundWithSystemSoundID:
          [CPSoundEffectsManager systemSoundIDForSoundWithName:[prefix stringByAppendingString:@"-on"] type:@"aif"]];
     } else { 
-        [CPSoundEffectsManager playSoundWithSystemSoundID:
-         [CPSoundEffectsManager systemSoundIDForSoundWithName:[prefix stringByAppendingString:@"-off"] type:@"aif"]];
+//        [CPSoundEffectsManager playSoundWithSystemSoundID:
+//         [CPSoundEffectsManager systemSoundIDForSoundWithName:[prefix stringByAppendingString:@"-off"] type:@"aif"]];
     }
 }
 
