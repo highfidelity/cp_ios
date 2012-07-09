@@ -674,7 +674,16 @@
 }
 
 #pragma mark - Logging
-+ (void)getFeedForVenueID:(NSUInteger)venueID WithCompletion:(void (^)(NSDictionary *, NSError *))completion
++ (void)getFeedPreviewsForVenueIDs:(NSArray *)venueIDs withCompletion:(void (^)(NSDictionary *, NSError *))completion
+{
+    // setup the params dict with a comma seperated list of venue IDs
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:[venueIDs componentsJoinedByString:@","] forKey:@"venue_IDs"];
+    
+    // make the call
+    [self makeHTTPRequestWithAction:@"getVenueFeedPreviews" withParameters:params completion:completion];
+}
+
++ (void)getFeedForVenueID:(NSUInteger)venueID withCompletion:(void (^)(NSDictionary *, NSError *))completion
 {
     // our params dict contains one parameter, the ID of the venue we want log entries for
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"%d", venueID] forKey:@"venue_id"];
@@ -1056,36 +1065,6 @@
                      withParameters:parameters
                          completion:completion];
 
-}
-
-# pragma mark - Venue Chat
-
-+ (void)getVenueChatForVenueWithID:(int)venueID
-                        lastChatID:(int)lastChatID
-                             queue:(NSOperationQueue *)chatQueue
-                        completion:(void (^)(NSDictionary *, NSError *))completion
-{
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:[NSString stringWithFormat:@"%d", venueID] forKey:@"venue_id"];
-    [parameters setValue:[NSString stringWithFormat:@"%d", lastChatID] forKey:@"last_id"];
-    
-    [self makeHTTPRequestWithAction:@"getVenueChat" withParameters:parameters queue:chatQueue completion:completion];
-}
-
-+ (void)sendVenueChatForVenueWithID:(int)venueID
-                            message:(NSString *)message
-                         lastChatID:(int)lastChatID
-                              queue:(NSOperationQueue *)chatQueue
-                         completion:(void (^)(NSDictionary *, NSError *))completion
-{
-    // note that we also send the last_id here so that we can get all new chat messages back when the send is successful
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:[NSString stringWithFormat:@"%d", venueID] forKey:@"venue_id"];
-    [parameters setValue:message forKey:@"message"];
-    [parameters setValue:[NSString stringWithFormat:@"%d", lastChatID] forKey:@"last_id"];
-    
-    
-    [self makeHTTPRequestWithAction:@"sendVenueChat" withParameters:parameters queue:chatQueue timeout:5 completion:completion];
 }
 
 + (void)saveVenueAutoCheckinStatus:(CPVenue *)venue

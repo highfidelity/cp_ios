@@ -59,6 +59,7 @@
              password:(NSString *) password;
 
 #pragma mark - Feeds
++ (void)getFeedPreviewsForVenueIDs:(NSArray *)venueIDs withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 + (void)getFeedForVenueID:(NSUInteger)venueID WithCompletion:(void (^)(NSDictionary *, NSError *))completion;
 + (void)sendUpdate:(NSString *)updateText
               atVenue:(CPVenue *)venue
@@ -152,17 +153,6 @@
 + (void)deleteAccountWithParameters:(NSMutableDictionary *)parameters
                          completion:(void(^)(NSDictionary *json, NSError *error))completion;
 
-#pragma mark - Venue Chat
-+ (void)getVenueChatForVenueWithID:(int)venueID
-                        lastChatID:(int)lastChatID
-                             queue:(NSOperationQueue *)chatQueue
-                        completion:(void (^)(NSDictionary *, NSError *))completion;
-
-+ (void)sendVenueChatForVenueWithID:(int)venueIDString
-                            message:(NSString *)message
-                        lastChatID:(int)lastChatIDString
-                              queue:(NSOperationQueue *)chatQueue
-                        completion:(void (^)(NSDictionary *, NSError *))completion;
 
 + (void)saveVenueAutoCheckinStatus:(CPVenue *)venue;
 
