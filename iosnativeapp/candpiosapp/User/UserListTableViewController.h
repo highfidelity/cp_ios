@@ -10,7 +10,7 @@
 #import "CPUserActionCell.h"
 #import "CPBaseTableViewController.h"
 
-@interface UserListTableViewController : CPBaseTableViewController <UINavigationControllerDelegate, CPUserActionCellDelegate, UIActionSheetDelegate>
+@interface UserListTableViewController : CPBaseTableViewController <UINavigationControllerDelegate>
 
 @property (nonatomic, retain) NSMutableArray *weeklyUsers;
 @property (nonatomic, retain) NSMutableArray *checkedInUsers;

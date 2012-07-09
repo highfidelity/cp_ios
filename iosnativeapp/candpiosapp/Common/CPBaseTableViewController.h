@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CPUserActionCell.h"
 
-@interface CPBaseTableViewController : UITableViewController
+@interface CPBaseTableViewController : UITableViewController <UIActionSheetDelegate, CPUserActionCellDelegate>
 
 @property (nonatomic, strong) UIActivityIndicatorView *barSpinner;
 @property (nonatomic, assign) id delegate;

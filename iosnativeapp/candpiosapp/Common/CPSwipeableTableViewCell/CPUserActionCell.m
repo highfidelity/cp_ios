@@ -155,7 +155,7 @@
     
     // Additional buttons for contact exchange and chat
     CGFloat originX = SWITCH_LEFT_MARGIN;
-    self.sendLoveButton = [self addToggleWithPrefix:@"send-love-switch" originX:originX selector:@selector(sendLoveAction)];
+    self.sendLoveButton = [self addToggleWithPrefix:@"send-love" originX:originX selector:@selector(sendLoveAction)];
     originX += self.sendLoveButton.frame.size.width + SWITCH_LEFT_MARGIN;
     self.sendMessageButton = [self addToggleWithPrefix:@"send-message" originX:originX selector:@selector(sendMessageAction)];
     originX += self.sendMessageButton.frame.size.width + SWITCH_LEFT_MARGIN;
@@ -553,13 +553,20 @@ static char BOOLRevealing;
 
 - (void) switchSound:(id)sender {    
     UIButton *button = (UIButton*)sender;
-    NSString *prefix = @"send-love-switch";
+    NSString *prefix = @"";
+    if (button == self.sendLoveButton) {
+        prefix = @"send-love";
+    } else if (button == self.sendMessageButton) {
+        prefix = @"send-message";
+    } else if (button == self.exchangeContactsButton) {
+        prefix = @"exchange-contacts";
+    }
     if (button.isHighlighted) { 
         [CPSoundEffectsManager playSoundWithSystemSoundID:
-         [CPSoundEffectsManager systemSoundIDForSoundWithName:[prefix stringByAppendingString:@"-sound-on"] type:@"wav"]];
+         [CPSoundEffectsManager systemSoundIDForSoundWithName:[prefix stringByAppendingString:@"-on"] type:@"aif"]];
     } else { 
         [CPSoundEffectsManager playSoundWithSystemSoundID:
-         [CPSoundEffectsManager systemSoundIDForSoundWithName:[prefix stringByAppendingString:@"-sound-off"] type:@"wav"]];
+         [CPSoundEffectsManager systemSoundIDForSoundWithName:[prefix stringByAppendingString:@"-off"] type:@"aif"]];
     }
 }
 
