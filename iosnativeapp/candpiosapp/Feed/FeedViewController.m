@@ -422,7 +422,7 @@ typedef enum {
 {   
     [self toggleLoadingState:YES];
     // make the request with CPapi to get log entries for this user
-    [CPapi getFeedForVenueID:self.venue.venueID WithCompletion:^(NSDictionary *json, NSError *error) { 
+    [CPapi getFeedForVenueID:self.venue.venueID withCompletion:^(NSDictionary *json, NSError *error) { 
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {
                 // clear all current log entries
