@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CPSwipeableTableViewCell.h"
+#import "CPUserActionCell.h"
 #import "CPBaseTableViewController.h"
 
-@interface UserListTableViewController : CPBaseTableViewController <UINavigationControllerDelegate, CPSwipeableTableViewCellDelegate, UIActionSheetDelegate>
+@interface UserListTableViewController : CPBaseTableViewController <UINavigationControllerDelegate, CPUserActionCellDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, retain) NSMutableArray *weeklyUsers;
 @property (nonatomic, retain) NSMutableArray *checkedInUsers;

@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CPSwipeableTableViewCell.h"
+#import "CPUserActionCell.h"
 
 @class UserTableViewCell;
 
-@interface UserTableViewCell : CPSwipeableTableViewCell
+@interface UserTableViewCell : CPUserActionCell
 
 
 @property (nonatomic, retain) IBOutlet UILabel *nicknameLabel;

@@ -230,8 +230,8 @@
     else if (indexPath.section == 1) {
         user = [self.weeklyUsers objectAtIndex:indexPath.row];
     }
-   
-
+    cell.user = user;
+    
     // reset the nickname label since this is a reusable cell
     CGRect nicknameFrameChanger = cell.nicknameLabel.frame;
     nicknameFrameChanger.origin.y = 15;
@@ -268,116 +268,7 @@
         [CPUIHelper manageVirtualBadgeForProfileImageView:cell.profilePictureImageView
                                          checkInIsVirtual:NO];
     }
-    // Additional buttons for contact exchange and chat
-    UIButton *chatButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage * buttonImage = [UIImage imageNamed:@"go-menu-button-2.png"];
-    [chatButton setImage:buttonImage 
-                forState:UIControlStateNormal];
-    [chatButton addTarget:self 
-                   action:@selector(chatRequest:) 
-         forControlEvents:UIControlEventTouchUpInside];
-    [chatButton addTarget:self 
-                   action:@selector(switchSound:) 
-         forControlEvents:UIControlEventTouchDown | UIControlEventTouchUpInside | UIControlEventTouchCancel];
-    
-    chatButton.frame = CGRectMake(cell.contentView.frame.size.width * 0.45, 
-                                  (cell.contentView.frame.size.height / 2) - (buttonImage.size.height / 2), 
-                                  buttonImage.size.width, 
-                                  buttonImage.size.height);
-    [cell.hiddenView addSubview:chatButton];
-        
-    UIButton *exchangeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    buttonImage = [UIImage imageNamed:@"exchange-cards.png"];
-    [exchangeButton setImage:buttonImage 
-                    forState:UIControlStateNormal];
-    [exchangeButton addTarget:self 
-                       action:@selector(exchangeContactInfoRequest:) 
-             forControlEvents:UIControlEventTouchUpInside];
-    [exchangeButton addTarget:self 
-                   action:@selector(switchSound:) 
-         forControlEvents:UIControlEventTouchDown | UIControlEventTouchUpInside | UIControlEventTouchCancel];
-    exchangeButton.frame = CGRectMake(cell.contentView.frame.size.width * 0.7, 
-                                  (cell.contentView.frame.size.height / 2) - (buttonImage.size.height / 2), 
-                                  buttonImage.size.width, 
-                                  buttonImage.size.height);
-    [cell.hiddenView addSubview:exchangeButton];
-    
     return cell;
-}
-
-- (User*) closeTrayAndReturnUser:(id)sender {
-    // close the open slide tray
-    [self closeOpenCellsExceptForIndexPath:nil];
-    
-    // return the selected user
-    UITableViewCell *cell = (UITableViewCell*)[[sender superview] superview];
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    return [self selectedUserForIndexPath:indexPath];
-}
-
-- (void) chatRequest:(id)sender {
-    // handle chat request to the selected user
-    User *user = [self closeTrayAndReturnUser:sender];
-    
-    // get a user object with resume data.. which includes its contact settings
-    [user loadUserResumeData:^(NSError *error) {
-        if (!error) {
-            if (user.contactsOnlyChat && !user.isContact) {
-                NSString *errorMessage = [NSString stringWithFormat:@"You can not chat with %@ until the two of you have exchanged contact information", user.nickname];
-                [SVProgressHUD showErrorWithStatus:errorMessage
-                                          duration:kDefaultDimissDelay];
-            } else {
-                // push the UserProfileViewController onto the navigation controller stack
-                OneOnOneChatViewController *chatViewController = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"OneOnOneChatView"];
-                chatViewController.user = user; 
-                [self.navigationController pushViewController:chatViewController animated:YES];
-            }
-        } else {
-            // error checking for load of user
-            NSLog(@"Error in user load during chat request.");
-        }
-    }];
-   
-    
-    
-}
-
-- (void) exchangeContactInfoRequest:(id)sender { 
-    // handle chat request to the selected user
-    User *user = [self closeTrayAndReturnUser:sender];
-
-    // Offer to exchange contacts
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                  initWithTitle:kRequestToAddToMyContactsActionSheetTitle
-                                  delegate:self
-                                  cancelButtonTitle:@"Cancel"
-                                  destructiveButtonTitle:@"Send"
-                                  otherButtonTitles: nil
-                                  ];
-    actionSheet.tag = user.userID;
-    [actionSheet showInView:self.view];
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    // Exchange contacts if accepted
-    if ([actionSheet title] == kRequestToAddToMyContactsActionSheetTitle) {
-        if (buttonIndex != [actionSheet cancelButtonIndex]) {
-            [CPapi sendContactRequestToUserId:actionSheet.tag];
-        }
-    }
-}
-
-
-- (void) switchSound:(id)sender {    
-    UIButton *button = (UIButton*)sender;
-    NSString *prefix = quickActionPrefix;
-    if (button.isHighlighted) { 
-        [CPSoundEffectsManager playSoundWithSystemSoundID:
-         [CPSoundEffectsManager systemSoundIDForSoundWithName:[prefix stringByAppendingString:@"-sound-on"] type:@"wav"]];
-    } else { 
-        [CPSoundEffectsManager playSoundWithSystemSoundID:
-         [CPSoundEffectsManager systemSoundIDForSoundWithName:[prefix stringByAppendingString:@"-sound-off"] type:@"wav"]];
-    }
 }
 
 #pragma mark - Table view delegate
@@ -418,35 +309,6 @@
     return headerView;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (![CPUserDefaultsHandler currentUser]) {
-        [CPAppDelegate showLoginBanner];
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        return;
-    }
-    [self closeOpenCellsExceptForIndexPath:indexPath];
-    [self showUserProfileForUser:[self selectedUserForIndexPath:indexPath]];
-}
-
-
-- (User *)selectedUserForIndexPath:(NSIndexPath *)indexPath
-{
-    User *selectedUser;
-    
-    if (indexPath.section == 0 && self.checkedInUsers.count > 0) {
-        selectedUser = [self.checkedInUsers objectAtIndex:indexPath.row];
-    }
-    else if (indexPath.section == 0 && self.weeklyUsers.count > 0) {
-        selectedUser = [self.weeklyUsers objectAtIndex:indexPath.row];
-    }
-    else if (indexPath.section == 1) {
-        selectedUser = [self.weeklyUsers objectAtIndex:indexPath.row];
-    }
-    
-    return selectedUser;
-}
-
 - (void)showUserProfileForUser:(User *)selectedUser
 {
     UserProfileViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
@@ -457,68 +319,77 @@
     [self.navigationController pushViewController:userVC animated:YES];
 }
 
-# pragma mark - CPSwipeableTableViewCellDelegate
+# pragma mark - CPUserActionCellDelegate
 
-static NSString *quickActionPrefix = @"send-love-switch";
-static CPSwipeableQuickActionSwitch *quickSwitch = nil;
-
-- (CPSwipeableQuickActionSwitch *)quickActionSwitchForDirection:(CPSwipeableTableViewCellDirection)direction
-{
-    if (!quickSwitch) {
-        quickSwitch = [[CPSwipeableQuickActionSwitch alloc] initWithAssetPrefix:quickActionPrefix];
-    }
-    return quickSwitch;
-}
-
--(void)performQuickActionForDirection:(CPSwipeableTableViewCellDirection)direction cell:(CPSwipeableTableViewCell *)sender
+- (void)cell:(CPUserActionCell*)cell didSelectSendLoveToUser:(User*)user 
 {
     // only show the love modal if this user is logged in
     if ([CPUserDefaultsHandler currentUser]) {
-        User *selectedUser = [self selectedUserForIndexPath:[self.tableView indexPathForCell:sender]];
-        
         // only show the love modal if this isn't the user themselves
-        if (selectedUser.userID != [CPUserDefaultsHandler currentUser].userID) {
+        if (user.userID != [CPUserDefaultsHandler currentUser].userID) {
             UserLoveViewController *loveModal = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"SendLoveModal"];
-            loveModal.user = selectedUser;
+            loveModal.user = user;
             
             [self presentModalViewController:loveModal animated:YES];
         }
-    }
+    }    
 }
-
--(void)cellDidBeginPan:(CPSwipeableTableViewCell *)cell
+- (void)cell:(CPUserActionCell*)cell didSelectSendMessageToUser:(User*)user 
 {
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    [self closeOpenCellsExceptForIndexPath:indexPath];
-    self.userIsPerformingQuickAction = YES;
+    // get a user object with resume data.. which includes its contact settings
+    [user loadUserResumeData:^(NSError *error) {
+        if (!error) {
+            if (user.contactsOnlyChat && !user.isContact) {
+                NSString *errorMessage = [NSString stringWithFormat:@"You can not chat with %@ until the two of you have exchanged contact information", user.nickname];
+                [SVProgressHUD showErrorWithStatus:errorMessage
+                                          duration:kDefaultDimissDelay];
+            } else {
+                // push the UserProfileViewController onto the navigation controller stack
+                OneOnOneChatViewController *chatViewController = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"OneOnOneChatView"];
+                chatViewController.user = user; 
+                [self.navigationController pushViewController:chatViewController animated:YES];
+            }
+        } else {
+            // error checking for load of user
+            NSLog(@"Error in user load during chat request.");
+        }
+    }];
 }
 
--(void)cellDidFinishPan:(CPSwipeableTableViewCell *)cell
+- (void)cell:(CPUserActionCell*)cell didSelectExchangeContactsWithUser:(User*)user
 {
-    self.userIsPerformingQuickAction = NO;
-    
-    if (self.reloadPrevented) {
-        // we prevented our UITableView from reloading before so fire it now
-        [self.tableView reloadData];
-        
-        // reset the boolean
-        self.reloadPrevented = NO;
-    }
+    // Offer to exchange contacts
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:kRequestToAddToMyContactsActionSheetTitle
+                                  delegate:self
+                                  cancelButtonTitle:@"Cancel"
+                                  destructiveButtonTitle:@"Send"
+                                  otherButtonTitles: nil
+                                  ];
+    actionSheet.tag = user.userID;
+    [actionSheet showInView:self.view];    
 }
 
-- (void)closeOpenCellsExceptForIndexPath:(NSIndexPath*)openIndexPath {
-    for (UITableViewCell *cell in self.tableView.visibleCells) {
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        if (!openIndexPath ||
-            (openIndexPath.section != indexPath.section || 
-             openIndexPath.row != indexPath.row)) {
-            UserTableViewCell *cell = (UserTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-            [cell close];
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex 
+{
+    // Exchange contacts if accepted
+    if ([actionSheet title] == kRequestToAddToMyContactsActionSheetTitle) {
+        if (buttonIndex != [actionSheet cancelButtonIndex]) {
+            [CPapi sendContactRequestToUserId:actionSheet.tag];
         }
     }
 }
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [self closeOpenCellsExceptForIndexPath:nil];    
+
+- (void)cell:(CPUserActionCell*)cell didSelectRowWithUser:(User*)user 
+{
+    if (![CPUserDefaultsHandler currentUser]) {
+        [CPAppDelegate showLoginBanner];
+        cell.selected = NO;
+    } else { 
+        [self showUserProfileForUser:user];
+    }
+    
 }
+
 
 @end

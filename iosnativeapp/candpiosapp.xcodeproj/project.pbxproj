@@ -61,15 +61,24 @@
 		32D1E99B15701993009B45BD /* checkbox-unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D1E99715701993009B45BD /* checkbox-unchecked.png */; };
 		32D1E99C15701993009B45BD /* checkbox-unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D1E99815701993009B45BD /* checkbox-unchecked@2x.png */; };
 		32E03BB115446A4000288BF9 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E03BAB154468B600288BF9 /* libTestFlight.a */; };
+		4E28A7C915AB5E08003C601A /* exchange-contacts-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7BD15AB5E08003C601A /* exchange-contacts-off.png */; };
+		4E28A7CA15AB5E08003C601A /* exchange-contacts-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7BE15AB5E08003C601A /* exchange-contacts-off@2x.png */; };
+		4E28A7CB15AB5E08003C601A /* exchange-contacts-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7BF15AB5E08003C601A /* exchange-contacts-on.png */; };
+		4E28A7CC15AB5E08003C601A /* exchange-contacts-on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C015AB5E08003C601A /* exchange-contacts-on@2x.png */; };
+		4E28A7CD15AB5E08003C601A /* send-love-switch-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C115AB5E08003C601A /* send-love-switch-off.png */; };
+		4E28A7CE15AB5E08003C601A /* send-love-switch-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C215AB5E08003C601A /* send-love-switch-off@2x.png */; };
+		4E28A7CF15AB5E08003C601A /* send-love-switch-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C315AB5E08003C601A /* send-love-switch-on.png */; };
+		4E28A7D015AB5E08003C601A /* send-love-switch-on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C415AB5E08003C601A /* send-love-switch-on@2x.png */; };
+		4E28A7D115AB5E08003C601A /* send-message-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C515AB5E08003C601A /* send-message-off.png */; };
+		4E28A7D215AB5E08003C601A /* send-message-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C615AB5E08003C601A /* send-message-off@2x.png */; };
+		4E28A7D315AB5E08003C601A /* send-message-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C715AB5E08003C601A /* send-message-on.png */; };
+		4E28A7D415AB5E08003C601A /* send-message-on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C815AB5E08003C601A /* send-message-on@2x.png */; };
+		4E28A7D715AB5E13003C601A /* CPUserActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E28A7D615AB5E13003C601A /* CPUserActionCell.m */; };
 		530C5DB31575E4F3003505AC /* CPSwipeableQuickActionSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C5DB01575E4F3003505AC /* CPSwipeableQuickActionSwitch.m */; };
 		530C5DB41575E4F3003505AC /* CPSwipeableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C5DB21575E4F3003505AC /* CPSwipeableTableViewCell.m */; };
 		530C5DB71575E4FC003505AC /* CPSoundEffectsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */; };
 		530C5DBB1575E516003505AC /* send-love-switch-sound-off.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */; };
 		530C5DBC1575E516003505AC /* send-love-switch-sound-on.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */; };
-		530C5DC11575E52D003505AC /* send-love-switch-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DBD1575E52D003505AC /* send-love-switch-off.png */; };
-		530C5DC21575E52D003505AC /* send-love-switch-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DBE1575E52D003505AC /* send-love-switch-off@2x.png */; };
-		530C5DC31575E52D003505AC /* send-love-switch-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DBF1575E52D003505AC /* send-love-switch-on.png */; };
-		530C5DC41575E52D003505AC /* send-love-switch-on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DC01575E52D003505AC /* send-love-switch-on@2x.png */; };
 		531806541584811B0037E5BC /* libGRMustache4-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 531806531584811B0037E5BC /* libGRMustache4-iOS.a */; };
 		5319C76115547157005DA299 /* UIButton+AnimatedClockHand.m in Sources */ = {isa = PBXBuildFile; fileRef = 5319C76015547157005DA299 /* UIButton+AnimatedClockHand.m */; };
 		53217F8C156FF89B006258F0 /* LoveSkillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */; };
@@ -593,6 +602,20 @@
 		32D1E99815701993009B45BD /* checkbox-unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-unchecked@2x.png"; sourceTree = "<group>"; };
 		32E03BAB154468B600288BF9 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		32E03BAC154468B600288BF9 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		4E28A7BD15AB5E08003C601A /* exchange-contacts-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exchange-contacts-off.png"; sourceTree = "<group>"; };
+		4E28A7BE15AB5E08003C601A /* exchange-contacts-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exchange-contacts-off@2x.png"; sourceTree = "<group>"; };
+		4E28A7BF15AB5E08003C601A /* exchange-contacts-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exchange-contacts-on.png"; sourceTree = "<group>"; };
+		4E28A7C015AB5E08003C601A /* exchange-contacts-on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exchange-contacts-on@2x.png"; sourceTree = "<group>"; };
+		4E28A7C115AB5E08003C601A /* send-love-switch-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send-love-switch-off.png"; sourceTree = "<group>"; };
+		4E28A7C215AB5E08003C601A /* send-love-switch-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send-love-switch-off@2x.png"; sourceTree = "<group>"; };
+		4E28A7C315AB5E08003C601A /* send-love-switch-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send-love-switch-on.png"; sourceTree = "<group>"; };
+		4E28A7C415AB5E08003C601A /* send-love-switch-on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send-love-switch-on@2x.png"; sourceTree = "<group>"; };
+		4E28A7C515AB5E08003C601A /* send-message-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send-message-off.png"; sourceTree = "<group>"; };
+		4E28A7C615AB5E08003C601A /* send-message-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send-message-off@2x.png"; sourceTree = "<group>"; };
+		4E28A7C715AB5E08003C601A /* send-message-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send-message-on.png"; sourceTree = "<group>"; };
+		4E28A7C815AB5E08003C601A /* send-message-on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send-message-on@2x.png"; sourceTree = "<group>"; };
+		4E28A7D515AB5E13003C601A /* CPUserActionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUserActionCell.h; sourceTree = "<group>"; };
+		4E28A7D615AB5E13003C601A /* CPUserActionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPUserActionCell.m; sourceTree = "<group>"; };
 		530C5DAF1575E4F3003505AC /* CPSwipeableQuickActionSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPSwipeableQuickActionSwitch.h; sourceTree = "<group>"; };
 		530C5DB01575E4F3003505AC /* CPSwipeableQuickActionSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPSwipeableQuickActionSwitch.m; sourceTree = "<group>"; };
 		530C5DB11575E4F3003505AC /* CPSwipeableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPSwipeableTableViewCell.h; sourceTree = "<group>"; };
@@ -601,10 +624,6 @@
 		530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPSoundEffectsManager.m; sourceTree = "<group>"; };
 		530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-off.wav"; sourceTree = "<group>"; };
 		530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-on.wav"; sourceTree = "<group>"; };
-		530C5DBD1575E52D003505AC /* send-love-switch-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-love-switch-off.png"; path = "User/images/send-love-switch-off.png"; sourceTree = "<group>"; };
-		530C5DBE1575E52D003505AC /* send-love-switch-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-love-switch-off@2x.png"; path = "User/images/send-love-switch-off@2x.png"; sourceTree = "<group>"; };
-		530C5DBF1575E52D003505AC /* send-love-switch-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-love-switch-on.png"; path = "User/images/send-love-switch-on.png"; sourceTree = "<group>"; };
-		530C5DC01575E52D003505AC /* send-love-switch-on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-love-switch-on@2x.png"; path = "User/images/send-love-switch-on@2x.png"; sourceTree = "<group>"; };
 		531806531584811B0037E5BC /* libGRMustache4-iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGRMustache4-iOS.a"; sourceTree = "<group>"; };
 		5319C75F15547157005DA299 /* UIButton+AnimatedClockHand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+AnimatedClockHand.h"; path = "CheckIn/UIButton+AnimatedClockHand.h"; sourceTree = "<group>"; };
 		5319C76015547157005DA299 /* UIButton+AnimatedClockHand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+AnimatedClockHand.m"; path = "CheckIn/UIButton+AnimatedClockHand.m"; sourceTree = "<group>"; };
@@ -1428,9 +1447,31 @@
 			path = TestFlight;
 			sourceTree = "<group>";
 		};
+		4E28A7BB15AB5DF4003C601A /* images */ = {
+			isa = PBXGroup;
+			children = (
+				4E28A7BD15AB5E08003C601A /* exchange-contacts-off.png */,
+				4E28A7BE15AB5E08003C601A /* exchange-contacts-off@2x.png */,
+				4E28A7BF15AB5E08003C601A /* exchange-contacts-on.png */,
+				4E28A7C015AB5E08003C601A /* exchange-contacts-on@2x.png */,
+				4E28A7C115AB5E08003C601A /* send-love-switch-off.png */,
+				4E28A7C215AB5E08003C601A /* send-love-switch-off@2x.png */,
+				4E28A7C315AB5E08003C601A /* send-love-switch-on.png */,
+				4E28A7C415AB5E08003C601A /* send-love-switch-on@2x.png */,
+				4E28A7C515AB5E08003C601A /* send-message-off.png */,
+				4E28A7C615AB5E08003C601A /* send-message-off@2x.png */,
+				4E28A7C715AB5E08003C601A /* send-message-on.png */,
+				4E28A7C815AB5E08003C601A /* send-message-on@2x.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
 		530C5DAE1575E4F3003505AC /* CPSwipeableTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				4E28A7D515AB5E13003C601A /* CPUserActionCell.h */,
+				4E28A7D615AB5E13003C601A /* CPUserActionCell.m */,
+				4E28A7BB15AB5DF4003C601A /* images */,
 				530C5DAF1575E4F3003505AC /* CPSwipeableQuickActionSwitch.h */,
 				530C5DB01575E4F3003505AC /* CPSwipeableQuickActionSwitch.m */,
 				530C5DB11575E4F3003505AC /* CPSwipeableTableViewCell.h */,
@@ -1615,10 +1656,6 @@
 		536DE929150170BB00794650 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				530C5DBD1575E52D003505AC /* send-love-switch-off.png */,
-				530C5DBE1575E52D003505AC /* send-love-switch-off@2x.png */,
-				530C5DBF1575E52D003505AC /* send-love-switch-on.png */,
-				530C5DC01575E52D003505AC /* send-love-switch-on@2x.png */,
 				53ABCC2415621054004BA177 /* send-love-small@2x.png */,
 				536E1E5A1554932F00052D40 /* available-for-icon@2x~iphone.png */,
 				536E1E5B1554932F00052D40 /* available-for-icon~iphone.png */,
@@ -2738,10 +2775,6 @@
 				32D1E99C15701993009B45BD /* checkbox-unchecked@2x.png in Resources */,
 				530C5DBB1575E516003505AC /* send-love-switch-sound-off.wav in Resources */,
 				530C5DBC1575E516003505AC /* send-love-switch-sound-on.wav in Resources */,
-				530C5DC11575E52D003505AC /* send-love-switch-off.png in Resources */,
-				530C5DC21575E52D003505AC /* send-love-switch-off@2x.png in Resources */,
-				530C5DC31575E52D003505AC /* send-love-switch-on.png in Resources */,
-				530C5DC41575E52D003505AC /* send-love-switch-on@2x.png in Resources */,
 				69E3A73D1573CAC90046E687 /* linkedin-invite.png in Resources */,
 				69E3A73E1573CAC90046E687 /* linkedin-invite@2x.png in Resources */,
 				69112E6A1580D41B009CCBD0 /* contact-cell-bg-selected.png in Resources */,
@@ -2791,6 +2824,18 @@
 				E496772115A8252500917A1F /* header-button@2.png in Resources */,
 				E46B562015A8D8AC00AD3C62 /* divider-button.png in Resources */,
 				E46B562115A8D8AC00AD3C62 /* divider-button@2.png in Resources */,
+				4E28A7C915AB5E08003C601A /* exchange-contacts-off.png in Resources */,
+				4E28A7CA15AB5E08003C601A /* exchange-contacts-off@2x.png in Resources */,
+				4E28A7CB15AB5E08003C601A /* exchange-contacts-on.png in Resources */,
+				4E28A7CC15AB5E08003C601A /* exchange-contacts-on@2x.png in Resources */,
+				4E28A7CD15AB5E08003C601A /* send-love-switch-off.png in Resources */,
+				4E28A7CE15AB5E08003C601A /* send-love-switch-off@2x.png in Resources */,
+				4E28A7CF15AB5E08003C601A /* send-love-switch-on.png in Resources */,
+				4E28A7D015AB5E08003C601A /* send-love-switch-on@2x.png in Resources */,
+				4E28A7D115AB5E08003C601A /* send-message-off.png in Resources */,
+				4E28A7D215AB5E08003C601A /* send-message-off@2x.png in Resources */,
+				4E28A7D315AB5E08003C601A /* send-message-on.png in Resources */,
+				4E28A7D415AB5E08003C601A /* send-message-on@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2951,6 +2996,7 @@
 				533E5F0A15A3AD040042862E /* FeedViewController.m in Sources */,
 				533E5F0D15A3AE020042862E /* FeedVenuesTableViewController.m in Sources */,
 				533B1DA915A3D3300072997D /* CheckInListTableViewController.m in Sources */,
+				4E28A7D715AB5E13003C601A /* CPUserActionCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
