@@ -12,6 +12,7 @@
 
 #define kInVenueText @"in venue"
 #define kInCityText @"in city"
+#define kContactsText @"contacts"
 
 @interface ProfileNotificationsViewController () <UIActionSheetDelegate>
 
@@ -24,7 +25,6 @@
 @property (weak, nonatomic) IBOutlet UISwitch *contactsOnlyChatSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *chatNotificationLabel;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
-@property (weak, nonatomic) IBOutlet UISwitch *contactsOnlyCheckInsSwitch;
 
 - (IBAction)selectVenueCity:(UIButton *)sender;
 - (IBAction)quietFromClicked:(UIButton *)sender;
@@ -32,7 +32,7 @@
 - (IBAction)quietTimeValueChanged:(UISwitch *)sender;
 - (IBAction)anyoneChatSwitchChanged:(id)sender;
 
-- (void)setVenue:(BOOL)inVenue;
+- (void)setVenue:(NSString *)setting;
 
 @property(strong) NSDate *quietTimeFromDate;
 @property(strong) NSDate *quietTimeToDate;
@@ -52,7 +52,6 @@
 @synthesize quietTimeFromDate = _quietTimeFromDate;
 @synthesize quietTimeToDate = _quietTimeToDate;
 @synthesize headerView = _headerView;
-@synthesize contactsOnlyCheckInsSwitch = _contactsOnlyCheckInsSwitch;
 
 #pragma mark - View lifecycle
 
@@ -92,7 +91,6 @@
     [self setQuietTimeToDate:nil];
     [self setChatNotificationLabel:nil];
     [self setHeaderView:nil];
-    [self setContactsOnlyCheckInsSwitch:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -128,7 +126,7 @@
             NSDictionary *dict = [json objectForKey:@"payload"];
 
             NSString *venue = (NSString *)[dict objectForKey:@"push_distance"];
-            [self setVenue:[venue isEqualToString:@"venue"]];
+            [self setVenue:venue];
 
             NSString *checkInOnly = (NSString *)[dict objectForKey:@"checked_in_only"];
             [[self checkedInOnlySwitch] setOn:[checkInOnly isEqualToString:@"1"]];
@@ -173,9 +171,6 @@
 
             [[self chatNotificationLabel] setHidden:self.contactsOnlyChatSwitch.on];
 
-            NSString *contactsOnlyCheckIns = (NSString *)[dict objectForKey:@"contacts_only_check_ins"];
-            [[self contactsOnlyCheckInsSwitch] setOn:[contactsOnlyCheckIns isEqualToString:@"1"]];
-
             [SVProgressHUD dismiss];
         }
     }];
@@ -183,17 +178,23 @@
 
 - (void)saveNotificationSettings
 {
-    BOOL notifyInVenue = [self.venueButton.currentTitle isEqualToString:kInVenueText];
-    NSString *distance = notifyInVenue ? @"venue" : @"city";
-
+    NSString *distance = @"city";
+    
+    if ([self.venueButton.currentTitle isEqualToString:kInVenueText]) {
+        distance = @"venue";
+    }
+    
+    else if ([self.venueButton.currentTitle isEqualToString:kContactsText]) {
+        distance = @"contacts";
+    }
+    
     [CPapi setNotificationSettingsForDistance:distance
                                  andCheckedId:self.checkedInOnlySwitch.on
                                     quietTime:self.quietTimeSwitch.on
                                 quietTimeFrom:[self quietTimeFromDate]
                                   quietTimeTo:[self quietTimeToDate]
                       timezoneOffsetInSeconds:[[NSTimeZone defaultTimeZone] secondsFromGMT]
-                         chatFromContactsOnly:!self.contactsOnlyChatSwitch.on
-                         contactsOnlyCheckIns:self.contactsOnlyCheckInsSwitch.on];
+                         chatFromContactsOnly:!self.contactsOnlyChatSwitch.on];
 }
 
 #pragma mark - UI Events
@@ -250,19 +251,37 @@
                                   delegate:self
                                   cancelButtonTitle:@"Cancel"
                                   destructiveButtonTitle:nil
-                                  otherButtonTitles:@"City", @"Venue", nil
+                                  otherButtonTitles:@"City", @"Venue", @"Contacts", nil
                                   ];
     [actionSheet showInView:self.view];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    [self setVenue:buttonIndex == 1];
+    NSString *selection = @"city";
+    if (buttonIndex == 1) {
+        selection = @"venue";
+    }
+    
+    else if (buttonIndex == 2) {
+        selection = @"contacts";
+    }
+
+    [self setVenue:selection];
 }
 
-- (void)setVenue:(BOOL)inVenue
+- (void)setVenue:(NSString *)setting
 {
-    [[self venueButton] setTitle: inVenue ? kInVenueText : kInCityText
+    NSMutableString *title = [NSMutableString stringWithString:kInCityText];
+    
+    if ([setting isEqualToString:@"venue"]) {
+        [title setString:kInVenueText];   
+    }
+    else if ([setting isEqualToString: @"contacts"]) {
+        [title setString:kContactsText];   
+    }
+    
+    [[self venueButton] setTitle: title
                         forState:UIControlStateNormal];
 }
 

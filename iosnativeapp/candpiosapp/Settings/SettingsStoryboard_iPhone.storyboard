@@ -1062,6 +1062,9 @@ photo?</string>
                 <viewController id="Oyl-sh-T3U" customClass="ProfileNotificationsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="29t-LB-tsx">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <userGuides>
+                            <userLayoutGuide location="21" affinity="maxX"/>
+                        </userGuides>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show me new Check Ins" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="0Ry-8y-hMv">
@@ -1085,13 +1088,6 @@ photo?</string>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="From contacts" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="T11-Rh-ZRG">
-                                <rect key="frame" x="20" y="131" width="177" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="WYv-d1-E2c">
                                 <rect key="frame" x="104" y="50" width="196" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1109,14 +1105,14 @@ photo?</string>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Quiet time" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="jQz-GS-m06">
-                                <rect key="frame" x="20" y="171" width="129" height="20"/>
+                                <rect key="frame" x="20" y="132" width="129" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" id="cX0-GX-mm2">
-                                <rect key="frame" x="0.0" y="198" width="320" height="45"/>
+                                <rect key="frame" x="0.0" y="159" width="320" height="45"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="From" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" id="Aj4-Uy-yzx">
@@ -1134,7 +1130,7 @@ photo?</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="d0g-u2-bia">
-                                        <rect key="frame" x="221" y="8" width="75" height="27"/>
+                                        <rect key="frame" x="224" y="8" width="75" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                         <state key="normal" title="7:00 PM">
@@ -1167,7 +1163,7 @@ photo?</string>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="oHx-V4-TMp">
-                                <rect key="frame" x="0.0" y="239" width="320" height="203"/>
+                                <rect key="frame" x="0.0" y="200" width="320" height="133"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="416-pJ-fQf">
@@ -1176,7 +1172,7 @@ photo?</string>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="Rhs-hN-YNW" userLabel="Switch - chat from anyone">
-                                        <rect key="frame" x="221" y="7" width="79" height="27"/>
+                                        <rect key="frame" x="221" y="6" width="79" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
@@ -1184,7 +1180,7 @@ photo?</string>
                                         </connections>
                                     </switch>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Allow anyone to send me 1:1 chat" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="uSk-Wv-06w">
-                                        <rect key="frame" x="20" y="3" width="157" height="35"/>
+                                        <rect key="frame" x="20" y="2" width="157" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -1239,13 +1235,8 @@ photo?</string>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
                             </switch>
-                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="dcM-1p-qd1">
-                                <rect key="frame" x="221" y="128" width="79" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
-                            </switch>
                             <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="CzO-7x-w0O">
-                                <rect key="frame" x="221" y="167" width="79" height="27"/>
+                                <rect key="frame" x="221" y="128" width="79" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -1279,11 +1270,11 @@ photo?</string>
                         <outlet property="chatNotificationLabel" destination="tmc-Qs-3bj" id="PeE-Sy-oBs"/>
                         <outlet property="checkedInOnlySwitch" destination="6Kq-XY-CWZ" id="KAg-5q-0k6"/>
                         <outlet property="contactsOnlyChatSwitch" destination="Rhs-hN-YNW" id="cqq-sR-Eom"/>
-                        <outlet property="contactsOnlyCheckInsSwitch" destination="dcM-1p-qd1" id="AOL-ex-Gch"/>
                         <outlet property="headerView" destination="29t-LB-tsx" id="XD9-eS-NQk"/>
                         <outlet property="quietFromButton" destination="wxb-H5-mQy" id="X3M-R0-zF8"/>
                         <outlet property="quietTimeSwitch" destination="CzO-7x-w0O" id="qaa-jB-XdP"/>
                         <outlet property="quietToButton" destination="d0g-u2-bia" id="6jX-6d-P1Y"/>
+                        <outlet property="venueButton" destination="WYv-d1-E2c" id="j3X-sQ-Y4f"/>
                     </connections>
                 </viewController>
             </objects>
@@ -1748,7 +1739,6 @@ photo?</string>
                 <relationship kind="outlet" name="chatNotificationLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="checkedInOnlySwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="contactsOnlyChatSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="contactsOnlyCheckInsSwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="headerView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="quietFromButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="quietTimeSwitch" candidateClass="UISwitch"/>
