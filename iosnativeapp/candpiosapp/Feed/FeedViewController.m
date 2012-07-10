@@ -72,9 +72,6 @@ typedef enum {
     [self.tableView addPullToRefreshWithActionHandler:^{
         [self getVenueFeedOrFeedPreviews];
     }];
-    
-    // call toggleSelectedFeedOrFeedPreviews to reload the venue feed previews
-    [self toggleSelectedFeedOrFeedPreviews];   
 }
 
 - (void)viewDidUnload
@@ -109,7 +106,9 @@ typedef enum {
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self getVenueFeedOrFeedPreviews];
+    
+    // call toggleSelectedFeedOrFeedPreviews to reload the venue feed previews
+    [self toggleSelectedFeedOrFeedPreviews];
 }
 
 - (void)setSelectedVenueFeed:(CPVenueFeed *)selectedVenueFeed
@@ -552,9 +551,11 @@ typedef enum {
         self.navigationItem.leftBarButtonItem = nil;
         [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
         
-        
         // our title is the default
         self.navigationItem.title = @"Venue Feeds";
+        
+        // get venue feed previews
+        [self getVenueFeedOrFeedPreviews];
     } else {
         // make sure we don't have the reload button in the top right
         self.navigationItem.rightBarButtonItem = nil;
@@ -566,12 +567,16 @@ typedef enum {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backFromSelectedFeed:)];
         // our new title is the name of the venue
         self.navigationItem.title = self.selectedVenueFeed.venue.name;
+        
+        // trigger a refresh of the pullToRefreshView which will refresh our data
+        [self.tableView.pullToRefreshView triggerRefresh];
     }
     
     // no matter what we're switching to we need to reload the tableView
     // and pull for new data
     [self.tableView reloadData];
-    [self getVenueFeedOrFeedPreviews];
+    
+    
 }
 
 - (void)loadProfileImageForButton:(UIButton *)button photoURL:(NSURL *)photoURL indexPath:(NSIndexPath *)indexPath
@@ -649,7 +654,7 @@ typedef enum {
                         // reset the newpostAfterLoad property so it doesn't fire again
                         self.newPostAfterLoad = NO;
                     } else {
-                        // go to the bottom of the tableView
+                        // go to the top of the tableView
                         [self scrollTableViewToTopAnimated:YES];
                     }
                 }
@@ -896,7 +901,13 @@ typedef enum {
     
         
         // only try and update the tableView if we've asked for this change by adding or removing an entry
-        if (self.currentState == FeedVCStateAddingOrRemovingPendingPost) {            
+        if (self.currentState == FeedVCStateAddingOrRemovingPendingPost) { 
+            
+            if (!beingShown) {
+                // give the tableView its new frame ASAP so the animation of deleting the cell is right
+                self.tableView.frame = newTableViewFrame;
+            }
+            
             [self.tableView beginUpdates];
             
             // if the keyboard is being shown then we need to add an entry
@@ -924,10 +935,10 @@ typedef enum {
                                  // toggle the alpha of the right side buttons and green line
                                  [thinBar toggleRightSide:!beingShown];
                                  
-                                 // give the tableView its new Frame
-                                 self.tableView.frame = newTableViewFrame;
-                                                             
                                  if (beingShown) {
+                                     // animate change in tableView's frame
+                                     self.tableView.frame = newTableViewFrame;
+                                     
                                      // get the tableView to scroll while the keyboard is appearing
                                      [self scrollTableViewToTopAnimated:NO];
                                  }
@@ -938,9 +949,6 @@ typedef enum {
                          }
                          completion:^(BOOL finished){
                              if (beingShown) {
-                                 // call scrollTableViewToTopAnimated again because otherwise its off by a couple of points
-                                 [self scrollTableViewToTopAnimated:NO];
-                                 
                                  // grab the new cell and make its growingTextView the first responder
                                  if (self.pendingPost) {
                                      [self.pendingPostCell.growingTextView becomeFirstResponder];
