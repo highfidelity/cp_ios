@@ -13,6 +13,7 @@
 #import "NewPostCell.h"
 #import "PostLoveCell.h"
 #import "UserProfileViewController.h"
+#import "SVPullToRefresh.h"
 
 #define TIMELINE_ORIGIN_X 50
 
@@ -52,9 +53,6 @@ typedef enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // refresh button in top right
-    [self addRefreshButtonToNavigationItem];
 
     // setup a background view
     // and add the timeline to the backgroundView
@@ -71,8 +69,12 @@ typedef enum {
     
     [self reloadFeedPreviewVenues:nil];
     
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        [self getVenueFeedOrFeedPreviews];
+    }];
+    
     // call toggleSelectedFeedOrFeedPreviews to reload the venue feed previews
-    [self toggleSelectedFeedOrFeedPreviews];
+    [self toggleSelectedFeedOrFeedPreviews];   
 }
 
 - (void)viewDidUnload
@@ -191,7 +193,7 @@ typedef enum {
         }
     } 
     
-    if (self.selectedVenueFeed && self.pendingPost && indexPath.row == self.selectedVenueFeed.posts.count - 1) {
+    if (self.selectedVenueFeed && self.pendingPost && indexPath.row == 0) {
         // this is an editable cell
         // for which we might have a changed height
         
@@ -399,6 +401,20 @@ typedef enum {
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (self.selectedVenueFeed) {
+        return 15;
+    } else {
+        return 0;
+    }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return [[UIView alloc] init];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     if (self.selectedVenueFeed) {
@@ -526,11 +542,26 @@ typedef enum {
 - (void)toggleSelectedFeedOrFeedPreviews 
 {
     if (!self.selectedVenueFeed) {
+        // no pull to refresh in this table
+        self.tableView.showsPullToRefresh = NO;
+        
+        // make sure we have the reload button in the top right
+        [self addRefreshButtonToNavigationItem];
+        
+        // make sure the settings button is available in the top left
         self.navigationItem.leftBarButtonItem = nil;
         [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
+        
+        
         // our title is the default
         self.navigationItem.title = @"Venue Feeds";
     } else {
+        // make sure we don't have the reload button in the top right
+        self.navigationItem.rightBarButtonItem = nil;
+        
+        // make sure that pull to refresh is now enabled for the tableview
+        self.tableView.showsPullToRefresh = YES;
+        
         // add a back button as the left navigation item
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backFromSelectedFeed:)];
         // our new title is the name of the venue
@@ -572,16 +603,25 @@ typedef enum {
 - (void)toggleLoadingState:(BOOL)loading
 {
     if (loading) {
+        // show a HUD or the pullToRefreshView
+        if (!self.tableView.showsPullToRefresh) {
+            [SVProgressHUD showWithStatus:@"Loading..."];
+        }
+
         // our current state is log reload
         self.currentState = FeedVCStateReloadingFeed;
-        // show a progress HUD
-        [SVProgressHUD showWithStatus:@"Loading..."];
     } else {
+        // show a HUD or the pullToRefreshView
+        if (self.tableView.showsPullToRefresh) {
+            // dismiss the pullToRefreshView in the tableView       
+            [self.tableView.pullToRefreshView stopAnimating];
+        } else {
+            // dismiss the progressHUD
+            [SVProgressHUD dismiss];
+        }
+        
         // our current state is now the default
         self.currentState = FeedVCStateDefault;
-        
-        // dismiss the progress HUD
-        [SVProgressHUD dismiss];
     } 
 }
 
@@ -610,7 +650,7 @@ typedef enum {
                         self.newPostAfterLoad = NO;
                     } else {
                         // go to the bottom of the tableView
-                        [self scrollTableViewToBottomAnimated:YES];
+                        [self scrollTableViewToTopAnimated:YES];
                     }
                 }
             }
@@ -691,10 +731,10 @@ typedef enum {
     }
 }
 
-- (void)scrollTableViewToBottomAnimated:(BOOL)animated
+- (void)scrollTableViewToTopAnimated:(BOOL)animated
 {
-    // scroll to the bottom of the tableView
-    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height) animated:animated];
+    // scroll to the top of the tableView
+    [self.tableView setContentOffset:CGPointMake(0, 0) animated:animated];
 }
 
 #pragma mark - IBActions
@@ -724,7 +764,7 @@ typedef enum {
         // the author for this log message is the current user
         self.pendingPost.author = [CPUserDefaultsHandler currentUser];
         
-        [self.selectedVenueFeed.posts addObject:self.pendingPost];
+        [self.selectedVenueFeed.posts insertObject:self.pendingPost atIndex:0];
         
         // we need the keyboard to know that we're asking for this change
         self.currentState = FeedVCStateAddingOrRemovingPendingPost;
@@ -750,17 +790,23 @@ typedef enum {
 }
 
 - (IBAction)cancelPost:(id)sender {
-    // user is cancelling log entry
-    
-    // remove the pending log entry from our array of entries
-    [self.selectedVenueFeed.posts removeObject:self.pendingPost];
-    
-    // we need the keyboard to know that we're asking for this change
-    self.currentState = FeedVCStateAddingOrRemovingPendingPost;
-    
-    // switch first responder to our fake textView and then resign it so we can drop the keyboard
-    [self.fakeTextView becomeFirstResponder];
-    [self.fakeTextView resignFirstResponder];
+    // don't allow a double tap on the cancel button to crash the app
+    if (self.currentState != FeedVCStateAddingOrRemovingPendingPost) {
+        // user is cancelling new post
+        
+        // remove the pending post from our array of posts
+        [self.selectedVenueFeed.posts removeObject:self.pendingPost];
+        
+        // we need the keyboard to know that we're asking for this change
+        self.currentState = FeedVCStateAddingOrRemovingPendingPost;
+        
+        // switch first responder to our fake textView and then resign it so we can drop the keyboard
+        [self.fakeTextView becomeFirstResponder];
+        [self.fakeTextView resignFirstResponder];
+        
+        // scroll to the top of the table view
+        [self scrollTableViewToTopAnimated:YES];
+    }
 }
 
 - (IBAction)pushToUserProfileFromButton:(UIButton *)button
@@ -828,10 +874,9 @@ typedef enum {
     // don't move anything if the keyboard isn't being moved because of us
     if (self.currentState != FeedVCStateDefault) {
         
-        // create the indexPath for the last row
-        int row = self.selectedVenueFeed.posts.count - (beingShown ? 1 : 0);
-        NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
-        NSArray *indexPathArray = [NSArray arrayWithObject:lastIndexPath];
+        // create the indexPath for the first row
+        NSIndexPath *firstIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        NSArray *indexPathArray = [NSArray arrayWithObject:firstIndexPath];
         
         UITabBar *tabBar = [CPAppDelegate tabBarController].tabBar;
         CPThinTabBar *thinBar = [CPAppDelegate tabBarController].thinBar;
@@ -856,10 +901,10 @@ typedef enum {
             
             // if the keyboard is being shown then we need to add an entry
             if (beingShown) {
-                [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationFade];
+                [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationTop];
             } else {
                 // otherwise  we're removing one
-                [self.tableView deleteRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationFade];
+                [self.tableView deleteRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationTop];
                 
                 // remove our pointer to the previous pendingPost object now that the row is gone
                 self.pendingPost = nil;
@@ -884,7 +929,7 @@ typedef enum {
                                                              
                                  if (beingShown) {
                                      // get the tableView to scroll while the keyboard is appearing
-                                     [self scrollTableViewToBottomAnimated:NO];
+                                     [self scrollTableViewToTopAnimated:NO];
                                  }
                              }
                              
@@ -893,16 +938,16 @@ typedef enum {
                          }
                          completion:^(BOOL finished){
                              if (beingShown) {
-                                 // call scrollTableViewToBottomAnimated again because otherwise its off by a couple of points
-                                 [self scrollTableViewToBottomAnimated:NO];
+                                 // call scrollTableViewToTopAnimated again because otherwise its off by a couple of points
+                                 [self scrollTableViewToTopAnimated:NO];
                                  
                                  // grab the new cell and make its growingTextView the first responder
                                  if (self.pendingPost) {
                                      [self.pendingPostCell.growingTextView becomeFirstResponder];
                                  }
                              } else {                                     
-                                 // remove the cancel button and replace it with the reload button
-                                 [self addRefreshButtonToNavigationItem];
+                                 // remove the cancel button
+                                 self.navigationItem.rightBarButtonItem = nil;
                              }
                         
                              // reset the LogVCState
@@ -953,10 +998,6 @@ typedef enum {
         
         // call beginUpdates and endUpdates to get the tableView to change the height of the first cell
         [self.tableView beginUpdates];
-        if (diff < 0) {
-            [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentOffset.y - diff) animated:YES];
-        }
-        
         [self.tableView endUpdates];  
     }
 }
