@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CPVenueFeed.h"
 
 @interface FeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, assign) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) CPVenue *venue;
+@property (nonatomic, strong) CPVenueFeed *selectedVenueFeed;
+@property (nonatomic, strong) NSMutableArray *venueFeedPreviews;
 @property (nonatomic, assign) BOOL newPostAfterLoad;
 
 - (void)newPost;

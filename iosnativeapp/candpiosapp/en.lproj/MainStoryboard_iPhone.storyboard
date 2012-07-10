@@ -109,7 +109,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-455" y="-1124"/>
+            <point key="canvasLocation" x="-429" y="-1156"/>
         </scene>
         <!--Venue List Table View Controller-->
         <scene sceneID="JpK-kY-M1k">
@@ -203,56 +203,13 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="3My-5J-aWQ" kind="relationship" relationship="rootViewController" id="VX0-PR-dfr"/>
+                        <segue destination="n3K-IJ-fac" kind="relationship" relationship="rootViewController" id="hph-eP-mPg"/>
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-825" y="-1974"/>
+            <point key="canvasLocation" x="-838" y="-1762"/>
         </scene>
-        <!--Feed Venues Table View Controller - Feeds-->
-        <scene sceneID="Qwl-us-hBb">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YBu-Hp-hxv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController id="3My-5J-aWQ" customClass="FeedVenuesTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="QFX-ap-rBS">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FeedVenueCell" textLabel="bix-Bn-cQb" style="IBUITableViewCellStyleDefault" id="5gr-Q7-iq0">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Coffee &amp; Power" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bix-Bn-cQb">
-                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="3My-5J-aWQ" id="lTf-3y-ZTY"/>
-                            <outlet property="delegate" destination="3My-5J-aWQ" id="IhU-If-c5V"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Feeds" id="xzR-z2-6yG"/>
-                    <connections>
-                        <segue destination="n3K-IJ-fac" kind="push" identifier="ShowVenueFeed" id="6bD-cF-cw4"/>
-                        <segue destination="n3K-IJ-fac" kind="push" identifier="ShowVenueFeedForNewPost" id="ard-JZ-jaq"/>
-                    </connections>
-                </tableViewController>
-            </objects>
-            <point key="canvasLocation" x="-429" y="-1988"/>
-        </scene>
-        <!--Feed View Controller - Coffee & Power-->
+        <!--Feed View Controller - Venue Feeds-->
         <scene sceneID="TLA-K8-9xx">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kQN-dH-rA9" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -266,8 +223,32 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.96470588235294119" green="0.96862745098039216" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MyPostUpdateCell" id="VQG-Nh-eGn" customClass="PostUpdateCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedPreviewHeaderCell" id="ru4-kX-UFC">
                                         <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5382" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="zIf-Uv-RSL">
+                                                    <rect key="frame" x="36" y="6" width="264" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.96470588235294119" green="0.96862745098039216" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                    <color key="textColor" red="0.53725490196078429" green="0.53725490196078429" blue="0.53725490196078429" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" id="hSV-5O-fN6">
+                                                    <rect key="frame" x="36" y="0.0" width="40" height="8"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.96470588239999999" green="0.96862745100000003" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MyPostUpdateCell" id="VQG-Nh-eGn" customClass="PostUpdateCell">
+                                        <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -325,7 +306,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PostUpdateCell" id="hYJ-Fw-y5V" customClass="PostUpdateCell">
-                                        <rect key="frame" x="0.0" y="66" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="110" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -365,7 +346,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PostLoveCell" id="LSp-29-kRX" customClass="PostLoveCell">
-                                        <rect key="frame" x="0.0" y="110" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="154" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -425,7 +406,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewPostCell" id="RqY-S2-RGs" customClass="NewPostCell">
-                                        <rect key="frame" x="0.0" y="154" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="198" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -470,6 +451,15 @@
                                             <outlet property="senderProfileButton" destination="Ccr-Jb-jpd" id="env-In-p51"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedPreviewFooterCell" rowHeight="5" id="NQZ-6Y-hyq">
+                                        <rect key="frame" x="0.0" y="242" width="320" height="5"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="4"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="n3K-IJ-fac" id="9ez-a0-yhO"/>
@@ -479,13 +469,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Coffee &amp; Power" id="61X-eH-TNO"/>
+                    <navigationItem key="navigationItem" title="Venue Feeds" id="61X-eH-TNO"/>
                     <connections>
                         <outlet property="tableView" destination="seB-8X-LdH" id="X5d-e2-cle"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-37" y="-1988"/>
+            <point key="canvasLocation" x="-424" y="-1762"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xFZ-aJ-dUu">
@@ -501,7 +491,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-838" y="-1124"/>
+            <point key="canvasLocation" x="-844" y="-1156"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="f2o-1k-FZ2">
@@ -801,7 +791,7 @@
         <image name="contact-ignore.png" width="38" height="38"/>
         <image name="contacts-blank-slate.png" width="320" height="340"/>
         <image name="default-avatar-256.png" width="256" height="256"/>
-        <image name="love-sent.png" width="16" height="16"/>
+        <image name="love-sent.png" width="17" height="11"/>
         <image name="map-locate.png" width="40" height="41"/>
         <image name="map-refresh-progress-arrow.png" width="24" height="24"/>
         <image name="map-refresh.png" width="40" height="41"/>
@@ -814,7 +804,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="ard-JZ-jaq"/>
-    </inferredMetricsTieBreakers>
 </document>

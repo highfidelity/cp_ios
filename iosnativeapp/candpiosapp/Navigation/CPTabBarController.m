@@ -7,7 +7,6 @@
 //
 
 #import "CPTabBarController.h"
-#import "FeedVenuesTableViewController.h"
 #import "FeedViewController.h"
  
 @implementation CPTabBarController
@@ -142,48 +141,30 @@
     } else {
         // the user is logged in and checked in
         
-        // we need to bring them to the feed VC for the venue they are checked into
-        // and then tell that VC that the user wants to add a new log
+        // we need to bring them to the feed VC and display the feed for the venue they are checked into
         
-        // assume that the venue the user is currently checked into is the first
-        // in the UITableView of the FeedVenuesTableViewController
-        
-        // grab the logbook navigation controller and logbook view controller
+        // grab the FeedViewController
         UINavigationController *feedNC = [self.viewControllers objectAtIndex:0];
+        FeedViewController *feedVC = [feedNC.viewControllers objectAtIndex:0];
+        
+        // if the FeedViewController doesn't have our the current venue's feed as it's selectedVenueFeed
+        // then alloc-init one and set it properly
+        if ([CPUserDefaultsHandler currentVenue].venueID != feedVC.selectedVenueFeed.venue.venueID) {
+            CPVenueFeed *currentVenueFeed = [[CPVenueFeed alloc] init];
+            currentVenueFeed.venue = [CPUserDefaultsHandler currentVenue];
             
-        if (feedNC.viewControllers.count > 1) {
-            FeedViewController *feedVC = [feedNC.viewControllers objectAtIndex:1];
-            
-            if ([CPUserDefaultsHandler currentVenue].venueID == feedVC.venue.venueID) {
-                // the user is already on the feed for the right venue
-                // so tell the feedVC that we want to add a new post
-                
-                if (self.selectedIndex == 0) {
-                    // the feedVC is on screen so we want a new post right now
-                    [feedVC newPost];
-                } else {
-                    // the feedVC isn't on screen yet so tell we want a new post after it loads
-                    feedVC.newPostAfterLoad = YES;
-                    self.selectedIndex = 0;
-                }
-                
-                // we're done with the execution of this method, get out of here
-                return;
-            } else {
-                // we need to pop the wrong feed off the navigation controller
-                // so it can segue to the right one below
-                [feedNC popViewControllerAnimated:NO];
-            }
+            feedVC.selectedVenueFeed = currentVenueFeed;
         }
         
-        // grab the FeedVenuesTableViewController
-        FeedVenuesTableViewController *feedTVC = [feedNC.viewControllers objectAtIndex:0];
+        // the user is already on the feed for the right venue
+        // so tell the feedVC that we want to add a new post
         
-        // now that we're on the feeds TVC tell it to perform ShowVenueFeedForNewPost segue
-        [feedTVC performSegueWithIdentifier:@"ShowVenueFeedForNewPost" sender:self]; 
-        
-        // switch to the feeds TVC if we weren't on it
-        if (self.selectedIndex != 0) {
+        if (self.selectedIndex == 0) {
+            // the feedVC is on screen so we want a new post right now
+            [feedVC newPost];
+        } else {
+            // the feedVC isn't on screen yet so tell we want a new post after it loads
+            feedVC.newPostAfterLoad = YES;
             self.selectedIndex = 0;
         }
     }

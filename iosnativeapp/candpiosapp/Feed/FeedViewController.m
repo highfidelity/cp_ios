@@ -12,10 +12,8 @@
 #import "PostUpdateCell.h"
 #import "NewPostCell.h"
 #import "PostLoveCell.h"
-#import "CPCheckinHandler.h"
 #import "UserProfileViewController.h"
 
-#define LOWER_BUTTON_LABEL_TAG 5463
 #define TIMELINE_ORIGIN_X 50
 
 typedef enum {
@@ -27,7 +25,6 @@ typedef enum {
 
 @interface FeedViewController () <HPGrowingTextViewDelegate>
 
-@property (nonatomic, strong) NSMutableArray *posts;
 @property (nonatomic, assign) float newEditableCellHeight;
 @property (nonatomic, strong) CPPost *pendingPost;
 @property (nonatomic, strong) NewPostCell *pendingPostCell;
@@ -40,15 +37,15 @@ typedef enum {
 @implementation FeedViewController 
 
 @synthesize tableView = _tableView;
-@synthesize venue = _venue;
+@synthesize selectedVenueFeed = _selectedVenueFeed;
+@synthesize venueFeedPreviews = _venueFeedPreviews;
 @synthesize newPostAfterLoad = _newPostAfterLoad;
-@synthesize posts = _posts;
 @synthesize newEditableCellHeight = _newEditableCellHeight;
 @synthesize pendingPost = _pendingPost;
 @synthesize pendingPostCell = _pendingPostCell;
 @synthesize keyboardBackground = _keyboardBackground;
 @synthesize fakeTextView = _fakeTextView;
-@synthesize currentState = _currentState;
+@synthesize currentState = _currentState; 
 
 #pragma mark - View Lifecycle
 
@@ -58,10 +55,7 @@ typedef enum {
     
     // refresh button in top right
     [self addRefreshButtonToNavigationItem];
-    
-    // our title is our venue's name
-    self.title = self.venue.name;
-    
+
     // setup a background view
     // and add the timeline to the backgroundView
     UIView *backgroundView = [[UIView alloc] initWithFrame:self.tableView.frame];
@@ -69,44 +63,16 @@ typedef enum {
     timeLine.backgroundColor = [UIColor colorWithR:234 G:234 B:234 A:1];
     [backgroundView addSubview:timeLine];
     
-    // use that background view as the tableView's background 
     self.tableView.backgroundView = backgroundView;
     
-    // we need a footer a the bottom of the tableView so the bottom log entry clears the button
-    CGFloat buttonHalf = [CPAppDelegate tabBarController].thinBar.leftButton.frame.size.width / 2;
-    UIView *tableFooter = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, buttonHalf)];
-    self.tableView.tableFooterView = tableFooter;
-    
-    // add a hidden UITextView so we can use it to become the first responder
-    self.fakeTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-    self.fakeTextView.hidden = YES;
-    self.fakeTextView.keyboardAppearance = UIKeyboardAppearanceAlert;
-    self.fakeTextView.returnKeyType = UIReturnKeyDone;
-    [self.view insertSubview:self.fakeTextView belowSubview:self.tableView];
-    
-    // Add notifications for keyboard showing / hiding
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-    
-    // create a CGRect for the base of our view
-    // we're going to hide things there
-    CGRect baseRect = CGRectMake(0, [CPAppDelegate window].bounds.size.height, self.view.frame.size.width, 0);
-    
-    // add a view so we can have a background behind the keyboard
-    self.keyboardBackground = [[UIView alloc] initWithFrame:baseRect];
-    self.keyboardBackground.backgroundColor = [UIColor colorWithR:51 G:51 B:51 A:1];
-
-    // add the keyboardBackground to the view
-    [[CPAppDelegate window] addSubview:self.keyboardBackground];
-    
     // subscribe to the applicationDidBecomeActive notification
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getUserLogEntries) name:@"applicationDidBecomeActive" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getVenueFeedOrFeedPreviews) name:@"applicationDidBecomeActive" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newFeedVenueAdded:) name:@"feedVenueAdded" object:nil];
+    
+    [self reloadFeedPreviewVenues:nil];
+    
+    // call toggleSelectedFeedOrFeedPreviews to reload the venue feed previews
+    [self toggleSelectedFeedOrFeedPreviews];
 }
 
 - (void)viewDidUnload
@@ -116,7 +82,7 @@ typedef enum {
     [self.keyboardBackground removeFromSuperview];
 
     // unsubscribe from the applicationDidBecomeActive notification
-    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"applicationDidBecomeActive"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -136,58 +102,68 @@ typedef enum {
         // make sure the keyboard isn't up anymore
         [self cancelPost:nil];
     }
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self getUserLogEntries];
+    [self getVenueFeedOrFeedPreviews];
 }
 
-- (NSMutableArray *)posts
+- (void)setSelectedVenueFeed:(CPVenueFeed *)selectedVenueFeed
 {
-    if (!_posts) {
-        _posts = [NSMutableArray array];
+    if (![_selectedVenueFeed isEqual:selectedVenueFeed]) {
+        _selectedVenueFeed = selectedVenueFeed;        
     }
-    return _posts;
+    
+    [self toggleSelectedFeedOrFeedPreviews];
+}
+
+- (NSMutableArray *)venueFeedPreviews
+{
+    if (!_venueFeedPreviews) {
+        _venueFeedPreviews = [NSMutableArray array];
+    }
+    return _venueFeedPreviews;
 }
 
 #pragma mark - Table view delegate
 
 #define MIN_CELL_HEIGHT 38
+#define PREVIEW_HEADER_CELL_HEIGHT 38
+#define PREVIEW_FOOTER_CELL_HEIGHT 5
 #define UPDATE_LABEL_WIDTH 228
 #define LOVE_LABEL_WIDTH 178
 #define LOVE_PLUS_ONE_LABEL_WIDTH 178
 
-- (NSString *)textForLogEntry:(CPPost *)logEntry
+- (NSString *)textForPost:(CPPost *)post
 {
-    if (logEntry.type == CPPostTypeUpdate && logEntry.author.userID != [CPUserDefaultsHandler currentUser].userID) {
-        return [NSString stringWithFormat:@"%@: %@", logEntry.author.firstName, logEntry.entry];
+    if (post.type == CPPostTypeUpdate && post.author.userID != [CPUserDefaultsHandler currentUser].userID) {
+        return [NSString stringWithFormat:@"%@: %@", post.author.firstName, post.entry];
     } else {
-        if (logEntry.type == CPPostTypeLove && logEntry.originalPostID > 0) {
-            return [NSString stringWithFormat:@"%@ +1'd recognition: %@", logEntry.author.firstName, logEntry.entry];
+        if (post.type == CPPostTypeLove && post.originalPostID > 0) {
+            return [NSString stringWithFormat:@"%@ +1'd recognition: %@", post.author.firstName, post.entry];
         } else {
-            return logEntry.entry;
+            return post.entry;
         }
     }
 }
 
-- (UIFont *)fontForLogEntry:(CPPost *)logEntry
+- (UIFont *)fontForPost:(CPPost *)post
 {
-    if (logEntry.type == CPPostTypeUpdate) {
-        return [UIFont systemFontOfSize:(logEntry.author.userID == [CPUserDefaultsHandler currentUser].userID ? 13 : 12)];
+    if (post.type == CPPostTypeUpdate) {
+        return [UIFont systemFontOfSize:(post.author.userID == [CPUserDefaultsHandler currentUser].userID ? 13 : 12)];
     } else {
         return [UIFont boldSystemFontOfSize:10];
     }
 }
 
-- (CGFloat)widthForLabelForLogEntry:(CPPost *)logEntry
+- (CGFloat)widthForLabelForPost:(CPPost *)post
 {
-    if (logEntry.type == CPPostTypeUpdate) {
+    if (post.type == CPPostTypeUpdate) {
         return UPDATE_LABEL_WIDTH;
     } else {
-        if (logEntry.originalPostID > 0) {
+        if (post.originalPostID > 0) {
             return LOVE_PLUS_ONE_LABEL_WIDTH;
         } else {
             return LOVE_LABEL_WIDTH;
@@ -206,7 +182,16 @@ typedef enum {
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat labelHeight;
-    if (self.pendingPost && indexPath.row == self.posts.count - 1) {
+    
+    if (!self.selectedVenueFeed) {
+        if (indexPath.row == 0) {
+            return PREVIEW_HEADER_CELL_HEIGHT;
+        } else if (indexPath.row == [[self.venueFeedPreviews objectAtIndex:indexPath.section] posts].count + 1)  {
+            return PREVIEW_FOOTER_CELL_HEIGHT;
+        }
+    } 
+    
+    if (self.selectedVenueFeed && self.pendingPost && indexPath.row == self.selectedVenueFeed.posts.count - 1) {
         // this is an editable cell
         // for which we might have a changed height
         
@@ -218,9 +203,16 @@ typedef enum {
     } else {
         // we need to check here if we have multiline text
         // grab the entry this is for so we can change the height of the cell accordingly
-        CPPost *logEntry = [self.posts objectAtIndex:indexPath.row];
         
-        labelHeight = [self labelHeightWithText:[self textForLogEntry:logEntry] labelWidth:[self widthForLabelForLogEntry:logEntry] labelFont:[self fontForLogEntry:logEntry]];
+        CPPost *post;
+        
+        if (self.selectedVenueFeed) {
+            post = [self.selectedVenueFeed.posts objectAtIndex:indexPath.row];
+        } else {
+            post = [[[self.venueFeedPreviews objectAtIndex:indexPath.section] posts] objectAtIndex:(indexPath.row - 1)];
+        }
+        
+        labelHeight = [self labelHeightWithText:[self textForPost:post] labelWidth:[self widthForLabelForPost:post] labelFont:[self fontForPost:post]];
                 
         // keep a 17 pt margin
         labelHeight += 17;
@@ -235,16 +227,62 @@ typedef enum {
 
 #pragma mark - Table view data source
 
+
+- (int)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.selectedVenueFeed ? 1 : self.venueFeedPreviews.count;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    return self.posts.count;
+    // if this is for a single venue then the number of rows is the number of posts in the feed
+    if (self.selectedVenueFeed) {
+        return self.selectedVenueFeed.posts.count;
+    } else {
+        // grab the CPVenueFeed for this section
+        CPVenueFeed *sectionVenueFeed = [self.venueFeedPreviews objectAtIndex:section];
+        
+        // there will be one extra cell for the header for each venue feed
+        // and an extra cell for the footer for each venue feed
+        
+        // there will be a cell for each post in each of the venue feed previews
+        return sectionVenueFeed.posts.count + 2;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // pull the right log entry from the array
-    CPPost *post = [self.posts objectAtIndex:indexPath.row];
+{    
+    CPPost *post;
+
+    if (!self.selectedVenueFeed) {
+        CPVenueFeed *sectionVenueFeed = [self.venueFeedPreviews objectAtIndex:indexPath.section];
+        
+        // check if this is for a header or footer for a venue feed preview
+        if (indexPath.row == 0) {
+            static NSString *FeedPreviewHeaderCellIdentifier = @"FeedPreviewHeaderCell";
+            UITableViewCell *feedPreviewHeaderCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewHeaderCellIdentifier];
+            
+            // grab the label for the venue name
+            UILabel *venueNameLabel = (UILabel *)[feedPreviewHeaderCell viewWithTag:5382];
+            
+            // give that label the venue name and change font to league gothic
+            venueNameLabel.text = sectionVenueFeed.venue.name;
+            [CPUIHelper changeFontForLabel:venueNameLabel toLeagueGothicOfSize:24];
+            
+            return feedPreviewHeaderCell;
+        } else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section] - 1) {
+            static NSString *FeedPreviewFooterCellIdentifier = @"FeedPreviewFooterCell";
+            UITableViewCell *feedPreviewFooterCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewFooterCellIdentifier];
+            
+            return feedPreviewFooterCell;
+        } else {
+            // pull the right post from the feed preview for this venue
+            post = [sectionVenueFeed.posts objectAtIndex:(indexPath.row - 1)];
+        }
+    } else {
+        // pull the right post from the selectedVenueFeed's posts
+        post = [self.selectedVenueFeed.posts objectAtIndex:indexPath.row];
+    }
     
     PostBaseCell *cell;
     // check if this is a pending entry cell
@@ -257,7 +295,7 @@ typedef enum {
         newEntryCell.entryLabel.textColor = [CPUIHelper CPTealColor];
         
         // NOTE: we're resetting attributes on the HPGrowingTextView here that only need to be set once
-        // if the tableView is sluggish it's probably worth laying out the NewLogEntryCell and LogEntryCell
+        // if the tableView is sluggish it's probably worth laying out the NewpostCell and postCell
         // programatically so that it's only done once.
         
         // set the required properties on the HPGrowingTextView
@@ -293,25 +331,29 @@ typedef enum {
                 static NSString *EntryCellIdentifier = @"MyPostUpdateCell";
                 updateCell = [tableView dequeueReusableCellWithIdentifier:EntryCellIdentifier];
                 
-                // create a singleton NSDateFormatter that we'll keep using
-                static NSDateFormatter *logFormatter = nil;
-                
-                if (!logFormatter) {
-                    logFormatter = [[NSDateFormatter alloc] init];
-                    [logFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+                if (self.selectedVenueFeed) {
+                    // create a singleton NSDateFormatter that we'll keep using
+                    static NSDateFormatter *logFormatter = nil;
+                    
+                    if (!logFormatter) {
+                        logFormatter = [[NSDateFormatter alloc] init];
+                        [logFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+                    }
+                    
+                    // setup the format for the time label
+                    logFormatter.dateFormat = @"h:mma";
+                    updateCell.timeLabel.text = [logFormatter stringFromDate:post.date];
+                    // replace either AM or PM with lowercase a or p
+                    updateCell.timeLabel.text = [updateCell.timeLabel.text stringByReplacingOccurrencesOfString:@"AM" withString:@"a"];
+                    updateCell.timeLabel.text = [updateCell.timeLabel.text stringByReplacingOccurrencesOfString:@"PM" withString:@"p"];        
+                    
+                    // setup the format for the date label
+                    logFormatter.dateFormat = @"MMM d";
+                    updateCell.dateLabel.text = [logFormatter stringFromDate:post.date];
+                } else {
+                    updateCell.dateLabel.text = nil;
+                    updateCell.timeLabel.text = nil;
                 }
-                
-                // setup the format for the time label
-                logFormatter.dateFormat = @"h:mma";
-                updateCell.timeLabel.text = [logFormatter stringFromDate:post.date];
-                // replace either AM or PM with lowercase a or p
-                updateCell.timeLabel.text = [updateCell.timeLabel.text stringByReplacingOccurrencesOfString:@"AM" withString:@"a"];
-                updateCell.timeLabel.text = [updateCell.timeLabel.text stringByReplacingOccurrencesOfString:@"PM" withString:@"p"];        
-                
-                // setup the format for the date label
-                logFormatter.dateFormat = @"MMM d";
-                updateCell.dateLabel.text = [logFormatter stringFromDate:post.date];
-                
             } else {
                 // this is an update from another user
                 static NSString *OtherUserEntryCellIdentifier = @"PostUpdateCell";
@@ -327,7 +369,7 @@ typedef enum {
             PostLoveCell *loveCell = [tableView dequeueReusableCellWithIdentifier:loveCellIdentifier];
             
             // setup the receiver's profile button
-            [self loadProfileImageForButton:loveCell.receiverProfileButton photoURL:post.receiver.photoURL buttonTag:indexPath.row];
+            [self loadProfileImageForButton:loveCell.receiverProfileButton photoURL:post.receiver.photoURL indexPath:indexPath];
             
             loveCell.entryLabel.text = post.entry.description;
             
@@ -341,24 +383,167 @@ typedef enum {
             cell = loveCell;
         } 
         
-        // the text for this entry is prepended with NICKNAME logged:
-        cell.entryLabel.text = [self textForLogEntry:post];
+        // the text for this entry is prepended with NICKNAME:
+        cell.entryLabel.text = [self textForPost:post];
         
         // make the frame of the label larger if required for a multi-line entry
         CGRect entryFrame = cell.entryLabel.frame;
-        entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text labelWidth:[self widthForLabelForLogEntry:post] labelFont:[self fontForLogEntry:post]];
+        entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text labelWidth:[self widthForLabelForPost:post] labelFont:[self fontForPost:post]];
         cell.entryLabel.frame = entryFrame;
     }
-    
+
     // setup the entry sender's profile button
-    [self loadProfileImageForButton:cell.senderProfileButton photoURL:post.author.photoURL buttonTag:indexPath.row];
+    [self loadProfileImageForButton:cell.senderProfileButton photoURL:post.author.photoURL indexPath:indexPath];
     
     // return the cell
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if (self.selectedVenueFeed) {
+        return [CPAppDelegate tabBarController].thinBar.leftButton.frame.size.width / 2;
+    } else {
+        return 0;
+    }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return [[UIView alloc] init];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!self.selectedVenueFeed) {
+        // the user has just tapped on a venue feed preview
+        // make sure they didn't tap the footer
+        if (indexPath.row != [tableView numberOfRowsInSection:indexPath.section] - 1) {
+            self.selectedVenueFeed = [self.venueFeedPreviews objectAtIndex:indexPath.section];
+        }
+    }
+}
+
 #pragma mark - VC Helper Methods
-- (void)loadProfileImageForButton:(UIButton *)button photoURL:(NSURL *)photoURL buttonTag:(NSInteger)buttonTag
+- (void)newFeedVenueAdded:(NSNotification *)notification
+{
+    // reload the venues for which we want feed previews
+    [self reloadFeedPreviewVenues:notification.object];
+
+    // make sure our tabBarController is showing us
+    if (self.tabBarController.selectedIndex != 0) {
+        self.tabBarController.selectedIndex = 0;    
+    }
+}
+
+- (void)setupForPostEntry
+{
+    if (!self.fakeTextView) {
+        // add a hidden UITextView so we can use it to become the first responder
+        self.fakeTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+        self.fakeTextView.hidden = YES;
+        self.fakeTextView.keyboardAppearance = UIKeyboardAppearanceAlert;
+        self.fakeTextView.returnKeyType = UIReturnKeyDone;
+        [self.view insertSubview:self.fakeTextView belowSubview:self.tableView];
+    }
+        
+    if (!self.keyboardBackground) {
+        // Add notifications for keyboard showing / hiding
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWillShow:)
+                                                     name:UIKeyboardWillShowNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWillHide:)
+                                                     name:UIKeyboardWillHideNotification
+                                                   object:nil];
+        
+        // create a CGRect for the base of our view
+        // we're going to hide things there
+        CGRect baseRect = CGRectMake(0, [CPAppDelegate window].bounds.size.height, self.view.frame.size.width, 0);
+        
+        // add a view so we can have a background behind the keyboard
+        self.keyboardBackground = [[UIView alloc] initWithFrame:baseRect];
+        self.keyboardBackground.backgroundColor = [UIColor colorWithR:51 G:51 B:51 A:1];
+        
+        // add the keyboardBackground to the view
+        [[CPAppDelegate window] addSubview:self.keyboardBackground];
+    } 
+    
+    // make sure the left bar button item is a back button
+}
+
+- (void)reloadFeedPreviewVenues:(CPVenue *)displayVenue
+{    
+    CPVenue *currentVenue = [CPUserDefaultsHandler currentVenue];
+    // if it exists add the user's current venue as the first object in self.venues
+    if (currentVenue) { 
+        // create a CPVenueFeed object with the currentVenue as the venue
+        CPVenueFeed *currentVenueFeed = [[CPVenueFeed alloc] init];
+        currentVenueFeed.venue = currentVenue;
+        
+        // if the currentVenueFeed already exists in the array of venueFeedPreviews
+        // then take it out so it can get added back at the beginning
+        [self.venueFeedPreviews removeObject:currentVenueFeed];
+        
+        // add the current venue feed to the beginning of the array of venue feed previews
+        [self.venueFeedPreviews insertObject:currentVenueFeed atIndex:0];
+        
+        // if the current venue is the venue we want to show
+        // then set that as our selected venue feed
+        if ([displayVenue isEqual:currentVenue]) {
+            self.selectedVenueFeed = currentVenueFeed;
+        }
+    }    
+    
+    NSDictionary *storedFeedVenues = [CPUserDefaultsHandler feedVenues];
+    for (NSString *venueIDKey in storedFeedVenues) {
+        // grab the NSData representation of the venue and decode it
+        NSData *venueData = [storedFeedVenues objectForKey:venueIDKey];
+        CPVenue *decodedVenue = [NSKeyedUnarchiver unarchiveObjectWithData:venueData];
+        
+        // only add the venue if the user isn't checked in there
+        if (decodedVenue.venueID != currentVenue.venueID) {
+            // create a CPVenueFeed object with the decodedVenue as the venue
+            CPVenueFeed *newVenueFeed = [[CPVenueFeed alloc] init];
+            newVenueFeed.venue = decodedVenue;
+            
+            // add the new venue feed to the array of venue feed previews
+            // but only if it's not already there
+            if (![self.venueFeedPreviews containsObject:newVenueFeed]) {
+                [self.venueFeedPreviews addObject:newVenueFeed];
+            }
+            
+            // if this decoded venue is the venue we want to show
+            // then set that as our selected venue feed
+            if ([displayVenue isEqual:decodedVenue]) {
+                self.selectedVenueFeed = newVenueFeed;
+            }
+        }
+    }
+}
+
+- (void)toggleSelectedFeedOrFeedPreviews 
+{
+    if (!self.selectedVenueFeed) {
+        self.navigationItem.leftBarButtonItem = nil;
+        [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
+        // our title is the default
+        self.navigationItem.title = @"Venue Feeds";
+    } else {
+        // add a back button as the left navigation item
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backFromSelectedFeed:)];
+        // our new title is the name of the venue
+        self.navigationItem.title = self.selectedVenueFeed.venue.name;
+    }
+    
+    // no matter what we're switching to we need to reload the tableView
+    // and pull for new data
+    [self.tableView reloadData];
+    [self getVenueFeedOrFeedPreviews];
+}
+
+- (void)loadProfileImageForButton:(UIButton *)button photoURL:(NSURL *)photoURL indexPath:(NSIndexPath *)indexPath
 {   
     __block UIButton *profileButton = button;
     
@@ -373,33 +558,15 @@ typedef enum {
     
     // the row of this cell is the tag for the button
     // we need to be able to grab the cell later and go to the user's profile
-    button.tag = buttonTag;
+    button.tag = self.selectedVenueFeed ? indexPath.row : indexPath.section;
     
     // be the target of the button
     [button addTarget:self action:@selector(pushToUserProfileFromButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (IBAction)pushToUserProfileFromButton:(UIButton *)button
-{
-    // grab the log entry that is associated to this button
-    CPPost *userEntry = [self.posts objectAtIndex:button.tag];
-    
-    // grab a UserProfileViewController from the UserStoryboard
-    UserProfileViewController *userProfileVC = (UserProfileViewController *)[[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
-    
-    // give the log's user object to the UserProfileVC
-    
-    // if this button's origin is left of the timeline then it's the log's author
-    // otherwise it's the log's receiver
-    userProfileVC.user = button.frame.origin.x < TIMELINE_ORIGIN_X ? userEntry.author : userEntry.receiver;
-    
-    // ask our navigation controller to push to the UserProfileVC
-    [self.navigationController pushViewController:userProfileVC animated:YES];
-}
-
 - (void)addRefreshButtonToNavigationItem
 {
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(getUserLogEntries)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(getVenueFeedOrFeedPreviews)];
 }
 
 - (void)toggleLoadingState:(BOOL)loading
@@ -418,43 +585,77 @@ typedef enum {
     } 
 }
 
-- (void)getUserLogEntries
+- (void)getVenueFeedOrFeedPreviews
 {   
     [self toggleLoadingState:YES];
-    // make the request with CPapi to get log entries for this user
-    [CPapi getFeedForVenueID:self.venue.venueID withCompletion:^(NSDictionary *json, NSError *error) { 
-        if (!error) {
-            if (![[json objectForKey:@"error"] boolValue]) {
-                // clear all current log entries
-                [self.posts removeAllObjects];
-                
-                for (NSDictionary *logDict in [json objectForKey:@"payload"]) {
-                    // alloc-init a log entry from the dictionary representation
-                    CPPost *logEntry = [[CPPost alloc] initFromDictionary:logDict];
+    
+    if (self.selectedVenueFeed) {  
+        // make the request with CPapi to get the feed for this selected venue
+        [CPapi getFeedForVenueID:self.selectedVenueFeed.venue.venueID withCompletion:^(NSDictionary *json, NSError *error) { 
+            if (!error) {
+                if (![[json objectForKey:@"error"] boolValue]) {
+                                        
+                    [self.selectedVenueFeed addPostsFromArray:[json objectForKey:@"payload"]];
                     
-                    // add that log entry to our array of log entries
-                    // add it at the beginning so the newest entries are first in the array
-                    [self.posts addObject:logEntry];
-                }
-                
-                [self toggleLoadingState:NO];
-                
-                // reload the tableView
-                [self.tableView reloadData];
-                
-                // check if we were loaded because the user immediately wants to add a new entry
-                if (self.newPostAfterLoad) {
-                    // if that's the case then pull let the user add a new entry
-                    [self newPost];
-                    // reset the newLogEntryAfterLoad property so it doesn't fire again
-                    self.newPostAfterLoad = NO;
-                } else {
-                    // go to the bottom of the tableView
-                    [self scrollTableViewToBottomAnimated:YES];
+                    [self toggleLoadingState:NO];
+                    
+                    // reload the tableView
+                    [self.tableView reloadData];
+                    
+                    // check if we were loaded because the user immediately wants to add a new entry
+                    if (self.newPostAfterLoad) {
+                        // if that's the case then pull let the user add a new entry
+                        [self newPost];
+                        // reset the newpostAfterLoad property so it doesn't fire again
+                        self.newPostAfterLoad = NO;
+                    } else {
+                        // go to the bottom of the tableView
+                        [self scrollTableViewToBottomAnimated:YES];
+                    }
                 }
             }
+        }];
+    } else if (self.venueFeedPreviews.count) {
+        // create an array of the venue IDs for which we want feed previews
+        NSMutableArray *venueIDs = [NSMutableArray arrayWithCapacity:self.venueFeedPreviews.count];
+        for (CPVenueFeed *venueFeed in self.venueFeedPreviews) {
+            [venueIDs addObject:[NSNumber numberWithInt:venueFeed.venue.venueID]];
         }
-    }];
+        
+        // ask the API for the feed previews
+        [CPapi getFeedPreviewsForVenueIDs:venueIDs withCompletion:^(NSDictionary *json, NSError *error) {
+            if (!error) {
+                NSDictionary *feedPreviews = [json objectForKey:@"payload"];
+                
+                // enumerate through the feeds returned
+                for (NSString *venueIDString in feedPreviews) {
+                    [self addPostsToFeedPreview:[feedPreviews objectForKey:venueIDString] venueIDString:venueIDString];
+                }
+                
+                // tell the tableView to reload
+                [self.tableView reloadData];
+            }
+            
+            // we're done loading
+            [self toggleLoadingState:NO];
+        }];
+    } else {
+        [self toggleLoadingState:NO];
+    }
+}
+         
+- (void)addPostsToFeedPreview:(NSArray *)postArray venueIDString:(NSString *)venueIDString
+{
+    // TODO: make sure this isn't a slowdown
+    // if so we'll want a faster way to pull a feed from the array (an ordered dictionary)
+    
+    // enumerate through the feeds in the venueFeedPreviews array
+    // once we find the right one then tell it to add the posts that have come back
+    for (CPVenueFeed *feed in self.venueFeedPreviews) {
+        if (feed.venue.venueID == [venueIDString intValue]) {
+            [feed addPostsFromArray:postArray];
+        }
+    }
 }
 
 - (void)sendNewLog
@@ -471,17 +672,10 @@ typedef enum {
         [spinner startAnimating];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
         
-        [CPapi sendUpdate:self.pendingPost.entry atVenue:self.venue completion:^(NSDictionary *json, NSError *error) {
+        [CPapi sendUpdate:self.pendingPost.entry atVenue:self.selectedVenueFeed.venue completion:^(NSDictionary *json, NSError *error) {
             if (!error) {
                 if (![[json objectForKey:@"error"] boolValue]) {
-                    self.currentState = FeedVCStateSentNewPost;
-                    
-                    // if the user chose a venue for the log we need to check them in there
-                    // unless it's the same venue that we already have them checked into
-                    if (self.venue && ![self.venue.foursquareID isEqualToString:[CPUserDefaultsHandler currentVenue].foursquareID]) {
-                        [self checkinUserToVenue:self.venue];
-                    }
-                    
+                    self.currentState = FeedVCStateSentNewPost;                    
                     // drop the self.pendingPost to the pending entry now that it's sent
                     CPPost *sentEntry = self.pendingPost;
                     self.pendingPost = nil;
@@ -503,35 +697,16 @@ typedef enum {
     [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height) animated:animated];
 }
 
-- (void)checkinUserToVenue:(CPVenue *)venue
-{
-    NSInteger hoursHere = 24;
-    [CPapi checkInToLocation:venue hoursHere:hoursHere statusText:nil isVirtual:NO isAutomatic:NO completionBlock:^(NSDictionary *json, NSError *error){
-        if (!error) {
-            if (![[json objectForKey:@"error"] boolValue]) {
-                // give the venue_id that came back with this request to the venue
-                venue.venueID = [[json objectForKey:@"venue_id"] intValue];
-                
-                // tell the CPCheckinHandler to do what it needs for successful checkin
-                NSInteger checkoutTime = [[NSDate dateWithTimeIntervalSinceNow:(60*60*hoursHere)] timeIntervalSince1970];
-                [CPCheckinHandler handleSuccessfulCheckinToVenue:venue checkoutTime:checkoutTime checkinType:CPCheckinTypeAuto];
-            } else {
-                // TODO: handle this error
-            }
-        } else {
-            // TODO: handle error here
-            // all of these errors (JSON parse, etc.) should be handled by a single method somewhere
-        }
-    }];
-}
-
 #pragma mark - IBActions
 - (void)newPost
 {   
+    // let's make sure we're setup for post entry
+    [self setupForPostEntry];
+    
     if (self.currentState == FeedVCStateReloadingFeed) {
         // if the log is currently reloading
         // or the view isn't yet visible
-        // then don't try to add a newLogEntry right away
+        // then don't try to add a newpost right away
         // set our property that will pull up the keyboard after the load is complete
         self.newPostAfterLoad = YES;
         
@@ -543,13 +718,13 @@ typedef enum {
     // or if we aren't reloading the user's logs
     if (!self.pendingPost) {
         // we need to add a new cell to the table with a textView that the user can edit
-        // first create a new CPLogEntry object
+        // first create a new CPpost object
         self.pendingPost = [[CPPost alloc] init];
         
         // the author for this log message is the current user
         self.pendingPost.author = [CPUserDefaultsHandler currentUser];
         
-        [self.posts addObject:self.pendingPost];
+        [self.selectedVenueFeed.posts addObject:self.pendingPost];
         
         // we need the keyboard to know that we're asking for this change
         self.currentState = FeedVCStateAddingOrRemovingPendingPost;
@@ -578,7 +753,7 @@ typedef enum {
     // user is cancelling log entry
     
     // remove the pending log entry from our array of entries
-    [self.posts removeObject:self.pendingPost];
+    [self.selectedVenueFeed.posts removeObject:self.pendingPost];
     
     // we need the keyboard to know that we're asking for this change
     self.currentState = FeedVCStateAddingOrRemovingPendingPost;
@@ -586,6 +761,41 @@ typedef enum {
     // switch first responder to our fake textView and then resign it so we can drop the keyboard
     [self.fakeTextView becomeFirstResponder];
     [self.fakeTextView resignFirstResponder];
+}
+
+- (IBAction)pushToUserProfileFromButton:(UIButton *)button
+{
+    if (self.selectedVenueFeed) {
+        // grab the log entry that is associated to this button
+        CPPost *userEntry = [self.selectedVenueFeed.posts objectAtIndex:button.tag];
+        
+        // grab a UserProfileViewController from the UserStoryboard
+        UserProfileViewController *userProfileVC = (UserProfileViewController *)[[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
+        
+        // give the log's user object to the UserProfileVC
+        
+        // if this button's origin is left of the timeline then it's the log's author
+        // otherwise it's the log's receiver
+        userProfileVC.user = button.frame.origin.x < TIMELINE_ORIGIN_X ? userEntry.author : userEntry.receiver;
+        
+        // ask our navigation controller to push to the UserProfileVC
+        [self.navigationController pushViewController:userProfileVC animated:YES];
+    } else {
+        // we need to show the venue feed for this venue
+        // the button's tag is the section for this feed
+        self.selectedVenueFeed = [self.venueFeedPreviews objectAtIndex:button.tag];
+    }
+}
+
+- (IBAction)backFromSelectedFeed:(id)sender
+{
+    // if the user is adding a post then cancel the pending post
+    if (self.pendingPost) {
+        [self cancelPost:nil];
+    }
+    
+    // nil out the selectedVenueFeed
+    self.selectedVenueFeed = nil;
 }
 
 # pragma mark - Keyboard hide/show notification
@@ -619,7 +829,7 @@ typedef enum {
     if (self.currentState != FeedVCStateDefault) {
         
         // create the indexPath for the last row
-        int row = self.posts.count - (beingShown ? 1 : 0);
+        int row = self.selectedVenueFeed.posts.count - (beingShown ? 1 : 0);
         NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
         NSArray *indexPathArray = [NSArray arrayWithObject:lastIndexPath];
         

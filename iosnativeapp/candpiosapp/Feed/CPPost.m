@@ -82,4 +82,17 @@ static NSDateFormatter *postDateFormatter;
     }
 }
 
+-(BOOL)isEqual:(id)object
+{
+    if (self == object) {
+        return YES;
+    } else if (![object isKindOfClass:[self class]]) {
+        return NO;
+    } else if (self.postID == [object postID]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 @end

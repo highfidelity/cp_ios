@@ -228,7 +228,6 @@
 
 -(void)encodeWithCoder:(NSCoder *)encoder
 {
-    NSLog(@"encoded lat: %f", self.coordinate.latitude);
     [encoder encodeObject:self.name forKey:@"name"];
     [encoder encodeObject:self.foursquareID forKey:@"foursquareID"];
     [encoder encodeInt:self.venueID forKey:@"venueID"];
