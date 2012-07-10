@@ -96,7 +96,7 @@
             [self showCode:[jsonDict objectForKey:@"code"]];
         } else {
             [SVProgressHUD dismissWithError:[json objectForKey:@"payload"]
-                                 afterDelay:kDefaultDimissDelay];
+                                 afterDelay:kDefaultDismissDelay];
         }
     }];
 }

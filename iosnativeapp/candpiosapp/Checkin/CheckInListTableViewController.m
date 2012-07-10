@@ -253,8 +253,8 @@
     else {
         // Tell the user they aren't logged in and show them the Signup Page
         [SVProgressHUD showErrorWithStatus:@"You must be logged in to C&P in order to check in."
-                                  duration:kDefaultDimissDelay];
-        [CPAppDelegate performSelector:@selector(showSignupModalFromViewController:animated:) withObject:self afterDelay:kDefaultDimissDelay];
+                                  duration:kDefaultDismissDelay];
+        [CPAppDelegate performSelector:@selector(showSignupModalFromViewController:animated:) withObject:self afterDelay:kDefaultDismissDelay];
     }
 }
 

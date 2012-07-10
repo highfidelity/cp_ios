@@ -76,7 +76,7 @@
 
         } else {
             [SVProgressHUD dismissWithError:@"You must be logged in to C&P in order to make payments"
-                                 afterDelay:kDefaultDimissDelay];
+                                 afterDelay:kDefaultDismissDelay];
         }
 
     }];
@@ -116,7 +116,7 @@
         [paymentAmount becomeFirstResponder];
 
         [SVProgressHUD dismissWithError:@"Payment amount must be greater then $0."
-                             afterDelay:kDefaultDimissDelay];
+                             afterDelay:kDefaultDismissDelay];
         return;
     }
 
@@ -141,12 +141,12 @@
         {
             NSString *error = [NSString stringWithFormat:@"%@", [jsonDict objectForKey:@"message"]];
             [SVProgressHUD dismissWithError:error
-                                 afterDelay:kDefaultDimissDelay];
+                                 afterDelay:kDefaultDismissDelay];
 
             if ([successNum intValue] == -1) {
                 [[self navigationController] performSelector:@selector(popViewControllerAnimated:)
                                                   withObject:self
-                                                  afterDelay:kDefaultDimissDelay];
+                                                  afterDelay:kDefaultDismissDelay];
             }
          
         }
@@ -156,11 +156,11 @@
             
             NSString *message = [NSString stringWithFormat:@"Paid %@ $%.2f for %@", self.user.nickname, amount, [paymentNote text]];
             [SVProgressHUD dismissWithSuccess:message
-                                 afterDelay:kDefaultDimissDelay];
+                                 afterDelay:kDefaultDismissDelay];
 
             [[self navigationController] performSelector:@selector(popViewControllerAnimated:)
                                               withObject:self
-                                              afterDelay:kDefaultDimissDelay];
+                                              afterDelay:kDefaultDismissDelay];
             
         }
         
@@ -170,7 +170,7 @@
 		NSLog(@"AFJSONRequestOperation error: %@", [error localizedDescription] );
 #endif
 		[SVProgressHUD dismissWithError:[error localizedDescription]
-                             afterDelay:kDefaultDimissDelay];
+                             afterDelay:kDefaultDismissDelay];
 	}];
 
     [[NSOperationQueue mainQueue] addOperation:postOperation];

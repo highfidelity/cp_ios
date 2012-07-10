@@ -330,7 +330,7 @@
             if ([webSyncUser.email isKindOfClass:[NSNull class]] || [webSyncUser.email length] == 0) {
                 [self dismissModalViewControllerAnimated:YES];
                 NSString *message = @"There was a problem getting your data!\nPlease logout and login again.";
-                [SVProgressHUD dismissWithError:message afterDelay:kDefaultDimissDelay];
+                [SVProgressHUD dismissWithError:message afterDelay:kDefaultDismissDelay];
             } else {
                 // let's update the local current user with any new data
 
@@ -398,7 +398,7 @@
         } else {
             [self dismissModalViewControllerAnimated:YES];
             NSString *message = @"There was a problem getting current data. Please try again in a little while.";
-            [SVProgressHUD showErrorWithStatus:message duration:kDefaultDimissDelay];
+            [SVProgressHUD showErrorWithStatus:message duration:kDefaultDismissDelay];
         }
     }];
 }
@@ -436,7 +436,7 @@
                 message = @"There was an problem uploading your image.\n Please try again.";
             }
 
-            [SVProgressHUD dismissWithError:message afterDelay:kDefaultDimissDelay];
+            [SVProgressHUD dismissWithError:message afterDelay:kDefaultDismissDelay];
         }
     }];
 }
@@ -460,7 +460,7 @@
         if (pendingEmail) {
             // user wants to change email, set our pending email instance variable to that
             self.pendingEmail = pendingEmail;
-            [SVProgressHUD showSuccessWithStatus:[json objectForKey:@"message"] duration:kDefaultDimissDelay];
+            [SVProgressHUD showSuccessWithStatus:[json objectForKey:@"message"] duration:kDefaultDismissDelay];
         }
         // update the user's photo url
         NSString *newPhoto = [paramsDict objectForKey:@"picture"];
@@ -518,13 +518,13 @@
                                             ^(NSDictionary *json, NSError *error) {
                                                 if (error) {
                                                     [SVProgressHUD dismissWithError:[error localizedDescription]
-                                                            afterDelay:kDefaultDimissDelay];
+                                                            afterDelay:kDefaultDismissDelay];
                                                     return;
                                                 }
 
                                                 if (NO == [[json objectForKey:@"succeeded"] boolValue]) {
                                                     [SVProgressHUD dismissWithError:[json objectForKey:@"message"]
-                                                            afterDelay:kDefaultDimissDelay];
+                                                            afterDelay:kDefaultDismissDelay];
                                                     return;
                                                 }
 
@@ -581,7 +581,7 @@
             (textField.text.length == 0  || ![CPUtils validateEmailWithString:textField.text])) {
         NSString *message = @"Email address does not appear to be valid.";
         // we had an error, let's tell the user and leave
-        [SVProgressHUD showErrorWithStatus:message duration:kDefaultDimissDelay];
+        [SVProgressHUD showErrorWithStatus:message duration:kDefaultDismissDelay];
         return NO;
     }
     if (textField == self.emailTextField && [self.emailTextField.text isEqualToString:self.currentUser.email]) {
@@ -620,7 +620,7 @@
                 textField.userInteractionEnabled = YES;
                 [self updateCurrentUserWithNewData:json];
             } else {
-                [SVProgressHUD showErrorWithStatus:[json objectForKey:@"message"] duration:kDefaultDimissDelay];
+                [SVProgressHUD showErrorWithStatus:[json objectForKey:@"message"] duration:kDefaultDismissDelay];
                 [self updateCurrentUserWithNewData:nil];
             }
             textField.userInteractionEnabled = YES;

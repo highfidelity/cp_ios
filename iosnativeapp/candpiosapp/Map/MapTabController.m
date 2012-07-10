@@ -290,7 +290,7 @@ BOOL clearLocations = NO;
         
         NSString *message = @"We're unable to get your location and the application relies on it.\n\nPlease go to your settings and enable location for the C&P app.";
         [SVProgressHUD showErrorWithStatus:message
-                             duration:kDefaultDimissDelay];
+                             duration:kDefaultDismissDelay];
     } else {
         // we have a location ... zoom to it
         [self zoomTo: [[mapView userLocation] coordinate]];

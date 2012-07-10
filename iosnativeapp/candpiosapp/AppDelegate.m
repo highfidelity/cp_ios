@@ -532,7 +532,16 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
         if (!error && !respError) {
             [[UIApplication sharedApplication] cancelAllLocalNotifications];
             
-            NSString *alertText = [NSString stringWithFormat:@"You were checked out of %@.", region.identifier];
+            NSDictionary *jsonDict = [json objectForKey:@"payload"];
+            NSString *venue = [jsonDict valueForKey:@"venue_name"];
+            NSMutableString *alertText = [NSMutableString stringWithFormat:@"Checked out of %@.", venue];
+            
+            int hours = [[jsonDict valueForKey:@"hours_checked_in"] intValue];
+            if (hours == 1) {
+                [alertText appendString:@" You were there for 1 hour."];
+            } else if (hours > 1) {
+                [alertText appendFormat:@" You were there for %d hours.", hours];
+            }
             
             UILocalNotification *localNotif = [[UILocalNotification alloc] init];
             localNotif.alertBody = alertText;
@@ -545,17 +554,17 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
                                    nil];
             
             [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
-            
             [self setCheckedOut];
-            [SVProgressHUD dismissWithSuccess:@"You have been sucessfully checked out." 
-                                   afterDelay:kDefaultDimissDelay];
+            
+            [SVProgressHUD dismissWithSuccess:alertText
+                                   afterDelay:kDefaultDismissDelay];
         } else {
             NSString *message = [json objectForKey:@"payload"];
             if (!message) {
                 message = @"Oops. Something went wrong.";    
             }
             [SVProgressHUD dismissWithError:message 
-                                 afterDelay:kDefaultDimissDelay];
+                                 afterDelay:kDefaultDismissDelay];
         }
     }];    
 }

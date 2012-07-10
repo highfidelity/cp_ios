@@ -66,7 +66,7 @@
                                   @"Oops! We couldn't get the data.\nAsk the sender to send Contact Request again."];
 
             [SVProgressHUD dismissWithError:alertMsg
-                                 afterDelay:kDefaultDimissDelay];
+                                 afterDelay:kDefaultDismissDelay];
         }        
     }];
 }
@@ -105,6 +105,6 @@
     [view.f2fPasswordAlert dismissWithClickedButtonIndex:0 animated:NO];
 
     [SVProgressHUD showSuccessWithStatus:alertMsg
-                                duration:kDefaultDimissDelay];
+                                duration:kDefaultDismissDelay];
 }
 @end

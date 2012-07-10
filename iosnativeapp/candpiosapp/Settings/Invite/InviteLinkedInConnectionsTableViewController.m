@@ -155,7 +155,7 @@
 
 - (void)loadLinkedInConnectionsResult:(OAServiceTicket *)ticket didFail:(NSError *)error {
     [SVProgressHUD dismissWithError:[error localizedDescription]
-                         afterDelay:kDefaultDimissDelay];
+                         afterDelay:kDefaultDismissDelay];
 }
 
 - (NSMutableArray *)filterOutInvalidConnections:(NSArray *)connections {

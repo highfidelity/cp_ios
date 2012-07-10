@@ -53,6 +53,6 @@
 NSString* const kSmartererCallback = @"candp://smarterer";
 NSString* const kCandPAPIVersion = @"0.1";
 
-int const kDefaultDimissDelay = 2.5;
+int const kDefaultDismissDelay = 3;
 
 @end

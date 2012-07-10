@@ -319,11 +319,11 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                 NSString *outerErrorMessage = [JSON objectForKey:@"message"];// often just 'error'
                 // we get here if we failed to login
                 NSString *errorMessage = [NSString stringWithFormat:@"The error was: %@", outerErrorMessage];\
-                [SVProgressHUD showErrorWithStatus:errorMessage duration:kDefaultDimissDelay];
+                [SVProgressHUD showErrorWithStatus:errorMessage duration:kDefaultDismissDelay];
                 [[CPAppDelegate tabBarController]
                         performSelector:@selector(dismissModalViewControllerAnimated:)
                              withObject:[NSNumber numberWithBool:YES]
-                             afterDelay:kDefaultDimissDelay];
+                             afterDelay:kDefaultDismissDelay];
 
             }
             else
@@ -371,7 +371,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
             [[NSNotificationCenter defaultCenter] removeObserver:self name:@"linkedInCredentials" object:nil];
 
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-            [SVProgressHUD showErrorWithStatus:[error localizedDescription] duration:kDefaultDimissDelay];
+            [SVProgressHUD showErrorWithStatus:[error localizedDescription] duration:kDefaultDismissDelay];
 
         }];
         

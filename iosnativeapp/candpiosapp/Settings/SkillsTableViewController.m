@@ -76,10 +76,10 @@
                     // get rid of the SVProgressHud
                     [SVProgressHUD dismiss];
                 } else {
-                    [SVProgressHUD showErrorWithStatus:[json objectForKey:@"payload"] duration:kDefaultDimissDelay];
+                    [SVProgressHUD showErrorWithStatus:[json objectForKey:@"payload"] duration:kDefaultDismissDelay];
                 }
             } else {
-                [SVProgressHUD showErrorWithStatus:[error localizedDescription] duration:kDefaultDimissDelay];
+                [SVProgressHUD showErrorWithStatus:[error localizedDescription] duration:kDefaultDismissDelay];
             }
         }];
     }
@@ -157,7 +157,7 @@
         if (self.visibleCount == 5) {
             // turn the switch off and show the HUD error
             visibilitySwitch.on = NO;
-            [SVProgressHUD showErrorWithStatus:@"You can't have more than 5 visible skills at one time!" duration:kDefaultDimissDelay];
+            [SVProgressHUD showErrorWithStatus:@"You can't have more than 5 visible skills at one time!" duration:kDefaultDismissDelay];
             
             // return from this function ... nothing else to do here
             return;
@@ -205,7 +205,7 @@
     erroredSwitch.on = !erroredSwitch.on;
     
     // show an error with the progress HUD
-    [SVProgressHUD showErrorWithStatus:errorMessage duration:kDefaultDimissDelay];
+    [SVProgressHUD showErrorWithStatus:errorMessage duration:kDefaultDismissDelay];
 }
 
 

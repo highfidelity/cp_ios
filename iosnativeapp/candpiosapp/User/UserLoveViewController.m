@@ -132,12 +132,12 @@
             } else {
                 // error returned from backend
                 // show that to the user
-                [SVProgressHUD showErrorWithStatus:[error localizedDescription] duration:kDefaultDimissDelay];
+                [SVProgressHUD showErrorWithStatus:[error localizedDescription] duration:kDefaultDismissDelay];
             }
         } else {
             // json parse error
             // show the ugly error to the user, might help us debug
-            [SVProgressHUD showErrorWithStatus:[error localizedDescription] duration:kDefaultDimissDelay];
+            [SVProgressHUD showErrorWithStatus:[error localizedDescription] duration:kDefaultDismissDelay];
         }
     }];
 }
@@ -185,7 +185,7 @@
                 NSString *error = [NSString stringWithFormat:@"%@", [json objectForKey:@"message"]];
                 
                 [SVProgressHUD dismissWithError:error
-                                     afterDelay:kDefaultDimissDelay];
+                                     afterDelay:kDefaultDismissDelay];
             }
             else {
                 // Consume the item if purchased
@@ -222,7 +222,7 @@
 
                         // show a success HUD
                         [SVProgressHUD showSuccessWithStatus:message
-                                                    duration:kDefaultDimissDelay];
+                                                    duration:kDefaultDismissDelay];
                     }];
                 }
             }

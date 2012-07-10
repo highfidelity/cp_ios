@@ -284,6 +284,7 @@
                     // our delegate is the venue info view controller
                     // tell it to scroll to the user thumbnail after loading new data from this checkin
                     [self.delegate setScrollToUserThumbnail:YES];
+                    [SVProgressHUD dismiss];
                 }                
             }
             else {
@@ -292,14 +293,14 @@
                 // we obviously passed a foursquare ID if we're in the app so the user isn't actually logged in
                 // show an alertView if the user isn't checked in
                 [SVProgressHUD dismissWithError:@"You must be logged in to C&P in order to check in."
-                                     afterDelay:kDefaultDimissDelay];
+                                     afterDelay:kDefaultDismissDelay];
                 [CPAppDelegate tabBarController].forcedCheckin = NO;
-                [CPAppDelegate performSelector:@selector(showSignupModalFromViewController:animated:) withObject:self afterDelay:kDefaultDimissDelay];
+                [CPAppDelegate performSelector:@selector(showSignupModalFromViewController:animated:) withObject:self afterDelay:kDefaultDismissDelay];
             }
         } else {
             // show an alertView letting the user know that an error occured, log the error if debugging
             [SVProgressHUD dismissWithError:@"An error occured while attempting to check in."
-                                 afterDelay:kDefaultDimissDelay];
+                                 afterDelay:kDefaultDismissDelay];
         }
     }];      
 }

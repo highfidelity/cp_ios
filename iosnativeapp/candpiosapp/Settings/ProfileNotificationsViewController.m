@@ -117,7 +117,7 @@
             [self dismissModalViewControllerAnimated:YES];
             NSString *message = @"There was a problem getting your data!\nPlease logout and login again.";
             [SVProgressHUD dismissWithError:message
-                                 afterDelay:kDefaultDimissDelay];
+                                 afterDelay:kDefaultDismissDelay];
         } else {
             NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
             [dateFormat setDateFormat:@"HH:mm:ss"];

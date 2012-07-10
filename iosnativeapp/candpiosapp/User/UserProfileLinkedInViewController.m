@@ -71,7 +71,7 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [SVProgressHUD dismissWithError:[error localizedDescription]
-                         afterDelay:kDefaultDimissDelay];
+                         afterDelay:kDefaultDismissDelay];
 }
 
 @end

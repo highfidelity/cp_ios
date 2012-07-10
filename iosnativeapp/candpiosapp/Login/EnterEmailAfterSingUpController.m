@@ -56,7 +56,7 @@
             [self pushNextViewContollerOrDismissWithMessage:[json objectForKey:@"message"]];
         } else {
             [SVProgressHUD dismissWithError:[json objectForKey:@"message"]
-                                 afterDelay:kDefaultDimissDelay];
+                                 afterDelay:kDefaultDismissDelay];
         }
     }];
 }
@@ -97,7 +97,7 @@
     if (email.length == 0  || ![CPUtils validateEmailWithString:email]) {
         NSString *message = @"Email address does not appear to be valid.";
         [SVProgressHUD dismissWithError:message
-                             afterDelay:kDefaultDimissDelay];
+                             afterDelay:kDefaultDismissDelay];
     } else {
         [self.emailTextField resignFirstResponder];
         [self sendEmailSettingsWithEmail:email];

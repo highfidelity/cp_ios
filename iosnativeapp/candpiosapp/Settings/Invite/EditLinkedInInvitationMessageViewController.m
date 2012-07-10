@@ -57,12 +57,12 @@ Welcome!";
                                wihtCompletionBlock:
      ^(NSDictionary *json, NSError *error) {
          if (error) {
-             [SVProgressHUD dismissWithError:[error localizedDescription] afterDelay:kDefaultDimissDelay];
+             [SVProgressHUD dismissWithError:[error localizedDescription] afterDelay:kDefaultDismissDelay];
              return;
          }
          
          if ([[json objectForKey:@"error"] intValue]) {
-             [SVProgressHUD dismissWithError:[json objectForKey:@"payload"] afterDelay:kDefaultDimissDelay];
+             [SVProgressHUD dismissWithError:[json objectForKey:@"payload"] afterDelay:kDefaultDismissDelay];
              return;
          }
          
@@ -144,14 +144,14 @@ Welcome!";
         [SVProgressHUD dismissWithSuccess:@"Invitation has been sent"];
         [FlurryAnalytics logEvent:@"invitedLinkedInConnections"];
     } else {
-        [SVProgressHUD dismissWithError:[json objectForKey:@"message"] afterDelay:kDefaultDimissDelay];
+        [SVProgressHUD dismissWithError:[json objectForKey:@"message"] afterDelay:kDefaultDismissDelay];
         
         [self setSendButtonEnabled:YES];
     }
 }
 
 - (void)sendLinkedInInvitationMessageResult:(OAServiceTicket *)ticket didFail:(NSError *)error {
-    [SVProgressHUD dismissWithError:[error localizedDescription] afterDelay:kDefaultDimissDelay];
+    [SVProgressHUD dismissWithError:[error localizedDescription] afterDelay:kDefaultDismissDelay];
     [self setSendButtonEnabled:YES];
 }
 

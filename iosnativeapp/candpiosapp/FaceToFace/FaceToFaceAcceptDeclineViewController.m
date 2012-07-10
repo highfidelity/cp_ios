@@ -148,7 +148,7 @@
              
              [SVProgressHUD performSelector:@selector(showSuccessWithStatus:)
                                  withObject:@"Contact Request Accepted"
-                                 afterDelay:kDefaultDimissDelay];
+                                 afterDelay:kDefaultDismissDelay];
          }
      }];
 }
@@ -174,11 +174,11 @@
          if (errorMessage) {
              [SVProgressHUD performSelector:@selector(showErrorWithStatus:)
                                  withObject:errorMessage
-                                 afterDelay:kDefaultDimissDelay];
+                                 afterDelay:kDefaultDismissDelay];
          } else {
              [SVProgressHUD performSelector:@selector(showSuccessWithStatus:)
                                  withObject:@"Contact Request Accepted"
-                                 afterDelay:kDefaultDimissDelay];
+                                 afterDelay:kDefaultDismissDelay];
          }
      }];
     

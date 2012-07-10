@@ -399,9 +399,6 @@
     // set the scrollview content size
     self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width, self.venuePhoto.frame.size.height + self.firstAidSection.frame.size.height); 
     
-    // clear the SVProgressHUD if it's shown
-    [SVProgressHUD dismiss];
-    
     if (self.scrollToUserThumbnail) {
         // we need to find the userThumbnail and scroll to it
         UIButton *userButton = (UIButton *)[self.view viewWithTag:[CPUserDefaultsHandler currentUser].userID];

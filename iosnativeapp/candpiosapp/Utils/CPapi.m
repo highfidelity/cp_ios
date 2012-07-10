@@ -434,7 +434,7 @@
         }
     }
 
-    [SVProgressHUD dismissWithError:alertMsg afterDelay:kDefaultDimissDelay];
+    [SVProgressHUD dismissWithError:alertMsg afterDelay:kDefaultDismissDelay];
 }
 
 + (void)sendF2FAccept:(int)userId
@@ -541,7 +541,7 @@
     {
         alertMsg = @"Error declining request.";
         [SVProgressHUD dismissWithError:alertMsg
-                             afterDelay:kDefaultDimissDelay];
+                             afterDelay:kDefaultDismissDelay];
     } 
     else
     {
@@ -550,14 +550,14 @@
         {
             alertMsg = @"Contact Request declined.";
             [SVProgressHUD dismissWithSuccess:alertMsg
-                                 afterDelay:kDefaultDimissDelay];
+                                 afterDelay:kDefaultDismissDelay];
         }
         else
         {
             // Otherwise, just show whatever came back in "message"
             alertMsg = [json objectForKey:@"message"];
             [SVProgressHUD dismissWithError:alertMsg
-                                 afterDelay:kDefaultDimissDelay];
+                                 afterDelay:kDefaultDismissDelay];
         }
     }
 }
@@ -606,7 +606,7 @@
     {
         alertMsg = @"Error submitting password.";
         [SVProgressHUD dismissWithError:alertMsg
-                             afterDelay:kDefaultDimissDelay];
+                             afterDelay:kDefaultDismissDelay];
     } 
     else
     {
@@ -614,11 +614,11 @@
             [json objectForKey:@"error"] == nil)
         {
             alertMsg = @"You have been added as a Contact!";
-            [SVProgressHUD dismissWithSuccess:alertMsg afterDelay:kDefaultDimissDelay];
+            [SVProgressHUD dismissWithSuccess:alertMsg afterDelay:kDefaultDismissDelay];
             [[CPAppDelegate tabBarController]
                     performSelector:@selector(dismissModalViewControllerAnimated:)
                          withObject:[NSNumber numberWithBool:YES]
-                         afterDelay:kDefaultDimissDelay];
+                         afterDelay:kDefaultDismissDelay];
         }
         else {
             if ([[json objectForKey:@"error"] isEqualToString:@"3"]) {
@@ -630,7 +630,7 @@
             }
         }
         [SVProgressHUD dismissWithError:alertMsg
-                             afterDelay:kDefaultDimissDelay];
+                             afterDelay:kDefaultDismissDelay];
     }
 }
 

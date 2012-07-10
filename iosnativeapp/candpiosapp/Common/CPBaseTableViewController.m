@@ -156,7 +156,7 @@
             if (user.contactsOnlyChat && !user.isContact) {
                 NSString *errorMessage = [NSString stringWithFormat:@"You can not chat with %@ until the two of you have exchanged contact information", user.nickname];
                 [SVProgressHUD showErrorWithStatus:errorMessage
-                                          duration:kDefaultDimissDelay];
+                                          duration:kDefaultDismissDelay];
             } else {
                 // push the UserProfileViewController onto the navigation controller stack
                 OneOnOneChatViewController *chatViewController = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"OneOnOneChatView"];

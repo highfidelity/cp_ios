@@ -207,7 +207,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
             }
             else {
                 NSLog(@"%@",[json objectForKey:@"payload"]);
-                [SVProgressHUD showErrorWithStatus:[json objectForKey:@"payload"] duration:kDefaultDimissDelay];
+                [SVProgressHUD showErrorWithStatus:[json objectForKey:@"payload"] duration:kDefaultDismissDelay];
             }
         }
         else {
@@ -520,7 +520,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     }
     
     if (errorMessage) {
-        [SVProgressHUD showErrorWithStatus:errorMessage duration:kDefaultDimissDelay];
+        [SVProgressHUD showErrorWithStatus:errorMessage duration:kDefaultDismissDelay];
     }
 }
 

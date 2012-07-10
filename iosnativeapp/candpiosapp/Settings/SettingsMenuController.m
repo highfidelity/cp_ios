@@ -411,17 +411,30 @@
             
             BOOL respError = [[json objectForKey:@"error"] boolValue];
             if (!error && !respError) {
+                
                 [[UIApplication sharedApplication] cancelAllLocalNotifications];
                 [CPAppDelegate setCheckedOut];
-                [SVProgressHUD dismissWithSuccess:@"You have been sucessfully checked out."
-                                       afterDelay:kDefaultDimissDelay];
+                
+                NSDictionary *jsonDict = [json objectForKey:@"payload"];
+                NSString *venue = [jsonDict valueForKey:@"venue_name"];
+                
+                NSMutableString *message = [NSMutableString stringWithFormat:@"Checked out of %@.", venue];
+                int hours = [[jsonDict valueForKey:@"hours_checked_in"] intValue];
+                if (hours == 1) {
+                    [message appendString:@" You were there for 1 hour."];
+                } else if (hours > 1) {
+                    [message appendFormat:@" You were there for %d hours.", hours];
+                }
+                
+                [SVProgressHUD showSuccessWithStatus:message 
+                                            duration:kDefaultDismissDelay];
             } else {
                 NSString *message = [json objectForKey:@"payload"];
                 if (!message) {
                     message = @"Oops. Something went wrong.";    
                 }
                 [SVProgressHUD dismissWithError:message
-                                     afterDelay:kDefaultDimissDelay];
+                                     afterDelay:kDefaultDismissDelay];
             }
         }];
     } else if (alertView.tag = AUTOCHECKIN_PROMPT_TAG) {

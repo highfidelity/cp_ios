@@ -48,7 +48,7 @@
                 message = @"Oops. Something went wrong.";    
             }
             [SVProgressHUD dismissWithError:message 
-                                 afterDelay:kDefaultDimissDelay];
+                                 afterDelay:kDefaultDismissDelay];
         }
     }];
 

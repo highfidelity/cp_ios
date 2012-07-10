@@ -149,7 +149,7 @@
             [SVProgressHUD dismiss];
         } else {
             [SVProgressHUD dismissWithError:[json objectForKey:@"payload"]
-                                 afterDelay:kDefaultDimissDelay];
+                                 afterDelay:kDefaultDismissDelay];
         }
     
         [pullDownLabel setText:kPullText];

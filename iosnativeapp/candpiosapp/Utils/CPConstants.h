@@ -27,6 +27,6 @@ extern  NSString* const kUserVoiceSite;
 extern  NSString* const kUserVoiceKey;
 extern  NSString* const kUserVoiceSecret;
 
-extern int const kDefaultDimissDelay;
+extern int const kDefaultDismissDelay;
 
 @end

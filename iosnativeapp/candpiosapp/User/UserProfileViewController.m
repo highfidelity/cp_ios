@@ -649,7 +649,7 @@ UITapGestureRecognizer* _tapRecon = nil;
     if (self.user.contactsOnlyChat && !self.user.isContact) {
         NSString *errorMessage = [NSString stringWithFormat:@"You can not chat with %@ until the two of you have exchanged contact information", self.user.nickname];
         [SVProgressHUD showErrorWithStatus:errorMessage
-                                  duration:kDefaultDimissDelay];
+                                  duration:kDefaultDismissDelay];
     } else {
         [self performSegueWithIdentifier:@"ProfileToOneOnOneSegue" sender:sender];
     }

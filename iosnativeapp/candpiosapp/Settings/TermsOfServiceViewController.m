@@ -45,7 +45,7 @@
         
         [SVProgressHUD dismiss];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [SVProgressHUD dismissWithError:[error description] afterDelay:kDefaultDimissDelay];
+        [SVProgressHUD dismissWithError:[error description] afterDelay:kDefaultDismissDelay];
     }];
     
     [[NSOperationQueue mainQueue] addOperation:httpRequestOperation];
