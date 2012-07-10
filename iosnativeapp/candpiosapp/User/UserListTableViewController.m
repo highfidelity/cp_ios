@@ -14,7 +14,6 @@
 #import "VenueCell.h"
 #import "CheckInDetailsViewController.h"
 #import "CPVenue.h"
-#import "CPSwipeableQuickActionSwitch.h"
 #import "CPSoundEffectsManager.h"
 #import "OneOnOneChatViewController.h"
 

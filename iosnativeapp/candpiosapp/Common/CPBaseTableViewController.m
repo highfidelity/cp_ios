@@ -107,6 +107,21 @@
 - (void)cell:(CPUserActionCell*)cell didSelectSendLoveToUser:(User*)user 
 {
     // only show the love modal if this user is logged in
+    if (![CPUserDefaultsHandler currentUser]) {
+        [CPAppDelegate showLoginBanner];
+        cell.selected = NO;
+        return;
+    }    
+    if (user.userID == [CPUserDefaultsHandler currentUser].userID) {
+        // cheeky response for self-talk
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Self-Love" 
+                                                            message:@"Feeling lonely?  Try sharing some love with other users." 
+                                                           delegate:nil 
+                                                  cancelButtonTitle:@"OK" 
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        return;
+    }
     if ([CPUserDefaultsHandler currentUser]) {
         // only show the love modal if this isn't the user themselves
         if (user.userID != [CPUserDefaultsHandler currentUser].userID) {
@@ -120,6 +135,11 @@
 - (void)cell:(CPUserActionCell*)cell didSelectSendMessageToUser:(User*)user 
 {
     // handle chat
+    if (![CPUserDefaultsHandler currentUser]) {
+        [CPAppDelegate showLoginBanner];
+        cell.selected = NO;
+        return;
+    }    
     if (user.userID == [CPUserDefaultsHandler currentUser].userID) {
         // cheeky response for self-talk
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Self-Chat" 
@@ -153,6 +173,22 @@
 - (void)cell:(CPUserActionCell*)cell didSelectExchangeContactsWithUser:(User*)user
 {
     // Offer to exchange contacts
+    // handle chat
+    if (![CPUserDefaultsHandler currentUser]) {
+        [CPAppDelegate showLoginBanner];
+        cell.selected = NO;
+        return;
+    }    
+    if (user.userID == [CPUserDefaultsHandler currentUser].userID) {
+        // cheeky response for self-talk
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Add a Contact" 
+                                                            message:@"You should have already met yourself..." 
+                                                           delegate:nil 
+                                                  cancelButtonTitle:@"OK" 
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        return;
+    }
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                   initWithTitle:kRequestToAddToMyContactsActionSheetTitle
                                   delegate:self
@@ -179,14 +215,14 @@
     if (![CPUserDefaultsHandler currentUser]) {
         [CPAppDelegate showLoginBanner];
         cell.selected = NO;
-    } else { 
-        UserProfileViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
-        // set the user object on the UserProfileVC to the user we just created
-        userVC.user = user;
-        
-        // push the UserProfileViewController onto the navigation controller stack
-        [self.navigationController pushViewController:userVC animated:YES];
+        return;
     }
+    UserProfileViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+    // set the user object on the UserProfileVC to the user we just created
+    userVC.user = user;
+    
+    // push the UserProfileViewController onto the navigation controller stack
+    [self.navigationController pushViewController:userVC animated:YES];
     
 }
 

@@ -1495,18 +1495,15 @@
 			name = sound;
 			sourceTree = "<group>";
 		};
-		530C5DAE1575E4F3003505AC /* CPSwipeableTableViewCell */ = {
+		530C5DAE1575E4F3003505AC /* CPUserActionCell */ = {
 			isa = PBXGroup;
 			children = (
 				53019FE215ABA21D00AE3FA1 /* CPUserActionCell.h */,
 				53019FE315ABA21D00AE3FA1 /* CPUserActionCell.m */,
 				4E28A7E615AB795B003C601A /* sound */,
 				4E28A7BB15AB5DF4003C601A /* images */,
-				530C5DAF1575E4F3003505AC /* CPSwipeableQuickActionSwitch.h */,
-				530C5DB01575E4F3003505AC /* CPSwipeableQuickActionSwitch.m */,
-				530C5DB11575E4F3003505AC /* CPSwipeableTableViewCell.h */,
-				530C5DB21575E4F3003505AC /* CPSwipeableTableViewCell.m */,
 			);
+			name = CPUserActionCell;
 			path = CPSwipeableTableViewCell;
 			sourceTree = "<group>";
 		};
@@ -2051,7 +2048,7 @@
 				E4E74E07153B08710022F404 /* CPTouchableView.m */,
 				530C5DB51575E4FC003505AC /* CPSoundEffectsManager.h */,
 				530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */,
-				530C5DAE1575E4F3003505AC /* CPSwipeableTableViewCell */,
+				530C5DAE1575E4F3003505AC /* CPUserActionCell */,
 				534EB7381567179D00BDBA57 /* CPBaseTableViewController.h */,
 				534EB7391567179D00BDBA57 /* CPBaseTableViewController.m */,
 				537255B6156AF0C800263CFA /* CPPlaceholderTextView.h */,
@@ -3011,8 +3008,6 @@
 				534B6EF0156DAE7900DA9F74 /* SkillsTableViewController.m in Sources */,
 				5361F8C3156EBBEC0099D303 /* CPSkill.m in Sources */,
 				53217F8C156FF89B006258F0 /* LoveSkillTableViewCell.m in Sources */,
-				530C5DB31575E4F3003505AC /* CPSwipeableQuickActionSwitch.m in Sources */,
-				530C5DB41575E4F3003505AC /* CPSwipeableTableViewCell.m in Sources */,
 				530C5DB71575E4FC003505AC /* CPSoundEffectsManager.m in Sources */,
 				69120B73156D3EA900521E3F /* CPLinkedInAPI.m in Sources */,
 				538EF4331585352E00249AAF /* EditLinkedInInvitationMessageViewController.m in Sources */,

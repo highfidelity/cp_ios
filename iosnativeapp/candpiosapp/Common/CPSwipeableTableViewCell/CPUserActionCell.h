@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <UIKit/UIKit.h>
 #import "CPSoundEffectsManager.h"
-#import "CPSwipeableQuickActionSwitch.h"
 #import "User.h"
 
 typedef enum {
@@ -61,5 +60,7 @@ typedef enum {
 @property (nonatomic, strong) UIButton *sendMessageButton;
 @property (nonatomic, strong) UIButton *exchangeContactsButton;
 @property (nonatomic) CPUserActionCellSwitchState toggleState;
+@property (nonatomic, strong) UIColor *activeColor;
+@property (nonatomic, strong) UIColor *inactiveColor;
 
 @end

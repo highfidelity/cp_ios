@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "UserTableViewCell.h"
-#import "CPSwipeableTableViewCell.h"
 
 @class ContactListCell;
 
@@ -19,7 +18,7 @@
 
 @end
 
-@interface ContactListCell : CPSwipeableTableViewCell
+@interface ContactListCell : CPUserActionCell
 
 @property (nonatomic, assign) id<ContactListCellDelegate> contactListTVC;
 @property (nonatomic, assign) IBOutlet UIImageView *profilePicture;

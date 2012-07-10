@@ -66,6 +66,8 @@
 @synthesize sendMessageButton;
 @synthesize exchangeContactsButton;
 @synthesize toggleState;
+@synthesize activeColor;
+@synthesize inactiveColor;
 
 - (void)awakeFromNib
 {
@@ -143,6 +145,10 @@
     
     // init the toggles to inactive
     self.toggleState = CPUserActionCellSwitchStateOff;
+    
+    // default colors
+    self.activeColor = [CPUIHelper CPTealColor];
+    self.inactiveColor = [UIColor colorWithR:51 G:51 B:51 A:1];
 }
 
 - (void)layoutSubviews
@@ -539,9 +545,9 @@ static char BOOLRevealing;
 - (void)toggleCellActiveState:(BOOL)active
 {
     if (active) {
-        self.contentView.layer.backgroundColor = [CPUIHelper CPTealColor].CGColor;
+        self.contentView.backgroundColor = self.activeColor;
     } else {
-        self.contentView.layer.backgroundColor = [UIColor colorWithR:51 G:51 B:51 A:1].CGColor;
+        self.contentView.backgroundColor = self.inactiveColor;
     }
 }
 
@@ -565,6 +571,7 @@ static char BOOLRevealing;
         [CPSoundEffectsManager playSoundWithSystemSoundID:
          [CPSoundEffectsManager systemSoundIDForSoundWithName:[prefix stringByAppendingString:@"-on"] type:@"aif"]];
     } else { 
+// TODO: Revisit the sounds and restore the off sound if necessary
 //        [CPSoundEffectsManager playSoundWithSystemSoundID:
 //         [CPSoundEffectsManager systemSoundIDForSoundWithName:[prefix stringByAppendingString:@"-off"] type:@"aif"]];
     }

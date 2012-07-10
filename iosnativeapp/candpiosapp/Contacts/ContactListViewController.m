@@ -166,6 +166,8 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    // let the CPUserActionCell manage selection
+    self.tableView.allowsSelection = NO;
     
     // hide the search bar if it hasn't been scrolled
     if (self.tableView.contentOffset.y == 0.0f) {
@@ -328,27 +330,18 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
         cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
         cell.backgroundView.backgroundColor = RGBA(66, 128, 128, 1);
         
-        cell.rightStyle = CPSwipeableTableViewCellSwipeStyleNone;
+        cell.rightStyle = CPUserActionCellSwipeStyleNone;
     } else {
-        cell.rightStyle = CPSwipeableTableViewCellSwipeStyleQuickAction;
+        cell.rightStyle = CPUserActionCellSwipeStyleQuickAction;
         cell.delegate = self;
     }
 
+    cell.user = [self userForIndexPath:indexPath];
     return cell;
 }
 
 
 #pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    User *user = [self userForIndexPath:indexPath];
-    
-    // instantiate a UserProfileViewController
-    UserProfileViewController *vc = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
-    vc.user = user;
-    [self.navigationController pushViewController:vc animated:YES];
-}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 
@@ -472,47 +465,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
                                     }];
     
     [self updateBadgeValue];
-}
-
-# pragma mark - CPSwipeableTableViewCellDelegate
-
-- (CPSwipeableQuickActionSwitch *)quickActionSwitchForDirection:(CPSwipeableTableViewCellDirection)direction {
-    static CPSwipeableQuickActionSwitch *quickSwitch = nil;
-    if ( ! quickSwitch) {
-        quickSwitch = [[CPSwipeableQuickActionSwitch alloc] initWithAssetPrefix:kQuickActionPrefix];
-    }
-    return quickSwitch;
-}
-
--(void)performQuickActionForDirection:(CPSwipeableTableViewCellDirection)direction cell:(CPSwipeableTableViewCell *)sender {
-    if ([CPUserDefaultsHandler currentUser]) {
-        User *selectedUser = [self userForIndexPath:[self.tableView indexPathForCell:sender]];
-        
-        // only show the love modal if this isn't the user themselves
-        if (selectedUser.userID != [CPUserDefaultsHandler currentUser].userID) {
-            UserLoveViewController *loveModal = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil]
-                                                 instantiateViewControllerWithIdentifier:@"SendLoveModal"];
-            loveModal.user = selectedUser;
-            
-            [self presentModalViewController:loveModal animated:YES];
-        }
-    }
-}
-
--(void)cellDidBeginPan:(CPSwipeableTableViewCell *)cell {
-    self.userIsPerformingQuickAction = YES;
-}
-
--(void)cellDidFinishPan:(CPSwipeableTableViewCell *)cell {
-    self.userIsPerformingQuickAction = NO;
-    
-    if (self.reloadPrevented) {
-        // we prevented our UITableView from reloading before so fire it now
-        [self.tableView reloadData];
-        
-        // reset the boolean
-        self.reloadPrevented = NO;
-    }
 }
 
 #pragma mark - actions

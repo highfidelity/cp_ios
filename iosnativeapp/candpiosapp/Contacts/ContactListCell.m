@@ -38,9 +38,7 @@
                                              action:@selector(declineButtonAction)
                                    forControlEvents:UIControlEventTouchUpInside];
     }
-    
-    self.rightStyle = CPSwipeableTableViewCellSwipeStyleNone;
-    self.leftStyle = CPSwipeableTableViewCellSwipeStyleNone;
+    self.activeColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"contact-cell-bg-selected.png"]];    
 }
 
 - (void)layoutSubviews {
@@ -56,16 +54,6 @@
     self.contactListTVC = nil;
     self.acceptContactRequestButton.hidden = YES;
     self.declineContactRequestButton.hidden = YES;
-}
-
-#pragma mark - CPSwipeableTableViewCell
-
-- (void)toggleCellActiveState:(BOOL)active {
-    if (active) {
-        self.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"contact-cell-bg-selected.png"]];
-    } else {
-        self.contentView.backgroundColor = [UIColor colorWithR:51 G:51 B:51 A:1];
-    }
 }
 
 - (IBAction)acceptButtonAction {
