@@ -60,7 +60,6 @@
 		32D1E99A15701993009B45BD /* checkbox-checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D1E99615701993009B45BD /* checkbox-checked@2x.png */; };
 		32D1E99B15701993009B45BD /* checkbox-unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D1E99715701993009B45BD /* checkbox-unchecked.png */; };
 		32D1E99C15701993009B45BD /* checkbox-unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D1E99815701993009B45BD /* checkbox-unchecked@2x.png */; };
-		32E03BB115446A4000288BF9 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E03BAB154468B600288BF9 /* libTestFlight.a */; };
 		4E28A7C915AB5E08003C601A /* exchange-contacts-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7BD15AB5E08003C601A /* exchange-contacts-off.png */; };
 		4E28A7CA15AB5E08003C601A /* exchange-contacts-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7BE15AB5E08003C601A /* exchange-contacts-off@2x.png */; };
 		4E28A7CB15AB5E08003C601A /* exchange-contacts-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7BF15AB5E08003C601A /* exchange-contacts-on.png */; };
@@ -607,8 +606,6 @@
 		32D1E99615701993009B45BD /* checkbox-checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-checked@2x.png"; sourceTree = "<group>"; };
 		32D1E99715701993009B45BD /* checkbox-unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-unchecked.png"; sourceTree = "<group>"; };
 		32D1E99815701993009B45BD /* checkbox-unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-unchecked@2x.png"; sourceTree = "<group>"; };
-		32E03BAB154468B600288BF9 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		32E03BAC154468B600288BF9 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		4E28A7BD15AB5E08003C601A /* exchange-contacts-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exchange-contacts-off.png"; sourceTree = "<group>"; };
 		4E28A7BE15AB5E08003C601A /* exchange-contacts-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exchange-contacts-off@2x.png"; sourceTree = "<group>"; };
 		4E28A7BF15AB5E08003C601A /* exchange-contacts-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exchange-contacts-on.png"; sourceTree = "<group>"; };
@@ -1177,7 +1174,6 @@
 				871EFB0F14AE9C820030658B /* CoreGraphics.framework in Frameworks */,
 				320604A414D5BBA40035A88D /* libFlurryAnalytics.a in Frameworks */,
 				E4C35C4114F1323A009B6DBF /* AudioToolbox.framework in Frameworks */,
-				32E03BB115446A4000288BF9 /* libTestFlight.a in Frameworks */,
 				697357A8156BF68F00A37A92 /* libUserVoice.a in Frameworks */,
 				697357CC156BFE2800A37A92 /* libUAirship-1.2.1.a in Frameworks */,
 				531806541584811B0037E5BC /* libGRMustache4-iOS.a in Frameworks */,
@@ -1449,15 +1445,6 @@
 				32B9976714E37B6400713B6E /* SSKeychain.m */,
 			);
 			path = SSKeychain;
-			sourceTree = "<group>";
-		};
-		32E03BA91544689300288BF9 /* TestFlight */ = {
-			isa = PBXGroup;
-			children = (
-				32E03BAB154468B600288BF9 /* libTestFlight.a */,
-				32E03BAC154468B600288BF9 /* TestFlight.h */,
-			);
-			path = TestFlight;
 			sourceTree = "<group>";
 		};
 		4E28A7BB15AB5DF4003C601A /* images */ = {
@@ -2367,7 +2354,6 @@
 				871EFB9714AF97130030658B /* SVProgressHUD */,
 				53ABBCB0159E5ED800C6ED8B /* SVPullToRefresh */,
 				8733311314BCFAAB001BF4DB /* TableViewHelper */,
-				32E03BA91544689300288BF9 /* TestFlight */,
 				6F7BA4D614E308AF00420AD5 /* TPKeyboardAvoiding */,
 				32A7998C14F9863200A0D4CB /* UIImage-categories */,
 				6973577A156BF68E00A37A92 /* UserVoiceSDK */,
@@ -3140,7 +3126,6 @@
 					"\"$(SRCROOT)/candpiosapp/3rdParty/FlurryAnalytics\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/Airship\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/GRMustache\"",
-					"\"$(SRCROOT)/candpiosapp/3rdParty/TestFlight\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/UserVoiceSDK\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
@@ -3171,7 +3156,6 @@
 					"\"$(SRCROOT)/candpiosapp/3rdParty/FlurryAnalytics\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/Airship\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/GRMustache\"",
-					"\"$(SRCROOT)/candpiosapp/3rdParty/TestFlight\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/UserVoiceSDK\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
