@@ -27,7 +27,7 @@
     if (cell.user.userID == [CPUserDefaultsHandler currentUser].userID) {
         // cheeky response for self-talk
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Self-Love" 
-                                                            message:@"Feeling lonely?  Try sharing some love with other users." 
+                                                            message:@"Feeling lonely?  Try sharing some love with others." 
                                                            delegate:nil 
                                                   cancelButtonTitle:@"OK" 
                                                   otherButtonTitles:nil];
@@ -55,7 +55,7 @@
     if (cell.user.userID == [CPUserDefaultsHandler currentUser].userID) {
         // cheeky response for self-talk
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Self-Chat" 
-                                                            message:@"It's quicker to chat with yourself in person." 
+                                                            message:@"γνῶθι σεαυτόν (Know Thyself)\n--The Temple of Delphi" 
                                                            delegate:nil 
                                                   cancelButtonTitle:@"OK" 
                                                   otherButtonTitles:nil];
