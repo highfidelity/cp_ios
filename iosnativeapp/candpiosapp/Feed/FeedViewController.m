@@ -809,9 +809,8 @@ typedef enum {
                     [self newPost];
                 } else {
                     // make sure the selectedVenueFeed is nil
+                    // that will also toggle the tableView state
                     self.selectedVenueFeed = nil;
-                    // toggle the tableView state to display the postable feeds
-                    [self toggleTableViewState];
                 }
             }
         }
