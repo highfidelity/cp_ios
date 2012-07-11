@@ -68,14 +68,16 @@ typedef enum {
     self.tableView.backgroundView = backgroundView;
     
     // subscribe to the applicationDidBecomeActive notification
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getVenueFeedOrFeedPreviews) name:@"applicationDidBecomeActive" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleTableViewState) name:@"applicationDidBecomeActive" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newFeedVenueAdded:) name:@"feedVenueAdded" object:nil];
     
     [self reloadFeedPreviewVenues:nil];
-    
+
     [self.tableView addPullToRefreshWithActionHandler:^{
         [self getVenueFeedOrFeedPreviews];
     }];
+    
+    [self toggleTableViewState];
 }
 
 - (void)viewDidUnload
@@ -110,9 +112,7 @@ typedef enum {
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    // call toggleTableViewState to reload the venue feed previews
-    [self toggleTableViewState];
+
 }
 
 - (void)setSelectedVenueFeed:(CPVenueFeed *)selectedVenueFeed
@@ -462,11 +462,14 @@ typedef enum {
 #pragma mark - VC Helper Methods
 - (void)newFeedVenueAdded:(NSNotification *)notification
 {
+    if (notification.object) {
+        // if the notification has an object the user wants to see this feed
+        // make sure our tabBarController is showing us
+        self.tabBarController.selectedIndex = 0;  
+    }
+    
     // reload the venues for which we want feed previews
     [self reloadFeedPreviewVenues:notification.object];
-
-    // make sure our tabBarController is showing us
-    self.tabBarController.selectedIndex = 0;  
 }
 
 - (void)setupForPostEntry
@@ -1034,10 +1037,14 @@ typedef enum {
                                  // toggle the alpha of the right side buttons and green line
                                  [thinBar toggleRightSide:!beingShown];
                                  
-                                 if (beingShown) {
+                                 // change the frame of the table view if we haven't already done so
+                                 if ((!beingShown && self.currentState != FeedVCStateAddingOrRemovingPendingPost) ||
+                                     beingShown) {
                                      // animate change in tableView's frame
                                      self.tableView.frame = newTableViewFrame;
-                                     
+                                 }
+                                 
+                                 if (beingShown) {
                                      // get the tableView to scroll while the keyboard is appearing
                                      [self scrollTableViewToTopAnimated:NO];
                                  }

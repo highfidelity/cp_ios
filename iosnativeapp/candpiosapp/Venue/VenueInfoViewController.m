@@ -299,7 +299,7 @@
 - (void)showVenueChat
 {
     if ([CPUserDefaultsHandler currentUser]) {
-        [CPUserDefaultsHandler addFeedVenue:self.venue];
+        [CPUserDefaultsHandler addFeedVenue:self.venue showFeedNow:YES];
     } else {
         // prompt the user to login
         [CPAppDelegate showLoginBanner];

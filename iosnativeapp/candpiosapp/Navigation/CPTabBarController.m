@@ -146,25 +146,35 @@
         UINavigationController *feedNC = [self.viewControllers objectAtIndex:0];
         FeedViewController *feedVC = [feedNC.viewControllers objectAtIndex:0];
         
-        // if the FeedViewController doesn't have our the current venue's feed as it's selectedVenueFeed
-        // then alloc-init one and set it properly
-        if ([CPUserDefaultsHandler currentVenue].venueID != feedVC.selectedVenueFeed.venue.venueID) {
-            CPVenueFeed *currentVenueFeed = [[CPVenueFeed alloc] init];
-            currentVenueFeed.venue = [CPUserDefaultsHandler currentVenue];
-            
-            feedVC.selectedVenueFeed = currentVenueFeed;
-        }
-        
-        // the user is already on the feed for the right venue
-        // so tell the feedVC that we want to add a new post
-        
-        if (self.selectedIndex == 0) {
-            // the feedVC is on screen so we want a new post right now
-            [feedVC newPost];
-        } else {
-            // the feedVC isn't on screen yet so tell we want a new post after it loads
+        if (self.forcedCheckin) {
+            // this is for a forced checkin
+            // so the feedVC is already being show
+            // just tell it we want a new post
             feedVC.newPostAfterLoad = YES;
-            self.selectedIndex = 0;
+            
+            // reset the forced checkin boolean
+            self.forcedCheckin = NO;
+        } else {
+            // if the FeedViewController doesn't have our the current venue's feed as it's selectedVenueFeed
+            // then alloc-init one and set it properly
+            if ([CPUserDefaultsHandler currentVenue].venueID != feedVC.selectedVenueFeed.venue.venueID) {
+                CPVenueFeed *currentVenueFeed = [[CPVenueFeed alloc] init];
+                currentVenueFeed.venue = [CPUserDefaultsHandler currentVenue];
+                
+                feedVC.selectedVenueFeed = currentVenueFeed;
+            } 
+            
+            // the user is already on the feed for the right venue
+            // so tell the feedVC that we want to add a new post
+            
+            if (self.selectedIndex == 0) {
+                // the feedVC is on screen so we want a new post right now
+                [feedVC newPost];
+            } else {
+                // the feedVC isn't on screen yet so tell we want a new post after it loads
+                feedVC.newPostAfterLoad = YES;
+                self.selectedIndex = 0;
+            }
         }
     }
 }

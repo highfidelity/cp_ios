@@ -29,7 +29,7 @@
 + (void)setAutomaticCheckins:(BOOL)on;
 + (BOOL)automaticCheckins;
 
-+ (void)addFeedVenue:(CPVenue *)venue;
++ (void)addFeedVenue:(CPVenue *)venue showFeedNow:(BOOL)showFeedNow;
 + (NSDictionary *)feedVenues;
 
 @end
