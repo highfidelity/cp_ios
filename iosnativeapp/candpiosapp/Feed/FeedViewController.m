@@ -57,15 +57,6 @@ typedef enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // setup a background view
-    // and add the timeline to the backgroundView
-    UIView *backgroundView = [[UIView alloc] initWithFrame:self.tableView.frame];
-    UIView *timeLine = [[UIView alloc] initWithFrame:CGRectMake(TIMELINE_ORIGIN_X, 0, 2, backgroundView.frame.size.height)];
-    timeLine.backgroundColor = [UIColor colorWithR:234 G:234 B:234 A:1];
-    [backgroundView addSubview:timeLine];
-    
-    self.tableView.backgroundView = backgroundView;
     
     // subscribe to the applicationDidBecomeActive notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleTableViewState) name:@"applicationDidBecomeActive" object:nil];
@@ -136,7 +127,6 @@ typedef enum {
 
 #define MIN_CELL_HEIGHT 38
 #define PREVIEW_HEADER_CELL_HEIGHT 38
-#define PREVIEW_FOOTER_CELL_HEIGHT 5
 #define UPDATE_LABEL_WIDTH 228
 #define LOVE_LABEL_WIDTH 178
 #define LOVE_PLUS_ONE_LABEL_WIDTH 178
@@ -191,8 +181,6 @@ typedef enum {
     if (!self.selectedVenueFeed) {
         if (indexPath.row == 0) {
             return PREVIEW_HEADER_CELL_HEIGHT;
-        } else if (indexPath.row == [[self venueFeedPreviewForIndex:indexPath.section] posts].count + 1)  {
-            return PREVIEW_FOOTER_CELL_HEIGHT;
         }
     } 
     
@@ -254,10 +242,9 @@ typedef enum {
         CPVenueFeed *sectionVenueFeed = [self venueFeedPreviewForIndex:section];
         
         // there will be one extra cell for the header for each venue feed
-        // and an extra cell for the footer for each venue feed
         
         // there will be a cell for each post in each of the venue feed previews
-        return sectionVenueFeed.posts.count + 2;
+        return sectionVenueFeed.posts.count + 1;
     }
 }
 
@@ -268,7 +255,7 @@ typedef enum {
     if (!self.selectedVenueFeed) {
         CPVenueFeed *sectionVenueFeed = [self venueFeedPreviewForIndex:indexPath.section];
         
-        // check if this is for a header or footer for a venue feed preview
+        // check if this is for a header for a venue feed preview
         if (indexPath.row == 0) {
             static NSString *FeedPreviewHeaderCellIdentifier = @"FeedPreviewHeaderCell";
             UITableViewCell *feedPreviewHeaderCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewHeaderCellIdentifier];
@@ -281,11 +268,6 @@ typedef enum {
             [CPUIHelper changeFontForLabel:venueNameLabel toLeagueGothicOfSize:24];
             
             return feedPreviewHeaderCell;
-        } else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section] - 1) {
-            static NSString *FeedPreviewFooterCellIdentifier = @"FeedPreviewFooterCell";
-            UITableViewCell *feedPreviewFooterCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewFooterCellIdentifier];
-            
-            return feedPreviewFooterCell;
         } else {
             // pull the right post from the feed preview for this venue
             post = [sectionVenueFeed.posts objectAtIndex:(indexPath.row - 1)];
@@ -296,6 +278,7 @@ typedef enum {
     }
     
     PostBaseCell *cell;
+    
     // check if this is a pending entry cell
     if (self.pendingPost && !post.entry) {
         
@@ -406,15 +389,11 @@ typedef enum {
     // setup the entry sender's profile button
     [self loadProfileImageForButton:cell.senderProfileButton photoURL:post.author.photoURL indexPath:indexPath];
     
-    // add background timeline to cell
-    UIView *timeLine = [[UIView alloc] initWithFrame:CGRectMake(TIMELINE_ORIGIN_X, 0, 2, cell.contentView.frame.size.height)];
-    timeLine.backgroundColor = [UIColor colorWithR:234 G:234 B:234 A:1];
-    [timeLine setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
-    [cell.contentView insertSubview:timeLine atIndex:1];
     cell.activeColor = self.tableView.backgroundColor;
     cell.inactiveColor = self.tableView.backgroundColor;
     cell.user = post.author;
     cell.delegate = self;
+
     
     // return the cell
     return cell;
@@ -452,10 +431,8 @@ typedef enum {
 {
     if (!self.selectedVenueFeed) {
         // the user has just tapped on a venue feed preview
-        // make sure they didn't tap the footer
-        if (indexPath.row != [tableView numberOfRowsInSection:indexPath.section] - 1) {
-            [self transitionToVenueFeedForSection:indexPath.section];
-        }
+        // so bring them to that feed
+        [self transitionToVenueFeedForSection:indexPath.section];
     }
 }
 
@@ -583,6 +560,10 @@ typedef enum {
         
         // get venue feed previews
         [self getVenueFeedOrFeedPreviews];
+        
+        // set the proper background color for the tableView
+        self.tableView.backgroundColor = [UIColor colorWithR:242 G:242 B:242 A:1.0];
+        self.tableView.backgroundView = nil;
     } else {
         // this is for a selected venue feed
         
@@ -599,6 +580,19 @@ typedef enum {
         
         // trigger a refresh of the pullToRefreshView which will refresh our data
         [self.tableView.pullToRefreshView triggerRefresh];
+        
+        // set the proper background color for the tableView
+        self.tableView.backgroundColor = [UIColor colorWithR:246 G:247 B:245 A:1.0];
+        
+        // this is a selected venue feed so show the timeline as the background view
+        
+        // setup a background view
+        // and add the timeline to the backgroundView
+        UIView *backgroundView = [[UIView alloc] initWithFrame:self.tableView.frame];
+        UIView *timeLine = [[UIView alloc] initWithFrame:CGRectMake(TIMELINE_ORIGIN_X, 0, 2, backgroundView.frame.size.height)];
+        timeLine.backgroundColor = [UIColor colorWithR:234 G:234 B:234 A:1];
+        [backgroundView addSubview:timeLine];
+        self.tableView.backgroundView = backgroundView;
     }
     
     // no matter what we're switching to we need to reload the tableView
