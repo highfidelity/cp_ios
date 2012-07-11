@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet CPPlaceholderTextView *descriptionTextView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *loveBackground;
 
 - (IBAction)resumeCheckboxPressed:(UIButton *)sender;
 

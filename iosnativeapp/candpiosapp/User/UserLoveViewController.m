@@ -15,6 +15,12 @@
 
 #define LOVE_CHAR_LIMIT 140
 #define inAppItem @"com.coffeeandpower.love1"
+#define HEADER_SKILL_CELL_HEIGHT 38
+#define NORMAL_SKILL_CELL_HEIGHT 35
+#define ICON_LEFT_MARGIN 18
+#define ICON_WIDTH 13
+#define LOADING_SPINNER_TAG 1239
+
 
 @interface UserLoveViewController () <UITextViewDelegate, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 
@@ -37,6 +43,7 @@
 @synthesize descriptionTextView = _descriptionTextView;
 @synthesize navigationBar = _navigationBar;
 @synthesize tableView = _tableView;
+@synthesize loveBackground = _loveBackground;
 @synthesize purchasedLove = _purchasedLove;
 @synthesize sendLoveWithoutPayment = _sendLoveWithoutPayment;
 @synthesize resumeCheckboxActive = _resumeCheckboxActive;
@@ -129,6 +136,17 @@
                 
                 // reload the tableView with the new data
                 [self.tableView reloadData];
+                
+                if (userSkills.count > 1) {
+                    // animate the tableView up so the skill-choosing header appears above the keyboard
+                    [UIView beginAnimations:@"shift-up-skills" context:nil];
+                    self.loveBackground.frame = CGRectMake(self.loveBackground.frame.origin.x, 
+                                                           self.loveBackground.frame.origin.y, 
+                                                           self.loveBackground.frame.size.width, 
+                                                           self.loveBackground.frame.size.height - HEADER_SKILL_CELL_HEIGHT);
+                    self.tableView.frame = CGRectInset(self.tableView.frame, 0, -HEADER_SKILL_CELL_HEIGHT);
+                    [UIView commitAnimations];
+                }
             } else {
                 // error returned from backend
                 // show that to the user
@@ -151,6 +169,7 @@
     [self setCharCounterLabel:nil];
     [self setKeyboardBackground:nil];
     [self setResumeCheckbox:nil];
+    [self setLoveBackground:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     
@@ -331,12 +350,6 @@
 }
 
 # pragma mark - UITableViewDelegate
-
-#define HEADER_SKILL_CELL_HEIGHT 38
-#define NORMAL_SKILL_CELL_HEIGHT 35
-#define ICON_LEFT_MARGIN 18
-#define ICON_WIDTH 13
-#define LOADING_SPINNER_TAG 1239
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

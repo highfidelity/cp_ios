@@ -783,24 +783,24 @@
                                 </items>
                             </navigationBar>
                             <view contentMode="scaleToFill" id="2hh-kk-6yh">
-                                <rect key="frame" x="0.0" y="44" width="320" height="163"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="201"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="CLY-yM-MjS">
                                         <rect key="frame" x="15" y="15" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="43G-dv-hkk" customClass="CPPlaceholderTextView">
-                                        <rect key="frame" x="66" y="6" width="234" height="145"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <rect key="frame" x="66" y="6" width="234" height="183"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert" returnKeyType="send"/>
                                     </textView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="140" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="LbX-Za-MQP">
-                                        <rect key="frame" x="268" y="121" width="42" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <rect key="frame" x="268" y="159" width="42" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -810,7 +810,7 @@
                                 <color key="backgroundColor" red="0.89803921568627454" green="0.8901960784313725" blue="0.85098039215686272" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="UOQ-R0-oNk">
-                                <rect key="frame" x="0.0" y="208" width="320" height="252"/>
+                                <rect key="frame" x="0.0" y="246" width="320" height="214"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" red="0.22745098039215686" green="0.22745098039215686" blue="0.22745098039215686" alpha="1" colorSpace="calibratedRGB"/>
@@ -856,6 +856,7 @@
                     <connections>
                         <outlet property="charCounterLabel" destination="LbX-Za-MQP" id="AfR-de-hlC"/>
                         <outlet property="descriptionTextView" destination="43G-dv-hkk" id="Hnl-Qq-0FP"/>
+                        <outlet property="loveBackground" destination="2hh-kk-6yh" id="bYl-Xt-Q8Q"/>
                         <outlet property="navigationBar" destination="Nhw-F2-Jfo" id="vwG-XF-pGS"/>
                         <outlet property="profilePicture" destination="CLY-yM-MjS" id="Pfs-ZI-xX8"/>
                         <outlet property="resumeCheckbox" destination="5Am-PI-vUx" id="AqX-PI-C5e"/>
@@ -997,6 +998,7 @@
                 <relationship kind="action" name="resumeCheckboxPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="charCounterLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="descriptionTextView" candidateClass="CPPlaceholderTextView"/>
+                <relationship kind="outlet" name="loveBackground" candidateClass="UIView"/>
                 <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
                 <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="resumeCheckbox" candidateClass="UIButton"/>
