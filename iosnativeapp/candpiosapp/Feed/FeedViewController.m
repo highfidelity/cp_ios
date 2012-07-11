@@ -14,6 +14,7 @@
 #import "PostLoveCell.h"
 #import "UserProfileViewController.h"
 #import "SVPullToRefresh.h"
+#import "CPUserAction.h"
 
 #define TIMELINE_ORIGIN_X 50
 
@@ -395,6 +396,16 @@ typedef enum {
 
     // setup the entry sender's profile button
     [self loadProfileImageForButton:cell.senderProfileButton photoURL:post.author.photoURL indexPath:indexPath];
+    
+    // add background timeline to cell
+    UIView *timeLine = [[UIView alloc] initWithFrame:CGRectMake(TIMELINE_ORIGIN_X, 0, 2, cell.contentView.frame.size.height)];
+    timeLine.backgroundColor = [UIColor colorWithR:234 G:234 B:234 A:1];
+    [timeLine setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
+    [cell.contentView insertSubview:timeLine atIndex:1];
+    cell.activeColor = self.tableView.backgroundColor;
+    cell.inactiveColor = self.tableView.backgroundColor;
+    cell.user = post.author;
+    cell.delegate = self;
     
     // return the cell
     return cell;
@@ -1007,6 +1018,37 @@ typedef enum {
         // call beginUpdates and endUpdates to get the tableView to change the height of the first cell
         [self.tableView beginUpdates];
         [self.tableView endUpdates];  
+    }
+}
+
+# pragma mark - CPUserActionCellDelegate
+
+- (void)cell:(CPUserActionCell*)cell didSelectSendLoveToUser:(User*)user 
+{
+    [CPUserAction cell:cell sendLoveFromViewController:self];
+}
+
+- (void)cell:(CPUserActionCell*)cell didSelectSendMessageToUser:(User*)user 
+{
+    [CPUserAction cell:cell sendMessageFromViewController:self];
+}
+
+- (void)cell:(CPUserActionCell*)cell didSelectExchangeContactsWithUser:(User*)user
+{
+    [CPUserAction cell:cell exchangeContactsFromViewController:self];
+}
+
+- (void)cell:(CPUserActionCell*)cell didSelectRowWithUser:(User*)user 
+{
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex 
+{
+    // Exchange contacts if accepted
+    if ([actionSheet title] == kRequestToAddToMyContactsActionSheetTitle) {
+        if (buttonIndex != [actionSheet cancelButtonIndex]) {
+            [CPapi sendContactRequestToUserId:actionSheet.tag];
+        }
     }
 }
 

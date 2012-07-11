@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "CPVenueFeed.h"
+#import "CPUserActionCell.h"
 
-@interface FeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface FeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, CPUserActionCellDelegate>
 
 @property (nonatomic, assign) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) CPVenueFeed *selectedVenueFeed;

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CPUserActionCell.h"
 
-@interface PostBaseCell : UITableViewCell
+@interface PostBaseCell : CPUserActionCell
 
 @property (nonatomic, assign) IBOutlet UIButton *senderProfileButton;
 @property (nonatomic, assign) IBOutlet UILabel *entryLabel;

@@ -1,0 +1,131 @@
+//
+//  CPUserAction.m
+//  candpiosapp
+//
+//  Created by Andrew Hammond on 7/10/12.
+//  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
+//
+
+#import "CPUserAction.h"
+#import "CPUserActionCell.h"
+#import "UserLoveViewController.h"
+#import "OneOnOneChatViewController.h"
+#import "UserProfileViewController.h"
+
+@implementation CPUserAction
+
+# pragma mark - CPUserActionCellDelegate
+
++ (void)cell:(CPUserActionCell*)cell sendLoveFromViewController:(UIViewController*)viewController
+{
+    // only show the love modal if this user is logged in
+    if (![CPUserDefaultsHandler currentUser]) {
+        [CPAppDelegate showLoginBanner];
+        cell.selected = NO;
+        return;
+    }    
+    if (cell.user.userID == [CPUserDefaultsHandler currentUser].userID) {
+        // cheeky response for self-talk
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Self-Love" 
+                                                            message:@"Feeling lonely?  Try sharing some love with other users." 
+                                                           delegate:nil 
+                                                  cancelButtonTitle:@"OK" 
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        return;
+    }
+    if ([CPUserDefaultsHandler currentUser]) {
+        // only show the love modal if this isn't the user themselves
+        if (cell.user.userID != [CPUserDefaultsHandler currentUser].userID) {
+            UserLoveViewController *loveModal = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"SendLoveModal"];
+            loveModal.user = cell.user;
+            
+            [viewController presentModalViewController:loveModal animated:YES];
+        }
+    }    
+}
++ (void)cell:(CPUserActionCell*)cell sendMessageFromViewController:(UIViewController*)viewController
+{
+    // handle chat
+    if (![CPUserDefaultsHandler currentUser]) {
+        [CPAppDelegate showLoginBanner];
+        cell.selected = NO;
+        return;
+    }    
+    if (cell.user.userID == [CPUserDefaultsHandler currentUser].userID) {
+        // cheeky response for self-talk
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Self-Chat" 
+                                                            message:@"It's quicker to chat with yourself in person." 
+                                                           delegate:nil 
+                                                  cancelButtonTitle:@"OK" 
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        return;
+    }
+    // get a user object with resume data.. which includes its contact settings
+    [cell.user loadUserResumeData:^(NSError *error) {
+        if (!error) {
+            if (cell.user.contactsOnlyChat && !cell.user.isContact) {
+                NSString *errorMessage = [NSString stringWithFormat:@"You can not chat with %@ until the two of you have exchanged contact information", cell.user.nickname];
+                [SVProgressHUD showErrorWithStatus:errorMessage
+                                          duration:kDefaultDismissDelay];
+            } else {
+                // push the UserProfileViewController onto the navigation controller stack
+                OneOnOneChatViewController *chatViewController = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"OneOnOneChatView"];
+                chatViewController.user = cell.user; 
+                [viewController.navigationController pushViewController:chatViewController animated:YES];
+            }
+        } else {
+            // error checking for load of user
+            NSLog(@"Error in user load during chat request.");
+        }
+    }];
+}
+
++ (void)cell:(CPUserActionCell*)cell exchangeContactsFromViewController:(UIViewController*)viewController
+{
+    // Offer to exchange contacts
+    // handle chat
+    if (![CPUserDefaultsHandler currentUser]) {
+        [CPAppDelegate showLoginBanner];
+        cell.selected = NO;
+        return;
+    }    
+    if (cell.user.userID == [CPUserDefaultsHandler currentUser].userID) {
+        // cheeky response for self-talk
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Add a Contact" 
+                                                            message:@"You should have already met yourself..." 
+                                                           delegate:nil 
+                                                  cancelButtonTitle:@"OK" 
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        return;
+    }
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:kRequestToAddToMyContactsActionSheetTitle
+                                  delegate:(id<UIActionSheetDelegate>)viewController
+                                  cancelButtonTitle:@"Cancel"
+                                  destructiveButtonTitle:@"Send"
+                                  otherButtonTitles: nil
+                                  ];
+    actionSheet.tag = cell.user.userID;
+    [actionSheet showInView:viewController.view];    
+}
+
++ (void)cell:(CPUserActionCell*)cell showProfileFromViewController:(UIViewController*)viewController
+{
+    if (![CPUserDefaultsHandler currentUser]) {
+        [CPAppDelegate showLoginBanner];
+        cell.selected = NO;
+        return;
+    }
+    UserProfileViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+    // set the user object on the UserProfileVC to the user we just created
+    userVC.user = cell.user;
+    
+    // push the UserProfileViewController onto the navigation controller stack
+    [viewController.navigationController pushViewController:userVC animated:YES];
+}
+
+
+@end
