@@ -66,21 +66,23 @@
 
 - (void)setSelectedIndex:(NSUInteger)selectedIndex
 {
-    if (self.selectedIndex > 0 && 
-        self.selectedIndex <= 4 && 
-        selectedIndex == 0 && 
-        ![CPUserDefaultsHandler currentUser]) {
-        // don't change the selected index here
-        // just show the login banner
-        [self promptForLoginToSeeLogbook:CPAfterLoginActionShowLogbook];
-    } else {
-        // switch to the designated VC
-        [super setSelectedIndex:selectedIndex];
-        
-        // move the green line to the right spot
-        [self.thinBar moveGreenLineToSelectedIndex:selectedIndex];
+    // only try and change things if this isn't already our selected index
+    if (selectedIndex != self.selectedIndex) {
+        if (self.selectedIndex > 0 && 
+            self.selectedIndex <= 4 && 
+            selectedIndex == 0 && 
+            ![CPUserDefaultsHandler currentUser]) {
+            // don't change the selected index here
+            // just show the login banner
+            [self promptForLoginToSeeLogbook:CPAfterLoginActionShowLogbook];
+        } else {
+            // switch to the designated VC
+            [super setSelectedIndex:selectedIndex];
+            
+            // move the green line to the right spot
+            [self.thinBar moveGreenLineToSelectedIndex:selectedIndex];
+        }
     }
-   
 }
 
 - (void)tabBarButtonPressed:(id)sender
@@ -129,18 +131,15 @@
         // if we have a user but they aren't checked in
         // they need to be checked in before they can log
         
-        NSString *alertMessage = @"You must be checked in to post an update. Want to checkin now?";
-        
-        UIAlertView *checkinAlert =  [[UIAlertView alloc] initWithTitle:@"Wait!"
-                                                                message:alertMessage 
+        UIAlertView *checkinAlert =  [[UIAlertView alloc] initWithTitle:@"Choose one"
+                                                                message:nil 
                                                                delegate:self 
-                                                      cancelButtonTitle:@"Cancel" 
-                                                      otherButtonTitles:@"Checkin", nil];
+                                                      cancelButtonTitle:@"Cancel"
+                                                      otherButtonTitles:@"Checkin", @"Post to Feed", nil];
         [checkinAlert show];
         
     } else {
         // the user is logged in and checked in
-        
         // we need to bring them to the feed VC and display the feed for the venue they are checked into
         
         // grab the FeedViewController
@@ -191,6 +190,17 @@
         
         // present that VC modally
         [self presentModalViewController:checkinNVC animated:YES];
+    } else if (buttonIndex != alertView.cancelButtonIndex) {
+        // this is the "Post to Feed" button
+        // tell the Feed TVC that it needs to show only postable feeds
+        
+        FeedViewController *feedVC = [[[self.viewControllers objectAtIndex:0] viewControllers] objectAtIndex:0];
+        
+        // tell the feedVC to switch to showing only postable feeds
+        [feedVC showOnlyPostableFeeds];
+        
+        // make sure our selected index is 0
+        self.selectedIndex = 0;
     }
 }
 

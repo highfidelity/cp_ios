@@ -15,8 +15,10 @@
 @property (nonatomic, assign) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) CPVenueFeed *selectedVenueFeed;
 @property (nonatomic, strong) NSMutableArray *venueFeedPreviews;
+@property (nonatomic, strong) NSMutableArray *postableVenueFeeds;
 @property (nonatomic, assign) BOOL newPostAfterLoad;
 
 - (void)newPost;
+- (void)showOnlyPostableFeeds;
 
 @end

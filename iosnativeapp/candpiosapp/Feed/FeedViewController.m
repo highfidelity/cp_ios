@@ -33,6 +33,7 @@ typedef enum {
 @property (nonatomic, strong) UIView *keyboardBackground;
 @property (nonatomic, strong) UITextView *fakeTextView;
 @property (nonatomic, assign) FeedVCState currentState;
+@property (nonatomic, assign) BOOL previewPostableFeedsOnly;
 
 @end
 
@@ -41,6 +42,7 @@ typedef enum {
 @synthesize tableView = _tableView;
 @synthesize selectedVenueFeed = _selectedVenueFeed;
 @synthesize venueFeedPreviews = _venueFeedPreviews;
+@synthesize postableVenueFeeds = _postableVenueFeeds;
 @synthesize newPostAfterLoad = _newPostAfterLoad;
 @synthesize newEditableCellHeight = _newEditableCellHeight;
 @synthesize pendingPost = _pendingPost;
@@ -48,6 +50,7 @@ typedef enum {
 @synthesize keyboardBackground = _keyboardBackground;
 @synthesize fakeTextView = _fakeTextView;
 @synthesize currentState = _currentState; 
+@synthesize previewPostableFeedsOnly = _previewPostableFeedsOnly;
 
 #pragma mark - View Lifecycle
 
@@ -108,8 +111,8 @@ typedef enum {
 {
     [super viewDidAppear:animated];
     
-    // call toggleSelectedFeedOrFeedPreviews to reload the venue feed previews
-    [self toggleSelectedFeedOrFeedPreviews];
+    // call toggleTableViewState to reload the venue feed previews
+    [self toggleTableViewState];
 }
 
 - (void)setSelectedVenueFeed:(CPVenueFeed *)selectedVenueFeed
@@ -118,7 +121,7 @@ typedef enum {
         _selectedVenueFeed = selectedVenueFeed;        
     }
     
-    [self toggleSelectedFeedOrFeedPreviews];
+    [self toggleTableViewState];
 }
 
 - (NSMutableArray *)venueFeedPreviews
@@ -188,7 +191,7 @@ typedef enum {
     if (!self.selectedVenueFeed) {
         if (indexPath.row == 0) {
             return PREVIEW_HEADER_CELL_HEIGHT;
-        } else if (indexPath.row == [[self.venueFeedPreviews objectAtIndex:indexPath.section] posts].count + 1)  {
+        } else if (indexPath.row == [[self venueFeedPreviewForIndex:indexPath.section] posts].count + 1)  {
             return PREVIEW_FOOTER_CELL_HEIGHT;
         }
     } 
@@ -211,7 +214,7 @@ typedef enum {
         if (self.selectedVenueFeed) {
             post = [self.selectedVenueFeed.posts objectAtIndex:indexPath.row];
         } else {
-            post = [[[self.venueFeedPreviews objectAtIndex:indexPath.section] posts] objectAtIndex:(indexPath.row - 1)];
+            post = [[[self venueFeedPreviewForIndex:indexPath.section] posts] objectAtIndex:(indexPath.row - 1)];
         }
         
         labelHeight = [self labelHeightWithText:[self textForPost:post] labelWidth:[self widthForLabelForPost:post] labelFont:[self fontForPost:post]];
@@ -232,7 +235,13 @@ typedef enum {
 
 - (int)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.selectedVenueFeed ? 1 : self.venueFeedPreviews.count;
+    if (self.selectedVenueFeed) {
+        // this is for a selectedVenueFeed, only one section
+        return 1;
+    } else {
+        // this is for venue feed previews, either all or only postable
+        return self.previewPostableFeedsOnly ? self.postableVenueFeeds.count : self.venueFeedPreviews.count;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -242,7 +251,7 @@ typedef enum {
         return self.selectedVenueFeed.posts.count;
     } else {
         // grab the CPVenueFeed for this section
-        CPVenueFeed *sectionVenueFeed = [self.venueFeedPreviews objectAtIndex:section];
+        CPVenueFeed *sectionVenueFeed = [self venueFeedPreviewForIndex:section];
         
         // there will be one extra cell for the header for each venue feed
         // and an extra cell for the footer for each venue feed
@@ -257,7 +266,7 @@ typedef enum {
     CPPost *post;
 
     if (!self.selectedVenueFeed) {
-        CPVenueFeed *sectionVenueFeed = [self.venueFeedPreviews objectAtIndex:indexPath.section];
+        CPVenueFeed *sectionVenueFeed = [self venueFeedPreviewForIndex:indexPath.section];
         
         // check if this is for a header or footer for a venue feed preview
         if (indexPath.row == 0) {
@@ -445,7 +454,7 @@ typedef enum {
         // the user has just tapped on a venue feed preview
         // make sure they didn't tap the footer
         if (indexPath.row != [tableView numberOfRowsInSection:indexPath.section] - 1) {
-            self.selectedVenueFeed = [self.venueFeedPreviews objectAtIndex:indexPath.section];
+            [self transitionToVenueFeedForSection:indexPath.section];
         }
     }
 }
@@ -457,9 +466,7 @@ typedef enum {
     [self reloadFeedPreviewVenues:notification.object];
 
     // make sure our tabBarController is showing us
-    if (self.tabBarController.selectedIndex != 0) {
-        self.tabBarController.selectedIndex = 0;    
-    }
+    self.tabBarController.selectedIndex = 0;  
 }
 
 - (void)setupForPostEntry
@@ -549,9 +556,18 @@ typedef enum {
     }
 }
 
-- (void)toggleSelectedFeedOrFeedPreviews 
+- (void)toggleTableViewState
 {
     if (!self.selectedVenueFeed) {
+        // this is for venue feed previews (either all feeds or only postable)
+        if (self.previewPostableFeedsOnly) {
+            // our title is the default
+            self.navigationItem.title = @"Choose Feed";
+        } else {
+            // our title is the default
+            self.navigationItem.title = @"Venue Feeds";
+        }
+        
         // no pull to refresh in this table
         self.tableView.showsPullToRefresh = NO;
         
@@ -562,12 +578,11 @@ typedef enum {
         self.navigationItem.leftBarButtonItem = nil;
         [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
         
-        // our title is the default
-        self.navigationItem.title = @"Venue Feeds";
-        
         // get venue feed previews
         [self getVenueFeedOrFeedPreviews];
     } else {
+        // this is for a selected venue feed
+        
         // make sure we don't have the reload button in the top right
         self.navigationItem.rightBarButtonItem = nil;
         
@@ -753,6 +768,75 @@ typedef enum {
     [self.tableView setContentOffset:CGPointMake(0, 0) animated:animated];
 }
 
+- (void)showOnlyPostableFeeds
+{
+    // we only need to download the array of postable feeds if we don't already have it
+    
+    // check if we are already shown (otherwise we're about to be transitioned to by method in CPTabBarController)
+    // if we are then check if
+    BOOL forceDisplayOfList = (self.tabBarController.selectedIndex != 0);
+    if (forceDisplayOfList) {
+        NSLog(@"Forcing list display");
+    }
+    
+    // let the TVC know that we want to only show the postable feeds
+    self.previewPostableFeedsOnly = YES;
+    
+    if (!self.postableVenueFeeds) {
+        // call API function to return array of venue IDs we can post to
+        // assume they are all in our list
+        [CPapi getPostableFeedVenueIDs:^(NSDictionary *json, NSError *error){
+            if (!error) {
+                if (![[json objectForKey:@"error"] boolValue]) {
+                    NSArray *venueIDs = [json objectForKey:@"payload"];
+                    
+                    self.postableVenueFeeds = [NSMutableArray arrayWithCapacity:venueIDs.count];
+                    
+                    for (CPVenueFeed *venueFeed in self.venueFeedPreviews) {
+                        if ([venueIDs containsObject:[NSString stringWithFormat:@"%d", venueFeed.venue.venueID]]) {
+                            // add this venueFeed to the array of postableVenueFeeds
+                            [self.postableVenueFeeds addObject:venueFeed];
+                        }
+                    }
+                    
+                    [self handleTransitionToPostableFeeds:forceDisplayOfList];
+                }
+            }
+        }];
+    } else {
+        [self handleTransitionToPostableFeeds:forceDisplayOfList];
+    }
+}
+
+- (void)handleTransitionToPostableFeeds:(BOOL)forceList
+{
+    if (!forceList && self.selectedVenueFeed && [self.postableVenueFeeds containsObject:self.selectedVenueFeed]) {
+        // no need to change anything, we're looking at a feed that is postable
+        // post to it
+        [self newPost];
+    } else {
+        // make sure the selectedVenueFeed is nil
+        self.selectedVenueFeed = nil;
+        // toggle the tableView state to display the postable feeds
+        [self toggleTableViewState];
+    }
+}
+
+- (CPVenueFeed *)venueFeedPreviewForIndex:(NSInteger)index
+{
+    return self.previewPostableFeedsOnly ? [self.postableVenueFeeds objectAtIndex:index] : [self.venueFeedPreviews objectAtIndex:index];
+}
+
+- (void)transitionToVenueFeedForSection:(NSInteger)section
+{
+    self.selectedVenueFeed = [self venueFeedPreviewForIndex:section];
+    if (self.previewPostableFeedsOnly) {
+        // once the TVC has loaded the feed we want to add a new update
+        self.newPostAfterLoad = YES;
+    }
+    
+}
+
 #pragma mark - IBActions
 - (void)newPost
 {   
@@ -845,7 +929,7 @@ typedef enum {
     } else {
         // we need to show the venue feed for this venue
         // the button's tag is the section for this feed
-        self.selectedVenueFeed = [self.venueFeedPreviews objectAtIndex:button.tag];
+        [self transitionToVenueFeedForSection:button.tag];
     }
 }
 
@@ -855,6 +939,10 @@ typedef enum {
     if (self.pendingPost) {
         [self cancelPost:nil];
     }
+    
+    // we're coming back from a selected feed
+    // we should no longer just be showing postable feeds
+    self.previewPostableFeedsOnly = NO;
     
     // nil out the selectedVenueFeed
     self.selectedVenueFeed = nil;

@@ -673,7 +673,7 @@
     [self makeHTTPRequestWithAction:@"getNearestVenuesAndUsersWithCheckinsDuringInterval" withParameters:params queue:mapQueue timeout:9 completion:completion];
 }
 
-#pragma mark - Logging
+#pragma mark - Feeds
 + (void)getFeedPreviewsForVenueIDs:(NSArray *)venueIDs withCompletion:(void (^)(NSDictionary *, NSError *))completion
 {
     NSError *error;
@@ -714,6 +714,14 @@
     // make the request
     [self makeHTTPRequestWithAction:@"sendUpdate" withParameters:params completion:completion];
     [FlurryAnalytics logEvent:@"newUpdatePost"];
+}
+
++ (void)getPostableFeedVenueIDs:(void (^)(NSDictionary *, NSError *))completion
+{
+    // no params, this is only for the current user
+    
+    // make the request
+    [self makeHTTPRequestWithAction:@"getPostableFeedVenueIDs" withParameters:nil completion:completion];
 }
 
 #pragma mark - Checkins

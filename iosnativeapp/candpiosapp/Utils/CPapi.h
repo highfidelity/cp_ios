@@ -64,6 +64,7 @@
 + (void)sendUpdate:(NSString *)updateText
               atVenue:(CPVenue *)venue
            completion:(void(^)(NSDictionary *json, NSError *error))completion;
++ (void)getPostableFeedVenueIDs:(void (^)(NSDictionary *, NSError *))completion;
 
 
 #pragma mark - Checkins
