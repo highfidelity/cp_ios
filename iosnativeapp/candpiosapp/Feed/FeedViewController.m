@@ -637,7 +637,7 @@ typedef enum {
 - (void)toggleLoadingState:(BOOL)loading
 {
     if (loading) {
-        // show a HUD or the pullToRefreshView
+        // show a HUD unless this is the pull to refresh table
         if (!self.tableView.showsPullToRefresh) {
             [SVProgressHUD showWithStatus:@"Loading..."];
         }
@@ -777,52 +777,45 @@ typedef enum {
     
     // check if we are already shown (otherwise we're about to be transitioned to by method in CPTabBarController)
     // if we are then check if
-    BOOL forceDisplayOfList = (self.tabBarController.selectedIndex != 0);
-    if (forceDisplayOfList) {
-        NSLog(@"Forcing list display");
-    }
+    BOOL forceList = (self.tabBarController.selectedIndex != 0);
     
     // let the TVC know that we want to only show the postable feeds
     self.previewPostableFeedsOnly = YES;
     
-    if (!self.postableVenueFeeds) {
-        // call API function to return array of venue IDs we can post to
-        // assume they are all in our list
-        [CPapi getPostableFeedVenueIDs:^(NSDictionary *json, NSError *error){
-            if (!error) {
-                if (![[json objectForKey:@"error"] boolValue]) {
-                    NSArray *venueIDs = [json objectForKey:@"payload"];
-                    
-                    self.postableVenueFeeds = [NSMutableArray arrayWithCapacity:venueIDs.count];
-                    
-                    for (CPVenueFeed *venueFeed in self.venueFeedPreviews) {
-                        if ([venueIDs containsObject:[NSString stringWithFormat:@"%d", venueFeed.venue.venueID]]) {
-                            // add this venueFeed to the array of postableVenueFeeds
-                            [self.postableVenueFeeds addObject:venueFeed];
-                        }
+    // anytime the user says they want to post a feed for a venue they are not checked into
+    // we call this API function to return array of venue IDs we can post to
+    
+    // assume they are all in our local list of feeds
+    [self toggleLoadingState:YES];
+    
+    [CPapi getPostableFeedVenueIDs:^(NSDictionary *json, NSError *error){
+        if (!error) {
+            if (![[json objectForKey:@"error"] boolValue]) {
+                NSArray *venueIDs = [json objectForKey:@"payload"];
+                self.postableVenueFeeds = [NSMutableArray arrayWithCapacity:venueIDs.count];
+                
+                for (CPVenueFeed *venueFeed in self.venueFeedPreviews) {
+                    if ([venueIDs containsObject:[NSString stringWithFormat:@"%d", venueFeed.venue.venueID]]) {
+                        // add this venueFeed to the array of postableVenueFeeds
+                        [self.postableVenueFeeds addObject:venueFeed];
                     }
-                    
-                    [self handleTransitionToPostableFeeds:forceDisplayOfList];
+                }
+                
+                [self toggleLoadingState:NO];
+                
+                if (!forceList && self.selectedVenueFeed && [self.postableVenueFeeds containsObject:self.selectedVenueFeed]) {
+                    // no need to change anything, we're looking at a feed that is postable
+                    // post to it
+                    [self newPost];
+                } else {
+                    // make sure the selectedVenueFeed is nil
+                    self.selectedVenueFeed = nil;
+                    // toggle the tableView state to display the postable feeds
+                    [self toggleTableViewState];
                 }
             }
-        }];
-    } else {
-        [self handleTransitionToPostableFeeds:forceDisplayOfList];
-    }
-}
-
-- (void)handleTransitionToPostableFeeds:(BOOL)forceList
-{
-    if (!forceList && self.selectedVenueFeed && [self.postableVenueFeeds containsObject:self.selectedVenueFeed]) {
-        // no need to change anything, we're looking at a feed that is postable
-        // post to it
-        [self newPost];
-    } else {
-        // make sure the selectedVenueFeed is nil
-        self.selectedVenueFeed = nil;
-        // toggle the tableView state to display the postable feeds
-        [self toggleTableViewState];
-    }
+        }
+    }];
 }
 
 - (CPVenueFeed *)venueFeedPreviewForIndex:(NSInteger)index
