@@ -96,6 +96,7 @@
     // setup the background view
     self.hiddenView = [[UIView alloc] initWithFrame:self.contentView.frame];
     self.hiddenView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-dark"]];
+    [self.hiddenView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     
     // setup a CGRect that we'll manipulate to add some subviews
     CGRect changeFrame = self.hiddenView.frame;
@@ -108,6 +109,8 @@
     
     // alloc-init a UIImageView for the top gradient
     UIImageView *topGradient = [[UIImageView alloc] initWithFrame:changeFrame];
+    [topGradient setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin];
+
     // give it the gradient image
     topGradient.image = embossedGradient;
     
@@ -116,6 +119,8 @@
     
     // alloc-init a UIImageView for the bottom gradient
     UIImageView *bottomGradient = [[UIImageView alloc] initWithFrame:changeFrame];
+    [bottomGradient setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin];
+    
     // give it the gradient image
     bottomGradient.image = embossedGradient;
     
@@ -149,16 +154,7 @@
     // default colors
     self.activeColor = [CPUIHelper CPTealColor];
     self.inactiveColor = [UIColor colorWithR:51 G:51 B:51 A:1];
-}
-
-- (void)layoutSubviews
-{
-	[super layoutSubviews];
-	
-	[self addSubview:self.hiddenView];
-	[self addSubview:self.contentView];
-	self.hiddenView.frame = self.contentView.frame;
-    
+        
     // Additional buttons for contact exchange and chat
     CGFloat originX = SWITCH_LEFT_MARGIN;
     self.sendLoveButton = [self addToggleWithPrefix:@"send-love" originX:originX selector:@selector(sendLoveAction)];
@@ -166,6 +162,10 @@
     self.sendMessageButton = [self addToggleWithPrefix:@"send-message" originX:originX selector:@selector(sendMessageAction)];
     originX += self.sendMessageButton.frame.size.width + SWITCH_LEFT_MARGIN;
     self.exchangeContactsButton = [self addToggleWithPrefix:@"exchange-contacts" originX:originX selector:@selector(exchangeContactsAction)];
+
+    // add subviews
+	[self addSubview:self.hiddenView];
+	[self addSubview:self.contentView];    
 }
 
 static char BOOLRevealing;
@@ -507,6 +507,7 @@ static char BOOLRevealing;
     [button addTarget:self 
                action:selector 
      forControlEvents:UIControlEventTouchUpInside];
+    [button setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin ];
     [self.hiddenView addSubview:button];
     return button;
 }
