@@ -19,5 +19,4 @@
     [self.senderProfileButton setBackgroundImage:[CPUIHelper defaultProfileImage] forState:UIControlStateNormal];
 }
 
-
 @end

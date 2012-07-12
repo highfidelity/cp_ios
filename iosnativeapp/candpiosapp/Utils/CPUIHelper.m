@@ -249,13 +249,9 @@
 // returns a UIImage with our default profile pic
 // might need to be changed a to larger version if used somewhere that frame is larger than 256x256
 
-static UIImage *defaultProfileImage;
 + (UIImage *)defaultProfileImage
 {
-    if (!defaultProfileImage) {
-        defaultProfileImage = [UIImage imageNamed:@"default-avatar-256"];
-    }
-    return defaultProfileImage;
+    return [UIImage imageNamed:@"default-avatar-256"];
 }
 
 + (void)manageVirtualBadgeForProfileImageView:(UIImageView *)profileImageView

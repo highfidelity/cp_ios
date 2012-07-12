@@ -25,6 +25,13 @@ typedef enum {
     FeedVCStateSentNewPost
 } FeedVCState;
 
+typedef enum {
+    FeedBGContainerPositionTop,
+    FeedBGContainerPositionMiddle,
+    FeedBGContainerPositionBottom,
+    FeedBGContainerPositionNA
+} FeedBGContainerPosition;
+
 @interface FeedViewController () <HPGrowingTextViewDelegate>
 
 @property (nonatomic, assign) float newEditableCellHeight;
@@ -123,13 +130,19 @@ typedef enum {
     return _venueFeedPreviews;
 }
 
-#pragma mark - Table view delegate
+#pragma mark - Table view helper methods
 
 #define MIN_CELL_HEIGHT 38
+#define LABEL_BOTTOM_MARGIN 17
+#define LAST_PREVIEW_POST_MIN_CELL_HEIGHT 27
+#define LAST_PREVIEW_POST_LABEL_BOTTOM_MARGIN 5
 #define PREVIEW_HEADER_CELL_HEIGHT 38
+#define PREVIEW_FOOTER_CELL_HEIGHT 27
 #define UPDATE_LABEL_WIDTH 228
 #define LOVE_LABEL_WIDTH 178
 #define LOVE_PLUS_ONE_LABEL_WIDTH 178
+#define CONTAINER_IMAGE_VIEW_TAG 2819
+#define TIMELINE_VIEW_TAG 2820
 
 - (NSString *)textForPost:(CPPost *)post
 {
@@ -174,13 +187,135 @@ typedef enum {
     
 }
 
+- (CGFloat)cellHeightWithLabelHeight:(CGFloat)labelHeight indexPath:(NSIndexPath *)indexPath
+{
+    CGFloat cellHeight = labelHeight;
+    CGFloat bottomMargin;
+    CGFloat minCellHeight;
+    
+    // keep a 17 pt margin
+    // but only if this isn't the last post in a preview
+    if (self.selectedVenueFeed ||
+        (indexPath.row < [[self venueFeedPreviewForIndex:indexPath.section] posts].count)) {
+        // use the default bottom margin and top margin
+        bottomMargin = LABEL_BOTTOM_MARGIN;
+        minCellHeight = MIN_CELL_HEIGHT; 
+    } else {
+        // keep the right bottom margin for this last post
+        bottomMargin = LAST_PREVIEW_POST_LABEL_BOTTOM_MARGIN;
+        
+        // this is the last cell in a preview so reduce the minCellHeight
+        minCellHeight = LAST_PREVIEW_POST_MIN_CELL_HEIGHT;
+    }
+    
+    // give the appropriate bottomMargin to this cell
+    cellHeight += bottomMargin;
+    
+    // make sure labelHeight isn't smaller than our min cell height
+    cellHeight = cellHeight > minCellHeight ? cellHeight : minCellHeight;
+    
+    return cellHeight;
+}
+
+- (UIImageView *)containerImageViewForPosition:(FeedBGContainerPosition)position containerHeight:(CGFloat)containerHeight
+{
+    NSString *filename;
+    UIEdgeInsets insets;
+    
+    // switch-case to set variables dependent on the position this is for
+    switch (position) {
+        case FeedBGContainerPositionTop:
+            filename = @"venue-feed-bg-container-top";
+            insets = UIEdgeInsetsMake(6, 0, 0, 0);
+            containerHeight = PREVIEW_HEADER_CELL_HEIGHT;
+            break;
+        case FeedBGContainerPositionMiddle:
+            filename = @"venue-feed-bg-container-middle";
+            insets = UIEdgeInsetsMake(0, 0, 0, 0);
+            break;
+        case FeedBGContainerPositionBottom:
+            insets = UIEdgeInsetsMake(0, 0, 6, 0);
+            filename = @"venue-feed-bg-container-bottom";
+            break;
+        default:
+            break;
+    }
+    
+    UIImage *containerImage = [[UIImage imageNamed:filename] resizableImageWithCapInsets:insets];
+    
+    // create a UIImageView with the image
+    UIImageView *containerImageView = [[UIImageView alloc] initWithImage:containerImage];
+    
+    // change the frame of the imageView to leave spacing on the side
+    CGRect containerIVFrame = containerImageView.frame;
+    containerIVFrame.origin.x = 10;
+    containerIVFrame.size.width = 305;
+    containerIVFrame.size.height = containerHeight;
+    containerImageView.frame = containerIVFrame;
+    
+    
+    // give the UIImageView a tag so we can check for its presence later
+    containerImageView.tag = CONTAINER_IMAGE_VIEW_TAG;
+    
+    return containerImageView;
+}
+
+- (UIView *)timelineViewWithHeight:(CGFloat)height
+{
+    // alloc-init the timeline view
+    UIView *timeLine = [[UIView alloc] initWithFrame:CGRectMake(TIMELINE_ORIGIN_X, 0, 2, height)];
+    
+    // give it the right color
+    timeLine.backgroundColor = [UIColor colorWithR:234 G:234 B:234 A:1];
+    
+    // allow it to autoresize with the view
+    timeLine.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    
+    // give it a tag so we can verify presence later
+    timeLine.tag = TIMELINE_VIEW_TAG;
+    
+    return timeLine;
+}
+
+- (void)setupSpecialViewForCell:(UITableViewCell *)cell 
+                     viewHeight:(CGFloat)viewHeight 
+                       position:(FeedBGContainerPosition)position
+{
+    int desiredViewTag = (self.selectedVenueFeed ? TIMELINE_VIEW_TAG : CONTAINER_IMAGE_VIEW_TAG);
+    int killViewTag = (self.selectedVenueFeed ? CONTAINER_IMAGE_VIEW_TAG : TIMELINE_VIEW_TAG);
+    
+    // remove the undesired view, if it exists
+    [[cell viewWithTag:killViewTag] removeFromSuperview];
+    
+    UIView *viewToAdd;
+    
+    // add the viewToAdd if it doesn't already exist on this cell
+    if (!(viewToAdd = [cell.contentView viewWithTag:desiredViewTag])) {
+        viewToAdd = self.selectedVenueFeed ? [self timelineViewWithHeight:viewHeight] : 
+                                             [self containerImageViewForPosition:position containerHeight:viewHeight];
+        
+        // add that view to the cell's contentView
+        [cell.contentView insertSubview:viewToAdd atIndex:0];
+        
+    } else if (self.selectedVenueFeed || position == FeedBGContainerPositionMiddle) {
+        // adjust the view's height if required
+        CGRect viewHeightFix = viewToAdd.frame;
+        viewHeightFix.size.height = viewHeight;
+        viewToAdd.frame = viewHeightFix;
+    }
+}
+
+#pragma mark - Table view delegate
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat labelHeight;
+    CGFloat cellHeight;
     
     if (!self.selectedVenueFeed) {
         if (indexPath.row == 0) {
             return PREVIEW_HEADER_CELL_HEIGHT;
+        } else if (indexPath.row == [[self venueFeedPreviewForIndex:indexPath.section] posts].count + 1) {
+            return PREVIEW_FOOTER_CELL_HEIGHT;
         }
     } 
     
@@ -189,7 +324,7 @@ typedef enum {
         // for which we might have a changed height
         
         // check if we have a new cell height which is larger than our min height and grow to that size
-        labelHeight = self.newEditableCellHeight > MIN_CELL_HEIGHT ? self.newEditableCellHeight : MIN_CELL_HEIGHT;
+        cellHeight = self.newEditableCellHeight > MIN_CELL_HEIGHT ? self.newEditableCellHeight : MIN_CELL_HEIGHT;
         
         // reset the newEditableCellHeight to 0
         self.newEditableCellHeight = 0;
@@ -198,24 +333,24 @@ typedef enum {
         // grab the entry this is for so we can change the height of the cell accordingly
         
         CPPost *post;
+        BOOL lastPost;
         
         if (self.selectedVenueFeed) {
             post = [self.selectedVenueFeed.posts objectAtIndex:indexPath.row];
         } else {
-            post = [[[self venueFeedPreviewForIndex:indexPath.section] posts] objectAtIndex:(indexPath.row - 1)];
+            NSArray *posts = [[self venueFeedPreviewForIndex:indexPath.section] posts];
+            post = [posts objectAtIndex:(indexPath.row - 1)];
+            
+            lastPost = (indexPath.row - 1 == posts.count);
         }
         
-        labelHeight = [self labelHeightWithText:[self textForPost:post] labelWidth:[self widthForLabelForPost:post] labelFont:[self fontForPost:post]];
-                
-        // keep a 17 pt margin
-        labelHeight += 17;
+        CGFloat labelHeight = [self labelHeightWithText:[self textForPost:post] labelWidth:[self widthForLabelForPost:post] labelFont:[self fontForPost:post]];
         
-        // make sure labelHeight isn't smaller than our min cell height
-        labelHeight = labelHeight > MIN_CELL_HEIGHT ? labelHeight : MIN_CELL_HEIGHT;
+        cellHeight = [self cellHeightWithLabelHeight:labelHeight indexPath:indexPath];
     }
     
     // return the calculated labelHeight
-    return labelHeight;
+    return cellHeight;
 }
 
 #pragma mark - Table view data source
@@ -242,9 +377,10 @@ typedef enum {
         CPVenueFeed *sectionVenueFeed = [self venueFeedPreviewForIndex:section];
         
         // there will be one extra cell for the header for each venue feed
+        // and one for the footer of each feed
         
         // there will be a cell for each post in each of the venue feed previews
-        return sectionVenueFeed.posts.count + 1;
+        return sectionVenueFeed.posts.count + 2;
     }
 }
 
@@ -255,11 +391,16 @@ typedef enum {
     if (!self.selectedVenueFeed) {
         CPVenueFeed *sectionVenueFeed = [self venueFeedPreviewForIndex:indexPath.section];
         
-        // check if this is for a header for a venue feed preview
+        // check if this is for a header 
+        // or a footer for a venue feed preview
         if (indexPath.row == 0) {
             static NSString *FeedPreviewHeaderCellIdentifier = @"FeedPreviewHeaderCell";
             UITableViewCell *feedPreviewHeaderCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewHeaderCellIdentifier];
             
+            [self setupSpecialViewForCell:feedPreviewHeaderCell 
+                               viewHeight:PREVIEW_HEADER_CELL_HEIGHT 
+                                 position:FeedBGContainerPositionTop];
+                        
             // grab the label for the venue name
             UILabel *venueNameLabel = (UILabel *)[feedPreviewHeaderCell viewWithTag:5382];
             
@@ -268,6 +409,20 @@ typedef enum {
             [CPUIHelper changeFontForLabel:venueNameLabel toLeagueGothicOfSize:24];
             
             return feedPreviewHeaderCell;
+        } else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section] - 1) {
+            static NSString *FeedPreviewFooterCellIdentifier = @"FeedPreviewFooterCell";
+            UITableViewCell *feedPreviewFooterCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewFooterCellIdentifier];
+            
+            if (!feedPreviewFooterCell) {
+                feedPreviewFooterCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:FeedPreviewFooterCellIdentifier];
+            }
+            
+            // containerHeight needs to be the cellHeight minus the desired separation between the feed previews
+            [self setupSpecialViewForCell:feedPreviewFooterCell 
+                               viewHeight:PREVIEW_FOOTER_CELL_HEIGHT - 9 
+                                 position:FeedBGContainerPositionBottom];
+            
+            return feedPreviewFooterCell;
         } else {
             // pull the right post from the feed preview for this venue
             post = [sectionVenueFeed.posts objectAtIndex:(indexPath.row - 1)];
@@ -286,22 +441,10 @@ typedef enum {
         NewPostCell *newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewEntryCellIdentifier];
         
         newEntryCell.entryLabel.text = @"Update:";
-        newEntryCell.entryLabel.textColor = [CPUIHelper CPTealColor];
+        newEntryCell.entryLabel.textColor = [CPUIHelper CPTealColor];      
         
-        // NOTE: we're resetting attributes on the HPGrowingTextView here that only need to be set once
-        // if the tableView is sluggish it's probably worth laying out the NewpostCell and postCell
-        // programatically so that it's only done once.
-        
-        // set the required properties on the HPGrowingTextView
-        newEntryCell.growingTextView.internalTextView.contentInset = UIEdgeInsetsMake(0, -8, 0, 0);
+        // be the delegate of the HPGrowingTextView on this cell
         newEntryCell.growingTextView.delegate = self;
-        newEntryCell.growingTextView.font = [UIFont systemFontOfSize:12];
-        newEntryCell.growingTextView.textColor = [UIColor colorWithR:100 G:100 B:100 A:1];
-        newEntryCell.growingTextView.backgroundColor = [UIColor clearColor];
-        newEntryCell.growingTextView.minNumberOfLines = 1;
-        newEntryCell.growingTextView.maxNumberOfLines = 20;
-        newEntryCell.growingTextView.returnKeyType = UIReturnKeyDone;
-        newEntryCell.growingTextView.keyboardAppearance = UIKeyboardAppearanceAlert;
         
         // get the cursor to the right place
         // by padding it with leading spaces
@@ -389,11 +532,15 @@ typedef enum {
     // setup the entry sender's profile button
     [self loadProfileImageForButton:cell.senderProfileButton photoURL:post.author.photoURL indexPath:indexPath];
     
+    // final cell setup for container background or timeline view
+    [self setupSpecialViewForCell:cell 
+                       viewHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height indexPath:indexPath] 
+                         position:(self.selectedVenueFeed ? FeedBGContainerPositionNA : FeedBGContainerPositionMiddle)];
+    
     cell.activeColor = self.tableView.backgroundColor;
     cell.inactiveColor = self.tableView.backgroundColor;
     cell.user = post.author;
     cell.delegate = self;
-
     
     // return the cell
     return cell;
@@ -402,8 +549,13 @@ typedef enum {
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (self.selectedVenueFeed) {
+        // selected feed view needs a 15pt header
         return 15;
+    } else if (section == 0) {
+        // first header in venue feed previews should match spacing
+        return 9;
     } else {
+        // no header required
         return 0;
     }
 }
@@ -415,7 +567,8 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (self.selectedVenueFeed) {
+    if (self.selectedVenueFeed || section == [tableView numberOfSections] - 1) {
+        // give the tableView a footer so that the bottom cells clear the button
         return [CPAppDelegate tabBarController].thinBar.leftButton.frame.size.width / 2;
     } else {
         return 0;
@@ -564,6 +717,10 @@ typedef enum {
         // set the proper background color for the tableView
         self.tableView.backgroundColor = [UIColor colorWithR:242 G:242 B:242 A:1.0];
         self.tableView.backgroundView = nil;
+        
+        // don't show the scroll indicator in feed previews
+        self.tableView.showsVerticalScrollIndicator = NO;
+        
     } else {
         // this is for a selected venue feed
         
@@ -588,11 +745,13 @@ typedef enum {
         
         // setup a background view
         // and add the timeline to the backgroundView
-        UIView *backgroundView = [[UIView alloc] initWithFrame:self.tableView.frame];
-        UIView *timeLine = [[UIView alloc] initWithFrame:CGRectMake(TIMELINE_ORIGIN_X, 0, 2, backgroundView.frame.size.height)];
-        timeLine.backgroundColor = [UIColor colorWithR:234 G:234 B:234 A:1];
-        [backgroundView addSubview:timeLine];
+        UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 1)];
+        [backgroundView addSubview:[self timelineViewWithHeight:1]];
+        backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         self.tableView.backgroundView = backgroundView;
+        
+        // show the scroll inidicator in a selected feed
+        self.tableView.showsVerticalScrollIndicator = YES;
     }
     
     // no matter what we're switching to we need to reload the tableView

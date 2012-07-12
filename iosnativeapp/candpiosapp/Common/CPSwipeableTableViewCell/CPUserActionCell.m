@@ -568,13 +568,10 @@ static char BOOLRevealing;
     } else if (button == self.exchangeContactsButton) {
         prefix = @"exchange-contacts";
     }
+   
     if (button.isHighlighted) { 
         [CPSoundEffectsManager playSoundWithSystemSoundID:
          [CPSoundEffectsManager systemSoundIDForSoundWithName:[prefix stringByAppendingString:@"-on"] type:@"aif"]];
-    } else { 
-// TODO: Revisit the sounds and restore the off sound if necessary
-//        [CPSoundEffectsManager playSoundWithSystemSoundID:
-//         [CPSoundEffectsManager systemSoundIDForSoundWithName:[prefix stringByAppendingString:@"-off"] type:@"aif"]];
     }
 }
 
