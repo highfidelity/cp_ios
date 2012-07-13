@@ -984,6 +984,9 @@ typedef enum {
                     // make sure the selectedVenueFeed is nil
                     // that will also toggle the tableView state
                     self.selectedVenueFeed = nil;
+                    
+                    // add a cancel button in the top right so the user can go back to all feeds
+                    [self cancelButtonForRightNavigationItem];
                 }
             }
         }
@@ -1003,6 +1006,12 @@ typedef enum {
         self.newPostAfterLoad = YES;
     }
     
+}
+
+- (void)cancelButtonForRightNavigationItem
+{
+    // add a cancel button to our nav bar so the user can drop out of creation
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPost:)];
 }
 
 #pragma mark - IBActions
@@ -1037,8 +1046,7 @@ typedef enum {
         // we need the keyboard to know that we're asking for this change
         self.currentState = FeedVCStateAddingOrRemovingPendingPost;
         
-        // add a cancel button to our nav bar so the user can drop out of creation
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPost:)];
+        [self cancelButtonForRightNavigationItem];
         
         // tell the tableView to stop scrolling, it'll be completed by the keyboard being displayed
         self.tableView.contentOffset = self.tableView.contentOffset;
@@ -1058,8 +1066,14 @@ typedef enum {
 }
 
 - (IBAction)cancelPost:(id)sender {
-    // don't allow a double tap on the cancel button to crash the app
-    if (self.currentState != FeedVCStateAddingOrRemovingPendingPost) {
+    if (!self.selectedVenueFeed) {
+        // the user is looking at the list postable feeds and wants to switch to the list of all feeds
+        self.previewPostableFeedsOnly = NO;
+        [self toggleTableViewState];
+    } else if (self.currentState != FeedVCStateAddingOrRemovingPendingPost) {
+        // confirm the currentState is correct so that we
+        // don't allow a double tap on the cancel button to crash the app
+        
         // user is cancelling new post
         
         // remove the pending post from our array of posts
