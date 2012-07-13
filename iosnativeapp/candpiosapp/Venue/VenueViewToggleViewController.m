@@ -10,36 +10,24 @@
 #import "VenueListTableViewController.h"
 
 @interface VenueViewToggleViewController ()
-@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (strong, nonatomic) MapTabController *venueMapController;
 @property (strong, nonatomic) VenueListTableViewController *venueListController;
 
+- (void)mapListTogglePressed:(id)mapListTogglePressed;
 @end
 
 @implementation VenueViewToggleViewController
-@synthesize segmentedControl = _segmentedControl;
 @synthesize venueMapController = _venueMapController;
 @synthesize venueListController = _venueListController;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // use league gothic for the text in the segmented control
-    [self.segmentedControl setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIFont fontWithName:@"LeagueGothic" size:16] forKey:UITextAttributeFont] forState:UIControlStateNormal];
 
-    UIImage *headerButtonImage = [UIImage imageNamed:@"header-button.png"];
-    headerButtonImage = [headerButtonImage stretchableImageWithLeftCapWidth:7
-                                                               topCapHeight:0];
-    [self.segmentedControl setBackgroundImage:headerButtonImage
-                                     forState:UIControlStateNormal
-                                   barMetrics:UIBarMetricsDefault];
-
-    UIImage *dividerImage = [UIImage imageNamed:@"divider-button.png"];
-    [self.segmentedControl setDividerImage:dividerImage
-                       forLeftSegmentState:UIControlStateNormal
-                         rightSegmentState:UIControlStateNormal
-                                barMetrics:UIBarMetricsDefault];
+    [[self navigationItem] setRightBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"List"
+                                                                                  style:UIBarButtonItemStylePlain 
+                                                                                 target:self 
+                                                                                 action:@selector(mapListTogglePressed:)]];
 
     // grab both view controllers from the storyboard
     self.venueMapController = [CPAppDelegate settingsMenuController].mapTabController;
@@ -53,9 +41,21 @@
     [self showViewController:self.venueMapController];
 }
 
+- (void)mapListTogglePressed:(UIBarButtonItem *)sender
+{
+    UIViewController *currentVC = [sender.title isEqualToString:@"List"] ? self.venueMapController : self.venueListController;
+    UIViewController *nextVC = [sender.title isEqualToString:@"List"] ? self.venueListController : self.venueMapController;
+
+    sender.title = [sender.title isEqualToString:@"List"] ? @"Map": @"List";
+
+    [currentVC.view removeFromSuperview];
+
+    [self showViewController:nextVC];
+
+}
+
 - (void)viewDidUnload
 {
-    [self setSegmentedControl:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -66,15 +66,6 @@
     // place the settings button on the navigation item if required
     // or remove it if the user isn't logged in
     [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
-}
-
-- (IBAction)segmentChanged:(UISegmentedControl *)sender {
-    UIViewController *currentVC = sender.selectedSegmentIndex ? self.venueMapController : self.venueListController;
-    UIViewController *nextVC = sender.selectedSegmentIndex ? self.venueListController : self.venueMapController;
-
-    [currentVC.view removeFromSuperview];
-    
-    [self showViewController:nextVC];
 }
 
 - (void)showViewController:(UIViewController *)newVC

@@ -89,24 +89,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Venues" id="UoU-aa-7Xt">
-                        <barButtonItem key="rightBarButtonItem" id="Agh-mq-UdG">
-                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="FV5-Bf-Ljg">
-                                <rect key="frame" x="238" y="7" width="77" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Map"/>
-                                    <segment title="List"/>
-                                </segments>
-                                <connections>
-                                    <action selector="segmentChanged:" destination="SDa-jH-fe5" eventType="valueChanged" id="DaW-cv-NWq"/>
-                                </connections>
-                            </segmentedControl>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="segmentedControl" destination="FV5-Bf-Ljg" id="hdP-75-HYR"/>
-                    </connections>
+                    <navigationItem key="navigationItem" title="Venues" id="UoU-aa-7Xt"/>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="-429" y="-1156"/>
