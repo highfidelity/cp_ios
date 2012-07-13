@@ -21,4 +21,6 @@
 - (void)newPost;
 - (void)showOnlyPostableFeeds;
 
++ (UIView *)timelineViewWithHeight:(CGFloat)height;
+
 @end

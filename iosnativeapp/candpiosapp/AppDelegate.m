@@ -585,7 +585,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    NSLog(@"didfailwitherror");
+    NSLog(@"Location Manager failed with error: %@", error.localizedDescription);
 }
 
 #pragma mark - Appearance Styles

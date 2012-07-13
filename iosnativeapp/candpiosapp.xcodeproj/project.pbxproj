@@ -315,6 +315,8 @@
 		53E1F0CA1546430C00131042 /* splash-screen-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53E1F0C81546430C00131042 /* splash-screen-logo@2x.png */; };
 		53E2062C150596180000FA8D /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53E2062A150596180000FA8D /* MainStoryboard_iPhone.storyboard */; };
 		53E4EC0A150EDD6100DB236A /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 53E4EC09150EDD6100DB236A /* SVProgressHUD.bundle */; };
+		53F1102C15AF9CDC00EC75D3 /* list-arrow-big-light-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F1102A15AF9CDC00EC75D3 /* list-arrow-big-light-grey.png */; };
+		53F1102D15AF9CDC00EC75D3 /* list-arrow-big-light-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F1102B15AF9CDC00EC75D3 /* list-arrow-big-light-grey@2x.png */; };
 		53FD32F715915102000448EF /* tab-login.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FD32F515915102000448EF /* tab-login.png */; };
 		53FD32F815915102000448EF /* tab-login@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FD32F615915102000448EF /* tab-login@2x.png */; };
 		53FE254F150EA60D00A0D93A /* PaymentHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE254D150EA50A00A0D93A /* PaymentHelper.m */; };
@@ -929,6 +931,8 @@
 		53E1F0C81546430C00131042 /* splash-screen-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "splash-screen-logo@2x.png"; path = "candpiosapp/Login/images/splash-screen-logo@2x.png"; sourceTree = SOURCE_ROOT; };
 		53E2062B150596180000FA8D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		53E4EC09150EDD6100DB236A /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		53F1102A15AF9CDC00EC75D3 /* list-arrow-big-light-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list-arrow-big-light-grey.png"; sourceTree = "<group>"; };
+		53F1102B15AF9CDC00EC75D3 /* list-arrow-big-light-grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list-arrow-big-light-grey@2x.png"; sourceTree = "<group>"; };
 		53FD32F515915102000448EF /* tab-login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-login.png"; sourceTree = "<group>"; };
 		53FD32F615915102000448EF /* tab-login@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-login@2x.png"; sourceTree = "<group>"; };
 		53FE254C150EA50A00A0D93A /* PaymentHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaymentHelper.h; path = Payment/PaymentHelper.h; sourceTree = "<group>"; };
@@ -1551,6 +1555,8 @@
 		533E5EDF15A3A88C0042862E /* images */ = {
 			isa = PBXGroup;
 			children = (
+				53F1102A15AF9CDC00EC75D3 /* list-arrow-big-light-grey.png */,
+				53F1102B15AF9CDC00EC75D3 /* list-arrow-big-light-grey@2x.png */,
 				5361D0B015AE423F00C5682E /* venue-feed-bg-container-bottom.png */,
 				5361D0B115AE423F00C5682E /* venue-feed-bg-container-bottom@2x.png */,
 				5361D0B215AE423F00C5682E /* venue-feed-bg-container-middle.png */,
@@ -2830,6 +2836,8 @@
 				5361D0B915AE423F00C5682E /* venue-feed-bg-container-middle@2x.png in Resources */,
 				5361D0BA15AE423F00C5682E /* venue-feed-bg-container-top.png in Resources */,
 				5361D0BB15AE423F00C5682E /* venue-feed-bg-container-top@2x.png in Resources */,
+				53F1102C15AF9CDC00EC75D3 /* list-arrow-big-light-grey.png in Resources */,
+				53F1102D15AF9CDC00EC75D3 /* list-arrow-big-light-grey@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

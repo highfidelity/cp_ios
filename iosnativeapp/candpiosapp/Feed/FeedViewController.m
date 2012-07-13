@@ -16,8 +16,6 @@
 #import "SVPullToRefresh.h"
 #import "CPUserAction.h"
 
-#define TIMELINE_ORIGIN_X 50
-
 typedef enum {
     FeedVCStateDefault,
     FeedVCStateReloadingFeed,
@@ -28,8 +26,7 @@ typedef enum {
 typedef enum {
     FeedBGContainerPositionTop,
     FeedBGContainerPositionMiddle,
-    FeedBGContainerPositionBottom,
-    FeedBGContainerPositionNA
+    FeedBGContainerPositionBottom
 } FeedBGContainerPosition;
 
 @interface FeedViewController () <HPGrowingTextViewDelegate>
@@ -143,6 +140,7 @@ typedef enum {
 #define LOVE_PLUS_ONE_LABEL_WIDTH 178
 #define CONTAINER_IMAGE_VIEW_TAG 2819
 #define TIMELINE_VIEW_TAG 2820
+#define TIMELINE_ORIGIN_X 50
 
 - (NSString *)textForPost:(CPPost *)post
 {
@@ -248,11 +246,31 @@ typedef enum {
     
     // change the frame of the imageView to leave spacing on the side
     CGRect containerIVFrame = containerImageView.frame;
-    containerIVFrame.origin.x = 10;
+    containerIVFrame.origin.x = 7.5;
     containerIVFrame.size.width = 305;
     containerIVFrame.size.height = containerHeight;
     containerImageView.frame = containerIVFrame;
     
+    if (position != FeedBGContainerPositionMiddle) {
+        CGFloat timelineHeight = (position == FeedBGContainerPositionTop) ? 2 : (containerHeight - 2);
+        
+        UIView *timelineView = [[self class] timelineViewWithHeight:timelineHeight];
+        
+        // make adjustments to the timeLine autoresizing and frame
+        timelineView.autoresizingMask = UIViewAutoresizingNone;
+        
+        CGRect timelineFrame = timelineView.frame;
+        timelineFrame.origin.x = TIMELINE_ORIGIN_X - containerIVFrame.origin.x;
+        
+        if (position == FeedBGContainerPositionTop) {
+            timelineFrame.origin.y = containerIVFrame.size.height - timelineHeight;
+        }
+        
+        timelineView.frame = timelineFrame;
+        
+        // add the timeline to the containerImageView
+        [containerImageView addSubview:timelineView];
+    }
     
     // give the UIImageView a tag so we can check for its presence later
     containerImageView.tag = CONTAINER_IMAGE_VIEW_TAG;
@@ -260,48 +278,33 @@ typedef enum {
     return containerImageView;
 }
 
-- (UIView *)timelineViewWithHeight:(CGFloat)height
-{
-    // alloc-init the timeline view
-    UIView *timeLine = [[UIView alloc] initWithFrame:CGRectMake(TIMELINE_ORIGIN_X, 0, 2, height)];
-    
-    // give it the right color
-    timeLine.backgroundColor = [UIColor colorWithR:234 G:234 B:234 A:1];
-    
-    // allow it to autoresize with the view
-    timeLine.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    
-    // give it a tag so we can verify presence later
-    timeLine.tag = TIMELINE_VIEW_TAG;
-    
-    return timeLine;
-}
-
-- (void)setupSpecialViewForCell:(UITableViewCell *)cell 
-                     viewHeight:(CGFloat)viewHeight 
+- (void)setupContainerBackgroundForCell:(UITableViewCell *)cell 
+                     containerHeight:(CGFloat)containerHeight 
                        position:(FeedBGContainerPosition)position
-{
-    int desiredViewTag = (self.selectedVenueFeed ? TIMELINE_VIEW_TAG : CONTAINER_IMAGE_VIEW_TAG);
-    int killViewTag = (self.selectedVenueFeed ? CONTAINER_IMAGE_VIEW_TAG : TIMELINE_VIEW_TAG);
-    
-    // remove the undesired view, if it exists
-    [[cell viewWithTag:killViewTag] removeFromSuperview];
-    
-    UIView *viewToAdd;
+{    
+    UIView *containerView;
     
     // add the viewToAdd if it doesn't already exist on this cell
-    if (!(viewToAdd = [cell.contentView viewWithTag:desiredViewTag])) {
-        viewToAdd = self.selectedVenueFeed ? [self timelineViewWithHeight:viewHeight] : 
-                                             [self containerImageViewForPosition:position containerHeight:viewHeight];
+    if (!(containerView = [cell.contentView viewWithTag:CONTAINER_IMAGE_VIEW_TAG])) {
+        containerView = [self containerImageViewForPosition:position containerHeight:containerHeight];
         
         // add that view to the cell's contentView
-        [cell.contentView insertSubview:viewToAdd atIndex:0];
+        [cell.contentView insertSubview:containerView atIndex:0];
         
-    } else if (self.selectedVenueFeed || position == FeedBGContainerPositionMiddle) {
-        // adjust the view's height if required
-        CGRect viewHeightFix = viewToAdd.frame;
-        viewHeightFix.size.height = viewHeight;
-        viewToAdd.frame = viewHeightFix;
+    } else {
+        if (position == FeedBGContainerPositionMiddle) {
+            // adjust the view's height if required
+            CGRect viewHeightFix = containerView.frame;
+            viewHeightFix.size.height = containerHeight;
+            containerView.frame = viewHeightFix;
+        } else if (self.previewPostableFeedsOnly) {
+            // make sure the timeline views are removed from the header and footer
+            [containerView viewWithTag:TIMELINE_VIEW_TAG].hidden = YES;
+        } else {
+            // make sure the timeline views are shown in the header and footer
+            [containerView viewWithTag:TIMELINE_VIEW_TAG].hidden = NO;
+        }
+        
     }
 }
 
@@ -314,7 +317,7 @@ typedef enum {
     if (!self.selectedVenueFeed) {
         if (indexPath.row == 0) {
             return PREVIEW_HEADER_CELL_HEIGHT;
-        } else if (indexPath.row == [[self venueFeedPreviewForIndex:indexPath.section] posts].count + 1) {
+        } else if (indexPath.row == (self.previewPostableFeedsOnly ? 1 : [[self venueFeedPreviewForIndex:indexPath.section] posts].count + 1)) {
             return PREVIEW_FOOTER_CELL_HEIGHT;
         }
     } 
@@ -373,14 +376,19 @@ typedef enum {
     if (self.selectedVenueFeed) {
         return self.selectedVenueFeed.posts.count;
     } else {
-        // grab the CPVenueFeed for this section
-        CPVenueFeed *sectionVenueFeed = [self venueFeedPreviewForIndex:section];
-        
-        // there will be one extra cell for the header for each venue feed
-        // and one for the footer of each feed
-        
-        // there will be a cell for each post in each of the venue feed previews
-        return sectionVenueFeed.posts.count + 2;
+        if (self.previewPostableFeedsOnly) {
+            // just a header and a footer here
+            return 2;
+        } else {
+            // grab the CPVenueFeed for this section
+            CPVenueFeed *sectionVenueFeed = [self venueFeedPreviewForIndex:section];
+            
+            // there will be one extra cell for the header for each venue feed
+            // and one for the footer of each feed
+            
+            // there will be a cell for each post in each of the venue feed previews
+            return sectionVenueFeed.posts.count + 2;
+        }        
     }
 }
 
@@ -394,12 +402,19 @@ typedef enum {
         // check if this is for a header 
         // or a footer for a venue feed preview
         if (indexPath.row == 0) {
-            static NSString *FeedPreviewHeaderCellIdentifier = @"FeedPreviewHeaderCell";
-            UITableViewCell *feedPreviewHeaderCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewHeaderCellIdentifier];
+            UITableViewCell *feedPreviewHeaderCell;
             
-            [self setupSpecialViewForCell:feedPreviewHeaderCell 
-                               viewHeight:PREVIEW_HEADER_CELL_HEIGHT 
-                                 position:FeedBGContainerPositionTop];
+            if (self.previewPostableFeedsOnly) {
+                static NSString *FeedPostablePreviewHeaderCellIdentifier = @"FeedPostablePreviewHeaderCell";
+                feedPreviewHeaderCell = [tableView dequeueReusableCellWithIdentifier:FeedPostablePreviewHeaderCellIdentifier];
+            } else {
+                static NSString *FeedPreviewHeaderCellIdentifier = @"FeedPreviewHeaderCell";
+                feedPreviewHeaderCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewHeaderCellIdentifier];
+            }
+            
+            [self setupContainerBackgroundForCell:feedPreviewHeaderCell 
+                                  containerHeight:PREVIEW_HEADER_CELL_HEIGHT 
+                                         position:FeedBGContainerPositionTop];
                         
             // grab the label for the venue name
             UILabel *venueNameLabel = (UILabel *)[feedPreviewHeaderCell viewWithTag:5382];
@@ -415,12 +430,13 @@ typedef enum {
             
             if (!feedPreviewFooterCell) {
                 feedPreviewFooterCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:FeedPreviewFooterCellIdentifier];
+                feedPreviewFooterCell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             
             // containerHeight needs to be the cellHeight minus the desired separation between the feed previews
-            [self setupSpecialViewForCell:feedPreviewFooterCell 
-                               viewHeight:PREVIEW_FOOTER_CELL_HEIGHT - 9 
-                                 position:FeedBGContainerPositionBottom];
+            [self setupContainerBackgroundForCell:feedPreviewFooterCell
+                                  containerHeight:PREVIEW_FOOTER_CELL_HEIGHT - 9
+                                         position:FeedBGContainerPositionBottom];
             
             return feedPreviewFooterCell;
         } else {
@@ -532,10 +548,14 @@ typedef enum {
     // setup the entry sender's profile button
     [self loadProfileImageForButton:cell.senderProfileButton photoURL:post.author.photoURL indexPath:indexPath];
     
-    // final cell setup for container background or timeline view
-    [self setupSpecialViewForCell:cell 
-                       viewHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height indexPath:indexPath] 
-                         position:(self.selectedVenueFeed ? FeedBGContainerPositionNA : FeedBGContainerPositionMiddle)];
+    if (self.selectedVenueFeed) {
+        // remove the container background from this cell, if it exists
+        [[cell viewWithTag:CONTAINER_IMAGE_VIEW_TAG] removeFromSuperview];
+    } else {
+        [self setupContainerBackgroundForCell:cell 
+                              containerHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height indexPath:indexPath] 
+                                     position:FeedBGContainerPositionMiddle];
+    }
     
     cell.activeColor = self.tableView.backgroundColor;
     cell.inactiveColor = self.tableView.backgroundColor;
@@ -746,7 +766,7 @@ typedef enum {
         // setup a background view
         // and add the timeline to the backgroundView
         UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 1)];
-        [backgroundView addSubview:[self timelineViewWithHeight:1]];
+        [backgroundView addSubview:[[self class] timelineViewWithHeight:1]];
         backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         self.tableView.backgroundView = backgroundView;
         
@@ -1290,6 +1310,24 @@ typedef enum {
             [CPapi sendContactRequestToUserId:actionSheet.tag];
         }
     }
+}
+
+#pragma mark - Class methods
++ (UIView *)timelineViewWithHeight:(CGFloat)height
+{
+    // alloc-init the timeline view
+    UIView *timeLine = [[UIView alloc] initWithFrame:CGRectMake(TIMELINE_ORIGIN_X, 0, 2, height)];
+    
+    // give it the right color
+    timeLine.backgroundColor = [UIColor colorWithR:234 G:234 B:234 A:1];
+    
+    // allow it to autoresize with the view
+    timeLine.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    
+    // give it a tag so we can verify presence later
+    timeLine.tag = TIMELINE_VIEW_TAG;
+    
+    return timeLine;
 }
 
 

@@ -7,11 +7,19 @@
 //
 
 #import "PostBaseCell.h"
+#import "FeedViewController.h"
 
 @implementation PostBaseCell
 
 @synthesize senderProfileButton = _senderProfileButton;
 @synthesize entryLabel = _entryLabel;
+
+- (void)awakeFromNib
+{
+    // grab a timeLine view using the class method in FeedViewController    
+    // add the timeline to our contentView
+    [self.contentView insertSubview:[FeedViewController timelineViewWithHeight:self.frame.size.height] atIndex:0];
+}
 
 - (void)prepareForReuse
 {
