@@ -605,6 +605,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     // add the blue overlay where the gradient ends
     UIView *blueOverlayExtend = [[UIView alloc] initWithFrame:CGRectMake(0, 416, 320, self.scrollView.contentSize.height - 416)];
     blueOverlayExtend.backgroundColor = [UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0];
+    self.view.backgroundColor = blueOverlayExtend.backgroundColor;
     [self.scrollView insertSubview:blueOverlayExtend atIndex:0];
     
     // call the JS function in the mustache file that will lazyload the images
