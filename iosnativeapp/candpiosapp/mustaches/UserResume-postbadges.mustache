@@ -1,0 +1,78 @@
+    {{#user}}
+    {{#hasAnyWorkInformation}}
+                <h2 class="line-bottom">Work</h2>
+                <dl id="work-list">
+                {{#workInformation}}
+                        <dt>
+                            {{#title}}
+                                {{title}} at {{company}}
+                            {{/title}}
+                            {{^title}}
+                                {{company}}
+                            {{/title}}
+                        </dt>
+                        <dd>
+                            {{#startDate}}
+                                ({{ startDate }} - {{ endDate }})
+                            {{/startDate}}
+                        </dd>
+                    {{#used}}
+                        
+                    {{/used}}
+                {{/workInformation}}
+                </dl>
+            {{/hasAnyWorkInformation}}
+
+            {{#hasAnyEducationInformation}}
+                <h2 class="line-bottom">Education</h2>
+                <dl>
+                    {{#educationInformation}}
+                        <dt>{{school}}</dt>
+                        <dd>
+                            {{#endDate}}
+                                {{#startDate}}
+                                    {{startDate}}-{{endDate}}
+                                {{/startDate}}
+                                {{^startDate}}
+                                    {{endDate}}
+                                {{/startDate}}
+                            {{/endDate}}
+                        </dd>
+                        <dd>{{degree}}</dd>
+                        <dd>{{concentrations}}</dd>
+                    {{/educationInformation}}
+                </dl>
+            {{/hasAnyEducationInformation}}
+        {{/user}}
+
+        {{#hasAnyReview}}
+            <h2 class="line-bottom">Recognition</h2>
+            <ul id="reviews">
+                {{#reviews}}
+                    <li>
+                        {{#isPositive}}
+                            {{#isLove}}
+                                <img src="send-love-small@2x.png" width="16" height="17" />
+                            {{/isLove}}
+                            {{^isLove}}
+                                <img src="thumbs-up@2x.png" width="16" height="17" />
+                            {{/isLove}}    
+                        {{/isPositive}}
+                        {{#isNegative}}
+                            <img src="thumbs-down@2x.png" width="16" height="17" />
+                        {{/isNegative}}
+                        <div class="review">
+                            {{#isLove}}
+                            <div>from {{author}}: "{{review}}"{{#skill}} (Skill: {{skill}}){{/skill}}</div>
+                            {{/isLove}}
+                            {{^isLove}}
+                            <div>{{review}}</div>
+                            {{/isLove}}
+                        </div>
+                    </li>
+                {{/reviews}}
+            </ul>
+        {{/hasAnyReview}}
+    </div>
+</body>
+</html>
