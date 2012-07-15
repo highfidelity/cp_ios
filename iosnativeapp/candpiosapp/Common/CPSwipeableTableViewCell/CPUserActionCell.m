@@ -26,6 +26,7 @@
 # define SWITCH_LEFT_MARGIN 15
 # define QUICK_ACTION_MARGIN 70
 # define QUICK_ACTION_LOCK 3 * (QUICK_ACTION_MARGIN + 10)
+# define REDUCED_ACTION_LOCK 2 * (QUICK_ACTION_MARGIN + 10)
 #define RIGHT_SWIPE_SWITCH_IMAGE_VIEW_TAG 4293
 #define LEFT_SWIPE_SWITCH_IMAGE_VIEW_TAG 4294
 #define FULL_PADDING 10.0
@@ -270,7 +271,14 @@ static char BOOLRevealing;
         } else if (newCenterPosition < originalCenter - QUICK_ACTION_LOCK && self.leftStyle == CPUserActionCellSwipeStyleQuickAction) {
             newCenterPosition = originalCenter - QUICK_ACTION_LOCK;
         }
-        
+
+        // if our style is quick action then don't go past the defined margin
+        if (newCenterPosition > originalCenter + REDUCED_ACTION_LOCK && self.rightStyle == CPUserActionCellSwipeStyleReducedAction) {
+            newCenterPosition = originalCenter + REDUCED_ACTION_LOCK;
+        } else if (newCenterPosition < originalCenter - REDUCED_ACTION_LOCK && self.leftStyle == CPUserActionCellSwipeStyleReducedAction) {
+            newCenterPosition = originalCenter - REDUCED_ACTION_LOCK;
+        }
+
 		// Let's not go waaay out of bounds
 		if (newCenterPosition > self.bounds.size.width + originalCenter)
 			newCenterPosition = self.bounds.size.width + originalCenter;
@@ -351,18 +359,22 @@ static char BOOLRevealing;
 
 - (BOOL)shouldDragLeft
 {
-	return (self.leftStyle == CPUserActionCellSwipeStyleFull || self.leftStyle == CPUserActionCellSwipeStyleQuickAction);
+	return (self.leftStyle == CPUserActionCellSwipeStyleFull || 
+            self.leftStyle == CPUserActionCellSwipeStyleQuickAction ||
+            self.leftStyle == CPUserActionCellSwipeStyleReducedAction);
 }
 
 - (BOOL)shouldDragRight
 {
-    return (self.rightStyle == CPUserActionCellSwipeStyleFull || self.rightStyle == CPUserActionCellSwipeStyleQuickAction);
+    return (self.rightStyle == CPUserActionCellSwipeStyleFull || 
+            self.rightStyle == CPUserActionCellSwipeStyleQuickAction ||
+            self.rightStyle == CPUserActionCellSwipeStyleReducedAction);
 }
 
 - (BOOL)styleForDirectionIsQuickAction:(CPUserActionCellDirection)direction 
 {
-    return ((direction == CPUserActionCellDirectionLeft && self.leftStyle == CPUserActionCellSwipeStyleQuickAction) ||
-            (direction == CPUserActionCellDirectionRight && self.rightStyle == CPUserActionCellSwipeStyleQuickAction));
+    return ((direction == CPUserActionCellDirectionLeft && (self.leftStyle == CPUserActionCellSwipeStyleQuickAction || self.leftStyle == CPUserActionCellSwipeStyleReducedAction)) ||
+            (direction == CPUserActionCellDirectionRight && (self.rightStyle == CPUserActionCellSwipeStyleQuickAction || self.rightStyle == CPUserActionCellSwipeStyleReducedAction)));
 }
 
 - (CGFloat)originalCenter
@@ -457,7 +469,7 @@ static char BOOLRevealing;
 - (void)checkForQuickActionSwitchToggleForNewCenter:(CGFloat)centerX {  
     // currently the app only uses quick action on right swipe
     // code will need to be refactored if we need to add that functionality on the right side
-    if (self.rightStyle == CPUserActionCellSwipeStyleQuickAction) {
+    if (self.rightStyle == CPUserActionCellSwipeStyleQuickAction || self.rightStyle == CPUserActionCellSwipeStyleReducedAction) {
         // get the position of the left edge of the cell
         CGFloat leftEdge = centerX - (self.contentView.frame.size.width / 2);
         

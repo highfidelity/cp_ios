@@ -18,7 +18,8 @@ typedef enum {
 
 typedef enum {
 	CPUserActionCellSwipeStyleFull = 0,
-	CPUserActionCellSwipeStyleQuickAction,
+    CPUserActionCellSwipeStyleQuickAction,
+    CPUserActionCellSwipeStyleReducedAction,
 	CPUserActionCellSwipeStyleNone,
 } CPUserActionCellSwipeStyle;
 

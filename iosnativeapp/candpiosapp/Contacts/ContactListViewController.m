@@ -321,7 +321,9 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     } else {
         imageView.image = [CPUIHelper defaultProfileImage];
     }
-    
+
+    cell.user = [self userForIndexPath:indexPath];
+
     if ([CellIdentifier isEqualToString:kContactRequestsCellIdentifier]) {
         cell.acceptContactRequestButton.hidden = NO;
         cell.declineContactRequestButton.hidden = NO;
@@ -332,11 +334,10 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
         
         cell.rightStyle = CPUserActionCellSwipeStyleNone;
     } else {
-        cell.rightStyle = CPUserActionCellSwipeStyleQuickAction;
+        cell.rightStyle = CPUserActionCellSwipeStyleReducedAction;
         cell.delegate = self;
     }
 
-    cell.user = [self userForIndexPath:indexPath];
     return cell;
 }
 

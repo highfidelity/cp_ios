@@ -213,7 +213,7 @@
     if (cell == nil) {
         cell = [[UserTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-
+    
     // be the delegate of the cell for swipe actions
     cell.delegate = self;
     
@@ -266,6 +266,11 @@
     else {
         [CPUIHelper manageVirtualBadgeForProfileImageView:cell.profilePictureImageView
                                          checkInIsVirtual:NO];
+    }
+    if (cell.user.isContact) {
+        cell.rightStyle = CPUserActionCellSwipeStyleReducedAction;
+    } else{
+        cell.rightStyle = CPUserActionCellSwipeStyleQuickAction;
     }
     return cell;
 }

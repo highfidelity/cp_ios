@@ -57,6 +57,7 @@
 @property (nonatomic, assign) BOOL checkInIsVirtual;
 @property (nonatomic, assign) BOOL contactsOnlyChat;
 @property (nonatomic, assign) BOOL isContact;
+@property (nonatomic, assign) BOOL hasChatHistory;
 @property (nonatomic, strong) NSString *linkedInPublicProfileUrl;
 @property (nonatomic, strong) NSNumber *numberOfContactRequests;
 @property (nonatomic, strong) NSString *profileURLVisibility;

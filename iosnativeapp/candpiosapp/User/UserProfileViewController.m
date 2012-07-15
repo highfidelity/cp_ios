@@ -661,12 +661,19 @@ static GRMustacheTemplate *postBadgesTemplate;
         self.plusButton.alpha = 0.0;
     } completion:NULL];
     // animation of menu buttons shooting out
+    
     [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
-        self.f2fButton.transform = CGAffineTransformMakeTranslation(0, -165);
+        if (self.user.isContact) {
+            self.f2fButton.hidden = YES;
+            self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, -110);
+        } else {
+            self.f2fButton.hidden = NO;
+            self.f2fButton.transform = CGAffineTransformMakeTranslation(0, -165);            
+            self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, -165);
+        }
         self.chatButton.transform = CGAffineTransformMakeTranslation(0, -110);
         self.reviewButton.transform = CGAffineTransformMakeTranslation(0, -55);
         //self.payButton.transform = CGAffineTransformMakeTranslation(0, -55);
-        self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, -165);
     } completion:^(BOOL finished){
         [self.view viewWithTag:1005].userInteractionEnabled = YES;
     }];
@@ -734,7 +741,7 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 - (IBAction)chatButtonPressed:(id)sender
 {
-    if (self.user.contactsOnlyChat && !self.user.isContact) {
+    if (self.user.contactsOnlyChat && !self.user.isContact && !self.user.hasChatHistory) {
         NSString *errorMessage = [NSString stringWithFormat:@"You can not chat with %@ until the two of you have exchanged contact information", self.user.nickname];
         [SVProgressHUD showErrorWithStatus:errorMessage
                                   duration:kDefaultDismissDelay];

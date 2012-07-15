@@ -49,6 +49,7 @@
 @synthesize checkInIsVirtual = _checkInIsVirtual;
 @synthesize contactsOnlyChat = _contactsOnlyChat;
 @synthesize isContact = _isContact;
+@synthesize hasChatHistory = _hasChatHistory;
 @synthesize totalHours = _totalHours;
 @synthesize linkedInPublicProfileUrl = _linkedInPublicProfileUrl;
 @synthesize numberOfContactRequests = _numberOfContactRequests;
@@ -87,6 +88,7 @@
         self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict objectForKey:@"checkout"] integerValue]];
         self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
         self.checkInIsVirtual = [[userDict objectForKey:@"is_virtual"] boolValue];
+        self.isContact = [[userDict objectForKey:@"is_contact"] boolValue];
 	}
 	return self;
 }
@@ -283,6 +285,7 @@
             self.minorJobCategory = [userDict objectForKey:@"minor_job_category"];
             self.contactsOnlyChat = [[userDict objectForKey:@"contacts_only_chat"] boolValue];
             self.isContact = [[userDict objectForKey:@"user_is_contact"] boolValue];
+            self.hasChatHistory = [[userDict objectForKey:@"has_chat_history"] boolValue];
 
             self.status = [[userDict objectForKey:@"status_text"]
                            stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
