@@ -14,6 +14,15 @@
 
 @implementation CPUserAction
 
+static UserProfileViewController* userProfileViewController;
++ (UserProfileViewController*)userProfileViewController 
+{
+    if (!userProfileViewController) {
+        userProfileViewController = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+    }
+    return userProfileViewController;
+}
+
 # pragma mark - CPUserActionCellDelegate
 
 + (void)cell:(CPUserActionCell*)cell sendLoveFromViewController:(UIViewController*)viewController
@@ -119,7 +128,8 @@
         cell.selected = NO;
         return;
     }
-    UserProfileViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+    UserProfileViewController *userVC = [CPUserAction userProfileViewController];
+//    UserProfileViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
     // set the user object on the UserProfileVC to the user we just created
     userVC.user = cell.user;
     

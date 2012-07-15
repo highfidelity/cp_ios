@@ -146,26 +146,106 @@ static GRMustacheTemplate *postBadgesTemplate;
     return self;
 }
 
+- (void)setUser:(User *)newUser 
+{
+    // assign the user
+    _user = newUser;
+    
+    // reset the resume
+    self.preBadgesHTML = nil;
+    self.badgesHTML = nil;
+    self.postBadgesHTML = nil;
+    
+    // reset the stats
+    self.resumeEarned.text = @"";
+    self.loveReceived.text = @"";
+    self.resumeWebView.alpha = 0.0;
+    if (_user) {
+        // set the booleans this VC uses in later control statements
+        firstLoad = YES;
+        self.mapAndDistanceLoaded = NO;
+        
+        // set the card image to the user's profile image
+        [CPUIHelper profileImageView:self.cardImage
+                 withProfileImageUrl:self.user.photoURL];
+        
+        // hide the go menu if this profile is current user's profile
+        if (self.user.userID == [CPUserDefaultsHandler currentUser].userID || self.isF2FInvite) {
+            for (NSNumber *viewID in [NSArray arrayWithObjects:[NSNumber numberWithInt:1005], [NSNumber numberWithInt:1006], [NSNumber numberWithInt:1007], [NSNumber numberWithInt:1008], [NSNumber numberWithInt:1009], [NSNumber numberWithInt:1010], [NSNumber numberWithInt:1020], nil]) {
+                [self.view viewWithTag:[viewID intValue]].alpha = 0.0;
+            }
+        } else {
+            for (NSNumber *viewID in [NSArray arrayWithObjects:[NSNumber numberWithInt:1005], [NSNumber numberWithInt:1006], [NSNumber numberWithInt:1007], [NSNumber numberWithInt:1008], [NSNumber numberWithInt:1009], [NSNumber numberWithInt:1010], [NSNumber numberWithInt:1020], nil]) {
+                [self.view viewWithTag:[viewID intValue]].alpha = 1.0;
+            }
+            self.minusButton.alpha = 0.0;
+            
+        }
+        
+        // update labels
+        // set the labels on the user business card
+        self.cardNickname.text = self.user.nickname;
+        
+        [self setUserStatusWithQuotes:self.user.status];
+        
+        self.cardJobPosition.text = self.user.jobTitle;
+        
+        // set the navigation controller title to the user's nickname
+        self.title = self.user.nickname;  
+        
+        // don't allow scrolling in the mustache view until it's loaded
+        self.resumeWebView.userInteractionEnabled = NO;
+        
+        // check if this is an F2F invite
+        if (self.isF2FInvite) {
+            // we're in an F2F invite
+            [self placeUserDataOnProfile];
+        } else {  
+            // lock the scrollView
+            self.scrollView.scrollEnabled = NO;
+            // put three animated dots after the Loading Resume text
+            [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:YES];
+            [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:YES];
+            
+            // get a user object with resume data
+            [self.user loadUserResumeData:^(NSError *error) {
+                if (!error) {
+                    NSLog(@"Received resume response.");
+                    // unlock the scrollView
+                    self.scrollView.scrollEnabled = YES;
+                    // resume has loaded, change the label and remove the animated dots
+                    [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
+                    [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:NO];
+                    self.resumeLabel.text = @"Resume";
+                    
+                    [self placeUserDataOnProfile];
+                } else {
+                    // error checking for load of user
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Resume Load" 
+                                                                    message:@"An error has occurred while loading the resume.  Try again later." delegate:nil 
+                                                          cancelButtonTitle:@"OK" 
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                    [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
+                    [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:NO];
+                    NSLog(@"Error loading resume: %@", error);
+                }
+            }];
+        }
+        
+        // hide the venue info until we load the resume data
+        self.venueView.alpha = 0.0;
+        self.availabilityView.alpha = 0.0;
+        
+    }
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    // set the booleans this VC uses in later control statements
-    firstLoad = YES;
-    self.mapAndDistanceLoaded = NO;
-
-    // set the card image to the user's profile image
-    [CPUIHelper profileImageView:self.cardImage
-             withProfileImageUrl:self.user.photoURL];
-    
-    // hide the go menu if this profile is current user's profile
-    if (self.user.userID == [CPUserDefaultsHandler currentUser].userID || self.isF2FInvite) {
-        for (NSNumber *viewID in [NSArray arrayWithObjects:[NSNumber numberWithInt:1005], [NSNumber numberWithInt:1006], [NSNumber numberWithInt:1007], [NSNumber numberWithInt:1008], [NSNumber numberWithInt:1009], [NSNumber numberWithInt:1010], [NSNumber numberWithInt:1020], nil]) {
-            [[self.view viewWithTag:[viewID intValue]] removeFromSuperview];
-        }
-    }
     
     // add the blue overlay gradient in front of the map
     UIView *blueOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.mapView.frame.size.width, self.mapView.frame.size.height)];
@@ -193,59 +273,15 @@ static GRMustacheTemplate *postBadgesTemplate;
     
     [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     
-    // set the labels on the user business card
-    self.cardNickname.text = self.user.nickname;
-    
-    [self setUserStatusWithQuotes:self.user.status];
-    
-    self.cardJobPosition.text = self.user.jobTitle;
-    
-    // set the navigation controller title to the user's nickname
-    self.title = self.user.nickname;  
-    
-    // don't allow scrolling in the mustache view until it's loaded
-    self.resumeWebView.userInteractionEnabled = NO;
     // make sure there's a shadow on the resumeView for the part that is already showing
     [CPUIHelper addShadowToView:self.resumeView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     
-    // check if this is an F2F invite
-    if (self.isF2FInvite) {
-        // we're in an F2F invite
-        [self placeUserDataOnProfile];
-    } else {  
-        // lock the scrollView
-        self.scrollView.scrollEnabled = NO;
-        // put three animated dots after the Loading Resume text
-        [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:YES];
-        
-        // get a user object with resume data
-        [self.user loadUserResumeData:^(NSError *error) {
-            if (!error) {
-                NSLog(@"Received resume response.");
-                // unlock the scrollView
-                self.scrollView.scrollEnabled = YES;
-                // resume has loaded, change the label and remove the animated dots
-                [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
-                self.resumeLabel.text = @"Resume";
-                
-                [self placeUserDataOnProfile];
-            } else {
-                // error checking for load of user 
-            }
-        }];
-    }
-    
-    if (!self.user.placeCheckedIn) {
-        // we're missing a place that the user is checked in at which means we're coming from contacts or venue chat (and this wasn't an active user)
-        // show a progress hud
-        
-        [SVProgressHUD showWithStatus:@"Loading Profile..."];
-    } else {
-        self.venueView.alpha = 1.0;
-        self.availabilityView.alpha = 1.0;
-        // given that we already have a last checked in place for the user show it already
-        [self updateLastUserCheckin];
-        [self updateMapAndDistanceToUser];
+    // move the data in the venueView down so it's vertically centered
+    NSArray *venueInfo = [NSArray arrayWithObjects:self.venueIcon, self.venueName, self.venueAddress, nil];
+    for (UIView *venueItem in venueInfo) {
+        CGRect frame = venueItem.frame;
+        frame.origin.y += 8;
+        venueItem.frame = frame;
     }
 }
 
@@ -322,7 +358,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     if (firstLoad) {
         // if the user is checked in show how much longer they'll be available for
         if ([self.user.checkoutEpoch timeIntervalSinceNow] > 0) {
-            self.checkedIn.text = @"Checked in...";
+            self.checkedIn.text = @"Checked in";
             // get the number of seconds until they'll checkout
             NSTimeInterval secondsToCheckout = [self.user.checkoutEpoch timeIntervalSinceNow];
             // convert to minutes and then hours + minutes to next our
@@ -334,19 +370,20 @@ static GRMustacheTemplate *postBadgesTemplate;
             if (hoursToCheckout > 0) {
                 self.hoursAvailable.text = [NSString stringWithFormat:@"%d hrs", hoursToCheckout];
             } else {
-                // otherwise show just the minutes, move it so it's where hours would be
-                CGRect minutesFrame = self.minutesAvailable.frame;
-                minutesFrame.origin = self.hoursAvailable.frame.origin;
-                self.minutesAvailable.frame = minutesFrame;
-                self.minutesAvailable.font = [UIFont boldSystemFontOfSize:self.minutesAvailable.font.pointSize];
+                self.hoursAvailable.text = @"";
             }            
             self.minutesAvailable.text = [NSString stringWithFormat:@"%d mins", minutesToHour];
+            // show the availability view
+            self.availabilityView.alpha = 1.0;
+            [UIView animateWithDuration:0.4 animations:^{self.availabilityView.alpha = 1.0;}];
         } else {
             // change the label since the user isn't here anymore
-            self.checkedIn.text = @"Was checked in...";
+            self.checkedIn.text = @"Last checked in";
             
             // otherwise don't show the availability view
-            [self.availabilityView removeFromSuperview];
+            self.availabilityView.alpha = 0.0;
+            self.hoursAvailable.text = @"";
+            self.minutesAvailable.text = @"";
         }
     }
     
@@ -358,16 +395,12 @@ static GRMustacheTemplate *postBadgesTemplate;
     if (firstLoad) {
         if (self.othersAtPlace == 0) {
             // hide the little man, nobody else is here
-            [self.venueOthersIcon removeFromSuperview];
+            self.venueOthersIcon.alpha = 0.0;
+            self.venueOthers.text = @"";
             
-            // move the data in the venueView down so it's vertically centered
-            NSArray *venueInfo = [NSArray arrayWithObjects:self.venueIcon, self.venueName, self.venueAddress, nil];
-            for (UIView *venueItem in venueInfo) {
-                CGRect frame = venueItem.frame;
-                frame.origin.y += 8;
-                venueItem.frame = frame;
-            }
         } else {
+            // show the little man
+            self.venueOthersIcon.alpha = 1.0;
             // otherwise put 1 other or x others here now
             self.venueOthers.text = [NSString stringWithFormat:@"%d %@ here now", self.othersAtPlace, self.othersAtPlace == 1 ? @"other" : @"others"];
         }
@@ -377,7 +410,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     
     // animate the display of the venueView and availabilityView
     // if they aren't already on screen
-    [UIView animateWithDuration:0.4 animations:^{self.venueView.alpha = 1.0; self.availabilityView.alpha = 1.0;}];
+    [UIView animateWithDuration:0.4 animations:^{self.venueView.alpha = 1.0;}];
 }
 
 - (void)updateMapAndDistanceToUser
@@ -590,7 +623,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     CGRect resumeFrame = self.resumeView.frame;
     resumeFrame.size.height = self.resumeWebView.frame.origin.y + fittingSize.height;
     self.resumeView.frame = resumeFrame;
-    
+
     [CPUIHelper addShadowToView:self.resumeView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     
     // if this is an f2f invite we need some extra height in the scrollview content size
@@ -610,6 +643,8 @@ static GRMustacheTemplate *postBadgesTemplate;
     
     // call the JS function in the mustache file that will lazyload the images
     [aWebView stringByEvaluatingJavaScriptFromString:@"lazyLoad();"];
+    // reveal the resume
+    self.resumeWebView.alpha = 1.0;
 }
 
 -(IBAction)plusButtonPressed:(id)sender {
