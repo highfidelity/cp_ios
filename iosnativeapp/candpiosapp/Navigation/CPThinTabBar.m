@@ -18,7 +18,7 @@
 @property (nonatomic, strong) UIImageView *plusIconImageView;
 @property (nonatomic, strong) UIImageView *minusIconImageView;
 @property (nonatomic, strong) UIImageView *updateIconImageView;
-@property (nonatomic, strong) UIButton *updateButton;
+@property (nonatomic, strong) NSMutableArray *actionMenuButtons;
 
 @end
 
@@ -34,7 +34,7 @@
 @synthesize plusIconImageView = _plusImageView;
 @synthesize minusIconImageView = _minusImageView;
 @synthesize updateIconImageView = _updateIconImageView;
-@synthesize updateButton = _updateButton;
+@synthesize actionMenuButtons = _actionMenuButtons;
 @synthesize barButton1 = _barButton1;
 @synthesize barButton2 = _barButton2;
 @synthesize barButton3 = _barButton3;
@@ -88,6 +88,14 @@ static NSArray *tabBarIcons;
     
     // setup the action menu
     [self actionMenuSetup];
+}
+
+- (NSMutableArray *)actionMenuButtons
+{
+    if (!_actionMenuButtons) {
+        _actionMenuButtons = [NSMutableArray array];
+    }
+    return _actionMenuButtons;
 }
 
 - (void)setActionButtonState:(CPThinTabBarActionButtonState)actionButtonState
@@ -201,8 +209,11 @@ static NSArray *tabBarIcons;
     self.barButton4.alpha = shown;
 }
 
-#define ACTION_MENU_HEIGHT 238
-#define UPDATE_BUTTON_TOP_MARGIN 158
+#define ACTION_MENU_HEIGHT 244
+#define UPDATE_BUTTON_TOP_MARGIN 162
+#define LOVE_BUTTON_TOP_MARGIN 111
+#define QUESTION_BUTTON_TOP_MARGIN 60 
+#define CHECKIN_BUTTON_TOP_MARGIN 9
 
 - (void)actionMenuSetup
 {
@@ -235,7 +246,7 @@ static NSArray *tabBarIcons;
     self.actionMenu.clipsToBounds = YES;
     
     UIImageView *actionMenuBackground = [[UIImageView alloc] initWithImage:resizableBackground];
-    actionMenuBackground.frame = CGRectMake(0, 0, resizableBackground.size.width, 238);
+    actionMenuBackground.frame = CGRectMake(0, 0, resizableBackground.size.width, ACTION_MENU_HEIGHT);
     [self.actionMenu addSubview:actionMenuBackground];
     
     [self.thinBarBackground insertSubview:self.actionMenu belowSubview:self.actionButton];
@@ -248,15 +259,39 @@ static NSArray *tabBarIcons;
     self.plusIconImageView.alpha = 1.0;
     
     // add each of the buttons to the action menu
-    self.updateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *backgroundImage = [UIImage imageNamed:@"action-menu-button-update"];
-    [self.updateButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
-    self.updateButton.frame = CGRectMake((self.actionMenu.frame.size.width / 2) - (backgroundImage.size.width / 2),
-                                         UPDATE_BUTTON_TOP_MARGIN,
-                                         backgroundImage.size.width, 
-                                         backgroundImage.size.height);
-    [self.updateButton addTarget:self.tabBarController action:@selector(updateButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.actionMenu addSubview:self.updateButton];
+    [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"update" topMargin:UPDATE_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(updateButtonPressed:)]];
+    [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"love" topMargin:LOVE_BUTTON_TOP_MARGIN tabBarControllerAction:nil]];
+    [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"question" topMargin:QUESTION_BUTTON_TOP_MARGIN tabBarControllerAction:nil]];
+    [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"checkin" topMargin:CHECKIN_BUTTON_TOP_MARGIN tabBarControllerAction:nil]];
+}
+                       
+- (UIButton *)actionMenuButtonWithImageSuffix:(NSString *)imageSuffix 
+                                    topMargin:(CGFloat)topMargin 
+                       tabBarControllerAction:(SEL)tabBarControllerAction
+{
+    // alloc-init an actionMenuButton
+    UIButton *actionMenuButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    // grab the background image
+    UIImage *backgroundImage = [UIImage imageNamed:[NSString stringWithFormat:@"action-menu-button-%@", imageSuffix]];
+    
+    // give the background image to the button
+    [actionMenuButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
+    
+    // set the right frame
+    actionMenuButton.frame = CGRectMake((self.actionMenu.frame.size.width / 2) - (backgroundImage.size.width / 2),
+                                        topMargin,
+                                        backgroundImage.size.width, 
+                                        backgroundImage.size.height);
+    
+    // give the button the action passed as tabBarControllerAction
+    [actionMenuButton addTarget:self.tabBarController action:tabBarControllerAction forControlEvents:UIControlEventTouchUpInside];
+    
+    // add the the button to the actionMenu
+    [self.actionMenu addSubview:actionMenuButton];
+    
+    // return the created button
+    return actionMenuButton;
 }
 
 - (void)toggleActionMenu:(BOOL)showMenu
