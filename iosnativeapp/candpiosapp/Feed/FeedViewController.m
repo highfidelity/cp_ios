@@ -1034,6 +1034,9 @@ typedef enum {
     // only try to add a new log if we aren't in the middle of adding one now
     // or if we aren't reloading the user's logs
     if (!self.pendingPost) {
+        // switch the state of the thinBar's button
+        [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateUpdate;
+        
         // we need to add a new cell to the table with a textView that the user can edit
         // first create a new CPpost object
         self.pendingPost = [[CPPost alloc] init];
@@ -1225,6 +1228,12 @@ typedef enum {
                                  if (beingShown) {
                                      // get the tableView to scroll while the keyboard is appearing
                                      [self scrollTableViewToTopAnimated:NO];
+                                     
+                                     // swtich the thinBar's action button state to the right type
+                                     [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateUpdate;
+                                 } else {
+                                     // switch the thinBar's action button state back to the plus button
+                                     [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStatePlus;
                                  }
                              }
                              

@@ -98,6 +98,10 @@ static NSArray *tabBarIcons;
         // set the alpha of the UIImageView subviews of the leftButton based on the new state
         self.plusIconImageView.alpha = (actionButtonState == CPThinTabBarActionButtonStatePlus);
         self.minusIconImageView.alpha = (actionButtonState == CPThinTabBarActionButtonStateMinus);
+        self.updateIconImageView.alpha = (actionButtonState == CPThinTabBarActionButtonStateUpdate);
+        
+        self.actionButton.userInteractionEnabled = (self.actionButtonState == CPThinTabBarActionButtonStatePlus || 
+                                                    self.actionButtonState == CPThinTabBarActionButtonStateMinus);
     }
 }
 
@@ -105,34 +109,11 @@ static NSArray *tabBarIcons;
 {
     // alloc-init an imageView and add it to the actionButton
     UIImageView *iconImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"action-menu-button-%@", imageSuffix]]];
+    iconImageView.alpha = 0.0;
     [self.actionButton addSubview:iconImageView];
     
     // return the iconImageView
     return iconImageView;
-}
-
-- (UIImageView *)plusIconImageView
-{
-    if (!_plusImageView) {
-        _plusImageView = [self iconImageView:@"plus"];
-    }
-    return _plusImageView;
-}
-
-- (UIImageView *)minusIconImageView
-{
-    if (!_minusImageView) {
-        _minusImageView = [self iconImageView:@"minus"];
-    }
-    return _minusImageView;
-}
-
-- (UIImageView *)updateIconImageView
-{
-    if (!_updateIconImageView) {
-        _updateIconImageView = [self iconImageView:@"update-selected"];
-    }
-    return _updateIconImageView;
 }
 
 - (void)moveGreenLineToSelectedIndex:(NSUInteger)selectedIndex
@@ -259,7 +240,11 @@ static NSArray *tabBarIcons;
     
     [self.thinBarBackground insertSubview:self.actionMenu belowSubview:self.actionButton];
     
-    // make sure that the plus is shown for the default state of the action menu
+    // setup the buttons in the action menu
+    // and make sure that the plus is shown for the default state of the action menu
+    self.plusIconImageView = [self iconImageView:@"plus"];
+    self.minusIconImageView = [self iconImageView:@"minus"];
+    self.updateIconImageView = [self iconImageView:@"update-selected"];
     self.plusIconImageView.alpha = 1.0;
     
     // add each of the buttons to the action menu
