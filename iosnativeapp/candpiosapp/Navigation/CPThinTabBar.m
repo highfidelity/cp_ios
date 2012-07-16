@@ -15,10 +15,7 @@
 
 @property (nonatomic, strong) UIView *actionMenu;
 @property (nonatomic, strong) UIView *greenLine;
-
-@property (nonatomic, strong) UIImageView *plusIconImageView;
-@property (nonatomic, strong) UIImageView *minusIconImageView;
-@property (nonatomic, strong) UIImageView *updateIconImageView;
+@property (nonatomic, strong) NSMutableArray *actionButtonIconImageViews;
 @property (nonatomic, strong) NSMutableArray *actionMenuButtons;
 
 @end
@@ -32,9 +29,7 @@
 @synthesize customBarButtons = _customBarButtons;
 @synthesize actionMenu = _actionMenu;
 @synthesize greenLine = _greenLine;
-@synthesize plusIconImageView = _plusImageView;
-@synthesize minusIconImageView = _minusImageView;
-@synthesize updateIconImageView = _updateIconImageView;
+@synthesize actionButtonIconImageViews = _actionButtonIconImageViews;
 @synthesize actionMenuButtons = _actionMenuButtons;
 
 static NSArray *tabBarIcons;
@@ -87,31 +82,15 @@ static NSArray *tabBarIcons;
     [self actionMenuSetup];
 }
 
-- (NSMutableArray *)actionMenuButtons
-{
-    if (!_actionMenuButtons) {
-        _actionMenuButtons = [NSMutableArray array];
-    }
-    return _actionMenuButtons;
-}
-
-- (NSMutableArray *)customBarButtons
-{
-    if (!_customBarButtons) {
-        _customBarButtons = [NSMutableArray array];
-    }
-    return _customBarButtons;
-}
-
 - (void)setActionButtonState:(CPThinTabBarActionButtonState)actionButtonState
 {
     if (_actionButtonState != actionButtonState) {
         _actionButtonState = actionButtonState;
         
         // set the alpha of the UIImageView subviews of the leftButton based on the new state
-        self.plusIconImageView.alpha = (actionButtonState == CPThinTabBarActionButtonStatePlus);
-        self.minusIconImageView.alpha = (actionButtonState == CPThinTabBarActionButtonStateMinus);
-        self.updateIconImageView.alpha = (actionButtonState == CPThinTabBarActionButtonStateUpdate);
+        [[self.actionButtonIconImageViews objectAtIndex:0] setAlpha:(actionButtonState == CPThinTabBarActionButtonStatePlus)];
+        [[self.actionButtonIconImageViews objectAtIndex:1] setAlpha:(actionButtonState == CPThinTabBarActionButtonStateMinus)];
+        [[self.actionButtonIconImageViews objectAtIndex:2] setAlpha:(actionButtonState == CPThinTabBarActionButtonStateUpdate)];
         
         self.actionButton.userInteractionEnabled = (self.actionButtonState == CPThinTabBarActionButtonStatePlus || 
                                                     self.actionButtonState == CPThinTabBarActionButtonStateMinus);
@@ -166,6 +145,8 @@ static NSArray *tabBarIcons;
 - (void)addCustomButtons 
 {
     CGFloat xOrigin = LEFT_AREA_WIDTH;
+    
+    self.customBarButtons = [NSMutableArray array];
     
     // create the four buttons that will be added
     for (int i = 0; i < 4; i++) {
@@ -251,13 +232,17 @@ static NSArray *tabBarIcons;
     [self.thinBarBackground insertSubview:self.actionMenu belowSubview:self.actionButton];
     
     // setup the buttons in the action menu
-    // and make sure that the plus is shown for the default state of the action menu
-    self.plusIconImageView = [self iconImageView:@"plus"];
-    self.minusIconImageView = [self iconImageView:@"minus"];
-    self.updateIconImageView = [self iconImageView:@"update-selected"];
-    self.plusIconImageView.alpha = 1.0;
+    self.actionButtonIconImageViews = [NSMutableArray array];
+    [self.actionButtonIconImageViews addObject:[self iconImageView:@"plus"]];
+    [self.actionButtonIconImageViews addObject:[self iconImageView:@"minus"]];
+    [self.actionButtonIconImageViews addObject:[self iconImageView:@"update-selected"]];
+    
+    // make sure that the plus is shown for the default state of the action menu
+    // using the actionButtonState setter won't work here because that's the default state
+    [[self.actionButtonIconImageViews objectAtIndex:0] setAlpha:1.0];
     
     // add each of the buttons to the action menu
+    self.actionMenuButtons = [NSMutableArray array];
     [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"update" topMargin:UPDATE_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(updateButtonPressed:)]];
     [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"love" topMargin:LOVE_BUTTON_TOP_MARGIN tabBarControllerAction:nil]];
     [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"question" topMargin:QUESTION_BUTTON_TOP_MARGIN tabBarControllerAction:nil]];
