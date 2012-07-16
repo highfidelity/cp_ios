@@ -28,7 +28,7 @@
     if (forcedCheckin) {
         // this was a forced checkin
         // so use the IBAction on the tabBarController to post to the feed
-        [[CPAppDelegate tabBarController] postUpdateButtonPressed:nil];
+        [[CPAppDelegate tabBarController] updateButtonPressed:nil];
     }
     
     // If this is the user's first check in to this venue and auto-checkins are enabled,

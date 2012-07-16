@@ -11,10 +11,10 @@
 
 @interface CPTabBarController : UITabBarController <UIAlertViewDelegate>
 
-@property (nonatomic, strong) CPThinTabBar *thinBar;
 @property (nonatomic, assign) BOOL forcedCheckin;
 @property (nonatomic, strong) NSString *currentVenueID;
 
-- (IBAction)postUpdateButtonPressed:(id)sender;
+- (IBAction)tabBarButtonPressed:(id)sender;
+- (IBAction)updateButtonPressed:(id)sender;
 
 @end

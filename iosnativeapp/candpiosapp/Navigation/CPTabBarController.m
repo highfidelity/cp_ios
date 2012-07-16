@@ -8,12 +8,11 @@
 
 #import "CPTabBarController.h"
 #import "FeedViewController.h"
- 
+#import "CPTabBarControllerView.h"
+
 @implementation CPTabBarController
 
 // TODO: get rid of the currentVenueID here, let's keep that in NSUserDefaults (my bad)
-
-@synthesize thinBar = _thinBar;
 @synthesize forcedCheckin = _forcedCheckin;
 @synthesize currentVenueID = _currentVenueID;
 
@@ -21,36 +20,28 @@
 {
     [super viewDidLoad];
     
-    UIImage *bgImage = [UIImage imageNamed:@"thin-nav-bg"];
+    UIImage *bgImage = [CPThinTabBar backgroundImage];
     
     CGFloat heightDiff = self.tabBar.frame.size.height - bgImage.size.height;
-    // change the frame of the regular tab bar
+    
+    // change the frame of the tab bar
     self.tabBar.frame = CGRectMake(self.tabBar.frame.origin.x, 
                                    self.tabBar.frame.origin.y + heightDiff, 
                                    self.tabBar.frame.size.width, 
                                    self.tabBar.frame.size.height - heightDiff);
     
-    // add our custom thin bar
-    // alloc-init a UIImageView and give it the background image
-    self.thinBar = [[CPThinTabBar alloc] initWithFrame:CGRectMake(0, 0, self.tabBar.frame.size.width, self.tabBar.frame.size.height)
-                                       backgroundImage:bgImage];
-    
-    // be the tabBarController for the thinBar
-    self.thinBar.tabBarController = self;
-    
-    // add the UIView to the CPTabBarController's view
-    [self.tabBar addSubview:self.thinBar];
+    // be the tabBarController of the tab bar
+    // so that it can send its buttons actions back to us
+    // this is a weak pointer    
+    ((CPThinTabBar *) self.tabBar).tabBarController = self;
     
     // make sure the CPTabBarController's views take up the extra space
     CGRect viewFrame = [[self.view.subviews objectAtIndex:0] frame];
     viewFrame.size.height += heightDiff;
     [[self.view.subviews objectAtIndex:0] setFrame:viewFrame];
     
-    // we are the target for the leftButton
-    [self.thinBar.leftButton addTarget:self action:@selector(postUpdateButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
     [self refreshTabBar];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(refreshTabBar)
                                                  name:@"LoginStateChanged"
@@ -78,14 +69,14 @@
         } else {
             // switch to the designated VC
             [super setSelectedIndex:selectedIndex];
-            
+
             // move the green line to the right spot
-            [self.thinBar moveGreenLineToSelectedIndex:selectedIndex];
+            [((CPThinTabBar *)self.tabBar) moveGreenLineToSelectedIndex:selectedIndex];
         }
     }
 }
 
-- (void)tabBarButtonPressed:(id)sender
+- (IBAction)tabBarButtonPressed:(id)sender
 {
     // switch to the tab the user just tapped
     int tabIndex = ((UIButton *)sender).tag;
@@ -103,7 +94,7 @@
         self.viewControllers = tabVCArray;
         
         // tell the thinBar to update the button
-        [self.thinBar refreshLastTab:NO];
+        [((CPThinTabBar *)self.tabBar) refreshLastTab:NO];
     } else {
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone"
                                                                  bundle:nil];
@@ -114,16 +105,15 @@
         self.viewControllers = tabVCArray;
         
         // tell the thinBar to update the button
-        [self.thinBar refreshLastTab:YES];
+        [((CPThinTabBar *) self.tabBar) refreshLastTab:YES];
     }  
     
     // make sure the thinBar is in front of the new button
-    [self.tabBar bringSubviewToFront:self.thinBar];
-    
+    [self.tabBar bringSubviewToFront:((CPThinTabBar *) self.tabBar).thinBarBackground];
 }
 
-- (IBAction)postUpdateButtonPressed:(id)sender
-{   
+- (IBAction)updateButtonPressed:(id)sender
+{
     if (![CPUserDefaultsHandler currentUser]) {
         // if we don't have a current user then we need to just show the login banner
         [self promptForLoginToSeeLogbook:CPAfterLoginActionAddNewLog];

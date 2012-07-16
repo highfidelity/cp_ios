@@ -589,7 +589,7 @@ typedef enum {
 {
     if (self.selectedVenueFeed || section == [tableView numberOfSections] - 1) {
         // give the tableView a footer so that the bottom cells clear the button
-        return [CPAppDelegate tabBarController].thinBar.leftButton.frame.size.width / 2;
+        return ((CPThinTabBar *)[CPAppDelegate tabBarController].tabBar).leftButton.frame.size.width / 2;
     } else {
         return 0;
     }
@@ -1164,11 +1164,10 @@ typedef enum {
         NSIndexPath *firstIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         NSArray *indexPathArray = [NSArray arrayWithObject:firstIndexPath];
         
-        UITabBar *tabBar = [CPAppDelegate tabBarController].tabBar;
-        CPThinTabBar *thinBar = [CPAppDelegate tabBarController].thinBar;
+        CPThinTabBar *thinBar = (CPThinTabBar *)[CPAppDelegate tabBarController].tabBar;
         
         // new CGRect for the UITabBar
-        CGRect newTabBarFrame = tabBar.frame;
+        CGRect newTabBarFrame = thinBar.frame;
         newTabBarFrame.origin.y -= keyboardHeight;
         
         // setup a new CGRect for the tableView
@@ -1211,7 +1210,7 @@ typedef enum {
                              if (self.currentState == FeedVCStateAddingOrRemovingPendingPost ||
                                  self.currentState == FeedVCStateSentNewPost) {
                                  // give the tabBar its new frame
-                                 tabBar.frame = newTabBarFrame;
+                                 thinBar.frame = newTabBarFrame;
                                  
                                  // toggle the alpha of the right side buttons and green line
                                  [thinBar toggleRightSide:!beingShown];

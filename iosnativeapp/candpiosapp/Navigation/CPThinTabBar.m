@@ -8,15 +8,32 @@
 
 #import "CPThinTabBar.h"
 
+@interface CPThinTabBar()
+
+@property (nonatomic, strong) UIView *greenLine;
+@property (nonatomic, strong) UIImageView *actionMenuBackground;
+@property (nonatomic, strong) UIImageView *plusImageView;
+@property (nonatomic, strong) UIImageView *minusImageView;
+@property (nonatomic, strong) UIButton *updateButton;
+
+@end
+
 @implementation CPThinTabBar
 
-@synthesize leftButton = _leftButton;
-@synthesize greenLine = _greenLine;
+@synthesize thinBarBackground = _thinBarBackground;
 @synthesize tabBarController = _tabBarController;
+@synthesize leftButton = _leftButton;
+@synthesize actionMenu = _actionMenu;
+@synthesize greenLine = _greenLine;
+@synthesize actionMenuBackground = _actionMenuBackground;
+@synthesize plusImageView = _plusImageView;
+@synthesize minusImageView = _minusImageView;
+@synthesize updateButton = _updateButton;
 @synthesize barButton1 = _barButton1;
 @synthesize barButton2 = _barButton2;
 @synthesize barButton3 = _barButton3;
 @synthesize barButton4 = _barButton4;
+@synthesize isActionMenuOpen = _isActionMenuOpen;
 
 static NSArray *tabBarIcons;
 
@@ -32,28 +49,40 @@ static NSArray *tabBarIcons;
     }
 }
 
-- (id)initWithFrame:(CGRect)frame backgroundImage:(UIImage *)backgroundImage
++ (UIImage *)backgroundImage
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        UIImage *thinImage = [UIImage imageNamed:@"thin-nav-bg.png"];
-        
-        self.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin);
-        
-        // use the image as the background color
-        self.backgroundColor = [UIColor colorWithPatternImage:thinImage];
-        
-        // set user interaction enabled to yes so the buttons actually work
-        self.userInteractionEnabled = YES;
-        
-        // add the other tab bar buttons
-        [self addCustomButtons];
-        // add the left button
-        [self addLeftButtonWithImage:[UIImage imageNamed:@"add-log-button"]];
-        // add the little green line on the bottom
-        [self addBottomGreenLine];
-    }
-    return self;
+    return [UIImage imageNamed:@"thin-nav-bg"];
+}
+
+- (void)awakeFromNib
+{    
+    UIImage *thinBackgroundImage = [[self class] backgroundImage];
+    
+    // make the frame of the tabBar thinner
+    CGFloat heightDiff = self.frame.size.height - thinBackgroundImage.size.height;
+    self.frame = CGRectMake(self.frame.origin.x, 
+                            self.frame.origin.y + heightDiff, 
+                            self.frame.size.width, 
+                            self.frame.size.height - heightDiff);
+    
+    
+    // add an imageView using the thin-nav-bg
+    // this can't be the background image because we need to hide the normal tab highlight
+    
+    self.thinBarBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 
+                                                                      thinBackgroundImage.size.width,
+                                                                      thinBackgroundImage.size.width)];
+    self.thinBarBackground.backgroundColor = [UIColor colorWithPatternImage:thinBackgroundImage]; 
+    [self addSubview:self.thinBarBackground];
+    
+    // add the other tab bar buttons
+    [self addCustomButtons];
+    
+    // add the little green line on the bottom
+    [self addBottomGreenLine];
+    
+    // setup the action menu
+    [self actionMenuSetup];
 }
 
 - (void)moveGreenLineToSelectedIndex:(NSUInteger)selectedIndex
@@ -76,22 +105,7 @@ static NSArray *tabBarIcons;
     // it sits inside of the button's borders
     self.greenLine = [[UIView alloc] initWithFrame:CGRectMake(LEFT_AREA_WIDTH + 1, self.frame.size.height - 2, BUTTON_WIDTH - 1, 2)];
     self.greenLine.backgroundColor = [CPUIHelper CPTealColor];
-    [self addSubview:self.greenLine];
-}
-
-- (void)addLeftButtonWithImage:(UIImage *)buttonImage
-{
-    // setup a UIButton with the image
-    self.leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.leftButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    self.leftButton.frame = CGRectMake(0.0, 0.0, buttonImage.size.width, buttonImage.size.height);
-    [self.leftButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    
-    // place the center of the button on the top of the CPThinBar at the center of LEFT_AREA_WIDTH
-    self.leftButton.center = CGPointMake(LEFT_AREA_WIDTH / 2, 0);
-    
-    // add the button to the tab bar controller
-    [self addSubview:self.leftButton];    
+    [self.thinBarBackground addSubview:self.greenLine];
 }
 
 - (void)refreshLastTab:(BOOL)loggedIn
@@ -125,10 +139,11 @@ static NSArray *tabBarIcons;
         // add the seperator line to the button
         [tabBarButton addSubview:sepLine];
         
-        [tabBarButton addTarget:self.tabBarController action:@selector(tabBarButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        
         // add the button to the thinBackground imageView
-        [self addSubview:tabBarButton];
+        [self.thinBarBackground addSubview:tabBarButton];
+        
+        // the target for this button is the CPTabBarController
+        [tabBarButton addTarget:self.tabBarController action:@selector(tabBarButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                 
         // this is our ith button so set that property
         // we need this to hide the buttons later
@@ -153,6 +168,124 @@ static NSArray *tabBarIcons;
     self.barButton2.alpha = shown;
     self.barButton3.alpha = shown;
     self.barButton4.alpha = shown;
+}
+
+#define ACTION_MENU_HEIGHT 238
+#define UPDATE_BUTTON_TOP_MARGIN 158
+
+- (void)actionMenuSetup
+{
+    // setup a UIButton with the image
+    UIImage *buttonImage = [UIImage imageNamed:@"action-menu-button-base"];
+    self.leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.leftButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    self.leftButton.frame = CGRectMake(0, 0, buttonImage.size.width, buttonImage.size.height);
+    [self.leftButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    
+    // place the center of the button on the top of the CPThinBar at the center of LEFT_AREA_WIDTH
+    self.leftButton.center = CGPointMake(LEFT_AREA_WIDTH / 2, 0);
+    
+    // add the button to the tab bar controller
+    [self.thinBarBackground addSubview:self.leftButton];    
+    
+    // we are the target for the leftButton
+    [self.leftButton addTarget:self action:@selector(actionMenuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    // add the actionMenu
+    // create a resizable image with the background
+    UIImage *resizableBackground = [[UIImage imageNamed:@"action-menu-bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(34, 0, 0, 0)];
+    
+    CGRect actionMenuFrame = CGRectMake((LEFT_AREA_WIDTH / 2) - (resizableBackground.size.width / 2),
+                                        0, 
+                                        resizableBackground.size.width, 
+                                        0);
+    self.actionMenu = [[UIView alloc] initWithFrame:actionMenuFrame];
+    // clip the subviews of the actionMenu to its bounds
+    self.actionMenu.clipsToBounds = YES;
+    
+    UIImageView *actionMenuBackground = [[UIImageView alloc] initWithImage:resizableBackground];
+    actionMenuBackground.frame = CGRectMake(0, 0, resizableBackground.size.width, 238);
+    [self.actionMenu addSubview:actionMenuBackground];
+    
+    [self.thinBarBackground insertSubview:self.actionMenu belowSubview:self.leftButton];
+    
+    // toggle the state of the action button so the plus is placed
+    [self toggleActionButtonState:NO];
+    
+    // add each of the buttons to the action menu
+    self.updateButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *backgroundImage = [UIImage imageNamed:@"action-menu-button-update"];
+    [self.updateButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
+    self.updateButton.frame = CGRectMake((self.actionMenu.frame.size.width / 2) - (backgroundImage.size.width / 2),
+                                         UPDATE_BUTTON_TOP_MARGIN,
+                                         backgroundImage.size.width, 
+                                         backgroundImage.size.height);
+    [self.updateButton addTarget:self.tabBarController action:@selector(updateButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.actionMenu addSubview:self.updateButton];
+}
+
+- (void)toggleActionMenu:(BOOL)showMenu
+{
+    CGFloat leftButtonTransform = showMenu ? M_PI : (M_PI*2)-0.0001;
+    
+    // if we're showing the menu the action menu background needs to grow
+    // otherwise drop height to 0
+    CGRect newMenuBackgroundFrame = self.actionMenu.frame;
+    newMenuBackgroundFrame.size.height = showMenu ? ACTION_MENU_HEIGHT : 0;
+    newMenuBackgroundFrame.origin.y -= showMenu ? ACTION_MENU_HEIGHT : -ACTION_MENU_HEIGHT;
+    
+    // animate the spinning of the plus button and replacement by the minus button
+    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{ 
+        self.leftButton.transform = CGAffineTransformMakeRotation(leftButtonTransform); 
+        [self toggleActionButtonState:showMenu];
+        
+    } completion: NULL];
+    // animation of menu buttons shooting out
+    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
+        // give the actionMenu its new frame
+        self.actionMenu.frame = newMenuBackgroundFrame;
+    } completion:^(BOOL finished){
+        //        [self.view viewWithTag:1005].userInteractionEnabled = YES;
+    }];
+}
+
+- (void)toggleActionButtonState:(BOOL)showingMenu
+{  
+    // setup the buttons if we need to
+    if (!self.plusImageView) {
+        // alloc-init the plusImageView and minusImageView
+        self.plusImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"action-menu-button-plus"]];
+        self.minusImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"action-menu-button-minus"]];
+        
+        // place them on the actionButton
+        [self.leftButton addSubview:self.plusImageView];
+        [self.leftButton addSubview:self.minusImageView];
+    }
+    // set the alpha of the UIImageView subviews of the actionButton
+    self.plusImageView.alpha = !showingMenu;
+    self.minusImageView.alpha = showingMenu;
+}
+
+- (IBAction)actionMenuButtonPressed:(id)sender
+{       
+    if (!self.isActionMenuOpen) {
+        [self toggleActionMenu:YES];
+        self.isActionMenuOpen = YES;
+    } else {
+        [self toggleActionMenu:NO];
+        self.isActionMenuOpen = NO;
+    }
+}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    if (CGRectContainsPoint(self.leftButton.frame, point)) {
+        return self.leftButton;
+    } else if (CGRectContainsPoint(self.actionMenu.frame, point)) {
+        return [self.actionMenu hitTest:[self.actionMenu convertPoint:point fromView:self] withEvent:event];
+    } else {
+        return [super hitTest:point withEvent:event];
+    } 
 }
 
 @end
