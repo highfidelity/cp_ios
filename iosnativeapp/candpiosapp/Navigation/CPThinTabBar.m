@@ -15,7 +15,6 @@
 
 @property (nonatomic, strong) UIView *actionMenu;
 @property (nonatomic, strong) UIView *greenLine;
-@property (nonatomic, strong) UIImageView *actionMenuBackground;
 
 @property (nonatomic, strong) UIImageView *plusIconImageView;
 @property (nonatomic, strong) UIImageView *minusIconImageView;
@@ -33,7 +32,6 @@
 @synthesize customBarButtons = _customBarButtons;
 @synthesize actionMenu = _actionMenu;
 @synthesize greenLine = _greenLine;
-@synthesize actionMenuBackground = _actionMenuBackground;
 @synthesize plusIconImageView = _plusImageView;
 @synthesize minusIconImageView = _minusImageView;
 @synthesize updateIconImageView = _updateIconImageView;
