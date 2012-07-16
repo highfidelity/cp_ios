@@ -10,6 +10,8 @@
 
 @interface CPThinTabBar()
 
+@property (nonatomic, strong) UIView *thinBarBackground;
+@property (nonatomic, strong) NSMutableArray *customBarButtons;
 
 @property (nonatomic, strong) UIView *actionMenu;
 @property (nonatomic, strong) UIView *greenLine;
@@ -24,10 +26,11 @@
 
 @implementation CPThinTabBar
 
-@synthesize thinBarBackground = _thinBarBackground;
 @synthesize tabBarController = _tabBarController;
-@synthesize actionButtonState = _actionButtonState;
 @synthesize actionButton = _actionButton;
+@synthesize actionButtonState = _actionButtonState;
+@synthesize thinBarBackground = _thinBarBackground;
+@synthesize customBarButtons = _customBarButtons;
 @synthesize actionMenu = _actionMenu;
 @synthesize greenLine = _greenLine;
 @synthesize actionMenuBackground = _actionMenuBackground;
@@ -35,10 +38,6 @@
 @synthesize minusIconImageView = _minusImageView;
 @synthesize updateIconImageView = _updateIconImageView;
 @synthesize actionMenuButtons = _actionMenuButtons;
-@synthesize barButton1 = _barButton1;
-@synthesize barButton2 = _barButton2;
-@synthesize barButton3 = _barButton3;
-@synthesize barButton4 = _barButton4;
 
 static NSArray *tabBarIcons;
 
@@ -98,6 +97,14 @@ static NSArray *tabBarIcons;
     return _actionMenuButtons;
 }
 
+- (NSMutableArray *)customBarButtons
+{
+    if (!_customBarButtons) {
+        _customBarButtons = [NSMutableArray array];
+    }
+    return _customBarButtons;
+}
+
 - (void)setActionButtonState:(CPThinTabBarActionButtonState)actionButtonState
 {
     if (_actionButtonState != actionButtonState) {
@@ -152,7 +159,10 @@ static NSArray *tabBarIcons;
     // grab the new image from our array of tabBarIcons
     UIImage *newImage = [tabBarIcons objectAtIndex:(loggedIn ? 3 : 4)];
     // give the new image to the button
-    [self.barButton4 setImage:newImage forState:UIControlStateNormal];
+    [[self.customBarButtons objectAtIndex:3] setImage:newImage forState:UIControlStateNormal];
+    
+    // make sure the thinBar is in front of the new button
+    [self bringSubviewToFront:self.thinBarBackground];
 }
 
 - (void)addCustomButtons 
@@ -183,17 +193,9 @@ static NSArray *tabBarIcons;
         
         // the target for this button is the CPTabBarController
         [tabBarButton addTarget:self.tabBarController action:@selector(tabBarButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                
-        // this is our ith button so set that property
-        // we need this to hide the buttons later
-        NSString *setter = [NSString stringWithFormat:@"setBarButton%d:", i+1];
         
-        // ignoring a warning here about performingSelector without a compile-time set selector, it's dynamic because of the for loop
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        [self performSelector:NSSelectorFromString(setter) withObject:tabBarButton];
-#pragma clang diagnostic pop
-        
+        // add the tabBarButton to our array of custom buttons
+        [self.customBarButtons addObject:tabBarButton];
         
         // add the right padding for the next button
         xOrigin += BUTTON_WIDTH;
@@ -203,10 +205,9 @@ static NSArray *tabBarIcons;
 - (void)toggleRightSide:(BOOL)shown
 {    
     self.greenLine.alpha = shown;
-    self.barButton1.alpha = shown;
-    self.barButton2.alpha = shown;
-    self.barButton3.alpha = shown;
-    self.barButton4.alpha = shown;
+    for (UIButton *customBarButton in self.customBarButtons) {
+        customBarButton.alpha = shown;
+    }
 }
 
 #define ACTION_MENU_HEIGHT 244

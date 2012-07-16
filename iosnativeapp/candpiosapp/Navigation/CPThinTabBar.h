@@ -21,14 +21,9 @@ typedef enum {
 
 @interface CPThinTabBar : UITabBar
 
-@property (nonatomic, strong) UIView *thinBarBackground;
 @property (nonatomic, assign) UITabBarController *tabBarController;
 @property (nonatomic, strong) UIButton *actionButton;
 @property (nonatomic, assign) CPThinTabBarActionButtonState actionButtonState;
-@property (nonatomic, strong) UIButton *barButton1;
-@property (nonatomic, strong) UIButton *barButton2;
-@property (nonatomic, strong) UIButton *barButton3;
-@property (nonatomic, strong) UIButton *barButton4;
 
 - (void)toggleActionMenu:(BOOL)showMenu;
 - (void)moveGreenLineToSelectedIndex:(NSUInteger)selectedIndex;

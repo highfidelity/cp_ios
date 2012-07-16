@@ -112,9 +112,6 @@
         // tell the thinBar to update the button
         [self.thinBar refreshLastTab:YES];
     }  
-    
-    // make sure the thinBar is in front of the new button
-    [self.tabBar bringSubviewToFront:self.thinBar.thinBarBackground];
 }
 
 - (IBAction)updateButtonPressed:(id)sender
