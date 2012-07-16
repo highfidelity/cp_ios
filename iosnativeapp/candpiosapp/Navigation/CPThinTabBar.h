@@ -30,8 +30,6 @@ typedef enum {
 @property (nonatomic, strong) UIButton *barButton3;
 @property (nonatomic, strong) UIButton *barButton4;
 
-@property (nonatomic, assign) BOOL isActionMenuOpen;
-
 - (void)toggleActionMenu:(BOOL)showMenu;
 - (void)moveGreenLineToSelectedIndex:(NSUInteger)selectedIndex;
 - (void)toggleRightSide:(BOOL)shown;

@@ -39,7 +39,6 @@
 @synthesize barButton2 = _barButton2;
 @synthesize barButton3 = _barButton3;
 @synthesize barButton4 = _barButton4;
-@synthesize isActionMenuOpen = _isActionMenuOpen;
 
 static NSArray *tabBarIcons;
 
@@ -276,9 +275,7 @@ static NSArray *tabBarIcons;
 }
 
 - (void)toggleActionMenu:(BOOL)showMenu
-{
-    self.isActionMenuOpen = showMenu;
-    
+{    
     CGFloat leftButtonTransform = showMenu ? M_PI : (M_PI*2)-0.0001;
     
     // if we're showing the menu the action menu background needs to grow
