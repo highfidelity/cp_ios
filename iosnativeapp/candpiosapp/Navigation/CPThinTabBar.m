@@ -10,10 +10,14 @@
 
 @interface CPThinTabBar()
 
+
+@property (nonatomic, strong) UIView *actionMenu;
 @property (nonatomic, strong) UIView *greenLine;
 @property (nonatomic, strong) UIImageView *actionMenuBackground;
-@property (nonatomic, strong) UIImageView *plusImageView;
-@property (nonatomic, strong) UIImageView *minusImageView;
+
+@property (nonatomic, strong) UIImageView *plusIconImageView;
+@property (nonatomic, strong) UIImageView *minusIconImageView;
+@property (nonatomic, strong) UIImageView *updateIconImageView;
 @property (nonatomic, strong) UIButton *updateButton;
 
 @end
@@ -22,12 +26,14 @@
 
 @synthesize thinBarBackground = _thinBarBackground;
 @synthesize tabBarController = _tabBarController;
-@synthesize leftButton = _leftButton;
+@synthesize actionButtonState = _actionButtonState;
+@synthesize actionButton = _actionButton;
 @synthesize actionMenu = _actionMenu;
 @synthesize greenLine = _greenLine;
 @synthesize actionMenuBackground = _actionMenuBackground;
-@synthesize plusImageView = _plusImageView;
-@synthesize minusImageView = _minusImageView;
+@synthesize plusIconImageView = _plusImageView;
+@synthesize minusIconImageView = _minusImageView;
+@synthesize updateIconImageView = _updateIconImageView;
 @synthesize updateButton = _updateButton;
 @synthesize barButton1 = _barButton1;
 @synthesize barButton2 = _barButton2;
@@ -83,6 +89,51 @@ static NSArray *tabBarIcons;
     
     // setup the action menu
     [self actionMenuSetup];
+}
+
+- (void)setActionButtonState:(CPThinTabBarActionButtonState)actionButtonState
+{
+    if (_actionButtonState != actionButtonState) {
+        _actionButtonState = actionButtonState;
+        
+        // set the alpha of the UIImageView subviews of the leftButton based on the new state
+        self.plusIconImageView.alpha = (actionButtonState == CPThinTabBarActionButtonStatePlus);
+        self.minusIconImageView.alpha = (actionButtonState == CPThinTabBarActionButtonStateMinus);
+    }
+}
+
+- (UIImageView *)iconImageView:(NSString *)imageSuffix
+{
+    // alloc-init an imageView and add it to the actionButton
+    UIImageView *iconImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"action-menu-button-%@", imageSuffix]]];
+    [self.actionButton addSubview:iconImageView];
+    
+    // return the iconImageView
+    return iconImageView;
+}
+
+- (UIImageView *)plusIconImageView
+{
+    if (!_plusImageView) {
+        _plusImageView = [self iconImageView:@"plus"];
+    }
+    return _plusImageView;
+}
+
+- (UIImageView *)minusIconImageView
+{
+    if (!_minusImageView) {
+        _minusImageView = [self iconImageView:@"minus"];
+    }
+    return _minusImageView;
+}
+
+- (UIImageView *)updateIconImageView
+{
+    if (!_updateIconImageView) {
+        _updateIconImageView = [self iconImageView:@"update-selected"];
+    }
+    return _updateIconImageView;
 }
 
 - (void)moveGreenLineToSelectedIndex:(NSUInteger)selectedIndex
@@ -177,19 +228,19 @@ static NSArray *tabBarIcons;
 {
     // setup a UIButton with the image
     UIImage *buttonImage = [UIImage imageNamed:@"action-menu-button-base"];
-    self.leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.leftButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    self.leftButton.frame = CGRectMake(0, 0, buttonImage.size.width, buttonImage.size.height);
-    [self.leftButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    self.actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.actionButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    self.actionButton.frame = CGRectMake(0, 0, buttonImage.size.width, buttonImage.size.height);
+    [self.actionButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
     
     // place the center of the button on the top of the CPThinBar at the center of LEFT_AREA_WIDTH
-    self.leftButton.center = CGPointMake(LEFT_AREA_WIDTH / 2, 0);
+    self.actionButton.center = CGPointMake(LEFT_AREA_WIDTH / 2, 0);
     
     // add the button to the tab bar controller
-    [self.thinBarBackground addSubview:self.leftButton];    
+    [self.thinBarBackground addSubview:self.actionButton];    
     
     // we are the target for the leftButton
-    [self.leftButton addTarget:self action:@selector(actionMenuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.actionButton addTarget:self action:@selector(actionMenuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     // add the actionMenu
     // create a resizable image with the background
@@ -207,10 +258,10 @@ static NSArray *tabBarIcons;
     actionMenuBackground.frame = CGRectMake(0, 0, resizableBackground.size.width, 238);
     [self.actionMenu addSubview:actionMenuBackground];
     
-    [self.thinBarBackground insertSubview:self.actionMenu belowSubview:self.leftButton];
+    [self.thinBarBackground insertSubview:self.actionMenu belowSubview:self.actionButton];
     
-    // toggle the state of the action button so the plus is placed
-    [self toggleActionButtonState:NO];
+    // make sure that the plus is shown for the default state of the action menu
+    self.plusIconImageView.alpha = 1.0;
     
     // add each of the buttons to the action menu
     self.updateButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -226,6 +277,8 @@ static NSArray *tabBarIcons;
 
 - (void)toggleActionMenu:(BOOL)showMenu
 {
+    self.isActionMenuOpen = showMenu;
+    
     CGFloat leftButtonTransform = showMenu ? M_PI : (M_PI*2)-0.0001;
     
     // if we're showing the menu the action menu background needs to grow
@@ -236,51 +289,33 @@ static NSArray *tabBarIcons;
     
     // animate the spinning of the plus button and replacement by the minus button
     [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{ 
-        self.leftButton.transform = CGAffineTransformMakeRotation(leftButtonTransform); 
-        [self toggleActionButtonState:showMenu];
-        
+        self.actionButton.transform = CGAffineTransformMakeRotation(leftButtonTransform); 
+        self.actionButtonState = (showMenu ? CPThinTabBarActionButtonStateMinus : CPThinTabBarActionButtonStatePlus);
     } completion: NULL];
+    
     // animation of menu buttons shooting out
     [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
         // give the actionMenu its new frame
         self.actionMenu.frame = newMenuBackgroundFrame;
     } completion:^(BOOL finished){
-        //        [self.view viewWithTag:1005].userInteractionEnabled = YES;
+        
     }];
 }
 
-- (void)toggleActionButtonState:(BOOL)showingMenu
-{  
-    // setup the buttons if we need to
-    if (!self.plusImageView) {
-        // alloc-init the plusImageView and minusImageView
-        self.plusImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"action-menu-button-plus"]];
-        self.minusImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"action-menu-button-minus"]];
-        
-        // place them on the actionButton
-        [self.leftButton addSubview:self.plusImageView];
-        [self.leftButton addSubview:self.minusImageView];
-    }
-    // set the alpha of the UIImageView subviews of the actionButton
-    self.plusImageView.alpha = !showingMenu;
-    self.minusImageView.alpha = showingMenu;
-}
-
 - (IBAction)actionMenuButtonPressed:(id)sender
-{       
-    if (!self.isActionMenuOpen) {
+{    
+    // only toggle the menu if the actionButton is displaying the plus or minus icon
+    if (self.actionButtonState == CPThinTabBarActionButtonStatePlus) {
         [self toggleActionMenu:YES];
-        self.isActionMenuOpen = YES;
-    } else {
+    } else if (self.actionButtonState == CPThinTabBarActionButtonStateMinus) {
         [self toggleActionMenu:NO];
-        self.isActionMenuOpen = NO;
     }
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-    if (CGRectContainsPoint(self.leftButton.frame, point)) {
-        return self.leftButton;
+    if (CGRectContainsPoint(self.actionButton.frame, point)) {
+        return self.actionButton;
     } else if (CGRectContainsPoint(self.actionMenu.frame, point)) {
         return [self.actionMenu hitTest:[self.actionMenu convertPoint:point fromView:self] withEvent:event];
     } else {

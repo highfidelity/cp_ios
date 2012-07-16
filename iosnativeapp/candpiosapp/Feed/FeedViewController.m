@@ -589,7 +589,7 @@ typedef enum {
 {
     if (self.selectedVenueFeed || section == [tableView numberOfSections] - 1) {
         // give the tableView a footer so that the bottom cells clear the button
-        return ((CPThinTabBar *)[CPAppDelegate tabBarController].tabBar).leftButton.frame.size.width / 2;
+        return [CPAppDelegate tabBarController].thinBar.actionButton.frame.size.width / 2;
     } else {
         return 0;
     }
@@ -1164,7 +1164,7 @@ typedef enum {
         NSIndexPath *firstIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         NSArray *indexPathArray = [NSArray arrayWithObject:firstIndexPath];
         
-        CPThinTabBar *thinBar = (CPThinTabBar *)[CPAppDelegate tabBarController].tabBar;
+        CPThinTabBar *thinBar = [CPAppDelegate tabBarController].thinBar;
         
         // new CGRect for the UITabBar
         CGRect newTabBarFrame = thinBar.frame;

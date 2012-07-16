@@ -33,7 +33,7 @@
     // be the tabBarController of the tab bar
     // so that it can send its buttons actions back to us
     // this is a weak pointer    
-    ((CPThinTabBar *) self.tabBar).tabBarController = self;
+    self.thinBar.tabBarController = self;
     
     // make sure the CPTabBarController's views take up the extra space
     CGRect viewFrame = [[self.view.subviews objectAtIndex:0] frame];
@@ -71,9 +71,14 @@
             [super setSelectedIndex:selectedIndex];
 
             // move the green line to the right spot
-            [((CPThinTabBar *)self.tabBar) moveGreenLineToSelectedIndex:selectedIndex];
+            [self.thinBar moveGreenLineToSelectedIndex:selectedIndex];
         }
     }
+}
+
+- (CPThinTabBar *)thinBar
+{
+    return (CPThinTabBar *)self.tabBar;
 }
 
 - (IBAction)tabBarButtonPressed:(id)sender
@@ -94,7 +99,7 @@
         self.viewControllers = tabVCArray;
         
         // tell the thinBar to update the button
-        [((CPThinTabBar *)self.tabBar) refreshLastTab:NO];
+        [self.thinBar refreshLastTab:NO];
     } else {
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone"
                                                                  bundle:nil];
@@ -105,15 +110,18 @@
         self.viewControllers = tabVCArray;
         
         // tell the thinBar to update the button
-        [((CPThinTabBar *) self.tabBar) refreshLastTab:YES];
+        [self.thinBar refreshLastTab:YES];
     }  
     
     // make sure the thinBar is in front of the new button
-    [self.tabBar bringSubviewToFront:((CPThinTabBar *) self.tabBar).thinBarBackground];
+    [self.tabBar bringSubviewToFront:self.thinBar.thinBarBackground];
 }
 
 - (IBAction)updateButtonPressed:(id)sender
 {
+    // hide the action menu
+    [self.thinBar toggleActionMenu:NO];
+    
     if (![CPUserDefaultsHandler currentUser]) {
         // if we don't have a current user then we need to just show the login banner
         [self promptForLoginToSeeLogbook:CPAfterLoginActionAddNewLog];

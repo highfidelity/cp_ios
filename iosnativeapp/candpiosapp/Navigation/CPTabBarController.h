@@ -13,6 +13,7 @@
 
 @property (nonatomic, assign) BOOL forcedCheckin;
 @property (nonatomic, strong) NSString *currentVenueID;
+@property (nonatomic, readonly) CPThinTabBar *thinBar;
 
 - (IBAction)tabBarButtonPressed:(id)sender;
 - (IBAction)updateButtonPressed:(id)sender;
