@@ -242,22 +242,41 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 #pragma mark - View lifecycle
 
+- (void)addGradientWithFrame:(CGRect)frame locations:(NSArray*)locations colors:(NSArray*)colors 
+{
+    // add gradient overlay
+    UIView *overlay = [[UIView alloc] initWithFrame:frame];
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = overlay.bounds;
+    gradient.colors = colors;
+    gradient.locations = locations;
+    [overlay.layer insertSublayer:gradient atIndex:0];
+    [self.scrollView insertSubview:overlay atIndex:1];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
+    // when pulling the scroll view top down, present the map
+    self.mapView.frame = CGRectUnion(self.mapView.frame, 
+                                     CGRectOffset(self.mapView.frame, 0, -self.mapView.frame.size.height));
     // add the blue overlay gradient in front of the map
-    UIView *blueOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.mapView.frame.size.width, self.mapView.frame.size.height)];
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = blueOverlay.bounds;
-    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0.40 green:0.62 blue:0.64 alpha:0.4] CGColor],
-                       (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:0.75] CGColor],
-                       (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor],
-                       nil];
-    gradient.locations = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:0.80], [NSNumber numberWithFloat:1.0], nil];
-    [blueOverlay.layer insertSublayer:gradient atIndex:0];
-    [self.scrollView insertSubview:blueOverlay atIndex:1];
+    [self addGradientWithFrame:self.mapView.frame 
+                     locations:[NSArray arrayWithObjects:
+                                [NSNumber numberWithFloat:0.25], 
+                                [NSNumber numberWithFloat:0.30], 
+                                [NSNumber numberWithFloat:0.5], 
+                                [NSNumber numberWithFloat:0.90], 
+                                [NSNumber numberWithFloat:1.0], 
+                                nil] 
+                        colors:[NSArray arrayWithObjects:
+                                (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor],
+                                (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:0.75] CGColor],
+                                (id)[[UIColor colorWithRed:0.40 green:0.62 blue:0.64 alpha:0.4] CGColor],
+                                (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:0.75] CGColor],
+                                (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor],
+                                nil]
+     ];
         
     // set LeagueGothic font where applicable
     [CPUIHelper changeFontForLabel:self.checkedIn toLeagueGothicOfSize:24];
