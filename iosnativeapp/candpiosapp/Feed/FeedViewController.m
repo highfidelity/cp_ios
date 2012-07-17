@@ -138,9 +138,12 @@ typedef enum {
 #define UPDATE_LABEL_WIDTH 228
 #define LOVE_LABEL_WIDTH 178
 #define LOVE_PLUS_ONE_LABEL_WIDTH 178
+#define CONTAINER_BACKGROUND_ORIGIN_X 7.5
+#define CONTAINER_BACKGROUND_WIDTH 305
 #define CONTAINER_IMAGE_VIEW_TAG 2819
 #define TIMELINE_VIEW_TAG 2820
 #define TIMELINE_ORIGIN_X 50
+#define CELL_SEPARATOR_TAG 2349
 
 - (NSString *)textForPost:(CPPost *)post
 {
@@ -232,7 +235,7 @@ typedef enum {
             insets = UIEdgeInsetsMake(0, 0, 0, 0);
             break;
         case FeedBGContainerPositionBottom:
-            insets = UIEdgeInsetsMake(0, 0, 6, 0);
+            insets = UIEdgeInsetsMake(0, 0, 8, 0);
             filename = @"venue-feed-bg-container-bottom";
             break;
         default:
@@ -246,13 +249,13 @@ typedef enum {
     
     // change the frame of the imageView to leave spacing on the side
     CGRect containerIVFrame = containerImageView.frame;
-    containerIVFrame.origin.x = 7.5;
-    containerIVFrame.size.width = 305;
+    containerIVFrame.origin.x = CONTAINER_BACKGROUND_ORIGIN_X;
+    containerIVFrame.size.width = CONTAINER_BACKGROUND_WIDTH;
     containerIVFrame.size.height = containerHeight;
     containerImageView.frame = containerIVFrame;
     
     if (position != FeedBGContainerPositionMiddle) {
-        CGFloat timelineHeight = (position == FeedBGContainerPositionTop) ? 2 : (containerHeight - 2);
+        CGFloat timelineHeight = (position == FeedBGContainerPositionTop) ? 2 : (containerHeight - 4);
         
         UIView *timelineView = [[self class] timelineViewWithHeight:timelineHeight];
         
@@ -305,6 +308,29 @@ typedef enum {
             [containerView viewWithTag:TIMELINE_VIEW_TAG].hidden = NO;
         }
         
+    }
+}
+
+- (void)addSeperatorViewtoCell:(UITableViewCell *)cell
+{
+    UIView *separatorView;
+    
+    if (!(separatorView = [cell.contentView viewWithTag:CELL_SEPARATOR_TAG])) {
+        separatorView = [[UIView alloc] initWithFrame:CGRectMake(CONTAINER_BACKGROUND_ORIGIN_X + 2, 
+                                                                cell.contentView.frame.size.height - 5, 
+                                                                CONTAINER_BACKGROUND_WIDTH - 5, 
+                                                                1)];
+        separatorView.backgroundColor = [UIColor colorWithR:239 G:239 B:239 A:1];
+        separatorView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;        
+        separatorView.tag = CELL_SEPARATOR_TAG;
+        
+        // add the separatorView to the cell's contentView
+        [cell.contentView addSubview:separatorView];
+    } else {
+        // make sure the separator is in the right spot
+        CGRect separatorViewMove = separatorView.frame;
+        separatorViewMove.origin.y = cell.contentView.frame.size.height - 5;
+        separatorView.frame = separatorViewMove;
     }
 }
 
@@ -395,6 +421,7 @@ typedef enum {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {    
     CPPost *post;
+    BOOL cellSeperatorRequired;
 
     if (!self.selectedVenueFeed) {
         CPVenueFeed *sectionVenueFeed = [self venueFeedPreviewForIndex:indexPath.section];
@@ -440,6 +467,7 @@ typedef enum {
             
             return feedPreviewFooterCell;
         } else {
+            cellSeperatorRequired = !(indexPath.row == sectionVenueFeed.posts.count);
             // pull the right post from the feed preview for this venue
             post = [sectionVenueFeed.posts objectAtIndex:(indexPath.row - 1)];
         }
@@ -550,11 +578,20 @@ typedef enum {
     
     if (self.selectedVenueFeed) {
         // remove the container background from this cell, if it exists
+        // remove the separator view
         [[cell viewWithTag:CONTAINER_IMAGE_VIEW_TAG] removeFromSuperview];
+        [[cell viewWithTag:CELL_SEPARATOR_TAG] removeFromSuperview];
     } else {
         [self setupContainerBackgroundForCell:cell 
                               containerHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height indexPath:indexPath] 
                                      position:FeedBGContainerPositionMiddle];
+        
+        if (cellSeperatorRequired) {
+            [self addSeperatorViewtoCell:cell];
+        } else {
+            // remove the cell separator if it exists
+            [[cell viewWithTag:CELL_SEPARATOR_TAG] removeFromSuperview];
+        }
     }
     
     cell.activeColor = self.tableView.backgroundColor;
