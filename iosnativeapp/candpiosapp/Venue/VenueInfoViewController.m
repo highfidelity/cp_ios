@@ -336,7 +336,9 @@
             if ([[[activeUsers objectForKey:userID] objectForKey:@"checked_in"] boolValue]) {
                 [self addUser:user toArrayForJobCategory:user.majorJobCategory];
                 // if the major and minor job categories differ also add this person to the minor category
-                if (![user.majorJobCategory isEqualToString:user.minorJobCategory] && ![user.minorJobCategory isEqualToString:@"other"]) {
+                if (![user.majorJobCategory isEqualToString:user.minorJobCategory] &&
+                    ![user.minorJobCategory isEqualToString:@"other"] &&
+                    ![user.minorJobCategory isEqualToString:@""]) {
                     [self addUser:user toArrayForJobCategory:user.minorJobCategory];
                 }
             } else {
