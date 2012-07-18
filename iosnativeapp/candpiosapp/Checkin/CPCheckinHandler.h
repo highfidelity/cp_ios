@@ -9,14 +9,19 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    CPCheckinTypeDefault,
-    CPCheckinTypeForced,
-    CPCheckinTypeAuto
-} CPCheckinType;
+    CPAfterCheckinActionNone,
+    CPAfterCheckinActionShowFeed,
+    CPAfterCheckinActionNewPost
+} CPAfterCheckinAction;
 
 @interface CPCheckinHandler : NSObject
 
-+ (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime checkinType:(CPCheckinType)checkinType;
-+ (void)queueLocalNotificationForVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime;
+@property (nonatomic, assign) CPAfterCheckinAction afterCheckinAction;
+
+- (void)presentCheckinModalFromViewController:(UIViewController *)presentingViewController;
+- (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime;
+- (void)queueLocalNotificationForVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime;
+
++ (CPCheckinHandler *)sharedHandler;
 
 @end

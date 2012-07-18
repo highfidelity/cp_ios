@@ -9,8 +9,39 @@
 #import "CPCheckinHandler.h"
 
 @implementation CPCheckinHandler
+@synthesize afterCheckinAction = _afterCheckinAction;
 
-+ (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime checkinType:(CPCheckinType)checkinType
+static CPCheckinHandler *sharedHandler;
+
++ (void)initialize
+{
+    static BOOL initialized = NO;
+    if(!initialized)
+    {
+        initialized = YES;
+        sharedHandler = [[CPCheckinHandler alloc] init];
+    }
+}
+
++ (CPCheckinHandler *)sharedHandler
+{
+    static CPCheckinHandler *_sharedHandler;
+    if (!_sharedHandler) {
+        _sharedHandler = [[CPCheckinHandler alloc] init];
+    }
+    return _sharedHandler;
+}
+
+- (void)presentCheckinModalFromViewController:(UIViewController *)presentingViewController
+{
+    // grab the inital view controller of the checkin storyboard
+    UINavigationController *checkinNVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+    
+    // present that VC modally
+    [presentingViewController presentModalViewController:checkinNVC animated:YES];
+}
+
+- (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime
 {       
     [CPAppDelegate setCheckedOut];
     // set the NSUserDefault to the user checkout time
@@ -19,17 +50,10 @@
     // Save current place to venue defaults as it's used in several places in the app
     [CPUserDefaultsHandler setCurrentVenue:venue];
     
-    BOOL forcedCheckin = (checkinType == CPCheckinTypeForced);
-    
     // Add this venue to the list of recent venues for the feed TVC
     // if this was a forced checkin we need to show the feed now
-    [CPUserDefaultsHandler addFeedVenue:venue showFeedNow:forcedCheckin];
+    [CPUserDefaultsHandler addFeedVenue:venue showFeedNow:(self.afterCheckinAction != CPAfterCheckinActionNone)];
     
-    if (forcedCheckin) {
-        // this was a forced checkin
-        // so use the IBAction on the tabBarController to post to the feed
-        [[CPAppDelegate tabBarController] updateButtonPressed:nil];
-    }
     
     // If this is the user's first check in to this venue and auto-checkins are enabled,
     // ask the user about checking in automatically to this venue in the future
@@ -51,7 +75,7 @@
     }
 }
 
-+ (void)queueLocalNotificationForVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime
+- (void)queueLocalNotificationForVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime
 {
     // Fire a notification 5 minutes before checkout time
     NSInteger minutesBefore = 5;

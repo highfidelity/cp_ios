@@ -270,8 +270,8 @@
                 // in case we came from foursquare venue list and didn't have it
                 self.place.venueID = [[json objectForKey:@"venue_id"] intValue];
                 
-                [CPCheckinHandler queueLocalNotificationForVenue:self.place checkoutTime:checkOutTime];
-                [CPCheckinHandler handleSuccessfulCheckinToVenue:self.place checkoutTime:checkOutTime checkinType:([CPAppDelegate tabBarController].forcedCheckin ? CPCheckinTypeForced : CPCheckinTypeDefault)];                
+                [[CPCheckinHandler sharedHandler] queueLocalNotificationForVenue:self.place checkoutTime:checkOutTime];
+                [[CPCheckinHandler sharedHandler] handleSuccessfulCheckinToVenue:self.place checkoutTime:checkOutTime];                
                 
                 // hide the checkin screen, we're checked in
                 if ([self isModal]) {
@@ -294,7 +294,6 @@
                 // show an alertView if the user isn't checked in
                 [SVProgressHUD dismissWithError:@"You must be logged in to C&P in order to check in."
                                      afterDelay:kDefaultDismissDelay];
-                [CPAppDelegate tabBarController].forcedCheckin = NO;
                 [CPAppDelegate performSelector:@selector(showSignupModalFromViewController:animated:) withObject:self afterDelay:kDefaultDismissDelay];
             }
         } else {

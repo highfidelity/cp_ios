@@ -64,7 +64,6 @@
 
 - (IBAction)closeWindow:(id)sender {
     [SVProgressHUD dismiss];
-    [CPAppDelegate tabBarController].forcedCheckin = NO;
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -238,7 +237,7 @@
 {
 
     if ([CPUserDefaultsHandler currentUser].userID) {
-        // If the item selected is the last in the list, prompt user to add a new venuen
+        // If the item selected is the last in the list, prompt user to add a new venue
         if (indexPath.row == places.count - 1) {
             addPlaceAlertView = [[UIAlertView alloc] initWithTitle:@"Name of New Place" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
             addPlaceAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
@@ -246,8 +245,27 @@
             [addPlaceAlertView show];
             return;
         }
-        else {
-            [self performSegueWithIdentifier:@"ShowCheckInDetailsView" sender:self];            
+        else if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
+            // this user is currently checked in
+            // we need to present them with an alertView to confirm that they do in fact want to checkout of the previous venue
+            // and checkin here now
+            NSString *switchVenueMessage = [NSString stringWithFormat:@"Do you want to leave %@?\nYou can always go back later!", 
+                                            [CPUserDefaultsHandler currentVenue].name];
+            
+            UIAlertView *switchVenueConfirm = [[UIAlertView alloc] 
+                                               initWithTitle:@"Are you sure?" 
+                                               message:switchVenueMessage
+                                               delegate:self 
+                                               cancelButtonTitle:@"Cancel" 
+                                               otherButtonTitles:@"Yes", nil];
+            
+#define SWITCH_VENUE_ALERT_TAG 1230
+            
+            switchVenueConfirm.tag = SWITCH_VENUE_ALERT_TAG;
+            [switchVenueConfirm show];
+            
+        } else {
+            [self performSegueWithIdentifier:@"ShowCheckInDetailsView" sender:self]; 
         }
     }
     else {
@@ -286,15 +304,23 @@
 # pragma mark - AlertView
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSString *name = [alertView textFieldAtIndex:0].text;
-    
-    // Check for a valid name, otherwise cancel the Add Place request
-    if (buttonIndex == 1) {
-        [self addNewPlace:name];
-    }
-    else {
-        [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
-    }
+    if (alertView.tag = SWITCH_VENUE_ALERT_TAG) {
+        if (buttonIndex == alertView.firstOtherButtonIndex) {
+            [self performSegueWithIdentifier:@"ShowCheckInDetailsView" sender:self];
+        } else {
+            [self dismissModalViewControllerAnimated:YES];
+        }
+    } else {
+        NSString *name = [alertView textFieldAtIndex:0].text;
+        
+        // Check for a valid name, otherwise cancel the Add Place request
+        if (buttonIndex == 1) {
+            [self addNewPlace:name];
+        }
+        else {
+            [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+        }
+    }    
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

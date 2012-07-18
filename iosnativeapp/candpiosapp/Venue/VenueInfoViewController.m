@@ -12,6 +12,7 @@
 #import "UserProfileViewController.h"
 #import "MapDataSet.h"
 #import "UIButton+AnimatedClockHand.h"
+#import "CPCheckinHandler.h"
 
 #define CHAT_MESSAGE_ORIGIN_X 11
 
@@ -795,6 +796,9 @@
             // user is checked in here so ask them if they want to be checked out
             [CPAppDelegate promptForCheckout];
         } else {
+            // tell the CPCheckinHandler that there should be no action after this checkin
+            [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionNone;
+            
             // show them the check in screen
             CheckInDetailsViewController *checkinVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
             checkinVC.place = self.venue;

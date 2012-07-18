@@ -190,10 +190,11 @@ static NSArray *tabBarIcons;
 }
 
 #define ACTION_MENU_HEIGHT 244
+
+#define QUESTION_BUTTON_TOP_MARGIN 9
+#define LOVE_BUTTON_TOP_MARGIN 60
+#define CHECKIN_BUTTON_TOP_MARGIN 111
 #define UPDATE_BUTTON_TOP_MARGIN 162
-#define LOVE_BUTTON_TOP_MARGIN 111
-#define QUESTION_BUTTON_TOP_MARGIN 60 
-#define CHECKIN_BUTTON_TOP_MARGIN 9
 
 - (void)actionMenuSetup
 {
@@ -246,7 +247,7 @@ static NSArray *tabBarIcons;
     [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"update" topMargin:UPDATE_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(updateButtonPressed:)]];
     [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"love" topMargin:LOVE_BUTTON_TOP_MARGIN tabBarControllerAction:nil]];
     [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"question" topMargin:QUESTION_BUTTON_TOP_MARGIN tabBarControllerAction:nil]];
-    [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"checkin" topMargin:CHECKIN_BUTTON_TOP_MARGIN tabBarControllerAction:nil]];
+    [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"checkin" topMargin:CHECKIN_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(checkinButtonPressed:)]];
 }
                        
 - (UIButton *)actionMenuButtonWithImageSuffix:(NSString *)imageSuffix 

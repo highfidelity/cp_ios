@@ -9,11 +9,11 @@
 #import "CPTabBarController.h"
 #import "FeedViewController.h"
 #import "CPTabBarControllerView.h"
+#import "CPCheckinHandler.h"
 
 @implementation CPTabBarController
 
 // TODO: get rid of the currentVenueID here, let's keep that in NSUserDefaults (my bad)
-@synthesize forcedCheckin = _forcedCheckin;
 @synthesize currentVenueID = _currentVenueID;
 
 - (void)viewDidLoad
@@ -141,14 +141,11 @@
         UINavigationController *feedNC = [self.viewControllers objectAtIndex:0];
         FeedViewController *feedVC = [feedNC.viewControllers objectAtIndex:0];
         
-        if (self.forcedCheckin) {
+        if ([CPCheckinHandler sharedHandler].afterCheckinAction == CPAfterCheckinActionNewPost) {
             // this is for a forced checkin
             // so the feedVC is already being show
             // just tell it we want a new post
             feedVC.newPostAfterLoad = YES;
-            
-            // reset the forced checkin boolean
-            self.forcedCheckin = NO;
         } else {
             // if the FeedViewController doesn't have our the current venue's feed as it's selectedVenueFeed
             // then alloc-init one and set it properly
@@ -174,6 +171,14 @@
     }
 }
 
+- (IBAction)checkinButtonPressed:(id)sender
+{
+    [self.thinBar toggleActionMenu:NO];
+    
+    [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionShowFeed;
+    [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
+}
+
 - (void)promptForLoginToSeeLogbook:(CPAfterLoginAction)action
 {
     // set the settingsMenuController CPAfterLoginAction so it knows where to go after login
@@ -185,16 +190,9 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == alertView.firstOtherButtonIndex) {
-        // the user wants to checkin
-        // this is a forced checkin
-        self.forcedCheckin = YES;
-        
-        // grab the inital view controller of the checkin storyboard
-        UINavigationController *checkinNVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
-        
-        // present that VC modally
-        [self presentModalViewController:checkinNVC animated:YES];
+    if (buttonIndex == alertView.firstOtherButtonIndex) {        
+        [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionNewPost;      
+        [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
     } else if (buttonIndex != alertView.cancelButtonIndex) {
         // this is the "Post to Feed" button
         // tell the Feed TVC that it needs to show only postable feeds
