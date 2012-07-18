@@ -806,6 +806,9 @@
             // be the delgate of the check in view controller
             checkinVC.delegate = self;
             
+            // tell the CheckinDetailsViewController that it should hide the tabBar
+            checkinVC.hidesBottomBarWhenPushed = YES;
+            
             // Pass whether the checkin is virtual or non-virtual
             checkinVC.checkInIsVirtual = self.checkInIsVirtual;
             
