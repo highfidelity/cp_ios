@@ -92,12 +92,54 @@
     return [NSString stringWithFormat:@"%@ %@", [formatter stringFromNumber:number], suffix];
 }
 
-# pragma mark Validation
+#pragma mark - Validation
 + (BOOL)validateEmailWithString:(NSString*)email
 {
     NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"; 
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex]; 
     return [emailTest evaluateWithObject:email];
+}
+
+#pragma mark - Relative time string
++ (NSString *)relativeTimeStringFromDateToNow:(NSDate *)date
+{
+    if (date) {
+        NSTimeInterval secondsAgo = -[date timeIntervalSinceNow];
+        int secondsInMinute = 60;
+        int minutesInHour = 60;
+        int hoursInDay = 24;
+        int daysInMonth = 30;
+        int daysInYear = 365;
+
+        
+        if (secondsAgo < secondsInMinute) {
+            return @"a moment ago";
+        } else if (secondsAgo < secondsInMinute * minutesInHour * hoursInDay * daysInYear){
+            double result;
+            NSString *unit;
+            
+            if (secondsAgo < secondsInMinute * minutesInHour) {
+                result = secondsAgo / secondsInMinute;
+                unit = @"min";
+            } else if (secondsAgo < secondsInMinute * minutesInHour * hoursInDay) {
+                result = secondsAgo / (secondsInMinute * minutesInHour);
+                unit = @"hr";
+            } else if (secondsAgo < secondsInMinute * minutesInHour * hoursInDay * daysInMonth) {
+                result = secondsAgo / (secondsInMinute * minutesInHour * hoursInDay);
+                unit = @"day";
+            } else {
+                result = secondsAgo / (secondsInMinute * minutesInHour * hoursInDay * daysInMonth);
+                unit = @"mnth";
+            }
+            
+            return [NSString stringWithFormat:@"%.f %@ ago", round(result), (round(result) == 1 ? unit : [unit stringByAppendingString:@"s"])];
+                
+        } else {
+            return @"more than 1 yr";
+        }
+    } else {
+        return nil;
+    }
 }
 
 

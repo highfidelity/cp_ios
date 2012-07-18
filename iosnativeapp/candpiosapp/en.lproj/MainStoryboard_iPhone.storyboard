@@ -206,35 +206,48 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.96470588235294119" green="0.96862745098039216" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedPreviewHeaderCell" id="ru4-kX-UFC">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedPreviewHeaderCell" id="ru4-kX-UFC" customClass="FeedPreviewHeaderCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5382" contentMode="left" text="Coffee &amp; Power" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="zIf-Uv-RSL">
-                                                    <rect key="frame" x="36" y="7" width="264" height="30"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Coffee &amp; Power" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="zIf-Uv-RSL">
+                                                    <rect key="frame" x="36" y="7" width="182" height="31"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="24"/>
                                                     <color key="textColor" red="0.0" green="0.53725490196078429" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="1 min ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="Nea-O1-Ryy">
+                                                    <rect key="frame" x="201" y="7" width="101" height="31"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="24"/>
+                                                    <color key="textColor" red="0.80784313725490198" green="0.80784313725490198" blue="0.80784313725490198" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <connections>
+                                            <outlet property="relativeTimeLabel" destination="Nea-O1-Ryy" id="JxB-nM-NZz"/>
+                                            <outlet property="venueNameLabel" destination="zIf-Uv-RSL" id="rbh-HF-6BH"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedPostablePreviewHeaderCell" id="8at-7z-Qf8">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedPostablePreviewHeaderCell" id="8at-7z-Qf8" customClass="FeedPreviewHeaderCell">
                                         <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5382" contentMode="left" text="Coffee &amp; Power" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="i8M-R5-4Ty">
-                                                    <rect key="frame" x="36" y="12" width="264" height="30"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Coffee &amp; Power" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="i8M-R5-4Ty">
+                                                    <rect key="frame" x="36" y="12" width="235" height="30"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="24"/>
                                                     <color key="textColor" red="0.0" green="0.53725490200000003" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
@@ -245,6 +258,9 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <connections>
+                                            <outlet property="venueNameLabel" destination="i8M-R5-4Ty" id="c1l-Vt-Tr0"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MyPostUpdateCell" id="VQG-Nh-eGn" customClass="PostUpdateCell">
                                         <rect key="frame" x="0.0" y="110" width="320" height="44"/>
@@ -791,6 +807,126 @@
         <image name="picture-coming-soon.jpg" width="100" height="100"/>
         <image name="user-image-mask.png" width="25" height="25"/>
     </resources>
+    <classes>
+        <class className="CPBaseTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPBaseTableViewController.h"/>
+        </class>
+        <class className="CPTabBarController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPTabBarController.h"/>
+            <relationships>
+                <relationship kind="action" name="tabBarButtonPressed:"/>
+                <relationship kind="action" name="updateButtonPressed:"/>
+            </relationships>
+        </class>
+        <class className="CPThinTabBar" superclassName="UITabBar">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPThinTabBar.h"/>
+        </class>
+        <class className="CPUserActionCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPUserActionCell.h"/>
+        </class>
+        <class className="ContactListCell" superclassName="CPUserActionCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ContactListCell.h"/>
+            <relationships>
+                <relationship kind="action" name="acceptButtonAction"/>
+                <relationship kind="action" name="declineButtonAction"/>
+                <relationship kind="outlet" name="acceptContactRequestButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="declineContactRequestButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="ContactListViewController" superclassName="CPBaseTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ContactListViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="placeholderImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="FeedPreviewHeaderCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FeedPreviewHeaderCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="relativeTimeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueNameLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="FeedViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FeedViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="HPGrowingTextView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HPGrowingTextView.h"/>
+        </class>
+        <class className="MapTabController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapTabController.h"/>
+            <relationships>
+                <relationship kind="action" name="locateMe:"/>
+                <relationship kind="action" name="refreshButtonClicked:"/>
+                <relationship kind="outlet" name="mapAndButtonsView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="NewPostCell" superclassName="PostBaseCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NewPostCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="growingTextView" candidateClass="HPGrowingTextView"/>
+            </relationships>
+        </class>
+        <class className="PostBaseCell" superclassName="CPUserActionCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PostBaseCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="entryLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="senderProfileButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="PostLoveCell" superclassName="PostBaseCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PostLoveCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="receiverProfileButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="PostUpdateCell" superclassName="PostBaseCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PostUpdateCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="UserListTableViewController" superclassName="CPBaseTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserListTableViewController.h"/>
+        </class>
+        <class className="UserTableViewCell" superclassName="CPUserActionCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserTableViewCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="categoryLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="checkInCountLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="checkInLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="distanceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="profilePictureImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="VenueCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueCheckins" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueDistance" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venuePicture" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="VenueListTableViewController" superclassName="CPBaseTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueListTableViewController.h"/>
+        </class>
+        <class className="VenueViewToggleViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueViewToggleViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

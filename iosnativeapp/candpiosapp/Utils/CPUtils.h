@@ -15,8 +15,9 @@
 + (NSString *)localizedDistanceBetweenLocationA:(CLLocation *)locationA
     andLocationB:(CLLocation *)locationB;
 + (NSString *)localizedDistanceofLocationA:(CLLocation *)locationA awayFromLocationB:(CLLocation *)locationB;
-
 + (NSString *)localizedDistanceStringFromMiles:(double)miles;
+
++ (NSString *)relativeTimeStringFromDateToNow:(NSDate *)date;
 
 + (BOOL)validateEmailWithString:(NSString*)email;
 @end

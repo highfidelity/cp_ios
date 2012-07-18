@@ -12,6 +12,7 @@
 #import "PostUpdateCell.h"
 #import "NewPostCell.h"
 #import "PostLoveCell.h"
+#import "FeedPreviewHeaderCell.h"
 #import "UserProfileViewController.h"
 #import "SVPullToRefresh.h"
 #import "CPUserAction.h"
@@ -429,28 +430,64 @@ typedef enum {
         // check if this is for a header 
         // or a footer for a venue feed preview
         if (indexPath.row == 0) {
-            UITableViewCell *feedPreviewHeaderCell;
+            FeedPreviewHeaderCell *headerCell;
             
             if (self.previewPostableFeedsOnly) {
                 static NSString *FeedPostablePreviewHeaderCellIdentifier = @"FeedPostablePreviewHeaderCell";
-                feedPreviewHeaderCell = [tableView dequeueReusableCellWithIdentifier:FeedPostablePreviewHeaderCellIdentifier];
+                headerCell = [tableView dequeueReusableCellWithIdentifier:FeedPostablePreviewHeaderCellIdentifier];
             } else {
                 static NSString *FeedPreviewHeaderCellIdentifier = @"FeedPreviewHeaderCell";
-                feedPreviewHeaderCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewHeaderCellIdentifier];
+                headerCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewHeaderCellIdentifier];
             }
             
-            [self setupContainerBackgroundForCell:feedPreviewHeaderCell 
+            [self setupContainerBackgroundForCell:headerCell
                                   containerHeight:PREVIEW_HEADER_CELL_HEIGHT 
                                          position:FeedBGContainerPositionTop];
-                        
-            // grab the label for the venue name
-            UILabel *venueNameLabel = (UILabel *)[feedPreviewHeaderCell viewWithTag:5382];
             
             // give that label the venue name and change font to league gothic
-            venueNameLabel.text = sectionVenueFeed.venue.name;
-            [CPUIHelper changeFontForLabel:venueNameLabel toLeagueGothicOfSize:24];
+            headerCell.venueNameLabel.text = sectionVenueFeed.venue.name;
+            [CPUIHelper changeFontForLabel:headerCell.venueNameLabel toLeagueGothicOfSize:24];
             
-            return feedPreviewHeaderCell;
+            if (!self.previewPostableFeedsOnly) {
+                [CPUIHelper changeFontForLabel:headerCell.relativeTimeLabel toLeagueGothicOfSize:24];
+                
+                // give the relative time string to the cell
+                // if this venue has posts in the preview
+                // otherwise leave it blank
+                NSDate *firstPostDate;
+                if (sectionVenueFeed.posts.count > 0) {
+                    firstPostDate = [[sectionVenueFeed.posts objectAtIndex:0] date];
+                }
+                
+                headerCell.relativeTimeLabel.text = [CPUtils relativeTimeStringFromDateToNow:firstPostDate];
+                
+#define TIMESTAMP_LEFT_MARGIN 4
+                
+                if (headerCell.relativeTimeLabel.text) {
+                    // we need to stick the timestamp right beside the venue name
+                    CGSize timestampSize = [headerCell.relativeTimeLabel.text sizeWithFont:headerCell.relativeTimeLabel.font];
+                    CGSize venueNameSize = [headerCell.venueNameLabel.text sizeWithFont:headerCell.venueNameLabel.font];
+                    
+                    // stick the timestamp label to the venue name
+                    CGRect timestampShift = headerCell.relativeTimeLabel.frame;
+                    timestampShift.origin.x = (CONTAINER_BACKGROUND_WIDTH + CONTAINER_BACKGROUND_ORIGIN_X) - timestampSize.width - 18;
+                    
+                    // the venueNameLabel will cut into the time stamp so shrink it
+                    CGRect venueNameShrink = headerCell.venueNameLabel.frame;
+                    
+                    if ((headerCell.venueNameLabel.frame.origin.x + venueNameSize.width) > timestampShift.origin.x) {
+                        venueNameShrink.size.width = timestampShift.origin.x - venueNameShrink.origin.x - TIMESTAMP_LEFT_MARGIN;
+                    } else {
+                        venueNameShrink.size.width = venueNameSize.width;
+                        timestampShift.origin.x = (venueNameShrink.origin.x + venueNameShrink.size.width + TIMESTAMP_LEFT_MARGIN);
+                    }
+                    
+                    headerCell.venueNameLabel.frame = venueNameShrink;
+                    headerCell.relativeTimeLabel.frame = timestampShift;                   
+                }
+            }
+            
+            return headerCell;
         } else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section] - 1) {
             static NSString *FeedPreviewFooterCellIdentifier = @"FeedPreviewFooterCell";
             UITableViewCell *feedPreviewFooterCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewFooterCellIdentifier];
