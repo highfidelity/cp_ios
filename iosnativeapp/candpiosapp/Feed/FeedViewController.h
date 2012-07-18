@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSMutableArray *venueFeedPreviews;
 @property (nonatomic, strong) NSMutableArray *postableVenueFeeds;
 @property (nonatomic, assign) BOOL newPostAfterLoad;
+@property (nonatomic, strong) NSMutableDictionary *postPlussingUserIds;
 
 - (void)newPost;
 - (void)showOnlyPostableFeeds;

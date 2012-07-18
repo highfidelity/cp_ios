@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "CPUserActionCell.h"
+#import "CPPost.h"
 
 @interface PostBaseCell : CPUserActionCell
 
 @property (nonatomic, assign) IBOutlet UIButton *senderProfileButton;
 @property (nonatomic, assign) IBOutlet UILabel *entryLabel;
+@property (nonatomic, strong) CPPost* post;
 
 @end

@@ -12,5 +12,11 @@
 @interface PostLoveCell : PostBaseCell
 
 @property (nonatomic, assign) IBOutlet UIButton *receiverProfileButton;
+@property (nonatomic, strong) UIButton *plusLoveButton;
+@property (nonatomic, strong) UILabel *loveCountLabel;
+@property (nonatomic, strong) UIImageView *loveCountBubble;
+
+- (void) addPlusWidget;
+- (void) changeLoveCountToValue:(int)value;
 
 @end

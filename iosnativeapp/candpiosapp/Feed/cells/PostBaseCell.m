@@ -13,6 +13,7 @@
 
 @synthesize senderProfileButton = _senderProfileButton;
 @synthesize entryLabel = _entryLabel;
+@synthesize post;
 
 - (void)awakeFromNib
 {
