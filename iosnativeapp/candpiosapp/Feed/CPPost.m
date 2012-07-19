@@ -21,6 +21,8 @@
 @synthesize skill = _skill;
 @synthesize type = _type;
 @synthesize originalPostID = _originalPostID;
+@synthesize likeCount;
+@synthesize userHasLiked;
 
 static NSDateFormatter *postDateFormatter;
 
@@ -39,6 +41,8 @@ static NSDateFormatter *postDateFormatter;
         self.postID = [[postDict objectForKey:@"id"] integerValue];
         self.entry = [postDict objectForKey:@"entry"];
         self.date = [postDateFormatter dateFromString:[postDict objectForKey:@"date"]];
+        self.likeCount = [[postDict objectForKey:@"like_count"] integerValue];
+        self.userHasLiked = [[postDict objectForKey:@"user_has_liked"] boolValue];
         
         // alloc-init user objects for author and receiver if we have them
         // we should always have an author

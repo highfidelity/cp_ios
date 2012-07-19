@@ -616,13 +616,6 @@ typedef enum {
             loveLabelFrame.size.width = post.originalPostID > 0 ? LOVE_PLUS_ONE_LABEL_WIDTH : LOVE_LABEL_WIDTH;
             loveCell.entryLabel.frame = loveLabelFrame;
 
-            // add the plus love widget
-            [loveCell addPlusWidget];
-            int count = [self plusCountForPostId:post.postID];
-            if (count) {
-                [loveCell changeLoveCountToValue:count];
-            }
-
             // the cell to return is the loveCell
             cell = loveCell;
         } 
@@ -664,6 +657,12 @@ typedef enum {
     
     // return the cell
     cell.post = post;
+
+    // add the plus love widget
+    [cell addPlusWidget];
+    [cell changeLikeCountToValue:cell.post.likeCount animated:NO];
+    cell.plusButton.enabled = !post.userHasLiked;
+    
     return cell;
 }
 
@@ -933,45 +932,6 @@ typedef enum {
     } 
 }
 
-- (void)checkForPlussesOnPostId:(CPPost*)post 
-{
-    if (post.originalPostID) {
-        [self postId:post.postID plussedByUserId:post.author.userID];
-    }
-}
-- (void)postId:(int)postId plussedByUserId:(int)userId
-{
-    id key =[NSNumber numberWithInt:postId];
-    NSMutableSet *set = [self.postPlussingUserIds objectForKey:key];
-    if (!set) {
-        set = [NSMutableSet new];
-        [self.postPlussingUserIds setObject:set forKey:key];
-    }
-    [set addObject:[NSNumber numberWithInt:userId]];
-}
-
-- (BOOL) hasPostId:(int)postId beenPlussedByUserId:(int)userId 
-{
-    id key =[NSNumber numberWithInt:postId];
-    NSMutableSet *set = [self.postPlussingUserIds objectForKey:key];
-    if ([set containsObject:[NSNumber numberWithInt:userId]]) {
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
-- (int) plusCountForPostId:(int)postId 
-{
-    id key =[NSNumber numberWithInt:postId];
-    NSMutableSet *set = [self.postPlussingUserIds objectForKey:key];
-    if (set) {
-        return [set count];
-    } else {
-        return 0;
-    }
-}
-
 - (void)getVenueFeedOrFeedPreviews
 {   
     [self toggleLoadingState:YES];
@@ -985,10 +945,6 @@ typedef enum {
                 if (![[json objectForKey:@"error"] boolValue]) {
                                         
                     [self.selectedVenueFeed addPostsFromArray:[json objectForKey:@"payload"]];
-                    
-                    for (CPPost* post in self.selectedVenueFeed.posts) {
-                        [self checkForPlussesOnPostId:post];
-                    }
                     
                     [self toggleLoadingState:NO];
                     
@@ -1047,9 +1003,6 @@ typedef enum {
     for (CPVenueFeed *feed in self.venueFeedPreviews) {
         if (feed.venue.venueID == [venueIDString intValue]) {
             [feed addPostsFromArray:postArray];
-            for (CPPost* post in feed.posts) {
-                [self checkForPlussesOnPostId:post];
-            }
         }
     }
 }

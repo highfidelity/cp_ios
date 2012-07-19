@@ -27,6 +27,8 @@ typedef enum {
 @property (nonatomic, strong) CPSkill *skill;
 @property (nonatomic, assign) CPPostType type;
 @property (nonatomic, assign) NSUInteger originalPostID;
+@property (nonatomic, assign) NSUInteger likeCount;
+@property (nonatomic, assign) BOOL userHasLiked;
 
 - (id)initFromDictionary:(NSDictionary *)postDict;
 
