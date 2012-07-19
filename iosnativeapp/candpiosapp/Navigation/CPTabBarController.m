@@ -114,6 +114,33 @@
     }  
 }
 
+- (void)questionButtonPressed:(id)sender
+{  
+    [self.thinBar toggleActionMenu:NO];
+
+    if (![CPUserDefaultsHandler currentUser]) {
+        [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionNewQuestion;
+        [self promptForLoginToSeeLogbook:CPAfterLoginActionPostQuestion];
+    } else if (![CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
+
+        UIAlertView *checkinAlert =  [[UIAlertView alloc] initWithTitle:@"Please check in at venue to post a question."
+                                                                message:nil
+                                                               delegate:self
+                                                      cancelButtonTitle:@"Cancel"
+                                                      otherButtonTitles:@"Checkin", nil];
+        [checkinAlert show];
+    } else {
+        UINavigationController *feedNC = [self.viewControllers objectAtIndex:0];
+        FeedViewController *feedVC = [feedNC.viewControllers objectAtIndex:0];
+        CPVenueFeed *currentVenueFeed = [[CPVenueFeed alloc] init];
+        currentVenueFeed.venue = [CPUserDefaultsHandler currentVenue];
+        
+        feedVC.selectedVenueFeed = currentVenueFeed;
+        feedVC.postType = CPPostTypeQuestion;
+        [feedVC newPost];
+    }
+}
+
 - (IBAction)updateButtonPressed:(id)sender
 {
     // hide the action menu
@@ -140,6 +167,7 @@
         // grab the FeedViewController
         UINavigationController *feedNC = [self.viewControllers objectAtIndex:0];
         FeedViewController *feedVC = [feedNC.viewControllers objectAtIndex:0];
+        feedVC.postType = CPPostTypeUpdate;
         
         if ([CPCheckinHandler sharedHandler].afterCheckinAction == CPAfterCheckinActionNewPost) {
             // this is for a forced checkin

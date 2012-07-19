@@ -17,5 +17,6 @@
 - (IBAction)tabBarButtonPressed:(id)sender;
 - (IBAction)updateButtonPressed:(id)sender;
 - (IBAction)checkinButtonPressed:(id)sender;
+- (void)questionButtonPressed:(id)sender;
 
 @end

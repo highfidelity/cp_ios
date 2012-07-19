@@ -11,6 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "CPapi.h"
 #import "UIImage+Resize.h"
+#import "CPPost.h"
 
 @interface CPapi()
 
@@ -702,19 +703,36 @@
     [self makeHTTPRequestWithAction:@"getVenueFeed" withParameters:params completion:completion];
 }
 
-+ (void)sendUpdate:(NSString *)updateText 
-              atVenue:(CPVenue *)venue
-           completion:(void (^)(NSDictionary *, NSError *))completion
++ (void)newPost:(CPPost *)post
+        atVenue:(CPVenue *)venue
+     completion:(void (^)(NSDictionary *, NSError *))completion
 {
+    
+    NSString *postType;
+    switch (post.type) {
+        case CPPostTypeQuestion:
+            postType = @"question";
+            break;
+        case CPPostTypeUpdate:
+            postType = @"update";
+            break;
+        case CPPostTypeLove:
+            postType = @"love";
+            break;
+    }
+    
     // setup the params dictionary
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setObject:updateText forKey:@"entry"];
+    [params setObject:post.entry forKey:@"entry"];    
+    [params setObject:postType forKey:@"type"];
     [params setObject:[NSString stringWithFormat:@"%d", venue.venueID] forKey:@"venue_id"];
-    
+
+
     // make the request
-    [self makeHTTPRequestWithAction:@"sendUpdate" withParameters:params completion:completion];
-    [FlurryAnalytics logEvent:@"newUpdatePost"];
+    [self makeHTTPRequestWithAction:@"newPost" withParameters:params completion:completion];
+    [FlurryAnalytics logEvent:[NSString stringWithFormat:@"newPost:%@", postType]];
 }
+
 
 + (void)getPostableFeedVenueIDs:(void (^)(NSDictionary *, NSError *))completion
 {
@@ -781,6 +799,14 @@
     [self makeHTTPRequestWithAction:@"checkout"
                      withParameters:nil
                          completion:completion];
+}
+
++ (void)getCurrentCheckInsCountAtVenue:(CPVenue *)venue 
+                        withCompletion:(void (^)(NSDictionary *, NSError *))completion
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setValue:[NSString stringWithFormat:@"%d", venue.venueID] forKey:@"venue_id"];
+    [self makeHTTPRequestWithAction:@"getVenueCheckInsCount" withParameters:parameters completion:completion];
 }
 
 + (void)getResumeForUserId:(int)userId

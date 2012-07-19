@@ -11,7 +11,8 @@
 typedef enum {
     CPAfterCheckinActionNone,
     CPAfterCheckinActionShowFeed,
-    CPAfterCheckinActionNewPost
+    CPAfterCheckinActionNewPost,
+    CPAfterCheckinActionNewQuestion
 } CPAfterCheckinAction;
 
 @interface CPCheckinHandler : NSObject

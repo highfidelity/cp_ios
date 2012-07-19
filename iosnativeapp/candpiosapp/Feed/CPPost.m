@@ -75,6 +75,8 @@ static NSDateFormatter *postDateFormatter;
         return CPPostTypeUpdate;
     } else if ([typeString isEqualToString:@"love"]) {
         return CPPostTypeLove;
+    } else if ([typeString isEqualToString:@"question"]) {
+        return CPPostTypeQuestion;
     } else {
         // this shouldn't ever happen
         // always expect a type from API

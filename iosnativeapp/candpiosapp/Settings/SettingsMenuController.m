@@ -493,6 +493,9 @@
                 // show the logbook and allow the user to enter a new log entry
                 [[CPAppDelegate tabBarController] updateButtonPressed:nil];
                 break;
+            case CPAfterLoginActionPostQuestion:
+                [[CPAppDelegate tabBarController] questionButtonPressed:nil];
+                break;
             case CPAfterLoginActionShowMap:
                 [CPAppDelegate tabBarController].selectedIndex = 1;
             default:

@@ -13,6 +13,7 @@
 #import <Foundation/Foundation.h>
 #import "CPVenue.h"
 #import "ChatHistory.h"
+#import "CPPost.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface CPapi : NSObject
@@ -61,9 +62,11 @@
 #pragma mark - Feeds
 + (void)getFeedPreviewsForVenueIDs:(NSArray *)venueIDs withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 + (void)getFeedForVenueID:(NSUInteger)venueID withCompletion:(void (^)(NSDictionary *, NSError *))completion;
-+ (void)sendUpdate:(NSString *)updateText
-              atVenue:(CPVenue *)venue
-           completion:(void(^)(NSDictionary *json, NSError *error))completion;
+
++ (void)newPost:(CPPost *)post
+        atVenue:(CPVenue *)venue
+     completion:(void(^)(NSDictionary *json, NSError *error))completion;
+
 + (void)getPostableFeedVenueIDs:(void (^)(NSDictionary *, NSError *))completion;
 
 
@@ -79,6 +82,9 @@
           completionBlock:(void (^)(NSDictionary *, NSError *))completion;
 
 + (void)checkOutWithCompletion:(void(^)(NSDictionary *json, NSError *error))completion;
+
++ (void)getCurrentCheckInsCountAtVenue:(CPVenue *)venue 
+                        withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - User Profile
 + (void)getResumeForUserId:(int)userId andCompletion:(void(^)(NSDictionary *json, NSError *error))completion;

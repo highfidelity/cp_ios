@@ -90,7 +90,8 @@ static NSArray *tabBarIcons;
         // set the alpha of the UIImageView subviews of the leftButton based on the new state
         [[self.actionButtonIconImageViews objectAtIndex:0] setAlpha:(actionButtonState == CPThinTabBarActionButtonStatePlus)];
         [[self.actionButtonIconImageViews objectAtIndex:1] setAlpha:(actionButtonState == CPThinTabBarActionButtonStateMinus)];
-        [[self.actionButtonIconImageViews objectAtIndex:2] setAlpha:(actionButtonState == CPThinTabBarActionButtonStateUpdate)];
+        [[self.actionButtonIconImageViews objectAtIndex:2] setAlpha:(actionButtonState == CPThinTabBarActionButtonStateQuestion)];
+        [[self.actionButtonIconImageViews objectAtIndex:3] setAlpha:(actionButtonState == CPThinTabBarActionButtonStateUpdate)];
         
         self.actionButton.userInteractionEnabled = (self.actionButtonState == CPThinTabBarActionButtonStatePlus || 
                                                     self.actionButtonState == CPThinTabBarActionButtonStateMinus);
@@ -236,6 +237,7 @@ static NSArray *tabBarIcons;
     self.actionButtonIconImageViews = [NSMutableArray array];
     [self.actionButtonIconImageViews addObject:[self iconImageView:@"plus"]];
     [self.actionButtonIconImageViews addObject:[self iconImageView:@"minus"]];
+    [self.actionButtonIconImageViews addObject:[self iconImageView:@"question-selected"]];
     [self.actionButtonIconImageViews addObject:[self iconImageView:@"update-selected"]];
     
     // make sure that the plus is shown for the default state of the action menu
@@ -246,10 +248,10 @@ static NSArray *tabBarIcons;
     self.actionMenuButtons = [NSMutableArray array];
     [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"update" topMargin:UPDATE_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(updateButtonPressed:)]];
     [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"love" topMargin:LOVE_BUTTON_TOP_MARGIN tabBarControllerAction:nil]];
-    [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"question" topMargin:QUESTION_BUTTON_TOP_MARGIN tabBarControllerAction:nil]];
+    [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"question" topMargin:QUESTION_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(questionButtonPressed:)]];
     [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"checkin" topMargin:CHECKIN_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(checkinButtonPressed:)]];
 }
-                       
+
 - (UIButton *)actionMenuButtonWithImageSuffix:(NSString *)imageSuffix 
                                     topMargin:(CGFloat)topMargin 
                        tabBarControllerAction:(SEL)tabBarControllerAction

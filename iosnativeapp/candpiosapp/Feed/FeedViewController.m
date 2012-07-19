@@ -29,7 +29,7 @@ typedef enum {
     FeedBGContainerPositionBottom
 } FeedBGContainerPosition;
 
-@interface FeedViewController () <HPGrowingTextViewDelegate>
+@interface FeedViewController () <HPGrowingTextViewDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, assign) float newEditableCellHeight;
 @property (nonatomic, strong) CPPost *pendingPost;
@@ -41,7 +41,7 @@ typedef enum {
 
 @end
 
-@implementation FeedViewController 
+@implementation FeedViewController
 
 @synthesize tableView = _tableView;
 @synthesize selectedVenueFeed = _selectedVenueFeed;
@@ -56,6 +56,8 @@ typedef enum {
 @synthesize currentState = _currentState; 
 @synthesize previewPostableFeedsOnly = _previewPostableFeedsOnly;
 @synthesize postPlussingUserIds;
+@synthesize postType = _postType;
+
 
 #pragma mark - View Lifecycle
 
@@ -151,6 +153,8 @@ typedef enum {
 {
     if (post.type == CPPostTypeUpdate && post.author.userID != [CPUserDefaultsHandler currentUser].userID) {
         return [NSString stringWithFormat:@"%@: %@", post.author.firstName, post.entry];
+    } else if (post.type == CPPostTypeQuestion) {
+        return [NSString stringWithFormat:@"Question from %@: %@", post.author.nickname, post.entry];
     } else {
         if (post.type == CPPostTypeLove && post.originalPostID > 0) {
             return [NSString stringWithFormat:@"%@ +1'd recognition: %@", post.author.firstName, post.entry];
@@ -523,19 +527,29 @@ typedef enum {
     
     // check if this is a pending entry cell
     if (self.pendingPost && !post.entry) {
+
+        self.pendingPost.type = self.postType;
         
         static NSString *NewEntryCellIdentifier = @"NewPostCell";
         NewPostCell *newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewEntryCellIdentifier];
         
-        newEntryCell.entryLabel.text = @"Update:";
+        if (self.pendingPost.type == CPPostTypeQuestion) {
+            newEntryCell.entryLabel.text = @"Question:";
+            // get the cursor to the right place
+            // by padding it with leading spaces
+            newEntryCell.growingTextView.text = @"                 ";
+            newEntryCell.growingTextView.returnKeyType = UIReturnKeySend;
+        } else {
+            newEntryCell.entryLabel.text = @"Update:";
+            // get the cursor to the right place
+            // by padding it with leading spaces
+            newEntryCell.growingTextView.text = @"               ";
+            newEntryCell.growingTextView.returnKeyType = UIReturnKeyDone;
+        }
         newEntryCell.entryLabel.textColor = [CPUIHelper CPTealColor];      
         
         // be the delegate of the HPGrowingTextView on this cell
         newEntryCell.growingTextView.delegate = self;
-        
-        // get the cursor to the right place
-        // by padding it with leading spaces
-        newEntryCell.growingTextView.text = @"               ";
         
         // this is our pending entry cell
         self.pendingPostCell = newEntryCell;
@@ -544,7 +558,7 @@ typedef enum {
         cell = newEntryCell;
     } else {        
         // check which type of cell we are dealing with
-        if (post.type == CPPostTypeUpdate) {
+        if (post.type == CPPostTypeUpdate || post.type == CPPostTypeQuestion) {
             
             // this is an update cell
             // so check if it's this user's or somebody else's
@@ -1054,7 +1068,7 @@ typedef enum {
         [spinner startAnimating];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
         
-        [CPapi sendUpdate:self.pendingPost.entry atVenue:self.selectedVenueFeed.venue completion:^(NSDictionary *json, NSError *error) {
+        [CPapi newPost:self.pendingPost atVenue:self.selectedVenueFeed.venue completion:^(NSDictionary *json, NSError *error) {
             if (!error) {
                 if (![[json objectForKey:@"error"] boolValue]) {
                     self.currentState = FeedVCStateSentNewPost;                    
@@ -1170,7 +1184,12 @@ typedef enum {
     // or if we aren't reloading the user's logs
     if (!self.pendingPost) {
         // switch the state of the thinBar's button
-        [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateUpdate;
+        
+        if (self.postType == CPPostTypeQuestion) {
+            [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateQuestion;   
+        } else {
+            [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateUpdate;   
+        }
         
         // we need to add a new cell to the table with a textView that the user can edit
         // first create a new CPpost object
@@ -1365,7 +1384,12 @@ typedef enum {
                                      [self scrollTableViewToTopAnimated:NO];
                                      
                                      // swtich the thinBar's action button state to the right type
-                                     [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateUpdate;
+                                     if (self.postType == CPPostTypeQuestion) {
+                                         [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateQuestion;
+                                     } else {
+                                         [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateUpdate;
+                                     }
+
                                  } else {
                                      // switch the thinBar's action button state back to the plus button
                                      [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStatePlus;
@@ -1401,7 +1425,41 @@ typedef enum {
         if ([text isEqualToString:@"\n"]) {
             // when the user clicks return it's the done button 
             // so send the update
-            [self sendNewLog];
+            
+            if (self.pendingPost.type == CPPostTypeQuestion) {
+                
+                [CPapi getCurrentCheckInsCountAtVenue:self.selectedVenueFeed.venue 
+                                       withCompletion:^(NSDictionary *json, NSError *error) {
+                                           BOOL respError = [[json objectForKey:@"error"] boolValue];
+                                           
+                                           if (!error && !respError) {
+                                               
+                                               int count = [[json objectForKey:@"count"] intValue];
+                                               NSString *message;
+                                               
+                                               //user +1 person
+                                               if (count == 2) {
+                                                   message = @"It will be pushed to 1 person checked in to this location.";
+                                               } else if (count > 2) {
+                                                   message = [NSString stringWithFormat: @"It will be pushed to %d checked in to this location.", count - 1];
+                                               } else {
+                                                   message = @"It won't be pushed to nobody.";
+                                               }
+                                               
+                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Post a question"
+                                                                                               message:[NSString stringWithFormat:@"Are you sure you want to ask this question? %@", message]
+                                                                                              delegate:self
+                                                                                     cancelButtonTitle:@"No" 
+                                                                                     otherButtonTitles:@"Yes", nil];
+                                               [alert show];
+                                               
+                                           }
+                                           
+                                       }];
+                
+            } else {
+                [self sendNewLog];   
+            }
             return NO;
         } else {
             return YES;
@@ -1509,4 +1567,12 @@ typedef enum {
 }
 
 
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex 
+{
+    if (alertView.cancelButtonIndex != buttonIndex) {
+        [self sendNewLog]; 
+    }
+}
 @end
