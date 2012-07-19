@@ -2,10 +2,20 @@
 //  FeedPreviewHeaderCell.h
 //  candpiosapp
 //
+<<<<<<< HEAD
 //  Created by Stephen Birarda on 7/17/12.
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+
+@interface FeedPreviewHeaderCell : UITableViewCell
+@property (nonatomic, assign) IBOutlet UILabel *venueNameLabel;
+@property (nonatomic, assign) IBOutlet UILabel *relativeTimeLabel;
+=======
+//  Created by Tomáš Horáček on 7/18/12.
+//  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
+//
 
 @class FeedPreviewHeaderCell;
 
@@ -18,9 +28,9 @@
 
 @interface FeedPreviewHeaderCell : UITableViewCell
 
-@property (nonatomic, assign) IBOutlet UILabel *venueNameLabel;
-@property (nonatomic, assign) IBOutlet UILabel *relativeTimeLabel;
+@property (nonatomic, weak) IBOutlet UILabel *venueLabel;
 @property (nonatomic, weak) IBOutlet UIButton *removeButton;
 @property (nonatomic, weak) id<FeedPreviewHeaderCellDelegate> delegate;
+>>>>>>> * done #17809: Allow people to remove feeds from their list
 
 @end

@@ -171,4 +171,14 @@ NSString* const kUDFeedVenues = @"feedVenues";
     return feedVenues;
 }
 
++ (void)removeFeedVenueWithID:(NSUInteger)venueID
+{
+    NSString *venueIDString = [NSString stringWithFormat:@"%d", venueID];
+    NSMutableDictionary *mutableFeedVenues = [[self feedVenues] mutableCopy];
+    
+    [mutableFeedVenues removeObjectForKey:venueIDString];
+    
+    SET_DEFAULTS(Object, kUDFeedVenues, [NSDictionary dictionaryWithDictionary:mutableFeedVenues]);
+}
+
 @end

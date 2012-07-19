@@ -213,14 +213,20 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+<<<<<<< HEAD
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Coffee &amp; Power" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="zIf-Uv-RSL">
                                                     <rect key="frame" x="36" y="7" width="182" height="31"/>
+=======
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5382" contentMode="left" text="Coffee &amp; Power" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="zIf-Uv-RSL">
+                                                    <rect key="frame" x="36" y="7" width="238" height="30"/>
+>>>>>>> * done #17809: Allow people to remove feeds from their list
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="24"/>
                                                     <color key="textColor" red="0.0" green="0.53725490196078429" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
+<<<<<<< HEAD
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="1 min ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="Nea-O1-Ryy">
                                                     <rect key="frame" x="201" y="7" width="101" height="31"/>
                                                     <autoresizingMask key="autoresizingMask"/>
@@ -229,6 +235,7 @@
                                                     <color key="textColor" red="0.80784313725490198" green="0.80784313725490198" blue="0.80784313725490198" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
+=======
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dsZ-6c-e0z">
                                                     <rect key="frame" x="272" y="0.0" width="39" height="39"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -241,13 +248,18 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
+>>>>>>> * done #17809: Allow people to remove feeds from their list
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
+<<<<<<< HEAD
                                             <outlet property="relativeTimeLabel" destination="Nea-O1-Ryy" id="JxB-nM-NZz"/>
                                             <outlet property="venueNameLabel" destination="zIf-Uv-RSL" id="rbh-HF-6BH"/>
+=======
                                             <outlet property="removeButton" destination="dsZ-6c-e0z" id="Y8a-Xc-w5B"/>
+                                            <outlet property="venueLabel" destination="zIf-Uv-RSL" id="2tI-6T-adV"/>
+>>>>>>> * done #17809: Allow people to remove feeds from their list
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedPostablePreviewHeaderCell" id="8at-7z-Qf8" customClass="FeedPreviewHeaderCell">
@@ -272,7 +284,11 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
+<<<<<<< HEAD
                                             <outlet property="venueNameLabel" destination="i8M-R5-4Ty" id="c1l-Vt-Tr0"/>
+=======
+                                            <outlet property="venueLabel" destination="i8M-R5-4Ty" id="ahC-Gb-HgI"/>
+>>>>>>> * done #17809: Allow people to remove feeds from their list
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MyPostUpdateCell" id="VQG-Nh-eGn" customClass="PostUpdateCell">
@@ -860,9 +876,13 @@
         <class className="FeedPreviewHeaderCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/FeedPreviewHeaderCell.h"/>
             <relationships>
+<<<<<<< HEAD
                 <relationship kind="outlet" name="relativeTimeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="venueNameLabel" candidateClass="UILabel"/>
+=======
                 <relationship kind="outlet" name="removeButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="venueLabel" candidateClass="UILabel"/>
+>>>>>>> * done #17809: Allow people to remove feeds from their list
             </relationships>
         </class>
         <class className="FeedViewController" superclassName="UIViewController">
