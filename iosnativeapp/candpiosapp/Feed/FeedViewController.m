@@ -822,6 +822,7 @@ typedef enum {
         }
         
         // no pull to refresh in this table
+        [self.tableView.pullToRefreshView stopAnimating];
         self.tableView.showsPullToRefresh = NO;
         
         // make sure we have the reload button in the top right

@@ -294,7 +294,6 @@
 		53A9F7761561912A0049F427 /* send-love.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A9F7741561912A0049F427 /* send-love.png */; };
 		53A9F7771561912A0049F427 /* send-love@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A9F7751561912A0049F427 /* send-love@2x.png */; };
 		53AA7A841566CB1500006E85 /* ContactListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AA7A831566CB1500006E85 /* ContactListCell.m */; };
-		53ABBCB4159E5ED800C6ED8B /* SVPullToRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 53ABBCB1159E5ED800C6ED8B /* SVPullToRefresh.bundle */; };
 		53ABBCB5159E5ED800C6ED8B /* SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 53ABBCB3159E5ED800C6ED8B /* SVPullToRefresh.m */; };
 		53ABCC2515621054004BA177 /* send-love-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53ABCC2415621054004BA177 /* send-love-small@2x.png */; };
 		53B6C4D2152108B5002934B8 /* place-location.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B6C4CE152108B5002934B8 /* place-location.png */; };
@@ -936,7 +935,6 @@
 		53A9F7751561912A0049F427 /* send-love@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-love@2x.png"; path = "User/images/send-love@2x.png"; sourceTree = "<group>"; };
 		53AA7A821566CB1500006E85 /* ContactListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactListCell.h; sourceTree = "<group>"; };
 		53AA7A831566CB1500006E85 /* ContactListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactListCell.m; sourceTree = "<group>"; };
-		53ABBCB1159E5ED800C6ED8B /* SVPullToRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVPullToRefresh.bundle; sourceTree = "<group>"; };
 		53ABBCB2159E5ED800C6ED8B /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
 		53ABBCB3159E5ED800C6ED8B /* SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPullToRefresh.m; sourceTree = "<group>"; };
 		53ABCC2415621054004BA177 /* send-love-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-love-small@2x.png"; path = "User/images/send-love-small@2x.png"; sourceTree = "<group>"; };
@@ -2090,7 +2088,6 @@
 		53ABBCB0159E5ED800C6ED8B /* SVPullToRefresh */ = {
 			isa = PBXGroup;
 			children = (
-				53ABBCB1159E5ED800C6ED8B /* SVPullToRefresh.bundle */,
 				53ABBCB2159E5ED800C6ED8B /* SVPullToRefresh.h */,
 				53ABBCB3159E5ED800C6ED8B /* SVPullToRefresh.m */,
 			);
@@ -2923,7 +2920,6 @@
 				53FD32F815915102000448EF /* tab-login@2x.png in Resources */,
 				69A030B7158F95F600BBCB4C /* pin-solar.png in Resources */,
 				69A030B8158F95F600BBCB4C /* pin-solar@2x.png in Resources */,
-				53ABBCB4159E5ED800C6ED8B /* SVPullToRefresh.bundle in Resources */,
 				533E5EFF15A3A88C0042862E /* user-image-mask.png in Resources */,
 				533E5F0015A3A88C0042862E /* user-image-mask@2x.png in Resources */,
 				533B1DA515A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard in Resources */,
