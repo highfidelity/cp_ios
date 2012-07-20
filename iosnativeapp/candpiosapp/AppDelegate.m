@@ -62,6 +62,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     sigaction(SIGILL, &newSignalAction, NULL);
     sigaction(SIGBUS, &newSignalAction, NULL);
     
+    [self setupTestFlightSDK];
     [self setupUrbanAirshipWithLaunchOptions:launchOptions];
     [self setupFlurryAnalytics];
     
@@ -335,6 +336,22 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 }
 
 #pragma mark - Third Party SDKs
+
+- (void)setupTestFlightSDK
+{
+    // if this is a build for TestFlight then set the user's UDID so sessions in testflight are associated with them
+#define TESTING 1
+#ifdef TESTING
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+#pragma clang diagnostic pop   
+
+#endif
+    
+    [TestFlight takeOff:kTestFlightKey];
+}
 
 - (void)setupUrbanAirshipWithLaunchOptions:(NSDictionary *)launchOptions
 {
