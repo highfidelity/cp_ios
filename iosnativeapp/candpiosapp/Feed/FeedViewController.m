@@ -1396,7 +1396,7 @@ typedef enum {
                                                } else if (count > 2) {
                                                    message = [NSString stringWithFormat: @"It will be pushed to %d checked in to this location.", count - 1];
                                                } else {
-                                                   message = @"It won't be pushed to nobody.";
+                                                   message = @"You are the only person here right now.";
                                                }
                                                
                                                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Post a Question"
