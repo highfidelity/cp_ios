@@ -3253,7 +3253,6 @@
 					"\"$(SRCROOT)/candpiosapp/3rdParty/Airship\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/GRMustache\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/UserVoiceSDK\"",
-					"\"$(SRCROOT)/candpiosapp/3rdParty/TestFlightSDK1\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/TestFlightSDK\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
@@ -3285,7 +3284,6 @@
 					"\"$(SRCROOT)/candpiosapp/3rdParty/Airship\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/GRMustache\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/UserVoiceSDK\"",
-					"\"$(SRCROOT)/candpiosapp/3rdParty/TestFlightSDK1\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/TestFlightSDK\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
