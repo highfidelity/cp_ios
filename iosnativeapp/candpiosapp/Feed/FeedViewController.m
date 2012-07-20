@@ -1399,7 +1399,7 @@ typedef enum {
                                                    message = @"It won't be pushed to nobody.";
                                                }
                                                
-                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Post a question"
+                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Post a Question"
                                                                                                message:[NSString stringWithFormat:@"Are you sure you want to ask this question? %@", message]
                                                                                               delegate:self
                                                                                      cancelButtonTitle:@"No" 

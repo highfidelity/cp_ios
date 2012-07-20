@@ -258,7 +258,7 @@
                 <h2 id="favorite-places-header">Often works at...</h2>
                 <table id="favorite-places">
                     {{#favoritePlaces}}
-                        <tr ontouchstart="" onclick="document.location = 'favorite-venue-index://{{index}}';">
+                        <tr ontouchstart="" onclick="document.location = 'favorite-venue-id://{{venueID}}';">
                             <td><img class="lazyImg" src="picture-coming-soon@2x.jpg" data-lazyUrl="{{#photoURL}}{{photoURL}}{{/photoURL}}" width="100" height="100"/></td>
                             <th>
                                 <h3>{{name}}</h3>

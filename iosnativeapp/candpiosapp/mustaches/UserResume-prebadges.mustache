@@ -91,14 +91,9 @@
         width: 110px;
         padding: 11px 0 14px 0;
     }
-    #favorite-places tr {
-        -webkit-tap-highlight-color: rgba(0,0,0,0);
-    }
-    #favorite-places tr:active {
-        background-color: rgba(0, 0, 0, 0.3);
-    }
     #favorite-places td img {
         -webkit-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.5);
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
     }
     #favorite-places th {
         border-top: 1px solid #999999;
@@ -109,6 +104,7 @@
     }
     #favorite-places th h3 {
         margin: 0;
+        padding: 0;
         font-size: 26px;
         font-family: LeagueGothic;
         font-weight: normal;
@@ -258,10 +254,10 @@
                 <h2 id="favorite-places-header">Often works at...</h2>
                 <table id="favorite-places">
                     {{#favoritePlaces}}
-                        <tr ontouchstart="" onclick="document.location = 'favorite-venue-index://{{index}}';">
-                            <td><img class="lazyImg" src="picture-coming-soon@2x.jpg" data-lazyUrl="{{#photoURL}}{{photoURL}}{{/photoURL}}" width="100" height="100"/></td>
+                        <tr>
+                            <td><img ontouchstart="" onclick="document.location = 'favorite-venue-id://{{venueID}}';" class="lazyImg" src="picture-coming-soon@2x.jpg" data-lazyUrl="{{#photoURL}}{{photoURL}}{{/photoURL}}" width="100" height="100"/></td>
                             <th>
-                                <h3>{{name}}</h3>
+                                <h3 ontouchstart="" onclick="document.location = 'favorite-venue-id://{{venueID}}';">{{name}}</h3>
                                 <div class="place-checkins">{{checkinTimeString}}</div>
                             </th>
                         </tr>

@@ -587,11 +587,16 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     NSURL *url = [request URL];
-    if ([url.scheme isEqualToString:@"favorite-venue-index"]) {
-        NSInteger selectedFavoriteVenueIndex = [url.host integerValue];
-        CPVenue *place = [self.user.favoritePlaces objectAtIndex:selectedFavoriteVenueIndex];
+    
+    if ([url.scheme isEqualToString:@"favorite-venue-id"]) {
+        NSInteger venueID = [url.host integerValue];
         
-        CPVenue *activeVenue = [[CPAppDelegate settingsMenuController].mapTabController venueFromActiveVenues:place.venueID];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"venueID == %d", venueID];
+        NSMutableArray *venues = self.user.favoritePlaces;
+        [venues filterUsingPredicate:predicate];
+        CPVenue *place = [venues objectAtIndex:0];
+        
+        CPVenue *activeVenue = [[CPAppDelegate settingsMenuController].mapTabController venueFromActiveVenues:venueID];
         if (activeVenue) {
             // we had this venue in the map dictionary of activeVenues so use that
             place = activeVenue;
