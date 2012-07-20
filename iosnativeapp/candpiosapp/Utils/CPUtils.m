@@ -18,11 +18,15 @@
     // set up a number formatter
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     formatter.numberStyle = NSNumberFormatterDecimalStyle;
-    formatter.maximumFractionDigits = 1;
+    formatter.maximumFractionDigits = 0;
     // if we're on a device using the metric system
     if ([[[NSLocale currentLocale] objectForKey:NSLocaleUsesMetricSystem] boolValue]) {
         // if the person is more than 100m away show it in km
         if (distance > 100) {
+            if (distance < 10000) {
+                // decimal fractions from 0.1km - 10km 
+                formatter.maximumFractionDigits = 1;                
+            }
             distance = distance / 1000.0; // convert to km
             NSNumber *number = [NSNumber numberWithDouble:distance];
             return [NSString stringWithFormat:@"%@km", [formatter stringFromNumber:number]];                   
@@ -33,6 +37,10 @@
     } else {
         // if the person is more than 160 feet away (0.1 miles) show it in miles
         if (distance > 160) {
+            if (distance < 52800) {
+                // decimal fractions miles from 160ft - 10mi
+                formatter.maximumFractionDigits = 1;                
+            }
             distance = distance * 0.000621371192;
             NSNumber *number = [NSNumber numberWithDouble:distance];
             return [NSString stringWithFormat:@"%@mi", [formatter stringFromNumber:number]];
