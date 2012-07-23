@@ -34,29 +34,6 @@
         CPPost *newPost = [[CPPost alloc] initFromDictionary:postDict];
         [self.posts addObject:newPost];
     }
-    
-    // TODO: remove this sorting code once a Testflight build has gone out with this
-    // and we can change the API to return posts in the correct order
-    self.posts = [[self.posts sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-        NSDate *first = [(CPPost *)a date];
-        NSDate *second = [(CPPost *)b date];
-        
-        // compare the two dates
-        NSComparisonResult result = [first compare:second];
-        
-        // switch-case to flip the order
-        switch (result) {
-            case NSOrderedAscending:
-                result = NSOrderedDescending;
-                break;
-            case NSOrderedDescending:
-                result = NSOrderedAscending;
-            default:
-                break;
-        }
-        
-        return result;
-    }] mutableCopy];
 }   
 
 -(BOOL)isEqual:(id)object
