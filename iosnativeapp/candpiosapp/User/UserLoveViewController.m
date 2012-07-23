@@ -232,8 +232,8 @@
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:message
                                                                         message:alertMessage
                                                                        delegate:self
-                                                              cancelButtonTitle:@"NO"
-                                                              otherButtonTitles:@"YES", nil];
+                                                              cancelButtonTitle:@"No"
+                                                              otherButtonTitles:@"Yes", nil];
                     [alertView show];
                 } else {
                     // dismiss the modal
