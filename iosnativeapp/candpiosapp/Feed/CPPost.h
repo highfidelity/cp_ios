@@ -12,7 +12,8 @@
 typedef enum {
     CPPostTypeUpdate,
     CPPostTypeLove,
-    CPPostTypeQuestion
+    CPPostTypeQuestion,
+    CPPostTypeCheckin
 } CPPostType;
 
 @interface CPPost : NSObject

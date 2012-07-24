@@ -259,7 +259,12 @@
     NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
     
     // use CPapi to checkin
-    [CPapi checkInToLocation:self.place hoursHere:self.checkInDuration statusText:statusText isVirtual:self.checkInIsVirtual isAutomatic:NO completionBlock:^(NSDictionary *json, NSError *error){
+    [CPapi checkInToLocation:self.place
+                   hoursHere:self.checkInDuration
+                  statusText:statusText
+                   isVirtual:self.checkInIsVirtual
+                 isAutomatic:NO
+             completionBlock:^(NSDictionary *json, NSError *error){
         // hide the SVProgressHUD
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {
@@ -361,7 +366,10 @@
                 // alloc and init a spinner to put where the image will be, to show while the image is loading
                 UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
                 // put the spinner in the middle of that imageview
-                spinner.frame = CGRectMake((userImage.frame.size.width / 2) - (spinner.frame.size.width / 2), (userImage.frame.size.height / 2) - (spinner.frame.size.height / 2), spinner.frame.size.width, spinner.frame.size.height);
+                spinner.frame = CGRectMake((userImage.frame.size.width / 2) - (spinner.frame.size.width / 2),
+                                           (userImage.frame.size.height / 2) - (spinner.frame.size.height / 2),
+                                           spinner.frame.size.width,
+                                           spinner.frame.size.height);
                 
                 // add a shadow to the imageview
                 [CPUIHelper addShadowToView:userImage color:[UIColor blackColor] offset:CGSizeMake(1, 1) radius:3 opacity:0.40];
@@ -533,7 +541,9 @@
     }
     
     // vertically the status text so it's at the top if it's one line
-    CGSize sizeToFit = [self.infoBubbleStatus.text sizeWithFont:self.infoBubbleStatus.font constrainedToSize:CGSizeMake(169, 42) lineBreakMode:self.infoBubbleStatus.lineBreakMode];
+    CGSize sizeToFit = [self.infoBubbleStatus.text sizeWithFont:self.infoBubbleStatus.font
+                                              constrainedToSize:CGSizeMake(169, 42)
+                                                  lineBreakMode:self.infoBubbleStatus.lineBreakMode];
     CGRect textFrame = self.infoBubbleStatus.frame;
     textFrame.size.height = sizeToFit.height;
     self.infoBubbleStatus.frame = textFrame;

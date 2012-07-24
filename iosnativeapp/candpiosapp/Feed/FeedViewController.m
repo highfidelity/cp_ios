@@ -151,12 +151,18 @@ typedef enum {
 
 - (NSString *)textForPost:(CPPost *)post
 {
-    if (post.type == CPPostTypeUpdate && post.author.userID != [CPUserDefaultsHandler currentUser].userID) {
+    if (CPPostTypeUpdate == post.type && post.author.userID != [CPUserDefaultsHandler currentUser].userID) {
         return [NSString stringWithFormat:@"%@: %@", post.author.firstName, post.entry];
-    } else if (post.type == CPPostTypeQuestion) {
+    } else if (CPPostTypeQuestion == post.type) {
         return [NSString stringWithFormat:@"Question from %@: %@", post.author.nickname, post.entry];
+    } else if (CPPostTypeCheckin == post.type) {
+        NSString *name = @"You";
+        if (post.author.userID != [CPUserDefaultsHandler currentUser].userID) {
+            name = post.author.firstName;
+        }
+        return [NSString stringWithFormat:@"%@ checked in: %@", name, post.entry];
     } else {
-        if (post.type == CPPostTypeLove && post.originalPostID > 0) {
+        if (CPPostTypeLove == post.type && post.originalPostID > 0) {
             return [NSString stringWithFormat:@"%@ +1'd recognition: %@", post.author.firstName, post.entry];
         } else {
             return post.entry;
@@ -166,7 +172,7 @@ typedef enum {
 
 - (UIFont *)fontForPost:(CPPost *)post
 {
-    if (post.type == CPPostTypeUpdate) {
+    if (CPPostTypeUpdate == post.type || CPPostTypeCheckin == post.type) {
         return [UIFont systemFontOfSize:(post.author.userID == [CPUserDefaultsHandler currentUser].userID ? 13 : 12)];
     } else {
         return [UIFont boldSystemFontOfSize:10];
@@ -175,7 +181,7 @@ typedef enum {
 
 - (CGFloat)widthForLabelForPost:(CPPost *)post
 {
-    if (post.type == CPPostTypeUpdate) {
+    if (CPPostTypeUpdate == post.type || CPPostTypeCheckin == post.type) {
         return UPDATE_LABEL_WIDTH;
     } else {
         if (post.originalPostID > 0) {
@@ -533,7 +539,7 @@ typedef enum {
         static NSString *NewEntryCellIdentifier = @"NewPostCell";
         NewPostCell *newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewEntryCellIdentifier];
         
-        if (self.pendingPost.type == CPPostTypeQuestion) {
+        if (CPPostTypeQuestion == self.pendingPost.type) {
             newEntryCell.entryLabel.text = @"Question:";
             // get the cursor to the right place
             // by padding it with leading spaces
@@ -558,7 +564,7 @@ typedef enum {
         cell = newEntryCell;
     } else {        
         // check which type of cell we are dealing with
-        if (post.type == CPPostTypeUpdate || post.type == CPPostTypeQuestion) {
+        if (CPPostTypeUpdate == post.type || CPPostTypeQuestion == post.type || CPPostTypeCheckin == post.type) {
             
             // this is an update cell
             // so check if it's this user's or somebody else's
@@ -1139,7 +1145,7 @@ typedef enum {
     if (!self.pendingPost) {
         // switch the state of the thinBar's button
         
-        if (self.postType == CPPostTypeQuestion) {
+        if (CPPostTypeQuestion == self.postType) {
             [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateQuestion;   
         } else {
             [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateUpdate;   
@@ -1338,7 +1344,7 @@ typedef enum {
                                      [self scrollTableViewToTopAnimated:NO];
                                      
                                      // swtich the thinBar's action button state to the right type
-                                     if (self.postType == CPPostTypeQuestion) {
+                                     if (CPPostTypeQuestion == self.postType) {
                                          [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateQuestion;
                                      } else {
                                          [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateUpdate;
@@ -1380,7 +1386,7 @@ typedef enum {
             // when the user clicks return it's the done button 
             // so send the update
             
-            if (self.pendingPost.type == CPPostTypeQuestion) {
+            if (CPPostTypeQuestion == self.pendingPost.type) {
                 
                 [CPapi getCurrentCheckInsCountAtVenue:self.selectedVenueFeed.venue 
                                        withCompletion:^(NSDictionary *json, NSError *error) {

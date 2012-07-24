@@ -719,6 +719,11 @@
         case CPPostTypeLove:
             postType = @"love";
             break;
+        case CPPostTypeCheckin:
+            @throw [NSException exceptionWithName:@"Don't call type=\"checkin\" directly, use chickin API call with status."
+                                           reason:nil
+                                         userInfo:nil];
+            break;
     }
     
     // setup the params dictionary
