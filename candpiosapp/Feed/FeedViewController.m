@@ -1394,7 +1394,7 @@ typedef enum {
                                            
                                            if (!error && !respError) {
                                                
-                                               int count = [[json objectForKey:@"count"] intValue];
+                                               int count = [[json objectForKey:@"payload"] intValue];
                                                NSString *message;
                                                
                                                //user +1 person
