@@ -116,7 +116,7 @@
 
 - (void)questionButtonPressed:(id)sender
 {  
-    [self.thinBar toggleActionMenu:NO];
+    self.thinBar.actionButtonState = CPThinTabBarActionButtonStatePlus;
 
     if (![CPUserDefaultsHandler currentUser]) {
         [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionNewQuestion;
@@ -137,7 +137,7 @@
 - (IBAction)updateButtonPressed:(id)sender
 {
     // hide the action menu
-    [self.thinBar toggleActionMenu:NO];
+    self.thinBar.actionButtonState = CPThinTabBarActionButtonStatePlus;
     
     if (![CPUserDefaultsHandler currentUser]) {
         // if we don't have a current user then we need to just show the login banner
@@ -200,7 +200,7 @@
 
 - (IBAction)checkinButtonPressed:(id)sender
 {
-    [self.thinBar toggleActionMenu:NO];
+    self.thinBar.actionButtonState = CPThinTabBarActionButtonStatePlus;
     
     [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionShowFeed;
     [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
