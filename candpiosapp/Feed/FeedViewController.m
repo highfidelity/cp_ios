@@ -16,6 +16,8 @@
 #import "SVPullToRefresh.h"
 #import "CPUserAction.h"
 
+#define kMaxFeedLength 140
+
 typedef enum {
     FeedVCStateDefault,
     FeedVCStateReloadingFeed,
@@ -1017,7 +1019,7 @@ typedef enum {
 - (void)sendNewLog
 {
     // let's grab the cell that this entry is for
-    self.pendingPost.entry = [self.pendingPostCell.growingTextView.text stringByReplacingCharactersInRange:NSMakeRange(0, 15) withString:@""];
+    self.pendingPost.entry = [self.pendingPostCell.growingTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
     // send a log entry as long as it's not blank
     // and we're not in the process of sending a log entry
@@ -1379,7 +1381,7 @@ typedef enum {
 #pragma mark - HPGrowingTextViewDelegate
 - (BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    if (range.location < 15) {
+    if (range.location < 15 || (CPPostTypeQuestion == self.pendingPost.type && range.location < 17)) {
         return NO;
     } else {
         if ([text isEqualToString:@"\n"]) {
@@ -1422,6 +1424,13 @@ typedef enum {
             }
             return NO;
         } else {
+            //Limit max length of the feed
+            int strLen = [[growingTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length];
+            int addLength = [text length] -  range.length;
+            if (strLen + addLength > kMaxFeedLength) {
+                return NO;
+            }
+            
             return YES;
         }
     }
@@ -1429,12 +1438,14 @@ typedef enum {
 
 - (void)growingTextViewDidChangeSelection:(HPGrowingTextView *)growingTextView
 {
-    if (growingTextView.selectedRange.location < 15) {
-        // make sure the end point was at least 16
-        // if that's the case then allow the selection from 15 to the original end point
+    int limit = CPPostTypeQuestion == self.pendingPost.type ? 17 : 15;
+        
+    if (growingTextView.selectedRange.location < limit) {
+        // make sure the end point was at least 16/18
+        // if that's the case then allow the selection from 15/17 to the original end point
         int end = growingTextView.selectedRange.location + growingTextView.selectedRange.length;
         
-        growingTextView.selectedRange = NSMakeRange(15, end > 15 ? end - 15 : 0);
+        growingTextView.selectedRange = NSMakeRange(limit, end > limit ? end - limit : 0);
     }
 }
 
