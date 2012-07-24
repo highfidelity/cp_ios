@@ -31,6 +31,7 @@
 @synthesize greenLine = _greenLine;
 @synthesize actionButtonIconImageViews = _actionButtonIconImageViews;
 @synthesize actionMenuButtons = _actionMenuButtons;
+@synthesize isMenuShowing;
 
 static NSArray *tabBarIcons;
 
@@ -198,6 +199,9 @@ static NSArray *tabBarIcons;
 
 - (void)actionMenuSetup
 {
+    // init state
+    self.isMenuShowing = NO;
+    
     // setup a UIButton with the image
     UIImage *buttonImage = [UIImage imageNamed:@"action-menu-button-base"];
     self.actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -280,7 +284,16 @@ static NSArray *tabBarIcons;
 }
 
 - (void)toggleActionMenu:(BOOL)showMenu
-{    
+{
+    // show or hide the action menu
+    if (showMenu == self.isMenuShowing) { 
+        // already in the correct state
+        return; 
+    } else {
+        // toggle the state
+        self.isMenuShowing = showMenu;
+    }
+    
     CGFloat leftButtonTransform = showMenu ? M_PI : (M_PI*2)-0.0001;
     
     // if we're showing the menu the action menu background needs to grow
