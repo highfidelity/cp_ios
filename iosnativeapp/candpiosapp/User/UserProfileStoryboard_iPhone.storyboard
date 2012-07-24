@@ -110,19 +110,15 @@
                                                             <action selector="venueViewButtonPressed:" destination="6Bs-xG-Mnl" eventType="touchUpInside" id="eAz-hy-Qq6"/>
                                                         </connections>
                                                     </button>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="checked-in-location.png" id="eYn-un-Hew">
-                                                        <rect key="frame" x="10" y="7" width="13" height="8"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    </imageView>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" minimumFontSize="10" id="x2C-Ym-EYT">
-                                                        <rect key="frame" x="27" y="-1" width="111" height="21"/>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" minimumFontSize="8" id="x2C-Ym-EYT">
+                                                        <rect key="frame" x="10" y="-1" width="128" height="21"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                         <color key="textColor" red="0.94901960780000005" green="0.94509803920000002" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" minimumFontSize="10" id="kT2-bI-cY7">
-                                                        <rect key="frame" x="10" y="14" width="128" height="21"/>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" minimumFontSize="8" id="kT2-bI-cY7">
+                                                        <rect key="frame" x="10" y="15" width="128" height="21"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <color key="textColor" red="0.94901960780000005" green="0.94509803920000002" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -132,10 +128,10 @@
                                                         <rect key="frame" x="10" y="37" width="11" height="9"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     </imageView>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" minimumFontSize="10" id="vkZ-9K-iRU">
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" minimumFontSize="8" id="vkZ-9K-iRU">
                                                         <rect key="frame" x="25" y="30" width="109" height="21"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <color key="textColor" red="0.94901960780000005" green="0.94509803920000002" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -399,7 +395,6 @@
                         <outlet property="scrollView" destination="FvT-cB-xLT" id="pcL-ZE-SlX"/>
                         <outlet property="userCard" destination="4sO-iN-dSk" id="fec-rS-lGF"/>
                         <outlet property="venueAddress" destination="kT2-bI-cY7" id="3wb-Dv-biX"/>
-                        <outlet property="venueIcon" destination="eYn-un-Hew" id="9y3-74-3Z1"/>
                         <outlet property="venueName" destination="x2C-Ym-EYT" id="IxR-RK-TKc"/>
                         <outlet property="venueOthers" destination="vkZ-9K-iRU" id="MIl-ds-iqI"/>
                         <outlet property="venueOthersIcon" destination="bc8-Bl-bkB" id="Dxj-8I-zLz"/>
@@ -935,7 +930,6 @@
         <image name="chat-bubble-right-middle.png" width="261" height="13"/>
         <image name="chat-bubble-right-top.png" width="261" height="14"/>
         <image name="checkbox-unchecked.png" width="23" height="23"/>
-        <image name="checked-in-location.png" width="16" height="16"/>
         <image name="exchange-cards.png" width="75" height="75"/>
         <image name="go-button.png" width="16" height="16"/>
         <image name="go-menu-bg.png" width="75" height="279"/>
@@ -1046,7 +1040,6 @@
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="userCard" candidateClass="UIView"/>
                 <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueIcon" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="venueOthers" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="venueOthersIcon" candidateClass="UIImageView"/>

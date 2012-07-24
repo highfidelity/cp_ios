@@ -27,7 +27,6 @@
 @property (nonatomic, weak) IBOutlet UILabel *cardJobPosition;
 @property (nonatomic, weak) IBOutlet UIView *venueView;
 @property (nonatomic, weak) IBOutlet UIButton *venueViewButton;
-@property (nonatomic, weak) IBOutlet UIImageView *venueIcon;
 @property (nonatomic, weak) IBOutlet UILabel *venueName;
 @property (nonatomic, weak) IBOutlet UILabel *venueAddress;
 @property (nonatomic, weak) IBOutlet UIImageView *venueOthersIcon;
@@ -79,7 +78,6 @@
 @synthesize distanceLabel = _distanceLabel;
 @synthesize venueView = _venueView;
 @synthesize venueViewButton = _venueViewButton;
-@synthesize venueIcon = _venueIcon;
 @synthesize venueName = _venueName;
 @synthesize venueAddress = venueAddress;
 @synthesize venueOthersIcon = _venueOthersIcon;
@@ -290,18 +288,9 @@ static GRMustacheTemplate *postBadgesTemplate;
     self.resumeWebView.opaque = NO;
     self.resumeWebView.backgroundColor = paper;
     
+    // make sure there's a shadow on the userCard and resumeView
     [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
-    
-    // make sure there's a shadow on the resumeView for the part that is already showing
     [CPUIHelper addShadowToView:self.resumeView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
-    
-    // move the data in the venueView down so it's vertically centered
-    NSArray *venueInfo = [NSArray arrayWithObjects:self.venueIcon, self.venueName, self.venueAddress, nil];
-    for (UIView *venueItem in venueInfo) {
-        CGRect frame = venueItem.frame;
-        frame.origin.y += 8;
-        venueItem.frame = frame;
-    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -340,7 +329,6 @@ static GRMustacheTemplate *postBadgesTemplate;
     [self setCardNickname:nil];
     [self setVenueView:nil];
     [self setVenueViewButton:nil];
-    [self setVenueIcon:nil];
     [self setVenueName:nil];
     [self setVenueAddress:nil];
     [self setVenueOthersIcon:nil];
