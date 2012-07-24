@@ -23,6 +23,7 @@
 {
     // grab a timeLine view using the class method in FeedViewController    
     // add the timeline to our contentView
+    [super awakeFromNib];
     [self.contentView insertSubview:[FeedViewController timelineViewWithHeight:self.frame.size.height] atIndex:0];
 }
 
