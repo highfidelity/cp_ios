@@ -24,9 +24,7 @@ typedef enum {
 @property (nonatomic, assign) UITabBarController *tabBarController;
 @property (nonatomic, strong) UIButton *actionButton;
 @property (nonatomic, assign) CPThinTabBarActionButtonState actionButtonState;
-@property (nonatomic, assign) BOOL isMenuShowing;
 
-- (void)toggleActionMenu:(BOOL)showMenu;
 - (void)moveGreenLineToSelectedIndex:(NSUInteger)selectedIndex;
 - (void)toggleRightSide:(BOOL)shown;
 - (void)refreshLastTab:(BOOL)loggedIn;
