@@ -117,10 +117,6 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="plug-logo.png" id="MUJ-EJ-afh">
-                                <rect key="frame" x="112" y="15" width="96" height="96"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                            </imageView>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="invite-code-background.png" id="UYR-iS-gIL">
                                 <rect key="frame" x="40" y="109" width="240" height="140"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -135,9 +131,11 @@
                                     <outlet property="delegate" destination="YTE-Yd-6dA" id="gce-aR-tQE"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Enter invite code from nearby C&amp;P user" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="10" id="gv0-xw-nqc">
-                                <rect key="frame" x="61" y="229" width="198" height="90"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="10" id="gv0-xw-nqc">
+                                <rect key="frame" x="-118" y="229" width="558" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <string key="text">If another C&amp;P user has given
+you an invite code, type it in above</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -276,7 +274,6 @@
     <resources>
         <image name="invite-code-background.png" width="240" height="140"/>
         <image name="linked-in-connect.png" width="153" height="75"/>
-        <image name="plug-logo.png" width="96" height="96"/>
         <image name="secret-society@2x.png" width="640" height="960"/>
         <image name="splash-screen-logo.png" width="112" height="193"/>
         <image name="tab-login.png" width="34" height="26"/>
