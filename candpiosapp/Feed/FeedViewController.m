@@ -172,7 +172,7 @@ typedef enum {
 
 - (UIFont *)fontForPost:(CPPost *)post
 {
-    if (CPPostTypeUpdate == post.type || CPPostTypeCheckin == post.type) {
+    if (CPPostTypeUpdate == post.type || CPPostTypeQuestion == post.type || CPPostTypeCheckin == post.type) {
         return [UIFont systemFontOfSize:(post.author.userID == [CPUserDefaultsHandler currentUser].userID ? 13 : 12)];
     } else {
         return [UIFont boldSystemFontOfSize:10];
@@ -181,7 +181,7 @@ typedef enum {
 
 - (CGFloat)widthForLabelForPost:(CPPost *)post
 {
-    if (CPPostTypeUpdate == post.type || CPPostTypeCheckin == post.type) {
+    if (CPPostTypeUpdate == post.type || CPPostTypeQuestion == post.type || CPPostTypeCheckin == post.type) {
         return UPDATE_LABEL_WIDTH;
     } else {
         if (post.originalPostID > 0) {
