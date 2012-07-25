@@ -17,6 +17,8 @@
 #import "CPUserAction.h"
 
 #define kMaxFeedLength 140
+#define kPaddingUpdate 15
+#define kPaddingQuestion 17
 
 typedef enum {
     FeedVCStateDefault,
@@ -545,13 +547,13 @@ typedef enum {
             newEntryCell.entryLabel.text = @"Question:";
             // get the cursor to the right place
             // by padding it with leading spaces
-            newEntryCell.growingTextView.text = @"                 ";
+            newEntryCell.growingTextView.text = [[NSString string] stringByPaddingToLength:kPaddingQuestion withString:@" " startingAtIndex:0];
             newEntryCell.growingTextView.returnKeyType = UIReturnKeySend;
         } else {
             newEntryCell.entryLabel.text = @"Update:";
             // get the cursor to the right place
             // by padding it with leading spaces
-            newEntryCell.growingTextView.text = @"               ";
+            newEntryCell.growingTextView.text = [[NSString string] stringByPaddingToLength:kPaddingUpdate withString:@" " startingAtIndex:0];
             newEntryCell.growingTextView.returnKeyType = UIReturnKeyDone;
         }
         newEntryCell.entryLabel.textColor = [CPUIHelper CPTealColor];      
@@ -1381,7 +1383,7 @@ typedef enum {
 #pragma mark - HPGrowingTextViewDelegate
 - (BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    if (range.location < 15 || (CPPostTypeQuestion == self.pendingPost.type && range.location < 17)) {
+    if (range.location < kPaddingUpdate || (CPPostTypeQuestion == self.pendingPost.type && range.location < kPaddingQuestion)) {
         return NO;
     } else {
         if ([text isEqualToString:@"\n"]) {
@@ -1438,7 +1440,7 @@ typedef enum {
 
 - (void)growingTextViewDidChangeSelection:(HPGrowingTextView *)growingTextView
 {
-    int limit = CPPostTypeQuestion == self.pendingPost.type ? 17 : 15;
+    int limit = CPPostTypeQuestion == self.pendingPost.type ? kPaddingQuestion : kPaddingUpdate;
         
     if (growingTextView.selectedRange.location < limit) {
         // make sure the end point was at least 16/18
