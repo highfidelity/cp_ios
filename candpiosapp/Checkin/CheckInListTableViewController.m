@@ -167,11 +167,37 @@
             
             [places insertObject:place atIndex:[places count]];
             
-            // reload the tableView now that we have new data
-            [self.tableView reloadData];
-            
-            // dismiss the loading HUD
-            [SVProgressHUD dismiss];
+            [CPapi getDefaultCheckInVenueWithCompletion:^(NSDictionary *jsonVenue, NSError *errorVenue) {
+                BOOL respError = [[jsonVenue objectForKey:@"error"] boolValue];
+                
+                if (!errorVenue && !respError) {
+                    NSDictionary *jsonDict = [jsonVenue objectForKey:@"payload"];
+
+                    CPVenue *defaultVenue = [[CPVenue alloc] init];
+                    defaultVenue.name = [jsonDict objectForKey:@"name"];
+                    defaultVenue.foursquareID = [jsonDict objectForKey:@"foursquare_id"];
+                    defaultVenue.address = [jsonDict objectForKey:@"address"];
+                    defaultVenue.city = [jsonDict objectForKey:@"city"];
+                    defaultVenue.state = [jsonDict objectForKey:@"state"];
+                    defaultVenue.zip = [jsonDict objectForKey:@"zip"];
+                    defaultVenue.phone = [jsonDict objectForKey:@"phone"];
+                    defaultVenue.formattedPhone = [jsonDict objectForKey:@"formatted_phone"];
+
+                    defaultVenue.coordinate = CLLocationCoordinate2DMake([[jsonDict valueForKeyPath:@"lat"] doubleValue], [[jsonDict valueForKeyPath:@"lng"] doubleValue]);
+                    
+                    NSPredicate *defaultVenuePredicate = [NSPredicate predicateWithFormat:@"foursquareID != %@", defaultVenue.foursquareID];
+                    [places filterUsingPredicate:defaultVenuePredicate];
+                    
+                    //add default venue
+                    [places insertObject:defaultVenue atIndex:0];
+
+                    // reload the tableView now that we have new data
+                    [self.tableView reloadData];
+                }
+                
+                // dismiss the loading HUD
+                [SVProgressHUD dismiss];
+            }];
         } else {
             // dismiss the progress HUD with an error
             [SVProgressHUD dismissWithError:@"Oops!\nCouldn't get the data." afterDelay:3];
@@ -214,7 +240,11 @@
     } else {
         // get the localized distance string based on the distance of this venue from the user
         // which we set when we sort the places
-        cell.distanceString.text = [CPUtils localizedDistanceStringForDistance:[[places objectAtIndex:indexPath.row] distanceFromUser]];
+        if (indexPath.row == 0) {
+            cell.distanceString.text = @"Recent";
+        } else {
+            cell.distanceString.text = [CPUtils localizedDistanceStringForDistance:[[places objectAtIndex:indexPath.row] distanceFromUser]];
+        }
         
         cell.venueAddress.text = [[[places objectAtIndex:indexPath.row] address] description];
         if (!cell.venueAddress.text) {
