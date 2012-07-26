@@ -555,8 +555,15 @@ typedef enum {
         if (self.pendingPost &&
             (post == self.pendingPost || (post.originalPostID && self.pendingPost == post.replies.lastObject))) {
             
-            static NSString *NewEntryCellIdentifier = @"NewPostCell";
-            NewPostCell *newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewEntryCellIdentifier];
+            NewPostCell *newEntryCell;
+            
+            if (post.originalPostID) {
+                static NSString *NewReplyCellIdentifier = @"NewPostReplyCell";
+                newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewReplyCellIdentifier];
+            } else {
+                static NSString *NewEntryCellIdentifier = @"NewPostCell";
+                newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewEntryCellIdentifier];
+            }            
             
             if (self.pendingPost.type == CPPostTypeQuestion) {
                 newEntryCell.entryLabel.text = @"Question:";
@@ -590,7 +597,7 @@ typedef enum {
                 // so check if it's this user's or somebody else's
                 PostUpdateCell *updateCell;
                 
-                if (post.author.userID == [CPUserDefaultsHandler currentUser].userID){
+                if (!post.originalPostID && post.author.userID == [CPUserDefaultsHandler currentUser].userID){
                     static NSString *EntryCellIdentifier = @"MyPostUpdateCell";
                     updateCell = [tableView dequeueReusableCellWithIdentifier:EntryCellIdentifier];
                     
@@ -618,9 +625,14 @@ typedef enum {
                         updateCell.timeLabel.text = nil;
                     }
                 } else {
-                    // this is an update from another user
-                    static NSString *OtherUserEntryCellIdentifier = @"PostUpdateCell";
-                    updateCell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];
+                    if (post.originalPostID) {
+                        static NSString *PostReplyCellIdentifier = @"PostReplyCell";
+                        updateCell = [tableView dequeueReusableCellWithIdentifier:PostReplyCellIdentifier];
+                    } else {
+                        // this is an update from another user
+                        static NSString *OtherUserEntryCellIdentifier = @"PostUpdateCell";
+                        updateCell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];
+                    }
                 }
                 
                 // the cell to return is the updateCell
