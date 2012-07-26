@@ -21,7 +21,7 @@
 @property (nonatomic, assign) BOOL newPostAfterLoad;
 @property (nonatomic, strong) NSMutableDictionary *postPlussingUserIds;
 
-- (void)newPost;
+- (void)newPost:(NSIndexPath *)replyToIndexPath;
 - (void)showOnlyPostableFeeds;
 
 + (UIView *)timelineViewWithHeight:(CGFloat)height;
