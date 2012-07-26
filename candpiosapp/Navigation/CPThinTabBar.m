@@ -85,6 +85,7 @@ static NSArray *tabBarIcons;
 - (void)setActionButtonState:(CPThinTabBarActionButtonState)actionButtonState
 {
     if (_actionButtonState != actionButtonState) {
+        CPThinTabBarActionButtonState previousState = _actionButtonState;
         _actionButtonState = actionButtonState;
         
         // set the alpha of the UIImageView subviews of the leftButton based on the new state
@@ -93,8 +94,15 @@ static NSArray *tabBarIcons;
         [[self.actionButtonIconImageViews objectAtIndex:2] setAlpha:(actionButtonState == CPThinTabBarActionButtonStateQuestion)];
         [[self.actionButtonIconImageViews objectAtIndex:3] setAlpha:(actionButtonState == CPThinTabBarActionButtonStateUpdate)];
         
-        self.actionButton.userInteractionEnabled = (self.actionButtonState == CPThinTabBarActionButtonStatePlus || 
-                                                    self.actionButtonState == CPThinTabBarActionButtonStateMinus);
+        BOOL plusOrMinusState = (self.actionButtonState == CPThinTabBarActionButtonStatePlus || 
+                                 self.actionButtonState == CPThinTabBarActionButtonStateMinus);
+        BOOL previousPlusOrMinusState = (previousState == CPThinTabBarActionButtonStatePlus ||
+                                         previousState == CPThinTabBarActionButtonStateMinus);
+        self.actionButton.userInteractionEnabled = plusOrMinusState;
+        if (plusOrMinusState && previousPlusOrMinusState) {
+            // switching between open and closed interactive menu states
+            [self toggleActionMenu:(self.actionButtonState == CPThinTabBarActionButtonStateMinus)];
+        }
     }
 }
 
@@ -280,7 +288,8 @@ static NSArray *tabBarIcons;
 }
 
 - (void)toggleActionMenu:(BOOL)showMenu
-{    
+{
+    // show or hide the action menu
     CGFloat leftButtonTransform = showMenu ? M_PI : (M_PI*2)-0.0001;
     
     // if we're showing the menu the action menu background needs to grow
