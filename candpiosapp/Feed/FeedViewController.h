@@ -10,8 +10,11 @@
 #import "CPVenueFeed.h"
 #import "CPUserActionCell.h"
 #import "FeedPreviewHeaderCell.h"
+#import "WEPopoverController.h"
+#import "PostBaseCell.h"
+#import "PillPopoverViewController.h"
 
-@interface FeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, CPUserActionCellDelegate, FeedPreviewHeaderCellDelegate>
+@interface FeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, CPUserActionCellDelegate, FeedPreviewHeaderCellDelegate, WEPopoverControllerDelegate>
 
 @property (nonatomic, assign) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) CPVenueFeed *selectedVenueFeed;
@@ -20,6 +23,10 @@
 @property (nonatomic, strong) NSMutableArray *postableVenueFeeds;
 @property (nonatomic, assign) BOOL newPostAfterLoad;
 @property (nonatomic, strong) NSMutableDictionary *postPlussingUserIds;
+@property (nonatomic, strong) WEPopoverController *popoverController;
+@property (nonatomic, strong) PillPopoverViewController *pillPopoverViewController;
+
+- (void)showPillPopoverFromCell:(PostBaseCell*)cell;
 
 - (void)newPost;
 - (void)showOnlyPostableFeeds;

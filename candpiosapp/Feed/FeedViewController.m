@@ -15,6 +15,7 @@
 #import "UserProfileViewController.h"
 #import "SVPullToRefresh.h"
 #import "CPUserAction.h"
+#import "PillPopoverViewController.h"
 
 typedef enum {
     FeedVCStateDefault,
@@ -57,7 +58,8 @@ typedef enum {
 @synthesize previewPostableFeedsOnly = _previewPostableFeedsOnly;
 @synthesize postPlussingUserIds;
 @synthesize postType = _postType;
-
+@synthesize popoverController;
+@synthesize pillPopoverViewController;
 
 #pragma mark - View Lifecycle
 
@@ -666,6 +668,7 @@ typedef enum {
 
     // add the plus love widget
     [cell addPlusWidget];
+    [cell addPillButton];
     [cell changeLikeCountToValue:cell.post.likeCount animated:NO];
     cell.plusButton.enabled = !post.userHasLiked;
     
@@ -1535,4 +1538,77 @@ typedef enum {
         [self sendNewLog]; 
     }
 }
+
+- (WEPopoverContainerViewProperties *)popoverContainerViewProperties {
+	
+	WEPopoverContainerViewProperties *props = [WEPopoverContainerViewProperties new];
+	NSString *bgImageName = nil;
+	CGFloat bgMargin = 0.0;
+	CGFloat bgCapSize = 0.0;
+	CGFloat contentMargin = 4.0;
+	
+	bgImageName = @"pill-popover-background.png";
+	
+	// These constants are determined by the popoverBg.png image file and are image dependent
+	bgMargin = 13; // margin width of 13 pixels on all sides popoverBg.png (62 pixels wide - 36 pixel background) / 2 == 26 / 2 == 13 
+	bgCapSize = 31; // ImageSize/2  == 62 / 2 == 31 pixels
+	
+	props.leftBgMargin = bgMargin;
+	props.rightBgMargin = bgMargin;
+	props.topBgMargin = bgMargin;
+	props.bottomBgMargin = bgMargin;
+	props.leftBgCapSize = bgCapSize;
+	props.topBgCapSize = bgCapSize;
+	props.bgImageName = bgImageName;
+	props.leftContentMargin = contentMargin;
+	props.rightContentMargin = contentMargin - 1; // Need to shift one pixel for border to look correct
+	props.topContentMargin = contentMargin; 
+	props.bottomContentMargin = contentMargin;
+	
+	props.arrowMargin = 4.0;
+	
+	props.upArrowImageName = @"popover-arrow-top.png";
+	props.downArrowImageName = @"popover-arrow-bottom.png";
+	props.leftArrowImageName = @"popover-arrow-left.png";
+	props.rightArrowImageName = @"popover-arrow-right.png";
+	return props;	
+}
+
+- (void)showPillPopoverFromCell:(PostBaseCell*)cell
+{
+	if (!self.popoverController) {
+        UIButton *button = cell.pillButton;
+		
+        // grab a UserProfileViewController from the UserStoryboard
+        self.pillPopoverViewController = (PillPopoverViewController *)[[UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"PillPopoverViewController"];
+
+        self.pillPopoverViewController.post = cell.post;
+		self.popoverController = [[WEPopoverController alloc] initWithContentViewController:self.pillPopoverViewController];
+        self.popoverController.popoverContentSize = CGSizeMake(172, 91);
+		self.popoverController.delegate = self;
+        [self.popoverController setContainerViewProperties:[self popoverContainerViewProperties]];
+		[self.popoverController presentPopoverFromRect:[self.view convertRect:button.frame fromView:button.superview]
+												inView:self.view 
+							  permittedArrowDirections:UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight
+                                              animated:YES];
+	} else {
+		[self.popoverController dismissPopoverAnimated:YES];
+		self.popoverController = nil;
+        self.pillPopoverViewController = nil;
+	}
+}
+
+#pragma mark -
+#pragma mark WEPopoverControllerDelegate implementation
+
+- (void)popoverControllerDidDismissPopover:(WEPopoverController *)thePopoverController {
+	//Safe to release the popover here
+	self.popoverController = nil;
+}
+
+- (BOOL)popoverControllerShouldDismissPopover:(WEPopoverController *)thePopoverController {
+	//The popover is automatically dismissed if you click outside it, unless you return NO here
+	return YES;
+}
+
 @end
