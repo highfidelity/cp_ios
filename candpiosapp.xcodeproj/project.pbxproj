@@ -3126,6 +3126,8 @@
 				4E5578BE15AD0575000B588D /* CPUserAction.m in Sources */,
 				530C3E5515B0F5B800D041FF /* CPTabBarControllerView.m in Sources */,
 				698BB08415B6E87A00665CEA /* FeedPreviewHeaderCell.m in Sources */,
+				534323F715C1C42600BE5075 /* GTMNSString+HTML.m in Sources */,
+				534323FB15C1C8AE00BE5075 /* NSData+Base64.m in Sources */,
 				532505AA15C0A236006B1DB6 /* NewPostReplyCell.m in Sources */,
 				532505AE15C0A25B006B1DB6 /* PostReplyCell.m in Sources */,
 			);
