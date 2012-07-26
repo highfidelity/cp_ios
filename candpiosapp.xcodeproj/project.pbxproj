@@ -89,9 +89,17 @@
 		530C5DB71575E4FC003505AC /* CPSoundEffectsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */; };
 		530C5DBB1575E516003505AC /* send-love-switch-sound-off.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */; };
 		530C5DBC1575E516003505AC /* send-love-switch-sound-on.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */; };
+		5316010215BF55FE00ADE1D0 /* comment-bubble-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 531600FC15BF55FE00ADE1D0 /* comment-bubble-bottom.png */; };
+		5316010315BF55FE00ADE1D0 /* comment-bubble-bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 531600FD15BF55FE00ADE1D0 /* comment-bubble-bottom@2x.png */; };
+		5316010415BF55FE00ADE1D0 /* comment-bubble-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = 531600FE15BF55FE00ADE1D0 /* comment-bubble-middle.png */; };
+		5316010515BF55FE00ADE1D0 /* comment-bubble-middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 531600FF15BF55FE00ADE1D0 /* comment-bubble-middle@2x.png */; };
+		5316010615BF55FE00ADE1D0 /* comment-bubble-top.png in Resources */ = {isa = PBXBuildFile; fileRef = 5316010015BF55FE00ADE1D0 /* comment-bubble-top.png */; };
+		5316010715BF55FE00ADE1D0 /* comment-bubble-top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5316010115BF55FE00ADE1D0 /* comment-bubble-top@2x.png */; };
 		531806541584811B0037E5BC /* libGRMustache4-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 531806531584811B0037E5BC /* libGRMustache4-iOS.a */; };
 		5319C76115547157005DA299 /* UIButton+AnimatedClockHand.m in Sources */ = {isa = PBXBuildFile; fileRef = 5319C76015547157005DA299 /* UIButton+AnimatedClockHand.m */; };
 		53217F8C156FF89B006258F0 /* LoveSkillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */; };
+		532505AA15C0A236006B1DB6 /* NewPostReplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 532505A915C0A236006B1DB6 /* NewPostReplyCell.m */; };
+		532505AE15C0A25B006B1DB6 /* PostReplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 532505AD15C0A25B006B1DB6 /* PostReplyCell.m */; };
 		532524CB14F8530F0089F8EA /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 532524C814F8530F0089F8EA /* GTMNSString+HTML.m */; };
 		532524CC14F8530F0089F8EA /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 532524CA14F8530F0089F8EA /* NSString+HTML.m */; };
 		5327E9FA15658CCE005330AD /* UIColor+EasyRGB.m in Sources */ = {isa = PBXBuildFile; fileRef = 5327E9F915658CCD005330AD /* UIColor+EasyRGB.m */; };
@@ -664,11 +672,21 @@
 		530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPSoundEffectsManager.m; sourceTree = "<group>"; };
 		530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-off.wav"; sourceTree = "<group>"; };
 		530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-on.wav"; sourceTree = "<group>"; };
+		531600FC15BF55FE00ADE1D0 /* comment-bubble-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment-bubble-bottom.png"; sourceTree = "<group>"; };
+		531600FD15BF55FE00ADE1D0 /* comment-bubble-bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment-bubble-bottom@2x.png"; sourceTree = "<group>"; };
+		531600FE15BF55FE00ADE1D0 /* comment-bubble-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment-bubble-middle.png"; sourceTree = "<group>"; };
+		531600FF15BF55FE00ADE1D0 /* comment-bubble-middle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment-bubble-middle@2x.png"; sourceTree = "<group>"; };
+		5316010015BF55FE00ADE1D0 /* comment-bubble-top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment-bubble-top.png"; sourceTree = "<group>"; };
+		5316010115BF55FE00ADE1D0 /* comment-bubble-top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment-bubble-top@2x.png"; sourceTree = "<group>"; };
 		531806531584811B0037E5BC /* libGRMustache4-iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGRMustache4-iOS.a"; sourceTree = "<group>"; };
 		5319C75F15547157005DA299 /* UIButton+AnimatedClockHand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+AnimatedClockHand.h"; path = "CheckIn/UIButton+AnimatedClockHand.h"; sourceTree = "<group>"; };
 		5319C76015547157005DA299 /* UIButton+AnimatedClockHand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+AnimatedClockHand.m"; path = "CheckIn/UIButton+AnimatedClockHand.m"; sourceTree = "<group>"; };
 		53217F8A156FF89B006258F0 /* LoveSkillTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoveSkillTableViewCell.h; path = User/LoveSkillTableViewCell.h; sourceTree = "<group>"; };
 		53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoveSkillTableViewCell.m; path = User/LoveSkillTableViewCell.m; sourceTree = "<group>"; };
+		532505A815C0A236006B1DB6 /* NewPostReplyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPostReplyCell.h; sourceTree = "<group>"; };
+		532505A915C0A236006B1DB6 /* NewPostReplyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPostReplyCell.m; sourceTree = "<group>"; };
+		532505AC15C0A25B006B1DB6 /* PostReplyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostReplyCell.h; sourceTree = "<group>"; };
+		532505AD15C0A25B006B1DB6 /* PostReplyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostReplyCell.m; sourceTree = "<group>"; };
 		532524C714F8530F0089F8EA /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
 		532524C814F8530F0089F8EA /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
 		532524C914F8530F0089F8EA /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
@@ -1616,6 +1634,10 @@
 				533E5EDC15A3A88C0042862E /* PostUpdateCell.m */,
 				698BB08215B6E87A00665CEA /* FeedPreviewHeaderCell.h */,
 				698BB08315B6E87A00665CEA /* FeedPreviewHeaderCell.m */,
+				532505A815C0A236006B1DB6 /* NewPostReplyCell.h */,
+				532505A915C0A236006B1DB6 /* NewPostReplyCell.m */,
+				532505AC15C0A25B006B1DB6 /* PostReplyCell.h */,
+				532505AD15C0A25B006B1DB6 /* PostReplyCell.m */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -1623,6 +1645,12 @@
 		533E5EDF15A3A88C0042862E /* images */ = {
 			isa = PBXGroup;
 			children = (
+				531600FC15BF55FE00ADE1D0 /* comment-bubble-bottom.png */,
+				531600FD15BF55FE00ADE1D0 /* comment-bubble-bottom@2x.png */,
+				531600FE15BF55FE00ADE1D0 /* comment-bubble-middle.png */,
+				531600FF15BF55FE00ADE1D0 /* comment-bubble-middle@2x.png */,
+				5316010015BF55FE00ADE1D0 /* comment-bubble-top.png */,
+				5316010115BF55FE00ADE1D0 /* comment-bubble-top@2x.png */,
 				4E88C2D215B6301E00F362A4 /* love-bubble.png */,
 				4E88C2D315B6301E00F362A4 /* love-bubble@2x.png */,
 				4E88C2D415B6301E00F362A4 /* plus-love-button.png */,
@@ -2982,6 +3010,12 @@
 				698BB07F15B6181100665CEA /* hide-element.png in Resources */,
 				698BB08015B6181100665CEA /* hide-element@2x.png in Resources */,
 				E4DF105915B9B0D500BFB608 /* ProfileBackground.mustache in Resources */,
+				5316010215BF55FE00ADE1D0 /* comment-bubble-bottom.png in Resources */,
+				5316010315BF55FE00ADE1D0 /* comment-bubble-bottom@2x.png in Resources */,
+				5316010415BF55FE00ADE1D0 /* comment-bubble-middle.png in Resources */,
+				5316010515BF55FE00ADE1D0 /* comment-bubble-middle@2x.png in Resources */,
+				5316010615BF55FE00ADE1D0 /* comment-bubble-top.png in Resources */,
+				5316010715BF55FE00ADE1D0 /* comment-bubble-top@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3144,6 +3178,8 @@
 				4E5578BE15AD0575000B588D /* CPUserAction.m in Sources */,
 				530C3E5515B0F5B800D041FF /* CPTabBarControllerView.m in Sources */,
 				698BB08415B6E87A00665CEA /* FeedPreviewHeaderCell.m in Sources */,
+				532505AA15C0A236006B1DB6 /* NewPostReplyCell.m in Sources */,
+				532505AE15C0A25B006B1DB6 /* PostReplyCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
