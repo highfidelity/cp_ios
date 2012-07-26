@@ -247,7 +247,7 @@
         }
         
         cell.venueAddress.text = [[[places objectAtIndex:indexPath.row] address] description];
-        if (!cell.venueAddress.text) {
+        if (!cell.venueAddress.text || [cell.venueAddress.text length] == 0) {
             // if we don't have an address then move the venuename down
             cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 19, cell.venueName.frame.size.width, cell.venueName.frame.size.height);
         } else {
