@@ -666,11 +666,8 @@ typedef enum {
     // return the cell
     cell.post = post;
 
-    // add the plus love widget
-    [cell addPlusWidget];
+    // add the +1/comment widget
     [cell addPillButton];
-    [cell changeLikeCountToValue:cell.post.likeCount animated:NO];
-    cell.plusButton.enabled = !post.userHasLiked;
     
     return cell;
 }

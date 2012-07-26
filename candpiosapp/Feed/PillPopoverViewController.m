@@ -84,9 +84,11 @@
                          self.commentImageView.frame = CGRectInset(self.commentImageView.frame, 
                                                                    -commentWidthFlex, 
                                                                    -commentHeightFlex);
-                         self.plusButton.frame = CGRectInset(self.plusButton.frame, 
-                                                             -plusWidthFlex,
-                                                             -plusHeightFlex);
+                         if (self.plusButton.enabled) {
+                             self.plusButton.frame = CGRectInset(self.plusButton.frame, 
+                                                                 -plusWidthFlex,
+                                                                 -plusHeightFlex);
+                         }
                      } 
                      completion:^(BOOL finished){
                          [UIView animateWithDuration:deltaT
@@ -94,9 +96,11 @@
                                               self.commentImageView.frame = CGRectInset(self.commentImageView.frame, 
                                                                                         commentWidthFlex, 
                                                                                         commentHeightFlex);
-                                              self.plusButton.frame = CGRectInset(self.plusButton.frame, 
-                                                                                  plusWidthFlex,
-                                                                                  plusHeightFlex);
+                                              if (self.plusButton.enabled) {
+                                                  self.plusButton.frame = CGRectInset(self.plusButton.frame, 
+                                                                                      plusWidthFlex,
+                                                                                      plusHeightFlex);
+                                              }
                                           } 
                                           completion:^(BOOL finished){
                                           }];
@@ -108,7 +112,8 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     // set +1 enabled state
-    self.plusButton.enabled = !self.post.userHasLiked;
+    self.plusButton.enabled = !(self.post.userHasLiked || 
+                                [CPUserDefaultsHandler currentUser].userID == self.post.author.userID);
     
     // update the plus count label
     [self updatePlusWebViewAnimated:animated];

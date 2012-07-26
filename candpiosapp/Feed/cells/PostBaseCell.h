@@ -22,9 +22,6 @@
 @property (nonatomic, strong) UILabel *pillLabel;
 @property (nonatomic, strong) UIImageView *likeCountBubble;
 
-- (void) addPlusWidget;
-- (void) addPillButton;
-- (void) changeLikeCountToValue:(int)value animated:(BOOL)animated;
 - (void) addPillButton;
 
 @end
