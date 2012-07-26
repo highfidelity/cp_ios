@@ -125,6 +125,7 @@
 		533E5F0015A3A88C0042862E /* user-image-mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533E5EEB15A3A88C0042862E /* user-image-mask@2x.png */; };
 		533E5F0A15A3AD040042862E /* FeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533E5F0915A3AD040042862E /* FeedViewController.m */; };
 		534323F715C1C42600BE5075 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 534323F615C1C42600BE5075 /* GTMNSString+HTML.m */; };
+		534323FB15C1C8AE00BE5075 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 534323FA15C1C8AE00BE5075 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		53463F5115336EA5001CA16D /* UIViewController+isModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 53463F5015336EA5001CA16D /* UIViewController+isModal.m */; };
 		534B6EF0156DAE7900DA9F74 /* SkillsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534B6EEF156DAE7900DA9F74 /* SkillsTableViewController.m */; };
 		534BD45615AB72BD001FCC5C /* CPVenueFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 534BD45515AB72BD001FCC5C /* CPVenueFeed.m */; };
@@ -714,6 +715,8 @@
 		533E5F0915A3AD040042862E /* FeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedViewController.m; sourceTree = "<group>"; };
 		534323F515C1C42600BE5075 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
 		534323F615C1C42600BE5075 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
+		534323F915C1C8AE00BE5075 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		534323FA15C1C8AE00BE5075 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		53463F4F15336EA5001CA16D /* UIViewController+isModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+isModal.h"; path = "Utils/UIViewController+isModal.h"; sourceTree = "<group>"; };
 		53463F5015336EA5001CA16D /* UIViewController+isModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+isModal.m"; path = "Utils/UIViewController+isModal.m"; sourceTree = "<group>"; };
 		534B6EEE156DAE7900DA9F74 /* SkillsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillsTableViewController.h; path = Settings/SkillsTableViewController.h; sourceTree = "<group>"; };
@@ -1592,6 +1595,15 @@
 			path = "GTMNSString+HTML";
 			sourceTree = "<group>";
 		};
+		534323F815C1C8AE00BE5075 /* NSData+Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				534323F915C1C8AE00BE5075 /* NSData+Base64.h */,
+				534323FA15C1C8AE00BE5075 /* NSData+Base64.m */,
+			);
+			path = "NSData+Base64";
+			sourceTree = "<group>";
+		};
 		534FC97C14EF1E53008C87B9 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -2386,6 +2398,7 @@
 				5386AFF1152A2A75008CD4BD /* GRMustache */,
 				534323F415C1C42600BE5075 /* GTMNSString+HTML */,
 				53DDBCEE153F560200306F8B /* HPGrowingTextView */,
+				534323F815C1C8AE00BE5075 /* NSData+Base64 */,
 				3222123E14E1E17B00C5471B /* OAuthConsumerARC */,
 				E4E74DF8153B08710022F403 /* Pickers */,
 				87F657D414B0D0C800F4AB6C /* SDWebImage */,
@@ -3074,6 +3087,7 @@
 				530C3E5515B0F5B800D041FF /* CPTabBarControllerView.m in Sources */,
 				698BB08415B6E87A00665CEA /* FeedPreviewHeaderCell.m in Sources */,
 				534323F715C1C42600BE5075 /* GTMNSString+HTML.m in Sources */,
+				534323FB15C1C8AE00BE5075 /* NSData+Base64.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
