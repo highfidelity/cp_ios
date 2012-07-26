@@ -148,11 +148,13 @@ typedef enum {
 #define UPDATE_LABEL_WIDTH 185
 #define LOVE_LABEL_WIDTH 135
 #define LOVE_PLUS_ONE_LABEL_WIDTH 185
+#define PILL_BUTTON_CELL_HEIGHT 25
 #define CONTAINER_BACKGROUND_ORIGIN_X 7.5
 #define CONTAINER_BACKGROUND_WIDTH 305
 #define CONTAINER_IMAGE_VIEW_TAG 2819
 #define TIMELINE_VIEW_TAG 2820
 #define TIMELINE_ORIGIN_X 50
+#define TIMESTAMP_LEFT_MARGIN 4
 #define CELL_SEPARATOR_TAG 2349
 
 - (NSString *)textForPost:(CPPost *)post
@@ -364,37 +366,45 @@ typedef enum {
         } else if (indexPath.row == (self.previewPostableFeedsOnly ? 1 : [[self venueFeedPreviewForIndex:indexPath.section] posts].count + 1)) {
             return PREVIEW_FOOTER_CELL_HEIGHT;
         }
-    } 
+    }
     
-    if (self.selectedVenueFeed && self.pendingPost && indexPath.row == 0) {
-        // this is an editable cell
-        // for which we might have a changed height
+    CPPost *cellPost;
+    
+    if (self.selectedVenueFeed) {
+        // pull the post at this section
+        cellPost = [self.selectedVenueFeed.posts objectAtIndex:indexPath.section];
         
-        // check if we have a new cell height which is larger than our min height and grow to that size
-        cellHeight = self.newEditableCellHeight > MIN_CELL_HEIGHT ? self.newEditableCellHeight : MIN_CELL_HEIGHT;
-        
-        // reset the newEditableCellHeight to 0
-        self.newEditableCellHeight = 0;
-    } else {
-        // we need to check here if we have multiline text
-        // grab the entry this is for so we can change the height of the cell accordingly
-        
-        CPPost *post;
-        BOOL lastPost;
-        
-        if (self.selectedVenueFeed) {
-            post = [self.selectedVenueFeed.posts objectAtIndex:indexPath.row];
-        } else {
-            NSArray *posts = [[self venueFeedPreviewForIndex:indexPath.section] posts];
-            post = [posts objectAtIndex:(indexPath.row - 1)];
-            
-            lastPost = (indexPath.row - 1 == posts.count);
+        // if this is the comment / +1 box cell then our height is static
+        if (indexPath.row > cellPost.replies.count) {
+            return PILL_BUTTON_CELL_HEIGHT;
+        } else if (indexPath.row > 0) {
+            // if the indexPath is not 0 and isn't the last this is a reply
+            cellPost = [cellPost.replies objectAtIndex:(indexPath.row - 1)];
         }
         
-        CGFloat labelHeight = [self labelHeightWithText:[self textForPost:post] labelWidth:[self widthForLabelForPost:post] labelFont:[self fontForPost:post]];
-        
-        cellHeight = [self cellHeightWithLabelHeight:labelHeight indexPath:indexPath];
+        // check if we have a pendingPost and if this is it
+        if (cellPost == self.pendingPost) {
+            // this is an editable cell
+            // for which we might have a changed height
+            
+            // check if we have a new cell height which is larger than our min height and grow to that size
+            cellHeight = self.newEditableCellHeight > MIN_CELL_HEIGHT ? self.newEditableCellHeight : MIN_CELL_HEIGHT;
+            
+            // reset the newEditableCellHeight to 0
+            self.newEditableCellHeight = 0;
+            
+            return cellHeight;
+        }
+    } else {
+        // grab post from venue feed preview
+        NSArray *posts = [[self venueFeedPreviewForIndex:indexPath.section] posts];
+        cellPost = [posts objectAtIndex:(indexPath.row - 1)];
     }
+    
+    // use helper methods to get label height and cell height
+    CGFloat labelHeight = [self labelHeightWithText:[self textForPost:cellPost] labelWidth:[self widthForLabelForPost:cellPost] labelFont:[self fontForPost:cellPost]];
+    
+    cellHeight = [self cellHeightWithLabelHeight:labelHeight indexPath:indexPath];
     
     // return the calculated labelHeight
     return cellHeight;
@@ -406,8 +416,8 @@ typedef enum {
 - (int)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if (self.selectedVenueFeed) {
-        // this is for a selectedVenueFeed, only one section
-        return 1;
+        // this is for a selectedVenueFeed, number of sections in tableView is number of posts
+        return self.selectedVenueFeed.posts.count;
     } else {
         // this is for venue feed previews, either all or only postable
         return self.previewPostableFeedsOnly ? self.postableVenueFeeds.count : self.venueFeedPreviews.count;
@@ -416,9 +426,10 @@ typedef enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // if this is for a single venue then the number of rows is the number of posts in the feed
+    // if this is for a single venue then the number of rows is 2 + number of replies in feed
     if (self.selectedVenueFeed) {
-        return self.selectedVenueFeed.posts.count;
+        // one for the post itself, one for comment / +1 footer, and then one for each reply
+        return 2 + ((CPPost *)[self.selectedVenueFeed.posts objectAtIndex:section]).replies.count;
     } else {
         if (self.previewPostableFeedsOnly) {
             // just a header and a footer here
@@ -482,8 +493,6 @@ typedef enum {
                 
                 headerCell.relativeTimeLabel.text = [CPUtils relativeTimeStringFromDateToNow:firstPostDate];
                 
-#define TIMESTAMP_LEFT_MARGIN 4
-                
                 if (headerCell.relativeTimeLabel.text) {
                     // we need to stick the timestamp right beside the venue name
                     CGSize timestampSize = [headerCell.relativeTimeLabel.text sizeWithFont:headerCell.relativeTimeLabel.font];
@@ -531,151 +540,175 @@ typedef enum {
             post = [sectionVenueFeed.posts objectAtIndex:(indexPath.row - 1)];
         }
     } else {
-        // pull the right post from the selectedVenueFeed's posts
-        post = [self.selectedVenueFeed.posts objectAtIndex:indexPath.row];
+        // pull the right post or reply from the selectedVenueFeed's posts
+        post = [self.selectedVenueFeed.posts objectAtIndex:indexPath.section];
+        
+        // if this is supposed to be a reply then the post object should be a reply of the post we just grabbed
+        if (indexPath.row > 0) {
+            post = (indexPath.row < [self.tableView numberOfRowsInSection:indexPath.section] - 1)
+                    ? [post.replies objectAtIndex:(indexPath.row - 1)] : nil;
+        }
     }
     
-    PostBaseCell *cell;
-    
-    // check if this is a pending entry cell
-    if (self.pendingPost && !post.entry) {
-
-        self.pendingPost.type = self.postType;
+    if (post) {
+        PostBaseCell *cell;
         
-        static NSString *NewEntryCellIdentifier = @"NewPostCell";
-        NewPostCell *newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewEntryCellIdentifier];
-        
-        if (CPPostTypeQuestion == self.pendingPost.type) {
-            newEntryCell.entryLabel.text = @"Question:";
-            // get the cursor to the right place
-            // by padding it with leading spaces
-            newEntryCell.growingTextView.text = [[NSString string] stringByPaddingToLength:kPaddingQuestion withString:@" " startingAtIndex:0];
-            newEntryCell.growingTextView.returnKeyType = UIReturnKeySend;
-        } else {
-            newEntryCell.entryLabel.text = @"Update:";
-            // get the cursor to the right place
-            // by padding it with leading spaces
-            newEntryCell.growingTextView.text = [[NSString string] stringByPaddingToLength:kPaddingUpdate withString:@" " startingAtIndex:0];
-            newEntryCell.growingTextView.returnKeyType = UIReturnKeyDone;
-        }
-        newEntryCell.entryLabel.textColor = [CPUIHelper CPTealColor];      
-        
-        // be the delegate of the HPGrowingTextView on this cell
-        newEntryCell.growingTextView.delegate = self;
-        
-        // this is our pending entry cell
-        self.pendingPostCell = newEntryCell;
-        
-        // the cell to be returned is the newEntryCell
-        cell = newEntryCell;
-    } else {        
-        // check which type of cell we are dealing with
-        if (CPPostTypeUpdate == post.type || CPPostTypeQuestion == post.type || CPPostTypeCheckin == post.type) {
+        // check if this is a pending entry cell
+        if (self.pendingPost &&
+            (post == self.pendingPost || (post.originalPostID && self.pendingPost == post.replies.lastObject))) {
             
-            // this is an update cell
-            // so check if it's this user's or somebody else's
-            PostUpdateCell *updateCell;
+            NewPostCell *newEntryCell;
             
-            if (post.author.userID == [CPUserDefaultsHandler currentUser].userID){
-                static NSString *EntryCellIdentifier = @"MyPostUpdateCell";
-                updateCell = [tableView dequeueReusableCellWithIdentifier:EntryCellIdentifier];
-                
-                if (self.selectedVenueFeed) {
-                    // create a singleton NSDateFormatter that we'll keep using
-                    static NSDateFormatter *logFormatter = nil;
-                    
-                    if (!logFormatter) {
-                        logFormatter = [[NSDateFormatter alloc] init];
-                        [logFormatter setTimeZone:[NSTimeZone systemTimeZone]];
-                    }
-                    
-                    // setup the format for the time label
-                    logFormatter.dateFormat = @"h:mma";
-                    updateCell.timeLabel.text = [logFormatter stringFromDate:post.date];
-                    // replace either AM or PM with lowercase a or p
-                    updateCell.timeLabel.text = [updateCell.timeLabel.text stringByReplacingOccurrencesOfString:@"AM" withString:@"a"];
-                    updateCell.timeLabel.text = [updateCell.timeLabel.text stringByReplacingOccurrencesOfString:@"PM" withString:@"p"];        
-                    
-                    // setup the format for the date label
-                    logFormatter.dateFormat = @"MMM d";
-                    updateCell.dateLabel.text = [logFormatter stringFromDate:post.date];
-                } else {
-                    updateCell.dateLabel.text = nil;
-                    updateCell.timeLabel.text = nil;
-                }
+            if (post.originalPostID) {
+                static NSString *NewReplyCellIdentifier = @"NewPostReplyCell";
+                newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewReplyCellIdentifier];
             } else {
-                // this is an update from another user
-                static NSString *OtherUserEntryCellIdentifier = @"PostUpdateCell";
-                updateCell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];        
+                static NSString *NewEntryCellIdentifier = @"NewPostCell";
+                newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewEntryCellIdentifier];
+            }            
+            
+            if (self.pendingPost.type == CPPostTypeQuestion) {
+                newEntryCell.entryLabel.text = @"Question:";
+                // get the cursor to the right place
+                // by padding it with leading spaces
+                newEntryCell.growingTextView.text = @"                 ";
+                newEntryCell.growingTextView.returnKeyType = UIReturnKeySend;
+            } else {
+                newEntryCell.entryLabel.text = @"Update:";
+                // get the cursor to the right place
+                // by padding it with leading spaces
+                newEntryCell.growingTextView.text = @"               ";
+                newEntryCell.growingTextView.returnKeyType = UIReturnKeyDone;
             }
             
-            // the cell to return is the updateCell
-            cell = updateCell;
+            newEntryCell.entryLabel.textColor = [CPUIHelper CPTealColor];
             
+            // be the delegate of the HPGrowingTextView on this cell
+            newEntryCell.growingTextView.delegate = self;
+            
+            // this is our pending entry cell
+            self.pendingPostCell = newEntryCell;
+            
+            // the cell to be returned is the newEntryCell
+            cell = newEntryCell;
         } else {
-            // this is a love cell
-            static NSString *loveCellIdentifier = @"PostLoveCell";
-            PostLoveCell *loveCell = [tableView dequeueReusableCellWithIdentifier:loveCellIdentifier];
+            // check which type of cell we are dealing with
+            if (post.type != CPPostTypeLove) {
+                
+                // this is an update cell
+                // so check if it's this user's or somebody else's
+                PostUpdateCell *updateCell;
+                
+                if (!post.originalPostID && post.author.userID == [CPUserDefaultsHandler currentUser].userID){
+                    static NSString *EntryCellIdentifier = @"MyPostUpdateCell";
+                    updateCell = [tableView dequeueReusableCellWithIdentifier:EntryCellIdentifier];
+                    
+                    if (self.selectedVenueFeed) {
+                        // create a singleton NSDateFormatter that we'll keep using
+                        static NSDateFormatter *logFormatter = nil;
+                        
+                        if (!logFormatter) {
+                            logFormatter = [[NSDateFormatter alloc] init];
+                            [logFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+                        }
+                        
+                        // setup the format for the time label
+                        logFormatter.dateFormat = @"h:mma";
+                        updateCell.timeLabel.text = [logFormatter stringFromDate:post.date];
+                        // replace either AM or PM with lowercase a or p
+                        updateCell.timeLabel.text = [updateCell.timeLabel.text stringByReplacingOccurrencesOfString:@"AM" withString:@"a"];
+                        updateCell.timeLabel.text = [updateCell.timeLabel.text stringByReplacingOccurrencesOfString:@"PM" withString:@"p"];
+                        
+                        // setup the format for the date label
+                        logFormatter.dateFormat = @"MMM d";
+                        updateCell.dateLabel.text = [logFormatter stringFromDate:post.date];
+                    } else {
+                        updateCell.dateLabel.text = nil;
+                        updateCell.timeLabel.text = nil;
+                    }
+                } else {
+                    if (post.originalPostID) {
+                        static NSString *PostReplyCellIdentifier = @"PostReplyCell";
+                        updateCell = [tableView dequeueReusableCellWithIdentifier:PostReplyCellIdentifier];
+                    } else {
+                        // this is an update from another user
+                        static NSString *OtherUserEntryCellIdentifier = @"PostUpdateCell";
+                        updateCell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];
+                    }
+                }
+                
+                // the cell to return is the updateCell
+                cell = updateCell;
+                
+            } else {
+                // this is a love cell
+                static NSString *loveCellIdentifier = @"PostLoveCell";
+                PostLoveCell *loveCell = [tableView dequeueReusableCellWithIdentifier:loveCellIdentifier];
+                
+                // setup the receiver's profile button
+                [self loadProfileImageForButton:loveCell.receiverProfileButton photoURL:post.receiver.photoURL indexPath:indexPath];
+                
+                loveCell.entryLabel.text = post.entry.description;
+                
+                // if this is a plus one we need to make the label wider
+                // or reset it if it's not
+                CGRect loveLabelFrame = loveCell.entryLabel.frame;
+                loveLabelFrame.size.width = post.originalPostID > 0 ? LOVE_PLUS_ONE_LABEL_WIDTH : LOVE_LABEL_WIDTH;
+                loveCell.entryLabel.frame = loveLabelFrame;
+                
+                // the cell to return is the loveCell
+                cell = loveCell;
+            }
             
-            // setup the receiver's profile button
-            [self loadProfileImageForButton:loveCell.receiverProfileButton photoURL:post.receiver.photoURL indexPath:indexPath];
+            // the text for this entry is prepended with NICKNAME:
+            cell.entryLabel.text = [self textForPost:post];
             
-            loveCell.entryLabel.text = post.entry.description;
-            
-            // if this is a plus one we need to make the label wider
-            // or reset it if it's not
-            CGRect loveLabelFrame = loveCell.entryLabel.frame;
-            loveLabelFrame.size.width = post.originalPostID > 0 ? LOVE_PLUS_ONE_LABEL_WIDTH : LOVE_LABEL_WIDTH;
-            loveCell.entryLabel.frame = loveLabelFrame;
-
-            // the cell to return is the loveCell
-            cell = loveCell;
-        } 
-        
-        // the text for this entry is prepended with NICKNAME:
-        cell.entryLabel.text = [self textForPost:post];
-        
-        // make the frame of the label larger if required for a multi-line entry
-        CGRect entryFrame = cell.entryLabel.frame;
-        entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text labelWidth:[self widthForLabelForPost:post] labelFont:[self fontForPost:post]];
-        cell.entryLabel.frame = entryFrame;
-    }
-
-    // setup the entry sender's profile button
-    [self loadProfileImageForButton:cell.senderProfileButton photoURL:post.author.photoURL indexPath:indexPath];
-    
-    if (self.selectedVenueFeed) {
-        // remove the container background from this cell, if it exists
-        // remove the separator view
-        [[cell viewWithTag:CONTAINER_IMAGE_VIEW_TAG] removeFromSuperview];
-        [[cell viewWithTag:CELL_SEPARATOR_TAG] removeFromSuperview];
-    } else {
-        [self setupContainerBackgroundForCell:cell 
-                              containerHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height indexPath:indexPath] 
-                                     position:FeedBGContainerPositionMiddle];
-        
-        if (cellSeperatorRequired) {
-            [self addSeperatorViewtoCell:cell];
-        } else {
-            // remove the cell separator if it exists
-            [[cell viewWithTag:CELL_SEPARATOR_TAG] removeFromSuperview];
+            // make the frame of the label larger if required for a multi-line entry
+            CGRect entryFrame = cell.entryLabel.frame;
+            entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text labelWidth:[self widthForLabelForPost:post] labelFont:[self fontForPost:post]];
+            cell.entryLabel.frame = entryFrame;
         }
+        
+        // setup the entry sender's profile button
+        [self loadProfileImageForButton:cell.senderProfileButton photoURL:post.author.photoURL indexPath:indexPath];
+        
+        if (self.selectedVenueFeed) {
+            // remove the container background from this cell, if it exists
+            // remove the separator view
+            [[cell viewWithTag:CONTAINER_IMAGE_VIEW_TAG] removeFromSuperview];
+            [[cell viewWithTag:CELL_SEPARATOR_TAG] removeFromSuperview];
+        } else {
+            [self setupContainerBackgroundForCell:cell
+                                  containerHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height indexPath:indexPath]
+                                         position:FeedBGContainerPositionMiddle];
+            
+            if (cellSeperatorRequired) {
+                [self addSeperatorViewtoCell:cell];
+            } else {
+                // remove the cell separator if it exists
+                [[cell viewWithTag:CELL_SEPARATOR_TAG] removeFromSuperview];
+            }
+        }
+        
+        cell.activeColor = self.tableView.backgroundColor;
+        cell.inactiveColor = self.tableView.backgroundColor;
+        cell.user = post.author;
+        cell.delegate = self;
+        
+        // return the cell
+        cell.post = post;
+        
+        // add the plus love widget
+        [cell addPlusWidget];
+        [cell changeLikeCountToValue:cell.post.likeCount animated:NO];
+        cell.plusButton.enabled = !post.userHasLiked;
+        
+        return cell;
+    } else {
+        // this is the comment / +1 cell for a post in selected venue feed
+        UITableViewCell *commentCell = [self.tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
+        return commentCell;
     }
-    
-    cell.activeColor = self.tableView.backgroundColor;
-    cell.inactiveColor = self.tableView.backgroundColor;
-    cell.user = post.author;
-    cell.delegate = self;
-    
-    // return the cell
-    cell.post = post;
-
-    // add the plus love widget
-    [cell addPlusWidget];
-    [cell changeLikeCountToValue:cell.post.likeCount animated:NO];
-    cell.plusButton.enabled = !post.userHasLiked;
-    
-    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -699,7 +732,7 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (self.selectedVenueFeed || section == [tableView numberOfSections] - 1) {
+    if (section == [tableView numberOfSections] - 1) {
         // give the tableView a footer so that the bottom cells clear the button
         return [CPAppDelegate tabBarController].thinBar.actionButton.frame.size.width / 2;
     } else {
@@ -967,7 +1000,7 @@ typedef enum {
                     // check if we were loaded because the user immediately wants to add a new entry
                     if (self.newPostAfterLoad) {
                         // if that's the case then pull let the user add a new entry
-                        [self newPost];
+                        [self newPost:nil];
                         // reset the newpostAfterLoad property so it doesn't fire again
                         self.newPostAfterLoad = NO;
                     } else {
@@ -1094,7 +1127,7 @@ typedef enum {
                 if (!forceList && self.selectedVenueFeed && [self.postableVenueFeeds containsObject:self.selectedVenueFeed]) {
                     // no need to change anything, we're looking at a feed that is postable
                     // post to it
-                    [self newPost];
+                    [self newPost:nil];
                 } else {
                     // make sure the selectedVenueFeed is nil
                     // that will also toggle the tableView state
@@ -1130,8 +1163,8 @@ typedef enum {
 }
 
 #pragma mark - IBActions
-- (void)newPost
-{   
+- (void)newPost:(NSIndexPath *)replyToIndexPath
+{
     // let's make sure we're setup for post entry
     [self setupForPostEntry];
     
@@ -1151,12 +1184,6 @@ typedef enum {
     if (!self.pendingPost) {
         // switch the state of the thinBar's button
         
-        if (CPPostTypeQuestion == self.postType) {
-            [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateQuestion;   
-        } else {
-            [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateUpdate;   
-        }
-        
         // we need to add a new cell to the table with a textView that the user can edit
         // first create a new CPpost object
         self.pendingPost = [[CPPost alloc] init];
@@ -1164,7 +1191,27 @@ typedef enum {
         // the author for this log message is the current user
         self.pendingPost.author = [CPUserDefaultsHandler currentUser];
         
-        [self.selectedVenueFeed.posts insertObject:self.pendingPost atIndex:0];
+        if (replyToIndexPath) {
+            CPPost *originalPost = [self.selectedVenueFeed.posts objectAtIndex:replyToIndexPath.section];
+            
+            // this log's original post ID is the id of the that post
+            self.pendingPost.originalPostID = originalPost.postID;
+            
+            // this log's type is the same of the original post
+            self.pendingPost.type = originalPost.type;
+            
+            // this is a reply to an existing post to add it to that posts' array of replies
+            [originalPost.replies addObject:self.pendingPost];
+        } else {
+            self.pendingPost.type = self.postType;
+            [self.selectedVenueFeed.posts insertObject:self.pendingPost atIndex:0];
+        }
+        
+        if (self.pendingPost.type == CPPostTypeQuestion) {
+            [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateQuestion;
+        } else {
+            [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateUpdate;
+        }
         
         // we need the keyboard to know that we're asking for this change
         self.currentState = FeedVCStateAddingOrRemovingPendingPost;
@@ -1199,8 +1246,13 @@ typedef enum {
         
         // user is cancelling new post
         
-        // remove the pending post from our array of posts
-        [self.selectedVenueFeed.posts removeObject:self.pendingPost];
+        // remove the pending post from the right array (depending on wether its an original post or a reply)
+        if (!self.pendingPost.originalPostID) {
+            [self.selectedVenueFeed.posts removeObject:self.pendingPost];
+        } else {
+            CPPost *originalPost = [self.selectedVenueFeed.posts objectAtIndex:[self.selectedVenueFeed indexOfPostWithID:self.pendingPost.originalPostID]];
+            [originalPost.replies removeObject:self.pendingPost];
+        }
         
         // we need the keyboard to know that we're asking for this change
         self.currentState = FeedVCStateAddingOrRemovingPendingPost;
@@ -1283,10 +1335,6 @@ typedef enum {
     // don't move anything if the keyboard isn't being moved because of us
     if (self.currentState != FeedVCStateDefault) {
         
-        // create the indexPath for the first row
-        NSIndexPath *firstIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        NSArray *indexPathArray = [NSArray arrayWithObject:firstIndexPath];
-        
         CPThinTabBar *thinBar = [CPAppDelegate tabBarController].thinBar;
         
         // new CGRect for the UITabBar
@@ -1313,14 +1361,37 @@ typedef enum {
             
             [self.tableView beginUpdates];
             
-            // if the keyboard is being shown then we need to add an entry
-            if (beingShown) {
-                [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationTop];
-            } else {
-                // otherwise  we're removing one
-                [self.tableView deleteRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationTop];
+            // check if this is a reply or an original post
+            // and add/delete a row/section accordingly 
+            if (!self.pendingPost.originalPostID) {
+                NSIndexSet *postIndexSet = [NSIndexSet indexSetWithIndex:0];
                 
-                // remove our pointer to the previous pendingPost object now that the row is gone
+                if (beingShown) {
+                    [self.tableView insertSections:postIndexSet withRowAnimation:UITableViewRowAnimationTop];
+                } else {
+                    [self.tableView deleteSections:postIndexSet withRowAnimation:UITableViewRowAnimationTop];
+                }
+            } else {
+                // get the index of the original post in the tableView by using CPVenueFeed's indexOfPostWithID method
+                int section = [self.selectedVenueFeed indexOfPostWithID:self.pendingPost.originalPostID];
+                
+                int replyIndex = ((CPPost *)[self.selectedVenueFeed.posts objectAtIndex:section]).replies.count;
+                
+                // if the keyboard is being dropped then the row we need to drop is one higher then the count of replies
+                replyIndex += beingShown ? 0 : 1;
+                
+                NSIndexPath *postIndexPath = [NSIndexPath indexPathForRow:replyIndex inSection:section];
+                NSArray *indexPathArray = [NSArray arrayWithObject:postIndexPath];
+                
+                if (beingShown) {
+                    [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationBottom];
+                } else {
+                    [self.tableView deleteRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationBottom];
+                }
+            }
+            
+            // if not keyboard is dropping then nil out self.pendingPost
+            if (!beingShown) {
                 self.pendingPost = nil;
             }
             [self.tableView endUpdates];
@@ -1346,8 +1417,17 @@ typedef enum {
                                  }
                                  
                                  if (beingShown) {
-                                     // get the tableView to scroll while the keyboard is appearing
-                                     [self scrollTableViewToTopAnimated:NO];
+                                     if (!self.pendingPost.originalPostID) {
+                                         // this is not a reply
+                                         // get the tableView to scroll to the top while the keyboard is appearing
+                                         [self scrollTableViewToTopAnimated:NO];
+                                     } else {
+                                         // this is a reply
+                                         // scroll to the post being replied to
+                                         NSIndexPath *replyToIndexPath = [NSIndexPath indexPathForRow:0 inSection:[self.selectedVenueFeed indexOfPostWithID:self.pendingPost.originalPostID]];
+                                         [self.tableView scrollToRowAtIndexPath:replyToIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                                     }
+                                     
                                      
                                      // swtich the thinBar's action button state to the right type
                                      if (CPPostTypeQuestion == self.postType) {
@@ -1523,6 +1603,26 @@ typedef enum {
     }
 }
 
+#pragma mark - UITapGestureRecognizer Target
+- (IBAction)pillButtonPressed:(UIButton *)pillButton
+{
+    // the user has held down the entry label for the required amount of time
+    // let's pop open the reply bubble
+    
+    // this is done by calling newPost with the index path of the post being replied to
+    NSIndexPath *tappedIndexPath = [self.tableView indexPathForRowAtPoint:[[pillButton superview] convertPoint:pillButton.center toView:self.tableView]];
+    [self newPost:tappedIndexPath];
+}
+    
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.cancelButtonIndex != buttonIndex) {
+        [self sendNewLog]; 
+    }
+}
+
 #pragma mark - Class methods
 + (UIView *)timelineViewWithHeight:(CGFloat)height
 {
@@ -1541,13 +1641,4 @@ typedef enum {
     return timeLine;
 }
 
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex 
-{
-    if (alertView.cancelButtonIndex != buttonIndex) {
-        [self sendNewLog]; 
-    }
-}
 @end

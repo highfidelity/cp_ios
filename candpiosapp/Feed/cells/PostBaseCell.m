@@ -13,11 +13,11 @@
 
 @synthesize senderProfileButton = _senderProfileButton;
 @synthesize entryLabel = _entryLabel;
-@synthesize post;
+@synthesize post = _post;
 
-@synthesize plusButton;
-@synthesize likeCountLabel;
-@synthesize likeCountBubble;
+@synthesize plusButton = _plusButton;
+@synthesize likeCountLabel = _likeCountLabel;
+@synthesize likeCountBubble = _likeCountBubble;
 
 - (void)awakeFromNib
 {
@@ -54,7 +54,7 @@
         CGRect bubbleRect = button.frame;
         self.likeCountBubble = [[UIImageView alloc] initWithFrame:bubbleRect];
         self.likeCountBubble.image = bubbleImage;
-        [self.contentView insertSubview:likeCountBubble belowSubview:button];
+        [self.contentView insertSubview:self.likeCountBubble belowSubview:button];
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(bubbleRect, 2.0f, 0.0f)];
         label.textColor = [UIColor grayColor];

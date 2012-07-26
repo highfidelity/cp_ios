@@ -34,7 +34,16 @@
         CPPost *newPost = [[CPPost alloc] initFromDictionary:postDict];
         [self.posts addObject:newPost];
     }
-}   
+}
+
+- (int)indexOfPostWithID:(int)postID
+{
+    // leverage the overridden isEqual method in CPPost and NSMutableArray's indexOfObject
+    CPPost *originalPostPlaceHolder = [[CPPost alloc] init];
+    originalPostPlaceHolder.postID = postID;
+    
+    return [self.posts indexOfObject:originalPostPlaceHolder];
+}
 
 -(BOOL)isEqual:(id)object
 {
