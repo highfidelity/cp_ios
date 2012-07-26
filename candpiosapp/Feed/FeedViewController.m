@@ -1245,11 +1245,11 @@ typedef enum {
         // user is cancelling new post
         
         // remove the pending post from the right array (depending on wether its an original post or a reply)
-        if (self.pendingPost.originalPostID) {
+        if (!self.pendingPost.originalPostID) {
+            [self.selectedVenueFeed.posts removeObject:self.pendingPost];
+        } else {
             CPPost *originalPost = [self.selectedVenueFeed.posts objectAtIndex:[self.selectedVenueFeed indexOfPostWithID:self.pendingPost.originalPostID]];
             [originalPost.replies removeObject:self.pendingPost];
-        } else {
-            [self.selectedVenueFeed.posts removeObject:self.pendingPost];
         }
         
         // we need the keyboard to know that we're asking for this change
@@ -1361,7 +1361,15 @@ typedef enum {
             
             // check if this is a reply or an original post
             // and add/delete a row/section accordingly 
-            if (self.pendingPost.originalPostID) {
+            if (!self.pendingPost.originalPostID) {
+                NSIndexSet *postIndexSet = [NSIndexSet indexSetWithIndex:0];
+                
+                if (beingShown) {
+                    [self.tableView insertSections:postIndexSet withRowAnimation:UITableViewRowAnimationTop];
+                } else {
+                    [self.tableView deleteSections:postIndexSet withRowAnimation:UITableViewRowAnimationTop];
+                }
+            } else {
                 // get the index of the original post in the tableView by using CPVenueFeed's indexOfPostWithID method
                 int section = [self.selectedVenueFeed indexOfPostWithID:self.pendingPost.originalPostID];
                 
@@ -1377,15 +1385,6 @@ typedef enum {
                     [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationBottom];
                 } else {
                     [self.tableView deleteRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationBottom];
-                }
-                 
-            } else {
-                NSIndexSet *postIndexSet = [NSIndexSet indexSetWithIndex:0];
-                
-                if (beingShown) {
-                    [self.tableView insertSections:postIndexSet withRowAnimation:UITableViewRowAnimationTop];
-                } else {
-                    [self.tableView deleteSections:postIndexSet withRowAnimation:UITableViewRowAnimationTop];
                 }
             }
             
