@@ -151,6 +151,7 @@ typedef enum {
 #define CONTAINER_IMAGE_VIEW_TAG 2819
 #define TIMELINE_VIEW_TAG 2820
 #define TIMELINE_ORIGIN_X 50
+#define TIMESTAMP_LEFT_MARGIN 4
 #define CELL_SEPARATOR_TAG 2349
 
 - (NSString *)textForPost:(CPPost *)post
@@ -486,8 +487,6 @@ typedef enum {
                 }
                 
                 headerCell.relativeTimeLabel.text = [CPUtils relativeTimeStringFromDateToNow:firstPostDate];
-                
-#define TIMESTAMP_LEFT_MARGIN 4
                 
                 if (headerCell.relativeTimeLabel.text) {
                     // we need to stick the timestamp right beside the venue name
