@@ -549,8 +549,8 @@ typedef enum {
         PostBaseCell *cell;
         
         // check if this is a pending entry cell
-        if (self.pendingPost && (post == self.pendingPost ||
-                                 self.pendingPost == post.replies.lastObject)) {
+        if (self.pendingPost &&
+            (post == self.pendingPost || (post.originalPostID && self.pendingPost == post.replies.lastObject))) {
             
             static NSString *NewEntryCellIdentifier = @"NewPostCell";
             NewPostCell *newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewEntryCellIdentifier];
@@ -581,7 +581,7 @@ typedef enum {
             cell = newEntryCell;
         } else {
             // check which type of cell we are dealing with
-            if (CPPostTypeUpdate == post.type || CPPostTypeQuestion == post.type || CPPostTypeCheckin == post.type) {
+            if (post.type != CPPostTypeLove) {
                 
                 // this is an update cell
                 // so check if it's this user's or somebody else's
