@@ -1416,8 +1416,17 @@ typedef enum {
                                  }
                                  
                                  if (beingShown) {
-                                     // get the tableView to scroll while the keyboard is appearing
-                                     [self scrollTableViewToTopAnimated:NO];
+                                     if (!self.pendingPost.originalPostID) {
+                                         // this is not a reply
+                                         // get the tableView to scroll to the top while the keyboard is appearing
+                                         [self scrollTableViewToTopAnimated:NO];
+                                     } else {
+                                         // this is a reply
+                                         // scroll to the post being replied to
+                                         NSIndexPath *replyToIndexPath = [NSIndexPath indexPathForRow:0 inSection:[self.selectedVenueFeed indexOfPostWithID:self.pendingPost.originalPostID]];
+                                         [self.tableView scrollToRowAtIndexPath:replyToIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                                     }
+                                     
                                      
                                      // swtich the thinBar's action button state to the right type
                                      if (CPPostTypeQuestion == self.postType) {
