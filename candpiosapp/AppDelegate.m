@@ -103,7 +103,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     
     [self customAppearanceStyles];
     [self hideLoginBannerWithCompletion:nil];
-//    [self startLocationMonitoring];
     
     // Initialize MKStoreKit
     [MKStoreManager sharedManager];
@@ -442,7 +441,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 - (CLLocationManager *)locationManager
 {
-    if ( ! _locationManager) {
+    if (!_locationManager) {
         _locationManager = [[CLLocationManager alloc] init];
         
         _locationManager.delegate = self;
