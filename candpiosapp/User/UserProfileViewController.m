@@ -11,7 +11,7 @@
 #import "AFJSONRequestOperation.h"
 #import "GRMustache.h"
 #import "VenueInfoViewController.h"
-#import "NSString+HTML.h"
+#import "GTMNSString+HTML.h"
 #import "UserProfileLinkedInViewController.h"
 
 
@@ -519,7 +519,7 @@ static GRMustacheTemplate *postBadgesTemplate;
                 [mutableReview setObject:[NSNumber numberWithBool:YES] forKey:@"isLove"];
             }
             
-            [mutableReview setObject:[[review objectForKey:@"review"] stringByDecodingHTMLEntities]
+            [mutableReview setObject:[[review objectForKey:@"review"] gtm_stringByUnescapingFromHTML]
                               forKey:@"review"];
             
             [reviews addObject:mutableReview];

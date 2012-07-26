@@ -270,7 +270,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     linkedinId = [json objectForKey:@"id"];
     
     // Generate truly random password
-    password = [NSString stringWithFormat:@"%d-%@", [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]], [[NSProcessInfo processInfo] globallyUniqueString]];
+    password = [NSString stringWithFormat:@"%d-%@", [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] intValue], [[NSProcessInfo processInfo] globallyUniqueString]];
     
     // Assign an identifying email address (prompt user in the future?)
     email = [NSString stringWithFormat:@"%@@linkedin.com", linkedinId];

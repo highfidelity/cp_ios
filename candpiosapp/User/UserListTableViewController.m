@@ -10,7 +10,7 @@
 #import "UserLoveViewController.h"
 #import "UserTableViewCell.h"
 #import "UserProfileViewController.h"
-#import "NSString+HTML.h"
+#import "GTMNSString+HTML.h"
 #import "VenueCell.h"
 #import "CheckInDetailsViewController.h"
 #import "CPVenue.h"
@@ -247,7 +247,7 @@
     
     cell.statusLabel.text = @"";
     if (user.status.length > 0 && user.checkedIn) {
-        cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",[user.status stringByDecodingHTMLEntities]];
+        cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",[user.status gtm_stringByUnescapingFromHTML]];
     }
     cell.distanceLabel.text = [CPUtils localizedDistanceStringForDistance:user.distance];
     
