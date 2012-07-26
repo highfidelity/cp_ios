@@ -8,7 +8,6 @@
 
 #import "UserLoveViewController.h"
 #import "UserProfileViewController.h"
-#import "MKStoreManager.h"
 #import "FlurryAnalytics.h"
 #import "CPSkill.h"
 #import "LoveSkillTableViewCell.h"
@@ -25,13 +24,8 @@
 @interface UserLoveViewController () <UITextViewDelegate, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *charCounterLabel;
-@property (nonatomic) BOOL purchasedLove;
-@property (nonatomic) BOOL sendLoveWithoutPayment;
 @property (strong, nonatomic) CPSkill *selectedSkill;
 @property (strong, nonatomic) UIView *keyboardBackground;
-@property (nonatomic) BOOL resumeCheckboxActive;
-@property (weak, nonatomic) IBOutlet UIButton *resumeCheckbox;
-
 
 @end
 
@@ -44,10 +38,6 @@
 @synthesize navigationBar = _navigationBar;
 @synthesize tableView = _tableView;
 @synthesize loveBackground = _loveBackground;
-@synthesize purchasedLove = _purchasedLove;
-@synthesize sendLoveWithoutPayment = _sendLoveWithoutPayment;
-@synthesize resumeCheckboxActive = _resumeCheckboxActive;
-@synthesize resumeCheckbox = _resumeCheckbox;
 @synthesize selectedSkill = _selectedSkill;
 @synthesize keyboardBackground = _keyboardBackground;
 
@@ -82,9 +72,6 @@
     
     // shadow on user profile picture
     [CPUIHelper addShadowToView:self.profilePicture color:[UIColor blackColor] offset:CGSizeMake(1, 1) radius:1 opacity:0.4];
-    
-    // Default checkbox to off
-    self.resumeCheckboxActive = NO;
     
     // reload the tableView 
     // it'll show loading 
@@ -168,7 +155,6 @@
     [self setTableView:nil];
     [self setCharCounterLabel:nil];
     [self setKeyboardBackground:nil];
-    [self setResumeCheckbox:nil];
     [self setLoveBackground:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -183,11 +169,6 @@
 }
 
 - (void)sendReview {
-    // If the user wants to add this love to the resume, prompt them to purchase now
-    if (self.resumeCheckboxActive && !self.purchasedLove && !self.sendLoveWithoutPayment) {
-        [self purchaseLove];
-        return;
-    }
     
     // show a progress HUD
     [SVProgressHUD showWithStatus:@"Sending..."];
@@ -207,13 +188,6 @@
                                      afterDelay:kDefaultDismissDelay];
             }
             else {
-                // Consume the item if purchased
-                if (self.purchasedLove) {
-                    if ([[MKStoreManager sharedManager] canConsumeProduct:inAppItem quantity:1]) {
-                        [[MKStoreManager sharedManager] consumeProduct:inAppItem quantity:1];
-                    }
-                }
-
                 // dismiss the HUD with the success message that came back
                 NSString *message = [NSString stringWithFormat:@"You Recognized %@", self.user.nickname];
 
@@ -276,61 +250,11 @@
     self.charCounterLabel.text = [NSString stringWithFormat:@"%d", LOVE_CHAR_LIMIT - textView.text.length];
 }
 
-- (void)purchaseLove
-{
-    // Check if the user has already purchased love but it failed previously, use it by default here
-    if ([[MKStoreManager sharedManager] canConsumeProduct:inAppItem quantity:1]) {
-        self.purchasedLove = YES;
-        
-        [self sendReview];
-        return;
-    }
-    
-    // Loading the store might take a while so pop up a HUD
-    [SVProgressHUD showWithStatus:@"Loading store..."];
-    
-    // Automatically hide the HUD after 2 seconds since there is no kind of callback when the app store alertview appears
-    [self performSelector:@selector(dismissHUD:) withObject:nil afterDelay:2.0];
-    
-    // Otherwise prompt the user to purchase Love now
-    [[MKStoreManager sharedManager] buyFeature:inAppItem 
-                                    onComplete:^(NSString* purchasedFeature, NSData* purchasedReceipt)
-     {
-         NSLog(@"Purchased: %@", purchasedFeature);
-         [FlurryAnalytics logEvent:@"purchasedLove"];
-         
-         self.purchasedLove = YES;
-         
-         [self sendReview];
-     }
-                                   onCancelled:^
-     {
-         NSLog(@"User Cancelled Transaction");
-         [FlurryAnalytics logEvent:@"canceledPurchase"];
-         
-         // Might want to tell the user he can still send love for free?
-         self.sendLoveWithoutPayment = YES;
-         [self sendReview];
-     }];    
-}
-
 #pragma mark - IBActions
 
 -(IBAction)cancelButtonPressed:(id)sender
 {
     [self dismissModalViewControllerAnimated:YES];
-}
-
-- (IBAction)resumeCheckboxPressed:(UIButton *)sender
-{
-    if (self.resumeCheckboxActive) {
-        self.resumeCheckboxActive = NO;
-        self.resumeCheckbox.imageView.image = [UIImage imageNamed:@"checkbox-unchecked"];
-    }
-    else {
-        self.resumeCheckboxActive = YES;
-        self.resumeCheckbox.imageView.image = [UIImage imageNamed:@"checkbox-checked"];
-    }
 }
 
 - (IBAction)changeSkillButtonPressed:(id)sender
@@ -392,13 +316,6 @@
     
     // add the seperator line to the tableHeader
     [tableHeader addSubview:sepLine];
-
-    // add a line to separate the + Resume from the Skills selector
-    UIView *vertSepLine = [[UIView alloc] initWithFrame:CGRectMake(self.resumeCheckbox.frame.origin.x - 8, 0, 1, 38)];
-    vertSepLine.backgroundColor = [UIColor colorWithR:58 G:58 B:58 A:1];
-//    don't add this for current production build as +Resume is hidden
-//    [tableHeader addSubview:vertSepLine];
-
     
     return tableHeader;
 }

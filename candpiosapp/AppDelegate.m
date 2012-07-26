@@ -18,7 +18,6 @@
 #import "UIButton+AnimatedClockHand.h"
 #import "PushModalViewControllerFromLeftSegue.h"
 #import "ContactListViewController.h"
-#import "MKStoreManager.h"
 
 #define kContactRequestAPNSKey @"contact_request"
 #define kContactRequestAcceptedAPNSKey @"contact_accepted"
@@ -100,9 +99,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     [self customAppearanceStyles];
     [self hideLoginBannerWithCompletion:nil];
     [self startLocationMonitoring];
-    
-    // Initialize MKStoreKit
-    [MKStoreManager sharedManager];
     
     return YES;
 }

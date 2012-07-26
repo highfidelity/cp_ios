@@ -20,9 +20,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *loveBackground;
 
-- (IBAction)resumeCheckboxPressed:(UIButton *)sender;
-
 - (void)dismissHUD:(id)sender;
-- (void)purchaseLove;
 
 @end

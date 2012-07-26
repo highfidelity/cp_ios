@@ -8,7 +8,7 @@
 
 #import "ContactListViewController.h"
 #import "UserProfileViewController.h"
-#import "NSString+HTML.h"
+#import "GTMNSString+HTML.h"
 #import "UserLoveViewController.h"
 
 #define kContactRequestsSection 0
@@ -308,7 +308,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     bool checkedIn = [[contact objectForKey:@"checked_in"]boolValue];
     cell.statusLabel.text = @"";
     if (status.length > 0 && checkedIn) {
-        status = [[status stringByDecodingHTMLEntities] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        status = [[status gtm_stringByUnescapingFromHTML] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",status];
     }
 
