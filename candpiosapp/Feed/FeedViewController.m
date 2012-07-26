@@ -146,6 +146,7 @@ typedef enum {
 #define UPDATE_LABEL_WIDTH 185
 #define LOVE_LABEL_WIDTH 135
 #define LOVE_PLUS_ONE_LABEL_WIDTH 185
+#define PILL_BUTTON_CELL_HEIGHT 25
 #define CONTAINER_BACKGROUND_ORIGIN_X 7.5
 #define CONTAINER_BACKGROUND_WIDTH 305
 #define CONTAINER_IMAGE_VIEW_TAG 2819
@@ -363,43 +364,45 @@ typedef enum {
         } else if (indexPath.row == (self.previewPostableFeedsOnly ? 1 : [[self venueFeedPreviewForIndex:indexPath.section] posts].count + 1)) {
             return PREVIEW_FOOTER_CELL_HEIGHT;
         }
-    } 
+    }
     
-    if (self.selectedVenueFeed && self.pendingPost && indexPath.row == 0) {
-        // this is an editable cell
-        // for which we might have a changed height
+    CPPost *cellPost;
+    
+    if (self.selectedVenueFeed) {
+        // pull the post at this section
+        cellPost = [self.selectedVenueFeed.posts objectAtIndex:indexPath.section];
         
-        // check if we have a new cell height which is larger than our min height and grow to that size
-        cellHeight = self.newEditableCellHeight > MIN_CELL_HEIGHT ? self.newEditableCellHeight : MIN_CELL_HEIGHT;
-        
-        // reset the newEditableCellHeight to 0
-        self.newEditableCellHeight = 0;
-    } else {
-        // we need to check here if we have multiline text
-        // grab the entry this is for so we can change the height of the cell accordingly
-        
-        CPPost *post;
-        BOOL lastPost;
-        
-        if (self.selectedVenueFeed) {
-            post = [self.selectedVenueFeed.posts objectAtIndex:indexPath.section];
-            
-            // if this is the comment / +1 box cell then our height is static
-            if (indexPath.row > post.replies.count) {
-                return 25;
-            }
-            
-        } else {
-            NSArray *posts = [[self venueFeedPreviewForIndex:indexPath.section] posts];
-            post = [posts objectAtIndex:(indexPath.row - 1)];
-            
-            lastPost = (indexPath.row - 1 == posts.count);
+        // if this is the comment / +1 box cell then our height is static
+        if (indexPath.row > cellPost.replies.count) {
+            return PILL_BUTTON_CELL_HEIGHT;
+        } else if (indexPath.row > 0) {
+            // if the indexPath is not 0 and isn't the last this is a reply
+            cellPost = [cellPost.replies objectAtIndex:(indexPath.row - 1)];
         }
         
-        CGFloat labelHeight = [self labelHeightWithText:[self textForPost:post] labelWidth:[self widthForLabelForPost:post] labelFont:[self fontForPost:post]];
-        
-        cellHeight = [self cellHeightWithLabelHeight:labelHeight indexPath:indexPath];
+        // check if we have a pendingPost and if this is it
+        if (cellPost == self.pendingPost) {
+            // this is an editable cell
+            // for which we might have a changed height
+            
+            // check if we have a new cell height which is larger than our min height and grow to that size
+            cellHeight = self.newEditableCellHeight > MIN_CELL_HEIGHT ? self.newEditableCellHeight : MIN_CELL_HEIGHT;
+            
+            // reset the newEditableCellHeight to 0
+            self.newEditableCellHeight = 0;
+            
+            return cellHeight;
+        }
+    } else {
+        // grab post from venue feed preview
+        NSArray *posts = [[self venueFeedPreviewForIndex:indexPath.section] posts];
+        cellPost = [posts objectAtIndex:(indexPath.row - 1)];
     }
+    
+    // use helper methods to get label height and cell height
+    CGFloat labelHeight = [self labelHeightWithText:[self textForPost:cellPost] labelWidth:[self widthForLabelForPost:cellPost] labelFont:[self fontForPost:cellPost]];
+    
+    cellHeight = [self cellHeightWithLabelHeight:labelHeight indexPath:indexPath];
     
     // return the calculated labelHeight
     return cellHeight;
