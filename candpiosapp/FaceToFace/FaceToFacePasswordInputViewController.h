@@ -11,8 +11,8 @@
 
 @interface FaceToFacePasswordInputViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UITextField *passwordField;
-@property (weak, nonatomic) IBOutlet UILabel *waitLabel;
-@property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
+@property (nonatomic, weak) IBOutlet UITextField *passwordField;
+@property (nonatomic, weak) IBOutlet UILabel *waitLabel;
+@property (nonatomic, weak) IBOutlet UINavigationItem *f2fNavigationItem;
 
 @end

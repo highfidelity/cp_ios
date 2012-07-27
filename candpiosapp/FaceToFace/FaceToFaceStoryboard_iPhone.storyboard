@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="bei-px-nB9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="bei-px-nB9">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
     <scenes>
         <!--Face To Face Accept Decline View Controller-->
@@ -151,7 +150,7 @@
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="navigationItem" destination="12i-KH-KKo" id="ZAR-P9-gWV"/>
+                        <outlet property="f2fNavigationItem" destination="12i-KH-KKo" id="63A-j6-rOt"/>
                         <outlet property="passwordField" destination="Um5-29-rub" id="idZ-F4-74H"/>
                         <outlet property="view" destination="l1L-tc-zUe" id="fPT-1q-070"/>
                         <outlet property="waitLabel" destination="LpT-bp-wo5" id="hyT-78-54E"/>
@@ -180,7 +179,7 @@
         <class className="FaceToFacePasswordInputViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/FaceToFacePasswordInputViewController.h"/>
             <relationships>
-                <relationship kind="outlet" name="navigationItem" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="f2fNavigationItem" candidateClass="UINavigationItem"/>
                 <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="waitLabel" candidateClass="UILabel"/>
             </relationships>

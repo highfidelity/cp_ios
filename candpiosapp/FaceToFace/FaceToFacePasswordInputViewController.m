@@ -8,26 +8,10 @@
 
 #import "FaceToFacePasswordInputViewController.h"
 
-@interface FaceToFacePasswordInputViewController ()
-
-@end
-
 @implementation FaceToFacePasswordInputViewController
-@synthesize passwordField;
-@synthesize waitLabel;
-@synthesize navigationItem;
 
 // This may seem a little strange but this view controller is never actually on screen.
 // It's used to append a view onto the bottom of the F2FAcceptDeclineView (which allows for the scrolling transition)
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -42,7 +26,7 @@
 {
     [self setPasswordField:nil];
     [self setWaitLabel:nil];
-    [self setNavigationItem:nil];
+    [self setF2fNavigationItem:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
