@@ -36,6 +36,7 @@
 // TODO: Store what we're storing now in settings in NSUSERDefaults
 // Why make our own class when there's an iOS Api for this?
 
+// explicit synthesizer for the locationManager so we have access to the iVar
 @synthesize locationManager = _locationManager;
 
 #pragma mark - View Lifecycle
