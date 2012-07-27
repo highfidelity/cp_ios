@@ -11,6 +11,7 @@
 #import "TPKeyboardAvoidingScrollView.h"
 #import "UIViewController+isModal.h"
 #import "CPCheckinHandler.h"
+#import "CPApiClient.h"
 
 @interface CheckInDetailsViewController() <UITextFieldDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *blueOverlay;
@@ -57,7 +58,7 @@
 @synthesize willLabel = _willLabel;
 @synthesize statusTextField = _statusTextField;
 @synthesize timeSlider = _timeSlider;
-@synthesize place = _place;
+@synthesize venue = _venue;
 @synthesize checkInDuration = _checkInDuration;
 @synthesize durationString = _durationString;
 @synthesize sliderButtonPressed = _sliderButtonPressed;
@@ -125,7 +126,7 @@
 {
     [super viewDidLoad];
     // set the title of the nav controller to the place name
-    self.title = self.place.name;
+    self.title = self.venue.name;
     
     // get the other users that are checked in
     [self processOtherCheckedInUsers];
@@ -167,7 +168,7 @@
     
     
     // make an MKCoordinate region for the zoom level on the map
-    MKCoordinateRegion region = MKCoordinateRegionMake(self.place.coordinate, MKCoordinateSpanMake(0.006, 0.006));
+    MKCoordinateRegion region = MKCoordinateRegionMake(self.venue.coordinate, MKCoordinateSpanMake(0.006, 0.006));
     [self.mapView setRegion:region];
     
     // this will always be the point on iPhones up to iPhone4
@@ -201,8 +202,8 @@
     self.otherUsersScrollView.delegate = self;
     
     // set the labels for the venue name and address
-    self.placeName.text = self.place.name;
-    self.placeAddress.text = self.place.address;
+    self.placeName.text = self.venue.name;
+    self.placeAddress.text = self.venue.address;
 }
 
 - (void)viewDidUnload
@@ -258,13 +259,12 @@
     NSInteger checkInDuration = self.checkInDuration;    
     NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
     
-    // use CPapi to checkin
-    [CPapi checkInToLocation:self.place
-                   hoursHere:self.checkInDuration
-                  statusText:statusText
-                   isVirtual:self.checkInIsVirtual
-                 isAutomatic:NO
-             completionBlock:^(NSDictionary *json, NSError *error){
+    [CPApiClient checkInToVenue:self.venue
+                         hoursHere:self.checkInDuration
+                        statusText:statusText
+                         isVirtual:self.checkInIsVirtual
+                       isAutomatic:NO
+                   completionBlock:^(NSDictionary *json, NSError *error){
         // hide the SVProgressHUD
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {
@@ -273,10 +273,10 @@
                 // a successful checkin passes back venue_id
                 // give that to this venue before we store it in NSUserDefaults
                 // in case we came from foursquare venue list and didn't have it
-                self.place.venueID = [[json objectForKey:@"venue_id"] intValue];
+                self.venue.venueID = [[json objectForKey:@"venue_id"] intValue];
                 
-                [[CPCheckinHandler sharedHandler] queueLocalNotificationForVenue:self.place checkoutTime:checkOutTime];
-                [[CPCheckinHandler sharedHandler] handleSuccessfulCheckinToVenue:self.place checkoutTime:checkOutTime];                
+                [[CPCheckinHandler sharedHandler] queueLocalNotificationForVenue:self.venue checkoutTime:checkOutTime];
+                [[CPCheckinHandler sharedHandler] handleSuccessfulCheckinToVenue:self.venue checkoutTime:checkOutTime];
                 
                 // hide the checkin screen, we're checked in
                 if ([self isModal]) {
@@ -290,10 +290,10 @@
                     // tell it to scroll to the user thumbnail after loading new data from this checkin
                     [self.delegate setScrollToUserThumbnail:YES];
                     [SVProgressHUD dismiss];
-                }                
+                }
             }
             else {
-
+                
                 // there's an error either becuase the user wasn't checked in or we didn't pass a foursquare ID
                 // we obviously passed a foursquare ID if we're in the app so the user isn't actually logged in
                 // show an alertView if the user isn't checked in
@@ -306,13 +306,13 @@
             [SVProgressHUD dismissWithError:@"An error occured while attempting to check in."
                                  afterDelay:kDefaultDismissDelay];
         }
-    }];      
+    }];
 }
 
 - (void)processOtherCheckedInUsers
 {
     // call the function in CPApi to get the other users at this venue
-    [CPapi getUsersCheckedInAtFoursquareID:self.place.foursquareID :^(NSDictionary *json, NSError *error) {   
+    [CPapi getUsersCheckedInAtFoursquareID:self.venue.foursquareID :^(NSDictionary *json, NSError *error) {
         int count = [[json valueForKeyPath:@"payload.count"] intValue];
         // check if we had an error or nobody else is here
         if (!error && count != 0) {

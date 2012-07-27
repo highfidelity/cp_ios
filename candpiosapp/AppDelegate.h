@@ -27,7 +27,7 @@
 @property (strong, nonatomic) SettingsMenuController *settingsMenuController;
 @property (strong, nonatomic) CPTabBarController *tabBarController;
 @property (strong) NSTimer *checkOutTimer;
-@property (strong) CLLocationManager *locationManager;
+@property (strong, readonly) CLLocationManager *locationManager;
            
 -(void)saveSettings;
 - (void)loadVenueView:(NSString *)venueName;
@@ -53,7 +53,6 @@
 - (CLRegion *)getRegionForVenue:(CPVenue *)venue;
 - (void)startMonitoringVenue:(CPVenue *)venue;
 - (void)stopMonitoringVenue:(CPVenue *)venue;
-- (void)startLocationMonitoring;
 
 void uncaughtExceptionHandler(NSException *exception);
 void SignalHandler(int sig);

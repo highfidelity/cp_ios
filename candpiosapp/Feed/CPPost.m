@@ -20,9 +20,10 @@
 @synthesize receiver = _receiver;
 @synthesize skill = _skill;
 @synthesize type = _type;
+@synthesize replies = _replies;
 @synthesize originalPostID = _originalPostID;
-@synthesize likeCount;
-@synthesize userHasLiked;
+@synthesize likeCount = _likeCount;
+@synthesize userHasLiked = _userHasLiked;
 
 static NSDateFormatter *postDateFormatter;
 
@@ -71,6 +72,15 @@ static NSDateFormatter *postDateFormatter;
 - (void)setEntry:(NSString *)entry
 {
     _entry = [entry gtm_stringByUnescapingFromHTML];
+}
+
+- (NSMutableArray *)replies
+{
+    if (!_replies) {
+        _replies = [NSMutableArray array];
+    }
+    
+    return _replies;
 }
 
 - (CPPostType)enumLogEntryTypeForString:(NSString *)typeString

@@ -18,24 +18,29 @@
 #import "UIButton+AnimatedClockHand.h"
 #import "PushModalViewControllerFromLeftSegue.h"
 #import "ContactListViewController.h"
+#import "CPApiClient.h"
 
 #define kContactRequestAPNSKey @"contact_request"
 #define kContactRequestAcceptedAPNSKey @"contact_accepted"
 #define kCheckOutLocalNotificationAlertViewTitle @"You will be checked out of C&P in 5 min."
 #define kRadiusForCheckins                      10 // measure in meters, from lat/lng of CPVenue
 
-@interface AppDelegate(Internal)
+@interface AppDelegate() {
+    CLLocationManager *_locationManager;
+}
+
 -(void) loadSettings;
 +(NSString*) settingsFilepath;
+
 @end
 
 @implementation AppDelegate
+
 @synthesize settings;
 @synthesize urbanAirshipClient;
 @synthesize settingsMenuController;
 @synthesize tabBarController;
 @synthesize checkOutTimer = _checkOutTimer;
-@synthesize locationManager;
 
 // TODO: Store what we're storing now in settings in NSUSERDefaults
 // Why make our own class when there's an iOS Api for this?
@@ -98,7 +103,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     
     [self customAppearanceStyles];
     [self hideLoginBannerWithCompletion:nil];
-    [self startLocationMonitoring];
     
     return YES;
 }
@@ -113,13 +117,17 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // in order to make sure we don't have stray significant change monitoring
-    // from previous app versions
-    // we need to call stopMonitoringSignificantLocationChanges here
-    [self.locationManager stopMonitoringSignificantLocationChanges];
-    
-    // stop monitoring user location, we're going to the background
-    [self.locationManager stopUpdatingLocation];
+    if (_locationManager) {
+        // in order to make sure we don't have stray significant change monitoring
+        // from previous app versions
+        // we need to call stopMonitoringSignificantLocationChanges here
+        [_locationManager stopMonitoringSignificantLocationChanges];
+        
+        // stop monitoring user location, we're going to the background
+        [_locationManager stopUpdatingLocation];
+        
+        _locationManager = nil;
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -428,18 +436,18 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     [FlurryAnalytics logEvent:@"automaticCheckinLocationDisabled"];
 }
 
-- (void)startLocationMonitoring
+- (CLLocationManager *)locationManager
 {
-    // Create the location manager if this object does not already have one.
-    if (!self.locationManager) {
-        self.locationManager = [[CLLocationManager alloc] init];
+    if (!_locationManager) {
+        _locationManager = [[CLLocationManager alloc] init];
+        
+        _locationManager.delegate = self;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+        _locationManager.distanceFilter = 20;
+        
+        [_locationManager startUpdatingLocation];
     }
-    
-    self.locationManager.delegate = self;
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    self.locationManager.distanceFilter = 20;
-    
-    [self.locationManager startUpdatingLocation];
+    return _locationManager;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
@@ -485,7 +493,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     NSString *statusText = @"";
     
     // use CPapi to checkin
-    [CPapi checkInToLocation:venue hoursHere:checkInDuration statusText:statusText isVirtual:NO isAutomatic:YES completionBlock:^(NSDictionary *json, NSError *error){
+    [CPApiClient checkInToVenue:venue hoursHere:checkInDuration statusText:statusText isVirtual:NO isAutomatic:YES completionBlock:^(NSDictionary *json, NSError *error){
         
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {
@@ -1016,7 +1024,7 @@ void SignalHandler(int sig) {
             CheckInDetailsViewController *vc = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil]
                                                 instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
             vc.checkInIsVirtual = false;
-            [vc setPlace:venue];
+            [vc setVenue:venue];
             vc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
                                                                                    style:UIBarButtonItemStylePlain
                                                                                   target:vc

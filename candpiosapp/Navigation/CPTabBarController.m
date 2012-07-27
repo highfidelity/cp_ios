@@ -189,7 +189,7 @@
         
         if (self.selectedIndex == 0) {
             // the feedVC is on screen so we want a new post right now
-            [feedVC newPost];
+            [feedVC newPost:nil];
         } else {
             // the feedVC isn't on screen yet so tell we want a new post after it loads
             feedVC.newPostAfterLoad = YES;
