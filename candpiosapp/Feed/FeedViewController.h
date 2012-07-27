@@ -13,17 +13,16 @@
 
 @interface FeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, CPUserActionCellDelegate, FeedPreviewHeaderCellDelegate>
 
-@property (nonatomic, assign) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) CPVenueFeed *selectedVenueFeed;
-@property (nonatomic, assign) CPPostType postType;
 @property (nonatomic, strong) NSMutableArray *venueFeedPreviews;
 @property (nonatomic, strong) NSMutableArray *postableVenueFeeds;
-@property (nonatomic, assign) BOOL newPostAfterLoad;
 @property (nonatomic, strong) NSMutableDictionary *postPlussingUserIds;
+@property CPPostType postType;
+@property BOOL newPostAfterLoad;
 
 - (void)newPost:(NSIndexPath *)replyToIndexPath;
 - (void)showOnlyPostableFeeds;
-
 + (UIView *)timelineViewWithHeight:(CGFloat)height;
 
 @end
