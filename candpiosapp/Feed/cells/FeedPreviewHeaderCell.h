@@ -20,7 +20,7 @@
 
 @property (nonatomic, assign) IBOutlet UILabel *venueNameLabel;
 @property (nonatomic, assign) IBOutlet UILabel *relativeTimeLabel;
-@property (nonatomic, weak) IBOutlet UIButton *removeButton;
-@property (nonatomic, weak) id<FeedPreviewHeaderCellDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UIButton *removeButton;
+@property (weak, nonatomic) id<FeedPreviewHeaderCellDelegate> delegate;
 
 @end

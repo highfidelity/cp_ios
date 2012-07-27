@@ -13,8 +13,8 @@
 
 @interface CPPlaceholderTextView : UITextView 
 
-@property (nonatomic, strong) NSString *placeholder;
-@property (nonatomic, strong) UIColor *placeholderColor;
+@property (strong, nonatomic) NSString *placeholder;
+@property (strong, nonatomic) UIColor *placeholderColor;
 
 -(void)textChanged:(NSNotification*)notification;
 

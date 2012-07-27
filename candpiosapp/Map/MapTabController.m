@@ -14,9 +14,9 @@
 @interface MapTabController() 
 -(void)zoomTo:(CLLocationCoordinate2D)loc;
 
-@property (nonatomic, strong) NSTimer *reloadTimer;
-@property (nonatomic, strong) NSTimer *locationAllowTimer;
-@property (nonatomic, strong) NSTimer *arrowSpinTimer;
+@property (strong, nonatomic) NSTimer *reloadTimer;
+@property (strong, nonatomic) NSTimer *locationAllowTimer;
+@property (strong, nonatomic) NSTimer *arrowSpinTimer;
 @property (nonatomic, assign) BOOL locationStatusKnown;
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 

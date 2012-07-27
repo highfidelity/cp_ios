@@ -30,8 +30,8 @@ typedef enum {
 @property (nonatomic, assign) CPAfterLoginAction afterLoginAction;
 
 // the following properties are used to dismiss F2F alerts that don't need to still be showing once new ones come in
-@property (nonatomic, strong) UIAlertView *f2fInviteAlert;
-@property (nonatomic, strong) UIAlertView *f2fPasswordAlert;
+@property (strong, nonatomic) UIAlertView *f2fInviteAlert;
+@property (strong, nonatomic) UIAlertView *f2fPasswordAlert;
 
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *blockUIButton;

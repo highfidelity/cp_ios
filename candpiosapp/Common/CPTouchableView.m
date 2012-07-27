@@ -10,7 +10,7 @@
 
 @interface CPTouchableView()
 
-@property (nonatomic, strong) UIColor *oldBackgroundColor;
+@property (strong, nonatomic) UIColor *oldBackgroundColor;
 
 @end
 

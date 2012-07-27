@@ -18,7 +18,7 @@
 
 @interface VenueInfoViewController () <UIAlertViewDelegate>
 
-@property (nonatomic, strong) NSTimer *chatReloadTimer;
+@property (strong, nonatomic) NSTimer *chatReloadTimer;
 @property (weak, nonatomic) IBOutlet UIView *bottomPhotoOverlayView;
 @property (weak, nonatomic) IBOutlet UIView *venueChatBox;
 @property (weak, nonatomic) IBOutlet UILabel *activeChatText;

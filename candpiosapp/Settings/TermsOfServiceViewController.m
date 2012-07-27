@@ -12,7 +12,7 @@
 
 @interface TermsOfServiceViewController ()
 
-@property (nonatomic, weak) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 @end
 

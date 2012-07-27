@@ -10,8 +10,8 @@
 
 @interface OneOnOneChatHistory : ChatHistory
 
-@property (nonatomic, strong) User *myUser;
-@property (nonatomic, strong) User *otherUser;
+@property (strong, nonatomic) User *myUser;
+@property (strong, nonatomic) User *otherUser;
 
 - (id)initWithMyUser:(User *)myUser
         andOtherUser:(User *)otherUser;

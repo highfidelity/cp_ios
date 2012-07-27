@@ -12,7 +12,7 @@
 #import "FlurryAnalytics.h"
 
 @interface AutoCheckinTableViewController ()
-@property (nonatomic, strong) NSMutableArray *placesArray;
+@property (strong, nonatomic) NSMutableArray *placesArray;
 @end
 
 @implementation AutoCheckinTableViewController

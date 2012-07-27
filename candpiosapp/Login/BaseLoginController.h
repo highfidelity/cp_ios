@@ -10,7 +10,7 @@
 
 @interface BaseLoginController : UIViewController
 
-@property (nonatomic, strong) AFHTTPClient *httpClient;
+@property (strong, nonatomic) AFHTTPClient *httpClient;
 
 +(void) pushAliasUpdate;
 

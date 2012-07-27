@@ -11,9 +11,9 @@
 
 @interface GenerateInvitationCodeViewController ()
 
-@property (nonatomic, weak) IBOutlet UILabel *codeLabel;
-@property (nonatomic, weak) IBOutlet UIImageView *codeLabelBackground;
-@property (nonatomic, weak) IBOutlet UIButton *doneButton;
+@property (weak, nonatomic) IBOutlet UILabel *codeLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *codeLabelBackground;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
 - (IBAction)gearPressed:(id)sender;
 

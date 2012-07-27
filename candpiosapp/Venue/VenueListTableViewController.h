@@ -11,6 +11,6 @@
 
 @interface VenueListTableViewController : CPBaseTableViewController
 
-@property (nonatomic, strong) NSMutableArray *venues;
+@property (strong, nonatomic) NSMutableArray *venues;
 
 @end

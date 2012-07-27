@@ -10,6 +10,6 @@
 
 @interface SkillsTableViewController : UITableViewController
 
-@property (nonatomic, strong) NSMutableArray *skills;
+@property (strong, nonatomic) NSMutableArray *skills;
 
 @end

@@ -14,7 +14,7 @@
 @interface SkillsTableViewController ()
 
 @property (nonatomic, assign) int visibleCount;
-@property (nonatomic, strong) NSOperationQueue *skillQueue;
+@property (strong, nonatomic) NSOperationQueue *skillQueue;
 
 @end
 

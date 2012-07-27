@@ -35,10 +35,10 @@ typedef enum {
 
 @interface FeedViewController () <HPGrowingTextViewDelegate, UIAlertViewDelegate>
 
-@property (nonatomic, strong) CPPost *pendingPost;
-@property (nonatomic, strong) NewPostCell *pendingPostCell;
-@property (nonatomic, strong) UIView *keyboardBackground;
-@property (nonatomic, strong) UITextView *fakeTextView;
+@property (strong, nonatomic) CPPost *pendingPost;
+@property (strong, nonatomic) NewPostCell *pendingPostCell;
+@property (strong, nonatomic) UIView *keyboardBackground;
+@property (strong, nonatomic) UITextView *fakeTextView;
 @property FeedVCState currentState;
 @property BOOL previewPostableFeedsOnly;
 @property float newEditableCellHeight;

@@ -14,10 +14,10 @@
 
 @property (nonatomic, assign) IBOutlet UIButton *senderProfileButton;
 @property (nonatomic, assign) IBOutlet UILabel *entryLabel;
-@property (nonatomic, strong) CPPost* post;
-@property (nonatomic, strong) UIButton *plusButton;
-@property (nonatomic, strong) UILabel *likeCountLabel;
-@property (nonatomic, strong) UIImageView *likeCountBubble;
+@property (strong, nonatomic) CPPost* post;
+@property (strong, nonatomic) UIButton *plusButton;
+@property (strong, nonatomic) UILabel *likeCountLabel;
+@property (strong, nonatomic) UIImageView *likeCountBubble;
 
 - (void) addPlusWidget;
 - (void) changeLikeCountToValue:(int)value animated:(BOOL)animated;

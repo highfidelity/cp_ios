@@ -10,16 +10,16 @@
 @interface CPVenue : NSObject <MKAnnotation, NSCoding>
 
 @property (nonatomic, assign) int venueID;
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *icon;
-@property (nonatomic, strong) NSString *foursquareID;
-@property (nonatomic, strong) NSString *address;
-@property (nonatomic, strong) NSString *city;
-@property (nonatomic, strong) NSString *state;
-@property (nonatomic, strong) NSString *zip;
-@property (nonatomic, strong) NSString *phone;
-@property (nonatomic, strong) NSString *formattedPhone;
-@property (nonatomic, strong) NSString *photoURL;
+@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *icon;
+@property (strong, nonatomic) NSString *foursquareID;
+@property (strong, nonatomic) NSString *address;
+@property (strong, nonatomic) NSString *city;
+@property (strong, nonatomic) NSString *state;
+@property (strong, nonatomic) NSString *zip;
+@property (strong, nonatomic) NSString *phone;
+@property (strong, nonatomic) NSString *formattedPhone;
+@property (strong, nonatomic) NSString *photoURL;
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 @property (nonatomic, assign) double distanceFromUser;
 @property (nonatomic) int checkinCount;
@@ -29,10 +29,10 @@
 @property (nonatomic, readonly) NSString *checkinCountString;
 @property (nonatomic, readonly) NSString *checkinTimeString;
 @property (nonatomic, readonly) NSString *formattedAddress;
-@property (nonatomic, strong) NSMutableDictionary *activeUsers;
+@property (strong, nonatomic) NSMutableDictionary *activeUsers;
 @property (nonatomic, assign) bool hasContactAtVenue;
 @property (nonatomic, assign) bool autoCheckin;
-@property (nonatomic, strong) NSString *specialVenueType;
+@property (strong, nonatomic) NSString *specialVenueType;
 
 - (CPVenue *)initFromDictionary:(NSDictionary *)json;
 - (NSComparisonResult)sortByDistanceToUser:(CPVenue *)place;

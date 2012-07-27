@@ -11,7 +11,7 @@
 
 @interface VenueInfoViewController : UIViewController
 
-@property (nonatomic, strong) CPVenue *venue;
+@property (strong, nonatomic) CPVenue *venue;
 @property (weak, nonatomic) IBOutlet UIImageView *venuePhoto;
 @property (weak, nonatomic) IBOutlet UIView *firstAidSection;
 @property (weak, nonatomic) IBOutlet UIView *userSection;

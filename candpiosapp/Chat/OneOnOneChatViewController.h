@@ -12,14 +12,14 @@
 @interface OneOnOneChatViewController : UIViewController
     <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) User   *user;
-@property (nonatomic, strong) User   *me;
-@property (nonatomic, strong) OneOnOneChatHistory *history;
-@property (nonatomic, weak) IBOutlet UITextField *chatEntryField;
-@property (nonatomic, weak) IBOutlet UITableView *chatContents;
-@property (nonatomic, weak) IBOutlet UIView *backgroundView;
-@property (nonatomic, weak) IBOutlet UIView *chatInputs;
-@property (nonatomic, weak) IBOutlet UIButton *chatButton;
+@property (strong, nonatomic) User   *user;
+@property (strong, nonatomic) User   *me;
+@property (strong, nonatomic) OneOnOneChatHistory *history;
+@property (weak, nonatomic) IBOutlet UITextField *chatEntryField;
+@property (weak, nonatomic) IBOutlet UITableView *chatContents;
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
+@property (weak, nonatomic) IBOutlet UIView *chatInputs;
+@property (weak, nonatomic) IBOutlet UIButton *chatButton;
 @property CGRect originalChatContentsRect;
 @property CGRect originalChatInputsRect;
 

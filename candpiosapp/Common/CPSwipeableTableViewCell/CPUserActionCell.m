@@ -32,8 +32,8 @@
 #define FULL_PADDING 10.0
 
 @interface CPUserActionCell()
-@property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
-@property (nonatomic, strong) UITapGestureRecognizer *tapRecognizer;
+@property (strong, nonatomic) UIPanGestureRecognizer *panRecognizer;
+@property (strong, nonatomic) UITapGestureRecognizer *tapRecognizer;
 @property (nonatomic, readonly) CGFloat originalCenter;
 @property CGFloat initialTouchPositionX;
 @property CGFloat initialHorizontalCenter;

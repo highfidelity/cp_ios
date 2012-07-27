@@ -26,8 +26,8 @@ Welcome!";
 
 @interface EditLinkedInInvitationMessageViewController ()
 
-@property (nonatomic, weak) IBOutlet UITextField *subjectTextField;
-@property (nonatomic, weak) IBOutlet UITextView *bodyTextView;
+@property (weak, nonatomic) IBOutlet UITextField *subjectTextField;
+@property (weak, nonatomic) IBOutlet UITextView *bodyTextView;
 
 - (IBAction)cancelAction;
 - (IBAction)sendAction;

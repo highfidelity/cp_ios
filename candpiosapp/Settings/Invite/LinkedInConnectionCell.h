@@ -10,7 +10,7 @@
 
 @interface LinkedInConnectionCell : UITableViewCell
 
-@property (nonatomic, weak) IBOutlet UIImageView *linkedInProfileImage;
-@property (nonatomic, weak) IBOutlet UILabel *linkedInName;
+@property (weak, nonatomic) IBOutlet UIImageView *linkedInProfileImage;
+@property (weak, nonatomic) IBOutlet UILabel *linkedInName;
 
 @end

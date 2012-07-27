@@ -20,7 +20,7 @@
 
 
 @property (strong, nonatomic) User *user;
-@property (nonatomic, strong) NSArray *jobCategories;
+@property (strong, nonatomic) NSArray *jobCategories;
 - (void)saveUserJobCategories;
 
 @end

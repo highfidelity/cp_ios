@@ -22,7 +22,7 @@ typedef enum {
 @interface CPThinTabBar : UITabBar
 
 @property (nonatomic, assign) UITabBarController *tabBarController;
-@property (nonatomic, strong) UIButton *actionButton;
+@property (strong, nonatomic) UIButton *actionButton;
 @property (nonatomic, assign) CPThinTabBarActionButtonState actionButtonState;
 
 - (void)moveGreenLineToSelectedIndex:(NSUInteger)selectedIndex;

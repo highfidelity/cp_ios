@@ -38,12 +38,12 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 @interface ContactListViewController ()
 
-@property (nonatomic, strong) NSMutableArray *contacts;
-@property (nonatomic, strong) NSMutableArray *contactRequests;
-@property (nonatomic, strong) NSMutableArray *sortedContactList;
-@property (nonatomic, strong) NSArray *searchResults;
-@property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
-@property (nonatomic, weak) IBOutlet UIImageView *placeholderImage;
+@property (strong, nonatomic) NSMutableArray *contacts;
+@property (strong, nonatomic) NSMutableArray *contactRequests;
+@property (strong, nonatomic) NSMutableArray *sortedContactList;
+@property (strong, nonatomic) NSArray *searchResults;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UIImageView *placeholderImage;
 @property BOOL userIsPerformingQuickAction;
 @property BOOL reloadPrevented;
 @property BOOL isSearching;

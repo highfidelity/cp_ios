@@ -9,7 +9,7 @@
 
 @interface CheckInListTableViewController : UITableViewController <UIAlertViewDelegate, UITextFieldDelegate>
 
-@property (nonatomic, strong) NSMutableArray *places;
+@property (strong, nonatomic) NSMutableArray *places;
 @property BOOL refreshLocationsNow;
 
 - (IBAction)closeWindow:(id)sender;

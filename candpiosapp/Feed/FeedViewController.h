@@ -13,11 +13,11 @@
 
 @interface FeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, CPUserActionCellDelegate, FeedPreviewHeaderCellDelegate>
 
-@property (nonatomic, weak) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) CPVenueFeed *selectedVenueFeed;
-@property (nonatomic, strong) NSMutableArray *venueFeedPreviews;
-@property (nonatomic, strong) NSMutableArray *postableVenueFeeds;
-@property (nonatomic, strong) NSMutableDictionary *postPlussingUserIds;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) CPVenueFeed *selectedVenueFeed;
+@property (strong, nonatomic) NSMutableArray *venueFeedPreviews;
+@property (strong, nonatomic) NSMutableArray *postableVenueFeeds;
+@property (strong, nonatomic) NSMutableDictionary *postPlussingUserIds;
 @property CPPostType postType;
 @property BOOL newPostAfterLoad;
 

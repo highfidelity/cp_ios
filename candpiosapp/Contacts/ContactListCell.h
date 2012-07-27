@@ -21,11 +21,11 @@
 @interface ContactListCell : CPUserActionCell
 
 @property (nonatomic) id<ContactListCellDelegate> contactListTVC;
-@property (nonatomic, weak) IBOutlet UIImageView *profilePicture;
-@property (nonatomic, weak) IBOutlet UILabel *nicknameLabel;
-@property (nonatomic, weak) IBOutlet UILabel *statusLabel;
-@property (nonatomic, weak) IBOutlet UIButton *acceptContactRequestButton;
-@property (nonatomic, weak) IBOutlet UIButton *declineContactRequestButton;
+@property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
+@property (weak, nonatomic) IBOutlet UILabel *nicknameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UIButton *acceptContactRequestButton;
+@property (weak, nonatomic) IBOutlet UIButton *declineContactRequestButton;
 
 - (IBAction)acceptButtonAction;
 - (IBAction)declineButtonAction;

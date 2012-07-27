@@ -12,10 +12,10 @@
 
 @interface EnterEmailAfterSingUpController () <UITextFieldDelegate>
 
-@property (nonatomic, weak) IBOutlet UITextField *emailTextField;
-@property (nonatomic, weak) IBOutlet UILabel *emailValidationMessage;
-@property (nonatomic, weak) IBOutlet UILabel *weWillNotSpamYouLabel;
-@property (nonatomic, weak) IBOutlet UIButton *sendButton;
+@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet UILabel *emailValidationMessage;
+@property (weak, nonatomic) IBOutlet UILabel *weWillNotSpamYouLabel;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
 
 - (IBAction)sendButtonPressed:(id)sender;
 

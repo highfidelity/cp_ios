@@ -14,11 +14,11 @@
 
 
 @property (nonatomic, readonly, strong) NSArray *annotations;
-@property (nonatomic, strong) NSDate *dateLoaded;
+@property (strong, nonatomic) NSDate *dateLoaded;
 @property (nonatomic, assign) MKMapRect regionCovered;
 @property (nonatomic, assign) CLLocationCoordinate2D previousCenter;
-@property (nonatomic, strong) NSDictionary *activeUsers;
-@property (nonatomic, strong) NSDictionary *activeVenues;
+@property (strong, nonatomic) NSDictionary *activeUsers;
+@property (strong, nonatomic) NSDictionary *activeVenues;
 
 +(void)beginLoadingNewDataset:(CLLocationCoordinate2D)mapCenter
 				   completion:(void (^)(MapDataSet *set, NSError *error))completion;

@@ -18,23 +18,23 @@
 
 @interface UserProfileViewController() <UIWebViewDelegate, UIActionSheetDelegate, GRMustacheTemplateDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, weak) IBOutlet UILabel *checkedIn;
-@property (nonatomic, weak) IBOutlet MKMapView *mapView;
-@property (nonatomic, weak) IBOutlet UIView *userCard;
-@property (nonatomic, weak) IBOutlet UIImageView *cardImage;
-@property (nonatomic, weak) IBOutlet UILabel *cardStatus;
-@property (nonatomic, weak) IBOutlet UILabel *cardNickname;
-@property (nonatomic, weak) IBOutlet UILabel *cardJobPosition;
-@property (nonatomic, weak) IBOutlet UIView *venueView;
-@property (nonatomic, weak) IBOutlet UIButton *venueViewButton;
-@property (nonatomic, weak) IBOutlet UILabel *venueName;
-@property (nonatomic, weak) IBOutlet UILabel *venueAddress;
-@property (nonatomic, weak) IBOutlet UIImageView *venueOthersIcon;
-@property (nonatomic, weak) IBOutlet UILabel *venueOthers;
-@property (nonatomic, weak) IBOutlet UIView *availabilityView;
-@property (nonatomic, weak) IBOutlet UILabel *distanceLabel;
-@property (nonatomic, weak) IBOutlet UILabel *hoursAvailable;
-@property (nonatomic, weak) IBOutlet UILabel *minutesAvailable;
+@property (weak, nonatomic) IBOutlet UILabel *checkedIn;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIView *userCard;
+@property (weak, nonatomic) IBOutlet UIImageView *cardImage;
+@property (weak, nonatomic) IBOutlet UILabel *cardStatus;
+@property (weak, nonatomic) IBOutlet UILabel *cardNickname;
+@property (weak, nonatomic) IBOutlet UILabel *cardJobPosition;
+@property (weak, nonatomic) IBOutlet UIView *venueView;
+@property (weak, nonatomic) IBOutlet UIButton *venueViewButton;
+@property (weak, nonatomic) IBOutlet UILabel *venueName;
+@property (weak, nonatomic) IBOutlet UILabel *venueAddress;
+@property (weak, nonatomic) IBOutlet UIImageView *venueOthersIcon;
+@property (weak, nonatomic) IBOutlet UILabel *venueOthers;
+@property (weak, nonatomic) IBOutlet UIView *availabilityView;
+@property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *hoursAvailable;
+@property (weak, nonatomic) IBOutlet UILabel *minutesAvailable;
 @property (weak, nonatomic) IBOutlet UIView *resumeView;
 @property (weak, nonatomic) IBOutlet UILabel *resumeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *resumeRate;
@@ -49,13 +49,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *reviewButton;
 @property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
 @property (nonatomic, assign) int othersAtPlace;
-@property (nonatomic, strong) NSNumber *templateCounter;
+@property (strong, nonatomic) NSNumber *templateCounter;
 @property (nonatomic, assign) NSInteger selectedFavoriteVenueIndex;
 @property (weak, nonatomic) IBOutlet UILabel *propNoteLabel;
 @property (nonatomic, assign) BOOL mapAndDistanceLoaded;
-@property (nonatomic, strong) NSString* preBadgesHTML;
-@property (nonatomic, strong) NSString* postBadgesHTML;
-@property (nonatomic, strong) NSString* badgesHTML;
+@property (strong, nonatomic) NSString* preBadgesHTML;
+@property (strong, nonatomic) NSString* postBadgesHTML;
+@property (strong, nonatomic) NSString* badgesHTML;
 
 -(NSString *)htmlStringWithResumeText;
 -(IBAction)plusButtonPressed:(id)sender;

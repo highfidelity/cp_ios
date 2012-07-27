@@ -19,6 +19,6 @@
 @interface CPAlertView : UIAlertView
 
 @property (nonatomic, retain) id context;
-@property (nonatomic, weak) UIViewController *rootView;
+@property (weak, nonatomic) UIViewController *rootView;
 
 @end

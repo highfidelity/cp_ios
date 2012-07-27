@@ -10,7 +10,7 @@
 
 @interface CPPlaceholderTextView()
 
-@property (nonatomic, strong) UILabel *placeHolderLabel;
+@property (strong, nonatomic) UILabel *placeHolderLabel;
 
 @end
 

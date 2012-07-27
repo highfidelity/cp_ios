@@ -11,10 +11,10 @@
 @interface ChatMessage : NSObject
 
 @property BOOL fromMe;
-@property (nonatomic, strong) User *fromUser;
-@property (nonatomic, strong) User *toUser;
-@property (nonatomic, strong) NSString *message;
-@property (nonatomic, strong) NSDate *date;
+@property (strong, nonatomic) User *fromUser;
+@property (strong, nonatomic) User *toUser;
+@property (strong, nonatomic) NSString *message;
+@property (strong, nonatomic) NSDate *date;
 
 - (id)initWithMessage:(NSString *)newMessage
                toUser:(User *)toUser

@@ -12,7 +12,7 @@
 @interface CheckInDetailsViewController : UIViewController <UIAlertViewDelegate>
 
 @property (nonatomic) id delegate;
-@property (nonatomic, strong) CPVenue *venue;
+@property (strong, nonatomic) CPVenue *venue;
 @property BOOL checkInIsVirtual;
 
 -(void)userImageButtonPressed:(UIButton *)sender;

@@ -12,8 +12,8 @@
 
 @interface EnterInvitationCodeViewController () <UITextFieldDelegate, UIAlertViewDelegate>
 
-@property (nonatomic, weak) IBOutlet UIButton *laterButton;
-@property (nonatomic, weak) IBOutlet UITextField *codeTextField;
+@property (weak, nonatomic) IBOutlet UIButton *laterButton;
+@property (weak, nonatomic) IBOutlet UITextField *codeTextField;
 
 - (IBAction)laterButtonAction:(id)sender;
 

@@ -11,7 +11,7 @@
 
 @interface CPTabBarController : UITabBarController <UIAlertViewDelegate>
 
-@property (nonatomic, strong) NSString *currentVenueID;
+@property (strong, nonatomic) NSString *currentVenueID;
 @property (nonatomic, readonly) CPThinTabBar *thinBar;
 
 - (IBAction)tabBarButtonPressed:(id)sender;
