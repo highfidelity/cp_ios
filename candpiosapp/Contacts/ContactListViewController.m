@@ -80,12 +80,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
                                                   object:nil];
 }
 
-- (void)viewDidUnload {
-    [super viewDidUnload];
-    [self setSearchBar:nil];
-    [self setPlaceholderImage:nil];
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];

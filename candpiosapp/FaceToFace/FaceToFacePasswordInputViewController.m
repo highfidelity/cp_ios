@@ -22,15 +22,6 @@
     self.passwordField.text = @"";
 }
 
-- (void)viewDidUnload
-{
-    [self setPasswordField:nil];
-    [self setWaitLabel:nil];
-    [self setF2fNavigationItem:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);

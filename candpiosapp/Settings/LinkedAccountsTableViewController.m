@@ -56,12 +56,6 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
-- (void)viewDidUnload
-{
-    [self setPostToLinkedInSwitch:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);

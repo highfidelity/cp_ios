@@ -217,18 +217,9 @@
 
 - (void)viewDidUnload
 {
-    [self setVenuePhoto:nil];
-    [self setUserSection:nil];
-    [self setFirstAidSection:nil];
-    [self setVenueChatBox:nil];
-    [self setActiveChatText:nil];
-    [self setCheckInButton:nil];
     [super viewDidUnload];
     [CPAppDelegate tabBarController].currentVenueID = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshVenueAfterCheckin" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LoginStateChanged" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"userCheckinStateChange" object:nil];
-    // Release any retained subviews of the main view.
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

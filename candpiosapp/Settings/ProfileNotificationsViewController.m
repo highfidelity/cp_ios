@@ -78,23 +78,6 @@
     [self loadNotificationSettings];
 }
 
-- (void)viewDidUnload
-{
-    [self setVenueButton:nil];
-    [self setCheckedInOnlySwitch:nil];
-    [self setQuietTimeSwitch:nil];
-    [self setAnyoneChatView:nil];
-    [self setQuietFromButton:nil];
-    [self setQuietToButton:nil];
-    [self setContactsOnlyChatSwitch:nil];
-    [self setQuietTimeFromDate:nil];
-    [self setQuietTimeToDate:nil];
-    [self setChatNotificationLabel:nil];
-    [self setHeaderView:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
-
 -(void)viewDidDisappear:(BOOL)animated
 {
     [self saveNotificationSettings];

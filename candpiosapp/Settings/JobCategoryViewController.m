@@ -66,16 +66,6 @@
     [[self minorCategoryButton] setTitle:[self.user minorJobCategory] forState:UIControlStateNormal];
 }
 
-- (void)viewDidUnload
-{
-    [self setJobCategories:nil];
-    [self setMajorCategoryButton:nil];
-    [self setMinorCategoryButton:nil];
-    [self setUser:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
-
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self saveUserJobCategories];

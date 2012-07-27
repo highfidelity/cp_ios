@@ -56,20 +56,6 @@
     self.actionBarHeader.text = [NSString stringWithFormat:@"%@ is nearby and\nwants to add you to their Contacts.", [self.user firstName]];
 }
 
-- (void)viewDidUnload
-{
-    [self setF2fAcceptButton:nil];
-    [self setF2fDeclineButton:nil];
-    [self setActionBar:nil];
-    [self setActionBarHeader:nil];
-    [self setViewUnderToolbar:nil];
-    [self setScrollView:nil];
-    [self setNavigationBar:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations

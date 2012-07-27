@@ -82,23 +82,6 @@
     }];
 }
 
-- (void)viewDidUnload
-{
-    paymentAmount = nil;
-    paymentNote = nil;
-    charsLeft = nil;
-    payTo = nil;
-    payeeImage = nil;
-    userBalance = nil;
-    paymentNote = nil;
-    paymentNote = nil;
-    descriptionView = nil;
-    cancelButton = nil;
-    payButton = nil;
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);

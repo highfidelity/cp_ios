@@ -61,12 +61,6 @@
 	[activityIndicator startAnimating];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
-
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[self navigationController] popToRootViewControllerAnimated:YES];

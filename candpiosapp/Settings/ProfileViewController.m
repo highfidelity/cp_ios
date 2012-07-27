@@ -172,30 +172,6 @@
     self.profileImageView.frame = profileImageFrame;
 }
 
-- (void)viewDidUnload
-{
-    [self setBackgroundWebView:nil];
-    [self setProfileHeaderView:nil];
-    [self setSkillsLabel:nil];
-    [self setSkillsView:nil];
-    [self setDetailsView:nil];
-    [self setCategoryView:nil];
-    [self setDeleteTouchable:nil];
-    [self setScrollView:nil];
-    [self setEmailTextField:nil];
-    [self setSkillsView:nil];
-    [self setVisibilityView:nil];
-    [self setEmailValidationMsg:nil];
-    [self setProfileImageButton:nil];
-    [self setCategoriesLabel:nil];
-    [self setSkillsTitle:nil];
-    [self setVisibilityLabel:nil];
-    [self setFloatView:nil];
-    [self setArrowImageView:nil];
-    [self setEmailView:nil];
-    [super viewDidUnload];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);

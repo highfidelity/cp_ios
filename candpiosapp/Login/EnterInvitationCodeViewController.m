@@ -48,10 +48,6 @@
     [CPUIHelper changeFontForTextField:self.codeTextField toLeagueGothicOfSize:86];
 }
 
-- (void)viewDidUnload {
-    [super viewDidUnload];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     

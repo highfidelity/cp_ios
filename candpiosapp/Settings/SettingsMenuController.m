@@ -143,8 +143,6 @@
 
 - (void)viewDidUnload
 {
-    [self setTableView:nil];
-    [self setEdgeShadow:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

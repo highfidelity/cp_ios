@@ -411,24 +411,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     
 }
 
-- (void)viewDidUnload
-{
-    [self setChatEntryField:nil];
-    [self setChatContents:nil];
-    [self setBackgroundView:nil];
-    [self setChatInputs:nil];
-    [self setChatButton:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.

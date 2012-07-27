@@ -43,14 +43,6 @@
     }
 }
 
-- (void)viewDidUnload
-{
-    [self setGlobalCheckinSwitch:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
 - (void)setupPlacesArray {
     if (!self.placesArray) {
         self.placesArray = [[NSMutableArray alloc] init];

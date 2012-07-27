@@ -149,13 +149,6 @@
 
 - (void)viewDidUnload
 {
-    [self setProfilePicture:nil];
-    [self setDescriptionTextView:nil];
-    [self setNavigationBar:nil];
-    [self setTableView:nil];
-    [self setCharCounterLabel:nil];
-    [self setKeyboardBackground:nil];
-    [self setLoveBackground:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     

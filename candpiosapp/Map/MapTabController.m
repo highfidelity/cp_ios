@@ -124,9 +124,6 @@ BOOL clearLocations = NO;
 
 - (void)viewDidUnload
 {
-	[self setMapView:nil];
-    [self setMapAndButtonsView:nil];
-    [self setRefreshButton:nil];
     [super viewDidUnload];
 	[reloadTimer invalidate];
 	reloadTimer = nil;

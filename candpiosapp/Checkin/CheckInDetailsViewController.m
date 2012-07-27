@@ -181,31 +181,6 @@
     self.placeAddress.text = self.venue.address;
 }
 
-- (void)viewDidUnload
-{
-    [self setMapView:nil];
-    [self setOtherUsersScrollView:nil];
-    [self setPlaceName:nil];
-    [self setPlaceAddress:nil];
-    [self setCheckInLabel:nil];
-    [self setCheckInDetails:nil];
-    [self setBlueOverlay:nil];
-    [self setWillLabel:nil];
-    [self setStatusTextField:nil];
-    [self setTimeSlider:nil];
-    [self setDurationString:nil];
-    [self setCheckInButton:nil];
-    [self setDurationHeader:nil];
-    [self setScrollView:nil];
-    [self setVenueInfo:nil];
-    [self setUserInfoBubble:nil];
-    [self setInfoBubbleNickname:nil];
-    [self setInfoBubbleStatus:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations

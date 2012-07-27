@@ -320,44 +320,9 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 - (void)viewDidUnload
 {
-    [self setScrollView:nil];
-    [self setCheckedIn:nil];
-    [self setMapView:nil];
-    [self setUserCard:nil];
-    [self setCardImage:nil];
-    [self setCardStatus:nil];
-    [self setCardNickname:nil];
-    [self setVenueView:nil];
-    [self setVenueViewButton:nil];
-    [self setVenueName:nil];
-    [self setVenueAddress:nil];
-    [self setVenueOthersIcon:nil];
-    [self setVenueOthers:nil];
-    [self setAvailabilityView:nil];
-    [self setDistanceLabel:nil];
-    [self setHoursAvailable:nil];
-    [self setMinutesAvailable:nil];
-    [self setResumeLabel:nil];
-    [self setResumeView:nil];
-    [self setResumeRate:nil];
-    [self setResumeEarned:nil];
-    [self setLoveReceived:nil];
-    [self setScrollView:nil];
-    [self setResumeWebView:nil];
-    [self setPlusButton:nil];
-    [self setMinusButton:nil];
-    [self setF2fButton:nil];
-    [self setChatButton:nil];
-    [self setPayButton:nil];
-    [self setReviewButton:nil];
-    [self setGoMenuBackground:nil];
-    [self setPropNoteLabel:nil];
-    
+    [super viewDidUnload];
     [self.navigationController.navigationBar removeGestureRecognizer:_tapRecon];
     _tapRecon = nil;
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (void)updateLastUserCheckin

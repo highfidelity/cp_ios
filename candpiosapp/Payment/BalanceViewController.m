@@ -61,18 +61,6 @@
     selectedIndex = -1;
 }
 
-- (void)viewDidUnload
-{
-    [self setUserBalance:nil];
-    [self setPullIcon:nil];
-    [self setPullDownLabel:nil];
-    [self setUpdateTimeLabel:nil];
-    [self setTransTableView:nil];
-    [self setBalanceScrollView:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
