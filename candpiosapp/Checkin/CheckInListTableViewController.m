@@ -296,7 +296,7 @@
         CPVenue *place = [places objectAtIndex:path.row];
         
         // give place info to the CheckInDetailsViewController
-        [[segue destinationViewController] setPlace:place];
+        [[segue destinationViewController] setVenue:place];
         
     }
 }
@@ -304,7 +304,7 @@
 # pragma mark - AlertView
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (alertView.tag = SWITCH_VENUE_ALERT_TAG) {
+    if (alertView.tag == SWITCH_VENUE_ALERT_TAG) {
         if (buttonIndex == alertView.firstOtherButtonIndex) {
             [self performSegueWithIdentifier:@"ShowCheckInDetailsView" sender:self];
         } else {

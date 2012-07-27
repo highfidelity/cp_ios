@@ -8,7 +8,7 @@
 //  This is the (un)official C&P iOS API! These functions are to
 //  be used to interact with the C&P web services.
 
-
+// TODO: Finish transition over to CPApiClient
 
 #import <Foundation/Foundation.h>
 #import "CPVenue.h"
@@ -17,7 +17,6 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface CPapi : NSObject
-
 
 // Helper functions
 + (NSString *)urlEncode:(NSString *)string;
@@ -73,13 +72,6 @@
 #pragma mark - Checkins
 + (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID
                                        :(void(^)(NSDictionary *json, NSError *error))completion; 
-
-+ (void)checkInToLocation:(CPVenue *)place
-                hoursHere:(int)hoursHere
-               statusText:(NSString *)stausText
-                isVirtual:(BOOL)isVirtual
-              isAutomatic:(BOOL)isAutomatic
-          completionBlock:(void (^)(NSDictionary *, NSError *))completion;
 
 + (void)checkOutWithCompletion:(void(^)(NSDictionary *json, NSError *error))completion;
 
