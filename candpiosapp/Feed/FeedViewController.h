@@ -13,8 +13,9 @@
 #import "WEPopoverController.h"
 #import "PostBaseCell.h"
 #import "PillPopoverViewController.h"
+#import "CommentCell.h"
 
-@interface FeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, CPUserActionCellDelegate, FeedPreviewHeaderCellDelegate, WEPopoverControllerDelegate>
+@interface FeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, CPUserActionCellDelegate, FeedPreviewHeaderCellDelegate, WEPopoverControllerDelegate, PillPopoverDelegate, CommentCellDelegate>
 
 @property (nonatomic, assign) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) CPVenueFeed *selectedVenueFeed;
@@ -28,7 +29,7 @@
 
 - (void)showPillPopoverFromCell:(PostBaseCell*)cell;
 
-- (void)newPost;
+- (void)newPost:(NSIndexPath *)replyToIndexPath;
 - (void)showOnlyPostableFeeds;
 
 + (UIView *)timelineViewWithHeight:(CGFloat)height;

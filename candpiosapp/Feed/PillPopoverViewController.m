@@ -20,6 +20,8 @@
 @synthesize commentTextView;
 @synthesize commentImageView;
 @synthesize post;
+@synthesize delegate;
+@synthesize indexPath;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -112,8 +114,7 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     // set +1 enabled state
-    self.plusButton.enabled = !(self.post.userHasLiked || 
-                                [CPUserDefaultsHandler currentUser].userID == self.post.author.userID);
+    self.plusButton.enabled = !(self.post.userHasLiked || [CPUserDefaultsHandler currentUser].userID == self.post.author.userID);
     
     // update the plus count label
     [self updatePlusWebViewAnimated:animated];
@@ -152,10 +153,9 @@
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField
 {
     // push view here to handle comment input
+    [self.delegate pillPopover:self commentPressedForIndexPath:self.indexPath];
+    
     return NO;
-}
-
-- (IBAction)commentButtonPressed:(id)sender {
 }
 
 - (IBAction)plusButtonPressed:(id)sender {
@@ -185,6 +185,9 @@
             self.post.likeCount--;
             self.post.userHasLiked = NO;
             [self updatePlusWebViewAnimated:YES];
+        } else {
+            // success
+            [self.delegate pillPopover:self plusOnePressedForIndexPath:self.indexPath];
         }
     }];
     

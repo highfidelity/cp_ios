@@ -731,7 +731,11 @@
     [params setObject:post.entry forKey:@"entry"];    
     [params setObject:postType forKey:@"type"];
     [params setObject:[NSString stringWithFormat:@"%d", venue.venueID] forKey:@"venue_id"];
-
+    
+    // if this is a reply/answer to an existing post then send the original post ID
+    if (post.originalPostID) {
+        [params setObject:[NSString stringWithFormat:@"%d", post.originalPostID] forKey:@"original_post_id"];
+    }
 
     // make the request
     [self makeHTTPRequestWithAction:@"newPost" withParameters:params completion:completion];

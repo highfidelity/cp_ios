@@ -9,7 +9,7 @@
 #import "User.h"
 #import "CPSkill.h"
 #import "MapDataSet.h"
-#import "NSString+HTML.h"
+#import "GTMNSString+HTML.h"
 
 @implementation User
 
@@ -134,7 +134,7 @@
     if ([nickname isKindOfClass:[NSNull class]]) {
         _nickname = @"";
     } else {
-        _nickname = [nickname stringByDecodingHTMLEntities];
+        _nickname = [nickname gtm_stringByUnescapingFromHTML];
     }  
 }
 
@@ -146,7 +146,7 @@
     }
     
     if ([status length] > 0) {
-        status = [status stringByDecodingHTMLEntities];
+        status = [status gtm_stringByUnescapingFromHTML];
         status = [status stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     }    
     _status = status;
@@ -155,13 +155,13 @@
 // override rate setter to decode any html entities
 - (void)setHourlyRate:(NSString *)hourlyRate
 {
-    _hourlyRate = [hourlyRate stringByDecodingHTMLEntities];
+    _hourlyRate = [hourlyRate gtm_stringByUnescapingFromHTML];
 }
 
 // override bio setter to decode any html entities
 - (void)setBio:(NSString *)bio
 {
-    _bio = [bio stringByDecodingHTMLEntities];
+    _bio = [bio gtm_stringByUnescapingFromHTML];
 }
 
 // override job title setter to decode html entities
@@ -170,7 +170,7 @@
     if ([jobTitle isKindOfClass:[NSNull class]]) {
         _jobTitle = @"";
     } else {
-        _jobTitle = [jobTitle stringByDecodingHTMLEntities];
+        _jobTitle = [jobTitle gtm_stringByUnescapingFromHTML];
     }
 }
 

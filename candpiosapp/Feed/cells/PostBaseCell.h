@@ -16,12 +16,5 @@
 @property (nonatomic, assign) IBOutlet UIButton *senderProfileButton;
 @property (nonatomic, assign) IBOutlet UILabel *entryLabel;
 @property (nonatomic, strong) CPPost* post;
-@property (nonatomic, strong) UIButton *plusButton;
-@property (nonatomic, strong) UIButton *pillButton;
-@property (nonatomic, strong) UILabel *likeCountLabel;
-@property (nonatomic, strong) UILabel *pillLabel;
-@property (nonatomic, strong) UIImageView *likeCountBubble;
-
-- (void) addPillButton;
 
 @end
