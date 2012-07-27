@@ -18,6 +18,7 @@
 #import "UIButton+AnimatedClockHand.h"
 #import "PushModalViewControllerFromLeftSegue.h"
 #import "ContactListViewController.h"
+#import "CPApiClient.h"
 
 #define kContactRequestAPNSKey @"contact_request"
 #define kContactRequestAcceptedAPNSKey @"contact_accepted"
@@ -492,7 +493,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     NSString *statusText = @"";
     
     // use CPapi to checkin
-    [CPapi checkInToLocation:venue hoursHere:checkInDuration statusText:statusText isVirtual:NO isAutomatic:YES completionBlock:^(NSDictionary *json, NSError *error){
+    [CPApiClient checkInToLocation:venue hoursHere:checkInDuration statusText:statusText isVirtual:NO isAutomatic:YES completionBlock:^(NSDictionary *json, NSError *error){
         
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {

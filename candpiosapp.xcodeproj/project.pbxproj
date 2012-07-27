@@ -136,6 +136,7 @@
 		534323FB15C1C8AE00BE5075 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 534323FA15C1C8AE00BE5075 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5343242A15C1F20400BE5075 /* pill-button-plus1-comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 5343242815C1F20400BE5075 /* pill-button-plus1-comment.png */; };
 		5343242B15C1F20400BE5075 /* pill-button-plus1-comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5343242915C1F20400BE5075 /* pill-button-plus1-comment@2x.png */; };
+		5343243F15C2123A00BE5075 /* CPApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5343243E15C2123A00BE5075 /* CPApiClient.m */; };
 		53463F5115336EA5001CA16D /* UIViewController+isModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 53463F5015336EA5001CA16D /* UIViewController+isModal.m */; };
 		534B6EF0156DAE7900DA9F74 /* SkillsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534B6EEF156DAE7900DA9F74 /* SkillsTableViewController.m */; };
 		534BD45615AB72BD001FCC5C /* CPVenueFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 534BD45515AB72BD001FCC5C /* CPVenueFeed.m */; };
@@ -739,6 +740,8 @@
 		534323FA15C1C8AE00BE5075 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		5343242815C1F20400BE5075 /* pill-button-plus1-comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pill-button-plus1-comment.png"; sourceTree = "<group>"; };
 		5343242915C1F20400BE5075 /* pill-button-plus1-comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pill-button-plus1-comment@2x.png"; sourceTree = "<group>"; };
+		5343243D15C2123A00BE5075 /* CPApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPApiClient.h; path = Utils/CPApiClient.h; sourceTree = "<group>"; };
+		5343243E15C2123A00BE5075 /* CPApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPApiClient.m; path = Utils/CPApiClient.m; sourceTree = "<group>"; };
 		53463F4F15336EA5001CA16D /* UIViewController+isModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+isModal.h"; path = "Utils/UIViewController+isModal.h"; sourceTree = "<group>"; };
 		53463F5015336EA5001CA16D /* UIViewController+isModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+isModal.m"; path = "Utils/UIViewController+isModal.m"; sourceTree = "<group>"; };
 		534B6EEE156DAE7900DA9F74 /* SkillsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillsTableViewController.h; path = Settings/SkillsTableViewController.h; sourceTree = "<group>"; };
@@ -1664,6 +1667,8 @@
 				69120B71156D3C2200521E3F /* CPLinkedInAPI.m */,
 				E41AD9CA15A25D9500B6E360 /* UIImage+ImageBlur.h */,
 				E41AD9CB15A25D9500B6E360 /* UIImage+ImageBlur.m */,
+				5343243D15C2123A00BE5075 /* CPApiClient.h */,
+				5343243E15C2123A00BE5075 /* CPApiClient.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -3132,6 +3137,7 @@
 				534323FB15C1C8AE00BE5075 /* NSData+Base64.m in Sources */,
 				532505AA15C0A236006B1DB6 /* NewPostReplyCell.m in Sources */,
 				532505AE15C0A25B006B1DB6 /* PostReplyCell.m in Sources */,
+				5343243F15C2123A00BE5075 /* CPApiClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

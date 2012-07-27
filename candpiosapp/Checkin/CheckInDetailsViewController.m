@@ -11,6 +11,7 @@
 #import "TPKeyboardAvoidingScrollView.h"
 #import "UIViewController+isModal.h"
 #import "CPCheckinHandler.h"
+#import "CPApiClient.h"
 
 @interface CheckInDetailsViewController() <UITextFieldDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *blueOverlay;
@@ -258,13 +259,12 @@
     NSInteger checkInDuration = self.checkInDuration;    
     NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
     
-    // use CPapi to checkin
-    [CPapi checkInToLocation:self.place
-                   hoursHere:self.checkInDuration
-                  statusText:statusText
-                   isVirtual:self.checkInIsVirtual
-                 isAutomatic:NO
-             completionBlock:^(NSDictionary *json, NSError *error){
+    [CPApiClient checkInToLocation:self.place
+                         hoursHere:self.checkInDuration
+                        statusText:statusText
+                         isVirtual:self.checkInIsVirtual
+                       isAutomatic:NO
+                   completionBlock:^(NSDictionary *json, NSError *error){
         // hide the SVProgressHUD
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {
@@ -276,7 +276,7 @@
                 self.place.venueID = [[json objectForKey:@"venue_id"] intValue];
                 
                 [[CPCheckinHandler sharedHandler] queueLocalNotificationForVenue:self.place checkoutTime:checkOutTime];
-                [[CPCheckinHandler sharedHandler] handleSuccessfulCheckinToVenue:self.place checkoutTime:checkOutTime];                
+                [[CPCheckinHandler sharedHandler] handleSuccessfulCheckinToVenue:self.place checkoutTime:checkOutTime];
                 
                 // hide the checkin screen, we're checked in
                 if ([self isModal]) {
@@ -290,10 +290,10 @@
                     // tell it to scroll to the user thumbnail after loading new data from this checkin
                     [self.delegate setScrollToUserThumbnail:YES];
                     [SVProgressHUD dismiss];
-                }                
+                }
             }
             else {
-
+                
                 // there's an error either becuase the user wasn't checked in or we didn't pass a foursquare ID
                 // we obviously passed a foursquare ID if we're in the app so the user isn't actually logged in
                 // show an alertView if the user isn't checked in
@@ -306,7 +306,7 @@
             [SVProgressHUD dismissWithError:@"An error occured while attempting to check in."
                                  afterDelay:kDefaultDismissDelay];
         }
-    }];      
+    }];
 }
 
 - (void)processOtherCheckedInUsers
