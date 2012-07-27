@@ -121,6 +121,8 @@
     [super viewDidLoad];
     [SVProgressHUD show];
     
+    self.view.backgroundColor = RGBA(230, 230, 230, 1);
+    
     self.gearButton = self.navigationItem.rightBarButtonItem;
     
     self.skillsView.delegate = self;
@@ -151,6 +153,11 @@
 
     self.currentUser = [CPUserDefaultsHandler currentUser];
     [self placeCurrentUserDataAnimated:NO];
+    
+    
+    // set the shadows
+    [CPUIHelper addShadowToView:self.profileHeaderView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
+    [CPUIHelper addShadowToView:self.detailsView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
 }
 
 - (void)viewDidAppear:(BOOL)animated
