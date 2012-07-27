@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CPUserActionCell.h"
 #import "CPPost.h"
+#import "WEPopoverController.h"
 
 @interface PostBaseCell : CPUserActionCell
 

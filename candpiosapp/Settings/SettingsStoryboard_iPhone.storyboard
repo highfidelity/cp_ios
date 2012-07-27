@@ -9,7 +9,6 @@
         <!--Settings Menu Controller-->
         <scene sceneID="6r0-kD-pJQ">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YHg-io-CGj" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="SettingsMenu" id="WGr-Yo-Vg9" customClass="SettingsMenuController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KXi-o7-FH1">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -97,13 +96,13 @@
                         <segue destination="In7-9a-DvU" kind="custom" identifier="ShowSupportFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="xVA-Q5-P4a"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YHg-io-CGj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2050" y="-557"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="l4p-Xc-Yli">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YX0-dd-TfY" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController definesPresentationContext="YES" navigationBarHidden="YES" id="l1s-lq-suM" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="GkE-Wp-VvA">
                         <autoresizingMask key="autoresizingMask"/>
@@ -112,13 +111,13 @@
                         <segue destination="TbW-wK-vWK" kind="relationship" relationship="rootViewController" id="W2X-yZ-jF5"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YX0-dd-TfY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1196" y="-1112"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="o7p-JZ-2b9">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="U6H-7w-aEh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController definesPresentationContext="YES" id="LIc-1O-LQB" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="1ov-tY-gCf">
                         <autoresizingMask key="autoresizingMask"/>
@@ -127,13 +126,13 @@
                         <segue destination="doX-wg-0Sm" kind="relationship" relationship="rootViewController" id="NWj-Dq-IOo"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="U6H-7w-aEh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1196" y="-1725"/>
         </scene>
         <!--Generate Invitation Code View Controller-->
         <scene sceneID="6oR-C8-wUA">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="01z-7b-GrR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="doX-wg-0Sm" customClass="GenerateInvitationCodeViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="osX-wC-xaK">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
@@ -213,13 +212,13 @@
                         <outlet property="codeLabelBackground" destination="WV6-YZ-zQf" id="fgz-xY-xND"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="01z-7b-GrR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-719" y="-1716"/>
         </scene>
         <!--Invite Linked In Connections Table View Controller - Invite LinkedIn Connections-->
         <scene sceneID="Vum-QO-w4c">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="syl-8z-sc9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="76A-7a-UMN" customClass="InviteLinkedInConnectionsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ppS-By-zQ9">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
@@ -277,13 +276,13 @@
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="syl-8z-sc9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-198" y="-1716"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="laJ-vZ-9JA">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fg5-NQ-JJn" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController definesPresentationContext="YES" id="g5I-1x-LsX" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Srr-Ju-exg">
                         <autoresizingMask key="autoresizingMask"/>
@@ -292,13 +291,13 @@
                         <segue destination="6Iv-eA-29n" kind="relationship" relationship="rootViewController" id="zux-Pd-BdF"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fg5-NQ-JJn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="284" y="-1716"/>
         </scene>
         <!--Edit Linked In Invitation Message View Controller - Send LinkedIn Invitation-->
         <scene sceneID="95r-lC-h93">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oKt-OD-cQB" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="6Iv-eA-29n" customClass="EditLinkedInInvitationMessageViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hrg-je-brs">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
@@ -342,13 +341,13 @@
                         <outlet property="subjectTextField" destination="BwN-8y-Pmc" id="YgQ-CN-5LI"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oKt-OD-cQB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="818" y="-1716"/>
         </scene>
         <!--Balance View Controller-->
         <scene sceneID="d1R-FS-22a">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MPq-6l-85G" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="UserWalletViewController" modalTransitionStyle="crossDissolve" id="TbW-wK-vWK" customClass="BalanceViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UG1-be-cTC">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -537,13 +536,13 @@
                         <outlet property="userBalance" destination="EB8-H4-enj" id="xYs-xg-hnS"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MPq-6l-85G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-719" y="-1103"/>
         </scene>
         <!--Job Category View Controller - Job Categories-->
         <scene sceneID="Kag-ik-hPh">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Qbt-Vb-crx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="Iyg-jY-ijR" customClass="JobCategoryViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5PT-92-mhk">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
@@ -604,13 +603,13 @@
                         <outlet property="minorCategoryButton" destination="tSa-2k-uYV" id="Biv-GA-lqR"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qbt-Vb-crx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="320" y="62"/>
         </scene>
         <!--Skills Table View Controller - Skills-->
         <scene sceneID="PvT-Rz-d1d">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kQB-Id-10J" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="T7f-ri-uXU" customClass="SkillsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gOO-vY-fjz">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
@@ -643,13 +642,13 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Skills" id="cH3-9S-S83"/>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kQB-Id-10J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="300" y="-516"/>
         </scene>
         <!--Profile View Controller - Profile-->
         <scene sceneID="knC-ev-7nr">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sV4-QQ-w11" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="NLt-KB-bR8" customClass="ProfileViewController" sceneMemberID="viewController">
                     <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="zhb-Ab-Ipm">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
@@ -658,12 +657,6 @@
                         </userGuides>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
-                            <webView alpha="0.80000000000000004" contentMode="scaleToFill" id="YBV-n6-x1r">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="640"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="0.8862745098" green="0.89019607840000003" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <dataDetectorType key="dataDetectorTypes"/>
-                            </webView>
                             <view contentMode="scaleToFill" id="h0X-vM-HGh" userLabel="View - profile details">
                                 <rect key="frame" x="10" y="0.0" width="300" height="346"/>
                                 <userGuides>
@@ -810,12 +803,12 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.8862745098" green="0.86666666670000003" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" id="wSJ-cC-czs" userLabel="View - Profile header">
+                            <view opaque="NO" contentMode="scaleToFill" id="wSJ-cC-czs" userLabel="View - Profile header">
                                 <rect key="frame" x="10" y="10" width="300" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
@@ -846,7 +839,7 @@ photo?</string>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.51000000000000001" colorSpace="calibratedRGB"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="default-avatar-256.png" id="g6r-Ox-wcS">
-                                        <rect key="frame" x="-100" y="0.0" width="100" height="100"/>
+                                        <rect key="frame" x="-110" y="0.0" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="KQF-R7-ru9" userLabel="profileImage - button">
@@ -865,10 +858,9 @@ photo?</string>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.8862745098" green="0.86666666670000003" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.8862745098" green="0.86666666670000003" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
                     </scrollView>
                     <navigationItem key="navigationItem" title="Profile" id="XJk-vD-qNL">
                         <barButtonItem key="rightBarButtonItem" id="F8m-G7-f7s">
@@ -891,7 +883,6 @@ photo?</string>
                     </navigationItem>
                     <connections>
                         <outlet property="arrowImageView" destination="6Yl-XS-GTf" id="VMu-Z7-dew"/>
-                        <outlet property="backgroundWebView" destination="YBV-n6-x1r" id="qyh-Cz-8WY"/>
                         <outlet property="categoriesLabel" destination="dvV-QQ-1oL" id="sXm-Pz-0be"/>
                         <outlet property="categoryView" destination="ifN-t7-iHN" id="H8b-Z3-9am"/>
                         <outlet property="changePhotoLabel" destination="wKY-Nd-7yp" id="U6r-Kw-n3Z"/>
@@ -916,13 +907,13 @@ photo?</string>
                         <segue destination="MVm-85-2NW" kind="push" identifier="ProfileToVisibilitySegue" id="wWY-jz-SCc"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sV4-QQ-w11" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-678" y="-280"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dTb-GJ-Nb5">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QTJ-Cb-ZAb" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController definesPresentationContext="YES" id="J5h-Z0-hwV" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="GMs-lG-rZT">
                         <autoresizingMask key="autoresizingMask"/>
@@ -931,13 +922,13 @@ photo?</string>
                         <segue destination="Oyl-sh-T3U" kind="relationship" relationship="rootViewController" id="rZi-tO-yUX"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QTJ-Cb-ZAb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1196" y="1096"/>
         </scene>
         <!--Support Table View Controller - Support-->
         <scene sceneID="T3a-m1-82s">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Djm-NM-ku3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="wEQ-k9-xxz" customClass="SupportTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="dpC-1z-VmI">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
@@ -1012,13 +1003,13 @@ photo?</string>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Djm-NM-ku3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-719" y="1756"/>
         </scene>
         <!--Terms Of Service View Controller - Terms of Service-->
         <scene sceneID="kVr-bP-Mxw">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="p9S-nV-Qrv" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="ZUr-wy-cXS" customClass="TermsOfServiceViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oXe-Fi-56L">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
@@ -1037,13 +1028,13 @@ photo?</string>
                         <outlet property="webView" destination="Ec5-cF-fW5" id="zMe-hF-l53"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p9S-nV-Qrv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-257" y="1756"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9Jx-na-AFB">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GiN-Qk-iLV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController definesPresentationContext="YES" id="In7-9a-DvU" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="quv-bn-jQS">
                         <autoresizingMask key="autoresizingMask"/>
@@ -1052,13 +1043,13 @@ photo?</string>
                         <segue destination="wEQ-k9-xxz" kind="relationship" relationship="rootViewController" id="X2I-4R-cCk"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GiN-Qk-iLV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1196" y="1756"/>
         </scene>
         <!--Profile Notifications View Controller - Notifications-->
         <scene sceneID="Dbf-Iq-Bi0">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hCE-vB-9ee" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="Oyl-sh-T3U" customClass="ProfileNotificationsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="29t-LB-tsx">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
@@ -1277,13 +1268,13 @@ photo?</string>
                         <outlet property="venueButton" destination="WYv-d1-E2c" id="j3X-sQ-Y4f"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hCE-vB-9ee" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-719" y="1096"/>
         </scene>
         <!--Linked Accounts Table View Controller - Linked Accounts-->
         <scene sceneID="nc2-v7-E52">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SCP-Eu-ajv" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="oag-4z-6cX" customClass="LinkedAccountsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="NYJ-hu-V8a">
                         <rect key="frame" x="0.0" y="64" width="320" height="372"/>
@@ -1379,13 +1370,13 @@ photo?</string>
                         <outlet property="postToLinkedInSwitch" destination="qX2-y4-Rbw" id="edz-aa-OJq"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SCP-Eu-ajv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-719" y="405"/>
         </scene>
         <!--Smarterer Login Controller-->
         <scene sceneID="W9b-jS-2LZ">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wSs-m8-YRB" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="N65-G8-6X2" customClass="SmartererLoginController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Boe-pk-R9B">
                         <rect key="frame" x="0.0" y="64" width="320" height="372"/>
@@ -1407,13 +1398,13 @@ photo?</string>
                         <outlet property="myWebView" destination="pyQ-wl-Awg" id="sUA-hD-8GA"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wSs-m8-YRB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-193" y="522"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Cuu-5f-AYW">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ifd-c2-ojS" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController definesPresentationContext="YES" id="g4S-1W-OlN" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="tvL-Z8-cSZ">
                         <autoresizingMask key="autoresizingMask"/>
@@ -1422,13 +1413,13 @@ photo?</string>
                         <segue destination="oag-4z-6cX" kind="relationship" relationship="rootViewController" id="29d-cm-hWU"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ifd-c2-ojS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1196" y="405"/>
         </scene>
         <!--Auto Checkin Table View Controller - Automatic Check Ins-->
         <scene sceneID="jEB-Kv-A8s">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cTh-Zc-cxR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="Zks-3J-HVT" customClass="AutoCheckinTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="69" sectionHeaderHeight="22" sectionFooterHeight="22" id="Hct-nb-YzH">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
@@ -1511,13 +1502,13 @@ photo?</string>
                         <outlet property="globalCheckinSwitch" destination="8Es-t0-lcY" id="JL7-Ug-Ix2"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cTh-Zc-cxR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-303" y="1096"/>
         </scene>
         <!--Add Funds View Controller-->
         <scene sceneID="LYN-xf-xk9">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9ev-4H-Jox" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="AddFundsViewController" id="f1M-sl-xRX" customClass="AddFundsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fXC-pE-Ejf">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
@@ -1545,13 +1536,13 @@ photo?</string>
                         <outlet property="webView" destination="WXX-KT-nmm" id="WKM-6k-3Rw"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9ev-4H-Jox" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="284" y="-1103"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="a73-2I-eFa">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ors-e0-WQW" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="SnX-Yi-lnS" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="hNg-75-m0b">
@@ -1563,13 +1554,13 @@ photo?</string>
                         <segue destination="f1M-sl-xRX" kind="relationship" relationship="rootViewController" id="Bmb-Ot-elY"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ors-e0-WQW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-193" y="-1103"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ouw-gO-OVS">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uf6-OX-9GJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="cJS-DT-22N" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="HFU-6a-cmg">
@@ -1581,13 +1572,13 @@ photo?</string>
                         <segue destination="NLt-KB-bR8" kind="relationship" relationship="rootViewController" id="nUk-HX-0VX"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uf6-OX-9GJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1196" y="-280"/>
         </scene>
         <!--Resume Visibility View Controller - Resume Visibility-->
         <scene sceneID="QLA-sT-xI4">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IOo-v3-sOI" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="MVm-85-2NW" customClass="ResumeVisibilityViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SoI-iL-ozD">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
@@ -1624,6 +1615,7 @@ photo?</string>
                         <outlet property="resumeVisibilityButton" destination="sWC-di-LSO" id="xOZ-MN-8He"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IOo-v3-sOI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="320" y="679"/>
         </scene>
@@ -1752,7 +1744,6 @@ photo?</string>
                 <relationship kind="action" name="chooseNewProfileImage:"/>
                 <relationship kind="action" name="gearPressed:"/>
                 <relationship kind="outlet" name="arrowImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="backgroundWebView" candidateClass="UIWebView"/>
                 <relationship kind="outlet" name="categoriesLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="categoryView" candidateClass="CPTouchableView"/>
                 <relationship kind="outlet" name="changePhotoLabel" candidateClass="UILabel"/>

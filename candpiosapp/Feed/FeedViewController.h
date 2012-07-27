@@ -10,8 +10,12 @@
 #import "CPVenueFeed.h"
 #import "CPUserActionCell.h"
 #import "FeedPreviewHeaderCell.h"
+#import "WEPopoverController.h"
+#import "PostBaseCell.h"
+#import "PillPopoverViewController.h"
+#import "CommentCell.h"
 
-@interface FeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, CPUserActionCellDelegate, FeedPreviewHeaderCellDelegate>
+@interface FeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, CPUserActionCellDelegate, FeedPreviewHeaderCellDelegate, WEPopoverControllerDelegate, PillPopoverDelegate, CommentCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) CPVenueFeed *selectedVenueFeed;
