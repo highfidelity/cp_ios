@@ -21,13 +21,13 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate, CLLocationManagerDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
-@property (strong, readonly) Settings *settings;
-@property (strong, nonatomic, readonly) AFHTTPClient *urbanAirshipClient;
-@property (strong, nonatomic) SettingsMenuController *settingsMenuController;
-@property (strong, nonatomic) CPTabBarController *tabBarController;
-@property (strong) NSTimer *checkOutTimer;
-@property (strong, readonly) CLLocationManager *locationManager;
+@property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, strong, readonly) Settings *settings;
+@property (nonatomic, strong, readonly) AFHTTPClient *urbanAirshipClient;
+@property (nonatomic, strong, readonly) CLLocationManager *locationManager;
+@property (nonatomic, strong) SettingsMenuController *settingsMenuController;
+@property (nonatomic, strong) CPTabBarController *tabBarController;
+@property (nonatomic, strong) NSTimer *checkOutTimer;
            
 -(void)saveSettings;
 - (void)loadVenueView:(NSString *)venueName;

@@ -24,27 +24,19 @@
 #define kCheckOutLocalNotificationAlertViewTitle @"You will be checked out of C&P in 5 min."
 #define kRadiusForCheckins                      10 // measure in meters, from lat/lng of CPVenue
 
-@interface AppDelegate() {
-    CLLocationManager *_locationManager;
-}
+@interface AppDelegate()
 
--(void) loadSettings;
-+(NSString*) settingsFilepath;
+- (void) loadSettings;
++ (NSString*) settingsFilepath;
 
 @end
 
 @implementation AppDelegate
 
-@synthesize settings;
-@synthesize urbanAirshipClient;
-@synthesize settingsMenuController;
-@synthesize tabBarController;
-@synthesize checkOutTimer = _checkOutTimer;
-
 // TODO: Store what we're storing now in settings in NSUSERDefaults
 // Why make our own class when there's an iOS Api for this?
 
-@synthesize window = _window;
+@synthesize locationManager = _locationManager;
 
 #pragma mark - View Lifecycle
 
@@ -78,9 +70,9 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     self.settingsMenuController = (SettingsMenuController*)[mainStoryboard instantiateViewControllerWithIdentifier:@"SettingsMenu"];
     self.tabBarController = (CPTabBarController *)self.window.rootViewController;
     self.settingsMenuController.cpTabBarController = self.tabBarController;
-    [settingsMenuController.view addSubview:self.tabBarController.view];
-    [settingsMenuController addChildViewController:self.tabBarController];
-    self.window.rootViewController = settingsMenuController;
+    [self.settingsMenuController.view addSubview:self.tabBarController.view];
+    [self.settingsMenuController addChildViewController:self.tabBarController];
+    self.window.rootViewController = self.settingsMenuController;
     
     // TODO: move the data that we take from the map to a different class so that we have a model for the data that the map and other views can pull from
     // for now we're forcing the map view to get loaded here so that the data is ready
@@ -334,7 +326,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
 - (void)application:(UIApplication *)app
 didFailToRegisterForRemoteNotificationsWithError:(NSError *)err 
 {
-    settings.registeredForApnsSuccessfully = NO;
+    self.settings.registeredForApnsSuccessfully = NO;
     NSLog(@"Error in registration. Error: %@", err);
 }
 
@@ -366,7 +358,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     // Please populate AirshipConfig.plist with your info from http://go.urbanairship.com
     [UAirship takeOff:takeOffOptions];
     
-    urbanAirshipClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://go.urbanairship.com/api"]];
+    _urbanAirshipClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://go.urbanairship.com/api"]];
     
 	// register for push 
     [[UAPush shared] registerForRemoteNotificationTypes:
@@ -929,24 +921,24 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 		// load our settings
 		Settings *newSettings = [NSKeyedUnarchiver unarchiveObjectWithFile:[AppDelegate settingsFilepath]];
 		if(newSettings) {
-			settings  = newSettings;
+			_settings  = newSettings;
 		}
 		else {
-			settings = [[Settings alloc]init];
+			_settings = [[Settings alloc]init];
 		}
 	}
 	@catch (NSException * e) 
 	{
 		// if we couldn't load the file, go ahead and delete the file
 		[[NSFileManager defaultManager] removeItemAtPath:[AppDelegate settingsFilepath] error:nil];
-		settings = [[Settings alloc]init];
+		_settings = [[Settings alloc]init];
 	}
 }
 
 -(void)saveSettings
 {
 	// save the new settings object
-	[NSKeyedArchiver archiveRootObject:settings toFile:[AppDelegate settingsFilepath]];
+	[NSKeyedArchiver archiveRootObject:_settings toFile:[AppDelegate settingsFilepath]];
 	
 }
 
