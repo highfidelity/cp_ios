@@ -658,12 +658,6 @@
                         </userGuides>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
-                            <webView alpha="0.80000000000000004" contentMode="scaleToFill" id="YBV-n6-x1r">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="640"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="0.8862745098" green="0.89019607840000003" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <dataDetectorType key="dataDetectorTypes"/>
-                            </webView>
                             <view contentMode="scaleToFill" id="h0X-vM-HGh" userLabel="View - profile details">
                                 <rect key="frame" x="10" y="0.0" width="300" height="346"/>
                                 <userGuides>
@@ -868,7 +862,7 @@ photo?</string>
                                 <color key="backgroundColor" red="0.8862745098" green="0.86666666670000003" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.8862745098" green="0.86666666670000003" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                     </scrollView>
                     <navigationItem key="navigationItem" title="Profile" id="XJk-vD-qNL">
                         <barButtonItem key="rightBarButtonItem" id="F8m-G7-f7s">
@@ -891,7 +885,6 @@ photo?</string>
                     </navigationItem>
                     <connections>
                         <outlet property="arrowImageView" destination="6Yl-XS-GTf" id="VMu-Z7-dew"/>
-                        <outlet property="backgroundWebView" destination="YBV-n6-x1r" id="qyh-Cz-8WY"/>
                         <outlet property="categoriesLabel" destination="dvV-QQ-1oL" id="sXm-Pz-0be"/>
                         <outlet property="categoryView" destination="ifN-t7-iHN" id="H8b-Z3-9am"/>
                         <outlet property="changePhotoLabel" destination="wKY-Nd-7yp" id="U6r-Kw-n3Z"/>
