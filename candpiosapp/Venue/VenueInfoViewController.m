@@ -25,10 +25,10 @@
 @property (weak, nonatomic) UIButton *checkInButton;
 @property (weak, nonatomic) UIButton *phoneButton;
 @property (weak, nonatomic) UIButton *addressButton;
-@property (nonatomic) BOOL hadNoChat;
-@property (nonatomic) BOOL checkInIsVirtual;
-@property (nonatomic) BOOL hasPhone;
-@property (nonatomic) BOOL hasAddress;
+@property BOOL hadNoChat;
+@property BOOL checkInIsVirtual;
+@property BOOL hasPhone;
+@property BOOL hasAddress;
 
 - (IBAction)tappedAddress:(id)sender;
 - (IBAction)tappedPhone:(id)sender;

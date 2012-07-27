@@ -21,7 +21,7 @@
 @property (strong, nonatomic) NSMutableArray *previousUsers;
 @property (strong, nonatomic) NSMutableSet *usersShown;
 @property (strong, nonatomic) NSMutableDictionary *userObjectsForUsersOnScreen;
-@property (nonatomic) BOOL scrollToUserThumbnail;
+@property BOOL scrollToUserThumbnail;
 
 
 @end

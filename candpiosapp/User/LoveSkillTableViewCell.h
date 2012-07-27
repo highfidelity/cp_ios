@@ -10,7 +10,7 @@
 
 @interface LoveSkillTableViewCell : UITableViewCell
 
-@property (nonatomic) BOOL forceActive;
+@property BOOL forceActive;
 
 - (void)setActive:(BOOL)active;
 

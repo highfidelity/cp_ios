@@ -9,7 +9,7 @@
 
 @interface CPVenue : NSObject <MKAnnotation, NSCoding>
 
-@property (nonatomic) int venueID;
+@property int venueID;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *icon;
 @property (strong, nonatomic) NSString *foursquareID;
@@ -21,17 +21,17 @@
 @property (strong, nonatomic) NSString *formattedPhone;
 @property (strong, nonatomic) NSString *photoURL;
 @property (nonatomic) CLLocationCoordinate2D coordinate;
-@property (nonatomic) double distanceFromUser;
-@property (nonatomic) int checkinCount;
-@property (nonatomic) int checkinTime;
-@property (nonatomic) int weeklyCheckinCount;
-@property (nonatomic) int intervalCheckinCount;
+@property double distanceFromUser;
+@property int checkinCount;
+@property int checkinTime;
+@property int weeklyCheckinCount;
+@property int intervalCheckinCount;
 @property (nonatomic, readonly) NSString *checkinCountString;
 @property (nonatomic, readonly) NSString *checkinTimeString;
 @property (nonatomic, readonly) NSString *formattedAddress;
 @property (strong, nonatomic) NSMutableDictionary *activeUsers;
-@property (nonatomic) bool hasContactAtVenue;
-@property (nonatomic) bool autoCheckin;
+@property BOOL hasContactAtVenue;
+@property BOOL autoCheckin;
 @property (strong, nonatomic) NSString *specialVenueType;
 
 - (CPVenue *)initFromDictionary:(NSDictionary *)json;

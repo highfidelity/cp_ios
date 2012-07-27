@@ -35,7 +35,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *infoBubbleStatus;
 @property (strong, nonatomic) NSMutableArray *userArray;
 @property (weak, nonatomic) UIImageView *infoBubbleArrow;
-@property (nonatomic) int checkInDuration;
+@property int checkInDuration;
 @property BOOL sliderButtonPressed;
 
 @property int userArrayIndex;

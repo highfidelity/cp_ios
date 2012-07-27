@@ -48,15 +48,15 @@
 @property (weak, nonatomic) IBOutlet UIButton *payButton;
 @property (weak, nonatomic) IBOutlet UIButton *reviewButton;
 @property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
-@property (nonatomic) int othersAtPlace;
+@property int othersAtPlace;
 @property (strong, nonatomic) NSNumber *templateCounter;
 @property (nonatomic) NSInteger selectedFavoriteVenueIndex;
 @property (weak, nonatomic) IBOutlet UILabel *propNoteLabel;
-@property (nonatomic) BOOL mapAndDistanceLoaded;
+@property BOOL mapAndDistanceLoaded;
 @property (strong, nonatomic) NSString* preBadgesHTML;
 @property (strong, nonatomic) NSString* postBadgesHTML;
 @property (strong, nonatomic) NSString* badgesHTML;
-@property (nonatomic) BOOL firstLoad;
+@property BOOL firstLoad;
 @property (strong, nonatomic) UITapGestureRecognizer *tapRecon;
 
 -(NSString *)htmlStringWithResumeText;

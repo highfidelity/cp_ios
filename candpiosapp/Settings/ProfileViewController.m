@@ -45,8 +45,8 @@
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
 @property (strong, nonatomic) NSString *pendingEmail;
 @property (strong, nonatomic) UIBarButtonItem *gearButton;
-@property (nonatomic) BOOL finishedSync;
-@property (nonatomic) BOOL newDataFromSync;
+@property BOOL finishedSync;
+@property BOOL newDataFromSync;
 @property (strong, nonatomic, getter = cacheManager) NSCache *cache;
 
 - (IBAction)gearPressed:(id)sender;
