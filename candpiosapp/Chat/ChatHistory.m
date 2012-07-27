@@ -16,13 +16,12 @@
 #pragma mark - Initializers
 
 - (id)init {
-    self = [super init];
-    
-    self.messages = [[NSMutableArray alloc] init];
+    if (self = [super init]) {
+        self.messages = [[NSMutableArray alloc] init];
+    }
     
     return self;
 }
-
 
 #pragma mark - History inspection methods
 

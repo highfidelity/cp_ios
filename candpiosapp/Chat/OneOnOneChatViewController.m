@@ -24,12 +24,10 @@ float const TIMESTAMP_CELL_HEIGHT         = 18.0f;
 
 static CGFloat const FONTSIZE = 14.0;
 
-
 @interface OneOnOneChatViewController()
 - (CGFloat)labelHeight:(ChatMessage *)message;
 - (void)scrollToLastChat;
 @end
-
 
 @implementation OneOnOneChatViewController
 

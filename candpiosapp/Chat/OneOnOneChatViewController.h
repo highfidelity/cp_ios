@@ -12,17 +12,16 @@
 @interface OneOnOneChatViewController : UIViewController
     <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
 
-@property (strong, nonatomic) User   *user;
-@property (strong, nonatomic) User   *me;
-@property (strong, nonatomic) OneOnOneChatHistory *history;
-
+@property (nonatomic, strong) User   *user;
+@property (nonatomic, strong) User   *me;
+@property (nonatomic, strong) OneOnOneChatHistory *history;
 @property (nonatomic, weak) IBOutlet UITextField *chatEntryField;
 @property (nonatomic, weak) IBOutlet UITableView *chatContents;
 @property (nonatomic, weak) IBOutlet UIView *backgroundView;
 @property (nonatomic, weak) IBOutlet UIView *chatInputs;
 @property (nonatomic, weak) IBOutlet UIButton *chatButton;
-@property (nonatomic, assign) CGRect originalChatContentsRect;
-@property (nonatomic, assign) CGRect originalChatInputsRect;
+@property CGRect originalChatContentsRect;
+@property CGRect originalChatInputsRect;
 
 
 // Send message via UrbanAirship push notification
