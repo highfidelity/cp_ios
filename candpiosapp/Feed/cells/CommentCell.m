@@ -32,6 +32,9 @@
 }
 
 - (void) updatePillButtonAnimated:(BOOL)animated {
+    // update pill button to the count specified in the post.. adding if needed
+    [self addPillButton];
+    
     if (animated) {
         CATransition *animation = [CATransition animation];
         animation.duration = 1.0;
@@ -47,6 +50,7 @@
     if (self.post.likeCount > 0) {
         self.pillLabel.text = [NSString stringWithFormat:@"%i", self.post.likeCount];
     }
+    // calculate the horizontal size of the button as buttonImage size + label size.. and center label vertically 
     CGSize sizeConstraint = CGSizeMake(self.contentView.frame.size.width - self.pillLabel.frame.origin.x, buttonImage.size.height);
     CGSize labelSize = [self.pillLabel.text sizeWithFont:self.pillLabel.font 
                               constrainedToSize:sizeConstraint
@@ -64,8 +68,9 @@
     }
 }
 
-- (void) updatePillButton
+- (void) addPillButton 
 {
+    // add the pill button if needed.. using a placeholder button from the storyboard for layout
     if (!self.pillButton) { 
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         
@@ -91,35 +96,13 @@
         label.backgroundColor = [UIColor clearColor];
         self.pillLabel = label;
         [self.contentView insertSubview:label belowSubview:button];
-
-
-//        label.text = @"";
-//        if (self.post.likeCount > 0) {
-//            label.text = [NSString stringWithFormat:@"%i", self.post.likeCount];
-//        }
-//        CGSize sizeConstraint = CGSizeMake(self.contentView.frame.size.width - label.frame.origin.x, buttonImage.size.height);
-//        CGSize labelSize = [label.text sizeWithFont:label.font 
-//                                  constrainedToSize:sizeConstraint
-//                                      lineBreakMode:label.lineBreakMode];
-//        label.frame = CGRectMake(label.frame.origin.x, 
-//                                 label.frame.origin.y + (button.frame.size.height - labelSize.height)/2, 
-//                                 labelSize.width, 
-//                                 labelSize.height);
-//        button.frame = CGRectMake(button.frame.origin.x, 
-//                                  button.frame.origin.y, 
-//                                  button.frame.size.width + labelSize.width, 
-//                                  button.frame.size.height);
-        
-    }    
-    [self updatePillButtonAnimated:NO];
+    }        
 }
 
 - (void) pillButtonPressed:(id)sender 
 {
     // forward on to the delegate to present the popover from the pill button
-    if ([self.delegate respondsToSelector:@selector(showPillPopoverFromCell:)]) {
-        [self.delegate performSelector:@selector(showPillPopoverFromCell:) withObject:self];
-    }    
+    [self.delegate showPillPopoverFromCell:self];
 }
 
 @end

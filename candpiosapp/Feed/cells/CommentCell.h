@@ -19,6 +19,7 @@
 @property (nonatomic, strong) IBOutlet UIButton *placeholderPillButton;
 @property (nonatomic, strong) UILabel *pillLabel;
 @property (nonatomic, strong) id<CommentCellDelegate> delegate;
-- (void) updatePillButton;
+
 - (void) updatePillButtonAnimated:(BOOL)animated;
+
 @end

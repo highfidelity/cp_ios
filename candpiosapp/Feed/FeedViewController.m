@@ -709,8 +709,8 @@ typedef enum {
         commentCell.post = originalPost;
         commentCell.delegate = self;
 
-        // add the +1/comment widget
-        [commentCell updatePillButton];
+        // update the +1/comment pill widget to reflect the likeCount on the parent post
+        [commentCell updatePillButtonAnimated:NO];
 
         return commentCell;
     }
