@@ -16,13 +16,6 @@
 
 @implementation ContactListCell
 
-@synthesize contactListTVC = _contactListTVC;
-@synthesize profilePicture = _profilePicture;
-@synthesize nicknameLabel = _nicknameLabel;
-@synthesize statusLabel = _statusLabel;
-@synthesize acceptContactRequestButton = _acceptContactRequestButton;
-@synthesize declineContactRequestButton = _declineContactRequestButton;
-
 - (void)awakeFromNib
 {
     [super awakeFromNib];

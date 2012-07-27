@@ -36,16 +36,17 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 @end
 
+@interface ContactListViewController ()
 
-@interface ContactListViewController () {
-    NSMutableArray *sortedContactList;
-    NSArray *searchResults;
-    BOOL isSearching;
-}
-
-@property (weak, nonatomic) IBOutlet UIImageView *placeholderImage;
-@property (nonatomic, assign) BOOL userIsPerformingQuickAction;
-@property (nonatomic, assign) BOOL reloadPrevented;
+@property (nonatomic, strong) NSMutableArray *contacts;
+@property (nonatomic, strong) NSMutableArray *contactRequests;
+@property (nonatomic, strong) NSMutableArray *sortedContactList;
+@property (nonatomic, strong) NSArray *searchResults;
+@property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, weak) IBOutlet UIImageView *placeholderImage;
+@property BOOL userIsPerformingQuickAction;
+@property BOOL reloadPrevented;
+@property BOOL isSearching;
 
 - (NSIndexPath *)addToContacts:(NSDictionary *)contactData;
 - (void)animateRemoveContactRequestAtIndex:(NSUInteger)index;
@@ -60,33 +61,19 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 @implementation ContactListViewController
 
-@synthesize placeholderImage;
-@synthesize userIsPerformingQuickAction = _userIsPerformingQuickAction;
-@synthesize reloadPrevented = _reloadPrevented;
-@synthesize contacts, searchBar;
-@synthesize contactRequests = _contactRequests;
-
-- (id)initWithStyle:(UITableViewStyle)style
+- (void)viewDidLoad
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        isSearching = NO;
-    }
-    return self;
+    [super viewDidLoad];
+    self.isSearching = NO;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(numberOfContactRequestsNotification:)
+                                                 name:kNumberOfContactRequestsNotification
+                                               object:nil];
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(numberOfContactRequestsNotification:)
-                                                     name:kNumberOfContactRequestsNotification
-                                                   object:nil];
-    }
-    return self;
-}
-
-- (void)dealloc {
+- (void)viewDidUnload {
+    [super viewDidUnload];
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:kNumberOfContactRequestsNotification
                                                   object:nil];
@@ -127,7 +114,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     contacts = [self partitionObjects:contactList collationStringSelector:@selector(nickname)];
     
     // store the array for search
-    sortedContactList = [contactList mutableCopy];
+    self.sortedContactList = [contactList mutableCopy];
 }
 
 - (void)hidePlaceholder:(BOOL)hide
@@ -135,7 +122,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     [self.placeholderImage setHidden:hide];
     [self.tableView setScrollEnabled:hide];
     [self.searchBar setHidden:!hide];
-    isSearching = !hide;
+    self.isSearching = !hide;
 }
 
 - (NSArray*)sectionIndexTitles 
@@ -225,7 +212,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (isSearching) {
+    if (self.isSearching) {
         return 1;
     }
     
@@ -234,8 +221,8 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (isSearching) {
-        return [searchResults count];
+    if (self.isSearching) {
+        return [self.searchResults count];
     }
     
     if (kContactRequestsSection == section) {
@@ -247,7 +234,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)aSection
 {
-    if (!isSearching) {
+    if (!self.isSearching) {
         if (kContactRequestsSection == aSection) {
             if ([self.contactRequests count]) {
                 return @"Contact Requests";
@@ -264,7 +251,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-    if (isSearching) {
+    if (self.isSearching) {
         return nil;
     }
     
@@ -290,7 +277,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *CellIdentifier = @"ContactListCell";
-    if (!isSearching && kContactRequestsSection == indexPath.section) {
+    if (!self.isSearching && kContactRequestsSection == indexPath.section) {
         CellIdentifier = kContactRequestsCellIdentifier;
     }
     
@@ -346,7 +333,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 
-    if (isSearching) return nil;
+    if (self.isSearching) return nil;
 
     NSString *title = [self tableView:tableView titleForHeaderInSection:section];
 
@@ -371,7 +358,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (isSearching) {
+    if (self.isSearching) {
         return 0;
     }
     
@@ -392,16 +379,16 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 #pragma mark - UISearchBarDelegate
 - (void)performSearch:(NSString *)searchText {
     if ([searchText isEqualToString:@""]) {
-        searchResults = [NSArray arrayWithArray:sortedContactList];
+        self.searchResults = [NSArray arrayWithArray:self.sortedContactList];
     }
     else {
-        searchResults = [sortedContactList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(nickname contains[cd] %@)", searchText]];
+        self.searchResults = [self.sortedContactList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(nickname contains[cd] %@)", searchText]];
     }
     [self.tableView reloadData];
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)aSearchBar {
-    isSearching = YES;
+    self.isSearching = YES;
     [aSearchBar setShowsCancelButton:YES animated:YES];
     [self performSearch:aSearchBar.text];
 }
@@ -410,7 +397,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     [self.searchBar setShowsCancelButton:NO animated:YES];
     [self.searchBar setText:@""];
     [self.searchBar resignFirstResponder];
-    isSearching = NO;
+    self.isSearching = NO;
     [self.tableView reloadData];
 }
 
@@ -485,10 +472,10 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     
     
     [sectionContacts addObject:contactData];
-    [sortedContactList addObject:contactData];
+    [self.sortedContactList addObject:contactData];
     
     [sectionContacts sortUsingDescriptors:sortDescriptors];
-    [sortedContactList sortUsingDescriptors:sortDescriptors];
+    [self.sortedContactList sortUsingDescriptors:sortDescriptors];
     
     NSIndexPath *contactIndexPath = [NSIndexPath indexPathForRow:[sectionContacts indexOfObject:contactData]
                                                        inSection:sectionIndex + kExtraContactRequestsSections];
@@ -538,8 +525,8 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 }
 
 - (NSDictionary *)contactForIndexPath:(NSIndexPath *)indexPath {
-    if (isSearching) {
-        return [searchResults objectAtIndex:(NSUInteger)[indexPath row]];
+    if (self.isSearching) {
+        return [self.searchResults objectAtIndex:(NSUInteger)[indexPath row]];
     }
     
     if (kContactRequestsSection == indexPath.section) {

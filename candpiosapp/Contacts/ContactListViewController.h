@@ -13,8 +13,4 @@
 
 @interface ContactListViewController : CPBaseTableViewController <UISearchBarDelegate, ContactListCellDelegate>
 
-@property (nonatomic, retain) NSMutableArray *contacts;
-@property (nonatomic, retain) NSMutableArray *contactRequests;
-@property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
-
 @end
