@@ -13,6 +13,7 @@
 
 
 @interface BaseLoginController()
+
 -(void)handleCommonCreate:(NSString*)username
                  password:(NSString*)password
                  nickname:(NSString*)nickname
@@ -22,13 +23,11 @@
 
 @implementation BaseLoginController
 
-@synthesize httpClient;
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // create client for web based logins
-    httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
+    self.httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
     // set a liberal cookie policy
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy: NSHTTPCookieAcceptPolicyAlways];    
 }
@@ -68,7 +67,7 @@
 	[loginParams setObject:[NSNumber numberWithInt:1] forKey:@"signupAcceptTerms"];
 	[loginParams setObject:@"json" forKey:@"type"];
 
-	NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
+	NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"signup.php" parameters:loginParams];
 	AFJSONRequestOperation *postOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
 #if DEBUG        
 		NSDictionary *jsonDict = json;

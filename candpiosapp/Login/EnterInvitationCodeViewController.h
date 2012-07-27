@@ -8,8 +8,8 @@
 
 @interface EnterInvitationCodeViewController : UIViewController
 
-@property (nonatomic, assign) BOOL dontShowTextNoticeAfterLaterButtonPressed;
-@property (nonatomic, assign) BOOL isPushedFromLeft;
-@property (nonatomic, assign) BOOL emailConfirmationRequired;
+@property BOOL dontShowTextNoticeAfterLaterButtonPressed;
+@property BOOL isPushedFromLeft;
+@property BOOL emailConfirmationRequired;
 
 @end

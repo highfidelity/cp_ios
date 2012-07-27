@@ -20,7 +20,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
 @interface LinkedInLoginController ()
 
-@property (nonatomic, assign) BOOL emailConfirmationRequired;
+@property BOOL emailConfirmationRequired;
 @property (strong, nonatomic) LoadLinkedInConnectionsCompletionBlockType loadLinkedInConnectionsCompletionBlock;
 
 @end
@@ -28,20 +28,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
 @implementation LinkedInLoginController
 
-@synthesize myWebView;
-@synthesize requestToken;
-@synthesize activityIndicator;
-@synthesize emailConfirmationRequired = _emailConfirmationRequired;
-@synthesize loadLinkedInConnectionsCompletionBlock;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 #pragma mark - View lifecycle
 
@@ -50,7 +36,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     [super viewDidLoad];
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     
-	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
 	self.navigationItem.rightBarButtonItem = button;
     
     // check for token in keychain
@@ -113,7 +99,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     
     OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://api.linkedin.com/uas/oauth/accessToken"]
                                                                    consumer:consumer
-                                                                      token:requestToken
+                                                                      token:self.requestToken
                                                                       realm:@"http://api.linkedin.com/"
                                                                    verifier:verifier
                                                           signatureProvider:nil];
@@ -174,7 +160,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                                                        encoding:NSUTF8StringEncoding];
         self.requestToken = [[OAToken alloc] initWithHTTPResponseBody:responseBody];
         
-        NSString *authorizationURL = [NSString stringWithFormat:@"https://www.linkedin.com/uas/oauth/authorize?oauth_token=%@", requestToken.key];
+        NSString *authorizationURL = [NSString stringWithFormat:@"https://www.linkedin.com/uas/oauth/authorize?oauth_token=%@", self.requestToken.key];
         
         NSURL *url = [NSURL URLWithString:authorizationURL];        
         NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];

@@ -10,22 +10,7 @@
 #import "FlurryAnalytics.h"
 #import "UIViewController+isModal.h"
 
-@interface SignupController ()
-@end
-
 @implementation SignupController
-@synthesize linkedinLoginButton;
-@synthesize dismissButton;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 
 - (void)didReceiveMemoryWarning
 {

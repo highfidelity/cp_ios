@@ -3,9 +3,8 @@
 
 @interface SmartererLoginController : BaseLoginController <UIWebViewDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *myWebView;
-
-@property (nonatomic, retain) OAToken *requestToken;
-@property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) OAToken *requestToken;
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 
 - (void)smartererLogin;
 - (void)loadSmartererConnections:(NSString *)token;

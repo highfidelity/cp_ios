@@ -23,11 +23,6 @@
 
 @implementation EnterEmailAfterSingUpController
 
-@synthesize emailTextField = _emailTextField;
-@synthesize emailValidationMessage = _emailValidationMessage;
-@synthesize weWillNotSpamYouLabel = _weWillNotSpamYouLabel;
-@synthesize sendButton = _sendButton;
-
 - (void)pushNextViewContollerOrDismissWithMessage:(NSString *)message {
     
     // shouldn't go to invite code anymore, that comes before us
