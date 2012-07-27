@@ -77,7 +77,6 @@
 		4E8922C615B0D63E0032F2F3 /* UserResume-postbadges.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 4E8922C515B0D63E0032F2F3 /* UserResume-postbadges.mustache */; };
 		53019FE015ABA1EE00AE3FA1 /* divider-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E46B561F15A8D8AA00AD3C62 /* divider-button@2x.png */; };
 		53019FE415ABA21D00AE3FA1 /* CPUserActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53019FE315ABA21D00AE3FA1 /* CPUserActionCell.m */; };
-		530C3E5515B0F5B800D041FF /* CPTabBarControllerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C3E5415B0F5B800D041FF /* CPTabBarControllerView.m */; };
 		530C5DB71575E4FC003505AC /* CPSoundEffectsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */; };
 		530C5DBB1575E516003505AC /* send-love-switch-sound-off.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */; };
 		530C5DBC1575E516003505AC /* send-love-switch-sound-on.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */; };
@@ -645,8 +644,6 @@
 		4E8922C515B0D63E0032F2F3 /* UserResume-postbadges.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "UserResume-postbadges.mustache"; sourceTree = "<group>"; };
 		53019FE215ABA21D00AE3FA1 /* CPUserActionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUserActionCell.h; sourceTree = "<group>"; };
 		53019FE315ABA21D00AE3FA1 /* CPUserActionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPUserActionCell.m; sourceTree = "<group>"; };
-		530C3E5315B0F5B800D041FF /* CPTabBarControllerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPTabBarControllerView.h; sourceTree = "<group>"; };
-		530C3E5415B0F5B800D041FF /* CPTabBarControllerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPTabBarControllerView.m; sourceTree = "<group>"; };
 		530C5DB51575E4FC003505AC /* CPSoundEffectsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPSoundEffectsManager.h; sourceTree = "<group>"; };
 		530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPSoundEffectsManager.m; sourceTree = "<group>"; };
 		530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-off.wav"; sourceTree = "<group>"; };
@@ -2151,8 +2148,6 @@
 				537BF1EA15868EA700A23DA3 /* images */,
 				53D9B19A152A5E8600BC1304 /* CPTabBarController.h */,
 				53D9B19B152A5E8600BC1304 /* CPTabBarController.m */,
-				530C3E5315B0F5B800D041FF /* CPTabBarControllerView.h */,
-				530C3E5415B0F5B800D041FF /* CPTabBarControllerView.m */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -3131,7 +3126,6 @@
 				534BD45615AB72BD001FCC5C /* CPVenueFeed.m in Sources */,
 				53019FE415ABA21D00AE3FA1 /* CPUserActionCell.m in Sources */,
 				4E5578BE15AD0575000B588D /* CPUserAction.m in Sources */,
-				530C3E5515B0F5B800D041FF /* CPTabBarControllerView.m in Sources */,
 				698BB08415B6E87A00665CEA /* FeedPreviewHeaderCell.m in Sources */,
 				534323F715C1C42600BE5075 /* GTMNSString+HTML.m in Sources */,
 				534323FB15C1C8AE00BE5075 /* NSData+Base64.m in Sources */,

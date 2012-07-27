@@ -8,13 +8,9 @@
 
 #import "CPTabBarController.h"
 #import "FeedViewController.h"
-#import "CPTabBarControllerView.h"
 #import "CPCheckinHandler.h"
 
 @implementation CPTabBarController
-
-// TODO: get rid of the currentVenueID here, let's keep that in NSUserDefaults (my bad)
-@synthesize currentVenueID = _currentVenueID;
 
 - (void)viewDidLoad
 {
