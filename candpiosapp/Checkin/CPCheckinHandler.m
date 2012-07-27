@@ -25,11 +25,7 @@ static CPCheckinHandler *sharedHandler;
 
 + (CPCheckinHandler *)sharedHandler
 {
-    static CPCheckinHandler *_sharedHandler;
-    if (!_sharedHandler) {
-        _sharedHandler = [[CPCheckinHandler alloc] init];
-    }
-    return _sharedHandler;
+    return sharedHandler;
 }
 
 - (void)presentCheckinModalFromViewController:(UIViewController *)presentingViewController
