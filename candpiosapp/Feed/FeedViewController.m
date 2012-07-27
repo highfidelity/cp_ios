@@ -1714,8 +1714,7 @@ typedef enum {
 	}
 }
 
-#pragma mark -
-#pragma mark WEPopoverControllerDelegate implementation
+#pragma mark - WEPopoverControllerDelegate implementation
 
 - (void)popoverControllerDidDismissPopover:(WEPopoverController *)thePopoverController {
 	//Safe to release the popover here
@@ -1727,8 +1726,7 @@ typedef enum {
 	return YES;
 }
 
-#pragma mark - 
-#pragma mark PillPopoverDelegate implementation
+#pragma mark - PillPopoverDelegate implementation
 - (void) pillPopover:(PillPopoverViewController*)pillPopoverViewController commentPressedForIndexPath:(NSIndexPath*)indexPath
 {
     // dismiss popover and show the comment cell
