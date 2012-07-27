@@ -801,7 +801,7 @@
             
             // show them the check in screen
             CheckInDetailsViewController *checkinVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
-            checkinVC.place = self.venue;
+            checkinVC.venue = self.venue;
             
             // be the delgate of the check in view controller
             checkinVC.delegate = self;

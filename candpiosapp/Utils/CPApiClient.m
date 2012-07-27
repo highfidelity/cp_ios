@@ -34,7 +34,7 @@ static AFHTTPClient *sharedClient;
     return self;
 }
 
-+ (void)checkInToLocation:(CPVenue *)place
++ (void)checkInToVenue:(CPVenue *)venue
                 hoursHere:(int)hoursHere
                statusText:(NSString *)statusText
                 isVirtual:(BOOL)isVirtual
@@ -42,19 +42,19 @@ static AFHTTPClient *sharedClient;
           completionBlock:(void (^)(NSDictionary *, NSError *))completion
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:[NSString stringWithFormat:@"%.7lf", place.coordinate.latitude]
+    [parameters setValue:[NSString stringWithFormat:@"%.7lf", venue.coordinate.latitude]
                   forKey:@"lat"];
-    [parameters setValue:[NSString stringWithFormat:@"%.7lf", place.coordinate.longitude]
+    [parameters setValue:[NSString stringWithFormat:@"%.7lf", venue.coordinate.longitude]
                   forKey:@"lng"];
-    [parameters setValue:place.name forKey:@"venue_name"];
+    [parameters setValue:venue.name forKey:@"venue_name"];
     [parameters setValue:[NSString stringWithFormat:@"%d", hoursHere] forKey:@"hours_here"];
-    [parameters setValue:place.foursquareID forKey:@"foursquare"];
-    [parameters setValue:place.address forKey:@"address"];
-    [parameters setValue:place.city forKey:@"city"];
-    [parameters setValue:place.state forKey:@"state"];
-    [parameters setValue:place.zip forKey:@"zip"];
-    [parameters setValue:place.phone forKey:@"phone"];
-    [parameters setValue:place.formattedPhone forKey:@"formatted_phone"];
+    [parameters setValue:venue.foursquareID forKey:@"foursquare"];
+    [parameters setValue:venue.address forKey:@"address"];
+    [parameters setValue:venue.city forKey:@"city"];
+    [parameters setValue:venue.state forKey:@"state"];
+    [parameters setValue:venue.zip forKey:@"zip"];
+    [parameters setValue:venue.phone forKey:@"phone"];
+    [parameters setValue:venue.formattedPhone forKey:@"formatted_phone"];
     [parameters setValue:[NSString stringWithFormat:@"%d", isAutomatic] forKey:@"is_automatic"];
     [parameters setValue:statusText forKey:@"status"];
     
