@@ -13,15 +13,6 @@
 @end
 
 @implementation PillPopoverViewController
-@synthesize plusButton;
-@synthesize plusWebView;
-@synthesize commentButton;
-@synthesize commentLabel;
-@synthesize commentTextView;
-@synthesize commentImageView;
-@synthesize post;
-@synthesize delegate;
-@synthesize indexPath;
 
 - (void) updatePlusWebViewAnimated:(BOOL)animated
 {
@@ -39,14 +30,14 @@
     // set the +1 recognition label
     NSString *headContent;
     NSString *tailContent;
-    if (post.likeCount == 0) {
+    if (self.post.likeCount == 0) {
         headContent = @"no one";
         tailContent = @"has +1'd this";
-    } else if (post.likeCount == 1) {
+    } else if (self.post.likeCount == 1) {
         headContent = @"one other";
         tailContent = @"has +1'd this";
     } else {
-        headContent = [NSString stringWithFormat:@"%i others", post.likeCount];
+        headContent = [NSString stringWithFormat:@"%i others", self.post.likeCount];
         tailContent = @"have +1'd this";
     }
     NSString *content = [NSString stringWithFormat:@"<font style=\"color: #00645F;\">%@</font> %@", headContent, tailContent];
@@ -115,23 +106,6 @@
     
     // setup the textfield
     self.commentTextView.delegate = self;
-}
-
-- (void)viewDidUnload
-{
-    [self setPlusButton:nil];
-    [self setCommentButton:nil];
-    [self setCommentLabel:nil];
-    [self setCommentTextView:nil];
-    [self setCommentImageView:nil];
-    [self setPlusWebView:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField
