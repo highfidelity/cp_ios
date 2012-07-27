@@ -12,7 +12,7 @@
 @interface CPBaseTableViewController : UITableViewController <UIActionSheetDelegate, CPUserActionCellDelegate>
 
 @property (nonatomic, strong) UIActivityIndicatorView *barSpinner;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic) id delegate;
 
 - (void)placeSpinnerOnRightBarButtonItem;
 - (void)showCorrectLoadingSpinnerForCount:(int)count;

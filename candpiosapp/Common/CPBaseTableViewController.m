@@ -14,23 +14,11 @@
 #import "UserProfileViewController.h"
 
 @interface CPBaseTableViewController ()
-@property (nonatomic, assign) BOOL showingHUD;
+@property BOOL showingHUD;
 
 @end
 
 @implementation CPBaseTableViewController
-@synthesize delegate = _delegate;
-@synthesize barSpinner = _barSpinner;
-@synthesize showingHUD = _showingHUD;
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 -(void)viewDidLoad
 {
@@ -42,13 +30,6 @@
     
     // set the rightBarButtonItem to that UIActivityIndicatorView 
     [self placeSpinnerOnRightBarButtonItem];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 -(void)viewWillAppear:(BOOL)animated

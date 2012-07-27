@@ -34,11 +34,11 @@
 @interface CPUserActionCell()
 @property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *tapRecognizer;
-@property (nonatomic, readonly, assign) CGFloat originalCenter;
-@property (nonatomic, assign) CGFloat initialTouchPositionX;
-@property (nonatomic, assign) CGFloat initialHorizontalCenter;
-@property (nonatomic, assign) CPUserActionCellDirection lastDirection;
-@property (nonatomic, assign) CPUserActionCellDirection currentDirection;
+@property (nonatomic, readonly) CGFloat originalCenter;
+@property CGFloat initialTouchPositionX;
+@property CGFloat initialHorizontalCenter;
+@property CPUserActionCellDirection lastDirection;
+@property CPUserActionCellDirection currentDirection;
 
 - (BOOL)shouldDragLeft;
 - (BOOL)shouldDragRight;
@@ -46,29 +46,6 @@
 @end
 
 @implementation CPUserActionCell
-
-// public attrs
-@synthesize delegate = _delegate;
-@synthesize hiddenView = _hiddenView;
-@synthesize shouldBounce = _shouldBounce;
-@synthesize leftStyle = _leftStyle;
-@synthesize rightStyle = _rightStyle;
-
-// private attrs
-@synthesize panRecognizer = _panRecognizer;
-@synthesize initialTouchPositionX = _initialTouchPositionX;
-@synthesize initialHorizontalCenter = _initialHorizontalCenter;
-@synthesize lastDirection = _lastDirection;
-@synthesize currentDirection = _currentDirection;
-@dynamic revealing;
-@synthesize tapRecognizer;
-@synthesize user;
-@synthesize sendLoveButton;
-@synthesize sendMessageButton;
-@synthesize exchangeContactsButton;
-@synthesize toggleState;
-@synthesize activeColor;
-@synthesize inactiveColor;
 
 - (void)awakeFromNib
 {

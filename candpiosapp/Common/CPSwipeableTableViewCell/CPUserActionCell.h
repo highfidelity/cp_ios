@@ -50,18 +50,18 @@ typedef enum {
 
 @interface CPUserActionCell : UITableViewCell <UIGestureRecognizerDelegate, UIActionSheetDelegate>
 
-@property (nonatomic, assign) id<CPUserActionCellDelegate> delegate;
+@property (nonatomic) id<CPUserActionCellDelegate> delegate;
 @property (nonatomic, strong) User *user;
 @property (nonatomic, strong) UIView *hiddenView;
-@property (nonatomic, assign, getter = isRevealing) BOOL revealing;
-@property (nonatomic, assign) BOOL shouldBounce;
-@property (nonatomic, assign) CPUserActionCellSwipeStyle leftStyle;
-@property (nonatomic, assign) CPUserActionCellSwipeStyle rightStyle;
+@property (nonatomic, getter = isRevealing) BOOL revealing;
 @property (nonatomic, strong) UIButton *sendLoveButton;
 @property (nonatomic, strong) UIButton *sendMessageButton;
 @property (nonatomic, strong) UIButton *exchangeContactsButton;
-@property (nonatomic) CPUserActionCellSwitchState toggleState;
 @property (nonatomic, strong) UIColor *activeColor;
 @property (nonatomic, strong) UIColor *inactiveColor;
+@property BOOL shouldBounce;
+@property CPUserActionCellSwipeStyle leftStyle;
+@property CPUserActionCellSwipeStyle rightStyle;
+@property CPUserActionCellSwitchState toggleState;
 
 @end
