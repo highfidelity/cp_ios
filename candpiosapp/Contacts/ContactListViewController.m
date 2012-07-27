@@ -44,9 +44,9 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 @property (strong, nonatomic) NSArray *searchResults;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIImageView *placeholderImage;
-@property BOOL userIsPerformingQuickAction;
-@property BOOL reloadPrevented;
-@property BOOL isSearching;
+@property (nonatomic) BOOL userIsPerformingQuickAction;
+@property (nonatomic) BOOL reloadPrevented;
+@property (nonatomic) BOOL isSearching;
 
 - (NSIndexPath *)addToContacts:(NSDictionary *)contactData;
 - (void)animateRemoveContactRequestAtIndex:(NSUInteger)index;

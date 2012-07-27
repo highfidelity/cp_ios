@@ -35,10 +35,10 @@
 @property (strong, nonatomic) UIPanGestureRecognizer *panRecognizer;
 @property (strong, nonatomic) UITapGestureRecognizer *tapRecognizer;
 @property (nonatomic, readonly) CGFloat originalCenter;
-@property CGFloat initialTouchPositionX;
-@property CGFloat initialHorizontalCenter;
-@property CPUserActionCellDirection lastDirection;
-@property CPUserActionCellDirection currentDirection;
+@property (nonatomic) CGFloat initialTouchPositionX;
+@property (nonatomic) CGFloat initialHorizontalCenter;
+@property (nonatomic) CPUserActionCellDirection lastDirection;
+@property (nonatomic) CPUserActionCellDirection currentDirection;
 
 - (BOOL)shouldDragLeft;
 - (BOOL)shouldDragRight;

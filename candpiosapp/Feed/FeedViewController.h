@@ -18,8 +18,8 @@
 @property (strong, nonatomic) NSMutableArray *venueFeedPreviews;
 @property (strong, nonatomic) NSMutableArray *postableVenueFeeds;
 @property (strong, nonatomic) NSMutableDictionary *postPlussingUserIds;
-@property CPPostType postType;
-@property BOOL newPostAfterLoad;
+@property (nonatomic) CPPostType postType;
+@property (nonatomic) BOOL newPostAfterLoad;
 
 - (void)newPost:(NSIndexPath *)replyToIndexPath;
 - (void)showOnlyPostableFeeds;

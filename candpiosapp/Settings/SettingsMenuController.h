@@ -25,7 +25,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) CPTabBarController *cpTabBarController;
 @property (strong, nonatomic) MapTabController *mapTabController;
-@property BOOL isMenuShowing;
+@property (nonatomic) BOOL isMenuShowing;
 @property (weak, nonatomic) IBOutlet UIImageView *edgeShadow;
 @property (weak, nonatomic) IBOutlet UIView *loginBanner;
 @property (nonatomic) CPAfterLoginAction afterLoginAction;

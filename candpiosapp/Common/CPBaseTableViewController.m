@@ -14,7 +14,7 @@
 #import "UserProfileViewController.h"
 
 @interface CPBaseTableViewController ()
-@property BOOL showingHUD;
+@property (nonatomic) BOOL showingHUD;
 
 @end
 

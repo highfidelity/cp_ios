@@ -35,10 +35,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *infoBubbleStatus;
 @property (strong, nonatomic) NSMutableArray *userArray;
 @property (weak, nonatomic) UIImageView *infoBubbleArrow;
-@property int checkInDuration;
-@property BOOL sliderButtonPressed;
+@property (nonatomic) int checkInDuration;
+@property (nonatomic) BOOL sliderButtonPressed;
 
-@property int userArrayIndex;
+@property (nonatomic) int userArrayIndex;
 
 -(IBAction)sliderChanged:(id)sender;
 -(void)showUserInfoBubbleForUserIndex:(int)userIndex andButton:(UIButton *)userImageButton;

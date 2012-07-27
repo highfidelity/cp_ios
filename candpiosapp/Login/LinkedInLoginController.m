@@ -20,7 +20,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
 @interface LinkedInLoginController ()
 
-@property BOOL emailConfirmationRequired;
+@property (nonatomic) BOOL emailConfirmationRequired;
 @property (strong, nonatomic) LoadLinkedInConnectionsCompletionBlockType loadLinkedInConnectionsCompletionBlock;
 
 @end

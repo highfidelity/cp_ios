@@ -13,7 +13,7 @@
 @interface UserProfileViewController : UIViewController
 
 @property (strong, nonatomic) User *user;
-@property BOOL isF2FInvite;
+@property (nonatomic) BOOL isF2FInvite;
 
 - (IBAction)f2fInvite;
 - (void)placeUserDataOnProfile;

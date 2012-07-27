@@ -39,9 +39,9 @@ typedef enum {
 @property (strong, nonatomic) NewPostCell *pendingPostCell;
 @property (strong, nonatomic) UIView *keyboardBackground;
 @property (strong, nonatomic) UITextView *fakeTextView;
-@property FeedVCState currentState;
-@property BOOL previewPostableFeedsOnly;
-@property float newEditableCellHeight;
+@property (nonatomic) FeedVCState currentState;
+@property (nonatomic) BOOL previewPostableFeedsOnly;
+@property (nonatomic) float newEditableCellHeight;
 
 @end
 

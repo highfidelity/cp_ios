@@ -11,7 +11,7 @@
 
 @interface LinkedAccountsTableViewController ()
 
-@property BOOL postToLinkedIn;
+@property (nonatomic) BOOL postToLinkedIn;
 @property (weak, nonatomic) IBOutlet UISwitch *postToLinkedInSwitch;
 
 -(IBAction)gearPressed:(id)sender;

@@ -19,8 +19,8 @@
 
 @interface UserListTableViewController()
 
-@property BOOL userIsPerformingQuickAction;
-@property BOOL reloadPrevented;
+@property (nonatomic) BOOL userIsPerformingQuickAction;
+@property (nonatomic) BOOL reloadPrevented;
 
 @end
 

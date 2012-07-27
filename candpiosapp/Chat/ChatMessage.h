@@ -10,7 +10,7 @@
 
 @interface ChatMessage : NSObject
 
-@property BOOL fromMe;
+@property (nonatomic) BOOL fromMe;
 @property (strong, nonatomic) User *fromUser;
 @property (strong, nonatomic) User *toUser;
 @property (strong, nonatomic) NSString *message;

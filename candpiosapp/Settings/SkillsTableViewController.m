@@ -13,7 +13,7 @@
 
 @interface SkillsTableViewController ()
 
-@property int visibleCount;
+@property (nonatomic) int visibleCount;
 @property (strong, nonatomic) NSOperationQueue *skillQueue;
 
 @end

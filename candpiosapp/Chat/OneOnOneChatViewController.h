@@ -20,8 +20,8 @@
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIView *chatInputs;
 @property (weak, nonatomic) IBOutlet UIButton *chatButton;
-@property CGRect originalChatContentsRect;
-@property CGRect originalChatInputsRect;
+@property (nonatomic) CGRect originalChatContentsRect;
+@property (nonatomic) CGRect originalChatInputsRect;
 
 
 // Send message via UrbanAirship push notification

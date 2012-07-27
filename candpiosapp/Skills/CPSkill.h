@@ -10,9 +10,9 @@
 
 @interface CPSkill : NSObject
 
-@property NSUInteger skillID;
-@property BOOL isVisible;
-@property int loveCount;
+@property (nonatomic) NSUInteger skillID;
+@property (nonatomic) BOOL isVisible;
+@property (nonatomic) int loveCount;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *rank;
 

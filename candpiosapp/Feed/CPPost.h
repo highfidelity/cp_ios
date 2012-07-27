@@ -18,13 +18,13 @@ typedef enum {
 
 @interface CPPost : NSObject
 
-@property NSUInteger postID;
-@property double *lat;
-@property double *lng;
-@property CPPostType type;
-@property NSUInteger originalPostID;
-@property NSUInteger likeCount;
-@property BOOL userHasLiked;
+@property (nonatomic) NSUInteger postID;
+@property (nonatomic) double *lat;
+@property (nonatomic) double *lng;
+@property (nonatomic) CPPostType type;
+@property (nonatomic) NSUInteger originalPostID;
+@property (nonatomic) NSUInteger likeCount;
+@property (nonatomic) BOOL userHasLiked;
 @property (strong, nonatomic) NSString *entry;
 @property (strong, nonatomic) User *author;
 @property (strong, nonatomic) NSDate *date;
