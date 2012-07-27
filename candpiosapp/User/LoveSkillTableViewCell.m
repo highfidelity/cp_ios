@@ -11,17 +11,6 @@
 
 @implementation LoveSkillTableViewCell
 
-@synthesize forceActive = _forceActive;
-
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
 - (void)setActive:(BOOL)active
 {    
     UIImageView *leftIconIV = (UIImageView *)[self viewWithTag:ICON_IMAGE_VIEW_TAG];

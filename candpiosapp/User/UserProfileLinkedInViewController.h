@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface UserProfileLinkedInViewController : UIViewController <UIWebViewDelegate>
+
 @property (strong, nonatomic) NSString *linkedInProfileUrlAddress;
 @property (weak, nonatomic) IBOutlet UIWebView *socialWebView;
-
 
 @end

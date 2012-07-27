@@ -12,9 +12,8 @@
 
 @interface UserListTableViewController : CPBaseTableViewController <UINavigationControllerDelegate>
 
-@property (nonatomic, retain) NSMutableArray *weeklyUsers;
-@property (nonatomic, retain) NSMutableArray *checkedInUsers;
-
+@property (strong, nonatomic) NSMutableArray *weeklyUsers;
+@property (strong, nonatomic) NSMutableArray *checkedInUsers;
 
 - (void)refreshFromNewMapData:(NSNotification *)notification;
 

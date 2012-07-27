@@ -48,14 +48,16 @@
 @property (weak, nonatomic) IBOutlet UIButton *payButton;
 @property (weak, nonatomic) IBOutlet UIButton *reviewButton;
 @property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
-@property (nonatomic, assign) int othersAtPlace;
+@property (nonatomic) int othersAtPlace;
 @property (strong, nonatomic) NSNumber *templateCounter;
-@property (nonatomic, assign) NSInteger selectedFavoriteVenueIndex;
+@property (nonatomic) NSInteger selectedFavoriteVenueIndex;
 @property (weak, nonatomic) IBOutlet UILabel *propNoteLabel;
-@property (nonatomic, assign) BOOL mapAndDistanceLoaded;
+@property (nonatomic) BOOL mapAndDistanceLoaded;
 @property (strong, nonatomic) NSString* preBadgesHTML;
 @property (strong, nonatomic) NSString* postBadgesHTML;
 @property (strong, nonatomic) NSString* badgesHTML;
+@property (nonatomic) BOOL firstLoad;
+@property (strong, nonatomic) UITapGestureRecognizer *tapRecon;
 
 -(NSString *)htmlStringWithResumeText;
 -(IBAction)plusButtonPressed:(id)sender;
@@ -66,49 +68,6 @@
 @end
 
 @implementation UserProfileViewController
-
-@synthesize scrollView = _scrollView;
-@synthesize checkedIn = _checkedIn;
-@synthesize mapView = _mapView;
-@synthesize user = _user;
-@synthesize userCard = _userCard;
-@synthesize cardImage = _cardImage;
-@synthesize cardStatus = _cardStatus;
-@synthesize cardNickname = _cardNickname;
-@synthesize distanceLabel = _distanceLabel;
-@synthesize venueView = _venueView;
-@synthesize venueViewButton = _venueViewButton;
-@synthesize venueName = _venueName;
-@synthesize venueAddress = venueAddress;
-@synthesize venueOthersIcon = _venueOthersIcon;
-@synthesize venueOthers = venueOthers;
-@synthesize availabilityView = _availabilityView;
-@synthesize hoursAvailable = _hoursAvailable;
-@synthesize minutesAvailable = _minutesAvailable;
-@synthesize resumeView = _resumeView;
-@synthesize resumeLabel = _resumeLabel;
-@synthesize resumeRate = _resumeRate;
-@synthesize resumeEarned = _resumeEarned;
-@synthesize loveReceived = _loveReceived;
-@synthesize resumeWebView = _resumeWebView;
-@synthesize plusButton = _plusButton;
-@synthesize minusButton = _minusButton;
-@synthesize f2fButton = _f2fButton;
-@synthesize chatButton = _chatButton;
-@synthesize payButton = _payButton;
-@synthesize reviewButton = _reviewButton;
-@synthesize goMenuBackground = _goMenuBackground;
-@synthesize cardJobPosition = _cardJobPosition;
-@synthesize isF2FInvite = _isF2FInvite;
-@synthesize othersAtPlace = _othersAtPlace;
-@synthesize templateCounter = _templateCounter;
-@synthesize selectedFavoriteVenueIndex = _selectedFavoriteVenueIndex;
-@synthesize propNoteLabel = _propNoteLabel;
-@synthesize mapAndDistanceLoaded = _mapAndDistanceLoaded;
-@synthesize preBadgesHTML, postBadgesHTML, badgesHTML;
-
-BOOL firstLoad = YES;
-UITapGestureRecognizer* _tapRecon = nil;
 
 static GRMustacheTemplate *preBadgesTemplate;
 static GRMustacheTemplate *badgesTemplate;
@@ -160,7 +119,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     self.resumeWebView.alpha = 0.0;
     if (_user) {
         // set the booleans this VC uses in later control statements
-        firstLoad = YES;
+        self.firstLoad = YES;
         self.mapAndDistanceLoaded = NO;
         
         // set the card image to the user's profile image
@@ -327,7 +286,7 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 - (void)updateLastUserCheckin
 {
-    if (firstLoad) {
+    if (self.firstLoad) {
         // if the user is checked in show how much longer they'll be available for
         if ([self.user.checkoutEpoch timeIntervalSinceNow] > 0) {
             self.checkedIn.text = @"Checked in";
@@ -364,7 +323,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     
     self.othersAtPlace = self.user.checkedIn ? self.user.placeCheckedIn.checkinCount - 1 : self.user.placeCheckedIn.checkinCount;
     
-    if (firstLoad) {
+    if (self.firstLoad) {
         if (self.othersAtPlace == 0) {
             // hide the little man, nobody else is here
             self.venueOthersIcon.alpha = 0.0;
@@ -377,7 +336,7 @@ static GRMustacheTemplate *postBadgesTemplate;
             self.venueOthers.text = [NSString stringWithFormat:@"%d %@ here now", self.othersAtPlace, self.othersAtPlace == 1 ? @"other" : @"others"];
         }
         
-        firstLoad = NO;
+        self.firstLoad = NO;
     }    
     
     // animate the display of the venueView and availabilityView

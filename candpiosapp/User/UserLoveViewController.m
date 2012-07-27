@@ -30,25 +30,6 @@
 @end
 
 @implementation UserLoveViewController
-@synthesize delegate = _delegate;
-@synthesize user = _user;
-@synthesize charCounterLabel = _charCounterLabel;
-@synthesize profilePicture = _profilePicture;
-@synthesize descriptionTextView = _descriptionTextView;
-@synthesize navigationBar = _navigationBar;
-@synthesize tableView = _tableView;
-@synthesize loveBackground = _loveBackground;
-@synthesize selectedSkill = _selectedSkill;
-@synthesize keyboardBackground = _keyboardBackground;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {

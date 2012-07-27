@@ -11,14 +11,6 @@
 
 @implementation UserTableViewCell 
 
-@synthesize nicknameLabel;
-@synthesize categoryLabel;
-@synthesize statusLabel;
-@synthesize distanceLabel;
-@synthesize checkInLabel;
-@synthesize checkInCountLabel;
-@synthesize profilePictureImageView;
-
 - (void)awakeFromNib
 {
     // call super's awakeFromNib so that this cell can be swipeable
