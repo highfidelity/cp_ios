@@ -11,7 +11,7 @@
 @interface CPApiClient : AFHTTPClient
 
 
-+ (void)checkInToLocation:(CPVenue *)place
++ (void)checkInToVenue:(CPVenue *)venue
                 hoursHere:(int)hoursHere
                statusText:(NSString *)statusText
                 isVirtual:(BOOL)isVirtual

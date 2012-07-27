@@ -296,7 +296,7 @@
         CPVenue *place = [places objectAtIndex:path.row];
         
         // give place info to the CheckInDetailsViewController
-        [[segue destinationViewController] setPlace:place];
+        [[segue destinationViewController] setVenue:place];
         
     }
 }
