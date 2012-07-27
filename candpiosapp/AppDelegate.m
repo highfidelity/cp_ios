@@ -15,7 +15,6 @@
 #import "CheckInDetailsViewController.h"
 #import "CPAlertView.h"
 #import "VenueInfoViewController.h"
-#import "UIButton+AnimatedClockHand.h"
 #import "PushModalViewControllerFromLeftSegue.h"
 #import "ContactListViewController.h"
 #import "CPApiClient.h"
