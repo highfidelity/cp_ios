@@ -77,11 +77,11 @@ static NSString * AFStringFromIndexSet(NSIndexSet *indexSet) {
         }
 
         if (range.length == 1) {
-            [string appendFormat:@"%u", range.location];
+            [string appendFormat:@"%lu", (long)range.location];
         } else {
             NSUInteger firstIndex = range.location;
             NSUInteger lastIndex = firstIndex + range.length - 1;
-            [string appendFormat:@"%u-%u", firstIndex, lastIndex];
+            [string appendFormat:@"%lu-%lu", (long)firstIndex, (long)lastIndex];
         }
 
         range.location = nextIndex;
@@ -188,7 +188,7 @@ NSString * AFCreateIncompleteDownloadDirectoryPath(void) {
 }
 
 - (BOOL)hasAcceptableStatusCode {
-    return ![[self class] acceptableStatusCodes] || [[[self class] acceptableStatusCodes] containsIndex:[self.response statusCode]];
+    return ![[self class] acceptableStatusCodes] || [[[self class] acceptableStatusCodes] containsIndex:(NSUInteger)[self.response statusCode]];
 }
 
 - (BOOL)hasAcceptableContentType {
@@ -291,7 +291,7 @@ static id AFStaticClassValueImplementation(id self, SEL _cmd) {
 }
 
 + (BOOL)canProcessRequest:(NSURLRequest *)request {
-    if (![[self class] isEqual:[AFHTTPRequestOperation class]]) {
+    if ([[self class] isEqual:[AFHTTPRequestOperation class]]) {
         return YES;
     }
     

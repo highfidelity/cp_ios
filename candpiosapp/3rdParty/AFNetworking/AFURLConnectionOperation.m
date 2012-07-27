@@ -21,6 +21,9 @@
 // THE SOFTWARE.
 
 #import "AFURLConnectionOperation.h"
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+#import <UIKit/UIKit.h>
+#endif
 
 typedef enum {
     AFHTTPOperationPausedState      = -1,
@@ -51,6 +54,7 @@ typedef void (^AFURLConnectionOperationProgressBlock)(NSInteger bytes, long long
 typedef BOOL (^AFURLConnectionOperationAuthenticationAgainstProtectionSpaceBlock)(NSURLConnection *connection, NSURLProtectionSpace *protectionSpace);
 typedef void (^AFURLConnectionOperationAuthenticationChallengeBlock)(NSURLConnection *connection, NSURLAuthenticationChallenge *challenge);
 typedef NSCachedURLResponse * (^AFURLConnectionOperationCacheResponseBlock)(NSURLConnection *connection, NSCachedURLResponse *cachedResponse);
+typedef NSURLRequest * (^AFURLConnectionOperationRedirectResponseBlock)(NSURLConnection *connection, NSURLRequest *request, NSURLResponse *redirectResponse);
 
 static inline NSString * AFKeyPathFromOperationState(AFOperationState state) {
     switch (state) {
@@ -113,6 +117,7 @@ static inline BOOL AFStateTransitionIsValid(AFOperationState fromState, AFOperat
 @property (readwrite, nonatomic, copy) AFURLConnectionOperationAuthenticationAgainstProtectionSpaceBlock authenticationAgainstProtectionSpace;
 @property (readwrite, nonatomic, copy) AFURLConnectionOperationAuthenticationChallengeBlock authenticationChallenge;
 @property (readwrite, nonatomic, copy) AFURLConnectionOperationCacheResponseBlock cacheResponse;
+@property (readwrite, nonatomic, copy) AFURLConnectionOperationRedirectResponseBlock redirectResponse;
 
 - (void)operationDidStart;
 - (void)finish;
@@ -137,6 +142,7 @@ static inline BOOL AFStateTransitionIsValid(AFOperationState fromState, AFOperat
 @synthesize authenticationAgainstProtectionSpace = _authenticationAgainstProtectionSpace;
 @synthesize authenticationChallenge = _authenticationChallenge;
 @synthesize cacheResponse = _cacheResponse;
+@synthesize redirectResponse = _redirectResponse;
 @synthesize lock = _lock;
 
 + (void)networkRequestThreadEntryPoint:(id)__unused object {
@@ -209,6 +215,7 @@ static inline BOOL AFStateTransitionIsValid(AFOperationState fromState, AFOperat
     [_authenticationChallenge release];
     [_authenticationAgainstProtectionSpace release];
     [_cacheResponse release];
+    [_redirectResponse release];
     
     [_connection release];
     
@@ -302,6 +309,10 @@ static inline BOOL AFStateTransitionIsValid(AFOperationState fromState, AFOperat
     self.cacheResponse = block;
 }
 
+- (void)setRedirectResponseBlock:(NSURLRequest * (^)(NSURLConnection *connection, NSURLRequest *request, NSURLResponse *redirectResponse))block {
+    self.redirectResponse = block;
+}
+
 - (void)setState:(AFOperationState)state {
     [self.lock lock];
     if (AFStateTransitionIsValid(self.state, state, [self isCancelled])) {
@@ -344,15 +355,19 @@ static inline BOOL AFStateTransitionIsValid(AFOperationState fromState, AFOperat
 }
 
 - (void)pause {
-    if ([self isPaused]) {
+    if ([self isPaused] || [self isFinished] || [self isCancelled]) {
         return;
     }
     
     [self.lock lock];
-    self.state = AFHTTPOperationPausedState;
     
-    [self.connection performSelector:@selector(cancel) onThread:[[self class] networkRequestThread] withObject:nil waitUntilDone:NO modes:[self.runLoopModes allObjects]];
-    [[NSNotificationCenter defaultCenter] postNotificationName:AFNetworkingOperationDidFinishNotification object:self];
+    if ([self isExecuting]) {
+        [self.connection performSelector:@selector(cancel) onThread:[[self class] networkRequestThread] withObject:nil waitUntilDone:NO modes:[self.runLoopModes allObjects]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:AFNetworkingOperationDidFinishNotification object:self];
+    }
+    
+    self.state = AFHTTPOperationPausedState;
+
     [self.lock unlock];
 }
 
@@ -504,6 +519,17 @@ didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
         } else {
             [[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
         }
+    }
+}
+
+- (NSURLRequest *)connection:(NSURLConnection *)connection
+             willSendRequest:(NSURLRequest *)request
+            redirectResponse:(NSURLResponse *)redirectResponse;
+{
+    if (self.redirectResponse) {
+        return self.redirectResponse(connection, request, redirectResponse);
+    } else {
+        return request;
     }
 }
 

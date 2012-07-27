@@ -762,47 +762,6 @@
                          completion:completion];
 }
 
-+ (void)checkInToLocation:(CPVenue *)place
-                hoursHere:(int)hoursHere
-               statusText:(NSString *)statusText
-                isVirtual:(BOOL)isVirtual
-              isAutomatic:(BOOL)isAutomatic
-          completionBlock:(void (^)(NSDictionary *, NSError *))completion
-{        
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:[NSString stringWithFormat:@"%.7lf", place.coordinate.latitude]
-                  forKey:@"lat"];
-    [parameters setValue:[NSString stringWithFormat:@"%.7lf", place.coordinate.longitude]
-                  forKey:@"lng"];
-    [parameters setValue:place.name forKey:@"venue_name"];
-    [parameters setValue:[NSString stringWithFormat:@"%d", hoursHere] forKey:@"hours_here"];
-    [parameters setValue:place.foursquareID forKey:@"foursquare"];
-    [parameters setValue:place.address forKey:@"address"];
-    [parameters setValue:place.city forKey:@"city"];
-    [parameters setValue:place.state forKey:@"state"];
-    [parameters setValue:place.zip forKey:@"zip"];
-    [parameters setValue:place.phone forKey:@"phone"];
-    [parameters setValue:place.formattedPhone forKey:@"formatted_phone"];
-    if(isVirtual)
-    {
-        [parameters setValue:@"1" forKey:@"is_virtual"];
-    }
-    else {
-        [parameters setValue:@"0" forKey:@"is_virtual"];
-
-    }
-
-    [parameters setValue:[NSString stringWithFormat:@"%d", isAutomatic] forKey:@"is_automatic"];
-    
-    // Don't pass the place icon - it's a dictionary and this crashes the request
-    // [parameters setValue:place.icon forKey:@"icon"];
-    [parameters setValue:statusText forKey:@"status"];
-    
-        
-    [self makeHTTPRequestWithAction:@"checkin" withParameters:parameters completion:completion];
-    [FlurryAnalytics logEvent:@"checkedIn"];
-}
-
 + (void)checkOutWithCompletion:(void (^)(NSDictionary *, NSError *))completion
 {
     [self makeHTTPRequestWithAction:@"checkout"
