@@ -10,8 +10,6 @@
 
 @implementation NewPostCell
 
-@synthesize growingTextView = _growingTextView;
-
 - (void)awakeFromNib
 {
     [super awakeFromNib];

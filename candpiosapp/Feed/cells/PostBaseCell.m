@@ -11,14 +11,6 @@
 
 @implementation PostBaseCell
 
-@synthesize senderProfileButton = _senderProfileButton;
-@synthesize entryLabel = _entryLabel;
-@synthesize post = _post;
-
-@synthesize plusButton = _plusButton;
-@synthesize likeCountLabel = _likeCountLabel;
-@synthesize likeCountBubble = _likeCountBubble;
-
 - (void)awakeFromNib
 {
     // grab a timeLine view using the class method in FeedViewController    

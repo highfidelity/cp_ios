@@ -10,7 +10,4 @@
 
 @implementation PostUpdateCell
 
-@synthesize timeLabel = _timeLabel;
-@synthesize dateLabel = _dateLabel;
-
 @end

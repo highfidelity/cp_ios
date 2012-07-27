@@ -11,5 +11,5 @@
 
 @interface PostLoveCell : PostBaseCell
 
-@property (nonatomic, assign) IBOutlet UIButton *receiverProfileButton;
+@property (weak, nonatomic) IBOutlet UIButton *receiverProfileButton;
 @end

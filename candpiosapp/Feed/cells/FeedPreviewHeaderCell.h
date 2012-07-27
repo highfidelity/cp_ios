@@ -18,8 +18,8 @@
 
 @interface FeedPreviewHeaderCell : UITableViewCell
 
-@property (nonatomic, assign) IBOutlet UILabel *venueNameLabel;
-@property (nonatomic, assign) IBOutlet UILabel *relativeTimeLabel;
+@property (nonatomic) IBOutlet UILabel *venueNameLabel;
+@property (nonatomic) IBOutlet UILabel *relativeTimeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *removeButton;
 @property (weak, nonatomic) id<FeedPreviewHeaderCellDelegate> delegate;
 

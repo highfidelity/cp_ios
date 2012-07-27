@@ -11,11 +11,6 @@
 
 @implementation FeedPreviewHeaderCell
 
-@synthesize venueNameLabel = _venueNameLabel;
-@synthesize relativeTimeLabel = _relativeTimeLabel;
-@synthesize removeButton = _removeButton;
-@synthesize delegate = _delegate;
-
 - (void)awakeFromNib {
     [super awakeFromNib];
     
