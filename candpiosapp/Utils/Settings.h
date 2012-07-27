@@ -17,7 +17,7 @@
 // note: userEmailAddress is only valid if the created their account with an email address
 @property (strong, nonatomic) NSString *userEmailAddress;
 @property (strong, nonatomic) NSString *userPassword;
-@property (nonatomic) float userBalance;
+@property float userBalance;
 
 //checkin notification settings
 @property BOOL notifyInVenueOnly;
