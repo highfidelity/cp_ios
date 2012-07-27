@@ -11,9 +11,6 @@
 
 @implementation CPVenueFeed
 
-@synthesize venue = _venue;
-@synthesize posts = _posts;
-
 - (NSMutableArray *)posts
 {
     if (!_posts) {

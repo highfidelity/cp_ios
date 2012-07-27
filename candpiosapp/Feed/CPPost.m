@@ -11,20 +11,6 @@
 
 @implementation CPPost
 
-@synthesize postID = _postID;
-@synthesize entry = _entry;
-@synthesize author = _author;
-@synthesize date = _date;
-@synthesize lat = _lat;
-@synthesize lng = _lng;
-@synthesize receiver = _receiver;
-@synthesize skill = _skill;
-@synthesize type = _type;
-@synthesize replies = _replies;
-@synthesize originalPostID = _originalPostID;
-@synthesize likeCount = _likeCount;
-@synthesize userHasLiked = _userHasLiked;
-
 static NSDateFormatter *postDateFormatter;
 
 + (void)initialize
