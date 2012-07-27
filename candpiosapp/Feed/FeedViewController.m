@@ -1647,53 +1647,52 @@ typedef enum {
     return timeLine;
 }
 
-
 - (WEPopoverContainerViewProperties *)popoverContainerViewProperties {
-	// layout and graphics properties for the popover
-	WEPopoverContainerViewProperties *props = [WEPopoverContainerViewProperties new];
-	NSString *bgImageName = nil;
-	CGFloat bgMargin = 0.0;
-	CGFloat bgCapSize = 0.0;
-	CGFloat contentMargin = 4.0;
-	
-	bgImageName = @"pill-popover-background.png";
-	
-	// These constants are determined by the popoverBg.png image file and are image dependent
-	bgMargin = 13; // margin width of 13 pixels on all sides popoverBg.png (62 pixels wide - 36 pixel background) / 2 == 26 / 2 == 13 
-	bgCapSize = 31; // ImageSize/2  == 62 / 2 == 31 pixels
-	
-	props.leftBgMargin = bgMargin;
-	props.rightBgMargin = bgMargin;
-	props.topBgMargin = bgMargin;
-	props.bottomBgMargin = bgMargin;
-	props.leftBgCapSize = bgCapSize;
-	props.topBgCapSize = bgCapSize;
-	props.bgImageName = bgImageName;
-	props.leftContentMargin = contentMargin;
-	props.rightContentMargin = contentMargin - 1; // Need to shift one pixel for border to look correct
-	props.topContentMargin = contentMargin; 
-	props.bottomContentMargin = contentMargin;
-	
-	props.arrowMargin = 4.0;
-	
-	props.upArrowImageName = @"popover-arrow-top.png";
-	props.downArrowImageName = @"popover-arrow-bottom.png";
-	props.leftArrowImageName = @"popover-arrow-left.png";
-	props.rightArrowImageName = @"popover-arrow-right.png";
-	return props;	
+    // layout and graphics properties for the popover
+    WEPopoverContainerViewProperties *props = [WEPopoverContainerViewProperties new];
+    NSString *bgImageName = nil;
+    CGFloat bgMargin = 0.0;
+    CGFloat bgCapSize = 0.0;
+    CGFloat contentMargin = 4.0;
+    
+    bgImageName = @"pill-popover-background.png";
+    
+    // These constants are determined by the popoverBg.png image file and are image dependent
+    bgMargin = 13; // margin width of 13 pixels on all sides popoverBg.png (62 pixels wide - 36 pixel background) / 2 == 26 / 2 == 13
+    bgCapSize = 31; // ImageSize/2  == 62 / 2 == 31 pixels
+    
+    props.leftBgMargin = bgMargin;
+    props.rightBgMargin = bgMargin;
+    props.topBgMargin = bgMargin;
+    props.bottomBgMargin = bgMargin;
+    props.leftBgCapSize = bgCapSize;
+    props.topBgCapSize = bgCapSize;
+    props.bgImageName = bgImageName;
+    props.leftContentMargin = contentMargin;
+    props.rightContentMargin = contentMargin - 1; // Need to shift one pixel for border to look correct
+    props.topContentMargin = contentMargin;
+    props.bottomContentMargin = contentMargin;
+    
+    props.arrowMargin = 4.0;
+    
+    props.upArrowImageName = @"popover-arrow-top.png";
+    props.downArrowImageName = @"popover-arrow-bottom.png";
+    props.leftArrowImageName = @"popover-arrow-left.png";
+    props.rightArrowImageName = @"popover-arrow-right.png";
+    return props;
 }
 
-- (void)dismissPopover 
+- (void)dismissPopover
 {
     // dismiss popover and reset state
     [self.wePopoverController dismissPopoverAnimated:YES];
     self.wePopoverController = nil;
-    self.pillPopoverViewController = nil;    
+    self.pillPopoverViewController = nil;
 }
 - (void)showPillPopoverFromCell:(CommentCell *)cell
 {
     // present the popover from the specified cell.. dismiss if this was a second touch
-	if (!self.wePopoverController) {
+    if (!self.wePopoverController) {
         UIButton *button = cell.pillButton;
 		
         // grab a UserProfileViewController from the UserStoryboard
@@ -1706,9 +1705,9 @@ typedef enum {
 		self.wePopoverController.delegate = self;
         [self.wePopoverController setContainerViewProperties:[self popoverContainerViewProperties]];
 		[self.wePopoverController presentPopoverFromRect:[self.view convertRect:button.frame fromView:button.superview]
-												inView:self.view 
-							  permittedArrowDirections:UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight
-                                              animated:YES];
+                                                  inView:self.view
+                                permittedArrowDirections:UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight
+                                                animated:YES];
 	} else {
         [self dismissPopover];
 	}
@@ -1718,7 +1717,7 @@ typedef enum {
 
 - (void)popoverControllerDidDismissPopover:(WEPopoverController *)thePopoverController {
 	//Safe to release the popover here
-	self.wePopoverController = nil;
+    self.wePopoverController = nil;
 }
 
 - (BOOL)popoverControllerShouldDismissPopover:(WEPopoverController *)thePopoverController {
@@ -1727,17 +1726,17 @@ typedef enum {
 }
 
 #pragma mark - PillPopoverDelegate implementation
-- (void) pillPopover:(PillPopoverViewController*)pillPopoverViewController commentPressedForIndexPath:(NSIndexPath*)indexPath
+- (void) pillPopover:(PillPopoverViewController *)pillPopoverViewController commentPressedForIndexPath:(NSIndexPath*)indexPath
 {
     // dismiss popover and show the comment cell
     [self dismissPopover];
     [self newPost:indexPath];
 }
-- (void) pillPopover:(PillPopoverViewController*)pillPopoverViewController plusOnePressedForIndexPath:(NSIndexPath*)indexPath
+- (void) pillPopover:(PillPopoverViewController *)pillPopoverViewController plusOnePressedForIndexPath:(NSIndexPath*)indexPath
 {
-    CommentCell *cell = (CommentCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+    CommentCell *cell = (CommentCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     [cell updatePillButtonAnimated:YES];
-    [self dismissPopover];    
+    [self dismissPopover];
 }
 
 

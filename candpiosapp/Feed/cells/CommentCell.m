@@ -18,38 +18,39 @@
 - (void) updatePillButtonAnimated:(BOOL)animated {
     // update pill button to the count specified in the post.. adding if needed
     [self addPillButton];
-    
+    NSTimeInterval animationDuration = 0.0;
     if (animated) {
+        animationDuration = 0.5;
         CATransition *animation = [CATransition animation];
         animation.duration = 1.0;
         animation.type = kCATransitionFade;
         animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
         [self.pillLabel.layer addAnimation:animation forKey:@"changeTextTransition"];
-        [UIView beginAnimations:@"pill-size-change" context:nil];
     } else {
         [self.pillLabel.layer removeAllAnimations];
     }
-    UIImage *buttonImage = [UIImage imageNamed:@"pill-button-plus1-comment"];
-    self.pillLabel.text = @"";
-    if (self.post.likeCount > 0) {
-        self.pillLabel.text = [NSString stringWithFormat:@"%i", self.post.likeCount];
-    }
-    // calculate the horizontal size of the button as buttonImage size + label size.. and center label vertically 
-    CGSize sizeConstraint = CGSizeMake(self.contentView.frame.size.width - self.pillLabel.frame.origin.x, buttonImage.size.height);
-    CGSize labelSize = [self.pillLabel.text sizeWithFont:self.pillLabel.font 
-                              constrainedToSize:sizeConstraint
-                                  lineBreakMode:self.pillLabel.lineBreakMode];
-    self.pillLabel.frame = CGRectMake(self.pillLabel.frame.origin.x, 
-                             self.pillButton.frame.origin.y + (buttonImage.size.height - labelSize.height)/2, 
-                             labelSize.width, 
-                             labelSize.height);
-    self.pillButton.frame = CGRectMake(self.pillButton.frame.origin.x, 
-                              self.pillButton.frame.origin.y,
-                              buttonImage.size.width + labelSize.width, 
-                              buttonImage.size.height);
-    if (animated) {
-        [UIView commitAnimations];
-    }
+    
+    [UIView animateWithDuration:animationDuration animations:^{
+        UIImage *buttonImage = [UIImage imageNamed:@"pill-button-plus1-comment"];
+        self.pillLabel.text = @"";
+        if (self.post.likeCount > 0) {
+            self.pillLabel.text = [NSString stringWithFormat:@"%i", self.post.likeCount];
+        }
+        // calculate the horizontal size of the button as buttonImage size + label size.. and center label vertically
+        CGSize sizeConstraint = CGSizeMake(self.contentView.frame.size.width - self.pillLabel.frame.origin.x, buttonImage.size.height);
+        CGSize labelSize = [self.pillLabel.text sizeWithFont:self.pillLabel.font
+                                           constrainedToSize:sizeConstraint
+                                               lineBreakMode:self.pillLabel.lineBreakMode];
+        self.pillLabel.frame = CGRectMake(self.pillLabel.frame.origin.x,
+                                          self.pillButton.frame.origin.y + (buttonImage.size.height - labelSize.height)/2,
+                                          labelSize.width,
+                                          labelSize.height);
+        self.pillButton.frame = CGRectMake(self.pillButton.frame.origin.x,
+                                           self.pillButton.frame.origin.y,
+                                           buttonImage.size.width + labelSize.width,
+                                           buttonImage.size.height);
+    }];
+    
 }
 
 - (void) addPillButton 
