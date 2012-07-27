@@ -11,9 +11,7 @@
 @interface UIButton (AnimatedClockHand)
 
 -(void)addClockHand;
-
 -(void)toggleAnimationOfClockHand:(BOOL)animating;
-
 -(void)refreshButtonStateFromCheckinStatus;
 -(void)refreshButtonStateWithBoolean:(BOOL)checkedIn;
 

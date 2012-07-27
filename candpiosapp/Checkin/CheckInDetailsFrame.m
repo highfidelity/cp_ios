@@ -10,15 +10,6 @@
 
 @implementation CheckInDetailsFrame
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
 // drawRect that will draw the frame and the ticks in the check in details box
 - (void)drawRect:(CGRect)rect
 {

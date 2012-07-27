@@ -9,7 +9,6 @@
 #import "CPCheckinHandler.h"
 
 @implementation CPCheckinHandler
-@synthesize afterCheckinAction = _afterCheckinAction;
 
 static CPCheckinHandler *sharedHandler;
 
