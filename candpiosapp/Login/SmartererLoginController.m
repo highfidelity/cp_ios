@@ -36,13 +36,6 @@
     [self initiateLogin];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-
 - (void)smartererCredentialsCapture:(NSNotification*)notification {
     NSLog(@"caught smarterer credentials");
     

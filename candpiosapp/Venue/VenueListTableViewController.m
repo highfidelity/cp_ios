@@ -79,11 +79,6 @@
     [self.delegate refreshButtonClicked:nil];   
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 -(void)newDataBeingLoaded:(NSNotification *)notification
 {
     // check if we're visible

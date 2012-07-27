@@ -71,11 +71,6 @@
     [self saveUserJobCategories];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 - (void)saveUserJobCategories
 {
     if ([self.user majorJobCategory] != [[self.majorCategoryButton titleLabel] text] ||

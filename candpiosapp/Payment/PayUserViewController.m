@@ -82,11 +82,6 @@
     }];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 - (IBAction)makePayment:(id)sender {
 
     [SVProgressHUD showWithStatus:@"Proccessing transaction"];

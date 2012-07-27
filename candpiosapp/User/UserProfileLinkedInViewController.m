@@ -45,11 +45,6 @@
     [self.socialWebView loadRequest:requestObj]; 
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 #pragma mark - UIWebViewDelegate
 
 

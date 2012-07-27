@@ -85,15 +85,6 @@
     [super viewDidDisappear:animated];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    if (interfaceOrientation == UIInterfaceOrientationPortrait) {
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
 - (void)refreshLocations {
 	[SVProgressHUD showWithStatus:@"Loading nearby venues..."];
 

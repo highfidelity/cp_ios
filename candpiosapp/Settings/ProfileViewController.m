@@ -172,11 +172,6 @@
     self.profileImageView.frame = profileImageFrame;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 #pragma mark - Web Data Sync
 
 - (void)placeCurrentUserDataAnimated:(BOOL)animated

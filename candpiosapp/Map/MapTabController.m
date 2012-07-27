@@ -157,12 +157,6 @@ BOOL clearLocations = NO;
     }
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 # pragma mark - Active Venue and Active User Grabbing
 
 // TODO: For both users and venues let's have a caching strategy

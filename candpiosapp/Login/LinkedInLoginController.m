@@ -77,12 +77,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     }
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 
 - (void)linkedInCredentialsCapture:(NSNotification*)notification {
     NSString *urlString = [[notification userInfo] objectForKey:@"url"];

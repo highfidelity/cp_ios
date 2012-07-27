@@ -83,13 +83,6 @@
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 - (IBAction)loginWithLinkedInTapped:(id)sender 
 {
 	// Handle LinkedIn login

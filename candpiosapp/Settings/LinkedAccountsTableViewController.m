@@ -56,16 +56,11 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
--(IBAction)gearPressed:(id)sender
-{
+-(IBAction)gearPressed:(id)sender {
     if ([self postToLinkedIn] != [[self postToLinkedInSwitch] isOn]) {
         [CPapi saveLinkedInPostStatus:[[self postToLinkedInSwitch] isOn]];
     }
+    
     [self dismissPushModalViewControllerFromLeftSegue];
 }
 

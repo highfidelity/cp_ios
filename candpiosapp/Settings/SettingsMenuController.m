@@ -157,12 +157,6 @@
     [self initMenu];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 - (void)menuClosePan:(UIPanGestureRecognizer*) sender {
     if (sender.state == UIGestureRecognizerStateBegan) {
         // record the start location
