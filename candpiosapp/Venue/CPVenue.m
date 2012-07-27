@@ -11,32 +11,9 @@
 
 @implementation CPVenue
 
-@synthesize venueID = _venueID;
-@synthesize name = _name;
-@synthesize icon = _icon;
-@synthesize foursquareID = _foursquareID;
-@synthesize address = _address;
-@synthesize city = _city;
-@synthesize state = _state;
-@synthesize zip = _zip;
-@synthesize formattedPhone = _formattedPhone;
-@synthesize phone = _phone;
-@synthesize photoURL = _photoURL;
-@synthesize distanceFromUser = _distanceFromUser;
-@synthesize checkinCount = _checkinCount;
-@synthesize checkinTime = _checkinTime;
-@synthesize weeklyCheckinCount = _weeklyCheckinCount;
-@synthesize intervalCheckinCount = _monthlyCheckinCount;
-@synthesize coordinate = _coordinate;
-@synthesize activeUsers = _activeUsers;
-@synthesize hasContactAtVenue = _hasContactAtVenue;
-@synthesize autoCheckin = _autoCheckin;
-@synthesize specialVenueType = _specialVenueType;
-
 // override setters here to that when we parse JSON to set values we don't set things to null
-
-
 // TODO: find out if there is a JSON parser that will just set these values to nil or empty strings so we don't have to do this everywhere
+
 - (void)setAddress:(NSString *)address
 {
     if (![address isKindOfClass:[NSNull class]]) {

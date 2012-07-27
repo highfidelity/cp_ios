@@ -18,17 +18,6 @@
 
 @implementation VenueListTableViewController
 
-@synthesize venues = _venues;
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (NSMutableArray *)venues
 {
     // lazily instantiate the array of venues

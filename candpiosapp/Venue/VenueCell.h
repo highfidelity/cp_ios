@@ -11,7 +11,6 @@
 @interface VenueCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *venuePicture;
-
 @property (weak, nonatomic) IBOutlet UILabel *venueName;
 @property (weak, nonatomic) IBOutlet UILabel *venueAddress;
 @property (weak, nonatomic) IBOutlet UILabel *venueDistance;

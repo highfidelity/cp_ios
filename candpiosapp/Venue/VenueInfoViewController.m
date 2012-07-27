@@ -25,10 +25,10 @@
 @property (weak, nonatomic) UIButton *checkInButton;
 @property (weak, nonatomic) UIButton *phoneButton;
 @property (weak, nonatomic) UIButton *addressButton;
-@property (assign, nonatomic) BOOL hadNoChat;
-@property (assign, nonatomic) BOOL checkInIsVirtual;
-@property (assign, nonatomic) BOOL hasPhone;
-@property (assign, nonatomic) BOOL hasAddress;
+@property (nonatomic) BOOL hadNoChat;
+@property (nonatomic) BOOL checkInIsVirtual;
+@property (nonatomic) BOOL hasPhone;
+@property (nonatomic) BOOL hasAddress;
 
 - (IBAction)tappedAddress:(id)sender;
 - (IBAction)tappedPhone:(id)sender;
@@ -53,44 +53,12 @@
 
 @implementation VenueInfoViewController
 
-@synthesize scrollView = _scrollView;
-@synthesize venue = _venue;
-@synthesize venuePhoto = _venuePhoto;
-@synthesize bottomPhotoOverlayView = _bottomPhotoOverlayView;
-@synthesize firstAidSection = _firstAidSection;
-@synthesize userSection = _userSection;
-@synthesize categoryCount = _categoryCount;
-@synthesize currentUsers = _currentUsers;
-@synthesize previousUsers = _previousUsers;
-@synthesize usersShown = _usersShown;
-@synthesize userObjectsForUsersOnScreen = _userObjectsForUsersOnScreen;
-@synthesize scrollToUserThumbnail = _scrollToUserThumbnail;
-@synthesize chatReloadTimer = _chatReloadTimer;
-@synthesize venueChatBox = _venueChatBox;
-@synthesize activeChatText = _activeChatText;
-@synthesize checkInButton = _checkInButton;
-@synthesize hadNoChat = _hadNoChat;
-@synthesize checkInIsVirtual = _checkInIsVirtual;
-@synthesize hasPhone = _hasPhone;
-@synthesize hasAddress = _hasAddress;
-@synthesize phoneButton = _phoneButton;
-@synthesize addressButton = _addressButton;
-
 - (NSMutableDictionary *)userObjectsForUsersOnScreen
 {
     if (!_userObjectsForUsersOnScreen) {
         _userObjectsForUsersOnScreen = [NSMutableDictionary dictionary];
     }
     return _userObjectsForUsersOnScreen;
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil  bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
 }
 
 - (void)viewDidLoad
