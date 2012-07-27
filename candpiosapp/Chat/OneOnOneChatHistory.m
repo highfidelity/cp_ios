@@ -10,9 +10,6 @@
 
 @implementation OneOnOneChatHistory
 
-@synthesize myUser = _myUser;
-@synthesize otherUser = _otherUser;
-
 - (id)initWithMyUser:(User *)myUser
         andOtherUser:(User *)otherUser
 {

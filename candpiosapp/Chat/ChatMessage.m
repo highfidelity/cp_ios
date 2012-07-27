@@ -10,12 +10,6 @@
 
 @implementation ChatMessage
 
-@synthesize fromMe = _fromMe;
-@synthesize fromUser = _fromUser;
-@synthesize toUser = _toUser;
-@synthesize message = _message;
-@synthesize date = _date;
-
 - (id)init {
     self = [super init];
     return self;

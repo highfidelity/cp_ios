@@ -13,9 +13,6 @@
 
 @implementation ChatHistory
 
-@synthesize messages = _messages;
-
-
 #pragma mark - Initializers
 
 - (id)init {
