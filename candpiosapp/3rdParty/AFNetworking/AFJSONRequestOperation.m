@@ -92,7 +92,7 @@ static dispatch_queue_t json_request_operation_processing_queue() {
 #pragma mark - AFHTTPRequestOperation
 
 + (NSSet *)acceptableContentTypes {
-    return [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", nil];
+    return [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", nil];
 }
 
 + (BOOL)canProcessRequest:(NSURLRequest *)request {
