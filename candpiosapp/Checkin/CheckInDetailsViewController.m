@@ -14,29 +14,31 @@
 #import "CPApiClient.h"
 
 @interface CheckInDetailsViewController() <UITextFieldDelegate, UIScrollViewDelegate>
-@property (weak, nonatomic) IBOutlet UIView *blueOverlay;
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (weak, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet UIScrollView *otherUsersScrollView;
-@property (weak, nonatomic) IBOutlet UIView *venueInfo;
-@property (weak, nonatomic) IBOutlet UILabel *checkInLabel;
-@property (weak, nonatomic) IBOutlet UILabel *placeName;
-@property (weak, nonatomic) IBOutlet UILabel *placeAddress;
-@property (weak, nonatomic) IBOutlet UIView *checkInDetails;
-@property (weak, nonatomic) IBOutlet UILabel *willLabel;
-@property (weak, nonatomic) IBOutlet UITextField *statusTextField;
-@property (weak, nonatomic) IBOutlet UISlider *timeSlider;
-@property (assign, nonatomic) int checkInDuration;
-@property (weak, nonatomic) IBOutlet UILabel *durationString;
-@property (assign, nonatomic) BOOL sliderButtonPressed;
-@property (weak, nonatomic) IBOutlet UIButton *checkInButton;
-@property (weak, nonatomic) IBOutlet UILabel *durationHeader;
-@property (weak, nonatomic) IBOutlet UIView *userInfoBubble;
-@property (weak, nonatomic) IBOutlet UILabel *infoBubbleNickname;
-@property (weak, nonatomic) IBOutlet UILabel *infoBubbleStatus;
-@property (strong, nonatomic) NSMutableArray *userArray;
-@property (assign, nonatomic) int userArrayIndex;
-@property (weak, nonatomic) UIImageView *infoBubbleArrow;
+
+@property (nonatomic, weak) IBOutlet UIView *blueOverlay;
+@property (nonatomic, weak) IBOutlet MKMapView *mapView;
+@property (nonatomic, weak) IBOutlet TPKeyboardAvoidingScrollView *scrollView;
+@property (nonatomic, weak) IBOutlet UIScrollView *otherUsersScrollView;
+@property (nonatomic, weak) IBOutlet UIView *venueInfo;
+@property (nonatomic, weak) IBOutlet UILabel *checkInLabel;
+@property (nonatomic, weak) IBOutlet UILabel *placeName;
+@property (nonatomic, weak) IBOutlet UILabel *placeAddress;
+@property (nonatomic, weak) IBOutlet UIView *checkInDetails;
+@property (nonatomic, weak) IBOutlet UILabel *willLabel;
+@property (nonatomic, weak) IBOutlet UITextField *statusTextField;
+@property (nonatomic, weak) IBOutlet UISlider *timeSlider;
+@property (nonatomic, weak) IBOutlet UILabel *durationString;
+@property (nonatomic, weak) IBOutlet UIButton *checkInButton;
+@property (nonatomic, weak) IBOutlet UILabel *durationHeader;
+@property (nonatomic, weak) IBOutlet UIView *userInfoBubble;
+@property (nonatomic, weak) IBOutlet UILabel *infoBubbleNickname;
+@property (nonatomic, weak) IBOutlet UILabel *infoBubbleStatus;
+@property (nonatomic, strong) NSMutableArray *userArray;
+@property (nonatomic, weak) UIImageView *infoBubbleArrow;
+@property (nonatomic) int checkInDuration;
+@property BOOL sliderButtonPressed;
+
+@property int userArrayIndex;
 
 -(IBAction)sliderChanged:(id)sender;
 -(void)showUserInfoBubbleForUserIndex:(int)userIndex andButton:(UIButton *)userImageButton;
@@ -46,33 +48,6 @@
 @end
 
 @implementation CheckInDetailsViewController
-@synthesize blueOverlay = _blueOverlay;
-@synthesize mapView = _mapView;
-@synthesize scrollView = _scrollView;
-@synthesize otherUsersScrollView = _otherUsersScrollView;
-@synthesize venueInfo = _venueInfo;
-@synthesize checkInLabel = _checkInLabel;
-@synthesize placeName = _placeName;
-@synthesize placeAddress = _placeAddress;
-@synthesize checkInDetails = _checkInDetails;
-@synthesize willLabel = _willLabel;
-@synthesize statusTextField = _statusTextField;
-@synthesize timeSlider = _timeSlider;
-@synthesize venue = _venue;
-@synthesize checkInDuration = _checkInDuration;
-@synthesize durationString = _durationString;
-@synthesize sliderButtonPressed = _sliderButtonPressed;
-@synthesize checkInButton = _checkInButton;
-@synthesize durationHeader = _durationHeader;
-@synthesize userInfoBubble = _userInfoBubble;
-@synthesize infoBubbleNickname = _infoBubbleNickname;
-@synthesize infoBubbleStatus = _infoBubbleStatus;
-@synthesize userArray = _userArray;
-@synthesize userArrayIndex = _userArrayIndex;
-@synthesize infoBubbleArrow = _infoBubbleArrow;
-@synthesize checkInIsVirtual = _checkInIsVirtual;
-@synthesize delegate = _delegate;
-
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
