@@ -19,17 +19,12 @@
 
 @interface UserListTableViewController()
 
-@property (nonatomic, assign) BOOL userIsPerformingQuickAction;
-@property (nonatomic, assign) BOOL reloadPrevented;
+@property (nonatomic) BOOL userIsPerformingQuickAction;
+@property (nonatomic) BOOL reloadPrevented;
 
 @end
 
 @implementation UserListTableViewController
-
-@synthesize userIsPerformingQuickAction = _userIsPerformingQuickAction;
-@synthesize reloadPrevented = _reloadPrevented;
-@synthesize weeklyUsers = _weeklyUsers;
-@synthesize checkedInUsers = _checkedInUsers;
 
 #pragma mark - View lifecycle
 
