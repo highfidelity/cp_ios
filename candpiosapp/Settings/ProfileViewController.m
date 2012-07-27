@@ -33,7 +33,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *emailValidationMsg;
 
 @property (weak, nonatomic) IBOutlet UIView *profileHeaderView;
-@property (weak, nonatomic) IBOutlet UIWebView *backgroundWebView;
 
 @property (weak, nonatomic) IBOutlet CPTouchableView *skillsView;
 @property (weak, nonatomic) IBOutlet CPTouchableView *visibilityView;
@@ -62,7 +61,6 @@
 
 @implementation ProfileViewController
 @synthesize profileHeaderView = _profileHeaderView;
-@synthesize backgroundWebView = _backgroundWebView;
 @synthesize skillsLabel = _skillsLabel;
 @synthesize categoriesLabel = _categoriesLabel;
 @synthesize skillsView = _skillsView;
@@ -123,6 +121,8 @@
     [super viewDidLoad];
     [SVProgressHUD show];
     
+    self.view.backgroundColor = RGBA(230, 230, 230, 1);
+    
     self.gearButton = self.navigationItem.rightBarButtonItem;
     
     self.skillsView.delegate = self;
@@ -133,7 +133,7 @@
 
     UIColor *paper = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paper-texture.jpg"]];
     self.profileHeaderView.backgroundColor = paper;
-    self.detailsView.backgroundColor = [paper colorWithAlphaComponent:0.8f];
+    self.detailsView.backgroundColor = paper;
     self.detailsView.frame = CGRectOffset(self.detailsView.frame, 0, 120);
     
     [CPUIHelper changeFontForTextField:self.nicknameTextField toLeagueGothicOfSize:30];
@@ -153,6 +153,11 @@
 
     self.currentUser = [CPUserDefaultsHandler currentUser];
     [self placeCurrentUserDataAnimated:NO];
+    
+    
+    // set the shadows
+    [CPUIHelper addShadowToView:self.profileHeaderView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
+    [CPUIHelper addShadowToView:self.detailsView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -174,7 +179,6 @@
 
 - (void)viewDidUnload
 {
-    [self setBackgroundWebView:nil];
     [self setProfileHeaderView:nil];
     [self setSkillsLabel:nil];
     [self setSkillsView:nil];
@@ -214,28 +218,6 @@
     
     [self.profileImageView setImage:profilePhoto];
     
-    NSString *fullHTML = [self.cache objectForKey:@"fullHTML"];
-    
-    if (!fullHTML) {
-        
-        GRMustacheTemplate *template = [GRMustacheTemplate templateFromResource:@"ProfileBackground"
-                                                                         bundle:nil
-                                                                          error:NULL];
-        
-        UIImage *blurredImage = [profilePhoto imageWithGaussianBlur];
-        NSData *imageData = UIImageJPEGRepresentation(blurredImage, 1.0);
-        
-        fullHTML = [template renderObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                           [imageData base64EncodedString],
-                                           @"photo-string",
-                                           nil]];
-        if (profilePhoto) {
-            [self.cache setObject:profilePhoto forKey:@"profilePhoto"];
-            [self.cache setObject:fullHTML forKey:@"fullHTML"];
-        }
-    }
-    
-    [self.backgroundWebView loadHTMLString:fullHTML baseURL:nil];
     // put the nickname
     self.nicknameTextField.text = self.currentUser.nickname;
 
