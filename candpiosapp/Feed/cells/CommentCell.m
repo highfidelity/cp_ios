@@ -9,11 +9,6 @@
 #import "CommentCell.h"
 
 @implementation CommentCell
-@synthesize post;
-@synthesize pillLabel;
-@synthesize pillButton;
-@synthesize placeholderPillButton;
-@synthesize delegate;
 
 - (void) updatePillButtonAnimated:(BOOL)animated {
     // update pill button to the count specified in the post.. adding if needed

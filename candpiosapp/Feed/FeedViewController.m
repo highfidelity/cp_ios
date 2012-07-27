@@ -49,7 +49,6 @@ typedef enum {
 
 @implementation FeedViewController
 
-
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad

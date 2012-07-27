@@ -15,12 +15,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *senderProfileButton;
 @property (weak, nonatomic) IBOutlet UILabel *entryLabel;
-@property (strong, nonatomic) CPPost* post;
-@property (strong, nonatomic) UIButton *plusButton;
-@property (strong, nonatomic) UILabel *likeCountLabel;
-@property (strong, nonatomic) UIImageView *likeCountBubble;
-
-- (void) addPlusWidget;
-- (void) changeLikeCountToValue:(int)value animated:(BOOL)animated;
+@property (nonatomic, strong) CPPost* post;
 
 @end

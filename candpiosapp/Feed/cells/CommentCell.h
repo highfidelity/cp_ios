@@ -14,11 +14,11 @@
 @end
 
 @interface CommentCell : UITableViewCell
-@property (nonatomic, strong) CPPost *post;
-@property (nonatomic, strong) UIButton *pillButton;
-@property (nonatomic, strong) IBOutlet UIButton *placeholderPillButton;
-@property (nonatomic, strong) UILabel *pillLabel;
-@property (nonatomic, strong) id<CommentCellDelegate> delegate;
+@property (strong, nonatomic) CPPost *post;
+@property (strong, nonatomic) UIButton *pillButton;
+@property (strong, nonatomic) UILabel *pillLabel;
+@property (nonatomic) id<CommentCellDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UIButton *placeholderPillButton;
 
 - (void) updatePillButtonAnimated:(BOOL)animated;
 
