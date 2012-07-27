@@ -25,21 +25,6 @@
 
 @implementation EnterInvitationCodeViewController
 
-@synthesize laterButton = _laterButton;
-@synthesize codeTextField = _codeTextField;
-
-@synthesize dontShowTextNoticeAfterLaterButtonPressed = _dontShowTextNoticeAfterLaterButtonPressed;
-@synthesize isPushedFromLeft = _isPushedFromLeft;
-@synthesize emailConfirmationRequired = _emailConfirmationRequired;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
