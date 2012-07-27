@@ -405,11 +405,11 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 #pragma mark UIWebViewDelegate methods
 
 -(void)webViewDidFinishLoad:(UIWebView *) webView {
-	[activityIndicator stopAnimating];
+	[self.activityIndicator stopAnimating];
 }
 
 -(void)webViewDidStartLoad:(UIWebView *) webView {
-	[activityIndicator startAnimating];
+	[self.activityIndicator startAnimating];
 }
 
 
