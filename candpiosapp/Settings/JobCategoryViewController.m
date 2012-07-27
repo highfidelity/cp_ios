@@ -11,35 +11,19 @@
 
 @interface JobCategoryViewController ()
 
-
 @property (weak, nonatomic) IBOutlet UIButton *majorCategoryButton;
 @property (weak, nonatomic) IBOutlet UIButton *minorCategoryButton;
+@property (strong, nonatomic) User *user;
+@property (strong, nonatomic) NSArray *jobCategories;
 
 - (IBAction)majorCategoryButtonClick:(id)sender;
 - (IBAction)minorCategoryButtonClick:(id)sender;
 
-
-@property (strong, nonatomic) User *user;
-@property (strong, nonatomic) NSArray *jobCategories;
 - (void)saveUserJobCategories;
 
 @end
 
 @implementation JobCategoryViewController
-@synthesize majorCategoryButton = _majorCategoryButton;
-@synthesize minorCategoryButton = _minorCategoryButton;
-@synthesize jobCategories = _jobCategories;
-@synthesize user = _user;
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -68,6 +52,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     [self saveUserJobCategories];
 }
 

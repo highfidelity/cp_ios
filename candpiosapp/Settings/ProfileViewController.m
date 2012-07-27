@@ -29,77 +29,32 @@
 @property (weak, nonatomic) IBOutlet UIView *emailView;
 @property (weak, nonatomic) IBOutlet UILabel *changePhotoLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
-
-@property (strong, nonatomic) IBOutlet UILabel *emailValidationMsg;
-
+@property (weak, nonatomic) IBOutlet UILabel *emailValidationMsg;
 @property (weak, nonatomic) IBOutlet UIView *profileHeaderView;
 @property (weak, nonatomic) IBOutlet UIWebView *backgroundWebView;
-
 @property (weak, nonatomic) IBOutlet CPTouchableView *skillsView;
 @property (weak, nonatomic) IBOutlet CPTouchableView *visibilityView;
 @property (weak, nonatomic) IBOutlet CPTouchableView *categoryView;
 @property (weak, nonatomic) IBOutlet CPTouchableView *deleteTouchable;
-
 @property (weak, nonatomic) IBOutlet UIView *detailsView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *floatView;
 @property (weak, nonatomic) IBOutlet UIImageView *arrowImageView;
 
-- (IBAction)gearPressed:(id)sender;
-- (IBAction)chooseNewProfileImage:(id)sender;
-
 @property (strong, nonatomic) User *currentUser;
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
 @property (strong, nonatomic) NSString *pendingEmail;
-
 @property (strong, nonatomic) UIBarButtonItem *gearButton;
-
-@property (assign, nonatomic) BOOL finishedSync;
-@property (assign, nonatomic) BOOL newDataFromSync;
-
+@property (nonatomic) BOOL finishedSync;
+@property (nonatomic) BOOL newDataFromSync;
 @property (strong, nonatomic, getter = cacheManager) NSCache *cache;
+
+- (IBAction)gearPressed:(id)sender;
+- (IBAction)chooseNewProfileImage:(id)sender;
+
 @end
 
 @implementation ProfileViewController
-@synthesize profileHeaderView = _profileHeaderView;
-@synthesize backgroundWebView = _backgroundWebView;
-@synthesize skillsLabel = _skillsLabel;
-@synthesize categoriesLabel = _categoriesLabel;
-@synthesize skillsView = _skillsView;
-@synthesize visibilityView = _visibilityView;
-@synthesize detailsView = _detailsView;
-@synthesize categoryView = _categoryView;
-@synthesize deleteTouchable = _deleteTouchable;
-@synthesize scrollView = _scrollView;
-@synthesize floatView = _floatView;
-@synthesize arrowImageView = _arrowImageView;
-@synthesize emailTextField = _emailTextField;
-@synthesize skillsTitle = _skillsTitle;
-@synthesize visibilityLabel = _visibilityLabel;
-@synthesize emailView = _emailView;
-@synthesize emailValidationMsg = _emailValidationMsg;
-@synthesize profileImageButton = _profileImageButton;
-
-@synthesize imagePicker = _imagePicker;
-@synthesize currentUser = _currentUser;
-@synthesize finishedSync = _finishedSync;
-@synthesize newDataFromSync = _newDataFromSync;
-@synthesize pendingEmail = _pendingEmail;
-@synthesize nicknameTextField = _nicknameTextField;
-@synthesize gearButton = _gearButton;
-@synthesize changePhotoLabel = _changePhotoLabel;
-@synthesize profileImageView = _profileImageView;
-@synthesize cache = _cache;
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 // lazily instantiate image picker when we call the getter
 - (UIImagePickerController *)imagePicker

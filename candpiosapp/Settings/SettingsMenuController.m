@@ -11,9 +11,9 @@
 
 @interface SettingsMenuController() <UITabBarControllerDelegate>
 
-@property (nonatomic, retain) NSArray *menuStringsArray;
-@property (nonatomic, retain) NSArray *menuSegueIdentifiersArray;
 @property (nonatomic) CGPoint panStartLocation;
+@property (strong, nonatomic) NSArray *menuStringsArray;
+@property (strong, nonatomic) NSArray *menuSegueIdentifiersArray;
 @property (strong, nonatomic) UITapGestureRecognizer *menuCloseGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanFromNavbarGestureRecognizer;
@@ -24,38 +24,7 @@
 
 @end
 
-
 @implementation SettingsMenuController
-
-@synthesize mapTabController;
-@synthesize tableView;
-@synthesize cpTabBarController;
-@synthesize isMenuShowing;
-@synthesize edgeShadow;
-@synthesize loginBanner = _loginBanner;
-@synthesize menuStringsArray;
-@synthesize menuSegueIdentifiersArray;
-@synthesize menuCloseGestureRecognizer;
-@synthesize menuClosePanGestureRecognizer;
-@synthesize menuClosePanFromNavbarGestureRecognizer;
-@synthesize menuClosePanFromTabbarGestureRecognizer;
-@synthesize menuCloseTapFromTabbarGestureRecognizer;
-@synthesize panStartLocation;
-@synthesize f2fInviteAlert = _f2fInviteAlert;
-@synthesize f2fPasswordAlert = _f2fPasswordAlert;
-@synthesize loginButton = _loginButton;
-@synthesize blockUIButton = _blockUIButton;
-@synthesize afterLoginAction = _afterLoginAction;
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)initMenu 
 {
@@ -93,14 +62,6 @@
     [self.tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
 #pragma mark - Alert View Setters
 
 - (void)setF2fInviteAlert:(UIAlertView *)f2fInviteAlert
@@ -116,14 +77,6 @@
 }
 
 #pragma mark - View lifecycle
-
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
-{
-}
-*/
-
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
@@ -160,11 +113,11 @@
 - (void)menuClosePan:(UIPanGestureRecognizer*) sender {
     if (sender.state == UIGestureRecognizerStateBegan) {
         // record the start location
-        panStartLocation = [sender locationInView:self.view];
+        self.panStartLocation = [sender locationInView:self.view];
     } else if (sender.state == UIGestureRecognizerStateChanged ||
                sender.state == UIGestureRecognizerStateEnded) {
         CGPoint location = [sender locationInView:self.view];
-        CGFloat dx = location.x - panStartLocation.x;
+        CGFloat dx = location.x - self.panStartLocation.x;
         CGFloat menuWidth = menuWidthPercentage * [UIScreen mainScreen].bounds.size.width;
         if (sender.state == UIGestureRecognizerStateChanged) { 
             // move the map, buttons and shadow
@@ -253,17 +206,17 @@
         if (!self.menuClosePanFromNavbarGestureRecognizer) { 
             // Pan to close from navbar
             self.menuClosePanFromNavbarGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(menuClosePan:)];
-            [visibleVC.navigationController.navigationBar addGestureRecognizer:menuClosePanFromNavbarGestureRecognizer];            
+            [visibleVC.navigationController.navigationBar addGestureRecognizer:self.menuClosePanFromNavbarGestureRecognizer];
         }
         if (!self.menuClosePanFromTabbarGestureRecognizer) {
             // Pan to close from tab bar
             self.menuClosePanFromTabbarGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(menuClosePan:)];
-            [tabTouch addGestureRecognizer:menuClosePanFromTabbarGestureRecognizer];  
+            [tabTouch addGestureRecognizer:self.menuClosePanFromTabbarGestureRecognizer];
         }
         if (!self.menuCloseTapFromTabbarGestureRecognizer) {
             // Tap to close from tab bar
             self.menuCloseTapFromTabbarGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeMenu)];
-            [tabTouch addGestureRecognizer:menuCloseTapFromTabbarGestureRecognizer];
+            [tabTouch addGestureRecognizer:self.menuCloseTapFromTabbarGestureRecognizer];
         }
     } else {
         // shift to the left, restoring the buttons
@@ -292,7 +245,7 @@
         
     }
     [UIView commitAnimations];
-    isMenuShowing = showMenu ? 1 : 0;
+    self.isMenuShowing = showMenu ? 1 : 0;
 }
 
 #pragma mark - Table view data source
@@ -304,7 +257,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return menuStringsArray.count;
+    return self.menuStringsArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

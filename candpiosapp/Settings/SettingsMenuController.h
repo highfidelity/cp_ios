@@ -21,13 +21,14 @@ typedef enum {
 } CPAfterLoginAction;
 
 @interface SettingsMenuController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) CPTabBarController *cpTabBarController;
 @property (strong, nonatomic) MapTabController *mapTabController;
 @property (nonatomic) BOOL isMenuShowing;
 @property (weak, nonatomic) IBOutlet UIImageView *edgeShadow;
 @property (weak, nonatomic) IBOutlet UIView *loginBanner;
-@property (nonatomic, assign) CPAfterLoginAction afterLoginAction;
+@property (nonatomic) CPAfterLoginAction afterLoginAction;
 
 // the following properties are used to dismiss F2F alerts that don't need to still be showing once new ones come in
 @property (strong, nonatomic) UIAlertView *f2fInviteAlert;

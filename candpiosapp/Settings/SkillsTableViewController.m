@@ -13,25 +13,12 @@
 
 @interface SkillsTableViewController ()
 
-@property (nonatomic, assign) int visibleCount;
+@property (nonatomic) int visibleCount;
 @property (strong, nonatomic) NSOperationQueue *skillQueue;
 
 @end
 
 @implementation SkillsTableViewController
-
-@synthesize skills = _skills;
-@synthesize visibleCount = _visibleCount;
-@synthesize skillQueue = _skillQueue;
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (NSOperationQueue *)skillQueue
 {

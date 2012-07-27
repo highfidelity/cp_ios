@@ -39,11 +39,6 @@ Welcome!";
 
 @implementation EditLinkedInInvitationMessageViewController
 
-@synthesize subjectTextField = _subjectTextField;
-@synthesize bodyTextView = _bodyTextView;
-@synthesize nickname = _nickname;
-@synthesize connectionIDs = _connectionIDs;
-
 #pragma mark - UIView
 
 - (void)viewDidLoad {
@@ -94,13 +89,7 @@ Welcome!";
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardWillShowNotification
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardWillHideNotification
-                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - actions

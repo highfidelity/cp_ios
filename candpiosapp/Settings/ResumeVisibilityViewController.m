@@ -25,12 +25,6 @@
 
 @implementation ResumeVisibilityViewController
 
-@synthesize user = _user;
-@synthesize resumeVisibilityButton = _resumeVisibilityButton;
-@synthesize resumeVisibilityOptions = _resumeVisibilityOptions;
-@synthesize resumeVisibilityOptionsKeys= _resumeVisibilityOptionsKeys;
-@synthesize originalProfileURLVisibility = _originalProfileURLVisibility;
-
 - (void)awakeFromNib {
     [super awakeFromNib];
     

@@ -18,9 +18,8 @@
 
 @implementation TermsOfServiceViewController
 
-@synthesize webView = _webView;
-
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
     [SVProgressHUD showWithStatus:@"Loading..."];

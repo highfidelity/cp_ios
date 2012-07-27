@@ -25,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UISwitch *contactsOnlyChatSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *chatNotificationLabel;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
+@property (strong, nonatomic) NSDate *quietTimeFromDate;
+@property (strong, nonatomic) NSDate *quietTimeToDate;
 
 - (IBAction)selectVenueCity:(UIButton *)sender;
 - (IBAction)quietFromClicked:(UIButton *)sender;
@@ -34,35 +36,11 @@
 
 - (void)setVenue:(NSString *)setting;
 
-@property(strong) NSDate *quietTimeFromDate;
-@property(strong) NSDate *quietTimeToDate;
-
 @end
 
 @implementation ProfileNotificationsViewController
 
-@synthesize venueButton = _venueButton;
-@synthesize checkedInOnlySwitch = _checkedInOnlySwitch;
-@synthesize quietTimeSwitch = _quietTimeSwitch;
-@synthesize anyoneChatView = anyoneChatView;
-@synthesize quietFromButton = _quietFromButton;
-@synthesize quietToButton = _quietToButton;
-@synthesize contactsOnlyChatSwitch = _contactsOnlyChatSwitch;
-@synthesize chatNotificationLabel = _chatNotificationLabel;
-@synthesize quietTimeFromDate = _quietTimeFromDate;
-@synthesize quietTimeToDate = _quietTimeToDate;
-@synthesize headerView = _headerView;
-
 #pragma mark - View lifecycle
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {

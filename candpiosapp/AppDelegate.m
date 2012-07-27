@@ -10,7 +10,6 @@
 #import "FaceToFaceHelper.h"
 #import "ChatHelper.h"
 #import "OAuthConsumer.h"
-#import "PaymentHelper.h"
 #import "EnterInvitationCodeViewController.h"
 #import "CheckInDetailsViewController.h"
 #import "CPAlertView.h"
@@ -300,12 +299,6 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
     else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey] != nil) {        
         [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"acceptor"]
                                        fromView:self.settingsMenuController];
-    }
-    // Received payment
-    else if ([userInfo valueForKey:@"payment_received"] != nil)
-    {
-        NSString *message = [userInfo valueForKeyPath:@"aps.alert"];
-        [PaymentHelper showPaymentReceivedAlertWithMessage:message];
     }
 }
 

@@ -17,21 +17,12 @@
 
 - (IBAction)gearPressed:(id)sender;
 
-#pragma mark -
-#pragma mark private
-
 - (void)showCode:(NSString *)code;
 - (void)loadCode;
 
 @end
 
-#pragma mark -
-
 @implementation GenerateInvitationCodeViewController
-
-@synthesize codeLabel = _codeLabel;
-@synthesize codeLabelBackground = _codeLabelBackground;
-@synthesize doneButton = _doneButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -50,7 +41,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [self loadCode];
 }
 

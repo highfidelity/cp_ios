@@ -12,10 +12,7 @@
 #import "LinkedInConnectionCell.h"
 #import "EditLinkedInInvitationMessageViewController.h"
 
-@interface InviteLinkedInConnectionsTableViewController () {
-    NSArray *_connections;
-    NSMutableDictionary *_selectedConnections;
-}
+@interface InviteLinkedInConnectionsTableViewController ()
 
 @property (strong, nonatomic) NSArray *connections;
 @property (strong, nonatomic) NSMutableDictionary *selectedConnections;
@@ -30,9 +27,6 @@
 @end
 
 @implementation InviteLinkedInConnectionsTableViewController
-
-@synthesize connections = _connections;
-@synthesize selectedConnections = _selectedConnections;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];

@@ -10,24 +10,15 @@
 #import "PushModalViewControllerFromLeftSegue.h"
 
 @interface LinkedAccountsTableViewController ()
-@property (assign)BOOL postToLinkedIn;
+
+@property (nonatomic) BOOL postToLinkedIn;
 @property (weak, nonatomic) IBOutlet UISwitch *postToLinkedInSwitch;
 
 -(IBAction)gearPressed:(id)sender;
+
 @end
 
 @implementation LinkedAccountsTableViewController
-@synthesize postToLinkedInSwitch = _postToLinkedInSwitch;
-@synthesize postToLinkedIn = _postToLinkedIn;
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
