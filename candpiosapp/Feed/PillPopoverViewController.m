@@ -23,15 +23,6 @@
 @synthesize delegate;
 @synthesize indexPath;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void) updatePlusWebViewAnimated:(BOOL)animated
 {
     // transitions of the label value, animated if desired
@@ -50,13 +41,13 @@
     NSString *tailContent;
     if (post.likeCount == 0) {
         headContent = @"no one";
-        tailContent = @"has recognized this";
+        tailContent = @"has +1'd this";
     } else if (post.likeCount == 1) {
         headContent = @"one other";
-        tailContent = @"has recognized this";
+        tailContent = @"has +1'd this";
     } else {
         headContent = [NSString stringWithFormat:@"%i others", post.likeCount];
-        tailContent = @"have recognized this";
+        tailContent = @"have +1'd this";
     }
     NSString *content = [NSString stringWithFormat:@"<font style=\"color: #00645F;\">%@</font> %@", headContent, tailContent];
     NSString *htmlString = [NSString stringWithFormat:@"<html> \n"
@@ -104,8 +95,8 @@
                                                                                       plusHeightFlex);
                                               }
                                           } 
-                                          completion:^(BOOL finished){
-                                          }];
+                                          completion:nil
+                          ];
                          
                      }];    
     
@@ -124,13 +115,6 @@
     
     // setup the textfield
     self.commentTextView.delegate = self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    
 }
 
 - (void)viewDidUnload

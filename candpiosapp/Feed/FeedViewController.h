@@ -24,7 +24,7 @@
 @property (nonatomic, strong) NSMutableArray *postableVenueFeeds;
 @property (nonatomic, assign) BOOL newPostAfterLoad;
 @property (nonatomic, strong) NSMutableDictionary *postPlussingUserIds;
-@property (nonatomic, strong) WEPopoverController *popoverController;
+@property (nonatomic, strong) WEPopoverController *wePopoverController;
 @property (nonatomic, strong) PillPopoverViewController *pillPopoverViewController;
 
 - (void)showPillPopoverFromCell:(PostBaseCell*)cell;

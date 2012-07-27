@@ -63,8 +63,8 @@ typedef enum {
 @synthesize previewPostableFeedsOnly = _previewPostableFeedsOnly;
 @synthesize postPlussingUserIds;
 @synthesize postType = _postType;
-@synthesize popoverController;
-@synthesize pillPopoverViewController;
+@synthesize wePopoverController = _wePopoverController;
+@synthesize pillPopoverViewController = _pillPopoverViewController;
 
 #pragma mark - View Lifecycle
 
@@ -1686,14 +1686,14 @@ typedef enum {
 - (void)dismissPopover 
 {
     // dismiss popover and reset state
-    [self.popoverController dismissPopoverAnimated:YES];
-    self.popoverController = nil;
+    [self.wePopoverController dismissPopoverAnimated:YES];
+    self.wePopoverController = nil;
     self.pillPopoverViewController = nil;    
 }
-- (void)showPillPopoverFromCell:(CommentCell*)cell
+- (void)showPillPopoverFromCell:(CommentCell *)cell
 {
     // present the popover from the specified cell.. dismiss if this was a second touch
-	if (!self.popoverController) {
+	if (!self.wePopoverController) {
         UIButton *button = cell.pillButton;
 		
         // grab a UserProfileViewController from the UserStoryboard
@@ -1701,11 +1701,11 @@ typedef enum {
         self.pillPopoverViewController.post = cell.post;
         self.pillPopoverViewController.indexPath = [self.tableView indexPathForCell:cell];
         self.pillPopoverViewController.delegate = self;
-		self.popoverController = [[WEPopoverController alloc] initWithContentViewController:self.pillPopoverViewController];
-        self.popoverController.popoverContentSize = CGSizeMake(172, 91);
-		self.popoverController.delegate = self;
-        [self.popoverController setContainerViewProperties:[self popoverContainerViewProperties]];
-		[self.popoverController presentPopoverFromRect:[self.view convertRect:button.frame fromView:button.superview]
+		self.wePopoverController = [[WEPopoverController alloc] initWithContentViewController:self.pillPopoverViewController];
+        self.wePopoverController.popoverContentSize = CGSizeMake(172, 91);
+		self.wePopoverController.delegate = self;
+        [self.wePopoverController setContainerViewProperties:[self popoverContainerViewProperties]];
+		[self.wePopoverController presentPopoverFromRect:[self.view convertRect:button.frame fromView:button.superview]
 												inView:self.view 
 							  permittedArrowDirections:UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight
                                               animated:YES];
@@ -1719,7 +1719,7 @@ typedef enum {
 
 - (void)popoverControllerDidDismissPopover:(WEPopoverController *)thePopoverController {
 	//Safe to release the popover here
-	self.popoverController = nil;
+	self.wePopoverController = nil;
 }
 
 - (BOOL)popoverControllerShouldDismissPopover:(WEPopoverController *)thePopoverController {

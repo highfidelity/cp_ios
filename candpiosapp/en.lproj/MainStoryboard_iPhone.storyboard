@@ -642,6 +642,11 @@
                                 <rect key="frame" x="-33" y="-16" width="215" height="62"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
+                                    <webView contentMode="scaleToFill" id="ll2-lY-S6V">
+                                        <rect key="frame" x="61" y="25" width="147" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </webView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="eDo-LU-fts">
                                         <rect key="frame" x="40" y="30" width="23" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -657,11 +662,6 @@
                                             <action selector="plusButtonPressed:" destination="B7E-pY-dfA" eventType="touchUpInside" id="Mzg-vV-cXL"/>
                                         </connections>
                                     </button>
-                                    <webView contentMode="scaleToFill" id="ll2-lY-S6V">
-                                        <rect key="frame" x="71" y="16" width="124" height="41"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    </webView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="popover-divider.png" id="UBZ-Tf-YSj">
                                         <rect key="frame" x="36" y="61" width="172" height="1"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1097,7 +1097,6 @@
         <class className="PillPopoverViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PillPopoverViewController.h"/>
             <relationships>
-                <relationship kind="action" name="commentButtonPressed:"/>
                 <relationship kind="action" name="plusButtonPressed:"/>
                 <relationship kind="outlet" name="commentButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="commentImageView" candidateClass="UIImageView"/>
