@@ -72,73 +72,18 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
                                                object:nil];
 }
 
-- (void)viewDidUnload {
-    [super viewDidUnload];
+- (void)viewWillUnload
+{
+    [super viewWillUnload];
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:kNumberOfContactRequestsNotification
                                                   object:nil];
 }
 
-- (NSMutableArray *)partitionObjects:(NSArray *)array collationStringSelector:(SEL)selector
-{
-    UILocalizedIndexedCollation *collation = [UILocalizedIndexedCollation currentCollation];
-
-    NSInteger sectionCount = [[collation sectionTitles] count]; //section count is take from sectionTitles and not sectionIndexTitles
-    NSMutableArray *unsortedSections = [NSMutableArray arrayWithCapacity:(NSUInteger)sectionCount];
-
-    //create an array to hold the data for each section
-    for(int i = 0; i < sectionCount; i++)
-    {
-        [unsortedSections addObject:[NSMutableArray array]];
-    }
-
-    //put each object into a section
-    for (id object in array)
-    {
-        NSInteger index = [collation sectionForObject:object collationStringSelector:selector];
-        [[unsortedSections objectAtIndex:(NSUInteger)index] addObject:object];
-    }
-
-    NSMutableArray *sections = [NSMutableArray arrayWithCapacity:(NSUInteger)sectionCount];
-
-    //sort each section
-    for (NSMutableArray *section in unsortedSections)
-    {
-        [sections addObject:[[collation sortedArrayFromArray:section collationStringSelector:selector] mutableCopy]];
-    }
-
-    return sections;
-}
-
-- (void)setContacts:(NSMutableArray *)contactList {
-    contacts = [self partitionObjects:contactList collationStringSelector:@selector(nickname)];
-    
-    // store the array for search
-    self.sortedContactList = [contactList mutableCopy];
-}
-
-- (void)hidePlaceholder:(BOOL)hide
-{
-    [self.placeholderImage setHidden:hide];
-    [self.tableView setScrollEnabled:hide];
-    [self.searchBar setHidden:!hide];
-    self.isSearching = !hide;
-}
-
-- (NSArray*)sectionIndexTitles 
-{
-    return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-}
-
-- (void)viewDidUnload
-{
-    [self setPlaceholderImage:nil];
+- (void)viewDidUnload {
     [super viewDidUnload];
+    [self setSearchBar:nil];
+    [self setPlaceholderImage:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -174,11 +119,11 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
                 NSSortDescriptor *nicknameSort = [[NSSortDescriptor alloc] initWithKey:@"nickname" ascending:YES];
                 
                 // No reason to sort if there is 1 or less
-                if (payload.count > 1) { 
-                    payload = [payload sortedArrayUsingDescriptors:[NSArray arrayWithObject:nicknameSort]]; 
+                if (payload.count > 1) {
+                    payload = [payload sortedArrayUsingDescriptors:[NSArray arrayWithObject:nicknameSort]];
                 }
                 if (contactRequests.count > 1) {
-                    contactRequests = [contactRequests sortedArrayUsingDescriptors:[NSArray arrayWithObject:nicknameSort]]; 
+                    contactRequests = [contactRequests sortedArrayUsingDescriptors:[NSArray arrayWithObject:nicknameSort]];
                 }
                 
                 
@@ -201,6 +146,58 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
             NSLog(@"Coundn't fetch contact list");
         }
     }];
+}
+
+
+- (NSMutableArray *)partitionObjects:(NSArray *)array collationStringSelector:(SEL)selector
+{
+    UILocalizedIndexedCollation *collation = [UILocalizedIndexedCollation currentCollation];
+
+    NSInteger sectionCount = [[collation sectionTitles] count]; //section count is take from sectionTitles and not sectionIndexTitles
+    NSMutableArray *unsortedSections = [NSMutableArray arrayWithCapacity:(NSUInteger)sectionCount];
+
+    //create an array to hold the data for each section
+    for(int i = 0; i < sectionCount; i++)
+    {
+        [unsortedSections addObject:[NSMutableArray array]];
+    }
+
+    //put each object into a section
+    for (id object in array)
+    {
+        NSInteger index = [collation sectionForObject:object collationStringSelector:selector];
+        [[unsortedSections objectAtIndex:(NSUInteger)index] addObject:object];
+    }
+
+    NSMutableArray *sections = [NSMutableArray arrayWithCapacity:(NSUInteger)sectionCount];
+
+    //sort each section
+    for (NSMutableArray *section in unsortedSections)
+    {
+        [sections addObject:[[collation sortedArrayFromArray:section collationStringSelector:selector] mutableCopy]];
+    }
+
+    return sections;
+}
+
+- (void)setContacts:(NSMutableArray *)contactList {
+    _contacts = [self partitionObjects:contactList collationStringSelector:@selector(nickname)];
+    
+    // store the array for search
+    self.sortedContactList = [contactList mutableCopy];
+}
+
+- (void)hidePlaceholder:(BOOL)hide
+{
+    [self.placeholderImage setHidden:hide];
+    [self.tableView setScrollEnabled:hide];
+    [self.searchBar setHidden:!hide];
+    self.isSearching = !hide;
+}
+
+- (NSArray*)sectionIndexTitles 
+{
+    return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
