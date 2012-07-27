@@ -1700,11 +1700,11 @@ typedef enum {
         self.pillPopoverViewController.post = cell.post;
         self.pillPopoverViewController.indexPath = [self.tableView indexPathForCell:cell];
         self.pillPopoverViewController.delegate = self;
-		self.wePopoverController = [[WEPopoverController alloc] initWithContentViewController:self.pillPopoverViewController];
+        self.wePopoverController = [[WEPopoverController alloc] initWithContentViewController:self.pillPopoverViewController];
         self.wePopoverController.popoverContentSize = CGSizeMake(172, 91);
-		self.wePopoverController.delegate = self;
+        self.wePopoverController.delegate = self;
         [self.wePopoverController setContainerViewProperties:[self popoverContainerViewProperties]];
-		[self.wePopoverController presentPopoverFromRect:[self.view convertRect:button.frame fromView:button.superview]
+        [self.wePopoverController presentPopoverFromRect:[self.view convertRect:button.frame fromView:button.superview]
                                                   inView:self.view
                                 permittedArrowDirections:UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight
                                                 animated:YES];
@@ -1716,13 +1716,13 @@ typedef enum {
 #pragma mark - WEPopoverControllerDelegate implementation
 
 - (void)popoverControllerDidDismissPopover:(WEPopoverController *)thePopoverController {
-	//Safe to release the popover here
+    //Safe to release the popover here
     self.wePopoverController = nil;
 }
 
 - (BOOL)popoverControllerShouldDismissPopover:(WEPopoverController *)thePopoverController {
-	//The popover is automatically dismissed if you click outside it, unless you return NO here
-	return YES;
+    //The popover is automatically dismissed if you click outside it, unless you return NO here
+    return YES;
 }
 
 #pragma mark - PillPopoverDelegate implementation
