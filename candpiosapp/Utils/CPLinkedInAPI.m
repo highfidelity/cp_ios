@@ -12,11 +12,6 @@
 
 static CPLinkedInAPI *sharedCPLinkedInAPI = nil;
 
-@interface CPLinkedInAPI ()
-
-@end
-
-
 @implementation CPLinkedInAPI
 
 + (CPLinkedInAPI *)shared {
