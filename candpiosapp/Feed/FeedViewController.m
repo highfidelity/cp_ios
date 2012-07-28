@@ -1373,6 +1373,9 @@ typedef enum {
         newBackgroundFrame.origin.y -= keyboardHeight;
         newBackgroundFrame.size.height += keyboardHeight;
     
+        // declare section and replyIndex here so we can use it later if applicable
+        int section;
+        int replyIndex;
         
         // only try and update the tableView if we've asked for this change by adding or removing an entry
         if (self.currentState == FeedVCStateAddingOrRemovingPendingPost) { 
@@ -1383,7 +1386,7 @@ typedef enum {
             }
             
             [self.tableView beginUpdates];
-            
+        
             // check if this is a reply or an original post
             // and add/delete a row/section accordingly 
             if (!self.pendingPost.originalPostID) {
@@ -1396,9 +1399,9 @@ typedef enum {
                 }
             } else {
                 // get the index of the original post in the tableView by using CPVenueFeed's indexOfPostWithID method
-                int section = [self.selectedVenueFeed indexOfPostWithID:self.pendingPost.originalPostID];
+                section = [self.selectedVenueFeed indexOfPostWithID:self.pendingPost.originalPostID];
                 
-                int replyIndex = ((CPPost *)[self.selectedVenueFeed.posts objectAtIndex:section]).replies.count;
+                replyIndex = ((CPPost *)[self.selectedVenueFeed.posts objectAtIndex:section]).replies.count;
                 
                 // if the keyboard is being dropped then the row we need to drop is one higher then the count of replies
                 replyIndex += beingShown ? 0 : 1;
@@ -1447,7 +1450,7 @@ typedef enum {
                                      } else {
                                          // this is a reply
                                          // scroll to the post being replied to
-                                         NSIndexPath *replyToIndexPath = [NSIndexPath indexPathForRow:0 inSection:[self.selectedVenueFeed indexOfPostWithID:self.pendingPost.originalPostID]];
+                                         NSIndexPath *replyToIndexPath = [NSIndexPath indexPathForRow:replyIndex inSection:section];
                                          [self.tableView scrollToRowAtIndexPath:replyToIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
                                      }
                                      
