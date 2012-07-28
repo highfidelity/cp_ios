@@ -160,44 +160,36 @@ typedef enum {
 
 - (NSString *)textForPost:(CPPost *)post
 {
-    if (CPPostTypeUpdate == post.type && post.author.userID != [CPUserDefaultsHandler currentUser].userID) {
+    if ((post.type == CPPostTypeUpdate || post.originalPostID) && post.author.userID != [CPUserDefaultsHandler currentUser].userID) {
         return [NSString stringWithFormat:@"%@: %@", post.author.firstName, post.entry];
-    } else if (CPPostTypeQuestion == post.type) {
+    } else if (!post.originalPostID && post.type == CPPostTypeQuestion) {
         return [NSString stringWithFormat:@"Question from %@: %@", post.author.nickname, post.entry];
-    } else if (CPPostTypeCheckin == post.type) {
+    } else if (!post.originalPostID && post.type == CPPostTypeCheckin) {
         NSString *name = @"You";
         if (post.author.userID != [CPUserDefaultsHandler currentUser].userID) {
             name = post.author.firstName;
         }
         return [NSString stringWithFormat:@"%@ checked in: %@", name, post.entry];
     } else {
-        if (CPPostTypeLove == post.type && post.originalPostID > 0) {
-            return [NSString stringWithFormat:@"%@ +1'd recognition: %@", post.author.firstName, post.entry];
-        } else {
-            return post.entry;
-        }
+        return post.entry;
     }
 }
 
 - (UIFont *)fontForPost:(CPPost *)post
 {
-    if (CPPostTypeUpdate == post.type || CPPostTypeQuestion == post.type || CPPostTypeCheckin == post.type) {
-        return [UIFont systemFontOfSize:(post.author.userID == [CPUserDefaultsHandler currentUser].userID ? 13 : 12)];
-    } else {
+    if (post.type == CPPostTypeLove && post.originalPostID == 0) {
         return [UIFont boldSystemFontOfSize:10];
+    } else {
+        return [UIFont systemFontOfSize:(post.author.userID == [CPUserDefaultsHandler currentUser].userID ? 13 : 12)];
     }
 }
 
 - (CGFloat)widthForLabelForPost:(CPPost *)post
 {
-    if (CPPostTypeUpdate == post.type || CPPostTypeQuestion == post.type || CPPostTypeCheckin == post.type) {
-        return UPDATE_LABEL_WIDTH;
+    if (post.type == CPPostTypeLove && post.originalPostID == 0) {
+        return LOVE_LABEL_WIDTH;
     } else {
-        if (post.originalPostID > 0) {
-            return LOVE_PLUS_ONE_LABEL_WIDTH;
-        } else {
-            return LOVE_LABEL_WIDTH;
-        }
+        return UPDATE_LABEL_WIDTH;
     }
 }
 
@@ -612,8 +604,10 @@ typedef enum {
             cell = newEntryCell;
         } else {
             // check which type of cell we are dealing with
-            if (post.type != CPPostTypeLove) {
-                
+            if (post.originalPostID) {
+                static NSString *PostReplyCellIdentifier = @"PostReplyCell";
+                cell = [tableView dequeueReusableCellWithIdentifier:PostReplyCellIdentifier];
+            } else if (post.type != CPPostTypeLove) {
                 // this is an update cell
                 // so check if it's this user's or somebody else's
                 PostUpdateCell *updateCell;
@@ -646,14 +640,9 @@ typedef enum {
                         updateCell.timeLabel.text = nil;
                     }
                 } else {
-                    if (post.originalPostID) {
-                        static NSString *PostReplyCellIdentifier = @"PostReplyCell";
-                        updateCell = [tableView dequeueReusableCellWithIdentifier:PostReplyCellIdentifier];
-                    } else {
-                        // this is an update from another user
-                        static NSString *OtherUserEntryCellIdentifier = @"PostUpdateCell";
-                        updateCell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];
-                    }
+                    // this is an update from another user
+                    static NSString *OtherUserEntryCellIdentifier = @"PostUpdateCell";
+                    updateCell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];
                 }
                 
                 // the cell to return is the updateCell
@@ -1087,7 +1076,7 @@ typedef enum {
     }
 }
 
-- (void)sendNewLog
+- (void)sendNewPost
 {
     // let's grab the cell that this entry is for
     self.pendingPost.entry = [self.pendingPostCell.growingTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -1506,7 +1495,7 @@ typedef enum {
             // when the user clicks return it's the done button 
             // so send the update
             
-            if (self.pendingPost.originalPostID && self.pendingPost.type == CPPostTypeQuestion) {
+            if (!self.pendingPost.originalPostID && self.pendingPost.type == CPPostTypeQuestion) {
                 
                 [CPapi getCurrentCheckInsCountAtVenue:self.selectedVenueFeed.venue 
                                        withCompletion:^(NSDictionary *json, NSError *error) {
@@ -1538,7 +1527,7 @@ typedef enum {
                                        }];
                 
             } else {
-                [self sendNewLog];   
+                [self sendNewPost];   
             }
             return NO;
         } else {
@@ -1653,7 +1642,7 @@ typedef enum {
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.cancelButtonIndex != buttonIndex) {
-        [self sendNewLog]; 
+        [self sendNewPost]; 
     }
 }
 
