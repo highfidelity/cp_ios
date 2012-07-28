@@ -242,7 +242,7 @@ typedef enum {
 - (int)paddingForPendingPost
 {
     if (self.pendingPost.type == CPPostTypeQuestion) {
-        return !self.pendingPost.originalPostID ? 17 : 14;
+        return !self.pendingPost.originalPostID ? 17 : 15;
     } else {
         return !self.pendingPost.originalPostID ? 15 : 12;
     }
@@ -595,6 +595,7 @@ typedef enum {
             int numberOfSpaces = [self paddingForPendingPost];
             
             // add the right number of leading spaces
+            newEntryCell.growingTextView.text = nil;
             for (int i = 0; i < numberOfSpaces; i++) {
                 newEntryCell.growingTextView.text = [newEntryCell.growingTextView.text stringByAppendingString:@" "];
             }
