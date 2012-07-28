@@ -36,6 +36,21 @@
     }
 }
 
+- (void)addRepliesFromDictionary:(NSDictionary *)repliesDict
+{
+    // loop through the keys of the dictionary returned from API
+    // these are the post ID for the original post the reply associates to
+    for (NSNumber *original_post_ID in repliesDict) {
+        // grab the original post from our posts array
+        CPPost *originalPost = [self.posts objectAtIndex:[self indexOfPostWithID:[original_post_ID intValue]]];
+        
+        // loop through the replies for this post and add them to the original post
+        for (NSDictionary *replyDict in [repliesDict objectForKey:original_post_ID]) {
+            [originalPost.replies addObject:[[CPPost alloc] initFromDictionary:replyDict]];
+        }
+    }
+}
+
 - (int)indexOfPostWithID:(int)postID
 {
     // leverage the overridden isEqual method in CPPost and NSMutableArray's indexOfObject

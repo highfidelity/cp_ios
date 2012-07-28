@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSMutableArray *posts;
 
 - (void)addPostsFromArray:(NSArray *)postsArray;
+- (void)addRepliesFromDictionary:(NSDictionary *)repliesDict;
 - (int)indexOfPostWithID:(int)postID;
 
 @end
