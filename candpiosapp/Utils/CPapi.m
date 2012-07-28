@@ -699,6 +699,17 @@
     // our params dict contains one parameter, the ID of the venue we want log entries for
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"%d", venueID] forKey:@"venue_id"];
     
+    // pretty simple, call action getVenueFeed in api.php
+    [self makeHTTPRequestWithAction:@"getVenueFeed" withParameters:params completion:completion];
+}
+
++ (void)getPostRepliesForVenueID:(NSUInteger)venueID withCompletion:(void (^)(NSDictionary *, NSError *))completion
+{
+    // our params dict contains one parameter, the ID of the venue we want post replies for
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:[NSString stringWithFormat:@"%d", venueID] forKey:@"venue_id"];
+    [params setObject:[NSString stringWithFormat:@"%d", 1] forKey:@"replies_only"];
+    
     // pretty simple, call action getLog in api.php
     [self makeHTTPRequestWithAction:@"getVenueFeed" withParameters:params completion:completion];
 }

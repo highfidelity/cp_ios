@@ -61,6 +61,7 @@
 #pragma mark - Feeds
 + (void)getFeedPreviewsForVenueIDs:(NSArray *)venueIDs withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 + (void)getFeedForVenueID:(NSUInteger)venueID withCompletion:(void (^)(NSDictionary *, NSError *))completion;
++ (void)getPostRepliesForVenueID:(NSUInteger)venueID withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 + (void)newPost:(CPPost *)post
         atVenue:(CPVenue *)venue
