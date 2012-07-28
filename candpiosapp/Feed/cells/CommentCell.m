@@ -61,7 +61,10 @@
         
         UIImage *buttonImage = [UIImage imageNamed:@"pill-button-plus1-comment"];
         UIImage *stretchableImage = [buttonImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 18, 0, 21)];
+        UIImage *buttonSelectedImage = [UIImage imageNamed:@"pill-button-plus1-comment-selected"];
+        UIImage *stretchableSelectedImage = [buttonSelectedImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 18, 0, 21)];
         [button setBackgroundImage:stretchableImage forState:UIControlStateNormal];
+        [button setBackgroundImage:stretchableSelectedImage forState:UIControlStateHighlighted];
         button.frame = CGRectMake(self.placeholderPillButton.frame.origin.x, 
                                   self.placeholderPillButton.frame.origin.y,
                                   buttonImage.size.width, 

@@ -1706,7 +1706,7 @@ typedef enum {
         [self.wePopoverController setContainerViewProperties:[self popoverContainerViewProperties]];
         [self.wePopoverController presentPopoverFromRect:[self.view convertRect:button.frame fromView:button.superview]
                                                   inView:self.view
-                                permittedArrowDirections:UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight
+                                permittedArrowDirections:UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight|UIPopoverArrowDirectionUp|UIPopoverArrowDirectionDown
                                                 animated:YES];
 	} else {
         [self dismissPopover];
