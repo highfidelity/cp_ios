@@ -731,9 +731,7 @@
             postType = @"love";
             break;
         case CPPostTypeCheckin:
-            @throw [NSException exceptionWithName:@"Don't call type=\"checkin\" directly, use chickin API call with status."
-                                           reason:nil
-                                         userInfo:nil];
+            postType = @"checkin";
             break;
     }
     
