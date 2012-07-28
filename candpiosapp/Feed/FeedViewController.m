@@ -19,8 +19,6 @@
 #import "CommentCell.h"
 
 #define kMaxFeedLength 140
-#define kPaddingUpdate 15
-#define kPaddingQuestion 17
 
 typedef enum {
     FeedVCStateDefault,
@@ -239,6 +237,15 @@ typedef enum {
     cellHeight = cellHeight > minCellHeight ? cellHeight : minCellHeight;
     
     return cellHeight;
+}
+
+- (int)paddingForPendingPost
+{
+    if (self.pendingPost.type == CPPostTypeQuestion) {
+        return !self.pendingPost.originalPostID ? 17 : 14;
+    } else {
+        return !self.pendingPost.originalPostID ? 15 : 12;
+    }
 }
 
 - (UIImageView *)containerImageViewForPosition:(FeedBGContainerPosition)position containerHeight:(CGFloat)containerHeight
@@ -570,21 +577,29 @@ typedef enum {
                 newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewEntryCellIdentifier];
             }            
             
+            // get the cursor to the right place
+            // by padding it with leading spaces for whatever the leading text is
+            
+            NSString *leadingText;
+        
             if (self.pendingPost.type == CPPostTypeQuestion) {
-                newEntryCell.entryLabel.text = @"Question:";
-                // get the cursor to the right place
-                // by padding it with leading spaces
-                newEntryCell.growingTextView.text = @"                 ";
-                newEntryCell.growingTextView.returnKeyType = UIReturnKeySend;
+                leadingText = !self.pendingPost.originalPostID ? @"Question" : @"Answer";
             } else {
-                newEntryCell.entryLabel.text = @"Update:";
-                // get the cursor to the right place
-                // by padding it with leading spaces
-                newEntryCell.growingTextView.text = @"               ";
-                newEntryCell.growingTextView.returnKeyType = UIReturnKeyDone;
+                leadingText = !self.pendingPost.originalPostID ? @"Update" : @"Reply";
             }
             
+            // give the entry label the right text and color
+            newEntryCell.entryLabel.text = [leadingText stringByAppendingString:@":"];
             newEntryCell.entryLabel.textColor = [CPUIHelper CPTealColor];
+            
+            int numberOfSpaces = [self paddingForPendingPost];
+            
+            // add the right number of leading spaces
+            for (int i = 0; i < numberOfSpaces; i++) {
+                newEntryCell.growingTextView.text = [newEntryCell.growingTextView.text stringByAppendingString:@" "];
+            }
+            
+            newEntryCell.growingTextView.returnKeyType = UIReturnKeySend;
             
             // be the delegate of the HPGrowingTextView on this cell
             newEntryCell.growingTextView.delegate = self;
@@ -1012,6 +1027,18 @@ typedef enum {
                     } else {
                         // go to the top of the tableView
                         [self scrollTableViewToTopAnimated:YES];
+                        
+                        // load the replies to the posts for this venue feed
+                        [CPapi getPostRepliesForVenueID:self.selectedVenueFeed.venue.venueID withCompletion:^(NSDictionary *json, NSError *error) {
+                            if (!error) {
+                                if (![[json objectForKey:@"error"] boolValue]) {
+                                    [self.selectedVenueFeed addRepliesFromDictionary:[json objectForKey:@"payload"]];
+                                    
+                                    // tell the tableView to reload so it shows the replies
+                                    [self.tableView reloadData];
+                                }
+                            }
+                        }];
                     }
                 }
             }
@@ -1471,14 +1498,14 @@ typedef enum {
 #pragma mark - HPGrowingTextViewDelegate
 - (BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    if (range.location < kPaddingUpdate || (CPPostTypeQuestion == self.pendingPost.type && range.location < kPaddingQuestion)) {
+    if (range.location < [self paddingForPendingPost]) {
         return NO;
     } else {
         if ([text isEqualToString:@"\n"]) {
             // when the user clicks return it's the done button 
             // so send the update
             
-            if (CPPostTypeQuestion == self.pendingPost.type) {
+            if (self.pendingPost.originalPostID && self.pendingPost.type == CPPostTypeQuestion) {
                 
                 [CPapi getCurrentCheckInsCountAtVenue:self.selectedVenueFeed.venue 
                                        withCompletion:^(NSDictionary *json, NSError *error) {
@@ -1528,8 +1555,8 @@ typedef enum {
 
 - (void)growingTextViewDidChangeSelection:(HPGrowingTextView *)growingTextView
 {
-    int limit = CPPostTypeQuestion == self.pendingPost.type ? kPaddingQuestion : kPaddingUpdate;
-        
+    int limit = [self paddingForPendingPost];
+    
     if (growingTextView.selectedRange.location < limit) {
         // make sure the end point was at least 16/18
         // if that's the case then allow the selection from 15/17 to the original end point
