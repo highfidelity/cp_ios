@@ -243,7 +243,7 @@ typedef enum {
     if (self.pendingPost.type == CPPostTypeQuestion) {
         return !self.pendingPost.originalPostID ? 18 : 15;
     } else {
-        return !self.pendingPost.originalPostID ? 15 : 14;
+        return !self.pendingPost.originalPostID ? 15 : 12;
     }
 }
 

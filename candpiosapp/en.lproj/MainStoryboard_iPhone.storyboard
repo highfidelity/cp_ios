@@ -527,7 +527,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="wce-Bm-fhb" customClass="HPGrowingTextView">
-                                                    <rect key="frame" x="110" y="-3" width="180" height="30"/>
+                                                    <rect key="frame" x="110" y="-5" width="180" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
