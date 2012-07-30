@@ -43,10 +43,10 @@
         headContent = @"no one";
         tailContent = @"has +1'd this";
     } else if (post.likeCount == 1) {
-        headContent = @"one other";
+        headContent = @"one person";
         tailContent = @"has +1'd this";
     } else {
-        headContent = [NSString stringWithFormat:@"%i others", post.likeCount];
+        headContent = [NSString stringWithFormat:@"%i people", post.likeCount];
         tailContent = @"have +1'd this";
     }
     NSString *content = [NSString stringWithFormat:@"<font style=\"color: #00645F;\">%@</font> %@", headContent, tailContent];
@@ -148,7 +148,6 @@
     button.enabled = NO;
     self.post.likeCount++;
     self.post.userHasLiked = YES;
-    [self updatePlusWebViewAnimated:YES];
     [CPapi sendPlusOneForLoveWithID:self.post.postID completion:^(NSDictionary *json, NSError *error) {
         NSString *errorString = nil;
         if ([[json objectForKey:@"error"] boolValue]) {
@@ -168,7 +167,6 @@
             button.enabled = YES;
             self.post.likeCount--;
             self.post.userHasLiked = NO;
-            [self updatePlusWebViewAnimated:YES];
         } else {
             // success
             [self.delegate pillPopover:self plusOnePressedForIndexPath:self.indexPath];

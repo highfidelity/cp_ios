@@ -148,9 +148,9 @@ typedef enum {
 #define LAST_PREVIEW_POST_LABEL_BOTTOM_MARGIN 5
 #define PREVIEW_HEADER_CELL_HEIGHT 38
 #define PREVIEW_FOOTER_CELL_HEIGHT 27
-#define UPDATE_LABEL_WIDTH 185
-#define LOVE_LABEL_WIDTH 135
-#define LOVE_PLUS_ONE_LABEL_WIDTH 185
+#define UPDATE_LABEL_WIDTH 228
+#define LOVE_LABEL_WIDTH 178
+#define LOVE_PLUS_ONE_LABEL_WIDTH 200
 #define PILL_BUTTON_CELL_HEIGHT 25
 #define CONTAINER_BACKGROUND_ORIGIN_X 7.5
 #define CONTAINER_BACKGROUND_WIDTH 305
@@ -184,9 +184,9 @@ typedef enum {
 - (UIFont *)fontForPost:(CPPost *)post
 {
     if (CPPostTypeUpdate == post.type || CPPostTypeQuestion == post.type || CPPostTypeCheckin == post.type) {
-        return [UIFont systemFontOfSize:(post.author.userID == [CPUserDefaultsHandler currentUser].userID ? 13 : 12)];
+        return [UIFont systemFontOfSize:14];
     } else {
-        return [UIFont boldSystemFontOfSize:10];
+        return [UIFont boldSystemFontOfSize:14];
     }
 }
 
@@ -664,11 +664,13 @@ typedef enum {
             }
             
             // the text for this entry is prepended with NICKNAME:
+            cell.entryLabel.font = [self fontForPost:post];
             cell.entryLabel.text = [self textForPost:post];
-            
             // make the frame of the label larger if required for a multi-line entry
             CGRect entryFrame = cell.entryLabel.frame;
-            entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text labelWidth:[self widthForLabelForPost:post] labelFont:[self fontForPost:post]];
+            entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text
+                                                    labelWidth:cell.entryLabel.frame.size.width
+                                                     labelFont:cell.entryLabel.font];
             cell.entryLabel.frame = entryFrame;
         }
         
@@ -1706,7 +1708,7 @@ typedef enum {
         [self.wePopoverController setContainerViewProperties:[self popoverContainerViewProperties]];
         [self.wePopoverController presentPopoverFromRect:[self.view convertRect:button.frame fromView:button.superview]
                                                   inView:self.view
-                                permittedArrowDirections:UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight
+                                permittedArrowDirections:UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight|UIPopoverArrowDirectionUp|UIPopoverArrowDirectionDown
                                                 animated:YES];
 	} else {
         [self dismissPopover];
