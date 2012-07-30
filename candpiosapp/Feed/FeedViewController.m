@@ -146,10 +146,10 @@ typedef enum {
 #define LAST_PREVIEW_POST_LABEL_BOTTOM_MARGIN 5
 #define PREVIEW_HEADER_CELL_HEIGHT 38
 #define PREVIEW_FOOTER_CELL_HEIGHT 27
-#define UPDATE_LABEL_WIDTH 185
+#define UPDATE_LABEL_WIDTH 228
+#define LOVE_LABEL_WIDTH 178
+#define LOVE_PLUS_ONE_LABEL_WIDTH 200
 #define REPLY_LABEL_WIDTH 180
-#define LOVE_LABEL_WIDTH 135
-#define LOVE_PLUS_ONE_LABEL_WIDTH 185
 #define PILL_BUTTON_CELL_HEIGHT 25
 #define CONTAINER_BACKGROUND_ORIGIN_X 7.5
 #define CONTAINER_BACKGROUND_WIDTH 305
@@ -178,10 +178,10 @@ typedef enum {
 
 - (UIFont *)fontForPost:(CPPost *)post
 {
-    if (post.type == CPPostTypeLove && post.originalPostID == 0) {
-        return [UIFont boldSystemFontOfSize:10];
+    if (post.type != CPPostTypeLove) {
+        return [UIFont systemFontOfSize:14];
     } else {
-        return [UIFont systemFontOfSize:(post.author.userID == [CPUserDefaultsHandler currentUser].userID ? 13 : 12)];
+        return [UIFont boldSystemFontOfSize:14];
     }
 }
 
