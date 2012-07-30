@@ -232,10 +232,8 @@ typedef enum {
     // give the appropriate bottomMargin to this cell
     cellHeight += bottomMargin;
     
-    // make sure labelHeight isn't smaller than our min cell height
-    cellHeight = cellHeight > minCellHeight ? cellHeight : minCellHeight;
-    
-    return cellHeight;
+    // make sure labelHeight isn't smaller than our min cell height    
+    return cellHeight > minCellHeight ? cellHeight : minCellHeight;
 }
 
 - (int)paddingForPendingPost
