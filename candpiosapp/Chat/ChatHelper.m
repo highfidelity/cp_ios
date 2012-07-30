@@ -10,6 +10,8 @@
 #import "OneOnOneChatViewController.h"
 #import "CPAlertView.h"
 
+#define kChatAlertTag 8001
+
 @implementation ChatHelper
 
 + (void)respondToIncomingChatNotification:(NSString *)message
@@ -53,6 +55,7 @@
                               delegate:self
                               cancelButtonTitle:@"Ignore"
                               otherButtonTitles: @"View", nil];
+        alert.tag = kChatAlertTag;
         
         NSDictionary *chatInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
                                   message, @"message",
@@ -73,7 +76,7 @@
 + (void)alertView:(CPAlertView *)alertView 
 didDismissWithButtonIndex:(NSInteger)buttonIndex
 {    
-    if (alertView.title == @"Incoming Chat") {
+    if (alertView.tag == kChatAlertTag) {
         if (buttonIndex == 1) {
             NSString *userId   = [alertView.context objectForKey:@"userid"];
             NSString *nickname = [alertView.context objectForKey:@"nickname"];
