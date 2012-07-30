@@ -754,11 +754,13 @@ typedef enum {
             }
             
             // the text for this entry is prepended with NICKNAME:
+            cell.entryLabel.font = [self fontForPost:post];
             cell.entryLabel.text = [self textForPost:post];
-            
             // make the frame of the label larger if required for a multi-line entry
             CGRect entryFrame = cell.entryLabel.frame;
-            entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text labelWidth:[self widthForLabelForPost:post] labelFont:[self fontForPost:post]];
+            entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text
+                                                    labelWidth:cell.entryLabel.frame.size.width
+                                                     labelFont:cell.entryLabel.font];
             cell.entryLabel.frame = entryFrame;
         }
         
@@ -1857,7 +1859,7 @@ typedef enum {
         [self.wePopoverController setContainerViewProperties:[self popoverContainerViewProperties]];
         [self.wePopoverController presentPopoverFromRect:[self.view convertRect:button.frame fromView:button.superview]
                                                   inView:self.view
-                                permittedArrowDirections:UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight
+                                permittedArrowDirections:UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight|UIPopoverArrowDirectionUp|UIPopoverArrowDirectionDown
                                                 animated:YES];
 	} else {
         [self dismissPopover];
