@@ -404,9 +404,6 @@ typedef enum {
     containerIVFrame.size.height = containerHeight;
     containerImageView.frame = containerIVFrame;
     
-    // let the container image view grow so that new replies will grow the bubble
-    containerImageView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
-    
     // give the UIImageView a tag so we can check for its presence later
     containerImageView.tag = CONTAINER_IMAGE_VIEW_TAG;
     
@@ -1691,11 +1688,17 @@ typedef enum {
         UIView *cellContentView = [growingTextView superview];
         
         // set the newEditableCellHeight property so we can grab it when the tableView asks for the cell height
-        self.newEditableCellHeight = cellContentView.frame.size.height - diff;
+        CGFloat newHeight = cellContentView.frame.size.height - diff;
+        self.newEditableCellHeight = newHeight;
         
         // call beginUpdates and endUpdates to get the tableView to change the height of the first cell
         [self.tableView beginUpdates];
-        [self.tableView endUpdates];  
+        [self.tableView endUpdates];
+        
+        // we need to make sure the speech bubble for this cell also fixes its height
+        if (self.pendingPost.originalPostID) {
+            [self setupReplyBubbleForCell:self.pendingPostCell containerHeight:newHeight position:FeedBGContainerPositionMiddle];
+        }
     }
 }
 
