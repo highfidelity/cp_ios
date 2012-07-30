@@ -147,6 +147,7 @@ typedef enum {
 #define PREVIEW_HEADER_CELL_HEIGHT 38
 #define PREVIEW_FOOTER_CELL_HEIGHT 27
 #define UPDATE_LABEL_WIDTH 185
+#define REPLY_LABEL_WIDTH 180
 #define LOVE_LABEL_WIDTH 135
 #define LOVE_PLUS_ONE_LABEL_WIDTH 185
 #define PILL_BUTTON_CELL_HEIGHT 25
@@ -189,7 +190,7 @@ typedef enum {
     if (post.type == CPPostTypeLove && post.originalPostID == 0) {
         return LOVE_LABEL_WIDTH;
     } else {
-        return UPDATE_LABEL_WIDTH;
+        return !post.originalPostID ? UPDATE_LABEL_WIDTH : REPLY_LABEL_WIDTH;
     }
 }
 
@@ -213,6 +214,12 @@ typedef enum {
         (indexPath.row < [[self venueFeedPreviewForIndex:indexPath.section] posts].count)) {
         // use the default bottom margin and top margin
         bottomMargin = LABEL_BOTTOM_MARGIN;
+        
+        // if this is a post in a selected venue feed that has replies then we need to drop the margin
+        if (self.selectedVenueFeed && ((CPPost *)[self.selectedVenueFeed.posts objectAtIndex:indexPath.section]).replies.count) {
+            bottomMargin -= 12;
+        }
+        
         minCellHeight = MIN_CELL_HEIGHT; 
     } else {
         // keep the right bottom margin for this last post
@@ -356,6 +363,79 @@ typedef enum {
     }
 }
 
+#define REPLY_BUBBLE_ORIGIN_X 62
+#define REPLY_BUBBLE_WIDTH 250
+#define REPLY_BUBBLE_IMAGE_VIEW_TAG 2820
+#define REPLY_BUBBLE_HEADER_HEIGHT 18
+#define REPLY_BUBBLE_FOOTER_HEIGHT 15
+
+- (UIImageView *)replyBubbleImageViewForPosition:(FeedBGContainerPosition)position containerHeight:(CGFloat)containerHeight
+{
+    NSString *filename;
+    UIEdgeInsets insets;
+    
+    // switch-case to set variables dependent on the position this is for
+    switch (position) {
+        case FeedBGContainerPositionTop:
+            filename = @"comment-bubble-top";
+            insets = UIEdgeInsetsMake(11, 36, 0, 11);
+            break;
+        case FeedBGContainerPositionMiddle:
+            filename = @"comment-bubble-middle";
+            insets = UIEdgeInsetsMake(0, 3, 0, 3);
+            break;
+        case FeedBGContainerPositionBottom:
+            insets = UIEdgeInsetsMake(0, 0, 8, 0);
+            filename = @"comment-bubble-bottom";
+            break;
+        default:
+            break;
+    }
+    
+    UIImage *containerImage = [[UIImage imageNamed:filename] resizableImageWithCapInsets:insets];
+    
+    // create a UIImageView with the image
+    UIImageView *containerImageView = [[UIImageView alloc] initWithImage:containerImage];
+    
+    // change the frame of the imageView to leave spacing on the side
+    CGRect containerIVFrame = containerImageView.frame;
+    containerIVFrame.origin.x = REPLY_BUBBLE_ORIGIN_X;
+    containerIVFrame.size.width = REPLY_BUBBLE_WIDTH;
+    containerIVFrame.size.height = containerHeight;
+    containerImageView.frame = containerIVFrame;
+    
+    // let the container image view grow so that new replies will grow the bubble
+    containerImageView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
+    
+    // give the UIImageView a tag so we can check for its presence later
+    containerImageView.tag = CONTAINER_IMAGE_VIEW_TAG;
+    
+    return containerImageView;
+}
+
+- (void)setupReplyBubbleForCell:(UITableViewCell *)cell
+                        containerHeight:(CGFloat)containerHeight
+                               position:(FeedBGContainerPosition)position
+{
+    UIView *containerView;
+    
+    // add the viewToAdd if it doesn't already exist on this cell
+    if (!(containerView = [cell.contentView viewWithTag:CONTAINER_IMAGE_VIEW_TAG])) {
+        containerView = [self replyBubbleImageViewForPosition:position containerHeight:containerHeight];
+        
+        // add that view to the cell's contentView
+        [cell.contentView insertSubview:containerView atIndex:0];
+        
+    } else {
+        if (position == FeedBGContainerPositionMiddle) {
+            // adjust the view's height if required
+            CGRect viewHeightFix = containerView.frame;
+            viewHeightFix.size.height = containerHeight;
+            containerView.frame = viewHeightFix;
+        }
+    }
+}
+
 #pragma mark - Table view delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -377,11 +457,13 @@ typedef enum {
         cellPost = [self.selectedVenueFeed.posts objectAtIndex:indexPath.section];
         
         // if this is the comment / +1 box cell then our height is static
-        if (indexPath.row > cellPost.replies.count) {
+        if (indexPath.row > cellPost.replies.count + 2) {
             return PILL_BUTTON_CELL_HEIGHT;
+        } else if (indexPath.row > cellPost.replies.count + 1 || indexPath.row == 1) {
+            return indexPath.row == 1 ? REPLY_BUBBLE_HEADER_HEIGHT : 18;
         } else if (indexPath.row > 0) {
             // if the indexPath is not 0 and isn't the last this is a reply
-            cellPost = [cellPost.replies objectAtIndex:(indexPath.row - 1)];
+            cellPost = [cellPost.replies objectAtIndex:indexPath.row - 2];
         }
         
         // check if we have a pendingPost and if this is it
@@ -428,10 +510,17 @@ typedef enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // if this is for a single venue then the number of rows is 2 + number of replies in feed
     if (self.selectedVenueFeed) {
-        // one for the post itself, one for comment / +1 footer, and then one for each reply
-        return 2 + ((CPPost *)[self.selectedVenueFeed.posts objectAtIndex:section]).replies.count;
+        // if this is for a single venue then the number of rows depends on the existence of replies
+        // one for the post itself, one for comment / +1 footer, one for reply header and footer, and then one for each reply
+        int replies = ((CPPost *)[self.selectedVenueFeed.posts objectAtIndex:section]).replies.count;
+        int rows = 2;
+        
+        if (replies) {
+            rows += replies + 2;
+        }
+        
+        return rows;
     } else {
         if (self.previewPostableFeedsOnly) {
             // just a header and a footer here
@@ -547,8 +636,8 @@ typedef enum {
         
         // if this is supposed to be a reply then the post object should be a reply of the post we just grabbed
         if (indexPath.row > 0) {
-            post = (indexPath.row < [self.tableView numberOfRowsInSection:indexPath.section] - 1)
-                    ? [post.replies objectAtIndex:(indexPath.row - 1)] : nil;
+            post = (indexPath.row < [self.tableView numberOfRowsInSection:indexPath.section] - 2 && indexPath.row > 1)
+                    ? [post.replies objectAtIndex:(indexPath.row - 2)] : nil;
         }
     }
     
@@ -556,8 +645,7 @@ typedef enum {
         PostBaseCell *cell;
         
         // check if this is a pending entry cell
-        if (self.pendingPost &&
-            (post == self.pendingPost || (post.originalPostID && self.pendingPost == post.replies.lastObject))) {
+        if (self.pendingPost && post == self.pendingPost) {
             
             NewPostCell *newEntryCell;
             
@@ -654,7 +742,7 @@ typedef enum {
                 PostLoveCell *loveCell = [tableView dequeueReusableCellWithIdentifier:loveCellIdentifier];
                 
                 // setup the receiver's profile button
-                [self loadProfileImageForButton:loveCell.receiverProfileButton photoURL:post.receiver.photoURL indexPath:indexPath];
+                [self loadProfileImageForButton:loveCell.receiverProfileButton photoURL:post.receiver.photoURL];
                 
                 loveCell.entryLabel.text = post.entry.description;
                 
@@ -678,13 +766,19 @@ typedef enum {
         }
         
         // setup the entry sender's profile button
-        [self loadProfileImageForButton:cell.senderProfileButton photoURL:post.author.photoURL indexPath:indexPath];
+        [self loadProfileImageForButton:cell.senderProfileButton photoURL:post.author.photoURL];
         
         if (self.selectedVenueFeed) {
             // remove the container background from this cell, if it exists
             // remove the separator view
             [[cell viewWithTag:CONTAINER_IMAGE_VIEW_TAG] removeFromSuperview];
             [[cell viewWithTag:CELL_SEPARATOR_TAG] removeFromSuperview];
+            
+            if (post.originalPostID) {
+                [self setupReplyBubbleForCell:cell
+                              containerHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height indexPath:indexPath]
+                                                                     position:FeedBGContainerPositionMiddle];
+            }
         } else {
             [self setupContainerBackgroundForCell:cell
                                   containerHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height indexPath:indexPath]
@@ -708,16 +802,40 @@ typedef enum {
         
         return cell;
     } else {
-        // this is the comment / +1 cell for a post in selected venue feed
-        CommentCell *commentCell = [self.tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
-        CPPost *originalPost = [self.selectedVenueFeed.posts objectAtIndex:indexPath.section];
-        commentCell.post = originalPost;
-        commentCell.delegate = self;
-
-        // update the +1/comment pill widget to reflect the likeCount on the parent post
-        [commentCell updatePillButtonAnimated:NO];
-
-        return commentCell;
+        if (indexPath.row == [self.tableView numberOfRowsInSection:indexPath.section] - 1) {
+            // this is the comment / +1 cell for a post in selected venue feed
+            CommentCell *commentCell = [self.tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
+            CPPost *originalPost = [self.selectedVenueFeed.posts objectAtIndex:indexPath.section];
+            commentCell.post = originalPost;
+            commentCell.delegate = self;
+            
+            // update the +1/comment pill widget to reflect the likeCount on the parent post
+            [commentCell updatePillButtonAnimated:NO];
+            
+            return commentCell;
+        } else {
+            UITableViewCell *replyBubbleExtraCell;
+            
+            static NSString *ReplyBubbleHeaderIdentifier = @"ReplyBubbleHeader";
+            static NSString *ReplyBubbleFooterIdentifier = @"ReplyBubbleFooter";
+            
+            // setup variables correctly for header or footer of bubble
+            NSString *containerIdentifier = indexPath.row == 1 ? ReplyBubbleHeaderIdentifier : ReplyBubbleFooterIdentifier;
+            FeedBGContainerPosition containerPosition = indexPath.row == 1 ? FeedBGContainerPositionTop : FeedBGContainerPositionBottom;
+            CGFloat containerHeight = indexPath.row == 1 ? REPLY_BUBBLE_HEADER_HEIGHT : REPLY_BUBBLE_FOOTER_HEIGHT;
+            
+            // try and pull a cell for reuse
+            replyBubbleExtraCell = [self.tableView dequeueReusableCellWithIdentifier:containerIdentifier];
+            
+            // otherwise we need to alloc-init it
+            if (!replyBubbleExtraCell) {
+                replyBubbleExtraCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:containerIdentifier];
+                [self setupReplyBubbleForCell:replyBubbleExtraCell containerHeight:containerHeight position:containerPosition];
+            }
+            
+            // return the cell
+            return replyBubbleExtraCell;
+        }
     }
     
 }
@@ -938,7 +1056,7 @@ typedef enum {
     
 }
 
-- (void)loadProfileImageForButton:(UIButton *)button photoURL:(NSURL *)photoURL indexPath:(NSIndexPath *)indexPath
+- (void)loadProfileImageForButton:(UIButton *)button photoURL:(NSURL *)photoURL
 {   
     __block UIButton *profileButton = button;
     
@@ -1410,7 +1528,7 @@ typedef enum {
                 // if the keyboard is being dropped then the row we need to drop is one higher then the count of replies
                 replyIndex += beingShown ? 0 : 1;
                 
-                NSIndexPath *postIndexPath = [NSIndexPath indexPathForRow:replyIndex inSection:section];
+                NSIndexPath *postIndexPath = [NSIndexPath indexPathForRow:(replyIndex + 1) inSection:section];
                 NSArray *indexPathArray = [NSArray arrayWithObject:postIndexPath];
                 
                 if (beingShown) {
