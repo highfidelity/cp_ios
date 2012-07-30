@@ -951,10 +951,6 @@ typedef enum {
         [profileButton setBackgroundImage:image forState:UIControlStateNormal];
     } failure:nil];
     
-    // the row of this cell is the tag for the button
-    // we need to be able to grab the cell later and go to the user's profile
-    button.tag = self.selectedVenueFeed ? indexPath.row : indexPath.section;
-    
     // be the target of the button
     [button addTarget:self action:@selector(pushToUserProfileFromButton:) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -1292,8 +1288,15 @@ typedef enum {
 - (IBAction)pushToUserProfileFromButton:(UIButton *)button
 {
     if (self.selectedVenueFeed) {
-        // grab the log entry that is associated to this button
-        CPPost *userEntry = [self.selectedVenueFeed.posts objectAtIndex:button.tag];
+        // grab the post that is associated to this button
+        // first we need the indexPath of this cell
+        NSIndexPath *selectedPath = [self.tableView indexPathForRowAtPoint:[[button superview] convertPoint:button.center toView:self.tableView]];
+        
+        CPPost *userEntry = [self.selectedVenueFeed.posts objectAtIndex:selectedPath.section];
+        
+        if (selectedPath.row > 0) {
+            userEntry = [userEntry.replies objectAtIndex:(selectedPath.row - 1)];
+        }
         
         // grab a UserProfileViewController from the UserStoryboard
         UserProfileViewController *userProfileVC = (UserProfileViewController *)[[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
@@ -1302,7 +1305,8 @@ typedef enum {
         
         // if this button's origin is left of the timeline then it's the log's author
         // otherwise it's the log's receiver
-        userProfileVC.user = button.frame.origin.x < TIMELINE_ORIGIN_X ? userEntry.author : userEntry.receiver;
+        userProfileVC.user = (userEntry.originalPostID || button.frame.origin.x < TIMELINE_ORIGIN_X)
+                             ? userEntry.author : userEntry.receiver;
         
         // ask our navigation controller to push to the UserProfileVC
         [self.navigationController pushViewController:userProfileVC animated:YES];
