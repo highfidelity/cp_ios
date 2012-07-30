@@ -178,7 +178,7 @@ typedef enum {
 
 - (UIFont *)fontForPost:(CPPost *)post
 {
-    if (post.type != CPPostTypeLove) {
+    if (post.type != CPPostTypeLove || post.originalPostID) {
         return [UIFont systemFontOfSize:14];
     } else {
         return [UIFont boldSystemFontOfSize:14];
