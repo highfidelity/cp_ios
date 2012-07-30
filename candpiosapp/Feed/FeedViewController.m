@@ -1526,7 +1526,13 @@ typedef enum {
                 replyIndex += beingShown ? 0 : 1;
                 
                 NSIndexPath *postIndexPath = [NSIndexPath indexPathForRow:(replyIndex + 1) inSection:section];
-                NSArray *indexPathArray = [NSArray arrayWithObject:postIndexPath];
+                NSMutableArray *indexPathArray = [NSMutableArray arrayWithObject:postIndexPath];
+                
+                // if this is/was the only reply for this post we need to add/delete more than just that cell
+                if (replyIndex == 1) {
+                    [indexPathArray addObject:[NSIndexPath indexPathForRow:1 inSection:section]];
+                    [indexPathArray addObject:[NSIndexPath indexPathForRow:(replyIndex + 2) inSection:section]];
+                }
                 
                 if (beingShown) {
                     [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationBottom];
