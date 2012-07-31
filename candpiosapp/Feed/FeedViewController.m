@@ -1114,7 +1114,9 @@ typedef enum {
                     [self.selectedVenueFeed addPostsFromArray:[json objectForKey:@"payload"]];
                     
                     // last ID property for venue feed is now the ID of the first post in the selectedVenueFeed posts array
-                    self.selectedVenueFeed.lastID = [[self.selectedVenueFeed.posts objectAtIndex:0] postID];
+                    if (self.selectedVenueFeed.posts.count) {
+                        self.selectedVenueFeed.lastID = [[self.selectedVenueFeed.posts objectAtIndex:0] postID];
+                    }
                     
                     [self toggleLoadingState:NO];
                     
