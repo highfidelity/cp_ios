@@ -12,6 +12,8 @@
 
 @property (nonatomic, strong) CPVenue *venue;
 @property (nonatomic, strong) NSMutableArray *posts;
+@property (nonatomic) int lastID;
+@property (nonatomic) int lastReplyID;
 
 - (void)addPostsFromArray:(NSArray *)postsArray;
 - (void)addRepliesFromDictionary:(NSDictionary *)repliesDict;

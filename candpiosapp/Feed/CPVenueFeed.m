@@ -23,21 +23,23 @@
 }
 
 - (void)addPostsFromArray:(NSArray *)postsArray
-{    
-    // for right now we clear the posts in the feed before adding the new ones
-    // next commit with add only new posts and re-sort array by date
-    self.posts = [NSMutableArray array];
-    
+{
     // enumerate through the posts in the array and add them to mutablePosts
     // by using the initFromDictionary method in the CPPost model
     for (NSDictionary *postDict in postsArray) {
         CPPost *newPost = [[CPPost alloc] initFromDictionary:postDict];
-        [self.posts addObject:newPost];
+        
+        if (![self.posts containsObject:newPost]) {
+            int postIndex = self.lastID == 0 ? self.posts.count : 0;
+            [self.posts insertObject:newPost atIndex:postIndex];
+        }       
     }
 }
 
 - (void)addRepliesFromDictionary:(NSDictionary *)repliesDict
 {
+    int maxReplyID;
+    
     // loop through the keys of the dictionary returned from API
     // these are the post ID for the original post the reply associates to
     for (NSNumber *original_post_ID in repliesDict) {
@@ -46,9 +48,22 @@
         
         // loop through the replies for this post and add them to the original post
         for (NSDictionary *replyDict in [repliesDict objectForKey:original_post_ID]) {
-            [originalPost.replies addObject:[[CPPost alloc] initFromDictionary:replyDict]];
+            CPPost *replyPost = [[CPPost alloc] initFromDictionary:replyDict];
+            
+            // add this reply if we don't already have it
+            if (![originalPost.replies containsObject:replyPost]) {
+                [originalPost.replies addObject:replyPost];
+                
+                // check if we have a new maxReplyID
+                 maxReplyID = (originalPost.postID > maxReplyID) ?
+                              originalPost.postID : maxReplyID;
+            }
+            
         }
     }
+    
+    // our last reply ID is the maxReplyID we figured out during the enumeration
+    self.lastReplyID = maxReplyID;
 }
 
 - (int)indexOfPostWithID:(int)postID

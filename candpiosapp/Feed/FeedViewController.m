@@ -1106,11 +1106,14 @@ typedef enum {
     
     if (self.selectedVenueFeed) {  
         // make the request with CPapi to get the feed for this selected venue
-        [CPapi getFeedForVenueID:self.selectedVenueFeed.venue.venueID withCompletion:^(NSDictionary *json, NSError *error) { 
+        [CPapi getPostsForVenueFeed:self.selectedVenueFeed withCompletion:^(NSDictionary *json, NSError *error) {
             if (!error) {
                 if (![[json objectForKey:@"error"] boolValue]) {
                                         
                     [self.selectedVenueFeed addPostsFromArray:[json objectForKey:@"payload"]];
+                    
+                    // last ID property for venue feed is now the ID of the first post in the selectedVenueFeed posts array
+                    self.selectedVenueFeed.lastID = [[self.selectedVenueFeed.posts objectAtIndex:0] postID];
                     
                     [self toggleLoadingState:NO];
                     
@@ -1128,7 +1131,7 @@ typedef enum {
                         [self scrollTableViewToTopAnimated:YES];
                         
                         // load the replies to the posts for this venue feed
-                        [CPapi getPostRepliesForVenueID:self.selectedVenueFeed.venue.venueID withCompletion:^(NSDictionary *json, NSError *error) {
+                        [CPapi getPostRepliesForVenueFeed:self.selectedVenueFeed withCompletion:^(NSDictionary *json, NSError *error) {
                             if (!error) {
                                 if (![[json objectForKey:@"error"] boolValue]) {
                                     [self.selectedVenueFeed addRepliesFromDictionary:[json objectForKey:@"payload"]];
