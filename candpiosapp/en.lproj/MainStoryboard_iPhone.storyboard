@@ -565,11 +565,11 @@
                                             <outlet property="senderProfileButton" destination="BFA-Cd-SRj" id="KmU-Z5-b81"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CommentCell" rowHeight="25" id="WNb-er-UQQ" customClass="CommentCell">
-                                        <rect key="frame" x="0.0" y="374" width="320" height="25"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CommentCell" rowHeight="45" id="WNb-er-UQQ" customClass="CommentCell">
+                                        <rect key="frame" x="0.0" y="374" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="24"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6Gh-jB-2lH">
@@ -587,6 +587,11 @@
                                                         <action selector="pillButtonPressed:" destination="n3K-IJ-fac" eventType="touchUpInside" id="oNt-76-uAu"/>
                                                     </connections>
                                                 </button>
+                                                <view contentMode="scaleToFill" id="4iT-ev-9Eg">
+                                                    <rect key="frame" x="0.0" y="30" width="320" height="1"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>

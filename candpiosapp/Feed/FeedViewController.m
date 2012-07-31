@@ -150,7 +150,7 @@ typedef enum {
 #define LOVE_LABEL_WIDTH 178
 #define LOVE_PLUS_ONE_LABEL_WIDTH 200
 #define REPLY_LABEL_WIDTH 180
-#define PILL_BUTTON_CELL_HEIGHT 25
+#define PILL_BUTTON_CELL_HEIGHT 40
 #define CONTAINER_BACKGROUND_ORIGIN_X 7.5
 #define CONTAINER_BACKGROUND_WIDTH 305
 #define CONTAINER_IMAGE_VIEW_TAG 2819
@@ -865,8 +865,6 @@ typedef enum {
     if (section == [tableView numberOfSections] - 1) {
         // give the tableView a footer so that the bottom cells clear the button
         return [CPAppDelegate tabBarController].thinBar.actionButton.frame.size.width / 2;
-    } else if (self.selectedVenueFeed) {
-        return 15;
     } else {
         return 0;
     }
