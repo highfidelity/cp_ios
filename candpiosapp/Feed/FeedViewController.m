@@ -149,7 +149,7 @@ typedef enum {
 #define UPDATE_LABEL_WIDTH 228
 #define LOVE_LABEL_WIDTH 178
 #define LOVE_PLUS_ONE_LABEL_WIDTH 200
-#define REPLY_LABEL_WIDTH 180
+#define REPLY_LABEL_WIDTH 190
 #define PILL_BUTTON_CELL_HEIGHT 40
 #define CONTAINER_BACKGROUND_ORIGIN_X 7.5
 #define CONTAINER_BACKGROUND_WIDTH 305
@@ -187,7 +187,7 @@ typedef enum {
 
 - (CGFloat)widthForLabelForPost:(CPPost *)post
 {
-    if (post.type == CPPostTypeLove && post.originalPostID == 0) {
+    if (post.type == CPPostTypeLove && !post.originalPostID) {
         return LOVE_LABEL_WIDTH;
     } else {
         return !post.originalPostID ? UPDATE_LABEL_WIDTH : REPLY_LABEL_WIDTH;
