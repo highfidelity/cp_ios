@@ -343,10 +343,11 @@ typedef enum {
     UIView *separatorView;
     
     if (!(separatorView = [cell.contentView viewWithTag:CELL_SEPARATOR_TAG])) {
-        separatorView = [self seperatorLineViewWithFrame:CGRectMake(CONTAINER_BACKGROUND_ORIGIN_X + 2,
+        UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(CONTAINER_BACKGROUND_ORIGIN_X + 2,
                                                           cell.contentView.frame.size.height - 5,
                                                           CONTAINER_BACKGROUND_WIDTH - 5,
                                                           1)];
+        separatorView.backgroundColor = [UIColor colorWithR:239 G:239 B:239 A:1];
         separatorView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;        
         separatorView.tag = CELL_SEPARATOR_TAG;
         
@@ -358,14 +359,6 @@ typedef enum {
         separatorViewMove.origin.y = cell.contentView.frame.size.height - 5;
         separatorView.frame = separatorViewMove;
     }
-}
-
-- (UIView *)seperatorLineViewWithFrame:(CGRect)frame
-{
-    UIView *separatorView = [[UIView alloc] initWithFrame:frame];
-    separatorView.backgroundColor = [UIColor colorWithR:239 G:239 B:239 A:1];
-    
-    return separatorView;
 }
 
 #define REPLY_BUBBLE_ORIGIN_X 62
@@ -871,17 +864,9 @@ typedef enum {
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    // alloc-init a footerView to return
-    UIView *footerView = [[UIView alloc] init];
-    
-    // if this is not the last footer for the selected venue feed then it needs a cell seperator
-    if (self.selectedVenueFeed && section < [tableView numberOfSections] - 1) {
-        [footerView addSubview:[self seperatorLineViewWithFrame:CGRectMake(0, 8, self.tableView.frame.size.width, 1)]];
-    }
-    
-    // return the created view
-    return footerView;
+{   
+    // return an empty view
+    return [[UIView alloc] init];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
