@@ -289,7 +289,7 @@
 {
     [UIView animateWithDuration:0.3 animations:^ {
         self.anyoneChatView.frame = CGRectMake(self.anyoneChatView.frame.origin.x, 
-                                               quietTime ? 239 : 200,
+                                               quietTime ? 200 : 161,
                                                self.anyoneChatView.frame.size.width,
                                                self.anyoneChatView.frame.size.height);
         
