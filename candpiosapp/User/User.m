@@ -361,6 +361,15 @@
                     }
                     self.placeCheckedIn = venue;
                     self.checkedIn = [[checkinDict valueForKey:@"checked_in"] boolValue];
+
+                    if ([CPUserDefaultsHandler currentUser] && [[CPUserDefaultsHandler currentUser] userID] == self.userID) {
+                        if (self.checkedIn) {
+                            NSInteger checkOutTime =[[checkinDict objectForKey:@"checkout"] integerValue];
+                            [CPAppDelegate saveCheckInVenue:venue andCheckOutTime:checkOutTime];
+                        } else {
+                            [CPAppDelegate setCheckedOut];
+                        }
+                    }
                 }
             }
             

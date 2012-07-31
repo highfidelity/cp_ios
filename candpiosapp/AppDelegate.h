@@ -39,6 +39,7 @@
 - (void)promptForCheckout;
 - (void)setCheckedOut;
 - (void)autoCheckinForVenue:(CPVenue *)venue;
+- (void)saveCheckInVenue:(CPVenue *)venue andCheckOutTime:(NSInteger)checkOutTime;
 - (void)autoCheckoutForCLRegion:(CLRegion *)region;
 - (void)showSignupModalFromViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
