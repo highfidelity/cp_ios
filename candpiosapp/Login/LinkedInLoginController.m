@@ -339,7 +339,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                 BOOL hasSentConfirmationEmail = [[userInfo objectForKey:@"has_confirm_string"] boolValue];
 
                 NSDictionary *checkInDict = [userInfo valueForKey:@"checkin_data"];
-                if ([[checkInDict objectForKey:@"checked_in"]boolValue]) {
+                if ([[checkInDict objectForKey:@"checked_in"] boolValue]) {
                     CPVenue *venue = [[CPVenue alloc] initFromDictionary:checkInDict];
 
                     NSInteger checkOutTime =[[checkInDict objectForKey:@"checkout"] integerValue];

@@ -33,7 +33,7 @@
 #else
 
 
-    NSString* const kCandPWebServiceUrl = @"http://dev.candp.me/~stojce/candpweb2/web/";
+    NSString* const kCandPWebServiceUrl = @"https://staging.candp.me/";
     // Devs can test against a their server sandbox by uncommenting and completing the following URL
     //kCandPWebServiceUrl = @"http://dev.worklist.net/~<login>/candpweb2_<job#>/web/";
 
