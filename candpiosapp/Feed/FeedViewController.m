@@ -343,11 +343,10 @@ typedef enum {
     UIView *separatorView;
     
     if (!(separatorView = [cell.contentView viewWithTag:CELL_SEPARATOR_TAG])) {
-        separatorView = [[UIView alloc] initWithFrame:CGRectMake(CONTAINER_BACKGROUND_ORIGIN_X + 2, 
-                                                                cell.contentView.frame.size.height - 5, 
-                                                                CONTAINER_BACKGROUND_WIDTH - 5, 
-                                                                1)];
-        separatorView.backgroundColor = [UIColor colorWithR:239 G:239 B:239 A:1];
+        separatorView = [self seperatorLineViewWithFrame:CGRectMake(CONTAINER_BACKGROUND_ORIGIN_X + 2,
+                                                          cell.contentView.frame.size.height - 5,
+                                                          CONTAINER_BACKGROUND_WIDTH - 5,
+                                                          1)];
         separatorView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;        
         separatorView.tag = CELL_SEPARATOR_TAG;
         
@@ -359,6 +358,14 @@ typedef enum {
         separatorViewMove.origin.y = cell.contentView.frame.size.height - 5;
         separatorView.frame = separatorViewMove;
     }
+}
+
+- (UIView *)seperatorLineViewWithFrame:(CGRect)frame
+{
+    UIView *separatorView = [[UIView alloc] initWithFrame:frame];
+    separatorView.backgroundColor = [UIColor colorWithR:239 G:239 B:239 A:1];
+    
+    return separatorView;
 }
 
 #define REPLY_BUBBLE_ORIGIN_X 62
@@ -452,10 +459,10 @@ typedef enum {
         cellPost = [self.selectedVenueFeed.posts objectAtIndex:indexPath.section];
         
         // if this is the comment / +1 box cell then our height is static
-        if (indexPath.row > cellPost.replies.count + 2) {
+        if ((!cellPost.replies.count && indexPath.row == 1) || indexPath.row > cellPost.replies.count + 2) {
             return PILL_BUTTON_CELL_HEIGHT;
         } else if (indexPath.row > cellPost.replies.count + 1 || indexPath.row == 1) {
-            return indexPath.row == 1 ? REPLY_BUBBLE_HEADER_HEIGHT : 18;
+            return indexPath.row == 1 ? REPLY_BUBBLE_HEADER_HEIGHT : REPLY_BUBBLE_FOOTER_HEIGHT + 3;
         } else if (indexPath.row > 0) {
             // if the indexPath is not 0 and isn't the last this is a reply
             cellPost = [cellPost.replies objectAtIndex:indexPath.row - 2];
@@ -839,11 +846,8 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (self.selectedVenueFeed) {
-        // selected feed view needs a 15pt header
-        return 15;
-    } else if (section == 0) {
-        // first header in venue feed previews should match spacing
+    if (section == 0) {
+        // first header in venue feed previews and selected feed view should have 9pt header
         return 9;
     } else {
         // no header required
@@ -861,6 +865,8 @@ typedef enum {
     if (section == [tableView numberOfSections] - 1) {
         // give the tableView a footer so that the bottom cells clear the button
         return [CPAppDelegate tabBarController].thinBar.actionButton.frame.size.width / 2;
+    } else if (self.selectedVenueFeed) {
+        return 15;
     } else {
         return 0;
     }
@@ -868,7 +874,16 @@ typedef enum {
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    return [[UIView alloc] init];
+    // alloc-init a footerView to return
+    UIView *footerView = [[UIView alloc] init];
+    
+    // if this is not the last footer for the selected venue feed then it needs a cell seperator
+    if (self.selectedVenueFeed && section < [tableView numberOfSections] - 1) {
+        [footerView addSubview:[self seperatorLineViewWithFrame:CGRectMake(0, 8, self.tableView.frame.size.width, 1)]];
+    }
+    
+    // return the created view
+    return footerView;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
