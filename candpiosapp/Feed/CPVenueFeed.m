@@ -13,6 +13,8 @@
 
 @synthesize venue = _venue;
 @synthesize posts = _posts;
+@synthesize lastID = _lastID;
+@synthesize lastReplyID = _lastReplyID;
 
 - (NSMutableArray *)posts
 {
