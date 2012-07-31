@@ -528,7 +528,8 @@ typedef enum {
             // and one for the footer of each feed
             
             // there will be a cell for each post in each of the venue feed previews
-            return sectionVenueFeed.posts.count + 2;
+            // up to three preview posts
+            return (sectionVenueFeed.posts.count > 3 ? 3 : sectionVenueFeed.posts.count) + 2;
         }        
     }
 }
