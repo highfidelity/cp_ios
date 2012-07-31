@@ -622,7 +622,7 @@ typedef enum {
             
             return feedPreviewFooterCell;
         } else {
-            cellSeperatorRequired = !(indexPath.row == sectionVenueFeed.posts.count);
+            cellSeperatorRequired = indexPath.row != sectionVenueFeed.posts.count && indexPath.row != 3;
             // pull the right post from the feed preview for this venue
             post = [sectionVenueFeed.posts objectAtIndex:(indexPath.row - 1)];
         }
