@@ -303,24 +303,20 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
     } else if ([userInfo valueForKey:kContactRequestAPNSKey] != nil) {        
         [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:kContactRequestAPNSKey] intValue]
                                           fromView:self.settingsMenuController];
-    }
-    else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey] != nil) {        
+    } else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey] != nil) {
         [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"acceptor"]
                                        fromView:self.settingsMenuController];
-    }
-    // Received payment
-    else if ([userInfo valueForKey:@"payment_received"] != nil)
-    {
+    } else if ([userInfo valueForKey:@"payment_received"] != nil) {
+        // Received payment
         NSString *message = [userInfo valueForKeyPath:@"aps.alert"];
         [PaymentHelper showPaymentReceivedAlertWithMessage:message];
-    }
-    else {
+    } else {
         // just show the alert if there was one, and the app is active
         if (alertMessage && [UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
             CPAlertView *alertView = [[CPAlertView alloc] initWithTitle:@"Incoming message"
                                                                 message:alertMessage
                                                                delegate:nil
-                                                      cancelButtonTitle:@"Ok"
+                                                      cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil];
             [alertView show];
         }
@@ -1054,8 +1050,8 @@ void SignalHandler(int sig) {
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
             [self.tabBarController presentModalViewController:navigationController animated:YES];
         }
-    }
-    else if (alertView.tag == kGeoFenceAlertTag && alertView.cancelButtonIndex == buttonIndex) {
+        
+    } else if (alertView.tag == kGeoFenceAlertTag && alertView.cancelButtonIndex == buttonIndex) {
         // Load the venue if the user tapped on View from the didExit auto checkout alert
         if (userInfo) {
             [self loadVenueView:[userInfo objectForKey:@"venue_name"]];
