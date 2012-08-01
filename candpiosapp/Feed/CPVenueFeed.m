@@ -44,12 +44,12 @@
     
     // loop through the keys of the dictionary returned from API
     // these are the post ID for the original post the reply associates to
-    for (NSNumber *original_post_ID in repliesDict) {
+    for (NSNumber *originalPostID in repliesDict) {
         // grab the original post from our posts array
-        CPPost *originalPost = [self.posts objectAtIndex:[self indexOfPostWithID:[original_post_ID intValue]]];
+        CPPost *originalPost = [self.posts objectAtIndex:[self indexOfPostWithID:[originalPostID intValue]]];
         
         // loop through the replies for this post and add them to the original post
-        for (NSDictionary *replyDict in [repliesDict objectForKey:original_post_ID]) {
+        for (NSDictionary *replyDict in [repliesDict objectForKey:originalPostID]) {
             CPPost *replyPost = [[CPPost alloc] initFromDictionary:replyDict];
             
             // add this reply if we don't already have it
