@@ -64,7 +64,7 @@ static NSDateFormatter *postDateFormatter;
         }
         
         self.type = [self enumLogEntryTypeForString:[postDict objectForKey:@"type"]];
-        self.originalPostID = [[postDict objectForKey:@"original_log_id"] integerValue];
+        self.originalPostID = [[postDict objectForKey:@"original_post_id"] integerValue];
     }
     return self;
 }
