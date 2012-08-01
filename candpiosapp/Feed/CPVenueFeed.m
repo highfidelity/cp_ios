@@ -36,6 +36,28 @@
             [self.posts insertObject:newPost atIndex:postIndex];
         }       
     }
+    
+    // TODO: check if an insertion sort is a better solution to this problem
+    self.posts = [[self.posts sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSDate *first = [(CPPost *)a date];
+        NSDate *second = [(CPPost *)b date];
+        
+        // compare the two dates
+        NSComparisonResult result = [first compare:second];
+        
+        // switch-case to flip the order
+        switch (result) {
+            case NSOrderedAscending:
+                result = NSOrderedDescending;
+                break;
+            case NSOrderedDescending:
+                result = NSOrderedAscending;
+            default:
+                break;
+        }
+        
+        return result;
+    }] mutableCopy];
 }
 
 - (void)addRepliesFromDictionary:(NSDictionary *)repliesDict
