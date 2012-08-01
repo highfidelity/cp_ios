@@ -694,10 +694,33 @@
     }
 }
 
-+ (void)getFeedForVenueID:(NSUInteger)venueID withCompletion:(void (^)(NSDictionary *, NSError *))completion
++ (void)getPostsForVenueFeed:(CPVenueFeed *)venueFeed
+           withCompletion:(void (^)(NSDictionary *, NSError *))completion
 {
     // our params dict contains one parameter, the ID of the venue we want log entries for
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"%d", venueID] forKey:@"venue_id"];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"%d", venueFeed.venue.venueID] forKey:@"venue_id"];
+    
+    // if we were passed a lastID then add that as a param
+    if (venueFeed.lastID) {
+        [params setObject:[NSString stringWithFormat:@"%d", venueFeed.lastID] forKey:@"last_id"];
+    }
+    
+    // pretty simple, call action getVenueFeed in api.php
+    [self makeHTTPRequestWithAction:@"getVenueFeed" withParameters:params completion:completion];
+}
+
++ (void)getPostRepliesForVenueFeed:(CPVenueFeed *)venueFeed
+                    withCompletion:(void (^)(NSDictionary *, NSError *))completion
+{
+    // our params dict contains one parameter, the ID of the venue we want post replies for
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:[NSString stringWithFormat:@"%d", venueFeed.venue.venueID] forKey:@"venue_id"];
+    [params setObject:[NSString stringWithFormat:@"%d", 1] forKey:@"replies_only"];
+    
+    // if we were passed a lastReplyID then add that as a param
+    if (venueFeed.lastReplyID) {
+        [params setObject:[NSString stringWithFormat:@"%d", venueFeed.lastReplyID] forKey:@"last_id"];
+    }
     
     // pretty simple, call action getLog in api.php
     [self makeHTTPRequestWithAction:@"getVenueFeed" withParameters:params completion:completion];
@@ -720,9 +743,7 @@
             postType = @"love";
             break;
         case CPPostTypeCheckin:
-            @throw [NSException exceptionWithName:@"Don't call type=\"checkin\" directly, use chickin API call with status."
-                                           reason:nil
-                                         userInfo:nil];
+            postType = @"checkin";
             break;
     }
     

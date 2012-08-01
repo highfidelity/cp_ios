@@ -172,6 +172,8 @@
 		533E5F0A15A3AD040042862E /* FeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533E5F0915A3AD040042862E /* FeedViewController.m */; };
 		534323F715C1C42600BE5075 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 534323F615C1C42600BE5075 /* GTMNSString+HTML.m */; };
 		534323FB15C1C8AE00BE5075 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 534323FA15C1C8AE00BE5075 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5343242A15C1F20400BE5075 /* PBXBuildFile */ = {isa = PBXBuildFile; fileRef = 5343242815C1F20400BE5075 /* pill-button-plus1-comment.png */; };
+		5343242B15C1F20400BE5075 /* PBXBuildFile */ = {isa = PBXBuildFile; fileRef = 5343242915C1F20400BE5075 /* pill-button-plus1-comment@2x.png */; };
 		5343243F15C2123A00BE5075 /* CPApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5343243E15C2123A00BE5075 /* CPApiClient.m */; };
 		53463F5115336EA5001CA16D /* UIViewController+isModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 53463F5015336EA5001CA16D /* UIViewController+isModal.m */; };
 		534B6EF0156DAE7900DA9F74 /* SkillsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534B6EEF156DAE7900DA9F74 /* SkillsTableViewController.m */; };

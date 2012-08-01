@@ -14,6 +14,7 @@
 #import "CPVenue.h"
 #import "ChatHistory.h"
 #import "CPPost.h"
+#import "CPVenueFeed.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface CPapi : NSObject
@@ -60,7 +61,8 @@
 
 #pragma mark - Feeds
 + (void)getFeedPreviewsForVenueIDs:(NSArray *)venueIDs withCompletion:(void (^)(NSDictionary *, NSError *))completion;
-+ (void)getFeedForVenueID:(NSUInteger)venueID withCompletion:(void (^)(NSDictionary *, NSError *))completion;
++ (void)getPostsForVenueFeed:(CPVenueFeed *)venueFeed withCompletion:(void (^)(NSDictionary *, NSError *))completion;
++ (void)getPostRepliesForVenueFeed:(CPVenueFeed *)venueFeed withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 + (void)newPost:(CPPost *)post
         atVenue:(CPVenue *)venue

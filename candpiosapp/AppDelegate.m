@@ -17,6 +17,7 @@
 #import "VenueInfoViewController.h"
 #import "PushModalViewControllerFromLeftSegue.h"
 #import "CPApiClient.h"
+#import "CPCheckinHandler.h"
 
 #define kContactRequestAPNSKey @"contact_request"
 #define kContactRequestAcceptedAPNSKey @"contact_accepted"
@@ -681,6 +682,16 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
 }
 
+- (void)saveCheckInVenue:(CPVenue *)venue andCheckOutTime:(NSInteger)checkOutTime
+{
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    [self setCheckedOut];
+    [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
+    [CPUserDefaultsHandler setCurrentVenue:venue];
+    [self updatePastVenue:venue];
+    [[CPCheckinHandler sharedHandler] queueLocalNotificationForVenue:venue checkoutTime:checkOutTime];
+}
+
 - (void)checkInButtonPressed:(id)sender
 {
     if (![CPUserDefaultsHandler currentUser]) {
@@ -693,7 +704,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     }
 }
 
-# pragma mark - Signup 
+# pragma mark - Signup
 
 - (void)showSignupModalFromViewController:(UIViewController *)viewController
                                  animated:(BOOL)animated
@@ -840,6 +851,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
         [CPUserDefaultsHandler setCurrentUser:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
     }
+    [self setCheckedOut];
 }
 
 - (void)storeUserLoginDataFromDictionary:(NSDictionary *)userInfo
