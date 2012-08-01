@@ -172,19 +172,7 @@
                 
                 if (!errorVenue && !respError) {
                     NSDictionary *jsonDict = [jsonVenue objectForKey:@"payload"];
-
-                    CPVenue *defaultVenue = [[CPVenue alloc] init];
-                    defaultVenue.name = [jsonDict objectForKey:@"name"];
-                    defaultVenue.foursquareID = [jsonDict objectForKey:@"foursquare_id"];
-                    defaultVenue.address = [jsonDict objectForKey:@"address"];
-                    defaultVenue.city = [jsonDict objectForKey:@"city"];
-                    defaultVenue.state = [jsonDict objectForKey:@"state"];
-                    defaultVenue.zip = [jsonDict objectForKey:@"zip"];
-                    defaultVenue.phone = [jsonDict objectForKey:@"phone"];
-                    defaultVenue.formattedPhone = [jsonDict objectForKey:@"formatted_phone"];
-
-                    defaultVenue.coordinate = CLLocationCoordinate2DMake([[jsonDict valueForKeyPath:@"lat"] doubleValue], [[jsonDict valueForKeyPath:@"lng"] doubleValue]);
-                    
+                    CPVenue *defaultVenue = [[CPVenue alloc] initFromDictionary:jsonDict];
                     NSPredicate *defaultVenuePredicate = [NSPredicate predicateWithFormat:@"foursquareID != %@", defaultVenue.foursquareID];
                     [places filterUsingPredicate:defaultVenuePredicate];
                     
