@@ -1208,7 +1208,11 @@ typedef enum {
         [CPapi newPost:self.pendingPost atVenue:self.selectedVenueFeed.venue completion:^(NSDictionary *json, NSError *error) {
             if (!error) {
                 if (![[json objectForKey:@"error"] boolValue]) {
-                    self.currentState = FeedVCStateSentNewPost;                    
+                    self.currentState = FeedVCStateSentNewPost;
+                    
+                    // the ID of the new post is returned as the payload
+                    self.pendingPost.postID = [[json objectForKey:@"payload"] integerValue];
+                    
                     // drop the self.pendingPost to the pending entry now that it's sent
                     CPPost *sentEntry = self.pendingPost;
                     self.pendingPost = nil;
