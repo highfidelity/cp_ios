@@ -798,6 +798,11 @@
     [self makeHTTPRequestWithAction:@"getVenueCheckInsCount" withParameters:parameters completion:completion];
 }
 
++ (void)getDefaultCheckInVenueWithCompletion:(void (^)(NSDictionary *, NSError *))completion
+{
+    [self makeHTTPRequestWithAction:@"getDefaultCheckInVenue" withParameters:nil completion:completion];   
+}
+
 + (void)getResumeForUserId:(int)userId
              andCompletion:(void (^)(NSDictionary *, NSError *))completion
 {

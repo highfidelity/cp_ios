@@ -80,6 +80,8 @@
 + (void)getCurrentCheckInsCountAtVenue:(CPVenue *)venue 
                         withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
++ (void)getDefaultCheckInVenueWithCompletion:(void (^)(NSDictionary *, NSError *))completion;
+
 #pragma mark - User Profile
 + (void)getResumeForUserId:(int)userId andCompletion:(void(^)(NSDictionary *json, NSError *error))completion;
 + (void)getUserProfileWithCompletionBlock:(void(^)(NSDictionary *json, NSError *error))completion;
