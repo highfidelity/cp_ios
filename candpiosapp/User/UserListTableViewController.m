@@ -16,6 +16,7 @@
 #import "CPVenue.h"
 #import "CPSoundEffectsManager.h"
 #import "OneOnOneChatViewController.h"
+#import "UIViewController+CPUserActionCellAdditions.h"
 
 @interface UserListTableViewController()
 
@@ -117,7 +118,13 @@
     
     // we only want to reload the table view here if the user isn't in the process of performing a quick action
     if (!self.userIsPerformingQuickAction) {
+        NSUInteger preReloadVisibleCellsCount = [self.tableView.visibleCells count];
+        
         [self.tableView reloadData];
+        
+        if (!preReloadVisibleCellsCount) {
+            [self animateSlideWaveWithCPUserActionCells:self.tableView.visibleCells];
+        }
     } else {
         self.reloadPrevented = YES;
     }

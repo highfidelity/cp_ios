@@ -10,6 +10,7 @@
 #import "UserProfileViewController.h"
 #import "GTMNSString+HTML.h"
 #import "UserLoveViewController.h"
+#import "UIViewController+CPUserActionCellAdditions.h"
 
 #define kContactRequestsSection 0
 #define kExtraContactRequestsSections 1
@@ -199,7 +200,13 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
                 self.contactRequests = [contactRequests mutableCopy];
                 
                 if (!self.userIsPerformingQuickAction) {
+                    NSUInteger preReloadVisibleCellsCount = [self.tableView.visibleCells count];
+                    
                     [self.tableView reloadData];
+                    
+                    if (!preReloadVisibleCellsCount) {
+                        [self animateSlideWaveWithCPUserActionCells:self.tableView.visibleCells];
+                    }
                 } else {
                     self.reloadPrevented = YES;
                 }

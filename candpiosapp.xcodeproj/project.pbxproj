@@ -172,8 +172,6 @@
 		533E5F0A15A3AD040042862E /* FeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533E5F0915A3AD040042862E /* FeedViewController.m */; };
 		534323F715C1C42600BE5075 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 534323F615C1C42600BE5075 /* GTMNSString+HTML.m */; };
 		534323FB15C1C8AE00BE5075 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 534323FA15C1C8AE00BE5075 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		5343242A15C1F20400BE5075 /* PBXBuildFile */ = {isa = PBXBuildFile; fileRef = 5343242815C1F20400BE5075 /* pill-button-plus1-comment.png */; };
-		5343242B15C1F20400BE5075 /* PBXBuildFile */ = {isa = PBXBuildFile; fileRef = 5343242915C1F20400BE5075 /* pill-button-plus1-comment@2x.png */; };
 		5343243F15C2123A00BE5075 /* CPApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5343243E15C2123A00BE5075 /* CPApiClient.m */; };
 		53463F5115336EA5001CA16D /* UIViewController+isModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 53463F5015336EA5001CA16D /* UIViewController+isModal.m */; };
 		534B6EF0156DAE7900DA9F74 /* SkillsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534B6EEF156DAE7900DA9F74 /* SkillsTableViewController.m */; };
@@ -448,6 +446,7 @@
 		699249E3158A3CFC00EC273A /* ResumeVisibilityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 699249E2158A3CFC00EC273A /* ResumeVisibilityViewController.m */; };
 		69A030B7158F95F600BBCB4C /* pin-solar.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A030B5158F95F600BBCB4C /* pin-solar.png */; };
 		69A030B8158F95F600BBCB4C /* pin-solar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A030B6158F95F600BBCB4C /* pin-solar@2x.png */; };
+		69A1582E15CB064300B21971 /* UIViewController+CPUserActionCellAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A1582D15CB064300B21971 /* UIViewController+CPUserActionCellAdditions.m */; };
 		69D5C3561533911300B3530F /* invite-code-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D5C3521533911300B3530F /* invite-code-background.png */; };
 		69D5C3571533911300B3530F /* invite-code-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D5C3531533911300B3530F /* invite-code-background@2x.png */; };
 		69D5C3581533911300B3530F /* plug-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D5C3541533911300B3530F /* plug-logo.png */; };
@@ -1150,6 +1149,8 @@
 		699249E2158A3CFC00EC273A /* ResumeVisibilityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResumeVisibilityViewController.m; path = Settings/ResumeVisibilityViewController.m; sourceTree = "<group>"; };
 		69A030B5158F95F600BBCB4C /* pin-solar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pin-solar.png"; path = "Map/images/pin-solar.png"; sourceTree = "<group>"; };
 		69A030B6158F95F600BBCB4C /* pin-solar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pin-solar@2x.png"; path = "Map/images/pin-solar@2x.png"; sourceTree = "<group>"; };
+		69A1582C15CB064300B21971 /* UIViewController+CPUserActionCellAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+CPUserActionCellAdditions.h"; sourceTree = "<group>"; };
+		69A1582D15CB064300B21971 /* UIViewController+CPUserActionCellAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+CPUserActionCellAdditions.m"; sourceTree = "<group>"; };
 		69D5C3521533911300B3530F /* invite-code-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "invite-code-background.png"; path = "Settings/images/invite-code-background.png"; sourceTree = "<group>"; };
 		69D5C3531533911300B3530F /* invite-code-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "invite-code-background@2x.png"; path = "Settings/images/invite-code-background@2x.png"; sourceTree = "<group>"; };
 		69D5C3541533911300B3530F /* plug-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "plug-logo.png"; path = "Settings/images/plug-logo.png"; sourceTree = "<group>"; };
@@ -1622,6 +1623,8 @@
 				4E5578BD15AD0575000B588D /* CPUserAction.m */,
 				53019FE215ABA21D00AE3FA1 /* CPUserActionCell.h */,
 				53019FE315ABA21D00AE3FA1 /* CPUserActionCell.m */,
+				69A1582C15CB064300B21971 /* UIViewController+CPUserActionCellAdditions.h */,
+				69A1582D15CB064300B21971 /* UIViewController+CPUserActionCellAdditions.m */,
 				4E28A7E615AB795B003C601A /* sound */,
 				4E28A7BB15AB5DF4003C601A /* images */,
 			);
@@ -3310,6 +3313,7 @@
 				532505AE15C0A25B006B1DB6 /* PostReplyCell.m in Sources */,
 				4EB016E915C21989006F600D /* CommentCell.m in Sources */,
 				5343243F15C2123A00BE5075 /* CPApiClient.m in Sources */,
+				69A1582E15CB064300B21971 /* UIViewController+CPUserActionCellAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
