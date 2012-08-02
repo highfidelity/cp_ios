@@ -136,6 +136,7 @@
         self.intervalCheckinCount = [[json objectForKey:@"checkins_for_interval"] integerValue];
         self.photoURL = [json objectForKey:@"photo_url"];
         self.specialVenueType = [json objectForKey:@"special_venue_type"];
+        self.postsCount = [[json objectForKey:@"posts_count"] unsignedIntValue];
         
         if (![[json objectForKey:@"lat"] isKindOfClass:[NSNull class]] && ![[json objectForKey:@"lng"] isKindOfClass:[NSNull class]]) {
             self.coordinate = CLLocationCoordinate2DMake([[json objectForKey:@"lat"] doubleValue], [[json objectForKey:@"lng"] doubleValue]);

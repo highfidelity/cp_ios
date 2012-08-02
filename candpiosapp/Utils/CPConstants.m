@@ -35,7 +35,7 @@
 
     NSString* const kCandPWebServiceUrl = @"https://staging.candp.me/";
     // Devs can test against a their server sandbox by uncommenting and completing the following URL
-    //kCandPWebServiceUrl = @"http://dev.worklist.net/~<login>/candpweb2_<job#>/web/";
+    //NSString* const kCandPWebServiceUrl = @"http://dev.worklist.net/~<login>/candpweb2_<job#>/web/";
 
     NSString* const kCandPAddFundsUrl = @"http://staging.coffeeandpower.com/m/?ios#addFundsiPhone";
     NSString* const kLinkedInKey = @"4xkfzpnvuc72";

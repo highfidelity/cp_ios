@@ -33,6 +33,7 @@
 @property (nonatomic, assign) bool hasContactAtVenue;
 @property (nonatomic, assign) bool autoCheckin;
 @property (nonatomic, strong) NSString *specialVenueType;
+@property (nonatomic) NSUInteger postsCount;
 
 - (CPVenue *)initFromDictionary:(NSDictionary *)json;
 - (NSComparisonResult)sortByDistanceToUser:(CPVenue *)place;

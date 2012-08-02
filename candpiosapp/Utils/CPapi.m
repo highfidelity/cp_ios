@@ -660,6 +660,21 @@
     [self makeHTTPRequestWithAction:@"getVenuesAndUsersWithCheckinsInBoundsDuringInterval" withParameters:params queue:mapQueue timeout:9 completion:completion];
 }
 
++ (void)getNearestVenuesWithActiveFeeds:(CLLocationCoordinate2D)coordinate
+                             completion:(void (^)(NSDictionary *, NSError *))completion
+{
+    // Venues with active feeds.. generally centered around the user
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setValue:[NSString stringWithFormat:@"%f", coordinate.latitude] forKey:@"lat"];
+    [params setValue:[NSString stringWithFormat:@"%f", coordinate.longitude] forKey:@"lng"];
+    
+    [self makeHTTPRequestWithAction:@"getNearestVenuesWithActiveFeeds"
+                     withParameters:params
+                              queue:nil
+                            timeout:9
+                         completion:completion];
+}
+
 + (void)getNearestVenuesWithCheckinsToCoordinate:(CLLocationCoordinate2D)coordinate
                                      mapQueue:(NSOperationQueue *)mapQueue
                                completion:(void (^)(NSDictionary *, NSError *))completion
