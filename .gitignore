@@ -16,3 +16,4 @@ profile
 DerivedData
 *.orig
 .DS_Store
+.idea

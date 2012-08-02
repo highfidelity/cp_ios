@@ -15,15 +15,17 @@
 #import "CheckInDetailsViewController.h"
 #import "CPAlertView.h"
 #import "VenueInfoViewController.h"
-#import "UIButton+AnimatedClockHand.h"
 #import "PushModalViewControllerFromLeftSegue.h"
-#import "ContactListViewController.h"
 #import "CPApiClient.h"
+#import "CPCheckinHandler.h"
 
 #define kContactRequestAPNSKey @"contact_request"
 #define kContactRequestAcceptedAPNSKey @"contact_accepted"
 #define kCheckOutLocalNotificationAlertViewTitle @"You will be checked out of C&P in 5 min."
 #define kRadiusForCheckins                      10 // measure in meters, from lat/lng of CPVenue
+
+#define kGeoFenceAlertTag 601
+#define kCheckOutAlertTag 602
 
 @interface AppDelegate() {
     CLLocationManager *_locationManager;
@@ -254,25 +256,22 @@ didReceiveLocalNotification:(UILocalNotification *)notif
         alertText = kCheckOutLocalNotificationAlertViewTitle;
         cancelText = @"Ignore";
         otherText = @"View";
-    } else if ([notif.userInfo valueForKey:@"geofence"]) {
-        [self handleGeofenceNotification:notif.alertBody userInfo:notif.userInfo];
-    }
-
-    // Only show the alert if there's a valid title to ensure that we don't show a blank alert
-    if (alertText && alertText.length > 0) {
         CPAlertView *alertView;
-        
+
         alertView = [[CPAlertView alloc] initWithTitle:alertText
                                                message:nil
                                               delegate:self
                                      cancelButtonTitle:cancelText
-                                     otherButtonTitles:otherText, nil];        
-        
+                                     otherButtonTitles:otherText, nil];
+        alertView.tag = kCheckOutAlertTag;
+
         if (alertView) {
-            alertView.context = notif.userInfo;            
+            alertView.context = notif.userInfo;
             [alertView show];
-        }        
-    }    
+        }
+    } else if ([notif.userInfo valueForKey:@"geofence"]) {
+        [self handleGeofenceNotification:notif.alertBody userInfo:notif.userInfo];
+    }
 }
 
 // Handle PUSH notifications while the app is running
@@ -304,16 +303,23 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
     } else if ([userInfo valueForKey:kContactRequestAPNSKey] != nil) {        
         [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:kContactRequestAPNSKey] intValue]
                                           fromView:self.settingsMenuController];
-    }
-    else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey] != nil) {        
+    } else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey] != nil) {
         [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"acceptor"]
                                        fromView:self.settingsMenuController];
-    }
-    // Received payment
-    else if ([userInfo valueForKey:@"payment_received"] != nil)
-    {
+    } else if ([userInfo valueForKey:@"payment_received"] != nil) {
+        // Received payment
         NSString *message = [userInfo valueForKeyPath:@"aps.alert"];
         [PaymentHelper showPaymentReceivedAlertWithMessage:message];
+    } else {
+        // just show the alert if there was one, and the app is active
+        if (alertMessage && [UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+            CPAlertView *alertView = [[CPAlertView alloc] initWithTitle:@"Incoming message"
+                                                                message:alertMessage
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+            [alertView show];
+        }
     }
 }
 
@@ -583,13 +589,13 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
                                                            delegate:self
                                                   cancelButtonTitle:@"View"
                                                   otherButtonTitles:@"Ignore", nil];    
-        
+
         // add our userInfo to the alertView
         // be the delegate, give it a tag so we can recognize it
         // and return it
         alertView.context = userInfo;
         alertView.delegate = self;
-        alertView.tag = 601;
+        alertView.tag = kGeoFenceAlertTag;
         
         [alertView show];
     } else {
@@ -672,6 +678,16 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
 }
 
+- (void)saveCheckInVenue:(CPVenue *)venue andCheckOutTime:(NSInteger)checkOutTime
+{
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    [self setCheckedOut];
+    [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
+    [CPUserDefaultsHandler setCurrentVenue:venue];
+    [self updatePastVenue:venue];
+    [[CPCheckinHandler sharedHandler] queueLocalNotificationForVenue:venue checkoutTime:checkOutTime];
+}
+
 - (void)checkInButtonPressed:(id)sender
 {
     if (![CPUserDefaultsHandler currentUser]) {
@@ -684,7 +700,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     }
 }
 
-# pragma mark - Signup 
+# pragma mark - Signup
 
 - (void)showSignupModalFromViewController:(UIViewController *)viewController
                                  animated:(BOOL)animated
@@ -831,6 +847,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
         [CPUserDefaultsHandler setCurrentUser:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
     }
+    [self setCheckedOut];
 }
 
 - (void)storeUserLoginDataFromDictionary:(NSDictionary *)userInfo
@@ -1033,8 +1050,8 @@ void SignalHandler(int sig) {
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
             [self.tabBarController presentModalViewController:navigationController animated:YES];
         }
-    }
-    else if (alertView.tag == 601 && alertView.cancelButtonIndex == buttonIndex) {
+        
+    } else if (alertView.tag == kGeoFenceAlertTag && alertView.cancelButtonIndex == buttonIndex) {
         // Load the venue if the user tapped on View from the didExit auto checkout alert
         if (userInfo) {
             [self loadVenueView:[userInfo objectForKey:@"venue_name"]];

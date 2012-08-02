@@ -18,7 +18,7 @@
     
     // set the required properties on the HPGrowingTextView
     self.growingTextView.internalTextView.contentInset = UIEdgeInsetsMake(0, -8, 0, 0);
-    self.growingTextView.font = [UIFont systemFontOfSize:12];
+    self.growingTextView.font = [UIFont systemFontOfSize:14];
     self.growingTextView.textColor = [UIColor colorWithR:100 G:100 B:100 A:1];
     self.growingTextView.backgroundColor = [UIColor clearColor];
     self.growingTextView.minNumberOfLines = 1;

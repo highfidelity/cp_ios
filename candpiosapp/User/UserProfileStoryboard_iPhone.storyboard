@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="6Bs-xG-Mnl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="6Bs-xG-Mnl">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
     <scenes>
         <!--User Profile View Controller-->
@@ -814,37 +813,6 @@
                                     <outlet property="delegate" destination="GAN-eH-aYE" id="zut-Iv-j0W"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="MrU-tE-8bR">
-                                <rect key="frame" x="215" y="215" width="105" height="23"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="7" maxY="0.0"/>
-                                <state key="normal" title="+ Resume">
-                                    <color key="titleColor" red="0.75294117650000003" green="0.75294117650000003" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="resumeCheckboxPressed:" destination="GAN-eH-aYE" eventType="touchUpInside" id="uND-Dv-EOA"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="5Am-PI-vUx">
-                                <rect key="frame" x="215" y="217" width="23" height="23"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                                <state key="normal" image="checkbox-unchecked.png">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="resumeCheckboxPressed:" destination="GAN-eH-aYE" eventType="touchUpInside" id="Kt9-0h-wFH"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -854,7 +822,6 @@
                         <outlet property="loveBackground" destination="2hh-kk-6yh" id="bYl-Xt-Q8Q"/>
                         <outlet property="navigationBar" destination="Nhw-F2-Jfo" id="vwG-XF-pGS"/>
                         <outlet property="profilePicture" destination="CLY-yM-MjS" id="Pfs-ZI-xX8"/>
-                        <outlet property="resumeCheckbox" destination="5Am-PI-vUx" id="AqX-PI-C5e"/>
                         <outlet property="tableView" destination="UOQ-R0-oNk" id="neF-AN-hCH"/>
                     </connections>
                 </viewController>
@@ -929,7 +896,6 @@
         <image name="chat-bubble-right-bottom.png" width="261" height="14"/>
         <image name="chat-bubble-right-middle.png" width="261" height="13"/>
         <image name="chat-bubble-right-top.png" width="261" height="14"/>
-        <image name="checkbox-unchecked.png" width="23" height="23"/>
         <image name="exchange-cards.png" width="75" height="75"/>
         <image name="go-button.png" width="16" height="16"/>
         <image name="go-menu-bg.png" width="75" height="279"/>
@@ -989,13 +955,13 @@
         <class className="UserLoveViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UserLoveViewController.h"/>
             <relationships>
-                <relationship kind="action" name="resumeCheckboxPressed:" candidateClass="UIButton"/>
+                <relationship kind="action" name="cancelButtonPressed:"/>
+                <relationship kind="action" name="changeSkillButtonPressed:"/>
                 <relationship kind="outlet" name="charCounterLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="descriptionTextView" candidateClass="CPPlaceholderTextView"/>
                 <relationship kind="outlet" name="loveBackground" candidateClass="UIView"/>
                 <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
                 <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="resumeCheckbox" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
         </class>
