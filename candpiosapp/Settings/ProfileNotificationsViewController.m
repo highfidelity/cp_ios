@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *contactsOnlyChatSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *chatNotificationLabel;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
+@property (weak, nonatomic) IBOutlet UIView *fromToSuperview;
 
 - (IBAction)selectVenueCity:(UIButton *)sender;
 - (IBAction)quietFromClicked:(UIButton *)sender;
@@ -288,11 +289,16 @@
 - (void)setQuietTime:(BOOL)quietTime
 {
     [UIView animateWithDuration:0.3 animations:^ {
-        self.anyoneChatView.frame = CGRectMake(self.anyoneChatView.frame.origin.x, 
-                                               quietTime ? 239 : 200,
-                                               self.anyoneChatView.frame.size.width,
-                                               self.anyoneChatView.frame.size.height);
+        CGRect fromToFrame = self.fromToSuperview.frame;
+        CGFloat anyoneChatViewY = fromToFrame.origin.y;
+        if (quietTime) {
+            anyoneChatViewY += fromToFrame.size.height;
+        }
+
+        CGRect anyoneChatFrame = self.anyoneChatView.frame;
+        anyoneChatFrame.origin.y = anyoneChatViewY;
         
+        self.anyoneChatView.frame = anyoneChatFrame;
     }];
 }
 
