@@ -1646,7 +1646,7 @@ typedef enum {
                                                if (count == 2) {
                                                    message = @"It will be pushed to 1 person checked in to this location.";
                                                } else if (count > 2) {
-                                                   message = [NSString stringWithFormat: @"It will be pushed to %d checked in to this location.", count - 1];
+                                                   message = [NSString stringWithFormat: @"It will be pushed to %d people checked in to this location.", count - 1];
                                                } else {
                                                    message = @"You are the only person here right now.";
                                                }
