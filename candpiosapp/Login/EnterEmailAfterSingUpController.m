@@ -36,7 +36,7 @@
     if (message.length) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" 
                                                             message:message
-                                                           delegate:self 
+                                                           delegate:nil
                                                   cancelButtonTitle:@"OK" 
                                                   otherButtonTitles:nil];
         [alertView show];
