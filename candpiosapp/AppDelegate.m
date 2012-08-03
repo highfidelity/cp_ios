@@ -127,8 +127,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
         
         // stop monitoring user location, we're going to the background
         [_locationManager stopUpdatingLocation];
-        
-        _locationManager = nil;
     }
 }
 

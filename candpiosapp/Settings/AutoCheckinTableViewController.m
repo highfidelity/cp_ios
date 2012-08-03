@@ -82,30 +82,6 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-//- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
-//{
-//    // create the parent view that will hold header Label
-//	UIView* customView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, 44.0)];
-//	
-//	// create the button object
-//	UILabel * headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-//	headerLabel.backgroundColor = tableView.backgroundColor;
-//	headerLabel.opaque = YES;
-//	headerLabel.textColor = [UIColor whiteColor];
-//	headerLabel.font = [UIFont boldSystemFontOfSize:14];
-//	headerLabel.frame = CGRectMake(20.0, 0.0, self.view.bounds.size.width - 40, 44.0);
-//    
-//	headerLabel.text = @"Choose the venues:";
-//	[customView addSubview:headerLabel];
-//    
-//	return customView;
-//}
-//
-//- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//	return 44.0;
-//}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
