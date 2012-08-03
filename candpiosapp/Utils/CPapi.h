@@ -41,6 +41,9 @@
                             mapQueue:(NSOperationQueue *)mapQueue
              withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
++ (void)getNearestVenuesWithActiveFeeds:(CLLocationCoordinate2D)coordinate
+                             completion:(void (^)(NSDictionary *, NSError *))completion;
+
 + (void)getNearestVenuesWithCheckinsToCoordinate:(CLLocationCoordinate2D)coordinate
                                         mapQueue:(NSOperationQueue *)mapQueue
                                       completion:(void (^)(NSDictionary *, NSError *))completion;

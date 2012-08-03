@@ -158,13 +158,18 @@ NSString* const kUDFeedVenues = @"feedVenues";
     // then send it as the object with the notification
     [[NSNotificationCenter defaultCenter] postNotificationName:@"feedVenueAdded" object:(showFeedNow ? venue : nil)];
 }
++ (BOOL)hasFeedVenues
+{
+    return (DEFAULTS(object, kUDFeedVenues) != nil);
+}
 
 + (NSDictionary *)feedVenues
 {
     // pull the array of logVenues from NSUserDefaults
     // create one if it does not exist
     NSDictionary *feedVenues;
-    if (!(feedVenues = DEFAULTS(object, kUDFeedVenues))) {   
+    if (!(feedVenues = DEFAULTS(object, kUDFeedVenues))) {
+        // the user has not selected any venues yet.. set them up with reasonable defaults
         feedVenues = [NSDictionary dictionary];
     }
     

@@ -951,7 +951,55 @@ typedef enum {
             self.selectedVenueFeed = currentVenueFeed;
         }
     }    
-    
+
+    if (![CPUserDefaultsHandler hasFeedVenues]) {
+        // there is nothing saved in the feed venues setting
+        [self findActiveFeeds];
+    } else {
+        [self showVenueFeeds:displayVenue];
+    }
+}
+
+- (void)findActiveFeeds {
+    [CPapi getNearestVenuesWithActiveFeeds:[CPUserDefaultsHandler currentUser].location
+                                completion:
+     ^(NSDictionary *json, NSError *error) {
+         // give the user some reasonable default feeds
+         if (!error) {
+             // de-JSONify active venue list
+             NSMutableArray *activeVenues = [NSMutableArray array];
+             NSArray *venues = [[json objectForKey:@"payload"] valueForKey:@"venues"];
+             for (NSDictionary *venueJSON in venues) {
+                 CPVenue *venue = [[CPVenue alloc] initFromDictionary:venueJSON];
+                 [activeVenues addObject:venue];
+             }
+
+             // sort the venues by most active
+             [activeVenues sortUsingComparator:^NSComparisonResult(id a, id b) {
+                 NSNumber *first = [NSNumber numberWithUnsignedInteger:[a postsCount]];
+                 NSNumber *second = [NSNumber numberWithUnsignedInteger:[b postsCount]];
+                 // compare the two post counts, flipping the order
+                 return [second compare:first];
+             }];
+
+             // Add the top 3 most active feeds
+             NSRange range = NSMakeRange(0, activeVenues.count >= 3 ? 3 : activeVenues.count);
+             activeVenues = [[activeVenues subarrayWithRange:range] mutableCopy];
+             for (CPVenue *venue in activeVenues) {
+                 [CPUserDefaultsHandler addFeedVenue:venue
+                                         showFeedNow:NO];
+             }
+
+             // show the feeds
+             [self showVenueFeeds:nil];
+         } else {
+             NSLog(@"Error retrieving default venues.");
+         }
+     }];
+}
+         
+- (void)showVenueFeeds:(CPVenue *)displayVenue {
+    CPVenue *currentVenue = [CPUserDefaultsHandler currentVenue];
     NSDictionary *storedFeedVenues = [CPUserDefaultsHandler feedVenues];
     for (NSString *venueIDKey in storedFeedVenues) {
         // grab the NSData representation of the venue and decode it
@@ -977,6 +1025,7 @@ typedef enum {
             }
         }
     }
+    
 }
 
 - (void)toggleTableViewState
@@ -988,7 +1037,7 @@ typedef enum {
             self.navigationItem.title = @"Choose Feed";
         } else {
             // our title is the default
-            self.navigationItem.title = @"Venue Feeds";
+            self.navigationItem.title = @"Active Feeds";
         }
         
         // no pull to refresh in this table
