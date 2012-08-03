@@ -11,17 +11,17 @@
 @implementation UIViewController (CPUserActionCellAdditions)
 
 - (void)animateSlideWaveWithCPUserActionCells:(NSArray *)cells {
-    NSTimeInterval delay = 0.2;
+    NSTimeInterval delay = 0.5;
     for (UITableViewCell *cell in cells) {
         cell.contentView.transform = CGAffineTransformMakeTranslation(160, 0);
-        [UIView animateWithDuration:0.2
+        [UIView animateWithDuration:0.3
                               delay:delay
                             options:kNilOptions
                          animations:^{
                              cell.contentView.transform = CGAffineTransformMakeTranslation(0, 0);
                          }
                          completion:nil];
-        delay += 0.03;
+        delay += 0.1;
     }
 }
 
