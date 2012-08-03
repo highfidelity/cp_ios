@@ -1094,9 +1094,17 @@ typedef enum {
         self.tableView.showsVerticalScrollIndicator = YES;
     }
     
-    // no matter what we're switching to we need to reload the tableView
-    // and pull for new data
-    [self.tableView reloadData];
+    if (self.pendingPost) {
+        // restore state for pending posts when returning from lock screen, etc.
+        [self.tableView.pullToRefreshView stopAnimating];
+        int section = [self.selectedVenueFeed indexOfPostWithID:self.pendingPost.originalPostID];
+        int replyIndex = ((CPPost *)[self.selectedVenueFeed.posts objectAtIndex:section]).replies.count;
+        NSIndexPath *replyToIndexPath = [NSIndexPath indexPathForRow:replyIndex inSection:section];
+        [self.tableView scrollToRowAtIndexPath:replyToIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        [self cancelButtonForRightNavigationItem];
+    } else {
+        [self.tableView reloadData];
+    }
     
     
 }
@@ -1149,7 +1157,11 @@ typedef enum {
 }
 
 - (void)getVenueFeedOrFeedPreviews
-{   
+{
+    if (self.pendingPost) {
+        // avoid clobbering pending posts
+        return;
+    }
     [self toggleLoadingState:YES];
     
     self.postPlussingUserIds = [NSMutableDictionary new];
