@@ -31,7 +31,7 @@
 
 + (void)addFeedVenue:(CPVenue *)venue showFeedNow:(BOOL)showFeedNow;
 + (NSDictionary *)feedVenues;
-+ (BOOL) hasFeedVenues;
++ (BOOL)hasFeedVenues;
 + (void)removeFeedVenueWithID:(NSUInteger)venueID;
 
 @end

@@ -962,51 +962,41 @@ typedef enum {
 
 - (void)findActiveFeeds {
     [CPapi getNearestVenuesWithActiveFeeds:[CPUserDefaultsHandler currentUser].location
-                                completion:^(NSDictionary *json, NSError *error) {
-                                    // give the user some reasonable default feeds
-                                    if (!error) {
-                                        // de-JSONify active venue list
-                                        NSMutableArray *activeVenues = [NSMutableArray array];
-                                        NSDictionary *jsonDict = [json objectForKey:@"payload"];
-                                        NSArray *venues = [jsonDict valueForKey:@"venues"];
-                                        for (NSDictionary *venueJSON in venues) {
-                                            CPVenue *venue = [[CPVenue alloc] initFromDictionary:venueJSON];
-                                            [activeVenues addObject:venue];
-                                        }
-                                        // sort the venues by most active
-                                        activeVenues = [[activeVenues sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-                                            //
-                                            NSNumber *first = [NSNumber numberWithUnsignedInteger:((CPVenue *)a).postsCount];
-                                            NSNumber *second = [NSNumber numberWithUnsignedInteger:((CPVenue *)b).postsCount];
-                                            
-                                            // compare the two post counts
-                                            NSComparisonResult result = [first compare:second];
-                                            
-                                            // flip the order
-                                            switch (result) {
-                                                case NSOrderedAscending:
-                                                    return NSOrderedDescending;
-                                                case NSOrderedDescending:
-                                                    return NSOrderedAscending;
-                                                default:
-                                                    return NSOrderedSame;
-                                            }
-                                        }] mutableCopy];
-                                        // Add the top 3 most active feeds
-                                        NSRange range = NSMakeRange(0, activeVenues.count >= 3 ? 3 : activeVenues.count);
-                                        activeVenues = [[activeVenues subarrayWithRange:range] mutableCopy];
-                                        for (CPVenue *venue in activeVenues) {
-                                            [CPUserDefaultsHandler addFeedVenue:venue
-                                                                    showFeedNow:NO];
-                                        }
-                                        // show the feeds
-                                        [self showVenueFeeds:nil];
-                                    } else {
-                                        NSLog(@"Error retrieving default venues.");
-                                    }
-                                }
-     ];
-    
+                                completion:
+     ^(NSDictionary *json, NSError *error) {
+         // give the user some reasonable default feeds
+         if (!error) {
+             // de-JSONify active venue list
+             NSMutableArray *activeVenues = [NSMutableArray array];
+             NSDictionary *jsonDict = [json objectForKey:@"payload"];
+             NSArray *venues = [jsonDict valueForKey:@"venues"];
+             for (NSDictionary *venueJSON in venues) {
+                 CPVenue *venue = [[CPVenue alloc] initFromDictionary:venueJSON];
+                 [activeVenues addObject:venue];
+             }
+
+             // sort the venues by most active
+             activeVenues = [[activeVenues sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+                 NSNumber *first = [NSNumber numberWithUnsignedInteger:((CPVenue *)a).postsCount];
+                 NSNumber *second = [NSNumber numberWithUnsignedInteger:((CPVenue *)b).postsCount];
+                 // compare the two post counts, flipping the order
+                 return [second compare:first];
+             }] mutableCopy];
+
+             // Add the top 3 most active feeds
+             NSRange range = NSMakeRange(0, activeVenues.count >= 3 ? 3 : activeVenues.count);
+             activeVenues = [[activeVenues subarrayWithRange:range] mutableCopy];
+             for (CPVenue *venue in activeVenues) {
+                 [CPUserDefaultsHandler addFeedVenue:venue
+                                         showFeedNow:NO];
+             }
+
+             // show the feeds
+             [self showVenueFeeds:nil];
+         } else {
+             NSLog(@"Error retrieving default venues.");
+         }
+     }];
 }
          
 - (void)showVenueFeeds:(CPVenue *)displayVenue {

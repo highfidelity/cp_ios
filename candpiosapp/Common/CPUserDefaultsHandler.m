@@ -158,7 +158,7 @@ NSString* const kUDFeedVenues = @"feedVenues";
     // then send it as the object with the notification
     [[NSNotificationCenter defaultCenter] postNotificationName:@"feedVenueAdded" object:(showFeedNow ? venue : nil)];
 }
-+ (BOOL) hasFeedVenues
++ (BOOL)hasFeedVenues
 {
     return (DEFAULTS(object, kUDFeedVenues) != nil);
 }
