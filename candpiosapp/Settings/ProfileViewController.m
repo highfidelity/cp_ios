@@ -131,7 +131,7 @@
     self.deleteTouchable.delegate = self;
     self.imagePicker.delegate = self;
 
-    UIColor *paper = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paper-texture.jpg"]];
+    UIColor *paper = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paper-texture.png"]];
     self.profileHeaderView.backgroundColor = paper;
     self.detailsView.backgroundColor = paper;
     self.detailsView.frame = CGRectOffset(self.detailsView.frame, 0, 120);
