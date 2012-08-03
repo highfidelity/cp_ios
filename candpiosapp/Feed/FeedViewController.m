@@ -968,20 +968,19 @@ typedef enum {
          if (!error) {
              // de-JSONify active venue list
              NSMutableArray *activeVenues = [NSMutableArray array];
-             NSDictionary *jsonDict = [json objectForKey:@"payload"];
-             NSArray *venues = [jsonDict valueForKey:@"venues"];
+             NSArray *venues = [[json objectForKey:@"payload"] valueForKey:@"venues"];
              for (NSDictionary *venueJSON in venues) {
                  CPVenue *venue = [[CPVenue alloc] initFromDictionary:venueJSON];
                  [activeVenues addObject:venue];
              }
 
              // sort the venues by most active
-             activeVenues = [[activeVenues sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+             [activeVenues sortUsingComparator:^NSComparisonResult(id a, id b) {
                  NSNumber *first = [NSNumber numberWithUnsignedInteger:[a postsCount]];
                  NSNumber *second = [NSNumber numberWithUnsignedInteger:[b postsCount]];
                  // compare the two post counts, flipping the order
                  return [second compare:first];
-             }] mutableCopy];
+             }];
 
              // Add the top 3 most active feeds
              NSRange range = NSMakeRange(0, activeVenues.count >= 3 ? 3 : activeVenues.count);
