@@ -977,8 +977,8 @@ typedef enum {
 
              // sort the venues by most active
              activeVenues = [[activeVenues sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-                 NSNumber *first = [NSNumber numberWithUnsignedInteger:((CPVenue *)a).postsCount];
-                 NSNumber *second = [NSNumber numberWithUnsignedInteger:((CPVenue *)b).postsCount];
+                 NSNumber *first = [NSNumber numberWithUnsignedInteger:[a postsCount]];
+                 NSNumber *second = [NSNumber numberWithUnsignedInteger:[b postsCount]];
                  // compare the two post counts, flipping the order
                  return [second compare:first];
              }] mutableCopy];
