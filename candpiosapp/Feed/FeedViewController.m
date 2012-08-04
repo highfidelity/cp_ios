@@ -665,15 +665,20 @@ typedef enum {
             }
             
             // give the entry label the right text and color
-            newEntryCell.entryLabel.text = [leadingText stringByAppendingString:@":"];
             newEntryCell.entryLabel.textColor = [CPUIHelper CPTealColor];
             
-            int numberOfSpaces = [self paddingForPendingPost];
+            // if the entry was blank (new entry) we need to setup the leading spaces
+            newEntryCell.entryLabel.text = [leadingText stringByAppendingString:@":"];
             
+                        
             // add the right number of leading spaces
-            newEntryCell.growingTextView.text = nil;
-            for (int i = 0; i < numberOfSpaces; i++) {
-                newEntryCell.growingTextView.text = [newEntryCell.growingTextView.text stringByAppendingString:@" "];
+            newEntryCell.growingTextView.text = self.pendingPost.entry;
+            
+            if (!newEntryCell.growingTextView.text.length) {
+                int numberOfSpaces = [self paddingForPendingPost];
+                for (int i = 0; i < numberOfSpaces; i++) {
+                    newEntryCell.growingTextView.text = [newEntryCell.growingTextView.text stringByAppendingString:@" "];
+                }
             }
             
             newEntryCell.growingTextView.returnKeyType = UIReturnKeySend;
@@ -1064,9 +1069,6 @@ typedef enum {
     } else {
         // this is for a selected venue feed
         
-        // make sure we don't have the reload button in the top right
-        self.navigationItem.rightBarButtonItem = nil;
-        
         // make sure that pull to refresh is now enabled for the tableview
         self.tableView.showsPullToRefresh = YES;
         
@@ -1074,9 +1076,6 @@ typedef enum {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backFromSelectedFeed:)];
         // our new title is the name of the venue
         self.navigationItem.title = self.selectedVenueFeed.venue.name;
-        
-        // trigger a refresh of the pullToRefreshView which will refresh our data
-        [self.tableView.pullToRefreshView triggerRefresh];
         
         // set the proper background color for the tableView
         self.tableView.backgroundColor = [UIColor colorWithR:246 G:247 B:245 A:1.0];
@@ -1092,13 +1091,26 @@ typedef enum {
         
         // show the scroll inidicator in a selected feed
         self.tableView.showsVerticalScrollIndicator = YES;
+
+        if (!self.pendingPost) {
+            // make sure we don't have the reload button in the top right
+            self.navigationItem.rightBarButtonItem = nil;
+            
+            // trigger a refresh of the pullToRefreshView which will refresh our data
+            [self.tableView.pullToRefreshView triggerRefresh];
+            
+        }        
     }
     
     // no matter what we're switching to we need to reload the tableView
     // and pull for new data
     [self.tableView reloadData];
     
-    
+    if (self.pendingPost) {
+        // if we have a pendingPost it's possible we've come back from a sleepy app
+        // so make sure that the keyboard is ready
+        [self.pendingPostCell.growingTextView becomeFirstResponder];
+    }
 }
 
 - (void)loadProfileImageForButton:(UIButton *)button photoURL:(NSURL *)photoURL
@@ -1719,11 +1731,12 @@ typedef enum {
             //Limit max length of the feed
             int strLen = [[growingTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length];
             int addLength = [text length] -  range.length;
+            
             if (strLen + addLength > kMaxFeedLength) {
                 return NO;
+            } else {
+                return YES;
             }
-            
-            return YES;
         }
     }
 }
@@ -1763,6 +1776,11 @@ typedef enum {
             [self setupReplyBubbleForCell:self.pendingPostCell containerHeight:newHeight position:FeedBGContainerPositionMiddle];
         }
     }
+}
+
+- (void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView
+{
+    self.pendingPost.entry = growingTextView.text;
 }
 
 # pragma mark - CPUserActionCellDelegate
