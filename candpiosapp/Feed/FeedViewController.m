@@ -877,6 +877,7 @@ typedef enum {
     if (!self.selectedVenueFeed) {
         // the user has just tapped on a venue feed preview
         // so bring them to that feed
+        
         [self transitionToVenueFeedForSection:indexPath.section];
     }
 }
@@ -1348,7 +1349,11 @@ typedef enum {
 
 - (void)transitionToVenueFeedForSection:(NSInteger)section
 {
+    // make sure that the HUD for loading venue feed previews isn't sticking around
+    [SVProgressHUD dismiss];
+    
     self.selectedVenueFeed = [self venueFeedPreviewForIndex:section];
+    
     if (self.previewPostableFeedsOnly) {
         // once the TVC has loaded the feed we want to add a new update
         self.newPostAfterLoad = YES;
