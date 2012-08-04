@@ -1096,10 +1096,10 @@ typedef enum {
     
     if (self.pendingPost) {
         // restore state for pending posts when returning from lock screen, etc.
-        [self.tableView.pullToRefreshView stopAnimating];
         int section = [self.selectedVenueFeed indexOfPostWithID:self.pendingPost.originalPostID];
-        int replyIndex = ((CPPost *)[self.selectedVenueFeed.posts objectAtIndex:section]).replies.count;
-        NSIndexPath *replyToIndexPath = [NSIndexPath indexPathForRow:replyIndex inSection:section];
+        int row = [[self.selectedVenueFeed.posts objectAtIndex:section] replies].count;
+        NSIndexPath *replyToIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
+
         [self.tableView scrollToRowAtIndexPath:replyToIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
         [self cancelButtonForRightNavigationItem];
     } else {
@@ -1159,7 +1159,8 @@ typedef enum {
 - (void)getVenueFeedOrFeedPreviews
 {
     if (self.pendingPost) {
-        // avoid clobbering pending posts
+        // avoid clobbering pending posts.. stop animations in case we got here via refresh
+        [self.tableView.pullToRefreshView stopAnimating];
         return;
     }
     [self toggleLoadingState:YES];
