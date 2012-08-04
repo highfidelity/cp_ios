@@ -469,9 +469,6 @@ typedef enum {
             // check if we have a new cell height which is larger than our min height and grow to that size
             cellHeight = self.newEditableCellHeight > MIN_CELL_HEIGHT ? self.newEditableCellHeight : MIN_CELL_HEIGHT;
             
-            // reset the newEditableCellHeight to 0
-            self.newEditableCellHeight = 0;
-            
             return cellHeight;
         }
     } else {
