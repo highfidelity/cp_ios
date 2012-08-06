@@ -420,7 +420,7 @@ typedef enum {
         
         // add that view to the cell's contentView
         [cell.contentView insertSubview:containerView atIndex:0];
-        
+        [cell addSubview:[FeedViewController timelineViewWithHeight:cell.frame.size.height]];
     } else {
         if (position == FeedBGContainerPositionMiddle) {
             // adjust the view's height if required
@@ -809,6 +809,9 @@ typedef enum {
             
             // update the +1/comment pill widget to reflect the likeCount on the parent post
             [commentCell updatePillButtonAnimated:NO];
+            if (!commentCell.timelineView) {
+                [commentCell addSubview:[FeedViewController timelineViewWithHeight:commentCell.frame.size.height]];
+            }
             
             return commentCell;
         } else {
@@ -1098,9 +1101,9 @@ typedef enum {
         // restore state for pending posts when returning from lock screen, etc.
         int section = [self.selectedVenueFeed indexOfPostWithID:self.pendingPost.originalPostID];
         int row = [[self.selectedVenueFeed.posts objectAtIndex:section] replies].count;
-        NSIndexPath *replyToIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
 
-        [self.tableView scrollToRowAtIndexPath:replyToIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
         [self cancelButtonForRightNavigationItem];
     } else {
         [self.tableView reloadData];
