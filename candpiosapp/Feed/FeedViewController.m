@@ -1074,7 +1074,7 @@ typedef enum {
         self.tableView.showsPullToRefresh = YES;
         
         // add a back button as the left navigation item
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backFromSelectedFeed:)];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Feeds" style:UIBarButtonItemStyleBordered target:self action:@selector(backFromSelectedFeed:)];
         // our new title is the name of the venue
         self.navigationItem.title = self.selectedVenueFeed.venue.name;
         
