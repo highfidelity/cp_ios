@@ -115,12 +115,6 @@ typedef enum {
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-}
-
 - (void)setSelectedVenueFeed:(CPVenueFeed *)selectedVenueFeed
 {
     if (![_selectedVenueFeed isEqual:selectedVenueFeed]) {
@@ -1074,8 +1068,10 @@ typedef enum {
         // our new title is the name of the venue
         self.navigationItem.title = self.selectedVenueFeed.venue.name;
         
-        // trigger a refresh of the pullToRefreshView which will refresh our data
-        [self.tableView.pullToRefreshView triggerRefresh];
+        if (!self.pendingPost) {
+            // trigger a refresh of the pullToRefreshView which will refresh our data
+            [self.tableView.pullToRefreshView triggerRefresh];
+        }        
         
         // set the proper background color for the tableView
         self.tableView.backgroundColor = [UIColor colorWithR:246 G:247 B:245 A:1.0];
@@ -1154,13 +1150,7 @@ typedef enum {
 }
 
 - (void)getVenueFeedOrFeedPreviews
-{
-    if (self.pendingPost) {
-        // avoid clobbering pending posts.. stop animations in case we got here via refresh
-        [self.tableView.pullToRefreshView stopAnimating];
-        return;
-    }
-    
+{   
     [self toggleLoadingState:YES];
     
     self.postPlussingUserIds = [NSMutableDictionary new];
