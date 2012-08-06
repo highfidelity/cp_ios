@@ -9,6 +9,7 @@
 #import "PillPopoverViewController.h"
 
 @interface PillPopoverViewController ()
+@property (nonatomic) BOOL currentlyAnimating;
 
 @end
 
@@ -63,9 +64,15 @@
         
 }
 
-- (void) pulseImages 
+- (void) pulseImages
 {
     // pulse the images to 120% size and back
+    if (self.currentlyAnimating) {
+        return;
+    } else {
+        self.currentlyAnimating = YES;
+    }
+    
     float flex = 0.2;
     CGFloat commentWidthFlex = self.commentImageView.frame.size.width * flex;
     CGFloat commentHeightFlex = self.commentImageView.frame.size.height * flex;
@@ -95,11 +102,89 @@
                                                                                       plusHeightFlex);
                                               }
                                           } 
-                                          completion:nil
+                                          completion:^(BOOL finished) {self.currentlyAnimating = NO;}
                           ];
                          
                      }];    
     
+}
+
+- (void) imageFlex:(float)flex commentRect:(CGRect)commentRect plusRect:(CGRect)plusRect
+{
+    CGFloat commentWidthFlex = commentRect.size.width * flex;
+    CGFloat commentHeightFlex = commentRect.size.height * flex;
+    CGFloat plusWidthFlex = plusRect.size.width * flex;
+    CGFloat plusHeightFlex = plusRect.size.height * flex;
+    
+    // set the image sizes
+    self.commentImageView.frame = CGRectInset(self.commentImageView.frame,
+                                              commentWidthFlex,
+                                              commentHeightFlex);
+    if (self.plusButton.enabled) {
+        self.plusButton.frame = CGRectInset(self.plusButton.frame,
+                                            plusWidthFlex,
+                                            plusHeightFlex);
+    }
+}
+
+- (void) deadDribbleImages
+{
+    // pulse the images like a ball bouncing to rest on the floor
+    if (self.currentlyAnimating) {
+        return;
+    } else {
+        self.currentlyAnimating = YES;
+    }
+
+    CGRect commentRect = self.commentImageView.frame;
+    CGRect plusRect = self.plusButton.frame;
+    
+    float flex1 = 0.2;
+    float flex2 = 0.1;
+    float flex3 = 0.05;
+    float deltaT = 0.75 / 6;
+    
+    [UIView animateWithDuration:deltaT
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{[self imageFlex:-flex1 commentRect:commentRect plusRect:plusRect];}
+                     completion:
+     ^(BOOL finished) {
+         [UIView animateWithDuration:deltaT
+                               delay:0
+                             options:UIViewAnimationOptionCurveEaseIn
+                          animations:^{[self imageFlex:flex1 commentRect:commentRect plusRect:plusRect];}
+                          completion:
+          ^(BOOL finished) {
+              [UIView animateWithDuration:deltaT
+                                    delay:0
+                                  options:UIViewAnimationOptionCurveEaseIn
+                               animations:^{[self imageFlex:-flex2 commentRect:commentRect plusRect:plusRect];}
+                               completion:
+               ^(BOOL finished) {
+                   [UIView animateWithDuration:deltaT
+                                         delay:0
+                                       options:UIViewAnimationOptionCurveEaseIn
+                                    animations:^{[self imageFlex:flex2 commentRect:commentRect plusRect:plusRect];}
+                                    completion:
+                    ^(BOOL finished) {
+                        [UIView animateWithDuration:deltaT
+                                              delay:0
+                                            options:UIViewAnimationOptionCurveEaseIn
+                                         animations:^{[self imageFlex:-flex3 commentRect:commentRect plusRect:plusRect];}
+                                         completion:
+                         ^(BOOL finished) {
+                             [UIView animateWithDuration:deltaT
+                                                   delay:0
+                                                 options:UIViewAnimationOptionCurveEaseIn
+                                              animations:^{[self imageFlex:flex3 commentRect:commentRect plusRect:plusRect];}
+                                              completion:^(BOOL finished) {self.currentlyAnimating = NO;}
+                              ];
+                         }];
+                    }];
+               }];
+          }];
+     }];
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -108,10 +193,10 @@
     self.plusButton.enabled = !(self.post.userHasLiked || [CPUserDefaultsHandler currentUser].userID == self.post.author.userID);
     
     // update the plus count label
-    [self updatePlusWebViewAnimated:animated];
+    [self updatePlusWebViewAnimated:NO];
     
     // animate the images
-    [self pulseImages];
+    [self deadDribbleImages];
     
     // setup the textfield
     self.commentTextView.delegate = self;
