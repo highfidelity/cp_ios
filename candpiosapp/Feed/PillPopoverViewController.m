@@ -78,7 +78,7 @@
     CGFloat commentHeightFlex = self.commentImageView.frame.size.height * flex;
     CGFloat plusWidthFlex = self.plusButton.frame.size.width * flex;
     CGFloat plusHeightFlex = self.plusButton.frame.size.height * flex;
-    float deltaT = 0.75 / 2;
+    float deltaT = 0.15 / 2;
     [UIView animateWithDuration:deltaT
                      animations:^{ 
                          self.commentImageView.frame = CGRectInset(self.commentImageView.frame, 
@@ -126,6 +126,146 @@
                                             plusHeightFlex);
     }
 }
+- (void) imageFlex:(float)flex commentRect:(CGRect)commentRect
+{
+    CGFloat commentWidthFlex = commentRect.size.width * flex;
+    CGFloat commentHeightFlex = commentRect.size.height * flex;
+    
+    // set the image sizes
+    self.commentImageView.frame = CGRectInset(self.commentImageView.frame,
+                                              commentWidthFlex,
+                                              commentHeightFlex);
+}
+
+- (void) imageFlex:(float)flex plusRect:(CGRect)plusRect
+{
+    CGFloat plusWidthFlex = plusRect.size.width * flex;
+    CGFloat plusHeightFlex = plusRect.size.height * flex;
+    
+    // set the image sizes
+    if (self.plusButton.enabled) {
+        self.plusButton.frame = CGRectInset(self.plusButton.frame,
+                                            plusWidthFlex,
+                                            plusHeightFlex);
+    }
+}
+
+
+- (void) dribbleImages
+{
+    // pulse the images like a ball bouncing to rest on the floor
+    if (self.currentlyAnimating) {
+        return;
+    } else {
+        self.currentlyAnimating = YES;
+    }
+    
+    CGRect plusRect = self.plusButton.frame;
+    
+    float flex1 = 0.7;
+    float flex2 = 0.2;
+    float flex3 = 0.1;
+    float deltaT = 0.35 / 6;
+    
+    // first dribble the +1 image if enabled.. chaining to a comment image dribble
+    if (self.plusButton.enabled) {
+        [UIView animateWithDuration:deltaT
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{[self imageFlex:-flex1 plusRect:plusRect];}
+                         completion:
+         ^(BOOL finished) {
+             [UIView animateWithDuration:deltaT
+                                   delay:0
+                                 options:UIViewAnimationOptionCurveEaseIn
+                              animations:^{[self imageFlex:flex1 plusRect:plusRect];}
+                              completion:
+              ^(BOOL finished) {
+                  [UIView animateWithDuration:deltaT
+                                        delay:0
+                                      options:UIViewAnimationOptionCurveEaseIn
+                                   animations:^{[self imageFlex:-flex2 plusRect:plusRect];}
+                                   completion:
+                   ^(BOOL finished) {
+                       [UIView animateWithDuration:deltaT
+                                             delay:0
+                                           options:UIViewAnimationOptionCurveEaseIn
+                                        animations:^{[self imageFlex:flex2 plusRect:plusRect];}
+                                        completion:
+                        ^(BOOL finished) {
+                            [UIView animateWithDuration:deltaT
+                                                  delay:0
+                                                options:UIViewAnimationOptionCurveEaseIn
+                                             animations:^{[self imageFlex:-flex3 plusRect:plusRect];}
+                                             completion:
+                             ^(BOOL finished) {
+                                 [UIView animateWithDuration:deltaT
+                                                       delay:0
+                                                     options:UIViewAnimationOptionCurveEaseIn
+                                                  animations:^{[self imageFlex:flex3 plusRect:plusRect];}
+                                                  completion:^(BOOL finished) {[self dribbleCommentImage];}
+                                  ];
+                             }];
+                        }];
+                   }];
+              }];
+         }];
+    } else {
+        [self dribbleCommentImage];
+    }
+}
+- (void) dribbleCommentImage
+{
+    CGRect commentRect = self.commentImageView.frame;
+    
+    float flex1 = 0.7;
+    float flex2 = 0.2;
+    float flex3 = 0.1;
+    float deltaT = 0.35 / 6;
+    
+    [UIView animateWithDuration:deltaT
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{[self imageFlex:-flex1 commentRect:commentRect];}
+                     completion:
+     ^(BOOL finished) {
+         [UIView animateWithDuration:deltaT
+                               delay:0
+                             options:UIViewAnimationOptionCurveEaseIn
+                          animations:^{[self imageFlex:flex1 commentRect:commentRect];}
+                          completion:
+          ^(BOOL finished) {
+              [UIView animateWithDuration:deltaT
+                                    delay:0
+                                  options:UIViewAnimationOptionCurveEaseIn
+                               animations:^{[self imageFlex:-flex2 commentRect:commentRect];}
+                               completion:
+               ^(BOOL finished) {
+                   [UIView animateWithDuration:deltaT
+                                         delay:0
+                                       options:UIViewAnimationOptionCurveEaseIn
+                                    animations:^{[self imageFlex:flex2 commentRect:commentRect];}
+                                    completion:
+                    ^(BOOL finished) {
+                        [UIView animateWithDuration:deltaT
+                                              delay:0
+                                            options:UIViewAnimationOptionCurveEaseIn
+                                         animations:^{[self imageFlex:-flex3 commentRect:commentRect];}
+                                         completion:
+                         ^(BOOL finished) {
+                             [UIView animateWithDuration:deltaT
+                                                   delay:0
+                                                 options:UIViewAnimationOptionCurveEaseIn
+                                              animations:^{[self imageFlex:flex3 commentRect:commentRect];}
+                                              completion:^(BOOL finished) {self.currentlyAnimating = NO;}
+                              ];
+                         }];
+                    }];
+               }];
+          }];
+     }];
+}
+
 
 - (void) deadDribbleImages
 {
@@ -139,9 +279,9 @@
     CGRect commentRect = self.commentImageView.frame;
     CGRect plusRect = self.plusButton.frame;
     
-    float flex1 = 0.2;
-    float flex2 = 0.1;
-    float flex3 = 0.05;
+    float flex1 = 0.7;
+    float flex2 = 0.2;
+    float flex3 = 0.1;
     float deltaT = 0.35 / 6;
     
     [UIView animateWithDuration:deltaT
@@ -196,7 +336,7 @@
     [self updatePlusWebViewAnimated:NO];
     
     // animate the images
-    [self deadDribbleImages];
+    [self dribbleImages];
     
     // setup the textfield
     self.commentTextView.delegate = self;
