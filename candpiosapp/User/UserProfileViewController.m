@@ -282,7 +282,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     [CPUIHelper changeFontForLabel:self.cardNickname toLeagueGothicOfSize:28];
     
     // set the paper background color where applicable
-    UIColor *paper = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paper-texture.jpg"]];
+    UIColor *paper = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paper-texture.png"]];
     self.userCard.backgroundColor = paper;
     self.resumeView.backgroundColor = paper;
     self.resumeWebView.opaque = NO;
