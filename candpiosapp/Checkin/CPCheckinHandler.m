@@ -9,7 +9,9 @@
 #import "CPCheckinHandler.h"
 
 @implementation CPCheckinHandler
+
 @synthesize afterCheckinAction = _afterCheckinAction;
+@synthesize checkOutTimer = _checkOutTimer;
 
 static CPCheckinHandler *sharedHandler;
 
@@ -39,7 +41,7 @@ static CPCheckinHandler *sharedHandler;
 
 - (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime
 {       
-    [CPAppDelegate setCheckedOut];
+    [self setCheckedOut];
     // set the NSUserDefault to the user checkout time
     [CPUserDefaultsHandler setCheckoutTime:checkoutTime];
     
@@ -94,6 +96,43 @@ static CPCheckinHandler *sharedHandler;
     
     localNotif.userInfo = venueDataDict;
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+}
+
+- (void)setCheckedOut
+{
+    // set user checkout time to now
+    NSInteger checkOutTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
+    [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
+    
+    // nil out the venue in NSUserDefaults
+    [CPUserDefaultsHandler setCurrentVenue:nil];
+    if (self.checkOutTimer != nil) {
+        [[self checkOutTimer] invalidate];
+        self.checkOutTimer = nil;
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
+}
+
+- (void)saveCheckInVenue:(CPVenue *)venue andCheckOutTime:(NSInteger)checkOutTime
+{
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    [self setCheckedOut];
+    [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
+    [CPUserDefaultsHandler setCurrentVenue:venue];
+    [CPAppDelegate updatePastVenue:venue];
+    [[CPCheckinHandler sharedHandler] queueLocalNotificationForVenue:venue checkoutTime:checkOutTime];
+}
+
+- (void)promptForCheckout
+{
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Check Out"
+                          message:@"Are you sure you want to be checked out?"
+                          delegate:[CPAppDelegate settingsMenuController]
+                          cancelButtonTitle:@"Cancel"
+                          otherButtonTitles: @"Check Out", nil];
+    alert.tag = 904;
+    [alert show];
 }
 
 @end

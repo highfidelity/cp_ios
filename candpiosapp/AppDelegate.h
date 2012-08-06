@@ -26,7 +26,6 @@
 @property (strong, nonatomic, readonly) AFHTTPClient *urbanAirshipClient;
 @property (strong, nonatomic) SettingsMenuController *settingsMenuController;
 @property (strong, nonatomic) CPTabBarController *tabBarController;
-@property (strong) NSTimer *checkOutTimer;
 @property (strong, readonly) CLLocationManager *locationManager;
            
 -(void)saveSettings;
@@ -36,10 +35,7 @@
 - (void)updatePastVenue:(CPVenue *)venue;
 - (CPVenue *)venueWithName:(NSString *)name;
 - (void)toggleSettingsMenu;
-- (void)promptForCheckout;
-- (void)setCheckedOut;
 - (void)autoCheckinForVenue:(CPVenue *)venue;
-- (void)saveCheckInVenue:(CPVenue *)venue andCheckOutTime:(NSInteger)checkOutTime;
 - (void)autoCheckoutForCLRegion:(CLRegion *)region;
 - (void)showSignupModalFromViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController

@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
+#import "CPCheckinHandler.h"
+
 #define menuWidthPercentage 0.8
 #define kEnterInviteFakeSegueID @"--kEnterInviteFakeSegueID"
 
@@ -413,7 +415,7 @@
             if (!error && !respError) {
                 
                 [[UIApplication sharedApplication] cancelAllLocalNotifications];
-                [CPAppDelegate setCheckedOut];
+                [[CPCheckinHandler sharedHandler] setCheckedOut];
                 
                 NSDictionary *jsonDict = [json objectForKey:@"payload"];
                 NSString *venue = [jsonDict valueForKey:@"venue_name"];

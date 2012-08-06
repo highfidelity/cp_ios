@@ -794,7 +794,7 @@
     } else {
         if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [CPUserDefaultsHandler currentVenue].venueID == self.venue.venueID){
             // user is checked in here so ask them if they want to be checked out
-            [CPAppDelegate promptForCheckout];
+            [[CPCheckinHandler sharedHandler] promptForCheckout];
         } else {
             // tell the CPCheckinHandler that there should be no action after this checkin
             [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionNone;

@@ -42,7 +42,6 @@
 @synthesize urbanAirshipClient;
 @synthesize settingsMenuController;
 @synthesize tabBarController;
-@synthesize checkOutTimer = _checkOutTimer;
 
 // TODO: Store what we're storing now in settings in NSUSERDefaults
 // Why make our own class when there's an iOS Api for this?
@@ -508,7 +507,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
                 // post a notification to say the user has checked in
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
                 
-                [self setCheckedOut];
+                [[CPCheckinHandler sharedHandler] setCheckedOut];
                 
                 [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
                 
@@ -562,7 +561,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
                                    nil];
             
             [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
-            [self setCheckedOut];
+            [[CPCheckinHandler sharedHandler] setCheckedOut];
             
             [SVProgressHUD dismissWithSuccess:alertText
                                    afterDelay:kDefaultDismissDelay];
@@ -643,59 +642,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 - (void)toggleSettingsMenu
 {
     [self.settingsMenuController showMenu: !self.settingsMenuController.isMenuShowing];
-}
-
-# pragma mark - Check-in/out Stuff
-
-// TODO: consolidate this with the checkedIn property on the current user in NSUserDefaults
-
-- (void)promptForCheckout
-{
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Check Out"
-                          message:@"Are you sure you want to be checked out?"
-                          delegate:self.settingsMenuController
-                          cancelButtonTitle:@"Cancel"
-                          otherButtonTitles: @"Check Out", nil];
-    alert.tag = 904;
-    [alert show];
-}
-
-- (void)setCheckedOut
-{
-    // set user checkout time to now
-    NSInteger checkOutTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
-    [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
-    
-    // nil out the venue in NSUserDefaults
-    [CPUserDefaultsHandler setCurrentVenue:nil];
-    if (self.checkOutTimer != nil) {
-        [[self checkOutTimer] invalidate];
-        self.checkOutTimer = nil;   
-    }
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
-}
-
-- (void)saveCheckInVenue:(CPVenue *)venue andCheckOutTime:(NSInteger)checkOutTime
-{
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    [self setCheckedOut];
-    [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
-    [CPUserDefaultsHandler setCurrentVenue:venue];
-    [self updatePastVenue:venue];
-    [[CPCheckinHandler sharedHandler] queueLocalNotificationForVenue:venue checkoutTime:checkOutTime];
-}
-
-- (void)checkInButtonPressed:(id)sender
-{
-    if (![CPUserDefaultsHandler currentUser]) {
-        [CPAppDelegate showLoginBanner];
-    } else if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
-        [self promptForCheckout];
-    } else {
-        UINavigationController *checkInNC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
-        [self.tabBarController presentModalViewController:checkInNC animated:YES];
-    }
 }
 
 # pragma mark - Signup
@@ -845,7 +791,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
         [CPUserDefaultsHandler setCurrentUser:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
     }
-    [self setCheckedOut];
+    [[CPCheckinHandler sharedHandler] setCheckedOut];
 }
 
 - (void)storeUserLoginDataFromDictionary:(NSDictionary *)userInfo
@@ -865,12 +811,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     [CPUserDefaultsHandler setAutomaticCheckins:YES];
     [CPUserDefaultsHandler setCurrentUser:currUser];
 }
-
-// TODO: In a lot of places in the app we are using this just to see if someone is logged in
-// without caring about the return
-// there's likely a way just to tell if we have an object at the kUDCurrentUser key
-// without pulling it out and decoding it
-// so use that for the case where we just want BOOL YES/NO for logged in status
 
 - (void)updatePastVenue:(CPVenue *)venue
 {
@@ -1027,7 +967,7 @@ void SignalHandler(int sig) {
 
     if ([alertView.title isEqualToString:kCheckOutLocalNotificationAlertViewTitle]) {
         if (alertView.firstOtherButtonIndex == buttonIndex) {            
-            (CPAppDelegate).checkOutTimer = [NSTimer scheduledTimerWithTimeInterval:300
+            [CPCheckinHandler sharedHandler].checkOutTimer = [NSTimer scheduledTimerWithTimeInterval:300
                                                                                     target:self
                                                                                   selector:@selector(setCheckedOut) 
                                                                                   userInfo:nil 
