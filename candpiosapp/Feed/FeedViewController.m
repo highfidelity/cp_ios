@@ -1078,6 +1078,9 @@ typedef enum {
         // our new title is the name of the venue
         self.navigationItem.title = self.selectedVenueFeed.venue.name;
         
+        // trigger a refresh of the pullToRefreshView which will refresh our data
+        [self.tableView.pullToRefreshView triggerRefresh];
+        
         // set the proper background color for the tableView
         self.tableView.backgroundColor = [UIColor colorWithR:246 G:247 B:245 A:1.0];
         
@@ -1092,15 +1095,6 @@ typedef enum {
         
         // show the scroll inidicator in a selected feed
         self.tableView.showsVerticalScrollIndicator = YES;
-
-        if (!self.pendingPost) {
-            // make sure we don't have the reload button in the top right
-            self.navigationItem.rightBarButtonItem = nil;
-            
-            // trigger a refresh of the pullToRefreshView which will refresh our data
-            [self.tableView.pullToRefreshView triggerRefresh];
-            
-        }        
     }
     
     if (self.pendingPost) {
