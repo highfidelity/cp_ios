@@ -32,11 +32,7 @@
 - (void)loadVenueView:(NSString *)venueName;
 -(void)logoutEverything;
 -(void)storeUserLoginDataFromDictionary:(NSDictionary *)userDictionary;
-- (void)updatePastVenue:(CPVenue *)venue;
-- (CPVenue *)venueWithName:(NSString *)name;
 - (void)toggleSettingsMenu;
-- (void)autoCheckinForVenue:(CPVenue *)venue;
-- (void)autoCheckoutForCLRegion:(CLRegion *)region;
 - (void)showSignupModalFromViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
          withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed
@@ -46,10 +42,6 @@
 
 - (void)showLoginBanner;
 - (void)hideLoginBannerWithCompletion:(void (^)(void))completion;
-
-- (CLRegion *)getRegionForVenue:(CPVenue *)venue;
-- (void)startMonitoringVenue:(CPVenue *)venue;
-- (void)stopMonitoringVenue:(CPVenue *)venue;
 
 void uncaughtExceptionHandler(NSException *exception);
 void SignalHandler(int sig);

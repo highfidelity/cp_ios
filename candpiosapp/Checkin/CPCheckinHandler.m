@@ -7,6 +7,7 @@
 //
 
 #import "CPCheckinHandler.h"
+#import "CPGeofenceHandler.h"
 
 @implementation CPCheckinHandler
 
@@ -59,7 +60,7 @@ static CPCheckinHandler *sharedHandler;
     
     if (automaticCheckins) {
         // Only show the alert if the current venue isn't currently in the list of monitored venues
-        CPVenue *matchedVenue = [CPAppDelegate venueWithName:venue.name];
+        CPVenue *matchedVenue = [[CPGeofenceHandler sharedHandler] venueWithName:venue.name];
         
         if (!matchedVenue) {                    
             UIAlertView *autoCheckinAlert = [[UIAlertView alloc] initWithTitle:nil 
@@ -124,11 +125,11 @@ static CPCheckinHandler *sharedHandler;
     // so that it doesn't get overriden by the call
     CPVenue *staleVenue;
     
-    if ((staleVenue = [CPAppDelegate venueWithName:venue.name])) {
+    if ((staleVenue = [[CPGeofenceHandler sharedHandler] venueWithName:venue.name])) {
         venue.autoCheckin = staleVenue.autoCheckin;
     }
     
-    [CPAppDelegate updatePastVenue:venue];
+    [[CPGeofenceHandler sharedHandler] updatePastVenue:venue];
     [self queueLocalNotificationForVenue:venue checkoutTime:checkOutTime];
 }
 

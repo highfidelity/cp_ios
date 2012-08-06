@@ -371,6 +371,7 @@
 		53D6A63915B0BB50001A76DE /* action-menu-button-update@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D6A62B15B0BB50001A76DE /* action-menu-button-update@2x.png */; };
 		53D6A63D15B0CD3A001A76DE /* action-menu-button-base.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D6A63B15B0CD3A001A76DE /* action-menu-button-base.png */; };
 		53D6A63E15B0CD3A001A76DE /* action-menu-button-base@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53D6A63C15B0CD3A001A76DE /* action-menu-button-base@2x.png */; };
+		53D7ADEE15D04AC800BB041E /* CPGeofenceHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */; };
 		53D9B198152A5D9300BC1304 /* VenueListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D9B197152A5D9300BC1304 /* VenueListTableViewController.m */; };
 		53D9B19C152A5E8600BC1304 /* CPTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D9B19B152A5E8600BC1304 /* CPTabBarController.m */; };
 		53DDB7D9152CE752008703D1 /* SignupStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53DDB7D8152CE752008703D1 /* SignupStoryboard_iPhone.storyboard */; };
@@ -1057,6 +1058,8 @@
 		53D6A62B15B0BB50001A76DE /* action-menu-button-update@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-update@2x.png"; sourceTree = "<group>"; };
 		53D6A63B15B0CD3A001A76DE /* action-menu-button-base.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-base.png"; sourceTree = "<group>"; };
 		53D6A63C15B0CD3A001A76DE /* action-menu-button-base@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-base@2x.png"; sourceTree = "<group>"; };
+		53D7ADEC15D04AC800BB041E /* CPGeofenceHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPGeofenceHandler.h; path = Checkin/CPGeofenceHandler.h; sourceTree = "<group>"; };
+		53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPGeofenceHandler.m; path = Checkin/CPGeofenceHandler.m; sourceTree = "<group>"; };
 		53D9B196152A5D9300BC1304 /* VenueListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VenueListTableViewController.h; path = Venue/VenueListTableViewController.h; sourceTree = "<group>"; };
 		53D9B197152A5D9300BC1304 /* VenueListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VenueListTableViewController.m; path = Venue/VenueListTableViewController.m; sourceTree = "<group>"; };
 		53D9B19A152A5E8600BC1304 /* CPTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPTabBarController.h; sourceTree = "<group>"; };
@@ -2245,6 +2248,8 @@
 		53D65B4614EEEC3700801C5E /* Checkin */ = {
 			isa = PBXGroup;
 			children = (
+				53D7ADEC15D04AC800BB041E /* CPGeofenceHandler.h */,
+				53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */,
 				533B1DA715A3D3300072997D /* CheckInListTableViewController.h */,
 				533B1DA815A3D3300072997D /* CheckInListTableViewController.m */,
 				533B1DA315A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard */,
@@ -3326,6 +3331,7 @@
 				4EB016E915C21989006F600D /* CommentCell.m in Sources */,
 				5343243F15C2123A00BE5075 /* CPApiClient.m in Sources */,
 				69A1582E15CB064300B21971 /* UIViewController+CPUserActionCellAdditions.m in Sources */,
+				53D7ADEE15D04AC800BB041E /* CPGeofenceHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

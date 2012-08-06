@@ -7,6 +7,7 @@
 //
 
 #import "CPCheckinHandler.h"
+#import "CPGeofenceHandler.h"
 
 #define menuWidthPercentage 0.8
 #define kEnterInviteFakeSegueID @"--kEnterInviteFakeSegueID"
@@ -447,19 +448,19 @@
         if (alertView.firstOtherButtonIndex == buttonIndex) {
             // Start monitoring the new location to allow auto-checkout and checkin (if enabled) 
             autoPromptVenue.autoCheckin = YES;
-            [CPAppDelegate startMonitoringVenue:autoPromptVenue];
+            [[CPGeofenceHandler sharedHandler] startMonitoringVenue:autoPromptVenue];
             [FlurryAnalytics logEvent:@"autoCheckInPromptAccepted"];
         }
         else if (buttonIndex == 2) {
             autoPromptVenue.autoCheckin = NO;
             // User does NOT want to automatically check in to this venue        
-            [CPAppDelegate stopMonitoringVenue:autoPromptVenue];
+            [[CPGeofenceHandler sharedHandler] stopMonitoringVenue:autoPromptVenue];
             [FlurryAnalytics logEvent:@"autoCheckInPromptDenied"];
         }
     
         // add this venue to the array of past venues in NSUserDefaults
         // with the correct autoCheckin status
-        [CPAppDelegate updatePastVenue:autoPromptVenue];
+        [[CPGeofenceHandler sharedHandler] updatePastVenue:autoPromptVenue];
     }
 }
 
