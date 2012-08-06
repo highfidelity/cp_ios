@@ -420,7 +420,7 @@ typedef enum {
         
         // add that view to the cell's contentView
         [cell.contentView insertSubview:containerView atIndex:0];
-        
+        [cell addSubview:[FeedViewController timelineViewWithHeight:cell.frame.size.height]];
     } else {
         if (position == FeedBGContainerPositionMiddle) {
             // adjust the view's height if required
@@ -809,6 +809,9 @@ typedef enum {
             
             // update the +1/comment pill widget to reflect the likeCount on the parent post
             [commentCell updatePillButtonAnimated:NO];
+            if (!commentCell.timelineView) {
+                [commentCell addSubview:[FeedViewController timelineViewWithHeight:commentCell.frame.size.height]];
+            }
             
             return commentCell;
         } else {
@@ -1094,9 +1097,17 @@ typedef enum {
         self.tableView.showsVerticalScrollIndicator = YES;
     }
     
-    // no matter what we're switching to we need to reload the tableView
-    // and pull for new data
-    [self.tableView reloadData];
+    if (self.pendingPost) {
+        // restore state for pending posts when returning from lock screen, etc.
+        int section = [self.selectedVenueFeed indexOfPostWithID:self.pendingPost.originalPostID];
+        int row = [[self.selectedVenueFeed.posts objectAtIndex:section] replies].count;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        [self cancelButtonForRightNavigationItem];
+    } else {
+        [self.tableView reloadData];
+    }
     
     
 }
@@ -1149,7 +1160,12 @@ typedef enum {
 }
 
 - (void)getVenueFeedOrFeedPreviews
-{   
+{
+    if (self.pendingPost) {
+        // avoid clobbering pending posts.. stop animations in case we got here via refresh
+        [self.tableView.pullToRefreshView stopAnimating];
+        return;
+    }
     [self toggleLoadingState:YES];
     
     self.postPlussingUserIds = [NSMutableDictionary new];
