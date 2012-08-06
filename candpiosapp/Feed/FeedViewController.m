@@ -1114,12 +1114,6 @@ typedef enum {
     } else {
         [self.tableView reloadData];
     }
-    
-    if (self.pendingPost) {
-        // if we have a pendingPost it's possible we've come back from a sleepy app
-        // so make sure that the keyboard is ready
-        [self.pendingPostCell.growingTextView becomeFirstResponder];
-    }
 }
 
 - (void)loadProfileImageForButton:(UIButton *)button photoURL:(NSURL *)photoURL
@@ -1176,6 +1170,7 @@ typedef enum {
         [self.tableView.pullToRefreshView stopAnimating];
         return;
     }
+    
     [self toggleLoadingState:YES];
     
     self.postPlussingUserIds = [NSMutableDictionary new];
