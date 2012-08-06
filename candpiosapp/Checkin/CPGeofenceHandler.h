@@ -13,8 +13,8 @@
 - (CLRegion *)getRegionForVenue:(CPVenue *)venue;
 - (void)startMonitoringVenue:(CPVenue *)venue;
 - (void)stopMonitoringVenue:(CPVenue *)venue;
-- (void)autoCheckinForVenue:(CPVenue *)venue;
-- (void)autoCheckoutForCLRegion:(CLRegion *)region;
+- (void)autoCheckInForVenue:(CPVenue *)venue;
+- (void)autoCheckOutForRegion:(CLRegion *)region;
 -(void)handleGeofenceNotification:(NSString *)message userInfo:(NSDictionary *)userInfo;
 - (void)updatePastVenue:(CPVenue *)venue;
 - (CPVenue *)venueWithName:(NSString *)name;

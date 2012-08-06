@@ -437,14 +437,14 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
         // grab the right venue from our past venues
         CPVenue * autoVenue = [[CPGeofenceHandler sharedHandler] venueWithName:region.identifier];
         // Check in the user immediately
-        [[CPGeofenceHandler sharedHandler] autoCheckinForVenue:autoVenue];
+        [[CPGeofenceHandler sharedHandler] autoCheckInForVenue:autoVenue];
     }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {    
     if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [[CPUserDefaultsHandler currentVenue].name isEqualToString:region.identifier]) {
         // Log user out immediately
-        [[CPGeofenceHandler sharedHandler] autoCheckoutForCLRegion:region];
+        [[CPGeofenceHandler sharedHandler] autoCheckOutForRegion:region];
     }
 }
 

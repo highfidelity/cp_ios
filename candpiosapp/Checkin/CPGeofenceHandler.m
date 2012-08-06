@@ -13,6 +13,7 @@
 
 #define kGeoFenceAlertTag 601
 #define kRadiusForCheckins 10 // measure in meters, from lat/lng of CPVenue
+#define kMaxCheckInDuration 24
 
 @implementation CPGeofenceHandler
 
@@ -64,15 +65,15 @@ static CPGeofenceHandler *sharedHandler;
     [FlurryAnalytics logEvent:@"automaticCheckinLocationDisabled"];
 }
 
-- (void)autoCheckinForVenue:(CPVenue *)venue
+- (void)autoCheckInForVenue:(CPVenue *)venue
 {
     // Check the user in automatically now
     
     [FlurryAnalytics logEvent:@"autoCheckedIn"];
     
-    NSInteger checkInTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
+    NSTimeInterval checkInTime = [[NSDate date] timeIntervalSince1970];
     // Set a maximum checkInDuration to 24 hours
-    NSInteger checkInDuration = 24;
+    NSInteger checkInDuration = kMaxCheckInDuration;
     
     NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
     NSString *statusText = @"";
@@ -87,7 +88,7 @@ static CPGeofenceHandler *sharedHandler;
                 [[UIApplication sharedApplication] cancelAllLocalNotifications];
                 
                 // post a notification to say the user has checked in
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckInStateChange" object:nil];
                 
                 [[CPCheckinHandler sharedHandler] setCheckedOut];
                 
@@ -108,7 +109,7 @@ static CPGeofenceHandler *sharedHandler;
     }];
 }
 
-- (void)autoCheckoutForCLRegion:(CLRegion *)region
+- (void)autoCheckOutForRegion:(CLRegion *)region
 {
     [FlurryAnalytics logEvent:@"autoCheckedOut"];
     

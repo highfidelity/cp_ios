@@ -111,7 +111,7 @@ static CPCheckinHandler *sharedHandler;
         [[self checkOutTimer] invalidate];
         self.checkOutTimer = nil;
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckInStateChange" object:nil];
 }
 
 - (void)saveCheckInVenue:(CPVenue *)venue andCheckOutTime:(NSInteger)checkOutTime

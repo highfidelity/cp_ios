@@ -227,7 +227,7 @@
     [CPAppDelegate tabBarController].currentVenueID = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshVenueAfterCheckin" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LoginStateChanged" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"userCheckinStateChange" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"userCheckInStateChange" object:nil];
     // Release any retained subviews of the main view.
 }
 
@@ -780,7 +780,7 @@
     //Add observer to update checkIn button
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(refreshVenueViewCheckinButton) 
-                                                 name:@"userCheckinStateChange" 
+                                                 name:@"userCheckInStateChange" 
                                                object:nil];
     
     
