@@ -1909,10 +1909,11 @@ typedef enum {
         self.pillPopoverViewController.indexPath = [self.tableView indexPathForCell:cell];
         self.pillPopoverViewController.delegate = self;
         self.wePopoverController = [[WEPopoverController alloc] initWithContentViewController:self.pillPopoverViewController];
-        self.wePopoverController.popoverContentSize = CGSizeMake(172, 91);
+        self.wePopoverController.popoverContentSize = CGSizeMake(172, 81);
         self.wePopoverController.delegate = self;
         [self.wePopoverController setContainerViewProperties:[self popoverContainerViewProperties]];
-        [self.wePopoverController presentPopoverFromRect:[self.view convertRect:button.frame fromView:button.superview]
+        CGRect rect = CGRectOffset([self.view convertRect:button.frame fromView:button.superview], -10, 0);
+        [self.wePopoverController presentPopoverFromRect:rect
                                                   inView:self.view
                                 permittedArrowDirections:UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight|UIPopoverArrowDirectionUp|UIPopoverArrowDirectionDown
                                                 animated:YES];

@@ -53,7 +53,7 @@
     NSString *htmlString = [NSString stringWithFormat:@"<html> \n"
                             "<head> \n"
                             "<style type=\"text/css\"> \n"
-                            "body {font-family: \"%@\"; font-size: %i;}\n"
+                            "body {font-family: \"%@\"; font-size: %i; color: #333333; }\n"
                             "</style> \n"
                             "</head> \n"
                             "<body>%@</body> \n"
