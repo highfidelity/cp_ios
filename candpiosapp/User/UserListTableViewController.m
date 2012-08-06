@@ -128,6 +128,8 @@
     } else {
         self.reloadPrevented = YES;
     }
+    
+    NSLog(@"Location: %f, %f", [CPAppDelegate locationManager].location.coordinate.latitude, [CPAppDelegate locationManager].location.coordinate.longitude);
 }
 
 -(void)newDataBeingLoaded:(NSNotification *)notification
