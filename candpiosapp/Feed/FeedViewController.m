@@ -1500,18 +1500,21 @@ typedef enum {
             userEntry = [userEntry.replies objectAtIndex:(selectedPath.row - 1)];
         }
         
-        // grab a UserProfileViewController from the UserStoryboard
-        UserProfileViewController *userProfileVC = (UserProfileViewController *)[[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
-        
-        // give the log's user object to the UserProfileVC
-        
         // if this button's origin is left of the timeline then it's the log's author
         // otherwise it's the log's receiver
-        userProfileVC.user = (userEntry.originalPostID || button.frame.origin.x < TIMELINE_ORIGIN_X)
+        User *selectedUser = (userEntry.originalPostID || button.frame.origin.x < TIMELINE_ORIGIN_X)
                              ? userEntry.author : userEntry.receiver;
         
-        // ask our navigation controller to push to the UserProfileVC
-        [self.navigationController pushViewController:userProfileVC animated:YES];
+        if (selectedUser) {
+            // grab a UserProfileViewController from the UserStoryboard
+            UserProfileViewController *userProfileVC = (UserProfileViewController *)[[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
+            
+            // give the post's user object to the UserProfileVC
+            userProfileVC.user = selectedUser;
+            
+            // ask our navigation controller to push to the UserProfileVC
+            [self.navigationController pushViewController:userProfileVC animated:YES];
+        }        
     } else {
         // we need to show the venue feed for this venue
         // the button's tag is the section for this feed
