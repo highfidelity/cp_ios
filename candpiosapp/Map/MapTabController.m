@@ -215,7 +215,13 @@ BOOL clearLocations = NO;
 {
     [self startRefreshArrowAnimation];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"mapIsLoadingNewData" object:nil];
-    [MapDataSet beginLoadingNewDataset:self.mapView.centerCoordinate
+    
+    // only use the center coordinate of the map if it exists
+    // otherwise use the AppDelegate's locationManager
+    CLLocationCoordinate2D dataSetCoordinate = self.mapHasLoaded ?
+                                               self.mapView.centerCoordinate : [CPAppDelegate locationManager].location.coordinate;
+    
+    [MapDataSet beginLoadingNewDataset:dataSetCoordinate
                             completion:^(MapDataSet *newDataset, NSError *error) {
 
         if (clearLocations) {
