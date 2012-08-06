@@ -815,7 +815,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 - (void)updatePastVenue:(CPVenue *)venue
 {
     // Store updated venue in pastVenues array
-
     // encode the user object
     NSData *newVenueData = [NSKeyedArchiver archivedDataWithRootObject:venue];
 

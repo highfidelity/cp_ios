@@ -119,8 +119,17 @@ static CPCheckinHandler *sharedHandler;
     [self setCheckedOut];
     [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
     [CPUserDefaultsHandler setCurrentVenue:venue];
+    
+    // before we update the past venue we need to get its local autocheckin status
+    // so that it doesn't get overriden by the call
+    CPVenue *staleVenue;
+    
+    if ((staleVenue = [CPAppDelegate venueWithName:venue.name])) {
+        venue.autoCheckin = staleVenue.autoCheckin;
+    }
+    
     [CPAppDelegate updatePastVenue:venue];
-    [[CPCheckinHandler sharedHandler] queueLocalNotificationForVenue:venue checkoutTime:checkOutTime];
+    [self queueLocalNotificationForVenue:venue checkoutTime:checkOutTime];
 }
 
 - (void)promptForCheckout
