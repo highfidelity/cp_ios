@@ -142,7 +142,7 @@
     float flex1 = 0.2;
     float flex2 = 0.1;
     float flex3 = 0.05;
-    float deltaT = 0.75 / 6;
+    float deltaT = 0.35 / 6;
     
     [UIView animateWithDuration:deltaT
                           delay:0
