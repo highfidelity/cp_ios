@@ -824,6 +824,7 @@ typedef enum {
             if (!replyBubbleExtraCell) {
                 replyBubbleExtraCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:containerIdentifier];
                 [self setupReplyBubbleForCell:replyBubbleExtraCell containerHeight:containerHeight position:containerPosition];
+                [replyBubbleExtraCell addSubview:[FeedViewController timelineViewWithHeight:replyBubbleExtraCell.frame.size.height]];
             }
             
             // return the cell
@@ -1071,7 +1072,7 @@ typedef enum {
         if (!self.pendingPost) {
             // trigger a refresh of the pullToRefreshView which will refresh our data
             [self.tableView.pullToRefreshView triggerRefresh];
-        }        
+        }
         
         // set the proper background color for the tableView
         self.tableView.backgroundColor = [UIColor colorWithR:246 G:247 B:245 A:1.0];
