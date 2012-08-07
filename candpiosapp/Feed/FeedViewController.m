@@ -1099,6 +1099,7 @@ typedef enum {
 
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
         [self cancelButtonForRightNavigationItem];
+        self.tableView.showsPullToRefresh = NO;
     } else {
         [self.tableView reloadData];
     }
