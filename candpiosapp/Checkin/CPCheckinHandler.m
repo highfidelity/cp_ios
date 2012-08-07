@@ -53,6 +53,11 @@ static CPCheckinHandler *sharedHandler;
     // if this was a forced checkin we need to show the feed now
     [CPUserDefaultsHandler addFeedVenue:venue showFeedNow:(self.afterCheckinAction != CPAfterCheckinActionNone)];
     
+    if (self.afterCheckinAction == CPAfterCheckinActionNewUpdate) {
+        [[CPAppDelegate tabBarController] showFeedViewController:CPPostTypeUpdate];
+    } else if (self.afterCheckinAction == CPAfterCheckinActionNewQuestion) {
+        [[CPAppDelegate tabBarController] showFeedViewController:CPPostTypeQuestion];
+    }
     
     // If this is the user's first check in to this venue and auto-checkins are enabled,
     // ask the user about checking in automatically to this venue in the future

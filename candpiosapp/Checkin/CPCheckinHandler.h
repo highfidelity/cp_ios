@@ -11,7 +11,7 @@
 typedef enum {
     CPAfterCheckinActionNone,
     CPAfterCheckinActionShowFeed,
-    CPAfterCheckinActionNewPost,
+    CPAfterCheckinActionNewUpdate,
     CPAfterCheckinActionNewQuestion
 } CPAfterCheckinAction;
 

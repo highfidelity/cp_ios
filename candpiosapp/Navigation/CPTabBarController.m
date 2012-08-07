@@ -160,7 +160,6 @@
 
 - (void)showFeedViewController:(CPPostType)postType
 {
-    
     // the user is logged in and checked in
     // we need to bring them to the feed VC and display the feed for the venue they are checked into
     
@@ -169,7 +168,8 @@
     FeedViewController *feedVC = [feedNC.viewControllers objectAtIndex:0];
     feedVC.postType = postType;
     
-    if ([CPCheckinHandler sharedHandler].afterCheckinAction == CPAfterCheckinActionNewPost) {
+    if ([CPCheckinHandler sharedHandler].afterCheckinAction == CPAfterCheckinActionNewUpdate ||
+        [CPCheckinHandler sharedHandler].afterCheckinAction == CPAfterCheckinActionNewQuestion) {
         // this is for a forced checkin
         // so the feedVC is already being show
         // just tell it we want a new post
@@ -218,7 +218,7 @@
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == alertView.firstOtherButtonIndex) {        
-        [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionNewPost;      
+        [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionNewUpdate;
         [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
     } else if (buttonIndex != alertView.cancelButtonIndex) {
         // this is the "Post to Feed" button
