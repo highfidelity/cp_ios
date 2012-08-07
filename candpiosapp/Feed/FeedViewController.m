@@ -1151,7 +1151,7 @@ typedef enum {
 }
 
 - (void)getVenueFeedOrFeedPreviews
-{   
+{
     [self toggleLoadingState:YES];
     
     self.postPlussingUserIds = [NSMutableDictionary new];
@@ -1633,6 +1633,8 @@ typedef enum {
                                      self.tableView.frame = newTableViewFrame;
                                  }
                                  
+                                 self.tableView.showsPullToRefresh = !beingShown;
+                                 
                                  if (beingShown) {
                                      if (!self.pendingPost.originalPostID) {
                                          // this is not a reply
@@ -1652,10 +1654,11 @@ typedef enum {
                                      } else {
                                          [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateUpdate;
                                      }
-
                                  } else {
                                      // switch the thinBar's action button state back to the plus button
                                      [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStatePlus;
+                                     
+                                     
                                  }
                              }
                              
