@@ -181,26 +181,26 @@
                               animations:^{[self imageFlex:flex1 plusRect:plusRect];}
                               completion:
               ^(BOOL finished) {
-                  [UIView animateWithDuration:deltaT
+                  [UIView animateWithDuration:deltaT*0.8
                                         delay:0
                                       options:UIViewAnimationOptionCurveEaseIn
                                    animations:^{[self imageFlex:-flex2 plusRect:plusRect];}
                                    completion:
                    ^(BOOL finished) {
-                       [UIView animateWithDuration:deltaT
+                       [UIView animateWithDuration:deltaT*0.8
                                              delay:0
                                            options:UIViewAnimationOptionCurveEaseIn
                                         animations:^{[self imageFlex:flex2 plusRect:plusRect];}
                                         completion:
                         ^(BOOL finished) {
-                            [self dribbleCommentImage];
-                            [UIView animateWithDuration:deltaT
+                            [self dribbleCommentImageWithDelay:0];
+                            [UIView animateWithDuration:deltaT*0.6
                                                   delay:0
                                                 options:UIViewAnimationOptionCurveEaseIn
                                              animations:^{[self imageFlex:-flex3 plusRect:plusRect];}
                                              completion:
                              ^(BOOL finished) {
-                                 [UIView animateWithDuration:deltaT
+                                 [UIView animateWithDuration:deltaT*0.6
                                                        delay:0
                                                      options:UIViewAnimationOptionCurveEaseIn
                                                   animations:^{[self imageFlex:flex3 plusRect:plusRect];}
@@ -212,11 +212,13 @@
               }];
          }];
     } else {
-        [self dribbleCommentImage];
+        // pause for the disabled +1
+        [self dribbleCommentImageWithDelay:4*deltaT];
     }
 }
-- (void) dribbleCommentImage
+- (void) dribbleCommentImageWithDelay:(NSTimeInterval)delay
 {
+    // dribble the image, losing some amplitude on each bounce
     CGRect commentRect = self.commentImageView.frame;
     
     float flex1 = 0.4;
@@ -225,7 +227,7 @@
     float deltaT = 0.35 / 6;
     
     [UIView animateWithDuration:deltaT
-                          delay:0
+                          delay:delay
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{[self imageFlex:-flex1 commentRect:commentRect];}
                      completion:
@@ -236,25 +238,25 @@
                           animations:^{[self imageFlex:flex1 commentRect:commentRect];}
                           completion:
           ^(BOOL finished) {
-              [UIView animateWithDuration:deltaT
+              [UIView animateWithDuration:deltaT*0.8
                                     delay:0
                                   options:UIViewAnimationOptionCurveEaseIn
                                animations:^{[self imageFlex:-flex2 commentRect:commentRect];}
                                completion:
                ^(BOOL finished) {
-                   [UIView animateWithDuration:deltaT
+                   [UIView animateWithDuration:deltaT*0.8
                                          delay:0
                                        options:UIViewAnimationOptionCurveEaseIn
                                     animations:^{[self imageFlex:flex2 commentRect:commentRect];}
                                     completion:
                     ^(BOOL finished) {
-                        [UIView animateWithDuration:deltaT
+                        [UIView animateWithDuration:deltaT*0.6
                                               delay:0
                                             options:UIViewAnimationOptionCurveEaseIn
                                          animations:^{[self imageFlex:-flex3 commentRect:commentRect];}
                                          completion:
                          ^(BOOL finished) {
-                             [UIView animateWithDuration:deltaT
+                             [UIView animateWithDuration:deltaT*0.6
                                                    delay:0
                                                  options:UIViewAnimationOptionCurveEaseIn
                                               animations:^{[self imageFlex:flex3 commentRect:commentRect];}
