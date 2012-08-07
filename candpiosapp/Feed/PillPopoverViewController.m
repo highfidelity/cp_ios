@@ -162,7 +162,7 @@
     
     CGRect plusRect = self.plusButton.frame;
     
-    float flex1 = 0.7;
+    float flex1 = 0.4;
     float flex2 = 0.2;
     float flex3 = 0.1;
     float deltaT = 0.35 / 6;
@@ -219,7 +219,7 @@
 {
     CGRect commentRect = self.commentImageView.frame;
     
-    float flex1 = 0.7;
+    float flex1 = 0.4;
     float flex2 = 0.2;
     float flex3 = 0.1;
     float deltaT = 0.35 / 6;
