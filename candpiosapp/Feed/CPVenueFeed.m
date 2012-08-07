@@ -15,6 +15,7 @@
 @synthesize posts = _posts;
 @synthesize lastID = _lastID;
 @synthesize lastReplyID = _lastReplyID;
+@synthesize updateTimestamp = _updateTimestamp;
 
 - (NSMutableArray *)posts
 {
@@ -30,10 +31,13 @@
     // by using the initFromDictionary method in the CPPost model
     for (NSDictionary *postDict in postsArray) {
         CPPost *newPost = [[CPPost alloc] initFromDictionary:postDict];
-        
-        if (![self.posts containsObject:newPost]) {
-            int postIndex = self.lastID == 0 ? self.posts.count : 0;
+
+        NSUInteger postIndex = [self.posts indexOfObject:newPost];
+        if (postIndex == NSNotFound) {
+            postIndex = self.lastID == 0 ? self.posts.count : 0;
             [self.posts insertObject:newPost atIndex:postIndex];
+        } else {
+            [self.posts replaceObjectAtIndex:postIndex withObject:newPost];
         }       
     }
     

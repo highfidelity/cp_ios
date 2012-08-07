@@ -1156,9 +1156,11 @@ typedef enum {
         [CPapi getPostsForVenueFeed:self.selectedVenueFeed withCompletion:^(NSDictionary *json, NSError *error) {
             if (!error) {
                 if (![[json objectForKey:@"error"] boolValue]) {
-                                        
-                    [self.selectedVenueFeed addPostsFromArray:[json objectForKey:@"payload"]];
-                    
+
+                    NSDictionary *jsonDict = [json objectForKey:@"payload"];
+                    [self.selectedVenueFeed addPostsFromArray:[jsonDict objectForKey:@"feeds"]];
+                    self.selectedVenueFeed.updateTimestamp = [[jsonDict objectForKey:@"timestamp"] integerValue];
+
                     // last ID property for venue feed is now the ID of the first post in the selectedVenueFeed posts array
                     if (self.selectedVenueFeed.posts.count) {
                         self.selectedVenueFeed.lastID = [[self.selectedVenueFeed.posts objectAtIndex:0] postID];
