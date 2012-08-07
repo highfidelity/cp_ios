@@ -227,7 +227,7 @@
     [CPAppDelegate tabBarController].currentVenueID = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshVenueAfterCheckin" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LoginStateChanged" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"userCheckinStateChange" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"userCheckInStateChange" object:nil];
     // Release any retained subviews of the main view.
 }
 
@@ -300,13 +300,14 @@
 - (void)showVenueChat
 {
     if ([CPUserDefaultsHandler currentUser]) {
-        [CPUserDefaultsHandler addFeedVenue:self.venue showFeedNow:YES];
+        [CPUserDefaultsHandler addFeedVenue:self.venue];
+        // switch over to the feed view controller
+        self.tabBarController.selectedIndex = 0;
     } else {
         // prompt the user to login
         [CPAppDelegate showLoginBanner];
         [self normalVenueChatButton];
     }
-    
 }
 
 - (void)populateUserSection
@@ -780,7 +781,7 @@
     //Add observer to update checkIn button
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(refreshVenueViewCheckinButton) 
-                                                 name:@"userCheckinStateChange" 
+                                                 name:@"userCheckInStateChange" 
                                                object:nil];
     
     
@@ -794,7 +795,7 @@
     } else {
         if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [CPUserDefaultsHandler currentVenue].venueID == self.venue.venueID){
             // user is checked in here so ask them if they want to be checked out
-            [CPAppDelegate promptForCheckout];
+            [[CPCheckinHandler sharedHandler] promptForCheckout];
         } else {
             // tell the CPCheckinHandler that there should be no action after this checkin
             [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionNone;

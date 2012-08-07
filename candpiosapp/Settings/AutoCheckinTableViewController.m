@@ -10,6 +10,7 @@
 #import "CPVenue.h"
 #import "AutoCheckinCell.h"
 #import "FlurryAnalytics.h"
+#import "CPGeofenceHandler.h"
 
 @interface AutoCheckinTableViewController ()
 @property (nonatomic, strong) NSMutableArray *placesArray;
@@ -19,15 +20,6 @@
 
 @synthesize globalCheckinSwitch = _globalCheckinSwitch;
 @synthesize placesArray = _placesArray;
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -130,7 +122,7 @@
         // Disable auto checkins
         
         for (CPVenue *venue in self.placesArray) {
-            [CPAppDelegate stopMonitoringVenue:venue];
+            [[CPGeofenceHandler sharedHandler] stopMonitoringVenue:venue];
         }
         
         [self.placesArray removeAllObjects];
@@ -149,7 +141,7 @@
         for (CPVenue *venue in self.placesArray) {
             NSLog(@"auto: %i, venue: %@", venue.autoCheckin, venue.name);
             if (venue.autoCheckin) {
-                [CPAppDelegate startMonitoringVenue:venue];
+                [[CPGeofenceHandler sharedHandler] startMonitoringVenue:venue];
             }
         }
 

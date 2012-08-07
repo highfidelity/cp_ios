@@ -18,13 +18,12 @@
 #import "PushModalViewControllerFromLeftSegue.h"
 #import "CPApiClient.h"
 #import "CPCheckinHandler.h"
+#import "CPGeofenceHandler.h"
 
 #define kContactRequestAPNSKey @"contact_request"
 #define kContactRequestAcceptedAPNSKey @"contact_accepted"
 #define kCheckOutLocalNotificationAlertViewTitle @"You will be checked out of C&P in 5 min."
-#define kRadiusForCheckins                      10 // measure in meters, from lat/lng of CPVenue
 
-#define kGeoFenceAlertTag 601
 #define kCheckOutAlertTag 602
 
 @interface AppDelegate() {
@@ -42,7 +41,6 @@
 @synthesize urbanAirshipClient;
 @synthesize settingsMenuController;
 @synthesize tabBarController;
-@synthesize checkOutTimer = _checkOutTimer;
 
 // TODO: Store what we're storing now in settings in NSUSERDefaults
 // Why make our own class when there's an iOS Api for this?
@@ -268,7 +266,7 @@ didReceiveLocalNotification:(UILocalNotification *)notif
             [alertView show];
         }
     } else if ([notif.userInfo valueForKey:@"geofence"]) {
-        [self handleGeofenceNotification:notif.alertBody userInfo:notif.userInfo];
+        [[CPGeofenceHandler sharedHandler] handleGeofenceNotification:notif.alertBody userInfo:notif.userInfo];
     }
 }
 
@@ -297,7 +295,7 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
                                            fromUserId:userId
                                          withRootView:self.tabBarController];
     } else if ([userInfo valueForKey:@"geofence"]) {
-        [self handleGeofenceNotification:alertMessage userInfo:userInfo];
+        [[CPGeofenceHandler sharedHandler] handleGeofenceNotification:alertMessage userInfo:userInfo];
     } else if ([userInfo valueForKey:kContactRequestAPNSKey] != nil) {        
         [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:kContactRequestAPNSKey] intValue]
                                           fromView:self.settingsMenuController];
@@ -407,39 +405,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     NSLog(@"Notification types: %@", flurryParams);
 }
 
-#pragma mark - Geofencing
-
-- (CLRegion *)getRegionForVenue:(CPVenue *)venue
-{
-    CLRegion* region = [[CLRegion alloc] initCircularRegionWithCenter:venue.coordinate
-                                                               radius:kRadiusForCheckins identifier:venue.name];
-    
-    return region;
-}
-
-- (void)startMonitoringVenue:(CPVenue *)venue
-{    
-    // Only start monitoring a region if automaticCheckins is YES    
-    if ([CPUserDefaultsHandler automaticCheckins]) {        
-        CLRegion* region = [self getRegionForVenue:venue];
-        
-        [self.locationManager startMonitoringForRegion:region
-                                       desiredAccuracy:kCLLocationAccuracyNearestTenMeters];
-        
-        [CPapi saveVenueAutoCheckinStatus:venue];
-    }
-}
-
-- (void)stopMonitoringVenue:(CPVenue *)venue
-{    
-    CLRegion* region = [self getRegionForVenue:venue];
-    [self.locationManager stopMonitoringForRegion:region];
-    
-    [CPapi saveVenueAutoCheckinStatus:venue];
-    
-    [FlurryAnalytics logEvent:@"automaticCheckinLocationDisabled"];
-}
-
 - (CLLocationManager *)locationManager
 {
     if (!_locationManager) {
@@ -470,135 +435,16 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
         return;
     } else {
         // grab the right venue from our past venues
-        CPVenue * autoVenue = [self venueWithName:region.identifier];
+        CPVenue * autoVenue = [[CPGeofenceHandler sharedHandler] venueWithName:region.identifier];
         // Check in the user immediately
-        [self autoCheckinForVenue:autoVenue];
+        [[CPGeofenceHandler sharedHandler] autoCheckInForVenue:autoVenue];
     }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {    
     if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [[CPUserDefaultsHandler currentVenue].name isEqualToString:region.identifier]) {
         // Log user out immediately
-        [self autoCheckoutForCLRegion:region];
-    }
-}
-
-- (void)autoCheckinForVenue:(CPVenue *)venue
-{
-    // Check the user in automatically now
-    
-    [FlurryAnalytics logEvent:@"autoCheckedIn"];
-    
-    NSInteger checkInTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
-    // Set a maximum checkInDuration to 24 hours
-    NSInteger checkInDuration = 24;
-    
-    NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
-    NSString *statusText = @"";
-    
-    // use CPapi to checkin
-    [CPApiClient checkInToVenue:venue hoursHere:checkInDuration statusText:statusText isVirtual:NO isAutomatic:YES completionBlock:^(NSDictionary *json, NSError *error){
-        
-        if (!error) {
-            if (![[json objectForKey:@"error"] boolValue]) {
-                
-                // Cancel all old local notifications
-                [[UIApplication sharedApplication] cancelAllLocalNotifications];
-                
-                // post a notification to say the user has checked in
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
-                
-                [self setCheckedOut];
-                
-                [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
-                
-                // Save current place to venue defaults as it's used in several places in the app
-                [CPUserDefaultsHandler setCurrentVenue:venue];
-                
-                // update this venue in the list of past venues
-                [self updatePastVenue:venue];
-            }
-            else {
-                // There was an error checking in; probably safe to ignore
-            }
-        } else {
-            // There was an error in the main call while checking in; probably safe to ignore
-        }
-    }];
-}
-
-- (void)autoCheckoutForCLRegion:(CLRegion *)region
-{
-    [FlurryAnalytics logEvent:@"autoCheckedOut"];
-    
-    [SVProgressHUD showWithStatus:@"Checking out..."];
-    
-    [CPapi checkOutWithCompletion:^(NSDictionary *json, NSError *error) {
-        
-        BOOL respError = [[json objectForKey:@"error"] boolValue];
-        
-        if (!error && !respError) {
-            [[UIApplication sharedApplication] cancelAllLocalNotifications];
-            
-            NSDictionary *jsonDict = [json objectForKey:@"payload"];
-            NSString *venue = [jsonDict valueForKey:@"venue_name"];
-            NSMutableString *alertText = [NSMutableString stringWithFormat:@"Checked out of %@.", venue];
-            
-            int hours = [[jsonDict valueForKey:@"hours_checked_in"] intValue];
-            if (hours == 1) {
-                [alertText appendString:@" You were there for 1 hour."];
-            } else if (hours > 1) {
-                [alertText appendFormat:@" You were there for %d hours.", hours];
-            }
-            
-            UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-            localNotif.alertBody = alertText;
-            localNotif.alertAction = @"View";
-            localNotif.soundName = UILocalNotificationDefaultSoundName;
-            
-            localNotif.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   @"exit", @"geofence",
-                                   region.identifier, @"venue_name",
-                                   nil];
-            
-            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
-            [self setCheckedOut];
-            
-            [SVProgressHUD dismissWithSuccess:alertText
-                                   afterDelay:kDefaultDismissDelay];
-        } else {
-            NSString *message = [json objectForKey:@"payload"];
-            if (!message) {
-                message = @"Oops. Something went wrong.";    
-            }
-            [SVProgressHUD dismissWithError:message 
-                                 afterDelay:kDefaultDismissDelay];
-        }
-    }];    
-}
-
--(void)handleGeofenceNotification:(NSString *)message userInfo:(NSDictionary *)userInfo
-{
-    // check if the app is currently active
-    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-        // alloc-init a CPAlertView
-        CPAlertView *alertView = [[CPAlertView alloc] initWithTitle:message
-                                                            message:nil
-                                                           delegate:self
-                                                  cancelButtonTitle:@"View"
-                                                  otherButtonTitles:@"Ignore", nil];    
-
-        // add our userInfo to the alertView
-        // be the delegate, give it a tag so we can recognize it
-        // and return it
-        alertView.context = userInfo;
-        alertView.delegate = self;
-        alertView.tag = kGeoFenceAlertTag;
-        
-        [alertView show];
-    } else {
-        // otherwise when they slide the notification bring them to the venue
-        [self loadVenueView:[userInfo objectForKey:@"venue_name"]];
+        [[CPGeofenceHandler sharedHandler] autoCheckOutForRegion:region];
     }
 }
 
@@ -643,59 +489,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 - (void)toggleSettingsMenu
 {
     [self.settingsMenuController showMenu: !self.settingsMenuController.isMenuShowing];
-}
-
-# pragma mark - Check-in/out Stuff
-
-// TODO: consolidate this with the checkedIn property on the current user in NSUserDefaults
-
-- (void)promptForCheckout
-{
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Check Out"
-                          message:@"Are you sure you want to be checked out?"
-                          delegate:self.settingsMenuController
-                          cancelButtonTitle:@"Cancel"
-                          otherButtonTitles: @"Check Out", nil];
-    alert.tag = 904;
-    [alert show];
-}
-
-- (void)setCheckedOut
-{
-    // set user checkout time to now
-    NSInteger checkOutTime = (NSInteger) [[NSDate date] timeIntervalSince1970];
-    [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
-    
-    // nil out the venue in NSUserDefaults
-    [CPUserDefaultsHandler setCurrentVenue:nil];
-    if (self.checkOutTimer != nil) {
-        [[self checkOutTimer] invalidate];
-        self.checkOutTimer = nil;   
-    }
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckinStateChange" object:nil];
-}
-
-- (void)saveCheckInVenue:(CPVenue *)venue andCheckOutTime:(NSInteger)checkOutTime
-{
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    [self setCheckedOut];
-    [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
-    [CPUserDefaultsHandler setCurrentVenue:venue];
-    [self updatePastVenue:venue];
-    [[CPCheckinHandler sharedHandler] queueLocalNotificationForVenue:venue checkoutTime:checkOutTime];
-}
-
-- (void)checkInButtonPressed:(id)sender
-{
-    if (![CPUserDefaultsHandler currentUser]) {
-        [CPAppDelegate showLoginBanner];
-    } else if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
-        [self promptForCheckout];
-    } else {
-        UINavigationController *checkInNC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
-        [self.tabBarController presentModalViewController:checkInNC animated:YES];
-    }
 }
 
 # pragma mark - Signup
@@ -845,7 +638,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
         [CPUserDefaultsHandler setCurrentUser:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
     }
-    [self setCheckedOut];
+    [[CPCheckinHandler sharedHandler] setCheckedOut];
 }
 
 - (void)storeUserLoginDataFromDictionary:(NSDictionary *)userInfo
@@ -865,68 +658,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     [CPUserDefaultsHandler setAutomaticCheckins:YES];
     [CPUserDefaultsHandler setCurrentUser:currUser];
 }
-
-// TODO: In a lot of places in the app we are using this just to see if someone is logged in
-// without caring about the return
-// there's likely a way just to tell if we have an object at the kUDCurrentUser key
-// without pulling it out and decoding it
-// so use that for the case where we just want BOOL YES/NO for logged in status
-
-- (void)updatePastVenue:(CPVenue *)venue
-{
-    // Store updated venue in pastVenues array
-
-    // encode the user object
-    NSData *newVenueData = [NSKeyedArchiver archivedDataWithRootObject:venue];
-
-    NSArray *pastVenues = [CPUserDefaultsHandler pastVenues];
-    
-    // Reverse order so that the oldest venues are knocked out
-    pastVenues = [[pastVenues reverseObjectEnumerator] allObjects];
-    
-    NSMutableArray *mutablePastVenues = [[NSMutableArray alloc] init];
-    
-    NSInteger i = 0;
-    
-    for (NSData *encodedObject in pastVenues) {
-        i++;
-        
-        CPVenue *unencodedVenue = (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
-        
-        // Only add the current venue at the very end, so that it will stay on the list the longest
-        if (unencodedVenue && unencodedVenue.name) {
-            if (![unencodedVenue.name isEqualToString:venue.name]) {
-                [mutablePastVenues addObject:encodedObject];
-            }
-        }
-        
-        // Limit number of geofencable venues to 20 due to iOS limitations; remove all of the old venues from monitoring
-        if (i > 18) {
-            [self stopMonitoringVenue:unencodedVenue];
-        }
-    }
-    
-    [mutablePastVenues addObject:newVenueData];
-    [CPUserDefaultsHandler setPastVenues:mutablePastVenues];  
-}
-
-- (CPVenue *)venueWithName:(NSString *)name
-{
-    NSArray *pastVenues = [CPUserDefaultsHandler pastVenues];
-
-    CPVenue *venueMatch;
-
-    for (NSData *encodedObject in pastVenues) {
-        CPVenue *venue = (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
-
-        if ([venue.name isEqualToString:name]) {
-            venueMatch = venue;
-        }
-    }
-    
-    return venueMatch;
-}
-
 
 #pragma mark - User Settings
 
@@ -968,7 +699,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 - (void)loadVenueView:(NSString *)venueName
 {    
-    CPVenue *venue = [self venueWithName:venueName];
+    CPVenue *venue = [[CPGeofenceHandler sharedHandler] venueWithName:venueName];
     
     if (venue) {
         NSLog(@"Load venue: %@", venueName);
@@ -1027,7 +758,7 @@ void SignalHandler(int sig) {
 
     if ([alertView.title isEqualToString:kCheckOutLocalNotificationAlertViewTitle]) {
         if (alertView.firstOtherButtonIndex == buttonIndex) {            
-            (CPAppDelegate).checkOutTimer = [NSTimer scheduledTimerWithTimeInterval:300
+            [CPCheckinHandler sharedHandler].checkOutTimer = [NSTimer scheduledTimerWithTimeInterval:300
                                                                                     target:self
                                                                                   selector:@selector(setCheckedOut) 
                                                                                   userInfo:nil 
@@ -1049,11 +780,6 @@ void SignalHandler(int sig) {
             [self.tabBarController presentModalViewController:navigationController animated:YES];
         }
         
-    } else if (alertView.tag == kGeoFenceAlertTag && alertView.cancelButtonIndex == buttonIndex) {
-        // Load the venue if the user tapped on View from the didExit auto checkout alert
-        if (userInfo) {
-            [self loadVenueView:[userInfo objectForKey:@"venue_name"]];
-        }
     }
 }
 

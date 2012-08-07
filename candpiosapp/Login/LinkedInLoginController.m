@@ -15,6 +15,7 @@
 #import "EnterInvitationCodeViewController.h"
 #import "CPLinkedInAPI.h"
 #import "CPapi.h"
+#import "CPCheckinHandler.h"
 
 typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
@@ -343,10 +344,10 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                     CPVenue *venue = [[CPVenue alloc] initFromDictionary:checkInDict];
 
                     NSInteger checkOutTime =[[checkInDict objectForKey:@"checkout"] integerValue];
-                    [CPAppDelegate saveCheckInVenue:venue
+                    [[CPCheckinHandler sharedHandler] saveCheckInVenue:venue
                                     andCheckOutTime:checkOutTime];
                 } else {
-                    [CPAppDelegate setCheckedOut];
+                    [[CPCheckinHandler sharedHandler] setCheckedOut];
                 }
 
                 [FlurryAnalytics logEvent:@"login_linkedin"];
