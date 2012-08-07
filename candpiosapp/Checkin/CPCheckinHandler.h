@@ -11,17 +11,21 @@
 typedef enum {
     CPAfterCheckinActionNone,
     CPAfterCheckinActionShowFeed,
-    CPAfterCheckinActionNewPost,
+    CPAfterCheckinActionNewUpdate,
     CPAfterCheckinActionNewQuestion
 } CPAfterCheckinAction;
 
 @interface CPCheckinHandler : NSObject
 
 @property (nonatomic, assign) CPAfterCheckinAction afterCheckinAction;
+@property (strong, nonatomic) NSTimer *checkOutTimer;
 
 - (void)presentCheckinModalFromViewController:(UIViewController *)presentingViewController;
 - (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime;
 - (void)queueLocalNotificationForVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime;
+- (void)setCheckedOut;
+- (void)saveCheckInVenue:(CPVenue *)venue andCheckOutTime:(NSInteger)checkOutTime;
+- (void)promptForCheckout;
 
 + (CPCheckinHandler *)sharedHandler;
 

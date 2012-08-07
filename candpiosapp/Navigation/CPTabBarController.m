@@ -130,7 +130,7 @@
                                                       otherButtonTitles:@"Checkin", nil];
         [checkinAlert show];
     } else {
-        [self showFeedViewController:CPPostTypeQuestion];
+        [self showFeedVCForNewPostWithPostType:CPPostTypeQuestion];
     }
 }
 
@@ -154,13 +154,12 @@
         [checkinAlert show];
         
     } else {
-        [self showFeedViewController:CPPostTypeUpdate];
+        [self showFeedVCForNewPostWithPostType:CPPostTypeUpdate];
     }
 }
 
-- (void)showFeedViewController:(CPPostType)postType
+- (void)showFeedVCForNewPostWithPostType:(CPPostType)postType
 {
-    
     // the user is logged in and checked in
     // we need to bring them to the feed VC and display the feed for the venue they are checked into
     
@@ -169,33 +168,21 @@
     FeedViewController *feedVC = [feedNC.viewControllers objectAtIndex:0];
     feedVC.postType = postType;
     
-    if ([CPCheckinHandler sharedHandler].afterCheckinAction == CPAfterCheckinActionNewPost) {
-        // this is for a forced checkin
-        // so the feedVC is already being show
-        // just tell it we want a new post
-        feedVC.newPostAfterLoad = YES;
+    // if the FeedViewController doesn't have our the current venue's feed as it's selectedVenueFeed
+    // then pull it from the list of venue feed previews and make it the selected venue feed
+    feedVC.selectedVenueFeed = [feedVC.venueFeedPreviews objectAtIndex:0];
+    
+    // the user is already on the feed for the right venue
+    // so tell the feedVC that we want to add a new post
+    
+    if (self.selectedIndex == 0) {
+        // the feedVC is on screen so we want a new post right now
+        [feedVC newPost:nil];
     } else {
-        // if the FeedViewController doesn't have our the current venue's feed as it's selectedVenueFeed
-        // then alloc-init one and set it properly
-        if ([CPUserDefaultsHandler currentVenue].venueID != feedVC.selectedVenueFeed.venue.venueID) {
-            CPVenueFeed *currentVenueFeed = [[CPVenueFeed alloc] init];
-            currentVenueFeed.venue = [CPUserDefaultsHandler currentVenue];
-            
-            feedVC.selectedVenueFeed = currentVenueFeed;
-        } 
-        
-        // the user is already on the feed for the right venue
-        // so tell the feedVC that we want to add a new post
-        
-        if (self.selectedIndex == 0) {
-            // the feedVC is on screen so we want a new post right now
-            [feedVC newPost:nil];
-        } else {
-            // the feedVC isn't on screen yet so tell we want a new post after it loads
-            feedVC.newPostAfterLoad = YES;
-            self.selectedIndex = 0;
-        }
-    }   
+        // the feedVC isn't on screen yet so tell we want a new post after it loads
+        feedVC.newPostAfterLoad = YES;
+        self.selectedIndex = 0;
+    }
 }
 
 - (IBAction)checkinButtonPressed:(id)sender
@@ -218,7 +205,7 @@
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == alertView.firstOtherButtonIndex) {        
-        [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionNewPost;      
+        [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionNewUpdate;
         [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
     } else if (buttonIndex != alertView.cancelButtonIndex) {
         // this is the "Post to Feed" button

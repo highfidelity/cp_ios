@@ -6,6 +6,9 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
+#import "CPCheckinHandler.h"
+#import "CPGeofenceHandler.h"
+
 #define menuWidthPercentage 0.8
 #define kEnterInviteFakeSegueID @"--kEnterInviteFakeSegueID"
 
@@ -116,14 +119,6 @@
 }
 
 #pragma mark - View lifecycle
-
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
-{
-}
-*/
-
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
@@ -413,7 +408,7 @@
             if (!error && !respError) {
                 
                 [[UIApplication sharedApplication] cancelAllLocalNotifications];
-                [CPAppDelegate setCheckedOut];
+                [[CPCheckinHandler sharedHandler] setCheckedOut];
                 
                 NSDictionary *jsonDict = [json objectForKey:@"payload"];
                 NSString *venue = [jsonDict valueForKey:@"venue_name"];
@@ -445,19 +440,19 @@
         if (alertView.firstOtherButtonIndex == buttonIndex) {
             // Start monitoring the new location to allow auto-checkout and checkin (if enabled) 
             autoPromptVenue.autoCheckin = YES;
-            [CPAppDelegate startMonitoringVenue:autoPromptVenue];
+            [[CPGeofenceHandler sharedHandler] startMonitoringVenue:autoPromptVenue];
             [FlurryAnalytics logEvent:@"autoCheckInPromptAccepted"];
         }
         else if (buttonIndex == 2) {
             autoPromptVenue.autoCheckin = NO;
             // User does NOT want to automatically check in to this venue        
-            [CPAppDelegate stopMonitoringVenue:autoPromptVenue];
+            [[CPGeofenceHandler sharedHandler] stopMonitoringVenue:autoPromptVenue];
             [FlurryAnalytics logEvent:@"autoCheckInPromptDenied"];
         }
     
         // add this venue to the array of past venues in NSUserDefaults
         // with the correct autoCheckin status
-        [CPAppDelegate updatePastVenue:autoPromptVenue];
+        [[CPGeofenceHandler sharedHandler] updatePastVenue:autoPromptVenue];
     }
 }
 

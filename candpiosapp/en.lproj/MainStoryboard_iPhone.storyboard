@@ -400,7 +400,7 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="user-image-mask.png" id="jMs-U5-VV0">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="user-image-mask-for-replies.png" id="jMs-U5-VV0">
                                                     <rect key="frame" x="77" y="2" width="25" height="25"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -551,7 +551,7 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="user-image-mask.png" id="PzW-Jd-dJx">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="user-image-mask-for-replies.png" id="PzW-Jd-dJx">
                                                     <rect key="frame" x="77" y="2" width="25" height="25"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -1018,6 +1018,7 @@
         <image name="pill-button-plus1-comment.png" width="42" height="22"/>
         <image name="plus1-button.png" width="33" height="31"/>
         <image name="popover-divider.png" width="152" height="2"/>
+        <image name="user-image-mask-for-replies.png" width="20" height="20"/>
         <image name="user-image-mask.png" width="25" height="25"/>
     </resources>
     <classes>

@@ -7,6 +7,7 @@
 //
 
 #import "CommentCell.h"
+#import "FeedViewController.h"
 
 @implementation CommentCell
 @synthesize post;
@@ -14,6 +15,14 @@
 @synthesize pillButton;
 @synthesize placeholderPillButton;
 @synthesize delegate;
+
+- (void)awakeFromNib
+{
+    // grab a timeLine view using the class method in FeedViewController
+    // add the timeline to our contentView
+    [super awakeFromNib];
+    [self.contentView addSubview:[FeedViewController timelineViewWithHeight:self.frame.size.height]];
+}
 
 - (void) updatePillButtonAnimated:(BOOL)animated {
     // update pill button to the count specified in the post.. adding if needed

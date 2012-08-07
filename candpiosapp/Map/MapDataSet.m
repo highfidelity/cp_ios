@@ -22,14 +22,6 @@
 
 static NSOperationQueue *sMapQueue = nil;
 
--(id)init {
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
-
 - (NSArray *)annotations
 {
     return [self.activeVenues allValues];
@@ -38,8 +30,7 @@ static NSOperationQueue *sMapQueue = nil;
 +(void)beginLoadingNewDataset:(CLLocationCoordinate2D)mapCenter
 					 completion:(void (^)(MapDataSet *set, NSError *error))completion
 {
-	if(!sMapQueue)
-	{
+	if(!sMapQueue) {
 		sMapQueue = [NSOperationQueue new];
 		[sMapQueue setSuspended:NO];
 		// serialize requests, please
@@ -51,10 +42,8 @@ static NSOperationQueue *sMapQueue = nil;
     }
     
 	
-	if([sMapQueue operationCount] == 0)
-	{
-            
-        [CPapi getNearestVenuesWithCheckinsToCoordinate:mapCenter 
+	if([sMapQueue operationCount] == 0) {        
+        [CPapi getNearestVenuesWithCheckinsToCoordinate:mapCenter
                                                mapQueue:sMapQueue 
                                              completion:^(NSDictionary *json, NSError *error){
             
@@ -75,8 +64,7 @@ static NSOperationQueue *sMapQueue = nil;
             }
         }];
 	}
-	else
-	{
+	else {
         //Because cancelAllOperations is called above it should not get here, but it is does it will show busy.
 		if(completion)
 			completion(nil, [NSError errorWithDomain:@"Busy" code:999 userInfo:nil]);
@@ -88,8 +76,7 @@ static NSOperationQueue *sMapQueue = nil;
 
 -(id)initFromJson:(NSDictionary*)json
 {
-	if((self = [super init]))
-	{		
+	if((self = [super init])) {
         // get the places that came back and make an annotation for each of them
         NSArray *venuesArray = [[json objectForKey:@"payload"] objectForKey:@"venues"];
         
@@ -108,28 +95,22 @@ static NSOperationQueue *sMapQueue = nil;
             
             MKMapRect coveredRect = MKMapRectNull;
 
-            for(NSDictionary *venueDict in venuesArray)
-            {
+            for(NSDictionary *venueDict in venuesArray) {
                 
                 CPVenue *venue = [[CPVenue alloc] initFromDictionary:venueDict];
                 //See if the user can checkin at a venue because they have a contact there
                 venue.hasContactAtVenue = NO;
-                for(id userIDObj in venue.activeUsers)
-                {
+                for(id userIDObj in venue.activeUsers) {
                     int activeUserID = [userIDObj integerValue];
                     NSDictionary *currentActiveUser = [venue.activeUsers objectForKey:userIDObj];
                     BOOL activeUserCheckedIn = [[currentActiveUser objectForKey:@"checked_in"] boolValue];
                     //Check to see if the activeUser at the venue is checkin
-                    if(activeUserCheckedIn)
-                    {
-                        for(NSDictionary *contactDict in contactsArray)
-                        {
-                            if(activeUserID == [[contactDict objectForKey:@"other_user_id"] integerValue])
-                            {
+                    if(activeUserCheckedIn) {
+                        for(NSDictionary *contactDict in contactsArray) {
+                            if(activeUserID == [[contactDict objectForKey:@"other_user_id"] integerValue]) {
                                 venue.hasContactAtVenue = YES;
                                 break;
                             }
-                            
                         }
                     }
                 }
@@ -195,8 +176,7 @@ static NSOperationQueue *sMapQueue = nil;
 	
 	// if the data is old, we need to reload anyway
 	double age = [self.dateLoaded timeIntervalSinceNow];
-	if(self.dateLoaded && age < kTwoMinutesAgo)
-	{
+	if(self.dateLoaded && age < kTwoMinutesAgo) {
 		NSLog(@".... data was too old (%.2f seconds old)", age);
 		return false;
 	}
@@ -210,8 +190,7 @@ static NSOperationQueue *sMapQueue = nil;
     
 	// if the new map region is contained within the region defined by the venues that are the furthest away
     // then we don't need to reload
-	if(MKMapRectContainsRect(self.regionCovered, newRegion))
-	{
+	if(MKMapRectContainsRect(self.regionCovered, newRegion)) {
 		return true;
     } else {
 		return false;

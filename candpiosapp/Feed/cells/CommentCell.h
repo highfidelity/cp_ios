@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class CommentCell;
+
 @protocol CommentCellDelegate <NSObject>
 - (void) showPillPopoverFromCell:(CommentCell*)cell;
 @end
@@ -19,7 +20,7 @@
 @property (nonatomic, strong) IBOutlet UIButton *placeholderPillButton;
 @property (nonatomic, strong) UILabel *pillLabel;
 @property (nonatomic, strong) id<CommentCellDelegate> delegate;
-@property (strong, nonatomic) UIView *timelineView;
+
 - (void) updatePillButtonAnimated:(BOOL)animated;
 
 @end

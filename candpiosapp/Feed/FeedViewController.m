@@ -115,12 +115,6 @@ typedef enum {
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-}
-
 - (void)setSelectedVenueFeed:(CPVenueFeed *)selectedVenueFeed
 {
     if (![_selectedVenueFeed isEqual:selectedVenueFeed]) {
@@ -420,7 +414,6 @@ typedef enum {
         
         // add that view to the cell's contentView
         [cell.contentView insertSubview:containerView atIndex:0];
-        [cell addSubview:[FeedViewController timelineViewWithHeight:cell.frame.size.height]];
     } else {
         if (position == FeedBGContainerPositionMiddle) {
             // adjust the view's height if required
@@ -468,9 +461,6 @@ typedef enum {
             
             // check if we have a new cell height which is larger than our min height and grow to that size
             cellHeight = self.newEditableCellHeight > MIN_CELL_HEIGHT ? self.newEditableCellHeight : MIN_CELL_HEIGHT;
-            
-            // reset the newEditableCellHeight to 0
-            self.newEditableCellHeight = 0;
             
             return cellHeight;
         }
@@ -665,15 +655,20 @@ typedef enum {
             }
             
             // give the entry label the right text and color
-            newEntryCell.entryLabel.text = [leadingText stringByAppendingString:@":"];
             newEntryCell.entryLabel.textColor = [CPUIHelper CPTealColor];
             
-            int numberOfSpaces = [self paddingForPendingPost];
+            // if the entry was blank (new entry) we need to setup the leading spaces
+            newEntryCell.entryLabel.text = [leadingText stringByAppendingString:@":"];
             
+                        
             // add the right number of leading spaces
-            newEntryCell.growingTextView.text = nil;
-            for (int i = 0; i < numberOfSpaces; i++) {
-                newEntryCell.growingTextView.text = [newEntryCell.growingTextView.text stringByAppendingString:@" "];
+            newEntryCell.growingTextView.text = self.pendingPost.entry;
+            
+            if (!newEntryCell.growingTextView.text.length) {
+                int numberOfSpaces = [self paddingForPendingPost];
+                for (int i = 0; i < numberOfSpaces; i++) {
+                    newEntryCell.growingTextView.text = [newEntryCell.growingTextView.text stringByAppendingString:@" "];
+                }
             }
             
             newEntryCell.growingTextView.returnKeyType = UIReturnKeySend;
@@ -809,9 +804,6 @@ typedef enum {
             
             // update the +1/comment pill widget to reflect the likeCount on the parent post
             [commentCell updatePillButtonAnimated:NO];
-            if (!commentCell.timelineView) {
-                [commentCell addSubview:[FeedViewController timelineViewWithHeight:commentCell.frame.size.height]];
-            }
             
             return commentCell;
         } else {
@@ -832,6 +824,8 @@ typedef enum {
             if (!replyBubbleExtraCell) {
                 replyBubbleExtraCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:containerIdentifier];
                 [self setupReplyBubbleForCell:replyBubbleExtraCell containerHeight:containerHeight position:containerPosition];
+                replyBubbleExtraCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                [replyBubbleExtraCell addSubview:[FeedViewController timelineViewWithHeight:replyBubbleExtraCell.frame.size.height]];
             }
             
             // return the cell
@@ -878,6 +872,7 @@ typedef enum {
     if (!self.selectedVenueFeed) {
         // the user has just tapped on a venue feed preview
         // so bring them to that feed
+        
         [self transitionToVenueFeedForSection:indexPath.section];
     }
 }
@@ -885,12 +880,6 @@ typedef enum {
 #pragma mark - VC Helper Methods
 - (void)newFeedVenueAdded:(NSNotification *)notification
 {
-    if (notification.object) {
-        // if the notification has an object the user wants to see this feed
-        // make sure our tabBarController is showing us
-        self.tabBarController.selectedIndex = 0;  
-    }
-    
     // reload the venues for which we want feed previews
     [self reloadFeedPreviewVenues:notification.object];
 }
@@ -989,8 +978,7 @@ typedef enum {
              NSRange range = NSMakeRange(0, activeVenues.count >= 3 ? 3 : activeVenues.count);
              activeVenues = [[activeVenues subarrayWithRange:range] mutableCopy];
              for (CPVenue *venue in activeVenues) {
-                 [CPUserDefaultsHandler addFeedVenue:venue
-                                         showFeedNow:NO];
+                 [CPUserDefaultsHandler addFeedVenue:venue];
              }
 
              // show the feeds
@@ -1067,19 +1055,18 @@ typedef enum {
     } else {
         // this is for a selected venue feed
         
-        // make sure we don't have the reload button in the top right
-        self.navigationItem.rightBarButtonItem = nil;
-        
         // make sure that pull to refresh is now enabled for the tableview
         self.tableView.showsPullToRefresh = YES;
         
         // add a back button as the left navigation item
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backFromSelectedFeed:)];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Feeds" style:UIBarButtonItemStyleBordered target:self action:@selector(backFromSelectedFeed:)];
         // our new title is the name of the venue
         self.navigationItem.title = self.selectedVenueFeed.venue.name;
         
-        // trigger a refresh of the pullToRefreshView which will refresh our data
-        [self.tableView.pullToRefreshView triggerRefresh];
+        if (!self.pendingPost) {
+            // trigger a refresh of the pullToRefreshView which will refresh our data
+            [self.tableView.pullToRefreshView triggerRefresh];
+        }
         
         // set the proper background color for the tableView
         self.tableView.backgroundColor = [UIColor colorWithR:246 G:247 B:245 A:1.0];
@@ -1105,11 +1092,10 @@ typedef enum {
 
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
         [self cancelButtonForRightNavigationItem];
+        self.tableView.showsPullToRefresh = NO;
     } else {
         [self.tableView reloadData];
     }
-    
-    
 }
 
 - (void)loadProfileImageForButton:(UIButton *)button photoURL:(NSURL *)photoURL
@@ -1161,11 +1147,6 @@ typedef enum {
 
 - (void)getVenueFeedOrFeedPreviews
 {
-    if (self.pendingPost) {
-        // avoid clobbering pending posts.. stop animations in case we got here via refresh
-        [self.tableView.pullToRefreshView stopAnimating];
-        return;
-    }
     [self toggleLoadingState:YES];
     
     self.postPlussingUserIds = [NSMutableDictionary new];
@@ -1355,7 +1336,11 @@ typedef enum {
 
 - (void)transitionToVenueFeedForSection:(NSInteger)section
 {
+    // make sure that the HUD for loading venue feed previews isn't sticking around
+    [SVProgressHUD dismiss];
+    
     self.selectedVenueFeed = [self venueFeedPreviewForIndex:section];
+    
     if (self.previewPostableFeedsOnly) {
         // once the TVC has loaded the feed we want to add a new update
         self.newPostAfterLoad = YES;
@@ -1486,18 +1471,21 @@ typedef enum {
             userEntry = [userEntry.replies objectAtIndex:(selectedPath.row - 1)];
         }
         
-        // grab a UserProfileViewController from the UserStoryboard
-        UserProfileViewController *userProfileVC = (UserProfileViewController *)[[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
-        
-        // give the log's user object to the UserProfileVC
-        
         // if this button's origin is left of the timeline then it's the log's author
         // otherwise it's the log's receiver
-        userProfileVC.user = (userEntry.originalPostID || button.frame.origin.x < TIMELINE_ORIGIN_X)
+        User *selectedUser = (userEntry.originalPostID || button.frame.origin.x < TIMELINE_ORIGIN_X)
                              ? userEntry.author : userEntry.receiver;
         
-        // ask our navigation controller to push to the UserProfileVC
-        [self.navigationController pushViewController:userProfileVC animated:YES];
+        if (selectedUser) {
+            // grab a UserProfileViewController from the UserStoryboard
+            UserProfileViewController *userProfileVC = (UserProfileViewController *)[[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
+            
+            // give the post's user object to the UserProfileVC
+            userProfileVC.user = selectedUser;
+            
+            // ask our navigation controller to push to the UserProfileVC
+            [self.navigationController pushViewController:userProfileVC animated:YES];
+        }        
     } else {
         // we need to show the venue feed for this venue
         // the button's tag is the section for this feed
@@ -1640,6 +1628,8 @@ typedef enum {
                                      self.tableView.frame = newTableViewFrame;
                                  }
                                  
+                                 self.tableView.showsPullToRefresh = !beingShown;
+                                 
                                  if (beingShown) {
                                      if (!self.pendingPost.originalPostID) {
                                          // this is not a reply
@@ -1659,10 +1649,11 @@ typedef enum {
                                      } else {
                                          [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateUpdate;
                                      }
-
                                  } else {
                                      // switch the thinBar's action button state back to the plus button
                                      [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStatePlus;
+                                     
+                                     
                                  }
                              }
                              
@@ -1735,11 +1726,12 @@ typedef enum {
             //Limit max length of the feed
             int strLen = [[growingTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length];
             int addLength = [text length] -  range.length;
+            
             if (strLen + addLength > kMaxFeedLength) {
                 return NO;
+            } else {
+                return YES;
             }
-            
-            return YES;
         }
     }
 }
@@ -1779,6 +1771,11 @@ typedef enum {
             [self setupReplyBubbleForCell:self.pendingPostCell containerHeight:newHeight position:FeedBGContainerPositionMiddle];
         }
     }
+}
+
+- (void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView
+{
+    self.pendingPost.entry = growingTextView.text;
 }
 
 # pragma mark - CPUserActionCellDelegate
