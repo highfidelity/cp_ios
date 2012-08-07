@@ -300,13 +300,14 @@
 - (void)showVenueChat
 {
     if ([CPUserDefaultsHandler currentUser]) {
-        [CPUserDefaultsHandler addFeedVenue:self.venue showFeedNow:YES];
+        [CPUserDefaultsHandler addFeedVenue:self.venue];
+        // switch over to the feed view controller
+        self.tabBarController.selectedIndex = 0;
     } else {
         // prompt the user to login
         [CPAppDelegate showLoginBanner];
         [self normalVenueChatButton];
     }
-    
 }
 
 - (void)populateUserSection

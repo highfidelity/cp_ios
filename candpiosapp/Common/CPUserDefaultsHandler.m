@@ -135,7 +135,7 @@ NSString* const kAutomaticCheckins = @"automaticCheckins";
 
 NSString* const kUDFeedVenues = @"feedVenues";
 
-+ (void)addFeedVenue:(CPVenue *)venue showFeedNow:(BOOL)showFeedNow
++ (void)addFeedVenue:(CPVenue *)venue
 {
     // setup an NSString object with the venue ID
     NSString *venueIDString = [NSString stringWithFormat:@"%d", venue.venueID];
@@ -154,9 +154,9 @@ NSString* const kUDFeedVenues = @"feedVenues";
     
     SET_DEFAULTS(Object, kUDFeedVenues, [NSDictionary dictionaryWithDictionary:mutableFeedVenues]);
     
-    // if we need to show this feed right away
-    // then send it as the object with the notification
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"feedVenueAdded" object:(showFeedNow ? venue : nil)];
+    // send the feed as the object with the notification
+    // so that the feed view controller can add it
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"feedVenueAdded" object:venue];
 }
 + (BOOL)hasFeedVenues
 {

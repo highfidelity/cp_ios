@@ -880,12 +880,6 @@ typedef enum {
 #pragma mark - VC Helper Methods
 - (void)newFeedVenueAdded:(NSNotification *)notification
 {
-    if (notification.object) {
-        // if the notification has an object the user wants to see this feed
-        // make sure our tabBarController is showing us
-        self.tabBarController.selectedIndex = 0;  
-    }
-    
     // reload the venues for which we want feed previews
     [self reloadFeedPreviewVenues:notification.object];
 }
@@ -984,8 +978,7 @@ typedef enum {
              NSRange range = NSMakeRange(0, activeVenues.count >= 3 ? 3 : activeVenues.count);
              activeVenues = [[activeVenues subarrayWithRange:range] mutableCopy];
              for (CPVenue *venue in activeVenues) {
-                 [CPUserDefaultsHandler addFeedVenue:venue
-                                         showFeedNow:NO];
+                 [CPUserDefaultsHandler addFeedVenue:venue];
              }
 
              // show the feeds

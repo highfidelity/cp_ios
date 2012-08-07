@@ -20,6 +20,6 @@
 - (IBAction)checkinButtonPressed:(id)sender;
 - (void)questionButtonPressed:(id)sender;
 
-- (void)showFeedViewController:(CPPostType)postType;
+- (void)showFeedVCForNewPostWithPostType:(CPPostType)postType;
 
 @end

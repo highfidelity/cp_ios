@@ -49,15 +49,7 @@ static CPCheckinHandler *sharedHandler;
     // Save current place to venue defaults as it's used in several places in the app
     [CPUserDefaultsHandler setCurrentVenue:venue];
     
-    // Add this venue to the list of recent venues for the feed TVC
-    // if this was a forced checkin we need to show the feed now
-    [CPUserDefaultsHandler addFeedVenue:venue showFeedNow:(self.afterCheckinAction != CPAfterCheckinActionNone)];
-    
-    if (self.afterCheckinAction == CPAfterCheckinActionNewUpdate) {
-        [[CPAppDelegate tabBarController] showFeedViewController:CPPostTypeUpdate];
-    } else if (self.afterCheckinAction == CPAfterCheckinActionNewQuestion) {
-        [[CPAppDelegate tabBarController] showFeedViewController:CPPostTypeQuestion];
-    }
+    [self performAfterCheckinActionForVenue:venue];
     
     // If this is the user's first check in to this venue and auto-checkins are enabled,
     // ask the user about checking in automatically to this venue in the future
@@ -148,6 +140,23 @@ static CPCheckinHandler *sharedHandler;
                           otherButtonTitles: @"Check Out", nil];
     alert.tag = 904;
     [alert show];
+}
+
+- (void)performAfterCheckinActionForVenue:(CPVenue *)venue
+{
+    if (self.afterCheckinAction != CPAfterCheckinActionNone) {
+        // Add this venue to the list of recent venues for the feed TVC
+        // if this was a forced checkin we need to show the feed now
+        [CPUserDefaultsHandler addFeedVenue:venue];
+        
+        if (self.afterCheckinAction == CPAfterCheckinActionNewUpdate) {
+            [[CPAppDelegate tabBarController] showFeedVCForNewPostWithPostType:CPPostTypeUpdate];
+        } else if (self.afterCheckinAction == CPAfterCheckinActionNewQuestion) {
+            [[CPAppDelegate tabBarController] showFeedVCForNewPostWithPostType:CPPostTypeQuestion];
+        }
+        
+        self.afterCheckinAction = CPAfterCheckinActionNone;
+    }
 }
 
 @end
