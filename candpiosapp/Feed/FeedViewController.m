@@ -1120,9 +1120,11 @@ typedef enum {
     // on failure do nothing since the background image on the button has been reset to the default profile image in prepare for reuse
     
     // we use the button's read-only imageView just to be able to peform the request using AFNetworking's caching
-    [button.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:photoURL] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+    [button.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:photoURL]
+                            placeholderImage:[CPUIHelper defaultProfileImage]
+                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         // give the downloaded image to the button
-        [profileButton setBackgroundImage:image forState:UIControlStateNormal];
+        [profileButton setImage:image forState:UIControlStateNormal];
     } failure:nil];
     
     // be the target of the button

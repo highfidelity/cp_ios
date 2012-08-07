@@ -193,6 +193,7 @@
                                         animations:^{[self imageFlex:flex2 plusRect:plusRect];}
                                         completion:
                         ^(BOOL finished) {
+                            [self dribbleCommentImage];
                             [UIView animateWithDuration:deltaT
                                                   delay:0
                                                 options:UIViewAnimationOptionCurveEaseIn
@@ -203,7 +204,7 @@
                                                        delay:0
                                                      options:UIViewAnimationOptionCurveEaseIn
                                                   animations:^{[self imageFlex:flex3 plusRect:plusRect];}
-                                                  completion:^(BOOL finished) {[self dribbleCommentImage];}
+                                                  completion:nil
                                   ];
                              }];
                         }];

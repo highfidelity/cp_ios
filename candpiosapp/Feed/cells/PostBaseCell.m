@@ -23,11 +23,5 @@
     [self.contentView insertSubview:[FeedViewController timelineViewWithHeight:self.frame.size.height] atIndex:0];
 }
 
-- (void)prepareForReuse
-{
-    [super prepareForReuse];
-    [self.senderProfileButton setBackgroundImage:[CPUIHelper defaultProfileImage] forState:UIControlStateNormal];
-}
-
 
 @end
