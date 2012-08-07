@@ -824,6 +824,7 @@ typedef enum {
             if (!replyBubbleExtraCell) {
                 replyBubbleExtraCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:containerIdentifier];
                 [self setupReplyBubbleForCell:replyBubbleExtraCell containerHeight:containerHeight position:containerPosition];
+                replyBubbleExtraCell.selectionStyle = UITableViewCellSelectionStyleNone;
                 [replyBubbleExtraCell addSubview:[FeedViewController timelineViewWithHeight:replyBubbleExtraCell.frame.size.height]];
             }
             
