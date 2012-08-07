@@ -170,12 +170,7 @@
     
     // if the FeedViewController doesn't have our the current venue's feed as it's selectedVenueFeed
     // then pull it from the list of venue feed previews and make it the selected venue feed
-    if (![[CPUserDefaultsHandler currentVenue] isEqual:feedVC.selectedVenueFeed.venue]) {
-        CPVenueFeed *currentVenueFeed = [[CPVenueFeed alloc] init];
-        currentVenueFeed.venue = [CPUserDefaultsHandler currentVenue];
-        
-        feedVC.selectedVenueFeed = [feedVC.venueFeedPreviews objectAtIndex:[feedVC.venueFeedPreviews indexOfObject:currentVenueFeed]];
-    }
+    feedVC.selectedVenueFeed = [feedVC.venueFeedPreviews objectAtIndex:0];
     
     // the user is already on the feed for the right venue
     // so tell the feedVC that we want to add a new post
