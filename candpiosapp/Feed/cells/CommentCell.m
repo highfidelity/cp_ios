@@ -9,7 +9,7 @@
 #import "CommentCell.h"
 #import "FeedViewController.h"
 #define kLeftCap 28
-#define kRightCap 31
+#define kRightCap 32
 #define kPillFontSize 10
 
 @implementation CommentCell
