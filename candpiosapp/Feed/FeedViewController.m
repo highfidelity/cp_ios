@@ -1167,7 +1167,6 @@ typedef enum {
                     }
                     
                     [self toggleLoadingState:NO];
-                    
                     // reload the tableView
                     [self.tableView reloadData];
                     
@@ -1194,6 +1193,10 @@ typedef enum {
                             self.selectedVenueFeed.updateTimestamp = timestamp;
                         }];
                     }
+                } else {
+                    [self toggleLoadingState:NO];
+                    [SVProgressHUD showErrorWithStatus:[json objectForKey:@"message"]
+                                              duration:kDefaultDismissDelay];
                 }
             }
         }];
