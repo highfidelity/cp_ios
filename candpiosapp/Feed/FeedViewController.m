@@ -1159,7 +1159,7 @@ typedef enum {
 
                     NSDictionary *jsonDict = [json objectForKey:@"payload"];
                     [self.selectedVenueFeed addPostsFromArray:[jsonDict objectForKey:@"feeds"]];
-                    self.selectedVenueFeed.updateTimestamp = [[jsonDict objectForKey:@"timestamp"] integerValue];
+                    int timestamp = [[jsonDict objectForKey:@"timestamp"] integerValue];
 
                     // last ID property for venue feed is now the ID of the first post in the selectedVenueFeed posts array
                     if (self.selectedVenueFeed.posts.count) {
@@ -1191,6 +1191,7 @@ typedef enum {
                                     [self.tableView reloadData];
                                 }
                             }
+                            self.selectedVenueFeed.updateTimestamp = timestamp;
                         }];
                     }
                 }
