@@ -94,9 +94,8 @@
     // pulse the images like a ball bouncing to rest on the floor
     if (self.currentlyAnimating) {
         return;
-    } else {
-        self.currentlyAnimating = YES;
     }
+    self.currentlyAnimating = YES;
     
     CGRect plusRect = self.plusButton.frame;
     
