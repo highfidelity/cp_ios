@@ -27,7 +27,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *statusTextField;
 @property (weak, nonatomic) IBOutlet UISlider *timeSlider;
 @property (assign, nonatomic) int checkInDuration;
-@property (weak, nonatomic) IBOutlet UILabel *durationString;
 @property (assign, nonatomic) BOOL sliderButtonPressed;
 @property (weak, nonatomic) IBOutlet UIButton *checkInButton;
 @property (weak, nonatomic) IBOutlet UILabel *durationHeader;
@@ -60,7 +59,6 @@
 @synthesize timeSlider = _timeSlider;
 @synthesize venue = _venue;
 @synthesize checkInDuration = _checkInDuration;
-@synthesize durationString = _durationString;
 @synthesize sliderButtonPressed = _sliderButtonPressed;
 @synthesize checkInButton = _checkInButton;
 @synthesize durationHeader = _durationHeader;
@@ -89,13 +87,6 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
-}
-
--(void)setCheckInDuration:(int)checkInDuration
-{
-    NSString *formatStr = checkInDuration == 1 ? @"%d hour" : @"%d hours";
-    self.durationString.text = [NSString stringWithFormat:formatStr, checkInDuration];
-    _checkInDuration = checkInDuration;
 }
 
 // customer getter for infoBubbleArrow
@@ -211,7 +202,6 @@
     [self setWillLabel:nil];
     [self setStatusTextField:nil];
     [self setTimeSlider:nil];
-    [self setDurationString:nil];
     [self setCheckInButton:nil];
     [self setDurationHeader:nil];
     [self setScrollView:nil];
@@ -479,7 +469,7 @@
     
     // change the font on the new selected value
     UILabel *selectedValueLabel = (UILabel *)[self.view viewWithTag:(1000 + value)];
-    selectedValueLabel.textColor = self.durationString.textColor;
+    selectedValueLabel.textColor = RGBA(66, 130, 140, 1);
     selectedValueLabel.font = [UIFont boldSystemFontOfSize:28.0];
     
     // set the slider to the accepted value
