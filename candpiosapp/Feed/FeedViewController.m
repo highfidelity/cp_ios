@@ -1106,9 +1106,11 @@ typedef enum {
     // on failure do nothing since the background image on the button has been reset to the default profile image in prepare for reuse
     
     // we use the button's read-only imageView just to be able to peform the request using AFNetworking's caching
-    [button.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:photoURL] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+    [button.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:photoURL]
+                            placeholderImage:[CPUIHelper defaultProfileImage]
+                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         // give the downloaded image to the button
-        [profileButton setBackgroundImage:image forState:UIControlStateNormal];
+        [profileButton setImage:image forState:UIControlStateNormal];
     } failure:nil];
     
     // be the target of the button
@@ -1922,10 +1924,11 @@ typedef enum {
         self.pillPopoverViewController.indexPath = [self.tableView indexPathForCell:cell];
         self.pillPopoverViewController.delegate = self;
         self.wePopoverController = [[WEPopoverController alloc] initWithContentViewController:self.pillPopoverViewController];
-        self.wePopoverController.popoverContentSize = CGSizeMake(172, 91);
+        self.wePopoverController.popoverContentSize = CGSizeMake(172, 81);
         self.wePopoverController.delegate = self;
         [self.wePopoverController setContainerViewProperties:[self popoverContainerViewProperties]];
-        [self.wePopoverController presentPopoverFromRect:[self.view convertRect:button.frame fromView:button.superview]
+        CGRect rect = CGRectOffset([self.view convertRect:button.frame fromView:button.superview], -10, 0);
+        [self.wePopoverController presentPopoverFromRect:rect
                                                   inView:self.view
                                 permittedArrowDirections:UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight|UIPopoverArrowDirectionUp|UIPopoverArrowDirectionDown
                                                 animated:YES];
