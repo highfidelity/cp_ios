@@ -49,7 +49,7 @@
     CGContextSetRGBStrokeColor(context, 0.2, 0.2, 0.2, 1.0);
     
     // draw the slider ticks
-    for (NSNumber *point in [NSArray arrayWithObjects:[NSNumber numberWithInt:25], [NSNumber numberWithInt:73], [NSNumber numberWithInt:120], [NSNumber numberWithInt:167], nil]) {
+    for (NSNumber *point in @[@25, @73, @120, @167]) {
         CGContextMoveToPoint(context, [point floatValue], 68);
         CGContextAddLineToPoint(context, [point floatValue], 58);
     }    
