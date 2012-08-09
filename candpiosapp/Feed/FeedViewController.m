@@ -1480,7 +1480,7 @@ typedef enum {
         User *selectedUser = (userEntry.originalPostID || button.frame.origin.x < TIMELINE_ORIGIN_X)
                              ? userEntry.author : userEntry.receiver;
         
-        if (selectedUser) {
+        if (selectedUser.userID) {
             // grab a UserProfileViewController from the UserStoryboard
             UserProfileViewController *userProfileVC = (UserProfileViewController *)[[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
             
