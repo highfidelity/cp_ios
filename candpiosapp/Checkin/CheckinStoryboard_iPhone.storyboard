@@ -242,6 +242,34 @@
                                                         <color key="textColor" red="0.25882352939999997" green="0.50980392159999999" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1001" contentMode="left" text="hr" lineBreakMode="tailTruncation" minimumFontSize="10" id="0Vb-1f-sge">
+                                                        <rect key="frame" x="29" y="32" width="30" height="34"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                                        <color key="textColor" red="0.25882352939999997" green="0.50980392159999999" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1001" contentMode="left" text="hrs" lineBreakMode="tailTruncation" minimumFontSize="10" id="m58-kb-U1P">
+                                                        <rect key="frame" x="81" y="32" width="30" height="34"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                                        <color key="textColor" red="0.25882352939999997" green="0.50980392159999999" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1001" contentMode="left" text="hrs" lineBreakMode="tailTruncation" minimumFontSize="10" id="Vdp-oJ-Fay">
+                                                        <rect key="frame" x="128" y="32" width="30" height="34"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                                        <color key="textColor" red="0.25882352939999997" green="0.50980392159999999" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1001" contentMode="left" text="hrs" lineBreakMode="tailTruncation" minimumFontSize="10" id="ZgT-Uw-edr">
+                                                        <rect key="frame" x="169" y="32" width="30" height="34"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                                        <color key="textColor" red="0.25882352939999997" green="0.50980392159999999" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1003" contentMode="left" text="3" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="VGn-eo-3yM">
                                                         <rect key="frame" x="58" y="31" width="30" height="25"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -326,14 +354,18 @@
                         <outlet property="checkInDetails" destination="fk3-HP-Rqj" id="RTC-Xa-i5P"/>
                         <outlet property="checkInLabel" destination="KoU-s2-WaU" id="LvN-RU-yYC"/>
                         <outlet property="durationHeader" destination="Xs3-l8-sPf" id="TxK-j9-MTx"/>
+                        <outlet property="fiveHoursLabel" destination="Vdp-oJ-Fay" id="GRj-y6-w9r"/>
                         <outlet property="infoBubbleNickname" destination="xwp-Zl-7Vm" id="vqz-KK-7D1"/>
                         <outlet property="infoBubbleStatus" destination="gzl-sw-w15" id="1XA-Se-t0K"/>
                         <outlet property="mapView" destination="QW5-Gd-uZB" id="0Ih-5u-8Fb"/>
+                        <outlet property="oneHourLabel" destination="0Vb-1f-sge" id="anq-gQ-vRJ"/>
                         <outlet property="otherUsersScrollView" destination="szL-LL-Gvb" id="j67-8k-pqJ"/>
                         <outlet property="placeAddress" destination="RbK-Wp-rAv" id="Kt0-1d-D8C"/>
                         <outlet property="placeName" destination="8HV-SV-sBO" id="Ydg-8u-CIc"/>
                         <outlet property="scrollView" destination="OYo-pF-ieq" id="H9m-iP-Gkv"/>
+                        <outlet property="sevenHoursLabel" destination="ZgT-Uw-edr" id="ArC-sp-nFr"/>
                         <outlet property="statusTextField" destination="DAk-CZ-SkQ" id="g5H-VB-8fu"/>
+                        <outlet property="threeHoursLabel" destination="m58-kb-U1P" id="yDR-bz-Jbh"/>
                         <outlet property="timeSlider" destination="wj6-A8-vit" id="ZOD-hY-W2D"/>
                         <outlet property="userInfoBubble" destination="hJZ-rQ-25X" id="1nS-RS-MRU"/>
                         <outlet property="venueInfo" destination="QI7-2q-JQT" id="bHb-em-R3X"/>
@@ -375,20 +407,27 @@
         <class className="CheckInDetailsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInDetailsViewController.h"/>
             <relationships>
+                <relationship kind="action" name="checkInPressed:"/>
                 <relationship kind="action" name="sliderChanged:"/>
+                <relationship kind="action" name="sliderTouchDownAction:"/>
+                <relationship kind="action" name="sliderTouchUpInsideAction:"/>
                 <relationship kind="outlet" name="blueOverlay" candidateClass="UIView"/>
                 <relationship kind="outlet" name="checkInButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="checkInDetails" candidateClass="UIView"/>
                 <relationship kind="outlet" name="checkInLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="durationHeader" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="fiveHoursLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="infoBubbleNickname" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="infoBubbleStatus" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="oneHourLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="otherUsersScrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="placeAddress" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="placeName" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="TPKeyboardAvoidingScrollView"/>
+                <relationship kind="outlet" name="sevenHoursLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="statusTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="threeHoursLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="timeSlider" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="userInfoBubble" candidateClass="UIView"/>
                 <relationship kind="outlet" name="venueInfo" candidateClass="UIView"/>

@@ -36,6 +36,10 @@
 @property (strong, nonatomic) NSMutableArray *userArray;
 @property (assign, nonatomic) int userArrayIndex;
 @property (weak, nonatomic) UIImageView *infoBubbleArrow;
+@property (weak, nonatomic) IBOutlet UILabel *oneHourLabel;
+@property (weak, nonatomic) IBOutlet UILabel *threeHoursLabel;
+@property (weak, nonatomic) IBOutlet UILabel *fiveHoursLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sevenHoursLabel;
 
 -(IBAction)sliderChanged:(id)sender;
 -(void)showUserInfoBubbleForUserIndex:(int)userIndex andButton:(UIButton *)userImageButton;
@@ -68,26 +72,13 @@
 @synthesize userArray = _userArray;
 @synthesize userArrayIndex = _userArrayIndex;
 @synthesize infoBubbleArrow = _infoBubbleArrow;
+@synthesize oneHourLabel = _oneHourLabel;
+@synthesize threeHoursLabel = _threeHoursLabel;
+@synthesize fiveHoursLabel = _fiveHoursLabel;
+@synthesize sevenHoursLabel = _sevenHoursLabel;
 @synthesize checkInIsVirtual = _checkInIsVirtual;
 @synthesize delegate = _delegate;
 
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
 
 // customer getter for infoBubbleArrow
 // lazily instantiates it if it's not on the screen yet
@@ -209,6 +200,10 @@
     [self setUserInfoBubble:nil];
     [self setInfoBubbleNickname:nil];
     [self setInfoBubbleStatus:nil];
+    [self setOneHourLabel:nil];
+    [self setThreeHoursLabel:nil];
+    [self setFiveHoursLabel:nil];
+    [self setSevenHoursLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -450,16 +445,26 @@
 
 -(IBAction)sliderChanged:(id)sender
 {
-    // get the value of the slider and set it to one of the accepted values
+    // hide the hrs labels
+    self.oneHourLabel.hidden = YES;
+    self.threeHoursLabel.hidden = YES;
+    self.fiveHoursLabel.hidden = YES;
+    self.sevenHoursLabel.hidden = YES;
+    
+    // get the value of the slider and set it to one of the accepted values, revealing the associated hour label
     float value = self.timeSlider.value;
     if (value < 2) {
         value = 1;
+        self.oneHourLabel.hidden = NO;
     } else if (value < 4) {
         value = 3;
+        self.threeHoursLabel.hidden = NO;
     } else if (value < 6) {
         value = 5;
+        self.fiveHoursLabel.hidden = NO;
     } else {
         value = 7;
+        self.sevenHoursLabel.hidden = NO;
     }
     
     // remove the font change to the previous selected value
