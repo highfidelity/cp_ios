@@ -10,6 +10,7 @@
 #import "FeedViewController.h"
 #import "CPTabBarControllerView.h"
 #import "CPCheckinHandler.h"
+#import "CPUserSessionHandler.h"
 
 @implementation CPTabBarController
 
@@ -199,7 +200,7 @@
     [CPAppDelegate settingsMenuController].afterLoginAction = action;
     
     // show the login banner
-    [CPAppDelegate showLoginBanner];
+    [CPUserSessionHandler showLoginBanner];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex

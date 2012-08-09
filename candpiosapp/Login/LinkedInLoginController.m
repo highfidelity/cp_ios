@@ -41,6 +41,12 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // create client for web based logins
+    self.httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
+    // set a liberal cookie policy
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy: NSHTTPCookieAcceptPolicyAlways];
+
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     
 	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
@@ -146,7 +152,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                                                  name:@"linkedInCredentials"
                                                object:nil];
 	
-	[CPAppDelegate logoutEverything];
+	[CPUserSessionHandler logoutEverything];
     [self linkedInLogin];
 }
 
@@ -307,8 +313,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
             NSInteger succeeded = [[JSON objectForKey:@"succeeded"] intValue];
             NSLog(@"success: %d", succeeded);
 
-            if(succeeded == 0)
-            {
+            if(succeeded == 0) {
                 NSString *outerErrorMessage = [JSON objectForKey:@"message"];// often just 'error'
                 // we get here if we failed to login
                 NSString *errorMessage = [NSString stringWithFormat:@"The error was: %@", outerErrorMessage];\
@@ -318,14 +323,12 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                              withObject:[NSNumber numberWithBool:YES]
                              afterDelay:kDefaultDismissDelay];
 
-            }
-            else
-            {
+            } else {
                 // remember that we're logged in!
                 // (it's really the persistent cookie that tracks our login, but we need a superficial indicator, too)
                 NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"params"];
                 
-                [CPAppDelegate storeUserLoginDataFromDictionary:userInfo];
+                [CPUserSessionHandler storeUserLoginDataFromDictionary:userInfo];
 
                 NSString *userId = [userInfo objectForKey:@"id"];
                 NSString *userEmail = [userInfo objectForKey:@"email"];
@@ -344,9 +347,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
                 [FlurryAnalytics logEvent:@"login_linkedin"];
                 [FlurryAnalytics setUserID:userId];
-
-                // Perform common post-login operations
-                [BaseLoginController pushAliasUpdate];
                 
                 [self loadLinkedInConnectionsWithCompletion:^{
                     if (!hasSentConfirmationEmail && (! userEmail ||
@@ -361,7 +361,9 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                     if (self.emailConfirmationRequired) {
                         [self performSegueWithIdentifier:@"EnterEmailAfterSignUpSegue" sender:nil];
                     } else {
-                        [self.navigationController dismissModalViewControllerAnimated:YES];
+                        [self.navigationController dismissViewControllerAnimated:YES completion:^(void){
+                            [CPUserSessionHandler performAfterLoginActions];
+                        }];
                     }
                 }];
             }

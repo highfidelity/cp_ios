@@ -9,6 +9,7 @@
 #import "EnterInvitationCodeViewController.h"
 #import "PushModalViewControllerFromLeftSegue.h"
 #import "User.h"
+#import "CPUserSessionHandler.h"
 
 @interface EnterInvitationCodeViewController () <UITextFieldDelegate, UIAlertViewDelegate>
 
@@ -65,7 +66,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView.firstOtherButtonIndex == buttonIndex) {
-        [CPAppDelegate logoutEverything];
+        [CPUserSessionHandler logoutEverything];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
@@ -117,7 +118,7 @@
         
         if (!error && !respError) {
             NSDictionary *userInfo = [[json objectForKey:@"payload"] objectForKey:@"user"];
-            [CPAppDelegate storeUserLoginDataFromDictionary:userInfo];
+            [CPUserSessionHandler storeUserLoginDataFromDictionary:userInfo];
             
             [self dismissLeftOrNormalModalViewControllerAnimated:YES];
             

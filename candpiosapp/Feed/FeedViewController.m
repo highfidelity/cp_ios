@@ -99,8 +99,6 @@ typedef enum {
 {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
-    
-    [CPAppDelegate locationManager];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

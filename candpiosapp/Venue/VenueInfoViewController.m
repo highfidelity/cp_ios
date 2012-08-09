@@ -13,6 +13,7 @@
 #import "MapDataSet.h"
 #import "UIButton+AnimatedClockHand.h"
 #import "CPCheckinHandler.h"
+#import "CPUserSessionHandler.h"
 
 #define CHAT_MESSAGE_ORIGIN_X 11
 
@@ -305,7 +306,7 @@
         self.tabBarController.selectedIndex = 0;
     } else {
         // prompt the user to login
-        [CPAppDelegate showLoginBanner];
+        [CPUserSessionHandler showLoginBanner];
         [self normalVenueChatButton];
     }
 }
@@ -791,7 +792,7 @@
 - (void)checkInPressed:(id)sender
 {
     if (![CPUserDefaultsHandler currentUser]) {
-        [CPAppDelegate showLoginBanner];
+        [CPUserSessionHandler showLoginBanner];
     } else {
         if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [CPUserDefaultsHandler currentVenue].venueID == self.venue.venueID){
             // user is checked in here so ask them if they want to be checked out
@@ -969,7 +970,7 @@
 - (IBAction)userImageButtonPressed:(id)sender
 {
     if (![CPUserDefaultsHandler currentUser]) {
-        [CPAppDelegate showLoginBanner];
+        [CPUserSessionHandler showLoginBanner];
 
     }   else {
         UserProfileViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
