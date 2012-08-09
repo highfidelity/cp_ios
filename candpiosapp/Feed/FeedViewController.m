@@ -76,7 +76,7 @@ typedef enum {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleTableViewState) name:@"applicationDidBecomeActive" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newFeedVenueAdded:) name:@"feedVenueAdded" object:nil];
     
-    [self reloadFeedPreviewVenues:nil];
+    [self reloadFeedPreviewVenues];
 
     [self.tableView addPullToRefreshWithActionHandler:^{
         [self getVenueFeedOrFeedPreviews];
@@ -883,7 +883,7 @@ typedef enum {
 - (void)newFeedVenueAdded:(NSNotification *)notification
 {
     // reload the venues for which we want feed previews
-    [self reloadFeedPreviewVenues:notification.object];
+    [self reloadFeedPreviewVenues];
 }
 
 - (void)setupForPostEntry
@@ -923,7 +923,7 @@ typedef enum {
     // make sure the left bar button item is a back button
 }
 
-- (void)reloadFeedPreviewVenues:(CPVenue *)displayVenue
+- (void)reloadFeedPreviewVenues
 {    
     CPVenue *currentVenue = [CPUserDefaultsHandler currentVenue];
     // if it exists add the user's current venue as the first object in self.venues
@@ -938,19 +938,13 @@ typedef enum {
         
         // add the current venue feed to the beginning of the array of venue feed previews
         [self.venueFeedPreviews insertObject:currentVenueFeed atIndex:0];
-        
-        // if the current venue is the venue we want to show
-        // then set that as our selected venue feed
-        if ([displayVenue isEqual:currentVenue]) {
-            self.selectedVenueFeed = currentVenueFeed;
-        }
     }    
 
     if (![CPUserDefaultsHandler hasFeedVenues]) {
         // there is nothing saved in the feed venues setting
         [self findActiveFeeds];
     } else {
-        [self showVenueFeeds:displayVenue];
+        [self showVenueFeeds];
     }
 }
 
@@ -979,19 +973,20 @@ typedef enum {
              // Add the top 3 most active feeds
              NSRange range = NSMakeRange(0, activeVenues.count >= AUTO_ACTIVE_FEED_COUNT ? AUTO_ACTIVE_FEED_COUNT : activeVenues.count);
              activeVenues = [[activeVenues subarrayWithRange:range] mutableCopy];
+             
              for (CPVenue *venue in activeVenues) {
                  [CPUserDefaultsHandler addFeedVenue:venue];
              }
-
-             // show the feeds
-             [self showVenueFeeds:nil];
+             
+             // call toggleTableViewState to get a reload
+             [self toggleTableViewState];
          } else {
              NSLog(@"Error retrieving default venues.");
          }
      }];
 }
          
-- (void)showVenueFeeds:(CPVenue *)displayVenue {
+- (void)showVenueFeeds {
     CPVenue *currentVenue = [CPUserDefaultsHandler currentVenue];
     NSDictionary *storedFeedVenues = [CPUserDefaultsHandler feedVenues];
     for (NSString *venueIDKey in storedFeedVenues) {
@@ -1010,15 +1005,20 @@ typedef enum {
             if (![self.venueFeedPreviews containsObject:newVenueFeed]) {
                 [self.venueFeedPreviews addObject:newVenueFeed];
             }
-            
-            // if this decoded venue is the venue we want to show
-            // then set that as our selected venue feed
-            if ([displayVenue isEqual:decodedVenue]) {
-                self.selectedVenueFeed = newVenueFeed;
-            }
+        }
+    }    
+}
+
+- (void)showVenueFeedForVenue:(CPVenue *)venueToShow
+{
+    // enumerate through our venue feeds and find the one for this venue
+    // it should be in here given that it was added by the NSNotification sent from CPUserDefaultsHandler
+    for (CPVenueFeed *venueFeed in self.venueFeedPreviews) {
+        if ([venueFeed.venue isEqual:venueToShow]) {
+            self.selectedVenueFeed = venueFeed;
+            break;
         }
     }
-    
 }
 
 - (void)toggleTableViewState
@@ -1355,7 +1355,6 @@ typedef enum {
         // once the TVC has loaded the feed we want to add a new update
         self.newPostAfterLoad = YES;
     }
-    
 }
 
 - (void)cancelButtonForRightNavigationItem

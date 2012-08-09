@@ -146,13 +146,21 @@ static CPCheckinHandler *sharedHandler;
 {
     if (self.afterCheckinAction != CPAfterCheckinActionNone) {
         // Add this venue to the list of recent venues for the feed TVC
-        // if this was a forced checkin we need to show the feed now
         [CPUserDefaultsHandler addFeedVenue:venue];
         
-        if (self.afterCheckinAction == CPAfterCheckinActionNewUpdate) {
-            [[CPAppDelegate tabBarController] showFeedVCForNewPostWithPostType:CPPostTypeUpdate];
-        } else if (self.afterCheckinAction == CPAfterCheckinActionNewQuestion) {
-            [[CPAppDelegate tabBarController] showFeedVCForNewPostWithPostType:CPPostTypeQuestion];
+        // if this was due to any action in the action menu we will be showing the venue feed
+        switch (self.afterCheckinAction) {
+            case CPAfterCheckinActionNewUpdate:
+                [[CPAppDelegate tabBarController] showFeedVCForNewPostAtCurrentVenueWithPostType:CPPostTypeUpdate];
+                break;
+            case CPAfterCheckinActionNewQuestion:
+                [[CPAppDelegate tabBarController] showFeedVCForNewPostAtCurrentVenueWithPostType:CPPostTypeQuestion];
+                break;
+            case CPAfterCheckinActionShowFeed:
+                [[CPAppDelegate tabBarController] showFeedVCForVenue:venue];
+                break;
+            default:
+                break;
         }
         
         self.afterCheckinAction = CPAfterCheckinActionNone;
