@@ -151,12 +151,14 @@ static CPCheckinHandler *sharedHandler;
         // if this was due to any action in the action menu we will be showing the venue feed
         switch (self.afterCheckinAction) {
             case CPAfterCheckinActionNewUpdate:
+                [[CPAppDelegate tabBarController] showFeedVCForNewPostAtCurrentVenueWithPostType:CPPostTypeUpdate];
+                break;
             case CPAfterCheckinActionNewQuestion:
-                [[CPAppDelegate tabBarController] showFeedVCForNewPostAtCurrentVenueWithPostType:
-                 (self.afterCheckinAction == CPAfterCheckinActionNewUpdate) ? CPPostTypeUpdate : CPPostTypeQuestion];
+                [[CPAppDelegate tabBarController] showFeedVCForNewPostAtCurrentVenueWithPostType:CPPostTypeQuestion];
                 break;
             case CPAfterCheckinActionShowFeed:
                 [[CPAppDelegate tabBarController] showFeedVCForVenue:venue];
+                break;
             default:
                 break;
         }
