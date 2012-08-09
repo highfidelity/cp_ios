@@ -15,11 +15,13 @@
 #import "CPLinkedInAPI.h"
 #import "CPapi.h"
 #import "CPCheckinHandler.h"
+#import "CPUserSessionHandler.h"
 
 typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
 @interface LinkedInLoginController ()
 
+@property (nonatomic, strong) AFHTTPClient *httpClient;
 @property (nonatomic, assign) BOOL emailConfirmationRequired;
 @property (nonatomic, strong) LoadLinkedInConnectionsCompletionBlockType loadLinkedInConnectionsCompletionBlock;
 
@@ -27,6 +29,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
 @implementation LinkedInLoginController
 
+@synthesize httpClient;
 @synthesize myWebView;
 @synthesize requestToken;
 @synthesize activityIndicator;
