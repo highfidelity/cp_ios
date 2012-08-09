@@ -19,6 +19,8 @@
 #import "CommentCell.h"
 
 #define kMaxFeedLength 140
+#define MAX_PREVIEW_POST_COUNT 3
+#define AUTO_ACTIVE_FEED_COUNT 3
 
 typedef enum {
     FeedVCStateDefault,
@@ -433,7 +435,7 @@ typedef enum {
     if (!self.selectedVenueFeed) {
         if (indexPath.row == 0) {
             return PREVIEW_HEADER_CELL_HEIGHT;
-        } else if (indexPath.row == (self.previewPostableFeedsOnly ? 1 : [[self venueFeedPreviewForIndex:indexPath.section] posts].count + 1)) {
+        } else if (indexPath.row == (self.previewPostableFeedsOnly ? 1 : [self tableView:self.tableView numberOfRowsInSection:indexPath.section] - 1)) {
             return PREVIEW_FOOTER_CELL_HEIGHT;
         }
     }
@@ -519,7 +521,7 @@ typedef enum {
             
             // there will be a cell for each post in each of the venue feed previews
             // up to three preview posts
-            return (sectionVenueFeed.posts.count > 3 ? 3 : sectionVenueFeed.posts.count) + 2;
+            return (sectionVenueFeed.posts.count > MAX_PREVIEW_POST_COUNT ? MAX_PREVIEW_POST_COUNT : sectionVenueFeed.posts.count) + 2;
         }        
     }
 }
@@ -975,7 +977,7 @@ typedef enum {
              }];
 
              // Add the top 3 most active feeds
-             NSRange range = NSMakeRange(0, activeVenues.count >= 3 ? 3 : activeVenues.count);
+             NSRange range = NSMakeRange(0, activeVenues.count >= AUTO_ACTIVE_FEED_COUNT ? AUTO_ACTIVE_FEED_COUNT : activeVenues.count);
              activeVenues = [[activeVenues subarrayWithRange:range] mutableCopy];
              for (CPVenue *venue in activeVenues) {
                  [CPUserDefaultsHandler addFeedVenue:venue];
