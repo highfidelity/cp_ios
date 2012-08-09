@@ -1160,16 +1160,17 @@ typedef enum {
         [CPapi getPostsForVenueFeed:self.selectedVenueFeed withCompletion:^(NSDictionary *json, NSError *error) {
             if (!error) {
                 if (![[json objectForKey:@"error"] boolValue]) {
-                                        
-                    [self.selectedVenueFeed addPostsFromArray:[json objectForKey:@"payload"]];
-                    
+
+                    NSDictionary *jsonDict = [json objectForKey:@"payload"];
+                    [self.selectedVenueFeed addPostsFromArray:[jsonDict objectForKey:@"feeds"]];
+                    int timestamp = [[jsonDict objectForKey:@"timestamp"] integerValue];
+
                     // last ID property for venue feed is now the ID of the first post in the selectedVenueFeed posts array
                     if (self.selectedVenueFeed.posts.count) {
                         self.selectedVenueFeed.lastID = [[self.selectedVenueFeed.posts objectAtIndex:0] postID];
                     }
                     
                     [self toggleLoadingState:NO];
-                    
                     // reload the tableView
                     [self.tableView reloadData];
                     
@@ -1193,8 +1194,13 @@ typedef enum {
                                     [self.tableView reloadData];
                                 }
                             }
+                            self.selectedVenueFeed.updateTimestamp = timestamp;
                         }];
                     }
+                } else {
+                    [self toggleLoadingState:NO];
+                    [SVProgressHUD showErrorWithStatus:[json objectForKey:@"message"]
+                                              duration:kDefaultDismissDelay];
                 }
             }
         }];
