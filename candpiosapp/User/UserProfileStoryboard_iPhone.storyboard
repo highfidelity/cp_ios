@@ -207,7 +207,7 @@
                                                         <rect key="frame" x="1" y="1" width="149" height="41"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="HOURS:" lineBreakMode="tailTruncation" minimumFontSize="10" id="ouI-iB-RSo">
+                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="HOURS" lineBreakMode="tailTruncation" minimumFontSize="10" id="ouI-iB-RSo">
                                                                 <rect key="frame" x="11" y="0.0" width="54" height="21"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
@@ -228,8 +228,8 @@
                                                         <rect key="frame" x="151" y="1" width="148" height="41"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="LOVE:" lineBreakMode="tailTruncation" minimumFontSize="10" id="wy1-Ol-R29">
-                                                                <rect key="frame" x="11" y="0.0" width="54" height="21"/>
+                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="RECOGNITION" lineBreakMode="tailTruncation" minimumFontSize="10" id="wy1-Ol-R29">
+                                                                <rect key="frame" x="11" y="0.0" width="77" height="21"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>

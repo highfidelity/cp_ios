@@ -714,11 +714,8 @@
 {
     // our params dict contains one parameter, the ID of the venue we want log entries for
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"%d", venueFeed.venue.venueID] forKey:@"venue_id"];
-    
-    // if we were passed a lastID then add that as a param
-    if (venueFeed.lastID) {
-        [params setObject:[NSString stringWithFormat:@"%d", venueFeed.lastID] forKey:@"last_id"];
-    }
+
+    [params setObject:[NSString stringWithFormat:@"%d", venueFeed.updateTimestamp] forKey:@"timestamp"];
     
     // pretty simple, call action getVenueFeed in api.php
     [self makeHTTPRequestWithAction:@"getVenueFeed" withParameters:params completion:completion];

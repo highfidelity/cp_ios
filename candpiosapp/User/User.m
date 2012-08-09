@@ -274,8 +274,9 @@
 -(void)loadUserResumeData:(void (^)(NSError *error))completion {
     
     [CPapi getResumeForUserId:self.userID andCompletion:^(NSDictionary *response, NSError *error) {
-        
-        if (!error) {
+
+        BOOL respError = [[response objectForKey:@"error"] boolValue];
+        if (!error && !respError) {
             NSDictionary *userDict = [response objectForKey:@"payload"];
 
             // only add the extra info we get because of resume here
