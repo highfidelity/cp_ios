@@ -28,9 +28,9 @@
 @property (nonatomic, strong) PillPopoverViewController *pillPopoverViewController;
 
 - (void)showPillPopoverFromCell:(PostBaseCell*)cell;
-
 - (void)newPost:(NSIndexPath *)replyToIndexPath;
 - (void)showOnlyPostableFeeds;
+- (void)showVenueFeedForVenue:(CPVenue *)venue;
 
 + (UIView *)timelineViewWithHeight:(CGFloat)height;
 

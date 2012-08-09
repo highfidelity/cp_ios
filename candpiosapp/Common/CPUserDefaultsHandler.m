@@ -154,9 +154,8 @@ NSString* const kUDFeedVenues = @"feedVenues";
     
     SET_DEFAULTS(Object, kUDFeedVenues, [NSDictionary dictionaryWithDictionary:mutableFeedVenues]);
     
-    // send the feed as the object with the notification
-    // so that the feed view controller can add it
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"feedVenueAdded" object:venue];
+    // send a notification so the feed view controller reloads its feeds
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"feedVenueAdded" object:self];
 }
 + (BOOL)hasFeedVenues
 {

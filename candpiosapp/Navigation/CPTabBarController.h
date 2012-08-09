@@ -20,6 +20,7 @@
 - (IBAction)checkinButtonPressed:(id)sender;
 - (void)questionButtonPressed:(id)sender;
 
-- (void)showFeedVCForNewPostWithPostType:(CPPostType)postType;
+- (void)showFeedVCForVenue:(CPVenue *)venue;
+- (void)showFeedVCForNewPostAtCurrentVenueWithPostType:(CPPostType)postType;
 
 @end
