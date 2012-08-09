@@ -1,16 +1,17 @@
 //
-//  EnterEmailAfterSingUpController.m
+//  EnterEmailAfterSignUpController.m
 //  candpiosapp
 //
 //  Created by Tomáš Horáček on 5/1/12.
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import "EnterEmailAfterSingUpController.h"
+#import "EnterEmailAfterSignUpController.h"
 #import "AppDelegate.h"
 #import "CPapi.h"
+#import "CPUserSessionHandler.h"
 
-@interface EnterEmailAfterSingUpController () <UITextFieldDelegate>
+@interface EnterEmailAfterSignUpController () <UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextField *emailTextField;
 @property (nonatomic, weak) IBOutlet UILabel *emailValidationMessage;
@@ -21,45 +22,12 @@
 
 @end
 
-@implementation EnterEmailAfterSingUpController
+@implementation EnterEmailAfterSignUpController
 
 @synthesize emailTextField = _emailTextField;
 @synthesize emailValidationMessage = _emailValidationMessage;
 @synthesize weWillNotSpamYouLabel = _weWillNotSpamYouLabel;
 @synthesize sendButton = _sendButton;
-
-- (void)pushNextViewContollerOrDismissWithMessage:(NSString *)message {
-    
-    // shouldn't go to invite code anymore, that comes before us
-    [self.navigationController dismissModalViewControllerAnimated:YES];
-    
-    if (message.length) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" 
-                                                            message:message
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK" 
-                                                  otherButtonTitles:nil];
-        [alertView show];
-    }
-}
-
-- (void)sendEmailSettingsWithEmail:(NSString *)email {
-    [SVProgressHUD showWithStatus:@"Checking..."];
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   email, @"email",
-                                   nil];
-    
-    [CPapi setUserProfileDataWithDictionary:params andCompletion:^(NSDictionary *json, NSError *error) {
-        if ( ! error && [[json objectForKey:@"succeeded"] boolValue]) {
-            [SVProgressHUD dismiss];
-            [self pushNextViewContollerOrDismissWithMessage:[json objectForKey:@"message"]];
-        } else {
-            [SVProgressHUD dismissWithError:[json objectForKey:@"message"]
-                                 afterDelay:kDefaultDismissDelay];
-        }
-    }];
-}
 
 #pragma mark - UIViewController
 
@@ -82,11 +50,57 @@
     [self.emailTextField becomeFirstResponder];
 }
 
+#pragma mark - VC Helpers
+
+- (void)dismissAndPerformAfterLoginActions
+{
+    [self.navigationController dismissViewControllerAnimated:YES completion:^(void){
+        [CPUserSessionHandler performAfterLoginActions];
+    }];
+}
+
+- (void)sendEmailSettingsWithEmail:(NSString *)email {
+    [SVProgressHUD showWithStatus:@"Checking..."];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   email, @"email",
+                                   nil];
+    
+    [CPapi setUserProfileDataWithDictionary:params andCompletion:^(NSDictionary *json, NSError *error) {
+        if ( ! error && [[json objectForKey:@"succeeded"] boolValue]) {
+            [SVProgressHUD dismiss];
+            NSString *message = [json objectForKey:@"message"];
+            
+            if (message.length) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
+                                                                    message:message
+                                                                   delegate:self
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                [alertView show];
+            } else {
+                [self dismissAndPerformAfterLoginActions];
+            }            
+        } else {
+            [SVProgressHUD dismissWithError:[json objectForKey:@"message"]
+                                 afterDelay:kDefaultDismissDelay];
+        }
+    }];
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self sendButtonPressed:nil];
     return NO;
+}
+
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    // this has to be the okay button on the alert view
+    // so dismiss us and perform the after login actions via CPUserSessionHandler
+    [self dismissAndPerformAfterLoginActions];
 }
 
 #pragma mark - actions
