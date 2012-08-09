@@ -110,7 +110,7 @@
     }else{
         [[[UIAlertView alloc]
           initWithTitle:@""
-          message:@"You have to be checked in to this venue to comment."
+          message:@"You have to be checked in to this venue to comment or +1."
           delegate:self
           cancelButtonTitle:@"OK"
           otherButtonTitles: nil]  show];
