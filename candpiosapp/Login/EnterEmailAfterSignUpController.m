@@ -11,7 +11,7 @@
 #import "CPapi.h"
 #import "CPUserSessionHandler.h"
 
-@interface EnterEmailAfterSignUpController () <UITextFieldDelegate, UIAlertViewDelegate>
+@interface EnterEmailAfterSignUpController () <UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextField *emailTextField;
 @property (nonatomic, weak) IBOutlet UILabel *emailValidationMessage;
@@ -52,13 +52,6 @@
 
 #pragma mark - VC Helpers
 
-- (void)dismissAndPerformAfterLoginActions
-{
-    [self.navigationController dismissViewControllerAnimated:YES completion:^(void){
-        [CPUserSessionHandler performAfterLoginActions];
-    }];
-}
-
 - (void)sendEmailSettingsWithEmail:(NSString *)email {
     [SVProgressHUD showWithStatus:@"Checking..."];
     
@@ -69,18 +62,10 @@
     [CPapi setUserProfileDataWithDictionary:params andCompletion:^(NSDictionary *json, NSError *error) {
         if ( ! error && [[json objectForKey:@"succeeded"] boolValue]) {
             [SVProgressHUD dismiss];
-            NSString *message = [json objectForKey:@"message"];
             
-            if (message.length) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
-                                                                    message:message
-                                                                   delegate:self
-                                                          cancelButtonTitle:@"OK"
-                                                          otherButtonTitles:nil];
-                [alertView show];
-            } else {
-                [self dismissAndPerformAfterLoginActions];
-            }            
+            [self.navigationController dismissViewControllerAnimated:YES completion:^(void){
+                [CPUserSessionHandler performAfterLoginActions];
+            }];
         } else {
             [SVProgressHUD dismissWithError:[json objectForKey:@"message"]
                                  afterDelay:kDefaultDismissDelay];
@@ -93,14 +78,6 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self sendButtonPressed:nil];
     return NO;
-}
-
-#pragma mark - UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    // this has to be the okay button on the alert view
-    // so dismiss us and perform the after login actions via CPUserSessionHandler
-    [self dismissAndPerformAfterLoginActions];
 }
 
 #pragma mark - actions
