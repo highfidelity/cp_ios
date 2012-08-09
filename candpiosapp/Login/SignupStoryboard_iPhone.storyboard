@@ -269,19 +269,6 @@ you an invite code, type it in above</string>
         <image name="tab-login.png" width="34" height="26"/>
     </resources>
     <classes>
-        <class className="BaseLoginController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BaseLoginController.h"/>
-        </class>
-        <class className="EnterEmailAfterSingUpController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EnterEmailAfterSingUpController.h"/>
-            <relationships>
-                <relationship kind="action" name="sendButtonPressed:"/>
-                <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="emailValidationMessage" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="sendButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="weWillNotSpamYouLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
         <class className="EnterInvitationCodeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EnterInvitationCodeViewController.h"/>
             <relationships>
@@ -290,19 +277,10 @@ you an invite code, type it in above</string>
                 <relationship kind="outlet" name="laterButton" candidateClass="UIButton"/>
             </relationships>
         </class>
-        <class className="LinkedInLoginController" superclassName="BaseLoginController">
+        <class className="LinkedInLoginController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedInLoginController.h"/>
             <relationships>
                 <relationship kind="outlet" name="myWebView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="SignupController" superclassName="BaseLoginController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupController.h"/>
-            <relationships>
-                <relationship kind="action" name="dismissClick:"/>
-                <relationship kind="action" name="loginWithLinkedInTapped:"/>
-                <relationship kind="outlet" name="dismissButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="linkedinLoginButton" candidateClass="UIButton"/>
             </relationships>
         </class>
     </classes>
