@@ -1472,7 +1472,7 @@ typedef enum {
         CPPost *userEntry = [self.selectedVenueFeed.posts objectAtIndex:selectedPath.section];
         
         if (selectedPath.row > 0) {
-            userEntry = [userEntry.replies objectAtIndex:(selectedPath.row - 1)];
+            userEntry = [userEntry.replies objectAtIndex:(selectedPath.row - 2)];
         }
         
         // if this button's origin is left of the timeline then it's the log's author
