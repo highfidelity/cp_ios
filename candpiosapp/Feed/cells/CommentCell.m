@@ -8,6 +8,9 @@
 
 #import "CommentCell.h"
 #import "FeedViewController.h"
+#define kLeftCap 28
+#define kRightCap 32
+#define kPillFontSize 10
 
 @implementation CommentCell
 @synthesize post;
@@ -69,25 +72,22 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         
         UIImage *buttonImage = [UIImage imageNamed:@"pill-button-plus1-comment"];
-        UIImage *stretchableImage = [buttonImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 18, 0, 21)];
+        UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0, kLeftCap, 0, kRightCap);
+        UIImage *stretchableImage = [buttonImage resizableImageWithCapInsets:edgeInsets];
         UIImage *buttonSelectedImage = [UIImage imageNamed:@"pill-button-plus1-comment-selected"];
-        UIImage *stretchableSelectedImage = [buttonSelectedImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 18, 0, 21)];
+        UIImage *stretchableSelectedImage = [buttonSelectedImage resizableImageWithCapInsets:edgeInsets];
         [button setBackgroundImage:stretchableImage forState:UIControlStateNormal];
         [button setBackgroundImage:stretchableSelectedImage forState:UIControlStateHighlighted];
-        button.frame = CGRectMake(self.placeholderPillButton.frame.origin.x, 
-                                  self.placeholderPillButton.frame.origin.y,
-                                  buttonImage.size.width, 
-                                  buttonImage.size.height);
+        button.contentMode = UIViewContentModeCenter;
+        button.frame = self.placeholderPillButton.frame;
         [self.placeholderPillButton removeFromSuperview];
-        button.layer.cornerRadius = 4.0f;
-        button.layer.masksToBounds = YES;
         [button addTarget:self action:@selector(pillButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         
         self.pillButton = button;
         [self.contentView addSubview:button];
         
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectOffset(button.frame, 19.0f, 0.0f)];
-        label.font = [UIFont fontWithName:label.font.fontName size:10];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectOffset(button.frame, kLeftCap + 1, 0)];
+        label.font = [UIFont boldSystemFontOfSize:kPillFontSize];
         label.textColor = [UIColor colorWithR:158 G:158 B:158 A:1.0];
         label.textAlignment = UITextAlignmentLeft;
         label.backgroundColor = [UIColor clearColor];
