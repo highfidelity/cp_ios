@@ -17,6 +17,7 @@
 #import "CPUserAction.h"
 #import "PillPopoverViewController.h"
 #import "CommentCell.h"
+#import "CPUserDefaultsHandler.h"
 
 #define kMaxFeedLength 140
 #define MAX_PREVIEW_POST_COUNT 3
@@ -803,6 +804,7 @@ typedef enum {
             CPPost *originalPost = [self.selectedVenueFeed.posts objectAtIndex:indexPath.section];
             commentCell.post = originalPost;
             commentCell.delegate = self;
+            commentCell.venue = self.selectedVenueFeed.venue;
             
             // update the +1/comment pill widget to reflect the likeCount on the parent post
             [commentCell updatePillButtonAnimated:NO];
