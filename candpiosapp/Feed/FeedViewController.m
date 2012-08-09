@@ -971,12 +971,13 @@ typedef enum {
              // Add the top 3 most active feeds
              NSRange range = NSMakeRange(0, activeVenues.count >= 3 ? 3 : activeVenues.count);
              activeVenues = [[activeVenues subarrayWithRange:range] mutableCopy];
+             
              for (CPVenue *venue in activeVenues) {
                  [CPUserDefaultsHandler addFeedVenue:venue];
              }
-
-             // show the feeds
-             [self showVenueFeeds];
+             
+             // call toggleTableViewState to get a reload
+             [self toggleTableViewState];
          } else {
              NSLog(@"Error retrieving default venues.");
          }
@@ -1003,8 +1004,7 @@ typedef enum {
                 [self.venueFeedPreviews addObject:newVenueFeed];
             }
         }
-    }
-    
+    }    
 }
 
 - (void)showVenueFeedForVenue:(CPVenue *)venueToShow
