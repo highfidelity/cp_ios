@@ -806,8 +806,6 @@ typedef enum {
             commentCell.delegate = self;
             commentCell.venue = self.selectedVenueFeed.venue;
             
-            
-            
             // update the +1/comment pill widget to reflect the likeCount on the parent post
             [commentCell updatePillButtonAnimated:NO];
             
