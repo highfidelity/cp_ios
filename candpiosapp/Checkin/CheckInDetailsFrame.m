@@ -30,9 +30,8 @@
     CGContextSetLineWidth(context, 0.5);
     CGContextSetRGBStrokeColor(context, 0.2, 0.2, 0.2, 0.2);
     
-    // draw the frame
     // render a box with a vertical divider
-    CGFloat verticalDividerX = self.frame.size.width - 110;
+    CGFloat verticalDividerX = self.frame.size.width - 111;
     CGFloat boxTopY = self.frame.size.height - 57;
     CGFloat boxBottomY = self.frame.size.height - 1;
     CGFloat boxLeftX = 1;
@@ -48,7 +47,9 @@
     CGContextAddLineToPoint(context, boxRightX, boxTopY);
     CGContextStrokePath(context);    
     CGContextSetRGBStrokeColor(context, 0.2, 0.2, 0.2, 1.0);
-    for (NSNumber *point in [NSArray arrayWithObjects:[NSNumber numberWithInt:30], [NSNumber numberWithInt:78], [NSNumber numberWithInt:125], [NSNumber numberWithInt:172], nil]) {
+    
+    // draw the slider ticks
+    for (NSNumber *point in [NSArray arrayWithObjects:[NSNumber numberWithInt:25], [NSNumber numberWithInt:73], [NSNumber numberWithInt:120], [NSNumber numberWithInt:167], nil]) {
         CGContextMoveToPoint(context, [point floatValue], 68);
         CGContextAddLineToPoint(context, [point floatValue], 58);
     }    
