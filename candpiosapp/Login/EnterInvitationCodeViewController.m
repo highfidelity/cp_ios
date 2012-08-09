@@ -30,15 +30,6 @@
 
 @synthesize dontShowTextNoticeAfterLaterButtonPressed = _dontShowTextNoticeAfterLaterButtonPressed;
 @synthesize isPushedFromLeft = _isPushedFromLeft;
-@synthesize emailConfirmationRequired = _emailConfirmationRequired;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -150,10 +141,8 @@
 }
 
 - (void)dismissLeftOrNormalModalViewControllerAnimated:(BOOL)animated {
-    
-    if (self.emailConfirmationRequired) {
-        [self performSegueWithIdentifier:@"ShowEmailAfterInviteCode" sender:self];
-    } else if (self.isPushedFromLeft) {
+    if (self.isPushedFromLeft) {
+        NSLog(@"Dismissing push from left!");
         [self dismissPushModalViewControllerFromLeftSegue];
     } else {
         [self.navigationController dismissModalViewControllerAnimated:animated];

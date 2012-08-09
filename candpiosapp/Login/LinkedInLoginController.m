@@ -12,7 +12,6 @@
 #import "OAMutableURLRequest.h"
 #import "OADataFetcher.h"
 #import "SSKeychain.h"
-#import "EnterInvitationCodeViewController.h"
 #import "CPLinkedInAPI.h"
 #import "CPapi.h"
 #import "CPCheckinHandler.h"
@@ -26,7 +25,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
 @end
 
-
 @implementation LinkedInLoginController
 
 @synthesize myWebView;
@@ -34,15 +32,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 @synthesize activityIndicator;
 @synthesize emailConfirmationRequired = _emailConfirmationRequired;
 @synthesize loadLinkedInConnectionsCompletionBlock;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 #pragma mark - View lifecycle
 
@@ -365,16 +354,11 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                     
                     // hide the login progress HUD
                     [SVProgressHUD dismiss];
-
-                    if ([CPUserDefaultsHandler currentUser].enteredInviteCode) {
-                        if (self.emailConfirmationRequired) {
-                            [self performSegueWithIdentifier:@"EnterEmailAfterSignUpSegue" sender:nil];
-                        } else {
-                            [self.navigationController dismissModalViewControllerAnimated:YES];
-                        }
-                    }
-                    else {
-                        [self performSegueWithIdentifier:@"EnterInvitationCodeSegue" sender:nil];
+                    
+                    if (self.emailConfirmationRequired) {
+                        [self performSegueWithIdentifier:@"EnterEmailAfterSignUpSegue" sender:nil];
+                    } else {
+                        [self.navigationController dismissModalViewControllerAnimated:YES];
                     }
                 }];
             }
@@ -389,13 +373,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
         
         NSOperationQueue *queue = [[NSOperationQueue alloc] init];
         [queue addOperation:operation];  
-    }
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"EnterInvitationCodeSegue"]) {
-        [[segue destinationViewController] setEmailConfirmationRequired:self.emailConfirmationRequired];
     }
 }
 
