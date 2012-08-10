@@ -361,9 +361,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                     if (self.emailConfirmationRequired) {
                         [self performSegueWithIdentifier:@"EnterEmailAfterSignUpSegue" sender:nil];
                     } else {
-                        [self.navigationController dismissViewControllerAnimated:YES completion:^(void){
-                            [CPUserSessionHandler performAfterLoginActions];
-                        }];
+                        [CPUserSessionHandler performAfterLoginActions];
                     }
                 }];
             }

@@ -62,10 +62,7 @@
     [CPapi setUserProfileDataWithDictionary:params andCompletion:^(NSDictionary *json, NSError *error) {
         if ( ! error && [[json objectForKey:@"succeeded"] boolValue]) {
             [SVProgressHUD dismiss];
-            
-            [self.navigationController dismissViewControllerAnimated:YES completion:^(void){
-                [CPUserSessionHandler performAfterLoginActions];
-            }];
+            [CPUserSessionHandler performAfterLoginActions];
         } else {
             [SVProgressHUD dismissWithError:[json objectForKey:@"message"]
                                  afterDelay:kDefaultDismissDelay];
