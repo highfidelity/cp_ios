@@ -379,16 +379,21 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 }
 
 - (void)setupUrbanAirship
-{    
-    // Create Airship singleton that's used to talk to Urban Airship servers.
-    // Please populate AirshipConfig.plist with your info from http://go.urbanairship.com
-    [UAirship takeOff:self.urbanAirshipTakeOffOptions];
-    
-    urbanAirshipClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://go.urbanairship.com/api"]];
-    
-	// register for push 
-    [[UAPush shared] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+{
+    if (self.urbanAirshipTakeOffOptions) {
+        // Create Airship singleton that's used to talk to Urban Airship servers.
+        // Please populate AirshipConfig.plist with your info from http://go.urbanairship.com
+        [UAirship takeOff:self.urbanAirshipTakeOffOptions];
+        
+        urbanAirshipClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://go.urbanairship.com/api"]];
+        
+        // register for push
+        [[UAPush shared] registerForRemoteNotificationTypes:
+         (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+        
+        // nil out the urban airship take off options
+        self.urbanAirshipTakeOffOptions = nil;
+    }
 }
 
 - (void)setupFlurryAnalytics
