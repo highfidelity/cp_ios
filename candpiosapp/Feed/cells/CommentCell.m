@@ -8,6 +8,9 @@
 
 #import "CommentCell.h"
 #import "FeedViewController.h"
+#import "CPVenue.h"
+#import "CPAlertView.h"
+
 #define kLeftCap 28
 #define kRightCap 32
 #define kPillFontSize 10
@@ -18,6 +21,7 @@
 @synthesize pillButton;
 @synthesize placeholderPillButton;
 @synthesize delegate;
+@synthesize venue;
 
 - (void)awakeFromNib
 {
@@ -97,9 +101,21 @@
 }
 
 - (void) pillButtonPressed:(id)sender 
-{
-    // forward on to the delegate to present the popover from the pill button
-    [self.delegate showPillPopoverFromCell:self];
+{   
+    //#17979 users should not be able to comment or +1 on feeds they are not checked in to
+    CPVenue *currentVenue = [CPUserDefaultsHandler currentVenue];
+    if (currentVenue && currentVenue.venueID == self.venue.venueID) {
+        // forward on to the delegate to present the popover from the pill button
+        [self.delegate showPillPopoverFromCell:self];
+    } else {
+        [[[UIAlertView alloc] initWithTitle:@""
+                                    message:@"You have to be checked in to this venue to comment or +1."
+                                   delegate:self
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles: nil]  show];
+    }
+
+    
 }
 
 @end

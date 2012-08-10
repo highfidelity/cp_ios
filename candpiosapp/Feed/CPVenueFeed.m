@@ -15,6 +15,7 @@
 @synthesize posts = _posts;
 @synthesize lastID = _lastID;
 @synthesize lastReplyID = _lastReplyID;
+@synthesize updateTimestamp = _updateTimestamp;
 
 - (NSMutableArray *)posts
 {
@@ -30,10 +31,17 @@
     // by using the initFromDictionary method in the CPPost model
     for (NSDictionary *postDict in postsArray) {
         CPPost *newPost = [[CPPost alloc] initFromDictionary:postDict];
-        
-        if (![self.posts containsObject:newPost]) {
-            int postIndex = self.lastID == 0 ? self.posts.count : 0;
+
+        NSUInteger postIndex = [self.posts indexOfObject:newPost];
+        if (postIndex == NSNotFound) {
+            postIndex = self.lastID == 0 ? self.posts.count : 0;
             [self.posts insertObject:newPost atIndex:postIndex];
+        } else {
+            CPPost *oldPost = [self.posts objectAtIndex:postIndex];
+            if (oldPost && oldPost.replies.count > 0) {
+                [newPost setReplies:oldPost.replies];
+            }
+            [self.posts replaceObjectAtIndex:postIndex withObject:newPost];
         }       
     }
     
@@ -62,35 +70,42 @@
 
 - (void)addRepliesFromDictionary:(NSDictionary *)repliesDict
 {
-    int maxReplyID;
+    NSUInteger maxReplyID = self.lastReplyID;
     
     // loop through the keys of the dictionary returned from API
     // these are the post ID for the original post the reply associates to
     for (NSNumber *originalPostID in repliesDict) {
-        // grab the original post from our posts array
-        CPPost *originalPost = [self.posts objectAtIndex:[self indexOfPostWithID:[originalPostID intValue]]];
-        
-        // loop through the replies for this post and add them to the original post
-        for (NSDictionary *replyDict in [repliesDict objectForKey:originalPostID]) {
-            CPPost *replyPost = [[CPPost alloc] initFromDictionary:replyDict];
-            
-            // add this reply if we don't already have it
-            if (![originalPost.replies containsObject:replyPost]) {
-                [originalPost.replies addObject:replyPost];
+
+        //TODO: app crashes here sometimes - temporary fix
+        @try {
+            // grab the original post from our posts array
+            CPPost *originalPost = [self.posts objectAtIndex:[self indexOfPostWithID:[originalPostID unsignedIntValue]]];
+
+            // loop through the replies for this post and add them to the original post
+            for (NSDictionary *replyDict in [repliesDict objectForKey:originalPostID]) {
+                CPPost *replyPost = [[CPPost alloc] initFromDictionary:replyDict];
+
+                // add this reply if we don't already have it
+                if (![originalPost.replies containsObject:replyPost]) {
+                    [originalPost.replies addObject:replyPost];
+
+                    // check if we have a new maxReplyID
+                    maxReplyID = (originalPost.postID > maxReplyID) ? originalPost.postID : maxReplyID;
+                }
                 
-                // check if we have a new maxReplyID
-                 maxReplyID = (originalPost.postID > maxReplyID) ?
-                              originalPost.postID : maxReplyID;
             }
-            
         }
+        @catch (NSException *exception) {
+            NSLog("exception: %@", exception);
+        }
+
     }
     
     // our last reply ID is the maxReplyID we figured out during the enumeration
     self.lastReplyID = maxReplyID;
 }
 
-- (int)indexOfPostWithID:(int)postID
+- (NSUInteger)indexOfPostWithID:(NSUInteger)postID
 {
     // leverage the overridden isEqual method in CPPost and NSMutableArray's indexOfObject
     CPPost *originalPostPlaceHolder = [[CPPost alloc] init];
