@@ -17,10 +17,9 @@ typedef enum {
 } CPUserActionCellDirection;
 
 typedef enum {
-	CPUserActionCellSwipeStyleFull = 0,
+    CPUserActionCellSwipeStyleNone = 0,
     CPUserActionCellSwipeStyleQuickAction,
     CPUserActionCellSwipeStyleReducedAction,
-	CPUserActionCellSwipeStyleNone,
 } CPUserActionCellSwipeStyle;
 
 // toggle switch state
