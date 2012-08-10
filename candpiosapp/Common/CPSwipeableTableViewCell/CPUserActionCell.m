@@ -300,7 +300,7 @@
             
             NSTimeInterval fullOpenAnimationDuration = 0.2;
             CGFloat openAmout = newCenterPosition - self.originalCenter;
-            CGFloat thresholdAmount = self.panFullOpenWidth / 3;
+            CGFloat thresholdAmount = self.panFullOpenWidth / 2;
             CGFloat velocityDuration = fullOpenAnimationDuration / 2.;
             CGFloat velocityShift = velocity.x * velocityDuration;
             
