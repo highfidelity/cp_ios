@@ -38,7 +38,6 @@
 @interface CPUserActionCell()
 @property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *tapRecognizer;
-@property (nonatomic, readonly, assign) CGFloat originalCenter;
 @property (nonatomic, assign) CGFloat initialTouchPositionX;
 @property (nonatomic, assign) CGFloat initialHorizontalCenter;
 @property (nonatomic, assign) CPUserActionCellDirection lastDirection;
@@ -295,7 +294,9 @@
             }
             
             [self animateSlideButtonsWithNewCenter:newCenterPosition
-                                          duration:0];
+                                             delay:0
+                                          duration:0
+                                          animated:YES];
             break;
         }
         case UIGestureRecognizerStateEnded:
@@ -323,7 +324,9 @@
             }
             
             [self animateSlideButtonsWithNewCenter:newCenterPosition
-                                          duration:fullOpenAnimationDuration];
+                                             delay:0
+                                          duration:fullOpenAnimationDuration
+                                          animated:YES];
             break;
         }
         default:
@@ -331,8 +334,8 @@
 	}
 }
 
-- (void)animateSlideButtonsWithNewCenter:(CGFloat)newCenter duration:(NSTimeInterval)duration {
-    [self animateButtonsBumpForNewCenter:newCenter withDelay:duration];
+- (void)animateSlideButtonsWithNewCenter:(CGFloat)newCenter delay:(NSTimeInterval)delay duration:(NSTimeInterval)duration animated:(BOOL)animated {
+    [self animateButtonsBumpForNewCenter:newCenter withDelay:delay duration:duration animated:animated];
     
     CGPoint center = self.contentView.center;
     center.x = newCenter;
@@ -345,7 +348,10 @@
         animations();
     } else {
         [UIView animateWithDuration:duration
-                         animations:animations];
+                              delay:delay
+                            options:kNilOptions
+                         animations:animations
+                         completion:nil];
     }
 }
 
@@ -392,7 +398,7 @@
 
 #pragma mark - Methods for quick action
 
-- (void)animateButtonsBumpForNewCenter:(CGFloat)newCenterX withDelay:(NSTimeInterval)delay {
+- (void)animateButtonsBumpForNewCenter:(CGFloat)newCenterX withDelay:(NSTimeInterval)delay duration:(NSTimeInterval)duration animated:(BOOL)animated {
     CGFloat oldLeftX = self.contentView.center.x - self.originalCenter;
     CGFloat newLeftX = newCenterX - self.originalCenter;
     
@@ -404,53 +410,57 @@
     int i = 0;
     for (UIButton *button in actionButtons) {
         CGFloat buttonX = button.center.x + 20;
-        NSTimeInterval buttonDelay = delay * abs(buttonX - oldLeftX) / abs(newLeftX - oldLeftX);
-        
-//        NSLog(@"i:%d H:%d C1:%d C2:%d newX: %.0f bX: %.0f",
-//              i,
-//              button.hidden,
-//              oldLeftX < buttonX && newLeftX >= buttonX,
-//              oldLeftX >= buttonX && newLeftX < buttonX,
-//              newLeftX,
-//              buttonX
-//        );
+        NSTimeInterval buttonDelay = delay + duration * abs(buttonX - oldLeftX) / abs(newLeftX - oldLeftX);
         
         if (oldLeftX < buttonX && newLeftX >= buttonX) {
-            [self bumpButtonIn:button withDelay:buttonDelay];
+            [self bumpButtonIn:button withDelay:buttonDelay animated:animated];
         }
         
         if (oldLeftX >= buttonX && newLeftX < buttonX) {
-            [self bumpButtonOut:button withDelay:buttonDelay];
+            [self bumpButtonOut:button withDelay:buttonDelay animated:animated];
         }
         i++;
     }
 }
 
-- (void)bumpButtonIn:(UIButton *)button withDelay:(NSTimeInterval)delay {
+- (void)bumpButtonIn:(UIButton *)button withDelay:(NSTimeInterval)delay animated:(BOOL)animated {
     if (button.hidden) {
         button.alpha = 0;
         button.transform = self.buttonBumpStartingTransform;
         button.hidden = NO;
     }
     
-    [UIView animateWithDuration:0.2
-                          delay:delay
-                        options:kNilOptions
-                     animations:^{
-                         button.alpha = 1;
-                         button.transform = CGAffineTransformIdentity;
-                     } completion:nil];
+    void (^animations)(void) = ^{
+        button.alpha = 1;
+        button.transform = CGAffineTransformIdentity;
+    };
+    
+    if (animated) {
+        [UIView animateWithDuration:0.2
+                              delay:delay
+                            options:kNilOptions
+                         animations:animations
+                         completion:nil];
+    } else {
+        animations();
+    }
 }
 
-- (void)bumpButtonOut:(UIButton *)button withDelay:(NSTimeInterval)delay {    
-    [UIView animateWithDuration:0.2
-                          delay:delay
-                        options:kNilOptions
-                     animations:^{
-                         button.transform = self.buttonBumpStartingTransform;
-                         button.alpha = 0;
-                     }
-                     completion:nil];
+- (void)bumpButtonOut:(UIButton *)button withDelay:(NSTimeInterval)delay animated:(BOOL)animated {
+    void (^animations)(void) = ^{
+        button.transform = self.buttonBumpStartingTransform;
+        button.alpha = 0;
+    };
+    
+    if (animated) {
+        [UIView animateWithDuration:0.2
+                              delay:delay
+                            options:kNilOptions
+                         animations:animations
+                         completion:nil];
+    } else {
+        animations();
+    }
 }
 
 -(UIButton*)addActionButtonWithImageNamed:(NSString*)imageName originX:(CGFloat)originX selector:(SEL)selector {
@@ -575,7 +585,7 @@
 
 - (void)cancelOpenSlideActionButtons:(NSNotification *)notification {
     if (notification.object != self) {
-        [self animateSlideButtonsWithNewCenter:self.originalCenter duration:0.2];
+        [self animateSlideButtonsWithNewCenter:self.originalCenter delay:0 duration:0.2 animated:YES];
     }
 }
 
