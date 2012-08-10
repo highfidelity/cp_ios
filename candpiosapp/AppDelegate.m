@@ -245,12 +245,12 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 - (void)pushAliasUpdate {
     // Set my UserID as an UrbanAirship alias for push notifications
     NSString *userid = [NSString stringWithFormat:@"%d", [CPUserDefaultsHandler currentUser].userID];
-    if (![userid isEqualToString:@""])
-    {
-        // Only push user id if it's not blank
-        NSLog(@"Pushing aliases to UrbanAirship: %@", userid);
-        [[UAPush shared] updateAlias:userid];
-    }
+    
+    NSLog(@"Pushing aliases to UrbanAirship: %@", userid);
+    [[UAPush shared] updateAlias:userid];
+    
+    // make sure that the signup modal has been dismissed if its still around
+    [CPUserSessionHandler dismissSignupModalFromPresentingViewController];
 }
 
 - (void)application:(UIApplication *)app
@@ -337,9 +337,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
 {
 	// We get here if the user has allowed Push Notifications
 	// We need to get our authorization token and send it to our servers
-    
-    // make sure that the signup modal has been dismissed if its still around
-    [CPUserSessionHandler dismissSignupModalFromPresentingViewController];
     
     NSString *deviceToken = [[[[devToken description]
                      stringByReplacingOccurrencesOfString: @"<" withString: @""]
