@@ -234,7 +234,6 @@
 
 - (void)pan:(UIPanGestureRecognizer *)recognizer
 {
-    CGPoint translation           = [recognizer translationInView:self];
 	CGPoint currentTouchPoint     = [recognizer locationInView:self];
 	CGPoint velocity              = [recognizer velocityInView:self];
 	
