@@ -75,6 +75,10 @@
 @synthesize activeColor;
 @synthesize inactiveColor;
 
+- (void)dealloc {
+    [self unregisterFromNotifications];
+}
+
 - (void)awakeFromNib
 {
     [super awakeFromNib];
@@ -178,6 +182,8 @@
     // add subviews
     [self addSubview:self.hiddenView];
     [self addSubview:self.contentView];
+    
+    [self registerForNotification];
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
@@ -248,6 +254,8 @@
             // Set a baseline for the panning
             self.initialTouchPositionX = currentTouchPositionX;
             self.initialHorizontalCenter = self.contentView.center.x;
+            
+            [[self class] cancelOpenSlideActionButtonsNotification:self];
             
             break;
         }
@@ -550,6 +558,30 @@
     if ([self.delegate respondsToSelector:@selector(cell:didSelectRowWithUser:)]) {
         [self.delegate cell:self didSelectRowWithUser:self.user];
     }
+}
+
+#pragma mark - notifications
+
+- (void)registerForNotification {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(cancelOpenSlideActionButtons:)
+                                                 name:kCancelOpenSlideActionButtonsNotification
+                                               object:nil];
+}
+
+- (void)unregisterFromNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)cancelOpenSlideActionButtons:(NSNotification *)notification {
+    if (notification.object != self) {
+        [self animateSlideButtonsWithNewCenter:self.originalCenter duration:0.2];
+    }
+}
+
++ (void)cancelOpenSlideActionButtonsNotification:(CPUserActionCell *)cell {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCancelOpenSlideActionButtonsNotification
+                                                        object:cell];
 }
 
 @end

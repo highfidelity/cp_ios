@@ -164,6 +164,12 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -226,6 +232,12 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
 
 #pragma mark - Table view data source

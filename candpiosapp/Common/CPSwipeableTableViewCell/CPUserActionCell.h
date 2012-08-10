@@ -11,6 +11,8 @@
 #import "CPSoundEffectsManager.h"
 #import "User.h"
 
+#define kCancelOpenSlideActionButtonsNotification @"kCancelOpenSlideActionButtonsNotification"
+
 typedef enum {
 	CPUserActionCellDirectionRight = 0,
 	CPUserActionCellDirectionLeft,
@@ -48,5 +50,7 @@ typedef enum {
 @property (nonatomic, strong) UIButton *exchangeContactsButton;
 @property (nonatomic, strong) UIColor *activeColor;
 @property (nonatomic, strong) UIColor *inactiveColor;
+
++ (void)cancelOpenSlideActionButtonsNotification:(CPUserActionCell *)cell;
 
 @end

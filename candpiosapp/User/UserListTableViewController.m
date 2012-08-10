@@ -75,6 +75,10 @@
     [self showCorrectLoadingSpinnerForCount:self.weeklyUsers.count + self.checkedInUsers.count];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -153,6 +157,12 @@
         // filter that data
         [self filterData];
     }
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
 
 #pragma mark - Table view data source
