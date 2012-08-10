@@ -286,12 +286,8 @@
                 newCenterPosition = -originalCenter;
             }
             
-            [self animateButtonsBumpForNewCenter:newCenterPosition withDelay:0];
-            
-            CGPoint center = self.contentView.center;
-            center.x = newCenterPosition;
-            
-            self.contentView.layer.position = center;
+            [self animateSlideButtonsWithNewCenter:newCenterPosition
+                                          duration:0];
             break;
         }
         case UIGestureRecognizerStateEnded:
@@ -318,19 +314,31 @@
                 }
             }
             
-            [self animateButtonsBumpForNewCenter:newCenterPosition withDelay:fullOpenAnimationDuration];
-
-            CGPoint center = self.contentView.center;
-            center.x = newCenterPosition;
-            [UIView animateWithDuration:fullOpenAnimationDuration
-                             animations:^{
-                                 self.contentView.layer.position = center;
-                             }];
+            [self animateSlideButtonsWithNewCenter:newCenterPosition
+                                          duration:fullOpenAnimationDuration];
             break;
         }
         default:
             break;
 	}
+}
+
+- (void)animateSlideButtonsWithNewCenter:(CGFloat)newCenter duration:(NSTimeInterval)duration {
+    [self animateButtonsBumpForNewCenter:newCenter withDelay:duration];
+    
+    CGPoint center = self.contentView.center;
+    center.x = newCenter;
+    
+    void (^animations)(void) = ^{
+        self.contentView.layer.position = center;
+    };
+    
+    if (0 == duration) {
+        animations();
+    } else {
+        [UIView animateWithDuration:duration
+                         animations:animations];
+    }
 }
 
 - (CGFloat)panFullOpenWidth {
