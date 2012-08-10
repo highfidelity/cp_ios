@@ -376,8 +376,7 @@
             [self showMenu:NO]; 
         }
         
-        // logout of *all* accounts
-        [CPUserSessionHandler logoutEverything];
+        // logout and show the signup modal
         [CPUserSessionHandler showSignupModalFromViewController:self animated:YES];
 
     } else {

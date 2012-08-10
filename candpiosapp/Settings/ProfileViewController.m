@@ -511,8 +511,6 @@
                                                     return;
                                                 }
 
-                                                [CPUserSessionHandler logoutEverything];
-
                                                 SettingsMenuController *presentingViewController = (SettingsMenuController *)self.presentingViewController;
                                                 if (presentingViewController.isMenuShowing) {
                                                     [presentingViewController showMenu:NO];
