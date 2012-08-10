@@ -338,6 +338,9 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
 	// We get here if the user has allowed Push Notifications
 	// We need to get our authorization token and send it to our servers
     
+    // make sure that the signup modal has been dismissed if its still around
+    [CPUserSessionHandler dismissSignupModalFromPresentingViewController];
+    
     NSString *deviceToken = [[[[devToken description]
                      stringByReplacingOccurrencesOfString: @"<" withString: @""]
                     stringByReplacingOccurrencesOfString: @">" withString: @""]
@@ -352,6 +355,9 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 {
     settings.registeredForApnsSuccessfully = NO;
     NSLog(@"Error in registration. Error: %@", err);
+    
+    // dismiss the signup modal if it exists
+    [CPUserSessionHandler dismissSignupModalFromPresentingViewController];
 }
 
 #pragma mark - Third Party SDKs
@@ -456,7 +462,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
         [[CPGeofenceHandler sharedHandler] autoCheckOutForRegion:region];
     }
 }
-
 
 - (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error
 {

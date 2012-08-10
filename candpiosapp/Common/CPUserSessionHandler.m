@@ -13,15 +13,33 @@
 
 @implementation CPUserSessionHandler
 
+static CPUserSessionHandler *sharedHandler;
+@synthesize signUpPresentingViewController = _signUpPresentingViewController;
+
++ (void)initialize
+{
+    static BOOL initialized = NO;
+    if(!initialized)
+    {
+        initialized = YES;
+        sharedHandler = [[self alloc] init];
+    }
+}
+
 + (void)performAfterLoginActions
 {
+    // make sure the CPAppDelegate's locationManager is lazily instantiated so it is ready to use
+    [CPAppDelegate locationManager];
+    
+    while ([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
+        // looping until we have a location service acceptance / denial
+    }
+    
     // we have a current user so we are good to ask for push and sync the user
     [CPAppDelegate setupUrbanAirship];
     [CPAppDelegate pushAliasUpdate];
-    [CPUserSessionHandler syncCurrentUserWithWebAndCheckValidLogin];
     
-    // make sure the CPAppDelegate's locationManager is lazily instantiated so it is ready to use
-    [CPAppDelegate locationManager];
+    [CPUserSessionHandler syncCurrentUserWithWebAndCheckValidLogin];
 }
 
 + (void)performAppVersionCheck
@@ -62,6 +80,7 @@
         [CPUserDefaultsHandler setCurrentUser:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
     }
+    
     [[CPCheckinHandler sharedHandler] setCheckedOut];
 }
 
@@ -83,6 +102,17 @@
     [CPUserDefaultsHandler setCurrentUser:currUser];
 }
 
++ (void)dismissSignupModalFromPresentingViewController
+{
+    NSLog(@"Login / Signup process deemed complete. Dismissing signup modal.");
+    if (sharedHandler.signUpPresentingViewController) {
+        [sharedHandler.signUpPresentingViewController dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        // nil out the variable since the modal is being dismissed
+        sharedHandler.signUpPresentingViewController = nil;
+    }
+}
+
 + (void)showSignupModalFromViewController:(UIViewController *)viewController
                                  animated:(BOOL)animated
 {
@@ -91,6 +121,8 @@
     UINavigationController *signupController = [signupStoryboard instantiateInitialViewController];
     
     [viewController presentModalViewController:signupController animated:animated];
+    
+    sharedHandler.signUpPresentingViewController = viewController;
 }
 
 + (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController

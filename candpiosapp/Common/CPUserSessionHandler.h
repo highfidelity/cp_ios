@@ -10,10 +10,13 @@
 
 @interface CPUserSessionHandler : NSObject
 
+@property (nonatomic, weak) UIViewController *signUpPresentingViewController;
+
 + (void)performAfterLoginActions;
 + (void)performAppVersionCheck;
 + (void)logoutEverything;
 + (void)storeUserLoginDataFromDictionary:(NSDictionary *)userInfo;
++ (void)dismissSignupModalFromPresentingViewController;
 + (void)showSignupModalFromViewController:(UIViewController *)viewController
                                  animated:(BOOL)animated;
 + (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
