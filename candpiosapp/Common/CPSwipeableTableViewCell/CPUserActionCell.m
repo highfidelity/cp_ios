@@ -23,8 +23,8 @@
 #import "OneOnOneChatViewController.h"
 #import "UserProfileViewController.h"
 
-#define SWITCH_LEFT_MARGIN 36
-#define QUICK_ACTION_MARGIN 70
+#define SWITCH_LEFT_MARGIN 23
+#define QUICK_ACTION_MARGIN 56
 #define QUICK_ACTION_LOCK 3 * (QUICK_ACTION_MARGIN + 10)
 #define REDUCED_ACTION_LOCK 2 * (QUICK_ACTION_MARGIN + 10)
 #define RIGHT_SWIPE_SWITCH_IMAGE_VIEW_TAG 4293

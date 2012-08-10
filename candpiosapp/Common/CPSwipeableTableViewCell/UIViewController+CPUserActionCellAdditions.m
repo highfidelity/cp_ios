@@ -16,7 +16,7 @@
     for (UITableViewCell *cell in cells) {
         if ([cell isKindOfClass:[CPUserActionCell class]]) {
             CPUserActionCell *userActionCell = (CPUserActionCell *)cell;
-            [userActionCell animateSlideButtonsWithNewCenter:userActionCell.originalCenter + 160
+            [userActionCell animateSlideButtonsWithNewCenter:userActionCell.originalCenter + 130
                                                        delay:0
                                                     duration:0
                                                     animated:NO];
