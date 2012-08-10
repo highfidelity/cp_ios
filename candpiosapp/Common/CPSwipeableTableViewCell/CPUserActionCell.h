@@ -22,19 +22,6 @@ typedef enum {
     CPUserActionCellSwipeStyleReducedAction,
 } CPUserActionCellSwipeStyle;
 
-// toggle switch state
-// 0 - nothing activated
-// 1 - send love active
-// 2 - send message active
-// 3 - exchange contacts active
-typedef enum {
-	CPUserActionCellSwitchStateOff = 0,
-	CPUserActionCellSwitchStateSendLoveOn,
-	CPUserActionCellSwitchStateSendMessageOn,
-    CPUserActionCellSwitchStateExchangeContactsOn,
-} CPUserActionCellSwitchState;
-
-
 @class CPUserActionCell;
 
 @protocol CPUserActionCellDelegate <NSObject>
@@ -59,7 +46,6 @@ typedef enum {
 @property (nonatomic, strong) UIButton *sendLoveButton;
 @property (nonatomic, strong) UIButton *sendMessageButton;
 @property (nonatomic, strong) UIButton *exchangeContactsButton;
-@property (nonatomic) CPUserActionCellSwitchState toggleState;
 @property (nonatomic, strong) UIColor *activeColor;
 @property (nonatomic, strong) UIColor *inactiveColor;
 

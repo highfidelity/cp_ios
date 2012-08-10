@@ -72,7 +72,6 @@
 @synthesize sendLoveButton;
 @synthesize sendMessageButton;
 @synthesize exchangeContactsButton;
-@synthesize toggleState;
 @synthesize activeColor;
 @synthesize inactiveColor;
 
@@ -155,9 +154,6 @@
     
     // make sure the hiddenView clips its subviews to its bounds
     self.hiddenView.clipsToBounds = YES;
-    
-    // init the toggles to inactive
-    self.toggleState = CPUserActionCellSwitchStateOff;
     
     // default colors
     self.activeColor = [CPUIHelper CPTealColor];
@@ -446,29 +442,18 @@
     
     [button addTarget:self 
                action:@selector(switchSound:) 
-     forControlEvents:UIControlEventTouchDown | UIControlEventTouchUpInside | UIControlEventTouchCancel | UIControlEventTouchUpOutside];
+     forControlEvents:UIControlEventTouchUpInside];
     
     [button addTarget:self 
                action:selector 
      forControlEvents:UIControlEventTouchUpInside];
+    
     [button setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin ];
     
     button.hidden = YES;
     [self.hiddenView addSubview:button];
     
     return button;
-}
-
-- (UIButton*) buttonForState:(CPUserActionCellSwitchState)state {
-    if (state == CPUserActionCellSwitchStateSendLoveOn) { 
-        return self.sendLoveButton; 
-    } else if (state == CPUserActionCellSwitchStateSendMessageOn) { 
-        return self.sendMessageButton; 
-    } else if (state == CPUserActionCellSwitchStateExchangeContactsOn) { 
-        return self.exchangeContactsButton; 
-    } else { 
-        return nil; 
-    }
 }
 
 - (void)toggleCellActiveState:(BOOL)active
