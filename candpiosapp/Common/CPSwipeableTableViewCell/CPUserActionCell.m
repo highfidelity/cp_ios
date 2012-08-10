@@ -200,6 +200,8 @@
                               nil];
     for (UIButton *button in actionButtons) {
         button.hidden = YES;
+        button.alpha = 0;
+        button.transform = CGAffineTransformIdentity;
     }
 }
 
@@ -296,13 +298,27 @@
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled: {
             
-            if ([self isPastPanFullOpenTrashold:self.contentView.center.x]) {
+            NSTimeInterval fullOpenAnimationDuration = 0.2;
+            CGFloat openAmout = newCenterPosition - self.originalCenter;
+            CGFloat thresholdAmount = self.panFullOpenWidth / 3;
+            CGFloat velocityDuration = fullOpenAnimationDuration / 2.;
+            CGFloat velocityShift = velocity.x * velocityDuration;
+            
+            CGFloat openAmoutWithVelocity = openAmout + velocityShift;
+            if (openAmoutWithVelocity >= thresholdAmount) {
                 newCenterPosition = originalCenter + self.panFullOpenWidth;
+                
+                if (openAmoutWithVelocity > self.panFullOpenWidth) {
+                    fullOpenAnimationDuration /= 2 * velocityShift / (self.panFullOpenWidth - openAmout);
+                }
             } else {
                 newCenterPosition = originalCenter;
+                
+                if (openAmoutWithVelocity < 0) {
+                    fullOpenAnimationDuration /= 2 * velocityShift / -panAmount;
+                }
             }
             
-            NSTimeInterval fullOpenAnimationDuration = 0.2;
             [self animateButtonsBumpForNewCenter:newCenterPosition withDelay:fullOpenAnimationDuration];
 
             CGPoint center = self.contentView.center;
@@ -316,13 +332,6 @@
         default:
             break;
 	}
-}
-
-- (BOOL)isPastPanFullOpenTrashold:(CGFloat)centerPosition {
-    if (abs(self.originalCenter - centerPosition) > self.panFullOpenWidth / 2) {
-        return YES;
-    }
-    return NO;
 }
 
 - (CGFloat)panFullOpenWidth {
@@ -377,12 +386,13 @@
                               self.sendMessageButton,
                               self.exchangeContactsButton,
                               nil];
-    
+    int i = 0;
     for (UIButton *button in actionButtons) {
         CGFloat buttonX = button.center.x + 20;
         NSTimeInterval buttonDelay = delay * abs(buttonX - oldLeftX) / abs(newLeftX - oldLeftX);
         
-//        NSLog(@"H:%d C1:%d C2:%d newX: %.0f bX: %.0f",
+//        NSLog(@"i:%d H:%d C1:%d C2:%d newX: %.0f bX: %.0f",
+//              i,
 //              button.hidden,
 //              oldLeftX < buttonX && newLeftX >= buttonX,
 //              oldLeftX >= buttonX && newLeftX < buttonX,
@@ -397,6 +407,7 @@
         if (oldLeftX >= buttonX && newLeftX < buttonX) {
             [self bumpButtonOut:button withDelay:buttonDelay];
         }
+        i++;
     }
 }
 
