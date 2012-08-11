@@ -1,3 +1,11 @@
+//
+//  SmartererLoginController.m
+//  candpiosapp
+//
+//  Created by Emmanuel Crouvisier.
+//  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
+//
+
 #import "SmartererLoginController.h"
 #import "FlurryAnalytics.h"
 #import "CPapi.h"
@@ -6,14 +14,6 @@
 @synthesize myWebView;
 @synthesize requestToken;
 @synthesize activityIndicator;
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)didReceiveMemoryWarning
 {

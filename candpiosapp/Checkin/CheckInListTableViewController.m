@@ -8,7 +8,6 @@
 #import "CheckInListTableViewController.h"
 #import "CPVenue.h"
 #import "CheckInDetailsViewController.h"
-#import "SignupController.h"
 #import "CheckInListCell.h"
 #import "FoursquareAPIRequest.h"
 

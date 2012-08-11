@@ -13,6 +13,7 @@
 #import "CPSkill.h"
 #import "UIImage+ImageBlur.h"
 #import "NSData+Base64.h"
+#import "CPUserSessionHandler.h"
 
 #define kActionSheetDeleteAccountTag 7911
 #define kActionSheetChooseNewProfileImageTag 7912
@@ -510,8 +511,6 @@
                                                     return;
                                                 }
 
-                                                [CPAppDelegate logoutEverything];
-
                                                 SettingsMenuController *presentingViewController = (SettingsMenuController *)self.presentingViewController;
                                                 if (presentingViewController.isMenuShowing) {
                                                     [presentingViewController showMenu:NO];
@@ -519,7 +518,7 @@
 
                                                 [self dismissModalViewControllerAnimated:NO];
 
-                                                [CPAppDelegate showSignupModalFromViewController:presentingViewController
+                                                [CPUserSessionHandler showSignupModalFromViewController:presentingViewController
                                                                                         animated:YES];
 
                                                 [SVProgressHUD dismissWithSuccess:[json objectForKey:@"message"]];

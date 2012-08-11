@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BaseLoginController.h"
 
-@interface SignupController : BaseLoginController
+@interface SignupController : UIViewController
 - (IBAction)loginWithLinkedInTapped:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *linkedinLoginButton;

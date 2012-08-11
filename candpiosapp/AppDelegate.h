@@ -28,20 +28,12 @@
 @property (strong, nonatomic) CPTabBarController *tabBarController;
 @property (strong, readonly) CLLocationManager *locationManager;
            
--(void)saveSettings;
+- (void)pushAliasUpdate;
+- (void)saveSettings;
 - (void)loadVenueView:(NSString *)venueName;
--(void)logoutEverything;
--(void)storeUserLoginDataFromDictionary:(NSDictionary *)userDictionary;
 - (void)toggleSettingsMenu;
-- (void)showSignupModalFromViewController:(UIViewController *)viewController animated:(BOOL)animated;
-- (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
-         withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed
-                                          pushFromLeft:(BOOL)pushFromLeft
-                                              animated:(BOOL)animated;
-- (void)syncCurrentUserWithWebAndCheckValidLogin;
+- (void)setupUrbanAirship;
 
-- (void)showLoginBanner;
-- (void)hideLoginBannerWithCompletion:(void (^)(void))completion;
 
 void uncaughtExceptionHandler(NSException *exception);
 void SignalHandler(int sig);

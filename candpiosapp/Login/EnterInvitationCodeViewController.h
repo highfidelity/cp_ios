@@ -10,6 +10,5 @@
 
 @property (nonatomic, assign) BOOL dontShowTextNoticeAfterLaterButtonPressed;
 @property (nonatomic, assign) BOOL isPushedFromLeft;
-@property (nonatomic, assign) BOOL emailConfirmationRequired;
 
 @end

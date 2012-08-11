@@ -100,8 +100,6 @@ typedef enum {
 {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
-    
-    [CPAppDelegate locationManager];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -1487,7 +1485,7 @@ typedef enum {
         CPPost *userEntry = [self.selectedVenueFeed.posts objectAtIndex:selectedPath.section];
         
         if (selectedPath.row > 0) {
-            userEntry = [userEntry.replies objectAtIndex:(selectedPath.row - 1)];
+            userEntry = [userEntry.replies objectAtIndex:(selectedPath.row - 2)];
         }
         
         // if this button's origin is left of the timeline then it's the log's author
@@ -1495,7 +1493,7 @@ typedef enum {
         User *selectedUser = (userEntry.originalPostID || button.frame.origin.x < TIMELINE_ORIGIN_X)
                              ? userEntry.author : userEntry.receiver;
         
-        if (selectedUser) {
+        if (selectedUser.userID) {
             // grab a UserProfileViewController from the UserStoryboard
             UserProfileViewController *userProfileVC = (UserProfileViewController *)[[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
             

@@ -6,10 +6,9 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import "BaseLoginController.h"
 @class OAToken;
 
-@interface LinkedInLoginController : BaseLoginController <UIWebViewDelegate>
+@interface LinkedInLoginController : UIViewController <UIWebViewDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *myWebView;
 
 @property (nonatomic, retain) OAToken *requestToken;
@@ -20,4 +19,5 @@
 - (void)loadLinkedInUserProfile;
 - (void)loadLinkedInConnectionsWithCompletion:(void(^)(void))completionBlock;
 - (void)handleLinkedInLogin:(NSString*)fullName linkedinID:(NSString *)linkedinID password:(NSString*)password email:(NSString *)email oauthToken:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret;
+
 @end

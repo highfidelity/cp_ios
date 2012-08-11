@@ -12,43 +12,41 @@
 #import "OAMutableURLRequest.h"
 #import "OADataFetcher.h"
 #import "SSKeychain.h"
-#import "EnterInvitationCodeViewController.h"
 #import "CPLinkedInAPI.h"
 #import "CPapi.h"
 #import "CPCheckinHandler.h"
+#import "CPUserSessionHandler.h"
 
 typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
 @interface LinkedInLoginController ()
 
+@property (nonatomic, strong) AFHTTPClient *httpClient;
 @property (nonatomic, assign) BOOL emailConfirmationRequired;
 @property (nonatomic, strong) LoadLinkedInConnectionsCompletionBlockType loadLinkedInConnectionsCompletionBlock;
 
 @end
 
-
 @implementation LinkedInLoginController
 
+@synthesize httpClient;
 @synthesize myWebView;
 @synthesize requestToken;
 @synthesize activityIndicator;
 @synthesize emailConfirmationRequired = _emailConfirmationRequired;
 @synthesize loadLinkedInConnectionsCompletionBlock;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // create client for web based logins
+    self.httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
+    // set a liberal cookie policy
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy: NSHTTPCookieAcceptPolicyAlways];
+
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     
 	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
@@ -154,7 +152,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                                                  name:@"linkedInCredentials"
                                                object:nil];
 	
-	[CPAppDelegate logoutEverything];
+	[CPUserSessionHandler logoutEverything];
     [self linkedInLogin];
 }
 
@@ -315,8 +313,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
             NSInteger succeeded = [[JSON objectForKey:@"succeeded"] intValue];
             NSLog(@"success: %d", succeeded);
 
-            if(succeeded == 0)
-            {
+            if(succeeded == 0) {
                 NSString *outerErrorMessage = [JSON objectForKey:@"message"];// often just 'error'
                 // we get here if we failed to login
                 NSString *errorMessage = [NSString stringWithFormat:@"The error was: %@", outerErrorMessage];\
@@ -326,14 +323,12 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                              withObject:[NSNumber numberWithBool:YES]
                              afterDelay:kDefaultDismissDelay];
 
-            }
-            else
-            {
+            } else {
                 // remember that we're logged in!
                 // (it's really the persistent cookie that tracks our login, but we need a superficial indicator, too)
                 NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"params"];
                 
-                [CPAppDelegate storeUserLoginDataFromDictionary:userInfo];
+                [CPUserSessionHandler storeUserLoginDataFromDictionary:userInfo];
 
                 NSString *userId = [userInfo objectForKey:@"id"];
                 NSString *userEmail = [userInfo objectForKey:@"email"];
@@ -352,9 +347,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
                 [FlurryAnalytics logEvent:@"login_linkedin"];
                 [FlurryAnalytics setUserID:userId];
-
-                // Perform common post-login operations
-                [BaseLoginController pushAliasUpdate];
                 
                 [self loadLinkedInConnectionsWithCompletion:^{
                     if (!hasSentConfirmationEmail && (! userEmail ||
@@ -365,16 +357,11 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                     
                     // hide the login progress HUD
                     [SVProgressHUD dismiss];
-
-                    if ([CPUserDefaultsHandler currentUser].enteredInviteCode) {
-                        if (self.emailConfirmationRequired) {
-                            [self performSegueWithIdentifier:@"EnterEmailAfterSignUpSegue" sender:nil];
-                        } else {
-                            [self.navigationController dismissModalViewControllerAnimated:YES];
-                        }
-                    }
-                    else {
-                        [self performSegueWithIdentifier:@"EnterInvitationCodeSegue" sender:nil];
+                    
+                    if (self.emailConfirmationRequired) {
+                        [self performSegueWithIdentifier:@"EnterEmailAfterSignUpSegue" sender:nil];
+                    } else {
+                        [CPUserSessionHandler performAfterLoginActions];
                     }
                 }];
             }
@@ -389,13 +376,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
         
         NSOperationQueue *queue = [[NSOperationQueue alloc] init];
         [queue addOperation:operation];  
-    }
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"EnterInvitationCodeSegue"]) {
-        [[segue destinationViewController] setEmailConfirmationRequired:self.emailConfirmationRequired];
     }
 }
 

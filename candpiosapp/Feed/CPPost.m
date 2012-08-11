@@ -48,7 +48,7 @@ static NSDateFormatter *postDateFormatter;
         // alloc-init user objects for author and receiver if we have them
         // we should always have an author
         if ([postDict objectForKey:@"author"] &&
-            ![[postDict objectForKey:@"author"] isEqual:[NSNull null]]) {
+            ![[postDict objectForKey:@"author"] isKindOfClass:[NSNull class]]) {
             self.author = [[User alloc] initFromDictionary:[postDict objectForKey:@"author"]];
         } 
         

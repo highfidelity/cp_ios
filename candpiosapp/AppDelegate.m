@@ -6,7 +6,6 @@
 //  Copyright (c) 2011 Coffee and Power Inc. All rights reserved.
 //
 
-#import "SignupController.h"
 #import "FaceToFaceHelper.h"
 #import "ChatHelper.h"
 #import "OAuthConsumer.h"
@@ -19,6 +18,7 @@
 #import "CPApiClient.h"
 #import "CPCheckinHandler.h"
 #import "CPGeofenceHandler.h"
+#import "CPUserSessionHandler.h"
 
 #define kContactRequestAPNSKey @"contact_request"
 #define kContactRequestAcceptedAPNSKey @"contact_accepted"
@@ -26,9 +26,9 @@
 
 #define kCheckOutAlertTag 602
 
-@interface AppDelegate() {
-    CLLocationManager *_locationManager;
-}
+@interface AppDelegate()
+
+@property (nonatomic, strong) NSDictionary* urbanAirshipTakeOffOptions;
 
 -(void) loadSettings;
 +(NSString*) settingsFilepath;
@@ -37,15 +37,16 @@
 
 @implementation AppDelegate
 
-@synthesize settings;
-@synthesize urbanAirshipClient;
-@synthesize settingsMenuController;
-@synthesize tabBarController;
-
 // TODO: Store what we're storing now in settings in NSUSERDefaults
 // Why make our own class when there's an iOS Api for this?
 
 @synthesize window = _window;
+@synthesize locationManager = _locationManager;
+@synthesize urbanAirshipTakeOffOptions = _urbanAirshipTakeOffOptions;
+@synthesize settings;
+@synthesize urbanAirshipClient;
+@synthesize settingsMenuController;
+@synthesize tabBarController;
 
 #pragma mark - View Lifecycle
 
@@ -67,12 +68,12 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     sigaction(SIGBUS, &newSignalAction, NULL);
     
     [self setupTestFlightSDK];
-    [self setupUrbanAirshipWithLaunchOptions:launchOptions];
     [self setupFlurryAnalytics];
     
-    [BaseLoginController pushAliasUpdate];
-    
-	[self loadSettings];  
+    // store urbanAirshipTakeOffOptions so we can use them when we want to take off
+    NSMutableDictionary *takeOffOptions = [[NSMutableDictionary alloc] init];
+    [takeOffOptions setValue:launchOptions forKey:UAirshipTakeOffOptionsLaunchOptionsKey];
+    self.urbanAirshipTakeOffOptions = takeOffOptions;
         
     // Switch out the UINavigationController in the rootviewcontroller for the SettingsMenuController
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"SettingsStoryboard_iPhone" bundle:nil];
@@ -92,17 +93,18 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     application.statusBarStyle = UIStatusBarStyleBlackOpaque;
 
     [self.window makeKeyAndVisible];
+    [self customAppearanceStyles];
     
     // check if we need to force a user logout if their version of the app is too old
-    [self performAppVersionCheck];
+    [CPUserSessionHandler performAppVersionCheck];
     
     if (![CPUserDefaultsHandler currentUser]) {
-        [self showSignupModalFromViewController:self.tabBarController animated:NO];
+        [CPUserSessionHandler showSignupModalFromViewController:self.tabBarController animated:NO];
+    } else {
+        [CPUserSessionHandler performAfterLoginActions];
     }
-    [self syncCurrentUserWithWebAndCheckValidLogin];
-    
-    [self customAppearanceStyles];
-    [self hideLoginBannerWithCompletion:nil];
+     
+    [CPUserSessionHandler hideLoginBannerWithCompletion:nil];
     
     return YES;
 }
@@ -133,7 +135,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 	/*
 	 Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 	 */
-    [self syncCurrentUserWithWebAndCheckValidLogin];
+    [CPUserSessionHandler syncCurrentUserWithWebAndCheckValidLogin];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -239,6 +241,17 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 
 
 # pragma mark - Push Notifications
+
+- (void)pushAliasUpdate {
+    // Set my UserID as an UrbanAirship alias for push notifications
+    NSString *userid = [NSString stringWithFormat:@"%d", [CPUserDefaultsHandler currentUser].userID];
+    
+    NSLog(@"Pushing aliases to UrbanAirship: %@", userid);
+    [[UAPush shared] updateAlias:userid];
+    
+    // make sure that the signup modal has been dismissed if its still around
+    [CPUserSessionHandler dismissSignupModalFromPresentingViewController];
+}
 
 - (void)application:(UIApplication *)app
 didReceiveLocalNotification:(UILocalNotification *)notif
@@ -359,21 +372,22 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     [TestFlight takeOff:kTestFlightKey];
 }
 
-- (void)setupUrbanAirshipWithLaunchOptions:(NSDictionary *)launchOptions
+- (void)setupUrbanAirship
 {
-    // Init Airship launch options
-    NSMutableDictionary *takeOffOptions = [[NSMutableDictionary alloc] init];
-    [takeOffOptions setValue:launchOptions forKey:UAirshipTakeOffOptionsLaunchOptionsKey];
-    
-    // Create Airship singleton that's used to talk to Urban Airship servers.
-    // Please populate AirshipConfig.plist with your info from http://go.urbanairship.com
-    [UAirship takeOff:takeOffOptions];
-    
-    urbanAirshipClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://go.urbanairship.com/api"]];
-    
-	// register for push 
-    [[UAPush shared] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    if (self.urbanAirshipTakeOffOptions) {
+        // Create Airship singleton that's used to talk to Urban Airship servers.
+        // Please populate AirshipConfig.plist with your info from http://go.urbanairship.com
+        [UAirship takeOff:self.urbanAirshipTakeOffOptions];
+        
+        urbanAirshipClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://go.urbanairship.com/api"]];
+        
+        // register for push
+        [[UAPush shared] registerForRemoteNotificationTypes:
+         (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+        
+        // nil out the urban airship take off options
+        self.urbanAirshipTakeOffOptions = nil;
+    }
 }
 
 - (void)setupFlurryAnalytics
@@ -448,7 +462,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     }
 }
 
-
 - (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error
 {
     NSLog(@"monitoringDidFailForRegion, ERROR: %@", error);
@@ -489,174 +502,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 - (void)toggleSettingsMenu
 {
     [self.settingsMenuController showMenu: !self.settingsMenuController.isMenuShowing];
-}
-
-# pragma mark - Signup
-
-- (void)showSignupModalFromViewController:(UIViewController *)viewController
-                                 animated:(BOOL)animated
-{
-    [self logoutEverything];
-    UIStoryboard *signupStoryboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
-    UINavigationController *signupController = [signupStoryboard instantiateInitialViewController];
-    
-    [viewController presentModalViewController:signupController animated:animated];
-}
-
-- (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
-         withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed
-                                          pushFromLeft:(BOOL)pushFromLeft
-                                              animated:(BOOL)animated
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
-    UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:
-                                                    @"EnterInvitationCodeNavigationController"];
-    
-    EnterInvitationCodeViewController *controller = (EnterInvitationCodeViewController *)navigationController.topViewController;
-    controller.dontShowTextNoticeAfterLaterButtonPressed = dontShowTextNoticeAfterLaterButtonPressed;
-    
-    if (pushFromLeft) {
-        controller.isPushedFromLeft = YES;
-        PushModalViewControllerFromLeftSegue *segue = [[PushModalViewControllerFromLeftSegue alloc] initWithIdentifier:nil
-                                                                                                                source:viewController
-                                                                                                           destination:navigationController];
-        [segue perform];
-    } else {
-        [viewController presentModalViewController:navigationController animated:animated];
-    }
-}
-
-- (void)syncCurrentUserWithWebAndCheckValidLogin {
-    User *currentUser = [CPUserDefaultsHandler currentUser];
-    if (currentUser.userID) {        
-        User *webSyncUser = [[User alloc] init];
-        webSyncUser.userID = currentUser.userID;
-        
-        [webSyncUser loadUserResumeData:^(NSError *error) {
-            if (!error) {
-                // TODO: make this a better solution by checking for a problem with the PHP session cookie in CPApi
-                // for now if the email comes back null this person isn't logged in so we're going to send them to do that.
-                if (![webSyncUser.email isKindOfClass:[NSNull class]]) {
-                    [CPUserDefaultsHandler setCurrentUser:webSyncUser];
-                    
-                    if (!currentUser.isDaysOfTrialAccessWithoutInviteCodeOK) {
-                        [self showSignupModalFromViewController:self.tabBarController animated:NO];
-                        
-                        [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Your %d days trial has ended.", kDaysOfTrialAccessWithoutInviteCode]
-                                                    message:@"Please login and enter invite code."
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil] show];
-                    }
-                }
-            }
-        }];
-    }
-}
-
-- (void)showLoginBanner
-{
-    if (self.tabBarController.selectedIndex == 4) {
-        return;
-    }
-    
-    self.settingsMenuController.blockUIButton.frame = CGRectMake(0.0,
-                                                                 self.settingsMenuController.loginBanner.frame.size.height,
-                                                                 self.window.frame.size.width,
-                                                                 self.window.frame.size.height);
-    
-    [self.settingsMenuController.view bringSubviewToFront: self.settingsMenuController.blockUIButton];
-    [self.settingsMenuController.view bringSubviewToFront: self.settingsMenuController.loginBanner];
-    
-    [UIView animateWithDuration:0.3 animations:^ {
-        self.settingsMenuController.loginBanner.frame = CGRectMake(0.0, 0.0,
-                                                                   self.settingsMenuController.loginBanner.frame.size.width,
-                                                                   self.settingsMenuController.loginBanner.frame.size.height);
-    }];
-}
-
-- (void)hideLoginBannerWithCompletion:(void (^)(void))completion
-{
-    self.settingsMenuController.blockUIButton.frame = CGRectMake(0.0, 0.0, 0.0, 0.0);
-    [self.settingsMenuController.view sendSubviewToBack:self.settingsMenuController.blockUIButton];
-    
-    [UIView animateWithDuration:0.3 animations:^ {
-        self.settingsMenuController.loginBanner.frame = CGRectMake(0.0,
-                                                                   -self.settingsMenuController.loginBanner.frame.size.height,
-                                                                   self.settingsMenuController.loginBanner.frame.size.width,
-                                                                   self.settingsMenuController.loginBanner.frame.size.height);
-        
-        if (completion) {
-            completion();
-        }
-    }];
-}
-
-#pragma mark - Login Stuff
-
--(void)performAppVersionCheck
-{
-    // here we're going to check what the user's previously registered app version was
-    // this allows us to force them to login again if required
-    // or to tell them to update
-    NSString *appVersion = [CPUserDefaultsHandler lastLoggedAppVersion];
-    
-#if DEBUG
-    NSLog(@"The last logged app version for this user is %@.", appVersion);
-#endif
-    
-    if (!appVersion || [appVersion doubleValue] < 1.3) {
-        // we either don't have a logged version or it's less than our current baseline
-        // kill the current user object
-#if DEBUG
-        NSLog(@"Forcing logout based on app version check."); 
-#endif
-        [self logoutEverything];
-    }
-    
-    NSString *currentVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    // set the kUDLastLoggedAppVersion to the current version if there has been a change
-    if (!appVersion || [appVersion doubleValue] < [currentVersion doubleValue]) {
-#if DEBUG
-        NSLog(@"Storing app version %@ in NSUserDefaults.", currentVersion);
-#endif
-        [CPUserDefaultsHandler setLastLoggedAppVersion:currentVersion];
-    }   
-}
-
--(void)logoutEverything
-{
-	// clear out the cookies
-	NSArray *httpscookies3 = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:kCandPWebServiceUrl]];
-	
-	[httpscookies3 enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-		NSHTTPCookie *cookie = (NSHTTPCookie*)obj;
-		[[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
-	}];
-
-    if ([CPUserDefaultsHandler currentUser]) {
-        [CPUserDefaultsHandler setCurrentUser:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
-    }
-    [[CPCheckinHandler sharedHandler] setCheckedOut];
-}
-
-- (void)storeUserLoginDataFromDictionary:(NSDictionary *)userInfo
-{
-    NSString *userId = [userInfo objectForKey:@"id"];
-    NSString  *nickname = [userInfo objectForKey:@"nickname"];
-    
-    User *currUser = [[User alloc] init];
-    currUser.nickname = nickname;
-    currUser.userID = [userId intValue];
-    [currUser setEnteredInviteCodeFromJSONString:[userInfo objectForKey:@"entered_invite_code"]];
-    [currUser setJoinDateFromJSONString:[userInfo objectForKey:@"join_date"]];
-    currUser.numberOfContactRequests = [userInfo objectForKey:@"number_of_contact_requests"];
-    currUser.profileURLVisibility = [userInfo objectForKey:@"profileURL_visibility"];
-    
-    // Reset the Automatic Checkins default to YES
-    [CPUserDefaultsHandler setAutomaticCheckins:YES];
-    [CPUserDefaultsHandler setCurrentUser:currUser];
 }
 
 #pragma mark - User Settings

@@ -8,6 +8,7 @@
 
 #import "CPCheckinHandler.h"
 #import "CPGeofenceHandler.h"
+#import "CPUserSessionHandler.h"
 
 #define menuWidthPercentage 0.8
 #define kEnterInviteFakeSegueID @"--kEnterInviteFakeSegueID"
@@ -375,16 +376,15 @@
             [self showMenu:NO]; 
         }
         
-        // logout of *all* accounts
-        [CPAppDelegate logoutEverything];
-        [CPAppDelegate showSignupModalFromViewController:self animated:YES];
+        // logout and show the signup modal
+        [CPUserSessionHandler showSignupModalFromViewController:self animated:YES];
 
     } else {
         NSString *segueID = [self.menuSegueIdentifiersArray objectAtIndex:indexPath.row];
         NSLog(@"You clicked on %@", segueID);
         
         if ([kEnterInviteFakeSegueID isEqual:segueID]) {
-            [CPAppDelegate showEnterInvitationCodeModalFromViewController:self
+            [CPUserSessionHandler showEnterInvitationCodeModalFromViewController:self
                                      withDontShowTextNoticeAfterLaterButtonPressed:YES
                                                                       pushFromLeft:YES
                                                                           animated:YES];
@@ -463,13 +463,13 @@
     self.afterLoginAction = CPAfterLoginActionNone;
     
     // hide the login banner
-    [CPAppDelegate hideLoginBannerWithCompletion:nil];
+    [CPUserSessionHandler hideLoginBannerWithCompletion:nil];
 }
 
 - (IBAction)loginButtonClick:(id)sender
 {
-    [CPAppDelegate hideLoginBannerWithCompletion:^ {
-        [CPAppDelegate showSignupModalFromViewController:[CPAppDelegate tabBarController]
+    [CPUserSessionHandler hideLoginBannerWithCompletion:^ {
+        [CPUserSessionHandler showSignupModalFromViewController:[CPAppDelegate tabBarController]
                                                 animated:YES];
     }];
 }
