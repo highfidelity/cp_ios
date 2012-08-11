@@ -143,7 +143,6 @@
 
 - (void)dismissLeftOrNormalModalViewControllerAnimated:(BOOL)animated {
     if (self.isPushedFromLeft) {
-        NSLog(@"Dismissing push from left!");
         [self dismissPushModalViewControllerFromLeftSegue];
     } else {
         [self.navigationController dismissModalViewControllerAnimated:animated];
