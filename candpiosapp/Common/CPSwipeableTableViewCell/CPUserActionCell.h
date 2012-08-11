@@ -50,7 +50,7 @@ typedef enum {
 @property (nonatomic, strong) UIButton *exchangeContactsButton;
 @property (nonatomic, strong) UIColor *activeColor;
 @property (nonatomic, strong) UIColor *inactiveColor;
-@property (nonatomic, readonly, assign) CGFloat originalCenter;
+@property (nonatomic, readonly) CGFloat originalCenter;
 
 + (void)cancelOpenSlideActionButtonsNotification:(CPUserActionCell *)cell;
 - (void)animateSlideButtonsWithNewCenter:(CGFloat)newCenter delay:(NSTimeInterval)delay duration:(NSTimeInterval)duration animated:(BOOL)animated;

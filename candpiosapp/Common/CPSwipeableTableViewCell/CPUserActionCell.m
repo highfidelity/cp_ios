@@ -44,7 +44,7 @@
 @property (nonatomic, assign) CPUserActionCellDirection currentDirection;
 @property (nonatomic, readonly) CGFloat panFullOpenWidth;
 @property (nonatomic, readonly) CGAffineTransform buttonBumpStartingTransform;
-@property (nonatomic, readonly) BOOL isActionButtonsVisible;
+@property (nonatomic, readonly) BOOL areActionButtonsVisible;
 
 - (BOOL)shouldDragLeft;
 - (BOOL)shouldDragRight;
@@ -75,7 +75,7 @@
 @synthesize inactiveColor;
 
 - (void)dealloc {
-    [self unregisterFromNotifications];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)awakeFromNib
@@ -187,7 +187,7 @@
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
     UIView *hitView = [super hitTest:point withEvent:event];
-    if (self.isActionButtonsVisible) {
+    if (self.areActionButtonsVisible) {
         if (hitView == self) {
             return nil;
         }
@@ -214,7 +214,7 @@
 - (void)tap:(UITapGestureRecognizer *)recognizer 
 {
     if (recognizer.state == UIGestureRecognizerStateEnded) {
-        if (self.isActionButtonsVisible) {
+        if (self.areActionButtonsVisible) {
             // noop
         } else {
             // mimic row selection - highlight and push the child view
@@ -271,19 +271,27 @@
                 (newCenterPosition > originalCenter && ![self shouldDragRight])) {
                 newCenterPosition = originalCenter;
             }
-
-            // if our style is quick action then don't go past the defined margin
-            if (newCenterPosition > originalCenter + QUICK_ACTION_LOCK && self.rightStyle == CPUserActionCellSwipeStyleQuickAction) {
-                newCenterPosition = originalCenter + QUICK_ACTION_LOCK;
-            } else if (newCenterPosition < originalCenter - QUICK_ACTION_LOCK && self.leftStyle == CPUserActionCellSwipeStyleQuickAction) {
-                newCenterPosition = originalCenter - QUICK_ACTION_LOCK;
+            
+            switch (self.rightStyle) {
+                case CPUserActionCellSwipeStyleQuickAction:
+                    newCenterPosition = MIN(originalCenter + QUICK_ACTION_LOCK, newCenterPosition);
+                    break;
+                case CPUserActionCellSwipeStyleReducedAction:
+                    newCenterPosition = MIN(originalCenter + REDUCED_ACTION_LOCK, newCenterPosition);
+                    break;
+                default:
+                    break;
             }
             
-            // if our style is quick action then don't go past the defined margin
-            if (newCenterPosition > originalCenter + REDUCED_ACTION_LOCK && self.rightStyle == CPUserActionCellSwipeStyleReducedAction) {
-                newCenterPosition = originalCenter + REDUCED_ACTION_LOCK;
-            } else if (newCenterPosition < originalCenter - REDUCED_ACTION_LOCK && self.leftStyle == CPUserActionCellSwipeStyleReducedAction) {
-                newCenterPosition = originalCenter - REDUCED_ACTION_LOCK;
+            switch (self.leftStyle) {
+                case CPUserActionCellSwipeStyleQuickAction:
+                    newCenterPosition = MAX(originalCenter - QUICK_ACTION_LOCK, newCenterPosition);
+                    break;
+                case CPUserActionCellSwipeStyleReducedAction:
+                    newCenterPosition = MAX(originalCenter - REDUCED_ACTION_LOCK, newCenterPosition);
+                    break;
+                default:
+                    break;
             }
             
             // Let's not go waaay out of bounds
@@ -303,22 +311,22 @@
         case UIGestureRecognizerStateCancelled: {
             
             NSTimeInterval fullOpenAnimationDuration = 0.2;
-            CGFloat openAmout = newCenterPosition - self.originalCenter;
+            CGFloat openAmount = newCenterPosition - self.originalCenter;
             CGFloat thresholdAmount = self.panFullOpenWidth / 2;
             CGFloat velocityDuration = fullOpenAnimationDuration / 2.;
             CGFloat velocityShift = velocity.x * velocityDuration;
             
-            CGFloat openAmoutWithVelocity = openAmout + velocityShift;
-            if (openAmoutWithVelocity >= thresholdAmount) {
+            CGFloat openAmountWithVelocity = openAmount + velocityShift;
+            if (openAmountWithVelocity >= thresholdAmount) {
                 newCenterPosition = originalCenter + self.panFullOpenWidth;
                 
-                if (openAmoutWithVelocity > self.panFullOpenWidth) {
-                    fullOpenAnimationDuration /= 2 * velocityShift / (self.panFullOpenWidth - openAmout);
+                if (openAmountWithVelocity > self.panFullOpenWidth) {
+                    fullOpenAnimationDuration /= 2 * velocityShift / (self.panFullOpenWidth - openAmount);
                 }
             } else {
                 newCenterPosition = originalCenter;
                 
-                if (openAmoutWithVelocity < 0) {
+                if (openAmountWithVelocity < 0) {
                     fullOpenAnimationDuration /= 2 * velocityShift / -panAmount;
                 }
             }
@@ -366,7 +374,7 @@
     }
 }
 
-- (BOOL)isActionButtonsVisible {
+- (BOOL)areActionButtonsVisible {
     return self.contentView.center.x != self.originalCenter;
 }
 
@@ -376,14 +384,12 @@
 
 - (BOOL)shouldDragLeft
 {
-    return (self.leftStyle == CPUserActionCellSwipeStyleQuickAction ||
-            self.leftStyle == CPUserActionCellSwipeStyleReducedAction);
+    return self.leftStyle != CPUserActionCellSwipeStyleNone;
 }
 
 - (BOOL)shouldDragRight
 {
-    return (self.rightStyle == CPUserActionCellSwipeStyleQuickAction ||
-            self.rightStyle == CPUserActionCellSwipeStyleReducedAction);
+    return self.rightStyle != CPUserActionCellSwipeStyleNone;
 }
 
 - (CGFloat)originalCenter
@@ -407,19 +413,16 @@
                               self.sendMessageButton,
                               self.exchangeContactsButton,
                               nil];
-    int i = 0;
+    
     for (UIButton *button in actionButtons) {
         CGFloat buttonX = button.center.x + 20;
         NSTimeInterval buttonDelay = delay + duration * abs(buttonX - oldLeftX) / abs(newLeftX - oldLeftX);
         
         if (oldLeftX < buttonX && newLeftX >= buttonX) {
             [self bumpButtonIn:button withDelay:buttonDelay animated:animated];
-        }
-        
-        if (oldLeftX >= buttonX && newLeftX < buttonX) {
+        } else if (oldLeftX >= buttonX && newLeftX < buttonX) {
             [self bumpButtonOut:button withDelay:buttonDelay animated:animated];
         }
-        i++;
     }
 }
 
@@ -577,10 +580,6 @@
                                              selector:@selector(cancelOpenSlideActionButtons:)
                                                  name:kCancelOpenSlideActionButtonsNotification
                                                object:nil];
-}
-
-- (void)unregisterFromNotifications {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)cancelOpenSlideActionButtons:(NSNotification *)notification {
