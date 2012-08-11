@@ -18,10 +18,7 @@ static CPUserSessionHandler *sharedHandler;
 
 + (void)initialize
 {
-    static BOOL initialized = NO;
-    if(!initialized)
-    {
-        initialized = YES;
+    if(!sharedHandler) {
         sharedHandler = [[self alloc] init];
     }
 }
