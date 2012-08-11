@@ -51,6 +51,10 @@
 		32D1E99A15701993009B45BD /* checkbox-checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D1E99615701993009B45BD /* checkbox-checked@2x.png */; };
 		32D1E99B15701993009B45BD /* checkbox-unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D1E99715701993009B45BD /* checkbox-unchecked.png */; };
 		32D1E99C15701993009B45BD /* checkbox-unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D1E99815701993009B45BD /* checkbox-unchecked@2x.png */; };
+		4E0B79C215D321E600D36078 /* check-in-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E0B79C015D321E600D36078 /* check-in-button.png */; };
+		4E0B79C315D321E600D36078 /* check-in-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E0B79C115D321E600D36078 /* check-in-button@2x.png */; };
+		4E0B4F8915D33C490041FAC0 /* sign-up-with-linkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E0B4F8715D33C490041FAC0 /* sign-up-with-linkedin.png */; };
+		4E0B4F8A15D33C490041FAC0 /* sign-up-with-linkedin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E0B4F8815D33C490041FAC0 /* sign-up-with-linkedin@2x.png */; };
 		4E28A7C915AB5E08003C601A /* exchange-contacts-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7BD15AB5E08003C601A /* exchange-contacts-off.png */; };
 		4E28A7CA15AB5E08003C601A /* exchange-contacts-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7BE15AB5E08003C601A /* exchange-contacts-off@2x.png */; };
 		4E28A7CB15AB5E08003C601A /* exchange-contacts-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7BF15AB5E08003C601A /* exchange-contacts-on.png */; };
@@ -657,6 +661,10 @@
 		32D1E99615701993009B45BD /* checkbox-checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-checked@2x.png"; sourceTree = "<group>"; };
 		32D1E99715701993009B45BD /* checkbox-unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-unchecked.png"; sourceTree = "<group>"; };
 		32D1E99815701993009B45BD /* checkbox-unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-unchecked@2x.png"; sourceTree = "<group>"; };
+		4E0B79C015D321E600D36078 /* check-in-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-in-button.png"; sourceTree = "<group>"; };
+		4E0B79C115D321E600D36078 /* check-in-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-in-button@2x.png"; sourceTree = "<group>"; };
+		4E0B4F8715D33C490041FAC0 /* sign-up-with-linkedin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin.png"; sourceTree = SOURCE_ROOT; };
+		4E0B4F8815D33C490041FAC0 /* sign-up-with-linkedin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin@2x.png"; sourceTree = SOURCE_ROOT; };
 		4E28A7BD15AB5E08003C601A /* exchange-contacts-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exchange-contacts-off.png"; sourceTree = "<group>"; };
 		4E28A7BE15AB5E08003C601A /* exchange-contacts-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exchange-contacts-off@2x.png"; sourceTree = "<group>"; };
 		4E28A7BF15AB5E08003C601A /* exchange-contacts-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exchange-contacts-on.png"; sourceTree = "<group>"; };
@@ -3162,8 +3170,10 @@
 				4E9D405115CC4E1300231055 /* paper-texture@2x.png in Resources */,
 				53DEDC5915CDB9F4008F5D2A /* user-image-mask-for-replies.png in Resources */,
 				53DEDC5A15CDB9F4008F5D2A /* user-image-mask-for-replies@2x.png in Resources */,
-				530FC23B15D42BBD00838B5A /* sign-up-with-linkedin.png in Resources */,
-				530FC23C15D42BBD00838B5A /* sign-up-with-linkedin@2x.png in Resources */,
+				4E0B79C215D321E600D36078 /* check-in-button.png in Resources */,
+				4E0B79C315D321E600D36078 /* check-in-button@2x.png in Resources */,
+				4E0B4F8915D33C490041FAC0 /* sign-up-with-linkedin.png in Resources */,
+				4E0B4F8A15D33C490041FAC0 /* sign-up-with-linkedin@2x.png in Resources */,
 				530FC23D15D42BBD00838B5A /* splash-screen-logo.png in Resources */,
 				530FC23E15D42BBD00838B5A /* splash-screen-logo@2x.png in Resources */,
 				530FC24115D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard in Resources */,
