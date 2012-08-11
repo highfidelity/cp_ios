@@ -189,8 +189,8 @@ static CPUserSessionHandler *sharedHandler;
                                                                  [CPAppDelegate window].frame.size.width,
                                                                  [CPAppDelegate window].frame.size.height);
     
-    [[CPAppDelegate settingsMenuController].view bringSubviewToFront: [CPAppDelegate settingsMenuController].blockUIButton];
-    [[CPAppDelegate settingsMenuController].view bringSubviewToFront: [CPAppDelegate settingsMenuController].loginBanner];
+    [[CPAppDelegate settingsMenuController].view bringSubviewToFront:[CPAppDelegate settingsMenuController].blockUIButton];
+    [[CPAppDelegate settingsMenuController].view bringSubviewToFront:[CPAppDelegate settingsMenuController].loginBanner];
     
     [UIView animateWithDuration:0.3 animations:^ {
         [CPAppDelegate settingsMenuController].loginBanner.frame = CGRectMake(0.0, 0.0,
