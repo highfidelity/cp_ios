@@ -7,20 +7,26 @@
 //
 
 #import "UIViewController+CPUserActionCellAdditions.h"
+#import "CPUserActionCell.h"
 
 @implementation UIViewController (CPUserActionCellAdditions)
 
 - (void)animateSlideWaveWithCPUserActionCells:(NSArray *)cells {
     NSTimeInterval delay = 0.5;
     for (UITableViewCell *cell in cells) {
-        cell.contentView.transform = CGAffineTransformMakeTranslation(160, 0);
-        [UIView animateWithDuration:0.3
-                              delay:delay
-                            options:kNilOptions
-                         animations:^{
-                             cell.contentView.transform = CGAffineTransformMakeTranslation(0, 0);
-                         }
-                         completion:nil];
+        if ([cell isKindOfClass:[CPUserActionCell class]]) {
+            CPUserActionCell *userActionCell = (CPUserActionCell *)cell;
+            [userActionCell animateSlideButtonsWithNewCenter:userActionCell.originalCenter + 130
+                                                       delay:0
+                                                    duration:0
+                                                    animated:NO];
+            
+            [userActionCell animateSlideButtonsWithNewCenter:userActionCell.originalCenter
+                                                       delay:delay
+                                                    duration:0.3
+                                                    animated:YES];
+        }
+        
         delay += 0.1;
     }
 }
