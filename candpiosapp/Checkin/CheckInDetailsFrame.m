@@ -30,22 +30,26 @@
     CGContextSetLineWidth(context, 0.5);
     CGContextSetRGBStrokeColor(context, 0.2, 0.2, 0.2, 0.2);
     
-    // draw the frame
-    CGContextMoveToPoint(context, self.frame.size.width - 85, 30);
-    CGContextAddLineToPoint(context, self.frame.size.width - 85, self.frame.size.height - 1);
-    CGContextAddLineToPoint(context, 1, self.frame.size.height - 1);
-    CGContextAddLineToPoint(context, 1, self.frame.size.height - 65);
-    CGContextAddLineToPoint(context, self.frame.size.width - 85, self.frame.size.height - 65);
-    CGContextAddLineToPoint(context, self.frame.size.width - 1, self.frame.size.height - 65);
-    CGContextAddLineToPoint(context, self.frame.size.width - 1, 1);
-    CGContextAddLineToPoint(context, self.frame.size.width - 85, 1);
-    CGContextAddLineToPoint(context, self.frame.size.width - 85, self.frame.size.height - 65);
-    CGContextMoveToPoint(context, self.frame.size.width - 85, self.frame.size.height - 1);
-    CGContextAddLineToPoint(context, self.frame.size.width - 1, self.frame.size.height - 1);
-    CGContextAddLineToPoint(context, self.frame.size.width - 1, self.frame.size.height - 65);   
+    // render a box with a vertical divider
+    CGFloat verticalDividerX = self.frame.size.width - 111;
+    CGFloat boxTopY = self.frame.size.height - 57;
+    CGFloat boxBottomY = self.frame.size.height - 1;
+    CGFloat boxLeftX = 1;
+    CGFloat boxRightX = self.frame.size.width - 1;
+    CGContextMoveToPoint(context, verticalDividerX, boxTopY);
+    CGContextAddLineToPoint(context, verticalDividerX, boxBottomY);
+    CGContextAddLineToPoint(context, boxLeftX, boxBottomY);
+    CGContextAddLineToPoint(context, boxLeftX, boxTopY);
+    CGContextAddLineToPoint(context, verticalDividerX, boxTopY);
+    CGContextAddLineToPoint(context, boxRightX, boxTopY);
+    CGContextMoveToPoint(context, verticalDividerX, boxBottomY);
+    CGContextAddLineToPoint(context, boxRightX, boxBottomY);
+    CGContextAddLineToPoint(context, boxRightX, boxTopY);
     CGContextStrokePath(context);    
     CGContextSetRGBStrokeColor(context, 0.2, 0.2, 0.2, 1.0);
-    for (NSNumber *point in [NSArray arrayWithObjects:[NSNumber numberWithInt:30], [NSNumber numberWithInt:78], [NSNumber numberWithInt:125], [NSNumber numberWithInt:172], nil]) {
+    
+    // draw the slider ticks
+    for (NSNumber *point in @[@25, @73, @120, @167]) {
         CGContextMoveToPoint(context, [point floatValue], 68);
         CGContextAddLineToPoint(context, [point floatValue], 58);
     }    

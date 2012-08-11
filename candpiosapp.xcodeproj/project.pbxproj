@@ -1933,6 +1933,8 @@
 		536DE92A150170CC00794650 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				4E0B79C015D321E600D36078 /* check-in-button.png */,
+				4E0B79C115D321E600D36078 /* check-in-button@2x.png */,
 				53A1EAA91587B4B7009D8E31 /* tab-check-in-clock-hand.png */,
 				53A1EAAA1587B4B7009D8E31 /* tab-check-in-clock-hand@2x.png */,
 				53A1EAAB1587B4B7009D8E31 /* tab-check-in.png */,
