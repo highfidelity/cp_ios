@@ -23,22 +23,28 @@
 #import "OneOnOneChatViewController.h"
 #import "UserProfileViewController.h"
 
-# define SWITCH_LEFT_MARGIN 15
-# define QUICK_ACTION_MARGIN 70
-# define QUICK_ACTION_LOCK 3 * (QUICK_ACTION_MARGIN + 10)
-# define REDUCED_ACTION_LOCK 2 * (QUICK_ACTION_MARGIN + 10)
+#define SWITCH_LEFT_MARGIN 23
+#define QUICK_ACTION_MARGIN 56
+#define QUICK_ACTION_LOCK 3 * (QUICK_ACTION_MARGIN + 10)
+#define REDUCED_ACTION_LOCK 2 * (QUICK_ACTION_MARGIN + 10)
 #define RIGHT_SWIPE_SWITCH_IMAGE_VIEW_TAG 4293
 #define LEFT_SWIPE_SWITCH_IMAGE_VIEW_TAG 4294
 #define FULL_PADDING 10.0
 
+#define kMinimumPan      60.0
+#define kBOUNCE_DISTANCE 20.0
+
+
 @interface CPUserActionCell()
 @property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *tapRecognizer;
-@property (nonatomic, readonly, assign) CGFloat originalCenter;
 @property (nonatomic, assign) CGFloat initialTouchPositionX;
 @property (nonatomic, assign) CGFloat initialHorizontalCenter;
 @property (nonatomic, assign) CPUserActionCellDirection lastDirection;
 @property (nonatomic, assign) CPUserActionCellDirection currentDirection;
+@property (nonatomic, readonly) CGFloat panFullOpenWidth;
+@property (nonatomic, readonly) CGAffineTransform buttonBumpStartingTransform;
+@property (nonatomic, readonly) BOOL areActionButtonsVisible;
 
 - (BOOL)shouldDragLeft;
 - (BOOL)shouldDragRight;
@@ -60,15 +66,17 @@
 @synthesize initialHorizontalCenter = _initialHorizontalCenter;
 @synthesize lastDirection = _lastDirection;
 @synthesize currentDirection = _currentDirection;
-@dynamic revealing;
 @synthesize tapRecognizer;
 @synthesize user;
 @synthesize sendLoveButton;
 @synthesize sendMessageButton;
 @synthesize exchangeContactsButton;
-@synthesize toggleState;
 @synthesize activeColor;
 @synthesize inactiveColor;
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)awakeFromNib
 {
@@ -95,8 +103,8 @@
     [self addGestureRecognizer:self.tapRecognizer];
     
     // setup the background view
-    self.hiddenView = [[UIView alloc] initWithFrame:self.contentView.frame];
-    self.hiddenView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-dark"]];
+    self.hiddenView = [[UIButton alloc] initWithFrame:self.contentView.frame];
+    self.hiddenView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-light_toast-dark-960wide"]];
     [self.hiddenView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     
     // setup a CGRect that we'll manipulate to add some subviews
@@ -142,6 +150,7 @@
     // alloc-init the bottom line and match the color with the line color from the user list table
     UIView *bottomLine = [[UIView alloc] initWithFrame:changeFrame];
     bottomLine.backgroundColor = [UIColor colorWithR:68 G:68 B:68 A:1];
+    bottomLine.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
     // add the bottom line to the hidden view
     [self.hiddenView addSubview:bottomLine];
@@ -149,60 +158,63 @@
     // make sure the hiddenView clips its subviews to its bounds
     self.hiddenView.clipsToBounds = YES;
     
-    // init the toggles to inactive
-    self.toggleState = CPUserActionCellSwitchStateOff;
-    
     // default colors
     self.activeColor = [CPUIHelper CPTealColor];
     self.inactiveColor = [UIColor colorWithR:51 G:51 B:51 A:1];
         
     // Additional buttons for contact exchange and chat
     CGFloat originX = SWITCH_LEFT_MARGIN;
-    self.sendLoveButton = [self addToggleWithPrefix:@"send-love" originX:originX selector:@selector(sendLoveAction)];
+    self.sendLoveButton = [self addActionButtonWithImageNamed:@"quick-action-recognize"
+                                                      originX:originX
+                                                     selector:@selector(sendLoveAction)];
+    
     originX += self.sendLoveButton.frame.size.width + SWITCH_LEFT_MARGIN;
-    self.sendMessageButton = [self addToggleWithPrefix:@"send-message" originX:originX selector:@selector(sendMessageAction)];
+    self.sendMessageButton = [self addActionButtonWithImageNamed:@"quick-action-chat"
+                                                         originX:originX
+                                                        selector:@selector(sendMessageAction)];
+    
     originX += self.sendMessageButton.frame.size.width + SWITCH_LEFT_MARGIN;
-    self.exchangeContactsButton = [self addToggleWithPrefix:@"exchange-contacts" originX:originX selector:@selector(exchangeContactsAction)];
+    self.exchangeContactsButton = [self addActionButtonWithImageNamed:@"quick-action-exchange-cards"
+                                                              originX:originX
+                                                             selector:@selector(exchangeContactsAction)];
 
     // add subviews
-	[self addSubview:self.hiddenView];
-	[self addSubview:self.contentView];    
+    [self addSubview:self.hiddenView];
+    [self addSubview:self.contentView];
+    
+    [self registerForNotification];
 }
 
-static char BOOLRevealing;
-
-- (BOOL)isRevealing
-{
-	return [(NSNumber *)objc_getAssociatedObject(self, &BOOLRevealing) boolValue];
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    UIView *hitView = [super hitTest:point withEvent:event];
+    if (self.areActionButtonsVisible) {
+        if (hitView == self) {
+            return nil;
+        }
+    }
+    return hitView;
 }
 
-- (void)setRevealing:(BOOL)revealing
-{
-	// Don't change the value if its already that value.
-	// Reveal unless the delegate says no
-	if (revealing == self.revealing || revealing)
-		return;
-	
-	[self _setRevealing:revealing];
-    	
-	if (self.isRevealing)
-		[self performActionInDirection:(self.isRevealing) ? self.currentDirection : self.lastDirection];
-	else
-		[self slideInContentViewFromDirection:(self.isRevealing) ? self.currentDirection : self.lastDirection offsetMultiplier:self.bounceMultiplier slideDelay:0];
-}
-
-- (void)_setRevealing:(BOOL)revealing
-{
-    [self willChangeValueForKey:@"isRevealing"];
-	objc_setAssociatedObject(self, &BOOLRevealing, [NSNumber numberWithBool:revealing], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-	[self didChangeValueForKey:@"isRevealing"];
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    
+    NSArray *actionButtons = [NSArray arrayWithObjects:
+                              self.sendLoveButton,
+                              self.sendMessageButton,
+                              self.exchangeContactsButton,
+                              nil];
+    for (UIButton *button in actionButtons) {
+        button.hidden = YES;
+        button.alpha = 0;
+        button.transform = CGAffineTransformIdentity;
+    }
 }
 
 #pragma mark - Handing Touch
 - (void)tap:(UITapGestureRecognizer *)recognizer 
 {
     if (recognizer.state == UIGestureRecognizerStateEnded) {
-        if (self.isRevealing) {
+        if (self.areActionButtonsVisible) {
             // noop
         } else {
             // mimic row selection - highlight and push the child view
@@ -227,7 +239,6 @@ static char BOOLRevealing;
 
 - (void)pan:(UIPanGestureRecognizer *)recognizer
 {
-    CGPoint translation           = [recognizer translationInView:self];
 	CGPoint currentTouchPoint     = [recognizer locationInView:self];
 	CGPoint velocity              = [recognizer velocityInView:self];
 	
@@ -237,144 +248,148 @@ static char BOOLRevealing;
     CGFloat newCenterPosition     = self.initialHorizontalCenter - panAmount;
     CGFloat centerX               = self.contentView.center.x;
 	
-	if (recognizer.state == UIGestureRecognizerStateBegan) {
-		
-		// Set a baseline for the panning
-		self.initialTouchPositionX = currentTouchPositionX;
-		self.initialHorizontalCenter = self.contentView.center.x;
-		
-	} else if (recognizer.state == UIGestureRecognizerStateChanged) {
-		
-		// If the pan amount is negative, then the last direction is left, and vice versa.
-		if (newCenterPosition - centerX < 0)
-			self.lastDirection = CPUserActionCellDirectionLeft;
-		else
-			self.lastDirection = CPUserActionCellDirectionRight;
-        
-		// Don't let you drag past a certain point depending on direction
-		if ((newCenterPosition < originalCenter && ![self shouldDragLeft]) || (newCenterPosition > originalCenter && ![self shouldDragRight])) {
-            newCenterPosition = originalCenter;
-        }
-        
-        
-        // if our style is full slide then don't go past the defined margin
-        CGFloat fullLock = self.bounds.size.width - FULL_PADDING;
-        if (newCenterPosition > originalCenter + fullLock && self.rightStyle == CPUserActionCellSwipeStyleFull) {
-            newCenterPosition = originalCenter + fullLock;
-        } else if (newCenterPosition < originalCenter - fullLock && self.leftStyle == CPUserActionCellSwipeStyleFull) {
-            newCenterPosition = originalCenter - fullLock;
-        }
-        
-        // if our style is quick action then don't go past the defined margin
-        if (newCenterPosition > originalCenter + QUICK_ACTION_LOCK && self.rightStyle == CPUserActionCellSwipeStyleQuickAction) {
-            newCenterPosition = originalCenter + QUICK_ACTION_LOCK;
-        } else if (newCenterPosition < originalCenter - QUICK_ACTION_LOCK && self.leftStyle == CPUserActionCellSwipeStyleQuickAction) {
-            newCenterPosition = originalCenter - QUICK_ACTION_LOCK;
-        }
-
-        // if our style is quick action then don't go past the defined margin
-        if (newCenterPosition > originalCenter + REDUCED_ACTION_LOCK && self.rightStyle == CPUserActionCellSwipeStyleReducedAction) {
-            newCenterPosition = originalCenter + REDUCED_ACTION_LOCK;
-        } else if (newCenterPosition < originalCenter - REDUCED_ACTION_LOCK && self.leftStyle == CPUserActionCellSwipeStyleReducedAction) {
-            newCenterPosition = originalCenter - REDUCED_ACTION_LOCK;
-        }
-
-		// Let's not go waaay out of bounds
-		if (newCenterPosition > self.bounds.size.width + originalCenter)
-			newCenterPosition = self.bounds.size.width + originalCenter;
-		
-		else if (newCenterPosition < -originalCenter)
-			newCenterPosition = -originalCenter;
-        
-        // check if we need to switch the quick action image
-        [self checkForQuickActionSwitchToggleForNewCenter:newCenterPosition];
-		
-		CGPoint center = self.contentView.center;
-		center.x = newCenterPosition;
-        
-		self.contentView.layer.position = center;
-		
-	} else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
-        // call the action for the active button
-        UIButton *activeButton = [self buttonForState:self.toggleState];
-        [activeButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-        
-		// Swiping left, velocity is below 0.
-		// Swiping right, it is above 0
-		// If the velocity is above the width in points per second at any point in the pan, push it to the acceptable side
-		// Otherwise, if we are 60 points in, push to the other side
-		// If we are < 60 points in, bounce back
-		
-#define kMinimumVelocity self.contentView.frame.size.width
-#define kMinimumPan      60.0
-		
-		CGFloat velocityX = velocity.x;
-        BOOL push = NO;
-        
-        // the minimum pan is defined above but is different if it's a quick action
-        CGFloat minPan = [self styleForDirectionIsQuickAction:self.lastDirection] ? QUICK_ACTION_MARGIN : kMinimumPan;
-        
-		push |= ((self.lastDirection == CPUserActionCellDirectionLeft && translation.x < -minPan) || (self.lastDirection == CPUserActionCellDirectionRight && translation.x > minPan));
-        
-        // only consider the velocity if this isn't for a quick action
-        if (![self styleForDirectionIsQuickAction:self.lastDirection]) {
-            push |= (velocityX < -kMinimumVelocity);
-            push |= (velocityX > kMinimumVelocity);
+    switch (recognizer.state) {
+        case UIGestureRecognizerStateBegan: {
+            // Set a baseline for the panning
+            self.initialTouchPositionX = currentTouchPositionX;
+            self.initialHorizontalCenter = self.contentView.center.x;
             
-            if (velocityX > 0 && self.lastDirection == CPUserActionCellDirectionLeft)
-                push = NO;
+            [[self class] cancelOpenSlideActionButtonsNotification:self];
             
-            else if (velocityX < 0 && self.lastDirection == CPUserActionCellDirectionRight)
-                push = NO;
+            break;
         }
-        
-		push &= ((self.lastDirection == CPUserActionCellDirectionRight && self.shouldDragRight) || (self.lastDirection == CPUserActionCellDirectionLeft && self.shouldDragLeft));
-        
-		if (push && !self.isRevealing) {
-			[self _setRevealing:YES];
-			[self performActionInDirection:self.lastDirection];
+        case UIGestureRecognizerStateChanged: {
+            // If the pan amount is negative, then the last direction is left, and vice versa.
+            if (newCenterPosition - centerX < 0) {
+                self.lastDirection = CPUserActionCellDirectionLeft;
+            } else {
+                self.lastDirection = CPUserActionCellDirectionRight;
+            }
             
-			self.currentDirection = self.lastDirection;
-			
-		} else if (self.isRevealing && translation.x != 0) {
-			CGFloat multiplier = self.bounceMultiplier;
-			if (!self.isRevealing)
-				multiplier *= -1.0;
+            // Don't let you drag past a certain point depending on direction
+            if ((newCenterPosition < originalCenter && ![self shouldDragLeft]) ||
+                (newCenterPosition > originalCenter && ![self shouldDragRight])) {
+                newCenterPosition = originalCenter;
+            }
             
-			[self slideInContentViewFromDirection:self.currentDirection offsetMultiplier:multiplier slideDelay:0];
-			[self _setRevealing:NO];
-			
-		} else if (translation.x != 0) {
-			// Figure out which side we've dragged on.
-			CPUserActionCellDirection finalDir = CPUserActionCellDirectionRight;
-			if (translation.x < 0)
-				finalDir = CPUserActionCellDirectionLeft;
+            switch (self.rightStyle) {
+                case CPUserActionCellSwipeStyleQuickAction:
+                    newCenterPosition = MIN(originalCenter + QUICK_ACTION_LOCK, newCenterPosition);
+                    break;
+                case CPUserActionCellSwipeStyleReducedAction:
+                    newCenterPosition = MIN(originalCenter + REDUCED_ACTION_LOCK, newCenterPosition);
+                    break;
+                default:
+                    break;
+            }
             
-			[self slideInContentViewFromDirection:finalDir offsetMultiplier:-1.0 * self.bounceMultiplier slideDelay:0];
-			[self _setRevealing:NO];
-		}
+            switch (self.leftStyle) {
+                case CPUserActionCellSwipeStyleQuickAction:
+                    newCenterPosition = MAX(originalCenter - QUICK_ACTION_LOCK, newCenterPosition);
+                    break;
+                case CPUserActionCellSwipeStyleReducedAction:
+                    newCenterPosition = MAX(originalCenter - REDUCED_ACTION_LOCK, newCenterPosition);
+                    break;
+                default:
+                    break;
+            }
+            
+            // Let's not go waaay out of bounds
+            if (newCenterPosition > self.bounds.size.width + originalCenter) {
+                newCenterPosition = self.bounds.size.width + originalCenter;
+            } else if (newCenterPosition < -originalCenter) {
+                newCenterPosition = -originalCenter;
+            }
+            
+            [self animateSlideButtonsWithNewCenter:newCenterPosition
+                                             delay:0
+                                          duration:0
+                                          animated:YES];
+            break;
+        }
+        case UIGestureRecognizerStateEnded:
+        case UIGestureRecognizerStateCancelled: {
+            
+            NSTimeInterval fullOpenAnimationDuration = 0.2;
+            CGFloat openAmount = newCenterPosition - self.originalCenter;
+            CGFloat thresholdAmount = self.panFullOpenWidth / 2;
+            CGFloat velocityDuration = fullOpenAnimationDuration / 2.;
+            CGFloat velocityShift = velocity.x * velocityDuration;
+            
+            CGFloat openAmountWithVelocity = openAmount + velocityShift;
+            if (openAmountWithVelocity >= thresholdAmount) {
+                newCenterPosition = originalCenter + self.panFullOpenWidth;
+                
+                if (openAmountWithVelocity > self.panFullOpenWidth) {
+                    fullOpenAnimationDuration /= 2 * velocityShift / (self.panFullOpenWidth - openAmount);
+                }
+            } else {
+                newCenterPosition = originalCenter;
+                
+                if (openAmountWithVelocity < 0) {
+                    fullOpenAnimationDuration /= 2 * velocityShift / -panAmount;
+                }
+            }
+            
+            [self animateSlideButtonsWithNewCenter:newCenterPosition
+                                             delay:0
+                                          duration:fullOpenAnimationDuration
+                                          animated:YES];
+            break;
+        }
+        default:
+            break;
 	}
 }
 
+- (void)animateSlideButtonsWithNewCenter:(CGFloat)newCenter delay:(NSTimeInterval)delay duration:(NSTimeInterval)duration animated:(BOOL)animated {
+    [self animateButtonsBumpForNewCenter:newCenter withDelay:delay duration:duration animated:animated];
+    
+    CGPoint center = self.contentView.center;
+    center.x = newCenter;
+    
+    void (^animations)(void) = ^{
+        self.contentView.layer.position = center;
+    };
+    
+    if (0 == duration) {
+        animations();
+    } else {
+        [UIView animateWithDuration:duration
+                              delay:delay
+                            options:kNilOptions
+                         animations:animations
+                         completion:nil];
+    }
+}
+
+- (CGFloat)panFullOpenWidth {
+    switch (self.rightStyle) {
+        case CPUserActionCellSwipeStyleQuickAction:
+            return QUICK_ACTION_LOCK;
+        case CPUserActionCellSwipeStyleReducedAction:
+            return REDUCED_ACTION_LOCK;
+        default:
+            return 0;
+    }
+}
+
+- (BOOL)areActionButtonsVisible {
+    return self.contentView.center.x != self.originalCenter;
+}
+
+- (CGAffineTransform)buttonBumpStartingTransform {
+    return CGAffineTransformMakeScale(0.01, 0.01);
+}
 
 - (BOOL)shouldDragLeft
 {
-	return (self.leftStyle == CPUserActionCellSwipeStyleFull || 
-            self.leftStyle == CPUserActionCellSwipeStyleQuickAction ||
-            self.leftStyle == CPUserActionCellSwipeStyleReducedAction);
+    return self.leftStyle != CPUserActionCellSwipeStyleNone;
 }
 
 - (BOOL)shouldDragRight
 {
-    return (self.rightStyle == CPUserActionCellSwipeStyleFull || 
-            self.rightStyle == CPUserActionCellSwipeStyleQuickAction ||
-            self.rightStyle == CPUserActionCellSwipeStyleReducedAction);
-}
-
-- (BOOL)styleForDirectionIsQuickAction:(CPUserActionCellDirection)direction 
-{
-    return ((direction == CPUserActionCellDirectionLeft && (self.leftStyle == CPUserActionCellSwipeStyleQuickAction || self.leftStyle == CPUserActionCellSwipeStyleReducedAction)) ||
-            (direction == CPUserActionCellDirectionRight && (self.rightStyle == CPUserActionCellSwipeStyleQuickAction || self.rightStyle == CPUserActionCellSwipeStyleReducedAction)));
+    return self.rightStyle != CPUserActionCellSwipeStyleNone;
 }
 
 - (CGFloat)originalCenter
@@ -387,172 +402,97 @@ static char BOOLRevealing;
 	return self.shouldBounce ? MIN(ABS(self.originalCenter - self.contentView.center.x) / kMinimumPan, 1.0) : 0.0;
 }
 
-#pragma mark - Sliding
-#define kBOUNCE_DISTANCE 20.0
-
-- (void)slideInContentViewFromDirection:(CPUserActionCellDirection)direction offsetMultiplier:(CGFloat)multiplier slideDelay:(CGFloat)slideDelay
-{    
-    CGFloat bounceDistance;
-    
-    if ([self styleForDirectionIsQuickAction:direction]) {
-        // this was from a quick action and we're forcing a hide
-        // so make sure we set revealing to NO
-        [self _setRevealing:NO];
-    }
-	
-	if (self.contentView.center.x == self.originalCenter)
-		return;
-	
-	switch (direction) {
-		case CPUserActionCellDirectionRight:
-			bounceDistance = kBOUNCE_DISTANCE * multiplier;
-			break;
-		case CPUserActionCellDirectionLeft:
-			bounceDistance = -kBOUNCE_DISTANCE * multiplier;
-			break;
-		default:
-			@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Unhandled gesture direction" userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:direction] forKey:@"direction"]];
-			break;
-	}
-	
-	[UIView animateWithDuration:0.1
-						  delay:slideDelay
-						options:UIViewAnimationOptionCurveEaseOut|UIViewAnimationOptionAllowUserInteraction 
-					 animations:^{ self.contentView.center = CGPointMake(self.originalCenter, self.contentView.center.y); } 
-					 completion:^(BOOL f) {
-                         
-						 [UIView animateWithDuration:0.1 delay:0 
-											 options:UIViewAnimationCurveLinear
-										  animations:^{ self.contentView.frame = CGRectOffset(self.contentView.frame, bounceDistance, 0); } 
-										  completion:^(BOOL f) {                     
-											  
-                                              [UIView animateWithDuration:0.1 delay:0 
-                                                                  options:UIViewAnimationCurveLinear
-                                                               animations:^{ self.contentView.frame = CGRectOffset(self.contentView.frame, -bounceDistance, 0); } 
-                                                               completion:NULL];
-										  }
-						  ]; 
-					 }];
-}
-
-- (void)slideOutContentViewToNewCenterX:(CGFloat)centerX;
-{
-    [UIView animateWithDuration:0.2 
-						  delay:0 
-						options:UIViewAnimationOptionCurveEaseOut 
-					 animations:^{ self.contentView.center = CGPointMake(centerX, self.contentView.center.y); } 
-					 completion:NULL];
-}
-
-- (void)performActionInDirection:(CPUserActionCellDirection)direction;
-{
-    if ([self styleForDirectionIsQuickAction:direction]) {
-        // make sure the delegate will handle the call
-        // and then tell it to perform the quick action
-        
-        // flick the switch back
-        // use the CPUserActionCellDirection to decide which index to pass to pull the right UIImageView
-        [self changeStateOfQuickActionSwitchForDirection:direction active:0];
-        
-        // slide the content view back in
-        // by setting revealing to NO using the delegate's method
-        [self slideInContentViewFromDirection:direction offsetMultiplier:[self bounceMultiplier] slideDelay:0.15];
-    } else {
-        // calculate the new center depending on the direction of the swipe
-        CGFloat x = direction == CPUserActionCellDirectionLeft ? -self.originalCenter +  FULL_PADDING: self.contentView.frame.size.width + self.originalCenter - FULL_PADDING; 
-        [self slideOutContentViewToNewCenterX:x];
-    }
-}
-
 #pragma mark - Methods for quick action
 
-- (void)checkForQuickActionSwitchToggleForNewCenter:(CGFloat)centerX {  
-    // currently the app only uses quick action on right swipe
-    // code will need to be refactored if we need to add that functionality on the right side
-    if (self.rightStyle == CPUserActionCellSwipeStyleQuickAction || self.rightStyle == CPUserActionCellSwipeStyleReducedAction) {
-        // get the position of the left edge of the cell
-        CGFloat leftEdge = centerX - (self.contentView.frame.size.width / 2);
+- (void)animateButtonsBumpForNewCenter:(CGFloat)newCenterX withDelay:(NSTimeInterval)delay duration:(NSTimeInterval)duration animated:(BOOL)animated {
+    CGFloat oldLeftX = self.contentView.center.x - self.originalCenter;
+    CGFloat newLeftX = newCenterX - self.originalCenter;
+    
+    NSArray *actionButtons = [NSArray arrayWithObjects:
+                              self.sendLoveButton,
+                              self.sendMessageButton,
+                              self.exchangeContactsButton,
+                              nil];
+    
+    for (UIButton *button in actionButtons) {
+        CGFloat buttonX = button.center.x + 20;
+        NSTimeInterval buttonDelay = delay + duration * abs(buttonX - oldLeftX) / abs(newLeftX - oldLeftX);
         
-        // use updateImageIndex to see if we need to update the imageView's image
-        int newState = 0;
-        
-        CGFloat sendLoveButtonMiddle = SWITCH_LEFT_MARGIN + self.sendLoveButton.frame.size.width / 2;
-        CGFloat sendMessageButtonStart = 2*SWITCH_LEFT_MARGIN + self.sendLoveButton.frame.size.width;
-        CGFloat sendMessageButtonMiddle = sendMessageButtonStart + self.sendMessageButton.frame.size.width / 2;
-        CGFloat exchangeContactsButtonStart = 3*SWITCH_LEFT_MARGIN + self.sendLoveButton.frame.size.width + self.sendMessageButton.frame.size.width;
-        CGFloat exchangeContactsButtonMiddle = exchangeContactsButtonStart + self.exchangeContactsButton.frame.size.width / 2;
-        // check if we need to toggle the switch
-        if (leftEdge >= sendLoveButtonMiddle &&
-            leftEdge <= sendMessageButtonStart) {
-            newState = 1;
-        } else if (leftEdge >= sendMessageButtonMiddle && 
-                   leftEdge <= exchangeContactsButtonStart) {
-            newState = 2;
-        } else if (leftEdge >= exchangeContactsButtonMiddle) { 
-            newState = 3;
-        } 
-        
-        // on state change, update the button and play the sound effect
-        [self changeStateOfQuickActionSwitchForDirection:CPUserActionCellDirectionRight active:newState];
+        if (oldLeftX < buttonX && newLeftX >= buttonX) {
+            [self bumpButtonIn:button withDelay:buttonDelay animated:animated];
+        } else if (oldLeftX >= buttonX && newLeftX < buttonX) {
+            [self bumpButtonOut:button withDelay:buttonDelay animated:animated];
+        }
     }
 }
 
--(UIButton*) addToggleWithPrefix:(NSString*)prefix originX:(CGFloat)originX selector:(SEL)selector {
+- (void)bumpButtonIn:(UIButton *)button withDelay:(NSTimeInterval)delay animated:(BOOL)animated {
+    if (button.hidden) {
+        button.alpha = 0;
+        button.transform = self.buttonBumpStartingTransform;
+        button.hidden = NO;
+    }
+    
+    void (^animations)(void) = ^{
+        button.alpha = 1;
+        button.transform = CGAffineTransformIdentity;
+    };
+    
+    if (animated) {
+        [UIView animateWithDuration:0.2
+                              delay:delay
+                            options:kNilOptions
+                         animations:animations
+                         completion:nil];
+    } else {
+        animations();
+    }
+}
+
+- (void)bumpButtonOut:(UIButton *)button withDelay:(NSTimeInterval)delay animated:(BOOL)animated {
+    void (^animations)(void) = ^{
+        button.transform = self.buttonBumpStartingTransform;
+        button.alpha = 0;
+    };
+    
+    if (animated) {
+        [UIView animateWithDuration:0.2
+                              delay:delay
+                            options:kNilOptions
+                         animations:animations
+                         completion:nil];
+    } else {
+        animations();
+    }
+}
+
+-(UIButton*)addActionButtonWithImageNamed:(NSString*)imageName originX:(CGFloat)originX selector:(SEL)selector {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *onImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@-on", prefix]];
-    UIImage *offImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@-off", prefix]];
     
-    [button setImage:offImage forState:UIControlStateNormal];
-    [button setImage:onImage forState:UIControlStateHighlighted];
-    [button setImage:onImage forState:UIControlStateSelected];
+    UIImage *image = [UIImage imageNamed:imageName];
+    [button setImage:image forState:UIControlStateNormal];
     
-    UIImageView *quickActionImageView = [[UIImageView alloc] initWithImage:offImage];
+    UIImageView *quickActionImageView = [[UIImageView alloc] initWithImage:image];
     // move the secretImageView to the right spot
     CGRect switchFrame = quickActionImageView.frame;
     switchFrame.origin.x = originX;
     switchFrame.origin.y = (self.contentView.frame.size.height / 2) - (switchFrame.size.height / 2);
     button.frame = switchFrame;
+    
     [button addTarget:self 
                action:@selector(switchSound:) 
-     forControlEvents:UIControlEventTouchDown | UIControlEventTouchUpInside | UIControlEventTouchCancel | UIControlEventTouchUpOutside];
+     forControlEvents:UIControlEventTouchUpInside];
     
     [button addTarget:self 
                action:selector 
      forControlEvents:UIControlEventTouchUpInside];
+    
     [button setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin ];
+    
+    button.hidden = YES;
     [self.hiddenView addSubview:button];
+    
     return button;
-}
-
-- (UIButton*) buttonForState:(CPUserActionCellSwitchState)state {
-    if (state == CPUserActionCellSwitchStateSendLoveOn) { 
-        return self.sendLoveButton; 
-    } else if (state == CPUserActionCellSwitchStateSendMessageOn) { 
-        return self.sendMessageButton; 
-    } else if (state == CPUserActionCellSwitchStateExchangeContactsOn) { 
-        return self.exchangeContactsButton; 
-    } else { 
-        return nil; 
-    }
-}
-
-- (void)changeStateOfQuickActionSwitchForDirection:(CPUserActionCellDirection)direction active:(CPUserActionCellSwitchState)active
-{
-    // toggle the switch as appropriate while sliding
-    if (active == self.toggleState) { return; } // already in the right state
-    UIButton *oldButton = [self buttonForState:self.toggleState];
-    if (oldButton) { 
-        // deactivate the old toggle
-        oldButton.highlighted = NO;
-        [oldButton sendActionsForControlEvents:UIControlEventTouchUpOutside];
-    }
-    UIButton *newButton = [self buttonForState:active];
-    if (newButton) {
-        // activate the new toggle
-        newButton.highlighted = YES;
-        [newButton sendActionsForControlEvents:UIControlEventTouchDown];
-    }
-    self.toggleState = active;
 }
 
 - (void)toggleCellActiveState:(BOOL)active
@@ -570,7 +510,7 @@ static char BOOLRevealing;
     [self toggleCellActiveState:highlighted];
 }
 
-- (void) switchSound:(id)sender {    
+- (void)switchSound:(id)sender {
     UIButton *button = (UIButton*)sender;
     NSString *prefix = @"";
     if (button == self.sendLoveButton) {
@@ -580,8 +520,8 @@ static char BOOLRevealing;
     } else if (button == self.exchangeContactsButton) {
         prefix = @"exchange-contacts";
     }
-   
-    if (button.isHighlighted) { 
+
+    if (button.isHighlighted) {
         [CPSoundEffectsManager playSoundWithSystemSoundID:
          [CPSoundEffectsManager systemSoundIDForSoundWithName:[prefix stringByAppendingString:@"-on"] type:@"aif"]];
     }
@@ -609,7 +549,7 @@ static char BOOLRevealing;
 
 #pragma mark - CPUserActionCellDelegate Invocations
 
-- (void) sendLoveAction {
+- (void)sendLoveAction {
     if ([self.delegate respondsToSelector:@selector(cell:didSelectSendLoveToUser:)]) {
         [self.delegate cell:self didSelectSendLoveToUser:self.user];
     }
@@ -631,6 +571,26 @@ static char BOOLRevealing;
     if ([self.delegate respondsToSelector:@selector(cell:didSelectRowWithUser:)]) {
         [self.delegate cell:self didSelectRowWithUser:self.user];
     }
+}
+
+#pragma mark - notifications
+
+- (void)registerForNotification {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(cancelOpenSlideActionButtons:)
+                                                 name:kCancelOpenSlideActionButtonsNotification
+                                               object:nil];
+}
+
+- (void)cancelOpenSlideActionButtons:(NSNotification *)notification {
+    if (notification.object != self) {
+        [self animateSlideButtonsWithNewCenter:self.originalCenter delay:0 duration:0.2 animated:YES];
+    }
+}
+
++ (void)cancelOpenSlideActionButtonsNotification:(CPUserActionCell *)cell {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCancelOpenSlideActionButtonsNotification
+                                                        object:cell];
 }
 
 @end

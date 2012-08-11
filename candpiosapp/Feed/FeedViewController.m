@@ -114,6 +114,8 @@ typedef enum {
         // make sure the keyboard isn't up anymore
         [self cancelPost:nil];
     }
+    
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
 
 - (void)setSelectedVenueFeed:(CPVenueFeed *)selectedVenueFeed
@@ -423,6 +425,12 @@ typedef enum {
             containerView.frame = viewHeightFix;
         }
     }
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
 
 #pragma mark - Table view delegate
