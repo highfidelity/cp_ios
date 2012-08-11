@@ -184,31 +184,34 @@ static CPUserSessionHandler *sharedHandler;
         return;
     }
     
-    [CPAppDelegate settingsMenuController].blockUIButton.frame = CGRectMake(0.0,
-                                                                 [CPAppDelegate settingsMenuController].loginBanner.frame.size.height,
-                                                                 [CPAppDelegate window].frame.size.width,
-                                                                 [CPAppDelegate window].frame.size.height);
+    SettingsMenuController *settingsMenuController = [CPAppDelegate settingsMenuController];
     
-    [[CPAppDelegate settingsMenuController].view bringSubviewToFront:[CPAppDelegate settingsMenuController].blockUIButton];
-    [[CPAppDelegate settingsMenuController].view bringSubviewToFront:[CPAppDelegate settingsMenuController].loginBanner];
+    settingsMenuController.blockUIButton.frame = CGRectMake(0.0,
+                                                            settingsMenuController.loginBanner.frame.size.height,
+                                                            [CPAppDelegate window].frame.size.width,
+                                                            [CPAppDelegate window].frame.size.height);
+    
+    [settingsMenuController.view bringSubviewToFront:settingsMenuController.blockUIButton];
+    [settingsMenuController.view bringSubviewToFront:[CPAppDelegate settingsMenuController].loginBanner];
     
     [UIView animateWithDuration:0.3 animations:^ {
-        [CPAppDelegate settingsMenuController].loginBanner.frame = CGRectMake(0.0, 0.0,
-                                                                   [CPAppDelegate settingsMenuController].loginBanner.frame.size.width,
-                                                                   [CPAppDelegate settingsMenuController].loginBanner.frame.size.height);
+        settingsMenuController.loginBanner.frame = CGRectMake(0.0, 0.0,
+                                                              settingsMenuController.loginBanner.frame.size.width,
+                                                              settingsMenuController.loginBanner.frame.size.height);
     }];
 }
 
 + (void)hideLoginBannerWithCompletion:(void (^)(void))completion
 {
-    [CPAppDelegate settingsMenuController].blockUIButton.frame = CGRectMake(0.0, 0.0, 0.0, 0.0);
-    [[CPAppDelegate settingsMenuController].view sendSubviewToBack:[CPAppDelegate settingsMenuController].blockUIButton];
+    SettingsMenuController *settingsMenuController = [CPAppDelegate settingsMenuController];
+    settingsMenuController.blockUIButton.frame = CGRectMake(0.0, 0.0, 0.0, 0.0);
+    [settingsMenuController.view sendSubviewToBack:[CPAppDelegate settingsMenuController].blockUIButton];
     
     [UIView animateWithDuration:0.3 animations:^ {
-        [CPAppDelegate settingsMenuController].loginBanner.frame = CGRectMake(0.0,
-                                                                   -[CPAppDelegate settingsMenuController].loginBanner.frame.size.height,
-                                                                   [CPAppDelegate settingsMenuController].loginBanner.frame.size.width,
-                                                                   [CPAppDelegate settingsMenuController].loginBanner.frame.size.height);
+        settingsMenuController.loginBanner.frame = CGRectMake(0.0,
+                                                              -settingsMenuController.loginBanner.frame.size.height,
+                                                              settingsMenuController.loginBanner.frame.size.width,
+                                                              settingsMenuController.loginBanner.frame.size.height);
         
         if (completion) {
             completion();
