@@ -352,9 +352,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 {
     settings.registeredForApnsSuccessfully = NO;
     NSLog(@"Error in registration. Error: %@", err);
-    
-    // dismiss the signup modal if it exists
-    [CPUserSessionHandler dismissSignupModalFromPresentingViewController];
 }
 
 #pragma mark - Third Party SDKs
