@@ -21,8 +21,7 @@ static CPGeofenceHandler *sharedHandler;
 
 + (void)initialize
 {
-    if(!sharedHandler)
-    {
+    if(!sharedHandler) {
         sharedHandler = [[CPGeofenceHandler alloc] init];
     }
 }

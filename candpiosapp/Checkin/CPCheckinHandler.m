@@ -15,8 +15,7 @@ static CPCheckinHandler *sharedHandler;
 
 + (void)initialize
 {
-    if(!sharedHandler)
-    {
+    if(!sharedHandler) {
         sharedHandler = [[CPCheckinHandler alloc] init];
     }
 }
