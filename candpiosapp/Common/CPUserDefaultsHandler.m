@@ -135,7 +135,7 @@ NSString* const kAutomaticCheckins = @"automaticCheckins";
 
 NSString* const kUDFeedVenues = @"feedVenues";
 
-+ (void)addFeedVenue:(CPVenue *)venue showFeedNow:(BOOL)showFeedNow
++ (void)addFeedVenue:(CPVenue *)venue
 {
     // setup an NSString object with the venue ID
     NSString *venueIDString = [NSString stringWithFormat:@"%d", venue.venueID];
@@ -154,9 +154,12 @@ NSString* const kUDFeedVenues = @"feedVenues";
     
     SET_DEFAULTS(Object, kUDFeedVenues, [NSDictionary dictionaryWithDictionary:mutableFeedVenues]);
     
-    // if we need to show this feed right away
-    // then send it as the object with the notification
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"feedVenueAdded" object:(showFeedNow ? venue : nil)];
+    // send a notification so the feed view controller reloads its feeds
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"feedVenueAdded" object:self];
+}
++ (BOOL)hasFeedVenues
+{
+    return (DEFAULTS(object, kUDFeedVenues) != nil);
 }
 
 + (NSDictionary *)feedVenues
@@ -164,7 +167,8 @@ NSString* const kUDFeedVenues = @"feedVenues";
     // pull the array of logVenues from NSUserDefaults
     // create one if it does not exist
     NSDictionary *feedVenues;
-    if (!(feedVenues = DEFAULTS(object, kUDFeedVenues))) {   
+    if (!(feedVenues = DEFAULTS(object, kUDFeedVenues))) {
+        // the user has not selected any venues yet.. set them up with reasonable defaults
         feedVenues = [NSDictionary dictionary];
     }
     

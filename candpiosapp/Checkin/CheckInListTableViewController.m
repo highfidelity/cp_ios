@@ -8,7 +8,6 @@
 #import "CheckInListTableViewController.h"
 #import "CPVenue.h"
 #import "CheckInDetailsViewController.h"
-#import "SignupController.h"
 #import "CheckInListCell.h"
 #import "FoursquareAPIRequest.h"
 
@@ -141,11 +140,25 @@
             
             [self.places insertObject:place atIndex:[self.places count]];
             
-            // reload the tableView now that we have new data
-            [self.tableView reloadData];
-            
-            // dismiss the loading HUD
-            [SVProgressHUD dismiss];
+            [CPapi getDefaultCheckInVenueWithCompletion:^(NSDictionary *jsonVenue, NSError *errorVenue) {
+                BOOL respError = [[jsonVenue objectForKey:@"error"] boolValue];
+                
+                if (!errorVenue && !respError) {
+                    NSDictionary *jsonDict = [jsonVenue objectForKey:@"payload"];
+                    CPVenue *defaultVenue = [[CPVenue alloc] initFromDictionary:jsonDict];
+                    NSPredicate *defaultVenuePredicate = [NSPredicate predicateWithFormat:@"foursquareID != %@", defaultVenue.foursquareID];
+                    [places filterUsingPredicate:defaultVenuePredicate];
+                    
+                    //add default venue
+                    [places insertObject:defaultVenue atIndex:0];
+
+                    // reload the tableView now that we have new data
+                    [self.tableView reloadData];
+                }
+                
+                // dismiss the loading HUD
+                [SVProgressHUD dismiss];
+            }];
         } else {
             // dismiss the progress HUD with an error
             [SVProgressHUD dismissWithError:@"Oops!\nCouldn't get the data." afterDelay:3];
@@ -188,10 +201,14 @@
     } else {
         // get the localized distance string based on the distance of this venue from the user
         // which we set when we sort the places
-        cell.distanceString.text = [CPUtils localizedDistanceStringForDistance:[[self.places objectAtIndex:indexPath.row] distanceFromUser]];
+        if (indexPath.row == 0) {
+            cell.distanceString.text = @"Recent";
+        } else {
+            cell.distanceString.text = [CPUtils localizedDistanceStringForDistance:[[places objectAtIndex:indexPath.row] distanceFromUser]];
+        }
         
-        cell.venueAddress.text = [[[self.places objectAtIndex:indexPath.row] address] description];
-        if (!cell.venueAddress.text) {
+        cell.venueAddress.text = [[[places objectAtIndex:indexPath.row] address] description];
+        if (!cell.venueAddress.text || [cell.venueAddress.text length] == 0) {
             // if we don't have an address then move the venuename down
             cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 19, cell.venueName.frame.size.width, cell.venueName.frame.size.height);
         } else {

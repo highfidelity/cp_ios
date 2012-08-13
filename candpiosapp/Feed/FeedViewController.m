@@ -17,10 +17,11 @@
 #import "CPUserAction.h"
 #import "PillPopoverViewController.h"
 #import "CommentCell.h"
+#import "CPUserDefaultsHandler.h"
 
 #define kMaxFeedLength 140
-#define kPaddingUpdate 15
-#define kPaddingQuestion 17
+#define MAX_PREVIEW_POST_COUNT 3
+#define AUTO_ACTIVE_FEED_COUNT 3
 
 typedef enum {
     FeedVCStateDefault,
@@ -59,7 +60,7 @@ typedef enum {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleTableViewState) name:@"applicationDidBecomeActive" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newFeedVenueAdded:) name:@"feedVenueAdded" object:nil];
     
-    [self reloadFeedPreviewVenues:nil];
+    [self reloadFeedPreviewVenues];
 
     [self.tableView addPullToRefreshWithActionHandler:^{
         [self getVenueFeedOrFeedPreviews];
@@ -82,8 +83,6 @@ typedef enum {
 {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
-    
-    [CPAppDelegate locationManager];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -125,10 +124,11 @@ typedef enum {
 #define LAST_PREVIEW_POST_LABEL_BOTTOM_MARGIN 5
 #define PREVIEW_HEADER_CELL_HEIGHT 38
 #define PREVIEW_FOOTER_CELL_HEIGHT 27
-#define UPDATE_LABEL_WIDTH 185
-#define LOVE_LABEL_WIDTH 135
-#define LOVE_PLUS_ONE_LABEL_WIDTH 185
-#define PILL_BUTTON_CELL_HEIGHT 25
+#define UPDATE_LABEL_WIDTH 228
+#define LOVE_LABEL_WIDTH 178
+#define LOVE_PLUS_ONE_LABEL_WIDTH 200
+#define REPLY_LABEL_WIDTH 190
+#define PILL_BUTTON_CELL_HEIGHT 40
 #define CONTAINER_BACKGROUND_ORIGIN_X 7.5
 #define CONTAINER_BACKGROUND_WIDTH 305
 #define CONTAINER_IMAGE_VIEW_TAG 2819
@@ -139,44 +139,36 @@ typedef enum {
 
 - (NSString *)textForPost:(CPPost *)post
 {
-    if (CPPostTypeUpdate == post.type && post.author.userID != [CPUserDefaultsHandler currentUser].userID) {
+    if ((post.type == CPPostTypeUpdate || post.originalPostID) && post.author.userID != [CPUserDefaultsHandler currentUser].userID) {
         return [NSString stringWithFormat:@"%@: %@", post.author.firstName, post.entry];
-    } else if (CPPostTypeQuestion == post.type) {
+    } else if (!post.originalPostID && post.type == CPPostTypeQuestion) {
         return [NSString stringWithFormat:@"Question from %@: %@", post.author.nickname, post.entry];
-    } else if (CPPostTypeCheckin == post.type) {
+    } else if (!post.originalPostID && post.type == CPPostTypeCheckin) {
         NSString *name = @"You";
         if (post.author.userID != [CPUserDefaultsHandler currentUser].userID) {
             name = post.author.firstName;
         }
         return [NSString stringWithFormat:@"%@ checked in: %@", name, post.entry];
     } else {
-        if (CPPostTypeLove == post.type && post.originalPostID > 0) {
-            return [NSString stringWithFormat:@"%@ +1'd recognition: %@", post.author.firstName, post.entry];
-        } else {
-            return post.entry;
-        }
+        return post.entry;
     }
 }
 
 - (UIFont *)fontForPost:(CPPost *)post
 {
-    if (CPPostTypeUpdate == post.type || CPPostTypeQuestion == post.type || CPPostTypeCheckin == post.type) {
-        return [UIFont systemFontOfSize:(post.author.userID == [CPUserDefaultsHandler currentUser].userID ? 13 : 12)];
+    if (post.type != CPPostTypeLove || post.originalPostID) {
+        return [UIFont systemFontOfSize:14];
     } else {
-        return [UIFont boldSystemFontOfSize:10];
+        return [UIFont boldSystemFontOfSize:14];
     }
 }
 
 - (CGFloat)widthForLabelForPost:(CPPost *)post
 {
-    if (CPPostTypeUpdate == post.type || CPPostTypeQuestion == post.type || CPPostTypeCheckin == post.type) {
-        return UPDATE_LABEL_WIDTH;
+    if (post.type == CPPostTypeLove && !post.originalPostID) {
+        return LOVE_LABEL_WIDTH;
     } else {
-        if (post.originalPostID > 0) {
-            return LOVE_PLUS_ONE_LABEL_WIDTH;
-        } else {
-            return LOVE_LABEL_WIDTH;
-        }
+        return !post.originalPostID ? UPDATE_LABEL_WIDTH : REPLY_LABEL_WIDTH;
     }
 }
 
@@ -200,6 +192,12 @@ typedef enum {
         (indexPath.row < [[self venueFeedPreviewForIndex:indexPath.section] posts].count)) {
         // use the default bottom margin and top margin
         bottomMargin = LABEL_BOTTOM_MARGIN;
+        
+        // if this is a post in a selected venue feed that has replies then we need to drop the margin
+        if (self.selectedVenueFeed && ((CPPost *)[self.selectedVenueFeed.posts objectAtIndex:indexPath.section]).replies.count) {
+            bottomMargin -= 12;
+        }
+        
         minCellHeight = MIN_CELL_HEIGHT; 
     } else {
         // keep the right bottom margin for this last post
@@ -212,10 +210,17 @@ typedef enum {
     // give the appropriate bottomMargin to this cell
     cellHeight += bottomMargin;
     
-    // make sure labelHeight isn't smaller than our min cell height
-    cellHeight = cellHeight > minCellHeight ? cellHeight : minCellHeight;
-    
-    return cellHeight;
+    // make sure labelHeight isn't smaller than our min cell height    
+    return cellHeight > minCellHeight ? cellHeight : minCellHeight;
+}
+
+- (int)paddingForPendingPost
+{
+    if (self.pendingPost.type == CPPostTypeQuestion) {
+        return !self.pendingPost.originalPostID ? 18 : 15;
+    } else {
+        return !self.pendingPost.originalPostID ? 15 : 12;
+    }
 }
 
 - (UIImageView *)containerImageViewForPosition:(FeedBGContainerPosition)position containerHeight:(CGFloat)containerHeight
@@ -316,10 +321,10 @@ typedef enum {
     UIView *separatorView;
     
     if (!(separatorView = [cell.contentView viewWithTag:CELL_SEPARATOR_TAG])) {
-        separatorView = [[UIView alloc] initWithFrame:CGRectMake(CONTAINER_BACKGROUND_ORIGIN_X + 2, 
-                                                                cell.contentView.frame.size.height - 5, 
-                                                                CONTAINER_BACKGROUND_WIDTH - 5, 
-                                                                1)];
+        UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(CONTAINER_BACKGROUND_ORIGIN_X + 2,
+                                                          cell.contentView.frame.size.height - 5,
+                                                          CONTAINER_BACKGROUND_WIDTH - 5,
+                                                          1)];
         separatorView.backgroundColor = [UIColor colorWithR:239 G:239 B:239 A:1];
         separatorView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;        
         separatorView.tag = CELL_SEPARATOR_TAG;
@@ -334,6 +339,81 @@ typedef enum {
     }
 }
 
+#define REPLY_BUBBLE_ORIGIN_X 62
+#define REPLY_BUBBLE_WIDTH 250
+#define REPLY_BUBBLE_IMAGE_VIEW_TAG 2820
+#define REPLY_BUBBLE_HEADER_HEIGHT 18
+#define REPLY_BUBBLE_FOOTER_HEIGHT 15
+
+- (UIImageView *)replyBubbleImageViewForPosition:(FeedBGContainerPosition)position containerHeight:(CGFloat)containerHeight
+{
+    NSString *filename;
+    UIEdgeInsets insets;
+    
+    // switch-case to set variables dependent on the position this is for
+    switch (position) {
+        case FeedBGContainerPositionTop:
+            filename = @"comment-bubble-top";
+            insets = UIEdgeInsetsMake(11, 36, 0, 11);
+            break;
+        case FeedBGContainerPositionMiddle:
+            filename = @"comment-bubble-middle";
+            insets = UIEdgeInsetsMake(0, 3, 0, 3);
+            break;
+        case FeedBGContainerPositionBottom:
+            insets = UIEdgeInsetsMake(0, 0, 8, 0);
+            filename = @"comment-bubble-bottom";
+            break;
+        default:
+            break;
+    }
+    
+    UIImage *containerImage = [[UIImage imageNamed:filename] resizableImageWithCapInsets:insets];
+    
+    // create a UIImageView with the image
+    UIImageView *containerImageView = [[UIImageView alloc] initWithImage:containerImage];
+    
+    // change the frame of the imageView to leave spacing on the side
+    CGRect containerIVFrame = containerImageView.frame;
+    containerIVFrame.origin.x = REPLY_BUBBLE_ORIGIN_X;
+    containerIVFrame.size.width = REPLY_BUBBLE_WIDTH;
+    containerIVFrame.size.height = containerHeight;
+    containerImageView.frame = containerIVFrame;
+    
+    // give the UIImageView a tag so we can check for its presence later
+    containerImageView.tag = CONTAINER_IMAGE_VIEW_TAG;
+    
+    return containerImageView;
+}
+
+- (void)setupReplyBubbleForCell:(UITableViewCell *)cell
+                        containerHeight:(CGFloat)containerHeight
+                               position:(FeedBGContainerPosition)position
+{
+    UIView *containerView;
+    
+    // add the viewToAdd if it doesn't already exist on this cell
+    if (!(containerView = [cell.contentView viewWithTag:CONTAINER_IMAGE_VIEW_TAG])) {
+        containerView = [self replyBubbleImageViewForPosition:position containerHeight:containerHeight];
+        
+        // add that view to the cell's contentView
+        [cell.contentView insertSubview:containerView atIndex:0];
+    } else {
+        if (position == FeedBGContainerPositionMiddle) {
+            // adjust the view's height if required
+            CGRect viewHeightFix = containerView.frame;
+            viewHeightFix.size.height = containerHeight;
+            containerView.frame = viewHeightFix;
+        }
+    }
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
+}
+
 #pragma mark - Table view delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -343,7 +423,7 @@ typedef enum {
     if (!self.selectedVenueFeed) {
         if (indexPath.row == 0) {
             return PREVIEW_HEADER_CELL_HEIGHT;
-        } else if (indexPath.row == (self.previewPostableFeedsOnly ? 1 : [[self venueFeedPreviewForIndex:indexPath.section] posts].count + 1)) {
+        } else if (indexPath.row == (self.previewPostableFeedsOnly ? 1 : [self tableView:self.tableView numberOfRowsInSection:indexPath.section] - 1)) {
             return PREVIEW_FOOTER_CELL_HEIGHT;
         }
     }
@@ -355,11 +435,13 @@ typedef enum {
         cellPost = [self.selectedVenueFeed.posts objectAtIndex:indexPath.section];
         
         // if this is the comment / +1 box cell then our height is static
-        if (indexPath.row > cellPost.replies.count) {
+        if ((!cellPost.replies.count && indexPath.row == 1) || indexPath.row > cellPost.replies.count + 2) {
             return PILL_BUTTON_CELL_HEIGHT;
+        } else if (indexPath.row > cellPost.replies.count + 1 || indexPath.row == 1) {
+            return indexPath.row == 1 ? REPLY_BUBBLE_HEADER_HEIGHT : REPLY_BUBBLE_FOOTER_HEIGHT + 3;
         } else if (indexPath.row > 0) {
             // if the indexPath is not 0 and isn't the last this is a reply
-            cellPost = [cellPost.replies objectAtIndex:(indexPath.row - 1)];
+            cellPost = [cellPost.replies objectAtIndex:indexPath.row - 2];
         }
         
         // check if we have a pendingPost and if this is it
@@ -369,9 +451,6 @@ typedef enum {
             
             // check if we have a new cell height which is larger than our min height and grow to that size
             cellHeight = self.newEditableCellHeight > MIN_CELL_HEIGHT ? self.newEditableCellHeight : MIN_CELL_HEIGHT;
-            
-            // reset the newEditableCellHeight to 0
-            self.newEditableCellHeight = 0;
             
             return cellHeight;
         }
@@ -406,10 +485,17 @@ typedef enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // if this is for a single venue then the number of rows is 2 + number of replies in feed
     if (self.selectedVenueFeed) {
-        // one for the post itself, one for comment / +1 footer, and then one for each reply
-        return 2 + ((CPPost *)[self.selectedVenueFeed.posts objectAtIndex:section]).replies.count;
+        // if this is for a single venue then the number of rows depends on the existence of replies
+        // one for the post itself, one for comment / +1 footer, one for reply header and footer, and then one for each reply
+        int replies = ((CPPost *)[self.selectedVenueFeed.posts objectAtIndex:section]).replies.count;
+        int rows = 2;
+        
+        if (replies) {
+            rows += replies + 2;
+        }
+        
+        return rows;
     } else {
         if (self.previewPostableFeedsOnly) {
             // just a header and a footer here
@@ -422,7 +508,8 @@ typedef enum {
             // and one for the footer of each feed
             
             // there will be a cell for each post in each of the venue feed previews
-            return sectionVenueFeed.posts.count + 2;
+            // up to three preview posts
+            return (sectionVenueFeed.posts.count > MAX_PREVIEW_POST_COUNT ? MAX_PREVIEW_POST_COUNT : sectionVenueFeed.posts.count) + 2;
         }        
     }
 }
@@ -515,7 +602,7 @@ typedef enum {
             
             return feedPreviewFooterCell;
         } else {
-            cellSeperatorRequired = !(indexPath.row == sectionVenueFeed.posts.count);
+            cellSeperatorRequired = indexPath.row != sectionVenueFeed.posts.count && indexPath.row != 3;
             // pull the right post from the feed preview for this venue
             post = [sectionVenueFeed.posts objectAtIndex:(indexPath.row - 1)];
         }
@@ -525,8 +612,8 @@ typedef enum {
         
         // if this is supposed to be a reply then the post object should be a reply of the post we just grabbed
         if (indexPath.row > 0) {
-            post = (indexPath.row < [self.tableView numberOfRowsInSection:indexPath.section] - 1)
-                    ? [post.replies objectAtIndex:(indexPath.row - 1)] : nil;
+            post = (indexPath.row < [self.tableView numberOfRowsInSection:indexPath.section] - 2 && indexPath.row > 1)
+                    ? [post.replies objectAtIndex:(indexPath.row - 2)] : nil;
         }
     }
     
@@ -534,8 +621,7 @@ typedef enum {
         PostBaseCell *cell;
         
         // check if this is a pending entry cell
-        if (self.pendingPost &&
-            (post == self.pendingPost || (post.originalPostID && self.pendingPost == post.replies.lastObject))) {
+        if (self.pendingPost && post == self.pendingPost) {
             
             NewPostCell *newEntryCell;
             
@@ -547,21 +633,35 @@ typedef enum {
                 newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewEntryCellIdentifier];
             }            
             
+            // get the cursor to the right place
+            // by padding it with leading spaces for whatever the leading text is
+            
+            NSString *leadingText;
+        
             if (self.pendingPost.type == CPPostTypeQuestion) {
-                newEntryCell.entryLabel.text = @"Question:";
-                // get the cursor to the right place
-                // by padding it with leading spaces
-                newEntryCell.growingTextView.text = @"                 ";
-                newEntryCell.growingTextView.returnKeyType = UIReturnKeySend;
+                leadingText = !self.pendingPost.originalPostID ? @"Question" : @"Answer";
             } else {
-                newEntryCell.entryLabel.text = @"Update:";
-                // get the cursor to the right place
-                // by padding it with leading spaces
-                newEntryCell.growingTextView.text = @"               ";
-                newEntryCell.growingTextView.returnKeyType = UIReturnKeyDone;
+                leadingText = !self.pendingPost.originalPostID ? @"Update" : @"Reply";
             }
             
+            // give the entry label the right text and color
             newEntryCell.entryLabel.textColor = [CPUIHelper CPTealColor];
+            
+            // if the entry was blank (new entry) we need to setup the leading spaces
+            newEntryCell.entryLabel.text = [leadingText stringByAppendingString:@":"];
+            
+                        
+            // add the right number of leading spaces
+            newEntryCell.growingTextView.text = self.pendingPost.entry;
+            
+            if (!newEntryCell.growingTextView.text.length) {
+                int numberOfSpaces = [self paddingForPendingPost];
+                for (int i = 0; i < numberOfSpaces; i++) {
+                    newEntryCell.growingTextView.text = [newEntryCell.growingTextView.text stringByAppendingString:@" "];
+                }
+            }
+            
+            newEntryCell.growingTextView.returnKeyType = UIReturnKeySend;
             
             // be the delegate of the HPGrowingTextView on this cell
             newEntryCell.growingTextView.delegate = self;
@@ -573,8 +673,10 @@ typedef enum {
             cell = newEntryCell;
         } else {
             // check which type of cell we are dealing with
-            if (post.type != CPPostTypeLove) {
-                
+            if (post.originalPostID) {
+                static NSString *PostReplyCellIdentifier = @"PostReplyCell";
+                cell = [tableView dequeueReusableCellWithIdentifier:PostReplyCellIdentifier];
+            } else if (post.type != CPPostTypeLove) {
                 // this is an update cell
                 // so check if it's this user's or somebody else's
                 PostUpdateCell *updateCell;
@@ -607,14 +709,9 @@ typedef enum {
                         updateCell.timeLabel.text = nil;
                     }
                 } else {
-                    if (post.originalPostID) {
-                        static NSString *PostReplyCellIdentifier = @"PostReplyCell";
-                        updateCell = [tableView dequeueReusableCellWithIdentifier:PostReplyCellIdentifier];
-                    } else {
-                        // this is an update from another user
-                        static NSString *OtherUserEntryCellIdentifier = @"PostUpdateCell";
-                        updateCell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];
-                    }
+                    // this is an update from another user
+                    static NSString *OtherUserEntryCellIdentifier = @"PostUpdateCell";
+                    updateCell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];
                 }
                 
                 // the cell to return is the updateCell
@@ -626,7 +723,7 @@ typedef enum {
                 PostLoveCell *loveCell = [tableView dequeueReusableCellWithIdentifier:loveCellIdentifier];
                 
                 // setup the receiver's profile button
-                [self loadProfileImageForButton:loveCell.receiverProfileButton photoURL:post.receiver.photoURL indexPath:indexPath];
+                [self loadProfileImageForButton:loveCell.receiverProfileButton photoURL:post.receiver.photoURL];
                 
                 loveCell.entryLabel.text = post.entry.description;
                 
@@ -641,22 +738,30 @@ typedef enum {
             }
             
             // the text for this entry is prepended with NICKNAME:
+            cell.entryLabel.font = [self fontForPost:post];
             cell.entryLabel.text = [self textForPost:post];
-            
             // make the frame of the label larger if required for a multi-line entry
             CGRect entryFrame = cell.entryLabel.frame;
-            entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text labelWidth:[self widthForLabelForPost:post] labelFont:[self fontForPost:post]];
+            entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text
+                                                    labelWidth:cell.entryLabel.frame.size.width
+                                                     labelFont:cell.entryLabel.font];
             cell.entryLabel.frame = entryFrame;
         }
         
         // setup the entry sender's profile button
-        [self loadProfileImageForButton:cell.senderProfileButton photoURL:post.author.photoURL indexPath:indexPath];
+        [self loadProfileImageForButton:cell.senderProfileButton photoURL:post.author.photoURL];
         
         if (self.selectedVenueFeed) {
             // remove the container background from this cell, if it exists
             // remove the separator view
             [[cell viewWithTag:CONTAINER_IMAGE_VIEW_TAG] removeFromSuperview];
             [[cell viewWithTag:CELL_SEPARATOR_TAG] removeFromSuperview];
+            
+            if (post.originalPostID) {
+                [self setupReplyBubbleForCell:cell
+                              containerHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height indexPath:indexPath]
+                                                                     position:FeedBGContainerPositionMiddle];
+            }
         } else {
             [self setupContainerBackgroundForCell:cell
                                   containerHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height indexPath:indexPath]
@@ -680,27 +785,51 @@ typedef enum {
         
         return cell;
     } else {
-        // this is the comment / +1 cell for a post in selected venue feed
-        CommentCell *commentCell = [self.tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
-        CPPost *originalPost = [self.selectedVenueFeed.posts objectAtIndex:indexPath.section];
-        commentCell.post = originalPost;
-        commentCell.delegate = self;
-
-        // update the +1/comment pill widget to reflect the likeCount on the parent post
-        [commentCell updatePillButtonAnimated:NO];
-
-        return commentCell;
+        if (indexPath.row == [self.tableView numberOfRowsInSection:indexPath.section] - 1) {
+            // this is the comment / +1 cell for a post in selected venue feed
+            CommentCell *commentCell = [self.tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
+            CPPost *originalPost = [self.selectedVenueFeed.posts objectAtIndex:indexPath.section];
+            commentCell.post = originalPost;
+            commentCell.delegate = self;
+            commentCell.venue = self.selectedVenueFeed.venue;
+            
+            // update the +1/comment pill widget to reflect the likeCount on the parent post
+            [commentCell updatePillButtonAnimated:NO];
+            
+            return commentCell;
+        } else {
+            UITableViewCell *replyBubbleExtraCell;
+            
+            static NSString *ReplyBubbleHeaderIdentifier = @"ReplyBubbleHeader";
+            static NSString *ReplyBubbleFooterIdentifier = @"ReplyBubbleFooter";
+            
+            // setup variables correctly for header or footer of bubble
+            NSString *containerIdentifier = indexPath.row == 1 ? ReplyBubbleHeaderIdentifier : ReplyBubbleFooterIdentifier;
+            FeedBGContainerPosition containerPosition = indexPath.row == 1 ? FeedBGContainerPositionTop : FeedBGContainerPositionBottom;
+            CGFloat containerHeight = indexPath.row == 1 ? REPLY_BUBBLE_HEADER_HEIGHT : REPLY_BUBBLE_FOOTER_HEIGHT;
+            
+            // try and pull a cell for reuse
+            replyBubbleExtraCell = [self.tableView dequeueReusableCellWithIdentifier:containerIdentifier];
+            
+            // otherwise we need to alloc-init it
+            if (!replyBubbleExtraCell) {
+                replyBubbleExtraCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:containerIdentifier];
+                [self setupReplyBubbleForCell:replyBubbleExtraCell containerHeight:containerHeight position:containerPosition];
+                replyBubbleExtraCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                [replyBubbleExtraCell addSubview:[FeedViewController timelineViewWithHeight:replyBubbleExtraCell.frame.size.height]];
+            }
+            
+            // return the cell
+            return replyBubbleExtraCell;
+        }
     }
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (self.selectedVenueFeed) {
-        // selected feed view needs a 15pt header
-        return 15;
-    } else if (section == 0) {
-        // first header in venue feed previews should match spacing
+    if (section == 0) {
+        // first header in venue feed previews and selected feed view should have 9pt header
         return 9;
     } else {
         // no header required
@@ -724,7 +853,8 @@ typedef enum {
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
+{   
+    // return an empty view
     return [[UIView alloc] init];
 }
 
@@ -733,6 +863,7 @@ typedef enum {
     if (!self.selectedVenueFeed) {
         // the user has just tapped on a venue feed preview
         // so bring them to that feed
+        
         [self transitionToVenueFeedForSection:indexPath.section];
     }
 }
@@ -740,14 +871,8 @@ typedef enum {
 #pragma mark - VC Helper Methods
 - (void)newFeedVenueAdded:(NSNotification *)notification
 {
-    if (notification.object) {
-        // if the notification has an object the user wants to see this feed
-        // make sure our tabBarController is showing us
-        self.tabBarController.selectedIndex = 0;  
-    }
-    
     // reload the venues for which we want feed previews
-    [self reloadFeedPreviewVenues:notification.object];
+    [self reloadFeedPreviewVenues];
 }
 
 - (void)setupForPostEntry
@@ -787,7 +912,7 @@ typedef enum {
     // make sure the left bar button item is a back button
 }
 
-- (void)reloadFeedPreviewVenues:(CPVenue *)displayVenue
+- (void)reloadFeedPreviewVenues
 {    
     CPVenue *currentVenue = [CPUserDefaultsHandler currentVenue];
     // if it exists add the user's current venue as the first object in self.venues
@@ -802,14 +927,56 @@ typedef enum {
         
         // add the current venue feed to the beginning of the array of venue feed previews
         [self.venueFeedPreviews insertObject:currentVenueFeed atIndex:0];
-        
-        // if the current venue is the venue we want to show
-        // then set that as our selected venue feed
-        if ([displayVenue isEqual:currentVenue]) {
-            self.selectedVenueFeed = currentVenueFeed;
-        }
     }    
-    
+
+    if (![CPUserDefaultsHandler hasFeedVenues]) {
+        // there is nothing saved in the feed venues setting
+        [self findActiveFeeds];
+    } else {
+        [self showVenueFeeds];
+    }
+}
+
+- (void)findActiveFeeds {
+    [CPapi getNearestVenuesWithActiveFeeds:[CPUserDefaultsHandler currentUser].location
+                                completion:
+     ^(NSDictionary *json, NSError *error) {
+         // give the user some reasonable default feeds
+         if (!error) {
+             // de-JSONify active venue list
+             NSMutableArray *activeVenues = [NSMutableArray array];
+             NSArray *venues = [[json objectForKey:@"payload"] valueForKey:@"venues"];
+             for (NSDictionary *venueJSON in venues) {
+                 CPVenue *venue = [[CPVenue alloc] initFromDictionary:venueJSON];
+                 [activeVenues addObject:venue];
+             }
+
+             // sort the venues by most active
+             [activeVenues sortUsingComparator:^NSComparisonResult(id a, id b) {
+                 NSNumber *first = [NSNumber numberWithUnsignedInteger:[a postsCount]];
+                 NSNumber *second = [NSNumber numberWithUnsignedInteger:[b postsCount]];
+                 // compare the two post counts, flipping the order
+                 return [second compare:first];
+             }];
+
+             // Add the top 3 most active feeds
+             NSRange range = NSMakeRange(0, activeVenues.count >= AUTO_ACTIVE_FEED_COUNT ? AUTO_ACTIVE_FEED_COUNT : activeVenues.count);
+             activeVenues = [[activeVenues subarrayWithRange:range] mutableCopy];
+             
+             for (CPVenue *venue in activeVenues) {
+                 [CPUserDefaultsHandler addFeedVenue:venue];
+             }
+             
+             // call toggleTableViewState to get a reload
+             [self toggleTableViewState];
+         } else {
+             NSLog(@"Error retrieving default venues.");
+         }
+     }];
+}
+         
+- (void)showVenueFeeds {
+    CPVenue *currentVenue = [CPUserDefaultsHandler currentVenue];
     NSDictionary *storedFeedVenues = [CPUserDefaultsHandler feedVenues];
     for (NSString *venueIDKey in storedFeedVenues) {
         // grab the NSData representation of the venue and decode it
@@ -827,12 +994,18 @@ typedef enum {
             if (![self.venueFeedPreviews containsObject:newVenueFeed]) {
                 [self.venueFeedPreviews addObject:newVenueFeed];
             }
-            
-            // if this decoded venue is the venue we want to show
-            // then set that as our selected venue feed
-            if ([displayVenue isEqual:decodedVenue]) {
-                self.selectedVenueFeed = newVenueFeed;
-            }
+        }
+    }    
+}
+
+- (void)showVenueFeedForVenue:(CPVenue *)venueToShow
+{
+    // enumerate through our venue feeds and find the one for this venue
+    // it should be in here given that it was added by the NSNotification sent from CPUserDefaultsHandler
+    for (CPVenueFeed *venueFeed in self.venueFeedPreviews) {
+        if ([venueFeed.venue isEqual:venueToShow]) {
+            self.selectedVenueFeed = venueFeed;
+            break;
         }
     }
 }
@@ -846,7 +1019,7 @@ typedef enum {
             self.navigationItem.title = @"Choose Feed";
         } else {
             // our title is the default
-            self.navigationItem.title = @"Venue Feeds";
+            self.navigationItem.title = @"Active Feeds";
         }
         
         // no pull to refresh in this table
@@ -873,19 +1046,18 @@ typedef enum {
     } else {
         // this is for a selected venue feed
         
-        // make sure we don't have the reload button in the top right
-        self.navigationItem.rightBarButtonItem = nil;
-        
         // make sure that pull to refresh is now enabled for the tableview
         self.tableView.showsPullToRefresh = YES;
         
         // add a back button as the left navigation item
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backFromSelectedFeed:)];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Feeds" style:UIBarButtonItemStyleBordered target:self action:@selector(backFromSelectedFeed:)];
         // our new title is the name of the venue
         self.navigationItem.title = self.selectedVenueFeed.venue.name;
         
-        // trigger a refresh of the pullToRefreshView which will refresh our data
-        [self.tableView.pullToRefreshView triggerRefresh];
+        if (!self.pendingPost) {
+            // trigger a refresh of the pullToRefreshView which will refresh our data
+            [self.tableView.pullToRefreshView triggerRefresh];
+        }
         
         // set the proper background color for the tableView
         self.tableView.backgroundColor = [UIColor colorWithR:246 G:247 B:245 A:1.0];
@@ -903,14 +1075,21 @@ typedef enum {
         self.tableView.showsVerticalScrollIndicator = YES;
     }
     
-    // no matter what we're switching to we need to reload the tableView
-    // and pull for new data
-    [self.tableView reloadData];
-    
-    
+    if (self.pendingPost) {
+        // restore state for pending posts when returning from lock screen, etc.
+        int section = [self.selectedVenueFeed indexOfPostWithID:self.pendingPost.originalPostID];
+        int row = [[self.selectedVenueFeed.posts objectAtIndex:section] replies].count;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        [self cancelButtonForRightNavigationItem];
+        self.tableView.showsPullToRefresh = NO;
+    } else {
+        [self.tableView reloadData];
+    }
 }
 
-- (void)loadProfileImageForButton:(UIButton *)button photoURL:(NSURL *)photoURL indexPath:(NSIndexPath *)indexPath
+- (void)loadProfileImageForButton:(UIButton *)button photoURL:(NSURL *)photoURL
 {   
     __block UIButton *profileButton = button;
     
@@ -918,14 +1097,12 @@ typedef enum {
     // on failure do nothing since the background image on the button has been reset to the default profile image in prepare for reuse
     
     // we use the button's read-only imageView just to be able to peform the request using AFNetworking's caching
-    [button.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:photoURL] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+    [button.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:photoURL]
+                            placeholderImage:[CPUIHelper defaultProfileImage]
+                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         // give the downloaded image to the button
-        [profileButton setBackgroundImage:image forState:UIControlStateNormal];
+        [profileButton setImage:image forState:UIControlStateNormal];
     } failure:nil];
-    
-    // the row of this cell is the tag for the button
-    // we need to be able to grab the cell later and go to the user's profile
-    button.tag = self.selectedVenueFeed ? indexPath.row : indexPath.section;
     
     // be the target of the button
     [button addTarget:self action:@selector(pushToUserProfileFromButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -962,21 +1139,27 @@ typedef enum {
 }
 
 - (void)getVenueFeedOrFeedPreviews
-{   
+{
     [self toggleLoadingState:YES];
     
     self.postPlussingUserIds = [NSMutableDictionary new];
     
     if (self.selectedVenueFeed) {  
         // make the request with CPapi to get the feed for this selected venue
-        [CPapi getFeedForVenueID:self.selectedVenueFeed.venue.venueID withCompletion:^(NSDictionary *json, NSError *error) { 
+        [CPapi getPostsForVenueFeed:self.selectedVenueFeed withCompletion:^(NSDictionary *json, NSError *error) {
             if (!error) {
                 if (![[json objectForKey:@"error"] boolValue]) {
-                                        
-                    [self.selectedVenueFeed addPostsFromArray:[json objectForKey:@"payload"]];
+
+                    NSDictionary *jsonDict = [json objectForKey:@"payload"];
+                    [self.selectedVenueFeed addPostsFromArray:[jsonDict objectForKey:@"feeds"]];
+                    int timestamp = [[jsonDict objectForKey:@"timestamp"] integerValue];
+
+                    // last ID property for venue feed is now the ID of the first post in the selectedVenueFeed posts array
+                    if (self.selectedVenueFeed.posts.count) {
+                        self.selectedVenueFeed.lastID = [[self.selectedVenueFeed.posts objectAtIndex:0] postID];
+                    }
                     
                     [self toggleLoadingState:NO];
-                    
                     // reload the tableView
                     [self.tableView reloadData];
                     
@@ -989,7 +1172,24 @@ typedef enum {
                     } else {
                         // go to the top of the tableView
                         [self scrollTableViewToTopAnimated:YES];
+                        
+                        // load the replies to the posts for this venue feed
+                        [CPapi getPostRepliesForVenueFeed:self.selectedVenueFeed withCompletion:^(NSDictionary *json, NSError *error) {
+                            if (!error) {
+                                if (![[json objectForKey:@"error"] boolValue]) {
+                                    [self.selectedVenueFeed addRepliesFromDictionary:[json objectForKey:@"payload"]];
+                                    
+                                    // tell the tableView to reload so it shows the replies
+                                    [self.tableView reloadData];
+                                }
+                            }
+                            self.selectedVenueFeed.updateTimestamp = timestamp;
+                        }];
                     }
+                } else {
+                    [self toggleLoadingState:NO];
+                    [SVProgressHUD showErrorWithStatus:[json objectForKey:@"message"]
+                                              duration:kDefaultDismissDelay];
                 }
             }
         }];
@@ -1036,7 +1236,7 @@ typedef enum {
     }
 }
 
-- (void)sendNewLog
+- (void)sendNewPost
 {
     // let's grab the cell that this entry is for
     self.pendingPost.entry = [self.pendingPostCell.growingTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -1053,7 +1253,11 @@ typedef enum {
         [CPapi newPost:self.pendingPost atVenue:self.selectedVenueFeed.venue completion:^(NSDictionary *json, NSError *error) {
             if (!error) {
                 if (![[json objectForKey:@"error"] boolValue]) {
-                    self.currentState = FeedVCStateSentNewPost;                    
+                    self.currentState = FeedVCStateSentNewPost;
+                    
+                    // the ID of the new post is returned as the payload
+                    self.pendingPost.postID = [[json objectForKey:@"payload"] integerValue];
+                    
                     // drop the self.pendingPost to the pending entry now that it's sent
                     CPPost *sentEntry = self.pendingPost;
                     self.pendingPost = nil;
@@ -1131,12 +1335,15 @@ typedef enum {
 
 - (void)transitionToVenueFeedForSection:(NSInteger)section
 {
+    // make sure that the HUD for loading venue feed previews isn't sticking around
+    [SVProgressHUD dismiss];
+    
     self.selectedVenueFeed = [self venueFeedPreviewForIndex:section];
+    
     if (self.previewPostableFeedsOnly) {
         // once the TVC has loaded the feed we want to add a new update
         self.newPostAfterLoad = YES;
     }
-    
 }
 
 - (void)cancelButtonForRightNavigationItem
@@ -1252,20 +1459,31 @@ typedef enum {
 - (IBAction)pushToUserProfileFromButton:(UIButton *)button
 {
     if (self.selectedVenueFeed) {
-        // grab the log entry that is associated to this button
-        CPPost *userEntry = [self.selectedVenueFeed.posts objectAtIndex:button.tag];
+        // grab the post that is associated to this button
+        // first we need the indexPath of this cell
+        NSIndexPath *selectedPath = [self.tableView indexPathForRowAtPoint:[[button superview] convertPoint:button.center toView:self.tableView]];
         
-        // grab a UserProfileViewController from the UserStoryboard
-        UserProfileViewController *userProfileVC = (UserProfileViewController *)[[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
+        CPPost *userEntry = [self.selectedVenueFeed.posts objectAtIndex:selectedPath.section];
         
-        // give the log's user object to the UserProfileVC
+        if (selectedPath.row > 0) {
+            userEntry = [userEntry.replies objectAtIndex:(selectedPath.row - 2)];
+        }
         
         // if this button's origin is left of the timeline then it's the log's author
         // otherwise it's the log's receiver
-        userProfileVC.user = button.frame.origin.x < TIMELINE_ORIGIN_X ? userEntry.author : userEntry.receiver;
+        User *selectedUser = (userEntry.originalPostID || button.frame.origin.x < TIMELINE_ORIGIN_X)
+                             ? userEntry.author : userEntry.receiver;
         
-        // ask our navigation controller to push to the UserProfileVC
-        [self.navigationController pushViewController:userProfileVC animated:YES];
+        if (selectedUser.userID) {
+            // grab a UserProfileViewController from the UserStoryboard
+            UserProfileViewController *userProfileVC = (UserProfileViewController *)[[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
+            
+            // give the post's user object to the UserProfileVC
+            userProfileVC.user = selectedUser;
+            
+            // ask our navigation controller to push to the UserProfileVC
+            [self.navigationController pushViewController:userProfileVC animated:YES];
+        }        
     } else {
         // we need to show the venue feed for this venue
         // the button's tag is the section for this feed
@@ -1333,6 +1551,9 @@ typedef enum {
         newBackgroundFrame.origin.y -= keyboardHeight;
         newBackgroundFrame.size.height += keyboardHeight;
     
+        // declare section and replyIndex here so we can use it later if applicable
+        int section;
+        int replyIndex;
         
         // only try and update the tableView if we've asked for this change by adding or removing an entry
         if (self.currentState == FeedVCStateAddingOrRemovingPendingPost) { 
@@ -1343,7 +1564,7 @@ typedef enum {
             }
             
             [self.tableView beginUpdates];
-            
+        
             // check if this is a reply or an original post
             // and add/delete a row/section accordingly 
             if (!self.pendingPost.originalPostID) {
@@ -1356,15 +1577,21 @@ typedef enum {
                 }
             } else {
                 // get the index of the original post in the tableView by using CPVenueFeed's indexOfPostWithID method
-                int section = [self.selectedVenueFeed indexOfPostWithID:self.pendingPost.originalPostID];
+                section = [self.selectedVenueFeed indexOfPostWithID:self.pendingPost.originalPostID];
                 
-                int replyIndex = ((CPPost *)[self.selectedVenueFeed.posts objectAtIndex:section]).replies.count;
+                replyIndex = ((CPPost *)[self.selectedVenueFeed.posts objectAtIndex:section]).replies.count;
                 
                 // if the keyboard is being dropped then the row we need to drop is one higher then the count of replies
                 replyIndex += beingShown ? 0 : 1;
                 
-                NSIndexPath *postIndexPath = [NSIndexPath indexPathForRow:replyIndex inSection:section];
-                NSArray *indexPathArray = [NSArray arrayWithObject:postIndexPath];
+                NSIndexPath *postIndexPath = [NSIndexPath indexPathForRow:(replyIndex + 1) inSection:section];
+                NSMutableArray *indexPathArray = [NSMutableArray arrayWithObject:postIndexPath];
+                
+                // if this is/was the only reply for this post we need to add/delete more than just that cell
+                if (replyIndex == 1) {
+                    [indexPathArray addObject:[NSIndexPath indexPathForRow:1 inSection:section]];
+                    [indexPathArray addObject:[NSIndexPath indexPathForRow:(replyIndex + 2) inSection:section]];
+                }
                 
                 if (beingShown) {
                     [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationBottom];
@@ -1399,6 +1626,8 @@ typedef enum {
                                      self.tableView.frame = newTableViewFrame;
                                  }
                                  
+                                 self.tableView.showsPullToRefresh = !beingShown;
+                                 
                                  if (beingShown) {
                                      if (!self.pendingPost.originalPostID) {
                                          // this is not a reply
@@ -1407,7 +1636,7 @@ typedef enum {
                                      } else {
                                          // this is a reply
                                          // scroll to the post being replied to
-                                         NSIndexPath *replyToIndexPath = [NSIndexPath indexPathForRow:0 inSection:[self.selectedVenueFeed indexOfPostWithID:self.pendingPost.originalPostID]];
+                                         NSIndexPath *replyToIndexPath = [NSIndexPath indexPathForRow:replyIndex inSection:section];
                                          [self.tableView scrollToRowAtIndexPath:replyToIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
                                      }
                                      
@@ -1418,10 +1647,11 @@ typedef enum {
                                      } else {
                                          [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStateUpdate;
                                      }
-
                                  } else {
                                      // switch the thinBar's action button state back to the plus button
                                      [CPAppDelegate tabBarController].thinBar.actionButtonState = CPThinTabBarActionButtonStatePlus;
+                                     
+                                     
                                  }
                              }
                              
@@ -1448,14 +1678,14 @@ typedef enum {
 #pragma mark - HPGrowingTextViewDelegate
 - (BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    if (range.location < kPaddingUpdate || (CPPostTypeQuestion == self.pendingPost.type && range.location < kPaddingQuestion)) {
+    if (range.location < [self paddingForPendingPost]) {
         return NO;
     } else {
         if ([text isEqualToString:@"\n"]) {
             // when the user clicks return it's the done button 
             // so send the update
             
-            if (CPPostTypeQuestion == self.pendingPost.type) {
+            if (!self.pendingPost.originalPostID && self.pendingPost.type == CPPostTypeQuestion) {
                 
                 [CPapi getCurrentCheckInsCountAtVenue:self.selectedVenueFeed.venue 
                                        withCompletion:^(NSDictionary *json, NSError *error) {
@@ -1470,7 +1700,7 @@ typedef enum {
                                                if (count == 2) {
                                                    message = @"It will be pushed to 1 person checked in to this location.";
                                                } else if (count > 2) {
-                                                   message = [NSString stringWithFormat: @"It will be pushed to %d checked in to this location.", count - 1];
+                                                   message = [NSString stringWithFormat: @"It will be pushed to %d people checked in to this location.", count - 1];
                                                } else {
                                                    message = @"You are the only person here right now.";
                                                }
@@ -1487,26 +1717,27 @@ typedef enum {
                                        }];
                 
             } else {
-                [self sendNewLog];   
+                [self sendNewPost];   
             }
             return NO;
         } else {
             //Limit max length of the feed
             int strLen = [[growingTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length];
             int addLength = [text length] -  range.length;
+            
             if (strLen + addLength > kMaxFeedLength) {
                 return NO;
+            } else {
+                return YES;
             }
-            
-            return YES;
         }
     }
 }
 
 - (void)growingTextViewDidChangeSelection:(HPGrowingTextView *)growingTextView
 {
-    int limit = CPPostTypeQuestion == self.pendingPost.type ? kPaddingQuestion : kPaddingUpdate;
-        
+    int limit = [self paddingForPendingPost];
+    
     if (growingTextView.selectedRange.location < limit) {
         // make sure the end point was at least 16/18
         // if that's the case then allow the selection from 15/17 to the original end point
@@ -1526,12 +1757,23 @@ typedef enum {
         UIView *cellContentView = [growingTextView superview];
         
         // set the newEditableCellHeight property so we can grab it when the tableView asks for the cell height
-        self.newEditableCellHeight = cellContentView.frame.size.height - diff;
+        CGFloat newHeight = cellContentView.frame.size.height - diff;
+        self.newEditableCellHeight = newHeight;
         
         // call beginUpdates and endUpdates to get the tableView to change the height of the first cell
         [self.tableView beginUpdates];
-        [self.tableView endUpdates];  
+        [self.tableView endUpdates];
+        
+        // we need to make sure the speech bubble for this cell also fixes its height
+        if (self.pendingPost.originalPostID) {
+            [self setupReplyBubbleForCell:self.pendingPostCell containerHeight:newHeight position:FeedBGContainerPositionMiddle];
+        }
     }
+}
+
+- (void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView
+{
+    self.pendingPost.entry = growingTextView.text;
 }
 
 # pragma mark - CPUserActionCellDelegate
@@ -1602,7 +1844,7 @@ typedef enum {
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.cancelButtonIndex != buttonIndex) {
-        [self sendNewLog]; 
+        [self sendNewPost]; 
     }
 }
 
@@ -1678,12 +1920,13 @@ typedef enum {
         self.pillPopoverViewController.indexPath = [self.tableView indexPathForCell:cell];
         self.pillPopoverViewController.delegate = self;
         self.wePopoverController = [[WEPopoverController alloc] initWithContentViewController:self.pillPopoverViewController];
-        self.wePopoverController.popoverContentSize = CGSizeMake(172, 91);
+        self.wePopoverController.popoverContentSize = CGSizeMake(172, 81);
         self.wePopoverController.delegate = self;
         [self.wePopoverController setContainerViewProperties:[self popoverContainerViewProperties]];
-        [self.wePopoverController presentPopoverFromRect:[self.view convertRect:button.frame fromView:button.superview]
+        CGRect rect = CGRectOffset([self.view convertRect:button.frame fromView:button.superview], -10, 0);
+        [self.wePopoverController presentPopoverFromRect:rect
                                                   inView:self.view
-                                permittedArrowDirections:UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight
+                                permittedArrowDirections:UIPopoverArrowDirectionLeft|UIPopoverArrowDirectionRight|UIPopoverArrowDirectionUp|UIPopoverArrowDirectionDown
                                                 animated:YES];
 	} else {
         [self dismissPopover];

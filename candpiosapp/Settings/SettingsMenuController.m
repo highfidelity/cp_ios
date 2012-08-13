@@ -6,6 +6,10 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
+#import "CPCheckinHandler.h"
+#import "CPGeofenceHandler.h"
+#import "CPUserSessionHandler.h"
+
 #define menuWidthPercentage 0.8
 #define kEnterInviteFakeSegueID @"--kEnterInviteFakeSegueID"
 
@@ -325,16 +329,15 @@
             [self showMenu:NO]; 
         }
         
-        // logout of *all* accounts
-        [CPAppDelegate logoutEverything];
-        [CPAppDelegate showSignupModalFromViewController:self animated:YES];
+        // logout and show the signup modal
+        [CPUserSessionHandler showSignupModalFromViewController:self animated:YES];
 
     } else {
         NSString *segueID = [self.menuSegueIdentifiersArray objectAtIndex:indexPath.row];
         NSLog(@"You clicked on %@", segueID);
         
         if ([kEnterInviteFakeSegueID isEqual:segueID]) {
-            [CPAppDelegate showEnterInvitationCodeModalFromViewController:self
+            [CPUserSessionHandler showEnterInvitationCodeModalFromViewController:self
                                      withDontShowTextNoticeAfterLaterButtonPressed:YES
                                                                       pushFromLeft:YES
                                                                           animated:YES];
@@ -358,7 +361,7 @@
             if (!error && !respError) {
                 
                 [[UIApplication sharedApplication] cancelAllLocalNotifications];
-                [CPAppDelegate setCheckedOut];
+                [[CPCheckinHandler sharedHandler] setCheckedOut];
                 
                 NSDictionary *jsonDict = [json objectForKey:@"payload"];
                 NSString *venue = [jsonDict valueForKey:@"venue_name"];
@@ -390,19 +393,19 @@
         if (alertView.firstOtherButtonIndex == buttonIndex) {
             // Start monitoring the new location to allow auto-checkout and checkin (if enabled) 
             autoPromptVenue.autoCheckin = YES;
-            [CPAppDelegate startMonitoringVenue:autoPromptVenue];
+            [[CPGeofenceHandler sharedHandler] startMonitoringVenue:autoPromptVenue];
             [FlurryAnalytics logEvent:@"autoCheckInPromptAccepted"];
         }
         else if (buttonIndex == 2) {
             autoPromptVenue.autoCheckin = NO;
             // User does NOT want to automatically check in to this venue        
-            [CPAppDelegate stopMonitoringVenue:autoPromptVenue];
+            [[CPGeofenceHandler sharedHandler] stopMonitoringVenue:autoPromptVenue];
             [FlurryAnalytics logEvent:@"autoCheckInPromptDenied"];
         }
     
         // add this venue to the array of past venues in NSUserDefaults
         // with the correct autoCheckin status
-        [CPAppDelegate updatePastVenue:autoPromptVenue];
+        [[CPGeofenceHandler sharedHandler] updatePastVenue:autoPromptVenue];
     }
 }
 
@@ -413,13 +416,13 @@
     self.afterLoginAction = CPAfterLoginActionNone;
     
     // hide the login banner
-    [CPAppDelegate hideLoginBannerWithCompletion:nil];
+    [CPUserSessionHandler hideLoginBannerWithCompletion:nil];
 }
 
 - (IBAction)loginButtonClick:(id)sender
 {
-    [CPAppDelegate hideLoginBannerWithCompletion:^ {
-        [CPAppDelegate showSignupModalFromViewController:[CPAppDelegate tabBarController]
+    [CPUserSessionHandler hideLoginBannerWithCompletion:^ {
+        [CPUserSessionHandler showSignupModalFromViewController:[CPAppDelegate tabBarController]
                                                 animated:YES];
     }];
 }

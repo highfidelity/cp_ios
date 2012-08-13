@@ -10,6 +10,7 @@
 #import "CPSkill.h"
 #import "MapDataSet.h"
 #import "GTMNSString+HTML.h"
+#import "CPCheckinHandler.h"
 
 @implementation User
 
@@ -221,8 +222,9 @@
 -(void)loadUserResumeData:(void (^)(NSError *error))completion {
     
     [CPapi getResumeForUserId:self.userID andCompletion:^(NSDictionary *response, NSError *error) {
-        
-        if (!error) {
+
+        BOOL respError = [[response objectForKey:@"error"] boolValue];
+        if (!error && !respError) {
             NSDictionary *userDict = [response objectForKey:@"payload"];
 
             // only add the extra info we get because of resume here
@@ -309,6 +311,15 @@
                     }
                     self.placeCheckedIn = venue;
                     self.checkedIn = [[checkinDict valueForKey:@"checked_in"] boolValue];
+
+                    if ([CPUserDefaultsHandler currentUser] && [[CPUserDefaultsHandler currentUser] userID] == self.userID) {
+                        if (self.checkedIn) {
+                            NSInteger checkOutTime =[[checkinDict objectForKey:@"checkout"] integerValue];
+                            [[CPCheckinHandler sharedHandler] saveCheckInVenue:venue andCheckOutTime:checkOutTime];
+                        } else {
+                            [[CPCheckinHandler sharedHandler] setCheckedOut];
+                        }
+                    }
                 }
             }
             

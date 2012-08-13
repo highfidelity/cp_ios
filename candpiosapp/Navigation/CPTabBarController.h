@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CPThinTabBar.h"
+#import "CPPost.h"
 
 @interface CPTabBarController : UITabBarController <UIAlertViewDelegate>
 
@@ -19,5 +20,8 @@
 - (IBAction)updateButtonPressed:(id)sender;
 - (IBAction)checkinButtonPressed:(id)sender;
 - (void)questionButtonPressed:(id)sender;
+
+- (void)showFeedVCForVenue:(CPVenue *)venue;
+- (void)showFeedVCForNewPostAtCurrentVenueWithPostType:(CPPostType)postType;
 
 @end

@@ -27,32 +27,15 @@
 @property (strong, nonatomic, readonly) CLLocationManager *locationManager;
 @property (strong, nonatomic) SettingsMenuController *settingsMenuController;
 @property (strong, nonatomic) CPTabBarController *tabBarController;
+@property (strong, readonly) CLLocationManager *locationManager;
 @property (strong, nonatomic) NSTimer *checkOutTimer;
            
--(void)saveSettings;
+- (void)pushAliasUpdate;
+- (void)saveSettings;
 - (void)loadVenueView:(NSString *)venueName;
--(void)logoutEverything;
--(void)storeUserLoginDataFromDictionary:(NSDictionary *)userDictionary;
-- (void)updatePastVenue:(CPVenue *)venue;
-- (CPVenue *)venueWithName:(NSString *)name;
 - (void)toggleSettingsMenu;
-- (void)promptForCheckout;
-- (void)setCheckedOut;
-- (void)autoCheckinForVenue:(CPVenue *)venue;
-- (void)autoCheckoutForCLRegion:(CLRegion *)region;
-- (void)showSignupModalFromViewController:(UIViewController *)viewController animated:(BOOL)animated;
-- (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
-         withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed
-                                          pushFromLeft:(BOOL)pushFromLeft
-                                              animated:(BOOL)animated;
-- (void)syncCurrentUserWithWebAndCheckValidLogin;
+- (void)setupUrbanAirship;
 
-- (void)showLoginBanner;
-- (void)hideLoginBannerWithCompletion:(void (^)(void))completion;
-
-- (CLRegion *)getRegionForVenue:(CPVenue *)venue;
-- (void)startMonitoringVenue:(CPVenue *)venue;
-- (void)stopMonitoringVenue:(CPVenue *)venue;
 
 void uncaughtExceptionHandler(NSException *exception);
 void SignalHandler(int sig);

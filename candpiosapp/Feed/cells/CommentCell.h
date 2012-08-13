@@ -8,17 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-@class CommentCell;
+@class CommentCell, CPVenue;
+
 @protocol CommentCellDelegate <NSObject>
 - (void) showPillPopoverFromCell:(CommentCell*)cell;
 @end
 
 @interface CommentCell : UITableViewCell
 @property (strong, nonatomic) CPPost *post;
+@property (strong, nonatomic) CPVenue *venue;
 @property (strong, nonatomic) UIButton *pillButton;
 @property (strong, nonatomic) UILabel *pillLabel;
-@property (nonatomic) id<CommentCellDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UIButton *placeholderPillButton;
+@property (nonatomic) id<CommentCellDelegate> delegate;
+
 
 - (void) updatePillButtonAnimated:(BOOL)animated;
 

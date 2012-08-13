@@ -660,6 +660,21 @@
     [self makeHTTPRequestWithAction:@"getVenuesAndUsersWithCheckinsInBoundsDuringInterval" withParameters:params queue:mapQueue timeout:9 completion:completion];
 }
 
++ (void)getNearestVenuesWithActiveFeeds:(CLLocationCoordinate2D)coordinate
+                             completion:(void (^)(NSDictionary *, NSError *))completion
+{
+    // Venues with active feeds.. generally centered around the user
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setValue:[NSString stringWithFormat:@"%f", coordinate.latitude] forKey:@"lat"];
+    [params setValue:[NSString stringWithFormat:@"%f", coordinate.longitude] forKey:@"lng"];
+    
+    [self makeHTTPRequestWithAction:@"getNearestVenuesWithActiveFeeds"
+                     withParameters:params
+                              queue:nil
+                            timeout:9
+                         completion:completion];
+}
+
 + (void)getNearestVenuesWithCheckinsToCoordinate:(CLLocationCoordinate2D)coordinate
                                      mapQueue:(NSOperationQueue *)mapQueue
                                completion:(void (^)(NSDictionary *, NSError *))completion
@@ -694,10 +709,30 @@
     }
 }
 
-+ (void)getFeedForVenueID:(NSUInteger)venueID withCompletion:(void (^)(NSDictionary *, NSError *))completion
++ (void)getPostsForVenueFeed:(CPVenueFeed *)venueFeed
+           withCompletion:(void (^)(NSDictionary *, NSError *))completion
 {
     // our params dict contains one parameter, the ID of the venue we want log entries for
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"%d", venueID] forKey:@"venue_id"];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"%d", venueFeed.venue.venueID] forKey:@"venue_id"];
+
+    [params setObject:[NSString stringWithFormat:@"%d", venueFeed.updateTimestamp] forKey:@"timestamp"];
+    
+    // pretty simple, call action getVenueFeed in api.php
+    [self makeHTTPRequestWithAction:@"getVenueFeed" withParameters:params completion:completion];
+}
+
++ (void)getPostRepliesForVenueFeed:(CPVenueFeed *)venueFeed
+                    withCompletion:(void (^)(NSDictionary *, NSError *))completion
+{
+    // our params dict contains one parameter, the ID of the venue we want post replies for
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:[NSString stringWithFormat:@"%d", venueFeed.venue.venueID] forKey:@"venue_id"];
+    [params setObject:[NSString stringWithFormat:@"%d", 1] forKey:@"replies_only"];
+    
+    // if we were passed a lastReplyID then add that as a param
+    if (venueFeed.lastReplyID) {
+        [params setObject:[NSString stringWithFormat:@"%d", venueFeed.lastReplyID] forKey:@"last_id"];
+    }
     
     // pretty simple, call action getLog in api.php
     [self makeHTTPRequestWithAction:@"getVenueFeed" withParameters:params completion:completion];
@@ -720,9 +755,7 @@
             postType = @"love";
             break;
         case CPPostTypeCheckin:
-            @throw [NSException exceptionWithName:@"Don't call type=\"checkin\" directly, use chickin API call with status."
-                                           reason:nil
-                                         userInfo:nil];
+            postType = @"checkin";
             break;
     }
     
@@ -775,6 +808,11 @@
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setValue:[NSString stringWithFormat:@"%d", venue.venueID] forKey:@"venue_id"];
     [self makeHTTPRequestWithAction:@"getVenueCheckInsCount" withParameters:parameters completion:completion];
+}
+
++ (void)getDefaultCheckInVenueWithCompletion:(void (^)(NSDictionary *, NSError *))completion
+{
+    [self makeHTTPRequestWithAction:@"getDefaultCheckInVenue" withParameters:nil completion:completion];   
 }
 
 + (void)getResumeForUserId:(int)userId

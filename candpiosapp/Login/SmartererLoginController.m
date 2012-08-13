@@ -1,3 +1,11 @@
+//
+//  SmartererLoginController.m
+//  candpiosapp
+//
+//  Created by Emmanuel Crouvisier.
+//  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
+//
+
 #import "SmartererLoginController.h"
 #import "FlurryAnalytics.h"
 #import "CPapi.h"

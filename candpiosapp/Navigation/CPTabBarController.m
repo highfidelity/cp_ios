@@ -9,6 +9,13 @@
 #import "CPTabBarController.h"
 #import "FeedViewController.h"
 #import "CPCheckinHandler.h"
+#import "CPUserSessionHandler.h"
+
+@interface CPTabBarController()
+
+@property (nonatomic, readonly) FeedViewController *feedViewController;
+
+@end
 
 @implementation CPTabBarController
 
@@ -110,6 +117,9 @@
     }  
 }
 
+#define QUESTION_ALERT_TAG 4423
+#define UPDATE_ALERT_TAG 4424
+
 - (void)questionButtonPressed:(id)sender
 {  
     self.thinBar.actionButtonState = CPThinTabBarActionButtonStatePlus;
@@ -124,9 +134,10 @@
                                                                delegate:self
                                                       cancelButtonTitle:@"Cancel"
                                                       otherButtonTitles:@"Checkin", nil];
+        checkinAlert.tag = QUESTION_ALERT_TAG;
         [checkinAlert show];
     } else {
-        [self showFeedViewController:CPPostTypeQuestion];
+        [self showFeedVCForNewPostAtCurrentVenueWithPostType:CPPostTypeQuestion];
     }
 }
 
@@ -147,51 +158,65 @@
                                                                delegate:self 
                                                       cancelButtonTitle:@"Cancel"
                                                       otherButtonTitles:@"Checkin", @"Post to Feed", nil];
+        checkinAlert.tag = UPDATE_ALERT_TAG;
         [checkinAlert show];
         
     } else {
-        [self showFeedViewController:CPPostTypeUpdate];
+        [self showFeedVCForNewPostAtCurrentVenueWithPostType:CPPostTypeUpdate];
     }
 }
 
-- (void)showFeedViewController:(CPPostType)postType
+- (FeedViewController *)feedViewController
 {
+    if (!_feedViewController) {
+        // lazily instantiate our _feedViewController variable
+        // grab it from the first tab
+        UINavigationController *feedNC = [self.viewControllers objectAtIndex:0];
+        FeedViewController *feedVC = [feedNC.viewControllers objectAtIndex:0];
+        _feedViewController = feedVC;
+    }
     
+    return _feedViewController;
+}
+
+- (void)showFeedVCForNewPost:(BOOL)forNewPost
+{
+    if (self.selectedIndex == 0) {
+        if (forNewPost) {
+            // the user is already on the feed for the right venue
+            // so tell the feedVC that we want to add a new post
+            [self.feedViewController newPost:nil];
+        }
+    } else {
+        if (forNewPost) {
+            // the feedVC isn't on screen yet so tell we want a new post after it loads
+            self.feedViewController.newPostAfterLoad = YES;
+        }
+        
+        // switch to the feed view controller
+        self.selectedIndex = 0;
+    }
+}
+
+- (void)showFeedVCForVenue:(CPVenue *)venue 
+{
+    // tell the feedViewController that it needs to switch to the venue feed for this venue
+    // and then get the CPTabBarController to switch over to it
+    [self.feedViewController showVenueFeedForVenue:venue];    
+    [self showFeedVCForNewPost:NO];
+}
+
+- (void)showFeedVCForNewPostAtCurrentVenueWithPostType:(CPPostType)postType
+{
     // the user is logged in and checked in
     // we need to bring them to the feed VC and display the feed for the venue they are checked into
+    self.feedViewController.postType = postType;
     
-    // grab the FeedViewController
-    UINavigationController *feedNC = [self.viewControllers objectAtIndex:0];
-    FeedViewController *feedVC = [feedNC.viewControllers objectAtIndex:0];
-    feedVC.postType = postType;
+    // if the FeedViewController doesn't have our the current venue's feed as it's selectedVenueFeed
+    // then pull it from the list of venue feed previews and make it the selected venue feed
+    self.feedViewController.selectedVenueFeed = [self.feedViewController.venueFeedPreviews objectAtIndex:0];
     
-    if ([CPCheckinHandler sharedHandler].afterCheckinAction == CPAfterCheckinActionNewPost) {
-        // this is for a forced checkin
-        // so the feedVC is already being show
-        // just tell it we want a new post
-        feedVC.newPostAfterLoad = YES;
-    } else {
-        // if the FeedViewController doesn't have our the current venue's feed as it's selectedVenueFeed
-        // then alloc-init one and set it properly
-        if ([CPUserDefaultsHandler currentVenue].venueID != feedVC.selectedVenueFeed.venue.venueID) {
-            CPVenueFeed *currentVenueFeed = [[CPVenueFeed alloc] init];
-            currentVenueFeed.venue = [CPUserDefaultsHandler currentVenue];
-            
-            feedVC.selectedVenueFeed = currentVenueFeed;
-        } 
-        
-        // the user is already on the feed for the right venue
-        // so tell the feedVC that we want to add a new post
-        
-        if (self.selectedIndex == 0) {
-            // the feedVC is on screen so we want a new post right now
-            [feedVC newPost:nil];
-        } else {
-            // the feedVC isn't on screen yet so tell we want a new post after it loads
-            feedVC.newPostAfterLoad = YES;
-            self.selectedIndex = 0;
-        }
-    }   
+    [self showFeedVCForNewPost:YES];
 }
 
 - (IBAction)checkinButtonPressed:(id)sender
@@ -208,13 +233,14 @@
     [CPAppDelegate settingsMenuController].afterLoginAction = action;
     
     // show the login banner
-    [CPAppDelegate showLoginBanner];
+    [CPUserSessionHandler showLoginBanner];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == alertView.firstOtherButtonIndex) {        
-        [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionNewPost;      
+        [CPCheckinHandler sharedHandler].afterCheckinAction = (alertView.tag == UPDATE_ALERT_TAG)
+                                                              ? CPAfterCheckinActionNewUpdate : CPAfterCheckinActionNewQuestion;
         [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
     } else if (buttonIndex != alertView.cancelButtonIndex) {
         // this is the "Post to Feed" button

@@ -11,30 +11,18 @@
 #import "CPSoundEffectsManager.h"
 #import "User.h"
 
+#define kCancelOpenSlideActionButtonsNotification @"kCancelOpenSlideActionButtonsNotification"
+
 typedef enum {
 	CPUserActionCellDirectionRight = 0,
 	CPUserActionCellDirectionLeft,
 } CPUserActionCellDirection;
 
 typedef enum {
-	CPUserActionCellSwipeStyleFull = 0,
+    CPUserActionCellSwipeStyleNone = 0,
     CPUserActionCellSwipeStyleQuickAction,
     CPUserActionCellSwipeStyleReducedAction,
-	CPUserActionCellSwipeStyleNone,
 } CPUserActionCellSwipeStyle;
-
-// toggle switch state
-// 0 - nothing activated
-// 1 - send love active
-// 2 - send message active
-// 3 - exchange contacts active
-typedef enum {
-	CPUserActionCellSwitchStateOff = 0,
-	CPUserActionCellSwitchStateSendLoveOn,
-	CPUserActionCellSwitchStateSendMessageOn,
-    CPUserActionCellSwitchStateExchangeContactsOn,
-} CPUserActionCellSwitchState;
-
 
 @class CPUserActionCell;
 
@@ -54,14 +42,17 @@ typedef enum {
 @property (strong, nonatomic) User *user;
 @property (strong, nonatomic) UIView *hiddenView;
 @property (nonatomic, getter = isRevealing) BOOL revealing;
+@property (nonatomic) BOOL shouldBounce;
+@property (nonatomic) CPUserActionCellSwipeStyle leftStyle;
+@property (nonatomic) CPUserActionCellSwipeStyle rightStyle;
 @property (strong, nonatomic) UIButton *sendLoveButton;
 @property (strong, nonatomic) UIButton *sendMessageButton;
 @property (strong, nonatomic) UIButton *exchangeContactsButton;
 @property (strong, nonatomic) UIColor *activeColor;
 @property (strong, nonatomic) UIColor *inactiveColor;
-@property (nonatomic) BOOL shouldBounce;
-@property (nonatomic) CPUserActionCellSwipeStyle leftStyle;
-@property (nonatomic) CPUserActionCellSwipeStyle rightStyle;
-@property (nonatomic) CPUserActionCellSwitchState toggleState;
+@property (nonatomic, readonly) CGFloat originalCenter;
+
++ (void)cancelOpenSlideActionButtonsNotification:(CPUserActionCell *)cell;
+- (void)animateSlideButtonsWithNewCenter:(CGFloat)newCenter delay:(NSTimeInterval)delay duration:(NSTimeInterval)duration animated:(BOOL)animated;
 
 @end

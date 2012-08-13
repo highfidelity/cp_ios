@@ -28,7 +28,6 @@
 @property (strong, nonatomic) PillPopoverViewController *pillPopoverViewController;
 
 - (void)showPillPopoverFromCell:(PostBaseCell*)cell;
-
 - (void)newPost:(NSIndexPath *)replyToIndexPath;
 - (void)showOnlyPostableFeeds;
 + (UIView *)timelineViewWithHeight:(CGFloat)height;

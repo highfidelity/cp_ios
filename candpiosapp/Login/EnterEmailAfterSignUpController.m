@@ -1,16 +1,17 @@
 //
-//  EnterEmailAfterSingUpController.m
+//  EnterEmailAfterSignUpController.m
 //  candpiosapp
 //
 //  Created by Tomáš Horáček on 5/1/12.
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import "EnterEmailAfterSingUpController.h"
+#import "EnterEmailAfterSignUpController.h"
 #import "AppDelegate.h"
 #import "CPapi.h"
+#import "CPUserSessionHandler.h"
 
-@interface EnterEmailAfterSingUpController () <UITextFieldDelegate>
+@interface EnterEmailAfterSignUpController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UILabel *emailValidationMessage;
@@ -21,7 +22,7 @@
 
 @end
 
-@implementation EnterEmailAfterSingUpController
+@implementation EnterEmailAfterSignUpController
 
 - (void)pushNextViewContollerOrDismissWithMessage:(NSString *)message {
     
@@ -75,6 +76,26 @@
     [self.navigationController setNavigationBarHidden:YES];
     
     [self.emailTextField becomeFirstResponder];
+}
+
+#pragma mark - VC Helpers
+
+- (void)sendEmailSettingsWithEmail:(NSString *)email {
+    [SVProgressHUD showWithStatus:@"Checking..."];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   email, @"email",
+                                   nil];
+    
+    [CPapi setUserProfileDataWithDictionary:params andCompletion:^(NSDictionary *json, NSError *error) {
+        if ( ! error && [[json objectForKey:@"succeeded"] boolValue]) {
+            [SVProgressHUD dismiss];
+            [CPUserSessionHandler performAfterLoginActions];
+        } else {
+            [SVProgressHUD dismissWithError:[json objectForKey:@"message"]
+                                 afterDelay:kDefaultDismissDelay];
+        }
+    }];
 }
 
 #pragma mark - UITextFieldDelegate

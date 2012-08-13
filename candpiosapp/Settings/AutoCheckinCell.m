@@ -7,6 +7,7 @@
 //
 
 #import "AutoCheckinCell.h"
+#import "CPGeofenceHandler.h"
 
 @implementation AutoCheckinCell
 
@@ -14,15 +15,15 @@
 {
     if (!sender.on) {
         self.venue.autoCheckin = NO;
-        [CPAppDelegate stopMonitoringVenue:self.venue];
+        [[CPGeofenceHandler sharedHandler] stopMonitoringVenue:venue];
     }
     else {
         self.venue.autoCheckin = YES;
-        [CPAppDelegate startMonitoringVenue:self.venue];
+        [[CPGeofenceHandler sharedHandler] startMonitoringVenue:venue];
     }
 
     // Save the changes to pastVenues
-    [CPAppDelegate updatePastVenue:self.venue];
+    [[CPGeofenceHandler sharedHandler] updatePastVenue:venue];
 }
 
 @end

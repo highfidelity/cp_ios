@@ -14,6 +14,7 @@
 #import "CPVenue.h"
 #import "ChatHistory.h"
 #import "CPPost.h"
+#import "CPVenueFeed.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface CPapi : NSObject
@@ -40,6 +41,9 @@
                             mapQueue:(NSOperationQueue *)mapQueue
              withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
++ (void)getNearestVenuesWithActiveFeeds:(CLLocationCoordinate2D)coordinate
+                             completion:(void (^)(NSDictionary *, NSError *))completion;
+
 + (void)getNearestVenuesWithCheckinsToCoordinate:(CLLocationCoordinate2D)coordinate
                                         mapQueue:(NSOperationQueue *)mapQueue
                                       completion:(void (^)(NSDictionary *, NSError *))completion;
@@ -60,7 +64,8 @@
 
 #pragma mark - Feeds
 + (void)getFeedPreviewsForVenueIDs:(NSArray *)venueIDs withCompletion:(void (^)(NSDictionary *, NSError *))completion;
-+ (void)getFeedForVenueID:(NSUInteger)venueID withCompletion:(void (^)(NSDictionary *, NSError *))completion;
++ (void)getPostsForVenueFeed:(CPVenueFeed *)venueFeed withCompletion:(void (^)(NSDictionary *, NSError *))completion;
++ (void)getPostRepliesForVenueFeed:(CPVenueFeed *)venueFeed withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 + (void)newPost:(CPPost *)post
         atVenue:(CPVenue *)venue
@@ -77,6 +82,8 @@
 
 + (void)getCurrentCheckInsCountAtVenue:(CPVenue *)venue 
                         withCompletion:(void (^)(NSDictionary *, NSError *))completion;
+
++ (void)getDefaultCheckInVenueWithCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - User Profile
 + (void)getResumeForUserId:(int)userId andCompletion:(void(^)(NSDictionary *json, NSError *error))completion;

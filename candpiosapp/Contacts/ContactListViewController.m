@@ -10,6 +10,7 @@
 #import "UserProfileViewController.h"
 #import "GTMNSString+HTML.h"
 #import "UserLoveViewController.h"
+#import "UIViewController+CPUserActionCellAdditions.h"
 
 #define kContactRequestsSection 0
 #define kExtraContactRequestsSections 1
@@ -89,6 +90,12 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -125,7 +132,13 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
                 self.contactRequests = [contactRequests mutableCopy];
                 
                 if (!self.userIsPerformingQuickAction) {
+                    NSUInteger preReloadVisibleCellsCount = [self.tableView.visibleCells count];
+                    
                     [self.tableView reloadData];
+                    
+                    if (!preReloadVisibleCellsCount) {
+                        [self animateSlideWaveWithCPUserActionCells:self.tableView.visibleCells];
+                    }
                 } else {
                     self.reloadPrevented = YES;
                 }
@@ -174,19 +187,10 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     return sections;
 }
 
-- (void)setContacts:(NSMutableArray *)contactList {
-    _contacts = [self partitionObjects:contactList collationStringSelector:@selector(nickname)];
-    
-    // store the array for search
-    self.sortedContactList = [contactList mutableCopy];
-}
+#pragma mark - UIScrollViewDelegate
 
-- (void)hidePlaceholder:(BOOL)hide
-{
-    [self.placeholderImage setHidden:hide];
-    [self.tableView setScrollEnabled:hide];
-    [self.searchBar setHidden:!hide];
-    self.isSearching = !hide;
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
 
 - (NSArray*)sectionIndexTitles 

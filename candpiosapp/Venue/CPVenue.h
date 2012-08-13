@@ -20,6 +20,8 @@
 @property (strong, nonatomic) NSString *phone;
 @property (strong, nonatomic) NSString *formattedPhone;
 @property (strong, nonatomic) NSString *photoURL;
+@property (strong, nonatomic) NSMutableDictionary *activeUsers;
+@property (strong, nonatomic) NSString *specialVenueType;
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 @property (nonatomic) double distanceFromUser;
 @property (nonatomic) int checkinCount;
@@ -29,10 +31,9 @@
 @property (nonatomic, readonly) NSString *checkinCountString;
 @property (nonatomic, readonly) NSString *checkinTimeString;
 @property (nonatomic, readonly) NSString *formattedAddress;
-@property (strong, nonatomic) NSMutableDictionary *activeUsers;
 @property (nonatomic) BOOL hasContactAtVenue;
 @property (nonatomic) BOOL autoCheckin;
-@property (strong, nonatomic) NSString *specialVenueType;
+@property (nonatomic) NSUInteger postsCount;
 
 - (CPVenue *)initFromDictionary:(NSDictionary *)json;
 - (NSComparisonResult)sortByDistanceToUser:(CPVenue *)place;

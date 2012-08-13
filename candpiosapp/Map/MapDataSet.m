@@ -26,7 +26,7 @@ static NSOperationQueue *sMapQueue = nil;
 +(void)beginLoadingNewDataset:(CLLocationCoordinate2D)mapCenter
 					 completion:(void (^)(MapDataSet *set, NSError *error))completion
 {
-	if(!sMapQueue)	{
+	if(!sMapQueue) {
 		sMapQueue = [NSOperationQueue new];
 		[sMapQueue setSuspended:NO];
 		// serialize requests, please
@@ -72,7 +72,7 @@ static NSOperationQueue *sMapQueue = nil;
 
 -(id)initFromJson:(NSDictionary*)json
 {
-	if((self = [super init])) {		
+	if((self = [super init])) {
         // get the places that came back and make an annotation for each of them
         NSArray *venuesArray = [[json objectForKey:@"payload"] objectForKey:@"venues"];
         
@@ -107,7 +107,6 @@ static NSOperationQueue *sMapQueue = nil;
                                 venue.hasContactAtVenue = YES;
                                 break;
                             }
-                            
                         }
                     }
                 }

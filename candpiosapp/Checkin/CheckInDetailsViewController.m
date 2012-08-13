@@ -27,17 +27,19 @@
 @property (weak, nonatomic) IBOutlet UILabel *willLabel;
 @property (weak, nonatomic) IBOutlet UITextField *statusTextField;
 @property (weak, nonatomic) IBOutlet UISlider *timeSlider;
-@property (weak, nonatomic) IBOutlet UILabel *durationString;
 @property (weak, nonatomic) IBOutlet UIButton *checkInButton;
 @property (weak, nonatomic) IBOutlet UILabel *durationHeader;
 @property (weak, nonatomic) IBOutlet UIView *userInfoBubble;
 @property (weak, nonatomic) IBOutlet UILabel *infoBubbleNickname;
 @property (weak, nonatomic) IBOutlet UILabel *infoBubbleStatus;
+@property (weak, nonatomic) IBOutlet UILabel *oneHourLabel;
+@property (weak, nonatomic) IBOutlet UILabel *threeHoursLabel;
+@property (weak, nonatomic) IBOutlet UILabel *fiveHoursLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sevenHoursLabel;
 @property (strong, nonatomic) NSMutableArray *userArray;
 @property (weak, nonatomic) UIImageView *infoBubbleArrow;
 @property (nonatomic) int checkInDuration;
 @property (nonatomic) BOOL sliderButtonPressed;
-
 @property (nonatomic) int userArrayIndex;
 
 -(IBAction)sliderChanged:(id)sender;
@@ -49,12 +51,6 @@
 
 @implementation CheckInDetailsViewController
 
--(void)setCheckInDuration:(int)checkInDuration
-{
-    NSString *formatStr = checkInDuration == 1 ? @"%d hour" : @"%d hours";
-    self.durationString.text = [NSString stringWithFormat:formatStr, checkInDuration];
-    _checkInDuration = checkInDuration;
-}
 
 // customer getter for infoBubbleArrow
 // lazily instantiates it if it's not on the screen yet
@@ -387,16 +383,26 @@
 
 -(IBAction)sliderChanged:(id)sender
 {
-    // get the value of the slider and set it to one of the accepted values
+    // hide the hrs labels
+    self.oneHourLabel.hidden = YES;
+    self.threeHoursLabel.hidden = YES;
+    self.fiveHoursLabel.hidden = YES;
+    self.sevenHoursLabel.hidden = YES;
+    
+    // get the value of the slider and set it to one of the accepted values, revealing the associated hour label
     float value = self.timeSlider.value;
     if (value < 2) {
         value = 1;
+        self.oneHourLabel.hidden = NO;
     } else if (value < 4) {
         value = 3;
+        self.threeHoursLabel.hidden = NO;
     } else if (value < 6) {
         value = 5;
+        self.fiveHoursLabel.hidden = NO;
     } else {
         value = 7;
+        self.sevenHoursLabel.hidden = NO;
     }
     
     // remove the font change to the previous selected value
@@ -406,7 +412,7 @@
     
     // change the font on the new selected value
     UILabel *selectedValueLabel = (UILabel *)[self.view viewWithTag:(1000 + value)];
-    selectedValueLabel.textColor = self.durationString.textColor;
+    selectedValueLabel.textColor = RGBA(66, 130, 140, 1);
     selectedValueLabel.font = [UIFont boldSystemFontOfSize:28.0];
     
     // set the slider to the accepted value

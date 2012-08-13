@@ -33,7 +33,8 @@ static NSDateFormatter *postDateFormatter;
         
         // alloc-init user objects for author and receiver if we have them
         // we should always have an author
-        if ([postDict objectForKey:@"author"]) {
+        if ([postDict objectForKey:@"author"] &&
+            ![[postDict objectForKey:@"author"] isKindOfClass:[NSNull class]]) {
             self.author = [[User alloc] initFromDictionary:[postDict objectForKey:@"author"]];
         } 
         
@@ -50,7 +51,7 @@ static NSDateFormatter *postDateFormatter;
         }
         
         self.type = [self enumLogEntryTypeForString:[postDict objectForKey:@"type"]];
-        self.originalPostID = [[postDict objectForKey:@"original_log_id"] integerValue];
+        self.originalPostID = [[postDict objectForKey:@"original_post_id"] integerValue];
     }
     return self;
 }

@@ -11,6 +11,7 @@
 #import "UserLoveViewController.h"
 #import "OneOnOneChatViewController.h"
 #import "UserProfileViewController.h"
+#import "CPUserSessionHandler.h"
 
 @implementation CPUserAction
 
@@ -29,7 +30,7 @@ static UserProfileViewController* userProfileViewController;
 {
     // only show the love modal if this user is logged in
     if (![CPUserDefaultsHandler currentUser]) {
-        [CPAppDelegate showLoginBanner];
+        [CPUserSessionHandler showLoginBanner];
         cell.selected = NO;
         return;
     }    
@@ -57,7 +58,7 @@ static UserProfileViewController* userProfileViewController;
 {
     // handle chat
     if (![CPUserDefaultsHandler currentUser]) {
-        [CPAppDelegate showLoginBanner];
+        [CPUserSessionHandler showLoginBanner];
         cell.selected = NO;
         return;
     }    
@@ -96,7 +97,7 @@ static UserProfileViewController* userProfileViewController;
     // Offer to exchange contacts
     // handle chat
     if (![CPUserDefaultsHandler currentUser]) {
-        [CPAppDelegate showLoginBanner];
+        [CPUserSessionHandler showLoginBanner];
         cell.selected = NO;
         return;
     }    
@@ -125,7 +126,7 @@ static UserProfileViewController* userProfileViewController;
 {
     NSLog(@"Show Profile called.");
     if (![CPUserDefaultsHandler currentUser]) {
-        [CPAppDelegate showLoginBanner];
+        [CPUserSessionHandler showLoginBanner];
         cell.selected = NO;
         return;
     }

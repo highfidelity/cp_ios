@@ -13,6 +13,7 @@
 #import "MapDataSet.h"
 #import "UIButton+AnimatedClockHand.h"
 #import "CPCheckinHandler.h"
+#import "CPUserSessionHandler.h"
 
 #define CHAT_MESSAGE_ORIGIN_X 11
 
@@ -254,13 +255,14 @@
 - (void)showVenueChat
 {
     if ([CPUserDefaultsHandler currentUser]) {
-        [CPUserDefaultsHandler addFeedVenue:self.venue showFeedNow:YES];
+        [CPUserDefaultsHandler addFeedVenue:self.venue];
+        // switch over to the feed view controller
+        self.tabBarController.selectedIndex = 0;
     } else {
         // prompt the user to login
-        [CPAppDelegate showLoginBanner];
+        [CPUserSessionHandler showLoginBanner];
         [self normalVenueChatButton];
     }
-    
 }
 
 - (void)populateUserSection
@@ -734,7 +736,7 @@
     //Add observer to update checkIn button
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(refreshVenueViewCheckinButton) 
-                                                 name:@"userCheckinStateChange" 
+                                                 name:@"userCheckInStateChange" 
                                                object:nil];
     
     
@@ -744,11 +746,11 @@
 - (void)checkInPressed:(id)sender
 {
     if (![CPUserDefaultsHandler currentUser]) {
-        [CPAppDelegate showLoginBanner];
+        [CPUserSessionHandler showLoginBanner];
     } else {
         if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [CPUserDefaultsHandler currentVenue].venueID == self.venue.venueID){
             // user is checked in here so ask them if they want to be checked out
-            [CPAppDelegate promptForCheckout];
+            [[CPCheckinHandler sharedHandler] promptForCheckout];
         } else {
             // tell the CPCheckinHandler that there should be no action after this checkin
             [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionNone;
@@ -922,7 +924,7 @@
 - (IBAction)userImageButtonPressed:(id)sender
 {
     if (![CPUserDefaultsHandler currentUser]) {
-        [CPAppDelegate showLoginBanner];
+        [CPUserSessionHandler showLoginBanner];
 
     }   else {
         UserProfileViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
