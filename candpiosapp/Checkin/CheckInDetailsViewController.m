@@ -15,6 +15,7 @@
 
 @interface CheckInDetailsViewController() <UITextFieldDelegate, UIScrollViewDelegate>
 
+@property (strong, nonatomic) NSMutableArray *userArray;
 @property (weak, nonatomic) IBOutlet UIView *blueOverlay;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollView;
@@ -36,7 +37,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *threeHoursLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fiveHoursLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sevenHoursLabel;
-@property (strong, nonatomic) NSMutableArray *userArray;
 @property (weak, nonatomic) UIImageView *infoBubbleArrow;
 @property (nonatomic) int checkInDuration;
 @property (nonatomic) BOOL sliderButtonPressed;
@@ -50,22 +50,6 @@
 @end
 
 @implementation CheckInDetailsViewController
-
-
-// customer getter for infoBubbleArrow
-// lazily instantiates it if it's not on the screen yet
--(UIImageView *)infoBubbleArrow
-{
-    if (!_infoBubbleArrow) {
-        UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.userInfoBubble.frame.size.height, 25, 15)];
-        arrowImageView.image = [UIImage imageNamed:@"check-in-status-arrow.png"];
-        _infoBubbleArrow = arrowImageView;
-        [self.userInfoBubble addSubview:_infoBubbleArrow];
-        return _infoBubbleArrow;
-    } else {
-        return _infoBubbleArrow;
-    }
-}
 
 #pragma mark - View lifecycle
 
@@ -157,6 +141,21 @@
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+// customer getter for infoBubbleArrow
+// lazily instantiates it if it's not on the screen yet
+-(UIImageView *)infoBubbleArrow
+{
+    if (!_infoBubbleArrow) {
+        UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.userInfoBubble.frame.size.height, 25, 15)];
+        arrowImageView.image = [UIImage imageNamed:@"check-in-status-arrow.png"];
+        _infoBubbleArrow = arrowImageView;
+        [self.userInfoBubble addSubview:_infoBubbleArrow];
+        return _infoBubbleArrow;
+    } else {
+        return _infoBubbleArrow;
+    }
 }
 
 - (IBAction)checkInPressed:(id)sender {

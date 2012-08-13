@@ -14,5 +14,6 @@
 
 @interface CPTouchableView : UIView 
 
-@property (nonatomic, assign) id delegate;
+@property (nonatomic) id delegate;
+
 @end
