@@ -17,6 +17,12 @@
 
 
 @interface UserProfileViewController() <UIWebViewDelegate, UIActionSheetDelegate, GRMustacheTemplateDelegate>
+
+@property (strong, nonatomic) UITapGestureRecognizer *tapRecon;
+@property (strong, nonatomic) NSNumber *templateCounter;
+@property (strong, nonatomic) NSString* preBadgesHTML;
+@property (strong, nonatomic) NSString* postBadgesHTML;
+@property (strong, nonatomic) NSString* badgesHTML;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UILabel *checkedIn;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -48,16 +54,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *payButton;
 @property (weak, nonatomic) IBOutlet UIButton *reviewButton;
 @property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
-@property (nonatomic) int othersAtPlace;
-@property (strong, nonatomic) NSNumber *templateCounter;
-@property (nonatomic) NSInteger selectedFavoriteVenueIndex;
 @property (weak, nonatomic) IBOutlet UILabel *propNoteLabel;
-@property (nonatomic) BOOL mapAndDistanceLoaded;
-@property (strong, nonatomic) NSString* preBadgesHTML;
-@property (strong, nonatomic) NSString* postBadgesHTML;
-@property (strong, nonatomic) NSString* badgesHTML;
 @property (nonatomic) BOOL firstLoad;
-@property (strong, nonatomic) UITapGestureRecognizer *tapRecon;
+@property (nonatomic) int othersAtPlace;
+@property (nonatomic) NSInteger selectedFavoriteVenueIndex;
+@property (nonatomic) BOOL mapAndDistanceLoaded;
 
 -(NSString *)htmlStringWithResumeText;
 -(IBAction)plusButtonPressed:(id)sender;

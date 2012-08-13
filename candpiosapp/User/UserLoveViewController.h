@@ -13,13 +13,13 @@
 
 @interface UserLoveViewController : UIViewController
 
-@property (nonatomic) id delegate;
 @property (strong, nonatomic) User *user;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
 @property (weak, nonatomic) IBOutlet CPPlaceholderTextView *descriptionTextView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *loveBackground;
+@property (nonatomic) id delegate;
 
 - (void)dismissHUD:(id)sender;
 
