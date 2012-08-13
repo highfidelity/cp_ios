@@ -308,10 +308,6 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
     } else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey] != nil) {
         [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"acceptor"]
                                        fromView:self.settingsMenuController];
-    } else if ([userInfo valueForKey:@"payment_received"] != nil) {
-        // Received payment
-        NSString *message = [userInfo valueForKeyPath:@"aps.alert"];
-        [PaymentHelper showPaymentReceivedAlertWithMessage:message];
     } else {
         // just show the alert if there was one, and the app is active
         if (alertMessage && [UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
@@ -372,7 +368,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
         // Please populate AirshipConfig.plist with your info from http://go.urbanairship.com
         [UAirship takeOff:self.urbanAirshipTakeOffOptions];
         
-        urbanAirshipClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://go.urbanairship.com/api"]];
+        _urbanAirshipClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://go.urbanairship.com/api"]];
         
         // register for push
         [[UAPush shared] registerForRemoteNotificationTypes:

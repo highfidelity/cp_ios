@@ -15,15 +15,15 @@
 {
     if (!sender.on) {
         self.venue.autoCheckin = NO;
-        [[CPGeofenceHandler sharedHandler] stopMonitoringVenue:venue];
+        [[CPGeofenceHandler sharedHandler] stopMonitoringVenue:self.venue];
     }
     else {
         self.venue.autoCheckin = YES;
-        [[CPGeofenceHandler sharedHandler] startMonitoringVenue:venue];
+        [[CPGeofenceHandler sharedHandler] startMonitoringVenue:self.venue];
     }
 
     // Save the changes to pastVenues
-    [[CPGeofenceHandler sharedHandler] updatePastVenue:venue];
+    [[CPGeofenceHandler sharedHandler] updatePastVenue:self.venue];
 }
 
 @end

@@ -39,24 +39,6 @@
     }
 }
 
-- (void)sendEmailSettingsWithEmail:(NSString *)email {
-    [SVProgressHUD showWithStatus:@"Checking..."];
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   email, @"email",
-                                   nil];
-    
-    [CPapi setUserProfileDataWithDictionary:params andCompletion:^(NSDictionary *json, NSError *error) {
-        if ( ! error && [[json objectForKey:@"succeeded"] boolValue]) {
-            [SVProgressHUD dismiss];
-            [self pushNextViewContollerOrDismissWithMessage:[json objectForKey:@"message"]];
-        } else {
-            [SVProgressHUD dismissWithError:[json objectForKey:@"message"]
-                                 afterDelay:kDefaultDismissDelay];
-        }
-    }];
-}
-
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {

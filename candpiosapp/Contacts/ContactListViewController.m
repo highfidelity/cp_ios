@@ -193,6 +193,15 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
 
+- (void)hidePlaceholder:(BOOL)hide
+{
+    [self.placeholderImage setHidden:hide];
+    [self.tableView setScrollEnabled:hide];
+    [self.searchBar setHidden:!hide];
+    self.isSearching = !hide;
+}
+
+
 - (NSArray*)sectionIndexTitles 
 {
     return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];

@@ -19,6 +19,8 @@
 
 @implementation CPTabBarController
 
+@synthesize feedViewController = _feedViewController;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

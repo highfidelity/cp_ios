@@ -30,6 +30,8 @@
 - (void)showPillPopoverFromCell:(PostBaseCell*)cell;
 - (void)newPost:(NSIndexPath *)replyToIndexPath;
 - (void)showOnlyPostableFeeds;
+- (void)showVenueFeedForVenue:(CPVenue *)venueToShow;
+
 + (UIView *)timelineViewWithHeight:(CGFloat)height;
 
 @end

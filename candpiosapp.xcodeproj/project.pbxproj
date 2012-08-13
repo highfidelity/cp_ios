@@ -142,7 +142,6 @@
 		5328937215548946007B0157 /* props-thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5328937015548946007B0157 /* props-thumb@2x.png */; };
 		5328937515548A2D007B0157 /* OneOnOneChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328937415548A2D007B0157 /* OneOnOneChatViewController.m */; };
 		5328937815548BAC007B0157 /* CPUIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328937715548BAC007B0157 /* CPUIHelper.m */; };
-		5328938615548D4A007B0157 /* BalanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328938515548D4A007B0157 /* BalanceViewController.m */; };
 		5328938B15548D6D007B0157 /* CheckInDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328938815548D6D007B0157 /* CheckInDetailsViewController.m */; };
 		5328938F15548D90007B0157 /* MapTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328938E15548D90007B0157 /* MapTabController.m */; };
 		5328939815548E63007B0157 /* SettingsMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939715548E63007B0157 /* SettingsMenuController.m */; };
@@ -759,7 +758,6 @@
 		5328937415548A2D007B0157 /* OneOnOneChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OneOnOneChatViewController.m; path = candpiosapp/Chat/OneOnOneChatViewController.m; sourceTree = SOURCE_ROOT; };
 		5328937615548BAC007B0157 /* CPUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPUIHelper.h; path = Utils/CPUIHelper.h; sourceTree = "<group>"; };
 		5328937715548BAC007B0157 /* CPUIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPUIHelper.m; path = Utils/CPUIHelper.m; sourceTree = "<group>"; };
-		5328938515548D4A007B0157 /* BalanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BalanceViewController.m; path = Payment/BalanceViewController.m; sourceTree = "<group>"; };
 		5328938715548D6D007B0157 /* CheckInDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckInDetailsViewController.h; path = CheckIn/CheckInDetailsViewController.h; sourceTree = "<group>"; };
 		5328938815548D6D007B0157 /* CheckInDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInDetailsViewController.m; path = CheckIn/CheckInDetailsViewController.m; sourceTree = "<group>"; };
 		5328938D15548D90007B0157 /* MapTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapTabController.h; path = Map/MapTabController.h; sourceTree = "<group>"; };
@@ -3154,7 +3152,6 @@
 				5328936E15548931007B0157 /* FaceToFacePasswordInputViewController.m in Sources */,
 				5328937515548A2D007B0157 /* OneOnOneChatViewController.m in Sources */,
 				5328937815548BAC007B0157 /* CPUIHelper.m in Sources */,
-				5328938615548D4A007B0157 /* BalanceViewController.m in Sources */,
 				5328938B15548D6D007B0157 /* CheckInDetailsViewController.m in Sources */,
 				5328938F15548D90007B0157 /* MapTabController.m in Sources */,
 				5328939815548E63007B0157 /* SettingsMenuController.m in Sources */,

@@ -36,13 +36,16 @@
 
 
 @interface CPUserActionCell()
+
 @property (strong, nonatomic) UIPanGestureRecognizer *panRecognizer;
 @property (strong, nonatomic) UITapGestureRecognizer *tapRecognizer;
-@property (nonatomic, readonly) CGFloat originalCenter;
 @property (nonatomic) CGFloat initialTouchPositionX;
 @property (nonatomic) CGFloat initialHorizontalCenter;
 @property (nonatomic) CPUserActionCellDirection lastDirection;
 @property (nonatomic) CPUserActionCellDirection currentDirection;
+@property (nonatomic, readonly) CGFloat panFullOpenWidth;
+@property (nonatomic, readonly) CGAffineTransform buttonBumpStartingTransform;
+@property (nonatomic, readonly) BOOL areActionButtonsVisible;
 
 - (BOOL)shouldDragLeft;
 - (BOOL)shouldDragRight;
