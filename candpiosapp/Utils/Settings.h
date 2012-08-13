@@ -11,19 +11,19 @@
 
 @interface Settings : NSObject< NSCoding, NSCopying >
 
-@property (nonatomic) BOOL flag;
-@property (nonatomic) BOOL registeredForApnsSuccessfully;
+// TODO: Don't store the userPassword here or in NSUserDefaults
+// it should be stored encrypted in the keychain
 
 // note: userEmailAddress is only valid if the created their account with an email address
 @property (strong, nonatomic) NSString *userEmailAddress;
 @property (strong, nonatomic) NSString *userPassword;
 @property (nonatomic) float userBalance;
+@property (nonatomic) BOOL flag;
+@property (nonatomic) BOOL registeredForApnsSuccessfully;
 
 //checkin notification settings
 @property (nonatomic) BOOL notifyInVenueOnly;
 @property (nonatomic) BOOL notifyWhenCheckedIn;
 
-// TODO: Don't store the userPassword here or in NSUserDefaults
-// it should be stored encrypted in the keychain
 
 @end

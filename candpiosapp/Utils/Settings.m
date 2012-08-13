@@ -10,10 +10,6 @@
 
 @implementation Settings
 
-//=========================================================== 
-// - (id)init
-//
-//=========================================================== 
 - (id)init
 {
     if ((self = [super init])) {
@@ -22,10 +18,6 @@
     return self;
 }
 
-//=========================================================== 
-//  Keyed Archiving
-//
-//=========================================================== 
 - (void)encodeWithCoder:(NSCoder *)encoder 
 {
     [encoder encodeBool:self.flag forKey:@"flag"];
