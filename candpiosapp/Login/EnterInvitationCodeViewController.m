@@ -23,7 +23,6 @@
 
 @end
 
-
 @implementation EnterInvitationCodeViewController
 
 - (void)viewDidLoad {

@@ -23,7 +23,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
 @property (strong, nonatomic) AFHTTPClient *httpClient;
 @property (strong, nonatomic) LoadLinkedInConnectionsCompletionBlockType loadLinkedInConnectionsCompletionBlock;
-@property (nonatomic, assign) BOOL emailConfirmationRequired;
+@property (nonatomic) BOOL emailConfirmationRequired;
 
 @end
 
