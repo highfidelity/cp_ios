@@ -53,18 +53,6 @@
 		32D1E99C15701993009B45BD /* checkbox-unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D1E99815701993009B45BD /* checkbox-unchecked@2x.png */; };
 		4E0B79C215D321E600D36078 /* check-in-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E0B79C015D321E600D36078 /* check-in-button.png */; };
 		4E0B79C315D321E600D36078 /* check-in-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E0B79C115D321E600D36078 /* check-in-button@2x.png */; };
-		4E28A7C915AB5E08003C601A /* exchange-contacts-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7BD15AB5E08003C601A /* exchange-contacts-off.png */; };
-		4E28A7CA15AB5E08003C601A /* exchange-contacts-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7BE15AB5E08003C601A /* exchange-contacts-off@2x.png */; };
-		4E28A7CB15AB5E08003C601A /* exchange-contacts-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7BF15AB5E08003C601A /* exchange-contacts-on.png */; };
-		4E28A7CC15AB5E08003C601A /* exchange-contacts-on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C015AB5E08003C601A /* exchange-contacts-on@2x.png */; };
-		4E28A7CD15AB5E08003C601A /* send-love-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C115AB5E08003C601A /* send-love-off.png */; };
-		4E28A7CE15AB5E08003C601A /* send-love-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C215AB5E08003C601A /* send-love-off@2x.png */; };
-		4E28A7CF15AB5E08003C601A /* send-love-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C315AB5E08003C601A /* send-love-on.png */; };
-		4E28A7D015AB5E08003C601A /* send-love-on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C415AB5E08003C601A /* send-love-on@2x.png */; };
-		4E28A7D115AB5E08003C601A /* send-message-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C515AB5E08003C601A /* send-message-off.png */; };
-		4E28A7D215AB5E08003C601A /* send-message-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C615AB5E08003C601A /* send-message-off@2x.png */; };
-		4E28A7D315AB5E08003C601A /* send-message-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C715AB5E08003C601A /* send-message-on.png */; };
-		4E28A7D415AB5E08003C601A /* send-message-on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7C815AB5E08003C601A /* send-message-on@2x.png */; };
 		4E5578B215AB7FA7000B588D /* send-message-on.aif in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7E815AB7975003C601A /* send-message-on.aif */; };
 		4E5578B415AB7FA7000B588D /* exchange-contacts-on.aif in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7EA15AB7975003C601A /* exchange-contacts-on.aif */; };
 		4E5578B615AB7FA7000B588D /* send-love-on.aif in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7EC15AB7975003C601A /* send-love-on.aif */; };
@@ -122,7 +110,6 @@
 		5308DD0815D5E5DF00B4EBC2 /* sign-up-with-linkedin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5308DD0415D5E5DF00B4EBC2 /* sign-up-with-linkedin@2x.png */; };
 		5308DD0915D5E5DF00B4EBC2 /* splash-screen-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 5308DD0515D5E5DF00B4EBC2 /* splash-screen-logo.png */; };
 		5308DD0A15D5E5DF00B4EBC2 /* splash-screen-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5308DD0615D5E5DF00B4EBC2 /* splash-screen-logo@2x.png */; };
-		530C3E5515B0F5B800D041FF /* CPTabBarControllerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C3E5415B0F5B800D041FF /* CPTabBarControllerView.m */; };
 		530C5DB71575E4FC003505AC /* CPSoundEffectsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */; };
 		530C5DBB1575E516003505AC /* send-love-switch-sound-off.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */; };
 		530C5DBC1575E516003505AC /* send-love-switch-sound-on.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */; };
@@ -657,18 +644,6 @@
 		32D1E99815701993009B45BD /* checkbox-unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-unchecked@2x.png"; sourceTree = "<group>"; };
 		4E0B79C015D321E600D36078 /* check-in-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-in-button.png"; sourceTree = "<group>"; };
 		4E0B79C115D321E600D36078 /* check-in-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-in-button@2x.png"; sourceTree = "<group>"; };
-		4E28A7BD15AB5E08003C601A /* exchange-contacts-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exchange-contacts-off.png"; sourceTree = "<group>"; };
-		4E28A7BE15AB5E08003C601A /* exchange-contacts-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exchange-contacts-off@2x.png"; sourceTree = "<group>"; };
-		4E28A7BF15AB5E08003C601A /* exchange-contacts-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exchange-contacts-on.png"; sourceTree = "<group>"; };
-		4E28A7C015AB5E08003C601A /* exchange-contacts-on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exchange-contacts-on@2x.png"; sourceTree = "<group>"; };
-		4E28A7C115AB5E08003C601A /* send-love-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send-love-off.png"; sourceTree = "<group>"; };
-		4E28A7C215AB5E08003C601A /* send-love-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send-love-off@2x.png"; sourceTree = "<group>"; };
-		4E28A7C315AB5E08003C601A /* send-love-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send-love-on.png"; sourceTree = "<group>"; };
-		4E28A7C415AB5E08003C601A /* send-love-on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send-love-on@2x.png"; sourceTree = "<group>"; };
-		4E28A7C515AB5E08003C601A /* send-message-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send-message-off.png"; sourceTree = "<group>"; };
-		4E28A7C615AB5E08003C601A /* send-message-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send-message-off@2x.png"; sourceTree = "<group>"; };
-		4E28A7C715AB5E08003C601A /* send-message-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send-message-on.png"; sourceTree = "<group>"; };
-		4E28A7C815AB5E08003C601A /* send-message-on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send-message-on@2x.png"; sourceTree = "<group>"; };
 		4E28A7E815AB7975003C601A /* send-message-on.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "send-message-on.aif"; sourceTree = "<group>"; };
 		4E28A7EA15AB7975003C601A /* exchange-contacts-on.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "exchange-contacts-on.aif"; sourceTree = "<group>"; };
 		4E28A7EC15AB7975003C601A /* send-love-on.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "send-love-on.aif"; sourceTree = "<group>"; };
@@ -734,8 +709,6 @@
 		5308DD0415D5E5DF00B4EBC2 /* sign-up-with-linkedin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin@2x.png"; sourceTree = "<group>"; };
 		5308DD0515D5E5DF00B4EBC2 /* splash-screen-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "splash-screen-logo.png"; sourceTree = "<group>"; };
 		5308DD0615D5E5DF00B4EBC2 /* splash-screen-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "splash-screen-logo@2x.png"; sourceTree = "<group>"; };
-		530C3E5315B0F5B800D041FF /* CPTabBarControllerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPTabBarControllerView.h; sourceTree = "<group>"; };
-		530C3E5415B0F5B800D041FF /* CPTabBarControllerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPTabBarControllerView.m; sourceTree = "<group>"; };
 		530C5DB51575E4FC003505AC /* CPSoundEffectsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPSoundEffectsManager.h; sourceTree = "<group>"; };
 		530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPSoundEffectsManager.m; sourceTree = "<group>"; };
 		530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-off.wav"; sourceTree = "<group>"; };
@@ -788,7 +761,6 @@
 		5328937415548A2D007B0157 /* OneOnOneChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OneOnOneChatViewController.m; path = candpiosapp/Chat/OneOnOneChatViewController.m; sourceTree = SOURCE_ROOT; };
 		5328937615548BAC007B0157 /* CPUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPUIHelper.h; path = Utils/CPUIHelper.h; sourceTree = "<group>"; };
 		5328937715548BAC007B0157 /* CPUIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPUIHelper.m; path = Utils/CPUIHelper.m; sourceTree = "<group>"; };
-		5328938415548D4A007B0157 /* BalanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BalanceViewController.h; path = Payment/BalanceViewController.h; sourceTree = "<group>"; };
 		5328938515548D4A007B0157 /* BalanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BalanceViewController.m; path = Payment/BalanceViewController.m; sourceTree = "<group>"; };
 		5328938715548D6D007B0157 /* CheckInDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckInDetailsViewController.h; path = CheckIn/CheckInDetailsViewController.h; sourceTree = "<group>"; };
 		5328938815548D6D007B0157 /* CheckInDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInDetailsViewController.m; path = CheckIn/CheckInDetailsViewController.m; sourceTree = "<group>"; };
@@ -1162,10 +1134,6 @@
 		69D5C3531533911300B3530F /* invite-code-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "invite-code-background@2x.png"; path = "Settings/images/invite-code-background@2x.png"; sourceTree = "<group>"; };
 		69D5C3541533911300B3530F /* plug-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "plug-logo.png"; path = "Settings/images/plug-logo.png"; sourceTree = "<group>"; };
 		69D5C3551533911300B3530F /* plug-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "plug-logo@2x.png"; path = "Settings/images/plug-logo@2x.png"; sourceTree = "<group>"; };
-		69DCDCB7152F611600317E5B /* EnterInvitationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = EnterInvitationCodeViewController.h; path = candpiosapp/Login/EnterInvitationCodeViewController.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		69DCDCB8152F611600317E5B /* EnterInvitationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EnterInvitationCodeViewController.m; path = candpiosapp/Login/EnterInvitationCodeViewController.m; sourceTree = SOURCE_ROOT; };
-		69DEA9C2154F60B1008053C0 /* EnterEmailAfterSingUpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EnterEmailAfterSingUpController.h; path = candpiosapp/Login/EnterEmailAfterSingUpController.h; sourceTree = SOURCE_ROOT; };
-		69DEA9C3154F60B1008053C0 /* EnterEmailAfterSingUpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EnterEmailAfterSingUpController.m; path = candpiosapp/Login/EnterEmailAfterSingUpController.m; sourceTree = SOURCE_ROOT; };
 		69E3A73B1573CAC80046E687 /* linkedin-invite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "linkedin-invite.png"; path = "candpiosapp/Settings/images/linkedin-invite.png"; sourceTree = SOURCE_ROOT; };
 		69E3A73C1573CAC90046E687 /* linkedin-invite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "linkedin-invite@2x.png"; path = "candpiosapp/Settings/images/linkedin-invite@2x.png"; sourceTree = SOURCE_ROOT; };
 		6F0B453714F6BCC50074DBD9 /* ChatHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatHelper.h; path = candpiosapp/Chat/ChatHelper.h; sourceTree = SOURCE_ROOT; };
@@ -2689,14 +2657,14 @@
 			children = (
 				5384B24E1554823A00A4E0C1 /* CPVenue.h */,
 				5384B24F1554823A00A4E0C1 /* CPVenue.m */,
-				53C4BE47152CD0FB00A87EF0 /* VenueStoryboard_iPhone.storyboard */,
 				E472FA9A151BAD780004430A /* images */,
 				E48C32B4151A7C3600A98427 /* VenueCell.h */,
 				E48C32B5151A7C3600A98427 /* VenueCell.m */,
-				53D9B196152A5D9300BC1304 /* VenueListTableViewController.h */,
 				536493341520F0F8006B39E8 /* VenueInfoViewController.h */,
 				536493351520F0F8006B39E8 /* VenueInfoViewController.m */,
+				53D9B196152A5D9300BC1304 /* VenueListTableViewController.h */,
 				53D9B197152A5D9300BC1304 /* VenueListTableViewController.m */,
+				53C4BE47152CD0FB00A87EF0 /* VenueStoryboard_iPhone.storyboard */,
 				532B4157158FD293005B55C0 /* VenueViewToggleViewController.h */,
 				532B4158158FD293005B55C0 /* VenueViewToggleViewController.m */,
 			);

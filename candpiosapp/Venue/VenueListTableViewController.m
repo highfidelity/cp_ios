@@ -12,10 +12,6 @@
 #import "MapTabController.h"
 #import "MapDataSet.h"
 
-@interface VenueListTableViewController ()
-
-@end
-
 @implementation VenueListTableViewController
 
 - (NSMutableArray *)venues
