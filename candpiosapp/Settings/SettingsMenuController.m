@@ -15,7 +15,6 @@
 
 @interface SettingsMenuController() <UITabBarControllerDelegate>
 
-@property (nonatomic) CGPoint panStartLocation;
 @property (strong, nonatomic) NSArray *menuStringsArray;
 @property (strong, nonatomic) NSArray *menuSegueIdentifiersArray;
 @property (strong, nonatomic) UITapGestureRecognizer *menuCloseGestureRecognizer;
@@ -23,6 +22,7 @@
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanFromNavbarGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanFromTabbarGestureRecognizer;
 @property (strong, nonatomic) UITapGestureRecognizer *menuCloseTapFromTabbarGestureRecognizer;
+@property (nonatomic) CGPoint panStartLocation;
 
 - (void)setMapAndButtonsViewXOffset:(CGFloat)xOffset;
 

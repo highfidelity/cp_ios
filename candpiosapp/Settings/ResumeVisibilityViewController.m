@@ -11,11 +11,12 @@
 
 @interface ResumeVisibilityViewController ()
 
-@property (weak, nonatomic) IBOutlet UIButton *resumeVisibilityButton;
 @property (strong, nonatomic) NSArray *resumeVisibilityOptions;
 @property (strong, nonatomic) NSArray *resumeVisibilityOptionsKeys;
 @property (strong, nonatomic) NSString *originalProfileURLVisibility;
 @property (strong, nonatomic) User *user;
+@property (weak, nonatomic) IBOutlet UIButton *resumeVisibilityButton;
+
 
 - (IBAction)resumeVisibilityButtonClick:(id)sender;
 - (void)updateResumeVisibilityButtonText;

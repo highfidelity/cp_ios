@@ -11,10 +11,10 @@
 
 @interface JobCategoryViewController ()
 
-@property (weak, nonatomic) IBOutlet UIButton *majorCategoryButton;
-@property (weak, nonatomic) IBOutlet UIButton *minorCategoryButton;
 @property (strong, nonatomic) User *user;
 @property (strong, nonatomic) NSArray *jobCategories;
+@property (weak, nonatomic) IBOutlet UIButton *majorCategoryButton;
+@property (weak, nonatomic) IBOutlet UIButton *minorCategoryButton;
 
 - (IBAction)majorCategoryButtonClick:(id)sender;
 - (IBAction)minorCategoryButtonClick:(id)sender;

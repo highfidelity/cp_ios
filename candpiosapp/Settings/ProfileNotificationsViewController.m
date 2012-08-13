@@ -16,6 +16,8 @@
 
 @interface ProfileNotificationsViewController () <UIActionSheetDelegate>
 
+@property (strong, nonatomic) NSDate *quietTimeFromDate;
+@property (strong, nonatomic) NSDate *quietTimeToDate;
 @property (weak, nonatomic) IBOutlet UIButton *venueButton;
 @property (weak, nonatomic) IBOutlet UISwitch *checkedInOnlySwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *quietTimeSwitch;
@@ -26,8 +28,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *chatNotificationLabel;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UIView *fromToSuperview;
-@property (strong, nonatomic) NSDate *quietTimeFromDate;
-@property (strong, nonatomic) NSDate *quietTimeToDate;
 
 - (IBAction)selectVenueCity:(UIButton *)sender;
 - (IBAction)quietFromClicked:(UIButton *)sender;

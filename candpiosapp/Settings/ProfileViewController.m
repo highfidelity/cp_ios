@@ -20,6 +20,11 @@
 
 @interface ProfileViewController () <CPTouchViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
 
+@property (strong, nonatomic) User *currentUser;
+@property (strong, nonatomic) UIImagePickerController *imagePicker;
+@property (strong, nonatomic) NSString *pendingEmail;
+@property (strong, nonatomic) UIBarButtonItem *gearButton;
+@property (strong, nonatomic, getter = cacheManager) NSCache *cache;
 @property (weak, nonatomic) IBOutlet UIButton *profileImageButton;
 @property (weak, nonatomic) IBOutlet UITextField *nicknameTextField;
 @property (weak, nonatomic) IBOutlet UILabel *skillsLabel;
@@ -32,7 +37,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *emailValidationMsg;
 @property (weak, nonatomic) IBOutlet UIView *profileHeaderView;
-
 @property (weak, nonatomic) IBOutlet CPTouchableView *skillsView;
 @property (weak, nonatomic) IBOutlet CPTouchableView *visibilityView;
 @property (weak, nonatomic) IBOutlet CPTouchableView *categoryView;
@@ -41,14 +45,8 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *floatView;
 @property (weak, nonatomic) IBOutlet UIImageView *arrowImageView;
-
-@property (strong, nonatomic) User *currentUser;
-@property (strong, nonatomic) UIImagePickerController *imagePicker;
-@property (strong, nonatomic) NSString *pendingEmail;
-@property (strong, nonatomic) UIBarButtonItem *gearButton;
 @property (nonatomic) BOOL finishedSync;
 @property (nonatomic) BOOL newDataFromSync;
-@property (strong, nonatomic, getter = cacheManager) NSCache *cache;
 
 - (IBAction)gearPressed:(id)sender;
 - (IBAction)chooseNewProfileImage:(id)sender;
@@ -133,29 +131,6 @@
     CGRect profileImageFrame = self.profileImageView.frame;
     profileImageFrame.origin.x = -100;
     self.profileImageView.frame = profileImageFrame;
-}
-
-- (void)viewDidUnload
-{
-    [self setProfileHeaderView:nil];
-    [self setSkillsLabel:nil];
-    [self setSkillsView:nil];
-    [self setDetailsView:nil];
-    [self setCategoryView:nil];
-    [self setDeleteTouchable:nil];
-    [self setScrollView:nil];
-    [self setEmailTextField:nil];
-    [self setSkillsView:nil];
-    [self setVisibilityView:nil];
-    [self setEmailValidationMsg:nil];
-    [self setProfileImageButton:nil];
-    [self setCategoriesLabel:nil];
-    [self setSkillsTitle:nil];
-    [self setVisibilityLabel:nil];
-    [self setFloatView:nil];
-    [self setArrowImageView:nil];
-    [self setEmailView:nil];
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

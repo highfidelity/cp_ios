@@ -18,9 +18,6 @@
 
 @implementation AutoCheckinTableViewController
 
-@synthesize globalCheckinSwitch = _globalCheckinSwitch;
-@synthesize placesArray = _placesArray;
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
