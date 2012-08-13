@@ -18,6 +18,12 @@ typedef enum {
 
 @interface CPPost : NSObject
 
+@property (strong, nonatomic) NSString *entry;
+@property (strong, nonatomic) User *author;
+@property (strong, nonatomic) NSDate *date;
+@property (strong, nonatomic) User *receiver;
+@property (strong, nonatomic) CPSkill *skill;
+@property (strong, nonatomic) NSMutableArray *replies;
 @property (nonatomic) NSUInteger postID;
 @property (nonatomic) double *lat;
 @property (nonatomic) double *lng;
@@ -25,12 +31,7 @@ typedef enum {
 @property (nonatomic) NSUInteger originalPostID;
 @property (nonatomic) NSUInteger likeCount;
 @property (nonatomic) BOOL userHasLiked;
-@property (strong, nonatomic) NSString *entry;
-@property (strong, nonatomic) User *author;
-@property (strong, nonatomic) NSDate *date;
-@property (strong, nonatomic) User *receiver;
-@property (strong, nonatomic) CPSkill *skill;
-@property (strong, nonatomic) NSMutableArray *replies;
+
 
 - (id)initFromDictionary:(NSDictionary *)postDict;
 

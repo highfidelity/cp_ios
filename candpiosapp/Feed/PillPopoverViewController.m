@@ -38,7 +38,7 @@
         headContent = @"one person";
         tailContent = @"has +1'd this";
     } else {
-        headContent = [NSString stringWithFormat:@"%i people", post.likeCount];
+        headContent = [NSString stringWithFormat:@"%i people", self.post.likeCount];
         tailContent = @"have +1'd this";
     }
     NSString *content = [NSString stringWithFormat:@"<font style=\"color: #00645F;\">%@</font> %@", headContent, tailContent];

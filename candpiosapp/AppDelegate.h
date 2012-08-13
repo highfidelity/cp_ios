@@ -27,7 +27,6 @@
 @property (strong, nonatomic, readonly) CLLocationManager *locationManager;
 @property (strong, nonatomic) SettingsMenuController *settingsMenuController;
 @property (strong, nonatomic) CPTabBarController *tabBarController;
-@property (strong, readonly) CLLocationManager *locationManager;
 @property (strong, nonatomic) NSTimer *checkOutTimer;
            
 - (void)pushAliasUpdate;

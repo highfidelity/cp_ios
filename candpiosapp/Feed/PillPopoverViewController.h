@@ -19,13 +19,14 @@
 
 @property (strong, nonatomic) CPPost *post;
 @property (strong, nonatomic) NSIndexPath *indexPath;
-@property (nonatomic) id<PillPopoverDelegate>delegate;
 @property (weak, nonatomic) IBOutlet UIButton *plusButton;
 @property (weak, nonatomic) IBOutlet UIWebView *plusWebView;
 @property (weak, nonatomic) IBOutlet UIButton *commentButton;
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel;
 @property (weak, nonatomic) IBOutlet UITextField *commentTextView;
 @property (weak, nonatomic) IBOutlet UIImageView *commentImageView;
+@property (nonatomic) id<PillPopoverDelegate>delegate;
+
 - (IBAction)plusButtonPressed:(id)sender;
 
 @end

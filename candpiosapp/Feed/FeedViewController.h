@@ -19,13 +19,13 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) CPVenueFeed *selectedVenueFeed;
-@property (nonatomic) CPPostType postType;
 @property (strong, nonatomic) NSMutableArray *venueFeedPreviews;
 @property (strong, nonatomic) NSMutableArray *postableVenueFeeds;
-@property (nonatomic) BOOL newPostAfterLoad;
 @property (strong, nonatomic) NSMutableDictionary *postPlussingUserIds;
 @property (strong, nonatomic) WEPopoverController *wePopoverController;
 @property (strong, nonatomic) PillPopoverViewController *pillPopoverViewController;
+@property (nonatomic) CPPostType postType;
+@property (nonatomic) BOOL newPostAfterLoad;
 
 - (void)showPillPopoverFromCell:(PostBaseCell*)cell;
 - (void)newPost:(NSIndexPath *)replyToIndexPath;
