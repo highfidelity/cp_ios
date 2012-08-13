@@ -282,7 +282,7 @@ static GRMustacheTemplate *postBadgesTemplate;
 {
     [super viewDidUnload];
     [self.navigationController.navigationBar removeGestureRecognizer:_tapRecon];
-    _tapRecon = nil;
+    self.tapRecon = nil;
 }
 
 - (void)updateLastUserCheckin
