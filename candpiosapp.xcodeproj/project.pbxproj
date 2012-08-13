@@ -485,8 +485,6 @@
 		871EFBA814AF97130030658B /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 871EFB7914AF97130030658B /* UIImageView+AFNetworking.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		871EFBBB14AF97130030658B /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 871EFB9C14AF97130030658B /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8726C6C414B00245004E4872 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8726C6C314B00245004E4872 /* CoreLocation.framework */; };
-		8733311C14BCFAAB001BF4DB /* TableCellHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8733311714BCFAAB001BF4DB /* TableCellHelper.m */; };
-		8733311D14BCFAAB001BF4DB /* TableViewControllerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8733311914BCFAAB001BF4DB /* TableViewControllerHelper.m */; };
 		87F657EB14B0D0C800F4AB6C /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F657D814B0D0C800F4AB6C /* SDImageCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		87F657EC14B0D0C800F4AB6C /* SDWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F657DC14B0D0C800F4AB6C /* SDWebImageDecoder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		87F657ED14B0D0C800F4AB6C /* SDWebImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F657DE14B0D0C800F4AB6C /* SDWebImageDownloader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1201,10 +1199,6 @@
 		871EFB9B14AF97130030658B /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		871EFB9C14AF97130030658B /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		8726C6C314B00245004E4872 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		8733311614BCFAAB001BF4DB /* TableCellHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableCellHelper.h; sourceTree = "<group>"; };
-		8733311714BCFAAB001BF4DB /* TableCellHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableCellHelper.m; sourceTree = "<group>"; };
-		8733311814BCFAAB001BF4DB /* TableViewControllerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewControllerHelper.h; sourceTree = "<group>"; };
-		8733311914BCFAAB001BF4DB /* TableViewControllerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewControllerHelper.m; sourceTree = "<group>"; };
 		87F657D714B0D0C800F4AB6C /* SDImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCache.h; sourceTree = "<group>"; };
 		87F657D814B0D0C800F4AB6C /* SDImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDImageCache.m; sourceTree = "<group>"; };
 		87F657D914B0D0C800F4AB6C /* SDImageCacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCacheDelegate.h; sourceTree = "<group>"; };
@@ -2540,7 +2534,6 @@
 				32B9976514E37B6400713B6E /* SSKeychain */,
 				871EFB9714AF97130030658B /* SVProgressHUD */,
 				53ABBCB0159E5ED800C6ED8B /* SVPullToRefresh */,
-				8733311314BCFAAB001BF4DB /* TableViewHelper */,
 				53F76F8415BA0D79008CBE09 /* TestFlightSDK */,
 				6F7BA4D614E308AF00420AD5 /* TPKeyboardAvoiding */,
 				32A7998C14F9863200A0D4CB /* UIImage-categories */,
@@ -2586,17 +2579,6 @@
 				871EFB9C14AF97130030658B /* SVProgressHUD.m */,
 			);
 			path = SVProgressHUD;
-			sourceTree = "<group>";
-		};
-		8733311314BCFAAB001BF4DB /* TableViewHelper */ = {
-			isa = PBXGroup;
-			children = (
-				8733311614BCFAAB001BF4DB /* TableCellHelper.h */,
-				8733311714BCFAAB001BF4DB /* TableCellHelper.m */,
-				8733311814BCFAAB001BF4DB /* TableViewControllerHelper.h */,
-				8733311914BCFAAB001BF4DB /* TableViewControllerHelper.m */,
-			);
-			path = TableViewHelper;
 			sourceTree = "<group>";
 		};
 		87F657D414B0D0C800F4AB6C /* SDWebImage */ = {
@@ -3111,8 +3093,6 @@
 				87F657EF14B0D0C800F4AB6C /* SDWebImagePrefetcher.m in Sources */,
 				87F657F014B0D0C800F4AB6C /* UIButton+WebCache.m in Sources */,
 				87F657F114B0D0C800F4AB6C /* UIImageView+WebCache.m in Sources */,
-				8733311C14BCFAAB001BF4DB /* TableCellHelper.m in Sources */,
-				8733311D14BCFAAB001BF4DB /* TableViewControllerHelper.m in Sources */,
 				3222126914E1E17B00C5471B /* NSMutableURLRequest+Parameters.m in Sources */,
 				3222126A14E1E17B00C5471B /* NSString+URLEncoding.m in Sources */,
 				3222126B14E1E17B00C5471B /* NSURL+Base.m in Sources */,
