@@ -17,8 +17,8 @@
 @property (strong, nonatomic) NSTimer *reloadTimer;
 @property (strong, nonatomic) NSTimer *locationAllowTimer;
 @property (strong, nonatomic) NSTimer *arrowSpinTimer;
-@property (nonatomic, assign) BOOL locationStatusKnown;
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
+@property (nonatomic) BOOL locationStatusKnown;
 
 -(void)refreshLocationsIfNeeded;
 -(void)startRefreshArrowAnimation;

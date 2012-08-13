@@ -19,10 +19,9 @@
 @interface MapTabController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) NSArray *pinScales;
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic, readonly) MapDataSet *dataset;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIView *mapAndButtonsView;
-
 @property (nonatomic) BOOL hasUpdatedUserLocation;
 
 // State to prevent querying userlist (with bad region) before the map has appeared
