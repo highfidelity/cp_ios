@@ -10,11 +10,11 @@
 
 @interface CPSkill : NSObject
 
+@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *rank;
 @property (nonatomic) NSUInteger skillID;
 @property (nonatomic) BOOL isVisible;
 @property (nonatomic) int loveCount;
-@property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSString *rank;
 
 - (CPSkill *)initFromDictionary:(NSDictionary *)skillDict;
 
