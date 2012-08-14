@@ -62,7 +62,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.isSearching = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(numberOfContactRequestsNotification:)
@@ -123,8 +122,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
                 if (contactRequests.count > 1) {
                     contactRequests = [contactRequests sortedArrayUsingDescriptors:[NSArray arrayWithObject:nicknameSort]];
                 }
-                
-                
+                                
                 self.contacts = [payload mutableCopy];
                 self.contactRequests = [contactRequests mutableCopy];
                 
@@ -160,15 +158,13 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     NSInteger sectionCount = [[collation sectionTitles] count]; //section count is take from sectionTitles and not sectionIndexTitles
     NSMutableArray *unsortedSections = [NSMutableArray arrayWithCapacity:(NSUInteger)sectionCount];
 
-    //create an array to hold the data for each section
-    for(int i = 0; i < sectionCount; i++)
-    {
+    // create an array to hold the data for each section
+    for(int i = 0; i < sectionCount; i++) {
         [unsortedSections addObject:[NSMutableArray array]];
     }
 
-    //put each object into a section
-    for (id object in array)
-    {
+    // put each object into a section
+    for (id object in array) {
         NSInteger index = [collation sectionForObject:object collationStringSelector:selector];
         [[unsortedSections objectAtIndex:(NSUInteger)index] addObject:object];
     }
@@ -176,18 +172,18 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     NSMutableArray *sections = [NSMutableArray arrayWithCapacity:(NSUInteger)sectionCount];
 
     //sort each section
-    for (NSMutableArray *section in unsortedSections)
-    {
+    for (NSMutableArray *section in unsortedSections) {
         [sections addObject:[[collation sortedArrayFromArray:section collationStringSelector:selector] mutableCopy]];
     }
 
     return sections;
 }
 
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
+- (void)setContacts:(NSMutableArray *)contactList {
+    _contacts = [self partitionObjects:contactList collationStringSelector:@selector(nickname)];
+    
+    // store the array for search
+    self.sortedContactList = [contactList mutableCopy];
 }
 
 - (void)hidePlaceholder:(BOOL)hide
@@ -198,10 +194,15 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     self.isSearching = !hide;
 }
 
-
-- (NSArray*)sectionIndexTitles 
+- (NSArray*)sectionIndexTitles
 {
     return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
 
 #pragma mark - Table view data source
