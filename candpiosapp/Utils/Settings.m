@@ -12,7 +12,7 @@
 
 - (id)init
 {
-    if ((self = [super init])) {
+    if (self = [super init]) {
         self.flag = true;
     }
     return self;
@@ -22,23 +22,23 @@
 {
     [encoder encodeBool:self.flag forKey:@"flag"];
     [encoder encodeBool:self.registeredForApnsSuccessfully forKey:@"registeredForApnsSuccessfully"];
-	[encoder encodeObject:self.userEmailAddress	forKey:@"userEmailAddress"];
-	[encoder encodeObject:self.userPassword	forKey:@"userPassword"];
-	[encoder encodeFloat:self.userBalance forKey:@"userBalance"];
+    [encoder encodeObject:self.userEmailAddress	forKey:@"userEmailAddress"];
+    [encoder encodeObject:self.userPassword	forKey:@"userPassword"];
+    [encoder encodeFloat:self.userBalance forKey:@"userBalance"];
     [encoder encodeBool:self.flag forKey:@"notifyInVenueOnly"];
     [encoder encodeBool:self.flag forKey:@"notifyWhenCheckedIn"];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder 
 {
-    if ((self = [super init])) {
+    if (self = [super init]) {
         self.flag = [decoder decodeBoolForKey:@"flag"];
         self.registeredForApnsSuccessfully = [decoder decodeBoolForKey:@"registeredForApnsSuccessfully"];
-		
-		self.userEmailAddress = [decoder decodeObjectForKey:@"userEmailAddress"];
-		self.userPassword = [decoder decodeObjectForKey:@"userPassword"];
-		self.userBalance = [decoder decodeFloatForKey:@"userBalance"];
         
+        self.userEmailAddress = [decoder decodeObjectForKey:@"userEmailAddress"];
+        self.userPassword = [decoder decodeObjectForKey:@"userPassword"];
+        
+        self.userBalance = [decoder decodeFloatForKey:@"userBalance"];
         self.notifyInVenueOnly = [decoder decodeBoolForKey:@"notifyInVenueOnly"];
         self.notifyWhenCheckedIn = [decoder decodeBoolForKey:@"notifyWhenCheckedIn"];
     }
