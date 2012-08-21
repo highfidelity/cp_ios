@@ -11,6 +11,6 @@
 
 @interface NewPostCell : PostBaseCell
 
-@property (nonatomic, assign) IBOutlet HPGrowingTextView *growingTextView;
+@property (weak, nonatomic) IBOutlet HPGrowingTextView *growingTextView;
 
 @end

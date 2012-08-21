@@ -22,11 +22,12 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, readonly) Settings *settings;
+@property (strong, nonatomic, readonly) Settings *settings;
 @property (strong, nonatomic, readonly) AFHTTPClient *urbanAirshipClient;
+@property (strong, nonatomic, readonly) CLLocationManager *locationManager;
 @property (strong, nonatomic) SettingsMenuController *settingsMenuController;
 @property (strong, nonatomic) CPTabBarController *tabBarController;
-@property (strong, readonly) CLLocationManager *locationManager;
+@property (strong, nonatomic) NSTimer *checkOutTimer;
            
 - (void)pushAliasUpdate;
 - (void)saveSettings;

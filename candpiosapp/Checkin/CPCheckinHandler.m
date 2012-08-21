@@ -11,17 +11,11 @@
 
 @implementation CPCheckinHandler
 
-@synthesize afterCheckinAction = _afterCheckinAction;
-@synthesize checkOutTimer = _checkOutTimer;
-
 static CPCheckinHandler *sharedHandler;
 
 + (void)initialize
 {
-    static BOOL initialized = NO;
-    if(!initialized)
-    {
-        initialized = YES;
+    if(!sharedHandler) {
         sharedHandler = [[CPCheckinHandler alloc] init];
     }
 }

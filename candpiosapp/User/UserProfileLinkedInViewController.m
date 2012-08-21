@@ -8,23 +8,7 @@
 
 #import "UserProfileLinkedInViewController.h"
 
-@interface UserProfileLinkedInViewController ()
-
-
-@end
-
 @implementation UserProfileLinkedInViewController
-@synthesize linkedInProfileUrlAddress = _linkedInProfileUrlAddress;
-@synthesize socialWebView = _socialWebView;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil  bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -43,19 +27,6 @@
     
     //Load the request in the UIWebView.
     [self.socialWebView loadRequest:requestObj]; 
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    [self setSocialWebView:nil];
-
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - UIWebViewDelegate

@@ -10,37 +10,22 @@
 
 @implementation ChatMessage
 
-@synthesize fromMe = _fromMe;
-@synthesize fromUser = _fromUser;
-@synthesize toUser = _toUser;
-@synthesize message = _message;
-@synthesize date = _date;
-
-- (id)init {
-    self = [super init];
-    return self;
-}
-
 - (id)initWithMessage:(NSString *)newMessage
                toUser:(User *)toUser
              fromUser:(User *)fromUser
 {
-    self = [super init];
+    if (self = [super init]) {
+        self.message = newMessage;
+        self.fromUser = fromUser;
+        self.toUser = toUser;
+        self.date = [NSDate date];
         
-    self.message = newMessage;
-    self.fromUser = fromUser;
-    self.toUser = toUser;
-    self.date = [NSDate date];
-    
-    // Automatically determine if this is my message
-    if ([CPUserDefaultsHandler currentUser].userID ==
-        fromUser.userID)
-    {
-        self.fromMe = YES;
-    }
-    else 
-    {
-        self.fromMe = NO;
+        // Automatically determine if this is my message
+        if ([CPUserDefaultsHandler currentUser].userID == fromUser.userID) {
+            self.fromMe = YES;
+        } else {
+            self.fromMe = NO;
+        }
     }
     
     return self;
@@ -51,12 +36,11 @@
               fromUser:(User *)fromUser
                   date:(NSDate *)date
 {
-    self = [self initWithMessage:newMessage
-                          toUser:toUser
-                        fromUser:fromUser];
-    
-    self.date = date;
-    
+    if (self = [self initWithMessage:newMessage
+                              toUser:toUser
+                            fromUser:fromUser]) {
+        self.date = date;
+    }
     return self;
 }
 

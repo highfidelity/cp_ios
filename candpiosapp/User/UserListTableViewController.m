@@ -20,17 +20,12 @@
 
 @interface UserListTableViewController()
 
-@property (nonatomic, assign) BOOL userIsPerformingQuickAction;
-@property (nonatomic, assign) BOOL reloadPrevented;
+@property (nonatomic) BOOL userIsPerformingQuickAction;
+@property (nonatomic) BOOL reloadPrevented;
 
 @end
 
 @implementation UserListTableViewController
-
-@synthesize userIsPerformingQuickAction = _userIsPerformingQuickAction;
-@synthesize reloadPrevented = _reloadPrevented;
-@synthesize weeklyUsers = _weeklyUsers;
-@synthesize checkedInUsers = _checkedInUsers;
 
 #pragma mark - View lifecycle
 
@@ -73,16 +68,6 @@
     // we'll get a notification when that's done to reload ours
     [self.delegate refreshButtonClicked:nil];
     [self showCorrectLoadingSpinnerForCount:self.weeklyUsers.count + self.checkedInUsers.count];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (NSMutableArray *)weeklyUsers

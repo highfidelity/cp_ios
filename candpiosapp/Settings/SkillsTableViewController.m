@@ -13,25 +13,12 @@
 
 @interface SkillsTableViewController ()
 
-@property (nonatomic, assign) int visibleCount;
-@property (nonatomic, strong) NSOperationQueue *skillQueue;
+@property (strong, nonatomic) NSOperationQueue *skillQueue;
+@property (nonatomic) int visibleCount;
 
 @end
 
 @implementation SkillsTableViewController
-
-@synthesize skills = _skills;
-@synthesize visibleCount = _visibleCount;
-@synthesize skillQueue = _skillQueue;
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (NSOperationQueue *)skillQueue
 {
@@ -84,18 +71,6 @@
         }];
     }
     
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Table view data source

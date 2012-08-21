@@ -14,11 +14,11 @@
 @interface MapTabController() 
 -(void)zoomTo:(CLLocationCoordinate2D)loc;
 
-@property (nonatomic, strong) NSTimer *reloadTimer;
-@property (nonatomic, strong) NSTimer *locationAllowTimer;
-@property (nonatomic, strong) NSTimer *arrowSpinTimer;
-@property (nonatomic, assign) BOOL locationStatusKnown;
+@property (strong, nonatomic) NSTimer *reloadTimer;
+@property (strong, nonatomic) NSTimer *locationAllowTimer;
+@property (strong, nonatomic) NSTimer *arrowSpinTimer;
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
+@property (nonatomic) BOOL locationStatusKnown;
 
 -(void)refreshLocationsIfNeeded;
 -(void)startRefreshArrowAnimation;
@@ -27,38 +27,12 @@
 @end
 
 @implementation MapTabController
-@synthesize mapView;
-@synthesize dataset;
-@synthesize reloadTimer;
-@synthesize arrowSpinTimer;
-@synthesize mapHasLoaded;
-@synthesize mapAndButtonsView;
-@synthesize locationAllowTimer;
-@synthesize locationStatusKnown;
-@synthesize refreshButton;
 
 BOOL clearLocations = NO;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
     // Reload all pins when the app comes back into the foreground
     [self refreshButtonClicked:nil];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark - View lifecycle
@@ -88,7 +62,7 @@ BOOL clearLocations = NO;
     
     self.mapHasLoaded = NO;
     
-	hasUpdatedUserLocation = false;
+	self.hasUpdatedUserLocation = false;
     
 	// let's assume when this view loads we don't know the location status
     // this is switched in checkIfUserHasDismissedLocationAlert
@@ -124,18 +98,12 @@ BOOL clearLocations = NO;
 
 - (void)viewDidUnload
 {
-	[self setMapView:nil];
-    [self setMapAndButtonsView:nil];
-    [self setRefreshButton:nil];
     [super viewDidUnload];
-	[reloadTimer invalidate];
-	reloadTimer = nil;
+	[self.reloadTimer invalidate];
+	self.reloadTimer = nil;
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"userCheckInStateChange" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"applicationDidBecomeActive" object:nil];
-
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -158,12 +126,6 @@ BOOL clearLocations = NO;
     if (self.locationStatusKnown) {
         [self refreshButtonClicked:nil];
     }
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 # pragma mark - Active Venue and Active User Grabbing
@@ -199,12 +161,12 @@ BOOL clearLocations = NO;
 -(void)refreshLocationsIfNeeded
 {
     
-    if (locationStatusKnown) {
+    if (self.locationStatusKnown) {
         
-        MKMapRect mapRect = mapView.visibleMapRect;
+        MKMapRect mapRect = self.mapView.visibleMapRect;
         
         // prevent the refresh of locations when we have a valid dataset or the map is not yet loaded
-        if(self.mapHasLoaded && (!dataset || ![dataset isValidFor:mapRect mapCenter:self.mapView.centerCoordinate]))
+        if(self.mapHasLoaded && (!self.dataset || ![self.dataset isValidFor:mapRect mapCenter:self.mapView.centerCoordinate]))
         {
             [self refreshLocations];
         }
@@ -227,7 +189,7 @@ BOOL clearLocations = NO;
         if (clearLocations) {
             
             // clear other than current user location
-            for (id annotation in mapView.annotations) {
+            for (id annotation in self.mapView.annotations) {
                 if ([annotation isKindOfClass:[CPVenue class]]) {
                     [self.mapView removeAnnotation:annotation];
                 }
@@ -238,7 +200,7 @@ BOOL clearLocations = NO;
         
         if(newDataset)
         {
-            dataset = newDataset;
+            _dataset = newDataset;
             
             BOOL foundIt = NO;
 
@@ -249,7 +211,7 @@ BOOL clearLocations = NO;
                         foundIt = YES;
                         if (ann.checkinCount != newAnn.checkinCount || ann.weeklyCheckinCount != newAnn.weeklyCheckinCount) {
                             // the annotation will be added again
-                            [mapView removeAnnotation:ann];
+                            [self.mapView removeAnnotation:ann];
                         } else {
                             // no update to the annotation is required
                             [annotationsToAdd removeObject:newAnn];
@@ -267,7 +229,7 @@ BOOL clearLocations = NO;
         }
         
         // add modified dataset to map - new/updated annotations
-        [mapView addAnnotations:annotationsToAdd];                                
+        [self.mapView addAnnotations:annotationsToAdd];
 
         // stop spinning the refresh icon and dismiss the HUD
         [self stopRefreshArrowAnimation];
@@ -282,8 +244,8 @@ BOOL clearLocations = NO;
         // post two notifications for places and people reload
         // both send non-mutable copies of the data
         // it's up to that view controller to make a mutable copy that it can modify so that it doesn't directly touch the dataset
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshUsersFromNewMapData" object:dataset.activeUsers];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshVenuesFromNewMapData" object:[NSArray arrayWithArray:dataset.annotations]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshUsersFromNewMapData" object:self.dataset.activeUsers];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshVenuesFromNewMapData" object:[NSArray arrayWithArray:self.dataset.annotations]];
     }]; 
 }
 
@@ -299,13 +261,13 @@ BOOL clearLocations = NO;
                              duration:kDefaultDismissDelay];
     } else {
         // we have a location ... zoom to it
-        [self zoomTo: [[mapView userLocation] coordinate]];
+        [self zoomTo: [[self.mapView userLocation] coordinate]];
     }    
 }
 
 - (MKUserLocation *)currentUserLocationInMapView
 {
-    return mapView.userLocation;
+    return self.mapView.userLocation;
 }
 
 - (void) mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
@@ -398,8 +360,8 @@ BOOL clearLocations = NO;
 }
 
 - (float)getPinScaleForNumberOfPeople:(NSInteger)number {
-    if (pinScales == nil) {
-        pinScales = [NSArray arrayWithObjects: 
+    if (!self.pinScales) {
+        self.pinScales = [NSArray arrayWithObjects:
                      [NSNumber numberWithFloat:0.31f],   // for 1 person
                      [NSNumber numberWithFloat:0.57f],
                      [NSNumber numberWithFloat:0.74f],
@@ -411,11 +373,11 @@ BOOL clearLocations = NO;
     }
     
     if (number <= 0) {
-        return [[pinScales objectAtIndex:0] floatValue];
-    } else if (number >= [pinScales count]) {
-        return [[pinScales objectAtIndex:[pinScales count] - 1] floatValue];
+        return [[self.pinScales objectAtIndex:0] floatValue];
+    } else if (number >= [self.pinScales count]) {
+        return [[self.pinScales objectAtIndex:[self.pinScales count] - 1] floatValue];
     } else {
-        return [[pinScales objectAtIndex:number - 1] floatValue];
+        return [[self.pinScales objectAtIndex:number - 1] floatValue];
     }
     
 }
@@ -474,12 +436,12 @@ BOOL clearLocations = NO;
 	if(userLocation.location.coordinate.latitude != 0 &&
        userLocation.location.coordinate.longitude != 0)
 	{		
-        if (!hasUpdatedUserLocation) {
+        if (!self.hasUpdatedUserLocation) {
             NSLog(@"MapTab: didUpdateUserLocation a zoomto (lat %f, lon %f)",
                   userLocation.location.coordinate.latitude,
                   userLocation.location.coordinate.longitude);
             [self zoomTo:userLocation.location.coordinate];   
-            hasUpdatedUserLocation = true;
+            self.hasUpdatedUserLocation = true;
         }
 
 	}
@@ -493,7 +455,7 @@ BOOL clearLocations = NO;
     {
         // zoom to a region 2km across
         MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(loc, 1000, 1000);
-        [mapView setRegion:viewRegion animated:TRUE];
+        [self.mapView setRegion:viewRegion animated:TRUE];
     }
     else {
 #if DEBUG

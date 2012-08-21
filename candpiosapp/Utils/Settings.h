@@ -11,23 +11,19 @@
 
 @interface Settings : NSObject< NSCoding, NSCopying >
 
-@property (nonatomic, assign) bool flag;
-@property (nonatomic, assign) bool registeredForApnsSuccessfully;
-
-//@property (nonatomic, copy) NSString *candpLoginToken;
-
-// note: userEmailAddress is only valid if the created their account with an email address
-@property (nonatomic, copy) NSString *userEmailAddress;
-@property (nonatomic, copy) NSString *userPassword;
-@property (nonatomic, assign) float userBalance;
-
-//checkin notification settings
-@property (nonatomic, assign) bool notifyInVenueOnly;
-@property (nonatomic, assign) bool notifyWhenCheckedIn;
 // TODO: Don't store the userPassword here or in NSUserDefaults
 // it should be stored encrypted in the keychain
 
-// TODO: Store a user object (User.h) once the user is logged in instead of just storing an NSNumber which is the user ID
+// note: userEmailAddress is only valid if the created their account with an email address
+@property (strong, nonatomic) NSString *userEmailAddress;
+@property (strong, nonatomic) NSString *userPassword;
+@property (nonatomic) float userBalance;
+@property (nonatomic) BOOL flag;
+@property (nonatomic) BOOL registeredForApnsSuccessfully;
+
+//checkin notification settings
+@property (nonatomic) BOOL notifyInVenueOnly;
+@property (nonatomic) BOOL notifyWhenCheckedIn;
 
 
 @end

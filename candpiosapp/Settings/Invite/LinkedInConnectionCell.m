@@ -10,7 +10,4 @@
 
 @implementation LinkedInConnectionCell
 
-@synthesize linkedInProfileImage = _linkedInProfileImage;
-@synthesize linkedInName = _linkedInName;
-
 @end

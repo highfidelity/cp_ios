@@ -11,28 +11,13 @@
 #import "CheckInListCell.h"
 #import "FoursquareAPIRequest.h"
 
-@implementation CheckInListTableViewController {
-    UIAlertView *addPlaceAlertView;
-}
+@interface CheckInListTableViewController()
 
-@synthesize places, refreshLocationsNow;
+@property (strong, nonatomic) UIAlertView *addPlaceAlertView;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+@end
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
+@implementation CheckInListTableViewController
 
 // TODO: Add a search box at the box of the table view so the user can quickly search for the venue
 
@@ -41,7 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    refreshLocationsNow = YES;
+    self.refreshLocationsNow = YES;
     
     self.title = @"Check In";
     
@@ -69,8 +54,6 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LoginStateChanged" object:nil];
 }
 
@@ -87,9 +70,9 @@
     [super viewDidAppear:animated];
 
     // Load the list of nearby venues
-    if (refreshLocationsNow) {
+    if (self.refreshLocationsNow) {
         [self refreshLocations];
-        refreshLocationsNow = NO;
+        self.refreshLocationsNow = NO;
     }
 }
 
@@ -103,21 +86,12 @@
     [super viewDidDisappear:animated];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    if (interfaceOrientation == UIInterfaceOrientationPortrait) {
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
 - (void)refreshLocations {
 	[SVProgressHUD showWithStatus:@"Loading nearby venues..."];
 
     // Reset the Places array
     
-    places = [[NSMutableArray alloc] init];
+    self.venues = [[NSMutableArray alloc] init];
 
     CLLocation *userLocation = [CPAppDelegate locationManager].location;
     [FoursquareAPIRequest getVenuesCloseToLocation:userLocation :^(NSDictionary *json, NSError *error){
@@ -151,11 +125,11 @@
                 
                 
                 place.distanceFromUser = [placeLocation distanceFromLocation:userLocation];
-                [places addObject:place];
+                [self.venues addObject:place];
             }
             
             // sort the places array by distance from user
-            [places sortUsingSelector:@selector(sortByDistanceToUser:)];
+            [self.venues sortUsingSelector:@selector(sortByDistanceToUser:)];
             
             // add a custom place so people can checkin if foursquare doesn't have the venue
             CPVenue *place = [[CPVenue alloc] init];
@@ -164,7 +138,7 @@
             
             place.coordinate = userLocation.coordinate;
             
-            [places insertObject:place atIndex:[places count]];
+            [self.venues insertObject:place atIndex:[self.venues count]];
             
             [CPapi getDefaultCheckInVenueWithCompletion:^(NSDictionary *jsonVenue, NSError *errorVenue) {
                 BOOL respError = [[jsonVenue objectForKey:@"error"] boolValue];
@@ -173,10 +147,10 @@
                     NSDictionary *jsonDict = [jsonVenue objectForKey:@"payload"];
                     CPVenue *defaultVenue = [[CPVenue alloc] initFromDictionary:jsonDict];
                     NSPredicate *defaultVenuePredicate = [NSPredicate predicateWithFormat:@"foursquareID != %@", defaultVenue.foursquareID];
-                    [places filterUsingPredicate:defaultVenuePredicate];
+                    [self.venues filterUsingPredicate:defaultVenuePredicate];
                     
                     //add default venue
-                    [places insertObject:defaultVenue atIndex:0];
+                    [self.venues insertObject:defaultVenue atIndex:0];
 
                     // reload the tableView now that we have new data
                     [self.tableView reloadData];
@@ -211,7 +185,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [places count];
+    return [self.venues count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -222,7 +196,7 @@
     CheckInListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCell"];
     
     // if this is the "place not listed" cell then we have a different identifier
-    if (indexPath.row == [places count] - 1) {
+    if (indexPath.row == [self.venues count] - 1) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCellNotListed"];
     } else {
         // get the localized distance string based on the distance of this venue from the user
@@ -230,10 +204,10 @@
         if (indexPath.row == 0) {
             cell.distanceString.text = @"Recent";
         } else {
-            cell.distanceString.text = [CPUtils localizedDistanceStringForDistance:[[places objectAtIndex:indexPath.row] distanceFromUser]];
+            cell.distanceString.text = [CPUtils localizedDistanceStringForDistance:[[self.venues objectAtIndex:indexPath.row] distanceFromUser]];
         }
         
-        cell.venueAddress.text = [[[places objectAtIndex:indexPath.row] address] description];
+        cell.venueAddress.text = [[[self.venues objectAtIndex:indexPath.row] address] description];
         if (!cell.venueAddress.text || [cell.venueAddress.text length] == 0) {
             // if we don't have an address then move the venuename down
             cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 19, cell.venueName.frame.size.width, cell.venueName.frame.size.height);
@@ -243,7 +217,7 @@
         }
     }
     
-    cell.venueName.text = [[places objectAtIndex:indexPath.row] name];
+    cell.venueName.text = [[self.venues objectAtIndex:indexPath.row] name];
     
     return cell;
 }
@@ -255,11 +229,11 @@
 
     if ([CPUserDefaultsHandler currentUser].userID) {
         // If the item selected is the last in the list, prompt user to add a new venue
-        if (indexPath.row == places.count - 1) {
-            addPlaceAlertView = [[UIAlertView alloc] initWithTitle:@"Name of New Place" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
-            addPlaceAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-            [[addPlaceAlertView textFieldAtIndex:0] setDelegate:self];
-            [addPlaceAlertView show];
+        if (indexPath.row == self.venues.count - 1) {
+            self.addPlaceAlertView = [[UIAlertView alloc] initWithTitle:@"Name of New Place" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
+            self.addPlaceAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+            [[self.addPlaceAlertView textFieldAtIndex:0] setDelegate:self];
+            [self.addPlaceAlertView show];
             return;
         }
         else if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
@@ -296,7 +270,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // if this is the last row it's the 'place not listed' row so make it smaller
-    if (indexPath.row == [places count] - 1) {
+    if (indexPath.row == [self.venues count] - 1) {
         return 40;
     } else {
         return 60;
@@ -310,7 +284,7 @@
     if ([[segue identifier] isEqualToString:@"ShowCheckInDetailsView"]) {
         
         NSIndexPath *path = [self.tableView indexPathForSelectedRow];
-        CPVenue *place = [places objectAtIndex:path.row];
+        CPVenue *place = [self.venues objectAtIndex:path.row];
         
         // give place info to the CheckInDetailsViewController
         [[segue destinationViewController] setVenue:place];
@@ -344,7 +318,7 @@
 {
     
     NSLog(@"text: %@", textField.text);
-    [addPlaceAlertView dismissWithClickedButtonIndex:1 animated:YES];
+    [self.addPlaceAlertView dismissWithClickedButtonIndex:1 animated:YES];
     [self addNewPlace:textField.text];
     return YES;
 }
@@ -352,7 +326,7 @@
 - (void)addNewPlace:(NSString *)name {
 	[SVProgressHUD showWithStatus:@"Saving new place..."];
 
-    CPVenue *place = [places objectAtIndex:[self.tableView indexPathForSelectedRow].row];
+    CPVenue *place = [self.venues objectAtIndex:[self.tableView indexPathForSelectedRow].row];
     place.name = name;
     
     // Send Add request to Foursquare and use the new Venue ID here

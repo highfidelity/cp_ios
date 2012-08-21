@@ -10,7 +10,6 @@
 
 @implementation CPAlertView
 
-@synthesize context;
-@synthesize rootView;
+@synthesize context = _cpContext;
 
 @end

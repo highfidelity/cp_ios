@@ -36,12 +36,13 @@
 
 
 @interface CPUserActionCell()
-@property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
-@property (nonatomic, strong) UITapGestureRecognizer *tapRecognizer;
-@property (nonatomic, assign) CGFloat initialTouchPositionX;
-@property (nonatomic, assign) CGFloat initialHorizontalCenter;
-@property (nonatomic, assign) CPUserActionCellDirection lastDirection;
-@property (nonatomic, assign) CPUserActionCellDirection currentDirection;
+
+@property (strong, nonatomic) UIPanGestureRecognizer *panRecognizer;
+@property (strong, nonatomic) UITapGestureRecognizer *tapRecognizer;
+@property (nonatomic) CGFloat initialTouchPositionX;
+@property (nonatomic) CGFloat initialHorizontalCenter;
+@property (nonatomic) CPUserActionCellDirection lastDirection;
+@property (nonatomic) CPUserActionCellDirection currentDirection;
 @property (nonatomic, readonly) CGFloat panFullOpenWidth;
 @property (nonatomic, readonly) CGAffineTransform buttonBumpStartingTransform;
 @property (nonatomic, readonly) BOOL areActionButtonsVisible;
@@ -52,27 +53,6 @@
 @end
 
 @implementation CPUserActionCell
-
-// public attrs
-@synthesize delegate = _delegate;
-@synthesize hiddenView = _hiddenView;
-@synthesize shouldBounce = _shouldBounce;
-@synthesize leftStyle = _leftStyle;
-@synthesize rightStyle = _rightStyle;
-
-// private attrs
-@synthesize panRecognizer = _panRecognizer;
-@synthesize initialTouchPositionX = _initialTouchPositionX;
-@synthesize initialHorizontalCenter = _initialHorizontalCenter;
-@synthesize lastDirection = _lastDirection;
-@synthesize currentDirection = _currentDirection;
-@synthesize tapRecognizer;
-@synthesize user;
-@synthesize sendLoveButton;
-@synthesize sendMessageButton;
-@synthesize exchangeContactsButton;
-@synthesize activeColor;
-@synthesize inactiveColor;
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

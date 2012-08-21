@@ -13,12 +13,12 @@
 @interface MapDataSet : NSObject
 
 
-@property (nonatomic, readonly, strong) NSArray *annotations;
-@property (nonatomic, strong) NSDate *dateLoaded;
-@property (nonatomic, assign) MKMapRect regionCovered;
-@property (nonatomic, assign) CLLocationCoordinate2D previousCenter;
-@property (nonatomic, strong) NSDictionary *activeUsers;
-@property (nonatomic, strong) NSDictionary *activeVenues;
+@property (strong, nonatomic, readonly) NSArray *annotations;
+@property (strong, nonatomic) NSDate *dateLoaded;
+@property (strong, nonatomic) NSDictionary *activeUsers;
+@property (strong, nonatomic) NSDictionary *activeVenues;
+@property (nonatomic) MKMapRect regionCovered;
+@property (nonatomic) CLLocationCoordinate2D previousCenter;
 
 +(void)beginLoadingNewDataset:(CLLocationCoordinate2D)mapCenter
 				   completion:(void (^)(MapDataSet *set, NSError *error))completion;

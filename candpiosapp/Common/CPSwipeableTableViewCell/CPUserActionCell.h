@@ -38,18 +38,18 @@ typedef enum {
 
 @interface CPUserActionCell : UITableViewCell <UIGestureRecognizerDelegate, UIActionSheetDelegate>
 
-@property (nonatomic, assign) id<CPUserActionCellDelegate> delegate;
-@property (nonatomic, strong) User *user;
-@property (nonatomic, strong) UIView *hiddenView;
-@property (nonatomic, assign, getter = isRevealing) BOOL revealing;
-@property (nonatomic, assign) BOOL shouldBounce;
-@property (nonatomic, assign) CPUserActionCellSwipeStyle leftStyle;
-@property (nonatomic, assign) CPUserActionCellSwipeStyle rightStyle;
-@property (nonatomic, strong) UIButton *sendLoveButton;
-@property (nonatomic, strong) UIButton *sendMessageButton;
-@property (nonatomic, strong) UIButton *exchangeContactsButton;
-@property (nonatomic, strong) UIColor *activeColor;
-@property (nonatomic, strong) UIColor *inactiveColor;
+@property (strong, nonatomic) User *user;
+@property (strong, nonatomic) UIView *hiddenView;
+@property (strong, nonatomic) UIButton *sendLoveButton;
+@property (strong, nonatomic) UIButton *sendMessageButton;
+@property (strong, nonatomic) UIButton *exchangeContactsButton;
+@property (strong, nonatomic) UIColor *activeColor;
+@property (strong, nonatomic) UIColor *inactiveColor;
+@property (weak, nonatomic) id<CPUserActionCellDelegate> delegate;
+@property (nonatomic) BOOL shouldBounce;
+@property (nonatomic) CPUserActionCellSwipeStyle leftStyle;
+@property (nonatomic) CPUserActionCellSwipeStyle rightStyle;
+@property (nonatomic, getter = isRevealing) BOOL revealing;
 @property (nonatomic, readonly) CGFloat originalCenter;
 
 + (void)cancelOpenSlideActionButtonsNotification:(CPUserActionCell *)cell;

@@ -12,22 +12,7 @@
 #import "MapTabController.h"
 #import "MapDataSet.h"
 
-@interface VenueListTableViewController ()
-
-@end
-
 @implementation VenueListTableViewController
-
-@synthesize venues = _venues;
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (NSMutableArray *)venues
 {
@@ -61,11 +46,7 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"mapIsLoadingNewData" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshVenuesFromNewMapData" object:nil];
-     
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -81,11 +62,6 @@
     // tell the map to reload data
     // we'll get a notification when that's done to reload ours
     [self.delegate refreshButtonClicked:nil];   
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 -(void)newDataBeingLoaded:(NSNotification *)notification

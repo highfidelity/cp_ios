@@ -16,6 +16,8 @@
 
 @interface ProfileNotificationsViewController () <UIActionSheetDelegate>
 
+@property (strong, nonatomic) NSDate *quietTimeFromDate;
+@property (strong, nonatomic) NSDate *quietTimeToDate;
 @property (weak, nonatomic) IBOutlet UIButton *venueButton;
 @property (weak, nonatomic) IBOutlet UISwitch *checkedInOnlySwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *quietTimeSwitch;
@@ -35,35 +37,11 @@
 
 - (void)setVenue:(NSString *)setting;
 
-@property(strong) NSDate *quietTimeFromDate;
-@property(strong) NSDate *quietTimeToDate;
-
 @end
 
 @implementation ProfileNotificationsViewController
 
-@synthesize venueButton = _venueButton;
-@synthesize checkedInOnlySwitch = _checkedInOnlySwitch;
-@synthesize quietTimeSwitch = _quietTimeSwitch;
-@synthesize anyoneChatView = anyoneChatView;
-@synthesize quietFromButton = _quietFromButton;
-@synthesize quietToButton = _quietToButton;
-@synthesize contactsOnlyChatSwitch = _contactsOnlyChatSwitch;
-@synthesize chatNotificationLabel = _chatNotificationLabel;
-@synthesize quietTimeFromDate = _quietTimeFromDate;
-@synthesize quietTimeToDate = _quietTimeToDate;
-@synthesize headerView = _headerView;
-
 #pragma mark - View lifecycle
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -79,34 +57,11 @@
     [self loadNotificationSettings];
 }
 
-- (void)viewDidUnload
-{
-    [self setVenueButton:nil];
-    [self setCheckedInOnlySwitch:nil];
-    [self setQuietTimeSwitch:nil];
-    [self setAnyoneChatView:nil];
-    [self setQuietFromButton:nil];
-    [self setQuietToButton:nil];
-    [self setContactsOnlyChatSwitch:nil];
-    [self setQuietTimeFromDate:nil];
-    [self setQuietTimeToDate:nil];
-    [self setChatNotificationLabel:nil];
-    [self setHeaderView:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
-
 -(void)viewDidDisappear:(BOOL)animated
 {
     [self saveNotificationSettings];
     [super viewDidDisappear:animated];
 }
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 
 #pragma mark - Api calls
 - (void)loadNotificationSettings

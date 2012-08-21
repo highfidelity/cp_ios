@@ -24,25 +24,12 @@ float const TIMESTAMP_CELL_HEIGHT         = 18.0f;
 
 static CGFloat const FONTSIZE = 14.0;
 
-
 @interface OneOnOneChatViewController()
 - (CGFloat)labelHeight:(ChatMessage *)message;
 - (void)scrollToLastChat;
 @end
 
-
 @implementation OneOnOneChatViewController
-
-@synthesize user = _user;
-@synthesize me = _me;
-@synthesize history = _history;
-
-@synthesize chatEntryField = _chatEntryField;
-@synthesize chatContents = _chatContents;
-@synthesize backgroundView = _backgroundView;
-@synthesize chatInputs = _chatInputs;
-@synthesize chatButton = _chatButton;
-
 
 #pragma mark - Misc Functions
 
@@ -81,8 +68,8 @@ static CGFloat const FONTSIZE = 14.0;
     double scrollSpeed = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     
     // Save original positions
-    originalChatContentsRect = self.chatContents.frame;
-    originalChatInputsRect = self.chatInputs.frame;
+    self.originalChatContentsRect = self.chatContents.frame;
+    self.originalChatInputsRect = self.chatInputs.frame;
     
     // Shrink the height of the table view by the # of points that the keyboard
     // will occupy
@@ -115,8 +102,8 @@ static CGFloat const FONTSIZE = 14.0;
                           delay:0
                         options:UIViewAnimationOptionAllowUserInteraction
                      animations:^{
-                         self.chatContents.frame = originalChatContentsRect;
-                         self.chatInputs.frame = originalChatInputsRect;
+                         self.chatContents.frame = self.originalChatContentsRect;
+                         self.chatInputs.frame = self.originalChatInputsRect;
                      }
                      completion:nil];
     [self scrollToLastChat];
@@ -424,24 +411,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     
 }
 
-- (void)viewDidUnload
-{
-    [self setChatEntryField:nil];
-    [self setChatContents:nil];
-    [self setBackgroundView:nil];
-    [self setChatInputs:nil];
-    [self setChatButton:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -459,30 +428,5 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     }
     return self;
 }
-
-/* PROBABLY GONNA DELETE THIS, THOUGHT I LIKE THE IDEA.
-   It doesn't seem to work as intended.
- 
-- (void)loadWithUserId:(NSString *)userId
-            andMessage:(NSString *)message {
-    
-    self.user.userID = [userId intValue];
-    
-    [SVProgressHUD showWithStatus:@"Starting Chat"];
-    
-    [self.user loadUserResumeData:^(User *user, NSError *error) {
-        NSLog(@"We're in here doing something...");
-        if (!error) {
-            self.user = user;   
-            [SVProgressHUD dismiss];
-        } else {
-            [SVProgressHUD dismissWithError:[error localizedDescription]];
-        }
-    }];
-    
-    [self addChatMessageToView:message
-                      sentByMe:NO];
-}
-*/
 
 @end

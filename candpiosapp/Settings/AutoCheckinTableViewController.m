@@ -13,13 +13,10 @@
 #import "CPGeofenceHandler.h"
 
 @interface AutoCheckinTableViewController ()
-@property (nonatomic, strong) NSMutableArray *placesArray;
+@property (strong, nonatomic) NSMutableArray *placesArray;
 @end
 
 @implementation AutoCheckinTableViewController
-
-@synthesize globalCheckinSwitch = _globalCheckinSwitch;
-@synthesize placesArray = _placesArray;
 
 - (void)viewDidLoad
 {
@@ -33,14 +30,6 @@
     if (automaticCheckins) {    
         [self setupPlacesArray];
     }
-}
-
-- (void)viewDidUnload
-{
-    [self setGlobalCheckinSwitch:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (void)setupPlacesArray {

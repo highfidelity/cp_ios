@@ -14,10 +14,7 @@ static AFHTTPClient *sharedClient;
 
 + (void)initialize
 {
-    static BOOL initialized = NO;
-    if(!initialized)
-    {
-        initialized = YES;
+    if(!sharedClient) {
         sharedClient = [[self alloc] initWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
     }
 }

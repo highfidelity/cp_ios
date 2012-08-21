@@ -13,8 +13,8 @@
 
 @interface EnterInvitationCodeViewController () <UITextFieldDelegate, UIAlertViewDelegate>
 
-@property (nonatomic, weak) IBOutlet UIButton *laterButton;
-@property (nonatomic, weak) IBOutlet UITextField *codeTextField;
+@property (weak, nonatomic) IBOutlet UIButton *laterButton;
+@property (weak, nonatomic) IBOutlet UITextField *codeTextField;
 
 - (IBAction)laterButtonAction:(id)sender;
 
@@ -23,14 +23,7 @@
 
 @end
 
-
 @implementation EnterInvitationCodeViewController
-
-@synthesize laterButton = _laterButton;
-@synthesize codeTextField = _codeTextField;
-
-@synthesize dontShowTextNoticeAfterLaterButtonPressed = _dontShowTextNoticeAfterLaterButtonPressed;
-@synthesize isPushedFromLeft = _isPushedFromLeft;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,10 +31,6 @@
     [CPUIHelper makeButtonCPButton:self.laterButton
                  withCPButtonColor:CPButtonTurquoise];
     [CPUIHelper changeFontForTextField:self.codeTextField toLeagueGothicOfSize:86];
-}
-
-- (void)viewDidUnload {
-    [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

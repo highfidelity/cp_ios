@@ -16,15 +16,17 @@
 @end
 
 @interface PillPopoverViewController : UIViewController<UITextFieldDelegate>
-@property (nonatomic, strong) CPPost *post;
-@property (nonatomic, strong) NSIndexPath *indexPath;
-@property (nonatomic, strong) id<PillPopoverDelegate>delegate;
+
+@property (strong, nonatomic) CPPost *post;
+@property (strong, nonatomic) NSIndexPath *indexPath;
 @property (weak, nonatomic) IBOutlet UIButton *plusButton;
 @property (weak, nonatomic) IBOutlet UIWebView *plusWebView;
 @property (weak, nonatomic) IBOutlet UIButton *commentButton;
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel;
 @property (weak, nonatomic) IBOutlet UITextField *commentTextView;
 @property (weak, nonatomic) IBOutlet UIImageView *commentImageView;
+@property (weak, nonatomic) id<PillPopoverDelegate>delegate;
+
 - (IBAction)plusButtonPressed:(id)sender;
 
 @end

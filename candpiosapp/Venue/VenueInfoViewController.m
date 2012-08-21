@@ -19,17 +19,17 @@
 
 @interface VenueInfoViewController () <UIAlertViewDelegate>
 
-@property (nonatomic, strong) NSTimer *chatReloadTimer;
+@property (strong, nonatomic) NSTimer *chatReloadTimer;
 @property (weak, nonatomic) IBOutlet UIView *bottomPhotoOverlayView;
 @property (weak, nonatomic) IBOutlet UIView *venueChatBox;
 @property (weak, nonatomic) IBOutlet UILabel *activeChatText;
 @property (weak, nonatomic) UIButton *checkInButton;
 @property (weak, nonatomic) UIButton *phoneButton;
 @property (weak, nonatomic) UIButton *addressButton;
-@property (assign, nonatomic) BOOL hadNoChat;
-@property (assign, nonatomic) BOOL checkInIsVirtual;
-@property (assign, nonatomic) BOOL hasPhone;
-@property (assign, nonatomic) BOOL hasAddress;
+@property (nonatomic) BOOL hadNoChat;
+@property (nonatomic) BOOL checkInIsVirtual;
+@property (nonatomic) BOOL hasPhone;
+@property (nonatomic) BOOL hasAddress;
 
 - (IBAction)tappedAddress:(id)sender;
 - (IBAction)tappedPhone:(id)sender;
@@ -54,44 +54,12 @@
 
 @implementation VenueInfoViewController
 
-@synthesize scrollView = _scrollView;
-@synthesize venue = _venue;
-@synthesize venuePhoto = _venuePhoto;
-@synthesize bottomPhotoOverlayView = _bottomPhotoOverlayView;
-@synthesize firstAidSection = _firstAidSection;
-@synthesize userSection = _userSection;
-@synthesize categoryCount = _categoryCount;
-@synthesize currentUsers = _currentUsers;
-@synthesize previousUsers = _previousUsers;
-@synthesize usersShown = _usersShown;
-@synthesize userObjectsForUsersOnScreen = _userObjectsForUsersOnScreen;
-@synthesize scrollToUserThumbnail = _scrollToUserThumbnail;
-@synthesize chatReloadTimer = _chatReloadTimer;
-@synthesize venueChatBox = _venueChatBox;
-@synthesize activeChatText = _activeChatText;
-@synthesize checkInButton = _checkInButton;
-@synthesize hadNoChat = _hadNoChat;
-@synthesize checkInIsVirtual = _checkInIsVirtual;
-@synthesize hasPhone = _hasPhone;
-@synthesize hasAddress = _hasAddress;
-@synthesize phoneButton = _phoneButton;
-@synthesize addressButton = _addressButton;
-
 - (NSMutableDictionary *)userObjectsForUsersOnScreen
 {
     if (!_userObjectsForUsersOnScreen) {
         _userObjectsForUsersOnScreen = [NSMutableDictionary dictionary];
     }
     return _userObjectsForUsersOnScreen;
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil  bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
 }
 
 - (void)viewDidLoad
@@ -218,23 +186,9 @@
 
 - (void)viewDidUnload
 {
-    [self setVenuePhoto:nil];
-    [self setUserSection:nil];
-    [self setFirstAidSection:nil];
-    [self setVenueChatBox:nil];
-    [self setActiveChatText:nil];
-    [self setCheckInButton:nil];
     [super viewDidUnload];
     [CPAppDelegate tabBarController].currentVenueID = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshVenueAfterCheckin" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LoginStateChanged" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"userCheckInStateChange" object:nil];
-    // Release any retained subviews of the main view.
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)isCheckedInHere

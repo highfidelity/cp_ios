@@ -17,14 +17,12 @@
 @class MapDataSet;
 
 @interface MapTabController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate>
-{
-	bool hasUpdatedUserLocation;
-    NSArray *pinScales;
-}
 
-@property (nonatomic, retain) IBOutlet MKMapView *mapView;
-@property (nonatomic, readonly, strong) MapDataSet *dataset;
+@property (strong, nonatomic) NSArray *pinScales;
+@property (strong, nonatomic, readonly) MapDataSet *dataset;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIView *mapAndButtonsView;
+@property (nonatomic) BOOL hasUpdatedUserLocation;
 
 // State to prevent querying userlist (with bad region) before the map has appeared
 // Although there is a delegate method, mapViewDidFinishLoadingMap:, this is not

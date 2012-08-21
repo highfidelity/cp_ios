@@ -14,7 +14,6 @@
 @implementation CPUserSessionHandler
 
 static CPUserSessionHandler *sharedHandler;
-@synthesize signUpPresentingViewController = _signUpPresentingViewController;
 
 + (void)initialize
 {

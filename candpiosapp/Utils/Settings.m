@@ -9,51 +9,38 @@
 #import "Settings.h"
 
 @implementation Settings
-@synthesize flag;
-@synthesize registeredForApnsSuccessfully;
-//@synthesize candpLoginToken;
-@synthesize userEmailAddress, userPassword, userBalance;
-@synthesize notifyInVenueOnly, notifyWhenCheckedIn;;
 
-//=========================================================== 
-// - (id)init
-//
-//=========================================================== 
 - (id)init
 {
-    if ((self = [super init])) {
-        flag = true;
+    if (self = [super init]) {
+        self.flag = true;
     }
     return self;
 }
 
-//=========================================================== 
-//  Keyed Archiving
-//
-//=========================================================== 
 - (void)encodeWithCoder:(NSCoder *)encoder 
 {
-    [encoder encodeBool:flag forKey:@"flag"];
-    [encoder encodeBool:registeredForApnsSuccessfully forKey:@"registeredForApnsSuccessfully"];
-	[encoder encodeObject:userEmailAddress	forKey:@"userEmailAddress"];
-	[encoder encodeObject:userPassword	forKey:@"userPassword"];
-	[encoder encodeFloat:userBalance forKey:@"userBalance"];
-    [encoder encodeBool:flag forKey:@"notifyInVenueOnly"];
-    [encoder encodeBool:flag forKey:@"notifyWhenCheckedIn"];
+    [encoder encodeBool:self.flag forKey:@"flag"];
+    [encoder encodeBool:self.registeredForApnsSuccessfully forKey:@"registeredForApnsSuccessfully"];
+    [encoder encodeObject:self.userEmailAddress	forKey:@"userEmailAddress"];
+    [encoder encodeObject:self.userPassword	forKey:@"userPassword"];
+    [encoder encodeFloat:self.userBalance forKey:@"userBalance"];
+    [encoder encodeBool:self.flag forKey:@"notifyInVenueOnly"];
+    [encoder encodeBool:self.flag forKey:@"notifyWhenCheckedIn"];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder 
 {
-    if ((self = [super init])) {
-        flag = [decoder decodeBoolForKey:@"flag"];
-        registeredForApnsSuccessfully = [decoder decodeBoolForKey:@"registeredForApnsSuccessfully"];
-		
-		userEmailAddress = [decoder decodeObjectForKey:@"userEmailAddress"];
-		userPassword = [decoder decodeObjectForKey:@"userPassword"];
-		userBalance = [decoder decodeFloatForKey:@"userBalance"];
+    if (self = [super init]) {
+        self.flag = [decoder decodeBoolForKey:@"flag"];
+        self.registeredForApnsSuccessfully = [decoder decodeBoolForKey:@"registeredForApnsSuccessfully"];
         
-        notifyInVenueOnly = [decoder decodeBoolForKey:@"notifyInVenueOnly"];
-        notifyWhenCheckedIn = [decoder decodeBoolForKey:@"notifyWhenCheckedIn"];
+        self.userEmailAddress = [decoder decodeObjectForKey:@"userEmailAddress"];
+        self.userPassword = [decoder decodeObjectForKey:@"userPassword"];
+        
+        self.userBalance = [decoder decodeFloatForKey:@"userBalance"];
+        self.notifyInVenueOnly = [decoder decodeBoolForKey:@"notifyInVenueOnly"];
+        self.notifyWhenCheckedIn = [decoder decodeBoolForKey:@"notifyWhenCheckedIn"];
     }
     return self;
 }

@@ -26,8 +26,8 @@ Welcome!";
 
 @interface EditLinkedInInvitationMessageViewController ()
 
-@property (nonatomic, weak) IBOutlet UITextField *subjectTextField;
-@property (nonatomic, weak) IBOutlet UITextView *bodyTextView;
+@property (weak, nonatomic) IBOutlet UITextField *subjectTextField;
+@property (weak, nonatomic) IBOutlet UITextView *bodyTextView;
 
 - (IBAction)cancelAction;
 - (IBAction)sendAction;
@@ -38,11 +38,6 @@ Welcome!";
 @end
 
 @implementation EditLinkedInInvitationMessageViewController
-
-@synthesize subjectTextField = _subjectTextField;
-@synthesize bodyTextView = _bodyTextView;
-@synthesize nickname = _nickname;
-@synthesize connectionIDs = _connectionIDs;
 
 #pragma mark - UIView
 
@@ -94,13 +89,7 @@ Welcome!";
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardWillShowNotification
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardWillHideNotification
-                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - actions

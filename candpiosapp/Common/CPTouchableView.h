@@ -12,9 +12,8 @@
 - (void) touchUp:(id)sender;
 @end
 
-@interface CPTouchableView : UIView  {
-    id <CPTouchViewDelegate> delegate;
-}
+@interface CPTouchableView : UIView 
 
-@property (nonatomic, strong) id delegate;
+@property (weak, nonatomic) id delegate;
+
 @end

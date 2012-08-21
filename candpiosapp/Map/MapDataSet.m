@@ -13,12 +13,8 @@
 -(id)initFromJson:(NSDictionary*)json;
 
 @end
+
 @implementation MapDataSet
-@synthesize activeUsers = _activeUsers;
-@synthesize activeVenues = _activeVenues;
-@synthesize dateLoaded = _dateLoaded;
-@synthesize regionCovered = _regionCovered;
-@synthesize previousCenter = _previousCenter;
 
 static NSOperationQueue *sMapQueue = nil;
 
@@ -36,14 +32,15 @@ static NSOperationQueue *sMapQueue = nil;
 		// serialize requests, please
 		[sMapQueue setMaxConcurrentOperationCount:1];
 	}
+    
     if ([sMapQueue operationCount] > 0) {
         [sMapQueue cancelAllOperations];
         [sMapQueue waitUntilAllOperationsAreFinished];
     }
     
 	
-	if([sMapQueue operationCount] == 0) {        
-        [CPapi getNearestVenuesWithCheckinsToCoordinate:mapCenter
+	if([sMapQueue operationCount] == 0) {
+        [CPapi getNearestVenuesWithCheckinsToCoordinate:mapCenter 
                                                mapQueue:sMapQueue 
                                              completion:^(NSDictionary *json, NSError *error){
             
@@ -63,8 +60,7 @@ static NSOperationQueue *sMapQueue = nil;
                 }
             }
         }];
-	}
-	else {
+	} else {
         //Because cancelAllOperations is called above it should not get here, but it is does it will show busy.
 		if(completion)
 			completion(nil, [NSError errorWithDomain:@"Busy" code:999 userInfo:nil]);

@@ -17,24 +17,30 @@
 
 
 @interface UserProfileViewController() <UIWebViewDelegate, UIActionSheetDelegate, GRMustacheTemplateDelegate>
+
+@property (strong, nonatomic) UITapGestureRecognizer *tapRecon;
+@property (strong, nonatomic) NSNumber *templateCounter;
+@property (strong, nonatomic) NSString* preBadgesHTML;
+@property (strong, nonatomic) NSString* postBadgesHTML;
+@property (strong, nonatomic) NSString* badgesHTML;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, weak) IBOutlet UILabel *checkedIn;
-@property (nonatomic, weak) IBOutlet MKMapView *mapView;
-@property (nonatomic, weak) IBOutlet UIView *userCard;
-@property (nonatomic, weak) IBOutlet UIImageView *cardImage;
-@property (nonatomic, weak) IBOutlet UILabel *cardStatus;
-@property (nonatomic, weak) IBOutlet UILabel *cardNickname;
-@property (nonatomic, weak) IBOutlet UILabel *cardJobPosition;
-@property (nonatomic, weak) IBOutlet UIView *venueView;
-@property (nonatomic, weak) IBOutlet UIButton *venueViewButton;
-@property (nonatomic, weak) IBOutlet UILabel *venueName;
-@property (nonatomic, weak) IBOutlet UILabel *venueAddress;
-@property (nonatomic, weak) IBOutlet UIImageView *venueOthersIcon;
-@property (nonatomic, weak) IBOutlet UILabel *venueOthers;
-@property (nonatomic, weak) IBOutlet UIView *availabilityView;
-@property (nonatomic, weak) IBOutlet UILabel *distanceLabel;
-@property (nonatomic, weak) IBOutlet UILabel *hoursAvailable;
-@property (nonatomic, weak) IBOutlet UILabel *minutesAvailable;
+@property (weak, nonatomic) IBOutlet UILabel *checkedIn;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIView *userCard;
+@property (weak, nonatomic) IBOutlet UIImageView *cardImage;
+@property (weak, nonatomic) IBOutlet UILabel *cardStatus;
+@property (weak, nonatomic) IBOutlet UILabel *cardNickname;
+@property (weak, nonatomic) IBOutlet UILabel *cardJobPosition;
+@property (weak, nonatomic) IBOutlet UIView *venueView;
+@property (weak, nonatomic) IBOutlet UIButton *venueViewButton;
+@property (weak, nonatomic) IBOutlet UILabel *venueName;
+@property (weak, nonatomic) IBOutlet UILabel *venueAddress;
+@property (weak, nonatomic) IBOutlet UIImageView *venueOthersIcon;
+@property (weak, nonatomic) IBOutlet UILabel *venueOthers;
+@property (weak, nonatomic) IBOutlet UIView *availabilityView;
+@property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *hoursAvailable;
+@property (weak, nonatomic) IBOutlet UILabel *minutesAvailable;
 @property (weak, nonatomic) IBOutlet UIView *resumeView;
 @property (weak, nonatomic) IBOutlet UILabel *resumeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *resumeRate;
@@ -48,14 +54,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *payButton;
 @property (weak, nonatomic) IBOutlet UIButton *reviewButton;
 @property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
-@property (nonatomic, assign) int othersAtPlace;
-@property (nonatomic, strong) NSNumber *templateCounter;
-@property (nonatomic, assign) NSInteger selectedFavoriteVenueIndex;
 @property (weak, nonatomic) IBOutlet UILabel *propNoteLabel;
-@property (nonatomic, assign) BOOL mapAndDistanceLoaded;
-@property (nonatomic, strong) NSString* preBadgesHTML;
-@property (nonatomic, strong) NSString* postBadgesHTML;
-@property (nonatomic, strong) NSString* badgesHTML;
+@property (nonatomic) BOOL firstLoad;
+@property (nonatomic) int othersAtPlace;
+@property (nonatomic) NSInteger selectedFavoriteVenueIndex;
+@property (nonatomic) BOOL mapAndDistanceLoaded;
 
 -(NSString *)htmlStringWithResumeText;
 -(IBAction)plusButtonPressed:(id)sender;
@@ -66,49 +69,6 @@
 @end
 
 @implementation UserProfileViewController
-
-@synthesize scrollView = _scrollView;
-@synthesize checkedIn = _checkedIn;
-@synthesize mapView = _mapView;
-@synthesize user = _user;
-@synthesize userCard = _userCard;
-@synthesize cardImage = _cardImage;
-@synthesize cardStatus = _cardStatus;
-@synthesize cardNickname = _cardNickname;
-@synthesize distanceLabel = _distanceLabel;
-@synthesize venueView = _venueView;
-@synthesize venueViewButton = _venueViewButton;
-@synthesize venueName = _venueName;
-@synthesize venueAddress = venueAddress;
-@synthesize venueOthersIcon = _venueOthersIcon;
-@synthesize venueOthers = venueOthers;
-@synthesize availabilityView = _availabilityView;
-@synthesize hoursAvailable = _hoursAvailable;
-@synthesize minutesAvailable = _minutesAvailable;
-@synthesize resumeView = _resumeView;
-@synthesize resumeLabel = _resumeLabel;
-@synthesize resumeRate = _resumeRate;
-@synthesize resumeEarned = _resumeEarned;
-@synthesize loveReceived = _loveReceived;
-@synthesize resumeWebView = _resumeWebView;
-@synthesize plusButton = _plusButton;
-@synthesize minusButton = _minusButton;
-@synthesize f2fButton = _f2fButton;
-@synthesize chatButton = _chatButton;
-@synthesize payButton = _payButton;
-@synthesize reviewButton = _reviewButton;
-@synthesize goMenuBackground = _goMenuBackground;
-@synthesize cardJobPosition = _cardJobPosition;
-@synthesize isF2FInvite = _isF2FInvite;
-@synthesize othersAtPlace = _othersAtPlace;
-@synthesize templateCounter = _templateCounter;
-@synthesize selectedFavoriteVenueIndex = _selectedFavoriteVenueIndex;
-@synthesize propNoteLabel = _propNoteLabel;
-@synthesize mapAndDistanceLoaded = _mapAndDistanceLoaded;
-@synthesize preBadgesHTML, postBadgesHTML, badgesHTML;
-
-BOOL firstLoad = YES;
-UITapGestureRecognizer* _tapRecon = nil;
 
 static GRMustacheTemplate *preBadgesTemplate;
 static GRMustacheTemplate *badgesTemplate;
@@ -160,7 +120,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     self.resumeWebView.alpha = 0.0;
     if (_user) {
         // set the booleans this VC uses in later control statements
-        firstLoad = YES;
+        self.firstLoad = YES;
         self.mapAndDistanceLoaded = NO;
         
         // set the card image to the user's profile image
@@ -320,49 +280,14 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 - (void)viewDidUnload
 {
-    [self setScrollView:nil];
-    [self setCheckedIn:nil];
-    [self setMapView:nil];
-    [self setUserCard:nil];
-    [self setCardImage:nil];
-    [self setCardStatus:nil];
-    [self setCardNickname:nil];
-    [self setVenueView:nil];
-    [self setVenueViewButton:nil];
-    [self setVenueName:nil];
-    [self setVenueAddress:nil];
-    [self setVenueOthersIcon:nil];
-    [self setVenueOthers:nil];
-    [self setAvailabilityView:nil];
-    [self setDistanceLabel:nil];
-    [self setHoursAvailable:nil];
-    [self setMinutesAvailable:nil];
-    [self setResumeLabel:nil];
-    [self setResumeView:nil];
-    [self setResumeRate:nil];
-    [self setResumeEarned:nil];
-    [self setLoveReceived:nil];
-    [self setScrollView:nil];
-    [self setResumeWebView:nil];
-    [self setPlusButton:nil];
-    [self setMinusButton:nil];
-    [self setF2fButton:nil];
-    [self setChatButton:nil];
-    [self setPayButton:nil];
-    [self setReviewButton:nil];
-    [self setGoMenuBackground:nil];
-    [self setPropNoteLabel:nil];
-    
-    [self.navigationController.navigationBar removeGestureRecognizer:_tapRecon];
-    _tapRecon = nil;
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    [self.navigationController.navigationBar removeGestureRecognizer:_tapRecon];
+    self.tapRecon = nil;
 }
 
 - (void)updateLastUserCheckin
 {
-    if (firstLoad) {
+    if (self.firstLoad) {
         // if the user is checked in show how much longer they'll be available for
         if ([self.user.checkoutEpoch timeIntervalSinceNow] > 0) {
             self.checkedIn.text = @"Checked in";
@@ -399,7 +324,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     
     self.othersAtPlace = self.user.checkedIn ? self.user.placeCheckedIn.checkinCount - 1 : self.user.placeCheckedIn.checkinCount;
     
-    if (firstLoad) {
+    if (self.firstLoad) {
         if (self.othersAtPlace == 0) {
             // hide the little man, nobody else is here
             self.venueOthersIcon.alpha = 0.0;
@@ -412,7 +337,7 @@ static GRMustacheTemplate *postBadgesTemplate;
             self.venueOthers.text = [NSString stringWithFormat:@"%d %@ here now", self.othersAtPlace, self.othersAtPlace == 1 ? @"other" : @"others"];
         }
         
-        firstLoad = NO;
+        self.firstLoad = NO;
     }    
     
     // animate the display of the venueView and availabilityView
@@ -713,12 +638,6 @@ static GRMustacheTemplate *postBadgesTemplate;
         [self.view viewWithTag:1005].userInteractionEnabled = NO;
     }];
     
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

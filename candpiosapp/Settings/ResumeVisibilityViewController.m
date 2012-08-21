@@ -11,11 +11,12 @@
 
 @interface ResumeVisibilityViewController ()
 
+@property (strong, nonatomic) NSArray *resumeVisibilityOptions;
+@property (strong, nonatomic) NSArray *resumeVisibilityOptionsKeys;
+@property (strong, nonatomic) NSString *originalProfileURLVisibility;
+@property (strong, nonatomic) User *user;
 @property (weak, nonatomic) IBOutlet UIButton *resumeVisibilityButton;
-@property (nonatomic, strong) NSArray *resumeVisibilityOptions;
-@property (nonatomic, strong) NSArray *resumeVisibilityOptionsKeys;
-@property (nonatomic, strong) NSString *originalProfileURLVisibility;
-@property (nonatomic, strong) User *user;
+
 
 - (IBAction)resumeVisibilityButtonClick:(id)sender;
 - (void)updateResumeVisibilityButtonText;
@@ -24,12 +25,6 @@
 @end
 
 @implementation ResumeVisibilityViewController
-
-@synthesize user = _user;
-@synthesize resumeVisibilityButton = _resumeVisibilityButton;
-@synthesize resumeVisibilityOptions = _resumeVisibilityOptions;
-@synthesize resumeVisibilityOptionsKeys= _resumeVisibilityOptionsKeys;
-@synthesize originalProfileURLVisibility = _originalProfileURLVisibility;
 
 - (void)awakeFromNib {
     [super awakeFromNib];

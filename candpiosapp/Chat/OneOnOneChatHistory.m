@@ -10,23 +10,20 @@
 
 @implementation OneOnOneChatHistory
 
-@synthesize myUser = _myUser;
-@synthesize otherUser = _otherUser;
-
 - (id)initWithMyUser:(User *)myUser
         andOtherUser:(User *)otherUser
 {
-    self = [super init];
-    
-    if (myUser == nil || otherUser == nil)
-    {
-        @throw [NSException exceptionWithName:@"NIL user object"
-                                       reason:@"User objects must be defined."
-                                     userInfo:nil];
+    if (self = [super init]) {
+        if (myUser == nil || otherUser == nil)
+        {
+            @throw [NSException exceptionWithName:@"NIL user object"
+                                           reason:@"User objects must be defined."
+                                         userInfo:nil];
+        }
+        
+        self.myUser = myUser;
+        self.otherUser = otherUser;
     }
-    
-    self.myUser = myUser;
-    self.otherUser = otherUser;
     
     return self;
 }

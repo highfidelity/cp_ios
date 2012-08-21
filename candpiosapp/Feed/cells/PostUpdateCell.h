@@ -11,7 +11,7 @@
 
 @interface PostUpdateCell : PostBaseCell
 
-@property (nonatomic, assign) IBOutlet UILabel *timeLabel;
-@property (nonatomic, assign) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 
 @end

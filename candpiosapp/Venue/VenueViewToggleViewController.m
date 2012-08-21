@@ -10,15 +10,15 @@
 #import "VenueListTableViewController.h"
 
 @interface VenueViewToggleViewController ()
+
 @property (strong, nonatomic) MapTabController *venueMapController;
 @property (strong, nonatomic) VenueListTableViewController *venueListController;
 
 - (void)mapListTogglePressed:(id)mapListTogglePressed;
+
 @end
 
 @implementation VenueViewToggleViewController
-@synthesize venueMapController = _venueMapController;
-@synthesize venueListController = _venueListController;
 
 - (void)viewDidLoad
 {
@@ -52,12 +52,6 @@
 
     [self showViewController:nextVC];
 
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
 }
 
 - (void)viewDidAppear:(BOOL)animated

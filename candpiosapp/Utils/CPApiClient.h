@@ -10,7 +10,6 @@
 
 @interface CPApiClient : AFHTTPClient
 
-
 + (void)checkInToVenue:(CPVenue *)venue
                 hoursHere:(int)hoursHere
                statusText:(NSString *)statusText

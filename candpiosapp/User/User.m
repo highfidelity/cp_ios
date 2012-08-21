@@ -14,58 +14,6 @@
 
 @implementation User
 
-@synthesize nickname = _nickname;
-@synthesize userID = _userID;
-@synthesize email = _email;
-@synthesize title = _title;
-@synthesize status = _status;
-@synthesize skills = _skills;
-@synthesize location = _location;
-@synthesize bio = _bio;
-@synthesize sponsorId = _sponsorId;
-@synthesize sponsorNickname = _sponsorNickname;
-@synthesize facebookVerified = _facebookVerified;
-@synthesize linkedInVerified = _linkedInVerified;
-@synthesize hourlyRate = _hourlyRate;
-@synthesize totalEarned = _totalEarned;
-@synthesize totalSpent = _totalSpent;
-@synthesize photoURLString = _photoURLString;
-@synthesize distance = _distance;
-@synthesize checkedIn = _checkedIn;
-@synthesize placeCheckedIn = _placeCheckedIn;
-@synthesize checkoutEpoch = _checkoutEpoch;
-@synthesize join_date = _join_date;
-@synthesize trusted_by = _trusted_by;
-@synthesize workInformation = _workInformation;
-@synthesize educationInformation  = _educationInformation;
-@synthesize jobTitle = _jobTitle;
-@synthesize reviews = _reviews;
-@synthesize checkInHistory = _checkInHistory;
-@synthesize majorJobCategory = _majorJobCategory;
-@synthesize minorJobCategory =  _minorJobCategory;
-@synthesize enteredInviteCode = _enteredInviteCode;
-@synthesize joinDate = _joinDate;
-@synthesize badges = _badges;
-@synthesize smartererName = _smartererName;
-@synthesize checkInIsVirtual = _checkInIsVirtual;
-@synthesize contactsOnlyChat = _contactsOnlyChat;
-@synthesize isContact = _isContact;
-@synthesize hasChatHistory = _hasChatHistory;
-@synthesize totalHours = _totalHours;
-@synthesize linkedInPublicProfileUrl = _linkedInPublicProfileUrl;
-@synthesize numberOfContactRequests = _numberOfContactRequests;
-@synthesize profileURLVisibility = _profileURLVisibility;
-
--(id)init
-{
-	self = [super init];
-	if(self)
-	{
-        // init code here
-	}
-	return self;
-}
-
 -(id)initFromDictionary:(NSDictionary *)userDict
 {
     self = [super init];

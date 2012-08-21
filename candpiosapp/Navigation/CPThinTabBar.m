@@ -10,27 +10,16 @@
 
 @interface CPThinTabBar()
 
-@property (nonatomic, strong) UIView *thinBarBackground;
-@property (nonatomic, strong) NSMutableArray *customBarButtons;
-
-@property (nonatomic, strong) UIView *actionMenu;
-@property (nonatomic, strong) UIView *greenLine;
-@property (nonatomic, strong) NSMutableArray *actionButtonIconImageViews;
-@property (nonatomic, strong) NSMutableArray *actionMenuButtons;
+@property (strong, nonatomic) UIView *thinBarBackground;
+@property (strong, nonatomic) NSMutableArray *customBarButtons;
+@property (strong, nonatomic) UIView *actionMenu;
+@property (strong, nonatomic) UIView *greenLine;
+@property (strong, nonatomic) NSMutableArray *actionButtonIconImageViews;
+@property (strong, nonatomic) NSMutableArray *actionMenuButtons;
 
 @end
 
 @implementation CPThinTabBar
-
-@synthesize tabBarController = _tabBarController;
-@synthesize actionButton = _actionButton;
-@synthesize actionButtonState = _actionButtonState;
-@synthesize thinBarBackground = _thinBarBackground;
-@synthesize customBarButtons = _customBarButtons;
-@synthesize actionMenu = _actionMenu;
-@synthesize greenLine = _greenLine;
-@synthesize actionButtonIconImageViews = _actionButtonIconImageViews;
-@synthesize actionMenuButtons = _actionMenuButtons;
 
 static NSArray *tabBarIcons;
 

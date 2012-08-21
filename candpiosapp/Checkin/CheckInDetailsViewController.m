@@ -14,6 +14,8 @@
 #import "CPApiClient.h"
 
 @interface CheckInDetailsViewController() <UITextFieldDelegate, UIScrollViewDelegate>
+
+@property (strong, nonatomic) NSMutableArray *userArray;
 @property (weak, nonatomic) IBOutlet UIView *blueOverlay;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollView;
@@ -26,20 +28,19 @@
 @property (weak, nonatomic) IBOutlet UILabel *willLabel;
 @property (weak, nonatomic) IBOutlet UITextField *statusTextField;
 @property (weak, nonatomic) IBOutlet UISlider *timeSlider;
-@property (assign, nonatomic) int checkInDuration;
-@property (assign, nonatomic) BOOL sliderButtonPressed;
 @property (weak, nonatomic) IBOutlet UIButton *checkInButton;
 @property (weak, nonatomic) IBOutlet UILabel *durationHeader;
 @property (weak, nonatomic) IBOutlet UIView *userInfoBubble;
 @property (weak, nonatomic) IBOutlet UILabel *infoBubbleNickname;
 @property (weak, nonatomic) IBOutlet UILabel *infoBubbleStatus;
-@property (strong, nonatomic) NSMutableArray *userArray;
-@property (assign, nonatomic) int userArrayIndex;
-@property (weak, nonatomic) UIImageView *infoBubbleArrow;
 @property (weak, nonatomic) IBOutlet UILabel *oneHourLabel;
 @property (weak, nonatomic) IBOutlet UILabel *threeHoursLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fiveHoursLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sevenHoursLabel;
+@property (weak, nonatomic) UIImageView *infoBubbleArrow;
+@property (nonatomic) int checkInDuration;
+@property (nonatomic) BOOL sliderButtonPressed;
+@property (nonatomic) int userArrayIndex;
 
 -(IBAction)sliderChanged:(id)sender;
 -(void)showUserInfoBubbleForUserIndex:(int)userIndex andButton:(UIButton *)userImageButton;
@@ -49,51 +50,6 @@
 @end
 
 @implementation CheckInDetailsViewController
-@synthesize blueOverlay = _blueOverlay;
-@synthesize mapView = _mapView;
-@synthesize scrollView = _scrollView;
-@synthesize otherUsersScrollView = _otherUsersScrollView;
-@synthesize venueInfo = _venueInfo;
-@synthesize checkInLabel = _checkInLabel;
-@synthesize placeName = _placeName;
-@synthesize placeAddress = _placeAddress;
-@synthesize checkInDetails = _checkInDetails;
-@synthesize willLabel = _willLabel;
-@synthesize statusTextField = _statusTextField;
-@synthesize timeSlider = _timeSlider;
-@synthesize venue = _venue;
-@synthesize checkInDuration = _checkInDuration;
-@synthesize sliderButtonPressed = _sliderButtonPressed;
-@synthesize checkInButton = _checkInButton;
-@synthesize durationHeader = _durationHeader;
-@synthesize userInfoBubble = _userInfoBubble;
-@synthesize infoBubbleNickname = _infoBubbleNickname;
-@synthesize infoBubbleStatus = _infoBubbleStatus;
-@synthesize userArray = _userArray;
-@synthesize userArrayIndex = _userArrayIndex;
-@synthesize infoBubbleArrow = _infoBubbleArrow;
-@synthesize oneHourLabel = _oneHourLabel;
-@synthesize threeHoursLabel = _threeHoursLabel;
-@synthesize fiveHoursLabel = _fiveHoursLabel;
-@synthesize sevenHoursLabel = _sevenHoursLabel;
-@synthesize checkInIsVirtual = _checkInIsVirtual;
-@synthesize delegate = _delegate;
-
-
-// customer getter for infoBubbleArrow
-// lazily instantiates it if it's not on the screen yet
--(UIImageView *)infoBubbleArrow
-{
-    if (!_infoBubbleArrow) {
-        UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.userInfoBubble.frame.size.height, 25, 15)];
-        arrowImageView.image = [UIImage imageNamed:@"check-in-status-arrow.png"];
-        _infoBubbleArrow = arrowImageView;
-        [self.userInfoBubble addSubview:_infoBubbleArrow];
-        return _infoBubbleArrow;
-    } else {
-        return _infoBubbleArrow;
-    }
-}
 
 #pragma mark - View lifecycle
 
@@ -181,44 +137,24 @@
     self.placeAddress.text = self.venue.address;
 }
 
-- (void)viewDidUnload
-{
-    [self setMapView:nil];
-    [self setOtherUsersScrollView:nil];
-    [self setPlaceName:nil];
-    [self setPlaceAddress:nil];
-    [self setCheckInLabel:nil];
-    [self setCheckInDetails:nil];
-    [self setBlueOverlay:nil];
-    [self setWillLabel:nil];
-    [self setStatusTextField:nil];
-    [self setTimeSlider:nil];
-    [self setCheckInButton:nil];
-    [self setDurationHeader:nil];
-    [self setScrollView:nil];
-    [self setVenueInfo:nil];
-    [self setUserInfoBubble:nil];
-    [self setInfoBubbleNickname:nil];
-    [self setInfoBubbleStatus:nil];
-    [self setOneHourLabel:nil];
-    [self setThreeHoursLabel:nil];
-    [self setFiveHoursLabel:nil];
-    [self setSevenHoursLabel:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+// customer getter for infoBubbleArrow
+// lazily instantiates it if it's not on the screen yet
+-(UIImageView *)infoBubbleArrow
+{
+    if (!_infoBubbleArrow) {
+        UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.userInfoBubble.frame.size.height, 25, 15)];
+        arrowImageView.image = [UIImage imageNamed:@"check-in-status-arrow.png"];
+        _infoBubbleArrow = arrowImageView;
+        [self.userInfoBubble addSubview:_infoBubbleArrow];
+    }
+    
+    return _infoBubbleArrow;
 }
 
 - (IBAction)checkInPressed:(id)sender {

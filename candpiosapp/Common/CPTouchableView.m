@@ -8,26 +8,13 @@
 
 #import "CPTouchableView.h"
 
-@implementation CPTouchableView {
-@private
-    UIColor *oldBackgroundColor;
-}
+@interface CPTouchableView()
 
-@synthesize delegate = _delegate;
+@property (strong, nonatomic) UIColor *oldBackgroundColor;
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    self.userInteractionEnabled = YES;
-    return self;
-}
+@end
 
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    self.userInteractionEnabled = YES;
-    return self;
-}
+@implementation CPTouchableView
 
 - (void)awakeFromNib
 {
@@ -39,14 +26,14 @@
 {
     [self.delegate touchUp:self];
     [UIView animateWithDuration:0.3f delay:0.3f options:UIViewAnimationOptionCurveEaseIn animations:^{
-        self.backgroundColor = oldBackgroundColor;
+        self.backgroundColor = self.oldBackgroundColor;
     } completion:nil];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    oldBackgroundColor = self.backgroundColor;    
-    const CGFloat *rgb = CGColorGetComponents(oldBackgroundColor.CGColor);
+    self.oldBackgroundColor = self.backgroundColor;
+    const CGFloat *rgb = CGColorGetComponents(self.oldBackgroundColor.CGColor);
     
     float red = rgb[0];
     float green = rgb[1];
@@ -69,12 +56,12 @@
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    self.backgroundColor = oldBackgroundColor;
+    self.backgroundColor = self.oldBackgroundColor;
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    self.backgroundColor = oldBackgroundColor;
+    self.backgroundColor = self.oldBackgroundColor;
 }
 
 @end

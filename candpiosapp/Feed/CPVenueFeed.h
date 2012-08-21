@@ -10,8 +10,8 @@
 
 @interface CPVenueFeed : NSObject
 
-@property (nonatomic, strong) CPVenue *venue;
-@property (nonatomic, strong) NSMutableArray *posts;
+@property (strong, nonatomic) CPVenue *venue;
+@property (strong, nonatomic) NSMutableArray *posts;
 @property (nonatomic) int lastID;
 @property (nonatomic) NSUInteger lastReplyID;
 @property (nonatomic) int updateTimestamp;

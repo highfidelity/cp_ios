@@ -10,30 +10,7 @@
 #import "FlurryAnalytics.h"
 #import "UIViewController+isModal.h"
 
-@interface SignupController ()
-@end
-
 @implementation SignupController
-@synthesize linkedinLoginButton;
-@synthesize dismissButton;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
 
 #pragma mark - View lifecycle
 
@@ -55,15 +32,6 @@
         // then bring them to the map once they login
         [CPAppDelegate settingsMenuController].afterLoginAction = CPAfterLoginActionShowMap;
     }
-}
-
-- (void)viewDidUnload
-{
-    [self setLinkedinLoginButton:nil];
-    [self setDismissButton:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -90,13 +58,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:NO animated:animated];
-}
-
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (IBAction)loginWithLinkedInTapped:(id)sender 

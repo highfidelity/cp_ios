@@ -9,10 +9,10 @@
 @class OAToken;
 
 @interface LinkedInLoginController : UIViewController <UIWebViewDelegate>
-@property (weak, nonatomic) IBOutlet UIWebView *myWebView;
 
-@property (nonatomic, retain) OAToken *requestToken;
-@property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) OAToken *requestToken;
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIWebView *myWebView;
 
 - (void)initiateLogin;
 - (void)linkedInLogin;

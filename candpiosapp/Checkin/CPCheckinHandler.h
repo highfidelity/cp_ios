@@ -17,8 +17,8 @@ typedef enum {
 
 @interface CPCheckinHandler : NSObject
 
-@property (nonatomic, assign) CPAfterCheckinAction afterCheckinAction;
 @property (strong, nonatomic) NSTimer *checkOutTimer;
+@property (nonatomic) CPAfterCheckinAction afterCheckinAction;
 
 - (void)presentCheckinModalFromViewController:(UIViewController *)presentingViewController;
 - (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime;

@@ -12,15 +12,14 @@
 
 @interface TermsOfServiceViewController ()
 
-@property (nonatomic, weak) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 @end
 
 @implementation TermsOfServiceViewController
 
-@synthesize webView = _webView;
-
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
     [SVProgressHUD showWithStatus:@"Loading..."];

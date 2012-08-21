@@ -11,40 +11,19 @@
 
 @implementation AutoCheckinCell
 
-@synthesize venueName = _venueName;
-@synthesize venueAddress = _venueAddress;
-@synthesize venueSwitch = _venueSwitch;
-@synthesize venue;
-
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
-
 - (IBAction)venueSwitchChanged:(UISwitch *)sender
 {
     if (!sender.on) {
-        venue.autoCheckin = NO;
-        [[CPGeofenceHandler sharedHandler] stopMonitoringVenue:venue];
+        self.venue.autoCheckin = NO;
+        [[CPGeofenceHandler sharedHandler] stopMonitoringVenue:self.venue];
     }
     else {
-        venue.autoCheckin = YES;
-        [[CPGeofenceHandler sharedHandler] startMonitoringVenue:venue];
+        self.venue.autoCheckin = YES;
+        [[CPGeofenceHandler sharedHandler] startMonitoringVenue:self.venue];
     }
 
     // Save the changes to pastVenues
-    [[CPGeofenceHandler sharedHandler] updatePastVenue:venue];
+    [[CPGeofenceHandler sharedHandler] updatePastVenue:self.venue];
 }
 
 @end

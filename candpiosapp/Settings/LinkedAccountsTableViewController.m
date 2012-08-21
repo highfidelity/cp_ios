@@ -10,24 +10,15 @@
 #import "PushModalViewControllerFromLeftSegue.h"
 
 @interface LinkedAccountsTableViewController ()
-@property (assign)BOOL postToLinkedIn;
+
 @property (weak, nonatomic) IBOutlet UISwitch *postToLinkedInSwitch;
+@property (nonatomic) BOOL postToLinkedIn;
 
 -(IBAction)gearPressed:(id)sender;
+
 @end
 
 @implementation LinkedAccountsTableViewController
-@synthesize postToLinkedInSwitch = _postToLinkedInSwitch;
-@synthesize postToLinkedIn = _postToLinkedIn;
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -56,22 +47,11 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
-- (void)viewDidUnload
-{
-    [self setPostToLinkedInSwitch:nil];
-    [super viewDidUnload];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
--(IBAction)gearPressed:(id)sender
-{
+-(IBAction)gearPressed:(id)sender {
     if ([self postToLinkedIn] != [[self postToLinkedInSwitch] isOn]) {
         [CPapi saveLinkedInPostStatus:[[self postToLinkedInSwitch] isOn]];
     }
+    
     [self dismissPushModalViewControllerFromLeftSegue];
 }
 

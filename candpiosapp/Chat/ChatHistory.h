@@ -11,7 +11,7 @@
 
 @interface ChatHistory : NSObject
 
-@property (nonatomic, strong) NSMutableArray* messages;
+@property (strong, nonatomic) NSMutableArray* messages;
 
 #pragma mark - Add to history
 // Add a message to the messages array for the given user

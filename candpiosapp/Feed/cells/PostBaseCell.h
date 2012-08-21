@@ -13,8 +13,8 @@
 
 @interface PostBaseCell : CPUserActionCell
 
-@property (nonatomic, assign) IBOutlet UIButton *senderProfileButton;
-@property (nonatomic, assign) IBOutlet UILabel *entryLabel;
+@property (weak, nonatomic) IBOutlet UIButton *senderProfileButton;
+@property (weak, nonatomic) IBOutlet UILabel *entryLabel;
 @property (nonatomic, strong) CPPost* post;
 
 @end

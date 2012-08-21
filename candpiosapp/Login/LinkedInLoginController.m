@@ -21,20 +21,13 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
 @interface LinkedInLoginController ()
 
-@property (nonatomic, strong) AFHTTPClient *httpClient;
-@property (nonatomic, assign) BOOL emailConfirmationRequired;
-@property (nonatomic, strong) LoadLinkedInConnectionsCompletionBlockType loadLinkedInConnectionsCompletionBlock;
+@property (strong, nonatomic) AFHTTPClient *httpClient;
+@property (strong, nonatomic) LoadLinkedInConnectionsCompletionBlockType loadLinkedInConnectionsCompletionBlock;
+@property (nonatomic) BOOL emailConfirmationRequired;
 
 @end
 
 @implementation LinkedInLoginController
-
-@synthesize httpClient;
-@synthesize myWebView;
-@synthesize requestToken;
-@synthesize activityIndicator;
-@synthesize emailConfirmationRequired = _emailConfirmationRequired;
-@synthesize loadLinkedInConnectionsCompletionBlock;
 
 #pragma mark - View lifecycle
 
@@ -49,7 +42,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     
-	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
 	self.navigationItem.rightBarButtonItem = button;
     
     // check for token in keychain
@@ -74,20 +67,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
         // no token/secret in keychain
         [self initiateLogin];
     }
-}
-
-- (void)viewDidUnload
-{
-    [self setMyWebView:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 
@@ -126,7 +105,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     
     OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://api.linkedin.com/uas/oauth/accessToken"]
                                                                    consumer:consumer
-                                                                      token:requestToken
+                                                                      token:self.requestToken
                                                                       realm:@"http://api.linkedin.com/"
                                                                    verifier:verifier
                                                           signatureProvider:nil];
@@ -187,7 +166,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                                                        encoding:NSUTF8StringEncoding];
         self.requestToken = [[OAToken alloc] initWithHTTPResponseBody:responseBody];
         
-        NSString *authorizationURL = [NSString stringWithFormat:@"https://www.linkedin.com/uas/oauth/authorize?oauth_token=%@", requestToken.key];
+        NSString *authorizationURL = [NSString stringWithFormat:@"https://www.linkedin.com/uas/oauth/authorize?oauth_token=%@", self.requestToken.key];
         
         NSURL *url = [NSURL URLWithString:authorizationURL];        
         NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
@@ -425,11 +404,11 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 #pragma mark UIWebViewDelegate methods
 
 -(void)webViewDidFinishLoad:(UIWebView *) webView {
-	[activityIndicator stopAnimating];
+	[self.activityIndicator stopAnimating];
 }
 
 -(void)webViewDidStartLoad:(UIWebView *) webView {
-	[activityIndicator startAnimating];
+	[self.activityIndicator startAnimating];
 }
 
 

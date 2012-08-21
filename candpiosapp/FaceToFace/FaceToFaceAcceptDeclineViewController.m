@@ -12,36 +12,6 @@
 #define F2FPasswordViewTag 1515
 
 @implementation FaceToFaceAcceptDeclineViewController
-@synthesize user = _user;
-@synthesize actionBar = _actionBar;
-@synthesize actionBarHeader = _actionBarHeader;
-@synthesize f2fAcceptButton = _f2fAcceptButton;
-@synthesize f2fDeclineButton = _f2fDeclineButton;
-@synthesize viewUnderToolbar = _viewUnderToolbar;
-@synthesize passwordField = _passwordField;
-@synthesize scrollView = _scrollView;
-@synthesize navigationBar = _navigationBar;
-@synthesize userProfile = _userProfile;
-
-/*
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
 
 #pragma mark - View lifecycle
 
@@ -84,26 +54,6 @@
     self.navigationBar.topItem.title = @"Contact Request";
     
     self.actionBarHeader.text = [NSString stringWithFormat:@"%@ is nearby and\nwants to add you to their Contacts.", [self.user firstName]];
-}
-
-- (void)viewDidUnload
-{
-    [self setF2fAcceptButton:nil];
-    [self setF2fDeclineButton:nil];
-    [self setActionBar:nil];
-    [self setActionBarHeader:nil];
-    [self setViewUnderToolbar:nil];
-    [self setScrollView:nil];
-    [self setNavigationBar:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Actions

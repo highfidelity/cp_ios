@@ -11,12 +11,6 @@
 
 @implementation CPVenueFeed
 
-@synthesize venue = _venue;
-@synthesize posts = _posts;
-@synthesize lastID = _lastID;
-@synthesize lastReplyID = _lastReplyID;
-@synthesize updateTimestamp = _updateTimestamp;
-
 - (NSMutableArray *)posts
 {
     if (!_posts) {

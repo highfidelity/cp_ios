@@ -17,20 +17,20 @@
 
 @interface FeedViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, CPUserActionCellDelegate, FeedPreviewHeaderCellDelegate, WEPopoverControllerDelegate, PillPopoverDelegate, CommentCellDelegate>
 
-@property (nonatomic, assign) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) CPVenueFeed *selectedVenueFeed;
-@property (nonatomic, assign) CPPostType postType;
-@property (nonatomic, strong) NSMutableArray *venueFeedPreviews;
-@property (nonatomic, strong) NSMutableArray *postableVenueFeeds;
-@property (nonatomic, assign) BOOL newPostAfterLoad;
-@property (nonatomic, strong) NSMutableDictionary *postPlussingUserIds;
-@property (nonatomic, strong) WEPopoverController *wePopoverController;
-@property (nonatomic, strong) PillPopoverViewController *pillPopoverViewController;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) CPVenueFeed *selectedVenueFeed;
+@property (strong, nonatomic) NSMutableArray *venueFeedPreviews;
+@property (strong, nonatomic) NSMutableArray *postableVenueFeeds;
+@property (strong, nonatomic) NSMutableDictionary *postPlussingUserIds;
+@property (strong, nonatomic) WEPopoverController *wePopoverController;
+@property (strong, nonatomic) PillPopoverViewController *pillPopoverViewController;
+@property (nonatomic) CPPostType postType;
+@property (nonatomic) BOOL newPostAfterLoad;
 
 - (void)showPillPopoverFromCell:(PostBaseCell*)cell;
 - (void)newPost:(NSIndexPath *)replyToIndexPath;
 - (void)showOnlyPostableFeeds;
-- (void)showVenueFeedForVenue:(CPVenue *)venue;
+- (void)showVenueFeedForVenue:(CPVenue *)venueToShow;
 
 + (UIView *)timelineViewWithHeight:(CGFloat)height;
 

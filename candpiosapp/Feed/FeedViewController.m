@@ -38,34 +38,17 @@ typedef enum {
 
 @interface FeedViewController () <HPGrowingTextViewDelegate, UIAlertViewDelegate>
 
-@property (nonatomic, assign) float newEditableCellHeight;
-@property (nonatomic, strong) CPPost *pendingPost;
-@property (nonatomic, strong) NewPostCell *pendingPostCell;
-@property (nonatomic, strong) UIView *keyboardBackground;
-@property (nonatomic, strong) UITextView *fakeTextView;
-@property (nonatomic, assign) FeedVCState currentState;
-@property (nonatomic, assign) BOOL previewPostableFeedsOnly;
+@property (strong, nonatomic) CPPost *pendingPost;
+@property (strong, nonatomic) NewPostCell *pendingPostCell;
+@property (strong, nonatomic) UIView *keyboardBackground;
+@property (strong, nonatomic) UITextView *fakeTextView;
+@property (nonatomic) FeedVCState currentState;
+@property (nonatomic) BOOL previewPostableFeedsOnly;
+@property (nonatomic) float newEditableCellHeight;
 
 @end
 
 @implementation FeedViewController
-
-@synthesize tableView = _tableView;
-@synthesize selectedVenueFeed = _selectedVenueFeed;
-@synthesize venueFeedPreviews = _venueFeedPreviews;
-@synthesize postableVenueFeeds = _postableVenueFeeds;
-@synthesize newPostAfterLoad = _newPostAfterLoad;
-@synthesize newEditableCellHeight = _newEditableCellHeight;
-@synthesize pendingPost = _pendingPost;
-@synthesize pendingPostCell = _pendingPostCell;
-@synthesize keyboardBackground = _keyboardBackground;
-@synthesize fakeTextView = _fakeTextView;
-@synthesize currentState = _currentState; 
-@synthesize previewPostableFeedsOnly = _previewPostableFeedsOnly;
-@synthesize postPlussingUserIds;
-@synthesize postType = _postType;
-@synthesize wePopoverController = _wePopoverController;
-@synthesize pillPopoverViewController = _pillPopoverViewController;
 
 #pragma mark - View Lifecycle
 
@@ -114,8 +97,6 @@ typedef enum {
         // make sure the keyboard isn't up anymore
         [self cancelPost:nil];
     }
-    
-    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
 
 - (void)setSelectedVenueFeed:(CPVenueFeed *)selectedVenueFeed

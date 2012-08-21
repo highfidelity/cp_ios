@@ -13,10 +13,10 @@
 
 @interface EnterEmailAfterSignUpController () <UITextFieldDelegate>
 
-@property (nonatomic, weak) IBOutlet UITextField *emailTextField;
-@property (nonatomic, weak) IBOutlet UILabel *emailValidationMessage;
-@property (nonatomic, weak) IBOutlet UILabel *weWillNotSpamYouLabel;
-@property (nonatomic, weak) IBOutlet UIButton *sendButton;
+@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet UILabel *emailValidationMessage;
+@property (weak, nonatomic) IBOutlet UILabel *weWillNotSpamYouLabel;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
 
 - (IBAction)sendButtonPressed:(id)sender;
 
@@ -24,10 +24,20 @@
 
 @implementation EnterEmailAfterSignUpController
 
-@synthesize emailTextField = _emailTextField;
-@synthesize emailValidationMessage = _emailValidationMessage;
-@synthesize weWillNotSpamYouLabel = _weWillNotSpamYouLabel;
-@synthesize sendButton = _sendButton;
+- (void)pushNextViewContollerOrDismissWithMessage:(NSString *)message {
+    
+    // shouldn't go to invite code anymore, that comes before us
+    [self.navigationController dismissModalViewControllerAnimated:YES];
+    
+    if (message.length) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" 
+                                                            message:message
+                                                           delegate:self 
+                                                  cancelButtonTitle:@"OK" 
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }
+}
 
 #pragma mark - UIViewController
 

@@ -12,6 +12,7 @@
 @interface FaceToFaceAcceptDeclineViewController : UIViewController <UITextFieldDelegate>
 
 @property (strong, nonatomic) User *user;
+@property (strong, nonatomic) UserProfileViewController *userProfile;
 @property (weak, nonatomic) IBOutlet UIView *actionBar;
 @property (weak, nonatomic) IBOutlet UILabel *actionBarHeader;
 @property (weak, nonatomic) IBOutlet UIButton *f2fAcceptButton;
@@ -20,7 +21,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
-@property (strong, nonatomic) UserProfileViewController *userProfile;
 
 - (IBAction)acceptF2F;
 - (IBAction)declineF2F;

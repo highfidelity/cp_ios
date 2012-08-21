@@ -13,6 +13,6 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UILabel *waitLabel;
-@property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
+@property (weak, nonatomic) IBOutlet UINavigationItem *f2fNavigationItem;
 
 @end

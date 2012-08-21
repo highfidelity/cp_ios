@@ -955,8 +955,6 @@
         <class className="UserLoveViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UserLoveViewController.h"/>
             <relationships>
-                <relationship kind="action" name="cancelButtonPressed:"/>
-                <relationship kind="action" name="changeSkillButtonPressed:"/>
                 <relationship kind="outlet" name="charCounterLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="descriptionTextView" candidateClass="CPPlaceholderTextView"/>
                 <relationship kind="outlet" name="loveBackground" candidateClass="UIView"/>

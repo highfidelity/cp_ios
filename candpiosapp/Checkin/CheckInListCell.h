@@ -10,8 +10,8 @@
 
 @interface CheckInListCell : UITableViewCell
 
-@property (nonatomic, weak) IBOutlet UILabel *venueName;
-@property (nonatomic, weak) IBOutlet UILabel *venueAddress;
-@property (nonatomic, weak) IBOutlet UILabel *distanceString;
+@property (weak, nonatomic) IBOutlet UILabel *venueName;
+@property (weak, nonatomic) IBOutlet UILabel *venueAddress;
+@property (weak, nonatomic) IBOutlet UILabel *distanceString;
 
 @end

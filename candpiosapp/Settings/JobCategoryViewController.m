@@ -11,35 +11,19 @@
 
 @interface JobCategoryViewController ()
 
-
+@property (strong, nonatomic) User *user;
+@property (strong, nonatomic) NSArray *jobCategories;
 @property (weak, nonatomic) IBOutlet UIButton *majorCategoryButton;
 @property (weak, nonatomic) IBOutlet UIButton *minorCategoryButton;
 
 - (IBAction)majorCategoryButtonClick:(id)sender;
 - (IBAction)minorCategoryButtonClick:(id)sender;
 
-
-@property (strong, nonatomic) User *user;
-@property (nonatomic, strong) NSArray *jobCategories;
 - (void)saveUserJobCategories;
 
 @end
 
 @implementation JobCategoryViewController
-@synthesize majorCategoryButton = _majorCategoryButton;
-@synthesize minorCategoryButton = _minorCategoryButton;
-@synthesize jobCategories = _jobCategories;
-@synthesize user = _user;
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -66,24 +50,10 @@
     [[self minorCategoryButton] setTitle:[self.user minorJobCategory] forState:UIControlStateNormal];
 }
 
-- (void)viewDidUnload
-{
-    [self setJobCategories:nil];
-    [self setMajorCategoryButton:nil];
-    [self setMinorCategoryButton:nil];
-    [self setUser:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
-
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     [self saveUserJobCategories];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)saveUserJobCategories

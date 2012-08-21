@@ -8,7 +8,6 @@
 
 #import "CPTabBarController.h"
 #import "FeedViewController.h"
-#import "CPTabBarControllerView.h"
 #import "CPCheckinHandler.h"
 #import "CPUserSessionHandler.h"
 
@@ -20,8 +19,6 @@
 
 @implementation CPTabBarController
 
-// TODO: get rid of the currentVenueID here, let's keep that in NSUserDefaults (my bad)
-@synthesize currentVenueID = _currentVenueID;
 @synthesize feedViewController = _feedViewController;
 
 - (void)viewDidLoad

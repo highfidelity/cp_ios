@@ -10,12 +10,6 @@
 
 @implementation CPSkill
 
-@synthesize skillID = _skillID;
-@synthesize name = _name;
-@synthesize isVisible = _isVisible;
-@synthesize loveCount = _loveCount;
-@synthesize rank = _rank;
-
 - (CPSkill *)initFromDictionary:(NSDictionary *)skillDict
 {
     if (self = [super init]) {

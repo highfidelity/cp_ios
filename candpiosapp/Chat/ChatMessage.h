@@ -5,17 +5,16 @@
 //  Created by Alexi (Love Machine) on 2012/02/12.
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
-@class User;
 
 #import <Foundation/Foundation.h>
 
 @interface ChatMessage : NSObject
 
-@property (nonatomic, assign) BOOL fromMe;
-@property (nonatomic, strong) User *fromUser;
-@property (nonatomic, strong) User *toUser;
-@property (nonatomic, strong) NSString *message;
-@property (nonatomic, strong) NSDate *date;
+@property (nonatomic) BOOL fromMe;
+@property (strong, nonatomic) User *fromUser;
+@property (strong, nonatomic) User *toUser;
+@property (strong, nonatomic) NSString *message;
+@property (strong, nonatomic) NSDate *date;
 
 - (id)initWithMessage:(NSString *)newMessage
                toUser:(User *)toUser

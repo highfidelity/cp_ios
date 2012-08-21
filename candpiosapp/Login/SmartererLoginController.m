@@ -11,17 +11,6 @@
 #import "CPapi.h"
 
 @implementation SmartererLoginController
-@synthesize myWebView;
-@synthesize requestToken;
-@synthesize activityIndicator;
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
 
 #pragma mark - View lifecycle
 
@@ -30,26 +19,11 @@
     [super viewDidLoad];
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     
-	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
 	self.navigationItem.rightBarButtonItem = button;
     
     [self initiateLogin];
 }
-
-- (void)viewDidUnload
-{
-    [self setMyWebView:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 
 - (void)smartererCredentialsCapture:(NSNotification*)notification {
     NSLog(@"caught smarterer credentials");
@@ -168,11 +142,11 @@
 #pragma mark UIWebViewDelegate methods
 
 -(void)webViewDidFinishLoad:(UIWebView *) webView {
-	[activityIndicator stopAnimating];
+	[self.activityIndicator stopAnimating];
 }
 
 -(void)webViewDidStartLoad:(UIWebView *) webView {
-	[activityIndicator startAnimating];
+	[self.activityIndicator startAnimating];
 }
 
 

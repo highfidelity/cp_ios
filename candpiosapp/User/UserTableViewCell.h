@@ -13,14 +13,12 @@
 
 @interface UserTableViewCell : CPUserActionCell
 
-
-@property (nonatomic, retain) IBOutlet UILabel *nicknameLabel;
-@property (nonatomic, retain) IBOutlet UILabel *categoryLabel;
-@property (nonatomic, retain) IBOutlet UILabel *statusLabel;
-@property (nonatomic, retain) IBOutlet UILabel *distanceLabel;
-@property (nonatomic, retain) IBOutlet UILabel *checkInLabel;
-@property (nonatomic, retain) IBOutlet UILabel *checkInCountLabel;
-@property (nonatomic, retain) IBOutlet UIImageView *profilePictureImageView;
-
+@property (weak, nonatomic) IBOutlet UILabel *nicknameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *checkInLabel;
+@property (weak, nonatomic) IBOutlet UILabel *checkInCountLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *profilePictureImageView;
 
 @end

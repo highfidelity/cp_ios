@@ -12,13 +12,14 @@
 #define ICON_IMAGE_VIEW_TAG 1238
 
 @interface UserLoveViewController : UIViewController
-@property (weak, nonatomic) id delegate;
+
 @property (strong, nonatomic) User *user;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
 @property (weak, nonatomic) IBOutlet CPPlaceholderTextView *descriptionTextView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *loveBackground;
+@property (weak, nonatomic) id delegate;
 
 - (void)dismissHUD:(id)sender;
 

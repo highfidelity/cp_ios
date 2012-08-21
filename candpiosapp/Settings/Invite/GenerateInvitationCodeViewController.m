@@ -11,27 +11,18 @@
 
 @interface GenerateInvitationCodeViewController ()
 
-@property (nonatomic, weak) IBOutlet UILabel *codeLabel;
-@property (nonatomic, weak) IBOutlet UIImageView *codeLabelBackground;
-@property (nonatomic, weak) IBOutlet UIButton *doneButton;
+@property (weak, nonatomic) IBOutlet UILabel *codeLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *codeLabelBackground;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
 - (IBAction)gearPressed:(id)sender;
-
-#pragma mark -
-#pragma mark private
 
 - (void)showCode:(NSString *)code;
 - (void)loadCode;
 
 @end
 
-#pragma mark -
-
 @implementation GenerateInvitationCodeViewController
-
-@synthesize codeLabel = _codeLabel;
-@synthesize codeLabelBackground = _codeLabelBackground;
-@synthesize doneButton = _doneButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -48,13 +39,8 @@
     [CPUIHelper makeButtonCPButton:self.doneButton withCPButtonColor:CPButtonTurquoise];
 }
 
-- (void)viewDidUnload {
-    [super viewDidUnload];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [self loadCode];
 }
 
