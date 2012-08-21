@@ -152,10 +152,9 @@
         arrowImageView.image = [UIImage imageNamed:@"check-in-status-arrow.png"];
         _infoBubbleArrow = arrowImageView;
         [self.userInfoBubble addSubview:_infoBubbleArrow];
-        return _infoBubbleArrow;
-    } else {
-        return _infoBubbleArrow;
     }
+    
+    return _infoBubbleArrow;
 }
 
 - (IBAction)checkInPressed:(id)sender {
