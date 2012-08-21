@@ -20,7 +20,7 @@
 
 @interface ContactListCell : CPUserActionCell
 
-@property (nonatomic) id<ContactListCellDelegate> contactListTVC;
+@property (weak, nonatomic) id<ContactListCellDelegate> contactListTVC;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
 @property (weak, nonatomic) IBOutlet UILabel *nicknameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;

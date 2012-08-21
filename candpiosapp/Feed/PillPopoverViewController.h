@@ -25,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel;
 @property (weak, nonatomic) IBOutlet UITextField *commentTextView;
 @property (weak, nonatomic) IBOutlet UIImageView *commentImageView;
-@property (nonatomic) id<PillPopoverDelegate>delegate;
+@property (weak, nonatomic) id<PillPopoverDelegate>delegate;
 
 - (IBAction)plusButtonPressed:(id)sender;
 

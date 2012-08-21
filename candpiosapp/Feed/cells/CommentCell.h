@@ -20,7 +20,7 @@
 @property (strong, nonatomic) UIButton *pillButton;
 @property (strong, nonatomic) UILabel *pillLabel;
 @property (weak, nonatomic) IBOutlet UIButton *placeholderPillButton;
-@property (nonatomic) id<CommentCellDelegate> delegate;
+@property (weak, nonatomic) id<CommentCellDelegate> delegate;
 
 
 - (void) updatePillButtonAnimated:(BOOL)animated;

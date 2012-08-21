@@ -45,7 +45,7 @@ typedef enum {
 @property (strong, nonatomic) UIButton *exchangeContactsButton;
 @property (strong, nonatomic) UIColor *activeColor;
 @property (strong, nonatomic) UIColor *inactiveColor;
-@property (nonatomic) id<CPUserActionCellDelegate> delegate;
+@property (weak, nonatomic) id<CPUserActionCellDelegate> delegate;
 @property (nonatomic) BOOL shouldBounce;
 @property (nonatomic) CPUserActionCellSwipeStyle leftStyle;
 @property (nonatomic) CPUserActionCellSwipeStyle rightStyle;

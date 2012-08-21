@@ -19,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *loveBackground;
-@property (nonatomic) id delegate;
+@property (weak, nonatomic) id delegate;
 
 - (void)dismissHUD:(id)sender;
 
