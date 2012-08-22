@@ -141,6 +141,8 @@
     // default colors
     self.activeColor = [CPUIHelper CPTealColor];
     self.inactiveColor = [UIColor colorWithR:51 G:51 B:51 A:1];
+    self.selectedBackgroundView = [[UIView alloc] initWithFrame:self.contentView.frame];
+    self.selectedBackgroundView.backgroundColor = self.activeColor;
         
     // Additional buttons for contact exchange and chat
     CGFloat originX = SWITCH_LEFT_MARGIN;
@@ -190,9 +192,25 @@
     }
 }
 
+-(void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)evt {
+    // mimic row selection - highlight and push the child view
+    self.contentView.backgroundColor = self.activeColor;
+    UITableView *tableView = (UITableView *)self.superview;
+    for (CPUserActionCell *cell in tableView.visibleCells) {
+        if (cell != self) {
+            if ([cell respondsToSelector:@selector(inactiveColor)]) {
+                cell.contentView.backgroundColor = cell.inactiveColor;
+            } else {
+                [cell setSelected:NO animated:YES];
+            }
+        }
+    }
+}
+
 #pragma mark - Handing Touch
-- (void)tap:(UITapGestureRecognizer *)recognizer 
+- (void)tap:(UITapGestureRecognizer *)recognizer
 {
+    // handle taps
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         if (self.areActionButtonsVisible) {
             // noop
@@ -200,9 +218,8 @@
             // mimic row selection - highlight and push the child view
             UITableView *tableView = (UITableView*)self.superview;
             NSIndexPath *indexPath = [tableView indexPathForCell: self];
-            [self setHighlighted:YES animated:YES];
             // for some reason selectRowAtIndexPath:indexPath was not invoking the delegate :( Notifications not sent by this.
-            if ([tableView.delegate respondsToSelector:@selector(tableView:willSelectRowAtIndexPath:)]) { 
+            if ([tableView.delegate respondsToSelector:@selector(tableView:willSelectRowAtIndexPath:)]) {
                 indexPath = [[tableView delegate] tableView:tableView willSelectRowAtIndexPath:indexPath];
             }
             if (indexPath) {

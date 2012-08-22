@@ -32,8 +32,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // we are using swipe cells.. which will need to handle the selection themselves
-    self.tableView.allowsSelection = NO;
 
     // the map is our delegate
     self.delegate = [[CPAppDelegate settingsMenuController] mapTabController];
@@ -274,6 +272,7 @@
     } else{
         cell.rightStyle = CPUserActionCellSwipeStyleQuickAction;
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     return cell;
 }
 
