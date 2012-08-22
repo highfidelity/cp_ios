@@ -55,6 +55,7 @@
 
 NSString* const kSmartererCallback = @"candp://smarterer";
 NSString* const kCandPAPIVersion = @"0.1";
+NSString* const kCandPAPIErrorDomain = @"com.coffeeandpower.api.error";
 
 int const kDefaultDismissDelay = 3;
 
