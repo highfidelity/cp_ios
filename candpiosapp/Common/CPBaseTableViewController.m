@@ -23,6 +23,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    self.tableView.allowsSelection = NO;
     
     // alloc-init a UIActivityIndicatorView to put in the navigation item
     self.barSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];

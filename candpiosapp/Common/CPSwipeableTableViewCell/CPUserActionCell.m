@@ -225,10 +225,9 @@
 - (void)tap:(UITapGestureRecognizer *)recognizer
 {
     // handle taps
-    if (recognizer.state == UIGestureRecognizerStateEnded) {
-        if (self.areActionButtonsVisible) {
-            // noop
-        } else {
+    if (!self.areActionButtonsVisible) {
+        [self highlightInBackground];
+        if (recognizer.state == UIGestureRecognizerStateEnded) {
             // mimic row selection - highlight and push the child view
             [self highlightInBackground];
             UITableView *tableView = (UITableView*)self.superview;
