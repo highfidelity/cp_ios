@@ -113,7 +113,6 @@
 		530C5DB71575E4FC003505AC /* CPSoundEffectsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */; };
 		530C5DBB1575E516003505AC /* send-love-switch-sound-off.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */; };
 		530C5DBC1575E516003505AC /* send-love-switch-sound-on.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */; };
-		530FC23915D42BBD00838B5A /* EnterEmailAfterSignUpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC22915D42BBD00838B5A /* EnterEmailAfterSignUpController.m */; };
 		530FC23A15D42BBD00838B5A /* EnterInvitationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC22B15D42BBD00838B5A /* EnterInvitationCodeViewController.m */; };
 		530FC23F15D42BBD00838B5A /* LinkedInLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC23215D42BBD00838B5A /* LinkedInLoginController.m */; };
 		530FC24115D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 530FC23515D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard */; };
@@ -710,8 +709,6 @@
 		530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPSoundEffectsManager.m; sourceTree = "<group>"; };
 		530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-off.wav"; sourceTree = "<group>"; };
 		530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-on.wav"; sourceTree = "<group>"; };
-		530FC22815D42BBD00838B5A /* EnterEmailAfterSignUpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterEmailAfterSignUpController.h; sourceTree = "<group>"; };
-		530FC22915D42BBD00838B5A /* EnterEmailAfterSignUpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterEmailAfterSignUpController.m; sourceTree = "<group>"; };
 		530FC22A15D42BBD00838B5A /* EnterInvitationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterInvitationCodeViewController.h; sourceTree = "<group>"; };
 		530FC22B15D42BBD00838B5A /* EnterInvitationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterInvitationCodeViewController.m; sourceTree = "<group>"; };
 		530FC23115D42BBD00838B5A /* LinkedInLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedInLoginController.h; sourceTree = "<group>"; };
@@ -1620,8 +1617,6 @@
 				5308DD0215D5E5DF00B4EBC2 /* images */,
 				530FC24615D4389D00838B5A /* SignupController.h */,
 				530FC24715D4389D00838B5A /* SignupController.m */,
-				530FC22815D42BBD00838B5A /* EnterEmailAfterSignUpController.h */,
-				530FC22915D42BBD00838B5A /* EnterEmailAfterSignUpController.m */,
 				530FC22A15D42BBD00838B5A /* EnterInvitationCodeViewController.h */,
 				530FC22B15D42BBD00838B5A /* EnterInvitationCodeViewController.m */,
 				530FC23115D42BBD00838B5A /* LinkedInLoginController.h */,
@@ -3213,7 +3208,6 @@
 				5343243F15C2123A00BE5075 /* CPApiClient.m in Sources */,
 				69A1582E15CB064300B21971 /* UIViewController+CPUserActionCellAdditions.m in Sources */,
 				53D7ADEE15D04AC800BB041E /* CPGeofenceHandler.m in Sources */,
-				530FC23915D42BBD00838B5A /* EnterEmailAfterSignUpController.m in Sources */,
 				530FC23A15D42BBD00838B5A /* EnterInvitationCodeViewController.m in Sources */,
 				530FC23F15D42BBD00838B5A /* LinkedInLoginController.m in Sources */,
 				530FC24215D42BBD00838B5A /* SmartererLoginController.m in Sources */,

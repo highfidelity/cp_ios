@@ -284,7 +284,7 @@ NSInteger normalize(id obj1, id obj2, void *context)
 
 	parameter = [[OARequestParameter alloc] initWithName:@"oauth_version" value:@"1.0"] ;
     [parameterPairs addObject:[parameter URLEncodedNameValuePair]];
-	
+
 	for(NSString *k in tokenParameters) {
 		[parameterPairs addObject:[[OARequestParameter requestParameter:k value:[tokenParameters objectForKey:k]] URLEncodedNameValuePair]];
 	}
@@ -299,7 +299,6 @@ NSInteger normalize(id obj1, id obj2, void *context)
     NSArray *sortedPairs = [parameterPairs sortedArrayUsingFunction:normalize context:NULL];
 
     NSString *normalizedRequestParameters = [sortedPairs componentsJoinedByString:@"&"];
-//	NSLog(@"Normalized: %@", normalizedRequestParameters);
     // OAuth Spec, Section 9.1.2 "Concatenate Request Elements"
     return [NSString stringWithFormat:@"%@&%@&%@",
             [self HTTPMethod],
