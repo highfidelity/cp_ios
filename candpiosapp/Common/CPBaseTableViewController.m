@@ -79,6 +79,41 @@
     }
 }
 
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    // calling the animation directly is not respecting duration
+    [self performSelectorInBackground:@selector(unhighlightCells) withObject:self];
+}
+
+- (void)unhighlightCells {
+    [self unhighlightCells:YES];
+}
+
+- (void)unhighlightCells:(BOOL)animated {
+    NSTimeInterval duration = 0;
+    if (animated) {
+        duration = 0.2;
+    }
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        NSLog(@"started.");
+        for (CPUserActionCell *cell in self.tableView.visibleCells) {
+            if ([cell respondsToSelector:@selector(inactiveColor)]) {
+                cell.contentView.backgroundColor = cell.inactiveColor;
+            }
+        }
+    } completion:^(BOOL finished) {
+        NSLog(@"completed.");
+    }];
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self unhighlightCells:YES];
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
+}
+
+
 # pragma mark - CPUserActionCellDelegate
 
 - (void)cell:(CPUserActionCell*)cell didSelectSendLoveToUser:(User*)user 

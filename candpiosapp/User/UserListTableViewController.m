@@ -59,6 +59,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     // setup the tableView with whatever we already have
     [self filterData];
     
@@ -140,12 +141,6 @@
         // filter that data
         [self filterData];
     }
-}
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
 
 #pragma mark - Table view data source

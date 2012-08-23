@@ -33,7 +33,7 @@
 
 #define kMinimumPan      60.0
 #define kBOUNCE_DISTANCE 20.0
-
+#define HIGHLIGHT_DURATION 0.2
 
 @interface CPUserActionCell()
 
@@ -56,6 +56,11 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void) setInactiveColor:(UIColor *)inactiveColor {
+    _inactiveColor = inactiveColor;
+    self.contentView.backgroundColor = inactiveColor;
 }
 
 - (void)awakeFromNib
@@ -143,7 +148,7 @@
     self.inactiveColor = [UIColor colorWithR:51 G:51 B:51 A:1];
     self.selectedBackgroundView = [[UIView alloc] initWithFrame:self.contentView.frame];
     self.selectedBackgroundView.backgroundColor = self.activeColor;
-        
+
     // Additional buttons for contact exchange and chat
     CGFloat originX = SWITCH_LEFT_MARGIN;
     self.sendLoveButton = [self addActionButtonWithImageNamed:@"quick-action-recognize"
@@ -194,17 +199,19 @@
 
 -(void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)evt {
     // mimic row selection - highlight and push the child view
-    self.contentView.backgroundColor = self.activeColor;
-    UITableView *tableView = (UITableView *)self.superview;
-    for (CPUserActionCell *cell in tableView.visibleCells) {
-        if (cell != self) {
-            if ([cell respondsToSelector:@selector(inactiveColor)]) {
-                cell.contentView.backgroundColor = cell.inactiveColor;
-            } else {
-                [cell setSelected:NO animated:YES];
+    [UIView animateWithDuration:HIGHLIGHT_DURATION animations:^{
+        self.contentView.backgroundColor = self.activeColor;
+        UITableView *tableView = (UITableView *)self.superview;
+        for (CPUserActionCell *cell in tableView.visibleCells) {
+            if (cell != self) {
+                if ([cell respondsToSelector:@selector(inactiveColor)]) {
+                    cell.contentView.backgroundColor = cell.inactiveColor;
+                } else {
+                    [cell setSelected:NO animated:YES];
+                }
             }
         }
-    }
+    }];
 }
 
 #pragma mark - Handing Touch
@@ -490,21 +497,6 @@
     [self.hiddenView addSubview:button];
     
     return button;
-}
-
-- (void)toggleCellActiveState:(BOOL)active
-{
-    if (active) {
-        self.contentView.backgroundColor = self.activeColor;
-    } else {
-        self.contentView.backgroundColor = self.inactiveColor;
-    }
-}
-
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
-{
-    [super setHighlighted:highlighted animated:animated];
-    [self toggleCellActiveState:highlighted];
 }
 
 - (void)switchSound:(id)sender {
