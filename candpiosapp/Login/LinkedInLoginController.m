@@ -315,6 +315,8 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
                 [FlurryAnalytics logEvent:@"login_linkedin"];
                 [FlurryAnalytics setUserID:userId];
+                
+                [SVProgressHUD dismiss];
             }
             
             [[CPAppDelegate tabBarController]
