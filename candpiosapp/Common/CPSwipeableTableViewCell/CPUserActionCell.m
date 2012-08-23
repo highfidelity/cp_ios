@@ -33,7 +33,7 @@
 
 #define kMinimumPan      60.0
 #define kBOUNCE_DISTANCE 20.0
-#define HIGHLIGHT_DURATION 0.2
+#define HIGHLIGHT_DURATION 0.1
 
 @interface CPUserActionCell()
 
@@ -197,7 +197,10 @@
     }
 }
 
--(void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)evt {
+- (void) highlightInBackground {
+    [self performSelectorInBackground:@selector(highlight) withObject:self];
+}
+- (void) highlight {
     // mimic row selection - highlight and push the child view
     [UIView animateWithDuration:HIGHLIGHT_DURATION animations:^{
         self.contentView.backgroundColor = self.activeColor;
@@ -214,6 +217,10 @@
     }];
 }
 
+-(void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)evt {
+    [self highlightInBackground];
+}
+
 #pragma mark - Handing Touch
 - (void)tap:(UITapGestureRecognizer *)recognizer
 {
@@ -223,6 +230,7 @@
             // noop
         } else {
             // mimic row selection - highlight and push the child view
+            [self highlightInBackground];
             UITableView *tableView = (UITableView*)self.superview;
             NSIndexPath *indexPath = [tableView indexPathForCell: self];
             // for some reason selectRowAtIndexPath:indexPath was not invoking the delegate :( Notifications not sent by this.

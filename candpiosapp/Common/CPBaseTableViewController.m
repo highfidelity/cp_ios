@@ -92,10 +92,10 @@
 - (void)unhighlightCells:(BOOL)animated {
     NSTimeInterval duration = 0;
     if (animated) {
-        duration = 0.2;
+        duration = 0.1;
     }
     
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:duration animations:^{
         NSLog(@"started.");
         for (CPUserActionCell *cell in self.tableView.visibleCells) {
             if ([cell respondsToSelector:@selector(inactiveColor)]) {
