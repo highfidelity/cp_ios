@@ -52,7 +52,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     {
         // token and token secret found in keychain
         // update user defaults and attempt login
-//        NSLog(@"token:%@ account:%@", keyToken, keyTokenSecret);
         
         [[NSUserDefaults standardUserDefaults] setObject:keyToken forKey:@"linkedin_token"];
         [[NSUserDefaults standardUserDefaults] setObject:keyTokenSecret forKey:@"linkedin_secret"];
@@ -92,9 +91,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     
     NSString *token = [pairs objectForKey:@"oauth_token"];
     NSString *verifier = [pairs objectForKey:@"oauth_verifier"];
-    
-//    NSLog(@"Token: %@, Verifier: %@", token, verifier);
-    
     
     // Now get the final auth token
     OAConsumer *consumer = [[OAConsumer alloc] initWithKey:kLinkedInKey secret:kLinkedInSecret];
@@ -143,7 +139,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     
     [request setHTTPMethod:@"POST"];
 
-    OARequestParameter * scopeParameter=[OARequestParameter requestParameter:@"scope" value:@"r_fullprofile r_network r_emailaddress"];
+    OARequestParameter *scopeParameter = [OARequestParameter requestParameter:@"scope" value:@"r_fullprofile r_network r_emailaddress"];
     [request setParameters:[NSArray arrayWithObject:scopeParameter]];
     
     OADataFetcher *fetcher = [[OADataFetcher alloc] init];
