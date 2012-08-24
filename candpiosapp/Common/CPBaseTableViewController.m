@@ -83,10 +83,6 @@
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     // calling the animation directly is not respecting duration
-    [self performSelectorInBackground:@selector(unhighlightCells) withObject:self];
-}
-
-- (void)unhighlightCells {
     [self unhighlightCells:YES];
 }
 

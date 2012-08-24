@@ -218,7 +218,9 @@
 }
 
 -(void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)evt {
-    [self highlightInBackground];
+    if (!self.areActionButtonsVisible) {
+        [self highlightInBackground];
+    }
 }
 
 #pragma mark - Handing Touch
@@ -226,10 +228,9 @@
 {
     // handle taps
     if (!self.areActionButtonsVisible) {
+        // mimic row selection - highlight and push the child view
         [self highlightInBackground];
         if (recognizer.state == UIGestureRecognizerStateEnded) {
-            // mimic row selection - highlight and push the child view
-            [self highlightInBackground];
             UITableView *tableView = (UITableView*)self.superview;
             NSIndexPath *indexPath = [tableView indexPathForCell: self];
             // for some reason selectRowAtIndexPath:indexPath was not invoking the delegate :( Notifications not sent by this.
