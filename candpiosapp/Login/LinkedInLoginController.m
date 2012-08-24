@@ -36,7 +36,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     [super viewDidLoad];
     
     // create client for web based logins
-    self.httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
+    self.httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceSecureUrl]];
     // set a liberal cookie policy
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy: NSHTTPCookieAcceptPolicyAlways];
 
