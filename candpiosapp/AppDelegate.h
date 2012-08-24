@@ -34,6 +34,7 @@
 - (void)loadVenueView:(NSString *)venueName;
 - (void)toggleSettingsMenu;
 - (void)setupUrbanAirship;
+- (NSCache *)appCache;
 
 
 void uncaughtExceptionHandler(NSException *exception);
