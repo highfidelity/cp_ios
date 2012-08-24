@@ -25,7 +25,8 @@ NSString* const kUDCurrentUser = @"loggedUser";
 #if DEBUG
     NSLog(@"Storing user data for user with ID %d and nickname %@ to NSUserDefaults", currentUser.userID, currentUser.nickname);
 #endif
-    
+
+    [[CPAppDelegate appCache] removeObjectForKey:kUDCurrentUser];
     // encode the user object
     NSData *encodedUser = [NSKeyedArchiver archivedDataWithRootObject:currentUser];
     
@@ -46,10 +47,19 @@ NSString* const kUDCurrentUser = @"loggedUser";
 + (User *)currentUser
 {
     if (DEFAULTS(object, kUDCurrentUser)) {
-        // grab the coded user from NSUserDefaults
-        NSData *myEncodedObject = DEFAULTS(object, kUDCurrentUser);
+        User *user = [[CPAppDelegate appCache] objectForKey:kUDCurrentUser];
+
+        if (!user) {
+            // grab the coded user from NSUserDefaults
+            NSData *myEncodedObject = DEFAULTS(object, kUDCurrentUser);
+            user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData:myEncodedObject];
+            if (!user) {
+                return nil;
+            }
+            [[CPAppDelegate appCache] setObject:user forKey:kUDCurrentUser];
+        }
         // return it
-        return (User *)[NSKeyedUnarchiver unarchiveObjectWithData:myEncodedObject];
+        return user;
     } else {
         return nil;
     }

@@ -363,9 +363,17 @@
                 completion(nil);
             }
         } else {
-            if (completion) 
+            if (respError && !error) {
+                // if no error exists, create one for the callers completion block
+                NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+                NSString *message = [response objectForKey:@"payload"];
+                [userInfo setValue:NSLocalizedString(message, nil) forKey:NSLocalizedFailureReasonErrorKey];
+                error = [[NSError alloc] initWithDomain:kCandPAPIErrorDomain code:NSURLErrorBadServerResponse userInfo:userInfo];
+            }
+            if (completion) {
                 completion(error);
-        }       
+            }
+        }
     }];
 }
 

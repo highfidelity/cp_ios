@@ -25,7 +25,9 @@
 
 #define kCheckOutAlertTag 602
 
-@interface AppDelegate()
+@interface AppDelegate() {
+    NSCache *_cache;
+}
 
 @property (nonatomic, strong) NSDictionary* urbanAirshipTakeOffOptions;
 
@@ -581,6 +583,15 @@ void uncaughtExceptionHandler(NSException *exception) {
 void SignalHandler(int sig) {
     // NSLog(@"This is where we save the application data during a signal");
     // Save application data on crash
+}
+
+#pragma mark - appCache
+- (NSCache *)appCache
+{
+    if (!_cache) {
+        _cache = [[NSCache alloc] init];
+    }
+    return _cache;
 }
 
 #pragma mark - UIAlertViewDelegate

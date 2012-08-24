@@ -14,7 +14,9 @@
 @interface CPConstants : NSObject
 
 extern  NSString* const kCandPWebServiceUrl;
+extern  NSString* const kCandPWebServiceSecureUrl;
 extern  NSString* const kCandPAPIVersion;
+extern  NSString* const kCandPAPIErrorDomain;
 extern  NSString* const kCandPAddFundsUrl;
 extern  NSString* const kLinkedInKey;
 extern  NSString* const kLinkedInSecret;

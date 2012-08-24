@@ -15,7 +15,8 @@
 
 #ifdef PRODUCTION
 
-    NSString* const kCandPWebServiceUrl = @"https://www.coffeeandpower.com/";
+    NSString* const kCandPWebServiceUrl = @"http://www.coffeeandpower.com/";
+    NSString* const kCandPWebServiceSecureUrl = @"https://www.coffeeandpower.com/";
 
     NSString* const kCandPAddFundsUrl = @"http://www.coffeeandpower.com/m/?ios#addFundsiPhone";
     NSString* const kLinkedInKey = @"";
@@ -32,8 +33,8 @@
 
 #else
 
-
-    NSString* const kCandPWebServiceUrl = @"https://staging.candp.me/";
+    NSString* const kCandPWebServiceUrl = @"http://staging.candp.me/";
+    NSString* const kCandPWebServiceSecureUrl = @"https://staging.candp.me/";
     // Devs can test against a their server sandbox by uncommenting and completing the following URL
     //NSString* const kCandPWebServiceUrl = @"http://dev.worklist.net/~<login>/candpweb2_<job#>/web/";
 
@@ -55,6 +56,7 @@
 
 NSString* const kSmartererCallback = @"candp://smarterer";
 NSString* const kCandPAPIVersion = @"0.1";
+NSString* const kCandPAPIErrorDomain = @"com.coffeeandpower.api.error";
 
 int const kDefaultDismissDelay = 3;
 
