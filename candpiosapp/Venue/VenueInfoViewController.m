@@ -257,7 +257,17 @@
     if ([CPUserDefaultsHandler currentUser]) {
         [CPUserDefaultsHandler addFeedVenue:self.venue];
         // switch over to the feed view controller
+        
+        id fvc = [[self.tabBarController viewControllers] objectAtIndex:0];
+        if ([fvc isKindOfClass:[UINavigationController class]]) {
+            fvc = [(UINavigationController *)fvc visibleViewController];
+        }
+        if ([fvc respondsToSelector:@selector(showVenueFeedForVenue:)]){
+            [fvc performSelector:@selector(showVenueFeedForVenue:)
+                      withObject:self.venue];
+        }
         self.tabBarController.selectedIndex = 0;
+        
     } else {
         // prompt the user to login
         [CPUserSessionHandler showLoginBanner];
