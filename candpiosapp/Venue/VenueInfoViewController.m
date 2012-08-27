@@ -119,6 +119,7 @@
     // table view header
     [self.scrollView removeFromSuperview];
     self.tableView.tableHeaderView = self.scrollView;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // border on venue chat box
     // color gets set in view will appear
     self.venueChatBox.layer.borderWidth = 1.0;
@@ -720,9 +721,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section < self.categoryCount.count) {
-        NSString *category = [[self orderedCategories] objectAtIndex:section];
-        NSArray *userArray = [self.currentUsers objectForKey:category];
-        return userArray.count;
+        return 1;
     } else {
         return self.previousUsers.count;
     }
@@ -820,6 +819,7 @@
     if (self.currentUsers.count > 0) {
         CGFloat thumbnailDim = 71;
         CGFloat xOffset = 10;
+        CGFloat gradientWidth = 45;
         for (User *user in [self.currentUsers objectForKey:category]) {
             UIButton *thumbButton = [self thumbnailButtonForUser:user
                                                    withSquareDim:thumbnailDim
@@ -839,27 +839,10 @@
                 [self addUserToDictionaryOfUserObjectsFromUser:user];
             }
         }
-        
         // set the content size on the scrollview
-        CGFloat newWidth = [[self.currentUsers objectForKey:category] count] * (thumbnailDim + 10) + 45;
+        CGFloat newWidth = [[self.currentUsers objectForKey:category] count] * (thumbnailDim + 10) + gradientWidth;
         cell.scrollView.contentSize = CGSizeMake(newWidth, cell.scrollView.contentSize.height);
         cell.scrollView.showsHorizontalScrollIndicator = NO;
-        
-        // gradient on the right side of the scrollview
-        CAGradientLayer *gradient = [CAGradientLayer layer];
-        gradient.frame = CGRectMake(cell.scrollView.frame.size.width - 45,
-                                    cell.scrollView.frame.origin.y,
-                                    45,
-                                    cell.scrollView.frame.size.height);
-        gradient.colors = [NSArray arrayWithObjects:
-                           (id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:0.0] CGColor],
-                           (id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:1.0] CGColor],
-                           (id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:1.0] CGColor],
-                           nil];
-        [gradient setStartPoint:CGPointMake(0.0, 0.5)];
-        [gradient setEndPoint:CGPointMake(1.0, 0.5)];
-        gradient.locations = @[@0.0, @0.65, @1.0];
-        [cell.contentView.layer addSublayer:gradient];
     }
 }
 

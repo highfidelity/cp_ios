@@ -131,11 +131,14 @@ static UserProfileViewController* userProfileViewController;
         return;
     }
     UserProfileViewController *userVC = [CPUserAction userProfileViewController];
-    // set the user object on the UserProfileVC to the user we just created
-    userVC.user = cell.user;
+    [userVC prepareForReuse];
     
     // push the UserProfileViewController onto the navigation controller stack
+    NSLog(@"Push Profile called.");
     [viewController.navigationController pushViewController:userVC animated:YES];
+    NSLog(@"Push Profile returned.");
+    // set the user object on the UserProfileVC to the user we just created
+    userVC.user = cell.user;
 }
 
 

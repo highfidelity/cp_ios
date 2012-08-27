@@ -103,12 +103,8 @@ static GRMustacheTemplate *postBadgesTemplate;
     }
     return self;
 }
-
-- (void)setUser:(User *)newUser 
+- (void)prepareForReuse
 {
-    // assign the user
-    _user = newUser;
-    
     // reset the resume
     self.preBadgesHTML = nil;
     self.badgesHTML = nil;
@@ -118,6 +114,14 @@ static GRMustacheTemplate *postBadgesTemplate;
     self.resumeEarned.text = @"";
     self.loveReceived.text = @"";
     self.resumeWebView.alpha = 0.0;
+}
+- (void)setUser:(User *)newUser 
+{
+    // assign the user
+    _user = newUser;
+    
+    [self prepareForReuse];
+    
     if (_user) {
         // set the booleans this VC uses in later control statements
         self.firstLoad = YES;
@@ -276,6 +280,7 @@ static GRMustacheTemplate *postBadgesTemplate;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    NSLog(@"viewDidAppear:");
 }
 
 - (void)viewDidUnload

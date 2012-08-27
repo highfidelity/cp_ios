@@ -93,15 +93,12 @@
     }
     
     [UIView animateWithDuration:duration animations:^{
-        NSLog(@"started.");
         for (CPUserActionCell *cell in self.tableView.visibleCells) {
             if ([cell respondsToSelector:@selector(inactiveColor)]) {
                 cell.contentView.backgroundColor = cell.inactiveColor;
             }
         }
-    } completion:^(BOOL finished) {
-        NSLog(@"completed.");
-    }];
+    } completion:nil];
 }
 
 #pragma mark - UIScrollViewDelegate

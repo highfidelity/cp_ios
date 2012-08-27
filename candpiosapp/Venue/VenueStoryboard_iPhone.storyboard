@@ -88,7 +88,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="Z24-IX-KB9">
-                                                    <rect key="frame" x="10" y="0.0" width="300" height="81"/>
+                                                    <rect key="frame" x="10" y="0.0" width="300" height="82"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="teddy" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="02D-0E-9EX">
@@ -113,21 +113,21 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="ozQ-Eo-FBO">
-                                                            <rect key="frame" x="10" y="4" width="72" height="72"/>
+                                                            <rect key="frame" x="10" y="5" width="72" height="72"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" id="aQZ-iT-18V">
-                                                            <rect key="frame" x="0.0" y="0.0" width="1" height="81"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="1" height="82"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" red="0.77647058823529413" green="0.77647058823529413" blue="0.77647058823529413" alpha="1" colorSpace="calibratedRGB"/>
                                                         </view>
                                                         <view contentMode="scaleToFill" id="oCq-QN-LI5">
-                                                            <rect key="frame" x="10" y="80" width="280" height="1"/>
+                                                            <rect key="frame" x="10" y="81" width="280" height="1"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.77647058820000003" alpha="1" colorSpace="calibratedRGB"/>
                                                         </view>
                                                         <view contentMode="scaleToFill" id="yZn-oG-1Xf">
-                                                            <rect key="frame" x="299" y="0.0" width="1" height="81"/>
+                                                            <rect key="frame" x="299" y="0.0" width="1" height="82"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" red="0.77647058823529413" green="0.77647058823529413" blue="0.77647058823529413" alpha="1" colorSpace="calibratedRGB"/>
                                                         </view>
@@ -155,21 +155,21 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="w0Q-uI-Xy4">
-                                                    <rect key="frame" x="10" y="0.0" width="300" height="81"/>
+                                                    <rect key="frame" x="10" y="0.0" width="300" height="82"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" id="koD-Dc-qNc">
-                                                            <rect key="frame" x="0.0" y="0.0" width="1" height="81"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="1" height="82"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.77647058820000003" alpha="1" colorSpace="calibratedRGB"/>
                                                         </view>
                                                         <view contentMode="scaleToFill" id="RnM-tn-a2r">
-                                                            <rect key="frame" x="299" y="0.0" width="1" height="81"/>
+                                                            <rect key="frame" x="299" y="0.0" width="1" height="82"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.77647058820000003" alpha="1" colorSpace="calibratedRGB"/>
                                                         </view>
                                                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="qjl-sw-yKC">
-                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="81"/>
+                                                            <rect key="frame" x="1" y="0.0" width="298" height="82"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         </scrollView>
                                                     </subviews>
@@ -180,6 +180,7 @@
                                         </view>
                                         <connections>
                                             <outlet property="scrollView" destination="qjl-sw-yKC" id="lSJ-lf-Hkg"/>
+                                            <outlet property="visibleView" destination="w0Q-uI-Xy4" id="XTY-K8-ViI"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -209,6 +210,40 @@
             <point key="canvasLocation" x="54" y="-492"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="VenueCategoryCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueCategoryCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="visibleView" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="VenueInfoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueInfoViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="userImageButtonPressed:"/>
+                <relationship kind="outlet" name="activeChatText" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="bottomPhotoOverlayView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="firstAidSection" candidateClass="UIView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="userSection" candidateClass="UIView"/>
+                <relationship kind="outlet" name="venueChatBox" candidateClass="UIView"/>
+                <relationship kind="outlet" name="venuePhoto" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="VenueUserCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueUserCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="hoursLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="separatorView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="visibleView" candidateClass="UIView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

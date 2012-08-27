@@ -231,21 +231,26 @@
         // mimic row selection - highlight and push the child view
         [self highlightInBackground];
         if (recognizer.state == UIGestureRecognizerStateEnded) {
-            UITableView *tableView = (UITableView*)self.superview;
-            NSIndexPath *indexPath = [tableView indexPathForCell: self];
-            // for some reason selectRowAtIndexPath:indexPath was not invoking the delegate :( Notifications not sent by this.
-            if ([tableView.delegate respondsToSelector:@selector(tableView:willSelectRowAtIndexPath:)]) {
-                indexPath = [[tableView delegate] tableView:tableView willSelectRowAtIndexPath:indexPath];
-            }
-            if (indexPath) {
-                if ([tableView.delegate respondsToSelector:@selector(tableView:didSelectRowAtIndexPath:)]) {
-                    [[tableView delegate] tableView:tableView didSelectRowAtIndexPath:indexPath];
-                }
-            }
-            if ([self.delegate respondsToSelector:@selector(cell:didSelectRowWithUser:)]) {
-                [self.delegate cell:self didSelectRowWithUser:self.user];
-            }
+            // return immediately.. next view must be initialized on main thread
+            [self performSelectorOnMainThread:@selector(handleTap) withObject:nil waitUntilDone:NO];
         }
+    }
+}
+
+- (void)handleTap {
+    UITableView *tableView = (UITableView*)self.superview;
+    NSIndexPath *indexPath = [tableView indexPathForCell: self];
+    // for some reason selectRowAtIndexPath:indexPath was not invoking the delegate :( Notifications not sent by this.
+    if ([tableView.delegate respondsToSelector:@selector(tableView:willSelectRowAtIndexPath:)]) {
+        indexPath = [[tableView delegate] tableView:tableView willSelectRowAtIndexPath:indexPath];
+    }
+    if (indexPath) {
+        if ([tableView.delegate respondsToSelector:@selector(tableView:didSelectRowAtIndexPath:)]) {
+            [[tableView delegate] tableView:tableView didSelectRowAtIndexPath:indexPath];
+        }
+    }
+    if ([self.delegate respondsToSelector:@selector(cell:didSelectRowWithUser:)]) {
+        [self.delegate cell:self didSelectRowWithUser:self.user];
     }
 }
 
