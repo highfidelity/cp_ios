@@ -39,8 +39,8 @@
     //NSString* const kCandPWebServiceUrl = @"http://dev.worklist.net/~<login>/candpweb2_<job#>/web/";
 
     NSString* const kCandPAddFundsUrl = @"http://staging.coffeeandpower.com/m/?ios#addFundsiPhone";
-    NSString* const kLinkedInKey = @"4xkfzpnvuc72";
-    NSString* const kLinkedInSecret = @"mxgFhH1i1PbPlWjq";
+    NSString* const kLinkedInKey = @"hgkjgipubg8b";
+    NSString* const kLinkedInSecret = @"1coFul6Ym82NJC2Z";
     NSString* const flurryAnalyticsKey = @"BI59BJPSZZTIFB5H87HQ";
     NSString* const kSmartererKey = @"3f883e6fc3d54834ac93c3bfe6f33553";
     NSString* const kSmartererSecret = @"ea670a5ca21c7d54d4e17972059b4f07";
