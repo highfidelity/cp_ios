@@ -107,6 +107,7 @@
 		4EB7A17915C0C30B00691AB2 /* popover-arrow-right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB7A17115C0C30A00691AB2 /* popover-arrow-right@2x.png */; };
 		4EB7A17A15C0C30B00691AB2 /* popover-arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB7A17215C0C30A00691AB2 /* popover-arrow-left.png */; };
 		4EB7A17B15C0C30B00691AB2 /* popover-arrow-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB7A17315C0C30B00691AB2 /* popover-arrow-left@2x.png */; };
+		4EF559C915E8533200DAE3BA /* VenueCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF559C815E8533200DAE3BA /* VenueCategoryCell.m */; };
 		53019FE015ABA1EE00AE3FA1 /* divider-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E46B561F15A8D8AA00AD3C62 /* divider-button@2x.png */; };
 		53019FE415ABA21D00AE3FA1 /* CPUserActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53019FE315ABA21D00AE3FA1 /* CPUserActionCell.m */; };
 		5308DD0715D5E5DF00B4EBC2 /* sign-up-with-linkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 5308DD0315D5E5DF00B4EBC2 /* sign-up-with-linkedin.png */; };
@@ -707,6 +708,8 @@
 		4EB7A17115C0C30A00691AB2 /* popover-arrow-right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "popover-arrow-right@2x.png"; sourceTree = "<group>"; };
 		4EB7A17215C0C30A00691AB2 /* popover-arrow-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "popover-arrow-left.png"; sourceTree = "<group>"; };
 		4EB7A17315C0C30B00691AB2 /* popover-arrow-left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "popover-arrow-left@2x.png"; sourceTree = "<group>"; };
+		4EF559C715E8533200DAE3BA /* VenueCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VenueCategoryCell.h; path = Venue/VenueCategoryCell.h; sourceTree = "<group>"; };
+		4EF559C815E8533200DAE3BA /* VenueCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VenueCategoryCell.m; path = Venue/VenueCategoryCell.m; sourceTree = "<group>"; };
 		53019FE215ABA21D00AE3FA1 /* CPUserActionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUserActionCell.h; sourceTree = "<group>"; };
 		53019FE315ABA21D00AE3FA1 /* CPUserActionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPUserActionCell.m; sourceTree = "<group>"; };
 		5308DD0315D5E5DF00B4EBC2 /* sign-up-with-linkedin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin.png"; sourceTree = "<group>"; };
@@ -2658,6 +2661,8 @@
 				532B4158158FD293005B55C0 /* VenueViewToggleViewController.m */,
 				4E569BC815E2FE7A00177176 /* VenueUserCell.h */,
 				4E569BC915E2FE7A00177176 /* VenueUserCell.m */,
+				4EF559C715E8533200DAE3BA /* VenueCategoryCell.h */,
+				4EF559C815E8533200DAE3BA /* VenueCategoryCell.m */,
 			);
 			name = Venue;
 			sourceTree = "<group>";
@@ -3233,6 +3238,7 @@
 				530FC24515D4335E00838B5A /* CPUserSessionHandler.m in Sources */,
 				530FC24815D4389D00838B5A /* SignupController.m in Sources */,
 				4E569BCA15E2FE7A00177176 /* VenueUserCell.m in Sources */,
+				4EF559C915E8533200DAE3BA /* VenueCategoryCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

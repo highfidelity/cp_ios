@@ -15,6 +15,7 @@
 #import "CPCheckinHandler.h"
 #import "CPUserSessionHandler.h"
 #import "VenueUserCell.h"
+#import "VenueCategoryCell.h"
 
 #define CHAT_MESSAGE_ORIGIN_X 11
 
@@ -730,38 +731,37 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    static NSString *CellIdentifier = @"VenueUserCell";
-    User *user;
-    VenueUserCell *cell = (VenueUserCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[VenueUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        [CPUIHelper changeFontForLabel:cell.nameLabel toLeagueGothicOfSize:18];
-    }
     if (indexPath.section < self.categoryCount.count) {
-        NSString *category = [[self orderedCategories] objectAtIndex:indexPath.section];
-        NSArray *userArray = [self.currentUsers objectForKey:category];
-        user = [userArray objectAtIndex:indexPath.row];
-        cell.user = user;
-        if (indexPath.row == userArray.count - 1) {
-            cell.separatorView.hidden = YES;
-        } else {
-            cell.separatorView.hidden = NO;
+        // Display a single cell with all users in that category
+        NSString *cellIdentifier = @"VenueCategoryCell";
+        VenueCategoryCell *cell = (VenueCategoryCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (cell == nil) {
+            cell = [[VenueCategoryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         }
+        NSString *category = [[self orderedCategories] objectAtIndex:indexPath.section];
+        [self updateCategoryViewForCurrentUserCategory:category forCell:cell];
+        return cell;
     } else {
-        user = [self.orderedPreviousUsers objectAtIndex:indexPath.row];
+        // Display one user per row
+        NSString *cellIdentifier = @"VenueUserCell";
+        VenueUserCell *cell = (VenueUserCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (cell == nil) {
+            cell = [[VenueUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            [CPUIHelper changeFontForLabel:cell.nameLabel toLeagueGothicOfSize:18];
+        }
+        User *user = [self.orderedPreviousUsers objectAtIndex:indexPath.row];
         cell.user = user;
         if (indexPath.row == self.orderedPreviousUsers.count - 1) {
             cell.separatorView.hidden = YES;
         } else {
             cell.separatorView.hidden = NO;
         }
+        // assign the checkin hours
+        NSString *userID = [NSString stringWithFormat:@"%d", user.userID];
+        int checkinTime = [[[self.venue.activeUsers objectForKey:userID] objectForKey:@"checkin_time"] integerValue];
+        cell.hoursLabel.text = [NSString stringWithFormat:@"%d hrs/week", checkinTime / 3600];
+        return cell;
     }
-    // assign the checkin hours
-    NSString *userID = [NSString stringWithFormat:@"%d", user.userID];
-    int checkinTime = [[[self.venue.activeUsers objectForKey:userID] objectForKey:@"checkin_time"] integerValue];
-    cell.hoursLabel.text = [NSString stringWithFormat:@"%d hrs/week", checkinTime / 3600];
-
-    return cell;
 }
 
 
@@ -771,6 +771,99 @@
 #define FOOTER_HEIGHT 5
 #define CELL_GUTTER_WIDTH 10
 #define BORDER_SIZE 1
+#define IMAGE_TOP_OFFSET 5
+
+- (UIButton *)thumbnailButtonForUser:(User *)user
+                       withSquareDim:(CGFloat)thumbnailDim
+                          andXOffset:(CGFloat)xOffset
+                          andYOffset:(CGFloat)yOffset
+{
+    // setup a button for the user thumbnail
+    UIButton *thumbButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    thumbButton.frame = CGRectMake(xOffset, yOffset, thumbnailDim, thumbnailDim);
+    
+    // set the tag to the user ID
+    thumbButton.tag = user.userID;
+    
+    // add a target for this user thumbnail button
+    [thumbButton addTarget:self action:@selector(userImageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIImageView *userThumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, thumbnailDim, thumbnailDim)];
+    
+    //If the user is checkedIn virutally add a virtual badge to their image
+    if(user.checkedIn) {
+        [CPUIHelper manageVirtualBadgeForProfileImageView:userThumbnail
+                                         checkInIsVirtual:user.checkInIsVirtual];
+    } else {
+        //Never show a virtual badge if they aren't checkin
+        [CPUIHelper manageVirtualBadgeForProfileImageView:userThumbnail
+                                         checkInIsVirtual:NO];
+    }
+    
+    [CPUIHelper profileImageView:userThumbnail
+             withProfileImageUrl:user.photoURL];
+    // add a shadow to the imageview
+    [CPUIHelper addShadowToView:userThumbnail color:[UIColor blackColor] offset:CGSizeMake(1, 1) radius:3 opacity:0.40];
+    
+    [thumbButton addSubview:userThumbnail];
+    return thumbButton;
+}
+
+- (void)updateCategoryViewForCurrentUserCategory:(NSString *)category
+                                         forCell:(VenueCategoryCell *)cell
+{
+    // remove previous contents
+    for (UIView *subview in cell.scrollView.subviews) {
+        [subview removeFromSuperview];
+    }
+    
+    if (self.currentUsers.count > 0) {
+        CGFloat thumbnailDim = 71;
+        CGFloat xOffset = 10;
+        for (User *user in [self.currentUsers objectForKey:category]) {
+            UIButton *thumbButton = [self thumbnailButtonForUser:user
+                                                   withSquareDim:thumbnailDim
+                                                      andXOffset:xOffset
+                                                      andYOffset:IMAGE_TOP_OFFSET];
+            
+            // add the thumbnail to the category view
+            [cell.scrollView addSubview:thumbButton];
+            
+            // add to the xOffset for the next thumbnail
+            xOffset += 10 + thumbButton.frame.size.width;
+            
+            // add this user to the usersShown set so we know we have them
+            [self.usersShown addObject:[NSNumber numberWithInt:user.userID]];
+            
+            if (![self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", user.userID]]) {
+                [self addUserToDictionaryOfUserObjectsFromUser:user];
+            }
+        }
+        
+        // set the content size on the scrollview
+        CGFloat newWidth = [[self.currentUsers objectForKey:category] count] * (thumbnailDim + 10) + 45;
+        cell.scrollView.contentSize = CGSizeMake(newWidth, cell.scrollView.contentSize.height);
+        cell.scrollView.showsHorizontalScrollIndicator = NO;
+        
+        // gradient on the right side of the scrollview
+        CAGradientLayer *gradient = [CAGradientLayer layer];
+        gradient.frame = CGRectMake(cell.scrollView.frame.size.width - 45,
+                                    cell.scrollView.frame.origin.y,
+                                    45,
+                                    cell.scrollView.frame.size.height);
+        gradient.colors = [NSArray arrayWithObjects:
+                           (id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:0.0] CGColor],
+                           (id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:1.0] CGColor],
+                           (id)[[UIColor colorWithRed:(237.0/255.0) green:(237.0/255.0) blue:(237.0/255.0) alpha:1.0] CGColor],
+                           nil];
+        [gradient setStartPoint:CGPointMake(0.0, 0.5)];
+        [gradient setEndPoint:CGPointMake(1.0, 0.5)];
+        gradient.locations = @[@0.0, @0.65, @1.0];
+        [cell.contentView.layer addSublayer:gradient];
+    }
+}
+
+
 
 - (CGFloat)cellWidth {
     return self.view.frame.size.width - (2 * CELL_GUTTER_WIDTH);
