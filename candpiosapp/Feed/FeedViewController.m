@@ -1475,15 +1475,12 @@ typedef enum {
                              ? userEntry.author : userEntry.receiver;
         
         if (selectedUser.userID) {
-            // grab a UserProfileViewController from the UserStoryboard
-            UserProfileViewController *userProfileVC = (UserProfileViewController *)[[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
-            
-            // give the post's user object to the UserProfileVC
-            userProfileVC.user = selectedUser;
-            
-            // ask our navigation controller to push to the UserProfileVC
-            [self.navigationController pushViewController:userProfileVC animated:YES];
-        }        
+            // push the user profile
+            UserProfileViewController *userProfileViewController = (UserProfileViewController *)[[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"UserProfileViewController"];
+            userProfileViewController.title = selectedUser.nickname;
+            [self.navigationController pushViewController:userProfileViewController animated:YES];
+            userProfileViewController.user = selectedUser;
+        }
     } else {
         // we need to show the venue feed for this venue
         // the button's tag is the section for this feed

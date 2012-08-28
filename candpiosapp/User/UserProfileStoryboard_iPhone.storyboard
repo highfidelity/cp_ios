@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="6Bs-xG-Mnl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12B19" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="6Bs-xG-Mnl">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
@@ -80,7 +80,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="145" height="31"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Loading..." lineBreakMode="tailTruncation" minimumFontSize="10" id="DNg-QG-j4b">
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Loading" lineBreakMode="tailTruncation" minimumFontSize="10" id="DNg-QG-j4b">
                                                         <rect key="frame" x="7" y="4" width="124" height="24"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -191,12 +191,12 @@
                                         <rect key="frame" x="10" y="263" width="300" height="153"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.75" contentMode="left" text="Loading Resume" lineBreakMode="tailTruncation" minimumFontSize="10" id="Do4-zK-XAE">
-                                                <rect key="frame" x="22" y="0.0" width="132" height="48"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.75" contentMode="left" text="Resume" lineBreakMode="tailTruncation" minimumFontSize="10" id="Do4-zK-XAE">
+                                                <rect key="frame" x="14" y="0.0" width="132" height="48"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <rect key="contentStretch" x="0.29999999999999999" y="0.0" width="1" height="1"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" red="0.25882352939999997" green="0.50196078430000002" blue="0.51372549020000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                                <color key="textColor" red="0.25882352941176467" green="0.50196078431372548" blue="0.51372549019607838" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view alpha="0.75" contentMode="scaleToFill" id="dlC-de-XF2">
@@ -249,7 +249,7 @@
                                                 <color key="backgroundColor" red="0.75686274509999996" green="0.75686274509999996" blue="0.75686274509999996" alpha="1" colorSpace="calibratedRGB"/>
                                             </view>
                                             <webView contentMode="scaleToFill" id="i0u-vy-O1G">
-                                                <rect key="frame" x="0.0" y="98" width="300" height="25"/>
+                                                <rect key="frame" x="0.0" y="91" width="300" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <dataDetectorType key="dataDetectorTypes"/>
@@ -381,6 +381,7 @@
                         <outlet property="goMenuBackground" destination="ilO-4E-RSP" id="lDL-aJ-BHh"/>
                         <outlet property="hoursAvailable" destination="wey-vq-SSf" id="hmj-Pa-sMb"/>
                         <outlet property="loveReceived" destination="GDP-YW-dfo" id="D2F-nD-HJg"/>
+                        <outlet property="mapMarker" destination="hs9-Nt-iuJ" id="S1O-Ig-OgT"/>
                         <outlet property="mapView" destination="uay-M2-WVB" id="KuU-EL-Kr1"/>
                         <outlet property="minusButton" destination="vvL-gX-QgE" id="Txd-zH-9qm"/>
                         <outlet property="minutesAvailable" destination="Gye-uK-iuD" id="7Bk-Lm-v7U"/>
@@ -910,14 +911,6 @@
         <image name="vector-lock.png" width="13" height="13"/>
     </resources>
     <classes>
-        <class className="AddFundsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFundsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeWindow:"/>
-                <relationship kind="action" name="goBack:"/>
-                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
         <class className="CPPlaceholderTextView" superclassName="UITextView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CPPlaceholderTextView.h"/>
         </class>
@@ -933,23 +926,6 @@
                 <relationship kind="outlet" name="chatContents" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="chatEntryField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="chatInputs" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="PayUserViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PayUserViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeView:" candidateClass="UIButton"/>
-                <relationship kind="action" name="descriptionChanged:"/>
-                <relationship kind="action" name="makePayment:"/>
-                <relationship kind="outlet" name="cancelButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="charsLeft" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="descriptionView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="payButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="payTo" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="payeeImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="paymentAmount" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="paymentNote" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="userBalance" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="UserLoveViewController" superclassName="UIViewController">
@@ -989,6 +965,7 @@
                 <relationship kind="outlet" name="goMenuBackground" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="hoursAvailable" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="loveReceived" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="mapMarker" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
                 <relationship kind="outlet" name="minusButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="minutesAvailable" candidateClass="UILabel"/>

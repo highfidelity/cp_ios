@@ -25,7 +25,7 @@
 @property (strong, nonatomic) NSString* badgesHTML;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UILabel *checkedIn;
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIView *userCard;
 @property (weak, nonatomic) IBOutlet UIImageView *cardImage;
 @property (weak, nonatomic) IBOutlet UILabel *cardStatus;
@@ -55,6 +55,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *reviewButton;
 @property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
 @property (weak, nonatomic) IBOutlet UILabel *propNoteLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *mapMarker;
 @property (nonatomic) BOOL firstLoad;
 @property (nonatomic) int othersAtPlace;
 @property (nonatomic) NSInteger selectedFavoriteVenueIndex;
@@ -103,12 +104,8 @@ static GRMustacheTemplate *postBadgesTemplate;
     }
     return self;
 }
-
-- (void)setUser:(User *)newUser 
+- (void)prepareForReuse
 {
-    // assign the user
-    _user = newUser;
-    
     // reset the resume
     self.preBadgesHTML = nil;
     self.badgesHTML = nil;
@@ -118,6 +115,27 @@ static GRMustacheTemplate *postBadgesTemplate;
     self.resumeEarned.text = @"";
     self.loveReceived.text = @"";
     self.resumeWebView.alpha = 0.0;
+    self.checkedIn.text = @"Loading";
+    
+    // reset the map
+    self.distanceLabel.text = @"";
+    self.mapMarker.alpha = 0;
+    self.mapView.alpha = 0;
+    self.distanceLabel.alpha = 0;
+    if (self.mapView.superview) {
+        [self.mapView removeFromSuperview];
+    }
+    
+    // hide the venue info until we load the resume data
+    self.venueView.alpha = 0.0;
+    self.availabilityView.alpha = 0.0;
+}
+
+- (void)setUser:(User *)newUser
+{
+    // assign the user
+    _user = newUser;
+    
     if (_user) {
         // set the booleans this VC uses in later control statements
         self.firstLoad = YES;
@@ -140,12 +158,9 @@ static GRMustacheTemplate *postBadgesTemplate;
             
         }
         
-        // update labels
         // set the labels on the user business card
         self.cardNickname.text = self.user.nickname;
-        
         [self setUserStatusWithQuotes:self.user.status];
-        
         self.cardJobPosition.text = self.user.jobTitle;
         
         // set the navigation controller title to the user's nickname
@@ -168,33 +183,24 @@ static GRMustacheTemplate *postBadgesTemplate;
             // get a user object with resume data
             [self.user loadUserResumeData:^(NSError *error) {
                 if (!error) {
+                    // fill out the resume and unlock the scrollView
                     NSLog(@"Received resume response.");
-                    // unlock the scrollView
                     self.scrollView.scrollEnabled = YES;
-                    // resume has loaded, change the label and remove the animated dots
-                    [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
-                    [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:NO];
-                    self.resumeLabel.text = @"Resume";
-                    
                     [self placeUserDataOnProfile];
                 } else {
                     // error checking for load of user
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Resume Load" 
+                    NSLog(@"Error loading resume: %@", error);
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Resume Load"
                                                                     message:@"An error has occurred while loading the resume.  Try again later." delegate:nil 
                                                           cancelButtonTitle:@"OK" 
                                                           otherButtonTitles:nil];
                     [alert show];
-                    [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
-                    [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:NO];
-                    NSLog(@"Error loading resume: %@", error);
                 }
+                // stop animating the label ellipsis
+                [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
+                [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:NO];
             }];
         }
-        
-        // hide the venue info until we load the resume data
-        self.venueView.alpha = 0.0;
-        self.availabilityView.alpha = 0.0;
-        
     }
 }
 
@@ -235,10 +241,11 @@ static GRMustacheTemplate *postBadgesTemplate;
                                 (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor],
                                 nil]
      ];
+    [self prepareForReuse];
         
     // set LeagueGothic font where applicable
     [CPUIHelper changeFontForLabel:self.checkedIn toLeagueGothicOfSize:24];
-    [CPUIHelper changeFontForLabel:self.resumeLabel toLeagueGothicOfSize:24];
+    [CPUIHelper changeFontForLabel:self.resumeLabel toLeagueGothicOfSize:26];
     [CPUIHelper changeFontForLabel:self.cardNickname toLeagueGothicOfSize:28];
     
     // set the paper background color where applicable
@@ -276,6 +283,7 @@ static GRMustacheTemplate *postBadgesTemplate;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    NSLog(@"viewDidAppear:");
 }
 
 - (void)viewDidUnload
@@ -361,8 +369,17 @@ static GRMustacheTemplate *postBadgesTemplate;
         CLLocation *myLocation = [CPAppDelegate locationManager].location;
         CLLocation *otherUserLocation = [[CLLocation alloc] initWithLatitude:self.user.location.latitude longitude:self.user.location.longitude];
         NSString *distance = [CPUtils localizedDistanceofLocationA:myLocation awayFromLocationB:otherUserLocation];
-        self.distanceLabel.text = distance;
         
+        [self.scrollView insertSubview:self.mapView atIndex:0];
+        [UIView animateWithDuration:0.3 animations:^{
+            self.mapView.alpha = 1;
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:1 animations:^{
+                self.distanceLabel.text = distance;
+                self.distanceLabel.alpha = 1;
+                self.mapMarker.alpha = 1;
+            }];
+        }];
         self.mapAndDistanceLoaded = YES;
     }
 }
@@ -580,8 +597,11 @@ static GRMustacheTemplate *postBadgesTemplate;
     
     // call the JS function in the mustache file that will lazyload the images
     [aWebView stringByEvaluatingJavaScriptFromString:@"lazyLoad();"];
+
     // reveal the resume
-    self.resumeWebView.alpha = 1.0;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.resumeWebView.alpha = 1.0;
+    }];
 }
 
 -(IBAction)plusButtonPressed:(id)sender {

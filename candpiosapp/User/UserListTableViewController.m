@@ -32,8 +32,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // we are using swipe cells.. which will need to handle the selection themselves
-    self.tableView.allowsSelection = NO;
 
     // the map is our delegate
     self.delegate = [[CPAppDelegate settingsMenuController] mapTabController];
@@ -61,6 +59,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     // setup the tableView with whatever we already have
     [self filterData];
     
@@ -142,12 +141,6 @@
         // filter that data
         [self filterData];
     }
-}
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
 
 #pragma mark - Table view data source
@@ -274,6 +267,7 @@
     } else{
         cell.rightStyle = CPUserActionCellSwipeStyleQuickAction;
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     return cell;
 }
 

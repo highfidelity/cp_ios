@@ -23,6 +23,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    self.tableView.allowsSelection = NO;
     
     // alloc-init a UIActivityIndicatorView to put in the navigation item
     self.barSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -78,6 +79,34 @@
         [self.barSpinner stopAnimating];
     }
 }
+
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    // calling the animation directly is not respecting duration
+    [self unhighlightCells:YES];
+}
+
+- (void)unhighlightCells:(BOOL)animated {
+    NSTimeInterval duration = 0;
+    if (animated) {
+        duration = 0.1;
+    }
+    
+    [UIView animateWithDuration:duration animations:^{
+        for (CPUserActionCell *cell in self.tableView.visibleCells) {
+            if ([cell respondsToSelector:@selector(inactiveColor)]) {
+                cell.contentView.backgroundColor = cell.inactiveColor;
+            }
+        }
+    } completion:nil];
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self unhighlightCells:YES];
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
+}
+
 
 # pragma mark - CPUserActionCellDelegate
 

@@ -26,7 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.tableView.allowsSelection = YES;
     // our delegate is the map tab controller
     self.delegate = [[CPAppDelegate settingsMenuController] mapTabController];
     

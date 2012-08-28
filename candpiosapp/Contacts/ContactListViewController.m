@@ -199,12 +199,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
 }
 
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

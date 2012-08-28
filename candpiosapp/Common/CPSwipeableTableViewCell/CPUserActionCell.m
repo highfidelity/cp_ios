@@ -33,7 +33,7 @@
 
 #define kMinimumPan      60.0
 #define kBOUNCE_DISTANCE 20.0
-
+#define HIGHLIGHT_DURATION 0.1
 
 @interface CPUserActionCell()
 
@@ -56,6 +56,11 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void) setInactiveColor:(UIColor *)inactiveColor {
+    _inactiveColor = inactiveColor;
+    self.contentView.backgroundColor = inactiveColor;
 }
 
 - (void)awakeFromNib
@@ -141,7 +146,9 @@
     // default colors
     self.activeColor = [CPUIHelper CPTealColor];
     self.inactiveColor = [UIColor colorWithR:51 G:51 B:51 A:1];
-        
+    self.selectedBackgroundView = [[UIView alloc] initWithFrame:self.contentView.frame];
+    self.selectedBackgroundView.backgroundColor = self.activeColor;
+
     // Additional buttons for contact exchange and chat
     CGFloat originX = SWITCH_LEFT_MARGIN;
     self.sendLoveButton = [self addActionButtonWithImageNamed:@"quick-action-recognize"
@@ -190,30 +197,60 @@
     }
 }
 
-#pragma mark - Handing Touch
-- (void)tap:(UITapGestureRecognizer *)recognizer 
-{
-    if (recognizer.state == UIGestureRecognizerStateEnded) {
-        if (self.areActionButtonsVisible) {
-            // noop
-        } else {
-            // mimic row selection - highlight and push the child view
-            UITableView *tableView = (UITableView*)self.superview;
-            NSIndexPath *indexPath = [tableView indexPathForCell: self];
-            [self setHighlighted:YES animated:YES];
-            // for some reason selectRowAtIndexPath:indexPath was not invoking the delegate :( Notifications not sent by this.
-            if ([tableView.delegate respondsToSelector:@selector(tableView:willSelectRowAtIndexPath:)]) { 
-                indexPath = [[tableView delegate] tableView:tableView willSelectRowAtIndexPath:indexPath];
-            }
-            if (indexPath) {
-                if ([tableView.delegate respondsToSelector:@selector(tableView:didSelectRowAtIndexPath:)]) {
-                    [[tableView delegate] tableView:tableView didSelectRowAtIndexPath:indexPath];
+- (void) highlightInBackground {
+    [self performSelectorInBackground:@selector(highlight) withObject:self];
+}
+- (void) highlight {
+    // mimic row selection - highlight and push the child view
+    [UIView animateWithDuration:HIGHLIGHT_DURATION animations:^{
+        self.contentView.backgroundColor = self.activeColor;
+        UITableView *tableView = (UITableView *)self.superview;
+        for (CPUserActionCell *cell in tableView.visibleCells) {
+            if (cell != self) {
+                if ([cell respondsToSelector:@selector(inactiveColor)]) {
+                    cell.contentView.backgroundColor = cell.inactiveColor;
+                } else {
+                    [cell setSelected:NO animated:YES];
                 }
             }
-            if ([self.delegate respondsToSelector:@selector(cell:didSelectRowWithUser:)]) {
-                [self.delegate cell:self didSelectRowWithUser:self.user];
-            }
         }
+    }];
+}
+
+-(void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)evt {
+    if (!self.areActionButtonsVisible) {
+        [self highlightInBackground];
+    }
+}
+
+#pragma mark - Handing Touch
+- (void)tap:(UITapGestureRecognizer *)recognizer
+{
+    // handle taps
+    if (!self.areActionButtonsVisible) {
+        // mimic row selection - highlight and push the child view
+        [self highlightInBackground];
+        if (recognizer.state == UIGestureRecognizerStateEnded) {
+            // return immediately.. next view must be initialized on main thread
+            [self performSelectorOnMainThread:@selector(handleTap) withObject:nil waitUntilDone:NO];
+        }
+    }
+}
+
+- (void)handleTap {
+    UITableView *tableView = (UITableView*)self.superview;
+    NSIndexPath *indexPath = [tableView indexPathForCell: self];
+    // for some reason selectRowAtIndexPath:indexPath was not invoking the delegate :( Notifications not sent by this.
+    if ([tableView.delegate respondsToSelector:@selector(tableView:willSelectRowAtIndexPath:)]) {
+        indexPath = [[tableView delegate] tableView:tableView willSelectRowAtIndexPath:indexPath];
+    }
+    if (indexPath) {
+        if ([tableView.delegate respondsToSelector:@selector(tableView:didSelectRowAtIndexPath:)]) {
+            [[tableView delegate] tableView:tableView didSelectRowAtIndexPath:indexPath];
+        }
+    }
+    if ([self.delegate respondsToSelector:@selector(cell:didSelectRowWithUser:)]) {
+        [self.delegate cell:self didSelectRowWithUser:self.user];
     }
 }
 
@@ -473,21 +510,6 @@
     [self.hiddenView addSubview:button];
     
     return button;
-}
-
-- (void)toggleCellActiveState:(BOOL)active
-{
-    if (active) {
-        self.contentView.backgroundColor = self.activeColor;
-    } else {
-        self.contentView.backgroundColor = self.inactiveColor;
-    }
-}
-
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
-{
-    [super setHighlighted:highlighted animated:animated];
-    [self toggleCellActiveState:highlighted];
 }
 
 - (void)switchSound:(id)sender {
