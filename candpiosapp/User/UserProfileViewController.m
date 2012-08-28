@@ -185,8 +185,8 @@ static GRMustacheTemplate *postBadgesTemplate;
                 if (!error) {
                     // fill out the resume and unlock the scrollView
                     NSLog(@"Received resume response.");
-                    [self placeUserDataOnProfile];
                     self.scrollView.scrollEnabled = YES;
+                    [self placeUserDataOnProfile];
                 } else {
                     // error checking for load of user
                     NSLog(@"Error loading resume: %@", error);
@@ -597,8 +597,11 @@ static GRMustacheTemplate *postBadgesTemplate;
     
     // call the JS function in the mustache file that will lazyload the images
     [aWebView stringByEvaluatingJavaScriptFromString:@"lazyLoad();"];
+
     // reveal the resume
-    self.resumeWebView.alpha = 1.0;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.resumeWebView.alpha = 1.0;
+    }];
 }
 
 -(IBAction)plusButtonPressed:(id)sender {
