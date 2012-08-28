@@ -132,6 +132,7 @@ static UserProfileViewController* userProfileViewController;
     }
     UserProfileViewController *userVC = [CPUserAction userProfileViewController];
     [userVC prepareForReuse];
+    userVC.title = cell.user.nickname;
     
     // push the UserProfileViewController onto the navigation controller stack
     NSLog(@"Push Profile called.");

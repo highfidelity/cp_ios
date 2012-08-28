@@ -25,7 +25,7 @@
 @property (strong, nonatomic) NSString* badgesHTML;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UILabel *checkedIn;
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIView *userCard;
 @property (weak, nonatomic) IBOutlet UIImageView *cardImage;
 @property (weak, nonatomic) IBOutlet UILabel *cardStatus;
@@ -55,6 +55,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *reviewButton;
 @property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
 @property (weak, nonatomic) IBOutlet UILabel *propNoteLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *mapMarker;
 @property (nonatomic) BOOL firstLoad;
 @property (nonatomic) int othersAtPlace;
 @property (nonatomic) NSInteger selectedFavoriteVenueIndex;
@@ -114,8 +115,18 @@ static GRMustacheTemplate *postBadgesTemplate;
     self.resumeEarned.text = @"";
     self.loveReceived.text = @"";
     self.resumeWebView.alpha = 0.0;
+
+    // reset the map
+    self.distanceLabel.text = @"";
+    self.mapMarker.alpha = 0;
+    self.mapView.alpha = 0;
+    self.distanceLabel.alpha = 0;
+    if (self.mapView.superview) {
+        [self.mapView removeFromSuperview];
+    }
+    
 }
-- (void)setUser:(User *)newUser 
+- (void)setUser:(User *)newUser
 {
     // assign the user
     _user = newUser;
@@ -193,6 +204,7 @@ static GRMustacheTemplate *postBadgesTemplate;
                     NSLog(@"Error loading resume: %@", error);
                 }
             }];
+            // show the map 
         }
         
         // hide the venue info until we load the resume data
@@ -239,6 +251,7 @@ static GRMustacheTemplate *postBadgesTemplate;
                                 (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor],
                                 nil]
      ];
+//    [self.mapView removeFromSuperview];
         
     // set LeagueGothic font where applicable
     [CPUIHelper changeFontForLabel:self.checkedIn toLeagueGothicOfSize:24];
@@ -366,8 +379,17 @@ static GRMustacheTemplate *postBadgesTemplate;
         CLLocation *myLocation = [CPAppDelegate locationManager].location;
         CLLocation *otherUserLocation = [[CLLocation alloc] initWithLatitude:self.user.location.latitude longitude:self.user.location.longitude];
         NSString *distance = [CPUtils localizedDistanceofLocationA:myLocation awayFromLocationB:otherUserLocation];
-        self.distanceLabel.text = distance;
         
+        [self.scrollView insertSubview:self.mapView atIndex:0];
+        [UIView animateWithDuration:0.3 animations:^{
+            self.mapView.alpha = 1;
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:1 animations:^{
+                self.distanceLabel.text = distance;
+                self.distanceLabel.alpha = 1;
+                self.mapMarker.alpha = 1;
+            }];
+        }];
         self.mapAndDistanceLoaded = YES;
     }
 }
