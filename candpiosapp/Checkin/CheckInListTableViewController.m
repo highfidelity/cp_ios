@@ -6,10 +6,10 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 
 #import "CheckInListTableViewController.h"
-#import "CPVenue.h"
 #import "CheckInDetailsViewController.h"
 #import "CheckInListCell.h"
 #import "FoursquareAPIRequest.h"
+#import "CPUserSessionHandler.h"
 
 @interface CheckInListTableViewController()
 
@@ -263,7 +263,7 @@
         // Tell the user they aren't logged in and show them the Signup Page
         [SVProgressHUD showErrorWithStatus:@"You must be logged in to C&P in order to check in."
                                   duration:kDefaultDismissDelay];
-        [CPAppDelegate performSelector:@selector(showSignupModalFromViewController:animated:) withObject:self afterDelay:kDefaultDismissDelay];
+        [CPUserSessionHandler performSelector:@selector(showSignupModalFromViewController:animated:) withObject:self afterDelay:kDefaultDismissDelay];
     }
 }
 
