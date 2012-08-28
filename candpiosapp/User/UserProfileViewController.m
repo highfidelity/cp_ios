@@ -115,7 +115,8 @@ static GRMustacheTemplate *postBadgesTemplate;
     self.resumeEarned.text = @"";
     self.loveReceived.text = @"";
     self.resumeWebView.alpha = 0.0;
-
+    self.checkedIn.text = @"Loading";
+    
     // reset the map
     self.distanceLabel.text = @"";
     self.mapMarker.alpha = 0;
@@ -125,13 +126,15 @@ static GRMustacheTemplate *postBadgesTemplate;
         [self.mapView removeFromSuperview];
     }
     
+    // hide the venue info until we load the resume data
+    self.venueView.alpha = 0.0;
+    self.availabilityView.alpha = 0.0;
 }
+
 - (void)setUser:(User *)newUser
 {
     // assign the user
     _user = newUser;
-    
-    [self prepareForReuse];
     
     if (_user) {
         // set the booleans this VC uses in later control statements
@@ -155,12 +158,9 @@ static GRMustacheTemplate *postBadgesTemplate;
             
         }
         
-        // update labels
         // set the labels on the user business card
         self.cardNickname.text = self.user.nickname;
-        
         [self setUserStatusWithQuotes:self.user.status];
-        
         self.cardJobPosition.text = self.user.jobTitle;
         
         // set the navigation controller title to the user's nickname
@@ -183,34 +183,24 @@ static GRMustacheTemplate *postBadgesTemplate;
             // get a user object with resume data
             [self.user loadUserResumeData:^(NSError *error) {
                 if (!error) {
+                    // fill out the resume and unlock the scrollView
                     NSLog(@"Received resume response.");
-                    // unlock the scrollView
-                    self.scrollView.scrollEnabled = YES;
-                    // resume has loaded, change the label and remove the animated dots
-                    [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
-                    [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:NO];
-                    self.resumeLabel.text = @"Resume";
-                    
                     [self placeUserDataOnProfile];
+                    self.scrollView.scrollEnabled = YES;
                 } else {
                     // error checking for load of user
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Resume Load" 
+                    NSLog(@"Error loading resume: %@", error);
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Resume Load"
                                                                     message:@"An error has occurred while loading the resume.  Try again later." delegate:nil 
                                                           cancelButtonTitle:@"OK" 
                                                           otherButtonTitles:nil];
                     [alert show];
-                    [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
-                    [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:NO];
-                    NSLog(@"Error loading resume: %@", error);
                 }
+                // stop animating the label ellipsis
+                [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
+                [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:NO];
             }];
-            // show the map 
         }
-        
-        // hide the venue info until we load the resume data
-        self.venueView.alpha = 0.0;
-        self.availabilityView.alpha = 0.0;
-        
     }
 }
 
@@ -251,11 +241,11 @@ static GRMustacheTemplate *postBadgesTemplate;
                                 (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor],
                                 nil]
      ];
-//    [self.mapView removeFromSuperview];
+    [self prepareForReuse];
         
     // set LeagueGothic font where applicable
     [CPUIHelper changeFontForLabel:self.checkedIn toLeagueGothicOfSize:24];
-    [CPUIHelper changeFontForLabel:self.resumeLabel toLeagueGothicOfSize:24];
+    [CPUIHelper changeFontForLabel:self.resumeLabel toLeagueGothicOfSize:26];
     [CPUIHelper changeFontForLabel:self.cardNickname toLeagueGothicOfSize:28];
     
     // set the paper background color where applicable

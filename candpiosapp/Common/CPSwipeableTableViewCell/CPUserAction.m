@@ -20,6 +20,8 @@ static UserProfileViewController* userProfileViewController;
 {
     if (!userProfileViewController) {
         userProfileViewController = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+    } else {
+        [userProfileViewController prepareForReuse];
     }
     return userProfileViewController;
 }
@@ -80,7 +82,7 @@ static UserProfileViewController* userProfileViewController;
                 [SVProgressHUD showErrorWithStatus:errorMessage
                                           duration:kDefaultDismissDelay];
             } else {
-                // push the UserProfileViewController onto the navigation controller stack
+                // push the chat controller
                 OneOnOneChatViewController *chatViewController = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"OneOnOneChatView"];
                 chatViewController.user = cell.user; 
                 [viewController.navigationController pushViewController:chatViewController animated:YES];
@@ -130,16 +132,15 @@ static UserProfileViewController* userProfileViewController;
         cell.selected = NO;
         return;
     }
-    UserProfileViewController *userVC = [CPUserAction userProfileViewController];
-    [userVC prepareForReuse];
-    userVC.title = cell.user.nickname;
+    UserProfileViewController *userProfileViewController = [CPUserAction userProfileViewController];
+    userProfileViewController.title = cell.user.nickname;
     
     // push the UserProfileViewController onto the navigation controller stack
     NSLog(@"Push Profile called.");
-    [viewController.navigationController pushViewController:userVC animated:YES];
+    [viewController.navigationController pushViewController:userProfileViewController animated:YES];
     NSLog(@"Push Profile returned.");
     // set the user object on the UserProfileVC to the user we just created
-    userVC.user = cell.user;
+    userProfileViewController.user = cell.user;
 }
 
 

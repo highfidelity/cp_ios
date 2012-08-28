@@ -703,12 +703,14 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // assign user to user view controller and push
-    UserProfileViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+    // push the user profile
+    UserProfileViewController *userProfileViewController =
+        [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
     VenueUserCell *cell = (VenueUserCell *)[tableView cellForRowAtIndexPath:indexPath];
-    userVC.user = cell.user;
-    [self.navigationController pushViewController:userVC animated:YES];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];    
+    userProfileViewController.title = cell.user.nickname;
+    [self.navigationController pushViewController:userProfileViewController animated:YES];
+    userProfileViewController.user = cell.user;
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - Table view data source
