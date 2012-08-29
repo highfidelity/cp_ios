@@ -89,13 +89,13 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
         }
     }
     
-    NSString *token = [pairs objectForKey:@"oauth_token"];
     NSString *verifier = [pairs objectForKey:@"oauth_verifier"];
     
     // Now get the final auth token
     OAConsumer *consumer = [[OAConsumer alloc] initWithKey:kLinkedInKey secret:kLinkedInSecret];
     
     // TODO: Probably need to remove requestToken here and use the one passed
+    //        NSString *token = [pairs objectForKey:@"oauth_token"];
     //        OAToken *requestToken = [[OAToken alloc] initWithKey:token secret:nil];
     
     OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://api.linkedin.com/uas/oauth/accessToken"]
