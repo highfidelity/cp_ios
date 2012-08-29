@@ -16,5 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *senderProfileButton;
 @property (weak, nonatomic) IBOutlet UILabel *entryLabel;
 @property (nonatomic, strong) CPPost* post;
+@property (strong, nonatomic) CAGradientLayer *gradientLayer;
 
+- (void)updateGradientAndSetVisible:(BOOL)visible;
 @end

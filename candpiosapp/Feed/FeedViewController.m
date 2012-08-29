@@ -174,8 +174,17 @@ typedef enum {
 
 - (CGFloat)labelHeightWithText:(NSString *)text labelWidth:(CGFloat)labelWidth labelFont:(UIFont *)labelFont
 {
+    // limit to 3 lines of text in preview mode
+    return [self labelHeightWithText:text
+                          labelWidth:labelWidth
+                           labelFont:labelFont
+                           maxHeight:(self.selectedVenueFeed ? MAXFLOAT : labelFont.lineHeight * 3)];
+}
+
+- (CGFloat)labelHeightWithText:(NSString *)text labelWidth:(CGFloat)labelWidth labelFont:(UIFont *)labelFont maxHeight:(CGFloat)maxHeight
+{
     return [text sizeWithFont:labelFont
-            constrainedToSize:CGSizeMake(labelWidth, MAXFLOAT) 
+            constrainedToSize:CGSizeMake(labelWidth, maxHeight)
                 lineBreakMode:UILineBreakModeWordWrap].height;
     
 }
@@ -745,7 +754,16 @@ typedef enum {
             entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text
                                                     labelWidth:cell.entryLabel.frame.size.width
                                                      labelFont:cell.entryLabel.font];
+
             cell.entryLabel.frame = entryFrame;
+
+            // fade out the text if we exceed the height requirements
+            CGFloat fullHeight = [self labelHeightWithText:cell.entryLabel.text
+                                                labelWidth:cell.entryLabel.frame.size.width
+                                                 labelFont:cell.entryLabel.font
+                                                 maxHeight:MAXFLOAT];
+            [cell updateGradientAndSetVisible:(fullHeight > entryFrame.size.height)];
+
         }
         
         // setup the entry sender's profile button
