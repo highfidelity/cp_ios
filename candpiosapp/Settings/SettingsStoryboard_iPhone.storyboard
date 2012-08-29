@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12B19" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <development version="4300" identifier="xcode"/>
+        <development version="4400" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
     <scenes>
@@ -629,6 +629,47 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="HelperTextCell" rowHeight="393" id="6zI-B0-pgn">
+                                <rect key="frame" x="0.0" y="66" width="320" height="393"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="392"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="9" baselineAdjustment="alignBaselines" minimumFontSize="10" id="vUI-fA-gQW">
+                                            <rect key="frame" x="23" y="63" width="274" height="195"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <string key="text">Coffee &amp; Power displays the skills you select in your LinkedIn profile to others who want to send you recognition. As they write their recognition message, they are given the chance to map it to one of your listed skills. You cannot select five of your best representative skills on this screen because you must first add some on LinkedIn. To add some:</string>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" numberOfLines="9" baselineAdjustment="alignBaselines" minimumFontSize="10" id="xhT-ZA-0Ed">
+                                            <rect key="frame" x="20" y="240" width="280" height="146"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <string key="text">1) Sign out of C&amp;P
+
+2) Sign in to LinkedIn and select some skills for
+    yourself
+
+3) Sign in to C&amp;P and come back to this screen.
+    Your new skills will automagically be pulled in
+    for you to select.</string>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="We know you have skills! " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Gx2-Hi-fkz">
+                                            <rect key="frame" x="20" y="30" width="280" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                            <color key="textColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1635,14 +1676,6 @@ photo?</string>
         <image name="wallet-lock.png" width="25" height="25"/>
     </resources>
     <classes>
-        <class className="AddFundsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFundsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeWindow:"/>
-                <relationship kind="action" name="goBack:"/>
-                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
         <class className="AutoCheckinCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AutoCheckinCell.h"/>
             <relationships>
@@ -1658,20 +1691,6 @@ photo?</string>
                 <relationship kind="action" name="globalCheckinChanged:"/>
                 <relationship kind="outlet" name="globalCheckinSwitch" candidateClass="UISwitch"/>
             </relationships>
-        </class>
-        <class className="BalanceViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BalanceViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="balanceScrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="pullDownLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="pullIcon" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="transTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="updateTimeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="userBalance" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="BaseLoginController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BaseLoginController.h"/>
         </class>
         <class className="CPTouchableView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CPTouchableView.h"/>
@@ -1789,7 +1808,7 @@ photo?</string>
         <class className="SkillsTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SkillsTableViewController.h"/>
         </class>
-        <class className="SmartererLoginController" superclassName="BaseLoginController">
+        <class className="SmartererLoginController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SmartererLoginController.h"/>
             <relationships>
                 <relationship kind="outlet" name="myWebView" candidateClass="UIWebView"/>
@@ -1805,17 +1824,6 @@ photo?</string>
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TermsOfServiceViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="WalletCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/WalletCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="amountLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="dateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="descriptionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="profileImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="stateImage" candidateClass="UIImageView"/>
             </relationships>
         </class>
     </classes>
