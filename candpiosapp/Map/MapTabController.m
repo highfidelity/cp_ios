@@ -324,8 +324,8 @@ BOOL clearLocations = NO;
         }
         
         BOOL solar = [placeAnn.specialVenueType isEqual:@"solar"];
-        
-        if (!placeAnn.checkinCount > 0) {
+
+        if (!(placeAnn.checkinCount - placeAnn.virtualCheckinCount) > 0) {
             [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO hasVirtual:NO isSolar:solar withLabel:NO];
             [self adjustScaleForPin:pin forNumberOfPeople:placeAnn.weeklyCheckinCount];
         } 
@@ -342,7 +342,7 @@ BOOL clearLocations = NO;
 
             }
         }
-        
+
         pin.enabled = YES;
         pin.canShowCallout = YES;
         
