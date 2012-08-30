@@ -111,6 +111,7 @@
         self.checkinCount = [[json objectForKey:@"checkins"] integerValue];
         self.weeklyCheckinCount = [[json objectForKey:@"checkins_for_week"] integerValue];
         self.intervalCheckinCount = [[json objectForKey:@"checkins_for_interval"] integerValue];
+        self.virtualCheckinCount = [[json objectForKey:@"virtual_checkins"] integerValue];
         self.photoURL = [json objectForKey:@"photo_url"];
         self.specialVenueType = [json objectForKey:@"special_venue_type"];
         self.postsCount = [[json objectForKey:@"posts_count"] unsignedIntValue];

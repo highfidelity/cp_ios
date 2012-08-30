@@ -28,6 +28,7 @@
 @property (nonatomic) int checkinTime;
 @property (nonatomic) int weeklyCheckinCount;
 @property (nonatomic) int intervalCheckinCount;
+@property (nonatomic) int virtualCheckinCount;
 @property (nonatomic) BOOL hasContactAtVenue;
 @property (nonatomic) BOOL autoCheckin;
 @property (nonatomic) NSUInteger postsCount;
