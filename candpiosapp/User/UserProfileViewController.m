@@ -388,6 +388,8 @@ static GRMustacheTemplate *postBadgesTemplate;
 {
     if ([self.user.status length] > 0 && self.user.checkedIn) {
         self.cardStatus.text = [NSString stringWithFormat:@"\"%@\"", status];
+    } else {
+        self.cardStatus.text = @"";
     }
 }
 
