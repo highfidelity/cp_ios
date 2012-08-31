@@ -551,21 +551,41 @@
 
 #pragma mark - CPUserActionCellDelegate Invocations
 
+#define UNHIGHLIGHT_DELAY 0.75
+
 - (void)sendLoveAction {
     if ([self.delegate respondsToSelector:@selector(cell:didSelectSendLoveToUser:)]) {
-        [self.delegate cell:self didSelectSendLoveToUser:self.user];
+        dispatch_after(DISPATCH_TIME_NOW, dispatch_get_current_queue(), ^{
+            self.sendLoveButton.highlighted = YES;
+            [self.delegate cell:self didSelectSendLoveToUser:self.user];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, UNHIGHLIGHT_DELAY * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
+                self.sendLoveButton.highlighted = NO;
+            });
+        });
     }
 }
 
 - (void)sendMessageAction {
     if ([self.delegate respondsToSelector:@selector(cell:didSelectSendMessageToUser:)]) {
-        [self.delegate cell:self didSelectSendMessageToUser:self.user];
+        dispatch_after(DISPATCH_TIME_NOW, dispatch_get_current_queue(), ^{
+            self.sendMessageButton.highlighted = YES;
+            [self.delegate cell:self didSelectSendMessageToUser:self.user];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, UNHIGHLIGHT_DELAY * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
+                self.sendMessageButton.highlighted = NO;
+            });
+        });
     }
 }
 
 - (void)exchangeContactsAction {
     if ([self.delegate respondsToSelector:@selector(cell:didSelectExchangeContactsWithUser:)]) {
-        [self.delegate cell:self didSelectExchangeContactsWithUser:self.user];
+        dispatch_after(DISPATCH_TIME_NOW, dispatch_get_current_queue(), ^{
+            self.exchangeContactsButton.highlighted = YES;
+            [self.delegate cell:self didSelectExchangeContactsWithUser:self.user];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, UNHIGHLIGHT_DELAY * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
+                self.exchangeContactsButton.highlighted = NO;
+            });
+        });
     }
 }
 
