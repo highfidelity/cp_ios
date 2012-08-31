@@ -18,7 +18,7 @@ static NSDateFormatter *postDateFormatter;
     if (!postDateFormatter) {
         postDateFormatter = [[NSDateFormatter alloc] init];
         postDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-        postDateFormatter.timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+        postDateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
     }
 }
 

@@ -700,16 +700,15 @@ typedef enum {
                         
                         if (!logFormatter) {
                             logFormatter = [[NSDateFormatter alloc] init];
-                            [logFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+                            logFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+                            logFormatter.AMSymbol = @"a";
+                            logFormatter.PMSymbol = @"p";
                         }
-                        
+
                         // setup the format for the time label
                         logFormatter.dateFormat = @"h:mma";
                         updateCell.timeLabel.text = [logFormatter stringFromDate:post.date];
-                        // replace either AM or PM with lowercase a or p
-                        updateCell.timeLabel.text = [updateCell.timeLabel.text stringByReplacingOccurrencesOfString:@"AM" withString:@"a"];
-                        updateCell.timeLabel.text = [updateCell.timeLabel.text stringByReplacingOccurrencesOfString:@"PM" withString:@"p"];
-                        
+
                         // setup the format for the date label
                         logFormatter.dateFormat = @"MMM d";
                         updateCell.dateLabel.text = [logFormatter stringFromDate:post.date];
