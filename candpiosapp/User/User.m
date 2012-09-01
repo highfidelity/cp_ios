@@ -219,9 +219,13 @@
     return YES;
 }
 
--(void)loadUserResumeData:(void (^)(NSError *error))completion {
+- (void)loadUserResumeOnQueue:(NSOperationQueue *)operationQueue
+                  completion:(void (^)(NSError *error))completion
+{
     
-    [CPapi getResumeForUserId:self.userID andCompletion:^(NSDictionary *response, NSError *error) {
+    [CPapi getResumeForUserId:self.userID
+                        queue:operationQueue
+                   completion:^(NSDictionary *response, NSError *error) {
 
         BOOL respError = [[response objectForKey:@"error"] boolValue];
         if (!error && !respError) {

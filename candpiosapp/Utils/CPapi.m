@@ -93,7 +93,7 @@
 
 // Private method to perform HTTP Requests to the C&P API
 + (void)makeHTTPRequestWithAction:(NSString *)action 
-                   withParameters:(NSMutableDictionary *)parameters 
+                   withParameters:(NSMutableDictionary *)parameters
                        completion:(void (^)(NSDictionary *, NSError *))completion
 {
     [self makeHTTPRequestWithAction:action withParameters:parameters queue:nil completion:completion];
@@ -816,7 +816,8 @@
 }
 
 + (void)getResumeForUserId:(int)userId
-             andCompletion:(void (^)(NSDictionary *, NSError *))completion
+                     queue:(NSOperationQueue *)operationQueue
+             completion:(void (^)(NSDictionary *, NSError *))completion
 {
     // params dict with user id
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d", userId], @"user_id", nil];
@@ -824,6 +825,7 @@
     // make the request
     [self makeHTTPRequestWithAction:@"getResume"
                      withParameters:parameters
+                              queue:operationQueue
                          completion:completion];
 }
 

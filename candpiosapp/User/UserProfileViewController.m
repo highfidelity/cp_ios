@@ -56,10 +56,12 @@
 @property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
 @property (weak, nonatomic) IBOutlet UILabel *propNoteLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *mapMarker;
+@property (strong, nonatomic) NSOperationQueue *operationQueue;
 @property (nonatomic) BOOL firstLoad;
 @property (nonatomic) int othersAtPlace;
 @property (nonatomic) NSInteger selectedFavoriteVenueIndex;
 @property (nonatomic) BOOL mapAndDistanceLoaded;
+@property (nonatomic) BOOL isCancelling;
 
 -(NSString *)htmlStringWithResumeText;
 -(IBAction)plusButtonPressed:(id)sender;
@@ -181,7 +183,7 @@ static GRMustacheTemplate *postBadgesTemplate;
             [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:YES];
             
             // get a user object with resume data
-            [self.user loadUserResumeData:^(NSError *error) {
+            [self.user loadUserResumeOnQueue:self.operationQueue completion:^(NSError *error) {
                 if (!error) {
                     // fill out the resume and unlock the scrollView
                     NSLog(@"Received resume response.");
@@ -221,6 +223,9 @@ static GRMustacheTemplate *postBadgesTemplate;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    // keep our own queue, so we can safely cancel
+    self.operationQueue = [NSOperationQueue new];
+    
     // when pulling the scroll view top down, present the map
     self.mapView.frame = CGRectUnion(self.mapView.frame, 
                                      CGRectOffset(self.mapView.frame, 0, -self.mapView.frame.size.height));
@@ -262,9 +267,24 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    // bail out of ongoing operations to keep the ui responsive
+    self.isCancelling = YES;
+
+    if (self.operationQueue.operationCount) {
+        [self.operationQueue cancelAllOperations];
+    }
+    if (self.resumeWebView.isLoading) {
+        [self.resumeWebView stopLoading];
+    }
     [self.navigationController.navigationBar removeGestureRecognizer:_tapRecon];
     _tapRecon = nil;
+
     [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    self.isCancelling = NO;
+    [super viewDidDisappear:animated];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -295,6 +315,7 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 - (void)updateLastUserCheckin
 {
+    if (self.isCancelling) { return; }
     if (self.firstLoad) {
         // if the user is checked in show how much longer they'll be available for
         if ([self.user.checkoutEpoch timeIntervalSinceNow] > 0) {
@@ -355,7 +376,7 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 - (void)updateMapAndDistanceToUser
 {
-    if (!self.mapAndDistanceLoaded) {
+    if (!self.mapAndDistanceLoaded && !self.isCancelling) {
         // make an MKCoordinate region for the zoom level on the map
         MKCoordinateRegion region = MKCoordinateRegionMake(self.user.location, MKCoordinateSpanMake(0.005, 0.005));
         [self.mapView setRegion:region];
@@ -374,11 +395,13 @@ static GRMustacheTemplate *postBadgesTemplate;
         [UIView animateWithDuration:0.3 animations:^{
             self.mapView.alpha = 1;
         } completion:^(BOOL finished) {
-            [UIView animateWithDuration:1 animations:^{
-                self.distanceLabel.text = distance;
-                self.distanceLabel.alpha = 1;
-                self.mapMarker.alpha = 1;
-            }];
+            if (finished && !self.isCancelling) {
+                [UIView animateWithDuration:1 animations:^{
+                    self.distanceLabel.text = distance;
+                    self.distanceLabel.alpha = 1;
+                    self.mapMarker.alpha = 1;
+                }];
+            }
         }];
         self.mapAndDistanceLoaded = YES;
     }
@@ -398,6 +421,9 @@ static GRMustacheTemplate *postBadgesTemplate;
     
     // dismiss the SVProgressHUD if it's up
     [SVProgressHUD dismiss];
+
+    // bail out if the user hit the back button
+    if (self.isCancelling) { return; }
     
     [CPUIHelper profileImageView:self.cardImage
              withProfileImageUrl:self.user.photoURL];
@@ -429,13 +455,15 @@ static GRMustacheTemplate *postBadgesTemplate;
 - (NSString *)htmlStringWithResumeText {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.user, @"user",nil];
     
-    if (!self.preBadgesHTML) { 
+    if (!self.preBadgesHTML) {
+        if (self.isCancelling) { return @""; }
         GRMustacheTemplate *template = [UserProfileViewController preBadgesTemplate];
         template.delegate = self;
         self.preBadgesHTML = [template renderObject:dictionary];
     }
 
     if (self.user.badges.count > 0) { 
+        if (self.isCancelling) { return @""; }
         GRMustacheTemplate *template = [UserProfileViewController badgesTemplate];
         template.delegate = self;
         self.badgesHTML = [template renderObject:dictionary];        
@@ -443,7 +471,8 @@ static GRMustacheTemplate *postBadgesTemplate;
         self.badgesHTML = @"";
     }
 
-    if (!self.postBadgesHTML) { 
+    if (!self.postBadgesHTML) {
+        if (self.isCancelling) { return @""; }
         NSMutableArray *reviews = [NSMutableArray arrayWithCapacity:[[self.user.reviews objectForKey:@"rows"] count]];
         for (NSDictionary *review in [self.user.reviews objectForKey:@"rows"]) {
             NSMutableDictionary *mutableReview = [NSMutableDictionary dictionaryWithDictionary:review];
@@ -480,7 +509,7 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 - (void) loadBadgesAsync
 {
-    if (self.user.smartererName.length > 0) {
+    if (self.user.smartererName.length) {
         // Get user's current badges asynchronously from smarterer if they've linked their account
         NSString *urlString = [NSString stringWithFormat:@"https://smarterer.com/api/badges/%@", self.user.smartererName];
         NSURL *url = [NSURL URLWithString:urlString];
@@ -503,6 +532,7 @@ static GRMustacheTemplate *postBadgesTemplate;
                                              {
                                                  NSLog(@"%@", error.localizedDescription);
                                              }];
+        [self.operationQueue addOperation:operation];
         [operation start];
     }
 }
