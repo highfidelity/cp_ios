@@ -59,7 +59,11 @@ typedef enum {
     // subscribe to the applicationDidBecomeActive notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleTableViewState) name:@"applicationDidBecomeActive" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newFeedVenueAdded:) name:@"feedVenueAdded" object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(getVenueFeedOrFeedPreviews)
+                                                 name:@"userCheckInStateChange"
+                                               object:nil];
+
     [self reloadFeedPreviewVenues];
 
     [self.tableView addPullToRefreshWithActionHandler:^{
@@ -82,6 +86,7 @@ typedef enum {
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self reloadFeedPreviewVenues];
     [self.tableView reloadData];
 }
 
@@ -937,14 +942,21 @@ typedef enum {
         // create a CPVenueFeed object with the currentVenue as the venue
         CPVenueFeed *currentVenueFeed = [[CPVenueFeed alloc] init];
         currentVenueFeed.venue = currentVenue;
-        
-        // if the currentVenueFeed already exists in the array of venueFeedPreviews
-        // then take it out so it can get added back at the beginning
-        [self.venueFeedPreviews removeObject:currentVenueFeed];
-        
-        // add the current venue feed to the beginning of the array of venue feed previews
-        [self.venueFeedPreviews insertObject:currentVenueFeed atIndex:0];
-    }    
+
+        NSUInteger venueIndex = [self.venueFeedPreviews indexOfObject:currentVenueFeed];
+        if (venueIndex > 0) {
+            if (venueIndex != NSNotFound) {
+                currentVenueFeed = [self.venueFeedPreviews objectAtIndex:venueIndex];
+            }
+            // if the currentVenueFeed already exists in the array of venueFeedPreviews
+            // then take it out so it can get added back at the beginning
+            [self.venueFeedPreviews removeObject:currentVenueFeed];
+
+            // add the current venue feed to the beginning of the array of venue feed previews
+            [self.venueFeedPreviews insertObject:currentVenueFeed atIndex:0];
+        }
+
+    }
 
     if (![CPUserDefaultsHandler hasFeedVenues]) {
         // there is nothing saved in the feed venues setting
