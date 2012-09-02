@@ -10,6 +10,9 @@
 #import "CPCheckinHandler.h"
 #import "EnterInvitationCodeViewController.h"
 #import "PushModalViewControllerFromLeftSegue.h"
+#import "SSKeychain.h"
+#import "CPConstants.h"
+#import "LinkedInLoginController.h"
 
 @implementation CPUserSessionHandler
 
@@ -66,16 +69,27 @@ static CPUserSessionHandler *sharedHandler;
     }
 }
 
-+ (void)logoutEverything
++ (void)flushCookiesForURL:(NSString*)url
 {
 	// clear out the cookies
-	NSArray *httpscookies3 = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:kCandPWebServiceUrl]];
+	NSArray *httpscookies3 = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:url]];
 	
 	[httpscookies3 enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 		NSHTTPCookie *cookie = (NSHTTPCookie*)obj;
 		[[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
 	}];
-    
+}
+
++ (void)logoutEverything
+{
+    // clear C&P cookies
+    [CPUserSessionHandler flushCookiesForURL:kCandPWebServiceSecureUrl];
+
+    // clear linkedin secrets & cookies
+    [CPUserSessionHandler flushCookiesForURL:kLinkedInAPIUrl];
+    [LinkedInLoginController linkedInLogout];
+	    
+    // alert to state change
     if ([CPUserDefaultsHandler currentUser]) {
         [CPUserDefaultsHandler setCurrentUser:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];

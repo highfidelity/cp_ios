@@ -28,6 +28,7 @@ extern  NSString* const kTestFlightKey;
 extern  NSString* const kUserVoiceSite;
 extern  NSString* const kUserVoiceKey;
 extern  NSString* const kUserVoiceSecret;
+extern  NSString* const kLinkedInAPIUrl;
 
 extern int const kDefaultDismissDelay;
 

@@ -18,9 +18,6 @@
 {
     [super viewDidLoad];
     
-    // Do any additional setup after loading the view from its nib.
-    [CPUIHelper makeButtonCPButton:self.dismissButton
-                 withCPButtonColor:CPButtonGrey];
     [FlurryAnalytics logEvent:@"signupScreen"];
     
     // if this is being presented inside the app from the UITabBarController
@@ -37,7 +34,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationItem setHidesBackButton:YES animated:NO];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
     self.title = @"Log In";
     // Set the back button that will appear in pushed views
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" 
@@ -46,14 +43,15 @@
                                                                             action:nil];
     // prepare for the icons to fade in
     self.linkedinLoginButton.alpha = 0.0;
+    self.dismissButton.alpha = 0.0;
 }
 
 - (void) viewDidAppear:(BOOL)animated {
     // fade in the icons to direct user attention at them
-    [UIView beginAnimations:@"" context:nil];
-    [UIView setAnimationDuration:0.3];
-    self.linkedinLoginButton.alpha = 1.0;
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.linkedinLoginButton.alpha = 1.0;
+        self.dismissButton.alpha = 1.0;
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
