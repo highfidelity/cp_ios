@@ -135,7 +135,8 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     
     // invalidate the token
     OAConsumer *consumer = [[OAConsumer alloc] initWithKey:kLinkedInKey secret:kLinkedInSecret];
-    OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://api.linkedin.com/uas/oauth/invalidateToken"]
+    NSURL *url = [NSURL URLWithString:[kLinkedInAPIUrl stringByAppendingString:@"/uas/oauth/invalidateToken"]];
+    OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
                                                                    consumer:consumer
                                                                       token:nil
                                                                       realm:nil
@@ -158,8 +159,8 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     NSLog(@"LinkedIn Login");
     self.requestToken = nil;
     OAConsumer *consumer = [[OAConsumer alloc] initWithKey:kLinkedInKey secret:kLinkedInSecret];
-    
-    OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://api.linkedin.com/uas/oauth/requestToken"]
+    NSURL *url = [NSURL URLWithString:[kLinkedInAPIUrl stringByAppendingString:@"/uas/oauth/requestToken"]];
+    OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
                                                                    consumer:consumer
                                                                       token:nil
                                                                       realm:nil
