@@ -20,4 +20,6 @@
 - (void)loadLinkedInConnectionsWithCompletion:(void(^)(void))completionBlock;
 - (void)handleLinkedInLogin:(NSString*)fullName linkedinID:(NSString *)linkedinID password:(NSString*)password email:(NSString *)email oauthToken:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret;
 
++ (void)linkedInLogout;
+
 @end
