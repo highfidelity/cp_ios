@@ -120,7 +120,9 @@ static GRMustacheTemplate *postBadgesTemplate;
     UIButton *backButton = sender;
     dispatch_async(dispatch_get_main_queue(), ^{
         backButton.highlighted = YES;
-        [self.navigationController popViewControllerAnimated:YES];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.05 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+        });
     });
 }
 
