@@ -219,9 +219,13 @@
     return YES;
 }
 
--(void)loadUserResumeData:(void (^)(NSError *error))completion {
+- (void)loadUserResumeOnQueue:(NSOperationQueue *)operationQueue
+                  completion:(void (^)(NSError *error))completion
+{
     
-    [CPapi getResumeForUserId:self.userID andCompletion:^(NSDictionary *response, NSError *error) {
+    [CPapi getResumeForUserId:self.userID
+                        queue:operationQueue
+                   completion:^(NSDictionary *response, NSError *error) {
 
         BOOL respError = [[response objectForKey:@"error"] boolValue];
         if (!error && !respError) {
@@ -380,8 +384,13 @@
 - (NSComparisonResult) compareDistanceToUser:(User *)otherUser {
     NSNumber *distanceA = [NSNumber numberWithDouble:self.distance];
     NSNumber *distanceB = [NSNumber numberWithDouble:otherUser.distance];
-    
-    return [distanceA compare:distanceB];
+    NSComparisonResult distanceComparison = [distanceA compare:distanceB];
+    if (distanceComparison == NSOrderedSame) {
+        // order by case insensitive nicknames to keep sorting stable
+        return [self.nickname compare:otherUser.nickname options:NSCaseInsensitiveSearch];
+    } else {
+        return distanceComparison;
+    }
 }
 
 @end

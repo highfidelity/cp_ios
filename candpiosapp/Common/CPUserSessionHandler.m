@@ -169,7 +169,7 @@ static CPUserSessionHandler *sharedHandler;
         User *webSyncUser = [[User alloc] init];
         webSyncUser.userID = currentUser.userID;
         
-        [webSyncUser loadUserResumeData:^(NSError *error) {
+        [webSyncUser loadUserResumeOnQueue:nil completion:^(NSError *error) {
             if (!error) {
                 // TODO: make this a better solution by checking for a problem with the PHP session cookie in CPApi
                 // for now if the email comes back null this person isn't logged in so we're going to send them to do that.

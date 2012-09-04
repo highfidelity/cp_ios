@@ -60,9 +60,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    // setup the tableView with whatever we already have
-    [self filterData];
-    
     // tell the map to reload data
     // we'll get a notification when that's done to reload ours
     [self.delegate refreshButtonClicked:nil];
@@ -86,7 +83,6 @@
 }
 
 - (void)filterData {
-    
     // Iterate through the passed missions and only show the ones that were within the map bounds, ordered by distance
 
     CLLocation *currentLocation = [CPAppDelegate locationManager].location;

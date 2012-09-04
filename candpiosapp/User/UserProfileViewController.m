@@ -56,10 +56,13 @@
 @property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
 @property (weak, nonatomic) IBOutlet UILabel *propNoteLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *mapMarker;
+@property (strong, nonatomic) NSOperationQueue *operationQueue;
 @property (nonatomic) BOOL firstLoad;
 @property (nonatomic) int othersAtPlace;
 @property (nonatomic) NSInteger selectedFavoriteVenueIndex;
 @property (nonatomic) BOOL mapAndDistanceLoaded;
+@property (nonatomic) BOOL isCancelling;
+@property (nonatomic) BOOL ellipsisAnimating;
 
 -(NSString *)htmlStringWithResumeText;
 -(IBAction)plusButtonPressed:(id)sender;
@@ -95,6 +98,34 @@ static GRMustacheTemplate *postBadgesTemplate;
     return badgesTemplate;
 }
 
+- (void)updateBackButton
+{
+    // use a custom back button so we can highlight on popping the view controller
+    UIImage *buttonImage = [[UIImage imageNamed:@"back-button.png"] stretchableImageWithLeftCapWidth:17 topCapHeight:0];
+    NSArray *items = self.navigationController.navigationBar.items;
+    NSString *buttonTitle = [items.lastObject title];
+    UIFont *font = [UIFont fontWithName:@"LeagueGothic" size:16];
+    CGRect rect = CGRectMake(0, 0, [buttonTitle sizeWithFont:font].width + buttonImage.size.width, buttonImage.size.height);
+    UIButton *backButton = [[UIButton alloc] initWithFrame:rect];
+    [backButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    backButton.titleLabel.font = font;
+    backButton.titleEdgeInsets = UIEdgeInsetsMake(3, 12, 0, 0);
+    [backButton setTitle:buttonTitle forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+}
+
+- (void)backButtonPressed:(id)sender
+{
+    UIButton *backButton = sender;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        backButton.highlighted = YES;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.05 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+    });
+}
+
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Profile"
@@ -104,6 +135,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     }
     return self;
 }
+
 - (void)prepareForReuse
 {
     // reset the resume
@@ -177,11 +209,12 @@ static GRMustacheTemplate *postBadgesTemplate;
             // lock the scrollView
             self.scrollView.scrollEnabled = NO;
             // put three animated dots after the Loading Resume text
+            self.ellipsisAnimating = YES;
             [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:YES];
             [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:YES];
             
             // get a user object with resume data
-            [self.user loadUserResumeData:^(NSError *error) {
+            [self.user loadUserResumeOnQueue:self.operationQueue completion:^(NSError *error) {
                 if (!error) {
                     // fill out the resume and unlock the scrollView
                     NSLog(@"Received resume response.");
@@ -196,9 +229,6 @@ static GRMustacheTemplate *postBadgesTemplate;
                                                           otherButtonTitles:nil];
                     [alert show];
                 }
-                // stop animating the label ellipsis
-                [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
-                [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:NO];
             }];
         }
     }
@@ -221,6 +251,10 @@ static GRMustacheTemplate *postBadgesTemplate;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    // keep our own queue, so we can safely cancel
+    self.operationQueue = [NSOperationQueue new];
+    
     // when pulling the scroll view top down, present the map
     self.mapView.frame = CGRectUnion(self.mapView.frame, 
                                      CGRectOffset(self.mapView.frame, 0, -self.mapView.frame.size.height));
@@ -259,18 +293,47 @@ static GRMustacheTemplate *postBadgesTemplate;
     [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     [CPUIHelper addShadowToView:self.resumeView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
 }
+-(void)cancelEllipsis
+{
+    if (self.ellipsisAnimating) {
+        // cancelled operations will leave ellipsis animating
+        [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
+        [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:NO];
+        self.ellipsisAnimating = NO;
+    }
+}
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    // bail out of ongoing operations to keep the ui responsive
+    self.isCancelling = YES;
+
+    [self cancelEllipsis];
+    
+    if (self.operationQueue.operationCount) {
+        [self.operationQueue cancelAllOperations];
+    }
+    if (self.resumeWebView.isLoading) {
+        [self.resumeWebView stopLoading];
+    }
     [self.navigationController.navigationBar removeGestureRecognizer:_tapRecon];
     _tapRecon = nil;
+
     [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    self.isCancelling = NO;
+    [super viewDidDisappear:animated];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    [self updateBackButton];
+
+    // custom back button to allow event capture
+
     if(!_tapRecon){
         _tapRecon = [[UITapGestureRecognizer alloc]
                      initWithTarget:self action:@selector(navigationBarTitleTap:)];
@@ -283,6 +346,7 @@ static GRMustacheTemplate *postBadgesTemplate;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
     NSLog(@"viewDidAppear:");
 }
 
@@ -295,6 +359,7 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 - (void)updateLastUserCheckin
 {
+    if (self.isCancelling) { return; }
     if (self.firstLoad) {
         // if the user is checked in show how much longer they'll be available for
         if ([self.user.checkoutEpoch timeIntervalSinceNow] > 0) {
@@ -355,7 +420,7 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 - (void)updateMapAndDistanceToUser
 {
-    if (!self.mapAndDistanceLoaded) {
+    if (!self.mapAndDistanceLoaded && !self.isCancelling) {
         // make an MKCoordinate region for the zoom level on the map
         MKCoordinateRegion region = MKCoordinateRegionMake(self.user.location, MKCoordinateSpanMake(0.005, 0.005));
         [self.mapView setRegion:region];
@@ -371,14 +436,16 @@ static GRMustacheTemplate *postBadgesTemplate;
         NSString *distance = [CPUtils localizedDistanceofLocationA:myLocation awayFromLocationB:otherUserLocation];
         
         [self.scrollView insertSubview:self.mapView atIndex:0];
+        self.distanceLabel.text = distance;
         [UIView animateWithDuration:0.3 animations:^{
             self.mapView.alpha = 1;
         } completion:^(BOOL finished) {
-            [UIView animateWithDuration:1 animations:^{
-                self.distanceLabel.text = distance;
-                self.distanceLabel.alpha = 1;
-                self.mapMarker.alpha = 1;
-            }];
+            if (finished && !self.isCancelling) {
+                [UIView animateWithDuration:1 animations:^{
+                    self.distanceLabel.alpha = 1;
+                    self.mapMarker.alpha = 1;
+                }];
+            }
         }];
         self.mapAndDistanceLoaded = YES;
     }
@@ -398,6 +465,9 @@ static GRMustacheTemplate *postBadgesTemplate;
     
     // dismiss the SVProgressHUD if it's up
     [SVProgressHUD dismiss];
+
+    // bail out if the user hit the back button
+    if (self.isCancelling) { return; }
     
     [CPUIHelper profileImageView:self.cardImage
              withProfileImageUrl:self.user.photoURL];
@@ -418,24 +488,32 @@ static GRMustacheTemplate *postBadgesTemplate;
     self.loveReceived.text = [self.user.reviews objectForKey:@"love_received"];
     
     [self loadBadgesAsync];
-    // load html into the bottom of the resume view for all the user data
-    NSString *htmlString = [self htmlStringWithResumeText];
-    [self updateResumeWithHTML:htmlString];
-    
-    [self updateLastUserCheckin];
-    [self updateMapAndDistanceToUser];
+    dispatch_queue_t q_profile = dispatch_queue_create("com.candp.profile", NULL);
+    dispatch_async(q_profile, ^{
+        // load html into the bottom of the resume view for all the user data
+        // get the mustache rendering off the main thread
+        NSString *htmlString = [self htmlStringWithResumeText];
+        [self updateResumeWithHTML:htmlString];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self updateMapAndDistanceToUser];
+            [self updateLastUserCheckin];
+            [self cancelEllipsis];
+        });
+    });
 }
 
 - (NSString *)htmlStringWithResumeText {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.user, @"user",nil];
     
-    if (!self.preBadgesHTML) { 
+    if (!self.preBadgesHTML) {
+        if (self.isCancelling) { return @""; }
         GRMustacheTemplate *template = [UserProfileViewController preBadgesTemplate];
         template.delegate = self;
         self.preBadgesHTML = [template renderObject:dictionary];
     }
 
     if (self.user.badges.count > 0) { 
+        if (self.isCancelling) { return @""; }
         GRMustacheTemplate *template = [UserProfileViewController badgesTemplate];
         template.delegate = self;
         self.badgesHTML = [template renderObject:dictionary];        
@@ -443,7 +521,8 @@ static GRMustacheTemplate *postBadgesTemplate;
         self.badgesHTML = @"";
     }
 
-    if (!self.postBadgesHTML) { 
+    if (!self.postBadgesHTML) {
+        if (self.isCancelling) { return @""; }
         NSMutableArray *reviews = [NSMutableArray arrayWithCapacity:[[self.user.reviews objectForKey:@"rows"] count]];
         for (NSDictionary *review in [self.user.reviews objectForKey:@"rows"]) {
             NSMutableDictionary *mutableReview = [NSMutableDictionary dictionaryWithDictionary:review];
@@ -480,7 +559,7 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 - (void) loadBadgesAsync
 {
-    if (self.user.smartererName.length > 0) {
+    if (self.user.smartererName.length) {
         // Get user's current badges asynchronously from smarterer if they've linked their account
         NSString *urlString = [NSString stringWithFormat:@"https://smarterer.com/api/badges/%@", self.user.smartererName];
         NSURL *url = [NSURL URLWithString:urlString];
@@ -503,6 +582,7 @@ static GRMustacheTemplate *postBadgesTemplate;
                                              {
                                                  NSLog(@"%@", error.localizedDescription);
                                              }];
+        [self.operationQueue addOperation:operation];
         [operation start];
     }
 }

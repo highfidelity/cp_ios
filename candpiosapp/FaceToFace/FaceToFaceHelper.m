@@ -51,7 +51,7 @@
     user.userID = userId;
     
     // load the user's data so the F2F invite screen will show it all when it gets presented
-    [user loadUserResumeData:^(NSError *error){
+    [user loadUserResumeOnQueue:nil completion:^(NSError *error){
         if (!error) {     
             f2fVC.user = user;
             

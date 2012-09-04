@@ -64,7 +64,9 @@
 @property (nonatomic) int userID;
 
 
--(void)loadUserResumeData:(void (^)(NSError *error))completion;
+- (void)loadUserResumeOnQueue:(NSOperationQueue *)operationQueue
+                   completion:(void (^)(NSError *error))completion;
+
 -(id)initFromDictionary:(NSDictionary *)userDict;
 -(NSString *)firstName;
 
