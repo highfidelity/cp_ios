@@ -103,7 +103,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     // use a custom back button so we can highlight on popping the view controller
     UIImage *buttonImage = [[UIImage imageNamed:@"back-button.png"] stretchableImageWithLeftCapWidth:17 topCapHeight:0];
     NSArray *items = self.navigationController.navigationBar.items;
-    NSString *buttonTitle = ((UINavigationItem *)[items objectAtIndex:items.count - 1]).title;
+    NSString *buttonTitle = ((UINavigationItem *)items.lastObject).title;
     UIFont *font = [UIFont fontWithName:@"LeagueGothic" size:16];
     CGRect rect = CGRectMake(0, 0, [buttonTitle sizeWithFont:font].width + buttonImage.size.width, buttonImage.size.height);
     UIButton *backButton = [[UIButton alloc] initWithFrame:rect];
