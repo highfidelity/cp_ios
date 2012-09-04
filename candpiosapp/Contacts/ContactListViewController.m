@@ -279,7 +279,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
     NSDictionary *contact = [self contactForIndexPath:indexPath];
 
-    cell.nicknameLabel.text = [contact objectForKey:@"nickname"];
+    cell.nicknameLabel.text = [[contact objectForKey:@"nickname"] gtm_stringByUnescapingFromHTML];
     [CPUIHelper changeFontForLabel:cell.nicknameLabel toLeagueGothicOfSize:18.0];
 
     NSString *status = [contact objectForKey:@"status_text"];
