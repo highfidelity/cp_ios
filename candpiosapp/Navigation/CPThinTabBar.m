@@ -213,7 +213,7 @@ static NSArray *tabBarIcons;
         animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
         [badge.layer addAnimation:animation forKey:@"badgeTextTransition"];
         badge.userInteractionEnabled = NO;
-		[tabBarButton addSubview:badge];
+        [tabBarButton addSubview:badge];
         [self.customBarBadges addObject:badge];
         
         // add the right padding for the next button
