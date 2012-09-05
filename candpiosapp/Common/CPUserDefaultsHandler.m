@@ -35,13 +35,10 @@ NSString* const kUDCurrentUser = @"loggedUser";
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
     
-    if (currentUser.numberOfContactRequests) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNumberOfContactRequestsNotification
-                                                            object:self
-                                                          userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                    currentUser.numberOfContactRequests, @"numberOfContactRequests",
-                                                                    nil]];
-    }
+    // update the contact request badges
+    CPThinTabBar *thinTabBar = (CPThinTabBar *)[[CPAppDelegate  tabBarController] tabBar];
+    [thinTabBar setBadgeNumber:currentUser.numberOfContactRequests
+                    atTabIndex:kContactTabIndex];
 }
 
 + (User *)currentUser

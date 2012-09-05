@@ -94,6 +94,7 @@
 		4EB79F8F15F2C0C2004D254F /* sign-in-later.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB79F8C15F2C0C2004D254F /* sign-in-later.png */; };
 		4EB79F9015F2C0C2004D254F /* sign-up-with-linkedin-active.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB79F8D15F2C0C2004D254F /* sign-up-with-linkedin-active.png */; };
 		4EB79F9215F2C606004D254F /* sign-up-with-linkedin-active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB79F9115F2C606004D254F /* sign-up-with-linkedin-active@2x.png */; };
+		4EB79FBA15F6BE0E004D254F /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB79FB915F6BE0E004D254F /* CustomBadge.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4EB7A15715C0879100691AB2 /* PillPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB7A15615C0879000691AB2 /* PillPopoverViewController.m */; };
 		4EB7A16015C0AA1300691AB2 /* comment-button-popover.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB7A15815C0AA1300691AB2 /* comment-button-popover.png */; };
 		4EB7A16115C0AA1300691AB2 /* comment-button-popover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB7A15915C0AA1300691AB2 /* comment-button-popover@2x.png */; };
@@ -695,6 +696,8 @@
 		4EB79F8C15F2C0C2004D254F /* sign-in-later.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-in-later.png"; sourceTree = "<group>"; };
 		4EB79F8D15F2C0C2004D254F /* sign-up-with-linkedin-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin-active.png"; sourceTree = "<group>"; };
 		4EB79F9115F2C606004D254F /* sign-up-with-linkedin-active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin-active@2x.png"; sourceTree = "<group>"; };
+		4EB79FB815F6BE0E004D254F /* CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBadge.h; sourceTree = "<group>"; };
+		4EB79FB915F6BE0E004D254F /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomBadge.m; sourceTree = "<group>"; };
 		4EB7A15515C0879000691AB2 /* PillPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PillPopoverViewController.h; sourceTree = "<group>"; };
 		4EB7A15615C0879000691AB2 /* PillPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PillPopoverViewController.m; sourceTree = "<group>"; };
 		4EB7A15815C0AA1300691AB2 /* comment-button-popover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment-button-popover.png"; sourceTree = "<group>"; };
@@ -1586,6 +1589,15 @@
 				4E5D552215C0791E005FC2D7 /* popoverBg@2x.png */,
 			);
 			name = images;
+			sourceTree = "<group>";
+		};
+		4EB79FB715F6BE0E004D254F /* CustomBadge */ = {
+			isa = PBXGroup;
+			children = (
+				4EB79FB815F6BE0E004D254F /* CustomBadge.h */,
+				4EB79FB915F6BE0E004D254F /* CustomBadge.m */,
+			);
+			path = CustomBadge;
 			sourceTree = "<group>";
 		};
 		5308DD0215D5E5DF00B4EBC2 /* images */ = {
@@ -2530,6 +2542,7 @@
 		871EFB6014AF97130030658B /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
+				4EB79FB715F6BE0E004D254F /* CustomBadge */,
 				871EFB6114AF97130030658B /* AFNetworking */,
 				3267F51014D9196800BFFBAA /* Airship */,
 				320604A114D5BBA40035A88D /* FlurryAnalytics */,
@@ -3241,6 +3254,7 @@
 				530FC24815D4389D00838B5A /* SignupController.m in Sources */,
 				4E569BCA15E2FE7A00177176 /* VenueUserCell.m in Sources */,
 				4EF559C915E8533200DAE3BA /* VenueCategoryCell.m in Sources */,
+				4EB79FBA15F6BE0E004D254F /* CustomBadge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
