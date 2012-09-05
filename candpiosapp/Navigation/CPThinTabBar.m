@@ -7,11 +7,15 @@
 //
 
 #import "CPThinTabBar.h"
+#import "CustomBadge.h"
+
+#define kBadgeAnimationDuration 0.5
 
 @interface CPThinTabBar()
 
 @property (strong, nonatomic) UIView *thinBarBackground;
 @property (strong, nonatomic) NSMutableArray *customBarButtons;
+@property (strong, nonatomic) NSMutableArray *customBarBadges;
 @property (strong, nonatomic) UIView *actionMenu;
 @property (strong, nonatomic) UIView *greenLine;
 @property (strong, nonatomic) NSMutableArray *actionButtonIconImageViews;
@@ -140,11 +144,26 @@ static NSArray *tabBarIcons;
     [self bringSubviewToFront:self.thinBarBackground];
 }
 
+- (void)setBadgeNumber:(NSNumber *)number atTabIndex:(NSUInteger)index
+{
+    CustomBadge *badge = [self.customBarBadges objectAtIndex:index];
+    [UIView animateWithDuration:kBadgeAnimationDuration animations:^{
+        if ([number intValue]) {
+            badge.badgeText = [number stringValue];
+            badge.alpha = 1;
+        } else {
+            badge.alpha = 0;
+        }
+        [badge setNeedsDisplay];
+    }];
+}
+
 - (void)addCustomButtons 
 {
     CGFloat xOrigin = LEFT_AREA_WIDTH;
     
     self.customBarButtons = [NSMutableArray array];
+    self.customBarBadges = [NSMutableArray array];
     
     // create the four buttons that will be added
     for (int i = 0; i < 4; i++) {
@@ -173,6 +192,29 @@ static NSArray *tabBarIcons;
         
         // add the tabBarButton to our array of custom buttons
         [self.customBarButtons addObject:tabBarButton];
+
+        // add badges
+        CustomBadge *badge = [CustomBadge customBadgeWithString:@"?"
+                                                withStringColor:[UIColor whiteColor]
+                                                 withInsetColor:[UIColor redColor]
+                                                 withBadgeFrame:YES
+                                            withBadgeFrameColor:[UIColor whiteColor]
+                                                      withScale:0.8
+                                                    withShining:YES];
+        CGFloat badgeInset = 4.0;
+        badge.frame = CGRectMake(tabBarButton.frame.size.width - badge.frame.size.width - badgeInset,
+                                 badge.frame.origin.y + badgeInset,
+                                 badge.frame.size.width,
+                                 badge.frame.size.height);
+        badge.alpha = 0;
+        CATransition *animation = [CATransition animation];
+        animation.duration = kBadgeAnimationDuration;
+        animation.type = kCATransitionFade;
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        [badge.layer addAnimation:animation forKey:@"badgeTextTransition"];
+        badge.userInteractionEnabled = NO;
+        [tabBarButton addSubview:badge];
+        [self.customBarBadges addObject:badge];
         
         // add the right padding for the next button
         xOrigin += BUTTON_WIDTH;

@@ -50,7 +50,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 - (void)animateRemoveContactRequestAtIndex:(NSUInteger)index;
 - (void)handleSendAcceptOrDeclineComletionWithJson:(NSDictionary *)json andError:(NSError *)error;
 - (void)updateBadgeValue;
-- (void)setBadgeNumber:(NSInteger)badgeNumber;
 - (NSDictionary *)contactForIndexPath:(NSIndexPath *)indexPath;
 - (User *)userForIndexPath:(NSIndexPath *)indexPath;
 
@@ -58,24 +57,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 
 @implementation ContactListViewController
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(numberOfContactRequestsNotification:)
-                                                 name:kNumberOfContactRequestsNotification
-                                               object:nil];
-}
-
-- (void)viewWillUnload
-{
-    [super viewWillUnload];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:kNumberOfContactRequestsNotification
-                                                  object:nil];
-}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -446,12 +427,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     [self updateBadgeValue];
 }
 
-#pragma mark - actions
-
-- (void)numberOfContactRequestsNotification:(NSNotification *)notification {
-    [self setBadgeNumber:[[[notification userInfo] objectForKey:@"numberOfContactRequests"] integerValue]];
-}
-
 #pragma mark - private
 
 - (NSIndexPath *)addToContacts:(NSDictionary *)contactData {
@@ -504,15 +479,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 }
 
 - (void)updateBadgeValue {
-    [self setBadgeNumber:[self.contactRequests count]];
-}
-
-- (void)setBadgeNumber:(NSInteger)badgeNumber {
-    NSString *badgeValue = nil;
-    if (badgeNumber > 0) {
-        badgeValue = [NSString stringWithFormat:@"%d", badgeNumber];
-    }
-    self.navigationController.tabBarItem.badgeValue = badgeValue;
+    [CPUserDefaultsHandler currentUser].numberOfContactRequests = @(self.contactRequests.count);    
 }
 
 - (NSDictionary *)contactForIndexPath:(NSIndexPath *)indexPath {

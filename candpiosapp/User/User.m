@@ -11,6 +11,7 @@
 #import "MapDataSet.h"
 #import "GTMNSString+HTML.h"
 #import "CPCheckinHandler.h"
+#import "ContactListViewController.h"
 
 @implementation User
 
@@ -217,6 +218,17 @@
     }
     
     return YES;
+}
+
+- (void)setNumberOfContactRequests:(NSNumber *)numberOfContactRequests
+{
+    _numberOfContactRequests = numberOfContactRequests;
+    if (self == [CPUserDefaultsHandler currentUser]) {
+        // update our badges
+        CPThinTabBar *thinTabBar = (CPThinTabBar *)[[CPAppDelegate  tabBarController] tabBar];
+        [thinTabBar setBadgeNumber:[CPUserDefaultsHandler currentUser].numberOfContactRequests
+                        atTabIndex:kContactTabIndex];
+    }
 }
 
 - (void)loadUserResumeOnQueue:(NSOperationQueue *)operationQueue
