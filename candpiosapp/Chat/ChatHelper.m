@@ -9,6 +9,7 @@
 #import "ChatHelper.h"
 #import "OneOnOneChatViewController.h"
 #import "CPAlertView.h"
+#import "GTMNSString+HTML.h"
 
 #define kChatAlertTag 8001
 
@@ -19,6 +20,8 @@
                                fromUserId:(NSInteger)userId
                              withRootView:(UIViewController *)rootView
 {
+
+    NSString *unescapedMessage = [message gtm_stringByUnescapingFromHTML];
     OneOnOneChatViewController *chatView = nil;
     UIViewController *lastView = [rootView.childViewControllers lastObject];
 
@@ -45,18 +48,35 @@
         chatView = (OneOnOneChatViewController *)
             [[lastView childViewControllers] lastObject];
     }
-        
+    else {
+        NSUInteger childViewCount = [[rootView childViewControllers] count];
+        UIViewController *parentView = nil;
+        if (childViewCount > 2) {
+            //from people>resume
+            parentView = [rootView.childViewControllers objectAtIndex:2];
+            if ([[[parentView childViewControllers] lastObject] isKindOfClass:[OneOnOneChatViewController class]]) {
+                chatView = [[parentView childViewControllers] lastObject];
+            }
+
+            //from feeds>resume
+            parentView = [rootView.childViewControllers objectAtIndex:0];
+            if ([[[parentView childViewControllers] lastObject] isKindOfClass:[OneOnOneChatViewController class]]) {
+                chatView = [[parentView childViewControllers] lastObject];
+            }
+        }
+    }
+    
     // If the person is in the chat window AND is talking with the user that
     // sent the chat send the message straight to the chat window    
     if (chatView != nil && chatView.user.userID == userId) {
-        [chatView receiveChatText:message];
+        [chatView receiveChatText:unescapedMessage];
     }
     // Otherwise send the message as a popup alert
     else
     {
         NSString *alertMessage = [NSString stringWithFormat:@"%@: %@",
                                   nickname,
-                                  message];
+                                  unescapedMessage];
         CPAlertView *alert = [[CPAlertView alloc]
                               initWithTitle:@"Incoming Chat"
                               message:alertMessage
@@ -66,7 +86,7 @@
         alert.tag = kChatAlertTag;
         
         NSDictionary *chatInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                  message, @"message",
+                                  unescapedMessage, @"message",
                                   [NSString stringWithFormat:@"%d", userId], @"userid",
                                   nickname, @"nickname",
                                   nil];

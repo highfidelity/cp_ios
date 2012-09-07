@@ -7,6 +7,7 @@
 //
 
 #import "OneOnOneChatHistory.h"
+#import "GTMNSString+HTML.h"
 
 @implementation OneOnOneChatHistory
 
@@ -57,7 +58,7 @@
                 //NSLog(@"chatDict: %@", chatDict);
                 
                 // Extract chat text from json...
-                NSString *messageString = [chatDict valueForKey:@"entry_text"];
+                NSString *messageString = [[chatDict valueForKey:@"entry_text"] gtm_stringByUnescapingFromHTML];
                 
                 // Extract user details from json...
                 User *fromUser = nil;
