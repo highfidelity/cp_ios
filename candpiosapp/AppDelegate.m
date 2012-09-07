@@ -550,20 +550,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
         
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:venueVC];
-        [self.tabBarController presentModalViewController:navigationController animated:YES];        
-        
-        // If you want to instead take the user directly to the check-in screen, use the code below
-        
-        //    CheckInDetailsViewController *vc = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil]
-        //                                        instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
-        //    [vc setPlace:venue];
-        //    vc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
-        //                                                                           style:UIBarButtonItemStylePlain
-        //                                                                          target:vc
-        //                                                                          action:@selector(dismissViewControllerAnimated)];
-        //    
-        //    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
-        //    [self.tabBarController presentModalViewController:navigationController animated:YES];
+        [self.tabBarController presentModalViewController:navigationController animated:YES];
     }
     else {
         // Venue wasn't found, so load the normal checkIn screen so the user can select it
