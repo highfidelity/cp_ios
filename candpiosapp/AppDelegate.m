@@ -7,7 +7,7 @@
 //
 
 #import "FaceToFaceHelper.h"
-#import "ChatHelper.h"
+#import "CPChatHelper.h"
 #import "OAuthConsumer.h"
 #import "EnterInvitationCodeViewController.h"
 #import "CheckInDetailsViewController.h"
@@ -298,10 +298,9 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
         NSString *message = [chatParts componentsJoinedByString:@": "];
         NSInteger userId = [[userInfo valueForKey:@"chat"] intValue];
         
-        [ChatHelper respondToIncomingChatNotification:message
+        [CPChatHelper respondToIncomingChatNotification:message
                                          fromNickname:nickname
-                                           fromUserId:userId
-                                         withRootView:self.tabBarController];
+                                           fromUserId:userId];
     } else if ([userInfo valueForKey:@"geofence"]) {
         [[CPGeofenceHandler sharedHandler] handleGeofenceNotification:alertMessage userInfo:userInfo];
     } else if ([userInfo valueForKey:kContactRequestAPNSKey] != nil) {        

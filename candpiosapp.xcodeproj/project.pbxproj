@@ -451,7 +451,7 @@
 		69D5C3591533911300B3530F /* plug-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D5C3551533911300B3530F /* plug-logo@2x.png */; };
 		69E3A73D1573CAC90046E687 /* linkedin-invite.png in Resources */ = {isa = PBXBuildFile; fileRef = 69E3A73B1573CAC80046E687 /* linkedin-invite.png */; };
 		69E3A73E1573CAC90046E687 /* linkedin-invite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69E3A73C1573CAC90046E687 /* linkedin-invite@2x.png */; };
-		6F0B453914F6BCD10074DBD9 /* ChatHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453814F6BCD10074DBD9 /* ChatHelper.m */; };
+		6F0B453914F6BCD10074DBD9 /* CPChatHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453814F6BCD10074DBD9 /* CPChatHelper.m */; };
 		6F0B453C14F6BD560074DBD9 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453B14F6BD560074DBD9 /* ChatMessage.m */; };
 		6F0B453F14F6BD850074DBD9 /* ChatHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453E14F6BD850074DBD9 /* ChatHistory.m */; };
 		6F0B454214F6CEE40074DBD9 /* CPAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B454114F6CEE40074DBD9 /* CPAlertView.m */; };
@@ -1146,8 +1146,8 @@
 		69D5C3551533911300B3530F /* plug-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "plug-logo@2x.png"; path = "Settings/images/plug-logo@2x.png"; sourceTree = "<group>"; };
 		69E3A73B1573CAC80046E687 /* linkedin-invite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "linkedin-invite.png"; path = "candpiosapp/Settings/images/linkedin-invite.png"; sourceTree = SOURCE_ROOT; };
 		69E3A73C1573CAC90046E687 /* linkedin-invite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "linkedin-invite@2x.png"; path = "candpiosapp/Settings/images/linkedin-invite@2x.png"; sourceTree = SOURCE_ROOT; };
-		6F0B453714F6BCC50074DBD9 /* ChatHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatHelper.h; path = candpiosapp/Chat/ChatHelper.h; sourceTree = SOURCE_ROOT; };
-		6F0B453814F6BCD10074DBD9 /* ChatHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatHelper.m; path = candpiosapp/Chat/ChatHelper.m; sourceTree = SOURCE_ROOT; };
+		6F0B453714F6BCC50074DBD9 /* CPChatHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPChatHelper.h; path = candpiosapp/Chat/CPChatHelper.h; sourceTree = SOURCE_ROOT; };
+		6F0B453814F6BCD10074DBD9 /* CPChatHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPChatHelper.m; path = candpiosapp/Chat/CPChatHelper.m; sourceTree = SOURCE_ROOT; };
 		6F0B453A14F6BD560074DBD9 /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ChatMessage.h; path = candpiosapp/Chat/ChatMessage.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		6F0B453B14F6BD560074DBD9 /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatMessage.m; path = candpiosapp/Chat/ChatMessage.m; sourceTree = SOURCE_ROOT; };
 		6F0B453D14F6BD850074DBD9 /* ChatHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ChatHistory.h; path = candpiosapp/Chat/ChatHistory.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -2430,8 +2430,8 @@
 				6F0B453E14F6BD850074DBD9 /* ChatHistory.m */,
 				6FB06646150ACFD00064DC42 /* OneOnOneChatHistory.h */,
 				6FB06647150ACFD00064DC42 /* OneOnOneChatHistory.m */,
-				6F0B453714F6BCC50074DBD9 /* ChatHelper.h */,
-				6F0B453814F6BCD10074DBD9 /* ChatHelper.m */,
+				6F0B453714F6BCC50074DBD9 /* CPChatHelper.h */,
+				6F0B453814F6BCD10074DBD9 /* CPChatHelper.m */,
 				6FF5891D14FEE7E300EFDB56 /* ChatMessageCell.h */,
 				6FF5891E14FEE7E300EFDB56 /* ChatMessageCell.m */,
 			);
@@ -3146,7 +3146,7 @@
 				32B9976814E37B6400713B6E /* SSKeychain.m in Sources */,
 				6F7BA4DB14E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				6F7BA4DC14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m in Sources */,
-				6F0B453914F6BCD10074DBD9 /* ChatHelper.m in Sources */,
+				6F0B453914F6BCD10074DBD9 /* CPChatHelper.m in Sources */,
 				6F0B453C14F6BD560074DBD9 /* ChatMessage.m in Sources */,
 				6F0B453F14F6BD850074DBD9 /* ChatHistory.m in Sources */,
 				6F0B454214F6CEE40074DBD9 /* CPAlertView.m in Sources */,
