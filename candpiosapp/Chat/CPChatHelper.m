@@ -19,7 +19,7 @@ static CPChatHelper *sharedHelper;
 
 + (void)initialize
 {
-    if(!sharedHelper) {
+    if (!sharedHelper) {
         sharedHelper = [[self alloc] init];
     }
 }
