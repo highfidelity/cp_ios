@@ -9,6 +9,7 @@
 #import "OneOnOneChatViewController.h"
 #import "ChatMessage.h"
 #import "ChatMessageCell.h"
+#import "CPChatHelper.h"
 
 float const CHAT_CELL_PADDING_Y           = 12.0f;
 float const CHAT_BUBBLE_PADDING_TOP       = 5.0f;
@@ -30,6 +31,70 @@ static CGFloat const FONTSIZE = 14.0;
 @end
 
 @implementation OneOnOneChatViewController
+
+
+#pragma mark - View lifecycle
+
+
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    // Setup the "me" object. It's a wonder why we don't just hae
+    self.me = [CPUserDefaultsHandler currentUser];
+    
+    self.title = self.user.nickname;
+    
+    self.history = [[OneOnOneChatHistory alloc] initWithMyUser:self.me
+                                                  andOtherUser:self.user];
+    
+    // Load the last few lines of chat
+    void (^afterLoadingHistory)() = ^() {
+        [self.chatContents reloadData];
+        [self scrollToLastChat];
+    };
+    [self.history loadChatHistoryWithSuccessBlock:afterLoadingHistory];
+    
+    // Set up the fancy background on view
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-light.png"]];
+    
+    // Make our chat button FANCY!
+    UIImage *chatButtonImage = [[UIImage imageNamed:@"button-turquoise-32pt.png"]
+                                resizableImageWithCapInsets:UIEdgeInsetsMake(0, 7, 0, 9)];
+    
+    [self.chatButton setBackgroundImage:chatButtonImage forState:UIControlStateNormal];
+    
+    // Set up the chat entry field
+    self.chatEntryField.delegate = self;
+    
+    // Add notifications for keyboard showing / hiding
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    // be the activeChatViewController of the CPChatHelper
+    [CPChatHelper sharedHelper].activeChatViewController = self;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    // no longer the activeChatViewController of the CPChatHelper
+    [CPChatHelper sharedHelper].activeChatViewController = nil;
+}
 
 #pragma mark - Misc Functions
 
@@ -361,72 +426,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {    
     [textField resignFirstResponder];
     return YES;
-}
-
-
-#pragma mark - View lifecycle
-
-
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    // Setup the "me" object. It's a wonder why we don't just hae
-    self.me = [CPUserDefaultsHandler currentUser];
-
-    self.title = self.user.nickname;
-    
-    self.history = [[OneOnOneChatHistory alloc] initWithMyUser:self.me
-                                                  andOtherUser:self.user];
-    
-    // Load the last few lines of chat
-    void (^afterLoadingHistory)() = ^() {
-        [self.chatContents reloadData];
-        [self scrollToLastChat];
-    };
-    [self.history loadChatHistoryWithSuccessBlock:afterLoadingHistory];
-        
-    // Set up the fancy background on view
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-light.png"]];
-    
-    // Make our chat button FANCY!
-    UIImage *chatButtonImage = [[UIImage imageNamed:@"button-turquoise-32pt.png"]
-                                resizableImageWithCapInsets:UIEdgeInsetsMake(0, 7, 0, 9)];
-    
-    [self.chatButton setBackgroundImage:chatButtonImage forState:UIControlStateNormal];
-    
-    // Set up the chat entry field
-    self.chatEntryField.delegate = self;
-    
-    // Add notifications for keyboard showing / hiding
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-    
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil
-               bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
 }
 
 @end
