@@ -604,7 +604,7 @@ void SignalHandler(int sig) {
     if ([alertView.title isEqualToString:kCheckOutLocalNotificationAlertViewTitle]) {
         if (alertView.firstOtherButtonIndex == buttonIndex) {            
             [CPCheckinHandler sharedHandler].checkOutTimer = [NSTimer scheduledTimerWithTimeInterval:300
-                                                                                    target:self
+                                                                                    target:[CPCheckinHandler sharedHandler]
                                                                                   selector:@selector(setCheckedOut) 
                                                                                   userInfo:nil 
                                                                                    repeats:NO];
