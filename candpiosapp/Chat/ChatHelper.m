@@ -52,13 +52,13 @@
         NSUInteger childViewCount = [[rootView childViewControllers] count];
         UIViewController *parentView = nil;
         if (childViewCount > 2) {
-            //from people>resume
+            // from people>resume
             parentView = [rootView.childViewControllers objectAtIndex:2];
             if ([[[parentView childViewControllers] lastObject] isKindOfClass:[OneOnOneChatViewController class]]) {
                 chatView = [[parentView childViewControllers] lastObject];
             }
 
-            //from feeds>resume
+            // from feeds>resume
             parentView = [rootView.childViewControllers objectAtIndex:0];
             if ([[[parentView childViewControllers] lastObject] isKindOfClass:[OneOnOneChatViewController class]]) {
                 chatView = [[parentView childViewControllers] lastObject];
