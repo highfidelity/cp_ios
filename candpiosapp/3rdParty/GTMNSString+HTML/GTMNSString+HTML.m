@@ -30,6 +30,7 @@ typedef struct {
 static HTMLEscapeMap gAsciiHTMLEscapeMap[] = {
 	// A.2.2. Special characters
 	{ @"&quot;", 34 },
+	{ @"&#039;", 34 },
 	{ @"&amp;", 38 },
 	{ @"&apos;", 39 },
 	{ @"&lt;", 60 },

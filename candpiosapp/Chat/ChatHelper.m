@@ -9,6 +9,7 @@
 #import "ChatHelper.h"
 #import "OneOnOneChatViewController.h"
 #import "CPAlertView.h"
+#import "GTMNSString+HTML.h"
 
 #define kChatAlertTag 8001
 
@@ -19,36 +20,63 @@
                                fromUserId:(NSInteger)userId
                              withRootView:(UIViewController *)rootView
 {
+
+    NSString *unescapedMessage = [message gtm_stringByUnescapingFromHTML];
     OneOnOneChatViewController *chatView = nil;
-    
+    UIViewController *lastView = [rootView.childViewControllers lastObject];
+
     // See if we've navigated to the chat view from a user profile
-    if ([[rootView.childViewControllers lastObject]
-         isKindOfClass:[OneOnOneChatViewController class]]) {
+    if ([lastView isKindOfClass:[OneOnOneChatViewController class]]) {
         
         chatView = (OneOnOneChatViewController *) [rootView.childViewControllers lastObject];
     }
     // See if we have a modal chat popup
-    else if ([[[[[rootView.childViewControllers lastObject]
-                 modalViewController]
+    else if ([[[[lastView modalViewController]
+                childViewControllers]
+               lastObject]
+              isKindOfClass:[OneOnOneChatViewController class]])
+    {
+        chatView = (OneOnOneChatViewController *)
+        [[[lastView modalViewController] childViewControllers] lastObject];
+    }    
+    // See if we have a  child chat view
+    else if ([[[lastView
                 childViewControllers]
                lastObject] 
               isKindOfClass:[OneOnOneChatViewController class]])
     {
         chatView = (OneOnOneChatViewController *)
-            [[[[rootView.childViewControllers lastObject] modalViewController] childViewControllers] lastObject];
+            [[lastView childViewControllers] lastObject];
     }
-        
+    else {
+        NSUInteger childViewCount = [[rootView childViewControllers] count];
+        UIViewController *parentView = nil;
+        if (childViewCount > 2) {
+            // from people>resume
+            parentView = [rootView.childViewControllers objectAtIndex:2];
+            if ([[[parentView childViewControllers] lastObject] isKindOfClass:[OneOnOneChatViewController class]]) {
+                chatView = [[parentView childViewControllers] lastObject];
+            }
+
+            // from feeds>resume
+            parentView = [rootView.childViewControllers objectAtIndex:0];
+            if ([[[parentView childViewControllers] lastObject] isKindOfClass:[OneOnOneChatViewController class]]) {
+                chatView = [[parentView childViewControllers] lastObject];
+            }
+        }
+    }
+    
     // If the person is in the chat window AND is talking with the user that
     // sent the chat send the message straight to the chat window    
     if (chatView != nil && chatView.user.userID == userId) {
-        [chatView receiveChatText:message];
+        [chatView receiveChatText:unescapedMessage];
     }
     // Otherwise send the message as a popup alert
     else
     {
         NSString *alertMessage = [NSString stringWithFormat:@"%@: %@",
                                   nickname,
-                                  message];
+                                  unescapedMessage];
         CPAlertView *alert = [[CPAlertView alloc]
                               initWithTitle:@"Incoming Chat"
                               message:alertMessage
@@ -58,7 +86,7 @@
         alert.tag = kChatAlertTag;
         
         NSDictionary *chatInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                  message, @"message",
+                                  unescapedMessage, @"message",
                                   [NSString stringWithFormat:@"%d", userId], @"userid",
                                   nickname, @"nickname",
                                   nil];
