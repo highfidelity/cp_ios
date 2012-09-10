@@ -126,12 +126,41 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     [self linkedInLogin];
 }
 
++ (void)linkedInLogout
+{
+    NSLog(@"LinkedIn Logout");
+    // clear the secrets
+    [SSKeychain deletePasswordForService:@"linkedin" account:@"token"];
+    [SSKeychain deletePasswordForService:@"linkedin" account:@"token_secret"];
+    
+    // invalidate the token
+    OAConsumer *consumer = [[OAConsumer alloc] initWithKey:kLinkedInKey secret:kLinkedInSecret];
+    NSURL *url = [NSURL URLWithString:[kLinkedInAPIUrl stringByAppendingString:@"/uas/oauth/invalidateToken"]];
+    OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
+                                                                   consumer:consumer
+                                                                      token:nil
+                                                                      realm:nil
+                                                          signatureProvider:nil];
+    
+    [request setHTTPMethod:@"POST"];
+    
+    OARequestParameter *scopeParameter = [OARequestParameter requestParameter:@"scope" value:@"r_fullprofile r_network r_emailaddress"];
+    [request setParameters:[NSArray arrayWithObject:scopeParameter]];
+    
+    // fire and forget our invalidate request
+    OADataFetcher *fetcher = [[OADataFetcher alloc] init];
+    [fetcher fetchDataWithRequest:request
+                         delegate:nil
+                didFinishSelector:nil
+                  didFailSelector:nil];
+}
+
 - (void)linkedInLogin {
     NSLog(@"LinkedIn Login");
-    
+    self.requestToken = nil;
     OAConsumer *consumer = [[OAConsumer alloc] initWithKey:kLinkedInKey secret:kLinkedInSecret];
-    
-    OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://api.linkedin.com/uas/oauth/requestToken"]
+    NSURL *url = [NSURL URLWithString:[kLinkedInAPIUrl stringByAppendingString:@"/uas/oauth/requestToken"]];
+    OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
                                                                    consumer:consumer
                                                                       token:nil
                                                                       realm:nil
@@ -381,10 +410,30 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 -(void)webViewDidFinishLoad:(UIWebView *) webView {
 	[self.activityIndicator stopAnimating];
 }
-
 -(void)webViewDidStartLoad:(UIWebView *) webView {
 	[self.activityIndicator startAnimating];
 }
 
-
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    if ([request.URL.scheme isEqualToString:@"http"] || [request.URL.scheme isEqualToString:@"https"]) {
+        if ([request.URL.description rangeOfString:@"candp"].location != NSNotFound ) {
+            // this was a cancel
+            if (webView.isLoading) {
+                [self.activityIndicator stopAnimating];
+                [webView stopLoading];
+            }
+            [self.navigationController popViewControllerAnimated:YES];
+            return NO;
+        } else {
+            return YES;
+        }
+    } else {
+        // handle candp:// url scheme
+        if ([[UIApplication sharedApplication]canOpenURL:request.URL]) {
+            [[UIApplication sharedApplication]openURL:request.URL];
+        }
+        return NO;
+    }
+}
 @end

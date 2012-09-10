@@ -28,6 +28,7 @@ typedef enum {
 - (void)moveGreenLineToSelectedIndex:(NSUInteger)selectedIndex;
 - (void)toggleRightSide:(BOOL)shown;
 - (void)refreshLastTab:(BOOL)loggedIn;
+- (void)setBadgeNumber:(NSNumber *)number atTabIndex:(NSUInteger)index;
 
 + (UIImage *)backgroundImage;
 

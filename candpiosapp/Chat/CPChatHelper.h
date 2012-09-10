@@ -1,5 +1,5 @@
 //
-//  ChatHelper.h
+//  CPChatHelper.h
 //  candpiosapp
 //
 //  Created by Alexi (Love Machine) on 2012/02/23.
@@ -7,12 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OneOnOneChatViewController.h"
 
-@interface ChatHelper : NSObject <UIAlertViewDelegate>
+@interface CPChatHelper : NSObject <UIAlertViewDelegate>
 
+@property (weak, nonatomic) OneOnOneChatViewController *activeChatViewController;
+
++ (CPChatHelper *)sharedHelper;
 + (void)respondToIncomingChatNotification:(NSString *)message
                              fromNickname:(NSString *)nickname
-                               fromUserId:(NSInteger)userId
-                             withRootView:(UIViewController *)rootView;
+                               fromUserId:(NSInteger)userId;
 
 @end

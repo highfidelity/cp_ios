@@ -7,7 +7,7 @@
 //
 
 #import "FaceToFaceHelper.h"
-#import "ChatHelper.h"
+#import "CPChatHelper.h"
 #import "OAuthConsumer.h"
 #import "EnterInvitationCodeViewController.h"
 #import "CheckInDetailsViewController.h"
@@ -298,10 +298,9 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
         NSString *message = [chatParts componentsJoinedByString:@": "];
         NSInteger userId = [[userInfo valueForKey:@"chat"] intValue];
         
-        [ChatHelper respondToIncomingChatNotification:message
+        [CPChatHelper respondToIncomingChatNotification:message
                                          fromNickname:nickname
-                                           fromUserId:userId
-                                         withRootView:self.tabBarController];
+                                           fromUserId:userId];
     } else if ([userInfo valueForKey:@"geofence"]) {
         [[CPGeofenceHandler sharedHandler] handleGeofenceNotification:alertMessage userInfo:userInfo];
     } else if ([userInfo valueForKey:kContactRequestAPNSKey] != nil) {        
@@ -550,20 +549,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
         
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:venueVC];
-        [self.tabBarController presentModalViewController:navigationController animated:YES];        
-        
-        // If you want to instead take the user directly to the check-in screen, use the code below
-        
-        //    CheckInDetailsViewController *vc = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil]
-        //                                        instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
-        //    [vc setPlace:venue];
-        //    vc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
-        //                                                                           style:UIBarButtonItemStylePlain
-        //                                                                          target:vc
-        //                                                                          action:@selector(dismissViewControllerAnimated)];
-        //    
-        //    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
-        //    [self.tabBarController presentModalViewController:navigationController animated:YES];
+        [self.tabBarController presentModalViewController:navigationController animated:YES];
     }
     else {
         // Venue wasn't found, so load the normal checkIn screen so the user can select it
@@ -604,7 +590,7 @@ void SignalHandler(int sig) {
     if ([alertView.title isEqualToString:kCheckOutLocalNotificationAlertViewTitle]) {
         if (alertView.firstOtherButtonIndex == buttonIndex) {            
             [CPCheckinHandler sharedHandler].checkOutTimer = [NSTimer scheduledTimerWithTimeInterval:300
-                                                                                    target:self
+                                                                                    target:[CPCheckinHandler sharedHandler]
                                                                                   selector:@selector(setCheckedOut) 
                                                                                   userInfo:nil 
                                                                                    repeats:NO];

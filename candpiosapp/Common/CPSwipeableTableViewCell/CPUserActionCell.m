@@ -551,21 +551,42 @@
 
 #pragma mark - CPUserActionCellDelegate Invocations
 
+#define UNHIGHLIGHT_DELAY 0.75
+
+- (void)highlightButton:(UIButton *)button completion:(void (^)())completion
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        button.highlighted = YES;
+        if (completion) {
+            completion();
+        }
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, UNHIGHLIGHT_DELAY * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
+            button.highlighted = NO;
+        });
+    });
+}
+
 - (void)sendLoveAction {
     if ([self.delegate respondsToSelector:@selector(cell:didSelectSendLoveToUser:)]) {
-        [self.delegate cell:self didSelectSendLoveToUser:self.user];
+        [self highlightButton:self.sendLoveButton completion:^{
+            [self.delegate cell:self didSelectSendLoveToUser:self.user];
+        }];
     }
 }
 
 - (void)sendMessageAction {
     if ([self.delegate respondsToSelector:@selector(cell:didSelectSendMessageToUser:)]) {
-        [self.delegate cell:self didSelectSendMessageToUser:self.user];
+        [self highlightButton:self.sendMessageButton completion:^{
+            [self.delegate cell:self didSelectSendMessageToUser:self.user];
+        }];
     }
 }
 
 - (void)exchangeContactsAction {
     if ([self.delegate respondsToSelector:@selector(cell:didSelectExchangeContactsWithUser:)]) {
-        [self.delegate cell:self didSelectExchangeContactsWithUser:self.user];
+        [self highlightButton:self.exchangeContactsButton completion:^{
+            [self.delegate cell:self didSelectExchangeContactsWithUser:self.user];
+        }];
     }
 }
 

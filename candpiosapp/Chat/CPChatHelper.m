@@ -1,54 +1,53 @@
 //
-//  ChatHelper.m
+//  CPChatHelper.m
 //  candpiosapp
 //
 //  Created by Alexi (Love Machine) on 2012/02/23.
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import "ChatHelper.h"
+#import "CPChatHelper.h"
 #import "OneOnOneChatViewController.h"
 #import "CPAlertView.h"
+#import "GTMNSString+HTML.h"
 
 #define kChatAlertTag 8001
 
-@implementation ChatHelper
+@implementation CPChatHelper
+
+static CPChatHelper *sharedHelper;
+
++ (void)initialize
+{
+    if (!sharedHelper) {
+        sharedHelper = [[self alloc] init];
+    }
+}
+
++ (CPChatHelper *)sharedHelper
+{
+    return sharedHelper;
+}
 
 + (void)respondToIncomingChatNotification:(NSString *)message
                              fromNickname:(NSString *)nickname
                                fromUserId:(NSInteger)userId
-                             withRootView:(UIViewController *)rootView
 {
-    OneOnOneChatViewController *chatView = nil;
+
+    NSString *unescapedMessage = [message gtm_stringByUnescapingFromHTML];
     
-    // See if we've navigated to the chat view from a user profile
-    if ([[rootView.childViewControllers lastObject]
-         isKindOfClass:[OneOnOneChatViewController class]]) {
+    if ([sharedHelper activeChatViewController].user.userID == userId) {
         
-        chatView = (OneOnOneChatViewController *) [rootView.childViewControllers lastObject];
-    }
-    // See if we have a modal chat popup
-    else if ([[[[[rootView.childViewControllers lastObject]
-                 modalViewController]
-                childViewControllers]
-               lastObject] 
-              isKindOfClass:[OneOnOneChatViewController class]])
-    {
-        chatView = (OneOnOneChatViewController *)
-            [[[[rootView.childViewControllers lastObject] modalViewController] childViewControllers] lastObject];
-    }
+        // If the person is in the chat window AND is talking with the user that
+        // sent the chat send the message straight to the chat window
         
-    // If the person is in the chat window AND is talking with the user that
-    // sent the chat send the message straight to the chat window    
-    if (chatView != nil && chatView.user.userID == userId) {
-        [chatView receiveChatText:message];
-    }
-    // Otherwise send the message as a popup alert
-    else
-    {
+        [[sharedHelper activeChatViewController] receiveChatText:unescapedMessage];
+    } else {
+        // Otherwise send the message as a popup alert
+        
         NSString *alertMessage = [NSString stringWithFormat:@"%@: %@",
                                   nickname,
-                                  message];
+                                  unescapedMessage];
         CPAlertView *alert = [[CPAlertView alloc]
                               initWithTitle:@"Incoming Chat"
                               message:alertMessage
@@ -58,13 +57,12 @@
         alert.tag = kChatAlertTag;
         
         NSDictionary *chatInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                  message, @"message",
+                                  unescapedMessage, @"message",
                                   [NSString stringWithFormat:@"%d", userId], @"userid",
                                   nickname, @"nickname",
                                   nil];
         alert.delegate = self;
         alert.context = chatInfo;
-        alert.rootView = rootView;
         
         [alert show];
     }
@@ -92,7 +90,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
             // Set up the view
             [oneOnOneChat addCloseButton];
             
-            [alertView.rootView presentViewController:chatNavController
+            [[CPAppDelegate tabBarController] presentViewController:chatNavController
                                              animated:YES
                                            completion:nil];
         }
