@@ -15,17 +15,6 @@
 
 @implementation CPUserAction
 
-static UserProfileViewController* userProfileViewController;
-+ (UserProfileViewController*)userProfileViewController 
-{
-    if (!userProfileViewController) {
-        userProfileViewController = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
-    } else {
-        [userProfileViewController prepareForReuse];
-    }
-    return userProfileViewController;
-}
-
 # pragma mark - CPUserActionCellDelegate
 
 + (void)cell:(CPUserActionCell*)cell sendLoveFromViewController:(UIViewController*)viewController
@@ -126,21 +115,20 @@ static UserProfileViewController* userProfileViewController;
 
 + (void)cell:(CPUserActionCell*)cell showProfileFromViewController:(UIViewController*)viewController
 {
-    NSLog(@"Show Profile called.");
     if (![CPUserDefaultsHandler currentUser]) {
         [CPUserSessionHandler showLoginBanner];
         cell.selected = NO;
         return;
     }
-    UserProfileViewController *userProfileViewController = [CPUserAction userProfileViewController];
+    
+    UserProfileViewController *userProfileViewController = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
     userProfileViewController.title = cell.user.nickname;
     
-    // push the UserProfileViewController onto the navigation controller stack
-    NSLog(@"Push Profile called.");
-    [viewController.navigationController pushViewController:userProfileViewController animated:YES];
-    NSLog(@"Push Profile returned.");
     // set the user object on the UserProfileVC to the user we just created
     userProfileViewController.user = cell.user;
+    
+    // push the UserProfileViewController onto the navigation controller stack
+    [viewController.navigationController pushViewController:userProfileViewController animated:YES];
 }
 
 

@@ -61,8 +61,6 @@
 @property (nonatomic) int othersAtPlace;
 @property (nonatomic) NSInteger selectedFavoriteVenueIndex;
 @property (nonatomic) BOOL mapAndDistanceLoaded;
-@property (nonatomic) BOOL isCancelling;
-@property (nonatomic) BOOL ellipsisAnimating;
 
 -(NSString *)htmlStringWithResumeText;
 -(IBAction)plusButtonPressed:(id)sender;
@@ -98,69 +96,78 @@ static GRMustacheTemplate *postBadgesTemplate;
     return badgesTemplate;
 }
 
-- (void)updateBackButton
+#pragma mark - View lifecycle
+
+- (void)viewDidLoad
 {
-    // use a custom back button so we can highlight on popping the view controller
-    UIImage *buttonImage = [[UIImage imageNamed:@"back-button.png"] stretchableImageWithLeftCapWidth:17 topCapHeight:0];
-    NSArray *items = self.navigationController.navigationBar.items;
-    NSString *buttonTitle = [items.lastObject title];
-    UIFont *font = [UIFont fontWithName:@"LeagueGothic" size:16];
-    CGRect rect = CGRectMake(0, 0, [buttonTitle sizeWithFont:font].width + buttonImage.size.width, buttonImage.size.height);
-    UIButton *backButton = [[UIButton alloc] initWithFrame:rect];
-    [backButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    backButton.titleLabel.font = font;
-    backButton.titleEdgeInsets = UIEdgeInsetsMake(3, 12, 0, 0);
-    [backButton setTitle:buttonTitle forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    [super viewDidLoad];
+    
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Profile"
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:nil
+                                                                            action:nil];
+    
+    // keep our own queue, so we can safely cancel
+    self.operationQueue = [NSOperationQueue new];
+    
+    // when pulling the scroll view top down, present the map
+    self.mapView.frame = CGRectUnion(self.mapView.frame,
+                                     CGRectOffset(self.mapView.frame, 0, -self.mapView.frame.size.height));
+    // add the blue overlay gradient in front of the map
+    [self addGradientWithFrame:self.mapView.frame
+                     locations:[NSArray arrayWithObjects:
+                                [NSNumber numberWithFloat:0.25],
+                                [NSNumber numberWithFloat:0.30],
+                                [NSNumber numberWithFloat:0.5],
+                                [NSNumber numberWithFloat:0.90],
+                                [NSNumber numberWithFloat:1.0],
+                                nil]
+                        colors:[NSArray arrayWithObjects:
+                                (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor],
+                                (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:0.75] CGColor],
+                                (id)[[UIColor colorWithRed:0.40 green:0.62 blue:0.64 alpha:0.4] CGColor],
+                                (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:0.75] CGColor],
+                                (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor],
+                                nil]
+     ];
+    
+    // set LeagueGothic font where applicable
+    [CPUIHelper changeFontForLabel:self.checkedIn toLeagueGothicOfSize:24];
+    [CPUIHelper changeFontForLabel:self.resumeLabel toLeagueGothicOfSize:26];
+    [CPUIHelper changeFontForLabel:self.cardNickname toLeagueGothicOfSize:28];
+    
+    // set the paper background color where applicable
+    UIColor *paper = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paper-texture.png"]];
+    self.userCard.backgroundColor = paper;
+    self.resumeView.backgroundColor = paper;
+    self.resumeWebView.opaque = NO;
+    self.resumeWebView.backgroundColor = paper;
+    
+    // make sure there's a shadow on the userCard and resumeView
+    [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
+    [CPUIHelper addShadowToView:self.resumeView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
 }
 
-- (void)backButtonPressed:(id)sender
+- (void)viewWillAppear:(BOOL)animated
 {
-    UIButton *backButton = sender;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        backButton.highlighted = YES;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.05 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
-            [self.navigationController popViewControllerAnimated:YES];
-        });
-    });
-}
-
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [super initWithCoder:aDecoder]) {
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Profile"
-                                                                                 style:UIBarButtonItemStylePlain
-                                                                                target:nil
-                                                                                action:nil];
+    [super viewWillAppear:animated];
+    
+    // custom back button to allow event capture
+    
+    if(!_tapRecon){
+        _tapRecon = [[UITapGestureRecognizer alloc]
+                     initWithTarget:self action:@selector(navigationBarTitleTap:)];
+        _tapRecon.numberOfTapsRequired = 1;
+        _tapRecon.cancelsTouchesInView = NO;
+        [self.navigationController.navigationBar addGestureRecognizer:_tapRecon];
     }
-    return self;
 }
 
-- (void)prepareForReuse
+- (void)viewDidUnload
 {
-    // reset the resume
-    self.preBadgesHTML = nil;
-    self.badgesHTML = nil;
-    self.postBadgesHTML = nil;
-    
-    // reset the stats
-    self.resumeEarned.text = @"";
-    self.loveReceived.text = @"";
-    self.resumeWebView.alpha = 0.0;
-    self.checkedIn.text = @"Loading";
-    
-    // reset the map
-    self.distanceLabel.text = @"";
-    self.mapMarker.alpha = 0;
-    self.mapView.alpha = 0;
-    self.distanceLabel.alpha = 0;
-    if (self.mapView.superview) {
-        [self.mapView removeFromSuperview];
-    }
-    
-    // hide the venue info until we load the resume data
-    self.venueView.alpha = 0.0;
-    self.availabilityView.alpha = 0.0;
+    [super viewDidUnload];
+    [self.navigationController.navigationBar removeGestureRecognizer:_tapRecon];
+    self.tapRecon = nil;
 }
 
 - (void)setUser:(User *)newUser
@@ -208,8 +215,8 @@ static GRMustacheTemplate *postBadgesTemplate;
         } else {  
             // lock the scrollView
             self.scrollView.scrollEnabled = NO;
+            
             // put three animated dots after the Loading Resume text
-            self.ellipsisAnimating = YES;
             [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:YES];
             [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:YES];
             
@@ -234,8 +241,6 @@ static GRMustacheTemplate *postBadgesTemplate;
     }
 }
 
-#pragma mark - View lifecycle
-
 - (void)addGradientWithFrame:(CGRect)frame locations:(NSArray*)locations colors:(NSArray*)colors 
 {
     // add gradient overlay
@@ -248,112 +253,8 @@ static GRMustacheTemplate *postBadgesTemplate;
     [self.scrollView insertSubview:overlay atIndex:1];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-    // keep our own queue, so we can safely cancel
-    self.operationQueue = [NSOperationQueue new];
-    
-    // when pulling the scroll view top down, present the map
-    self.mapView.frame = CGRectUnion(self.mapView.frame, 
-                                     CGRectOffset(self.mapView.frame, 0, -self.mapView.frame.size.height));
-    // add the blue overlay gradient in front of the map
-    [self addGradientWithFrame:self.mapView.frame 
-                     locations:[NSArray arrayWithObjects:
-                                [NSNumber numberWithFloat:0.25], 
-                                [NSNumber numberWithFloat:0.30], 
-                                [NSNumber numberWithFloat:0.5], 
-                                [NSNumber numberWithFloat:0.90], 
-                                [NSNumber numberWithFloat:1.0], 
-                                nil] 
-                        colors:[NSArray arrayWithObjects:
-                                (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor],
-                                (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:0.75] CGColor],
-                                (id)[[UIColor colorWithRed:0.40 green:0.62 blue:0.64 alpha:0.4] CGColor],
-                                (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:0.75] CGColor],
-                                (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor],
-                                nil]
-     ];
-    [self prepareForReuse];
-        
-    // set LeagueGothic font where applicable
-    [CPUIHelper changeFontForLabel:self.checkedIn toLeagueGothicOfSize:24];
-    [CPUIHelper changeFontForLabel:self.resumeLabel toLeagueGothicOfSize:26];
-    [CPUIHelper changeFontForLabel:self.cardNickname toLeagueGothicOfSize:28];
-    
-    // set the paper background color where applicable
-    UIColor *paper = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paper-texture.png"]];
-    self.userCard.backgroundColor = paper;
-    self.resumeView.backgroundColor = paper;
-    self.resumeWebView.opaque = NO;
-    self.resumeWebView.backgroundColor = paper;
-    
-    // make sure there's a shadow on the userCard and resumeView
-    [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
-    [CPUIHelper addShadowToView:self.resumeView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    // bail out of ongoing operations to keep the ui responsive
-    self.isCancelling = YES;
-    
-    [self cancelEllipsis];
-    
-    if (self.operationQueue.operationCount) {
-        [self.operationQueue cancelAllOperations];
-    }
-    if (self.resumeWebView.isLoading) {
-        [self.resumeWebView stopLoading];
-    }
-    [self.navigationController.navigationBar removeGestureRecognizer:_tapRecon];
-    _tapRecon = nil;
-    
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    self.isCancelling = NO;
-    [super viewDidDisappear:animated];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self updateBackButton];
-    
-    // custom back button to allow event capture
-    
-    if(!_tapRecon){
-        _tapRecon = [[UITapGestureRecognizer alloc]
-                     initWithTarget:self action:@selector(navigationBarTitleTap:)];
-        _tapRecon.numberOfTapsRequired = 1;
-        _tapRecon.cancelsTouchesInView = NO;
-        [self.navigationController.navigationBar addGestureRecognizer:_tapRecon];
-    }
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    [self.navigationController.navigationBar removeGestureRecognizer:_tapRecon];
-    self.tapRecon = nil;
-}
-
--(void)cancelEllipsis
-{
-    if (self.ellipsisAnimating) {
-        // cancelled operations will leave ellipsis animating
-        [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
-        [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:NO];
-        self.ellipsisAnimating = NO;
-    }
-}
-
 - (void)updateLastUserCheckin
 {
-    if (self.isCancelling) { return; }
     if (self.firstLoad) {
         // if the user is checked in show how much longer they'll be available for
         if ([self.user.checkoutEpoch timeIntervalSinceNow] > 0) {
@@ -414,7 +315,7 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 - (void)updateMapAndDistanceToUser
 {
-    if (!self.mapAndDistanceLoaded && !self.isCancelling) {
+    if (!self.mapAndDistanceLoaded) {
         // make an MKCoordinate region for the zoom level on the map
         MKCoordinateRegion region = MKCoordinateRegionMake(self.user.location, MKCoordinateSpanMake(0.005, 0.005));
         [self.mapView setRegion:region];
@@ -434,7 +335,7 @@ static GRMustacheTemplate *postBadgesTemplate;
         [UIView animateWithDuration:0.3 animations:^{
             self.mapView.alpha = 1;
         } completion:^(BOOL finished) {
-            if (finished && !self.isCancelling) {
+            if (finished) {
                 [UIView animateWithDuration:1 animations:^{
                     self.distanceLabel.alpha = 1;
                     self.mapMarker.alpha = 1;
@@ -458,9 +359,6 @@ static GRMustacheTemplate *postBadgesTemplate;
 {    
     // dismiss the SVProgressHUD if it's up
     [SVProgressHUD dismiss];
-
-    // bail out if the user hit the back button
-    if (self.isCancelling) { return; }
     
     [CPUIHelper profileImageView:self.cardImage
              withProfileImageUrl:self.user.photoURL];
@@ -490,7 +388,6 @@ static GRMustacheTemplate *postBadgesTemplate;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self updateMapAndDistanceToUser];
             [self updateLastUserCheckin];
-            [self cancelEllipsis];
         });
     });
 }
@@ -499,14 +396,12 @@ static GRMustacheTemplate *postBadgesTemplate;
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.user, @"user",nil];
     
     if (!self.preBadgesHTML) {
-        if (self.isCancelling) { return @""; }
         GRMustacheTemplate *template = [UserProfileViewController preBadgesTemplate];
         template.delegate = self;
         self.preBadgesHTML = [template renderObject:dictionary];
     }
 
     if (self.user.badges.count > 0) { 
-        if (self.isCancelling) { return @""; }
         GRMustacheTemplate *template = [UserProfileViewController badgesTemplate];
         template.delegate = self;
         self.badgesHTML = [template renderObject:dictionary];        
@@ -515,7 +410,6 @@ static GRMustacheTemplate *postBadgesTemplate;
     }
 
     if (!self.postBadgesHTML) {
-        if (self.isCancelling) { return @""; }
         NSMutableArray *reviews = [NSMutableArray arrayWithCapacity:[[self.user.reviews objectForKey:@"rows"] count]];
         for (NSDictionary *review in [self.user.reviews objectForKey:@"rows"]) {
             NSMutableDictionary *mutableReview = [NSMutableDictionary dictionaryWithDictionary:review];
