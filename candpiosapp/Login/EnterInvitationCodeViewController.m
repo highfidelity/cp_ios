@@ -15,6 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *laterButton;
 @property (weak, nonatomic) IBOutlet UITextField *codeTextField;
+@property (nonatomic) BOOL dismissModalViewController;
 
 - (IBAction)laterButtonAction:(id)sender;
 
@@ -37,6 +38,22 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (self.dismissModalViewController) {
+        [self dismissLeftOrNormalModalViewControllerAnimated:animated];
+    } else {
+        if (![[CPUserDefaultsHandler currentUser] isDaysOfTrialAccessWithoutInviteCodeOK]) {
+            [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Your %d days trial has ended.", kDaysOfTrialAccessWithoutInviteCode]
+                                        message:@"Please enter an invite code."
+                                       delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil] show];
+            [FlurryAnalytics logEvent:@"trialEnded"];
+        }
+    }
 }
 
 #pragma mark -
@@ -64,20 +81,18 @@
 #pragma mark actions
 
 - (IBAction)laterButtonAction:(id)sender; {
-    BOOL dismissModalViewController = YES;
+    self.dismissModalViewController = YES;
     
     if ( ! self.dontShowTextNoticeAfterLaterButtonPressed) {
         if ( ![[CPUserDefaultsHandler currentUser] isDaysOfTrialAccessWithoutInviteCodeOK]) {
-            
             [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Your %d days trial has ended.", kDaysOfTrialAccessWithoutInviteCode]
                                         message:@"Please enter code or logout."
                                        delegate:self
                               cancelButtonTitle:@"OK"
                               otherButtonTitles:@"Logout", nil] show];
             
-            dismissModalViewController = NO;
+            self.dismissModalViewController = NO;
             [FlurryAnalytics logEvent:@"trialEnded"];
-            
         } else {
             [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Coffee & Power requires an invite for full membership but you have %d days of full access to try us out.", kDaysOfTrialAccessWithoutInviteCode]
                                         message:@"If you get an invite from another C&P user you can enter it anytime by going to the Account page/Enter invite code tab."
@@ -87,8 +102,13 @@
         }
     }
     
-    if (dismissModalViewController) {
-        [self dismissLeftOrNormalModalViewControllerAnimated:YES];
+    if (![CPUserDefaultsHandler currentUser].isDaysOfTrialAccessWithoutInviteCodeOK) {
+        UINavigationController *navigationController = (UINavigationController *)self.parentViewController;
+        [CPUserSessionHandler showSignupModalFromViewController:navigationController.topViewController animated:YES];
+    } else {
+        if (self.dismissModalViewController) {
+            [self dismissLeftOrNormalModalViewControllerAnimated:YES];
+        }        
     }
 }
 
@@ -131,10 +151,11 @@
 }
 
 - (void)dismissLeftOrNormalModalViewControllerAnimated:(BOOL)animated {
+    self.dismissModalViewController = NO;
     if (self.isPushedFromLeft) {
         [self dismissPushModalViewControllerFromLeftSegue];
     } else {
-        [self.navigationController dismissModalViewControllerAnimated:animated];
+        [self dismissModalViewControllerAnimated:animated];
     }
 }
 
