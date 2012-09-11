@@ -293,21 +293,12 @@ static GRMustacheTemplate *postBadgesTemplate;
     [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     [CPUIHelper addShadowToView:self.resumeView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
 }
--(void)cancelEllipsis
-{
-    if (self.ellipsisAnimating) {
-        // cancelled operations will leave ellipsis animating
-        [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
-        [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:NO];
-        self.ellipsisAnimating = NO;
-    }
-}
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     // bail out of ongoing operations to keep the ui responsive
     self.isCancelling = YES;
-
+    
     [self cancelEllipsis];
     
     if (self.operationQueue.operationCount) {
@@ -318,7 +309,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     }
     [self.navigationController.navigationBar removeGestureRecognizer:_tapRecon];
     _tapRecon = nil;
-
+    
     [super viewWillDisappear:animated];
 }
 
@@ -331,9 +322,9 @@ static GRMustacheTemplate *postBadgesTemplate;
 {
     [super viewWillAppear:animated];
     [self updateBackButton];
-
+    
     // custom back button to allow event capture
-
+    
     if(!_tapRecon){
         _tapRecon = [[UITapGestureRecognizer alloc]
                      initWithTarget:self action:@selector(navigationBarTitleTap:)];
@@ -343,18 +334,21 @@ static GRMustacheTemplate *postBadgesTemplate;
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    NSLog(@"viewDidAppear:");
-}
-
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     [self.navigationController.navigationBar removeGestureRecognizer:_tapRecon];
     self.tapRecon = nil;
+}
+
+-(void)cancelEllipsis
+{
+    if (self.ellipsisAnimating) {
+        // cancelled operations will leave ellipsis animating
+        [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
+        [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:NO];
+        self.ellipsisAnimating = NO;
+    }
 }
 
 - (void)updateLastUserCheckin
