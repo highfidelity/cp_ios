@@ -431,7 +431,7 @@ typedef enum {
     
     if (!self.selectedVenueFeed) {
         if (indexPath.row == 0) {
-            return PREVIEW_HEADER_CELL_HEIGHT;
+            return PREVIEW_HEADER_CELL_HEIGHT + PREVIEW_FOOTER_CELL_HEIGHT;
         } else if (indexPath.row == (self.previewPostableFeedsOnly ? 1 : [self tableView:self.tableView numberOfRowsInSection:indexPath.section] - 1)) {
             return PREVIEW_FOOTER_CELL_HEIGHT;
         }
@@ -523,6 +523,184 @@ typedef enum {
     }
 }
 
+- (FeedPreviewCell *)feedPreviewCellForSectionVenueFeed:(CPVenueFeed *)sectionVenueFeed tableView:(UITableView *)tableView
+{
+    CPVenue *currentVenue = [CPUserDefaultsHandler currentVenue];
+    BOOL isCurrentVenue = sectionVenueFeed.venue.venueID == currentVenue.venueID;
+    FeedPreviewCell *headerCell;
+    
+    if (self.previewPostableFeedsOnly) {
+        static NSString *FeedPostablePreviewHeaderCellIdentifier = @"FeedPostablePreviewHeaderCell";
+        headerCell = [tableView dequeueReusableCellWithIdentifier:FeedPostablePreviewHeaderCellIdentifier];
+    } else {
+        static NSString *FeedPreviewHeaderCellIdentifier = @"FeedPreviewHeaderCell";
+        headerCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewHeaderCellIdentifier];
+    }
+    
+    [self setupContainerBackgroundForCell:headerCell
+                          containerHeight:PREVIEW_HEADER_CELL_HEIGHT 
+                                 position:FeedBGContainerPositionTop];
+    
+    headerCell.delegate = self;
+    headerCell.removeButton.hidden = isCurrentVenue;
+    // give that label the venue name and change font to league gothic
+    headerCell.venueNameLabel.text = sectionVenueFeed.venue.name;
+    [CPUIHelper changeFontForLabel:headerCell.venueNameLabel toLeagueGothicOfSize:24];
+    
+    if (!self.previewPostableFeedsOnly) {
+        [CPUIHelper changeFontForLabel:headerCell.relativeTimeLabel toLeagueGothicOfSize:24];
+        
+        // give the relative time string to the cell
+        // if this venue has posts in the preview
+        // otherwise leave it blank
+        NSDate *firstPostDate;
+        if (sectionVenueFeed.posts.count > 0) {
+            firstPostDate = [[sectionVenueFeed.posts objectAtIndex:0] date];
+        }
+        
+        headerCell.relativeTimeLabel.text = [CPUtils relativeTimeStringFromDateToNow:firstPostDate];
+        
+        if (headerCell.relativeTimeLabel.text) {
+            // we need to stick the timestamp right beside the venue name
+            CGSize timestampSize = [headerCell.relativeTimeLabel.text sizeWithFont:headerCell.relativeTimeLabel.font];
+            CGSize venueNameSize = [headerCell.venueNameLabel.text sizeWithFont:headerCell.venueNameLabel.font];
+            
+            // stick the timestamp label to the venue name
+            CGRect timestampShift = headerCell.relativeTimeLabel.frame;
+            CGFloat removeButtonWidth = (headerCell.removeButton.hidden) ? 0 : 23;
+            timestampShift.origin.x = (CONTAINER_BACKGROUND_WIDTH + CONTAINER_BACKGROUND_ORIGIN_X - removeButtonWidth) - timestampSize.width - 18;
+            
+            // the venueNameLabel will cut into the time stamp so shrink it
+            CGRect venueNameShrink = headerCell.venueNameLabel.frame;
+            
+            if ((headerCell.venueNameLabel.frame.origin.x + venueNameSize.width) > timestampShift.origin.x) {
+                venueNameShrink.size.width = timestampShift.origin.x - venueNameShrink.origin.x - TIMESTAMP_LEFT_MARGIN;
+            } else {
+                venueNameShrink.size.width = venueNameSize.width;
+                timestampShift.origin.x = (venueNameShrink.origin.x + venueNameShrink.size.width + TIMESTAMP_LEFT_MARGIN);
+            }
+            
+            headerCell.venueNameLabel.frame = venueNameShrink;
+            headerCell.relativeTimeLabel.frame = timestampShift;                   
+        }
+    }
+    
+    [headerCell setFeedPreviewFooterCell:[self feedPreviewFooterCell:tableView]
+                              withHeight:PREVIEW_FOOTER_CELL_HEIGHT];
+    
+    return headerCell;
+}
+
+- (UITableViewCell *)feedPreviewFooterCell:(UITableView *)tableView
+{
+    static NSString *FeedPreviewFooterCellIdentifier = @"FeedPreviewFooterCell";
+    UITableViewCell *feedPreviewFooterCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewFooterCellIdentifier];
+    
+    if (!feedPreviewFooterCell) {
+        feedPreviewFooterCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:FeedPreviewFooterCellIdentifier];
+        feedPreviewFooterCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    
+    // containerHeight needs to be the cellHeight minus the desired separation between the feed previews
+    [self setupContainerBackgroundForCell:feedPreviewFooterCell
+                          containerHeight:PREVIEW_FOOTER_CELL_HEIGHT - 9
+                                 position:FeedBGContainerPositionBottom];
+    
+    return feedPreviewFooterCell;
+}
+
+- (NewPostCell *)newPostCellForPost:(CPPost *)post tableView:(UITableView *)tableView
+{
+    NewPostCell *newEntryCell;
+    
+    if (post.originalPostID) {
+        static NSString *NewReplyCellIdentifier = @"NewPostReplyCell";
+        newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewReplyCellIdentifier];
+    } else {
+        static NSString *NewEntryCellIdentifier = @"NewPostCell";
+        newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewEntryCellIdentifier];
+    }            
+    
+    // get the cursor to the right place
+    // by padding it with leading spaces for whatever the leading text is
+    
+    NSString *leadingText;
+    
+    if (self.pendingPost.type == CPPostTypeQuestion) {
+        leadingText = !self.pendingPost.originalPostID ? @"Question" : @"Answer";
+    } else {
+        leadingText = !self.pendingPost.originalPostID ? @"Update" : @"Reply";
+    }
+    
+    // give the entry label the right text and color
+    newEntryCell.entryLabel.textColor = [CPUIHelper CPTealColor];
+    
+    // if the entry was blank (new entry) we need to setup the leading spaces
+    newEntryCell.entryLabel.text = [leadingText stringByAppendingString:@":"];
+    
+    
+    // add the right number of leading spaces
+    newEntryCell.growingTextView.text = self.pendingPost.entry;
+    
+    if (!newEntryCell.growingTextView.text.length) {
+        int numberOfSpaces = [self paddingForPendingPost];
+        for (int i = 0; i < numberOfSpaces; i++) {
+            newEntryCell.growingTextView.text = [newEntryCell.growingTextView.text stringByAppendingString:@" "];
+        }
+    }
+    
+    newEntryCell.growingTextView.returnKeyType = UIReturnKeySend;
+    
+    // be the delegate of the HPGrowingTextView on this cell
+    newEntryCell.growingTextView.delegate = self;
+    
+    // this is our pending entry cell
+    self.pendingPostCell = newEntryCell;
+    
+    return newEntryCell;
+}
+
+- (PostUpdateCell *)postUpdateCellForPost:(CPPost *)post tableView:(UITableView *)tableView
+{
+    // this is an update cell
+    // so check if it's this user's or somebody else's
+    PostUpdateCell *updateCell;
+    
+    if (!post.originalPostID && post.author.userID == [CPUserDefaultsHandler currentUser].userID){
+        static NSString *EntryCellIdentifier = @"MyPostUpdateCell";
+        updateCell = [tableView dequeueReusableCellWithIdentifier:EntryCellIdentifier];
+        
+        if (self.selectedVenueFeed) {
+            // create a singleton NSDateFormatter that we'll keep using
+            static NSDateFormatter *logFormatter = nil;
+            
+            if (!logFormatter) {
+                logFormatter = [[NSDateFormatter alloc] init];
+                logFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+                logFormatter.AMSymbol = @"a";
+                logFormatter.PMSymbol = @"p";
+            }
+            
+            // setup the format for the time label
+            logFormatter.dateFormat = @"h:mma";
+            updateCell.timeLabel.text = [logFormatter stringFromDate:post.date];
+            
+            // setup the format for the date label
+            logFormatter.dateFormat = @"MMM d";
+            updateCell.dateLabel.text = [logFormatter stringFromDate:post.date];
+        } else {
+            updateCell.dateLabel.text = nil;
+            updateCell.timeLabel.text = nil;
+        }
+    } else {
+        // this is an update from another user
+        static NSString *OtherUserEntryCellIdentifier = @"PostUpdateCell";
+        updateCell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];
+    }
+    
+    return updateCell;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {    
     CPPost *post;
@@ -530,86 +708,13 @@ typedef enum {
 
     if (!self.selectedVenueFeed) {
         CPVenueFeed *sectionVenueFeed = [self venueFeedPreviewForIndex:indexPath.section];
-        CPVenue *currentVenue = [CPUserDefaultsHandler currentVenue];
-        BOOL isCurrentVenue = sectionVenueFeed.venue.venueID == currentVenue.venueID;
         
         // check if this is for a header 
         // or a footer for a venue feed preview
         if (indexPath.row == 0) {
-            FeedPreviewHeaderCell *headerCell;
-            
-            if (self.previewPostableFeedsOnly) {
-                static NSString *FeedPostablePreviewHeaderCellIdentifier = @"FeedPostablePreviewHeaderCell";
-                headerCell = [tableView dequeueReusableCellWithIdentifier:FeedPostablePreviewHeaderCellIdentifier];
-            } else {
-                static NSString *FeedPreviewHeaderCellIdentifier = @"FeedPreviewHeaderCell";
-                headerCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewHeaderCellIdentifier];
-            }
-            
-            [self setupContainerBackgroundForCell:headerCell
-                                  containerHeight:PREVIEW_HEADER_CELL_HEIGHT 
-                                         position:FeedBGContainerPositionTop];
-            
-            headerCell.delegate = self;
-            headerCell.removeButton.hidden = isCurrentVenue;
-            // give that label the venue name and change font to league gothic
-            headerCell.venueNameLabel.text = sectionVenueFeed.venue.name;
-            [CPUIHelper changeFontForLabel:headerCell.venueNameLabel toLeagueGothicOfSize:24];
-            
-            if (!self.previewPostableFeedsOnly) {
-                [CPUIHelper changeFontForLabel:headerCell.relativeTimeLabel toLeagueGothicOfSize:24];
-                
-                // give the relative time string to the cell
-                // if this venue has posts in the preview
-                // otherwise leave it blank
-                NSDate *firstPostDate;
-                if (sectionVenueFeed.posts.count > 0) {
-                    firstPostDate = [[sectionVenueFeed.posts objectAtIndex:0] date];
-                }
-                
-                headerCell.relativeTimeLabel.text = [CPUtils relativeTimeStringFromDateToNow:firstPostDate];
-                
-                if (headerCell.relativeTimeLabel.text) {
-                    // we need to stick the timestamp right beside the venue name
-                    CGSize timestampSize = [headerCell.relativeTimeLabel.text sizeWithFont:headerCell.relativeTimeLabel.font];
-                    CGSize venueNameSize = [headerCell.venueNameLabel.text sizeWithFont:headerCell.venueNameLabel.font];
-                    
-                    // stick the timestamp label to the venue name
-                    CGRect timestampShift = headerCell.relativeTimeLabel.frame;
-                    CGFloat removeButtonWidth = (headerCell.removeButton.hidden) ? 0 : 23;
-                    timestampShift.origin.x = (CONTAINER_BACKGROUND_WIDTH + CONTAINER_BACKGROUND_ORIGIN_X - removeButtonWidth) - timestampSize.width - 18;
-                    
-                    // the venueNameLabel will cut into the time stamp so shrink it
-                    CGRect venueNameShrink = headerCell.venueNameLabel.frame;
-                    
-                    if ((headerCell.venueNameLabel.frame.origin.x + venueNameSize.width) > timestampShift.origin.x) {
-                        venueNameShrink.size.width = timestampShift.origin.x - venueNameShrink.origin.x - TIMESTAMP_LEFT_MARGIN;
-                    } else {
-                        venueNameShrink.size.width = venueNameSize.width;
-                        timestampShift.origin.x = (venueNameShrink.origin.x + venueNameShrink.size.width + TIMESTAMP_LEFT_MARGIN);
-                    }
-                    
-                    headerCell.venueNameLabel.frame = venueNameShrink;
-                    headerCell.relativeTimeLabel.frame = timestampShift;                   
-                }
-            }
-            
-            return headerCell;
+            return [self feedPreviewCellForSectionVenueFeed:sectionVenueFeed tableView:tableView];
         } else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section] - 1) {
-            static NSString *FeedPreviewFooterCellIdentifier = @"FeedPreviewFooterCell";
-            UITableViewCell *feedPreviewFooterCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewFooterCellIdentifier];
-            
-            if (!feedPreviewFooterCell) {
-                feedPreviewFooterCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:FeedPreviewFooterCellIdentifier];
-                feedPreviewFooterCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            
-            // containerHeight needs to be the cellHeight minus the desired separation between the feed previews
-            [self setupContainerBackgroundForCell:feedPreviewFooterCell
-                                  containerHeight:PREVIEW_FOOTER_CELL_HEIGHT - 9
-                                         position:FeedBGContainerPositionBottom];
-            
-            return feedPreviewFooterCell;
+            return [self feedPreviewFooterCell:tableView];
         } else {
             cellSeperatorRequired = indexPath.row != sectionVenueFeed.posts.count && indexPath.row != 3;
             // pull the right post from the feed preview for this venue
@@ -631,100 +736,14 @@ typedef enum {
         
         // check if this is a pending entry cell
         if (self.pendingPost && post == self.pendingPost) {
-            
-            NewPostCell *newEntryCell;
-            
-            if (post.originalPostID) {
-                static NSString *NewReplyCellIdentifier = @"NewPostReplyCell";
-                newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewReplyCellIdentifier];
-            } else {
-                static NSString *NewEntryCellIdentifier = @"NewPostCell";
-                newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewEntryCellIdentifier];
-            }            
-            
-            // get the cursor to the right place
-            // by padding it with leading spaces for whatever the leading text is
-            
-            NSString *leadingText;
-        
-            if (self.pendingPost.type == CPPostTypeQuestion) {
-                leadingText = !self.pendingPost.originalPostID ? @"Question" : @"Answer";
-            } else {
-                leadingText = !self.pendingPost.originalPostID ? @"Update" : @"Reply";
-            }
-            
-            // give the entry label the right text and color
-            newEntryCell.entryLabel.textColor = [CPUIHelper CPTealColor];
-            
-            // if the entry was blank (new entry) we need to setup the leading spaces
-            newEntryCell.entryLabel.text = [leadingText stringByAppendingString:@":"];
-            
-                        
-            // add the right number of leading spaces
-            newEntryCell.growingTextView.text = self.pendingPost.entry;
-            
-            if (!newEntryCell.growingTextView.text.length) {
-                int numberOfSpaces = [self paddingForPendingPost];
-                for (int i = 0; i < numberOfSpaces; i++) {
-                    newEntryCell.growingTextView.text = [newEntryCell.growingTextView.text stringByAppendingString:@" "];
-                }
-            }
-            
-            newEntryCell.growingTextView.returnKeyType = UIReturnKeySend;
-            
-            // be the delegate of the HPGrowingTextView on this cell
-            newEntryCell.growingTextView.delegate = self;
-            
-            // this is our pending entry cell
-            self.pendingPostCell = newEntryCell;
-            
-            // the cell to be returned is the newEntryCell
-            cell = newEntryCell;
+            cell = [self newPostCellForPost:post tableView:tableView];
         } else {
             // check which type of cell we are dealing with
             if (post.originalPostID) {
                 static NSString *PostReplyCellIdentifier = @"PostReplyCell";
                 cell = [tableView dequeueReusableCellWithIdentifier:PostReplyCellIdentifier];
             } else if (post.type != CPPostTypeLove) {
-                // this is an update cell
-                // so check if it's this user's or somebody else's
-                PostUpdateCell *updateCell;
-                
-                if (!post.originalPostID && post.author.userID == [CPUserDefaultsHandler currentUser].userID){
-                    static NSString *EntryCellIdentifier = @"MyPostUpdateCell";
-                    updateCell = [tableView dequeueReusableCellWithIdentifier:EntryCellIdentifier];
-                    
-                    if (self.selectedVenueFeed) {
-                        // create a singleton NSDateFormatter that we'll keep using
-                        static NSDateFormatter *logFormatter = nil;
-                        
-                        if (!logFormatter) {
-                            logFormatter = [[NSDateFormatter alloc] init];
-                            logFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-                            logFormatter.AMSymbol = @"a";
-                            logFormatter.PMSymbol = @"p";
-                        }
-
-                        // setup the format for the time label
-                        logFormatter.dateFormat = @"h:mma";
-                        updateCell.timeLabel.text = [logFormatter stringFromDate:post.date];
-
-                        // setup the format for the date label
-                        logFormatter.dateFormat = @"MMM d";
-                        updateCell.dateLabel.text = [logFormatter stringFromDate:post.date];
-                    } else {
-                        updateCell.dateLabel.text = nil;
-                        updateCell.timeLabel.text = nil;
-                    }
-                } else {
-                    // this is an update from another user
-                    static NSString *OtherUserEntryCellIdentifier = @"PostUpdateCell";
-                    updateCell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];
-                }
-                
-                // the cell to return is the updateCell
-                cell = updateCell;
-                
+                cell = [self postUpdateCellForPost:post tableView:tableView];
             } else {
                 // this is a love cell
                 static NSString *loveCellIdentifier = @"PostLoveCell";
@@ -1823,7 +1842,7 @@ typedef enum {
 
 #pragma mark - FeedPreviewHeaderCellDelegate
 
-- (void)removeButtonPressed:(FeedPreviewHeaderCell *)cell
+- (void)removeButtonPressed:(FeedPreviewCell *)cell
 {
     if ( ! self.selectedVenueFeed && ! self.previewPostableFeedsOnly) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];

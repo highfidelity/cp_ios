@@ -7,20 +7,22 @@
 //
 
 
-@class FeedPreviewHeaderCell;
+@class FeedPreviewCell;
 
 @protocol FeedPreviewHeaderCellDelegate <NSObject>
 
-- (void)removeButtonPressed:(FeedPreviewHeaderCell *)cell;
+- (void)removeButtonPressed:(FeedPreviewCell *)cell;
 
 @end
 
 
-@interface FeedPreviewHeaderCell : UITableViewCell
+@interface FeedPreviewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *venueNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *relativeTimeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *removeButton;
 @property (weak, nonatomic) id<FeedPreviewHeaderCellDelegate> delegate;
+
+- (void)setFeedPreviewFooterCell:(UITableViewCell *)feedPreviewFooterCell withHeight:(CGFloat)height;
 
 @end

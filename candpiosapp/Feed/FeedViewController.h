@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CPVenueFeed.h"
 #import "CPUserActionCell.h"
-#import "FeedPreviewHeaderCell.h"
+#import "FeedPreviewCell.h"
 #import "WEPopoverController.h"
 #import "PostBaseCell.h"
 #import "PillPopoverViewController.h"
