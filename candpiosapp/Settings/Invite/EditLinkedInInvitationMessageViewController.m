@@ -14,7 +14,7 @@
 NSString * const kSubjectTemplate = @"%@ is inviting you to Coffee & Power";
 NSString * const kBodyTemplate = @"Hi! %@ is inviting you to join Coffee & Power, the mobile work network.\n\
 \n\
-If you haven't already, first download the Coffee & Power app in the iTunes app store.\n\
+If you have not already, download the app from the iTunes or Google Play stores.\n\
 \n\
 Your personal invite code is: %@\n\
 \n\
