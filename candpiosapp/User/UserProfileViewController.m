@@ -456,7 +456,6 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 - (void)placeUserDataOnProfile
 {    
-    
     // dismiss the SVProgressHUD if it's up
     [SVProgressHUD dismiss];
 
