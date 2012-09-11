@@ -344,10 +344,9 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                 [SVProgressHUD dismiss];
             }
             
-            [[CPAppDelegate tabBarController]
-             performSelector:@selector(dismissModalViewControllerAnimated:)
-             withObject:[NSNumber numberWithBool:YES]
-             afterDelay:kDefaultDismissDelay];
+            [self performSelector:@selector(dismissModalViewControllerAnimated:)
+                       withObject:[NSNumber numberWithBool:YES]
+                       afterDelay:kDefaultDismissDelay];
 
             // Remove NSNotification as it's no longer needed once logged in
             [[NSNotificationCenter defaultCenter] removeObserver:self name:@"linkedInCredentials" object:nil];
