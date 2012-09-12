@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSString *city;
 @property (strong, nonatomic) NSString *state;
 @property (strong, nonatomic) NSString *zip;
+@property (strong, nonatomic) NSString *utc;
 @property (strong, nonatomic) NSString *phone;
 @property (strong, nonatomic) NSString *formattedPhone;
 @property (strong, nonatomic) NSString *photoURL;
