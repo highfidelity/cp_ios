@@ -122,7 +122,6 @@ typedef enum {
 #define LABEL_BOTTOM_MARGIN 17
 #define LAST_PREVIEW_POST_MIN_CELL_HEIGHT 27
 #define LAST_PREVIEW_POST_LABEL_BOTTOM_MARGIN 5
-#define PREVIEW_HEADER_CELL_HEIGHT 38
 #define PREVIEW_FOOTER_CELL_HEIGHT 27
 #define UPDATE_LABEL_WIDTH 228
 #define LOVE_LABEL_WIDTH 178
@@ -189,7 +188,7 @@ typedef enum {
     
 }
 
-- (CGFloat)cellHeightWithLabelHeight:(CGFloat)labelHeight indexPath:(NSIndexPath *)indexPath
+- (CGFloat)cellHeightWithLabelHeight:(CGFloat)labelHeight cellPost:(CPPost *)cellPost isLastPostInPreview:(BOOL)isLastPostInPreview
 {
     CGFloat cellHeight = labelHeight;
     CGFloat bottomMargin;
@@ -197,13 +196,12 @@ typedef enum {
     
     // keep a 17 pt margin
     // but only if this isn't the last post in a preview
-    if (self.selectedVenueFeed ||
-        (indexPath.row < [[self venueFeedPreviewForIndex:indexPath.section] posts].count)) {
+    if (self.selectedVenueFeed || !isLastPostInPreview) {
         // use the default bottom margin and top margin
         bottomMargin = LABEL_BOTTOM_MARGIN;
         
         // if this is a post in a selected venue feed that has replies then we need to drop the margin
-        if (self.selectedVenueFeed && ((CPPost *)[self.selectedVenueFeed.posts objectAtIndex:indexPath.section]).replies.count) {
+        if (self.selectedVenueFeed && cellPost.replies.count) {
             bottomMargin -= 12;
         }
         
@@ -431,7 +429,29 @@ typedef enum {
     
     if (!self.selectedVenueFeed) {
         if (indexPath.row == 0) {
-            return PREVIEW_HEADER_CELL_HEIGHT + PREVIEW_FOOTER_CELL_HEIGHT;
+            CPVenueFeed *sectionVenueFeed = [self venueFeedPreviewForIndex:indexPath.section];
+            
+            CGFloat postsTotalHeight = 0;
+            NSInteger count = 0;
+            for (CPPost *post in sectionVenueFeed.posts) {
+                BOOL isLast = NO;
+                if (++count >= 3 || count == [sectionVenueFeed.posts count]) {
+                    isLast = YES;
+                }
+                
+                CGFloat labelHeight = [self labelHeightWithText:[self textForPost:post]
+                                                     labelWidth:[self widthForLabelForPost:post]
+                                                      labelFont:[self fontForPost:post]];
+                CGFloat cellHeight = [self cellHeightWithLabelHeight:labelHeight cellPost:post isLastPostInPreview:isLast];
+                
+                postsTotalHeight += cellHeight;
+                
+                if (isLast) {
+                    break;
+                }
+            }
+            
+            return PREVIEW_HEADER_CELL_HEIGHT + PREVIEW_FOOTER_CELL_HEIGHT + postsTotalHeight;
         } else if (indexPath.row == (self.previewPostableFeedsOnly ? 1 : [self tableView:self.tableView numberOfRowsInSection:indexPath.section] - 1)) {
             return PREVIEW_FOOTER_CELL_HEIGHT;
         }
@@ -470,9 +490,11 @@ typedef enum {
     }
     
     // use helper methods to get label height and cell height
-    CGFloat labelHeight = [self labelHeightWithText:[self textForPost:cellPost] labelWidth:[self widthForLabelForPost:cellPost] labelFont:[self fontForPost:cellPost]];
+    CGFloat labelHeight = [self labelHeightWithText:[self textForPost:cellPost]
+                                         labelWidth:[self widthForLabelForPost:cellPost]
+                                          labelFont:[self fontForPost:cellPost]];
     
-    cellHeight = [self cellHeightWithLabelHeight:labelHeight indexPath:indexPath];
+    cellHeight = [self cellHeightWithLabelHeight:labelHeight cellPost:cellPost isLastPostInPreview:NO];
     
     // return the calculated labelHeight
     return cellHeight;
@@ -506,24 +528,11 @@ typedef enum {
         
         return rows;
     } else {
-        if (self.previewPostableFeedsOnly) {
-            // just a header and a footer here
-            return 2;
-        } else {
-            // grab the CPVenueFeed for this section
-            CPVenueFeed *sectionVenueFeed = [self venueFeedPreviewForIndex:section];
-            
-            // there will be one extra cell for the header for each venue feed
-            // and one for the footer of each feed
-            
-            // there will be a cell for each post in each of the venue feed previews
-            // up to three preview posts
-            return (sectionVenueFeed.posts.count > MAX_PREVIEW_POST_COUNT ? MAX_PREVIEW_POST_COUNT : sectionVenueFeed.posts.count) + 2;
-        }        
+        return 1;
     }
 }
 
-- (FeedPreviewCell *)feedPreviewCellForSectionVenueFeed:(CPVenueFeed *)sectionVenueFeed tableView:(UITableView *)tableView
+- (FeedPreviewCell *)feedPreviewCellForSectionVenueFeed:(CPVenueFeed *)sectionVenueFeed tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath
 {
     CPVenue *currentVenue = [CPUserDefaultsHandler currentVenue];
     BOOL isCurrentVenue = sectionVenueFeed.venue.venueID == currentVenue.venueID;
@@ -582,6 +591,29 @@ typedef enum {
             
             headerCell.venueNameLabel.frame = venueNameShrink;
             headerCell.relativeTimeLabel.frame = timestampShift;                   
+        }
+    }
+    
+    NSInteger count = 0;
+    for (CPPost *post in sectionVenueFeed.posts) {
+        BOOL isLast = NO;
+        if (++count >= 3 || count == [sectionVenueFeed.posts count]) {
+            isLast = YES;
+        }
+        
+        CGFloat labelHeight = [self labelHeightWithText:[self textForPost:post]
+                                             labelWidth:[self widthForLabelForPost:post]
+                                              labelFont:[self fontForPost:post]];
+        CGFloat cellHeight = [self cellHeightWithLabelHeight:labelHeight cellPost:post isLastPostInPreview:isLast];
+        
+        [headerCell addPostCell:[self postCellForPost:post
+                                            tableView:tableView
+                                cellSeperatorRequired:!isLast
+                                  isLastPostInPreview:isLast]
+                     withHeight:cellHeight];
+        
+        if (isLast) {
+            break;
         }
     }
     
@@ -701,6 +733,102 @@ typedef enum {
     return updateCell;
 }
 
+- (PostBaseCell *)postCellForPost:(CPPost *)post tableView:(UITableView *)tableView cellSeperatorRequired:(BOOL)cellSeperatorRequired isLastPostInPreview:(BOOL)isLastPostInPreview
+{
+    PostBaseCell *cell;
+    
+    // check if this is a pending entry cell
+    if (self.pendingPost && post == self.pendingPost) {
+        cell = [self newPostCellForPost:post tableView:tableView];
+    } else {
+        // check which type of cell we are dealing with
+        if (post.originalPostID) {
+            static NSString *PostReplyCellIdentifier = @"PostReplyCell";
+            cell = [tableView dequeueReusableCellWithIdentifier:PostReplyCellIdentifier];
+        } else if (post.type != CPPostTypeLove) {
+            cell = [self postUpdateCellForPost:post tableView:tableView];
+        } else {
+            // this is a love cell
+            static NSString *loveCellIdentifier = @"PostLoveCell";
+            PostLoveCell *loveCell = [tableView dequeueReusableCellWithIdentifier:loveCellIdentifier];
+            
+            // setup the receiver's profile button
+            [self loadProfileImageForButton:loveCell.receiverProfileButton photoURL:post.receiver.photoURL];
+            
+            loveCell.entryLabel.text = post.entry.description;
+            
+            // if this is a plus one we need to make the label wider
+            // or reset it if it's not
+            CGRect loveLabelFrame = loveCell.entryLabel.frame;
+            loveLabelFrame.size.width = post.originalPostID > 0 ? LOVE_PLUS_ONE_LABEL_WIDTH : LOVE_LABEL_WIDTH;
+            loveCell.entryLabel.frame = loveLabelFrame;
+            
+            // the cell to return is the loveCell
+            cell = loveCell;
+        }
+        
+        // the text for this entry is prepended with NICKNAME:
+        cell.entryLabel.font = [self fontForPost:post];
+        cell.entryLabel.text = [self textForPost:post];
+        // make the frame of the label larger if required for a multi-line entry
+        CGRect entryFrame = cell.entryLabel.frame;
+        entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text
+                                                labelWidth:cell.entryLabel.frame.size.width
+                                                 labelFont:cell.entryLabel.font];
+        
+        cell.entryLabel.frame = entryFrame;
+        
+        // fade out the text if we exceed the height requirements
+        CGFloat fullHeight = [self labelHeightWithText:cell.entryLabel.text
+                                            labelWidth:cell.entryLabel.frame.size.width
+                                             labelFont:cell.entryLabel.font
+                                             maxHeight:MAXFLOAT];
+        [cell updateGradientAndSetVisible:(fullHeight > entryFrame.size.height)];
+        
+    }
+    
+    // setup the entry sender's profile button
+    [self loadProfileImageForButton:cell.senderProfileButton photoURL:post.author.photoURL];
+    
+    if (self.selectedVenueFeed) {
+        // remove the container background from this cell, if it exists
+        // remove the separator view
+        [[cell viewWithTag:CONTAINER_IMAGE_VIEW_TAG] removeFromSuperview];
+        [[cell viewWithTag:CELL_SEPARATOR_TAG] removeFromSuperview];
+        
+        if (post.originalPostID) {
+            [self setupReplyBubbleForCell:cell
+                          containerHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height
+                                                                 cellPost:post
+                                                      isLastPostInPreview:isLastPostInPreview]
+                                 position:FeedBGContainerPositionMiddle];
+        }
+    } else {
+        [self setupContainerBackgroundForCell:cell
+                              containerHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height
+                                                                     cellPost:post
+                                                          isLastPostInPreview:isLastPostInPreview]
+                                     position:FeedBGContainerPositionMiddle];
+        
+        if (cellSeperatorRequired) {
+            [self addSeperatorViewtoCell:cell];
+        } else {
+            // remove the cell separator if it exists
+            [[cell viewWithTag:CELL_SEPARATOR_TAG] removeFromSuperview];
+        }
+    }
+    
+    cell.activeColor = self.tableView.backgroundColor;
+    cell.inactiveColor = self.tableView.backgroundColor;
+    cell.user = post.author;
+    cell.delegate = self;
+    
+    // return the cell
+    cell.post = post;
+    
+    return cell;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {    
     CPPost *post;
@@ -712,7 +840,7 @@ typedef enum {
         // check if this is for a header 
         // or a footer for a venue feed preview
         if (indexPath.row == 0) {
-            return [self feedPreviewCellForSectionVenueFeed:sectionVenueFeed tableView:tableView];
+            return [self feedPreviewCellForSectionVenueFeed:sectionVenueFeed tableView:tableView indexPath:indexPath];
         } else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section] - 1) {
             return [self feedPreviewFooterCell:tableView];
         } else {
@@ -732,94 +860,10 @@ typedef enum {
     }
     
     if (post) {
-        PostBaseCell *cell;
-        
-        // check if this is a pending entry cell
-        if (self.pendingPost && post == self.pendingPost) {
-            cell = [self newPostCellForPost:post tableView:tableView];
-        } else {
-            // check which type of cell we are dealing with
-            if (post.originalPostID) {
-                static NSString *PostReplyCellIdentifier = @"PostReplyCell";
-                cell = [tableView dequeueReusableCellWithIdentifier:PostReplyCellIdentifier];
-            } else if (post.type != CPPostTypeLove) {
-                cell = [self postUpdateCellForPost:post tableView:tableView];
-            } else {
-                // this is a love cell
-                static NSString *loveCellIdentifier = @"PostLoveCell";
-                PostLoveCell *loveCell = [tableView dequeueReusableCellWithIdentifier:loveCellIdentifier];
-                
-                // setup the receiver's profile button
-                [self loadProfileImageForButton:loveCell.receiverProfileButton photoURL:post.receiver.photoURL];
-                
-                loveCell.entryLabel.text = post.entry.description;
-                
-                // if this is a plus one we need to make the label wider
-                // or reset it if it's not
-                CGRect loveLabelFrame = loveCell.entryLabel.frame;
-                loveLabelFrame.size.width = post.originalPostID > 0 ? LOVE_PLUS_ONE_LABEL_WIDTH : LOVE_LABEL_WIDTH;
-                loveCell.entryLabel.frame = loveLabelFrame;
-                
-                // the cell to return is the loveCell
-                cell = loveCell;
-            }
-            
-            // the text for this entry is prepended with NICKNAME:
-            cell.entryLabel.font = [self fontForPost:post];
-            cell.entryLabel.text = [self textForPost:post];
-            // make the frame of the label larger if required for a multi-line entry
-            CGRect entryFrame = cell.entryLabel.frame;
-            entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text
-                                                    labelWidth:cell.entryLabel.frame.size.width
-                                                     labelFont:cell.entryLabel.font];
-
-            cell.entryLabel.frame = entryFrame;
-
-            // fade out the text if we exceed the height requirements
-            CGFloat fullHeight = [self labelHeightWithText:cell.entryLabel.text
-                                                labelWidth:cell.entryLabel.frame.size.width
-                                                 labelFont:cell.entryLabel.font
-                                                 maxHeight:MAXFLOAT];
-            [cell updateGradientAndSetVisible:(fullHeight > entryFrame.size.height)];
-
-        }
-        
-        // setup the entry sender's profile button
-        [self loadProfileImageForButton:cell.senderProfileButton photoURL:post.author.photoURL];
-        
-        if (self.selectedVenueFeed) {
-            // remove the container background from this cell, if it exists
-            // remove the separator view
-            [[cell viewWithTag:CONTAINER_IMAGE_VIEW_TAG] removeFromSuperview];
-            [[cell viewWithTag:CELL_SEPARATOR_TAG] removeFromSuperview];
-            
-            if (post.originalPostID) {
-                [self setupReplyBubbleForCell:cell
-                              containerHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height indexPath:indexPath]
-                                                                     position:FeedBGContainerPositionMiddle];
-            }
-        } else {
-            [self setupContainerBackgroundForCell:cell
-                                  containerHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height indexPath:indexPath]
-                                         position:FeedBGContainerPositionMiddle];
-            
-            if (cellSeperatorRequired) {
-                [self addSeperatorViewtoCell:cell];
-            } else {
-                // remove the cell separator if it exists
-                [[cell viewWithTag:CELL_SEPARATOR_TAG] removeFromSuperview];
-            }
-        }
-        
-        cell.activeColor = self.tableView.backgroundColor;
-        cell.inactiveColor = self.tableView.backgroundColor;
-        cell.user = post.author;
-        cell.delegate = self;
-        
-        // return the cell
-        cell.post = post;
-        
-        return cell;
+        return [self postCellForPost:post
+                           tableView:tableView
+               cellSeperatorRequired:cellSeperatorRequired
+                 isLastPostInPreview:NO];
     } else {
         if (indexPath.row == [self.tableView numberOfRowsInSection:indexPath.section] - 1) {
             // this is the comment / +1 cell for a post in selected venue feed

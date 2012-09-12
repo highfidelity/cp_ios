@@ -204,13 +204,15 @@
     // mimic row selection - highlight and push the child view
     [UIView animateWithDuration:HIGHLIGHT_DURATION animations:^{
         self.contentView.backgroundColor = self.activeColor;
-        UITableView *tableView = (UITableView *)self.superview;
-        for (CPUserActionCell *cell in tableView.visibleCells) {
-            if (cell != self) {
-                if ([cell respondsToSelector:@selector(inactiveColor)]) {
-                    cell.contentView.backgroundColor = cell.inactiveColor;
-                } else {
-                    [cell setSelected:NO animated:YES];
+        if ([self.superview isKindOfClass:[UITableView class]]) {
+            UITableView *tableView = (UITableView *)self.superview;
+            for (CPUserActionCell *cell in tableView.visibleCells) {
+                if (cell != self) {
+                    if ([cell respondsToSelector:@selector(inactiveColor)]) {
+                        cell.contentView.backgroundColor = cell.inactiveColor;
+                    } else {
+                        [cell setSelected:NO animated:YES];
+                    }
                 }
             }
         }

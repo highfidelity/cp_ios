@@ -11,6 +11,7 @@
 @interface FeedPreviewCell ()
 
 @property (nonatomic) UITableViewCell *feedPreviewFooterCell;
+@property (nonatomic) NSMutableArray *postCellsArray;
 
 @end
 
@@ -35,12 +36,29 @@
                                            self.venueNameLabel.frame.origin.y, 235, 
                                            self.venueNameLabel.frame.size.height);
     
+    for (FeedPreviewCell *postCell in self.postCellsArray) {
+        [postCell removeFromSuperview];
+    }
+    [self.postCellsArray removeAllObjects];
+    
     [self.feedPreviewFooterCell removeFromSuperview];
     self.feedPreviewFooterCell = nil;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    
+    CGFloat lastOriginY = PREVIEW_HEADER_CELL_HEIGHT;
+    for (PostBaseCell *postCell in self.postCellsArray) {
+        CGRect postCellFrame = postCell.frame;
+        postCellFrame.origin.x = 0;
+        postCellFrame.origin.y = lastOriginY;
+        postCellFrame.size.width = self.frame.size.width;
+        
+        postCell.frame = postCellFrame;
+        
+        lastOriginY += postCellFrame.size.height;
+    }
     
     if (self.feedPreviewFooterCell) {
         CGRect feedPreviewFooterCellFrame = self.feedPreviewFooterCell.frame;
@@ -64,8 +82,22 @@
     [self.feedPreviewFooterCell removeFromSuperview];
     
     self.feedPreviewFooterCell = feedPreviewFooterCell;
-    self.feedPreviewFooterCell.frame = CGRectMake(0, 0, 0, height);
-    [self addSubview:self.feedPreviewFooterCell];
+    feedPreviewFooterCell.frame = CGRectMake(0, 0, 0, height);
+    feedPreviewFooterCell.userInteractionEnabled = NO;
+    [self addSubview:feedPreviewFooterCell];
+    
+    [self setNeedsLayout];
+}
+
+- (void)addPostCell:(PostBaseCell *)postCell withHeight:(CGFloat)height {
+    if (!self.postCellsArray) {
+        self.postCellsArray = [NSMutableArray arrayWithCapacity:3];
+    }
+    
+    [self.postCellsArray addObject:postCell];
+    postCell.frame = CGRectMake(0, 0, 0, height);
+    postCell.userInteractionEnabled = NO;
+    [self addSubview:postCell];
     
     [self setNeedsLayout];
 }

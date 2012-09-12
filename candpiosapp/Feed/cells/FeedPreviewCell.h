@@ -6,6 +6,9 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
+#import "PostBaseCell.h"
+
+#define PREVIEW_HEADER_CELL_HEIGHT 38
 
 @class FeedPreviewCell;
 
@@ -24,5 +27,6 @@
 @property (weak, nonatomic) id<FeedPreviewHeaderCellDelegate> delegate;
 
 - (void)setFeedPreviewFooterCell:(UITableViewCell *)feedPreviewFooterCell withHeight:(CGFloat)height;
+- (void)addPostCell:(PostBaseCell *)postCell withHeight:(CGFloat)height;
 
 @end

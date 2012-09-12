@@ -1699,6 +1699,8 @@
 		533E5ED415A3A88C0042862E /* cells */ = {
 			isa = PBXGroup;
 			children = (
+				698BB08215B6E87A00665CEA /* FeedPreviewCell.h */,
+				698BB08315B6E87A00665CEA /* FeedPreviewCell.m */,
 				533E5ED515A3A88C0042862E /* PostBaseCell.h */,
 				533E5ED615A3A88C0042862E /* PostBaseCell.m */,
 				533E5ED715A3A88C0042862E /* PostLoveCell.h */,
@@ -1707,8 +1709,6 @@
 				533E5EDA15A3A88C0042862E /* NewPostCell.m */,
 				533E5EDB15A3A88C0042862E /* PostUpdateCell.h */,
 				533E5EDC15A3A88C0042862E /* PostUpdateCell.m */,
-				698BB08215B6E87A00665CEA /* FeedPreviewCell.h */,
-				698BB08315B6E87A00665CEA /* FeedPreviewCell.m */,
 				532505A815C0A236006B1DB6 /* NewPostReplyCell.h */,
 				532505A915C0A236006B1DB6 /* NewPostReplyCell.m */,
 				532505AC15C0A25B006B1DB6 /* PostReplyCell.h */,
