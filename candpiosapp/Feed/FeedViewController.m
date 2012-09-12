@@ -613,7 +613,7 @@ typedef enum {
         if (sectionVenueFeed.posts.count > 0) {
             
             //
-            // the venue needs to be localized for relativeTimeStringFromDateNow to work (see #18247).
+            // the venue date needs to be localized for relativeTimeStringFromDateNow to work (see #18247).
             //
             
             firstPostDate = [self localizeDate:[[sectionVenueFeed.posts objectAtIndex:0] date] withUtc:sectionVenueFeed.venue.utc];
