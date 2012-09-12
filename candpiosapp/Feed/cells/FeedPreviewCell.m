@@ -62,6 +62,8 @@
         CGRect entryLabelFrame = postCell.entryLabel.frame;
         entryLabelFrame.size.width = PREVIEW_POST_MAX_WIDTH - entryLabelFrame.origin.x;
         postCell.entryLabel.frame = entryLabelFrame;
+        
+        postCell.entryLabel.lineBreakMode = UILineBreakModeTailTruncation;
     }
     
     if (self.feedPreviewFooterCell) {

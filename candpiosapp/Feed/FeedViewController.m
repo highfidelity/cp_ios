@@ -124,7 +124,9 @@ typedef enum {
 #define LAST_PREVIEW_POST_LABEL_BOTTOM_MARGIN 5
 #define PREVIEW_FOOTER_CELL_HEIGHT 27
 #define UPDATE_LABEL_WIDTH 228
+#define UPDATE_LABEL_WIDTH_IN_PREVIEW 194
 #define LOVE_LABEL_WIDTH 178
+#define LOVE_LABEL_WIDTH_IN_PREVIEW 144
 #define LOVE_PLUS_ONE_LABEL_WIDTH 200
 #define REPLY_LABEL_WIDTH 190
 #define PILL_BUTTON_CELL_HEIGHT 40
@@ -162,12 +164,20 @@ typedef enum {
     }
 }
 
-- (CGFloat)widthForLabelForPost:(CPPost *)post
+- (CGFloat)widthForLabelForPost:(CPPost *)post isPostInPreview:(BOOL)isPostInPreview
 {
-    if (post.type == CPPostTypeLove && !post.originalPostID) {
-        return LOVE_LABEL_WIDTH;
+    if (isPostInPreview) {
+        if (post.type == CPPostTypeLove && !post.originalPostID) {
+            return LOVE_LABEL_WIDTH_IN_PREVIEW;
+        } else {
+            return UPDATE_LABEL_WIDTH_IN_PREVIEW;
+        }
     } else {
-        return !post.originalPostID ? UPDATE_LABEL_WIDTH : REPLY_LABEL_WIDTH;
+        if (post.type == CPPostTypeLove && !post.originalPostID) {
+            return LOVE_LABEL_WIDTH;
+        } else {
+            return !post.originalPostID ? UPDATE_LABEL_WIDTH : REPLY_LABEL_WIDTH;
+        }
     }
 }
 
@@ -446,7 +456,7 @@ typedef enum {
                 }
                 
                 CGFloat labelHeight = [self labelHeightWithText:[self textForPost:post]
-                                                     labelWidth:[self widthForLabelForPost:post]
+                                                     labelWidth:[self widthForLabelForPost:post isPostInPreview:YES]
                                                       labelFont:[self fontForPost:post]];
                 CGFloat cellHeight = [self cellHeightWithLabelHeight:labelHeight cellPost:post isLastPostInPreview:isLast];
                 
@@ -497,7 +507,7 @@ typedef enum {
     
     // use helper methods to get label height and cell height
     CGFloat labelHeight = [self labelHeightWithText:[self textForPost:cellPost]
-                                         labelWidth:[self widthForLabelForPost:cellPost]
+                                         labelWidth:[self widthForLabelForPost:cellPost isPostInPreview:NO]
                                           labelFont:[self fontForPost:cellPost]];
     
     cellHeight = [self cellHeightWithLabelHeight:labelHeight cellPost:cellPost isLastPostInPreview:NO];
@@ -608,7 +618,7 @@ typedef enum {
         }
         
         CGFloat labelHeight = [self labelHeightWithText:[self textForPost:post]
-                                             labelWidth:[self widthForLabelForPost:post]
+                                             labelWidth:[self widthForLabelForPost:post isPostInPreview:YES]
                                               labelFont:[self fontForPost:post]];
         CGFloat cellHeight = [self cellHeightWithLabelHeight:labelHeight cellPost:post isLastPostInPreview:isLast];
         
