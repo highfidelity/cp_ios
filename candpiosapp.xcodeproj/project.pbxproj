@@ -440,7 +440,7 @@
 		6983394D15641509007CD32F /* contact-ignore@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983394915641509007CD32F /* contact-ignore@2x.png */; };
 		698BB07F15B6181100665CEA /* hide-element.png in Resources */ = {isa = PBXBuildFile; fileRef = 698BB07D15B6181100665CEA /* hide-element.png */; };
 		698BB08015B6181100665CEA /* hide-element@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 698BB07E15B6181100665CEA /* hide-element@2x.png */; };
-		698BB08415B6E87A00665CEA /* FeedPreviewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 698BB08315B6E87A00665CEA /* FeedPreviewHeaderCell.m */; };
+		698BB08415B6E87A00665CEA /* FeedPreviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 698BB08315B6E87A00665CEA /* FeedPreviewCell.m */; };
 		699249E3158A3CFC00EC273A /* ResumeVisibilityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 699249E2158A3CFC00EC273A /* ResumeVisibilityViewController.m */; };
 		69A030B7158F95F600BBCB4C /* pin-solar.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A030B5158F95F600BBCB4C /* pin-solar.png */; };
 		69A030B8158F95F600BBCB4C /* pin-solar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A030B6158F95F600BBCB4C /* pin-solar@2x.png */; };
@@ -1132,8 +1132,8 @@
 		6983394915641509007CD32F /* contact-ignore@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-ignore@2x.png"; sourceTree = "<group>"; };
 		698BB07D15B6181100665CEA /* hide-element.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hide-element.png"; sourceTree = "<group>"; };
 		698BB07E15B6181100665CEA /* hide-element@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hide-element@2x.png"; sourceTree = "<group>"; };
-		698BB08215B6E87A00665CEA /* FeedPreviewHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedPreviewHeaderCell.h; sourceTree = "<group>"; };
-		698BB08315B6E87A00665CEA /* FeedPreviewHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedPreviewHeaderCell.m; sourceTree = "<group>"; };
+		698BB08215B6E87A00665CEA /* FeedPreviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedPreviewCell.h; sourceTree = "<group>"; };
+		698BB08315B6E87A00665CEA /* FeedPreviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedPreviewCell.m; sourceTree = "<group>"; };
 		699249E1158A3CFC00EC273A /* ResumeVisibilityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResumeVisibilityViewController.h; path = Settings/ResumeVisibilityViewController.h; sourceTree = "<group>"; };
 		699249E2158A3CFC00EC273A /* ResumeVisibilityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResumeVisibilityViewController.m; path = Settings/ResumeVisibilityViewController.m; sourceTree = "<group>"; };
 		69A030B5158F95F600BBCB4C /* pin-solar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pin-solar.png"; path = "Map/images/pin-solar.png"; sourceTree = "<group>"; };
@@ -1699,6 +1699,8 @@
 		533E5ED415A3A88C0042862E /* cells */ = {
 			isa = PBXGroup;
 			children = (
+				698BB08215B6E87A00665CEA /* FeedPreviewCell.h */,
+				698BB08315B6E87A00665CEA /* FeedPreviewCell.m */,
 				533E5ED515A3A88C0042862E /* PostBaseCell.h */,
 				533E5ED615A3A88C0042862E /* PostBaseCell.m */,
 				533E5ED715A3A88C0042862E /* PostLoveCell.h */,
@@ -1707,8 +1709,6 @@
 				533E5EDA15A3A88C0042862E /* NewPostCell.m */,
 				533E5EDB15A3A88C0042862E /* PostUpdateCell.h */,
 				533E5EDC15A3A88C0042862E /* PostUpdateCell.m */,
-				698BB08215B6E87A00665CEA /* FeedPreviewHeaderCell.h */,
-				698BB08315B6E87A00665CEA /* FeedPreviewHeaderCell.m */,
 				532505A815C0A236006B1DB6 /* NewPostReplyCell.h */,
 				532505A915C0A236006B1DB6 /* NewPostReplyCell.m */,
 				532505AC15C0A25B006B1DB6 /* PostReplyCell.h */,
@@ -3233,7 +3233,7 @@
 				534BD45615AB72BD001FCC5C /* CPVenueFeed.m in Sources */,
 				53019FE415ABA21D00AE3FA1 /* CPUserActionCell.m in Sources */,
 				4E5578BE15AD0575000B588D /* CPUserAction.m in Sources */,
-				698BB08415B6E87A00665CEA /* FeedPreviewHeaderCell.m in Sources */,
+				698BB08415B6E87A00665CEA /* FeedPreviewCell.m in Sources */,
 				4E5D551315C078C1005FC2D7 /* UIBarButtonItem+WEPopover.m in Sources */,
 				4E5D551415C078C1005FC2D7 /* WEPopoverContainerView.m in Sources */,
 				4E5D551515C078C1005FC2D7 /* WEPopoverController.m in Sources */,

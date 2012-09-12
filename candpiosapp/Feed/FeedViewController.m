@@ -127,10 +127,11 @@ typedef enum {
 #define LABEL_BOTTOM_MARGIN 17
 #define LAST_PREVIEW_POST_MIN_CELL_HEIGHT 27
 #define LAST_PREVIEW_POST_LABEL_BOTTOM_MARGIN 5
-#define PREVIEW_HEADER_CELL_HEIGHT 38
 #define PREVIEW_FOOTER_CELL_HEIGHT 27
 #define UPDATE_LABEL_WIDTH 228
+#define UPDATE_LABEL_WIDTH_IN_PREVIEW 194
 #define LOVE_LABEL_WIDTH 178
+#define LOVE_LABEL_WIDTH_IN_PREVIEW 144
 #define LOVE_PLUS_ONE_LABEL_WIDTH 200
 #define REPLY_LABEL_WIDTH 190
 #define PILL_BUTTON_CELL_HEIGHT 40
@@ -168,12 +169,20 @@ typedef enum {
     }
 }
 
-- (CGFloat)widthForLabelForPost:(CPPost *)post
+- (CGFloat)widthForLabelForPost:(CPPost *)post isPostInPreview:(BOOL)isPostInPreview
 {
-    if (post.type == CPPostTypeLove && !post.originalPostID) {
-        return LOVE_LABEL_WIDTH;
+    if (isPostInPreview) {
+        if (post.type == CPPostTypeLove && !post.originalPostID) {
+            return LOVE_LABEL_WIDTH_IN_PREVIEW;
+        } else {
+            return UPDATE_LABEL_WIDTH_IN_PREVIEW;
+        }
     } else {
-        return !post.originalPostID ? UPDATE_LABEL_WIDTH : REPLY_LABEL_WIDTH;
+        if (post.type == CPPostTypeLove && !post.originalPostID) {
+            return LOVE_LABEL_WIDTH;
+        } else {
+            return !post.originalPostID ? UPDATE_LABEL_WIDTH : REPLY_LABEL_WIDTH;
+        }
     }
 }
 
@@ -194,7 +203,7 @@ typedef enum {
     
 }
 
-- (CGFloat)cellHeightWithLabelHeight:(CGFloat)labelHeight indexPath:(NSIndexPath *)indexPath
+- (CGFloat)cellHeightWithLabelHeight:(CGFloat)labelHeight cellPost:(CPPost *)cellPost isLastPostInPreview:(BOOL)isLastPostInPreview
 {
     CGFloat cellHeight = labelHeight;
     CGFloat bottomMargin;
@@ -202,13 +211,12 @@ typedef enum {
     
     // keep a 17 pt margin
     // but only if this isn't the last post in a preview
-    if (self.selectedVenueFeed ||
-        (indexPath.row < [[self venueFeedPreviewForIndex:indexPath.section] posts].count)) {
+    if (self.selectedVenueFeed || !isLastPostInPreview) {
         // use the default bottom margin and top margin
         bottomMargin = LABEL_BOTTOM_MARGIN;
         
         // if this is a post in a selected venue feed that has replies then we need to drop the margin
-        if (self.selectedVenueFeed && ((CPPost *)[self.selectedVenueFeed.posts objectAtIndex:indexPath.section]).replies.count) {
+        if (self.selectedVenueFeed && cellPost.replies.count) {
             bottomMargin -= 12;
         }
         
@@ -330,15 +338,21 @@ typedef enum {
     }
 }
 
-- (void)addSeperatorViewtoCell:(UITableViewCell *)cell
+- (void)addSeperatorViewtoCell:(UITableViewCell *)cell isPostInPreview:(BOOL)isPostInPreview
 {
     UIView *separatorView;
     
     if (!(separatorView = [cell.contentView viewWithTag:CELL_SEPARATOR_TAG])) {
-        UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(CONTAINER_BACKGROUND_ORIGIN_X + 2,
-                                                          cell.contentView.frame.size.height - 5,
-                                                          CONTAINER_BACKGROUND_WIDTH - 5,
-                                                          1)];
+        CGRect separatorViewFrame = CGRectMake(CONTAINER_BACKGROUND_ORIGIN_X + 2,
+                                               cell.contentView.frame.size.height - 5,
+                                               CONTAINER_BACKGROUND_WIDTH - 5,
+                                               1);
+        
+        if (isPostInPreview) {
+            separatorViewFrame.size.width = 5 + PREVIEW_POST_MAX_WIDTH - separatorViewFrame.origin.x;
+        }
+        
+        UIView *separatorView = [[UIView alloc] initWithFrame:separatorViewFrame];
         separatorView.backgroundColor = [UIColor colorWithR:239 G:239 B:239 A:1];
         separatorView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;        
         separatorView.tag = CELL_SEPARATOR_TAG;
@@ -436,7 +450,29 @@ typedef enum {
     
     if (!self.selectedVenueFeed) {
         if (indexPath.row == 0) {
-            return PREVIEW_HEADER_CELL_HEIGHT;
+            CPVenueFeed *sectionVenueFeed = [self venueFeedPreviewForIndex:indexPath.section];
+            
+            CGFloat postsTotalHeight = 0;
+            NSInteger count = 0;
+            for (CPPost *post in sectionVenueFeed.posts) {
+                BOOL isLast = NO;
+                if (++count >= 3 || count == [sectionVenueFeed.posts count]) {
+                    isLast = YES;
+                }
+                
+                CGFloat labelHeight = [self labelHeightWithText:[self textForPost:post]
+                                                     labelWidth:[self widthForLabelForPost:post isPostInPreview:YES]
+                                                      labelFont:[self fontForPost:post]];
+                CGFloat cellHeight = [self cellHeightWithLabelHeight:labelHeight cellPost:post isLastPostInPreview:isLast];
+                
+                postsTotalHeight += cellHeight;
+                
+                if (isLast) {
+                    break;
+                }
+            }
+            
+            return PREVIEW_HEADER_CELL_HEIGHT + PREVIEW_FOOTER_CELL_HEIGHT + postsTotalHeight;
         } else if (indexPath.row == (self.previewPostableFeedsOnly ? 1 : [self tableView:self.tableView numberOfRowsInSection:indexPath.section] - 1)) {
             return PREVIEW_FOOTER_CELL_HEIGHT;
         }
@@ -475,9 +511,11 @@ typedef enum {
     }
     
     // use helper methods to get label height and cell height
-    CGFloat labelHeight = [self labelHeightWithText:[self textForPost:cellPost] labelWidth:[self widthForLabelForPost:cellPost] labelFont:[self fontForPost:cellPost]];
+    CGFloat labelHeight = [self labelHeightWithText:[self textForPost:cellPost]
+                                         labelWidth:[self widthForLabelForPost:cellPost isPostInPreview:NO]
+                                          labelFont:[self fontForPost:cellPost]];
     
-    cellHeight = [self cellHeightWithLabelHeight:labelHeight indexPath:indexPath];
+    cellHeight = [self cellHeightWithLabelHeight:labelHeight cellPost:cellPost isLastPostInPreview:NO];
     
     // return the calculated labelHeight
     return cellHeight;
@@ -511,21 +549,312 @@ typedef enum {
         
         return rows;
     } else {
-        if (self.previewPostableFeedsOnly) {
-            // just a header and a footer here
-            return 2;
-        } else {
-            // grab the CPVenueFeed for this section
-            CPVenueFeed *sectionVenueFeed = [self venueFeedPreviewForIndex:section];
-            
-            // there will be one extra cell for the header for each venue feed
-            // and one for the footer of each feed
-            
-            // there will be a cell for each post in each of the venue feed previews
-            // up to three preview posts
-            return (sectionVenueFeed.posts.count > MAX_PREVIEW_POST_COUNT ? MAX_PREVIEW_POST_COUNT : sectionVenueFeed.posts.count) + 2;
-        }        
+        return 1;
     }
+}
+
+- (FeedPreviewCell *)feedPreviewCellForSectionVenueFeed:(CPVenueFeed *)sectionVenueFeed tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath
+{
+    CPVenue *currentVenue = [CPUserDefaultsHandler currentVenue];
+    BOOL isCurrentVenue = sectionVenueFeed.venue.venueID == currentVenue.venueID;
+    FeedPreviewCell *headerCell;
+    
+    if (self.previewPostableFeedsOnly) {
+        static NSString *FeedPostablePreviewHeaderCellIdentifier = @"FeedPostablePreviewHeaderCell";
+        headerCell = [tableView dequeueReusableCellWithIdentifier:FeedPostablePreviewHeaderCellIdentifier];
+    } else {
+        static NSString *FeedPreviewHeaderCellIdentifier = @"FeedPreviewHeaderCell";
+        headerCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewHeaderCellIdentifier];
+    }
+    
+    [self setupContainerBackgroundForCell:headerCell
+                          containerHeight:PREVIEW_HEADER_CELL_HEIGHT 
+                                 position:FeedBGContainerPositionTop];
+    
+    headerCell.delegate = self;
+    headerCell.removeButton.hidden = isCurrentVenue;
+    // give that label the venue name and change font to league gothic
+    headerCell.venueNameLabel.text = sectionVenueFeed.venue.name;
+    [CPUIHelper changeFontForLabel:headerCell.venueNameLabel toLeagueGothicOfSize:24];
+    
+    if (!self.previewPostableFeedsOnly) {
+        [CPUIHelper changeFontForLabel:headerCell.relativeTimeLabel toLeagueGothicOfSize:24];
+        
+        // give the relative time string to the cell
+        // if this venue has posts in the preview
+        // otherwise leave it blank
+        NSDate *firstPostDate;
+        if (sectionVenueFeed.posts.count > 0) {
+            firstPostDate = [[sectionVenueFeed.posts objectAtIndex:0] date];
+        }
+        
+        headerCell.relativeTimeLabel.text = [CPUtils relativeTimeStringFromDateToNow:firstPostDate];
+        
+        if (headerCell.relativeTimeLabel.text) {
+            // we need to stick the timestamp right beside the venue name
+            CGSize timestampSize = [headerCell.relativeTimeLabel.text sizeWithFont:headerCell.relativeTimeLabel.font];
+            CGSize venueNameSize = [headerCell.venueNameLabel.text sizeWithFont:headerCell.venueNameLabel.font];
+            
+            // stick the timestamp label to the venue name
+            CGRect timestampShift = headerCell.relativeTimeLabel.frame;
+            CGFloat removeButtonWidth = (headerCell.removeButton.hidden) ? 0 : 23;
+            timestampShift.origin.x = (CONTAINER_BACKGROUND_WIDTH + CONTAINER_BACKGROUND_ORIGIN_X - removeButtonWidth) - timestampSize.width - 18;
+            
+            // the venueNameLabel will cut into the time stamp so shrink it
+            CGRect venueNameShrink = headerCell.venueNameLabel.frame;
+            
+            if ((headerCell.venueNameLabel.frame.origin.x + venueNameSize.width) > timestampShift.origin.x) {
+                venueNameShrink.size.width = timestampShift.origin.x - venueNameShrink.origin.x - TIMESTAMP_LEFT_MARGIN;
+            } else {
+                venueNameShrink.size.width = venueNameSize.width;
+                timestampShift.origin.x = (venueNameShrink.origin.x + venueNameShrink.size.width + TIMESTAMP_LEFT_MARGIN);
+            }
+            
+            headerCell.venueNameLabel.frame = venueNameShrink;
+            headerCell.relativeTimeLabel.frame = timestampShift;                   
+        }
+    }
+    
+    NSInteger count = 0;
+    for (CPPost *post in sectionVenueFeed.posts) {
+        BOOL isLast = NO;
+        if (++count >= 3 || count == [sectionVenueFeed.posts count]) {
+            isLast = YES;
+        }
+        
+        CGFloat labelHeight = [self labelHeightWithText:[self textForPost:post]
+                                             labelWidth:[self widthForLabelForPost:post isPostInPreview:YES]
+                                              labelFont:[self fontForPost:post]];
+        CGFloat cellHeight = [self cellHeightWithLabelHeight:labelHeight cellPost:post isLastPostInPreview:isLast];
+        
+        [headerCell addPostCell:[self postCellForPost:post
+                                            tableView:tableView
+                                cellSeperatorRequired:!isLast
+                                      isPostInPreview:YES
+                                  isLastPostInPreview:isLast]
+                     withHeight:cellHeight];
+        
+        if (isLast) {
+            break;
+        }
+    }
+    
+    [headerCell setFeedPreviewFooterCell:[self feedPreviewFooterCell:tableView]
+                              withHeight:PREVIEW_FOOTER_CELL_HEIGHT];
+    
+    return headerCell;
+}
+
+- (UITableViewCell *)feedPreviewFooterCell:(UITableView *)tableView
+{
+    static NSString *FeedPreviewFooterCellIdentifier = @"FeedPreviewFooterCell";
+    UITableViewCell *feedPreviewFooterCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewFooterCellIdentifier];
+    
+    if (!feedPreviewFooterCell) {
+        feedPreviewFooterCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:FeedPreviewFooterCellIdentifier];
+        feedPreviewFooterCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    
+    // containerHeight needs to be the cellHeight minus the desired separation between the feed previews
+    [self setupContainerBackgroundForCell:feedPreviewFooterCell
+                          containerHeight:PREVIEW_FOOTER_CELL_HEIGHT - 9
+                                 position:FeedBGContainerPositionBottom];
+    
+    return feedPreviewFooterCell;
+}
+
+- (NewPostCell *)newPostCellForPost:(CPPost *)post tableView:(UITableView *)tableView
+{
+    NewPostCell *newEntryCell;
+    
+    if (post.originalPostID) {
+        static NSString *NewReplyCellIdentifier = @"NewPostReplyCell";
+        newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewReplyCellIdentifier];
+    } else {
+        static NSString *NewEntryCellIdentifier = @"NewPostCell";
+        newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewEntryCellIdentifier];
+    }            
+    
+    // get the cursor to the right place
+    // by padding it with leading spaces for whatever the leading text is
+    
+    NSString *leadingText;
+    
+    if (self.pendingPost.type == CPPostTypeQuestion) {
+        leadingText = !self.pendingPost.originalPostID ? @"Question" : @"Answer";
+    } else {
+        leadingText = !self.pendingPost.originalPostID ? @"Update" : @"Reply";
+    }
+    
+    // give the entry label the right text and color
+    newEntryCell.entryLabel.textColor = [CPUIHelper CPTealColor];
+    
+    // if the entry was blank (new entry) we need to setup the leading spaces
+    newEntryCell.entryLabel.text = [leadingText stringByAppendingString:@":"];
+    
+    
+    // add the right number of leading spaces
+    newEntryCell.growingTextView.text = self.pendingPost.entry;
+    
+    if (!newEntryCell.growingTextView.text.length) {
+        int numberOfSpaces = [self paddingForPendingPost];
+        for (int i = 0; i < numberOfSpaces; i++) {
+            newEntryCell.growingTextView.text = [newEntryCell.growingTextView.text stringByAppendingString:@" "];
+        }
+    }
+    
+    newEntryCell.growingTextView.returnKeyType = UIReturnKeySend;
+    
+    // be the delegate of the HPGrowingTextView on this cell
+    newEntryCell.growingTextView.delegate = self;
+    
+    // this is our pending entry cell
+    self.pendingPostCell = newEntryCell;
+    
+    return newEntryCell;
+}
+
+- (PostUpdateCell *)postUpdateCellForPost:(CPPost *)post tableView:(UITableView *)tableView
+{
+    // this is an update cell
+    // so check if it's this user's or somebody else's
+    PostUpdateCell *updateCell;
+    
+    if (!post.originalPostID && post.author.userID == [CPUserDefaultsHandler currentUser].userID){
+        static NSString *EntryCellIdentifier = @"MyPostUpdateCell";
+        updateCell = [tableView dequeueReusableCellWithIdentifier:EntryCellIdentifier];
+        
+        if (self.selectedVenueFeed) {
+            // create a singleton NSDateFormatter that we'll keep using
+            static NSDateFormatter *logFormatter = nil;
+            
+            if (!logFormatter) {
+                logFormatter = [[NSDateFormatter alloc] init];
+                logFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+                logFormatter.AMSymbol = @"a";
+                logFormatter.PMSymbol = @"p";
+            }
+            
+            // setup the format for the time label
+            logFormatter.dateFormat = @"h:mma";
+            updateCell.timeLabel.text = [logFormatter stringFromDate:post.date];
+            
+            // setup the format for the date label
+            logFormatter.dateFormat = @"MMM d";
+            updateCell.dateLabel.text = [logFormatter stringFromDate:post.date];
+        } else {
+            updateCell.dateLabel.text = nil;
+            updateCell.timeLabel.text = nil;
+        }
+    } else {
+        // this is an update from another user
+        static NSString *OtherUserEntryCellIdentifier = @"PostUpdateCell";
+        updateCell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];
+    }
+    
+    return updateCell;
+}
+
+- (PostBaseCell *)postCellForPost:(CPPost *)post tableView:(UITableView *)tableView cellSeperatorRequired:(BOOL)cellSeperatorRequired isPostInPreview:(BOOL)isPostInPreview isLastPostInPreview:(BOOL)isLastPostInPreview
+{
+    PostBaseCell *cell;
+    
+    // check if this is a pending entry cell
+    if (self.pendingPost && post == self.pendingPost) {
+        cell = [self newPostCellForPost:post tableView:tableView];
+    } else {
+        // check which type of cell we are dealing with
+        if (post.originalPostID) {
+            static NSString *PostReplyCellIdentifier = @"PostReplyCell";
+            cell = [tableView dequeueReusableCellWithIdentifier:PostReplyCellIdentifier];
+        } else if (post.type != CPPostTypeLove) {
+            cell = [self postUpdateCellForPost:post tableView:tableView];
+        } else {
+            // this is a love cell
+            static NSString *loveCellIdentifier = @"PostLoveCell";
+            PostLoveCell *loveCell = [tableView dequeueReusableCellWithIdentifier:loveCellIdentifier];
+            
+            // setup the receiver's profile button
+            [self loadProfileImageForButton:loveCell.receiverProfileButton photoURL:post.receiver.photoURL];
+            
+            loveCell.entryLabel.text = post.entry.description;
+            
+            // if this is a plus one we need to make the label wider
+            // or reset it if it's not
+            CGRect loveLabelFrame = loveCell.entryLabel.frame;
+            loveLabelFrame.size.width = post.originalPostID > 0 ? LOVE_PLUS_ONE_LABEL_WIDTH : LOVE_LABEL_WIDTH;
+            loveCell.entryLabel.frame = loveLabelFrame;
+            
+            // the cell to return is the loveCell
+            cell = loveCell;
+        }
+        
+        // the text for this entry is prepended with NICKNAME:
+        cell.entryLabel.font = [self fontForPost:post];
+        cell.entryLabel.text = [self textForPost:post];
+        // make the frame of the label larger if required for a multi-line entry
+        CGRect entryFrame = cell.entryLabel.frame;
+        
+        if (isPostInPreview) {
+            entryFrame.size.width = [self widthForLabelForPost:post
+                                               isPostInPreview:isPostInPreview];
+        }
+        
+        entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text
+                                                labelWidth:entryFrame.size.width
+                                                 labelFont:cell.entryLabel.font];
+        
+        cell.entryLabel.frame = entryFrame;
+        
+        // fade out the text if we exceed the height requirements
+        CGFloat fullHeight = [self labelHeightWithText:cell.entryLabel.text
+                                            labelWidth:entryFrame.size.width
+                                             labelFont:cell.entryLabel.font
+                                             maxHeight:MAXFLOAT];
+        [cell updateGradientAndSetVisible:(fullHeight > entryFrame.size.height)];
+        
+    }
+    
+    // setup the entry sender's profile button
+    [self loadProfileImageForButton:cell.senderProfileButton photoURL:post.author.photoURL];
+    
+    if (self.selectedVenueFeed) {
+        // remove the container background from this cell, if it exists
+        // remove the separator view
+        [[cell viewWithTag:CONTAINER_IMAGE_VIEW_TAG] removeFromSuperview];
+        [[cell viewWithTag:CELL_SEPARATOR_TAG] removeFromSuperview];
+        
+        if (post.originalPostID) {
+            [self setupReplyBubbleForCell:cell
+                          containerHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height
+                                                                 cellPost:post
+                                                      isLastPostInPreview:isLastPostInPreview]
+                                 position:FeedBGContainerPositionMiddle];
+        }
+    } else {
+        [self setupContainerBackgroundForCell:cell
+                              containerHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height
+                                                                     cellPost:post
+                                                          isLastPostInPreview:isLastPostInPreview]
+                                     position:FeedBGContainerPositionMiddle];
+        
+        if (cellSeperatorRequired) {
+            [self addSeperatorViewtoCell:cell isPostInPreview:isPostInPreview];
+        } else {
+            // remove the cell separator if it exists
+            [[cell viewWithTag:CELL_SEPARATOR_TAG] removeFromSuperview];
+        }
+    }
+    
+    cell.activeColor = self.tableView.backgroundColor;
+    cell.inactiveColor = self.tableView.backgroundColor;
+    cell.user = post.author;
+    cell.delegate = self;
+    
+    // return the cell
+    cell.post = post;
+    
+    return cell;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -535,86 +864,13 @@ typedef enum {
 
     if (!self.selectedVenueFeed) {
         CPVenueFeed *sectionVenueFeed = [self venueFeedPreviewForIndex:indexPath.section];
-        CPVenue *currentVenue = [CPUserDefaultsHandler currentVenue];
-        BOOL isCurrentVenue = sectionVenueFeed.venue.venueID == currentVenue.venueID;
         
         // check if this is for a header 
         // or a footer for a venue feed preview
         if (indexPath.row == 0) {
-            FeedPreviewHeaderCell *headerCell;
-            
-            if (self.previewPostableFeedsOnly) {
-                static NSString *FeedPostablePreviewHeaderCellIdentifier = @"FeedPostablePreviewHeaderCell";
-                headerCell = [tableView dequeueReusableCellWithIdentifier:FeedPostablePreviewHeaderCellIdentifier];
-            } else {
-                static NSString *FeedPreviewHeaderCellIdentifier = @"FeedPreviewHeaderCell";
-                headerCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewHeaderCellIdentifier];
-            }
-            
-            [self setupContainerBackgroundForCell:headerCell
-                                  containerHeight:PREVIEW_HEADER_CELL_HEIGHT 
-                                         position:FeedBGContainerPositionTop];
-            
-            headerCell.delegate = self;
-            headerCell.removeButton.hidden = isCurrentVenue;
-            // give that label the venue name and change font to league gothic
-            headerCell.venueNameLabel.text = sectionVenueFeed.venue.name;
-            [CPUIHelper changeFontForLabel:headerCell.venueNameLabel toLeagueGothicOfSize:24];
-            
-            if (!self.previewPostableFeedsOnly) {
-                [CPUIHelper changeFontForLabel:headerCell.relativeTimeLabel toLeagueGothicOfSize:24];
-                
-                // give the relative time string to the cell
-                // if this venue has posts in the preview
-                // otherwise leave it blank
-                NSDate *firstPostDate;
-                if (sectionVenueFeed.posts.count > 0) {
-                    firstPostDate = [[sectionVenueFeed.posts objectAtIndex:0] date];
-                }
-                
-                headerCell.relativeTimeLabel.text = [CPUtils relativeTimeStringFromDateToNow:firstPostDate];
-                
-                if (headerCell.relativeTimeLabel.text) {
-                    // we need to stick the timestamp right beside the venue name
-                    CGSize timestampSize = [headerCell.relativeTimeLabel.text sizeWithFont:headerCell.relativeTimeLabel.font];
-                    CGSize venueNameSize = [headerCell.venueNameLabel.text sizeWithFont:headerCell.venueNameLabel.font];
-                    
-                    // stick the timestamp label to the venue name
-                    CGRect timestampShift = headerCell.relativeTimeLabel.frame;
-                    CGFloat removeButtonWidth = (headerCell.removeButton.hidden) ? 0 : 23;
-                    timestampShift.origin.x = (CONTAINER_BACKGROUND_WIDTH + CONTAINER_BACKGROUND_ORIGIN_X - removeButtonWidth) - timestampSize.width - 18;
-                    
-                    // the venueNameLabel will cut into the time stamp so shrink it
-                    CGRect venueNameShrink = headerCell.venueNameLabel.frame;
-                    
-                    if ((headerCell.venueNameLabel.frame.origin.x + venueNameSize.width) > timestampShift.origin.x) {
-                        venueNameShrink.size.width = timestampShift.origin.x - venueNameShrink.origin.x - TIMESTAMP_LEFT_MARGIN;
-                    } else {
-                        venueNameShrink.size.width = venueNameSize.width;
-                        timestampShift.origin.x = (venueNameShrink.origin.x + venueNameShrink.size.width + TIMESTAMP_LEFT_MARGIN);
-                    }
-                    
-                    headerCell.venueNameLabel.frame = venueNameShrink;
-                    headerCell.relativeTimeLabel.frame = timestampShift;                   
-                }
-            }
-            
-            return headerCell;
+            return [self feedPreviewCellForSectionVenueFeed:sectionVenueFeed tableView:tableView indexPath:indexPath];
         } else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section] - 1) {
-            static NSString *FeedPreviewFooterCellIdentifier = @"FeedPreviewFooterCell";
-            UITableViewCell *feedPreviewFooterCell = [tableView dequeueReusableCellWithIdentifier:FeedPreviewFooterCellIdentifier];
-            
-            if (!feedPreviewFooterCell) {
-                feedPreviewFooterCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:FeedPreviewFooterCellIdentifier];
-                feedPreviewFooterCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            
-            // containerHeight needs to be the cellHeight minus the desired separation between the feed previews
-            [self setupContainerBackgroundForCell:feedPreviewFooterCell
-                                  containerHeight:PREVIEW_FOOTER_CELL_HEIGHT - 9
-                                         position:FeedBGContainerPositionBottom];
-            
-            return feedPreviewFooterCell;
+            return [self feedPreviewFooterCell:tableView];
         } else {
             cellSeperatorRequired = indexPath.row != sectionVenueFeed.posts.count && indexPath.row != 3;
             // pull the right post from the feed preview for this venue
@@ -632,180 +888,11 @@ typedef enum {
     }
     
     if (post) {
-        PostBaseCell *cell;
-        
-        // check if this is a pending entry cell
-        if (self.pendingPost && post == self.pendingPost) {
-            
-            NewPostCell *newEntryCell;
-            
-            if (post.originalPostID) {
-                static NSString *NewReplyCellIdentifier = @"NewPostReplyCell";
-                newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewReplyCellIdentifier];
-            } else {
-                static NSString *NewEntryCellIdentifier = @"NewPostCell";
-                newEntryCell = [tableView dequeueReusableCellWithIdentifier:NewEntryCellIdentifier];
-            }            
-            
-            // get the cursor to the right place
-            // by padding it with leading spaces for whatever the leading text is
-            
-            NSString *leadingText;
-        
-            if (self.pendingPost.type == CPPostTypeQuestion) {
-                leadingText = !self.pendingPost.originalPostID ? @"Question" : @"Answer";
-            } else {
-                leadingText = !self.pendingPost.originalPostID ? @"Update" : @"Reply";
-            }
-            
-            // give the entry label the right text and color
-            newEntryCell.entryLabel.textColor = [CPUIHelper CPTealColor];
-            
-            // if the entry was blank (new entry) we need to setup the leading spaces
-            newEntryCell.entryLabel.text = [leadingText stringByAppendingString:@":"];
-            
-                        
-            // add the right number of leading spaces
-            newEntryCell.growingTextView.text = self.pendingPost.entry;
-            
-            if (!newEntryCell.growingTextView.text.length) {
-                int numberOfSpaces = [self paddingForPendingPost];
-                for (int i = 0; i < numberOfSpaces; i++) {
-                    newEntryCell.growingTextView.text = [newEntryCell.growingTextView.text stringByAppendingString:@" "];
-                }
-            }
-            
-            newEntryCell.growingTextView.returnKeyType = UIReturnKeySend;
-            
-            // be the delegate of the HPGrowingTextView on this cell
-            newEntryCell.growingTextView.delegate = self;
-            
-            // this is our pending entry cell
-            self.pendingPostCell = newEntryCell;
-            
-            // the cell to be returned is the newEntryCell
-            cell = newEntryCell;
-        } else {
-            // check which type of cell we are dealing with
-            if (post.originalPostID) {
-                static NSString *PostReplyCellIdentifier = @"PostReplyCell";
-                cell = [tableView dequeueReusableCellWithIdentifier:PostReplyCellIdentifier];
-            } else if (post.type != CPPostTypeLove) {
-                // this is an update cell
-                // so check if it's this user's or somebody else's
-                PostUpdateCell *updateCell;
-                
-                if (!post.originalPostID && post.author.userID == [CPUserDefaultsHandler currentUser].userID){
-                    static NSString *EntryCellIdentifier = @"MyPostUpdateCell";
-                    updateCell = [tableView dequeueReusableCellWithIdentifier:EntryCellIdentifier];
-                    
-                    if (self.selectedVenueFeed) {
-                        // create a singleton NSDateFormatter that we'll keep using
-                        static NSDateFormatter *logFormatter = nil;
-                        
-                        if (!logFormatter) {
-                            logFormatter = [[NSDateFormatter alloc] init];
-                            logFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-                            logFormatter.AMSymbol = @"a";
-                            logFormatter.PMSymbol = @"p";
-                        }
-
-                        // setup the format for the time label
-                        logFormatter.dateFormat = @"h:mma";
-                        updateCell.timeLabel.text = [logFormatter stringFromDate:post.date];
-
-                        // setup the format for the date label
-                        logFormatter.dateFormat = @"MMM d";
-                        updateCell.dateLabel.text = [logFormatter stringFromDate:post.date];
-                    } else {
-                        updateCell.dateLabel.text = nil;
-                        updateCell.timeLabel.text = nil;
-                    }
-                } else {
-                    // this is an update from another user
-                    static NSString *OtherUserEntryCellIdentifier = @"PostUpdateCell";
-                    updateCell = [tableView dequeueReusableCellWithIdentifier:OtherUserEntryCellIdentifier];
-                }
-                
-                // the cell to return is the updateCell
-                cell = updateCell;
-                
-            } else {
-                // this is a love cell
-                static NSString *loveCellIdentifier = @"PostLoveCell";
-                PostLoveCell *loveCell = [tableView dequeueReusableCellWithIdentifier:loveCellIdentifier];
-                
-                // setup the receiver's profile button
-                [self loadProfileImageForButton:loveCell.receiverProfileButton photoURL:post.receiver.photoURL];
-                
-                loveCell.entryLabel.text = post.entry.description;
-                
-                // if this is a plus one we need to make the label wider
-                // or reset it if it's not
-                CGRect loveLabelFrame = loveCell.entryLabel.frame;
-                loveLabelFrame.size.width = post.originalPostID > 0 ? LOVE_PLUS_ONE_LABEL_WIDTH : LOVE_LABEL_WIDTH;
-                loveCell.entryLabel.frame = loveLabelFrame;
-                
-                // the cell to return is the loveCell
-                cell = loveCell;
-            }
-            
-            // the text for this entry is prepended with NICKNAME:
-            cell.entryLabel.font = [self fontForPost:post];
-            cell.entryLabel.text = [self textForPost:post];
-            // make the frame of the label larger if required for a multi-line entry
-            CGRect entryFrame = cell.entryLabel.frame;
-            entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text
-                                                    labelWidth:cell.entryLabel.frame.size.width
-                                                     labelFont:cell.entryLabel.font];
-
-            cell.entryLabel.frame = entryFrame;
-
-            // fade out the text if we exceed the height requirements
-            CGFloat fullHeight = [self labelHeightWithText:cell.entryLabel.text
-                                                labelWidth:cell.entryLabel.frame.size.width
-                                                 labelFont:cell.entryLabel.font
-                                                 maxHeight:MAXFLOAT];
-            [cell updateGradientAndSetVisible:(fullHeight > entryFrame.size.height)];
-
-        }
-        
-        // setup the entry sender's profile button
-        [self loadProfileImageForButton:cell.senderProfileButton photoURL:post.author.photoURL];
-        
-        if (self.selectedVenueFeed) {
-            // remove the container background from this cell, if it exists
-            // remove the separator view
-            [[cell viewWithTag:CONTAINER_IMAGE_VIEW_TAG] removeFromSuperview];
-            [[cell viewWithTag:CELL_SEPARATOR_TAG] removeFromSuperview];
-            
-            if (post.originalPostID) {
-                [self setupReplyBubbleForCell:cell
-                              containerHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height indexPath:indexPath]
-                                                                     position:FeedBGContainerPositionMiddle];
-            }
-        } else {
-            [self setupContainerBackgroundForCell:cell
-                                  containerHeight:[self cellHeightWithLabelHeight:cell.entryLabel.frame.size.height indexPath:indexPath]
-                                         position:FeedBGContainerPositionMiddle];
-            
-            if (cellSeperatorRequired) {
-                [self addSeperatorViewtoCell:cell];
-            } else {
-                // remove the cell separator if it exists
-                [[cell viewWithTag:CELL_SEPARATOR_TAG] removeFromSuperview];
-            }
-        }
-        
-        cell.activeColor = self.tableView.backgroundColor;
-        cell.inactiveColor = self.tableView.backgroundColor;
-        cell.user = post.author;
-        cell.delegate = self;
-        
-        // return the cell
-        cell.post = post;
-        
-        return cell;
+        return [self postCellForPost:post
+                           tableView:tableView
+               cellSeperatorRequired:cellSeperatorRequired
+                     isPostInPreview:NO
+                 isLastPostInPreview:NO];
     } else {
         if (indexPath.row == [self.tableView numberOfRowsInSection:indexPath.section] - 1) {
             // this is the comment / +1 cell for a post in selected venue feed
@@ -1835,7 +1922,7 @@ typedef enum {
 
 #pragma mark - FeedPreviewHeaderCellDelegate
 
-- (void)removeButtonPressed:(FeedPreviewHeaderCell *)cell
+- (void)removeButtonPressed:(FeedPreviewCell *)cell
 {
     if ( ! self.selectedVenueFeed && ! self.previewPostableFeedsOnly) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
