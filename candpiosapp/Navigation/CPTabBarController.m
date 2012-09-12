@@ -232,12 +232,18 @@
     // the user is logged in and checked in
     // we need to bring them to the feed VC and display the feed for the venue they are checked into
     self.feedViewController.postType = postType;
-    
-    // if the FeedViewController doesn't have our the current venue's feed as it's selectedVenueFeed
-    // then pull it from the list of venue feed previews and make it the selected venue feed
-    self.feedViewController.selectedVenueFeed = [self.feedViewController.venueFeedPreviews objectAtIndex:0];
-    
-    [self showFeedVCForNewPost:YES];
+
+    @try {
+        // if the FeedViewController doesn't have our the current venue's feed as it's selectedVenueFeed
+        // then pull it from the list of venue feed previews and make it the selected venue feed
+        [self.feedViewController reloadFeedPreviewVenues];
+        self.feedViewController.selectedVenueFeed = [self.feedViewController.venueFeedPreviews objectAtIndex:0];
+
+        [self showFeedVCForNewPost:YES];
+    }
+    @catch (NSException *exception) {
+        [FlurryAnalytics logError:@"showFeedVCForNewPostAtCurrentVenueWithPostType" message:exception.reason exception:exception];
+    }
 }
 
 - (IBAction)checkinButtonPressed:(id)sender

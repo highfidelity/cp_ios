@@ -31,6 +31,7 @@
 - (void)newPost:(NSIndexPath *)replyToIndexPath;
 - (void)showOnlyPostableFeeds;
 - (void)showVenueFeedForVenue:(CPVenue *)venueToShow;
+- (void)reloadFeedPreviewVenues;
 
 + (UIView *)timelineViewWithHeight:(CGFloat)height;
 
