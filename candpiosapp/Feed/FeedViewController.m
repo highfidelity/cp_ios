@@ -553,6 +553,32 @@ typedef enum {
     }
 }
 
+//
+// logic loosely based on sample code provided at
+// http://stackoverflow.com/questions/1490537/gmt-time-on-iphone
+//
+- (NSDate*)localizeDate:(NSDate*)date withUtc:(NSString *)utc
+{
+    NSDate* localizedDate;
+    
+    if (utc)
+    {
+        int zoneOffset = [utc intValue];
+        NSTimeZone* remoteTimeZone = [NSTimeZone timeZoneForSecondsFromGMT:(zoneOffset*3600)];
+        NSTimeZone* utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+        NSInteger remoteGmtOffset = [remoteTimeZone secondsFromGMTForDate:date];
+        NSInteger gmtOffset = [utcTimeZone secondsFromGMTForDate:date];        NSTimeInterval gmtInterval = gmtOffset - remoteGmtOffset;
+        localizedDate = [[NSDate alloc] initWithTimeInterval:gmtInterval sinceDate:date];
+    }
+    else  // defaulting to date when no utc provided
+    {
+        localizedDate = date;
+    }
+    
+    return localizedDate;
+}
+
+
 - (FeedPreviewCell *)feedPreviewCellForSectionVenueFeed:(CPVenueFeed *)sectionVenueFeed tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath
 {
     CPVenue *currentVenue = [CPUserDefaultsHandler currentVenue];
@@ -585,7 +611,12 @@ typedef enum {
         // otherwise leave it blank
         NSDate *firstPostDate;
         if (sectionVenueFeed.posts.count > 0) {
-            firstPostDate = [[sectionVenueFeed.posts objectAtIndex:0] date];
+            
+            //
+            // the venue needs to be localized for relativeTimeStringFromDateNow to work (see #18247).
+            //
+            
+            firstPostDate = [self localizeDate:[[sectionVenueFeed.posts objectAtIndex:0] date] withUtc:sectionVenueFeed.venue.utc];
         }
         
         headerCell.relativeTimeLabel.text = [CPUtils relativeTimeStringFromDateToNow:firstPostDate];
