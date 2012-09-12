@@ -24,6 +24,8 @@
     [self.removeButton addTarget:self
                           action:@selector(removeButtonAction)
                 forControlEvents:UIControlEventTouchUpInside];
+    
+    self.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"list-arrow-big-light-grey.png"]];
 }
 
 - (void)prepareForReuse {
@@ -64,6 +66,16 @@
         postCell.entryLabel.frame = entryLabelFrame;
         
         postCell.entryLabel.lineBreakMode = UILineBreakModeTailTruncation;
+    }
+    
+    if ([self.postCellsArray count]) {
+        self.accessoryView.hidden = NO;
+        self.accessoryView.frame = CGRectMake(285,
+                                              roundf((self.frame.size.height - self.accessoryView.frame.size.height) / 2 - 5),
+                                              self.accessoryView.frame.size.width,
+                                              self.accessoryView.frame.size.height);
+    } else {
+        self.accessoryView.hidden = YES;
     }
     
     if (self.feedPreviewFooterCell) {
