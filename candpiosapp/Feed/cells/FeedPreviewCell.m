@@ -58,6 +58,10 @@
         postCell.frame = postCellFrame;
         
         lastOriginY += postCellFrame.size.height;
+        
+        CGRect entryLabelFrame = postCell.entryLabel.frame;
+        entryLabelFrame.size.width = PREVIEW_POST_MAX_WIDTH - entryLabelFrame.origin.x;
+        postCell.entryLabel.frame = entryLabelFrame;
     }
     
     if (self.feedPreviewFooterCell) {

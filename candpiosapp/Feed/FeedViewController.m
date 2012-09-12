@@ -323,15 +323,21 @@ typedef enum {
     }
 }
 
-- (void)addSeperatorViewtoCell:(UITableViewCell *)cell
+- (void)addSeperatorViewtoCell:(UITableViewCell *)cell isPostInPreview:(BOOL)isPostInPreview
 {
     UIView *separatorView;
     
     if (!(separatorView = [cell.contentView viewWithTag:CELL_SEPARATOR_TAG])) {
-        UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(CONTAINER_BACKGROUND_ORIGIN_X + 2,
-                                                          cell.contentView.frame.size.height - 5,
-                                                          CONTAINER_BACKGROUND_WIDTH - 5,
-                                                          1)];
+        CGRect separatorViewFrame = CGRectMake(CONTAINER_BACKGROUND_ORIGIN_X + 2,
+                                               cell.contentView.frame.size.height - 5,
+                                               CONTAINER_BACKGROUND_WIDTH - 5,
+                                               1);
+        
+        if (isPostInPreview) {
+            separatorViewFrame.size.width = 5 + PREVIEW_POST_MAX_WIDTH - separatorViewFrame.origin.x;
+        }
+        
+        UIView *separatorView = [[UIView alloc] initWithFrame:separatorViewFrame];
         separatorView.backgroundColor = [UIColor colorWithR:239 G:239 B:239 A:1];
         separatorView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;        
         separatorView.tag = CELL_SEPARATOR_TAG;
@@ -609,6 +615,7 @@ typedef enum {
         [headerCell addPostCell:[self postCellForPost:post
                                             tableView:tableView
                                 cellSeperatorRequired:!isLast
+                                      isPostInPreview:YES
                                   isLastPostInPreview:isLast]
                      withHeight:cellHeight];
         
@@ -733,7 +740,7 @@ typedef enum {
     return updateCell;
 }
 
-- (PostBaseCell *)postCellForPost:(CPPost *)post tableView:(UITableView *)tableView cellSeperatorRequired:(BOOL)cellSeperatorRequired isLastPostInPreview:(BOOL)isLastPostInPreview
+- (PostBaseCell *)postCellForPost:(CPPost *)post tableView:(UITableView *)tableView cellSeperatorRequired:(BOOL)cellSeperatorRequired isPostInPreview:(BOOL)isPostInPreview isLastPostInPreview:(BOOL)isLastPostInPreview
 {
     PostBaseCell *cell;
     
@@ -811,7 +818,7 @@ typedef enum {
                                      position:FeedBGContainerPositionMiddle];
         
         if (cellSeperatorRequired) {
-            [self addSeperatorViewtoCell:cell];
+            [self addSeperatorViewtoCell:cell isPostInPreview:isPostInPreview];
         } else {
             // remove the cell separator if it exists
             [[cell viewWithTag:CELL_SEPARATOR_TAG] removeFromSuperview];
@@ -863,6 +870,7 @@ typedef enum {
         return [self postCellForPost:post
                            tableView:tableView
                cellSeperatorRequired:cellSeperatorRequired
+                     isPostInPreview:NO
                  isLastPostInPreview:NO];
     } else {
         if (indexPath.row == [self.tableView numberOfRowsInSection:indexPath.section] - 1) {

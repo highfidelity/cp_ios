@@ -9,6 +9,7 @@
 #import "PostBaseCell.h"
 
 #define PREVIEW_HEADER_CELL_HEIGHT 38
+#define PREVIEW_POST_MAX_WIDTH 266
 
 @class FeedPreviewCell;
 

@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "CPUserActionCell.h"
 #import "CPPost.h"
 #import "WEPopoverController.h"
@@ -19,4 +18,5 @@
 @property (strong, nonatomic) CAGradientLayer *gradientLayer;
 
 - (void)updateGradientAndSetVisible:(BOOL)visible;
+
 @end
