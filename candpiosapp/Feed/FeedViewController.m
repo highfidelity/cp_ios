@@ -794,15 +794,21 @@ typedef enum {
         cell.entryLabel.text = [self textForPost:post];
         // make the frame of the label larger if required for a multi-line entry
         CGRect entryFrame = cell.entryLabel.frame;
+        
+        if (isPostInPreview) {
+            entryFrame.size.width = [self widthForLabelForPost:post
+                                               isPostInPreview:isPostInPreview];
+        }
+        
         entryFrame.size.height = [self labelHeightWithText:cell.entryLabel.text
-                                                labelWidth:cell.entryLabel.frame.size.width
+                                                labelWidth:entryFrame.size.width
                                                  labelFont:cell.entryLabel.font];
         
         cell.entryLabel.frame = entryFrame;
         
         // fade out the text if we exceed the height requirements
         CGFloat fullHeight = [self labelHeightWithText:cell.entryLabel.text
-                                            labelWidth:cell.entryLabel.frame.size.width
+                                            labelWidth:entryFrame.size.width
                                              labelFont:cell.entryLabel.font
                                              maxHeight:MAXFLOAT];
         [cell updateGradientAndSetVisible:(fullHeight > entryFrame.size.height)];
