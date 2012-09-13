@@ -163,9 +163,10 @@ static GRMustacheTemplate *postBadgesTemplate;
     }
 }
 
-- (void)viewDidUnload
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewDidUnload];
+    [super viewWillDisappear:animated];
+    
     [self.navigationController.navigationBar removeGestureRecognizer:_tapRecon];
     self.tapRecon = nil;
 }
