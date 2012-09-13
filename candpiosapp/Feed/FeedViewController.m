@@ -594,7 +594,9 @@ typedef enum {
                                         offsetFromUtc:[sectionVenueFeed.venue.utc intValue]];
             }
             else {
+#if DEBUG
                 NSLog(@"Warning: venue %@ is missing a utc (offset from UTC)", sectionVenueFeed.venue.name);
+#endif
                 // defaulting to the date of the post, the time displayed will be off by the offset of the venue!
                 firstPostDate = [[sectionVenueFeed.posts objectAtIndex:0] date];
             }
