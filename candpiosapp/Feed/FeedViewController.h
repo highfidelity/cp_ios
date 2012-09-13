@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CPVenueFeed.h"
 #import "CPUserActionCell.h"
-#import "FeedPreviewHeaderCell.h"
+#import "FeedPreviewCell.h"
 #import "WEPopoverController.h"
 #import "PostBaseCell.h"
 #import "PillPopoverViewController.h"
@@ -31,6 +31,7 @@
 - (void)newPost:(NSIndexPath *)replyToIndexPath;
 - (void)showOnlyPostableFeeds;
 - (void)showVenueFeedForVenue:(CPVenue *)venueToShow;
+- (void)reloadFeedPreviewVenues;
 
 + (UIView *)timelineViewWithHeight:(CGFloat)height;
 

@@ -84,9 +84,6 @@ static CPGeofenceHandler *sharedHandler;
                 // Cancel all old local notifications
                 [[UIApplication sharedApplication] cancelAllLocalNotifications];
                 
-                // post a notification to say the user has checked in
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckInStateChange" object:nil];
-                
                 [[CPCheckinHandler sharedHandler] setCheckedOut];
                 
                 [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
