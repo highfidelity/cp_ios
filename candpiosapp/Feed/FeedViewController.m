@@ -1366,6 +1366,8 @@ typedef enum {
     }
 }
 
+#define SECONDS_IN_HOUR 3600
+
 - (void)sendNewPost
 {
     // let's grab the cell that this entry is for
@@ -1383,6 +1385,7 @@ typedef enum {
         [CPapi newPost:self.pendingPost atVenue:self.selectedVenueFeed.venue completion:^(NSDictionary *json, NSError *error) {
             if (!error) {
                 if (![[json objectForKey:@"error"] boolValue]) {
+                                        
                     self.currentState = FeedVCStateSentNewPost;
                     
                     // the ID of the new post is returned as the payload
@@ -1393,7 +1396,14 @@ typedef enum {
                     self.pendingPost = nil;
                     
                     // no error, log sent successfully. let's add the completed log object to the array and reload the table
-                    sentEntry.date = [NSDate date];
+                    //
+                    if (self.selectedVenueFeed.venue.utc) {
+                        int offset = [self.selectedVenueFeed.venue.utc intValue];
+                        sentEntry.date = [[NSDate alloc] initWithTimeIntervalSinceNow:(offset*SECONDS_IN_HOUR)];
+                    }
+                    else {
+                        sentEntry.date = [NSDate date];
+                    }
                     [self.tableView reloadData];
                 } else {
                     
