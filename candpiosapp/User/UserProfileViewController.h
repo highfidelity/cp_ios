@@ -17,6 +17,5 @@
 
 - (IBAction)f2fInvite;
 - (void)placeUserDataOnProfile;
-- (void)prepareForReuse;
 
 @end
