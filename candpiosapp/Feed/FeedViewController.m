@@ -585,7 +585,22 @@ typedef enum {
         // otherwise leave it blank
         NSDate *firstPostDate;
         if (sectionVenueFeed.posts.count > 0) {
-            firstPostDate = [[sectionVenueFeed.posts objectAtIndex:0] date];
+            
+            //
+            // the venue date needs to be localized for relativeTimeStringFromDateNow to work (see #18247).
+            //
+            if ((sectionVenueFeed.venue.utc) &&
+                ([sectionVenueFeed.venue.utc length] > 0)) {
+                firstPostDate = [CPUtils localizeDate:[[sectionVenueFeed.posts objectAtIndex:0] date]
+                                        offsetFromUtc:[sectionVenueFeed.venue.utc intValue]];
+            }
+            else {
+#if DEBUG
+                NSLog(@"Warning: venue %@ is missing a utc (offset from UTC)", sectionVenueFeed.venue.name);
+#endif
+                // defaulting to the date of the post, the time displayed will be off by the offset of the venue!
+                firstPostDate = [[sectionVenueFeed.posts objectAtIndex:0] date];
+            }
         }
         
         headerCell.relativeTimeLabel.text = [CPUtils relativeTimeStringFromDateToNow:firstPostDate];
@@ -1352,6 +1367,8 @@ typedef enum {
     }
 }
 
+#define SECONDS_IN_HOUR 3600
+
 - (void)sendNewPost
 {
     // let's grab the cell that this entry is for
@@ -1369,6 +1386,7 @@ typedef enum {
         [CPapi newPost:self.pendingPost atVenue:self.selectedVenueFeed.venue completion:^(NSDictionary *json, NSError *error) {
             if (!error) {
                 if (![[json objectForKey:@"error"] boolValue]) {
+                                        
                     self.currentState = FeedVCStateSentNewPost;
                     
                     // the ID of the new post is returned as the payload
@@ -1379,7 +1397,15 @@ typedef enum {
                     self.pendingPost = nil;
                     
                     // no error, log sent successfully. let's add the completed log object to the array and reload the table
-                    sentEntry.date = [NSDate date];
+                    //
+                    if ((self.selectedVenueFeed.venue.utc) &&
+                        ([self.selectedVenueFeed.venue.utc length] > 0)) {
+                        int offset = [self.selectedVenueFeed.venue.utc intValue];
+                        sentEntry.date = [[NSDate alloc] initWithTimeIntervalSinceNow:(offset*SECONDS_IN_HOUR)];
+                    }
+                    else {
+                        sentEntry.date = [NSDate date];
+                    }
                     [self.tableView reloadData];
                 } else {
                     
