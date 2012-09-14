@@ -144,7 +144,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     
     [request setHTTPMethod:@"POST"];
     
-    OARequestParameter *scopeParameter = [OARequestParameter requestParameter:@"scope" value:@"w_messages r_fullprofile r_network r_emailaddress"];
+    OARequestParameter *scopeParameter = [OARequestParameter requestParameter:@"scope" value:@"rw_nus w_messages r_fullprofile r_network r_emailaddress"];
     [request setParameters:[NSArray arrayWithObject:scopeParameter]];
     
     // fire and forget our invalidate request
@@ -168,7 +168,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     
     [request setHTTPMethod:@"POST"];
 
-    OARequestParameter *scopeParameter = [OARequestParameter requestParameter:@"scope" value:@"w_messages r_fullprofile r_network r_emailaddress"];
+    OARequestParameter *scopeParameter = [OARequestParameter requestParameter:@"scope" value:@"rw_nus w_messages r_fullprofile r_network r_emailaddress"];
     [request setParameters:[NSArray arrayWithObject:scopeParameter]];
     
     OADataFetcher *fetcher = [[OADataFetcher alloc] init];
