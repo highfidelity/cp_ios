@@ -52,7 +52,7 @@
 
 - (void)setUtc:(NSString *)utc
 {
-    if (![utc isKindOfClass:[NSNull class]]) {
+    if ([utc isKindOfClass:[NSString class]]) {
         _utc = utc;
     } else {
         _utc = @"";
