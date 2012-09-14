@@ -589,7 +589,8 @@ typedef enum {
             //
             // the venue date needs to be localized for relativeTimeStringFromDateNow to work (see #18247).
             //
-            if (sectionVenueFeed.venue.utc) {
+            if ((sectionVenueFeed.venue.utc) &&
+                ([sectionVenueFeed.venue.utc length] > 0)) {
                 firstPostDate = [CPUtils localizeDate:[[sectionVenueFeed.posts objectAtIndex:0] date]
                                         offsetFromUtc:[sectionVenueFeed.venue.utc intValue]];
             }
@@ -1397,7 +1398,8 @@ typedef enum {
                     
                     // no error, log sent successfully. let's add the completed log object to the array and reload the table
                     //
-                    if (self.selectedVenueFeed.venue.utc) {
+                    if ((self.selectedVenueFeed.venue.utc) &&
+                        ([self.selectedVenueFeed.venue.utc length] > 0)) {
                         int offset = [self.selectedVenueFeed.venue.utc intValue];
                         sentEntry.date = [[NSDate alloc] initWithTimeIntervalSinceNow:(offset*SECONDS_IN_HOUR)];
                     }
