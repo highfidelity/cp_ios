@@ -311,6 +311,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     
     // animate the display of the venueView and availabilityView
     // if they aren't already on screen
+    [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:NO];
     [UIView animateWithDuration:0.4 animations:^{self.venueView.alpha = 1.0;}];
 }
 
@@ -572,6 +573,8 @@ static GRMustacheTemplate *postBadgesTemplate;
     [UIView animateWithDuration:0.3 animations:^{
         self.resumeWebView.alpha = 1.0;
     }];
+    
+    [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
 }
 
 -(IBAction)plusButtonPressed:(id)sender {
