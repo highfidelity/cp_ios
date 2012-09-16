@@ -73,6 +73,7 @@
 
 + (void)getPostableFeedVenueIDs:(void (^)(NSDictionary *, NSError *))completion;
 
++ (void)getQuestionReceiversAtLocation:(CLLocationCoordinate2D)coordinate withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Checkins
 + (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID
