@@ -108,6 +108,27 @@
     return [emailTest evaluateWithObject:email];
 }
 
+#pragma mark - Localize a date given an offset from UTC
+//
+// logic based on sample code provided at
+// http://stackoverflow.com/questions/1490537/gmt-time-on-iphone
+//
+#define SECONDS_IN_HOUR 3600
+
++ (NSDate*)localizeDate:(NSDate*)date offsetFromUtc:(int)offset;
+{
+    NSDate* localizedDate;
+    
+    NSTimeZone* remoteTimeZone = [NSTimeZone timeZoneForSecondsFromGMT:(offset*SECONDS_IN_HOUR)];
+    NSTimeZone* utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+    NSInteger remoteGmtOffset = [remoteTimeZone secondsFromGMTForDate:date];
+    NSInteger gmtOffset = [utcTimeZone secondsFromGMTForDate:date];
+    NSTimeInterval gmtInterval = gmtOffset - remoteGmtOffset;
+    localizedDate = [[NSDate alloc] initWithTimeInterval:gmtInterval sinceDate:date];
+    
+    return localizedDate;
+}
+
 #pragma mark - Relative time string
 + (NSString *)relativeTimeStringFromDateToNow:(NSDate *)date
 {

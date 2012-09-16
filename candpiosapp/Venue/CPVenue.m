@@ -50,6 +50,15 @@
     }
 }
 
+- (void)setUtc:(NSString *)utc
+{
+    if ([utc isKindOfClass:[NSString class]]) {
+        _utc = utc;
+    } else {
+        _utc = @"";
+    }
+}
+
 - (void)setPhone:(NSString *)phone
 {
     if (![phone isKindOfClass:[NSNull class]]) {
@@ -121,6 +130,8 @@
         }
         
         self.activeUsers = [json objectForKey:@"users"];
+        self.utc = [json objectForKey:@"utc"];
+
     }
     return self;
 }
@@ -201,6 +212,7 @@
         self.checkinTime = [decoder decodeIntegerForKey:@"checkinTime"];
         self.autoCheckin = [[decoder decodeObjectForKey:@"autoCheckin"] boolValue];
         self.specialVenueType = [decoder decodeObjectForKey:@"specialVenueType"];
+        self.utc = [decoder decodeObjectForKey:@"utc"];
     }    
     return self;
 }
@@ -218,6 +230,7 @@
     [encoder encodeInt:self.checkinTime forKey:@"checkinTime"];
     [encoder encodeObject:[NSNumber numberWithBool:self.autoCheckin] forKey:@"autoCheckin"];
     [encoder encodeObject:self.specialVenueType forKey:@"specialVenueType"];
+    [encoder encodeObject:self.utc forKey:@"utc"];
 }
 
 -(BOOL)isEqual:(id)object

@@ -197,20 +197,19 @@
     }
 }
 
-- (void) highlightInBackground {
-    [self performSelectorInBackground:@selector(highlight) withObject:self];
-}
 - (void) highlight {
     // mimic row selection - highlight and push the child view
     [UIView animateWithDuration:HIGHLIGHT_DURATION animations:^{
         self.contentView.backgroundColor = self.activeColor;
-        UITableView *tableView = (UITableView *)self.superview;
-        for (CPUserActionCell *cell in tableView.visibleCells) {
-            if (cell != self) {
-                if ([cell respondsToSelector:@selector(inactiveColor)]) {
-                    cell.contentView.backgroundColor = cell.inactiveColor;
-                } else {
-                    [cell setSelected:NO animated:YES];
+        if ([self.superview isKindOfClass:[UITableView class]]) {
+            UITableView *tableView = (UITableView *)self.superview;
+            for (CPUserActionCell *cell in tableView.visibleCells) {
+                if (cell != self) {
+                    if ([cell respondsToSelector:@selector(inactiveColor)]) {
+                        cell.contentView.backgroundColor = cell.inactiveColor;
+                    } else {
+                        [cell setSelected:NO animated:YES];
+                    }
                 }
             }
         }
@@ -219,7 +218,7 @@
 
 -(void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)evt {
     if (!self.areActionButtonsVisible) {
-        [self highlightInBackground];
+        [self highlight];
     }
 }
 
@@ -229,7 +228,7 @@
     // handle taps
     if (!self.areActionButtonsVisible) {
         // mimic row selection - highlight and push the child view
-        [self highlightInBackground];
+        [self highlight];
         if (recognizer.state == UIGestureRecognizerStateEnded) {
             // return immediately.. next view must be initialized on main thread
             [self performSelectorOnMainThread:@selector(handleTap) withObject:nil waitUntilDone:NO];

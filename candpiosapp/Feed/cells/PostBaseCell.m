@@ -8,6 +8,7 @@
 
 #import "PostBaseCell.h"
 #import "FeedViewController.h"
+
 #define GRADIENT_WIDTH 120
 
 @implementation PostBaseCell
@@ -38,7 +39,8 @@
     CGFloat lineHeight = self.entryLabel.font.lineHeight;
     self.gradientLayer.frame = CGRectMake(self.entryLabel.frame.size.width - GRADIENT_WIDTH,
                                           self.entryLabel.frame.size.height - lineHeight,
-                                          GRADIENT_WIDTH, lineHeight);
+                                          GRADIENT_WIDTH,
+                                          lineHeight);
 }
 
 @end
