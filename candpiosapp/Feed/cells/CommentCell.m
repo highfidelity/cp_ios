@@ -87,21 +87,8 @@
 }
 
 - (void) pillButtonPressed:(id)sender 
-{   
-    //#17979 users should not be able to comment or +1 on feeds they are not checked in to
-    CPVenue *currentVenue = [CPUserDefaultsHandler currentVenue];
-    if (currentVenue && currentVenue.venueID == self.venue.venueID) {
-        // forward on to the delegate to present the popover from the pill button
-        [self.delegate showPillPopoverFromCell:self];
-    } else {
-        [[[UIAlertView alloc] initWithTitle:@""
-                                    message:@"You have to be checked in to this venue to comment or +1."
-                                   delegate:self
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles: nil]  show];
-    }
-
-    
+{
+    [self.delegate showPillPopoverFromCell:self];
 }
 
 @end

@@ -150,11 +150,11 @@
         [self promptForLoginToSeeLogbook:CPAfterLoginActionPostQuestion];
     } else if (![CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
 
-        UIAlertView *checkinAlert =  [[UIAlertView alloc] initWithTitle:@"Please check in at venue to post a question."
+        UIAlertView *checkinAlert =  [[UIAlertView alloc] initWithTitle:@"Choose one"
                                                                 message:nil
                                                                delegate:self
                                                       cancelButtonTitle:@"Cancel"
-                                                      otherButtonTitles:@"Checkin", nil];
+                                                      otherButtonTitles:@"Check in", @"Post to Feed", nil];
         checkinAlert.tag = QUESTION_ALERT_TAG;
         [checkinAlert show];
     } else {
@@ -267,17 +267,12 @@
 {
     if (buttonIndex == alertView.firstOtherButtonIndex) {        
         [CPCheckinHandler sharedHandler].afterCheckinAction = (alertView.tag == UPDATE_ALERT_TAG)
-                                                              ? CPAfterCheckinActionNewUpdate : CPAfterCheckinActionNewQuestion;
+                ? CPAfterCheckinActionNewUpdate : CPAfterCheckinActionNewQuestion;
         [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
     } else if (buttonIndex != alertView.cancelButtonIndex) {
         // this is the "Post to Feed" button
-        // tell the Feed TVC that it needs to show only postable feeds
-        
-        FeedViewController *feedVC = [[[self.viewControllers objectAtIndex:0] viewControllers] objectAtIndex:0];
-        
-        // tell the feedVC to switch to showing only postable feeds
-        [feedVC showOnlyPostableFeeds];
-        
+        [self showFeedVCForNewPostAtCurrentVenueWithPostType:(alertView.tag == UPDATE_ALERT_TAG)
+                ? CPPostTypeUpdate : CPPostTypeQuestion];
         // make sure our selected index is 0
         self.selectedIndex = 0;
     }
