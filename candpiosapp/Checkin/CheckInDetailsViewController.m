@@ -180,40 +180,29 @@
                        isAutomatic:NO
                    completionBlock:^(NSDictionary *json, NSError *error){
         // hide the SVProgressHUD
-        if (!error) {
-            if (![[json objectForKey:@"error"] boolValue]) {
+        if (!error && ![[json objectForKey:@"error"] boolValue]) {
+            [SVProgressHUD dismiss];
+            
+            // a successful checkin passes back venue_id
+            // give that to this venue before we store it in NSUserDefaults
+            // in case we came from foursquare venue list and didn't have it
+            self.venue.venueID = [[json objectForKey:@"venue_id"] intValue];
+            
+            [[CPCheckinHandler sharedHandler] queueLocalNotificationForVenue:self.venue checkoutTime:checkOutTime];
+            [[CPCheckinHandler sharedHandler] handleSuccessfulCheckinToVenue:self.venue checkoutTime:checkOutTime];
+            
+            // hide the checkin screen, we're checked in
+            if ([self isModal]) {
+                [self dismissModalViewControllerAnimated:YES];
+            } else {
+                // show an SVProgressHUD since we'll be reloading user data in the venue view
+                [SVProgressHUD showWithStatus:@"Loading..."];
+                [self.navigationController popViewControllerAnimated:YES];
+                
+                // our delegate is the venue info view controller
+                // tell it to scroll to the user thumbnail after loading new data from this checkin
+                [self.delegate setScrollToUserThumbnail:YES];
                 [SVProgressHUD dismiss];
-                
-                // a successful checkin passes back venue_id
-                // give that to this venue before we store it in NSUserDefaults
-                // in case we came from foursquare venue list and didn't have it
-                self.venue.venueID = [[json objectForKey:@"venue_id"] intValue];
-                
-                [[CPCheckinHandler sharedHandler] queueLocalNotificationForVenue:self.venue checkoutTime:checkOutTime];
-                [[CPCheckinHandler sharedHandler] handleSuccessfulCheckinToVenue:self.venue checkoutTime:checkOutTime];
-                
-                // hide the checkin screen, we're checked in
-                if ([self isModal]) {
-                    [self dismissModalViewControllerAnimated:YES];
-                } else {
-                    // show an SVProgressHUD since we'll be reloading user data in the venue view
-                    [SVProgressHUD showWithStatus:@"Loading..."];
-                    [self.navigationController popViewControllerAnimated:YES];
-                    
-                    // our delegate is the venue info view controller
-                    // tell it to scroll to the user thumbnail after loading new data from this checkin
-                    [self.delegate setScrollToUserThumbnail:YES];
-                    [SVProgressHUD dismiss];
-                }
-            }
-            else {
-                
-                // there's an error either becuase the user wasn't checked in or we didn't pass a foursquare ID
-                // we obviously passed a foursquare ID if we're in the app so the user isn't actually logged in
-                // show an alertView if the user isn't checked in
-                [SVProgressHUD dismissWithError:@"You must be logged in to C&P in order to check in."
-                                     afterDelay:kDefaultDismissDelay];
-                [CPAppDelegate performSelector:@selector(showSignupModalFromViewController:animated:) withObject:self afterDelay:kDefaultDismissDelay];
             }
         } else {
             // show an alertView letting the user know that an error occured, log the error if debugging
