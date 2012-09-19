@@ -59,10 +59,6 @@ typedef enum {
     // subscribe to the applicationDidBecomeActive notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleTableViewState) name:@"applicationDidBecomeActive" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newFeedVenueAdded:) name:@"feedVenueAdded" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(getVenueFeedOrFeedPreviews)
-                                                 name:@"userCheckInStateChange"
-                                               object:nil];
 
     [self reloadFeedPreviewVenues];
 

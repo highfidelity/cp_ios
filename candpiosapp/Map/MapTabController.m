@@ -204,7 +204,7 @@ BOOL clearLocations = NO;
             
             BOOL foundIt = NO;
 
-            for (CPVenue *ann in [self.mapView.annotations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"!(self isKindOfClass: %@)", [MKUserLocation class]]]) {
+            for (CPVenue *ann in [self.mapView.annotations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(self isKindOfClass: %@)", [CPVenue class]]]) {
                 foundIt = NO;                                            
                 for (CPVenue *newAnn in newDataset.annotations) {
                     if ([ann.foursquareID isEqual:newAnn.foursquareID]) {
