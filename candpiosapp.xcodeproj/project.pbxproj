@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		320604A414D5BBA40035A88D /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 320604A314D5BBA40035A88D /* libFlurryAnalytics.a */; };
 		3222126914E1E17B00C5471B /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222124114E1E17B00C5471B /* NSMutableURLRequest+Parameters.m */; };
 		3222126A14E1E17B00C5471B /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222124314E1E17B00C5471B /* NSString+URLEncoding.m */; };
 		3222126B14E1E17B00C5471B /* NSURL+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222124514E1E17B00C5471B /* NSURL+Base.m */; };
@@ -136,6 +135,7 @@
 		530BAB02160BC244007DF806 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 530BAAFE160BC244007DF806 /* libTestFlight.a */; };
 		530BAE86160BCA80007DF806 /* libGRMustache5-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 530BAD7B160BCA80007DF806 /* libGRMustache5-iOS.a */; };
 		530BAE87160BCA80007DF806 /* libGRMustache5-MacOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 530BAD7C160BCA80007DF806 /* libGRMustache5-MacOS.a */; };
+		530BAF2B160BCB2A007DF806 /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 530BAF2A160BCB2A007DF806 /* libFlurryAnalytics.a */; };
 		530C5DB71575E4FC003505AC /* CPSoundEffectsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */; };
 		530C5DBB1575E516003505AC /* send-love-switch-sound-off.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */; };
 		530C5DBC1575E516003505AC /* send-love-switch-sound-on.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */; };
@@ -520,8 +520,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		320604A214D5BBA40035A88D /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
-		320604A314D5BBA40035A88D /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
 		3222124014E1E17B00C5471B /* NSMutableURLRequest+Parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+Parameters.h"; sourceTree = "<group>"; };
 		3222124114E1E17B00C5471B /* NSMutableURLRequest+Parameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+Parameters.m"; sourceTree = "<group>"; };
 		3222124214E1E17B00C5471B /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
@@ -784,6 +782,8 @@
 		530BAD79160BCA80007DF806 /* GRMustacheVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheVersion.h; sourceTree = "<group>"; };
 		530BAD7B160BCA80007DF806 /* libGRMustache5-iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGRMustache5-iOS.a"; sourceTree = "<group>"; };
 		530BAD7C160BCA80007DF806 /* libGRMustache5-MacOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGRMustache5-MacOS.a"; sourceTree = "<group>"; };
+		530BAF29160BCB2A007DF806 /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
+		530BAF2A160BCB2A007DF806 /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
 		530C5DB51575E4FC003505AC /* CPSoundEffectsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPSoundEffectsManager.h; sourceTree = "<group>"; };
 		530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPSoundEffectsManager.m; sourceTree = "<group>"; };
 		530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-off.wav"; sourceTree = "<group>"; };
@@ -1300,7 +1300,6 @@
 				871EFB0B14AE9C820030658B /* UIKit.framework in Frameworks */,
 				871EFB0D14AE9C820030658B /* Foundation.framework in Frameworks */,
 				871EFB0F14AE9C820030658B /* CoreGraphics.framework in Frameworks */,
-				320604A414D5BBA40035A88D /* libFlurryAnalytics.a in Frameworks */,
 				E4C35C4114F1323A009B6DBF /* AudioToolbox.framework in Frameworks */,
 				530BA9F9160BBEB1007DF806 /* libUAirship-1.3.3.a in Frameworks */,
 				530BA9FA160BBEB1007DF806 /* libUAirshipPush-1.3.3.a in Frameworks */,
@@ -1308,21 +1307,13 @@
 				530BAB02160BC244007DF806 /* libTestFlight.a in Frameworks */,
 				530BAE86160BCA80007DF806 /* libGRMustache5-iOS.a in Frameworks */,
 				530BAE87160BCA80007DF806 /* libGRMustache5-MacOS.a in Frameworks */,
+				530BAF2B160BCB2A007DF806 /* libFlurryAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		320604A114D5BBA40035A88D /* FlurryAnalytics */ = {
-			isa = PBXGroup;
-			children = (
-				320604A214D5BBA40035A88D /* FlurryAnalytics.h */,
-				320604A314D5BBA40035A88D /* libFlurryAnalytics.a */,
-			);
-			path = FlurryAnalytics;
-			sourceTree = "<group>";
-		};
 		3222123E14E1E17B00C5471B /* OAuthConsumerARC */ = {
 			isa = PBXGroup;
 			children = (
@@ -1762,6 +1753,15 @@
 				530BAD7C160BCA80007DF806 /* libGRMustache5-MacOS.a */,
 			);
 			path = lib;
+			sourceTree = "<group>";
+		};
+		530BAF28160BCB2A007DF806 /* FlurryAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				530BAF29160BCB2A007DF806 /* FlurryAnalytics.h */,
+				530BAF2A160BCB2A007DF806 /* libFlurryAnalytics.a */,
+			);
+			path = FlurryAnalytics;
 			sourceTree = "<group>";
 		};
 		530C5DAE1575E4F3003505AC /* CPUserActionCell */ = {
@@ -2483,6 +2483,7 @@
 		53D78BC7160B8DE300148EA3 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
+				530BAF28160BCB2A007DF806 /* FlurryAnalytics */,
 				530BAD19160BCA80007DF806 /* GRMustache */,
 				530BAAFD160BC244007DF806 /* TestFlightSDK */,
 				530BAAC0160BC143007DF806 /* ActionSheetPicker */,
@@ -2744,7 +2745,6 @@
 		871EFB6014AF97130030658B /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
-				320604A114D5BBA40035A88D /* FlurryAnalytics */,
 				3222123E14E1E17B00C5471B /* OAuthConsumerARC */,
 			);
 			path = 3rdParty;
@@ -3460,11 +3460,11 @@
 				INFOPLIST_FILE = "candpiosapp/candpiosapp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/candpiosapp/3rdParty/FlurryAnalytics\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/Airship\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/UserVoiceSDK\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/TestFlightSDK\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/GRMustache/lib\"",
+					"\"$(SRCROOT)/candpiosapp/Externals/FlurryAnalytics\"",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "${TARGET_NAME}";
@@ -3491,11 +3491,11 @@
 				INFOPLIST_FILE = "candpiosapp/candpiosapp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/candpiosapp/3rdParty/FlurryAnalytics\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/Airship\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/UserVoiceSDK\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/TestFlightSDK\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/GRMustache/lib\"",
+					"\"$(SRCROOT)/candpiosapp/Externals/FlurryAnalytics\"",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "${TARGET_NAME}";
