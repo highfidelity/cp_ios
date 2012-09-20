@@ -172,7 +172,6 @@
 		533E5EFF15A3A88C0042862E /* user-image-mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 533E5EEA15A3A88C0042862E /* user-image-mask.png */; };
 		533E5F0015A3A88C0042862E /* user-image-mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533E5EEB15A3A88C0042862E /* user-image-mask@2x.png */; };
 		533E5F0A15A3AD040042862E /* FeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533E5F0915A3AD040042862E /* FeedViewController.m */; };
-		534323FB15C1C8AE00BE5075 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 534323FA15C1C8AE00BE5075 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5343243F15C2123A00BE5075 /* CPApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5343243E15C2123A00BE5075 /* CPApiClient.m */; };
 		53463F5115336EA5001CA16D /* UIViewController+isModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 53463F5015336EA5001CA16D /* UIViewController+isModal.m */; };
 		534B6EF0156DAE7900DA9F74 /* SkillsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534B6EEF156DAE7900DA9F74 /* SkillsTableViewController.m */; };
@@ -808,8 +807,6 @@
 		533E5EEB15A3A88C0042862E /* user-image-mask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user-image-mask@2x.png"; sourceTree = "<group>"; };
 		533E5F0815A3AD040042862E /* FeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedViewController.h; sourceTree = "<group>"; };
 		533E5F0915A3AD040042862E /* FeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedViewController.m; sourceTree = "<group>"; };
-		534323F915C1C8AE00BE5075 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
-		534323FA15C1C8AE00BE5075 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		5343243D15C2123A00BE5075 /* CPApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPApiClient.h; path = Utils/CPApiClient.h; sourceTree = "<group>"; };
 		5343243E15C2123A00BE5075 /* CPApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPApiClient.m; path = Utils/CPApiClient.m; sourceTree = "<group>"; };
 		53463F4F15336EA5001CA16D /* UIViewController+isModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+isModal.h"; path = "Utils/UIViewController+isModal.h"; sourceTree = "<group>"; };
@@ -1769,15 +1766,6 @@
 			name = images;
 			sourceTree = "<group>";
 		};
-		534323F815C1C8AE00BE5075 /* NSData+Base64 */ = {
-			isa = PBXGroup;
-			children = (
-				534323F915C1C8AE00BE5075 /* NSData+Base64.h */,
-				534323FA15C1C8AE00BE5075 /* NSData+Base64.m */,
-			);
-			path = "NSData+Base64";
-			sourceTree = "<group>";
-		};
 		534FC97C14EF1E53008C87B9 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -2596,7 +2584,6 @@
 				3267F51014D9196800BFFBAA /* Airship */,
 				320604A114D5BBA40035A88D /* FlurryAnalytics */,
 				5386AFF1152A2A75008CD4BD /* GRMustache */,
-				534323F815C1C8AE00BE5075 /* NSData+Base64 */,
 				3222123E14E1E17B00C5471B /* OAuthConsumerARC */,
 				E4E74DF8153B08710022F403 /* Pickers */,
 				87F657D414B0D0C800F4AB6C /* SDWebImage */,
@@ -3246,7 +3233,6 @@
 				4E5D551515C078C1005FC2D7 /* WEPopoverController.m in Sources */,
 				4E5D551615C078C1005FC2D7 /* WETouchableView.m in Sources */,
 				4EB7A15715C0879100691AB2 /* PillPopoverViewController.m in Sources */,
-				534323FB15C1C8AE00BE5075 /* NSData+Base64.m in Sources */,
 				532505AA15C0A236006B1DB6 /* NewPostReplyCell.m in Sources */,
 				532505AE15C0A25B006B1DB6 /* PostReplyCell.m in Sources */,
 				4EB016E915C21989006F600D /* CommentCell.m in Sources */,
