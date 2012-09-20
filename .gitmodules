@@ -13,3 +13,6 @@
 [submodule "candpiosapp/Externals/SSKeychain"]
 	path = candpiosapp/Externals/SSKeychain
 	url = https://github.com/samsoffes/sskeychain
+[submodule "candpiosapp/Externals/SVProgressHUD"]
+	path = candpiosapp/Externals/SVProgressHUD
+	url = git://github.com/samvermette/SVProgressHUD.git
