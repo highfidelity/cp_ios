@@ -4,9 +4,6 @@
 [submodule "candpiosapp/Externals/CustomBadge"]
 	path = candpiosapp/Externals/CustomBadge
 	url = git://github.com/ckteebe/CustomBadge.git
-[submodule "candpiosapp/Externals/HPGrowingTextView"]
-	path = candpiosapp/Externals/HPGrowingTextView
-	url = git://github.com/yatinsns/HPGrowingTextView.git
 [submodule "candpiosapp/Externals/WEPopover"]
 	path = candpiosapp/Externals/WEPopover
 	url = git://github.com/werner77/WEPopover.git
@@ -31,3 +28,6 @@
 [submodule "candpiosapp/Externals/GRMustache"]
 	path = candpiosapp/Externals/GRMustache
 	url = git://github.com/groue/GRMustache.git
+[submodule "candpiosapp/Externals/HPGrowingTextView"]
+	path = candpiosapp/Externals/HPGrowingTextView
+	url = git://github.com/worklist/HPGrowingTextView.git
