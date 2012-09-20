@@ -14,12 +14,9 @@
 #import "GTMNSString+HTML.h"
 #import "UserProfileLinkedInViewController.h"
 
-
-
 @interface UserProfileViewController() <UIWebViewDelegate, UIActionSheetDelegate, GRMustacheTemplateDelegate>
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapRecon;
-@property (strong, nonatomic) NSNumber *templateCounter;
 @property (strong, nonatomic) NSString* preBadgesHTML;
 @property (strong, nonatomic) NSString* postBadgesHTML;
 @property (strong, nonatomic) NSString* badgesHTML;
