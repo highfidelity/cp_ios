@@ -133,6 +133,7 @@
 		530BAAED160BC143007DF806 /* ActionSheetDistancePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAACB160BC143007DF806 /* ActionSheetDistancePicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		530BAAEE160BC143007DF806 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAACD160BC143007DF806 /* ActionSheetStringPicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		530BAAEF160BC143007DF806 /* DistancePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAACF160BC143007DF806 /* DistancePickerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		530BAB02160BC244007DF806 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 530BAAFE160BC244007DF806 /* libTestFlight.a */; };
 		530C5DB71575E4FC003505AC /* CPSoundEffectsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */; };
 		530C5DBB1575E516003505AC /* send-love-switch-sound-off.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */; };
 		530C5DBC1575E516003505AC /* send-love-switch-sound-on.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */; };
@@ -427,7 +428,6 @@
 		53E2062C150596180000FA8D /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53E2062A150596180000FA8D /* MainStoryboard_iPhone.storyboard */; };
 		53F1102C15AF9CDC00EC75D3 /* list-arrow-big-light-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F1102A15AF9CDC00EC75D3 /* list-arrow-big-light-grey.png */; };
 		53F1102D15AF9CDC00EC75D3 /* list-arrow-big-light-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F1102B15AF9CDC00EC75D3 /* list-arrow-big-light-grey@2x.png */; };
-		53F76F8715BA0D79008CBE09 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F76F8515BA0D79008CBE09 /* libTestFlight.a */; };
 		53FD32F715915102000448EF /* tab-login.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FD32F515915102000448EF /* tab-login.png */; };
 		53FD32F815915102000448EF /* tab-login@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FD32F615915102000448EF /* tab-login@2x.png */; };
 		53FF95ED156D5D0E0046ADDE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FF95EC156D5D0E0046ADDE /* StoreKit.framework */; };
@@ -768,6 +768,8 @@
 		530BAACD160BC143007DF806 /* ActionSheetStringPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetStringPicker.m; sourceTree = "<group>"; };
 		530BAACE160BC143007DF806 /* DistancePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistancePickerView.h; sourceTree = "<group>"; };
 		530BAACF160BC143007DF806 /* DistancePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistancePickerView.m; sourceTree = "<group>"; };
+		530BAAFE160BC244007DF806 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		530BAB01160BC244007DF806 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		530C5DB51575E4FC003505AC /* CPSoundEffectsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPSoundEffectsManager.h; sourceTree = "<group>"; };
 		530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPSoundEffectsManager.m; sourceTree = "<group>"; };
 		530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-off.wav"; sourceTree = "<group>"; };
@@ -1159,8 +1161,6 @@
 		53E2062B150596180000FA8D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		53F1102A15AF9CDC00EC75D3 /* list-arrow-big-light-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list-arrow-big-light-grey.png"; sourceTree = "<group>"; };
 		53F1102B15AF9CDC00EC75D3 /* list-arrow-big-light-grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list-arrow-big-light-grey@2x.png"; sourceTree = "<group>"; };
-		53F76F8515BA0D79008CBE09 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		53F76F8615BA0D79008CBE09 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		53FD32F515915102000448EF /* tab-login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-login.png"; sourceTree = "<group>"; };
 		53FD32F615915102000448EF /* tab-login@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-login@2x.png"; sourceTree = "<group>"; };
 		53FF95EC156D5D0E0046ADDE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -1300,10 +1300,10 @@
 				320604A414D5BBA40035A88D /* libFlurryAnalytics.a in Frameworks */,
 				E4C35C4114F1323A009B6DBF /* AudioToolbox.framework in Frameworks */,
 				531806541584811B0037E5BC /* libGRMustache4-iOS.a in Frameworks */,
-				53F76F8715BA0D79008CBE09 /* libTestFlight.a in Frameworks */,
 				530BA9F9160BBEB1007DF806 /* libUAirship-1.3.3.a in Frameworks */,
 				530BA9FA160BBEB1007DF806 /* libUAirshipPush-1.3.3.a in Frameworks */,
 				530BAA91160BBF37007DF806 /* libUserVoice.a in Frameworks */,
+				530BAB02160BC244007DF806 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1713,6 +1713,15 @@
 				530BAACF160BC143007DF806 /* DistancePickerView.m */,
 			);
 			path = Pickers;
+			sourceTree = "<group>";
+		};
+		530BAAFD160BC244007DF806 /* TestFlightSDK */ = {
+			isa = PBXGroup;
+			children = (
+				530BAAFE160BC244007DF806 /* libTestFlight.a */,
+				530BAB01160BC244007DF806 /* TestFlight.h */,
+			);
+			path = TestFlightSDK;
 			sourceTree = "<group>";
 		};
 		530C5DAE1575E4F3003505AC /* CPUserActionCell */ = {
@@ -2460,6 +2469,7 @@
 		53D78BC7160B8DE300148EA3 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
+				530BAAFD160BC244007DF806 /* TestFlightSDK */,
 				530BAAC0160BC143007DF806 /* ActionSheetPicker */,
 				530BAAB4160BC097007DF806 /* UIImage-Categories */,
 				530BAA61160BBF37007DF806 /* UserVoiceSDK */,
@@ -2558,15 +2568,6 @@
 				53D9B19B152A5E8600BC1304 /* CPTabBarController.m */,
 			);
 			path = Navigation;
-			sourceTree = "<group>";
-		};
-		53F76F8415BA0D79008CBE09 /* TestFlightSDK */ = {
-			isa = PBXGroup;
-			children = (
-				53F76F8515BA0D79008CBE09 /* libTestFlight.a */,
-				53F76F8615BA0D79008CBE09 /* TestFlight.h */,
-			);
-			path = TestFlightSDK;
 			sourceTree = "<group>";
 		};
 		694323A715213D9000EBF585 /* mustaches */ = {
@@ -2731,7 +2732,6 @@
 				320604A114D5BBA40035A88D /* FlurryAnalytics */,
 				5386AFF1152A2A75008CD4BD /* GRMustache */,
 				3222123E14E1E17B00C5471B /* OAuthConsumerARC */,
-				53F76F8415BA0D79008CBE09 /* TestFlightSDK */,
 			);
 			path = 3rdParty;
 			sourceTree = "<group>";
@@ -3448,9 +3448,9 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/FlurryAnalytics\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/GRMustache\"",
-					"\"$(SRCROOT)/candpiosapp/3rdParty/TestFlightSDK\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/Airship\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/UserVoiceSDK\"",
+					"\"$(SRCROOT)/candpiosapp/Externals/TestFlightSDK\"",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "${TARGET_NAME}";
@@ -3479,9 +3479,9 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/FlurryAnalytics\"",
 					"\"$(SRCROOT)/candpiosapp/3rdParty/GRMustache\"",
-					"\"$(SRCROOT)/candpiosapp/3rdParty/TestFlightSDK\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/Airship\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/UserVoiceSDK\"",
+					"\"$(SRCROOT)/candpiosapp/Externals/TestFlightSDK\"",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "${TARGET_NAME}";
