@@ -695,35 +695,6 @@ static GRMustacheTemplate *postBadgesTemplate;
     }
 }
 
-#pragma mark -
-#pragma mark GRMustacheTemplateDelegate
-
-- (void)template:(GRMustacheTemplate *)template willRenderReturnValueOfInvocation:(GRMustacheInvocation *)invocation {
-    // This method is called when the template is about to render a tag.
-    
-    // The invocation object tells us which object is about to be rendered.
-    if ([invocation.returnValue isKindOfClass:[NSArray class]]) {
-        // If it is an NSArray, reset our counter.
-        self.templateCounter = [NSNumber numberWithUnsignedInteger:0];
-    } else if (self.templateCounter && [invocation.key isEqualToString:@"index"]) {
-        // If we have a counter, and we're asked for the `index` key, set the
-        // invocation's returnValue to the counter: it will be rendered.
-        // 
-        // And increment the counter, of course.
-        invocation.returnValue = self.templateCounter;
-        self.templateCounter = [NSNumber numberWithUnsignedInteger:self.templateCounter.unsignedIntegerValue + 1];
-    }
-}
-
-- (void)template:(GRMustacheTemplate *)template didRenderReturnValueOfInvocation:(GRMustacheInvocation *)invocation {
-    // This method is called right after the template has rendered a tag.
-    
-    // Make sure we release the counter when we leave an NSArray.
-    if ([invocation.returnValue isKindOfClass:[NSArray class]]) {
-        self.templateCounter = nil;
-    }
-}
-
 - (void)navigationBarTitleTap:(UIGestureRecognizer*)recognizer {
     [_scrollView setContentOffset:CGPointMake(0,0) animated:YES];
 }
