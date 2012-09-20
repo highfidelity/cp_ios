@@ -161,6 +161,8 @@
 		5335D86F160BAB2F005400FC /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5335D85D160BAB2F005400FC /* SVProgressHUD.bundle */; };
 		5335D870160BAB2F005400FC /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D85F160BAB2F005400FC /* SVProgressHUD.m */; };
 		5335D89A160BB369005400FC /* SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D88B160BB369005400FC /* SVPullToRefresh.m */; };
+		5335D8FA160BB404005400FC /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D8E8160BB404005400FC /* TPKeyboardAvoidingScrollView.m */; };
+		5335D8FB160BB404005400FC /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D8EA160BB404005400FC /* TPKeyboardAvoidingTableView.m */; };
 		5338B0991606C7DC00C23B4B /* check-in-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 5338B0971606C7DC00C23B4B /* check-in-button.png */; };
 		5338B09A1606C7DC00C23B4B /* check-in-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5338B0981606C7DC00C23B4B /* check-in-button@2x.png */; };
 		5338B09D1606C80B00C23B4B /* paper-texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 5338B09B1606C80B00C23B4B /* paper-texture.png */; };
@@ -468,8 +470,6 @@
 		6F0B453C14F6BD560074DBD9 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453B14F6BD560074DBD9 /* ChatMessage.m */; };
 		6F0B453F14F6BD850074DBD9 /* ChatHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453E14F6BD850074DBD9 /* ChatHistory.m */; };
 		6F0B454214F6CEE40074DBD9 /* CPAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B454114F6CEE40074DBD9 /* CPAlertView.m */; };
-		6F7BA4DB14E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7BA4D814E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m */; };
-		6F7BA4DC14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7BA4DA14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		6F8EF74714FD8D2100F9BDC0 /* chat-bubble-left-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF73B14FD8D2100F9BDC0 /* chat-bubble-left-bottom.png */; };
 		6F8EF74814FD8D2100F9BDC0 /* chat-bubble-left-bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF73C14FD8D2100F9BDC0 /* chat-bubble-left-bottom@2x.png */; };
 		6F8EF74914FD8D2100F9BDC0 /* chat-bubble-left-middle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8EF73D14FD8D2100F9BDC0 /* chat-bubble-left-middle.png */; };
@@ -788,6 +788,10 @@
 		5335D85F160BAB2F005400FC /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		5335D88A160BB369005400FC /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
 		5335D88B160BB369005400FC /* SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPullToRefresh.m; sourceTree = "<group>"; };
+		5335D8E7160BB404005400FC /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
+		5335D8E8160BB404005400FC /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
+		5335D8E9160BB404005400FC /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
+		5335D8EA160BB404005400FC /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
 		5338B0971606C7DC00C23B4B /* check-in-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-button.png"; path = "Checkin/images/check-in-button.png"; sourceTree = "<group>"; };
 		5338B0981606C7DC00C23B4B /* check-in-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-button@2x.png"; path = "Checkin/images/check-in-button@2x.png"; sourceTree = "<group>"; };
 		5338B09B1606C80B00C23B4B /* paper-texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "paper-texture.png"; path = "Utils/images/textures/paper-texture.png"; sourceTree = "<group>"; };
@@ -1173,10 +1177,6 @@
 		6F0B453E14F6BD850074DBD9 /* ChatHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatHistory.m; path = candpiosapp/Chat/ChatHistory.m; sourceTree = SOURCE_ROOT; };
 		6F0B454014F6CEE40074DBD9 /* CPAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPAlertView.h; path = Utils/CPAlertView.h; sourceTree = "<group>"; };
 		6F0B454114F6CEE40074DBD9 /* CPAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPAlertView.m; path = Utils/CPAlertView.m; sourceTree = "<group>"; };
-		6F7BA4D714E308AF00420AD5 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
-		6F7BA4D814E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
-		6F7BA4D914E308AF00420AD5 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
-		6F7BA4DA14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
 		6F8EF73B14FD8D2100F9BDC0 /* chat-bubble-left-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-left-bottom.png"; path = "candpiosapp/Chat/images/chat-bubble-left-bottom.png"; sourceTree = SOURCE_ROOT; };
 		6F8EF73C14FD8D2100F9BDC0 /* chat-bubble-left-bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-left-bottom@2x.png"; path = "candpiosapp/Chat/images/chat-bubble-left-bottom@2x.png"; sourceTree = SOURCE_ROOT; };
 		6F8EF73D14FD8D2100F9BDC0 /* chat-bubble-left-middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-bubble-left-middle.png"; path = "candpiosapp/Chat/images/chat-bubble-left-middle.png"; sourceTree = SOURCE_ROOT; };
@@ -1695,6 +1695,17 @@
 				5335D88B160BB369005400FC /* SVPullToRefresh.m */,
 			);
 			path = SVPullToRefresh;
+			sourceTree = "<group>";
+		};
+		5335D8CF160BB404005400FC /* TPKeyboardAvoiding */ = {
+			isa = PBXGroup;
+			children = (
+				5335D8E7160BB404005400FC /* TPKeyboardAvoidingScrollView.h */,
+				5335D8E8160BB404005400FC /* TPKeyboardAvoidingScrollView.m */,
+				5335D8E9160BB404005400FC /* TPKeyboardAvoidingTableView.h */,
+				5335D8EA160BB404005400FC /* TPKeyboardAvoidingTableView.m */,
+			);
+			path = TPKeyboardAvoiding;
 			sourceTree = "<group>";
 		};
 		533E5ED315A3A88C0042862E /* Feed */ = {
@@ -2276,6 +2287,7 @@
 		53D78BC7160B8DE300148EA3 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
+				5335D8CF160BB404005400FC /* TPKeyboardAvoiding */,
 				5335D875160BB369005400FC /* SVPullToRefresh */,
 				5335D848160BAB2F005400FC /* SVProgressHUD */,
 				5335D823160BAA56005400FC /* SSKeychain */,
@@ -2475,17 +2487,6 @@
 			name = FaceToFace;
 			sourceTree = "<group>";
 		};
-		6F7BA4D614E308AF00420AD5 /* TPKeyboardAvoiding */ = {
-			isa = PBXGroup;
-			children = (
-				6F7BA4D714E308AF00420AD5 /* TPKeyboardAvoidingScrollView.h */,
-				6F7BA4D814E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m */,
-				6F7BA4D914E308AF00420AD5 /* TPKeyboardAvoidingTableView.h */,
-				6F7BA4DA14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m */,
-			);
-			path = TPKeyboardAvoiding;
-			sourceTree = "<group>";
-		};
 		6F7DA74914E89471001BEC19 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -2617,7 +2618,6 @@
 				3222123E14E1E17B00C5471B /* OAuthConsumerARC */,
 				E4E74DF8153B08710022F403 /* Pickers */,
 				53F76F8415BA0D79008CBE09 /* TestFlightSDK */,
-				6F7BA4D614E308AF00420AD5 /* TPKeyboardAvoiding */,
 				32A7998C14F9863200A0D4CB /* UIImage-categories */,
 				6973577A156BF68E00A37A92 /* UserVoiceSDK */,
 			);
@@ -3125,8 +3125,6 @@
 				3222127814E1E17B00C5471B /* OAServiceTicket.m in Sources */,
 				3222127A14E1E17B00C5471B /* OAToken.m in Sources */,
 				3222127B14E1E17B00C5471B /* OATokenManager.m in Sources */,
-				6F7BA4DB14E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m in Sources */,
-				6F7BA4DC14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m in Sources */,
 				6F0B453914F6BCD10074DBD9 /* CPChatHelper.m in Sources */,
 				6F0B453C14F6BD560074DBD9 /* ChatMessage.m in Sources */,
 				6F0B453F14F6BD850074DBD9 /* ChatHistory.m in Sources */,
@@ -3245,6 +3243,8 @@
 				5335D83C160BAA56005400FC /* SSKeychain.m in Sources */,
 				5335D870160BAB2F005400FC /* SVProgressHUD.m in Sources */,
 				5335D89A160BB369005400FC /* SVPullToRefresh.m in Sources */,
+				5335D8FA160BB404005400FC /* TPKeyboardAvoidingScrollView.m in Sources */,
+				5335D8FB160BB404005400FC /* TPKeyboardAvoidingTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

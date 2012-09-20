@@ -19,3 +19,6 @@
 [submodule "candpiosapp/Externals/SVPullToRefresh"]
 	path = candpiosapp/Externals/SVPullToRefresh
 	url = git://github.com/samvermette/SVPullToRefresh.git
+[submodule "candpiosapp/Externals/TPKeyboardAvoiding"]
+	path = candpiosapp/Externals/TPKeyboardAvoiding
+	url = https://github.com/michaeltyson/TPKeyboardAvoiding
