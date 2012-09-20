@@ -87,7 +87,6 @@
 		4EB79F8F15F2C0C2004D254F /* sign-in-later.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB79F8C15F2C0C2004D254F /* sign-in-later.png */; };
 		4EB79F9015F2C0C2004D254F /* sign-up-with-linkedin-active.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB79F8D15F2C0C2004D254F /* sign-up-with-linkedin-active.png */; };
 		4EB79F9215F2C606004D254F /* sign-up-with-linkedin-active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB79F9115F2C606004D254F /* sign-up-with-linkedin-active@2x.png */; };
-		4EB79FBA15F6BE0E004D254F /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB79FB915F6BE0E004D254F /* CustomBadge.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4EB7A15715C0879100691AB2 /* PillPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB7A15615C0879000691AB2 /* PillPopoverViewController.m */; };
 		4EB7A16015C0AA1300691AB2 /* comment-button-popover.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB7A15815C0AA1300691AB2 /* comment-button-popover.png */; };
 		4EB7A16115C0AA1300691AB2 /* comment-button-popover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB7A15915C0AA1300691AB2 /* comment-button-popover@2x.png */; };
@@ -371,6 +370,7 @@
 		53D78C16160B8DE300148EA3 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D78BD8160B8DE300148EA3 /* AFURLConnectionOperation.m */; };
 		53D78C17160B8DE300148EA3 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D78BDA160B8DE300148EA3 /* AFXMLRequestOperation.m */; };
 		53D78C18160B8DE300148EA3 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D78BDC160B8DE300148EA3 /* UIImageView+AFNetworking.m */; };
+		53D78C50160B904000148EA3 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D78C3E160B904000148EA3 /* CustomBadge.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		53D7ADEE15D04AC800BB041E /* CPGeofenceHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */; };
 		53D9B198152A5D9300BC1304 /* VenueListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D9B197152A5D9300BC1304 /* VenueListTableViewController.m */; };
 		53D9B19C152A5E8600BC1304 /* CPTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D9B19B152A5E8600BC1304 /* CPTabBarController.m */; };
@@ -687,8 +687,6 @@
 		4EB79F8C15F2C0C2004D254F /* sign-in-later.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-in-later.png"; sourceTree = "<group>"; };
 		4EB79F8D15F2C0C2004D254F /* sign-up-with-linkedin-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin-active.png"; sourceTree = "<group>"; };
 		4EB79F9115F2C606004D254F /* sign-up-with-linkedin-active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin-active@2x.png"; sourceTree = "<group>"; };
-		4EB79FB815F6BE0E004D254F /* CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBadge.h; sourceTree = "<group>"; };
-		4EB79FB915F6BE0E004D254F /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomBadge.m; sourceTree = "<group>"; };
 		4EB7A15515C0879000691AB2 /* PillPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PillPopoverViewController.h; sourceTree = "<group>"; };
 		4EB7A15615C0879000691AB2 /* PillPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PillPopoverViewController.m; sourceTree = "<group>"; };
 		4EB7A15815C0AA1300691AB2 /* comment-button-popover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment-button-popover.png"; sourceTree = "<group>"; };
@@ -1056,6 +1054,8 @@
 		53D78BDA160B8DE300148EA3 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		53D78BDB160B8DE300148EA3 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		53D78BDC160B8DE300148EA3 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		53D78C3D160B904000148EA3 /* CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBadge.h; sourceTree = "<group>"; };
+		53D78C3E160B904000148EA3 /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomBadge.m; sourceTree = "<group>"; };
 		53D7ADEC15D04AC800BB041E /* CPGeofenceHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPGeofenceHandler.h; path = Checkin/CPGeofenceHandler.h; sourceTree = "<group>"; };
 		53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPGeofenceHandler.m; path = Checkin/CPGeofenceHandler.m; sourceTree = "<group>"; };
 		53D9B196152A5D9300BC1304 /* VenueListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VenueListTableViewController.h; path = Venue/VenueListTableViewController.h; sourceTree = "<group>"; };
@@ -1586,15 +1586,6 @@
 				4E5D552215C0791E005FC2D7 /* popoverBg@2x.png */,
 			);
 			name = images;
-			sourceTree = "<group>";
-		};
-		4EB79FB715F6BE0E004D254F /* CustomBadge */ = {
-			isa = PBXGroup;
-			children = (
-				4EB79FB815F6BE0E004D254F /* CustomBadge.h */,
-				4EB79FB915F6BE0E004D254F /* CustomBadge.m */,
-			);
-			path = CustomBadge;
 			sourceTree = "<group>";
 		};
 		5308DD0215D5E5DF00B4EBC2 /* images */ = {
@@ -2280,6 +2271,7 @@
 		53D78BC7160B8DE300148EA3 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
+				53D78C3B160B904000148EA3 /* CustomBadge */,
 				53D78BC8160B8DE300148EA3 /* AFNetworking */,
 			);
 			path = Externals;
@@ -2317,6 +2309,23 @@
 				53D78BDC160B8DE300148EA3 /* UIImageView+AFNetworking.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		53D78C3B160B904000148EA3 /* CustomBadge */ = {
+			isa = PBXGroup;
+			children = (
+				53D78C3C160B904000148EA3 /* Classes */,
+			);
+			path = CustomBadge;
+			sourceTree = "<group>";
+		};
+		53D78C3C160B904000148EA3 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				53D78C3D160B904000148EA3 /* CustomBadge.h */,
+				53D78C3E160B904000148EA3 /* CustomBadge.m */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		53D9B199152A5E6100BC1304 /* Navigation */ = {
@@ -2582,7 +2591,6 @@
 		871EFB6014AF97130030658B /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
-				4EB79FB715F6BE0E004D254F /* CustomBadge */,
 				3267F51014D9196800BFFBAA /* Airship */,
 				320604A114D5BBA40035A88D /* FlurryAnalytics */,
 				5386AFF1152A2A75008CD4BD /* GRMustache */,
@@ -3254,7 +3262,6 @@
 				530FC24515D4335E00838B5A /* CPUserSessionHandler.m in Sources */,
 				530FC24815D4389D00838B5A /* SignupController.m in Sources */,
 				4EF559C915E8533200DAE3BA /* VenueCategoryCell.m in Sources */,
-				4EB79FBA15F6BE0E004D254F /* CustomBadge.m in Sources */,
 				5338B0A11606C82200C23B4B /* VenueUserCell.m in Sources */,
 				53D78C10160B8DE300148EA3 /* AFHTTPClient.m in Sources */,
 				53D78C11160B8DE300148EA3 /* AFHTTPRequestOperation.m in Sources */,
@@ -3265,6 +3272,7 @@
 				53D78C16160B8DE300148EA3 /* AFURLConnectionOperation.m in Sources */,
 				53D78C17160B8DE300148EA3 /* AFXMLRequestOperation.m in Sources */,
 				53D78C18160B8DE300148EA3 /* UIImageView+AFNetworking.m in Sources */,
+				53D78C50160B904000148EA3 /* CustomBadge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

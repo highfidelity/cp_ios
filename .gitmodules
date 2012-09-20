@@ -1,3 +1,6 @@
 [submodule "candpiosapp/Externals/AFNetworking"]
 	path = candpiosapp/Externals/AFNetworking
 	url = git://github.com/AFNetworking/AFNetworking.git
+[submodule "candpiosapp/Externals/CustomBadge"]
+	path = candpiosapp/Externals/CustomBadge
+	url = git://github.com/ckteebe/CustomBadge.git
