@@ -4,3 +4,6 @@
 [submodule "candpiosapp/Externals/CustomBadge"]
 	path = candpiosapp/Externals/CustomBadge
 	url = git://github.com/ckteebe/CustomBadge.git
+[submodule "candpiosapp/Externals/HPGrowingTextView"]
+	path = candpiosapp/Externals/HPGrowingTextView
+	url = git://github.com/yatinsns/HPGrowingTextView.git

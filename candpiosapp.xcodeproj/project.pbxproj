@@ -371,11 +371,11 @@
 		53D78C17160B8DE300148EA3 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D78BDA160B8DE300148EA3 /* AFXMLRequestOperation.m */; };
 		53D78C18160B8DE300148EA3 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D78BDC160B8DE300148EA3 /* UIImageView+AFNetworking.m */; };
 		53D78C50160B904000148EA3 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D78C3E160B904000148EA3 /* CustomBadge.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		53D78C60160B91C900148EA3 /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D78C5D160B91C900148EA3 /* HPGrowingTextView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		53D78C61160B91C900148EA3 /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D78C5F160B91C900148EA3 /* HPTextViewInternal.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		53D7ADEE15D04AC800BB041E /* CPGeofenceHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */; };
 		53D9B198152A5D9300BC1304 /* VenueListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D9B197152A5D9300BC1304 /* VenueListTableViewController.m */; };
 		53D9B19C152A5E8600BC1304 /* CPTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D9B19B152A5E8600BC1304 /* CPTabBarController.m */; };
-		53DDBCF3153F560200306F8B /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DDBCF0153F560200306F8B /* HPGrowingTextView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		53DDBCF4153F560200306F8B /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DDBCF2153F560200306F8B /* HPTextViewInternal.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		53DEDC5915CDB9F4008F5D2A /* user-image-mask-for-replies.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DEDC5715CDB9F4008F5D2A /* user-image-mask-for-replies.png */; };
 		53DEDC5A15CDB9F4008F5D2A /* user-image-mask-for-replies@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53DEDC5815CDB9F4008F5D2A /* user-image-mask-for-replies@2x.png */; };
 		53E2062C150596180000FA8D /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53E2062A150596180000FA8D /* MainStoryboard_iPhone.storyboard */; };
@@ -1056,16 +1056,16 @@
 		53D78BDC160B8DE300148EA3 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		53D78C3D160B904000148EA3 /* CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBadge.h; sourceTree = "<group>"; };
 		53D78C3E160B904000148EA3 /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomBadge.m; sourceTree = "<group>"; };
+		53D78C5C160B91C900148EA3 /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
+		53D78C5D160B91C900148EA3 /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
+		53D78C5E160B91C900148EA3 /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
+		53D78C5F160B91C900148EA3 /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
 		53D7ADEC15D04AC800BB041E /* CPGeofenceHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPGeofenceHandler.h; path = Checkin/CPGeofenceHandler.h; sourceTree = "<group>"; };
 		53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPGeofenceHandler.m; path = Checkin/CPGeofenceHandler.m; sourceTree = "<group>"; };
 		53D9B196152A5D9300BC1304 /* VenueListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VenueListTableViewController.h; path = Venue/VenueListTableViewController.h; sourceTree = "<group>"; };
 		53D9B197152A5D9300BC1304 /* VenueListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VenueListTableViewController.m; path = Venue/VenueListTableViewController.m; sourceTree = "<group>"; };
 		53D9B19A152A5E8600BC1304 /* CPTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPTabBarController.h; sourceTree = "<group>"; };
 		53D9B19B152A5E8600BC1304 /* CPTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPTabBarController.m; sourceTree = "<group>"; };
-		53DDBCEF153F560200306F8B /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
-		53DDBCF0153F560200306F8B /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
-		53DDBCF1153F560200306F8B /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
-		53DDBCF2153F560200306F8B /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
 		53DEDC5715CDB9F4008F5D2A /* user-image-mask-for-replies.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user-image-mask-for-replies.png"; sourceTree = "<group>"; };
 		53DEDC5815CDB9F4008F5D2A /* user-image-mask-for-replies@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user-image-mask-for-replies@2x.png"; sourceTree = "<group>"; };
 		53E2062B150596180000FA8D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
@@ -2271,6 +2271,7 @@
 		53D78BC7160B8DE300148EA3 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
+				53D78C5B160B91C900148EA3 /* HPGrowingTextView */,
 				53D78C3B160B904000148EA3 /* CustomBadge */,
 				53D78BC8160B8DE300148EA3 /* AFNetworking */,
 			);
@@ -2328,6 +2329,17 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		53D78C5B160B91C900148EA3 /* HPGrowingTextView */ = {
+			isa = PBXGroup;
+			children = (
+				53D78C5C160B91C900148EA3 /* HPGrowingTextView.h */,
+				53D78C5D160B91C900148EA3 /* HPGrowingTextView.m */,
+				53D78C5E160B91C900148EA3 /* HPTextViewInternal.h */,
+				53D78C5F160B91C900148EA3 /* HPTextViewInternal.m */,
+			);
+			path = HPGrowingTextView;
+			sourceTree = "<group>";
+		};
 		53D9B199152A5E6100BC1304 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
@@ -2338,17 +2350,6 @@
 				53D9B19B152A5E8600BC1304 /* CPTabBarController.m */,
 			);
 			path = Navigation;
-			sourceTree = "<group>";
-		};
-		53DDBCEE153F560200306F8B /* HPGrowingTextView */ = {
-			isa = PBXGroup;
-			children = (
-				53DDBCEF153F560200306F8B /* HPGrowingTextView.h */,
-				53DDBCF0153F560200306F8B /* HPGrowingTextView.m */,
-				53DDBCF1153F560200306F8B /* HPTextViewInternal.h */,
-				53DDBCF2153F560200306F8B /* HPTextViewInternal.m */,
-			);
-			path = HPGrowingTextView;
 			sourceTree = "<group>";
 		};
 		53F76F8415BA0D79008CBE09 /* TestFlightSDK */ = {
@@ -2595,7 +2596,6 @@
 				320604A114D5BBA40035A88D /* FlurryAnalytics */,
 				5386AFF1152A2A75008CD4BD /* GRMustache */,
 				534323F415C1C42600BE5075 /* GTMNSString+HTML */,
-				53DDBCEE153F560200306F8B /* HPGrowingTextView */,
 				534323F815C1C8AE00BE5075 /* NSData+Base64 */,
 				3222123E14E1E17B00C5471B /* OAuthConsumerARC */,
 				E4E74DF8153B08710022F403 /* Pickers */,
@@ -3178,8 +3178,6 @@
 				E4E74E05153B08710022F403 /* ActionSheetDistancePicker.m in Sources */,
 				E4E74E06153B08710022F403 /* ActionSheetStringPicker.m in Sources */,
 				E4E74E07153B08710022F403 /* DistancePickerView.m in Sources */,
-				53DDBCF3153F560200306F8B /* HPGrowingTextView.m in Sources */,
-				53DDBCF4153F560200306F8B /* HPTextViewInternal.m in Sources */,
 				5319C76115547157005DA299 /* UIButton+AnimatedClockHand.m in Sources */,
 				5384B24A155481FA00A4E0C1 /* CPapi.m in Sources */,
 				5384B24D1554822100A4E0C1 /* CPUtils.m in Sources */,
@@ -3273,6 +3271,8 @@
 				53D78C17160B8DE300148EA3 /* AFXMLRequestOperation.m in Sources */,
 				53D78C18160B8DE300148EA3 /* UIImageView+AFNetworking.m in Sources */,
 				53D78C50160B904000148EA3 /* CustomBadge.m in Sources */,
+				53D78C60160B91C900148EA3 /* HPGrowingTextView.m in Sources */,
+				53D78C61160B91C900148EA3 /* HPTextViewInternal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
