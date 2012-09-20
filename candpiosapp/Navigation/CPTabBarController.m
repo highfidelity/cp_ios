@@ -178,7 +178,7 @@
                                                                 message:nil 
                                                                delegate:self 
                                                       cancelButtonTitle:@"Cancel"
-                                                      otherButtonTitles:@"Checkin", @"Post to Feed", nil];
+                                                      otherButtonTitles:@"Check in", @"Post to Feed", nil];
         checkinAlert.tag = UPDATE_ALERT_TAG;
         [checkinAlert show];
         

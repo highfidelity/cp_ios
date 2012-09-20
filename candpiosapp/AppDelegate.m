@@ -352,6 +352,8 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 #define TESTING 1
 #ifdef TESTING
     
+    [TestFlight setOptions:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"disableInAppUpdates"]];
+    
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
