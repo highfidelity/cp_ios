@@ -15,7 +15,7 @@
     #import "SVProgressHUD.h"
     #import "AppDelegate.h"
     #import "CPUIHelper.h"
-    #import "CPConstants.h" 
+    #import "CPConstants.h"
     #import "CPUserDefaultsHandler.h"
     #import "CPapi.h"
     #import "CPUtils.h"

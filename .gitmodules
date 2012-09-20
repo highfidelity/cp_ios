@@ -7,3 +7,6 @@
 [submodule "candpiosapp/Externals/HPGrowingTextView"]
 	path = candpiosapp/Externals/HPGrowingTextView
 	url = git://github.com/yatinsns/HPGrowingTextView.git
+[submodule "candpiosapp/Externals/WEPopover"]
+	path = candpiosapp/Externals/WEPopover
+	url = git://github.com/werner77/WEPopover.git
