@@ -22,3 +22,6 @@
 [submodule "candpiosapp/Externals/TPKeyboardAvoiding"]
 	path = candpiosapp/Externals/TPKeyboardAvoiding
 	url = https://github.com/michaeltyson/TPKeyboardAvoiding
+[submodule "candpiosapp/Externals/UIImage-Categories"]
+	path = candpiosapp/Externals/UIImage-Categories
+	url = git://github.com/mbcharbonneau/UIImage-Categories.git
