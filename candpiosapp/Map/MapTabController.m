@@ -7,7 +7,7 @@
 //
 
 #import "MapDataSet.h"
-#import "MKAnnotationView+WebCache.h"
+#import "MKAnnotationView+SpecialPin.h"
 #import "VenueInfoViewController.h"
 #import "User.h"
 
