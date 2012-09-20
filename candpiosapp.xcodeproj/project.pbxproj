@@ -160,6 +160,7 @@
 		5335D83C160BAA56005400FC /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D82A160BAA56005400FC /* SSKeychain.m */; };
 		5335D86F160BAB2F005400FC /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5335D85D160BAB2F005400FC /* SVProgressHUD.bundle */; };
 		5335D870160BAB2F005400FC /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D85F160BAB2F005400FC /* SVProgressHUD.m */; };
+		5335D89A160BB369005400FC /* SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D88B160BB369005400FC /* SVPullToRefresh.m */; };
 		5338B0991606C7DC00C23B4B /* check-in-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 5338B0971606C7DC00C23B4B /* check-in-button.png */; };
 		5338B09A1606C7DC00C23B4B /* check-in-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5338B0981606C7DC00C23B4B /* check-in-button@2x.png */; };
 		5338B09D1606C80B00C23B4B /* paper-texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 5338B09B1606C80B00C23B4B /* paper-texture.png */; };
@@ -328,7 +329,6 @@
 		53A9F7761561912A0049F427 /* send-love.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A9F7741561912A0049F427 /* send-love.png */; };
 		53A9F7771561912A0049F427 /* send-love@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A9F7751561912A0049F427 /* send-love@2x.png */; };
 		53AA7A841566CB1500006E85 /* ContactListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AA7A831566CB1500006E85 /* ContactListCell.m */; };
-		53ABBCB5159E5ED800C6ED8B /* SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 53ABBCB3159E5ED800C6ED8B /* SVPullToRefresh.m */; };
 		53ABCC2515621054004BA177 /* send-love-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53ABCC2415621054004BA177 /* send-love-small@2x.png */; };
 		53B6C4D2152108B5002934B8 /* place-location.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B6C4CE152108B5002934B8 /* place-location.png */; };
 		53B6C4D3152108B5002934B8 /* place-location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B6C4CF152108B5002934B8 /* place-location@2x.png */; };
@@ -786,6 +786,8 @@
 		5335D85D160BAB2F005400FC /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		5335D85E160BAB2F005400FC /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		5335D85F160BAB2F005400FC /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		5335D88A160BB369005400FC /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
+		5335D88B160BB369005400FC /* SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPullToRefresh.m; sourceTree = "<group>"; };
 		5338B0971606C7DC00C23B4B /* check-in-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-button.png"; path = "Checkin/images/check-in-button.png"; sourceTree = "<group>"; };
 		5338B0981606C7DC00C23B4B /* check-in-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-button@2x.png"; path = "Checkin/images/check-in-button@2x.png"; sourceTree = "<group>"; };
 		5338B09B1606C80B00C23B4B /* paper-texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "paper-texture.png"; path = "Utils/images/textures/paper-texture.png"; sourceTree = "<group>"; };
@@ -996,8 +998,6 @@
 		53A9F7751561912A0049F427 /* send-love@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-love@2x.png"; path = "User/images/send-love@2x.png"; sourceTree = "<group>"; };
 		53AA7A821566CB1500006E85 /* ContactListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactListCell.h; sourceTree = "<group>"; };
 		53AA7A831566CB1500006E85 /* ContactListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactListCell.m; sourceTree = "<group>"; };
-		53ABBCB2159E5ED800C6ED8B /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
-		53ABBCB3159E5ED800C6ED8B /* SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPullToRefresh.m; sourceTree = "<group>"; };
 		53ABCC2415621054004BA177 /* send-love-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-love-small@2x.png"; path = "User/images/send-love-small@2x.png"; sourceTree = "<group>"; };
 		53B6C4CE152108B5002934B8 /* place-location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "place-location.png"; path = "Venue/images/place-location.png"; sourceTree = "<group>"; };
 		53B6C4CF152108B5002934B8 /* place-location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "place-location@2x.png"; path = "Venue/images/place-location@2x.png"; sourceTree = "<group>"; };
@@ -1680,6 +1680,23 @@
 			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
+		5335D875160BB369005400FC /* SVPullToRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				5335D889160BB369005400FC /* SVPullToRefresh */,
+			);
+			path = SVPullToRefresh;
+			sourceTree = "<group>";
+		};
+		5335D889160BB369005400FC /* SVPullToRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				5335D88A160BB369005400FC /* SVPullToRefresh.h */,
+				5335D88B160BB369005400FC /* SVPullToRefresh.m */,
+			);
+			path = SVPullToRefresh;
+			sourceTree = "<group>";
+		};
 		533E5ED315A3A88C0042862E /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -2184,15 +2201,6 @@
 			path = Settings/Invite;
 			sourceTree = "<group>";
 		};
-		53ABBCB0159E5ED800C6ED8B /* SVPullToRefresh */ = {
-			isa = PBXGroup;
-			children = (
-				53ABBCB2159E5ED800C6ED8B /* SVPullToRefresh.h */,
-				53ABBCB3159E5ED800C6ED8B /* SVPullToRefresh.m */,
-			);
-			path = SVPullToRefresh;
-			sourceTree = "<group>";
-		};
 		53C578AC156468ED00EFE69E /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -2268,6 +2276,7 @@
 		53D78BC7160B8DE300148EA3 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
+				5335D875160BB369005400FC /* SVPullToRefresh */,
 				5335D848160BAB2F005400FC /* SVProgressHUD */,
 				5335D823160BAA56005400FC /* SSKeychain */,
 				53263286160B9E3D0051BF0A /* WEPopover */,
@@ -2607,7 +2616,6 @@
 				5386AFF1152A2A75008CD4BD /* GRMustache */,
 				3222123E14E1E17B00C5471B /* OAuthConsumerARC */,
 				E4E74DF8153B08710022F403 /* Pickers */,
-				53ABBCB0159E5ED800C6ED8B /* SVPullToRefresh */,
 				53F76F8415BA0D79008CBE09 /* TestFlightSDK */,
 				6F7BA4D614E308AF00420AD5 /* TPKeyboardAvoiding */,
 				32A7998C14F9863200A0D4CB /* UIImage-categories */,
@@ -3188,7 +3196,6 @@
 				53C4A2A5159107FB00711EC7 /* CPThinTabBar.m in Sources */,
 				53A3C78C159A4B73008459B0 /* CPCheckinHandler.m in Sources */,
 				E410F9DC159DF0A500D32F86 /* ProfileViewController.m in Sources */,
-				53ABBCB5159E5ED800C6ED8B /* SVPullToRefresh.m in Sources */,
 				E4E74E07153B08710022F405 /* CPTouchableView.m in Sources */,
 				E41AD9CC15A25D9500B6E360 /* UIImage+ImageBlur.m in Sources */,
 				53A5622315A386EC00ACD920 /* CPUserDefaultsHandler.m in Sources */,
@@ -3237,6 +3244,7 @@
 				5335D821160BA801005400FC /* MKAnnotationView+SpecialPin.m in Sources */,
 				5335D83C160BAA56005400FC /* SSKeychain.m in Sources */,
 				5335D870160BAB2F005400FC /* SVProgressHUD.m in Sources */,
+				5335D89A160BB369005400FC /* SVPullToRefresh.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
