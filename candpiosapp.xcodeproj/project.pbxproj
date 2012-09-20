@@ -44,7 +44,6 @@
 		32A7999314F9867D00A0D4CB /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A7998E14F9867D00A0D4CB /* UIImage+Alpha.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		32A7999414F9867D00A0D4CB /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A7999014F9867D00A0D4CB /* UIImage+Resize.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		32A7999514F9867D00A0D4CB /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A7999214F9867D00A0D4CB /* UIImage+RoundedCorner.m */; settings = {COMPILER_FLAGS = "-w"; }; };
-		32B9976814E37B6400713B6E /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 32B9976714E37B6400713B6E /* SSKeychain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		32CE875214D27FFF002D391B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CE875114D27FFF002D391B /* QuartzCore.framework */; };
 		32D1E99915701993009B45BD /* checkbox-checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D1E99515701993009B45BD /* checkbox-checked.png */; };
 		32D1E99A15701993009B45BD /* checkbox-checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D1E99615701993009B45BD /* checkbox-checked@2x.png */; };
@@ -158,6 +157,7 @@
 		5332FB42152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5332FB40152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg */; };
 		5335CF6F1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */; };
 		5335D821160BA801005400FC /* MKAnnotationView+SpecialPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D820160BA801005400FC /* MKAnnotationView+SpecialPin.m */; };
+		5335D83C160BAA56005400FC /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D82A160BAA56005400FC /* SSKeychain.m */; };
 		5338B0991606C7DC00C23B4B /* check-in-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 5338B0971606C7DC00C23B4B /* check-in-button.png */; };
 		5338B09A1606C7DC00C23B4B /* check-in-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5338B0981606C7DC00C23B4B /* check-in-button@2x.png */; };
 		5338B09D1606C80B00C23B4B /* paper-texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 5338B09B1606C80B00C23B4B /* paper-texture.png */; };
@@ -632,8 +632,6 @@
 		32A7999014F9867D00A0D4CB /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "UIImage-categories/UIImage+Resize.m"; sourceTree = "<group>"; };
 		32A7999114F9867D00A0D4CB /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+RoundedCorner.h"; path = "UIImage-categories/UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
 		32A7999214F9867D00A0D4CB /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+RoundedCorner.m"; path = "UIImage-categories/UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
-		32B9976614E37B6400713B6E /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
-		32B9976714E37B6400713B6E /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		32CE875114D27FFF002D391B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		32D1E99515701993009B45BD /* checkbox-checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-checked.png"; sourceTree = "<group>"; };
 		32D1E99615701993009B45BD /* checkbox-checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-checked@2x.png"; sourceTree = "<group>"; };
@@ -783,6 +781,8 @@
 		5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SettingsStoryboard_iPhone.storyboard; path = Settings/SettingsStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		5335D81F160BA801005400FC /* MKAnnotationView+SpecialPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MKAnnotationView+SpecialPin.h"; path = "Map/MKAnnotationView+SpecialPin.h"; sourceTree = "<group>"; };
 		5335D820160BA801005400FC /* MKAnnotationView+SpecialPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MKAnnotationView+SpecialPin.m"; path = "Map/MKAnnotationView+SpecialPin.m"; sourceTree = "<group>"; };
+		5335D829160BAA56005400FC /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		5335D82A160BAA56005400FC /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		5338B0971606C7DC00C23B4B /* check-in-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-button.png"; path = "Checkin/images/check-in-button.png"; sourceTree = "<group>"; };
 		5338B0981606C7DC00C23B4B /* check-in-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-button@2x.png"; path = "Checkin/images/check-in-button@2x.png"; sourceTree = "<group>"; };
 		5338B09B1606C80B00C23B4B /* paper-texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "paper-texture.png"; path = "Utils/images/textures/paper-texture.png"; sourceTree = "<group>"; };
@@ -1502,15 +1502,6 @@
 			name = "UIImage-categories";
 			sourceTree = "<group>";
 		};
-		32B9976514E37B6400713B6E /* SSKeychain */ = {
-			isa = PBXGroup;
-			children = (
-				32B9976614E37B6400713B6E /* SSKeychain.h */,
-				32B9976714E37B6400713B6E /* SSKeychain.m */,
-			);
-			path = SSKeychain;
-			sourceTree = "<group>";
-		};
 		4E28A7BB15AB5DF4003C601A /* images */ = {
 			isa = PBXGroup;
 			children = (
@@ -1660,6 +1651,15 @@
 				5355B0C115140697006A3D89 /* settings-button-3@2x.png */,
 			);
 			name = images;
+			sourceTree = "<group>";
+		};
+		5335D823160BAA56005400FC /* SSKeychain */ = {
+			isa = PBXGroup;
+			children = (
+				5335D829160BAA56005400FC /* SSKeychain.h */,
+				5335D82A160BAA56005400FC /* SSKeychain.m */,
+			);
+			path = SSKeychain;
 			sourceTree = "<group>";
 		};
 		533E5ED315A3A88C0042862E /* Feed */ = {
@@ -2250,6 +2250,7 @@
 		53D78BC7160B8DE300148EA3 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
+				5335D823160BAA56005400FC /* SSKeychain */,
 				53263286160B9E3D0051BF0A /* WEPopover */,
 				53D78C62160B99D800148EA3 /* GTMNSString+HTML */,
 				53D78C5B160B91C900148EA3 /* HPGrowingTextView */,
@@ -2587,7 +2588,6 @@
 				5386AFF1152A2A75008CD4BD /* GRMustache */,
 				3222123E14E1E17B00C5471B /* OAuthConsumerARC */,
 				E4E74DF8153B08710022F403 /* Pickers */,
-				32B9976514E37B6400713B6E /* SSKeychain */,
 				871EFB9714AF97130030658B /* SVProgressHUD */,
 				53ABBCB0159E5ED800C6ED8B /* SVPullToRefresh */,
 				53F76F8415BA0D79008CBE09 /* TestFlightSDK */,
@@ -3110,7 +3110,6 @@
 				3222127814E1E17B00C5471B /* OAServiceTicket.m in Sources */,
 				3222127A14E1E17B00C5471B /* OAToken.m in Sources */,
 				3222127B14E1E17B00C5471B /* OATokenManager.m in Sources */,
-				32B9976814E37B6400713B6E /* SSKeychain.m in Sources */,
 				6F7BA4DB14E308AF00420AD5 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				6F7BA4DC14E308AF00420AD5 /* TPKeyboardAvoidingTableView.m in Sources */,
 				6F0B453914F6BCD10074DBD9 /* CPChatHelper.m in Sources */,
@@ -3229,6 +3228,7 @@
 				532632B9160B9E3D0051BF0A /* WEPopoverController.m in Sources */,
 				532632BA160B9E3D0051BF0A /* WETouchableView.m in Sources */,
 				5335D821160BA801005400FC /* MKAnnotationView+SpecialPin.m in Sources */,
+				5335D83C160BAA56005400FC /* SSKeychain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

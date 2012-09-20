@@ -10,3 +10,6 @@
 [submodule "candpiosapp/Externals/WEPopover"]
 	path = candpiosapp/Externals/WEPopover
 	url = git://github.com/werner77/WEPopover.git
+[submodule "candpiosapp/Externals/SSKeychain"]
+	path = candpiosapp/Externals/SSKeychain
+	url = https://github.com/samsoffes/sskeychain
