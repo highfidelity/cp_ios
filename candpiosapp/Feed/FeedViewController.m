@@ -1822,27 +1822,27 @@ typedef enum {
             // so send the update
             
             if (!self.pendingPost.originalPostID && self.pendingPost.type == CPPostTypeQuestion) {
-                
-                [CPapi getCurrentCheckInsCountAtVenue:self.selectedVenueFeed.venue 
+                [CPapi getQuestionReceiversAtLocation:[CPAppDelegate locationManager].location.coordinate
                                        withCompletion:^(NSDictionary *json, NSError *error) {
                                            BOOL respError = [[json objectForKey:@"error"] boolValue];
                                            
                                            if (!error && !respError) {
-                                               
-                                               int count = [[json objectForKey:@"payload"] intValue];
+                                               NSDictionary *payload = [json objectForKey:@"payload"];
+                                               int count = [[payload objectForKey:@"count"] integerValue];
                                                NSString *message;
-                                               
-                                               //user +1 person
-                                               if (count == 2) {
-                                                   message = @"It will be pushed to 1 person checked in to this location.";
-                                               } else if (count > 2) {
-                                                   message = [NSString stringWithFormat: @"It will be pushed to %d people checked in to this location.", count - 1];
+
+                                               if (count == 0) {
+                                                   message = @"no one";
+                                               } else if (count == 1) {
+                                                   message = @"1 user";
                                                } else {
-                                                   message = @"You are the only person here right now.";
+                                                   message = [NSString stringWithFormat: @"%d users", count];
                                                }
-                                               
+
                                                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Post a Question"
-                                                                                               message:[NSString stringWithFormat:@"Are you sure you want to ask this question? %@", message]
+                                                                                               message:[NSString stringWithFormat:
+                                                                                                        @"Are you sure you want to ask this question?"
+                                                                                                        @" Your question will be sent to %@.", message]
                                                                                               delegate:self
                                                                                      cancelButtonTitle:@"No" 
                                                                                      otherButtonTitles:@"Yes", nil];
