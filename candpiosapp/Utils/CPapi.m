@@ -742,11 +742,16 @@
         atVenue:(CPVenue *)venue
      completion:(void (^)(NSDictionary *, NSError *))completion
 {
-    
+    // setup the params dictionary
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+
     NSString *postType;
     switch (post.type) {
         case CPPostTypeQuestion:
             postType = @"question";
+            CLLocationCoordinate2D coordinate = [CPAppDelegate locationManager].location.coordinate;
+            [params setValue:[NSString stringWithFormat:@"%f", coordinate.latitude] forKey:@"lat"];
+            [params setValue:[NSString stringWithFormat:@"%f", coordinate.longitude] forKey:@"lng"];
             break;
         case CPPostTypeUpdate:
             postType = @"update";
@@ -759,9 +764,7 @@
             break;
     }
     
-    // setup the params dictionary
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setObject:post.entry forKey:@"entry"];    
+    [params setObject:post.entry forKey:@"entry"];
     [params setObject:postType forKey:@"type"];
     [params setObject:[NSString stringWithFormat:@"%d", venue.venueID] forKey:@"venue_id"];
     
@@ -782,6 +785,15 @@
     
     // make the request
     [self makeHTTPRequestWithAction:@"getPostableFeedVenueIDs" withParameters:nil completion:completion];
+}
+
++ (void)getQuestionReceiversAtLocation:(CLLocationCoordinate2D)coordinate withCompletion:(void (^)(NSDictionary *, NSError *))completion
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setValue:[NSString stringWithFormat:@"%f", coordinate.latitude] forKey:@"lat"];
+    [params setValue:[NSString stringWithFormat:@"%f", coordinate.longitude] forKey:@"lng"];
+    
+    [self makeHTTPRequestWithAction:@"getQuestionReceivers" withParameters:params completion:completion];
 }
 
 #pragma mark - Checkins
