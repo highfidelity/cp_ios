@@ -24,6 +24,7 @@
 #define kCheckOutLocalNotificationAlertViewTitle @"You will be checked out of C&P in 5 min."
 
 #define kCheckOutAlertTag 602
+#define kFeedViewAlertTag 500
 
 @interface AppDelegate() {
     NSCache *_cache;
@@ -301,6 +302,17 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
         [CPChatHelper respondToIncomingChatNotification:message
                                          fromNickname:nickname
                                            fromUserId:userId];
+    } else if ([userInfo valueForKey:@"feed_venue_id"]) {
+
+        CPAlertView *alertView = [[CPAlertView alloc] initWithTitle:@"Incoming message"
+                                                            message:alertMessage
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Ignore"
+                                                  otherButtonTitles:@"View", nil];
+        alertView.tag = kFeedViewAlertTag;
+        alertView.context = userInfo;
+        [alertView show];
+
     } else if ([userInfo valueForKey:@"geofence"]) {
         [[CPGeofenceHandler sharedHandler] handleGeofenceNotification:alertMessage userInfo:userInfo];
     } else if ([userInfo valueForKey:kContactRequestAPNSKey] != nil) {        
@@ -613,6 +625,11 @@ void SignalHandler(int sig) {
             [self.tabBarController presentModalViewController:navigationController animated:YES];
         }
         
+    } else if (alertView.tag == kFeedViewAlertTag && alertView.firstOtherButtonIndex == buttonIndex) {
+        CPVenue *venue = [[CPVenue alloc] init];
+        venue.venueID = [[userInfo objectForKey:@"feed_venue_id"] integerValue];
+        venue.name = [userInfo objectForKey:@"feed_venue_name"];
+        [self.tabBarController showFeedVCForVenue:venue];
     }
 }
 

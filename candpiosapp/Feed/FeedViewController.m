@@ -1133,9 +1133,14 @@ typedef enum {
     for (CPVenueFeed *venueFeed in self.venueFeedPreviews) {
         if ([venueFeed.venue isEqual:venueToShow]) {
             self.selectedVenueFeed = venueFeed;
-            break;
+            return;
         }
     }
+
+    CPVenueFeed *feed = [[CPVenueFeed alloc] init];
+    feed.venue = venueToShow;
+    [self.venueFeedPreviews addObject:feed];
+    self.selectedVenueFeed = feed;
 }
 
 - (void)toggleTableViewState
@@ -1421,35 +1426,35 @@ typedef enum {
 - (void)showOnlyPostableFeeds
 {
     // we only need to download the array of postable feeds if we don't already have it
-    
+
     // check if we are already shown (otherwise we're about to be transitioned to by method in CPTabBarController)
     // if we are then check if
     BOOL forceList = (self.tabBarController.selectedIndex != 0);
-    
+
     // let the TVC know that we want to only show the postable feeds
     self.previewPostableFeedsOnly = YES;
-    
+
     // anytime the user says they want to post a feed for a venue they are not checked into
     // we call this API function to return array of venue IDs we can post to
-    
+
     // assume they are all in our local list of feeds
     [self toggleLoadingState:YES];
-    
+
     [CPapi getPostableFeedVenueIDs:^(NSDictionary *json, NSError *error){
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {
                 NSArray *venueIDs = [json objectForKey:@"payload"];
                 self.postableVenueFeeds = [NSMutableArray arrayWithCapacity:venueIDs.count];
-                
+
                 for (CPVenueFeed *venueFeed in self.venueFeedPreviews) {
                     if ([venueIDs containsObject:[NSString stringWithFormat:@"%d", venueFeed.venue.venueID]]) {
                         // add this venueFeed to the array of postableVenueFeeds
                         [self.postableVenueFeeds addObject:venueFeed];
                     }
                 }
-                
+
                 [self toggleLoadingState:NO];
-                
+
                 if (!forceList && self.selectedVenueFeed && [self.postableVenueFeeds containsObject:self.selectedVenueFeed]) {
                     // no need to change anything, we're looking at a feed that is postable
                     // post to it
@@ -1458,7 +1463,7 @@ typedef enum {
                     // make sure the selectedVenueFeed is nil
                     // that will also toggle the tableView state
                     self.selectedVenueFeed = nil;
-                    
+
                     // add a cancel button in the top right so the user can go back to all feeds
                     [self cancelButtonForRightNavigationItem];
                 }
@@ -1979,6 +1984,7 @@ typedef enum {
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    
     if (alertView.cancelButtonIndex != buttonIndex) {
         [self sendNewPost]; 
     }
