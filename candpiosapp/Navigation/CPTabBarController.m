@@ -234,12 +234,19 @@
     self.feedViewController.postType = postType;
 
     @try {
+
         // if the FeedViewController doesn't have our the current venue's feed as it's selectedVenueFeed
         // then pull it from the list of venue feed previews and make it the selected venue feed
-        [self.feedViewController reloadFeedPreviewVenues];
-        self.feedViewController.selectedVenueFeed = [self.feedViewController.venueFeedPreviews objectAtIndex:0];
+        if (self.feedViewController.venueFeedPreviews.count == 0) {
+            return;
+        }
 
+        if (!self.feedViewController.selectedVenueFeed) {
+            [self.feedViewController reloadFeedPreviewVenues];
+            self.feedViewController.selectedVenueFeed = [self.feedViewController.venueFeedPreviews objectAtIndex:0];
+        }
         [self showFeedVCForNewPost:YES];
+
     }
     @catch (NSException *exception) {
         [FlurryAnalytics logError:@"showFeedVCForNewPostAtCurrentVenueWithPostType" message:exception.reason exception:exception];
@@ -273,8 +280,6 @@
         // this is the "Post to Feed" button
         [self showFeedVCForNewPostAtCurrentVenueWithPostType:(alertView.tag == UPDATE_ALERT_TAG)
                 ? CPPostTypeUpdate : CPPostTypeQuestion];
-        // make sure our selected index is 0
-        self.selectedIndex = 0;
     }
 }
 
