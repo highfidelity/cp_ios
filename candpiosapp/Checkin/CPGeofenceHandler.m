@@ -15,7 +15,9 @@
 #define kRadiusForCheckins 10 // measure in meters, from lat/lng of CPVenue
 #define kMaxCheckInDuration 24
 
-@implementation CPGeofenceHandler
+@implementation CPGeofenceHandler {
+    int pendingVenueCheckInID;
+}
 
 static CPGeofenceHandler *sharedHandler;
 
@@ -64,43 +66,54 @@ static CPGeofenceHandler *sharedHandler;
 
 - (void)autoCheckInForVenue:(CPVenue *)venue
 {
-    // Check the user in automatically now
+    // Check to see if there is an existing checkin request for this venueID to eliminate duplicate check-ins from multiple geofence triggers
     
-    [FlurryAnalytics logEvent:@"autoCheckedIn"];
-    
-    NSTimeInterval checkInTime = [[NSDate date] timeIntervalSince1970];
-    // Set a maximum checkInDuration to 24 hours
-    NSInteger checkInDuration = kMaxCheckInDuration;
-    
-    NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
-    NSString *statusText = @"";
-    
-    // use CPapi to checkin
-    [CPApiClient checkInToVenue:venue hoursHere:checkInDuration statusText:statusText isVirtual:NO isAutomatic:YES completionBlock:^(NSDictionary *json, NSError *error){
+    if (pendingVenueCheckInID && venue.venueID == pendingVenueCheckInID) {
+        [FlurryAnalytics logEvent:@"autoCheckedInDuplicateIgnored"];
+    }
+    else {
+        // Check the user in automatically now
+        [FlurryAnalytics logEvent:@"autoCheckedIn"];
+
+        pendingVenueCheckInID = venue.venueID;
+
+        NSTimeInterval checkInTime = [[NSDate date] timeIntervalSince1970];
+        // Set a maximum checkInDuration to 24 hours
+        NSInteger checkInDuration = kMaxCheckInDuration;
         
-        if (!error) {
-            if (![[json objectForKey:@"error"] boolValue]) {
-                
-                // Cancel all old local notifications
-                [[UIApplication sharedApplication] cancelAllLocalNotifications];
-                
-                [[CPCheckinHandler sharedHandler] setCheckedOut];
-                
-                [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
-                
-                // Save current place to venue defaults as it's used in several places in the app
-                [CPUserDefaultsHandler setCurrentVenue:venue];
-                
-                // update this venue in the list of past venues
-                [self updatePastVenue:venue];
+        NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
+        NSString *statusText = @"";
+        
+        // use CPapi to checkin
+        [CPApiClient checkInToVenue:venue hoursHere:checkInDuration statusText:statusText isVirtual:NO isAutomatic:YES completionBlock:^(NSDictionary *json, NSError *error){
+            
+            if (!error) {
+                if (![[json objectForKey:@"error"] boolValue]) {
+                                        
+                    // Cancel all old local notifications
+                    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+                    
+                    [[CPCheckinHandler sharedHandler] setCheckedOut];
+                    
+                    [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
+                    
+                    // Save current place to venue defaults as it's used in several places in the app
+                    [CPUserDefaultsHandler setCurrentVenue:venue];
+                    
+                    // update this venue in the list of past venues
+                    [self updatePastVenue:venue];
+                }
+                else {
+                    // There was an error checking in; probably safe to ignore
+                }
+            } else {
+                // There was an error in the main call while checking in; probably safe to ignore
             }
-            else {
-                // There was an error checking in; probably safe to ignore
-            }
-        } else {
-            // There was an error in the main call while checking in; probably safe to ignore
-        }
-    }];
+            
+            // Reset pendingVenueCheckInID to 0 upon completion, regardless of success since we would want the check-in to complete if it failed previously
+            pendingVenueCheckInID = 0;
+        }];
+    }
 }
 
 - (void)autoCheckOutForRegion:(CLRegion *)region
