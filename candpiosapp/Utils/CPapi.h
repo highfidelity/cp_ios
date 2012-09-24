@@ -76,6 +76,8 @@
 + (void)getQuestionReceiversAtLocation:(CLLocationCoordinate2D)coordinate withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Checkins
++ (void)getNearestCheckedInWithCompletion:(void (^)(NSDictionary *, NSError *))completion;
+
 + (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID
                                        :(void(^)(NSDictionary *json, NSError *error))completion; 
 
