@@ -30,12 +30,6 @@ static CPUserSessionHandler *sharedHandler;
     // make sure the CPAppDelegate's locationManager is lazily instantiated so it is ready to use
     [CPAppDelegate locationManager];
     
-    while ([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
-        // looping until we have a location service acceptance / denial
-        // if the user hasn't given a location service status (accept or deny) to our app
-        // the alert will show up before the signup modal drops and must be interacted with before it does
-    }
-    
     // we have a current user so we are good to ask for push and sync the user
     
     // doesn't matter if this is called after UA has already taken off, the AppDelegate won't do it twice
