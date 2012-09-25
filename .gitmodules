@@ -31,3 +31,6 @@
 [submodule "candpiosapp/Externals/HPGrowingTextView"]
 	path = candpiosapp/Externals/HPGrowingTextView
 	url = git://github.com/worklist/HPGrowingTextView.git
+[submodule "candpiosapp/Externals/UserVoiceSDK"]
+	path = candpiosapp/Externals/UserVoiceSDK
+	url = git://github.com/uservoice/uservoice-iphone-sdk.git
