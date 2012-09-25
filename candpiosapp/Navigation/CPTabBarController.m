@@ -241,10 +241,13 @@
             return;
         }
 
-        if (!self.feedViewController.selectedVenueFeed) {
-            [self.feedViewController reloadFeedPreviewVenues];
-            self.feedViewController.selectedVenueFeed = [self.feedViewController.venueFeedPreviews objectAtIndex:0];
-        }
+        [self.feedViewController reloadFeedPreviewVenues];
+
+        NSUInteger index = self.feedViewController.selectedVenueFeed
+            ? [self.feedViewController.venueFeedPreviews indexOfObject:self.feedViewController.selectedVenueFeed]
+            : 0;
+        
+        self.feedViewController.selectedVenueFeed = [self.feedViewController.venueFeedPreviews objectAtIndex:index];
         [self showFeedVCForNewPost:YES];
 
     }
