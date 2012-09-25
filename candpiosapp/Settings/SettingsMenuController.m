@@ -334,7 +334,6 @@
 
     } else {
         NSString *segueID = [self.menuSegueIdentifiersArray objectAtIndex:indexPath.row];
-        NSLog(@"You clicked on %@", segueID);
         
         if ([kEnterInviteFakeSegueID isEqual:segueID]) {
             [CPUserSessionHandler showEnterInvitationCodeModalFromViewController:self
