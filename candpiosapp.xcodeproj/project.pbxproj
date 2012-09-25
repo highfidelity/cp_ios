@@ -97,7 +97,7 @@
 		530BAAEC160BC143007DF806 /* ActionSheetDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAAC9160BC143007DF806 /* ActionSheetDatePicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		530BAAED160BC143007DF806 /* ActionSheetDistancePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAACB160BC143007DF806 /* ActionSheetDistancePicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		530BAAEE160BC143007DF806 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAACD160BC143007DF806 /* ActionSheetStringPicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		530BAAEF160BC143007DF806 /* DistancePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAACF160BC143007DF806 /* DistancePickerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		530BAAEF160BC143007DF806 /* DistancePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAACF160BC143007DF806 /* DistancePickerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
 		530BAB02160BC244007DF806 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 530BAAFE160BC244007DF806 /* libTestFlight.a */; };
 		530BAE86160BCA80007DF806 /* libGRMustache5-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 530BAD7B160BCA80007DF806 /* libGRMustache5-iOS.a */; };
 		530BAF2B160BCB2A007DF806 /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 530BAF2A160BCB2A007DF806 /* libFlurryAnalytics.a */; };
