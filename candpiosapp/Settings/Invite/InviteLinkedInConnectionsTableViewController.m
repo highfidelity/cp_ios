@@ -46,8 +46,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"EditLinkedInInvitationMessageViewControllerSegue"]) {
-        UINavigationController *navigationController = segue.destinationViewController;
-        EditLinkedInInvitationMessageViewController *editInvitationViewController = (EditLinkedInInvitationMessageViewController *)navigationController.topViewController;
+        EditLinkedInInvitationMessageViewController *editInvitationViewController = (EditLinkedInInvitationMessageViewController *)segue.destinationViewController;
         
         editInvitationViewController.nickname = [CPUserDefaultsHandler currentUser].nickname;
         editInvitationViewController.connectionIDs = [self arrayOfSlectedConnectionIDs];
