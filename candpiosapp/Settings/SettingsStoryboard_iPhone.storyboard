@@ -67,7 +67,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="B0T-Il-Eqh">
-                                <rect key="frame" x="0.0" y="0.0" width="256" height="317"/>
+                                <rect key="frame" x="0.0" y="0.0" width="256" height="305"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.1764705882" green="0.1764705882" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -79,6 +79,25 @@
                                 <rect key="frame" x="-10" y="0.0" width="10" height="460"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ZWv-dm-FCa">
+                                <rect key="frame" x="85" y="427" width="40" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="TOS ">
+                                    <color key="titleColor" red="0.66274509803921566" green="0.66274509803921566" blue="0.66274509803921566" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showTermsOfServiceModal:" destination="WGr-Yo-Vg9" eventType="touchUpInside" id="r81-Fu-GD5"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="| v#.#" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wo4-C3-Xr7">
+                                <rect key="frame" x="125" y="425" width="46" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" red="0.66274509800000003" green="0.66274509800000003" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.1764705882" green="0.1764705882" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -88,12 +107,14 @@
                         <outlet property="loginBanner" destination="6y0-BL-V0c" id="zUq-H5-8Rb"/>
                         <outlet property="loginButton" destination="i5t-UY-UVC" id="rHl-ax-qm3"/>
                         <outlet property="tableView" destination="B0T-Il-Eqh" id="QWr-pZ-Bem"/>
+                        <outlet property="termsOfServiceButton" destination="ZWv-dm-FCa" id="3Hc-OM-z4y"/>
+                        <outlet property="versionNumberLabel" destination="Wo4-C3-Xr7" id="zRb-kx-BSu"/>
                         <segue destination="cJS-DT-22N" kind="custom" identifier="ShowUserSettingsFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="Ols-cb-ALz"/>
                         <segue destination="g4S-1W-OlN" kind="custom" identifier="ShowFederationFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="QpH-Nd-etk"/>
                         <segue destination="LIc-1O-LQB" kind="custom" identifier="ShowInvitationCodeMenu" customClass="PushModalViewControllerFromLeftSegue" id="p4O-gm-OdH"/>
                         <segue destination="l1s-lq-suM" kind="custom" identifier="ShowBalanceFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="Brh-PE-BHX"/>
                         <segue destination="J5h-Z0-hwV" kind="custom" identifier="ShowNotificationsFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="H2X-1v-RWb"/>
-                        <segue destination="In7-9a-DvU" kind="custom" identifier="ShowSupportFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="xVA-Q5-P4a"/>
+                        <segue destination="In7-9a-DvU" kind="modal" identifier="ShowTermsOfServiceModal" customClass="PushModalViewControllerFromLeftSegue" id="xVA-Q5-P4a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YHg-io-CGj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -947,87 +968,6 @@ photo?</string>
             </objects>
             <point key="canvasLocation" x="-1196" y="1096"/>
         </scene>
-        <!--Support Table View Controller - Support-->
-        <scene sceneID="T3a-m1-82s">
-            <objects>
-                <tableViewController id="wEQ-k9-xxz" customClass="SupportTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="dpC-1z-VmI">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.1764705882" green="0.1764705882" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="separatorColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
-                        <sections>
-                            <tableViewSection id="mg2-bg-GwS">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="S3T-rv-BaG" style="IBUITableViewCellStyleDefault" id="c21-eu-6WO">
-                                        <rect key="frame" x="0.0" y="10" width="320" height="45"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Send Feedback" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="S3T-rv-BaG">
-                                                    <rect key="frame" x="10" y="0.0" width="280" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" red="0.8862745098" green="0.89019607840000003" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" red="0.24313725489999999" green="0.24313725489999999" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Xdb-pk-3Zj" style="IBUITableViewCellStyleDefault" id="gSo-BI-k9i">
-                                        <rect key="frame" x="0.0" y="55" width="320" height="45"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Terms of Service" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xdb-pk-3Zj">
-                                                    <rect key="frame" x="10" y="0.0" width="260" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" red="0.8862745098" green="0.89019607840000003" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" red="0.24313725489999999" green="0.24313725489999999" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <segue destination="ZUr-wy-cXS" kind="push" id="new-Fr-MNT"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Support" id="tPd-g8-6cc">
-                        <barButtonItem key="rightBarButtonItem" id="QuG-SM-sD4">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="vRt-8o-mAh">
-                                <rect key="frame" x="273" y="7" width="42" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="settings-button-3.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="gearPressed:" destination="wEQ-k9-xxz" eventType="touchUpInside" id="nLj-lr-2Fg"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Djm-NM-ku3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-719" y="1756"/>
-        </scene>
         <!--Terms Of Service View Controller - Terms of Service-->
         <scene sceneID="kVr-bP-Mxw">
             <objects>
@@ -1044,27 +984,33 @@ photo?</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Terms of Service" id="0sX-zZ-n7e"/>
+                    <navigationItem key="navigationItem" title="Terms of Service" id="0sX-zZ-n7e">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="zo9-ct-jfF">
+                            <connections>
+                                <action selector="dismissTermsOfService:" destination="ZUr-wy-cXS" id="7zt-Cb-F4J"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="webView" destination="Ec5-cF-fW5" id="zMe-hF-l53"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p9S-nV-Qrv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-257" y="1756"/>
+            <point key="canvasLocation" x="-799" y="1762"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9Jx-na-AFB">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GiN-Qk-iLV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController definesPresentationContext="YES" id="In7-9a-DvU" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="quv-bn-jQS">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="wEQ-k9-xxz" kind="relationship" relationship="rootViewController" id="X2I-4R-cCk"/>
+                        <segue destination="ZUr-wy-cXS" kind="relationship" relationship="rootViewController" id="Dyg-Ou-I36"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GiN-Qk-iLV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1196" y="1756"/>
         </scene>
@@ -1777,11 +1723,14 @@ photo?</string>
             <relationships>
                 <relationship kind="action" name="blockUIButtonClick:"/>
                 <relationship kind="action" name="loginButtonClick:"/>
+                <relationship kind="action" name="showTermsOfServiceModal:"/>
                 <relationship kind="outlet" name="blockUIButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="edgeShadow" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="loginBanner" candidateClass="UIView"/>
                 <relationship kind="outlet" name="loginButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="termsOfServiceButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="versionNumberLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="SkillsTableViewController" superclassName="UITableViewController">
@@ -1793,15 +1742,10 @@ photo?</string>
                 <relationship kind="outlet" name="myWebView" candidateClass="UIWebView"/>
             </relationships>
         </class>
-        <class className="SupportTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SupportTableViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="gearPressed:"/>
-            </relationships>
-        </class>
         <class className="TermsOfServiceViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TermsOfServiceViewController.h"/>
             <relationships>
+                <relationship kind="action" name="dismissTermsOfService:"/>
                 <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
             </relationships>
         </class>

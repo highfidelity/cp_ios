@@ -50,4 +50,9 @@
     [[NSOperationQueue mainQueue] addOperation:httpRequestOperation];
 }
 
+- (IBAction)dismissTermsOfService:(id)sender
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
 @end
