@@ -39,6 +39,7 @@ typedef enum {
 
 - (IBAction)loginButtonClick:(id)sender;
 - (IBAction)blockUIButtonClick:(id)sender;
+- (IBAction)showTermsOfServiceModal:(id)sender;
 
 - (void)showMenu:(BOOL)shouldReveal;
 - (void)closeMenu;

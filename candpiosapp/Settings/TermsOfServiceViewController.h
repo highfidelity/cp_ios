@@ -8,4 +8,6 @@
 
 @interface TermsOfServiceViewController : UIViewController
 
+- (IBAction)dismissTermsOfService:(id)sender;
+
 @end
