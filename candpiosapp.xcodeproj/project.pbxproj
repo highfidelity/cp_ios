@@ -2728,7 +2728,6 @@
 				6F3651DA14EAE8BB00E9322B /* FaceToFace */,
 				533E5ED315A3A88C0042862E /* Feed */,
 				536E1E4D1554908800052D40 /* Icon */,
-				87F657F314B0D2D000F4AB6C /* images */,
 				530FC22515D42BBD00838B5A /* Login */,
 				53E2062A150596180000FA8D /* MainStoryboard_iPhone.storyboard */,
 				536DE93A1501737000794650 /* Map */,
@@ -2762,13 +2761,6 @@
 				3222123E14E1E17B00C5471B /* OAuthConsumerARC */,
 			);
 			path = 3rdParty;
-			sourceTree = "<group>";
-		};
-		87F657F314B0D2D000F4AB6C /* images */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = images;
 			sourceTree = "<group>";
 		};
 		E472FA9A151BAD780004430A /* images */ = {
