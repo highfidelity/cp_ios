@@ -15,9 +15,13 @@
 #define kRadiusForCheckins 10 // measure in meters, from lat/lng of CPVenue
 #define kMaxCheckInDuration 24
 
-@implementation CPGeofenceHandler {
-    int pendingVenueCheckInID;
-}
+@interface CPGeofenceHandler()
+
+@property (nonatomic) int pendingVenueCheckInID;
+
+@end
+
+@implementation CPGeofenceHandler
 
 static CPGeofenceHandler *sharedHandler;
 
@@ -68,14 +72,14 @@ static CPGeofenceHandler *sharedHandler;
 {
     // Check to see if there is an existing checkin request for this venueID to eliminate duplicate check-ins from multiple geofence triggers
     
-    if (pendingVenueCheckInID && venue.venueID == pendingVenueCheckInID) {
+    if (self.pendingVenueCheckInID && venue.venueID == self.pendingVenueCheckInID) {
         [FlurryAnalytics logEvent:@"autoCheckedInDuplicateIgnored"];
     }
     else {
         // Check the user in automatically now
         [FlurryAnalytics logEvent:@"autoCheckedIn"];
 
-        pendingVenueCheckInID = venue.venueID;
+        self.pendingVenueCheckInID = venue.venueID;
 
         NSTimeInterval checkInTime = [[NSDate date] timeIntervalSince1970];
         // Set a maximum checkInDuration to 24 hours
@@ -111,7 +115,7 @@ static CPGeofenceHandler *sharedHandler;
             }
             
             // Reset pendingVenueCheckInID to 0 upon completion, regardless of success since we would want the check-in to complete if it failed previously
-            pendingVenueCheckInID = 0;
+            self.pendingVenueCheckInID = 0;
         }];
     }
 }
