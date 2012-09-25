@@ -29,7 +29,6 @@ Welcome!";
 @property (weak, nonatomic) IBOutlet UITextField *subjectTextField;
 @property (weak, nonatomic) IBOutlet UITextView *bodyTextView;
 
-- (IBAction)cancelAction;
 - (IBAction)sendAction;
 - (void)adjustViewForKeyboardVisible:(BOOL)visible withKeyboadrNotification:(NSNotification *)aNotification;
 - (NSData *)messageBodyData;
@@ -93,10 +92,6 @@ Welcome!";
 }
 
 #pragma mark - actions
-
-- (IBAction)cancelAction {
-    [self dismissModalViewControllerAnimated:YES];
-}
 
 - (IBAction)sendAction {
     [self.subjectTextField resignFirstResponder];

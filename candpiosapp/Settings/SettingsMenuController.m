@@ -9,12 +9,16 @@
 #import "CPCheckinHandler.h"
 #import "CPGeofenceHandler.h"
 #import "CPUserSessionHandler.h"
+#import "UserVoice.h"
 
 #define menuWidthPercentage 0.8
 #define kEnterInviteFakeSegueID @"--kEnterInviteFakeSegueID"
+#define kFeedbackSegueID @"ShowFeedbackFromMenu"
 
 @interface SettingsMenuController() <UITabBarControllerDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *versionNumberLabel;
+@property (weak, nonatomic) IBOutlet UIButton *termsOfServiceButton;
 @property (strong, nonatomic) NSArray *menuStringsArray;
 @property (strong, nonatomic) NSArray *menuSegueIdentifiersArray;
 @property (strong, nonatomic) UITapGestureRecognizer *menuCloseGestureRecognizer;
@@ -48,7 +52,7 @@
                              @"Profile",
                              @"Linked Accounts",
                              @"Notifications",
-                             @"Support",
+                             @"Feedback",
                              @"Logout",
                              nil];
     
@@ -59,7 +63,7 @@
                                       @"ShowUserSettingsFromMenu",
                                       @"ShowFederationFromMenu",
                                       @"ShowNotificationsFromMenu",
-                                      @"ShowSupportFromMenu",
+                                      kFeedbackSegueID,
                                       @"ShowLogoutFromMenu",
                                       nil];
     
@@ -81,8 +85,6 @@
 }
 
 #pragma mark - View lifecycle
-
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -96,15 +98,15 @@
                                              selector:@selector(performAfterLoginActionIfRequired)
                                                  name:@"LoginStateChanged"
                                                object:nil];
+    
+    [self placeVersionNumberAndTermsButton];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LoginStateChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LoginStateChanged" object:nil];    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -252,6 +254,51 @@
     self.isMenuShowing = showMenu ? 1 : 0;
 }
 
+- (void)placeVersionNumberAndTermsButton
+{
+    // give the label the current version number
+    self.versionNumberLabel.text = [NSString stringWithFormat:@"| v%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+    
+    // grab the frames for the versionNumberLabel and the termsOfServiceButton
+    CGRect versionFrame = self.versionNumberLabel.frame;
+    CGRect termsFrame = self.termsOfServiceButton.frame;
+    
+    // shrink the version number label horizontally to just fit the contents
+    versionFrame.size.width = [self.versionNumberLabel.text sizeWithFont:self.versionNumberLabel.font].width;
+    
+    // find total width of both button and label
+    CGFloat buttonLabelWidth = termsFrame.size.width + versionFrame.size.width;
+    
+    // give the TOS button frame its new origin
+    termsFrame.origin.x = self.tableView.center.x - (buttonLabelWidth / 2);
+    
+    // give the version number frame its new origin
+    versionFrame.origin.x = termsFrame.origin.x + termsFrame.size.width;
+    
+    // give both elements their new frames
+    self.versionNumberLabel.frame = versionFrame;
+    self.termsOfServiceButton.frame = termsFrame;
+    
+    // ugly way to add an underline to the TOS button that will sit under the text
+    
+    // make the underline 75% of the width of the button
+    CGFloat underlineWidth = 0.75 * termsFrame.size.width;
+    
+    // alloc-init a 1pt tall underline 
+    UIView *underline = [[UIView alloc] initWithFrame:CGRectMake((termsFrame.size.width / 2) - (underlineWidth / 2), termsFrame.size.height - 6, underlineWidth, 1)];
+    
+    // give it the same color as the text
+    underline.backgroundColor = self.termsOfServiceButton.titleLabel.textColor;
+    
+    // add it to the existing button
+    [self.termsOfServiceButton addSubview:underline];
+}
+
+- (IBAction)showTermsOfServiceModal:(id)sender
+{
+    [self performSegueWithIdentifier:@"ShowTermsOfServiceModal" sender:self];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -334,13 +381,17 @@
 
     } else {
         NSString *segueID = [self.menuSegueIdentifiersArray objectAtIndex:indexPath.row];
-        NSLog(@"You clicked on %@", segueID);
         
-        if ([kEnterInviteFakeSegueID isEqual:segueID]) {
+        if ([segueID isEqualToString:kEnterInviteFakeSegueID]) {
             [CPUserSessionHandler showEnterInvitationCodeModalFromViewController:self
                                      withDontShowTextNoticeAfterLaterButtonPressed:YES
                                                                       pushFromLeft:YES
                                                                           animated:YES];
+        } else if ([segueID isEqualToString:kFeedbackSegueID]) {
+            UVConfig *config = [UVConfig configWithSite:kUserVoiceSite
+                                                 andKey:kUserVoiceKey
+                                              andSecret:kUserVoiceSecret];
+            [UserVoice presentUserVoiceForumForParentViewController:self andConfig:config];
         } else {
             [self performSegueWithIdentifier:segueID sender:self];
         }
@@ -349,10 +400,7 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1 && [[alertView buttonTitleAtIndex:1] isEqualToString:@"Wallet"]) {
-        // the user wants to see their wallet, so let's do that
-        [self performSegueWithIdentifier:@"ShowBalanceFromMenu" sender:self];
-    } else if (alertView.tag == 904 && buttonIndex == 1) {
+    if (alertView.tag == 904 && buttonIndex == 1) {
         [SVProgressHUD showWithStatus:@"Checking out..."];
         
         [CPapi checkOutWithCompletion:^(NSDictionary *json, NSError *error) {

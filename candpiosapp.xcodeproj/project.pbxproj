@@ -2329,8 +2329,6 @@
 				5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */,
 				534B6EEE156DAE7900DA9F74 /* SkillsTableViewController.h */,
 				534B6EEF156DAE7900DA9F74 /* SkillsTableViewController.m */,
-				697357CF156C198D00A37A92 /* SupportTableViewController.h */,
-				697357D0156C198E00A37A92 /* SupportTableViewController.m */,
 				697A6869156C3E8C001BEB35 /* TermsOfServiceViewController.h */,
 				697A686A156C3E8D001BEB35 /* TermsOfServiceViewController.m */,
 			);
@@ -3300,7 +3298,6 @@
 				534EB73A1567179D00BDBA57 /* CPBaseTableViewController.m in Sources */,
 				537255B4156AEBA800263CFA /* UserLoveViewController.m in Sources */,
 				537255B8156AF0C800263CFA /* CPPlaceholderTextView.m in Sources */,
-				697357D1156C198F00A37A92 /* SupportTableViewController.m in Sources */,
 				697A686B156C3E8D001BEB35 /* TermsOfServiceViewController.m in Sources */,
 				534B6EF0156DAE7900DA9F74 /* SkillsTableViewController.m in Sources */,
 				5361F8C3156EBBEC0099D303 /* CPSkill.m in Sources */,
@@ -3438,6 +3435,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
@@ -3463,6 +3461,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = armv7;
 			};
 			name = Release;
 		};
