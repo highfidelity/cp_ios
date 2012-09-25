@@ -3496,8 +3496,6 @@
 					"\"$(SRCROOT)/candpiosapp/Externals/TestFlightSDK\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/GRMustache/lib\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/FlurryAnalytics\"",
-					"\"$(SRCROOT)/candpiosapp/Externals/UserVoiceSDK/build/Release-iphoneos\"",
-					"\"$(SRCROOT)/candpiosapp/Externals/UserVoiceSDK/build/Release-iphonesimulator\"",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "${TARGET_NAME}";
@@ -3531,8 +3529,6 @@
 					"\"$(SRCROOT)/candpiosapp/Externals/TestFlightSDK\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/GRMustache/lib\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/FlurryAnalytics\"",
-					"\"$(SRCROOT)/candpiosapp/Externals/UserVoiceSDK/build/Release-iphoneos\"",
-					"\"$(SRCROOT)/candpiosapp/Externals/UserVoiceSDK/build/Release-iphonesimulator\"",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "${TARGET_NAME}";
