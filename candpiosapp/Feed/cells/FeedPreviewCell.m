@@ -74,6 +74,7 @@
                                               roundf((self.frame.size.height - self.accessoryView.frame.size.height) / 2 - 5),
                                               self.accessoryView.frame.size.width,
                                               self.accessoryView.frame.size.height);
+        [self bringSubviewToFront:self.accessoryView];
     } else {
         self.accessoryView.hidden = YES;
     }
@@ -116,6 +117,7 @@
     postCell.frame = CGRectMake(0, 0, 0, height);
     postCell.userInteractionEnabled = NO;
     [self addSubview:postCell];
+    [self bringSubviewToFront:postCell];
     
     [self setNeedsLayout];
 }
