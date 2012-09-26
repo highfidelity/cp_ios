@@ -33,4 +33,4 @@
 	url = git://github.com/worklist/HPGrowingTextView.git
 [submodule "candpiosapp/Externals/OAuthConsumer"]
 	path = candpiosapp/Externals/OAuthConsumer
-	url = git://github.com/samdeane/oauthconsumer.git
+	url = git@github.com:worklist/oauthconsumer.git
