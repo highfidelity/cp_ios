@@ -341,8 +341,10 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                 [FlurryAnalytics logEvent:@"login_linkedin"];
                 [FlurryAnalytics setUserID:userId];
                 
+                [CPUserSessionHandler performAfterLoginActions];
+                
                 [SVProgressHUD dismiss];
-            }
+            }            
             
             [self performSelector:@selector(dismissModalViewControllerAnimated:)
                        withObject:[NSNumber numberWithBool:YES]
