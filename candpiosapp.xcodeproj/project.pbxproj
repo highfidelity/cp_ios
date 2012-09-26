@@ -2470,23 +2470,23 @@
 		53D78BC7160B8DE300148EA3 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
-				53BBC0041612B70C00F5C14B /* OAuthConsumer */,
-				53BBBFA81612B25700F5C14B /* UserVoiceSDK */,
+				530BAAC0160BC143007DF806 /* ActionSheetPicker */,
+				53D78BC8160B8DE300148EA3 /* AFNetworking */,
+				530BA8EE160BBEB1007DF806 /* Airship */,
+				53D78C3B160B904000148EA3 /* CustomBadge */,
 				530BAF28160BCB2A007DF806 /* FlurryAnalytics */,
 				530BAD19160BCA80007DF806 /* GRMustache */,
-				530BAAFD160BC244007DF806 /* TestFlightSDK */,
-				530BAAC0160BC143007DF806 /* ActionSheetPicker */,
-				530BAAB4160BC097007DF806 /* UIImage-Categories */,
-				530BA8EE160BBEB1007DF806 /* Airship */,
-				5335D8CF160BB404005400FC /* TPKeyboardAvoiding */,
-				5335D875160BB369005400FC /* SVPullToRefresh */,
-				5335D848160BAB2F005400FC /* SVProgressHUD */,
-				5335D823160BAA56005400FC /* SSKeychain */,
-				53263286160B9E3D0051BF0A /* WEPopover */,
 				53D78C62160B99D800148EA3 /* GTMNSString+HTML */,
 				53D78C5B160B91C900148EA3 /* HPGrowingTextView */,
-				53D78C3B160B904000148EA3 /* CustomBadge */,
-				53D78BC8160B8DE300148EA3 /* AFNetworking */,
+				53BBC0041612B70C00F5C14B /* OAuthConsumer */,
+				5335D823160BAA56005400FC /* SSKeychain */,
+				5335D848160BAB2F005400FC /* SVProgressHUD */,
+				5335D875160BB369005400FC /* SVPullToRefresh */,
+				530BAAFD160BC244007DF806 /* TestFlightSDK */,
+				5335D8CF160BB404005400FC /* TPKeyboardAvoiding */,
+				530BAAB4160BC097007DF806 /* UIImage-Categories */,
+				53BBBFA81612B25700F5C14B /* UserVoiceSDK */,
+				53263286160B9E3D0051BF0A /* WEPopover */,
 			);
 			path = Externals;
 			sourceTree = "<group>";
@@ -2692,7 +2692,6 @@
 			isa = PBXGroup;
 			children = (
 				53D78BC7160B8DE300148EA3 /* Externals */,
-				871EFB6014AF97130030658B /* 3rdParty */,
 				871EFB1914AE9C820030658B /* AppDelegate.h */,
 				871EFB1A14AE9C820030658B /* AppDelegate.m */,
 				6F7DA74914E89471001BEC19 /* Chat */,
@@ -2727,13 +2726,6 @@
 				871EFB1614AE9C820030658B /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		871EFB6014AF97130030658B /* 3rdParty */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = 3rdParty;
 			sourceTree = "<group>";
 		};
 		E472FA9A151BAD780004430A /* images */ = {
