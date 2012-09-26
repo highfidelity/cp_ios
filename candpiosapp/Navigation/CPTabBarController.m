@@ -150,11 +150,11 @@
         [self promptForLoginToSeeLogbook:CPAfterLoginActionPostQuestion];
     } else if (![CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
 
-        UIAlertView *checkinAlert =  [[UIAlertView alloc] initWithTitle:@"Please check in at venue to post a question."
+        UIAlertView *checkinAlert =  [[UIAlertView alloc] initWithTitle:@"Choose one"
                                                                 message:nil
                                                                delegate:self
                                                       cancelButtonTitle:@"Cancel"
-                                                      otherButtonTitles:@"Checkin", nil];
+                                                      otherButtonTitles:@"Check in", @"Post to Feed", nil];
         checkinAlert.tag = QUESTION_ALERT_TAG;
         [checkinAlert show];
     } else {
@@ -234,12 +234,22 @@
     self.feedViewController.postType = postType;
 
     @try {
+
         // if the FeedViewController doesn't have our the current venue's feed as it's selectedVenueFeed
         // then pull it from the list of venue feed previews and make it the selected venue feed
-        [self.feedViewController reloadFeedPreviewVenues];
-        self.feedViewController.selectedVenueFeed = [self.feedViewController.venueFeedPreviews objectAtIndex:0];
+        if (self.feedViewController.venueFeedPreviews.count == 0) {
+            return;
+        }
 
+        [self.feedViewController reloadFeedPreviewVenues];
+
+        NSUInteger index = self.feedViewController.selectedVenueFeed
+            ? [self.feedViewController.venueFeedPreviews indexOfObject:self.feedViewController.selectedVenueFeed]
+            : 0;
+        
+        self.feedViewController.selectedVenueFeed = [self.feedViewController.venueFeedPreviews objectAtIndex:index];
         [self showFeedVCForNewPost:YES];
+
     }
     @catch (NSException *exception) {
         [FlurryAnalytics logError:@"showFeedVCForNewPostAtCurrentVenueWithPostType" message:exception.reason exception:exception];
@@ -267,19 +277,12 @@
 {
     if (buttonIndex == alertView.firstOtherButtonIndex) {        
         [CPCheckinHandler sharedHandler].afterCheckinAction = (alertView.tag == UPDATE_ALERT_TAG)
-                                                              ? CPAfterCheckinActionNewUpdate : CPAfterCheckinActionNewQuestion;
+                ? CPAfterCheckinActionNewUpdate : CPAfterCheckinActionNewQuestion;
         [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
     } else if (buttonIndex != alertView.cancelButtonIndex) {
         // this is the "Post to Feed" button
-        // tell the Feed TVC that it needs to show only postable feeds
-        
-        FeedViewController *feedVC = [[[self.viewControllers objectAtIndex:0] viewControllers] objectAtIndex:0];
-        
-        // tell the feedVC to switch to showing only postable feeds
-        [feedVC showOnlyPostableFeeds];
-        
-        // make sure our selected index is 0
-        self.selectedIndex = 0;
+        [self showFeedVCForNewPostAtCurrentVenueWithPostType:(alertView.tag == UPDATE_ALERT_TAG)
+                ? CPPostTypeUpdate : CPPostTypeQuestion];
     }
 }
 
