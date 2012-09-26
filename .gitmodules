@@ -31,3 +31,6 @@
 [submodule "candpiosapp/Externals/HPGrowingTextView"]
 	path = candpiosapp/Externals/HPGrowingTextView
 	url = git://github.com/worklist/HPGrowingTextView.git
+[submodule "candpiosapp/Externals/OAuthConsumer"]
+	path = candpiosapp/Externals/OAuthConsumer
+	url = git://github.com/samdeane/oauthconsumer.git
