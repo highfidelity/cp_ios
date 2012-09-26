@@ -88,7 +88,6 @@
 		53019FE415ABA21D00AE3FA1 /* CPUserActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53019FE315ABA21D00AE3FA1 /* CPUserActionCell.m */; };
 		5308DD0715D5E5DF00B4EBC2 /* sign-up-with-linkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 5308DD0315D5E5DF00B4EBC2 /* sign-up-with-linkedin.png */; };
 		5308DD0815D5E5DF00B4EBC2 /* sign-up-with-linkedin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5308DD0415D5E5DF00B4EBC2 /* sign-up-with-linkedin@2x.png */; };
-		530BA9F9160BBEB1007DF806 /* libUAirship-1.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 530BA94E160BBEB1007DF806 /* libUAirship-1.3.3.a */; };
 		530BA9FA160BBEB1007DF806 /* libUAirshipPush-1.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 530BA94F160BBEB1007DF806 /* libUAirshipPush-1.3.3.a */; };
 		530BAABD160BC097007DF806 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAAB7160BC097007DF806 /* UIImage+Alpha.m */; };
 		530BAABE160BC097007DF806 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAAB9160BC097007DF806 /* UIImage+Resize.m */; };
@@ -706,7 +705,6 @@
 		530BA94B160BBEB1007DF806 /* UASubscriptionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASubscriptionManager.h; sourceTree = "<group>"; };
 		530BA94C160BBEB1007DF806 /* UASubscriptionObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASubscriptionObserver.h; sourceTree = "<group>"; };
 		530BA94D160BBEB1007DF806 /* UASubscriptionProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASubscriptionProduct.h; sourceTree = "<group>"; };
-		530BA94E160BBEB1007DF806 /* libUAirship-1.3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libUAirship-1.3.3.a"; sourceTree = "<group>"; };
 		530BA94F160BBEB1007DF806 /* libUAirshipPush-1.3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libUAirshipPush-1.3.3.a"; sourceTree = "<group>"; };
 		530BAAB6160BC097007DF806 /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
 		530BAAB7160BC097007DF806 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
@@ -1296,7 +1294,6 @@
 				871EFB0D14AE9C820030658B /* Foundation.framework in Frameworks */,
 				871EFB0F14AE9C820030658B /* CoreGraphics.framework in Frameworks */,
 				E4C35C4114F1323A009B6DBF /* AudioToolbox.framework in Frameworks */,
-				530BA9F9160BBEB1007DF806 /* libUAirship-1.3.3.a in Frameworks */,
 				530BA9FA160BBEB1007DF806 /* libUAirshipPush-1.3.3.a in Frameworks */,
 				530BAB02160BC244007DF806 /* libTestFlight.a in Frameworks */,
 				530BAE86160BCA80007DF806 /* libGRMustache5-iOS.a in Frameworks */,
@@ -1417,7 +1414,6 @@
 				530BA8F0160BBEB1007DF806 /* Common */,
 				530BA90C160BBEB1007DF806 /* External */,
 				530BA92D160BBEB1007DF806 /* Library */,
-				530BA94E160BBEB1007DF806 /* libUAirship-1.3.3.a */,
 				530BA94F160BBEB1007DF806 /* libUAirshipPush-1.3.3.a */,
 			);
 			path = Airship;
