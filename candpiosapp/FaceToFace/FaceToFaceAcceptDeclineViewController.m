@@ -135,23 +135,4 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)cancelPasswordEntry:(id)sender {
-    // slide back the view to show the accept decline view
-    [self.passwordField resignFirstResponder];
-    [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
-        [self.scrollView setContentOffset:CGPointMake(0, 0)];
-    } completion:NULL];
-    
-    // don't remove the password view because we might be showing it again
-}
-
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    // the user has input a password and tapped on go
-    // let's try the F2F
-    [CPapi sendF2FVerify:self.user.userID password:textField.text];
-    return NO;
-}
-
 @end

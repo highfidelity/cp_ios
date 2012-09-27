@@ -16,12 +16,6 @@
 + (void)presentF2FInviteFromUser:(int) userId
                         fromView:(SettingsMenuController *)view;
 
-// F2F has been accepted
-// Present the 'greeter' with the password to provide the 'greeted'
-+ (void)presentF2FAcceptFromUser:(int) userId
-                    withPassword:(NSString *)password
-                        fromView:(SettingsMenuController *)view;
-
 // F2F is compelte. Congratulate both parties!
 + (void)presentF2FSuccessFrom:(NSString *) nickname
                      fromView:(SettingsMenuController *) view;
