@@ -160,7 +160,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 }
 
 - (void)setContacts:(NSMutableArray *)contactList {
-    self.contacts = [self partitionObjects:contactList collationStringSelector:@selector(nickname)];
+    _contacts = [self partitionObjects:contactList collationStringSelector:@selector(nickname)];
     
     // store the array for search
     self.sortedContactList = [contactList mutableCopy];
