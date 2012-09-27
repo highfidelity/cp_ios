@@ -67,7 +67,13 @@
                 } else {
                     self.reloadPrevented = YES;
                 }
+            } else {
+                [SVProgressHUD showErrorWithStatus:[json objectForKey:@"message"]
+                                          duration:kDefaultDismissDelay];
             }
+        } else {
+            [SVProgressHUD showErrorWithStatus:[error localizedDescription]
+                                      duration:kDefaultDismissDelay];
         }
     }];
 }
