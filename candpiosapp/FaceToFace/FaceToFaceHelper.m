@@ -9,9 +9,68 @@
 
 #import "FaceToFaceHelper.h"
 #import "FaceToFaceAcceptDeclineViewController.h"
+#import "CPUserSessionHandler.h"
 
 @implementation FaceToFaceHelper
 
+static FaceToFaceHelper *sharedHelper;
+
+#pragma mark - Instance Methods
+
+- (void)showContactRequestActionSheetForUserID:(int)userID
+{
+    // Offer to exchange contacts
+
+    // make sure that the 
+    if (![CPUserDefaultsHandler currentUser]) {
+        [CPUserSessionHandler showLoginBanner];
+    } else if (userID == [CPUserDefaultsHandler currentUser].userID) {
+        // cheeky response for self-talk
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Add a Contact"
+                                                            message:@"You should have already met yourself..."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+
+    } else {
+        // alloc-init the UIActionSheet
+        UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                      initWithTitle:@"Request to exchange contact info?"
+                                      delegate:self
+                                      cancelButtonTitle:@"Cancel"
+                                      destructiveButtonTitle:@"Send"
+                                      otherButtonTitles: nil];
+        
+        // use the ID of the user with which contact information is being exchanged
+        // as the tag for the UIActionSheet
+        actionSheet.tag = userID;
+        
+        // show the UIActionSheet in the passed view
+        [actionSheet showFromTabBar:[CPAppDelegate tabBarController].tabBar];
+    }   
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != [actionSheet cancelButtonIndex]) {
+        [CPapi sendContactRequestToUserId:actionSheet.tag];
+    }
+}
+
+#pragma mark - Class Methods
+
++ (void)initialize
+{
+    if(!sharedHelper) {
+        sharedHelper = [[self alloc] init];
+    }
+}
+
++ (FaceToFaceHelper *)sharedHelper
+{
+    return sharedHelper;
+}
 
 + (void)presentF2FInviteFromUser:(int)userId
                         fromView:(SettingsMenuController *)view
@@ -107,4 +166,5 @@
     [SVProgressHUD showSuccessWithStatus:alertMsg
                                 duration:kDefaultDismissDelay];
 }
+
 @end

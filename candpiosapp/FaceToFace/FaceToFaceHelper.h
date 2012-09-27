@@ -9,7 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "SettingsMenuController.h"
 
-@interface FaceToFaceHelper : NSObject
+@interface FaceToFaceHelper : NSObject <UIActionSheetDelegate>
+
+- (void)showContactRequestActionSheetForUserID:(int)userID;
+
++ (FaceToFaceHelper *)sharedHelper;
 
 // Handle an incoming F2F request
 // Present the 'greeted' with the option to Accept or Decline
@@ -25,5 +29,7 @@
 // F2F is compelte. Congratulate both parties!
 + (void)presentF2FSuccessFrom:(NSString *) nickname
                      fromView:(SettingsMenuController *) view;
+
+
 
 @end
