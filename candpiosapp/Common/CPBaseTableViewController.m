@@ -133,7 +133,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex 
 {
     // Exchange contacts if accepted
-    if ([actionSheet title] == kRequestToAddToMyContactsActionSheetTitle) {
+    if ([actionSheet.title isEqualToString:kRequestToAddToMyContactsActionSheetTitle]) {
         if (buttonIndex != [actionSheet cancelButtonIndex]) {
             [CPapi sendContactRequestToUserId:actionSheet.tag];
         }

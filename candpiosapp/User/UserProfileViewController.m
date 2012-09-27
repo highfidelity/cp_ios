@@ -687,7 +687,7 @@ static GRMustacheTemplate *postBadgesTemplate;
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if ([actionSheet title] == kRequestToAddToMyContactsActionSheetTitle) {
+    if ([actionSheet.title isEqualToString:kRequestToAddToMyContactsActionSheetTitle]) {
         [self minusButtonPressed:nil];
         if (buttonIndex != [actionSheet cancelButtonIndex]) {
             [CPapi sendContactRequestToUserId:self.user.userID];
