@@ -315,10 +315,10 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
 
     } else if ([userInfo valueForKey:@"geofence"]) {
         [[CPGeofenceHandler sharedHandler] handleGeofenceNotification:alertMessage userInfo:userInfo];
-    } else if ([userInfo valueForKey:kContactRequestAPNSKey] != nil) {        
+    } else if ([userInfo valueForKey:kContactRequestAPNSKey]) {        
         [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:kContactRequestAPNSKey] intValue]
                                           fromView:self.settingsMenuController];
-    } else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey] != nil) {
+    } else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey]) {
         [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"acceptor"]
                                        fromView:self.settingsMenuController];
     } else {

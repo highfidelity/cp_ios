@@ -98,7 +98,7 @@ static CPCheckinHandler *sharedHandler;
     
     // nil out the venue in NSUserDefaults
     [CPUserDefaultsHandler setCurrentVenue:nil];
-    if (self.checkOutTimer != nil) {
+    if (self.checkOutTimer) {
         [[self checkOutTimer] invalidate];
         self.checkOutTimer = nil;
     }

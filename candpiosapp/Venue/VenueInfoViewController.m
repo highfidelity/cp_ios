@@ -346,7 +346,7 @@
     toArrayForJobCategory:(NSString *)jobCategory
 {
     //If the jobCategory has a null value then don't show anything
-    if(jobCategory != Nil)
+    if(jobCategory)
     {
         // check if we already have an array for this category
         // and create one if we don't

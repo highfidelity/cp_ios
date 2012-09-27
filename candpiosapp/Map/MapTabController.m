@@ -383,7 +383,7 @@ BOOL clearLocations = NO;
 }
 
 - (void)adjustScaleForPin:(MKAnnotationView *)pin forNumberOfPeople:(NSInteger)number {
-    if (pin.image != nil) {    
+    if (pin.image) {    
         float scale = [self getPinScaleForNumberOfPeople:number];
         
         // can't simply adjust the pin's transform since that will also scale the callout bubble
