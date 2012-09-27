@@ -25,6 +25,9 @@
 #define kCheckOutAlertTag 602
 #define kFeedViewAlertTag 500
 
+#define kDefaultLatitude 37.77493
+#define kDefaultLongitude -122.419415
+
 @interface AppDelegate() {
     NSCache *_cache;
 }
@@ -432,6 +435,16 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
         [_locationManager startUpdatingLocation];
     }
     return _locationManager;
+}
+
+- (CLLocation *)currentOrDefaultLocation
+{
+    CLLocation *userLocation = [CPAppDelegate locationManager].location;
+    if (!userLocation) {
+        userLocation = [[CLLocation alloc] initWithLatitude:kDefaultLatitude longitude:kDefaultLongitude];
+    }
+
+    return userLocation;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
