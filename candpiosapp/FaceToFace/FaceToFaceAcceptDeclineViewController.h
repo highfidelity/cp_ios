@@ -21,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
-- (IBAction)acceptF2F;
-- (IBAction)declineF2F;
+- (IBAction)acceptContactRequest;
+- (IBAction)declineContactRequest;
 
 @end

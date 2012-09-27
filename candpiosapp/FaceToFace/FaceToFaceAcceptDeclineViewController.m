@@ -58,81 +58,75 @@
 
 #pragma mark - Actions
 
-- (IBAction)acceptF2F {
+- (IBAction)acceptContactRequest {
+    // prevent double tape on the Accept button during the existing request
     self.f2fAcceptButton.enabled = NO;
     
-    [SVProgressHUD showWithStatus:@"Loading..."];
-    
-    [CPapi sendAcceptContactRequestFromUserId:self.user.userID
-                                   completion:
-     ^(NSDictionary *json, NSError *error) {
-         NSString *errorMessage = nil;
-         
-         if (error) {
-             errorMessage = [error localizedDescription];
-         } else {
-             if (json == NULL) {
-                 errorMessage = @"We couldn't send the request.\nPlease try again.";
-             } else if ([[json objectForKey:@"error"] boolValue]) {
-                 errorMessage = [json objectForKey:@"message"];
-             }
-         }
-         
-         if (errorMessage) {
-             [SVProgressHUD dismiss];
-             
-             UIAlertView *alert = [[UIAlertView alloc]
-                                   initWithTitle:@"Contact Request"
-                                   message:errorMessage
-                                   delegate:self
-                                   cancelButtonTitle:@"OK"
-                                   otherButtonTitles: nil];
-             [alert show];
-
-             // avoid stacking the f2f alerts
-             [CPAppDelegate settingsMenuController].f2fInviteAlert = alert;
-             
-             self.f2fAcceptButton.enabled = YES;
-         } else {
-             [self dismissModalViewControllerAnimated:YES];
-             
-             [SVProgressHUD performSelector:@selector(showSuccessWithStatus:)
-                                 withObject:@"Contact Request Accepted"
-                                 afterDelay:kDefaultDismissDelay];
-         }
-     }];
+    // use common handler method
+    [self handleContactRequestAction:YES];
 }
 
-- (IBAction)declineF2F {
+- (IBAction)declineContactRequest {
+    // use common contact request action handler
+    [self handleContactRequestAction:NO];
+}
+
+- (void)handleContactRequestAction:(BOOL)isAcceptance
+{
+    // show a progressHUD
     [SVProgressHUD showWithStatus:@"Loading..."];
     
-    [CPapi sendDeclineContactRequestFromUserId:self.user.userID
-                                    completion:
-     ^(NSDictionary *json, NSError *error) {
-         NSString *errorMessage = nil;
-         
-         if (error) {
-             errorMessage = [error localizedDescription];
-         } else {
-             if (json == NULL) {
-                 errorMessage = @"We couldn't send the request.\nPlease try again.";
-             } else if ([[json objectForKey:@"error"] boolValue]) {
-                 errorMessage = [json objectForKey:@"message"];
-             }
-         }
-         
-         if (errorMessage) {
-             [SVProgressHUD performSelector:@selector(showErrorWithStatus:)
-                                 withObject:errorMessage
-                                 afterDelay:kDefaultDismissDelay];
-         } else {
-             [SVProgressHUD performSelector:@selector(showSuccessWithStatus:)
-                                 withObject:@"Contact Request Accepted"
-                                 afterDelay:kDefaultDismissDelay];
-         }
-     }];
+    void (^completionBlock)(NSDictionary *, NSError *) = ^(NSDictionary *json, NSError *error){
+        NSString *errorMessage;
+        
+        if (error) {
+            errorMessage = [error localizedDescription];
+        } else {
+            if (json == NULL) {
+                errorMessage = @"We couldn't send the request.\nPlease try again.";
+            } else if ([[json objectForKey:@"error"] boolValue]) {
+                errorMessage = [json objectForKey:@"message"];
+            }
+        }
+        
+        if (errorMessage) {
+            if (isAcceptance) {
+                [SVProgressHUD dismiss];
+                
+                UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle:@"Contact Request"
+                                      message:errorMessage
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles: nil];
+                [alert show];
+                
+                // avoid stacking the f2f alerts
+                [CPAppDelegate settingsMenuController].f2fInviteAlert = alert;
+                
+                self.f2fAcceptButton.enabled = YES;
+            } else {
+                [self dismissModalViewControllerAnimated:YES];
+                
+                [SVProgressHUD performSelector:@selector(showErrorWithStatus:)
+                                    withObject:errorMessage
+                                    afterDelay:kDefaultDismissDelay];
+            }
+        } else {
+            [self dismissModalViewControllerAnimated:YES];
+            
+            [SVProgressHUD performSelector:@selector(showSuccessWithStatus:)
+                                withObject:[NSString stringWithFormat:@"Contact Request %@!", (isAcceptance ? @"Accepted" : @"Declined")]
+                                afterDelay:kDefaultDismissDelay];
+        }
+    };
     
-    [self dismissModalViewControllerAnimated:YES];
+    if (isAcceptance) {
+        [CPapi sendAcceptContactRequestFromUserId:self.user.userID completion:completionBlock];
+    } else {
+        [CPapi sendDeclineContactRequestFromUserId:self.user.userID completion:completionBlock];
+    }
+    
 }
 
 @end
