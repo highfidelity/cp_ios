@@ -55,7 +55,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 @end
 
-
 @implementation ContactListViewController
 
 - (void)viewWillAppear:(BOOL)animated
@@ -161,7 +160,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 }
 
 - (void)setContacts:(NSMutableArray *)contactList {
-    _contacts = [self partitionObjects:contactList collationStringSelector:@selector(nickname)];
+    self.contacts = [self partitionObjects:contactList collationStringSelector:@selector(nickname)];
     
     // store the array for search
     self.sortedContactList = [contactList mutableCopy];
