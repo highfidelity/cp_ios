@@ -58,6 +58,14 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 @implementation ContactListViewController
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    // register to NSNotificationCenter so we can reload the contact list when requests come in via push
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadContactList) name:kContactListUpdateNotification object:nil];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -65,12 +73,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     // place the settings button on the navigation item if required
     // or remove it if the user isn't logged in
     [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -85,6 +87,22 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     }
     
     [self showCorrectLoadingSpinnerForCount:self.contacts.count + self.contactRequests.count];
+    [self reloadContactList];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)reloadContactList
+{
     [CPapi getContactListWithCompletionsBlock:^(NSDictionary *json, NSError *error) {
         [self stopAppropriateLoadingSpinner];
         if (!error) {
@@ -103,7 +121,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
                 if (contactRequests.count > 1) {
                     contactRequests = [contactRequests sortedArrayUsingDescriptors:[NSArray arrayWithObject:nicknameSort]];
                 }
-                                
+                
                 self.contacts = [payload mutableCopy];
                 self.contactRequests = [contactRequests mutableCopy];
                 
@@ -130,7 +148,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
         }
     }];
 }
-
 
 - (NSMutableArray *)partitionObjects:(NSArray *)array collationStringSelector:(SEL)selector
 {

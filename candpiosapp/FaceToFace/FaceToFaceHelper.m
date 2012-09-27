@@ -9,9 +9,9 @@
 
 #import "FaceToFaceHelper.h"
 #import "FaceToFaceAcceptDeclineViewController.h"
+#import "ContactListViewController.h"
 
 @implementation FaceToFaceHelper
-
 
 + (void)presentF2FInviteFromUser:(int)userId
 {   
@@ -36,6 +36,9 @@
                              otherButtonTitles:nil];
             
             [contactRequestAlert show];
+            
+            // tell the ContactListViewController to update so the badge is correct
+            [[NSNotificationCenter defaultCenter] postNotificationName:kContactListUpdateNotification object:nil];
         }
     } else {
         

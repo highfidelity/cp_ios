@@ -8,6 +8,7 @@
 
 #import "FaceToFaceAcceptDeclineViewController.h"
 #import "FaceToFacePasswordInputViewController.h"
+#import "ContactListViewController.h"
 
 #define F2FPasswordViewTag 1515
 
@@ -118,6 +119,8 @@
             [SVProgressHUD performSelector:@selector(showSuccessWithStatus:)
                                 withObject:[NSString stringWithFormat:@"Contact Request %@!", (isAcceptance ? @"Accepted" : @"Declined")]
                                 afterDelay:kDefaultDismissDelay];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kContactListUpdateNotification object:nil];
         }
     };
     
