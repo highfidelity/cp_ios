@@ -55,13 +55,6 @@
 + (void)sendDeclineContactRequestFromUserId:(int)userId
                                  completion:(void (^)(NSDictionary *, NSError *))completion;
 
-#pragma mark - Face to Face
-+ (void)sendF2FInvite:(int) userId;
-+ (void)sendF2FAccept:(int) userId;
-+ (void)sendF2FDecline:(int) userId;
-+ (void)sendF2FVerify:(int) userId
-             password:(NSString *) password;
-
 #pragma mark - Feeds
 + (void)getFeedPreviewsForVenueIDs:(NSArray *)venueIDs withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 + (void)getPostsForVenueFeed:(CPVenueFeed *)venueFeed withCompletion:(void (^)(NSDictionary *, NSError *))completion;

@@ -130,30 +130,6 @@ static FaceToFaceHelper *sharedHelper;
     }];
 }
 
-+ (void)presentF2FAcceptFromUser:(int) userId
-                    withPassword:(NSString *)password
-                        fromView:(SettingsMenuController *)view
-{    
-    NSString *alertMsg = [NSString stringWithFormat:
-                          @"The Contact Request password is: %@", password];
-    
-    if (view.f2fInviteAlert) {
-        // dismiss the invite alert if it's still hanging around
-        [view.f2fInviteAlert dismissWithClickedButtonIndex:0 animated:NO];
-    }
-    
-    // Show password to this user
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"Contact Request"
-                          message:alertMsg
-                          delegate:self
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles: nil];
-    [alert show];
-    
-    view.f2fPasswordAlert = alert;
-}
-
 + (void)presentF2FSuccessFrom:(NSString *) nickname
                      fromView:(SettingsMenuController *) view
 {
