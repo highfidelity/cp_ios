@@ -17,12 +17,10 @@
 
 // Handle an incoming F2F request
 // Present the 'greeted' with the option to Accept or Decline
-+ (void)presentF2FInviteFromUser:(int) userId
-                        fromView:(SettingsMenuController *)view;
++ (void)presentF2FInviteFromUser:(int) userId;
 
 // F2F is compelte. Congratulate both parties!
-+ (void)presentF2FSuccessFrom:(NSString *) nickname
-                     fromView:(SettingsMenuController *) view;
++ (void)presentF2FSuccessFrom:(NSString *) nickname;
 
 
 

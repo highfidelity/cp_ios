@@ -315,12 +315,10 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
 
     } else if ([userInfo valueForKey:@"geofence"]) {
         [[CPGeofenceHandler sharedHandler] handleGeofenceNotification:alertMessage userInfo:userInfo];
-    } else if ([userInfo valueForKey:kContactRequestAPNSKey] != nil) {        
-        [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:kContactRequestAPNSKey] intValue]
-                                          fromView:self.settingsMenuController];
-    } else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey] != nil) {
-        [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"acceptor"]
-                                       fromView:self.settingsMenuController];
+    } else if ([userInfo valueForKey:kContactRequestAPNSKey]) {        
+        [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:kContactRequestAPNSKey] intValue]];
+    } else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey]) {
+        [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"acceptor"]];
     } else {
         // just show the alert if there was one, and the app is active
         if (alertMessage && [UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
