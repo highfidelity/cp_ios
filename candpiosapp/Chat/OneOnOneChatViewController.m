@@ -285,7 +285,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     
     cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    if (cell == nil)
+    if (!cell)
     {
         @throw [NSException exceptionWithName:@"Chat Cell ID is incorrect."
                                        reason:nil

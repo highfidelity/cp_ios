@@ -316,7 +316,7 @@
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
+    if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         // Style the cell's font and background. clear the background colors so style is not obstructed.
         cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:20.0];

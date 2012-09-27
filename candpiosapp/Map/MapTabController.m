@@ -314,7 +314,7 @@ BOOL clearLocations = NO;
         
         MKAnnotationView *pin = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
         
-        if (pin == nil)
+        if (!pin)
         {
             pin = [[MKAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: reuseId];
         }
