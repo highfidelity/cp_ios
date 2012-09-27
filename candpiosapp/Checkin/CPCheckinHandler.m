@@ -75,7 +75,7 @@ static CPCheckinHandler *sharedHandler;
     // Cancel all old local notifications
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     
-    localNotif.alertBody = @"You will be checked out of C&P in 5 min.";
+    localNotif.alertBody = [NSString stringWithFormat:@"You will be checked out of %@ in 5 min.", venue.name];
     localNotif.alertAction = @"Check Out";
     localNotif.soundName = UILocalNotificationDefaultSoundName;
     
