@@ -219,17 +219,6 @@
     return YES;
 }
 
-- (void)setNumberOfContactRequests:(NSNumber *)numberOfContactRequests
-{
-    _numberOfContactRequests = numberOfContactRequests;
-    if (self == [CPUserDefaultsHandler currentUser]) {
-        // update our badges
-        CPThinTabBar *thinTabBar = (CPThinTabBar *)[[CPAppDelegate  tabBarController] tabBar];
-        [thinTabBar setBadgeNumber:[CPUserDefaultsHandler currentUser].numberOfContactRequests
-                        atTabIndex:kContactTabIndex];
-    }
-}
-
 - (void)loadUserResumeOnQueue:(NSOperationQueue *)operationQueue
                   completion:(void (^)(NSError *error))completion
 {
@@ -278,7 +267,10 @@
             
             // get the linkedin profile url
             self.linkedInPublicProfileUrl = [userDict objectForKey:@"linkedin_public_profile_url"];
-            self.numberOfContactRequests = [userDict objectForKey:@"number_of_contact_requests"];
+            
+            if ([userDict objectForKey:@"number_of_contact_requests"]) {
+                [CPUserDefaultsHandler setNumberOfContactRequests:[[userDict objectForKey:@"number_of_contact_requests"] integerValue]];
+            }
             
             // get the users hourly_billing_rate if it isn't null
             // set it to N/A if it's empty
