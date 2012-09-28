@@ -57,13 +57,14 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 @implementation ContactListViewController
 
-- (void)viewDidLoad
+#pragma mark - Class methods
+
++ (void)getNumberOfContactRequestsAndUpdateBadge
 {
-    [super viewDidLoad];
     
-    // register to NSNotificationCenter so we can reload the contact list when requests come in via push
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadContactList) name:kContactListUpdateNotification object:nil];
 }
+
+#pragma mark - Instance methods
 
 - (void)viewWillAppear:(BOOL)animated
 {
