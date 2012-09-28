@@ -283,7 +283,12 @@
                          completion:completion];
 }
 
-#pragma mark - Contact Request
+#pragma mark - Contact Requests
++ (void)getNumberOfContactRequests:(void (^)(NSDictionary *, NSError *))completion
+{
+    [self makeHTTPRequestWithAction:@"getNumberOfContactRequests" withParameters:nil completion:completion];
+}
+
 + (void)sendContactRequestToUserId:(int)userId {
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
