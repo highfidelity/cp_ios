@@ -10,7 +10,6 @@
 #import "CPBaseTableViewController.h"
 
 #define kNumberOfContactRequestsNotification @"kNumberOfContactRequestsNotification"
-#define kContactListUpdateNotification @"kContactListUpdateNotification"
 #define kContactTabIndex 3
 
 @interface ContactListViewController : CPBaseTableViewController <UISearchBarDelegate, ContactListCellDelegate>
@@ -18,5 +17,7 @@
 @property (strong, nonatomic) NSMutableArray *contacts;
 @property (strong, nonatomic) NSMutableArray *contactRequests;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+
++ (void)getNumberOfContactRequestsAndUpdateBadge;
 
 @end

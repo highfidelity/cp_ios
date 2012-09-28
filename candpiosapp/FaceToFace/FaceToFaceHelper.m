@@ -38,7 +38,7 @@
             [contactRequestAlert show];
             
             // tell the ContactListViewController to update so the badge is correct
-            [[NSNotificationCenter defaultCenter] postNotificationName:kContactListUpdateNotification object:nil];
+            [ContactListViewController getNumberOfContactRequestsAndUpdateBadge];
         }
     } else {
         

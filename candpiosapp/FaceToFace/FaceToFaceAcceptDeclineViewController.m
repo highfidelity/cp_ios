@@ -120,7 +120,8 @@
                                 withObject:[NSString stringWithFormat:@"Contact Request %@!", (isAcceptance ? @"Accepted" : @"Declined")]
                                 afterDelay:kDefaultDismissDelay];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:kContactListUpdateNotification object:nil];
+            // tell the ContactListViewController to update so the badge is correct
+            [ContactListViewController getNumberOfContactRequestsAndUpdateBadge];
         }
     };
     
