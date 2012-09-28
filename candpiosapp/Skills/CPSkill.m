@@ -7,17 +7,18 @@
 //
 
 #import "CPSkill.h"
+#import "NSDictionary+JsonParserWorkaround.h"
 
 @implementation CPSkill
 
 - (CPSkill *)initFromDictionary:(NSDictionary *)skillDict
 {
     if (self = [super init]) {
-        self.skillID = [[skillDict objectForKey:@"id"] integerValue];
-        self.name = [skillDict objectForKey:@"name"];  
-        self.isVisible = [[skillDict objectForKey:@"visible"] boolValue];
-        self.loveCount = [skillDict objectForKey:@"love"] ? [[skillDict objectForKey:@"love"] intValue] : 0;
-        self.rank = [skillDict objectForKey:@"rank"];
+        self.skillID = [skillDict objectForKeyOrNil:@"id"] ? [[skillDict objectForKey:@"id"] integerValue] : 0;
+        self.name = [skillDict objectForKeyOrNil:@"name"] ? [skillDict objectForKey:@"name"] : @"";
+        self.isVisible = [skillDict objectForKeyOrNil:@"visible"] ? [[skillDict objectForKey:@"visible"] boolValue] : NO;
+        self.loveCount = [skillDict objectForKeyOrNil:@"love"] ? [[skillDict objectForKey:@"love"] intValue] : 0;
+        self.rank = [skillDict objectForKeyOrNil:@"rank"];
     }
     
     return self;
@@ -40,9 +41,5 @@
     [encoder encodeBool:self.isVisible forKey:@"isVisible"];
 }
 
-- (void)setRank:(NSString *)rank 
-{
-    _rank = [rank isKindOfClass:[NSNull class]] ? nil : rank;
-}
 
 @end
