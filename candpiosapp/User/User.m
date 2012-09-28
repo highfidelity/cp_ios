@@ -27,7 +27,6 @@
         self.jobTitle = [userDict objectForKey:@"headline"];
         self.majorJobCategory = [userDict objectForKey:@"major_job_category"];
         self.minorJobCategory = [userDict objectForKey:@"minor_job_category"];
-        self.jobTitle = [userDict objectForKey:@"headline"];
         
         self.photoURLString = [userDict objectForKey:@"filename"];
         
