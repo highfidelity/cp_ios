@@ -7,35 +7,18 @@
 //
 
 #import "CPSkill.h"
-
-
-// adds an objectForKeyNotNull selector to NSDictionary to return nil when key == [NSNull null]
-// see: http://stackoverflow.com/questions/5716942/touchjson-dealing-with-nsnull
-@implementation NSDictionary (Utility)
-
-- (id)objectForKeyNotNull:(id)key {
-    id object = [self objectForKey:key];
-    if (object == [NSNull null]) {
-        return nil;
-    }
-    
-    return object;
-}
-
-@end
-
-
+#import "NSDictionary+JsonParserWorkaround.h"
 
 @implementation CPSkill
 
 - (CPSkill *)initFromDictionary:(NSDictionary *)skillDict
 {
     if (self = [super init]) {
-        self.skillID = [skillDict objectForKeyNotNull:@"id"] ? [[skillDict objectForKey:@"id"] integerValue] : 0;
-        self.name = [skillDict objectForKeyNotNull:@"name"] ? [skillDict objectForKey:@"name"] : @"";
-        self.isVisible = [skillDict objectForKeyNotNull:@"visible"] ? [[skillDict objectForKey:@"visible"] boolValue] : NO;
-        self.loveCount = [skillDict objectForKeyNotNull:@"love"] ? [[skillDict objectForKey:@"love"] intValue] : 0;
-        self.rank = [skillDict objectForKeyNotNull:@"rank"];
+        self.skillID = [skillDict objectForKeyOrNil:@"id"] ? [[skillDict objectForKey:@"id"] integerValue] : 0;
+        self.name = [skillDict objectForKeyOrNil:@"name"] ? [skillDict objectForKey:@"name"] : @"";
+        self.isVisible = [skillDict objectForKeyOrNil:@"visible"] ? [[skillDict objectForKey:@"visible"] boolValue] : NO;
+        self.loveCount = [skillDict objectForKeyOrNil:@"love"] ? [[skillDict objectForKey:@"love"] intValue] : 0;
+        self.rank = [skillDict objectForKeyOrNil:@"rank"];
     }
     
     return self;
