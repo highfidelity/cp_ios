@@ -90,6 +90,9 @@ static CPUserSessionHandler *sharedHandler;
     }
     
     [[CPCheckinHandler sharedHandler] setCheckedOut];
+    
+    // zero out pending contact requests
+    [CPUserDefaultsHandler setNumberOfContactRequests:0];
 }
 
 + (void)storeUserLoginDataFromDictionary:(NSDictionary *)userInfo
@@ -102,12 +105,15 @@ static CPUserSessionHandler *sharedHandler;
     currUser.userID = [userId intValue];
     [currUser setEnteredInviteCodeFromJSONString:[userInfo objectForKey:@"entered_invite_code"]];
     [currUser setJoinDateFromJSONString:[userInfo objectForKey:@"join_date"]];
-    currUser.numberOfContactRequests = [userInfo objectForKey:@"number_of_contact_requests"];
     currUser.profileURLVisibility = [userInfo objectForKey:@"profileURL_visibility"];
     
     // Reset the Automatic Checkins default to YES
     [CPUserDefaultsHandler setAutomaticCheckins:YES];
     [CPUserDefaultsHandler setCurrentUser:currUser];
+    
+    // give number of contact requests for this user to CPUserDefaults
+    // it will update the badge on the tab bar item
+    [CPUserDefaultsHandler setNumberOfContactRequests:[[userInfo objectForKey:@"number_of_contact_requests"] integerValue]];
 }
 
 + (void)dismissSignupModalFromPresentingViewController
