@@ -3328,6 +3328,7 @@
 				53BBC03E1612B70D00F5C14B /* OAServiceTicket.m in Sources */,
 				53BBC0401612B70D00F5C14B /* OAToken.m in Sources */,
 				53BBC0411612B70D00F5C14B /* OATokenManager.m in Sources */,
+				68B7B126161626BA000987E2 /* NSDictionary+JsonParserWorkaround.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,6 +13,7 @@
 #import "VenueInfoViewController.h"
 #import "GTMNSString+HTML.h"
 #import "UserProfileLinkedInViewController.h"
+#import "FaceToFaceHelper.h"
 
 @interface UserProfileViewController() <UIWebViewDelegate, UIActionSheetDelegate, GRMustacheTemplateDelegate>
 
