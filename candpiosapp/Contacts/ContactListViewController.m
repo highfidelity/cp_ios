@@ -61,7 +61,16 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 + (void)getNumberOfContactRequestsAndUpdateBadge
 {
-    
+    [CPapi getNumberOfContactRequests:^(NSDictionary *json, NSError *error) {
+        // no error handling to do here
+        // if we get it, then update it, otherwise we'll leave it
+        if (!error && ![[json objectForKey:@"error"] boolValue]) {
+            
+            // give that new value to CPUserDefaultsHandler
+            // it'll update the badge
+            [CPUserDefaultsHandler setNumberOfContactRequests:[[json valueForKeyPath:@"payload.number_of_contact_requests"] integerValue]];
+        }
+    }];
 }
 
 #pragma mark - Instance methods
