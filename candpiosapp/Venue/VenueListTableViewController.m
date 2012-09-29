@@ -117,7 +117,7 @@
     
     VenueCell *vcell = [tableView dequeueReusableCellWithIdentifier:venueCellIdentifier];
     
-    if (vcell == nil) {
+    if (!vcell) {
         vcell = [[VenueCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:venueCellIdentifier];
     }
     

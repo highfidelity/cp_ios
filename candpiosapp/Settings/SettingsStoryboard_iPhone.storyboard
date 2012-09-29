@@ -696,7 +696,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <userGuides>
-                            <userLayoutGuide location="31" affinity="maxX"/>
+                            <userLayoutGuide location="32" affinity="maxX"/>
                         </userGuides>
                         <subviews>
                             <view contentMode="scaleToFill" id="h0X-vM-HGh" userLabel="View - profile details">
@@ -728,7 +728,7 @@
                                                 <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <size key="shadowOffset" width="0.0" height="1"/>
                                             </label>
-                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="list-arrow-light-grey.png" id="6Yl-XS-GTf">
+                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="list-arrow-dark-grey.png" id="6Yl-XS-GTf">
                                                 <rect key="frame" x="261" y="7" width="12" height="18"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </imageView>
@@ -761,7 +761,7 @@
                                                         <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <size key="shadowOffset" width="0.0" height="1"/>
                                                     </label>
-                                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="list-arrow-light-grey.png" id="NP0-jI-kwQ">
+                                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="list-arrow-dark-grey.png" id="NP0-jI-kwQ">
                                                         <rect key="frame" x="261" y="6" width="12" height="18"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </imageView>
@@ -781,7 +781,7 @@
                                                         <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <size key="shadowOffset" width="0.0" height="1"/>
                                                     </label>
-                                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="list-arrow-light-grey.png" id="nhd-xt-5Zj">
+                                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="list-arrow-dark-grey.png" id="nhd-xt-5Zj">
                                                         <rect key="frame" x="261" y="6" width="12" height="18"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </imageView>
@@ -1002,7 +1002,6 @@ photo?</string>
         <!--Navigation Controller-->
         <scene sceneID="9Jx-na-AFB">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GiN-Qk-iLV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController definesPresentationContext="YES" id="In7-9a-DvU" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="quv-bn-jQS">
                         <autoresizingMask key="autoresizingMask"/>
@@ -1011,6 +1010,7 @@ photo?</string>
                         <segue destination="ZUr-wy-cXS" kind="relationship" relationship="rootViewController" id="Dyg-Ou-I36"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GiN-Qk-iLV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1196" y="1756"/>
         </scene>
@@ -1594,7 +1594,7 @@ photo?</string>
         <image name="drop-down.png" width="196" height="27"/>
         <image name="invite-code-background.png" width="240" height="140"/>
         <image name="linkedin-invite.png" width="202" height="48"/>
-        <image name="list-arrow-light-grey.png" width="12" height="18"/>
+        <image name="list-arrow-dark-grey.png" width="11" height="16"/>
         <image name="map-shadow.png" width="10" height="320"/>
         <image name="refresh-scroll-view.png" width="15" height="40"/>
         <image name="settings-button-3.png" width="42" height="29"/>

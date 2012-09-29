@@ -17,7 +17,7 @@ static CPLinkedInAPI *sharedCPLinkedInAPI = nil;
 + (CPLinkedInAPI *)shared {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        if (sharedCPLinkedInAPI == nil) {
+        if (!sharedCPLinkedInAPI) {
             sharedCPLinkedInAPI = [[self alloc] init];
         }
     });

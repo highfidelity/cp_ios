@@ -58,11 +58,11 @@
 
 - (void)saveUserJobCategories
 {
-    if ([self.user majorJobCategory] != [[self.majorCategoryButton titleLabel] text] ||
-            [self.user minorJobCategory] != [[self.minorCategoryButton titleLabel] text]) {
+    if (![self.user.majorJobCategory isEqualToString:self.majorCategoryButton.titleLabel.text] ||
+            ![self.user.minorJobCategory isEqualToString:self.minorCategoryButton.titleLabel.text]) {
 
-        [self.user setMajorJobCategory:[[self.majorCategoryButton titleLabel] text]];
-        [self.user setMinorJobCategory:[[self.minorCategoryButton titleLabel] text]];
+        self.user.majorJobCategory = self.majorCategoryButton.titleLabel.text;
+        self.user.minorJobCategory = self.minorCategoryButton.titleLabel.text;
 
         [SVProgressHUD show];
 

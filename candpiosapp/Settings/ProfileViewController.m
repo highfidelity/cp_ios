@@ -276,12 +276,12 @@
                     self.newDataFromSync = YES;
                 }
 
-                if (self.currentUser.majorJobCategory != webSyncUser.majorJobCategory) {
+                if (![self.currentUser.majorJobCategory isEqualToString:webSyncUser.majorJobCategory]) {
                     self.currentUser.majorJobCategory = webSyncUser.majorJobCategory;
                     self.newDataFromSync = YES;
                 }
 
-                if (self.currentUser.minorJobCategory != webSyncUser.minorJobCategory) {
+                if (![self.currentUser.minorJobCategory isEqualToString:webSyncUser.minorJobCategory]) {
                     self.currentUser.minorJobCategory = webSyncUser.minorJobCategory;
                     self.newDataFromSync = YES;
                 }
