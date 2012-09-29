@@ -55,7 +55,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 @end
 
-
 @implementation ContactListViewController
 
 #pragma mark - Class methods
@@ -497,7 +496,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 }
 
 - (void)updateBadgeValue {
-    [CPUserDefaultsHandler currentUser].numberOfContactRequests = @(self.contactRequests.count);    
+    [CPUserDefaultsHandler setNumberOfContactRequests:self.contactRequests.count];
 }
 
 - (NSDictionary *)contactForIndexPath:(NSIndexPath *)indexPath {

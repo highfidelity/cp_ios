@@ -49,6 +49,7 @@
                                       completion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Contact Request
++ (void)getNumberOfContactRequests:(void (^)(NSDictionary *json, NSError *error))completion;
 + (void)sendContactRequestToUserId:(int)userId;
 + (void)sendAcceptContactRequestFromUserId:(int)userId
                                 completion:(void (^)(NSDictionary *, NSError *))completion;
@@ -69,6 +70,8 @@
 + (void)getQuestionReceiversAtLocation:(CLLocationCoordinate2D)coordinate withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Checkins
++ (void)getNearestCheckedInWithCompletion:(void (^)(NSDictionary *, NSError *))completion;
+
 + (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID
                                        :(void(^)(NSDictionary *json, NSError *error))completion; 
 

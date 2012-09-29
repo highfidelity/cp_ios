@@ -283,7 +283,12 @@
                          completion:completion];
 }
 
-#pragma mark - Contact Request
+#pragma mark - Contact Requests
++ (void)getNumberOfContactRequests:(void (^)(NSDictionary *, NSError *))completion
+{
+    [self makeHTTPRequestWithAction:@"getNumberOfContactRequests" withParameters:nil completion:completion];
+}
+
 + (void)sendContactRequestToUserId:(int)userId {
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -508,11 +513,20 @@
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setValue:[NSString stringWithFormat:@"%f", coordinate.latitude] forKey:@"lat"];
     [params setValue:[NSString stringWithFormat:@"%f", coordinate.longitude] forKey:@"lng"];
-    
+
     [self makeHTTPRequestWithAction:@"getQuestionReceivers" withParameters:params completion:completion];
 }
 
 #pragma mark - Checkins
++ (void)getNearestCheckedInWithCompletion:(void (^)(NSDictionary *, NSError *))completion
+{
+    CLLocation *userLocation = [CPAppDelegate currentOrDefaultLocation];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setValue:[NSString stringWithFormat:@"%f", userLocation.coordinate.latitude] forKey:@"lat"];
+    [params setValue:[NSString stringWithFormat:@"%f", userLocation.coordinate.longitude] forKey:@"lng"];
+
+    [self makeHTTPRequestWithAction:@"getNearestCheckedIn" withParameters:params completion:completion];
+}
 
 + (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID 
                                        :(void (^)(NSDictionary *, NSError *))completion

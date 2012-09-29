@@ -7,15 +7,8 @@
 //
 
 #import "UserListTableViewController.h"
-#import "UserLoveViewController.h"
 #import "UserTableViewCell.h"
-#import "UserProfileViewController.h"
 #import "GTMNSString+HTML.h"
-#import "VenueCell.h"
-#import "CheckInDetailsViewController.h"
-#import "CPVenue.h"
-#import "CPSoundEffectsManager.h"
-#import "OneOnOneChatViewController.h"
 #import "UIViewController+CPUserActionCellAdditions.h"
 
 @interface UserListTableViewController()
@@ -32,20 +25,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // the map is our delegate
-    self.delegate = [[CPAppDelegate settingsMenuController] mapTabController];
-    
-    // Add a notification catcher for refreshTableViewWithNewMapData to refresh the view
-    [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(newDataBeingLoaded:) 
-                                                 name:@"mapIsLoadingNewData" 
-                                               object:nil]; 
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(refreshFromNewMapData:) 
-                                                 name:@"refreshUsersFromNewMapData" 
-                                               object:nil];
 }
 
 - (void)viewDidUnload
@@ -53,25 +32,50 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"mapIsLoadingNewData" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshUsersFromNewMapData" object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
-    // tell the map to reload data
-    // we'll get a notification when that's done to reload ours
-    [self.delegate refreshButtonClicked:nil];
-    [self showCorrectLoadingSpinnerForCount:self.weeklyUsers.count + self.checkedInUsers.count];
-}
+    [SVProgressHUD showWithStatus:@"Loading..."];
+    [CPapi getNearestCheckedInWithCompletion:^(NSDictionary *json, NSError *error) {
+        [SVProgressHUD dismiss];
+        if (!error) {
+            [self.checkedInUsers removeAllObjects];
+            if (![[json objectForKey:@"error"] boolValue]) {
 
-- (NSMutableArray *)weeklyUsers
-{
-    if (!_weeklyUsers) {
-        _weeklyUsers = [NSMutableArray array];
-    }
-    return _weeklyUsers;
+                CLLocation *userLocation = [CPAppDelegate currentOrDefaultLocation];
+                NSArray *people = [[json objectForKey:@"payload"] valueForKey:@"people"];
+                for (NSDictionary *personJSON in people) {
+                    User *user = [[User alloc] initFromDictionary:personJSON];
+
+                    CLLocation *location = [[CLLocation alloc] initWithLatitude:user.location.latitude longitude:user.location.longitude];
+                    user.distance = [location distanceFromLocation:userLocation];
+                    CPVenue *venue = [[CPVenue alloc] init];
+                    venue.name = [personJSON objectForKey:@"venue_name"];
+                    user.placeCheckedIn = venue;
+                    [self.checkedInUsers addObject:user];
+                }
+                
+                if (!self.userIsPerformingQuickAction) {
+                    NSUInteger preReloadVisibleCellsCount = [self.tableView.visibleCells count];
+
+                    [self.tableView reloadData];
+
+                    if (!preReloadVisibleCellsCount) {
+                        [self animateSlideWaveWithCPUserActionCells:self.tableView.visibleCells];
+                    }
+                } else {
+                    self.reloadPrevented = YES;
+                }
+            } else {
+                [SVProgressHUD showErrorWithStatus:[json objectForKey:@"message"]
+                                          duration:kDefaultDismissDelay];
+            }
+        } else {
+            [SVProgressHUD showErrorWithStatus:[error localizedDescription]
+                                      duration:kDefaultDismissDelay];
+        }
+    }];
 }
 
 - (NSMutableArray *)checkedInUsers
@@ -82,113 +86,10 @@
     return _checkedInUsers;
 }
 
-- (void)filterData {
-    // Iterate through the passed missions and only show the ones that were within the map bounds, ordered by distance
-
-    CLLocation *currentLocation = [CPAppDelegate locationManager].location;
-    
-    for (User *user in [self.weeklyUsers copy]) {
-        CLLocation *location = [[CLLocation alloc] initWithLatitude:user.location.latitude longitude:user.location.longitude];
-        user.distance = [location distanceFromLocation:currentLocation];
-        if (user.checkedIn) {
-            [self.checkedInUsers addObject:user];
-            [self.weeklyUsers removeObject:user];
-        }
-    }  
-    
-    // sort the two arrays by the distance to each user
-    self.checkedInUsers = [[self.checkedInUsers sortedArrayUsingSelector:@selector(compareDistanceToUser:)] mutableCopy];
-    self.weeklyUsers = [[self.weeklyUsers sortedArrayUsingSelector:@selector(compareDistanceToUser:)] mutableCopy];    
-    
-    // we only want to reload the table view here if the user isn't in the process of performing a quick action
-    if (!self.userIsPerformingQuickAction) {
-        NSUInteger preReloadVisibleCellsCount = [self.tableView.visibleCells count];
-        
-        [self.tableView reloadData];
-        
-        if (!preReloadVisibleCellsCount) {
-            [self animateSlideWaveWithCPUserActionCells:self.tableView.visibleCells];
-        }
-    } else {
-        self.reloadPrevented = YES;
-    }
-}
-
--(void)newDataBeingLoaded:(NSNotification *)notification
-{
-    // check if we're visible
-    if ([[[self tabBarController] selectedViewController] isEqual:self]) {
-        [self showCorrectLoadingSpinnerForCount:self.weeklyUsers.count + self.checkedInUsers.count];
-    }    
-}
-
-- (void)refreshFromNewMapData:(NSNotification *)notification {
-        
-    // clear the user arrays
-    [self.weeklyUsers removeAllObjects];
-    [self.checkedInUsers removeAllObjects];
-    
-    self.weeklyUsers = [[(NSDictionary *)notification.object allValues] mutableCopy];    
-    
-    if (self.isViewLoaded && self.view.window) {
-        // we're visible
-        [self stopAppropriateLoadingSpinner];
-        
-        // filter that data
-        [self filterData];
-    }
-}
-
 #pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    if (self.checkedInUsers.count > 0 && self.weeklyUsers.count > 0) {
-        return 2;
-    }
-    else if (self.checkedInUsers.count > 0 || self.weeklyUsers.count > 0) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NSString *checkedInNow;
-    NSString *lastCheckins = @"Last 7 Days";
-    
-    checkedInNow = @"Checked In Now";
-    
-
-    if (section == 0 && self.checkedInUsers.count > 0) {
-        return checkedInNow;
-    }
-    else if (section == 0 && self.weeklyUsers.count > 0) {
-        return lastCheckins;
-    }
-    else if (section == 1) {
-        return lastCheckins;
-    }
-    else {
-        return @"";
-    }
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0 && self.checkedInUsers.count > 0) {
-        return self.checkedInUsers.count;
-    }
-    else if (section == 0 && self.weeklyUsers.count > 0) {
-        return self.weeklyUsers.count;
-    }
-    else if (section == 1) {
-        return self.weeklyUsers.count;
-    }
-    else {
-        return 0;
-    }
+    return self.checkedInUsers.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -209,17 +110,7 @@
     cell.delegate = self;
     
     // Configure the cell...
-    User *user;
-
-    if (indexPath.section == 0 && self.checkedInUsers.count > 0) {
-        user = [self.checkedInUsers objectAtIndex:indexPath.row];
-    }
-    else if (indexPath.section == 0 && self.weeklyUsers.count > 0) {
-        user = [self.weeklyUsers objectAtIndex:indexPath.row];
-    }
-    else if (indexPath.section == 1) {
-        user = [self.weeklyUsers objectAtIndex:indexPath.row];
-    }
+    User *user = [self.checkedInUsers objectAtIndex:(NSUInteger) indexPath.row];
     cell.user = user;
     
     // reset the nickname label since this is a reusable cell
@@ -249,15 +140,8 @@
     cell.nicknameLabel.text = [CPUIHelper profileNickname:user.nickname];
     
     //If user is virtually checkedIn then add virtual badge to their profile image
-    if(user.checkedIn)
-    {
-        [CPUIHelper manageVirtualBadgeForProfileImageView:cell.profilePictureImageView
-                                         checkInIsVirtual:user.checkInIsVirtual];
-    }
-    else {
-        [CPUIHelper manageVirtualBadgeForProfileImageView:cell.profilePictureImageView
-                                         checkInIsVirtual:NO];
-    }
+    [CPUIHelper manageVirtualBadgeForProfileImageView:cell.profilePictureImageView
+                                     checkInIsVirtual:user.checkInIsVirtual];
     if (cell.user.isContact) {
         cell.rightStyle = CPUserActionCellSwipeStyleReducedAction;
     } else{
@@ -265,44 +149,6 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     return cell;
-}
-
-#pragma mark - Table view delegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 30;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-    // alloc-init a header UIView and give it the right background color
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, [self tableView:tableView heightForHeaderInSection:section])];
-    headerView.backgroundColor = [UIColor colorWithR:68 G:68 B:68 A:1];
-    
-    // alloc-init a UILabel to place in the header view
-    CGFloat labelLeft = 15;
-    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(labelLeft, 0, headerView.frame.size.width - labelLeft, headerView.frame.size.height)];
-    
-    // change the font to league gothic
-    [CPUIHelper changeFontForLabel:headerLabel toLeagueGothicOfSize:18];
-    
-    // change the text color and shadow for the label
-    headerLabel.textColor = [UIColor colorWithR:193 G:193 B:193 A:1];
-    headerLabel.shadowColor = [UIColor colorWithR:0 G:0 B:0 A:0.5];
-    headerLabel.shadowOffset = CGSizeMake(0, -1);
-    
-    // clear the background color on the label
-    headerLabel.backgroundColor = [UIColor clearColor];
-    
-    // give the headerLabel the right text
-    headerLabel.text = [self tableView:tableView titleForHeaderInSection:section];
-
-    // add the label to the header
-    [headerView addSubview:headerLabel];
-    
-    // return the headerView
-    return headerView;
 }
 
 @end

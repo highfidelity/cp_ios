@@ -18,6 +18,7 @@
 #import "PillPopoverViewController.h"
 #import "CommentCell.h"
 #import "CPUserDefaultsHandler.h"
+#import "FaceToFaceHelper.h"
 
 #define kMaxFeedLength 140
 #define MAX_PREVIEW_POST_COUNT 3
@@ -1932,20 +1933,6 @@ typedef enum {
 - (void)cell:(CPUserActionCell*)cell didSelectExchangeContactsWithUser:(User*)user
 {
     [CPUserAction cell:cell exchangeContactsFromViewController:self];
-}
-
-- (void)cell:(CPUserActionCell*)cell didSelectRowWithUser:(User*)user 
-{
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex 
-{
-    // Exchange contacts if accepted
-    if ([actionSheet.title isEqualToString:kRequestToAddToMyContactsActionSheetTitle]) {
-        if (buttonIndex != [actionSheet cancelButtonIndex]) {
-            [CPapi sendContactRequestToUserId:actionSheet.tag];
-        }
-    }
 }
 
 #pragma mark - FeedPreviewHeaderCellDelegate
