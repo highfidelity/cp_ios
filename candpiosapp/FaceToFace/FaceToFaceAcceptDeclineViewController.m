@@ -8,6 +8,7 @@
 
 #import "FaceToFaceAcceptDeclineViewController.h"
 #import "FaceToFacePasswordInputViewController.h"
+#import "ContactListViewController.h"
 
 #define F2FPasswordViewTag 1515
 
@@ -58,100 +59,78 @@
 
 #pragma mark - Actions
 
-- (IBAction)acceptF2F {
+- (IBAction)acceptContactRequest {
+    // prevent double tape on the Accept button during the existing request
     self.f2fAcceptButton.enabled = NO;
     
-    [SVProgressHUD showWithStatus:@"Loading..."];
-    
-    [CPapi sendAcceptContactRequestFromUserId:self.user.userID
-                                   completion:
-     ^(NSDictionary *json, NSError *error) {
-         NSString *errorMessage = nil;
-         
-         if (error) {
-             errorMessage = [error localizedDescription];
-         } else {
-             if (json == NULL) {
-                 errorMessage = @"We couldn't send the request.\nPlease try again.";
-             } else if ([[json objectForKey:@"error"] boolValue]) {
-                 errorMessage = [json objectForKey:@"message"];
-             }
-         }
-         
-         if (errorMessage) {
-             [SVProgressHUD dismiss];
-             
-             UIAlertView *alert = [[UIAlertView alloc]
-                                   initWithTitle:@"Contact Request"
-                                   message:errorMessage
-                                   delegate:self
-                                   cancelButtonTitle:@"OK"
-                                   otherButtonTitles: nil];
-             [alert show];
-
-             // avoid stacking the f2f alerts
-             [CPAppDelegate settingsMenuController].f2fInviteAlert = alert;
-             
-             self.f2fAcceptButton.enabled = YES;
-         } else {
-             [self dismissModalViewControllerAnimated:YES];
-             
-             [SVProgressHUD performSelector:@selector(showSuccessWithStatus:)
-                                 withObject:@"Contact Request Accepted"
-                                 afterDelay:kDefaultDismissDelay];
-         }
-     }];
+    // use common handler method
+    [self handleContactRequestAction:YES];
 }
 
-- (IBAction)declineF2F {
-    [SVProgressHUD showWithStatus:@"Loading..."];
-    
-    [CPapi sendDeclineContactRequestFromUserId:self.user.userID
-                                    completion:
-     ^(NSDictionary *json, NSError *error) {
-         NSString *errorMessage = nil;
-         
-         if (error) {
-             errorMessage = [error localizedDescription];
-         } else {
-             if (json == NULL) {
-                 errorMessage = @"We couldn't send the request.\nPlease try again.";
-             } else if ([[json objectForKey:@"error"] boolValue]) {
-                 errorMessage = [json objectForKey:@"message"];
-             }
-         }
-         
-         if (errorMessage) {
-             [SVProgressHUD performSelector:@selector(showErrorWithStatus:)
-                                 withObject:errorMessage
-                                 afterDelay:kDefaultDismissDelay];
-         } else {
-             [SVProgressHUD performSelector:@selector(showSuccessWithStatus:)
-                                 withObject:@"Contact Request Accepted"
-                                 afterDelay:kDefaultDismissDelay];
-         }
-     }];
-    
-    [self dismissModalViewControllerAnimated:YES];
+- (IBAction)declineContactRequest {
+    // use common contact request action handler
+    [self handleContactRequestAction:NO];
 }
 
-- (void)cancelPasswordEntry:(id)sender {
-    // slide back the view to show the accept decline view
-    [self.passwordField resignFirstResponder];
-    [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
-        [self.scrollView setContentOffset:CGPointMake(0, 0)];
-    } completion:NULL];
-    
-    // don't remove the password view because we might be showing it again
-}
-
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+- (void)handleContactRequestAction:(BOOL)isAcceptance
 {
-    // the user has input a password and tapped on go
-    // let's try the F2F
-    [CPapi sendF2FVerify:self.user.userID password:textField.text];
-    return NO;
+    // show a progressHUD
+    [SVProgressHUD showWithStatus:@"Loading..."];
+    
+    void (^completionBlock)(NSDictionary *, NSError *) = ^(NSDictionary *json, NSError *error){
+        NSString *errorMessage;
+        
+        if (error) {
+            errorMessage = [error localizedDescription];
+        } else {
+            if (json == NULL) {
+                errorMessage = @"We couldn't send the request.\nPlease try again.";
+            } else if ([[json objectForKey:@"error"] boolValue]) {
+                errorMessage = [json objectForKey:@"message"];
+            }
+        }
+        
+        if (errorMessage) {
+            if (isAcceptance) {
+                [SVProgressHUD dismiss];
+                
+                UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle:@"Contact Request"
+                                      message:errorMessage
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles: nil];
+                [alert show];
+                
+                // avoid stacking the f2f alerts
+                [CPAppDelegate settingsMenuController].f2fInviteAlert = alert;
+                
+                self.f2fAcceptButton.enabled = YES;
+            } else {
+                [self dismissModalViewControllerAnimated:YES];
+                
+                [SVProgressHUD performSelector:@selector(showErrorWithStatus:)
+                                    withObject:errorMessage
+                                    afterDelay:kDefaultDismissDelay];
+            }
+        } else {
+            [self dismissModalViewControllerAnimated:YES];
+            
+            [SVProgressHUD performSelector:@selector(showSuccessWithStatus:)
+                                withObject:[NSString stringWithFormat:@"Contact Request %@!", (isAcceptance ? @"Accepted" : @"Declined")]
+                                afterDelay:kDefaultDismissDelay];
+            
+            // tell the ContactListViewController to update so the badge is correct
+            [ContactListViewController getNumberOfContactRequestsAndUpdateBadge];
+        }
+    };
+    
+    if (isAcceptance) {
+        [CPapi sendAcceptContactRequestFromUserId:self.user.userID completion:completionBlock];
+    } else {
+        [CPapi sendDeclineContactRequestFromUserId:self.user.userID completion:completionBlock];
+    }
+    
 }
 
 @end

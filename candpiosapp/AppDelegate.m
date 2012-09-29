@@ -21,9 +21,12 @@
 
 #define kContactRequestAPNSKey @"contact_request"
 #define kContactRequestAcceptedAPNSKey @"contact_accepted"
-#define kCheckOutLocalNotificationAlertViewTitle @"You will be checked out of C&P in 5 min."
 
 #define kCheckOutAlertTag 602
+#define kFeedViewAlertTag 500
+
+#define kDefaultLatitude 37.77493
+#define kDefaultLongitude -122.419415
 
 @interface AppDelegate() {
     NSCache *_cache;
@@ -252,18 +255,16 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 - (void)application:(UIApplication *)app
 didReceiveLocalNotification:(UILocalNotification *)notif
 {    
-    NSString *alertText;
     NSString *cancelText;
     NSString *otherText;
 
     if ([notif.alertAction isEqualToString:@"Check Out"]) {
         // For regular timeout checkouts
-        alertText = kCheckOutLocalNotificationAlertViewTitle;
         cancelText = @"Ignore";
         otherText = @"View";
         CPAlertView *alertView;
 
-        alertView = [[CPAlertView alloc] initWithTitle:alertText
+        alertView = [[CPAlertView alloc] initWithTitle:notif.alertBody
                                                message:nil
                                               delegate:self
                                      cancelButtonTitle:cancelText
@@ -302,14 +303,23 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
         [CPChatHelper respondToIncomingChatNotification:message
                                          fromNickname:nickname
                                            fromUserId:userId];
+    } else if ([userInfo valueForKey:@"feed_venue_id"]) {
+
+        CPAlertView *alertView = [[CPAlertView alloc] initWithTitle:@"Incoming message"
+                                                            message:alertMessage
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Ignore"
+                                                  otherButtonTitles:@"View", nil];
+        alertView.tag = kFeedViewAlertTag;
+        alertView.context = userInfo;
+        [alertView show];
+
     } else if ([userInfo valueForKey:@"geofence"]) {
         [[CPGeofenceHandler sharedHandler] handleGeofenceNotification:alertMessage userInfo:userInfo];
-    } else if ([userInfo valueForKey:kContactRequestAPNSKey] != nil) {        
-        [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:kContactRequestAPNSKey] intValue]
-                                          fromView:self.settingsMenuController];
-    } else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey] != nil) {
-        [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"acceptor"]
-                                       fromView:self.settingsMenuController];
+    } else if ([userInfo valueForKey:kContactRequestAPNSKey]) {        
+        [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:kContactRequestAPNSKey] intValue]];
+    } else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey]) {
+        [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"acceptor"]];
     } else {
         // just show the alert if there was one, and the app is active
         if (alertMessage && [UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
@@ -424,6 +434,16 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
         [_locationManager startUpdatingLocation];
     }
     return _locationManager;
+}
+
+- (CLLocation *)currentOrDefaultLocation
+{
+    CLLocation *userLocation = [CPAppDelegate locationManager].location;
+    if (!userLocation) {
+        userLocation = [[CLLocation alloc] initWithLatitude:kDefaultLatitude longitude:kDefaultLongitude];
+    }
+
+    return userLocation;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
@@ -590,7 +610,7 @@ void SignalHandler(int sig) {
     CPAlertView *cpAlertView = (CPAlertView *)alertView;
     NSDictionary *userInfo = cpAlertView.context;
 
-    if ([alertView.title isEqualToString:kCheckOutLocalNotificationAlertViewTitle]) {
+    if (alertView.tag == kCheckOutAlertTag) {
         if (alertView.firstOtherButtonIndex == buttonIndex) {            
             [CPCheckinHandler sharedHandler].checkOutTimer = [NSTimer scheduledTimerWithTimeInterval:300
                                                                                     target:[CPCheckinHandler sharedHandler]
@@ -614,6 +634,11 @@ void SignalHandler(int sig) {
             [self.tabBarController presentModalViewController:navigationController animated:YES];
         }
         
+    } else if (alertView.tag == kFeedViewAlertTag && alertView.firstOtherButtonIndex == buttonIndex) {
+        CPVenue *venue = [[CPVenue alloc] init];
+        venue.venueID = [[userInfo objectForKey:@"feed_venue_id"] integerValue];
+        venue.name = [userInfo objectForKey:@"feed_venue_name"];
+        [self.tabBarController showFeedVCForVenue:venue];
     }
 }
 

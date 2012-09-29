@@ -25,6 +25,7 @@
 @property (strong, nonatomic, readonly) Settings *settings;
 @property (strong, nonatomic, readonly) AFHTTPClient *urbanAirshipClient;
 @property (strong, nonatomic, readonly) CLLocationManager *locationManager;
+@property (strong, nonatomic, readonly) CLLocation *currentOrDefaultLocation;
 @property (strong, nonatomic) SettingsMenuController *settingsMenuController;
 @property (strong, nonatomic) CPTabBarController *tabBarController;
 @property (strong, nonatomic) NSTimer *checkOutTimer;

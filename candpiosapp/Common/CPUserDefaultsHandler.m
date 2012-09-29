@@ -34,11 +34,6 @@ NSString* const kUDCurrentUser = @"loggedUser";
     SET_DEFAULTS(Object, kUDCurrentUser, encodedUser);
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
-    
-    // update the contact request badges
-    CPThinTabBar *thinTabBar = (CPThinTabBar *)[[CPAppDelegate  tabBarController] tabBar];
-    [thinTabBar setBadgeNumber:currentUser.numberOfContactRequests
-                    atTabIndex:kContactTabIndex];
 }
 
 + (User *)currentUser
@@ -60,6 +55,22 @@ NSString* const kUDCurrentUser = @"loggedUser";
     } else {
         return nil;
     }
+}
+
+NSString* const kUDNumberOfContactRequests = @"numberOfContactRequests";
++ (void)setNumberOfContactRequests:(NSInteger)numberOfContactRequests
+{
+    SET_DEFAULTS(Integer, kUDNumberOfContactRequests, numberOfContactRequests);
+    
+    // update the badge on the contacts tab number
+    CPThinTabBar *thinTabBar = (CPThinTabBar *)[[CPAppDelegate  tabBarController] tabBar];
+    [thinTabBar setBadgeNumber:[NSNumber numberWithInteger:numberOfContactRequests]
+                    atTabIndex:kContactTabIndex];
+}
+
++ (NSInteger)numberOfContactRequests
+{
+    return DEFAULTS(integer, kUDNumberOfContactRequests);
 }
 
 NSString* const kUDCurrentVenue = @"currentCheckIn";

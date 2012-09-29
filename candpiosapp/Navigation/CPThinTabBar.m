@@ -356,6 +356,12 @@ static NSArray *tabBarIcons;
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
+    if (self.actionButtonState == CPThinTabBarActionButtonStateMinus
+        && !CGRectContainsPoint([self convertRect:self.actionButton.frame fromView:self.actionButton.superview], point)
+        && !CGRectContainsPoint([self convertRect:self.actionMenu.frame fromView:self.actionButton.superview], point)) {
+        [self toggleActionMenu:NO];
+    }
+
     if (CGRectContainsPoint(self.actionButton.frame, point)) {
         return self.actionButton;
     } else if (CGRectContainsPoint(self.actionMenu.frame, point)) {

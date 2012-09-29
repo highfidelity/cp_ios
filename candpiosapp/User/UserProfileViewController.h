@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#define kRequestToAddToMyContactsActionSheetTitle @"Request to exchange contact info?"
 
 @interface UserProfileViewController : UIViewController
 

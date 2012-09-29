@@ -49,18 +49,12 @@
                                       completion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Contact Request
++ (void)getNumberOfContactRequests:(void (^)(NSDictionary *json, NSError *error))completion;
 + (void)sendContactRequestToUserId:(int)userId;
 + (void)sendAcceptContactRequestFromUserId:(int)userId
                                 completion:(void (^)(NSDictionary *, NSError *))completion;
 + (void)sendDeclineContactRequestFromUserId:(int)userId
                                  completion:(void (^)(NSDictionary *, NSError *))completion;
-
-#pragma mark - Face to Face
-+ (void)sendF2FInvite:(int) userId;
-+ (void)sendF2FAccept:(int) userId;
-+ (void)sendF2FDecline:(int) userId;
-+ (void)sendF2FVerify:(int) userId
-             password:(NSString *) password;
 
 #pragma mark - Feeds
 + (void)getFeedPreviewsForVenueIDs:(NSArray *)venueIDs withCompletion:(void (^)(NSDictionary *, NSError *))completion;
@@ -76,6 +70,8 @@
 + (void)getQuestionReceiversAtLocation:(CLLocationCoordinate2D)coordinate withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Checkins
++ (void)getNearestCheckedInWithCompletion:(void (^)(NSDictionary *, NSError *))completion;
+
 + (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID
                                        :(void(^)(NSDictionary *json, NSError *error))completion; 
 

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="bei-px-nB9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2840" systemVersion="12C54" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="bei-px-nB9">
     <dependencies>
-        <deployment defaultVersion="1296" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1926"/>
     </dependencies>
     <scenes>
         <!--Face To Face Accept Decline View Controller-->
         <scene sceneID="zin-iN-0ZW">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uGZ-Sk-lLy" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="FaceToFaceAcceptDecline" id="bei-px-nB9" customClass="FaceToFaceAcceptDeclineViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hwI-0C-CpS">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -38,7 +36,7 @@
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="acceptF2F" destination="bei-px-nB9" eventType="touchUpInside" id="xLS-MC-Tqi"/>
+                                                            <action selector="acceptContactRequest" destination="bei-px-nB9" eventType="touchUpInside" id="QCQ-bE-f57"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Swh-hC-OdC">
@@ -53,7 +51,7 @@
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="declineF2F" destination="bei-px-nB9" eventType="touchUpInside" id="yYD-di-D0p"/>
+                                                            <action selector="declineContactRequest" destination="bei-px-nB9" eventType="touchUpInside" id="DHh-To-MYI"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" id="7LK-tZ-E1u">
@@ -98,90 +96,24 @@
                         <outlet property="viewUnderToolbar" destination="JyI-9f-pYG" id="HjV-vY-PIj"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uGZ-Sk-lLy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-71" y="1096"/>
-        </scene>
-        <!--Face To Face Password Input View Controller-->
-        <scene sceneID="gmI-ZP-1ic">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6St-P4-nnI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController storyboardIdentifier="FaceToFacePasswordInput" id="QHa-w0-rSo" customClass="FaceToFacePasswordInputViewController" sceneMemberID="viewController">
-                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="l1L-tc-zUe">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" id="4iG-EH-Fba">
-                                <rect key="frame" x="0.0" y="44" width="320" height="416"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="password" textAlignment="center" minimumFontSize="17" id="Um5-29-rub">
-                                        <rect key="frame" x="0.0" y="82" width="320" height="67"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="textColor" red="0.8862745098" green="0.89019607840000003" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="54"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardAppearance="alert" returnKeyType="go"/>
-                                    </textField>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Hint to wait for password" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="LpT-bp-wo5">
-                                        <rect key="frame" x="43" y="20" width="234" height="54"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" red="0.8862745098" green="0.89019607840000003" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Enter Password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="wbQ-99-lUz">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <navigationBar contentMode="scaleToFill" id="8eA-qR-eYY">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="Enter Password" id="12i-KH-KKo"/>
-                                </items>
-                            </navigationBar>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <connections>
-                        <outlet property="f2fNavigationItem" destination="12i-KH-KKo" id="63A-j6-rOt"/>
-                        <outlet property="passwordField" destination="Um5-29-rub" id="idZ-F4-74H"/>
-                        <outlet property="view" destination="l1L-tc-zUe" id="fPT-1q-070"/>
-                        <outlet property="waitLabel" destination="LpT-bp-wo5" id="hyT-78-54E"/>
-                    </connections>
-                </viewController>
-            </objects>
-            <point key="canvasLocation" x="369" y="1103"/>
         </scene>
     </scenes>
     <classes>
         <class className="FaceToFaceAcceptDeclineViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/FaceToFaceAcceptDeclineViewController.h"/>
             <relationships>
-                <relationship kind="action" name="acceptF2F"/>
-                <relationship kind="action" name="declineF2F"/>
+                <relationship kind="action" name="acceptContactRequest"/>
+                <relationship kind="action" name="declineContactRequest"/>
                 <relationship kind="outlet" name="actionBar" candidateClass="UIView"/>
                 <relationship kind="outlet" name="actionBarHeader" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="f2fAcceptButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="f2fDeclineButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="viewUnderToolbar" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="FaceToFacePasswordInputViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FaceToFacePasswordInputViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="f2fNavigationItem" candidateClass="UINavigationItem"/>
-                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="waitLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
     </classes>
