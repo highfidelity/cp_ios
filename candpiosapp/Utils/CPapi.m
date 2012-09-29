@@ -58,7 +58,7 @@
                            kCandPWebServiceUrl, action];
     
     // Add parameters to the URL, if they were supplied
-    if (parameters != nil) {
+    if (parameters) {
         for (NSString * key in parameters) {
             id value = [parameters valueForKey: key];
 
@@ -79,7 +79,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
                    ^{
                        NSData* data = [NSData dataWithContentsOfURL: locationURL];
-                       if (selector != nil) {
+                       if (selector) {
                            [self performSelectorOnMainThread:selector
                                                   withObject:data
                                                waitUntilDone:YES];
@@ -152,12 +152,12 @@
 {
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request 
         success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-            if (completion != nil) {
+            if (completion) {
                 completion(JSON, nil);   
             }
         }
         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-            if (completion != nil) {
+            if (completion) {
                 completion(JSON, error);
         }
             

@@ -15,7 +15,7 @@
         andOtherUser:(User *)otherUser
 {
     if (self = [super init]) {
-        if (myUser == nil || otherUser == nil)
+        if (!myUser ||!otherUser)
         {
             @throw [NSException exceptionWithName:@"NIL user object"
                                            reason:@"User objects must be defined."

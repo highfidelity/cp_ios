@@ -280,7 +280,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     }
     
     ContactListCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
+    if (!cell) {
         cell = [[ContactListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
 

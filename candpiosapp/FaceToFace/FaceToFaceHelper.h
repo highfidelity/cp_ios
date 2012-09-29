@@ -22,6 +22,4 @@
 // F2F is compelte. Congratulate both parties!
 + (void)presentF2FSuccessFrom:(NSString *) nickname;
 
-
-
 @end

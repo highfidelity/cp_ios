@@ -346,7 +346,7 @@
     toArrayForJobCategory:(NSString *)jobCategory
 {
     //If the jobCategory has a null value then don't show anything
-    if(jobCategory != Nil)
+    if(jobCategory)
     {
         // check if we already have an array for this category
         // and create one if we don't
@@ -746,7 +746,7 @@
         // Display a single cell with all users in that category
         NSString *cellIdentifier = @"VenueCategoryCell";
         VenueCategoryCell *cell = (VenueCategoryCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell == nil) {
+        if (!cell) {
             cell = [[VenueCategoryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         }
         NSString *category = [[self orderedCategories] objectAtIndex:indexPath.section];
@@ -756,7 +756,7 @@
         // Display one user per row
         NSString *cellIdentifier = @"VenueUserCell";
         VenueUserCell *cell = (VenueUserCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell == nil) {
+        if (!cell) {
             cell = [[VenueUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             [CPUIHelper changeFontForLabel:cell.nameLabel toLeagueGothicOfSize:18];
         }
