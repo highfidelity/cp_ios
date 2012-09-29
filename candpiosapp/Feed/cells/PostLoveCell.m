@@ -7,12 +7,7 @@
 //
 
 #import "PostLoveCell.h"
-#import "UIImage+Resize.h"
 
 @implementation PostLoveCell
-
-@synthesize receiverProfileButton = _receiverProfileButton;
-
-
 
 @end

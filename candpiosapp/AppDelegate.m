@@ -245,7 +245,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     NSString *userid = [NSString stringWithFormat:@"%d", [CPUserDefaultsHandler currentUser].userID];
     
     NSLog(@"Pushing aliases to UrbanAirship: %@", userid);
-    [[UAPush shared] updateAlias:userid];
+    [UAPush shared].alias = userid;
+    [[UAPush shared] updateRegistration];
     
     // make sure that the signup modal has been dismissed if its still around
     [CPUserSessionHandler dismissSignupModalFromPresentingViewController];

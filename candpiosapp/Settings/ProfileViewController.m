@@ -12,7 +12,6 @@
 #import "CPTouchableView.h"
 #import "CPSkill.h"
 #import "UIImage+ImageBlur.h"
-#import "NSData+Base64.h"
 #import "CPUserSessionHandler.h"
 
 #define kActionSheetDeleteAccountTag 7911

@@ -89,7 +89,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
         }
     }
     
-    NSString *verifier = [pairs objectForKey:@"oauth_verifier"];
+    self.requestToken.verifier = [pairs objectForKey:@"oauth_verifier"];
     
     // Now get the final auth token
     OAConsumer *consumer = [[OAConsumer alloc] initWithKey:kLinkedInKey secret:kLinkedInSecret];
@@ -102,7 +102,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                                                                    consumer:consumer
                                                                       token:self.requestToken
                                                                       realm:@"http://api.linkedin.com/"
-                                                                   verifier:verifier
                                                           signatureProvider:nil];
     
     [request setHTTPMethod:@"POST"];
@@ -160,10 +159,13 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     self.requestToken = nil;
     OAConsumer *consumer = [[OAConsumer alloc] initWithKey:kLinkedInKey secret:kLinkedInSecret];
     NSURL *url = [NSURL URLWithString:[kLinkedInAPIUrl stringByAppendingString:@"/uas/oauth/requestToken"]];
+    
+    // alloc init OAMutableURLRequest with custom callbackURL so that the app can capture credentials
     OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
                                                                    consumer:consumer
                                                                       token:nil
                                                                       realm:nil
+                                                                callbackURL:@"candp://linkedin"
                                                           signatureProvider:nil];
     
     [request setHTTPMethod:@"POST"];
