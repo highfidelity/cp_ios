@@ -90,8 +90,7 @@ static FaceToFaceHelper *sharedHelper;
                 [[CPAppDelegate tabBarController] presentModalViewController:f2fVC animated:YES];
             } else {
                 // dismiss the SVProgress HUD with an error
-                NSString *alertMsg = [NSString stringWithFormat:
-                                      @"Oops! We couldn't get the data.\nAsk the sender to send Contact Request again."];
+                NSString *alertMsg = @"Oops! We couldn't get the data.\nAsk the sender to send Contact Request again.";
                 
           
                 [SVProgressHUD dismissWithError:alertMsg
