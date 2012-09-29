@@ -276,7 +276,7 @@
                     self.newDataFromSync = YES;
                 }
 
-                if ([self.currentUser.majorJobCategory isEqualToString:webSyncUser.majorJobCategory]) {
+                if (![self.currentUser.majorJobCategory isEqualToString:webSyncUser.majorJobCategory]) {
                     self.currentUser.majorJobCategory = webSyncUser.majorJobCategory;
                     self.newDataFromSync = YES;
                 }
