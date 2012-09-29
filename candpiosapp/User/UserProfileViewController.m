@@ -13,8 +13,7 @@
 #import "VenueInfoViewController.h"
 #import "GTMNSString+HTML.h"
 #import "UserProfileLinkedInViewController.h"
-
-
+#import "FaceToFaceHelper.h"
 
 @interface UserProfileViewController() <UIWebViewDelegate, UIActionSheetDelegate, GRMustacheTemplateDelegate>
 
@@ -676,26 +675,13 @@ static GRMustacheTemplate *postBadgesTemplate;
 }
 
 - (IBAction)f2fInvite {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                  initWithTitle:kRequestToAddToMyContactsActionSheetTitle
-                                  delegate:self
-                                  cancelButtonTitle:@"Cancel"
-                                  destructiveButtonTitle:@"Send"
-                                  otherButtonTitles: nil
-                                  ];
-    [actionSheet showInView:self.view];
+    // use the FaceToFaceHelper to show the contact request UIActionSheet
+    [[FaceToFaceHelper sharedHelper] showContactRequestActionSheetForUserID:self.user.userID];
+    
+    // drop the action menu
+    [self minusButtonPressed:nil];
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if ([actionSheet.title isEqualToString:kRequestToAddToMyContactsActionSheetTitle]) {
-        [self minusButtonPressed:nil];
-        if (buttonIndex != [actionSheet cancelButtonIndex]) {
-            [CPapi sendContactRequestToUserId:self.user.userID];
-        }
-    }
-}
-
-#pragma mark -
 #pragma mark GRMustacheTemplateDelegate
 
 - (void)template:(GRMustacheTemplate *)template willRenderReturnValueOfInvocation:(GRMustacheInvocation *)invocation {

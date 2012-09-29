@@ -55,8 +55,25 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 @end
 
-
 @implementation ContactListViewController
+
+#pragma mark - Class methods
+
++ (void)getNumberOfContactRequestsAndUpdateBadge
+{
+    [CPapi getNumberOfContactRequests:^(NSDictionary *json, NSError *error) {
+        // no error handling to do here
+        // if we get it, then update it, otherwise we'll leave it
+        if (!error && ![[json objectForKey:@"error"] boolValue]) {
+            
+            // give that new value to CPUserDefaultsHandler
+            // it'll update the badge
+            [CPUserDefaultsHandler setNumberOfContactRequests:[[json valueForKeyPath:@"payload.number_of_contact_requests"] integerValue]];
+        }
+    }];
+}
+
+#pragma mark - Instance methods
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -65,12 +82,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     // place the settings button on the navigation item if required
     // or remove it if the user isn't logged in
     [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -85,6 +96,22 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     }
     
     [self showCorrectLoadingSpinnerForCount:self.contacts.count + self.contactRequests.count];
+    [self reloadContactList];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)reloadContactList
+{
     [CPapi getContactListWithCompletionsBlock:^(NSDictionary *json, NSError *error) {
         [self stopAppropriateLoadingSpinner];
         if (!error) {
@@ -103,7 +130,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
                 if (contactRequests.count > 1) {
                     contactRequests = [contactRequests sortedArrayUsingDescriptors:[NSArray arrayWithObject:nicknameSort]];
                 }
-                                
+                
                 self.contacts = [payload mutableCopy];
                 self.contactRequests = [contactRequests mutableCopy];
                 
@@ -130,7 +157,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
         }
     }];
 }
-
 
 - (NSMutableArray *)partitionObjects:(NSArray *)array collationStringSelector:(SEL)selector
 {
@@ -479,7 +505,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 }
 
 - (void)updateBadgeValue {
-    [CPUserDefaultsHandler currentUser].numberOfContactRequests = @(self.contactRequests.count);    
+    [CPUserDefaultsHandler setNumberOfContactRequests:self.contactRequests.count];
 }
 
 - (NSDictionary *)contactForIndexPath:(NSIndexPath *)indexPath {

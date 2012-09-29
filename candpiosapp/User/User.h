@@ -22,7 +22,6 @@
 @property (strong, nonatomic) NSString *status;
 @property (strong, nonatomic) NSArray *skills;
 @property (strong, nonatomic) NSString *linkedInPublicProfileUrl;
-@property (strong, nonatomic) NSNumber *numberOfContactRequests;
 @property (strong, nonatomic) NSString *profileURLVisibility;
 @property (strong, nonatomic) NSString *bio;
 @property (strong, nonatomic) NSString *sponsorNickname;

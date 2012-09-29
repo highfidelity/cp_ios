@@ -12,6 +12,7 @@
 #import "OneOnOneChatViewController.h"
 #import "UserProfileViewController.h"
 #import "CPUserSessionHandler.h"
+#import "FaceToFaceHelper.h"
 
 @implementation CPUserAction
 
@@ -85,32 +86,14 @@
 
 + (void)cell:(CPUserActionCell*)cell exchangeContactsFromViewController:(UIViewController*)viewController
 {
-    // Offer to exchange contacts
-    // handle chat
-    if (![CPUserDefaultsHandler currentUser]) {
-        [CPUserSessionHandler showLoginBanner];
-        cell.selected = NO;
-        return;
-    }    
-    if (cell.user.userID == [CPUserDefaultsHandler currentUser].userID) {
-        // cheeky response for self-talk
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Add a Contact" 
-                                                            message:@"You should have already met yourself..." 
-                                                           delegate:nil 
-                                                  cancelButtonTitle:@"OK" 
-                                                  otherButtonTitles:nil];
-        [alertView show];
-        return;
-    }
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                  initWithTitle:kRequestToAddToMyContactsActionSheetTitle
-                                  delegate:(id<UIActionSheetDelegate>)viewController
-                                  cancelButtonTitle:@"Cancel"
-                                  destructiveButtonTitle:@"Send"
-                                  otherButtonTitles: nil
-                                  ];
-    actionSheet.tag = cell.user.userID;
-    [actionSheet showInView:viewController.view];    
+    // ask FaceToFaceHelper to display a UIActionSheet confirming the contact request
+    [[FaceToFaceHelper sharedHelper] showContactRequestActionSheetForUserID:cell.user.userID];
+    
+    // slide the cell back
+    [cell animateSlideButtonsWithNewCenter:cell.originalCenter delay:0 duration:0.2 animated:YES];
+    
+    // make sure the cell is no longer highlighted
+    cell.contentView.backgroundColor = cell.inactiveColor;
 }
 
 + (void)cell:(CPUserActionCell*)cell showProfileFromViewController:(UIViewController*)viewController

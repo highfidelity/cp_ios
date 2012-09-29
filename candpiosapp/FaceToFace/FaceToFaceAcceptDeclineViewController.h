@@ -18,12 +18,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *f2fAcceptButton;
 @property (weak, nonatomic) IBOutlet UIButton *f2fDeclineButton;
 @property (weak, nonatomic) IBOutlet UIView *viewUnderToolbar;
-@property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
-- (IBAction)acceptF2F;
-- (IBAction)declineF2F;
-- (void)cancelPasswordEntry:(id)sender;
+- (IBAction)acceptContactRequest;
+- (IBAction)declineContactRequest;
 
 @end
