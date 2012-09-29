@@ -58,8 +58,8 @@
 
 - (void)saveUserJobCategories
 {
-    if (![self.user.majorJobCategory isEqualToString:[self.majorCategoryButton.titleLabel.text]] ||
-            ![self.user.minorJobCategory isEqualToString:[self.majorCategoryButton.titleLabel.text]]) {
+    if (![self.user.majorJobCategory isEqualToString:self.majorCategoryButton.titleLabel.text] ||
+            ![self.user.minorJobCategory isEqualToString:self.majorCategoryButton.titleLabel.text]) {
 
         self.user.majorJobCategory = self.majorCategoryButton.titleLabel.text;
         self.user.minorJobCategory = self.minorCategoryButton.titleLabel.text;
