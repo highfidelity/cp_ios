@@ -129,12 +129,11 @@ static FaceToFaceHelper *sharedHelper;
         
     } else {
         // alloc-init the UIActionSheet
-        UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                      initWithTitle:@"Request to exchange contact info?"
-                                      delegate:self
-                                      cancelButtonTitle:@"Cancel"
-                                      destructiveButtonTitle:@"Send"
-                                      otherButtonTitles: nil];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Request to exchange contact info?"
+                                                                 delegate:self
+                                                        cancelButtonTitle:@"Cancel"
+                                                   destructiveButtonTitle:@"Send"
+                                                        otherButtonTitles: nil];
         
         // use the ID of the user with which contact information is being exchanged
         // as the tag for the UIActionSheet
