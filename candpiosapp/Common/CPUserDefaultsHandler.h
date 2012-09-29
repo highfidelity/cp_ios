@@ -16,8 +16,8 @@
 + (void)setCurrentVenue:(CPVenue *)venue;
 + (CPVenue *)currentVenue;
 
-+ (void)setNumberOfContactRequests:(int)numberOfContactRequests;
-+ (int)numberOfContactRequests;
++ (void)setNumberOfContactRequests:(NSInteger)numberOfContactRequests;
++ (NSInteger)numberOfContactRequests;
 
 + (void)setPastVenues:(NSArray *)pastVenues;
 + (NSArray *)pastVenues;

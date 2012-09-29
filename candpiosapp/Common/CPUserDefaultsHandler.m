@@ -58,7 +58,7 @@ NSString* const kUDCurrentUser = @"loggedUser";
 }
 
 NSString* const kUDNumberOfContactRequests = @"numberOfContactRequests";
-+ (void)setNumberOfContactRequests:(int)numberOfContactRequests
++ (void)setNumberOfContactRequests:(NSInteger)numberOfContactRequests
 {
     SET_DEFAULTS(Integer, kUDNumberOfContactRequests, numberOfContactRequests);
     
@@ -68,7 +68,7 @@ NSString* const kUDNumberOfContactRequests = @"numberOfContactRequests";
                     atTabIndex:kContactTabIndex];
 }
 
-+ (int)numberOfContactRequests
++ (NSInteger)numberOfContactRequests
 {
     return DEFAULTS(integer, kUDNumberOfContactRequests);
 }
