@@ -1,6 +1,3 @@
-[submodule "candpiosapp/Externals/SVProgressHUD"]
-	path = candpiosapp/Externals/SVProgressHUD
-	url = git://github.com/samvermette/SVProgressHUD.git
 [submodule "candpiosapp/Externals/SVPullToRefresh"]
 	path = candpiosapp/Externals/SVPullToRefresh
 	url = git://github.com/samvermette/SVPullToRefresh.git
