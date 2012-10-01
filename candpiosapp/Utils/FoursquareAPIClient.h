@@ -11,13 +11,18 @@
 
 @interface FoursquareAPIClient: AFHTTPClient
 
+typedef void (^AFRequestCompletionBlock)(AFHTTPRequestOperation *operation, id responseObject, NSError *error);
+
 + (FoursquareAPIClient *)sharedClient;
 
 + (void)getVenuesCloseToLocation:(CLLocation *)location
-                               withCompletion:(void (^)(AFHTTPRequestOperation *operation, id responseObject, NSError *error))completion;
+                               completion:(AFRequestCompletionBlock)completion;
+
++ (void)getTwoClosestNeighborhoodsToLocation:(CLLocation *)location
+                                  completion:(AFRequestCompletionBlock)completion;
 
 + (void)addNewPlace:(NSString *)name
-        atLocation:(CLLocation *)location
-    withCompletion:(void (^)(AFHTTPRequestOperation *operation, id responseObject, NSError *error))completion;
+        location:(CLLocation *)location
+    completion:(AFRequestCompletionBlock)completion;
 
 @end

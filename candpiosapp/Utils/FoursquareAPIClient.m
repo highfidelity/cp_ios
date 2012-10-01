@@ -56,7 +56,7 @@ static FoursquareAPIClient *_sharedClient;
 
 #pragma mark - Class Helpers
 
-+ (NSMutableDictionary *)parameterDictionaryWithVersionString:(NSString *)versionString andExistingParameters:(NSMutableDictionary *)existingParameters
++ (NSMutableDictionary *)parameterDictionaryWithVersionString:(NSString *)versionString existingParameters:(NSMutableDictionary *)existingParameters
 {
     if (!existingParameters) {
         existingParameters = [NSMutableDictionary dictionary];
@@ -70,13 +70,27 @@ static FoursquareAPIClient *_sharedClient;
 #pragma mark - Request Methods
 
 + (void)getVenuesCloseToLocation:(CLLocation *)location
-                              withCompletion:(void (^)(AFHTTPRequestOperation *operation, id responseObject, NSError *error))completion;
-{    
+                           limit:(int)limit
+                      categoryID:(NSString *)categoryID
+                   versionString:(NSString *)versionString
+                      completion:(AFRequestCompletionBlock)completion
+{
+    // create dictionary for request parameters
+    // pass location as comma seperated floats
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"%f,%f",
-                                                                   location.coordinate.latitude, location.coordinate.longitude] forKey:@"ll"];
+                                                                                 location.coordinate.latitude, location.coordinate.longitude] forKey:@"ll"];
+    // pass limit for number of venues desired in result
+    [parameters setObject:[NSNumber numberWithInt:limit] forKey:@"limit"];
     
-    parameters = [self parameterDictionaryWithVersionString:@"20120302" andExistingParameters:parameters];
+    // if we have a category ID ask for a specific category of venue
+    if (categoryID) {
+        [parameters setObject:categoryID forKey:@"categoryId"];
+    }
     
+    // add the passed version string to our dictionary of parameters
+    parameters = [self parameterDictionaryWithVersionString:versionString existingParameters:parameters];
+    
+    // make the GET request to venues/search
     [[self sharedClient] getPath:@"venues/search"
                       parameters:parameters
                          success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -86,16 +100,32 @@ static FoursquareAPIClient *_sharedClient;
                          }];
 }
 
-+ (void)addNewPlace:(NSString *)name
-        atLocation:(CLLocation *)location
-    withCompletion:(void (^)(AFHTTPRequestOperation *operation, id responseObject, NSError *error))completion;
++ (void)getVenuesCloseToLocation:(CLLocation *)location
+                      completion:(AFRequestCompletionBlock)completion;
+{    
+    // use above helper to get 20 closest venues, no matter the category
+    [self getVenuesCloseToLocation:location limit:20 categoryID:nil versionString:@"20120302" completion:completion];
+}
+
++ (void)getTwoClosestNeighborhoodsToLocation:(CLLocation *)location
+                                  completion:(AFRequestCompletionBlock)completion
 {
+    // use above helper to return 2 closest venues in the neighborhood category
+    [self getVenuesCloseToLocation:location limit:2 categoryID:nil versionString:@"20121001" completion:completion];
+}
+
++ (void)addNewPlace:(NSString *)name
+           location:(CLLocation *)location
+         completion:(AFRequestCompletionBlock)completion
+{
+    // setup dictionary with request parameters
     NSMutableDictionary *requestParams = [NSMutableDictionary dictionary];
     [requestParams setObject:name forKey:@"name"];
     [requestParams setObject:[NSString stringWithFormat:@"%f,%f", location.coordinate.latitude, location.coordinate.longitude] forKey:@"ll"];
-    requestParams = [self parameterDictionaryWithVersionString:@"20120208" andExistingParameters:requestParams];
+    requestParams = [self parameterDictionaryWithVersionString:@"20120208" existingParameters:requestParams];
     
-    [[self sharedClient] postPath:@"add" parameters:requestParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    // post to /venues/add
+    [[self sharedClient] postPath:@"venues/add" parameters:requestParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         completion(operation, responseObject, nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         completion(operation, nil, error);

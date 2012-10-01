@@ -97,7 +97,7 @@
     self.venues = [[NSMutableArray alloc] init];
 
     CLLocation *userLocation = [CPAppDelegate locationManager].location;
-    [FoursquareAPIClient getVenuesCloseToLocation:userLocation withCompletion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
+    [FoursquareAPIClient getVenuesCloseToLocation:userLocation completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
         // Do error checking here, in case Foursquare is down
         
         if (!error || [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
@@ -337,8 +337,8 @@
     
     CLLocation *location = [CPAppDelegate locationManager].location;
     [FoursquareAPIClient addNewPlace:name
-                          atLocation:location
-                      withCompletion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
+                          location:location
+                      completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
         // Do error checking here, in case Foursquare is down
         if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
 #if DEBUG
