@@ -1,3 +1,0 @@
-[submodule "candpiosapp/Externals/OAuthConsumer"]
-	path = candpiosapp/Externals/OAuthConsumer
-	url = https://github.com/worklist/oauthconsumer.git
