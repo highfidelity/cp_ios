@@ -802,13 +802,6 @@
                                             <color key="textColor" red="0.58823529411764708" green="0.58823529411764708" blue="0.58823529411764708" alpha="1" colorSpace="deviceRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text=".5mi away" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="sre-9B-55g" userLabel="distance label">
-                                            <rect key="frame" x="235" y="93" width="76" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                            <color key="textColor" red="0.85882359740000003" green="0.85882359740000003" blue="0.85882359740000003" alpha="1" colorSpace="deviceRGB"/>
-                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Major Job Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="bhX-UX-DQi" userLabel="Checkin name">
                                             <rect key="frame" x="123" y="42" width="162" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -822,7 +815,6 @@
                                 <connections>
                                     <outlet property="categoryLabel" destination="bhX-UX-DQi" id="YUK-58-mvn"/>
                                     <outlet property="checkInLabel" destination="4J4-w6-UoS" id="lIg-bQ-SII"/>
-                                    <outlet property="distanceLabel" destination="sre-9B-55g" id="fRc-jt-ima"/>
                                     <outlet property="nicknameLabel" destination="mjY-7Y-tr1" id="8qQ-NI-EQl"/>
                                     <outlet property="profilePictureImageView" destination="I6V-wG-Xen" id="mEP-xi-suU"/>
                                     <outlet property="statusLabel" destination="icM-uq-8K3" id="hrg-C0-7w2"/>

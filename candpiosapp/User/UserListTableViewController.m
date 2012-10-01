@@ -131,7 +131,6 @@
     if (user.status.length > 0 && user.checkedIn) {
         cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",[user.status gtm_stringByUnescapingFromHTML]];
     }
-    cell.distanceLabel.text = [CPUtils localizedDistanceStringForDistance:user.distance];
     
     cell.checkInLabel.text = user.placeCheckedIn.name;
 
