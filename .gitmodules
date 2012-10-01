@@ -1,6 +1,3 @@
-[submodule "candpiosapp/Externals/ActionSheetPicker"]
-	path = candpiosapp/Externals/ActionSheetPicker
-	url = git://github.com/TimCinel/ActionSheetPicker.git
 [submodule "candpiosapp/Externals/GRMustache"]
 	path = candpiosapp/Externals/GRMustache
 	url = git://github.com/groue/GRMustache.git
