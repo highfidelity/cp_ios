@@ -1,23 +1,24 @@
 //
-//  CheckInListTableViewController.m
+//  CheckInListViewController.m
 //  candpiosapp
 //
 //  Created by Stephen Birarda on 2/17/12.
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 
-#import "CheckInListTableViewController.h"
+#import "CheckInListViewController.h"
 #import "CheckInDetailsViewController.h"
 #import "CheckInListCell.h"
 #import "FoursquareAPIRequest.h"
 #import "CPUserSessionHandler.h"
 
-@interface CheckInListTableViewController()
+@interface CheckInListViewController()
 
 @property (strong, nonatomic) UIAlertView *addPlaceAlertView;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @end
 
-@implementation CheckInListTableViewController
+@implementation CheckInListViewController
 
 // TODO: Add a search box at the box of the table view so the user can quickly search for the venue
 
@@ -28,17 +29,18 @@
     [super viewDidLoad];
     self.refreshLocationsNow = YES;
     
-    self.title = @"Check In";
+    // center the map on the user's current location
+    [self.mapView setRegion:MKCoordinateRegionMakeWithDistance([CPAppDelegate locationManager].location.coordinate, 200, 200)
+                   animated:YES];
     
     // don't set the seperator here, add it manually in storyboard
     // allows us to show a line on the top cell when you are at the top of the table view
-    // self.tableView.separatorColor = [UIColor colorWithRed:(68.0/255.0) green:(68.0/255.0) blue:(68.0/255.0) alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // add a line to the top of the table
-    UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
+    UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 1)];
     topLine.backgroundColor = [UIColor colorWithRed:(68.0/255.0) green:(68.0/255.0) blue:(68.0/255.0) alpha:1.0];
-    [self.view addSubview:topLine];
+    [self.tableView addSubview:topLine];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadData)
@@ -53,6 +55,7 @@
 
 - (void)viewDidUnload
 {
+    [self setMapView:nil];
     [super viewDidUnload];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LoginStateChanged" object:nil];
 }

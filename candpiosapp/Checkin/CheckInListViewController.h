@@ -1,5 +1,5 @@
 //
-//  CheckInListTableViewController.h
+//  CheckInListViewController.h
 //  candpiosapp
 //
 //  Created by Stephen Birarda on 2/17/12.
@@ -7,8 +7,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CheckInListTableViewController : UITableViewController <UIAlertViewDelegate, UITextFieldDelegate>
+@interface CheckInListViewController : UIViewController <UIAlertViewDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *venues;
 @property (nonatomic) BOOL refreshLocationsNow;
 

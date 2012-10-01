@@ -157,7 +157,7 @@
 		533AFECE1523E87200D6E6A9 /* default-avatar-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 533AFECC1523E87200D6E6A9 /* default-avatar-256.png */; };
 		533AFECF1523E87200D6E6A9 /* default-avatar-256@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */; };
 		533B1DA515A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 533B1DA315A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard */; };
-		533B1DA915A3D3300072997D /* CheckInListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533B1DA815A3D3300072997D /* CheckInListTableViewController.m */; };
+		533B1DA915A3D3300072997D /* CheckInListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533B1DA815A3D3300072997D /* CheckInListViewController.m */; };
 		533E5EF015A3A88C0042862E /* PostBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533E5ED615A3A88C0042862E /* PostBaseCell.m */; };
 		533E5EF115A3A88C0042862E /* PostLoveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533E5ED815A3A88C0042862E /* PostLoveCell.m */; };
 		533E5EF215A3A88C0042862E /* NewPostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533E5EDA15A3A88C0042862E /* NewPostCell.m */; };
@@ -814,8 +814,8 @@
 		533AFECC1523E87200D6E6A9 /* default-avatar-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default-avatar-256.png"; path = "User/images/default-avatar-256.png"; sourceTree = "<group>"; };
 		533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default-avatar-256@2x.png"; path = "User/images/default-avatar-256@2x.png"; sourceTree = "<group>"; };
 		533B1DA315A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CheckinStoryboard_iPhone.storyboard; path = Checkin/CheckinStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		533B1DA715A3D3300072997D /* CheckInListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CheckInListTableViewController.h; path = Checkin/CheckInListTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		533B1DA815A3D3300072997D /* CheckInListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInListTableViewController.m; path = Checkin/CheckInListTableViewController.m; sourceTree = "<group>"; };
+		533B1DA715A3D3300072997D /* CheckInListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CheckInListViewController.h; path = Checkin/CheckInListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		533B1DA815A3D3300072997D /* CheckInListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInListViewController.m; path = Checkin/CheckInListViewController.m; sourceTree = "<group>"; };
 		533E5ED515A3A88C0042862E /* PostBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostBaseCell.h; sourceTree = "<group>"; };
 		533E5ED615A3A88C0042862E /* PostBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostBaseCell.m; sourceTree = "<group>"; };
 		533E5ED715A3A88C0042862E /* PostLoveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostLoveCell.h; sourceTree = "<group>"; };
@@ -2425,8 +2425,8 @@
 			children = (
 				53D7ADEC15D04AC800BB041E /* CPGeofenceHandler.h */,
 				53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */,
-				533B1DA715A3D3300072997D /* CheckInListTableViewController.h */,
-				533B1DA815A3D3300072997D /* CheckInListTableViewController.m */,
+				533B1DA715A3D3300072997D /* CheckInListViewController.h */,
+				533B1DA815A3D3300072997D /* CheckInListViewController.m */,
 				533B1DA315A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard */,
 				5328938715548D6D007B0157 /* CheckInDetailsViewController.h */,
 				5328938815548D6D007B0157 /* CheckInDetailsViewController.m */,
@@ -3260,7 +3260,7 @@
 				533E5EF315A3A88C0042862E /* PostUpdateCell.m in Sources */,
 				533E5EF415A3A88C0042862E /* CPPost.m in Sources */,
 				533E5F0A15A3AD040042862E /* FeedViewController.m in Sources */,
-				533B1DA915A3D3300072997D /* CheckInListTableViewController.m in Sources */,
+				533B1DA915A3D3300072997D /* CheckInListViewController.m in Sources */,
 				534BD45615AB72BD001FCC5C /* CPVenueFeed.m in Sources */,
 				53019FE415ABA21D00AE3FA1 /* CPUserActionCell.m in Sources */,
 				4E5578BE15AD0575000B588D /* CPUserAction.m in Sources */,
