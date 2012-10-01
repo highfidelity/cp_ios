@@ -279,7 +279,7 @@
 		5384B24A155481FA00A4E0C1 /* CPapi.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B249155481FA00A4E0C1 /* CPapi.m */; };
 		5384B24D1554822100A4E0C1 /* CPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B24C1554822100A4E0C1 /* CPUtils.m */; };
 		5384B2501554823A00A4E0C1 /* CPVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B24F1554823A00A4E0C1 /* CPVenue.m */; };
-		5384B2531554825F00A4E0C1 /* FoursquareAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2521554825F00A4E0C1 /* FoursquareAPIRequest.m */; };
+		5384B2531554825F00A4E0C1 /* FoursquareAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2521554825F00A4E0C1 /* FoursquareAPIClient.m */; };
 		5384B2561554827600A4E0C1 /* MapDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2551554827600A4E0C1 /* MapDataSet.m */; };
 		5384B2591554831400A4E0C1 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2581554831400A4E0C1 /* User.m */; };
 		5384B25C1554833D00A4E0C1 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B25B1554833D00A4E0C1 /* Settings.m */; };
@@ -956,8 +956,8 @@
 		5384B24C1554822100A4E0C1 /* CPUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPUtils.m; path = Utils/CPUtils.m; sourceTree = "<group>"; };
 		5384B24E1554823A00A4E0C1 /* CPVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CPVenue.h; path = Venue/CPVenue.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5384B24F1554823A00A4E0C1 /* CPVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPVenue.m; path = Venue/CPVenue.m; sourceTree = "<group>"; };
-		5384B2511554825F00A4E0C1 /* FoursquareAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FoursquareAPIRequest.h; path = Utils/FoursquareAPIRequest.h; sourceTree = "<group>"; };
-		5384B2521554825F00A4E0C1 /* FoursquareAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FoursquareAPIRequest.m; path = Utils/FoursquareAPIRequest.m; sourceTree = "<group>"; };
+		5384B2511554825F00A4E0C1 /* FoursquareAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FoursquareAPIClient.h; path = Utils/FoursquareAPIClient.h; sourceTree = "<group>"; };
+		5384B2521554825F00A4E0C1 /* FoursquareAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FoursquareAPIClient.m; path = Utils/FoursquareAPIClient.m; sourceTree = "<group>"; };
 		5384B2541554827600A4E0C1 /* MapDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapDataSet.h; path = Map/MapDataSet.h; sourceTree = "<group>"; };
 		5384B2551554827600A4E0C1 /* MapDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapDataSet.m; path = Map/MapDataSet.m; sourceTree = "<group>"; };
 		5384B2571554831400A4E0C1 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = User.h; path = User/User.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1911,8 +1911,8 @@
 				5328935B155488F5007B0157 /* CPConstants.m */,
 				5384B25A1554833D00A4E0C1 /* Settings.h */,
 				5384B25B1554833D00A4E0C1 /* Settings.m */,
-				5384B2511554825F00A4E0C1 /* FoursquareAPIRequest.h */,
-				5384B2521554825F00A4E0C1 /* FoursquareAPIRequest.m */,
+				5384B2511554825F00A4E0C1 /* FoursquareAPIClient.h */,
+				5384B2521554825F00A4E0C1 /* FoursquareAPIClient.m */,
 				5384B24B1554822100A4E0C1 /* CPUtils.h */,
 				5384B24C1554822100A4E0C1 /* CPUtils.m */,
 				5384B248155481FA00A4E0C1 /* CPapi.h */,
@@ -3208,7 +3208,7 @@
 				5384B24A155481FA00A4E0C1 /* CPapi.m in Sources */,
 				5384B24D1554822100A4E0C1 /* CPUtils.m in Sources */,
 				5384B2501554823A00A4E0C1 /* CPVenue.m in Sources */,
-				5384B2531554825F00A4E0C1 /* FoursquareAPIRequest.m in Sources */,
+				5384B2531554825F00A4E0C1 /* FoursquareAPIClient.m in Sources */,
 				5384B2561554827600A4E0C1 /* MapDataSet.m in Sources */,
 				5384B2591554831400A4E0C1 /* User.m in Sources */,
 				5384B25C1554833D00A4E0C1 /* Settings.m in Sources */,

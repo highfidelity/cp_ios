@@ -7,7 +7,7 @@
 //
 
 #import "UserProfileViewController.h"
-#import "FoursquareAPIRequest.h"
+#import "FoursquareAPIClient.h"
 #import "AFJSONRequestOperation.h"
 #import "GRMustache.h"
 #import "VenueInfoViewController.h"

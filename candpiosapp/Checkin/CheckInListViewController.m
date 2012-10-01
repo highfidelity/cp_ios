@@ -8,7 +8,7 @@
 #import "CheckInListViewController.h"
 #import "CheckInDetailsViewController.h"
 #import "CheckInListCell.h"
-#import "FoursquareAPIRequest.h"
+#import "FoursquareAPIClient.h"
 #import "CPUserSessionHandler.h"
 
 @interface CheckInListViewController()
@@ -97,8 +97,9 @@
     self.venues = [[NSMutableArray alloc] init];
 
     CLLocation *userLocation = [CPAppDelegate locationManager].location;
-    [FoursquareAPIRequest getVenuesCloseToLocation:userLocation :^(NSDictionary *json, NSError *error){
+    [FoursquareAPIClient getVenuesCloseToLocation:userLocation withCompletion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
         // Do error checking here, in case Foursquare is down
+        
         if (!error || [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
             
             // get the array of places that foursquare returned
@@ -116,7 +117,7 @@
                 place.coordinate = CLLocationCoordinate2DMake([[item valueForKeyPath:@"location.lat"] doubleValue], [[item valueForKeyPath:@"location.lng"] doubleValue]);
                 place.phone = [[item valueForKey:@"contact"] valueForKey:@"phone"];
                 place.formattedPhone = [item valueForKeyPath:@"contact.formattedPhone"];
-                                
+                
                 if ([item valueForKey:@"categories"] && [[item valueForKey:@"categories"] count] > 0) {
                     place.icon = [[[item valueForKey:@"categories"] objectAtIndex:0] valueForKey:@"icon"];
                 }
@@ -124,7 +125,7 @@
                     place.icon = @"";
                 }
                 
-                CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:place.coordinate.latitude longitude:place.coordinate.longitude];                
+                CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:place.coordinate.latitude longitude:place.coordinate.longitude];
                 
                 
                 place.distanceFromUser = [placeLocation distanceFromLocation:userLocation];
@@ -154,7 +155,7 @@
                     
                     //add default venue
                     [self.venues insertObject:defaultVenue atIndex:0];
-
+                    
                     // reload the tableView now that we have new data
                     [self.tableView reloadData];
                 }
@@ -168,7 +169,7 @@
             
             UIBarButtonItem *refresh = [[UIBarButtonItem alloc] initWithTitle:@"Refresh" style:UIBarButtonItemStylePlain target:self action:@selector(refreshLocations)];
             self.navigationItem.rightBarButtonItem = refresh;
-        }
+        } 
     }];
 }
 
@@ -335,7 +336,9 @@
     // Send Add request to Foursquare and use the new Venue ID here
     
     CLLocation *location = [CPAppDelegate locationManager].location;
-    [FoursquareAPIRequest addNewPlace:name atLocation:location :^(NSDictionary *json, NSError *error){
+    [FoursquareAPIClient addNewPlace:name
+                          atLocation:location
+                      withCompletion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
         // Do error checking here, in case Foursquare is down
         if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
 #if DEBUG
