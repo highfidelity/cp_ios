@@ -132,7 +132,7 @@
         cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",[user.status gtm_stringByUnescapingFromHTML]];
     }
     
-    cell.checkInLabel.text = user.placeCheckedIn.name;
+    cell.checkInLabel.text = [NSString stringWithFormat:@"@%@", user.placeCheckedIn.name];
 
     [CPUIHelper profileImageView:cell.profilePictureImageView
              withProfileImageUrl:user.photoURL];
