@@ -1,6 +1,3 @@
-[submodule "candpiosapp/Externals/CustomBadge"]
-	path = candpiosapp/Externals/CustomBadge
-	url = git://github.com/ckteebe/CustomBadge.git
 [submodule "candpiosapp/Externals/WEPopover"]
 	path = candpiosapp/Externals/WEPopover
 	url = git://github.com/werner77/WEPopover.git
