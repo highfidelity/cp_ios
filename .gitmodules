@@ -1,6 +1,3 @@
-[submodule "candpiosapp/Externals/UIImage-Categories"]
-	path = candpiosapp/Externals/UIImage-Categories
-	url = git://github.com/mbcharbonneau/UIImage-Categories.git
 [submodule "candpiosapp/Externals/ActionSheetPicker"]
 	path = candpiosapp/Externals/ActionSheetPicker
 	url = git://github.com/TimCinel/ActionSheetPicker.git
