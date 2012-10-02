@@ -107,11 +107,11 @@ static FoursquareAPIClient *_sharedClient;
     [self getVenuesCloseToLocation:location limit:20 categoryID:nil versionString:@"20120302" completion:completion];
 }
 
-+ (void)getTwoClosestNeighborhoodsToLocation:(CLLocation *)location
++ (void)getClosestNeighborhoodToLocation:(CLLocation *)location
                                   completion:(AFRequestCompletionBlock)completion
 {
     // use above helper to return 2 closest venues in the neighborhood category
-    [self getVenuesCloseToLocation:location limit:2 categoryID:@"4f2a25ac4b909258e854f55f" versionString:@"20121001" completion:completion];
+    [self getVenuesCloseToLocation:location limit:1 categoryID:@"4f2a25ac4b909258e854f55f" versionString:@"20121001" completion:completion];
 }
 
 + (void)addNewPlace:(NSString *)name
