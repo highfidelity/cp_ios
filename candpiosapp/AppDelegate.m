@@ -379,8 +379,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
         // Please populate AirshipConfig.plist with your info from http://go.urbanairship.com
         [UAirship takeOff:self.urbanAirshipTakeOffOptions];
         
-        _urbanAirshipClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://go.urbanairship.com/api"]];
-        
         // register for push
         [[UAPush shared] registerForRemoteNotificationTypes:
          (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
