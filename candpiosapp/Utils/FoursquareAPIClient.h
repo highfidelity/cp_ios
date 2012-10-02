@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
+#define kFoursquareNeighborhoodCategoryID @"4f2a25ac4b909258e854f55f"
+
 @interface FoursquareAPIClient: AFHTTPClient
 
 typedef void (^AFRequestCompletionBlock)(AFHTTPRequestOperation *operation, id responseObject, NSError *error);

@@ -14,6 +14,7 @@
 @interface CheckInListViewController()
 
 @property (strong, nonatomic) UIAlertView *addPlaceAlertView;
+@property (strong, nonatomic) CLLocation *searchLocation;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @end
@@ -27,7 +28,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.refreshLocationsNow = YES;
     
     // center the map on the user's current location
     [self.mapView setRegion:MKCoordinateRegionMakeWithDistance([CPAppDelegate locationManager].location.coordinate, 200, 200)
@@ -41,136 +41,138 @@
     UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 1)];
     topLine.backgroundColor = [UIColor colorWithRed:(68.0/255.0) green:(68.0/255.0) blue:(68.0/255.0) alpha:1.0];
     [self.tableView addSubview:topLine];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reloadData)
-                                                 name:@"LoginStateChanged"
-                                               object:nil];
+    
+    [self refreshLocations];
 }
+
+#pragma mark - IBActions 
 
 - (IBAction)closeWindow:(id)sender {
     [SVProgressHUD dismiss];
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)viewDidUnload
-{
-    [self setMapView:nil];
-    [super viewDidUnload];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LoginStateChanged" object:nil];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    if (self.navigationItem.rightBarButtonItem) {
-        self.navigationItem.rightBarButtonItem = nil;
-    }
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-    // Load the list of nearby venues
-    if (self.refreshLocationsNow) {
-        [self refreshLocations];
-        self.refreshLocationsNow = NO;
-    }
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-}
+#pragma mark - View Helpers
 
 - (void)refreshLocations {
 	[SVProgressHUD showWithStatus:@"Loading nearby venues..."];
 
-    // Reset the Places array
-    
+    // Reset the array of venues
     self.venues = [[NSMutableArray alloc] init];
-
-    CLLocation *userLocation = [CPAppDelegate locationManager].location;
-    [FoursquareAPIClient getVenuesCloseToLocation:userLocation completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
-        // Do error checking here, in case Foursquare is down
+    
+    // take the user's location at the beginning of the search and use that for both requests and the venue sorting
+    self.searchLocation = [[CPAppDelegate locationManager].location copy];
+    
+    [FoursquareAPIClient getClosestNeighborhoodToLocation:self.searchLocation completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
+        if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
+            // add the returned neighborhood to the array of venues
+            [self.venues addObjectsFromArray:[self arrayOfVenuesFromFoursquareResponse:json]];
+        }
         
-        if (!error || [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
+        [FoursquareAPIClient getVenuesCloseToLocation:self.searchLocation completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {            
+            if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
+                
+                // add the close venues that foursquare returned to our array of venues
+                [self.venues addObjectsFromArray:[self arrayOfVenuesFromFoursquareResponse:json]];
             
-            // get the array of places that foursquare returned
-            NSArray *itemsArray = [[json valueForKey:@"response"] valueForKey:@"venues"];
-            
-            // iterate through the results and add them to the places array
-            for (NSMutableDictionary *item in itemsArray) {
+                
+                // add a custom place so people can check in if foursquare doesn't have the venue
                 CPVenue *place = [[CPVenue alloc] init];
-                place.name = [item valueForKey:@"name"];
-                place.foursquareID = [item valueForKey:@"id"];
-                place.address = [[item valueForKey:@"location"] valueForKey:@"address"];
-                place.city = [[item valueForKey:@"location"] valueForKey:@"city"];
-                place.state = [[item valueForKey:@"location"] valueForKey:@"state"];
-                place.zip = [[item valueForKey:@"location"] valueForKey:@"postalCode"];
-                place.coordinate = CLLocationCoordinate2DMake([[item valueForKeyPath:@"location.lat"] doubleValue], [[item valueForKeyPath:@"location.lng"] doubleValue]);
-                place.phone = [[item valueForKey:@"contact"] valueForKey:@"phone"];
-                place.formattedPhone = [item valueForKeyPath:@"contact.formattedPhone"];
+                place.name = @"Add Place...";
+                place.foursquareID = @"0";
                 
-                if ([item valueForKey:@"categories"] && [[item valueForKey:@"categories"] count] > 0) {
-                    place.icon = [[[item valueForKey:@"categories"] objectAtIndex:0] valueForKey:@"icon"];
-                }
-                else {
-                    place.icon = @"";
-                }
+                place.coordinate = [CPAppDelegate locationManager].location.coordinate;
+                [self.venues insertObject:place atIndex:[self.venues count]];
                 
-                CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:place.coordinate.latitude longitude:place.coordinate.longitude];
-                
-                
-                place.distanceFromUser = [placeLocation distanceFromLocation:userLocation];
-                [self.venues addObject:place];
-            }
-            
-            // sort the places array by distance from user
-            [self.venues sortUsingSelector:@selector(sortByDistanceToUser:)];
-            
-            // add a custom place so people can checkin if foursquare doesn't have the venue
-            CPVenue *place = [[CPVenue alloc] init];
-            place.name = @"Add Place...";
-            place.foursquareID = @"0";
-            
-            place.coordinate = userLocation.coordinate;
-            
-            [self.venues insertObject:place atIndex:[self.venues count]];
-            
-            [CPapi getDefaultCheckInVenueWithCompletion:^(NSDictionary *jsonVenue, NSError *errorVenue) {
-                BOOL respError = [[jsonVenue objectForKey:@"error"] boolValue];
-                
-                if (!errorVenue && !respError) {
-                    NSDictionary *jsonDict = [jsonVenue objectForKey:@"payload"];
-                    CPVenue *defaultVenue = [[CPVenue alloc] initFromDictionary:jsonDict];
-                    NSPredicate *defaultVenuePredicate = [NSPredicate predicateWithFormat:@"foursquareID != %@", defaultVenue.foursquareID];
-                    [self.venues filterUsingPredicate:defaultVenuePredicate];
+                [CPapi getDefaultCheckInVenueWithCompletion:^(NSDictionary *jsonVenue, NSError *errorVenue) {
+                    BOOL respError = [[jsonVenue objectForKey:@"error"] boolValue];
                     
-                    //add default venue
-                    [self.venues insertObject:defaultVenue atIndex:0];
+                    if (!errorVenue && !respError) {
+                        NSDictionary *jsonDict = [jsonVenue objectForKey:@"payload"];
+                        CPVenue *defaultVenue = [[CPVenue alloc] initFromDictionary:jsonDict];
+                        NSPredicate *defaultVenuePredicate = [NSPredicate predicateWithFormat:@"foursquareID != %@", defaultVenue.foursquareID];
+                        [self.venues filterUsingPredicate:defaultVenuePredicate];
+                        
+                        //add default venue
+                        [self.venues insertObject:defaultVenue atIndex:1];
+                        
+                        // reload the tableView now that we have new data
+                        [self.tableView reloadData];
+                    }
                     
-                    // reload the tableView now that we have new data
-                    [self.tableView reloadData];
-                }
+                    // dismiss the loading HUD
+                    [SVProgressHUD dismiss];
+                }];
+            } else {
+                // dismiss the progress HUD with an error
+                [SVProgressHUD dismissWithError:@"Oops!\nCouldn't get the data." afterDelay:3];
                 
-                // dismiss the loading HUD
-                [SVProgressHUD dismiss];
-            }];
-        } else {
-            // dismiss the progress HUD with an error
-            [SVProgressHUD dismissWithError:@"Oops!\nCouldn't get the data." afterDelay:3];
-            
-            UIBarButtonItem *refresh = [[UIBarButtonItem alloc] initWithTitle:@"Refresh" style:UIBarButtonItemStylePlain target:self action:@selector(refreshLocations)];
-            self.navigationItem.rightBarButtonItem = refresh;
-        } 
-    }];
+                UIBarButtonItem *refresh = [[UIBarButtonItem alloc] initWithTitle:@"Refresh" style:UIBarButtonItemStylePlain target:self action:@selector(refreshLocations)];
+                self.navigationItem.rightBarButtonItem = refresh;
+            } 
+        }];
+    }];   
+}
+
+- (NSArray *)arrayOfVenuesFromFoursquareResponse:(NSDictionary *)json
+{
+    // setup venueArray to pass back in return
+    NSMutableArray *venueArray =  [NSMutableArray array];
+
+    // grab the foursquare venue array from the json response
+    NSArray *foursquareVenueArray = [[json valueForKey:@"response"] valueForKey:@"venues"];
+    
+    // iterate through the results and add them to the places array
+    for (NSMutableDictionary *foursquareVenueDict in foursquareVenueArray) {
+        CPVenue *venue = [[CPVenue alloc] initFromFoursquareDictionary:foursquareVenueDict userLocation:self.searchLocation];
+        [venueArray addObject:venue];
+    }
+    
+    return venueArray;
+}
+
+- (void)addNewPlace:(NSString *)name {
+	[SVProgressHUD showWithStatus:@"Saving new place..."];
+    
+    CPVenue *place = [self.venues objectAtIndex:[self.tableView indexPathForSelectedRow].row];
+    place.name = name;
+    
+    // Send Add request to Foursquare and use the new Venue ID here
+    
+    CLLocation *location = [CPAppDelegate locationManager].location;
+    [FoursquareAPIClient addNewPlace:name
+                            location:location
+                          completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
+                              // Do error checking here, in case Foursquare is down
+                              if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
+#if DEBUG
+                                  NSLog(@"JSON returned: %@", [json description]);
+#endif
+                                  
+                                  NSString *venueID = [json valueForKeyPath:@"response.venue.id"];
+                                  
+                                  place.foursquareID = venueID;
+                              }
+                              else if ([[json valueForKeyPath:@"meta.code"] intValue] == 409) {
+                                  // 409 means a duplicate was found, use the id from the duplicate; if you really want to get fancy, show a list of all possible dupes but that's overkill for now
+                                  
+                                  NSArray *venues = [json valueForKeyPath:@"response.candidateDuplicateVenues"];
+                                  
+                                  NSString *venueID = [[venues objectAtIndex:0] objectForKey:@"id"];
+                                  
+                                  place.foursquareID = venueID;
+                              }
+                              else {
+                                  // Error encountered, but let the user check in anyhow and use a randomly generated ID so that it will still be tracked internally
+                                  place.foursquareID = [NSString stringWithFormat:@"CandP%@", [[NSProcessInfo processInfo] globallyUniqueString]];
+                                  
+                                  NSLog(@"Error encountered while adding venue to Foursquare");
+                              }
+                              
+                              [SVProgressHUD dismiss];
+                              
+                              [self performSegueWithIdentifier:@"ShowCheckInDetailsView" sender:self];
+                          }];    
 }
 
 #pragma mark - Table view data source
@@ -206,6 +208,8 @@
         // get the localized distance string based on the distance of this venue from the user
         // which we set when we sort the places
         if (indexPath.row == 0) {
+            cell.distanceString.text = @"WFH";
+        } else if (indexPath.row == 1) {
             cell.distanceString.text = @"Recent";
         } else {
             cell.distanceString.text = [CPUtils localizedDistanceStringForDistance:[[self.venues objectAtIndex:indexPath.row] distanceFromUser]];
@@ -227,6 +231,8 @@
 }
 
 #pragma mark - Table view delegate
+
+#define SWITCH_VENUE_ALERT_TAG 1230
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -254,8 +260,6 @@
                                                cancelButtonTitle:@"Cancel" 
                                                otherButtonTitles:@"Yes", nil];
             
-#define SWITCH_VENUE_ALERT_TAG 1230
-            
             switchVenueConfirm.tag = SWITCH_VENUE_ALERT_TAG;
             [switchVenueConfirm show];
             
@@ -269,6 +273,9 @@
                                   duration:kDefaultDismissDelay];
         [CPUserSessionHandler performSelector:@selector(showSignupModalFromViewController:animated:) withObject:self afterDelay:kDefaultDismissDelay];
     }
+    
+    // deselect the row
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -296,7 +303,7 @@
     }
 }
 
-# pragma mark - AlertView
+# pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == SWITCH_VENUE_ALERT_TAG) {
@@ -318,6 +325,8 @@
     }    
 }
 
+#pragma mark - UITextFieldDelegate
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     
@@ -325,50 +334,6 @@
     [self.addPlaceAlertView dismissWithClickedButtonIndex:1 animated:YES];
     [self addNewPlace:textField.text];
     return YES;
-}
-
-- (void)addNewPlace:(NSString *)name {
-	[SVProgressHUD showWithStatus:@"Saving new place..."];
-
-    CPVenue *place = [self.venues objectAtIndex:[self.tableView indexPathForSelectedRow].row];
-    place.name = name;
-    
-    // Send Add request to Foursquare and use the new Venue ID here
-    
-    CLLocation *location = [CPAppDelegate locationManager].location;
-    [FoursquareAPIClient addNewPlace:name
-                          location:location
-                      completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
-        // Do error checking here, in case Foursquare is down
-        if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
-#if DEBUG
-            NSLog(@"JSON returned: %@", [json description]);
-#endif
-            
-            NSString *venueID = [json valueForKeyPath:@"response.venue.id"];
-            
-            place.foursquareID = venueID;
-        }
-        else if ([[json valueForKeyPath:@"meta.code"] intValue] == 409) {
-            // 409 means a duplicate was found, use the id from the duplicate; if you really want to get fancy, show a list of all possible dupes but that's overkill for now
-
-            NSArray *venues = [json valueForKeyPath:@"response.candidateDuplicateVenues"];
-            
-            NSString *venueID = [[venues objectAtIndex:0] objectForKey:@"id"];
-
-            place.foursquareID = venueID;
-        }
-        else {
-            // Error encountered, but let the user check in anyhow and use a randomly generated ID so that it will still be tracked internally
-            place.foursquareID = [NSString stringWithFormat:@"CandP%@", [[NSProcessInfo processInfo] globallyUniqueString]];
-
-            NSLog(@"Error encountered while adding venue to Foursquare");
-        }
-        
-        [SVProgressHUD dismiss];
-        
-        [self performSegueWithIdentifier:@"ShowCheckInDetailsView" sender:self];
-    }];    
 }
 
 @end

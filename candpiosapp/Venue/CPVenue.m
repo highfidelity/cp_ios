@@ -8,11 +8,111 @@
 #import "CPVenue.h"
 #import <CoreLocation/CoreLocation.h>
 #import "VenueInfoViewController.h"
+#import "FoursquareAPIClient.h"
 
 @implementation CPVenue
 
 // override setters here to that when we parse JSON to set values we don't set things to null
 // TODO: find out if there is a JSON parser that will just set these values to nil or empty strings so we don't have to do this everywhere
+
+- (CPVenue *)initFromDictionary:(NSDictionary *)json
+{
+    self = [super init];
+    if (self) {
+        self.venueID = [[json objectForKey:@"venue_id"] intValue];
+        self.name = [json objectForKey:@"name"];
+        self.address = [json objectForKey:@"address"];
+        self.city = [json objectForKey:@"city"];
+        self.state = [json objectForKey:@"state"];
+        self.phone = [json objectForKey:@"phone"];
+        self.formattedPhone = [json objectForKey:@"formatted_phone"];
+        self.distanceFromUser = [[json objectForKey:@"distance"] doubleValue];
+        self.foursquareID = [json objectForKey:@"foursquare_id"];
+        self.checkinCount = [[json objectForKey:@"checkins"] integerValue];
+        self.weeklyCheckinCount = [[json objectForKey:@"checkins_for_week"] integerValue];
+        self.intervalCheckinCount = [[json objectForKey:@"checkins_for_interval"] integerValue];
+        self.virtualCheckinCount = [[json objectForKey:@"virtual_checkins"] integerValue];
+        self.photoURL = [json objectForKey:@"photo_url"];
+        self.specialVenueType = [json objectForKey:@"special_venue_type"];
+        self.postsCount = [[json objectForKey:@"posts_count"] unsignedIntValue];
+        
+        if (![[json objectForKey:@"lat"] isKindOfClass:[NSNull class]] && ![[json objectForKey:@"lng"] isKindOfClass:[NSNull class]]) {
+            self.coordinate = CLLocationCoordinate2DMake([[json objectForKey:@"lat"] doubleValue], [[json objectForKey:@"lng"] doubleValue]);
+        }
+        
+        self.activeUsers = [json objectForKey:@"users"];
+        self.utc = [json objectForKey:@"utc"];
+        
+    }
+    return self;
+}
+
+- (CPVenue *)initFromFoursquareDictionary:(NSDictionary *)json userLocation:(CLLocation *)userLocation
+{
+    if (self = [super init]) {
+        self.name = [json valueForKey:@"name"];
+        self.foursquareID = [json valueForKey:@"id"];
+        self.address = [[json valueForKey:@"location"] valueForKey:@"address"];
+        self.city = [[json valueForKey:@"location"] valueForKey:@"city"];
+        self.state = [[json valueForKey:@"location"] valueForKey:@"state"];
+        self.zip = [[json valueForKey:@"location"] valueForKey:@"postalCode"];
+        self.coordinate = CLLocationCoordinate2DMake([[json valueForKeyPath:@"location.lat"] doubleValue], [[json valueForKeyPath:@"location.lng"] doubleValue]);
+        self.phone = [[json valueForKey:@"contact"] valueForKey:@"phone"];
+        self.formattedPhone = [json valueForKeyPath:@"contact.formattedPhone"];
+        
+        // check if this venue is considered a neighborhood
+        for (NSDictionary *categoryDict in [json valueForKey:@"categories"]) {
+            if (self.isNeighborhood = [[categoryDict objectForKey:@"id"] isEqualToString:kFoursquareNeighborhoodCategoryID]) {
+                break;
+            }
+        }
+        
+        // if it's not a neighborhood then we need to set the distanceFromUser property
+        if (!self.isNeighborhood) {
+            
+            CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:self.coordinate.latitude longitude:self.coordinate.longitude];
+            self.distanceFromUser = [placeLocation distanceFromLocation:userLocation];
+        }
+    }
+    
+    return self;
+}
+
+-(id)initWithCoder:(NSCoder *)decoder
+{
+    self = [super init];
+    if (self)
+    {
+        self.name = [decoder decodeObjectForKey:@"name"];
+        self.foursquareID = [decoder decodeObjectForKey:@"foursquareID"];
+        self.venueID = [decoder decodeIntegerForKey:@"venueID"];
+        self.coordinate = CLLocationCoordinate2DMake([[decoder decodeObjectForKey:@"lat"] doubleValue], [[decoder decodeObjectForKey:@"lng"] doubleValue]);
+        self.address = [decoder decodeObjectForKey:@"address"];
+        self.phone = [decoder decodeObjectForKey:@"phone"];
+        self.photoURL = [decoder decodeObjectForKey:@"photoURL"];
+        self.checkinTime = [decoder decodeIntegerForKey:@"checkinTime"];
+        self.autoCheckin = [[decoder decodeObjectForKey:@"autoCheckin"] boolValue];
+        self.specialVenueType = [decoder decodeObjectForKey:@"specialVenueType"];
+        self.utc = [decoder decodeObjectForKey:@"utc"];
+    }
+    return self;
+}
+
+-(void)encodeWithCoder:(NSCoder *)encoder
+{
+    [encoder encodeObject:self.name forKey:@"name"];
+    [encoder encodeObject:self.foursquareID forKey:@"foursquareID"];
+    [encoder encodeInt:self.venueID forKey:@"venueID"];
+    [encoder encodeObject:[NSNumber numberWithDouble:self.coordinate.latitude] forKey:@"lat"];
+    [encoder encodeObject:[NSNumber numberWithDouble:self.coordinate.longitude] forKey:@"lng"];
+    [encoder encodeObject:self.address forKey:@"address"];
+    [encoder encodeObject:self.phone forKey:@"phone"];
+    [encoder encodeObject:self.photoURL forKey:@"photoURL"];
+    [encoder encodeInt:self.checkinTime forKey:@"checkinTime"];
+    [encoder encodeObject:[NSNumber numberWithBool:self.autoCheckin] forKey:@"autoCheckin"];
+    [encoder encodeObject:self.specialVenueType forKey:@"specialVenueType"];
+    [encoder encodeObject:self.utc forKey:@"utc"];
+}
 
 - (void)setAddress:(NSString *)address
 {
@@ -104,37 +204,7 @@
     return _activeUsers;
 }
 
-- (CPVenue *)initFromDictionary:(NSDictionary *)json
-{
-    self = [super init];
-    if (self) {
-        self.venueID = [[json objectForKey:@"venue_id"] intValue];
-        self.name = [json objectForKey:@"name"];
-        self.address = [json objectForKey:@"address"];
-        self.city = [json objectForKey:@"city"];
-        self.state = [json objectForKey:@"state"];
-        self.phone = [json objectForKey:@"phone"];
-        self.formattedPhone = [json objectForKey:@"formatted_phone"];
-        self.distanceFromUser = [[json objectForKey:@"distance"] doubleValue];
-        self.foursquareID = [json objectForKey:@"foursquare_id"];
-        self.checkinCount = [[json objectForKey:@"checkins"] integerValue];
-        self.weeklyCheckinCount = [[json objectForKey:@"checkins_for_week"] integerValue];
-        self.intervalCheckinCount = [[json objectForKey:@"checkins_for_interval"] integerValue];
-        self.virtualCheckinCount = [[json objectForKey:@"virtual_checkins"] integerValue];
-        self.photoURL = [json objectForKey:@"photo_url"];
-        self.specialVenueType = [json objectForKey:@"special_venue_type"];
-        self.postsCount = [[json objectForKey:@"posts_count"] unsignedIntValue];
-        
-        if (![[json objectForKey:@"lat"] isKindOfClass:[NSNull class]] && ![[json objectForKey:@"lng"] isKindOfClass:[NSNull class]]) {
-            self.coordinate = CLLocationCoordinate2DMake([[json objectForKey:@"lat"] doubleValue], [[json objectForKey:@"lng"] doubleValue]);
-        }
-        
-        self.activeUsers = [json objectForKey:@"users"];
-        self.utc = [json objectForKey:@"utc"];
 
-    }
-    return self;
-}
 
 // this method is used in CheckInListTableViewController to sort the array of places
 // by the distance of each place from the user
@@ -195,42 +265,6 @@
         subtitleString = [NSString stringWithFormat:@"%d %@ in the last week", self.weeklyCheckinCount, self.weeklyCheckinCount > 1 ? @"people" : @"person"];
     }
     return subtitleString;
-}
-
--(id)initWithCoder:(NSCoder *)decoder
-{
-    self = [super init];
-    if (self) 
-    {
-        self.name = [decoder decodeObjectForKey:@"name"];
-        self.foursquareID = [decoder decodeObjectForKey:@"foursquareID"];
-        self.venueID = [decoder decodeIntegerForKey:@"venueID"];
-        self.coordinate = CLLocationCoordinate2DMake([[decoder decodeObjectForKey:@"lat"] doubleValue], [[decoder decodeObjectForKey:@"lng"] doubleValue]);
-        self.address = [decoder decodeObjectForKey:@"address"];
-        self.phone = [decoder decodeObjectForKey:@"phone"];
-        self.photoURL = [decoder decodeObjectForKey:@"photoURL"];
-        self.checkinTime = [decoder decodeIntegerForKey:@"checkinTime"];
-        self.autoCheckin = [[decoder decodeObjectForKey:@"autoCheckin"] boolValue];
-        self.specialVenueType = [decoder decodeObjectForKey:@"specialVenueType"];
-        self.utc = [decoder decodeObjectForKey:@"utc"];
-    }    
-    return self;
-}
-
--(void)encodeWithCoder:(NSCoder *)encoder
-{
-    [encoder encodeObject:self.name forKey:@"name"];
-    [encoder encodeObject:self.foursquareID forKey:@"foursquareID"];
-    [encoder encodeInt:self.venueID forKey:@"venueID"];
-    [encoder encodeObject:[NSNumber numberWithDouble:self.coordinate.latitude] forKey:@"lat"];
-    [encoder encodeObject:[NSNumber numberWithDouble:self.coordinate.longitude] forKey:@"lng"];
-    [encoder encodeObject:self.address forKey:@"address"];
-    [encoder encodeObject:self.phone forKey:@"phone"];
-    [encoder encodeObject:self.photoURL forKey:@"photoURL"];
-    [encoder encodeInt:self.checkinTime forKey:@"checkinTime"];
-    [encoder encodeObject:[NSNumber numberWithBool:self.autoCheckin] forKey:@"autoCheckin"];
-    [encoder encodeObject:self.specialVenueType forKey:@"specialVenueType"];
-    [encoder encodeObject:self.utc forKey:@"utc"];
 }
 
 -(BOOL)isEqual:(id)object
