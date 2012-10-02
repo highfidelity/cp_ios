@@ -158,6 +158,8 @@
 		533AFECF1523E87200D6E6A9 /* default-avatar-256@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */; };
 		533B1DA515A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 533B1DA315A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard */; };
 		533B1DA915A3D3300072997D /* CheckInListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533B1DA815A3D3300072997D /* CheckInListViewController.m */; };
+		533E43EE161B947E00432377 /* wfh-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 533E43EC161B947E00432377 /* wfh-icon.png */; };
+		533E43EF161B947E00432377 /* wfh-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533E43ED161B947E00432377 /* wfh-icon@2x.png */; };
 		533E5EF015A3A88C0042862E /* PostBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533E5ED615A3A88C0042862E /* PostBaseCell.m */; };
 		533E5EF115A3A88C0042862E /* PostLoveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533E5ED815A3A88C0042862E /* PostLoveCell.m */; };
 		533E5EF215A3A88C0042862E /* NewPostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533E5EDA15A3A88C0042862E /* NewPostCell.m */; };
@@ -816,6 +818,8 @@
 		533B1DA315A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CheckinStoryboard_iPhone.storyboard; path = Checkin/CheckinStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		533B1DA715A3D3300072997D /* CheckInListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CheckInListViewController.h; path = Checkin/CheckInListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		533B1DA815A3D3300072997D /* CheckInListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInListViewController.m; path = Checkin/CheckInListViewController.m; sourceTree = "<group>"; };
+		533E43EC161B947E00432377 /* wfh-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wfh-icon.png"; path = "Checkin/images/wfh-icon.png"; sourceTree = "<group>"; };
+		533E43ED161B947E00432377 /* wfh-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wfh-icon@2x.png"; path = "Checkin/images/wfh-icon@2x.png"; sourceTree = "<group>"; };
 		533E5ED515A3A88C0042862E /* PostBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostBaseCell.h; sourceTree = "<group>"; };
 		533E5ED615A3A88C0042862E /* PostBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostBaseCell.m; sourceTree = "<group>"; };
 		533E5ED715A3A88C0042862E /* PostLoveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostLoveCell.h; sourceTree = "<group>"; };
@@ -2013,14 +2017,10 @@
 		536DE92A150170CC00794650 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				536E1E6A1554947E00052D40 /* check-in-big.png */,
+				536E1E6B1554947E00052D40 /* check-in-big@2x.png */,
 				5338B0971606C7DC00C23B4B /* check-in-button.png */,
 				5338B0981606C7DC00C23B4B /* check-in-button@2x.png */,
-				53A1EAA91587B4B7009D8E31 /* tab-check-in-clock-hand.png */,
-				53A1EAAA1587B4B7009D8E31 /* tab-check-in-clock-hand@2x.png */,
-				53A1EAAB1587B4B7009D8E31 /* tab-check-in.png */,
-				53A1EAAC1587B4B7009D8E31 /* tab-check-in@2x.png */,
-				53A1EAAD1587B4B7009D8E31 /* tab-check-out.png */,
-				53A1EAAE1587B4B7009D8E31 /* tab-check-out@2x.png */,
 				536E1E6E155494A100052D40 /* check-in-slider-grooves-dark.png */,
 				536E1E6F155494A100052D40 /* check-in-slider-grooves-dark@2x.png */,
 				536E1E70155494A100052D40 /* check-in-slider-grooves-light.png */,
@@ -2029,8 +2029,14 @@
 				536E1E73155494A100052D40 /* check-in-slider-handle@2x.png */,
 				536E1E74155494A100052D40 /* check-in-status-arrow.png */,
 				536E1E75155494A100052D40 /* check-in-status-arrow@2x.png */,
-				536E1E6A1554947E00052D40 /* check-in-big.png */,
-				536E1E6B1554947E00052D40 /* check-in-big@2x.png */,
+				53A1EAA91587B4B7009D8E31 /* tab-check-in-clock-hand.png */,
+				53A1EAAA1587B4B7009D8E31 /* tab-check-in-clock-hand@2x.png */,
+				53A1EAAB1587B4B7009D8E31 /* tab-check-in.png */,
+				53A1EAAC1587B4B7009D8E31 /* tab-check-in@2x.png */,
+				53A1EAAD1587B4B7009D8E31 /* tab-check-out.png */,
+				53A1EAAE1587B4B7009D8E31 /* tab-check-out@2x.png */,
+				533E43EC161B947E00432377 /* wfh-icon.png */,
+				533E43ED161B947E00432377 /* wfh-icon@2x.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -3178,6 +3184,8 @@
 				53BBBFFA1612B25700F5C14B /* uv_vote_chicklet_empty@2x.png in Resources */,
 				53BBC03F1612B70D00F5C14B /* OATestServer.rb in Resources */,
 				53BBC0421612B70D00F5C14B /* README in Resources */,
+				533E43EE161B947E00432377 /* wfh-icon.png in Resources */,
+				533E43EF161B947E00432377 /* wfh-icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

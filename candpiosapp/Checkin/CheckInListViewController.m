@@ -207,33 +207,49 @@
 {    
     // note that this code will cause the app to crash if these identifiers don't match what is in the storyboard
     // we'd catch that before going to the store, but be careful
-    CheckInListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCell"];
+    CheckInListCell *cell;
+    
+    CPVenue *cellVenue = [self.venues objectAtIndex:indexPath.row];
+    
+    NSString *nameLabelText = cellVenue.name;
     
     // if this is the "place not listed" cell then we have a different identifier
     if (indexPath.row == [self.venues count] - 1) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCellNotListed"];
     } else {
-        // get the localized distance string based on the distance of this venue from the user
-        // which we set when we sort the places
-        if (indexPath.row == 0) {
-            cell.distanceString.text = @"WFH";
-        } else if (indexPath.row == 1) {
-            cell.distanceString.text = @"Recent";
+               
+        if (cellVenue.isNeighborhood) {
+            // this cell is for a neighborhood so grab the right cell
+            cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCellWFH"];
+            
+            // WFH venues have a custom name label, not just the venue name
+            nameLabelText = [NSString stringWithFormat:@"in %@", cellVenue.name];
         } else {
-            cell.distanceString.text = [CPUtils localizedDistanceStringForDistance:[[self.venues objectAtIndex:indexPath.row] distanceFromUser]];
-        }
-        
-        cell.venueAddress.text = [[[self.venues objectAtIndex:indexPath.row] address] description];
-        if (!cell.venueAddress.text || [cell.venueAddress.text length] == 0) {
-            // if we don't have an address then move the venuename down
-            cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 19, cell.venueName.frame.size.width, cell.venueName.frame.size.height);
-        } else {
-            // otherwise put it back since we re-use the cells
-            cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 11, cell.venueName.frame.size.width, cell.venueName.frame.size.height);
+            // grab the standard cell from the table view
+            cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCell"];
+            
+            if (indexPath.row == 1) {
+                // this is the user's recent venue
+                cell.distanceString.text = @"Recent";
+            } else {
+                // get the localized distance string based on the distance of this venue from the user
+                // which we set when we sort the places
+                cell.distanceString.text = [CPUtils localizedDistanceStringForDistance:[cellVenue distanceFromUser]];
+            }
+            
+            cell.venueAddress.text = cellVenue.address;
+            
+            if (!cell.venueAddress.text || [cell.venueAddress.text length] == 0) {
+                // if we don't have an address then move the venuename down
+                cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 19, cell.venueName.frame.size.width, cell.venueName.frame.size.height);
+            } else {
+                // otherwise put it back since we re-use the cells
+                cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 11, cell.venueName.frame.size.width, cell.venueName.frame.size.height);
+            }
         }
     }
     
-    cell.venueName.text = [[self.venues objectAtIndex:indexPath.row] name];
+    cell.venueName.text = nameLabelText;
     
     return cell;
 }
