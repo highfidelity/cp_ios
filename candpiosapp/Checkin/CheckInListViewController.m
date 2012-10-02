@@ -343,8 +343,6 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    
-    NSLog(@"text: %@", textField.text);
     [self.addPlaceAlertView dismissWithClickedButtonIndex:1 animated:YES];
     [self addNewPlace:textField.text];
     return YES;
