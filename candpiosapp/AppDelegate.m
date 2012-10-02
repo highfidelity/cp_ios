@@ -244,12 +244,9 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     // Set my UserID as an UrbanAirship alias for push notifications
     NSString *userid = [NSString stringWithFormat:@"%d", [CPUserDefaultsHandler currentUser].userID];
     
-    NSLog(@"Pushing aliases to UrbanAirship: %@", userid);
+    NSLog(@"Attempting to register user alias %@ with UrbanAirship", userid);
     [UAPush shared].alias = userid;
     [[UAPush shared] updateRegistration];
-    
-    // make sure that the signup modal has been dismissed if its still around
-    [CPUserSessionHandler dismissSignupModalFromPresentingViewController];
 }
 
 - (void)application:(UIApplication *)app
