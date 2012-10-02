@@ -240,15 +240,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 
 # pragma mark - Push Notifications
 
-- (void)pushAliasUpdate {
-    // Set my UserID as an UrbanAirship alias for push notifications
-    NSString *userid = [NSString stringWithFormat:@"%d", [CPUserDefaultsHandler currentUser].userID];
-    
-    NSLog(@"Attempting to register user alias %@ with UrbanAirship", userid);
-    [UAPush shared].alias = userid;
-    [[UAPush shared] updateRegistration];
-}
-
 - (void)application:(UIApplication *)app
 didReceiveLocalNotification:(UILocalNotification *)notif
 {    
@@ -354,6 +345,31 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 #pragma mark - Third Party SDKs
 
+- (void)setupUrbanAirship
+{
+    if (self.urbanAirshipTakeOffOptions) {
+        // Create Airship singleton that's used to talk to Urban Airship servers.
+        // Please populate AirshipConfig.plist with your info from http://go.urbanairship.com
+        [UAirship takeOff:self.urbanAirshipTakeOffOptions];
+        
+        // register for push
+        [[UAPush shared] registerForRemoteNotificationTypes:
+         (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+        
+        // nil out the urban airship take off options
+        self.urbanAirshipTakeOffOptions = nil;
+    }
+}
+
+- (void)pushAliasUpdate {
+    // Set my UserID as an UrbanAirship alias for push notifications
+    NSString *userid = [NSString stringWithFormat:@"%d", [CPUserDefaultsHandler currentUser].userID];
+    
+    NSLog(@"Attempting to register user alias %@ with UrbanAirship", userid);
+    [UAPush shared].alias = userid;
+    [[UAPush shared] updateRegistration];
+}
+
 - (void)setupTestFlightSDK
 {
     // if this is a build for TestFlight then set the user's UDID so sessions in testflight are associated with them
@@ -370,22 +386,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 #endif
     
     [TestFlight takeOff:kTestFlightKey];
-}
-
-- (void)setupUrbanAirship
-{
-    if (self.urbanAirshipTakeOffOptions) {
-        // Create Airship singleton that's used to talk to Urban Airship servers.
-        // Please populate AirshipConfig.plist with your info from http://go.urbanairship.com
-        [UAirship takeOff:self.urbanAirshipTakeOffOptions];
-        
-        // register for push
-        [[UAPush shared] registerForRemoteNotificationTypes:
-         (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-        
-        // nil out the urban airship take off options
-        self.urbanAirshipTakeOffOptions = nil;
-    }
 }
 
 -(void)setupFlurryAnalytics
