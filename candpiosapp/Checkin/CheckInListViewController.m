@@ -10,6 +10,7 @@
 #import "CheckInListCell.h"
 #import "FoursquareAPIClient.h"
 #import "CPUserSessionHandler.h"
+#import "SVPullToRefresh.h"
 
 @interface CheckInListViewController()
 
@@ -42,7 +43,13 @@
     topLine.backgroundColor = [UIColor colorWithRed:(68.0/255.0) green:(68.0/255.0) blue:(68.0/255.0) alpha:1.0];
     [self.tableView addSubview:topLine];
     
-    [self refreshLocations];
+    // add pull to refresh to UITableView using SVPullToRefresh
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        [self refreshLocations];
+    }];
+    
+    // trigger a refresh of the tableView
+    [self.tableView.pullToRefreshView triggerRefresh];
 }
 
 #pragma mark - IBActions 
@@ -55,8 +62,7 @@
 #pragma mark - View Helpers
 
 - (void)refreshLocations {
-	[SVProgressHUD showWithStatus:@"Loading nearby venues..."];
-
+    
     // Reset the array of venues
     self.venues = [[NSMutableArray alloc] init];
     
@@ -100,16 +106,18 @@
                         [self.tableView reloadData];
                     }
                     
-                    // dismiss the loading HUD
-                    [SVProgressHUD dismiss];
+                 [self.tableView.pullToRefreshView stopAnimating];
                 }];
             } else {
-                // dismiss the progress HUD with an error
-                [SVProgressHUD dismissWithError:@"Oops!\nCouldn't get the data." afterDelay:3];
+                UIAlertView *bulkLoadFail = [[UIAlertView alloc] initWithTitle:@"Oops!"
+                                                                       message:@"There was a problem getting data from foursquare."
+                                                                      delegate:self
+                                                             cancelButtonTitle:@"Cancel"
+                                                             otherButtonTitles:@"Refresh", nil];
                 
-                UIBarButtonItem *refresh = [[UIBarButtonItem alloc] initWithTitle:@"Refresh" style:UIBarButtonItemStylePlain target:self action:@selector(refreshLocations)];
-                self.navigationItem.rightBarButtonItem = refresh;
-            } 
+                [self.tableView.pullToRefreshView stopAnimating];
+                [bulkLoadFail show];
+            }
         }];
     }];   
 }
@@ -312,7 +320,7 @@
         } else {
             [self dismissModalViewControllerAnimated:YES];
         }
-    } else {
+    } else if (alertView == self.addPlaceAlertView) {
         NSString *name = [alertView textFieldAtIndex:0].text;
         
         // Check for a valid name, otherwise cancel the Add Place request
@@ -322,7 +330,13 @@
         else {
             [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
         }
-    }    
+    } else {
+        // this was the foursquare error alert view
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            // trigger a refresh of the table view if the user asked for one
+            [self.tableView.pullToRefreshView triggerRefresh];
+        }
+    }
 }
 
 #pragma mark - UITextFieldDelegate

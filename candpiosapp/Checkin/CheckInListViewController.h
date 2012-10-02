@@ -11,7 +11,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *venues;
-@property (nonatomic) BOOL refreshLocationsNow;
 
 - (IBAction)closeWindow:(id)sender;
 - (void)refreshLocations;
