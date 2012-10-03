@@ -12,7 +12,7 @@
 #import "CPUserSessionHandler.h"
 #import "SVPullToRefresh.h"
 
-@interface CheckInListViewController() <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface CheckInListViewController() <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -20,6 +20,7 @@
 @property (strong, nonatomic) CPVenue *neighborhoodVenue;
 @property (strong, nonatomic) CPVenue *defaultVenue;
 @property (strong, nonatomic) CLLocation *searchLocation;
+@property (strong, nonatomic) CLLocationManager *checkinLocationManager;
 
 - (IBAction)closeWindow:(id)sender;
 - (void)refreshLocations;
@@ -36,9 +37,10 @@
 {
     [super viewDidLoad];
     
-    // center the map on the user's current location
-    [self.mapView setRegion:MKCoordinateRegionMakeWithDistance([CPAppDelegate locationManager].location.coordinate, 200, 200)
-                   animated:YES];
+    // move the mapView to the user's current location
+    // and start location updates so the mapView moves if the user does
+    [self zoomMapViewToLocation:self.checkinLocationManager.location];
+    [self.checkinLocationManager startUpdatingLocation];
     
     // don't set the seperator here, add it manually in storyboard
     // allows us to show a line on the top cell when you are at the top of the table view
@@ -58,6 +60,18 @@
     [self.tableView.pullToRefreshView triggerRefresh];
 }
 
+#pragma mark - Overriden getters
+
+- (CLLocationManager *)checkinLocationManager
+{
+    if (!_checkinLocationManager) {
+        _checkinLocationManager = [[CLLocationManager alloc] init];
+        _checkinLocationManager.delegate = self;
+    }
+    
+    return _checkinLocationManager;
+}
+
 #pragma mark - IBActions 
 
 - (IBAction)closeWindow:(id)sender {
@@ -68,7 +82,7 @@
 
 - (void)refreshLocations {    
     // take the user's location at the beginning of the search and use that for both requests and the venue sorting
-    self.searchLocation = [[CPAppDelegate locationManager].location copy];
+    self.searchLocation = [self.checkinLocationManager.location copy];
     
     // reset the neighborhood venue
     self.neighborhoodVenue = nil;
@@ -319,6 +333,18 @@
             [self.tableView.pullToRefreshView triggerRefresh];
         }
     }
+}
+
+#pragma mark - CLLocationManagerDelegate
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    [self zoomMapViewToLocation:newLocation];
+}
+
+- (void)zoomMapViewToLocation:(CLLocation *)newLocation
+{
+    // center the map on the user's current location
+    [self.mapView setRegion:MKCoordinateRegionMakeWithDistance(newLocation.coordinate, 200, 200) animated:YES];
 }
 
 @end
