@@ -20,6 +20,7 @@
 @property (strong, nonatomic) UIView *greenLine;
 @property (strong, nonatomic) NSMutableArray *actionButtonIconImageViews;
 @property (strong, nonatomic) NSMutableArray *actionMenuButtons;
+@property (strong, nonatomic) UIButton *checkInOutButton;
 
 @end
 
@@ -37,6 +38,10 @@ static NSArray *tabBarIcons;
                        [UIImage imageNamed:@"tab-contacts"],
                        [UIImage imageNamed:@"tab-login"], nil];
     }
+}
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 + (UIImage *)backgroundImage
@@ -286,7 +291,15 @@ static NSArray *tabBarIcons;
     self.actionMenuButtons = [NSMutableArray array];
     [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"update" topMargin:UPDATE_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(updateButtonPressed:)]];
     [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"question" topMargin:QUESTION_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(questionButtonPressed:)]];
-    [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"checkin" topMargin:CHECKIN_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(checkinButtonPressed:)]];
+    
+    self.checkInOutButton = [self actionMenuButtonWithImageSuffix:[self checkInOutImageSuffix] topMargin:CHECKIN_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(checkinButtonPressed:)];
+    [self.actionMenuButtons addObject:self.checkInOutButton];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshCheckinButton)
+                                                 name:@"userCheckInStateChange"
+                                               object:nil];
+    
 }
 
 - (UIButton *)actionMenuButtonWithImageSuffix:(NSString *)imageSuffix 
@@ -369,6 +382,17 @@ static NSArray *tabBarIcons;
     } else {
         return [super hitTest:point withEvent:event];
     } 
+}
+
+- (void)refreshCheckinButton
+{
+    UIImage *backgroundImage = [UIImage imageNamed:[NSString stringWithFormat:@"action-menu-button-%@", [self checkInOutImageSuffix]]];
+    [self.checkInOutButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
+}
+
+-(NSString *)checkInOutImageSuffix
+{
+    return [CPUserDefaultsHandler isUserCurrentlyCheckedIn] ? @"check-out" : @"check-in";
 }
 
 @end

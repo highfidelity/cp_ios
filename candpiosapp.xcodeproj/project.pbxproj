@@ -22,6 +22,10 @@
 		32D1E99A15701993009B45BD /* checkbox-checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D1E99615701993009B45BD /* checkbox-checked@2x.png */; };
 		32D1E99B15701993009B45BD /* checkbox-unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D1E99715701993009B45BD /* checkbox-unchecked.png */; };
 		32D1E99C15701993009B45BD /* checkbox-unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D1E99815701993009B45BD /* checkbox-unchecked@2x.png */; };
+		3DA3548D161CC37D00275558 /* action-menu-button-check-in.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DA35489161CC37D00275558 /* action-menu-button-check-in.png */; };
+		3DA3548E161CC37D00275558 /* action-menu-button-check-in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DA3548A161CC37D00275558 /* action-menu-button-check-in@2x.png */; };
+		3DA3548F161CC37D00275558 /* action-menu-button-check-out.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DA3548B161CC37D00275558 /* action-menu-button-check-out.png */; };
+		3DA35490161CC37D00275558 /* action-menu-button-check-out@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DA3548C161CC37D00275558 /* action-menu-button-check-out@2x.png */; };
 		4E5578B215AB7FA7000B588D /* send-message-on.aif in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7E815AB7975003C601A /* send-message-on.aif */; };
 		4E5578B415AB7FA7000B588D /* exchange-contacts-on.aif in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7EA15AB7975003C601A /* exchange-contacts-on.aif */; };
 		4E5578B615AB7FA7000B588D /* send-love-on.aif in Resources */ = {isa = PBXBuildFile; fileRef = 4E28A7EC15AB7975003C601A /* send-love-on.aif */; };
@@ -539,6 +543,10 @@
 		32D1E99615701993009B45BD /* checkbox-checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-checked@2x.png"; sourceTree = "<group>"; };
 		32D1E99715701993009B45BD /* checkbox-unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-unchecked.png"; sourceTree = "<group>"; };
 		32D1E99815701993009B45BD /* checkbox-unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox-unchecked@2x.png"; sourceTree = "<group>"; };
+		3DA35489161CC37D00275558 /* action-menu-button-check-in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-in.png"; sourceTree = "<group>"; };
+		3DA3548A161CC37D00275558 /* action-menu-button-check-in@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-in@2x.png"; sourceTree = "<group>"; };
+		3DA3548B161CC37D00275558 /* action-menu-button-check-out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-out.png"; sourceTree = "<group>"; };
+		3DA3548C161CC37D00275558 /* action-menu-button-check-out@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-out@2x.png"; sourceTree = "<group>"; };
 		4E28A7E815AB7975003C601A /* send-message-on.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "send-message-on.aif"; sourceTree = "<group>"; };
 		4E28A7EA15AB7975003C601A /* exchange-contacts-on.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "exchange-contacts-on.aif"; sourceTree = "<group>"; };
 		4E28A7EC15AB7975003C601A /* send-love-on.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "send-love-on.aif"; sourceTree = "<group>"; };
@@ -2456,6 +2464,10 @@
 		53D6A61D15B0BB50001A76DE /* action-menu */ = {
 			isa = PBXGroup;
 			children = (
+				3DA35489161CC37D00275558 /* action-menu-button-check-in.png */,
+				3DA3548A161CC37D00275558 /* action-menu-button-check-in@2x.png */,
+				3DA3548B161CC37D00275558 /* action-menu-button-check-out.png */,
+				3DA3548C161CC37D00275558 /* action-menu-button-check-out@2x.png */,
 				53749C9F15B4CCF900AB8A4E /* action-menu-button-love-selected.png */,
 				53749CA015B4CCF900AB8A4E /* action-menu-button-love-selected@2x.png */,
 				53749CA115B4CCF900AB8A4E /* action-menu-button-question-selected.png */,
@@ -3203,6 +3215,10 @@
 				53BBC0421612B70D00F5C14B /* README in Resources */,
 				E46BA2CB161CE06100CA0440 /* LICENSE in Resources */,
 				E46BA2CC161CE06100CA0440 /* README.md in Resources */,
+				3DA3548D161CC37D00275558 /* action-menu-button-check-in.png in Resources */,
+				3DA3548E161CC37D00275558 /* action-menu-button-check-in@2x.png in Resources */,
+				3DA3548F161CC37D00275558 /* action-menu-button-check-out.png in Resources */,
+				3DA35490161CC37D00275558 /* action-menu-button-check-out@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,6 +17,7 @@
 
 #define kMaxFeedLength 140
 #define AUTO_ACTIVE_FEED_COUNT 3
+#define kSkillTextFontSize 12
 
 typedef enum {
     FeedVCStateDefault,
@@ -148,7 +149,7 @@ typedef enum {
             return [post.entry stringByReplacingOccurrencesOfString:post.author.nickname withString:@"You"];
         }        
     } else {
-        if (post.skill) {
+        if (post.skill && post.skill.name.length > 0) {
             return [NSString stringWithFormat:@"%@ (%@)", post.entry, post.skill.name];
         } else {
             return post.entry;
@@ -815,7 +816,7 @@ typedef enum {
             [attributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)boldFont range:postRange];
             [attributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[fontColor CGColor] range:postRange];
 
-            UIFont *italicSystemFont = [UIFont italicSystemFontOfSize:fontSize];
+            UIFont *italicSystemFont = [UIFont italicSystemFontOfSize:kSkillTextFontSize];
             CTFontRef italicFont = CTFontCreateWithName((__bridge CFStringRef)italicSystemFont.fontName, italicSystemFont.pointSize, NULL);
             if (italicFont) {
                 [attributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)italicFont range:skillRange];
