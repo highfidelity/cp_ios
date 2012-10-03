@@ -55,7 +55,6 @@
 #pragma mark - IBActions 
 
 - (IBAction)closeWindow:(id)sender {
-    [SVProgressHUD dismiss];
     [self dismissModalViewControllerAnimated:YES];
 }
 
