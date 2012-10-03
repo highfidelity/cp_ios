@@ -65,9 +65,9 @@ static AFHTTPClient *sharedClient;
     [parameters setValue:@"checkin" forKey:@"action"];
     
     [sharedClient postPath:@"api.php" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        completion(responseObject, nil);
         // post a notification to say the user has checked in
         [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckInStateChange" object:nil];
-        completion(responseObject, nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         completion(nil, error);
     }];
