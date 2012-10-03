@@ -299,8 +299,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // if this is the last row it's the 'place not listed' row so make it smaller
-    if (indexPath.row == 0) {
+    // if this is a WFH cell make it a little taller
+    // otherwise it's the standard 45
+    if (indexPath.row == 0 || (indexPath.row > 1 && ((CPVenue *)[self.closeVenues objectAtIndex:indexPath.row - 2]).isNeighborhood)) {
         return 60;
     } else {
         return 45;
