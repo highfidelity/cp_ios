@@ -122,6 +122,7 @@ static CPCheckinHandler *sharedHandler;
     
     [[CPGeofenceHandler sharedHandler] updatePastVenue:venue];
     [self queueLocalNotificationForVenue:venue checkoutTime:checkOutTime];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckInStateChange" object:nil];
 }
 
 - (void)promptForCheckout
