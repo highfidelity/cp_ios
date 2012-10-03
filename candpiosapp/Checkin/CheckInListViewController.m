@@ -12,11 +12,18 @@
 #import "CPUserSessionHandler.h"
 #import "SVPullToRefresh.h"
 
-@interface CheckInListViewController()
+@interface CheckInListViewController() <UIAlertViewDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) NSMutableArray *closeVenues;
+@property (strong, nonatomic) CPVenue *neighborhoodVenue;
+@property (strong, nonatomic) CPVenue *defaultVenue;
 @property (strong, nonatomic) UIAlertView *addPlaceAlertView;
 @property (strong, nonatomic) CLLocation *searchLocation;
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+
+- (IBAction)closeWindow:(id)sender;
+- (void)refreshLocations;
 
 @end
 
@@ -62,63 +69,89 @@
 
 - (void)refreshLocations {
     
-    // Reset the array of venues
-    self.venues = [[NSMutableArray alloc] init];
-    
     // take the user's location at the beginning of the search and use that for both requests and the venue sorting
     self.searchLocation = [[CPAppDelegate locationManager].location copy];
     
+    // reset the neighborhoods array
+    self.neighborhoodVenue = nil;
+    // reset the closeVenues array
+    self.closeVenues = [NSMutableArray array];
+
+    // grab the closest neighborhood from foursquare
     [FoursquareAPIClient getClosestNeighborhoodToLocation:self.searchLocation completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
         if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
-            // add the returned neighborhood to the array of venues
-            [self.venues addObjectsFromArray:[self arrayOfVenuesFromFoursquareResponse:json]];
-        }
-        
-        [FoursquareAPIClient getVenuesCloseToLocation:self.searchLocation completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {            
-            if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
-                
-                // add the close venues that foursquare returned to our array of venues
-                [self.venues addObjectsFromArray:[self arrayOfVenuesFromFoursquareResponse:json]];
+            // insert the returned neighborhood into the first slot in our neighborhoods array
+            self.neighborhoodVenue = [[self arrayOfVenuesFromFoursquareResponse:json] objectAtIndex:0];
             
+            // tell the tableView to reload venues, after filtering for duplicates
+            [self filterDuplicatesAndReloadTableVenues];
+        }
+    }];
+    
+    // if we're reloading and we already have a default venue we don't need to grab it again
+    if (!self.defaultVenue) {
+        // grab this user's recent check in from C&P api
+        [CPapi getDefaultCheckInVenueWithCompletion:^(NSDictionary *json, NSError *errorVenue) {
+            BOOL respError = [[json objectForKey:@"error"] boolValue];
+            
+            if (!errorVenue && !respError) {
+                // set our default venue to the default venue instantiated using initFromDictionary
+                self.defaultVenue = [[CPVenue alloc] initFromDictionary:[json objectForKey:@"payload"]];
                 
-                // add a custom place so people can check in if foursquare doesn't have the venue
-                CPVenue *place = [[CPVenue alloc] init];
-                place.name = @"Add Place...";
-                place.foursquareID = @"0";
-                
-                place.coordinate = [CPAppDelegate locationManager].location.coordinate;
-                [self.venues insertObject:place atIndex:[self.venues count]];
-                
-                [CPapi getDefaultCheckInVenueWithCompletion:^(NSDictionary *jsonVenue, NSError *errorVenue) {
-                    BOOL respError = [[jsonVenue objectForKey:@"error"] boolValue];
-                    
-                    if (!errorVenue && !respError) {
-                        NSDictionary *jsonDict = [jsonVenue objectForKey:@"payload"];
-                        CPVenue *defaultVenue = [[CPVenue alloc] initFromDictionary:jsonDict];
-                        NSPredicate *defaultVenuePredicate = [NSPredicate predicateWithFormat:@"foursquareID != %@", defaultVenue.foursquareID];
-                        [self.venues filterUsingPredicate:defaultVenuePredicate];
-                        
-                        //add default venue
-                        [self.venues insertObject:defaultVenue atIndex:1];
-                        
-                        // reload the tableView now that we have new data
-                        [self.tableView reloadData];
-                    }
-                    
-                 [self.tableView.pullToRefreshView stopAnimating];
-                }];
-            } else {
-                UIAlertView *bulkLoadFail = [[UIAlertView alloc] initWithTitle:@"Oops!"
-                                                                       message:@"There was a problem getting data from foursquare."
-                                                                      delegate:self
-                                                             cancelButtonTitle:@"Cancel"
-                                                             otherButtonTitles:@"Refresh", nil];
-                
-                [self.tableView.pullToRefreshView stopAnimating];
-                [bulkLoadFail show];
+                // tell the tableView to reload venues, after filtering for duplicates
+                [self filterDuplicatesAndReloadTableVenues];
             }
         }];
-    }];   
+    }
+    
+    // grab the 20 closest venues to user location
+    [FoursquareAPIClient getVenuesCloseToLocation:self.searchLocation completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
+        if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
+            // add the close venues that foursquare returned to our array of venues
+            [self.closeVenues addObjectsFromArray:[self arrayOfVenuesFromFoursquareResponse:json]];
+            
+            // tell the tableView to reload venues, after filtering for duplicates
+            [self filterDuplicatesAndReloadTableVenues];
+        } else {
+            // if this request fails we'll show an error because it represents the majority of the data
+            UIAlertView *bulkLoadFail = [[UIAlertView alloc] initWithTitle:@"Oops!"
+                                                                   message:@"There was a problem getting data from foursquare."
+                                                                  delegate:self
+                                                         cancelButtonTitle:@"Cancel"
+                                                         otherButtonTitles:@"Refresh", nil];
+            
+            [bulkLoadFail show];
+        }
+    }];
+}
+
+- (void)filterDuplicatesAndReloadTableVenues
+{
+    if (self.closeVenues.count) {
+        if (self.neighborhoodVenue || self.defaultVenue) {
+            NSMutableSet *existingIDs = [NSMutableSet set];
+            
+            if (self.neighborhoodVenue) {
+                // add the neighborhood venue's foursquare ID to the set of existing IDs
+                [existingIDs addObject:self.neighborhoodVenue.foursquareID];
+            }
+            
+            if (self.defaultVenue) {
+                // add the default venue foursquare ID to the set of existing IDs
+                [existingIDs addObject:self.defaultVenue.foursquareID];
+            }
+            
+            // remove any venues from self.closeVenues with a foursquareID in the existingIDs set
+            NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"NOT (foursquareID in %@)", existingIDs];
+            [self.closeVenues filterUsingPredicate:filterPredicate];
+        }
+    }
+    
+    // stop the pull to refresh view
+    [self.tableView.pullToRefreshView stopAnimating];
+    
+    // tell the tableView to reload its data
+    [self.tableView reloadData];
 }
 
 - (NSArray *)arrayOfVenuesFromFoursquareResponse:(NSDictionary *)json
@@ -141,7 +174,7 @@
 - (void)addNewPlace:(NSString *)name {
 	[SVProgressHUD showWithStatus:@"Saving new place..."];
     
-    CPVenue *place = [self.venues objectAtIndex:[self.tableView indexPathForSelectedRow].row];
+    CPVenue *place = [self.closeVenues objectAtIndex:[self.tableView indexPathForSelectedRow].row];
     place.name = name;
     
     // Send Add request to Foursquare and use the new Venue ID here
@@ -184,11 +217,6 @@
 
 #pragma mark - Table view data source
 
-- (void)reloadData
-{
-    [self.tableView reloadData];
-}
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
@@ -198,53 +226,60 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.venues count];
+    // 1 for neighborhood, 1 for default, number of close venues and 1 for add place
+    return !!self.neighborhoodVenue + !!self.defaultVenue + self.closeVenues.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{    
-    // note that this code will cause the app to crash if these identifiers don't match what is in the storyboard
-    // we'd catch that before going to the store, but be careful
+{
     CheckInListCell *cell;
+    CPVenue *cellVenue;
     
-    CPVenue *cellVenue = [self.venues objectAtIndex:indexPath.row];
+    // grab the cellVenue depending on which row this is
+    // the first row is the neighborhood venue and the second is the recent venue
+    switch (indexPath.row) {
+        case 0:
+            cellVenue = self.neighborhoodVenue;
+            break;
+        case 1:
+            cellVenue = self.defaultVenue;
+            break;
+        default:
+            cellVenue = [self.closeVenues objectAtIndex:(indexPath.row - 2)];
+            break;
+    }
     
+    // default for main label is venue name
     NSString *nameLabelText = cellVenue.name;
     
-    // if this is the "place not listed" cell then we have a different identifier
-    if (indexPath.row == [self.venues count] - 1) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCellNotListed"];
+    if (cellVenue.isNeighborhood) {
+        // this cell is for a neighborhood so grab the right cell
+        cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCellWFH"];
+        
+        // WFH venues have a custom name label, not just the venue name
+        nameLabelText = [NSString stringWithFormat:@"in %@", cellVenue.name];
     } else {
-               
-        if (cellVenue.isNeighborhood) {
-            // this cell is for a neighborhood so grab the right cell
-            cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCellWFH"];
-            
-            // WFH venues have a custom name label, not just the venue name
-            nameLabelText = [NSString stringWithFormat:@"in %@", cellVenue.name];
+        // grab the standard cell from the table view
+        cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCell"];
+        
+        if (self.defaultVenue == cellVenue) {
+            // this is the user's recent venue
+            cell.distanceString.text = @"Recent";
         } else {
-            // grab the standard cell from the table view
-            cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCell"];
-            
-            if (indexPath.row == 1) {
-                // this is the user's recent venue
-                cell.distanceString.text = @"Recent";
-            } else {
-                // get the localized distance string based on the distance of this venue from the user
-                // which we set when we sort the places
-                cell.distanceString.text = [CPUtils localizedDistanceStringForDistance:[cellVenue distanceFromUser]];
-            }
-            
-            cell.venueAddress.text = cellVenue.address;
-            
-            if (!cellVenue.address) {
-                // if we don't have an address then center the venue name
-                cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 0, cell.venueName.frame.size.width, 45);
-            } else {
-                // otherwise put it back since we re-use the cells
-                cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 3, cell.venueName.frame.size.width, 21);
-            }
+            // get the localized distance string based on the distance of this venue from the user
+            // which we set when we sort the places
+            cell.distanceString.text = [CPUtils localizedDistanceStringForDistance:[cellVenue distanceFromUser]];
+        }
+        
+        cell.venueAddress.text = cellVenue.address;
+        
+        if (!cellVenue.address) {
+            // if we don't have an address then center the venue name
+            cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 0, cell.venueName.frame.size.width, 45);
+        } else {
+            // otherwise put it back since we re-use the cells
+            cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 3, cell.venueName.frame.size.width, 21);
         }
     }
     
@@ -262,7 +297,7 @@
 
     if ([CPUserDefaultsHandler currentUser].userID) {
         // If the item selected is the last in the list, prompt user to add a new venue
-        if (indexPath.row == self.venues.count - 1) {
+        if (indexPath.row == self.closeVenues.count - 1) {
             self.addPlaceAlertView = [[UIAlertView alloc] initWithTitle:@"Name of New Place" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
             self.addPlaceAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
             [[self.addPlaceAlertView textFieldAtIndex:0] setDelegate:self];
@@ -304,7 +339,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // if this is the last row it's the 'place not listed' row so make it smaller
-    if (indexPath.row == [self.venues count] - 1) {
+    if (indexPath.row == [self.closeVenues count] - 1) {
         return 40;
     } else if (indexPath.row == 0) {
         return 60;
@@ -320,7 +355,7 @@
     if ([[segue identifier] isEqualToString:@"ShowCheckInDetailsView"]) {
         
         NSIndexPath *path = [self.tableView indexPathForSelectedRow];
-        CPVenue *place = [self.venues objectAtIndex:path.row];
+        CPVenue *place = [self.closeVenues objectAtIndex:path.row];
         
         // give place info to the CheckInDetailsViewController
         [[segue destinationViewController] setVenue:place];

@@ -7,12 +7,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CheckInListViewController : UIViewController <UIAlertViewDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
-
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) NSMutableArray *venues;
-
-- (IBAction)closeWindow:(id)sender;
-- (void)refreshLocations;
+@interface CheckInListViewController : UIViewController 
 
 @end
