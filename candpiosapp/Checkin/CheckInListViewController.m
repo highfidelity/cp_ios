@@ -75,6 +75,8 @@
     // reset the closeVenues array
     self.closeVenues = [NSMutableArray array];
     
+    [self.tableView reloadData];
+    
     // grab the closest neighborhood from foursquare
     [FoursquareAPIClient getClosestNeighborhoodToLocation:self.searchLocation completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
         if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
