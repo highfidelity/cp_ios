@@ -12,14 +12,13 @@
 #import "CPUserSessionHandler.h"
 #import "SVPullToRefresh.h"
 
-@interface CheckInListViewController() <UIAlertViewDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface CheckInListViewController() <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) NSMutableArray *closeVenues;
 @property (strong, nonatomic) CPVenue *neighborhoodVenue;
 @property (strong, nonatomic) CPVenue *defaultVenue;
-@property (strong, nonatomic) UIAlertView *addPlaceAlertView;
 @property (strong, nonatomic) CLLocation *searchLocation;
 
 - (IBAction)closeWindow:(id)sender;
@@ -171,50 +170,6 @@
     return venueArray;
 }
 
-- (void)addNewPlace:(NSString *)name {
-	[SVProgressHUD showWithStatus:@"Saving new place..."];
-    
-    CPVenue *place = [self.closeVenues objectAtIndex:[self.tableView indexPathForSelectedRow].row];
-    place.name = name;
-    
-    // Send Add request to Foursquare and use the new Venue ID here
-    
-    CLLocation *location = [CPAppDelegate locationManager].location;
-    [FoursquareAPIClient addNewPlace:name
-                            location:location
-                          completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
-                              // Do error checking here, in case Foursquare is down
-                              if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
-#if DEBUG
-                                  NSLog(@"JSON returned: %@", [json description]);
-#endif
-                                  
-                                  NSString *venueID = [json valueForKeyPath:@"response.venue.id"];
-                                  
-                                  place.foursquareID = venueID;
-                              }
-                              else if ([[json valueForKeyPath:@"meta.code"] intValue] == 409) {
-                                  // 409 means a duplicate was found, use the id from the duplicate; if you really want to get fancy, show a list of all possible dupes but that's overkill for now
-                                  
-                                  NSArray *venues = [json valueForKeyPath:@"response.candidateDuplicateVenues"];
-                                  
-                                  NSString *venueID = [[venues objectAtIndex:0] objectForKey:@"id"];
-                                  
-                                  place.foursquareID = venueID;
-                              }
-                              else {
-                                  // Error encountered, but let the user check in anyhow and use a randomly generated ID so that it will still be tracked internally
-                                  place.foursquareID = [NSString stringWithFormat:@"CandP%@", [[NSProcessInfo processInfo] globallyUniqueString]];
-                                  
-                                  NSLog(@"Error encountered while adding venue to Foursquare");
-                              }
-                              
-                              [SVProgressHUD dismiss];
-                              
-                              [self performSegueWithIdentifier:@"ShowCheckInDetailsView" sender:self];
-                          }];    
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -296,15 +251,7 @@
 {
 
     if ([CPUserDefaultsHandler currentUser].userID) {
-        // If the item selected is the last in the list, prompt user to add a new venue
-        if (indexPath.row == self.closeVenues.count - 1) {
-            self.addPlaceAlertView = [[UIAlertView alloc] initWithTitle:@"Name of New Place" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
-            self.addPlaceAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-            [[self.addPlaceAlertView textFieldAtIndex:0] setDelegate:self];
-            [self.addPlaceAlertView show];
-            return;
-        }
-        else if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
+        if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
             // this user is currently checked in
             // we need to present them with an alertView to confirm that they do in fact want to checkout of the previous venue
             // and checkin here now
@@ -339,9 +286,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // if this is the last row it's the 'place not listed' row so make it smaller
-    if (indexPath.row == [self.closeVenues count] - 1) {
-        return 40;
-    } else if (indexPath.row == 0) {
+    if (indexPath.row == 0) {
         return 60;
     } else {
         return 45;
@@ -372,16 +317,6 @@
         } else {
             [self dismissModalViewControllerAnimated:YES];
         }
-    } else if (alertView == self.addPlaceAlertView) {
-        NSString *name = [alertView textFieldAtIndex:0].text;
-        
-        // Check for a valid name, otherwise cancel the Add Place request
-        if (buttonIndex == 1) {
-            [self addNewPlace:name];
-        }
-        else {
-            [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
-        }
     } else {
         // this was the foursquare error alert view
         if (buttonIndex != alertView.cancelButtonIndex) {
@@ -389,15 +324,6 @@
             [self.tableView.pullToRefreshView triggerRefresh];
         }
     }
-}
-
-#pragma mark - UITextFieldDelegate
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [self.addPlaceAlertView dismissWithClickedButtonIndex:1 animated:YES];
-    [self addNewPlace:textField.text];
-    return YES;
 }
 
 @end

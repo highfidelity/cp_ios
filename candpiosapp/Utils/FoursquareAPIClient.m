@@ -114,22 +114,4 @@ static FoursquareAPIClient *_sharedClient;
     [self getVenuesCloseToLocation:location limit:1 categoryID:kFoursquareNeighborhoodCategoryID versionString:@"20121001" completion:completion];
 }
 
-+ (void)addNewPlace:(NSString *)name
-           location:(CLLocation *)location
-         completion:(AFRequestCompletionBlock)completion
-{
-    // setup dictionary with request parameters
-    NSMutableDictionary *requestParams = [NSMutableDictionary dictionary];
-    [requestParams setObject:name forKey:@"name"];
-    [requestParams setObject:[NSString stringWithFormat:@"%f,%f", location.coordinate.latitude, location.coordinate.longitude] forKey:@"ll"];
-    requestParams = [self parameterDictionaryWithVersionString:@"20120208" existingParameters:requestParams];
-    
-    // post to /venues/add
-    [[self sharedClient] postPath:@"venues/add" parameters:requestParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        completion(operation, responseObject, nil);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        completion(operation, nil, error);
-    }];
-}
-
 @end

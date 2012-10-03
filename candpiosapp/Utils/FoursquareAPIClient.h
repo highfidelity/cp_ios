@@ -23,8 +23,4 @@ typedef void (^AFRequestCompletionBlock)(AFHTTPRequestOperation *operation, id r
 + (void)getClosestNeighborhoodToLocation:(CLLocation *)location
                                   completion:(AFRequestCompletionBlock)completion;
 
-+ (void)addNewPlace:(NSString *)name
-        location:(CLLocation *)location
-    completion:(AFRequestCompletionBlock)completion;
-
 @end
