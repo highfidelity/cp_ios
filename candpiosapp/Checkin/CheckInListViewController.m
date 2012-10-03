@@ -66,16 +66,15 @@
 
 #pragma mark - View Helpers
 
-- (void)refreshLocations {
-    
+- (void)refreshLocations {    
     // take the user's location at the beginning of the search and use that for both requests and the venue sorting
     self.searchLocation = [[CPAppDelegate locationManager].location copy];
     
-    // reset the neighborhoods array
+    // reset the neighborhood venue
     self.neighborhoodVenue = nil;
     // reset the closeVenues array
     self.closeVenues = [NSMutableArray array];
-
+    
     // grab the closest neighborhood from foursquare
     [FoursquareAPIClient getClosestNeighborhoodToLocation:self.searchLocation completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
         if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
@@ -172,12 +171,6 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
@@ -201,7 +194,7 @@
             cellVenue = self.defaultVenue;
             break;
         default:
-            cellVenue = [self.closeVenues objectAtIndex:(indexPath.row - 2)];
+            cellVenue = self.closeVenues.count ? [self.closeVenues objectAtIndex:(indexPath.row - 2)] : nil;
             break;
     }
     
