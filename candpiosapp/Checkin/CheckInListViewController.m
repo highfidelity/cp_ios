@@ -238,12 +238,12 @@
             
             cell.venueAddress.text = cellVenue.address;
             
-            if (!cell.venueAddress.text || [cell.venueAddress.text length] == 0) {
-                // if we don't have an address then move the venuename down
-                cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 19, cell.venueName.frame.size.width, cell.venueName.frame.size.height);
+            if (!cellVenue.address) {
+                // if we don't have an address then center the venue name
+                cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 0, cell.venueName.frame.size.width, 45);
             } else {
                 // otherwise put it back since we re-use the cells
-                cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 11, cell.venueName.frame.size.width, cell.venueName.frame.size.height);
+                cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 3, cell.venueName.frame.size.width, 21);
             }
         }
     }
@@ -306,9 +306,11 @@
     // if this is the last row it's the 'place not listed' row so make it smaller
     if (indexPath.row == [self.venues count] - 1) {
         return 40;
-    } else {
+    } else if (indexPath.row == 0) {
         return 60;
-    }    
+    } else {
+        return 45;
+    }
 }
 
 # pragma mark - Segue Methods
