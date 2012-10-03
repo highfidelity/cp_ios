@@ -262,7 +262,7 @@
     
     if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
         [[CPCheckinHandler sharedHandler] promptForCheckout];
-    }else{
+    } else {
         [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionShowFeed;
         [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
     }

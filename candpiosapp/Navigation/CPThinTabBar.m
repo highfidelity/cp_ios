@@ -292,10 +292,8 @@ static NSArray *tabBarIcons;
     [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"update" topMargin:UPDATE_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(updateButtonPressed:)]];
     [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"question" topMargin:QUESTION_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(questionButtonPressed:)]];
     
-    NSString *imageSuffix = [CPUserDefaultsHandler isUserCurrentlyCheckedIn] ? @"check-out" : @"check-in";
-    self.checkInOutButton = [self actionMenuButtonWithImageSuffix:imageSuffix topMargin:CHECKIN_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(checkinButtonPressed:)];
+    self.checkInOutButton = [self actionMenuButtonWithImageSuffix:[self checkInOutImageSuffix] topMargin:CHECKIN_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(checkinButtonPressed:)];
     [self.actionMenuButtons addObject:self.checkInOutButton];
-    
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(refreshCheckinButton)
@@ -388,9 +386,13 @@ static NSArray *tabBarIcons;
 
 - (void)refreshCheckinButton
 {
-    NSString *imageSuffix = [CPUserDefaultsHandler isUserCurrentlyCheckedIn] ? @"check-out" : @"check-in";
-    UIImage *backgroundImage = [UIImage imageNamed:[NSString stringWithFormat:@"action-menu-button-%@", imageSuffix]];
+    UIImage *backgroundImage = [UIImage imageNamed:[NSString stringWithFormat:@"action-menu-button-%@", [self checkInOutImageSuffix]]];
     [self.checkInOutButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
+}
+
+-(NSString *)checkInOutImageSuffix
+{
+    return [CPUserDefaultsHandler isUserCurrentlyCheckedIn] ? @"check-out" : @"check-in";
 }
 
 @end
