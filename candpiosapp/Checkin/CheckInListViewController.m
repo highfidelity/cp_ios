@@ -190,8 +190,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    // 1 for neighborhood, 1 for default, number of close venues and 1 for add place
-    return !!self.neighborhoodVenue + !!self.defaultVenue + self.closeVenues.count;
+    // 1 for neighborhood, 1 for default, number of close venues
+    return 2 + self.closeVenues.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -217,12 +217,17 @@
     // default for main label is venue name
     NSString *nameLabelText = cellVenue.name;
     
-    if (cellVenue.isNeighborhood) {
+    if (indexPath.row == 0 || cellVenue.isNeighborhood) {
         // this cell is for a neighborhood so grab the right cell
         cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCellWFH"];
+
+        // WFH venues have a custom name label, 'in' before the venue name
+        // unless this is the WFH placeholder
+        // in which case leave Working from home on the top and add a little message in the venueAddress
+        nameLabelText = cellVenue ? [NSString stringWithFormat:@"in %@", cellVenue.name] : nil;
+        cell.venueAddress.text = cellVenue ? @"Your location will not be shown on the map." :
+                                             @"No luck finding nearby neighborhood.";
         
-        // WFH venues have a custom name label, not just the venue name
-        nameLabelText = [NSString stringWithFormat:@"in %@", cellVenue.name];
     } else {
         // grab the standard cell from the table view
         cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCell"];
