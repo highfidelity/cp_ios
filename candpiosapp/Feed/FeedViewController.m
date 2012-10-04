@@ -815,17 +815,15 @@ typedef enum {
             CTFontRef boldFont = CTFontCreateWithName((__bridge CFStringRef)cell.entryLabel.font.fontName, fontSize, NULL);
             [attributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)boldFont range:postRange];
             [attributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[fontColor CGColor] range:postRange];
+            [attributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor grayColor] CGColor] range:skillRange];
 
             UIFont *italicSystemFont = [UIFont italicSystemFontOfSize:kSkillTextFontSize];
             CTFontRef italicFont = CTFontCreateWithName((__bridge CFStringRef)italicSystemFont.fontName, italicSystemFont.pointSize, NULL);
             if (italicFont) {
                 [attributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)italicFont range:skillRange];
-                [attributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor grayColor] CGColor] range:skillRange];
-
-                cell.entryLabel.text = (id) attributedString;
-            } else {
-                cell.entryLabel.text = postText;
             }
+
+            cell.entryLabel.text = (id) attributedString;
         } else {
             cell.entryLabel.text = [self textForPost:post];
         }
