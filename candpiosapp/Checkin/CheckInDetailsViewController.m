@@ -185,10 +185,11 @@
     NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
     
     [CPApiClient checkInToVenue:self.venue
-                         hoursHere:self.checkInDuration
-                        statusText:statusText
-                         isVirtual:self.checkInIsVirtual
-                       isAutomatic:NO
+                      hoursHere:self.checkInDuration
+                     statusText:statusText
+                      isVirtual:self.checkInIsVirtual
+                    isAutomatic:NO
+                 isNeighborhood:self.venue.isNeighborhood
                    completionBlock:^(NSDictionary *json, NSError *error){
         // hide the SVProgressHUD
         if (!error && ![[json objectForKey:@"error"] boolValue]) {

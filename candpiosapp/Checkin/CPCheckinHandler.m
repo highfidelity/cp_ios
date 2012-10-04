@@ -45,22 +45,26 @@ static CPCheckinHandler *sharedHandler;
     
     [self performAfterCheckinActionForVenue:venue];
     
-    // If this is the user's first check in to this venue and auto-checkins are enabled,
-    // ask the user about checking in automatically to this venue in the future
-    BOOL automaticCheckins = [CPUserDefaultsHandler automaticCheckins];
-    
-    if (automaticCheckins) {
-        // Only show the alert if the current venue isn't currently in the list of monitored venues
-        CPVenue *matchedVenue = [[CPGeofenceHandler sharedHandler] venueWithName:venue.name];
+    if (!venue.isNeighborhood) {
+        // If this is the user's first check in to this venue and auto-checkins are enabled,
+        // ask the user about checking in automatically to this venue in the future
         
-        if (!matchedVenue) {                    
-            UIAlertView *autoCheckinAlert = [[UIAlertView alloc] initWithTitle:nil 
-                                                                       message:@"Automatically check in to this venue in the future?" 
-                                                                      delegate:[CPAppDelegate settingsMenuController]
-                                                             cancelButtonTitle:@"No" 
-                                                             otherButtonTitles:@"Yes", nil];
-            autoCheckinAlert.tag = AUTOCHECKIN_PROMPT_TAG;
-            [autoCheckinAlert show];
+        // there are no auto-checkins for WFH - neighborhood venues
+        BOOL automaticCheckins = [CPUserDefaultsHandler automaticCheckins];
+        
+        if (automaticCheckins) {
+            // Only show the alert if the current venue isn't currently in the list of monitored venues
+            CPVenue *matchedVenue = [[CPGeofenceHandler sharedHandler] venueWithName:venue.name];
+            
+            if (!matchedVenue) {
+                UIAlertView *autoCheckinAlert = [[UIAlertView alloc] initWithTitle:nil
+                                                                           message:@"Automatically check in to this venue in the future?"
+                                                                          delegate:[CPAppDelegate settingsMenuController]
+                                                                 cancelButtonTitle:@"No"
+                                                                 otherButtonTitles:@"Yes", nil];
+                autoCheckinAlert.tag = AUTOCHECKIN_PROMPT_TAG;
+                [autoCheckinAlert show];
+            }
         }
     }
 }
