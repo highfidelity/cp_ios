@@ -211,6 +211,23 @@
     return venueArray;
 }
 
+- (CPVenue *)venueForTableViewIndexPath:(NSIndexPath *)indexPath
+{
+    // grab the cellVenue depending on which row this is
+    // the first row is the neighborhood venue and the second is the recent venue
+    switch (indexPath.row) {
+        case 0:
+            return self.neighborhoodVenue;
+            break;
+        case 1:
+            return self.defaultVenue;
+            break;
+        default:
+            return self.closeVenues.count ? [self.closeVenues objectAtIndex:(indexPath.row - 2)] : nil;
+            break;
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -224,21 +241,7 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CheckInListCell *cell;
-    CPVenue *cellVenue;
-    
-    // grab the cellVenue depending on which row this is
-    // the first row is the neighborhood venue and the second is the recent venue
-    switch (indexPath.row) {
-        case 0:
-            cellVenue = self.neighborhoodVenue;
-            break;
-        case 1:
-            cellVenue = self.defaultVenue;
-            break;
-        default:
-            cellVenue = self.closeVenues.count ? [self.closeVenues objectAtIndex:(indexPath.row - 2)] : nil;
-            break;
-    }
+    CPVenue *cellVenue = [self venueForTableViewIndexPath:indexPath];
     
     // default for main label is venue name
     NSString *nameLabelText = cellVenue.name;
@@ -258,7 +261,7 @@
         // grab the standard cell from the table view
         cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCell"];
         
-        if (self.defaultVenue == cellVenue) {
+        if (indexPath.row == 1) {
             // this is the user's recent venue
             cell.distanceString.text = @"Recent";
         } else {
@@ -278,6 +281,12 @@
         }
     }
     
+    // if we don't have a cellVenue then don't show the disclosureImageView
+    // and don't allow selection of the cell
+    cell.disclosureImageView.hidden = !cellVenue;
+    cell.selectionStyle = cellVenue ? UITableViewCellSelectionStyleGray : UITableViewCellSelectionStyleNone;
+    
+    // give venueName UILabel the value of nameLabelText
     cell.venueName.text = nameLabelText;
     
     return cell;
@@ -291,36 +300,43 @@
 {
 
     if ([CPUserDefaultsHandler currentUser].userID) {
-        if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
-            // this user is currently checked in
-            // we need to present them with an alertView to confirm that they do in fact want to checkout of the previous venue
-            // and checkin here now
-            NSString *switchVenueMessage = [NSString stringWithFormat:@"Do you want to leave %@?\nYou can always go back later!", 
-                                            [CPUserDefaultsHandler currentVenue].name];
-            
-            UIAlertView *switchVenueConfirm = [[UIAlertView alloc] 
-                                               initWithTitle:@"Are you sure?" 
-                                               message:switchVenueMessage
-                                               delegate:self 
-                                               cancelButtonTitle:@"Cancel" 
-                                               otherButtonTitles:@"Yes", nil];
-            
-            switchVenueConfirm.tag = SWITCH_VENUE_ALERT_TAG;
-            [switchVenueConfirm show];
-            
+        
+        // make sure that we actually have a venue for this row
+        CPVenue *selectedVenue = [self venueForTableViewIndexPath:indexPath];
+        
+        if (selectedVenue) {
+            if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
+                // this user is currently checked in
+                // we need to present them with an alertView to confirm that they do in fact want to checkout of the previous venue
+                // and checkin here now
+                NSString *switchVenueMessage = [NSString stringWithFormat:@"Do you want to leave %@?\nYou can always go back later!",
+                                                [CPUserDefaultsHandler currentVenue].name];
+                
+                UIAlertView *switchVenueConfirm = [[UIAlertView alloc]
+                                                   initWithTitle:@"Are you sure?"
+                                                   message:switchVenueMessage
+                                                   delegate:self
+                                                   cancelButtonTitle:@"Cancel"
+                                                   otherButtonTitles:@"Yes", nil];
+                
+                switchVenueConfirm.tag = SWITCH_VENUE_ALERT_TAG;
+                [switchVenueConfirm show];
+                
+            } else {
+                [self performSegueWithIdentifier:@"ShowCheckInDetailsView" sender:self];
+            }
         } else {
-            [self performSegueWithIdentifier:@"ShowCheckInDetailsView" sender:self]; 
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
         }
-    }
-    else {
+    } else {
+        // deselect the row
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
         // Tell the user they aren't logged in and show them the Signup Page
         [SVProgressHUD showErrorWithStatus:@"You must be logged in to C&P in order to check in."
                                   duration:kDefaultDismissDelay];
         [CPUserSessionHandler performSelector:@selector(showSignupModalFromViewController:animated:) withObject:self afterDelay:kDefaultDismissDelay];
     }
-    
-    // deselect the row
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -340,12 +356,14 @@
 {
     if ([[segue identifier] isEqualToString:@"ShowCheckInDetailsView"]) {
         
-        NSIndexPath *path = [self.tableView indexPathForSelectedRow];
-        CPVenue *place = [self.closeVenues objectAtIndex:path.row];
+        NSIndexPath *selectedPath = [self.tableView indexPathForSelectedRow];
+        CPVenue *venue = [self venueForTableViewIndexPath:selectedPath];
+        
+        // deselect the row
+        [self.tableView deselectRowAtIndexPath:selectedPath animated:YES];
         
         // give place info to the CheckInDetailsViewController
-        [[segue destinationViewController] setVenue:place];
-        
+        [[segue destinationViewController] setVenue:venue];
     }
 }
 
