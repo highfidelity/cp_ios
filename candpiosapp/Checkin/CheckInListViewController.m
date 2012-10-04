@@ -295,17 +295,17 @@
     // default for main label is venue name
     NSString *nameLabelText = cellVenue.name;
     
-    if (cellVenue.isNeighborhood) {
-        // this cell is for a neighborhood so grab the right cell
-        cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCellWFH"];
-
-        // WFH venues have a custom name label, 'in' before the venue name
-        // unless this is the WFH placeholder
-        // in which case leave Working from home on the top and add a little message in the venueAddress
-        nameLabelText = cellVenue ? [NSString stringWithFormat:@"in %@", cellVenue.name] : nil;
-        cell.venueAddress.text = cellVenue ? @"Your location will not be shown on the map." :
-                                             @"No luck finding nearby neighborhood.";
-        
+    if ((!self.isUserSearching && indexPath.row == 0) || cellVenue.isNeighborhood) {
+        if (cellVenue) {
+            // this cell is for a neighborhood so grab the right cell
+            cell = [tableView dequeueReusableCellWithIdentifier:@"WFHCheckInListTableCell"];
+            
+            // WFH venues have a custom name label, 'in' before the venue name
+            // unless this is the WFH placeholder
+            nameLabelText = [NSString stringWithFormat:@"in %@", cellVenue.name];
+        } else {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"PlaceholderWFHCheckInListTableCell"];
+        }           
     } else {
         // grab the standard cell from the table view
         cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCell"];
@@ -319,11 +319,9 @@
             cell.distanceString.text = [CPUtils localizedDistanceStringForDistance:[cellVenue distanceFromUser]];
         }
         
-        cell.venueAddress.text = cellVenue.address;
-        
-        if (!cellVenue.address) {
+        if (!(cell.venueAddress.text = cellVenue.address)) {
             // if we don't have an address then center the venue name
-            cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 0, cell.venueName.frame.size.width, 45);
+            cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 0, cell.venueName.frame.size.width, cell.frame.size.height);
         } else {
             // otherwise put it back since we re-use the cells
             cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 3, cell.venueName.frame.size.width, 21);
@@ -390,7 +388,7 @@
 {
     // if this is a WFH cell make it a little taller
     // otherwise it's the standard 45
-    if ([self venueForTableViewIndexPath:indexPath].isNeighborhood) {
+    if ((!self.isUserSearching && indexPath.row == 0) || [self venueForTableViewIndexPath:indexPath].isNeighborhood) {
         return 60;
     } else {
         return 45;
