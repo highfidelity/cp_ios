@@ -238,37 +238,38 @@
 
 - (CPVenue *)venueForTableViewIndexPath:(NSIndexPath *)indexPath
 {
+    // have a variable that will count the number of results stuck to top
+    int topResults;
+    
     if (!self.isUserSearching) {
-        // grab the cellVenue depending on which row this is
-        // the first row is the neighborhood venue and the second is the recent venue
-        switch (indexPath.row) {
-            case 0:
+        // not searching so we have a WFH placeholder or venue and possibly a default venue
+        topResults = 1 + !!self.defaultVenue;
+    } else {
+        // searching so we may have either a WFH or default venue but niether is required
+        topResults = !!self.searchNeighborhoodVenue + !!self.searchDefaultVenue;
+    }
+    
+    // grab the cellVenue depending on which row this is
+    // the first row is the neighborhood venue and the second is the recent venue
+    NSArray *stateCloseVenues = !self.isUserSearching ? self.closeVenues : self.searchCloseVenues;
+    
+    if (topResults) {
+        // we have at least one result stuck to the top
+        if (indexPath.row == 0) {
+            if (!self.isUserSearching) {
                 return self.neighborhoodVenue;
-                break;
-            case 1:
-                return self.defaultVenue;
-                break;
-            default:
-                return self.closeVenues.count ? [self.closeVenues objectAtIndex:(indexPath.row - 2)] : nil;
-                break;
+            } else {
+                return self.searchNeighborhoodVenue ? self.searchNeighborhoodVenue : self.searchDefaultVenue;
+            }
+        } else if (topResults > 1 && indexPath.row == 1) {
+            return !self.isUserSearching ? self.defaultVenue : self.searchDefaultVenue;
+        } else {
+            return [stateCloseVenues objectAtIndex:(indexPath.row - topResults)];
         }
     } else {
-        int topResults = (int)!!self.searchNeighborhoodVenue + (int)!!self.searchDefaultVenue;
-        
-        if (topResults) {
-            // we have at least one result stuck to the top
-            if (indexPath.row == 0) {
-                return self.searchNeighborhoodVenue ? self.searchNeighborhoodVenue : self.searchDefaultVenue;
-            } else if (topResults > 1 && indexPath.row == 1) {
-                return self.searchDefaultVenue;
-            } else {
-                return [self.searchCloseVenues objectAtIndex:(indexPath.row - topResults)];
-            }
-        } else {
-            // no top results
-            // just return the venue for that row
-            return [self.searchCloseVenues objectAtIndex:indexPath.row];
-        }
+        // searching with no top results
+        // just return the venue for that row
+        return [self.searchCloseVenues objectAtIndex:indexPath.row];
     }
 }
 
@@ -277,8 +278,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (!self.isUserSearching) {
-        // 1 for neighborhood, 1 for default, number of close venues
-        return 2 + self.closeVenues.count;
+        // 1 for neighborhood, 1 for default if it exists, number of close venues
+        return 1 + !!self.defaultVenue + self.closeVenues.count;
     } else {
         // one row for each venue in search result array
         return !!self.searchNeighborhoodVenue + !!self.searchDefaultVenue + self.searchCloseVenues.count;
