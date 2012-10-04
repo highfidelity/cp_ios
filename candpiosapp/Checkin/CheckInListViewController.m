@@ -54,6 +54,13 @@
     topLine.backgroundColor = [UIColor colorWithRed:(68.0/255.0) green:(68.0/255.0) blue:(68.0/255.0) alpha:1.0];
     [self.tableView addSubview:topLine];
     
+    // make the UISearchBar use UIKeyboardAppearanceAlert
+    for(UIView *subView in self.searchBar.subviews) {
+        if([subView isKindOfClass: [UITextField class]]) {
+            [(UITextField *)subView setKeyboardAppearance: UIKeyboardAppearanceAlert];
+        }
+    }
+    
     // add pull to refresh to UITableView using SVPullToRefresh
     [self.tableView addPullToRefreshWithActionHandler:^{
         [self refreshLocations];
