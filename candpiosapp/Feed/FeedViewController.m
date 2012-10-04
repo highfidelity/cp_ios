@@ -6,23 +6,18 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import <QuartzCore/QuartzCore.h>
+#import <CoreText/CoreText.h>
 #import "FeedViewController.h"
-#import "CPPost.h"
 #import "PostUpdateCell.h"
 #import "NewPostCell.h"
 #import "PostLoveCell.h"
 #import "UserProfileViewController.h"
 #import "SVPullToRefresh.h"
 #import "CPUserAction.h"
-#import "PillPopoverViewController.h"
-#import "CommentCell.h"
-#import "CPUserDefaultsHandler.h"
-#import "FaceToFaceHelper.h"
 
 #define kMaxFeedLength 140
-#define MAX_PREVIEW_POST_COUNT 3
 #define AUTO_ACTIVE_FEED_COUNT 3
+#define kSkillTextFontSize 12
 
 typedef enum {
     FeedVCStateDefault,
@@ -154,7 +149,12 @@ typedef enum {
             return [post.entry stringByReplacingOccurrencesOfString:post.author.nickname withString:@"You"];
         }        
     } else {
-        return post.entry;
+        if (post.skill && post.skill.name.length > 0) {
+            return [NSString stringWithFormat:@"%@ (%@)", post.entry, post.skill.name];
+        } else {
+            return post.entry;
+        }
+
     }
 }
 
@@ -789,9 +789,6 @@ typedef enum {
             
             // setup the receiver's profile button
             [self loadProfileImageForButton:loveCell.receiverProfileButton photoURL:post.receiver.photoURL];
-            
-            loveCell.entryLabel.text = post.entry.description;
-            
             // if this is a plus one we need to make the label wider
             // or reset it if it's not
             CGRect loveLabelFrame = loveCell.entryLabel.frame;
@@ -804,7 +801,32 @@ typedef enum {
         
         // the text for this entry is prepended with NICKNAME:
         cell.entryLabel.font = [self fontForPost:post];
-        cell.entryLabel.text = [self textForPost:post];
+
+        if (post.skill && post.skill.name.length > 0) {
+            NSString *postText = [self textForPost:post];
+            NSUInteger start = postText.length - post.skill.name.length - 2;
+            NSRange postRange = NSMakeRange(0, start - 1);
+            NSRange skillRange = NSMakeRange(start, post.skill.name.length + 2);
+            CGFloat fontSize = cell.entryLabel.font.pointSize;
+            UIColor *fontColor = cell.entryLabel.textColor;
+            
+            NSMutableAttributedString * attributedString = [[NSMutableAttributedString alloc] initWithString:postText];
+
+            CTFontRef boldFont = CTFontCreateWithName((__bridge CFStringRef)cell.entryLabel.font.fontName, fontSize, NULL);
+            [attributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)boldFont range:postRange];
+            [attributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[fontColor CGColor] range:postRange];
+            [attributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor grayColor] CGColor] range:skillRange];
+
+            UIFont *italicSystemFont = [UIFont italicSystemFontOfSize:kSkillTextFontSize];
+            CTFontRef italicFont = CTFontCreateWithName((__bridge CFStringRef)italicSystemFont.fontName, italicSystemFont.pointSize, NULL);
+            if (italicFont) {
+                [attributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)italicFont range:skillRange];
+            }
+
+            cell.entryLabel.text = (id) attributedString;
+        } else {
+            cell.entryLabel.text = [self textForPost:post];
+        }
         // make the frame of the label larger if required for a multi-line entry
         CGRect entryFrame = cell.entryLabel.frame;
         

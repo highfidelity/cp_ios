@@ -505,6 +505,10 @@
 		E43CFC32153756C300A3A716 /* person-login-to-view.png in Resources */ = {isa = PBXBuildFile; fileRef = E43CFC30153756C300A3A716 /* person-login-to-view.png */; };
 		E43CFC33153756C300A3A716 /* person-login-to-view@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E43CFC31153756C300A3A716 /* person-login-to-view@2x.png */; };
 		E46B562015A8D8AC00AD3C62 /* divider-button.png in Resources */ = {isa = PBXBuildFile; fileRef = E46B561E15A8D8A900AD3C62 /* divider-button.png */; };
+		E46BA2C1161CD89500CA0440 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E46BA2C0161CD89500CA0440 /* CoreText.framework */; };
+		E46BA2CB161CE06100CA0440 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = E46BA2C7161CE06100CA0440 /* LICENSE */; };
+		E46BA2CC161CE06100CA0440 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E46BA2C8161CE06100CA0440 /* README.md */; };
+		E46BA2CD161CE06100CA0440 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E46BA2CA161CE06100CA0440 /* TTTAttributedLabel.m */; };
 		E47C832B15115D0600ECE98D /* drop-down.png in Resources */ = {isa = PBXBuildFile; fileRef = E47C832915115D0600ECE98D /* drop-down.png */; };
 		E47C832C15115D0600ECE98D /* drop-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E47C832A15115D0600ECE98D /* drop-down@2x.png */; };
 		E48C32B6151A7C3600A98427 /* VenueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E48C32B5151A7C3600A98427 /* VenueCell.m */; };
@@ -1266,6 +1270,11 @@
 		E43CFC31153756C300A3A716 /* person-login-to-view@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "person-login-to-view@2x.png"; path = "User/images/person-login-to-view@2x.png"; sourceTree = "<group>"; };
 		E46B561E15A8D8A900AD3C62 /* divider-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "divider-button.png"; path = "Utils/images/buttons/divider-button.png"; sourceTree = "<group>"; };
 		E46B561F15A8D8AA00AD3C62 /* divider-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "divider-button@2x.png"; path = "Utils/images/buttons/divider-button@2x.png"; sourceTree = "<group>"; };
+		E46BA2C0161CD89500CA0440 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		E46BA2C7161CE06100CA0440 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		E46BA2C8161CE06100CA0440 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		E46BA2C9161CE06100CA0440 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
+		E46BA2CA161CE06100CA0440 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		E47C832915115D0600ECE98D /* drop-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "drop-down.png"; path = "Settings/images/drop-down.png"; sourceTree = "<group>"; };
 		E47C832A15115D0600ECE98D /* drop-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "drop-down@2x.png"; path = "Settings/images/drop-down@2x.png"; sourceTree = "<group>"; };
 		E48C32B4151A7C3600A98427 /* VenueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VenueCell.h; path = Venue/VenueCell.h; sourceTree = "<group>"; };
@@ -1290,6 +1299,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E46BA2C1161CD89500CA0440 /* CoreText.framework in Frameworks */,
 				53FF95ED156D5D0E0046ADDE /* StoreKit.framework in Frameworks */,
 				3267F67C14D91A3600BFFBAA /* CoreTelephony.framework in Frameworks */,
 				3267F67A14D91A2E00BFFBAA /* libsqlite3.dylib in Frameworks */,
@@ -2501,6 +2511,7 @@
 				5335D875160BB369005400FC /* SVPullToRefresh */,
 				530BAAFD160BC244007DF806 /* TestFlightSDK */,
 				5335D8CF160BB404005400FC /* TPKeyboardAvoiding */,
+				E46BA2C6161CDE5600CA0440 /* TTTAttributedLabel */,
 				530BAAB4160BC097007DF806 /* UIImage-Categories */,
 				53BBBFA81612B25700F5C14B /* UserVoiceSDK */,
 				53263286160B9E3D0051BF0A /* WEPopover */,
@@ -2668,6 +2679,7 @@
 		871EFAFB14AE9C810030658B = {
 			isa = PBXGroup;
 			children = (
+				E46BA2C0161CD89500CA0440 /* CoreText.framework */,
 				871EFB1014AE9C820030658B /* candpiosapp */,
 				871EFB0914AE9C820030658B /* Frameworks */,
 				871EFB0714AE9C820030658B /* Products */,
@@ -2743,6 +2755,17 @@
 				871EFB1614AE9C820030658B /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E46BA2C6161CDE5600CA0440 /* TTTAttributedLabel */ = {
+			isa = PBXGroup;
+			children = (
+				E46BA2C7161CE06100CA0440 /* LICENSE */,
+				E46BA2C8161CE06100CA0440 /* README.md */,
+				E46BA2C9161CE06100CA0440 /* TTTAttributedLabel.h */,
+				E46BA2CA161CE06100CA0440 /* TTTAttributedLabel.m */,
+			);
+			path = TTTAttributedLabel;
 			sourceTree = "<group>";
 		};
 		E472FA9A151BAD780004430A /* images */ = {
@@ -3190,6 +3213,8 @@
 				53BBBFFA1612B25700F5C14B /* uv_vote_chicklet_empty@2x.png in Resources */,
 				53BBC03F1612B70D00F5C14B /* OATestServer.rb in Resources */,
 				53BBC0421612B70D00F5C14B /* README in Resources */,
+				E46BA2CB161CE06100CA0440 /* LICENSE in Resources */,
+				E46BA2CC161CE06100CA0440 /* README.md in Resources */,
 				3DA3548D161CC37D00275558 /* action-menu-button-check-in.png in Resources */,
 				3DA3548E161CC37D00275558 /* action-menu-button-check-in@2x.png in Resources */,
 				3DA3548F161CC37D00275558 /* action-menu-button-check-out.png in Resources */,
@@ -3345,6 +3370,7 @@
 				53BBC0401612B70D00F5C14B /* OAToken.m in Sources */,
 				53BBC0411612B70D00F5C14B /* OATokenManager.m in Sources */,
 				68B7B126161626BA000987E2 /* NSDictionary+JsonParserWorkaround.m in Sources */,
+				E46BA2CD161CE06100CA0440 /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
