@@ -32,6 +32,15 @@
     }
 }
 
+- (void)setName:(NSString *)name
+{
+    if (![name isKindOfClass:[NSNull class]]) {
+        _name = name;
+    } else {
+        _name = @"";
+    }
+}
+
 - (void)setState:(NSString *)state
 {
     if (![state isKindOfClass:[NSNull class]]) {
