@@ -93,10 +93,12 @@ static FoursquareAPIClient *_sharedClient;
     // create an AFHTTPRequestOperation and equeue it
     NSMutableURLRequest *request = [[self sharedClient] requestWithMethod:@"GET" path:@"venues/search" parameters:parameters];
     
+#if DEBUG
     // log out this request if it's not a search (since those clog up the log)
     if (!searchText) {
         NSLog(@"Making request to Foursquare at URL: %@", request.URL.absoluteString);
     }
+#endif
     
     AFHTTPRequestOperation *operation = [[self sharedClient]
                                          HTTPRequestOperationWithRequest:request
