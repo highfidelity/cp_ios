@@ -12,10 +12,13 @@
 #import "CPUserSessionHandler.h"
 #import "SVPullToRefresh.h"
 
-@interface CheckInListViewController() <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
+@interface CheckInListViewController() <UIAlertViewDelegate, UITableViewDataSource,
+                                        UITableViewDelegate, CLLocationManagerDelegate,
+                                        UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSMutableArray *closeVenues;
 @property (strong, nonatomic) CPVenue *neighborhoodVenue;
 @property (strong, nonatomic) CPVenue *defaultVenue;
@@ -58,6 +61,29 @@
     
     // trigger a refresh of the tableView
     [self.tableView.pullToRefreshView triggerRefresh];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    // listen to keyboard show/hide notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    // we're going offscreen, stop listening to see if the keyboard comes up or goes away
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Overriden getters
@@ -324,6 +350,7 @@
 }
 
 # pragma mark - UIAlertViewDelegate
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == SWITCH_VENUE_ALERT_TAG) {
@@ -342,6 +369,7 @@
 }
 
 #pragma mark - CLLocationManagerDelegate
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     [self zoomMapViewToLocation:newLocation];
@@ -351,6 +379,84 @@
 {
     // center the map on the user's current location
     [self.mapView setRegion:MKCoordinateRegionMakeWithDistance(newLocation.coordinate, 200, 200) animated:YES];
+}
+
+#pragma mark - Search
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    // use keyboardWillMove helper to resize and move views
+    [self keyboardWillMove:notification beingShown:YES];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    // use keyboardWillMove helper to resize and move views
+    [self keyboardWillMove:notification beingShown:NO];
+}
+
+- (void)keyboardWillMove:(NSNotification *)notification beingShown:(BOOL)beingShown
+{
+    // grab the CGRect for the keyboard end frame
+    CGRect keyboardRect = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    // grab CGRects for the mapView and tableView so we can alter their frames
+    CGRect mapShift = self.mapView.frame;
+    CGRect tableShift = self.tableView.frame;
+    
+    if (beingShown) {
+        // keyboard is being shown
+        
+        // hide the mapView by sliding it up
+        mapShift.origin.y -= mapShift.size.height;
+        
+        // slide up the tableView and allow it to take the extra space
+        tableShift.origin.y = self.searchBar.frame.size.height;
+        tableShift.size.height = self.view.frame.size.height - self.searchBar.frame.size.height - keyboardRect.size.height;
+    } else {
+        // keyboard is hiding
+        
+        // bring the mapView back down
+        mapShift.origin.y = self.searchBar.frame.size.height;
+        
+        // slide the tableView back down and shrink it back to previous size
+        tableShift.size.height = self.view.frame.size.height - mapShift.size.height - self.searchBar.frame.size.height;
+        tableShift.origin.y = mapShift.origin.y + mapShift.size.height;
+    }
+    
+    // grab the animationDuration and curve from the keyboard animation
+    CGFloat animationDuration = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    UIViewAnimationOptions keyboardCurve = [[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue];
+    
+    // animate the mapView and tableView frame changes using that duration and curve
+    [UIView animateWithDuration:animationDuration
+                          delay:0
+                        options:keyboardCurve
+                     animations:^{
+                         self.mapView.frame = mapShift;
+                         self.tableView.frame = tableShift;                         
+                     } completion:nil];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    // add the cancel button
+    searchBar.showsCancelButton = YES;
+    
+    // toggle the navigation bar
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    // toggle the navigation bar
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    // stop the search
+    [searchBar resignFirstResponder];
+    
+    // remove the cancel button
+    searchBar.showsCancelButton = NO;
 }
 
 @end
