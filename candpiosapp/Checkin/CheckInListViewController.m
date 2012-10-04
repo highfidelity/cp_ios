@@ -350,9 +350,8 @@
     if ([CPUserDefaultsHandler currentUser].userID) {
         
         // make sure that we actually have a venue for this row
-        CPVenue *selectedVenue = [self venueForTableViewIndexPath:indexPath];
-        
-        if (selectedVenue) {
+        // which either means we're searching or it's not a placeholder cell
+        if (self.isUserSearching || [self venueForTableViewIndexPath:indexPath]) {
             if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
                 // this user is currently checked in
                 // we need to present them with an alertView to confirm that they do in fact want to checkout of the previous venue
