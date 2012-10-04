@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSMutableArray *closeVenues;
 @property (strong, nonatomic) CPVenue *neighborhoodVenue;
 @property (strong, nonatomic) CPVenue *defaultVenue;
+@property (strong, nonatomic) NSArray *venueSearchResults;
 @property (strong, nonatomic) CLLocation *searchLocation;
 @property (strong, nonatomic) CLLocationManager *checkinLocationManager;
 
@@ -85,9 +86,9 @@
                                                object:nil];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewDidDisappear:animated];
+    [super viewWillDisappear:animated];
     
     // we're going offscreen, stop listening to see if the keyboard comes up or goes away
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -157,6 +158,9 @@
             // add the close venues that foursquare returned to our array of venues
             [self.closeVenues addObjectsFromArray:[self arrayOfVenuesFromFoursquareResponse:json]];
             
+            // sort the places array by distance from user
+            [self.closeVenues sortUsingSelector:@selector(sortByNeighborhoodAndDistanceToUser:)];
+            
             // tell the tableView to reload venues, after filtering for duplicates
             [self filterDuplicatesAndReloadTableVenues];
         } else {
@@ -220,18 +224,24 @@
 
 - (CPVenue *)venueForTableViewIndexPath:(NSIndexPath *)indexPath
 {
-    // grab the cellVenue depending on which row this is
-    // the first row is the neighborhood venue and the second is the recent venue
-    switch (indexPath.row) {
-        case 0:
-            return self.neighborhoodVenue;
-            break;
-        case 1:
-            return self.defaultVenue;
-            break;
-        default:
-            return self.closeVenues.count ? [self.closeVenues objectAtIndex:(indexPath.row - 2)] : nil;
-            break;
+    if (!self.venueSearchResults) {
+        // grab the cellVenue depending on which row this is
+        // the first row is the neighborhood venue and the second is the recent venue
+        switch (indexPath.row) {
+            case 0:
+                return self.neighborhoodVenue;
+                break;
+            case 1:
+                return self.defaultVenue;
+                break;
+            default:
+                return self.closeVenues.count ? [self.closeVenues objectAtIndex:(indexPath.row - 2)] : nil;
+                break;
+        }
+    } else {
+        // user is searching so we have a venueSearchResults array
+        // just return the venue for that rows
+        return [self.venueSearchResults objectAtIndex:indexPath.row];
     }
 }
 
@@ -239,9 +249,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    // 1 for neighborhood, 1 for default, number of close venues
-    return 2 + self.closeVenues.count;
+    if (!self.venueSearchResults) {
+        // 1 for neighborhood, 1 for default, number of close venues
+        return 2 + self.closeVenues.count;
+    } else {
+        // one row for each venue in search result array
+        return self.venueSearchResults.count;
+    }
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -253,7 +268,7 @@
     // default for main label is venue name
     NSString *nameLabelText = cellVenue.name;
     
-    if (indexPath.row == 0 || cellVenue.isNeighborhood) {
+    if (cellVenue.isNeighborhood) {
         // this cell is for a neighborhood so grab the right cell
         cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCellWFH"];
 
@@ -268,7 +283,7 @@
         // grab the standard cell from the table view
         cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCell"];
         
-        if (indexPath.row == 1) {
+        if (cellVenue == self.defaultVenue) {
             // this is the user's recent venue
             cell.distanceString.text = @"Recent";
         } else {
@@ -305,7 +320,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     if ([CPUserDefaultsHandler currentUser].userID) {
         
         // make sure that we actually have a venue for this row
@@ -350,7 +364,7 @@
 {
     // if this is a WFH cell make it a little taller
     // otherwise it's the standard 45
-    if (indexPath.row == 0 || (indexPath.row > 1 && ((CPVenue *)[self.closeVenues objectAtIndex:indexPath.row - 2]).isNeighborhood)) {
+    if ([self venueForTableViewIndexPath:indexPath].isNeighborhood) {
         return 60;
     } else {
         return 45;
@@ -362,7 +376,6 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"ShowCheckInDetailsView"]) {
-        
         NSIndexPath *selectedPath = [self.tableView indexPathForSelectedRow];
         CPVenue *venue = [self venueForTableViewIndexPath:selectedPath];
         
@@ -472,6 +485,28 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (!searchText.length) {
+        // the user is no longer searching, switch back to other state
+        self.venueSearchResults = nil;
+    } else {
+        // alloc-init a search results array
+        self.venueSearchResults = [NSArray array];
+        
+        // search whatever we have locally first
+        // create an array to hold the venues we'll be searching
+        NSMutableArray *venuesToSearch = [NSMutableArray arrayWithObjects:self.neighborhoodVenue, self.defaultVenue, nil];
+        [venuesToSearch addObjectsFromArray:self.closeVenues];
+        
+        // filter the venuesToSearch array using NSPredicate
+        self.venueSearchResults = [venuesToSearch filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText]];
+    }
+    
+    // tell the tableView to reload
+    [self.tableView reloadData];
+}
+
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     // toggle the navigation bar
@@ -479,6 +514,10 @@
     
     // stop the search
     [searchBar resignFirstResponder];
+    
+    // clear out the search string
+    self.searchBar.text = nil;
+    [self searchBar:self.searchBar textDidChange:nil];
     
     // remove the cancel button
     searchBar.showsCancelButton = NO;

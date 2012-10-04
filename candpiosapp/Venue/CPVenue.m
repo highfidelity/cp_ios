@@ -206,13 +206,17 @@
 
 
 
-// this method is used in CheckInListTableViewController to sort the array of places
+// this method is used in CheckInListViewController to sort the array of places
 // by the distance of each place from the user
 // might be a faster way to accomplish this (sorting while inserting the foursquare returned
 // data) but this seems to be quite quick anyways, as we aren't displaying a ton of places
-- (NSComparisonResult)sortByDistanceToUser:(CPVenue *)place
+- (NSComparisonResult)sortByNeighborhoodAndDistanceToUser:(CPVenue *)place
 {
-    if (self.distanceFromUser < place.distanceFromUser) {
+    if (self.isNeighborhood && !place.isNeighborhood) {
+        return NSOrderedAscending;
+    } else if (!self.isNeighborhood && place.isNeighborhood) {
+        return NSOrderedDescending;
+    } if (self.distanceFromUser < place.distanceFromUser) {
         return NSOrderedAscending;
     } else if (self.distanceFromUser > place.distanceFromUser) {
         return NSOrderedDescending;

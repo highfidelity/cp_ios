@@ -40,6 +40,6 @@
 
 - (CPVenue *)initFromDictionary:(NSDictionary *)json;
 - (CPVenue *)initFromFoursquareDictionary:(NSDictionary *)json userLocation:(CLLocation *)userLocation;
-- (NSComparisonResult)sortByDistanceToUser:(CPVenue *)place;
+- (NSComparisonResult)sortByNeighborhoodAndDistanceToUser:(CPVenue *)place;
 
 @end
