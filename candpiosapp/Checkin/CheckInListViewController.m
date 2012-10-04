@@ -595,7 +595,7 @@
     [searchBar resignFirstResponder];
     
     // re-enable pull to refresh in tableView
-    self.tableView.showsPullToRefresh = NO;
+    self.tableView.showsPullToRefresh = YES;
     
     // clear out the search string
     self.searchBar.text = nil;
