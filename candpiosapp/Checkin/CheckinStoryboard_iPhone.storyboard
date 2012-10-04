@@ -188,6 +188,44 @@
                                             <outlet property="venueName" destination="mYc-tB-g81" id="F3e-kU-vMW"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchingCheckInListTableCell" rowHeight="45" id="SYg-bP-GQs" customClass="CheckInListCell">
+                                        <rect key="frame" x="0.0" y="187" width="320" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view tag="939" contentMode="scaleToFill" id="cbT-F5-7Iz">
+                                                    <rect key="frame" x="64" y="0.0" width="1" height="45"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                </view>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Searching..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" id="yqd-co-MJo">
+                                                    <rect key="frame" x="80" y="10" width="206" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                    <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" id="GsA-BT-MaP">
+                                                    <rect key="frame" x="0.0" y="44" width="320" height="1"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                                </view>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" animating="YES" style="white" id="y67-DZ-adj">
+                                                    <rect key="frame" x="22" y="11" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="searchingSpinner" destination="y67-DZ-adj" id="BF3-Rn-lBP"/>
+                                            <outlet property="venueName" destination="yqd-co-MJo" id="bgS-3Y-AQb"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="wkj-5I-5nj" id="gPG-EC-ytA"/>
@@ -531,6 +569,7 @@
             <relationships>
                 <relationship kind="outlet" name="disclosureImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="distanceString" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="searchingSpinner" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
             </relationships>

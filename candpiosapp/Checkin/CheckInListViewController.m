@@ -29,6 +29,7 @@
 @property (strong, nonatomic) CLLocationManager *checkinLocationManager;
 @property (strong, nonatomic) AFHTTPRequestOperation *currentSearchOperation;
 @property (nonatomic) BOOL isUserSearching;
+@property (nonatomic) BOOL isWaitingForSearchResults;
 
 - (IBAction)closeWindow:(id)sender;
 - (void)refreshLocations;
@@ -156,6 +157,11 @@
         }];
     }
     
+    self.isWaitingForSearchResults = YES;
+    
+    // cancel any search operation that might still be going
+    [self.currentSearchOperation cancel];
+    
     // grab the 20 closest venues to user location
     self.currentSearchOperation = [FoursquareAPIClient getVenuesCloseToLocation:self.searchLocation
                                         searchText:nil
@@ -166,6 +172,8 @@
             
             // sort array of venues, prioritizing wether it's a neighboord and the distance from user
             [self.closeVenues sortUsingSelector:@selector(sortByNeighborhoodAndDistanceToUser:)];
+            
+            self.isWaitingForSearchResults = NO;
             
             // tell the tableView to reload venues, after filtering for duplicates
             [self filterDuplicatesAndReloadTableVenues];
@@ -275,67 +283,76 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)numberOfRowsForTableView
 {
     if (!self.isUserSearching) {
         // 1 for neighborhood, 1 for default if it exists, number of close venues
-        return 1 + !!self.defaultVenue + self.closeVenues.count;
+        return 1 + !!self.defaultVenue + self.closeVenues.count + !!self.isWaitingForSearchResults;
     } else {
         // one row for each venue in search result array
-        return !!self.searchNeighborhoodVenue + !!self.searchDefaultVenue + self.searchCloseVenues.count;
+        return !!self.searchNeighborhoodVenue + !!self.searchDefaultVenue + self.searchCloseVenues.count + !!self.isWaitingForSearchResults;
     }
-    
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self numberOfRowsForTableView];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CheckInListCell *cell;
-    CPVenue *cellVenue = [self venueForTableViewIndexPath:indexPath];
     
-    // default for main label is venue name
-    NSString *nameLabelText = cellVenue.name;
-    
-    if ((!self.isUserSearching && indexPath.row == 0) || cellVenue.isNeighborhood) {
-        if (cellVenue) {
-            // this cell is for a neighborhood so grab the right cell
-            cell = [tableView dequeueReusableCellWithIdentifier:@"WFHCheckInListTableCell"];
-            
-            // WFH venues have a custom name label, 'in' before the venue name
-            // unless this is the WFH placeholder
-            nameLabelText = [NSString stringWithFormat:@"in %@", cellVenue.name];
-        } else {
-            cell = [tableView dequeueReusableCellWithIdentifier:@"PlaceholderWFHCheckInListTableCell"];
-        }           
+    if (self.isWaitingForSearchResults && indexPath.row == [self numberOfRowsForTableView] - 1) {
+        // this is the acitivity spinner cell that shows up when the user is searching
+        cell = [tableView dequeueReusableCellWithIdentifier:@"SearchingCheckInListTableCell"];
+        
+        if (!cell.searchingSpinner.isAnimating) {
+            [cell.searchingSpinner startAnimating];
+        }
     } else {
-        // grab the standard cell from the table view
-        cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCell"];
+        CPVenue *cellVenue = [self venueForTableViewIndexPath:indexPath];
         
-        if (cellVenue == self.defaultVenue) {
-            // this is the user's recent venue
-            cell.distanceString.text = @"Recent";
+        // default for main label is venue name
+        NSString *nameLabelText = cellVenue.name;
+        
+        if ((!self.isUserSearching && indexPath.row == 0) || cellVenue.isNeighborhood) {
+            if (cellVenue) {
+                // this cell is for a neighborhood so grab the right cell
+                cell = [tableView dequeueReusableCellWithIdentifier:@"WFHCheckInListTableCell"];
+                
+                // WFH venues have a custom name label, 'in' before the venue name
+                // unless this is the WFH placeholder
+                nameLabelText = [NSString stringWithFormat:@"in %@", cellVenue.name];
+            } else {
+                cell = [tableView dequeueReusableCellWithIdentifier:@"PlaceholderWFHCheckInListTableCell"];
+            }
         } else {
-            // get the localized distance string based on the distance of this venue from the user
-            // which we set when we sort the places
-            cell.distanceString.text = [CPUtils localizedDistanceStringForDistance:[cellVenue distanceFromUser]];
+            // grab the standard cell from the table view
+            cell = [tableView dequeueReusableCellWithIdentifier:@"CheckInListTableCell"];
+            
+            if (cellVenue == self.defaultVenue) {
+                // this is the user's recent venue
+                cell.distanceString.text = @"Recent";
+            } else {
+                // get the localized distance string based on the distance of this venue from the user
+                // which we set when we sort the places
+                cell.distanceString.text = [CPUtils localizedDistanceStringForDistance:[cellVenue distanceFromUser]];
+            }
+            
+            if (!(cell.venueAddress.text = cellVenue.address)) {
+                // if we don't have an address then center the venue name
+                cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 0, cell.venueName.frame.size.width, cell.frame.size.height);
+            } else {
+                // otherwise put it back since we re-use the cells
+                cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 3, cell.venueName.frame.size.width, 21);
+            }
         }
         
-        if (!(cell.venueAddress.text = cellVenue.address)) {
-            // if we don't have an address then center the venue name
-            cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 0, cell.venueName.frame.size.width, cell.frame.size.height);
-        } else {
-            // otherwise put it back since we re-use the cells
-            cell.venueName.frame = CGRectMake(cell.venueName.frame.origin.x, 3, cell.venueName.frame.size.width, 21);
-        }
+        // give venueName UILabel the value of nameLabelText
+        cell.venueName.text = nameLabelText;
     }
-    
-    // if we don't have a cellVenue then don't show the disclosureImageView
-    // and don't allow selection of the cell
-    cell.disclosureImageView.hidden = !cellVenue;
-    cell.selectionStyle = cellVenue ? UITableViewCellSelectionStyleGray : UITableViewCellSelectionStyleNone;
-    
-    // give venueName UILabel the value of nameLabelText
-    cell.venueName.text = nameLabelText;
     
     return cell;
 }
@@ -389,7 +406,9 @@
 {
     // if this is a WFH cell make it a little taller
     // otherwise it's the standard 45
-    if ((!self.isUserSearching && indexPath.row == 0) || [self venueForTableViewIndexPath:indexPath].isNeighborhood) {
+    if (self.isWaitingForSearchResults && indexPath.row == [self numberOfRowsForTableView] - 1) {
+        return 45;
+    } else if ((!self.isUserSearching && indexPath.row == 0) || [self venueForTableViewIndexPath:indexPath].isNeighborhood) {
         return 60;
     } else {
         return 45;
@@ -544,6 +563,9 @@
         // first cancel the existing search operation if it's still going
         [self.currentSearchOperation cancel];
     
+        // while we're waiting to hear back from foursquare isWaitingForSearchResults should be YES
+        self.isWaitingForSearchResults = YES;
+        
         // ask Foursquare API for 20 venues close to location that have venue names matching the passed searchText
         self.currentSearchOperation = [FoursquareAPIClient getVenuesCloseToLocation:self.checkinLocationManager.location
                                             searchText:searchText
@@ -575,6 +597,9 @@
                                                     // sort the result set by distance, prioritize neighborhoods
                                                     [self.searchCloseVenues sortUsingSelector:@selector(sortByNeighborhoodAndDistanceToUser:)];
                                                     
+                                                    // we've got our result for this search, fix the boolean
+                                                    self.isWaitingForSearchResults = NO;
+                                                    
                                                     // reload the tableView
                                                     [self.tableView reloadData];
                                                 }
@@ -594,6 +619,14 @@
     
     // stop the search
     [searchBar resignFirstResponder];
+    
+    // we're not waiting on any search results anymore
+    self.isWaitingForSearchResults = NO;
+    
+    // reload foursquare close venues if we don't have any
+    if (!self.closeVenues.count) {
+        [self refreshLocations];
+    }
     
     // re-enable pull to refresh in tableView
     self.tableView.showsPullToRefresh = YES;
