@@ -22,9 +22,10 @@
 @property (strong, nonatomic) NSMutableArray *closeVenues;
 @property (strong, nonatomic) CPVenue *neighborhoodVenue;
 @property (strong, nonatomic) CPVenue *defaultVenue;
-@property (strong, nonatomic) NSArray *venueSearchResults;
+@property (strong, nonatomic) NSMutableArray *venueSearchResults;
 @property (strong, nonatomic) CLLocation *searchLocation;
 @property (strong, nonatomic) CLLocationManager *checkinLocationManager;
+@property (strong, nonatomic) AFHTTPRequestOperation *currentSearchOperation;
 
 - (IBAction)closeWindow:(id)sender;
 - (void)refreshLocations;
@@ -153,7 +154,9 @@
     }
     
     // grab the 20 closest venues to user location
-    [FoursquareAPIClient getVenuesCloseToLocation:self.searchLocation completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
+    [FoursquareAPIClient getVenuesCloseToLocation:self.searchLocation
+                                        searchText:nil
+                                       completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
         if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
             // add the close venues that foursquare returned to our array of venues
             [self.closeVenues addObjectsFromArray:[self arrayOfVenuesFromFoursquareResponse:json]];
@@ -492,7 +495,7 @@
         self.venueSearchResults = nil;
     } else {
         // alloc-init a search results array
-        self.venueSearchResults = [NSArray array];
+        self.venueSearchResults = [NSMutableArray array];
         
         // search whatever we have locally first
         // create an array to hold the venues we'll be searching
@@ -500,7 +503,31 @@
         [venuesToSearch addObjectsFromArray:self.closeVenues];
         
         // filter the venuesToSearch array using NSPredicate
-        self.venueSearchResults = [venuesToSearch filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText]];
+        self.venueSearchResults = [[venuesToSearch filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText]] mutableCopy];
+        
+        // search foursquare for more venues which match the search text
+        // first cancel the existing search operation if it's still going
+        [self.currentSearchOperation cancel];
+        
+        // ask Foursquare API for 20 venues close to location that have venue names matching the passed searchText
+        self.currentSearchOperation = [FoursquareAPIClient getVenuesCloseToLocation:self.checkinLocationManager.location
+                                            searchText:searchText
+                                            completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
+                                                
+                                                // use helper method to pull array of CPVenues from results
+                                                NSMutableArray *foursquareResults = [[self arrayOfVenuesFromFoursquareResponse:json] mutableCopy];
+                                                
+                                                NSMutableSet *existingIDs = [NSMutableSet set];
+                                                
+                                                for (CPVenue *venue in self.venueSearchResults) {
+                                                    [existingIDs addObject:venue.foursquareID];
+                                                }
+                                                
+                                                [foursquareResults filterUsingPredicate:[NSPredicate predicateWithFormat:@"NOT (foursquareID in %@)", existingIDs]];
+                                                [self.venueSearchResults addObjectsFromArray:foursquareResults];
+                                                
+                                                [self.tableView reloadData];
+                                            }];
     }
     
     // tell the tableView to reload

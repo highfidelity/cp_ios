@@ -47,10 +47,6 @@ static FoursquareAPIClient *_sharedClient;
     
     NSLog(@"Making request to Foursquare at URL: %@", request.URL.absoluteString);
     
-    if ([method isEqualToString:@"POST"]) {
-        NSLog(@"Parameters sent with Foursquare POST request: %@", parameters.description);
-    }
-    
     return request;
 }
 
@@ -69,9 +65,10 @@ static FoursquareAPIClient *_sharedClient;
 
 #pragma mark - Request Methods
 
-+ (void)getVenuesCloseToLocation:(CLLocation *)location
++ (AFHTTPRequestOperation *)getVenuesCloseToLocation:(CLLocation *)location
                            limit:(int)limit
                       categoryID:(NSString *)categoryID
+                      searchText:(NSString *)searchText
                    versionString:(NSString *)versionString
                       completion:(AFRequestCompletionBlock)completion
 {
@@ -87,31 +84,53 @@ static FoursquareAPIClient *_sharedClient;
         [parameters setObject:categoryID forKey:@"categoryId"];
     }
     
+    // if we have searchText then pass that as the query
+    if (searchText) {
+        [parameters setObject:searchText forKey:@"query"];
+    }
+    
     // add the passed version string to our dictionary of parameters
     parameters = [self parameterDictionaryWithVersionString:versionString existingParameters:parameters];
     
-    // make the GET request to venues/search
-    [[self sharedClient] getPath:@"venues/search"
-                      parameters:parameters
-                         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                             completion(operation, responseObject, nil);
-                         } failure:^(AFHTTPRequestOperation *operation, NSError *error){
-                             completion(operation, nil, error);
-                         }];
+    // create an AFHTTPRequestOperation and equeue it
+    NSMutableURLRequest *request = [[self sharedClient] requestWithMethod:@"GET" path:@"venues/search" parameters:parameters];
+    AFHTTPRequestOperation *operation = [[self sharedClient]
+                                         HTTPRequestOperationWithRequest:request
+                                                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                                                    completion(operation, responseObject, nil);
+                                                                } failure:^(AFHTTPRequestOperation *operation, NSError *error){
+                                                                    completion(operation, nil, error);
+                                                                }];
+    
+    [[self sharedClient] enqueueHTTPRequestOperation:operation];
+    
+    // return the AFHTTPRequestOperation so they can easily be cancelled
+    return operation;
 }
 
-+ (void)getVenuesCloseToLocation:(CLLocation *)location
++ (AFHTTPRequestOperation *)getVenuesCloseToLocation:(CLLocation *)location
+                      searchText:(NSString *)searchText
                       completion:(AFRequestCompletionBlock)completion;
 {    
     // use above helper to get 20 closest venues, no matter the category
-    [self getVenuesCloseToLocation:location limit:20 categoryID:nil versionString:@"20120302" completion:completion];
+    return [self getVenuesCloseToLocation:location
+                             limit:20
+                        categoryID:nil
+                        searchText:searchText
+                     versionString:@"20120302"
+                        completion:completion];
 }
 
-+ (void)getClosestNeighborhoodToLocation:(CLLocation *)location
++ (AFHTTPRequestOperation *)getClosestNeighborhoodToLocation:(CLLocation *)location
                                   completion:(AFRequestCompletionBlock)completion
 {
     // use above helper to return 2 closest venues in the neighborhood category
-    [self getVenuesCloseToLocation:location limit:1 categoryID:kFoursquareNeighborhoodCategoryID versionString:@"20121001" completion:completion];
+    return [self getVenuesCloseToLocation:location
+                             limit:1
+                        categoryID:kFoursquareNeighborhoodCategoryID
+                        searchText:nil
+                     versionString:@"20121001"
+                        completion:completion];
 }
 
 @end

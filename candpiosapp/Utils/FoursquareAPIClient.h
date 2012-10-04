@@ -17,10 +17,11 @@ typedef void (^AFRequestCompletionBlock)(AFHTTPRequestOperation *operation, id r
 
 + (FoursquareAPIClient *)sharedClient;
 
-+ (void)getVenuesCloseToLocation:(CLLocation *)location
-                               completion:(AFRequestCompletionBlock)completion;
++ (AFHTTPRequestOperation *)getVenuesCloseToLocation:(CLLocation *)location
+                      searchText:(NSString *)searchText
+                      completion:(AFRequestCompletionBlock)completion;
 
-+ (void)getClosestNeighborhoodToLocation:(CLLocation *)location
-                                  completion:(AFRequestCompletionBlock)completion;
++ (AFHTTPRequestOperation *)getClosestNeighborhoodToLocation:(CLLocation *)location
+                              completion:(AFRequestCompletionBlock)completion;
 
 @end
