@@ -22,10 +22,13 @@
 @property (strong, nonatomic) NSMutableArray *closeVenues;
 @property (strong, nonatomic) CPVenue *neighborhoodVenue;
 @property (strong, nonatomic) CPVenue *defaultVenue;
-@property (strong, nonatomic) NSMutableArray *venueSearchResults;
+@property (strong, nonatomic) NSMutableArray *searchCloseVenues;
+@property (strong, nonatomic) CPVenue *searchNeighborhoodVenue;
+@property (strong, nonatomic) CPVenue *searchDefaultVenue;
 @property (strong, nonatomic) CLLocation *searchLocation;
 @property (strong, nonatomic) CLLocationManager *checkinLocationManager;
 @property (strong, nonatomic) AFHTTPRequestOperation *currentSearchOperation;
+@property (nonatomic) BOOL isUserSearching;
 
 - (IBAction)closeWindow:(id)sender;
 - (void)refreshLocations;
@@ -154,14 +157,14 @@
     }
     
     // grab the 20 closest venues to user location
-    [FoursquareAPIClient getVenuesCloseToLocation:self.searchLocation
+    self.currentSearchOperation = [FoursquareAPIClient getVenuesCloseToLocation:self.searchLocation
                                         searchText:nil
                                        completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
         if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
-            // add the close venues that foursquare returned to our array of venues
+            // add the close venues that foursquare returned to our array of search results
             [self.closeVenues addObjectsFromArray:[self arrayOfVenuesFromFoursquareResponse:json]];
             
-            // sort the places array by distance from user
+            // sort array of venues, prioritizing wether it's a neighboord and the distance from user
             [self.closeVenues sortUsingSelector:@selector(sortByNeighborhoodAndDistanceToUser:)];
             
             // tell the tableView to reload venues, after filtering for duplicates
@@ -180,20 +183,10 @@
 }
 
 - (void)filterDuplicatesAndReloadTableVenues
-{
+{   
     if (self.closeVenues.count) {
         if (self.neighborhoodVenue || self.defaultVenue) {
-            NSMutableSet *existingIDs = [NSMutableSet set];
-            
-            if (self.neighborhoodVenue) {
-                // add the neighborhood venue's foursquare ID to the set of existing IDs
-                [existingIDs addObject:self.neighborhoodVenue.foursquareID];
-            }
-            
-            if (self.defaultVenue) {
-                // add the default venue foursquare ID to the set of existing IDs
-                [existingIDs addObject:self.defaultVenue.foursquareID];
-            }
+            NSMutableSet *existingIDs = [self setOfNeighborhoodAndDefaultIDsForPredicate];
             
             // remove any venues from self.closeVenues with a foursquareID in the existingIDs set
             NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"NOT (foursquareID in %@)", existingIDs];
@@ -201,14 +194,32 @@
         }
     }
     
-    // stop the pull to refresh view
+    // stop the pull to refresh view if it exists in the tableView
     [self.tableView.pullToRefreshView stopAnimating];
-    
+
     // tell the tableView to reload its data
     [self.tableView reloadData];
 }
 
-- (NSArray *)arrayOfVenuesFromFoursquareResponse:(NSDictionary *)json
+- (NSMutableSet *)setOfNeighborhoodAndDefaultIDsForPredicate
+{
+    NSMutableSet *existingIDs = [NSMutableSet set];
+    
+    CPVenue *stateNeighborhoodVenue = !self.isUserSearching ? self.neighborhoodVenue : self.searchNeighborhoodVenue;
+    CPVenue *stateDefaultVenue = !self.isUserSearching ? self.defaultVenue : self.searchDefaultVenue;
+    
+    if (stateNeighborhoodVenue) {
+        [existingIDs addObject:stateNeighborhoodVenue.foursquareID];
+    }
+    
+    if (stateDefaultVenue) {
+        [existingIDs addObject:stateDefaultVenue.foursquareID];
+    }
+    
+    return existingIDs;
+}
+
+- (NSMutableArray *)arrayOfVenuesFromFoursquareResponse:(NSDictionary *)json
 {
     // setup venueArray to pass back in return
     NSMutableArray *venueArray =  [NSMutableArray array];
@@ -227,7 +238,7 @@
 
 - (CPVenue *)venueForTableViewIndexPath:(NSIndexPath *)indexPath
 {
-    if (!self.venueSearchResults) {
+    if (!self.isUserSearching) {
         // grab the cellVenue depending on which row this is
         // the first row is the neighborhood venue and the second is the recent venue
         switch (indexPath.row) {
@@ -242,9 +253,22 @@
                 break;
         }
     } else {
-        // user is searching so we have a venueSearchResults array
-        // just return the venue for that rows
-        return [self.venueSearchResults objectAtIndex:indexPath.row];
+        int topResults = (int)!!self.searchNeighborhoodVenue + (int)!!self.searchDefaultVenue;
+        
+        if (topResults) {
+            // we have at least one result stuck to the top
+            if (indexPath.row == 0) {
+                return self.searchNeighborhoodVenue ? self.searchNeighborhoodVenue : self.searchDefaultVenue;
+            } else if (topResults > 1 && indexPath.row == 1) {
+                return self.searchDefaultVenue;
+            } else {
+                return [self.searchCloseVenues objectAtIndex:(indexPath.row - topResults)];
+            }
+        } else {
+            // no top results
+            // just return the venue for that row
+            return [self.searchCloseVenues objectAtIndex:indexPath.row];
+        }
     }
 }
 
@@ -252,12 +276,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (!self.venueSearchResults) {
+    if (!self.isUserSearching) {
         // 1 for neighborhood, 1 for default, number of close venues
         return 2 + self.closeVenues.count;
     } else {
         // one row for each venue in search result array
-        return self.venueSearchResults.count;
+        return !!self.searchNeighborhoodVenue + !!self.searchDefaultVenue + self.searchCloseVenues.count;
     }
     
 }
@@ -484,6 +508,9 @@
     // add the cancel button
     searchBar.showsCancelButton = YES;
     
+    // prevent pull to refresh in the search view
+    self.tableView.showsPullToRefresh = NO;
+    
     // toggle the navigation bar
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
@@ -492,45 +519,73 @@
 {
     if (!searchText.length) {
         // the user is no longer searching, switch back to other state
-        self.venueSearchResults = nil;
+        self.isUserSearching = NO;
     } else {
+        // the user is now searching
+        self.isUserSearching = YES;
+        
         // alloc-init a search results array
-        self.venueSearchResults = [NSMutableArray array];
+        self.searchCloseVenues = [NSMutableArray array];
         
         // search whatever we have locally first
-        // create an array to hold the venues we'll be searching
-        NSMutableArray *venuesToSearch = [NSMutableArray arrayWithObjects:self.neighborhoodVenue, self.defaultVenue, nil];
-        [venuesToSearch addObjectsFromArray:self.closeVenues];
         
-        // filter the venuesToSearch array using NSPredicate
-        self.venueSearchResults = [[venuesToSearch filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText]] mutableCopy];
+        // check if we have a match in the neighborhood venue
+        // if so then set our searchNeighborhoodVenue to that venue, otherwise nil it out
+        NSRange neighborhoodRange = [self.neighborhoodVenue.name rangeOfString:searchText options:NSCaseInsensitiveSearch];
+        self.searchNeighborhoodVenue = neighborhoodRange.location != NSNotFound ? self.neighborhoodVenue : nil;
+        
+        // check if we have a match in the default venue
+        // if so then set our defaultVenue to that venue, otherwise nil it out
+        NSRange defaultRange = [self.defaultVenue.name rangeOfString:searchText options:NSCaseInsensitiveSearch];
+        self.searchDefaultVenue = defaultRange.location != NSNotFound ? self.defaultVenue : nil;
+        
+        // filter the searchCloseVenues array using NSPredicate
+        self.searchCloseVenues = [[self.closeVenues filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText]] mutableCopy];
         
         // search foursquare for more venues which match the search text
         // first cancel the existing search operation if it's still going
         [self.currentSearchOperation cancel];
-        
+    
         // ask Foursquare API for 20 venues close to location that have venue names matching the passed searchText
         self.currentSearchOperation = [FoursquareAPIClient getVenuesCloseToLocation:self.checkinLocationManager.location
                                             searchText:searchText
                                             completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
-                                                
-                                                // use helper method to pull array of CPVenues from results
-                                                NSMutableArray *foursquareResults = [[self arrayOfVenuesFromFoursquareResponse:json] mutableCopy];
-                                                
-                                                NSMutableSet *existingIDs = [NSMutableSet set];
-                                                
-                                                for (CPVenue *venue in self.venueSearchResults) {
-                                                    [existingIDs addObject:venue.foursquareID];
+                                                // check if we get an error from foursquare or during JSON parse
+                                                // if so just ignore it and don't show the results
+                                                if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
+                                                    // use parseFoursquareVenueResponse:destinationArray helper to
+                                                    // add the venues to self.searchCloseVenues, sort and filter them and then ask the tableView to reload
+                                                    NSMutableArray *foursquareResultArray = [self arrayOfVenuesFromFoursquareResponse:json];
+                                                    
+                                                    // make sure we have no duplicate venues in the foursquare result array
+                                                    
+                                                    // use the helper method to create an NSMutableSet containing the neighborhood and default venue foursquare ID
+                                                    NSMutableSet *existingIDs = [self setOfNeighborhoodAndDefaultIDsForPredicate];
+                                                    
+                                                    // add the foursquare IDs for venues that we had locally
+                                                    for (CPVenue *resultVenue in self.searchCloseVenues) {
+                                                        [existingIDs addObject:resultVenue.foursquareID];
+                                                    }                                                    
+                                                    
+                                                    // remove any venues from self.closeVenues with a foursquareID in the existingIDs set
+                                                    NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"NOT (foursquareID in %@)", existingIDs];
+                                                    [foursquareResultArray filterUsingPredicate:filterPredicate];
+                                                    
+                                                    // add the new venues to self.searchCloseVenues
+                                                    [self.searchCloseVenues addObjectsFromArray:foursquareResultArray];
+                                                    
+                                                    // sort the result set by distance, prioritize neighborhoods
+                                                    [self.searchCloseVenues sortUsingSelector:@selector(sortByNeighborhoodAndDistanceToUser:)];
+                                                    
+                                                    // reload the tableView
+                                                    [self.tableView reloadData];
                                                 }
-                                                
-                                                [foursquareResults filterUsingPredicate:[NSPredicate predicateWithFormat:@"NOT (foursquareID in %@)", existingIDs]];
-                                                [self.venueSearchResults addObjectsFromArray:foursquareResults];
-                                                
-                                                [self.tableView reloadData];
                                             }];
+        
+        
     }
     
-    // tell the tableView to reload
+    // call reloadData to put old un-searched data back OR local results in the tableView
     [self.tableView reloadData];
 }
 
@@ -541,6 +596,9 @@
     
     // stop the search
     [searchBar resignFirstResponder];
+    
+    // re-enable pull to refresh in tableView
+    self.tableView.showsPullToRefresh = NO;
     
     // clear out the search string
     self.searchBar.text = nil;
