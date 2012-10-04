@@ -15,7 +15,6 @@
             statusText:(NSString *)statusText
              isVirtual:(BOOL)isVirtual
            isAutomatic:(BOOL)isAutomatic
-        isNeighborhood:(BOOL)isNeighborhood
        completionBlock:(void (^)(NSDictionary *, NSError *))completion;
 
 @end

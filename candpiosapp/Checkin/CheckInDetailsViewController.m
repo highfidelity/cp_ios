@@ -189,9 +189,9 @@
                      statusText:statusText
                       isVirtual:self.checkInIsVirtual
                     isAutomatic:NO
-                 isNeighborhood:self.venue.isNeighborhood
                    completionBlock:^(NSDictionary *json, NSError *error){
         // hide the SVProgressHUD
+                       NSLog(@"%@",json);
         if (!error && ![[json objectForKey:@"error"] boolValue]) {
             [SVProgressHUD dismiss];
             

@@ -94,7 +94,6 @@ static CPGeofenceHandler *sharedHandler;
                          statusText:statusText
                           isVirtual:NO
                         isAutomatic:YES
-                     isNeighborhood:NO
                     completionBlock:^(NSDictionary *json, NSError *error){
             
             if (!error) {
