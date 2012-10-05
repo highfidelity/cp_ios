@@ -194,11 +194,7 @@
 {   
     if (self.closeVenues.count) {
         if (self.neighborhoodVenue || self.defaultVenue) {
-            NSMutableSet *existingIDs = [self setOfNeighborhoodAndDefaultIDsForPredicate];
-            
-            // remove any venues from self.closeVenues with a foursquareID in the existingIDs set
-            NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"NOT (foursquareID in %@)", existingIDs];
-            [self.closeVenues filterUsingPredicate:filterPredicate];
+            self.closeVenues = [self filterDuplicatesFromArray:self.closeVenues againstArray:nil includeND:YES];
         }
     }
     
@@ -209,22 +205,36 @@
     [self.tableView reloadData];
 }
 
-- (NSMutableSet *)setOfNeighborhoodAndDefaultIDsForPredicate
+- (NSMutableArray *)filterDuplicatesFromArray:(NSMutableArray *)filterArray
+                         againstArray:(NSArray *)againstArray
+                            includeND:(BOOL)includeND
 {
     NSMutableSet *existingIDs = [NSMutableSet set];
     
-    CPVenue *stateNeighborhoodVenue = !self.isUserSearching ? self.neighborhoodVenue : self.searchNeighborhoodVenue;
-    CPVenue *stateDefaultVenue = !self.isUserSearching ? self.defaultVenue : self.searchDefaultVenue;
-    
-    if (stateNeighborhoodVenue) {
-        [existingIDs addObject:stateNeighborhoodVenue.foursquareID];
+    // if includeND is yes then we also need to filter out the neighborhood and default venue
+    if (includeND) {
+        CPVenue *stateNeighborhoodVenue = !self.isUserSearching ? self.neighborhoodVenue : self.searchNeighborhoodVenue;
+        CPVenue *stateDefaultVenue = !self.isUserSearching ? self.defaultVenue : self.searchDefaultVenue;
+        
+        if (stateNeighborhoodVenue) {
+            [existingIDs addObject:stateNeighborhoodVenue.foursquareID];
+        }
+        
+        if (stateDefaultVenue) {
+            [existingIDs addObject:stateDefaultVenue.foursquareID];
+        }
     }
     
-    if (stateDefaultVenue) {
-        [existingIDs addObject:stateDefaultVenue.foursquareID];
+    // if we have an againstArray then we need to also filter out foursquare IDs in that array
+    if (againstArray) {
+        for (CPVenue *venue in againstArray) {
+            [existingIDs addObject:venue.foursquareID];
+        }
     }
     
-    return existingIDs;
+    // remove any venues from self.closeVenues with a foursquareID in the existingIDs set
+    NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"NOT (foursquareID in %@)", existingIDs];
+    return [[filterArray filteredArrayUsingPredicate:filterPredicate] mutableCopy];
 }
 
 - (NSMutableArray *)arrayOfVenuesFromFoursquareResponse:(NSDictionary *)json
@@ -541,9 +551,6 @@
         // the user is now searching
         self.isUserSearching = YES;
         
-        // alloc-init a search results array
-        self.searchCloseVenues = [NSMutableArray array];
-        
         // search whatever we have locally first
         
         // check if we have a match in the neighborhood venue
@@ -556,8 +563,33 @@
         NSRange defaultRange = [self.defaultVenue.name rangeOfString:searchText options:NSCaseInsensitiveSearch];
         self.searchDefaultVenue = defaultRange.location != NSNotFound ? self.defaultVenue : nil;
         
-        // filter the searchCloseVenues array using NSPredicate
-        self.searchCloseVenues = [[self.closeVenues filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText]] mutableCopy];
+        NSPredicate *venueNamePredicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
+        
+        if (!self.searchCloseVenues) {
+            // alloc-init a search results array if we don't already have one
+            self.searchCloseVenues = [NSMutableArray array];
+        } else {
+            // filter the results we already have with the new venue name predicate
+            [self.searchCloseVenues filterUsingPredicate:venueNamePredicate];
+        }
+        
+        // add any matching results from our local list of close venues
+        NSMutableArray *localResultArray = [[self.closeVenues filteredArrayUsingPredicate:venueNamePredicate] mutableCopy];
+        
+        // if there's anything in searchCloseVenues we need to make sure we aren't introducing any duplicates
+        if (self.searchCloseVenues.count && localResultArray.count) {
+            localResultArray = [self filterDuplicatesFromArray:localResultArray againstArray:self.searchCloseVenues includeND:NO];
+            
+            // add everything from localResultArray to searchCloseVenues
+            [self.searchCloseVenues addObjectsFromArray:localResultArray];
+            
+            // sort the resulting array by distance and WFH
+            [self.searchCloseVenues sortUsingSelector:@selector(sortByNeighborhoodAndDistanceToUser:)];
+        } else {
+            // just add everything from localResultArray, it's already sorted from closeVenues
+            [self.searchCloseVenues addObjectsFromArray:localResultArray];
+        }
+
         
         // search foursquare for more venues which match the search text
         // first cancel the existing search operation if it's still going
@@ -578,18 +610,9 @@
                                                     NSMutableArray *foursquareResultArray = [self arrayOfVenuesFromFoursquareResponse:json];
                                                     
                                                     // make sure we have no duplicate venues in the foursquare result array
-                                                    
-                                                    // use the helper method to create an NSMutableSet containing the neighborhood and default venue foursquare ID
-                                                    NSMutableSet *existingIDs = [self setOfNeighborhoodAndDefaultIDsForPredicate];
-                                                    
-                                                    // add the foursquare IDs for venues that we had locally
-                                                    for (CPVenue *resultVenue in self.searchCloseVenues) {
-                                                        [existingIDs addObject:resultVenue.foursquareID];
-                                                    }                                                    
-                                                    
-                                                    // remove any venues from self.closeVenues with a foursquareID in the existingIDs set
-                                                    NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"NOT (foursquareID in %@)", existingIDs];
-                                                    [foursquareResultArray filterUsingPredicate:filterPredicate];
+                                                    foursquareResultArray = [self filterDuplicatesFromArray:foursquareResultArray
+                                                                                               againstArray:self.searchCloseVenues
+                                                                                                  includeND:YES];
                                                     
                                                     // add the new venues to self.searchCloseVenues
                                                     [self.searchCloseVenues addObjectsFromArray:foursquareResultArray];
