@@ -9,11 +9,12 @@
 #import "CPUserActionCell.h"
 #import "CPPost.h"
 #import "WEPopoverController.h"
+#import "TTTAttributedLabel.h"
 
 @interface PostBaseCell : CPUserActionCell
 
 @property (weak, nonatomic) IBOutlet UIButton *senderProfileButton;
-@property (weak, nonatomic) IBOutlet UILabel *entryLabel;
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *entryLabel;
 @property (nonatomic, strong) CPPost* post;
 @property (strong, nonatomic) CAGradientLayer *gradientLayer;
 

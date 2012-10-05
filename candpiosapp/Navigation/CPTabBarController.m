@@ -260,8 +260,12 @@
 {
     self.thinBar.actionButtonState = CPThinTabBarActionButtonStatePlus;
     
-    [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionShowFeed;
-    [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
+    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
+        [[CPCheckinHandler sharedHandler] promptForCheckout];
+    } else {
+        [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionShowFeed;
+        [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
+    }
 }
 
 - (void)promptForLoginToSeeLogbook:(CPAfterLoginAction)action
