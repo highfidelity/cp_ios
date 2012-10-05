@@ -134,7 +134,8 @@
     [FoursquareAPIClient getClosestNeighborhoodToLocation:self.searchLocation completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
         if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
             // insert the returned neighborhood into the first slot in our neighborhoods array
-            self.neighborhoodVenue = [[self arrayOfVenuesFromFoursquareResponse:json] objectAtIndex:0];
+            NSArray *neighborhoodArray = [self arrayOfVenuesFromFoursquareResponse:json];
+            self.neighborhoodVenue = neighborhoodArray.count ? [neighborhoodArray objectAtIndex:0] : nil;
             
             // tell the tableView to reload venues, after filtering for duplicates
             [self filterDuplicatesAndReloadTableVenues];
