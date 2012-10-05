@@ -508,8 +508,6 @@
 		E43CFC33153756C300A3A716 /* person-login-to-view@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E43CFC31153756C300A3A716 /* person-login-to-view@2x.png */; };
 		E46B562015A8D8AC00AD3C62 /* divider-button.png in Resources */ = {isa = PBXBuildFile; fileRef = E46B561E15A8D8A900AD3C62 /* divider-button.png */; };
 		E46BA2C1161CD89500CA0440 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E46BA2C0161CD89500CA0440 /* CoreText.framework */; };
-		E46BA2CB161CE06100CA0440 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = E46BA2C7161CE06100CA0440 /* LICENSE */; };
-		E46BA2CC161CE06100CA0440 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E46BA2C8161CE06100CA0440 /* README.md */; };
 		E46BA2CD161CE06100CA0440 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E46BA2CA161CE06100CA0440 /* TTTAttributedLabel.m */; };
 		E47C832B15115D0600ECE98D /* drop-down.png in Resources */ = {isa = PBXBuildFile; fileRef = E47C832915115D0600ECE98D /* drop-down.png */; };
 		E47C832C15115D0600ECE98D /* drop-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E47C832A15115D0600ECE98D /* drop-down@2x.png */; };
@@ -1275,8 +1273,6 @@
 		E46B561E15A8D8A900AD3C62 /* divider-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "divider-button.png"; path = "Utils/images/buttons/divider-button.png"; sourceTree = "<group>"; };
 		E46B561F15A8D8AA00AD3C62 /* divider-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "divider-button@2x.png"; path = "Utils/images/buttons/divider-button@2x.png"; sourceTree = "<group>"; };
 		E46BA2C0161CD89500CA0440 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		E46BA2C7161CE06100CA0440 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		E46BA2C8161CE06100CA0440 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		E46BA2C9161CE06100CA0440 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		E46BA2CA161CE06100CA0440 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		E47C832915115D0600ECE98D /* drop-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "drop-down.png"; path = "Settings/images/drop-down.png"; sourceTree = "<group>"; };
@@ -2766,8 +2762,6 @@
 		E46BA2C6161CDE5600CA0440 /* TTTAttributedLabel */ = {
 			isa = PBXGroup;
 			children = (
-				E46BA2C7161CE06100CA0440 /* LICENSE */,
-				E46BA2C8161CE06100CA0440 /* README.md */,
 				E46BA2C9161CE06100CA0440 /* TTTAttributedLabel.h */,
 				E46BA2CA161CE06100CA0440 /* TTTAttributedLabel.m */,
 			);
@@ -3219,6 +3213,10 @@
 				53BBBFFA1612B25700F5C14B /* uv_vote_chicklet_empty@2x.png in Resources */,
 				53BBC03F1612B70D00F5C14B /* OATestServer.rb in Resources */,
 				53BBC0421612B70D00F5C14B /* README in Resources */,
+				3DA3548D161CC37D00275558 /* action-menu-button-check-in.png in Resources */,
+				3DA3548E161CC37D00275558 /* action-menu-button-check-in@2x.png in Resources */,
+				3DA3548F161CC37D00275558 /* action-menu-button-check-out.png in Resources */,
+				3DA35490161CC37D00275558 /* action-menu-button-check-out@2x.png in Resources */,
 				533E43EE161B947E00432377 /* wfh-icon.png in Resources */,
 				533E43EF161B947E00432377 /* wfh-icon@2x.png in Resources */,
 			);
