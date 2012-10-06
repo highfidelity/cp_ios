@@ -195,7 +195,9 @@
 {   
     if (self.closeVenues.count) {
         if (self.neighborhoodVenue || self.defaultVenue) {
-            self.closeVenues = [self filterDuplicatesFromArray:self.closeVenues againstArray:nil includeND:YES];
+            self.closeVenues = [self filterVenueDuplicatesFromArray:self.closeVenues
+                                                       againstArray:nil
+                                      includeNeighborhoodAndDefault:YES];
         }
     }
     
@@ -206,9 +208,9 @@
     [self.tableView reloadData];
 }
 
-- (NSMutableArray *)filterDuplicatesFromArray:(NSMutableArray *)filterArray
-                         againstArray:(NSArray *)againstArray
-                            includeND:(BOOL)includeND
+- (NSMutableArray *)filterVenueDuplicatesFromArray:(NSMutableArray *)filterArray
+                                      againstArray:(NSArray *)againstArray
+                    includeNeighborhoodAndDefault:(BOOL)includeND
 {
     NSMutableSet *existingIDs = [NSMutableSet set];
     
@@ -537,6 +539,7 @@
     searchBar.showsCancelButton = YES;
     
     // prevent pull to refresh in the search view
+    [self.tableView.pullToRefreshView stopAnimating];
     self.tableView.showsPullToRefresh = NO;
     
     // toggle the navigation bar
@@ -579,7 +582,9 @@
         
         // if there's anything in searchCloseVenues we need to make sure we aren't introducing any duplicates
         if (self.searchCloseVenues.count && localResultArray.count) {
-            localResultArray = [self filterDuplicatesFromArray:localResultArray againstArray:self.searchCloseVenues includeND:NO];
+            localResultArray = [self filterVenueDuplicatesFromArray:localResultArray
+                                                       againstArray:self.searchCloseVenues
+                                      includeNeighborhoodAndDefault:NO];
             
             // add everything from localResultArray to searchCloseVenues
             [self.searchCloseVenues addObjectsFromArray:localResultArray];
@@ -602,32 +607,33 @@
         // ask Foursquare API for 20 venues close to location that have venue names matching the passed searchText
         self.currentSearchOperation = [FoursquareAPIClient getVenuesCloseToLocation:self.checkinLocationManager.location
                                             searchText:searchText
-                                            completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
-                                                // check if we get an error from foursquare or during JSON parse
-                                                // if so just ignore it and don't show the results
-                                                if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
-                                                    // use parseFoursquareVenueResponse:destinationArray helper to
-                                                    // add the venues to self.searchCloseVenues, sort and filter them and then ask the tableView to reload
-                                                    NSMutableArray *foursquareResultArray = [self arrayOfVenuesFromFoursquareResponse:json];
-                                                    
-                                                    // make sure we have no duplicate venues in the foursquare result array
-                                                    foursquareResultArray = [self filterDuplicatesFromArray:foursquareResultArray
-                                                                                               againstArray:self.searchCloseVenues
-                                                                                                  includeND:YES];
-                                                    
-                                                    // add the new venues to self.searchCloseVenues
-                                                    [self.searchCloseVenues addObjectsFromArray:foursquareResultArray];
-                                                    
-                                                    // sort the result set by distance, prioritize neighborhoods
-                                                    [self.searchCloseVenues sortUsingSelector:@selector(sortByNeighborhoodAndDistanceToUser:)];
-                                                    
-                                                    // we've got our result for this search, fix the boolean
-                                                    self.isWaitingForSearchResults = NO;
-                                                    
-                                                    // reload the tableView
-                                                    [self.tableView reloadData];
-                                                }
-                                            }];
+                                            completion:^(AFHTTPRequestOperation *operation, id json, NSError *error)
+        {
+            // check if we get an error from foursquare or during JSON parse
+            // if so just ignore it and don't show the results
+            if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
+                // use parseFoursquareVenueResponse:destinationArray helper to
+                // add the venues to self.searchCloseVenues, sort and filter them and then ask the tableView to reload
+                NSMutableArray *foursquareResultArray = [self arrayOfVenuesFromFoursquareResponse:json];
+                
+                // make sure we have no duplicate venues in the foursquare result array
+                foursquareResultArray = [self filterVenueDuplicatesFromArray:foursquareResultArray
+                                                                againstArray:self.searchCloseVenues
+                                                includeNeighborhoodAndDefault:YES];
+                
+                // add the new venues to self.searchCloseVenues
+                [self.searchCloseVenues addObjectsFromArray:foursquareResultArray];
+                
+                // sort the result set by distance, prioritize neighborhoods
+                [self.searchCloseVenues sortUsingSelector:@selector(sortByNeighborhoodAndDistanceToUser:)];
+                
+                // we've got our result for this search, fix the boolean
+                self.isWaitingForSearchResults = NO;
+                
+                // reload the tableView
+                [self.tableView reloadData];
+            }
+        }];
         
         
     }
