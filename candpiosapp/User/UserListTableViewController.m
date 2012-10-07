@@ -22,18 +22,6 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [SVProgressHUD showWithStatus:@"Loading..."];
@@ -52,6 +40,7 @@
                     user.distance = [location distanceFromLocation:userLocation];
                     CPVenue *venue = [[CPVenue alloc] init];
                     venue.name = [personJSON objectForKey:@"venue_name"];
+                    venue.venueID = [[personJSON objectForKey:@"venue_id"] intValue];
                     user.placeCheckedIn = venue;
                     [self.checkedInUsers addObject:user];
                 }
