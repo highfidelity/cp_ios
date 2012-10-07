@@ -14,11 +14,11 @@
 - (CPSkill *)initFromDictionary:(NSDictionary *)skillDict
 {
     if (self = [super init]) {
-        self.skillID = [skillDict objectForKeyOrNil:@"id"] ? [[skillDict objectForKey:@"id"] integerValue] : 0;
-        self.name = [skillDict objectForKeyOrNil:@"name"] ? [skillDict objectForKey:@"name"] : @"";
-        self.isVisible = [skillDict objectForKeyOrNil:@"visible"] ? [[skillDict objectForKey:@"visible"] boolValue] : NO;
-        self.loveCount = [skillDict objectForKeyOrNil:@"love"] ? [[skillDict objectForKey:@"love"] intValue] : 0;
-        self.rank = [skillDict objectForKeyOrNil:@"rank"];
+        self.skillID = [[skillDict objectForKey:@"id" orDefault:[NSNumber numberWithInteger:0]] integerValue];
+        self.name = [skillDict objectForKey:@"name" orDefault:@""];
+        self.isVisible = [[skillDict objectForKey:@"visible" orDefault:[NSNumber numberWithBool:NO]] boolValue];
+        self.loveCount = [[skillDict objectForKey:@"love" orDefault:[NSNumber numberWithInt:0]] intValue];
+        self.rank = [skillDict objectForKey:@"rank" orDefault:nil];
     }
     
     return self;

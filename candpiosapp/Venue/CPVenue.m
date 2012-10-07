@@ -25,29 +25,29 @@
 {
     self = [super init];
     if (self) {
-        self.venueID = [json objectForKeyOrNil:@"venue_id"] ? [[json objectForKey:@"venue_id"] intValue] : 0;
-        self.name = [json objectForKeyOrNil:@"name"] ? [json objectForKey:@"name"] : @"";
-        self.address = [json objectForKeyOrNil:@"address"] ? [json objectForKey:@"address"] : @"";
-        self.city = [json objectForKeyOrNil:@"city"] ? [json objectForKey:@"city"] : @"";
-        self.state = [json objectForKeyOrNil:@"state"] ? [json objectForKey:@"state"] : @"";
-        self.phone = [json objectForKeyOrNil:@"phone"] ? [json objectForKey:@"phone"] : @"";
-        self.formattedPhone = [json objectForKeyOrNil:@"formatted_phone"] ? [json objectForKey:@"formatted_phone"] : @"";
-        self.distanceFromUser = [json objectForKeyOrNil:@"distance"] ? [[json objectForKey:@"distance"] doubleValue] : 0;
-        self.foursquareID = [json objectForKeyOrNil:@"foursquare_id"] ? [json objectForKey:@"foursquare_id"] : @"";
-        self.checkinCount = [json objectForKeyOrNil:@"checkins"] ? [[json objectForKey:@"checkins"] integerValue] : 0;
-        self.weeklyCheckinCount = [json objectForKeyOrNil:@"checkins_for_week"] ? [[json objectForKey:@"checkins_for_week"] integerValue] : 0;
-        self.intervalCheckinCount = [json objectForKeyOrNil:@"checkins_for_interval"] ? [[json objectForKey:@"checkins_for_interval"] integerValue] : 0;
-        self.virtualCheckinCount = [json objectForKeyOrNil:@"virtual_checkins"] ? [[json objectForKey:@"virtual_checkins"] integerValue] : 0;
-        self.photoURL = [json objectForKeyOrNil:@"photo_url"];
-        self.specialVenueType = [json objectForKeyOrNil:@"special_venue_type"];
-        self.postsCount = [json objectForKeyOrNil:@"posts_count"] ? [[json objectForKey:@"posts_count"] unsignedIntValue] : 0;
+        self.venueID = [[json objectForKey:@"venue_id" orDefault:[NSNumber numberWithInt:0]] intValue];
+        self.name = [json objectForKey:@"name" orDefault:@""];
+        self.address = [json objectForKey:@"address" orDefault:@""];
+        self.city = [json objectForKey:@"city" orDefault:@""];
+        self.state = [json objectForKey:@"state" orDefault:@""];
+        self.phone = [json objectForKey:@"phone" orDefault:@""];
+        self.formattedPhone = [json objectForKey:@"formatted_phone" orDefault:@""];
+        self.distanceFromUser = [[json objectForKey:@"distance" orDefault:[NSNumber numberWithDouble:0]] doubleValue];
+        self.foursquareID = [json objectForKey:@"foursquare_id" orDefault:@""];
+        self.checkinCount = [[json objectForKey:@"checkins" orDefault:[NSNumber numberWithInt:0]] intValue];
+        self.weeklyCheckinCount = [[json objectForKey:@"checkins_for_week" orDefault:[NSNumber numberWithInt:0]] intValue];
+        self.intervalCheckinCount = [[json objectForKey:@"checkins_for_interval" orDefault:[NSNumber numberWithInt:0]] intValue];
+        self.virtualCheckinCount = [[json objectForKey:@"virtual_checkins" orDefault:[NSNumber numberWithInt:0]] intValue];
+        self.photoURL = [json objectForKey:@"photo_url" orDefault:nil];
+        self.specialVenueType = [json objectForKey:@"special_venue_type" orDefault:nil];
+        self.postsCount = [[json objectForKey:@"posts_count" orDefault:[NSNumber numberWithUnsignedInteger:0]] unsignedIntValue];
         
-        if ([json objectForKeyOrNil:@"lat"] && [json objectForKeyOrNil:@"lng"]) {
+        if ([json objectForKey:@"lat" orDefault:nil] && [json objectForKey:@"lng" orDefault:nil]) {
             self.coordinate = CLLocationCoordinate2DMake([[json objectForKey:@"lat"] doubleValue], [[json objectForKey:@"lng"] doubleValue]);
         }
         
         self.activeUsers = [json objectForKey:@"users"];
-        self.utc = [json objectForKeyOrNil:@"utc"] ? [json objectForKey:@"utc"] : @"";
+        self.utc = [json objectForKey:@"utc" orDefault:@""];
     }
     return self;
 }

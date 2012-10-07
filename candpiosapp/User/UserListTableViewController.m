@@ -52,7 +52,7 @@
                     CLLocation *location = [[CLLocation alloc] initWithLatitude:user.location.latitude longitude:user.location.longitude];
                     user.distance = [location distanceFromLocation:userLocation];
                     CPVenue *venue = [[CPVenue alloc] init];
-                    venue.name = [personJSON objectForKeyOrNil:@"venue_name"] ? [personJSON objectForKey:@"venue_name"] : @"";
+                    venue.name = [personJSON objectForKey:@"venue_name" orDefault:@""];
                     user.placeCheckedIn = venue;
                     [self.checkedInUsers addObject:user];
                 }

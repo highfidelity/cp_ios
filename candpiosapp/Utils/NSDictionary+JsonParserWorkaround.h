@@ -6,11 +6,10 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-
-
 @interface NSDictionary (JsonParserWorkaround)
 
-// adds an objectForKeyOrNil selector to NSDictionary to return nil when object == [NSNull null]
-- (id)objectForKeyOrNil:(id)key;
+// adds an objectForKey selector to NSDictionary with the additon of a default value.  If object == [NSNull null],
+// then the default value is returned
+- (id)objectForKey:(id)key orDefault:(id)defaultValue;
 
 @end

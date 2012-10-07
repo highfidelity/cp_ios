@@ -10,10 +10,10 @@
 
 @implementation NSDictionary (JsonParserWorkaround)
 
-- (id)objectForKeyOrNil:(id)key {
+- (id)objectForKey:(id)key orDefault:(id)defaultValue {
     id object = [self objectForKey:key];
     if (object == [NSNull null]) {
-        return nil;
+        return defaultValue;
     }
     
     return object;
