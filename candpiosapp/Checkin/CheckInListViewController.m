@@ -184,7 +184,7 @@ typedef enum {
                                                                      searchText:searchText
                                                                      completion:^(AFHTTPRequestOperation *operation, id json, NSError *error)
     {
-        if (error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
+        if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
             
             // pull the resultArray using arrayOfVenuesFromFoursquareResponse
             NSMutableArray *resultArray = [self arrayOfVenuesFromFoursquareResponse:json];
