@@ -176,8 +176,7 @@ typedef enum {
     
     // while we're waiting to hear back from foursquare isWaitingForSearchResults should be YES
     self.currentSearchState = CPCheckInListSearchStateInProgress;
-    
-    __block NSMutableArray *stateCloseVenues = !searchText ? self.closeVenues : self.searchCloseVenues;
+
     
     // grab the 20 closest venues to user location, use searchText if passed
     self.currentSearchOperation = [FoursquareAPIClient getVenuesCloseToLocation:self.searchLocation
@@ -193,6 +192,9 @@ typedef enum {
             if (!searchText) {
                 // just assign the result array to our close venues
                 self.closeVenues = resultArray;
+                
+                // sort the result set by distance, prioritize neighborhoods
+                [self.closeVenues sortUsingSelector:@selector(sortByNeighborhoodAndDistanceToUser:)];
             } else {
                 // use parseFoursquareVenueResponse:destinationArray helper to
                 // add the venues to self.searchCloseVenues, sort and filter them and then ask the tableView to reload
@@ -205,10 +207,10 @@ typedef enum {
                 
                 // add the new venues to self.searchCloseVenues
                 [self.searchCloseVenues addObjectsFromArray:foursquareResultArray];
-            }
-            
-            // sort the result set by distance, prioritize neighborhoods
-            [stateCloseVenues sortUsingSelector:@selector(sortByNeighborhoodAndDistanceToUser:)];
+                
+                // sort the result set by distance, prioritizing neighborhoods
+                [self.searchCloseVenues sortUsingSelector:@selector(sortByNeighborhoodAndDistanceToUser:)];
+            }            
            
             // we've got our result for this search, fix the boolean
             self.currentSearchState = CPCheckInListSearchStateComplete;

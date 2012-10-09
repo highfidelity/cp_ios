@@ -8,30 +8,11 @@
 
 #import "CPConstants.h"
 
-// Production vs. Staging variables
-//#define PRODUCTION 1
-
 @implementation CPConstants
 
 #ifdef PRODUCTION
 
-    NSString* const kCandPWebServiceUrl = @"http://www.coffeeandpower.com/";
-    NSString* const kCandPWebServiceSecureUrl = @"https://www.coffeeandpower.com/";
-
-    NSString* const kCandPAddFundsUrl = @"http://www.coffeeandpower.com/m/?ios#addFundsiPhone";
-    NSString* const kLinkedInKey = @"";
-    NSString* const kLinkedInSecret = @"";
-    NSString* const flurryAnalyticsKey = @"";
-    NSString* const kSmartererKey = @"";
-    NSString* const kSmartererSecret = @"";
-    NSString* const kTestFlightKey = @"";
-    NSString* const kUserVoiceSite = @"coffeeandpower.uservoice.com";
-    NSString* const kUserVoiceKey = @"";
-    NSString* const kUserVoiceSecret = @"";
-
-    #error "You're running in production mode. Are you sure you wanna do this?"
-
-#else
+#elseif
 
     NSString* const kCandPWebServiceUrl = @"http://staging.candp.me/";
     NSString* const kCandPWebServiceSecureUrl = @"https://staging.candp.me/";
@@ -40,17 +21,20 @@
 
     NSString* const kLinkedInKey = @"hgkjgipubg8b";
     NSString* const kLinkedInSecret = @"1coFul6Ym82NJC2Z";
-    NSString* const kFoursquareOAuthToken = @"BCG410DXRKXSBRWUNM1PPQFSLEFQ5ND4HOUTTTWYUB1PXYC4";
+
+    NSString* const kFoursquareClientID = @"2AT1GDJZHHJ21R5ZAP0G2JN2RTMSQ012Q0C55YCTM50PGXSO";
+    NSString* const kFoursquareClientSecret = @"DJOJS4CMQBQTU4RUKSTRAQESFVYZBD1XKYDUYF5PTG1OW30Z";
+
     NSString* const flurryAnalyticsKey = @"BI59BJPSZZTIFB5H87HQ";
+
     NSString* const kSmartererKey = @"3f883e6fc3d54834ac93c3bfe6f33553";
     NSString* const kSmartererSecret = @"ea670a5ca21c7d54d4e17972059b4f07";
+
     NSString* const kTestFlightKey = @"2ed46ba74d908aecc8ead4558ff3c7f5_MTA4NjQyMDEyLTAxLTAzIDIxOjA2OjE3LjcxODkwNA";
+
     NSString* const kUserVoiceSite = @"coffeeandpower.uservoice.com";
     NSString* const kUserVoiceKey = @"IBW0MSWGNnhVhBLi2Jlug";
     NSString* const kUserVoiceSecret = @"cWb3mvt7zsMxG1c2lldnSbSle3VGbCAVUsGi2YIbU";
-
-    // Urban Airship
-    // Configured in AirshipConfig.plist, not here anymore
 
 #endif
 

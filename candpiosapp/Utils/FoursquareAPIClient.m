@@ -41,7 +41,8 @@ static FoursquareAPIClient *_sharedClient;
 {
     // append our oauth_token to the request parameters
     NSMutableDictionary *mutableParameters = [parameters mutableCopy];
-    [mutableParameters setObject:kFoursquareOAuthToken forKey:@"oauth_token"];
+    [mutableParameters setObject:kFoursquareClientID forKey:@"client_id"];
+    [mutableParameters setObject:kFoursquareClientSecret forKey:@"client_secret"];
                    
     NSMutableURLRequest *request = [super requestWithMethod:method path:path parameters:mutableParameters];
     
