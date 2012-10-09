@@ -8,41 +8,39 @@
 #import "CPVenue.h"
 #import <CoreLocation/CoreLocation.h>
 #import "VenueInfoViewController.h"
+#import "NSDictionary+JsonParserWorkaround.h"
 #import "FoursquareAPIClient.h"
 
 @implementation CPVenue
 
-// override setters here to that when we parse JSON to set values we don't set things to null
-// TODO: find out if there is a JSON parser that will just set these values to nil or empty strings so we don't have to do this everywhere
 
 - (CPVenue *)initFromDictionary:(NSDictionary *)json
 {
     self = [super init];
     if (self) {
-        self.venueID = [[json objectForKey:@"venue_id"] intValue];
-        self.name = [json objectForKey:@"name"];
-        self.address = [json objectForKey:@"address"];
-        self.city = [json objectForKey:@"city"];
-        self.state = [json objectForKey:@"state"];
-        self.phone = [json objectForKey:@"phone"];
-        self.formattedPhone = [json objectForKey:@"formatted_phone"];
-        self.distanceFromUser = [[json objectForKey:@"distance"] doubleValue];
-        self.foursquareID = [json objectForKey:@"foursquare_id"];
-        self.checkinCount = [[json objectForKey:@"checkins"] integerValue];
-        self.weeklyCheckinCount = [[json objectForKey:@"checkins_for_week"] integerValue];
-        self.intervalCheckinCount = [[json objectForKey:@"checkins_for_interval"] integerValue];
-        self.virtualCheckinCount = [[json objectForKey:@"virtual_checkins"] integerValue];
-        self.photoURL = [json objectForKey:@"photo_url"];
-        self.specialVenueType = [json objectForKey:@"special_venue_type"];
-        self.postsCount = [[json objectForKey:@"posts_count"] unsignedIntValue];
+        self.venueID = [[json objectForKey:@"venue_id" orDefault:[NSNumber numberWithInt:0]] intValue];
+        self.name = [json objectForKey:@"name" orDefault:@""];
+        self.address = [json objectForKey:@"address" orDefault:@""];
+        self.city = [json objectForKey:@"city" orDefault:@""];
+        self.state = [json objectForKey:@"state" orDefault:@""];
+        self.phone = [json objectForKey:@"phone" orDefault:@""];
+        self.formattedPhone = [json objectForKey:@"formatted_phone" orDefault:@""];
+        self.distanceFromUser = [[json objectForKey:@"distance" orDefault:[NSNumber numberWithDouble:0]] doubleValue];
+        self.foursquareID = [json objectForKey:@"foursquare_id" orDefault:@""];
+        self.checkinCount = [[json objectForKey:@"checkins" orDefault:[NSNumber numberWithInt:0]] intValue];
+        self.weeklyCheckinCount = [[json objectForKey:@"checkins_for_week" orDefault:[NSNumber numberWithInt:0]] intValue];
+        self.intervalCheckinCount = [[json objectForKey:@"checkins_for_interval" orDefault:[NSNumber numberWithInt:0]] intValue];
+        self.virtualCheckinCount = [[json objectForKey:@"virtual_checkins" orDefault:[NSNumber numberWithInt:0]] intValue];
+        self.photoURL = [json objectForKey:@"photo_url" orDefault:nil];
+        self.specialVenueType = [json objectForKey:@"special_venue_type" orDefault:nil];
+        self.postsCount = [[json objectForKey:@"posts_count" orDefault:[NSNumber numberWithUnsignedInteger:0]] unsignedIntValue];
         
-        if (![[json objectForKey:@"lat"] isKindOfClass:[NSNull class]] && ![[json objectForKey:@"lng"] isKindOfClass:[NSNull class]]) {
+        if ([json objectForKey:@"lat" orDefault:nil] && [json objectForKey:@"lng" orDefault:nil]) {
             self.coordinate = CLLocationCoordinate2DMake([[json objectForKey:@"lat"] doubleValue], [[json objectForKey:@"lng"] doubleValue]);
         }
         
         self.activeUsers = [json objectForKey:@"users"];
-        self.utc = [json objectForKey:@"utc"];
-        
+        self.utc = [json objectForKey:@"utc" orDefault:@""];
     }
     return self;
 }
