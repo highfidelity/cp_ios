@@ -161,7 +161,6 @@
 		533AFECE1523E87200D6E6A9 /* default-avatar-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 533AFECC1523E87200D6E6A9 /* default-avatar-256.png */; };
 		533AFECF1523E87200D6E6A9 /* default-avatar-256@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */; };
 		533B1DA515A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 533B1DA315A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard */; };
-		533B1DA915A3D3300072997D /* CheckInListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533B1DA815A3D3300072997D /* CheckInListViewController.m */; };
 		533E43EE161B947E00432377 /* wfh-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 533E43EC161B947E00432377 /* wfh-icon.png */; };
 		533E43EF161B947E00432377 /* wfh-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533E43ED161B947E00432377 /* wfh-icon@2x.png */; };
 		533E5EF015A3A88C0042862E /* PostBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533E5ED615A3A88C0042862E /* PostBaseCell.m */; };
@@ -282,6 +281,7 @@
 		53749CA815B4CCF900AB8A4E /* action-menu-button-question-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53749CA215B4CCF900AB8A4E /* action-menu-button-question-selected@2x.png */; };
 		53749CA915B4CCF900AB8A4E /* action-menu-button-update-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 53749CA315B4CCF900AB8A4E /* action-menu-button-update-selected.png */; };
 		53749CAA15B4CCF900AB8A4E /* action-menu-button-update-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53749CA415B4CCF900AB8A4E /* action-menu-button-update-selected@2x.png */; };
+		537DEA8F16249A3400D59AC9 /* CheckInListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 537DEA8E16249A3400D59AC9 /* CheckInListViewController.m */; };
 		5384B24A155481FA00A4E0C1 /* CPapi.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B249155481FA00A4E0C1 /* CPapi.m */; };
 		5384B24D1554822100A4E0C1 /* CPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B24C1554822100A4E0C1 /* CPUtils.m */; };
 		5384B2501554823A00A4E0C1 /* CPVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B24F1554823A00A4E0C1 /* CPVenue.m */; };
@@ -827,7 +827,6 @@
 		533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default-avatar-256@2x.png"; path = "User/images/default-avatar-256@2x.png"; sourceTree = "<group>"; };
 		533B1DA315A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CheckinStoryboard_iPhone.storyboard; path = Checkin/CheckinStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		533B1DA715A3D3300072997D /* CheckInListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CheckInListViewController.h; path = Checkin/CheckInListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		533B1DA815A3D3300072997D /* CheckInListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInListViewController.m; path = Checkin/CheckInListViewController.m; sourceTree = "<group>"; };
 		533E43EC161B947E00432377 /* wfh-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wfh-icon.png"; path = "Checkin/images/wfh-icon.png"; sourceTree = "<group>"; };
 		533E43ED161B947E00432377 /* wfh-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wfh-icon@2x.png"; path = "Checkin/images/wfh-icon@2x.png"; sourceTree = "<group>"; };
 		533E5ED515A3A88C0042862E /* PostBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostBaseCell.h; sourceTree = "<group>"; };
@@ -964,6 +963,7 @@
 		53749CA215B4CCF900AB8A4E /* action-menu-button-question-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-question-selected@2x.png"; sourceTree = "<group>"; };
 		53749CA315B4CCF900AB8A4E /* action-menu-button-update-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-update-selected.png"; sourceTree = "<group>"; };
 		53749CA415B4CCF900AB8A4E /* action-menu-button-update-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-update-selected@2x.png"; sourceTree = "<group>"; };
+		537DEA8E16249A3400D59AC9 /* CheckInListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInListViewController.m; path = Checkin/CheckInListViewController.m; sourceTree = "<group>"; };
 		5384B248155481FA00A4E0C1 /* CPapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPapi.h; path = Utils/CPapi.h; sourceTree = "<group>"; };
 		5384B249155481FA00A4E0C1 /* CPapi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CPapi.m; path = Utils/CPapi.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5384B24B1554822100A4E0C1 /* CPUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPUtils.h; path = Utils/CPUtils.h; sourceTree = "<group>"; };
@@ -2443,22 +2443,22 @@
 		53D65B4614EEEC3700801C5E /* Checkin */ = {
 			isa = PBXGroup;
 			children = (
-				53D7ADEC15D04AC800BB041E /* CPGeofenceHandler.h */,
-				53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */,
-				533B1DA715A3D3300072997D /* CheckInListViewController.h */,
-				533B1DA815A3D3300072997D /* CheckInListViewController.m */,
-				533B1DA315A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard */,
-				5328938715548D6D007B0157 /* CheckInDetailsViewController.h */,
-				5328938815548D6D007B0157 /* CheckInDetailsViewController.m */,
 				5328935D15548902007B0157 /* CheckInDetailsFrame.h */,
 				5328935E15548902007B0157 /* CheckInDetailsFrame.m */,
+				5328938715548D6D007B0157 /* CheckInDetailsViewController.h */,
+				5328938815548D6D007B0157 /* CheckInDetailsViewController.m */,
 				5328935F15548902007B0157 /* CheckInListCell.h */,
 				5328936015548902007B0157 /* CheckInListCell.m */,
+				533B1DA715A3D3300072997D /* CheckInListViewController.h */,
+				537DEA8E16249A3400D59AC9 /* CheckInListViewController.m */,
+				533B1DA315A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard */,
+				53A3C78A159A4B73008459B0 /* CPCheckinHandler.h */,
+				53A3C78B159A4B73008459B0 /* CPCheckinHandler.m */,
+				53D7ADEC15D04AC800BB041E /* CPGeofenceHandler.h */,
+				53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */,
 				536DE92A150170CC00794650 /* images */,
 				5319C75F15547157005DA299 /* UIButton+AnimatedClockHand.h */,
 				5319C76015547157005DA299 /* UIButton+AnimatedClockHand.m */,
-				53A3C78A159A4B73008459B0 /* CPCheckinHandler.h */,
-				53A3C78B159A4B73008459B0 /* CPCheckinHandler.m */,
 			);
 			name = Checkin;
 			sourceTree = "<group>";
@@ -3301,7 +3301,6 @@
 				533E5EF315A3A88C0042862E /* PostUpdateCell.m in Sources */,
 				533E5EF415A3A88C0042862E /* CPPost.m in Sources */,
 				533E5F0A15A3AD040042862E /* FeedViewController.m in Sources */,
-				533B1DA915A3D3300072997D /* CheckInListViewController.m in Sources */,
 				534BD45615AB72BD001FCC5C /* CPVenueFeed.m in Sources */,
 				53019FE415ABA21D00AE3FA1 /* CPUserActionCell.m in Sources */,
 				4E5578BE15AD0575000B588D /* CPUserAction.m in Sources */,
@@ -3371,6 +3370,7 @@
 				53BBC0411612B70D00F5C14B /* OATokenManager.m in Sources */,
 				68B7B126161626BA000987E2 /* NSDictionary+JsonParserWorkaround.m in Sources */,
 				E46BA2CD161CE06100CA0440 /* TTTAttributedLabel.m in Sources */,
+				537DEA8F16249A3400D59AC9 /* CheckInListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
