@@ -8,31 +8,35 @@
 
 #import "CPConstants.h"
 
-// Production vs. Staging variables
-
 @implementation CPConstants
 
-NSString* const kCandPWebServiceUrl = @"http://staging.candp.me/";
-NSString* const kCandPWebServiceSecureUrl = @"https://staging.candp.me/";
-// Devs can test against a their server sandbox by uncommenting and completing the following URL
-//NSString* const kCandPWebServiceUrl = @"http://dev.worklist.net/~<login>/candpweb2_<job#>/web/";
+#ifdef PRODUCTION
 
-NSString* const kLinkedInKey = @"hgkjgipubg8b";
-NSString* const kLinkedInSecret = @"1coFul6Ym82NJC2Z";
+#elseif
 
-NSString* const kFoursquareClientID = @"2AT1GDJZHHJ21R5ZAP0G2JN2RTMSQ012Q0C55YCTM50PGXSO";
-NSString* const kFoursquareClientSecret = @"DJOJS4CMQBQTU4RUKSTRAQESFVYZBD1XKYDUYF5PTG1OW30Z";
+    NSString* const kCandPWebServiceUrl = @"http://staging.candp.me/";
+    NSString* const kCandPWebServiceSecureUrl = @"https://staging.candp.me/";
+    // Devs can test against a their server sandbox by uncommenting and completing the following URL
+    //NSString* const kCandPWebServiceUrl = @"http://dev.worklist.net/~<login>/candpweb2_<job#>/web/";
 
-NSString* const flurryAnalyticsKey = @"BI59BJPSZZTIFB5H87HQ";
+    NSString* const kLinkedInKey = @"hgkjgipubg8b";
+    NSString* const kLinkedInSecret = @"1coFul6Ym82NJC2Z";
 
-NSString* const kSmartererKey = @"3f883e6fc3d54834ac93c3bfe6f33553";
-NSString* const kSmartererSecret = @"ea670a5ca21c7d54d4e17972059b4f07";
+    NSString* const kFoursquareClientID = @"2AT1GDJZHHJ21R5ZAP0G2JN2RTMSQ012Q0C55YCTM50PGXSO";
+    NSString* const kFoursquareClientSecret = @"DJOJS4CMQBQTU4RUKSTRAQESFVYZBD1XKYDUYF5PTG1OW30Z";
 
-NSString* const kTestFlightKey = @"2ed46ba74d908aecc8ead4558ff3c7f5_MTA4NjQyMDEyLTAxLTAzIDIxOjA2OjE3LjcxODkwNA";
+    NSString* const flurryAnalyticsKey = @"BI59BJPSZZTIFB5H87HQ";
 
-NSString* const kUserVoiceSite = @"coffeeandpower.uservoice.com";
-NSString* const kUserVoiceKey = @"IBW0MSWGNnhVhBLi2Jlug";
-NSString* const kUserVoiceSecret = @"cWb3mvt7zsMxG1c2lldnSbSle3VGbCAVUsGi2YIbU";
+    NSString* const kSmartererKey = @"3f883e6fc3d54834ac93c3bfe6f33553";
+    NSString* const kSmartererSecret = @"ea670a5ca21c7d54d4e17972059b4f07";
+
+    NSString* const kTestFlightKey = @"2ed46ba74d908aecc8ead4558ff3c7f5_MTA4NjQyMDEyLTAxLTAzIDIxOjA2OjE3LjcxODkwNA";
+
+    NSString* const kUserVoiceSite = @"coffeeandpower.uservoice.com";
+    NSString* const kUserVoiceKey = @"IBW0MSWGNnhVhBLi2Jlug";
+    NSString* const kUserVoiceSecret = @"cWb3mvt7zsMxG1c2lldnSbSle3VGbCAVUsGi2YIbU";
+
+#endif
 
 NSString* const kSmartererCallback = @"candp://smarterer";
 NSString* const kCandPAPIVersion = @"0.1";
