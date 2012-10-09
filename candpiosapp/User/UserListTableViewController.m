@@ -121,9 +121,8 @@
     if (user.status.length > 0 && user.checkedIn) {
         cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",[user.status gtm_stringByUnescapingFromHTML]];
     }
-    cell.distanceLabel.text = [CPUtils localizedDistanceStringForDistance:user.distance];
     
-    cell.checkInLabel.text = user.placeCheckedIn.name;
+    cell.checkInLabel.text = [NSString stringWithFormat:@"@%@", user.placeCheckedIn.name];
 
     [CPUIHelper profileImageView:cell.profilePictureImageView
              withProfileImageUrl:user.photoURL];

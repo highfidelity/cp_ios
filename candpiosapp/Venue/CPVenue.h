@@ -10,7 +10,6 @@
 @interface CPVenue : NSObject <MKAnnotation, NSCoding>
 
 @property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSString *icon;
 @property (strong, nonatomic) NSString *foursquareID;
 @property (strong, nonatomic) NSString *address;
 @property (strong, nonatomic) NSString *city;
@@ -32,12 +31,15 @@
 @property (nonatomic) int virtualCheckinCount;
 @property (nonatomic) BOOL hasContactAtVenue;
 @property (nonatomic) BOOL autoCheckin;
+@property (nonatomic) BOOL isNeighborhood;
 @property (nonatomic) NSUInteger postsCount;
 @property (nonatomic, readonly) NSString *checkinCountString;
 @property (nonatomic, readonly) NSString *checkinTimeString;
 @property (nonatomic, readonly) NSString *formattedAddress;
 
+
 - (CPVenue *)initFromDictionary:(NSDictionary *)json;
-- (NSComparisonResult)sortByDistanceToUser:(CPVenue *)place;
+- (CPVenue *)initFromFoursquareDictionary:(NSDictionary *)json userLocation:(CLLocation *)userLocation;
+- (NSComparisonResult)sortByNeighborhoodAndDistanceToUser:(CPVenue *)place;
 
 @end

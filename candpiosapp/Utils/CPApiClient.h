@@ -11,10 +11,10 @@
 @interface CPApiClient : AFHTTPClient
 
 + (void)checkInToVenue:(CPVenue *)venue
-                hoursHere:(int)hoursHere
-               statusText:(NSString *)statusText
-                isVirtual:(BOOL)isVirtual
-              isAutomatic:(BOOL)isAutomatic
-          completionBlock:(void (^)(NSDictionary *, NSError *))completion;
+             hoursHere:(int)hoursHere
+            statusText:(NSString *)statusText
+             isVirtual:(BOOL)isVirtual
+           isAutomatic:(BOOL)isAutomatic
+       completionBlock:(void (^)(NSDictionary *, NSError *))completion;
 
 @end

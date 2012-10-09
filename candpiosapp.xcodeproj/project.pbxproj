@@ -161,7 +161,8 @@
 		533AFECE1523E87200D6E6A9 /* default-avatar-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 533AFECC1523E87200D6E6A9 /* default-avatar-256.png */; };
 		533AFECF1523E87200D6E6A9 /* default-avatar-256@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */; };
 		533B1DA515A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 533B1DA315A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard */; };
-		533B1DA915A3D3300072997D /* CheckInListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533B1DA815A3D3300072997D /* CheckInListTableViewController.m */; };
+		533E43EE161B947E00432377 /* wfh-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 533E43EC161B947E00432377 /* wfh-icon.png */; };
+		533E43EF161B947E00432377 /* wfh-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533E43ED161B947E00432377 /* wfh-icon@2x.png */; };
 		533E5EF015A3A88C0042862E /* PostBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533E5ED615A3A88C0042862E /* PostBaseCell.m */; };
 		533E5EF115A3A88C0042862E /* PostLoveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533E5ED815A3A88C0042862E /* PostLoveCell.m */; };
 		533E5EF215A3A88C0042862E /* NewPostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533E5EDA15A3A88C0042862E /* NewPostCell.m */; };
@@ -280,10 +281,13 @@
 		53749CA815B4CCF900AB8A4E /* action-menu-button-question-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53749CA215B4CCF900AB8A4E /* action-menu-button-question-selected@2x.png */; };
 		53749CA915B4CCF900AB8A4E /* action-menu-button-update-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 53749CA315B4CCF900AB8A4E /* action-menu-button-update-selected.png */; };
 		53749CAA15B4CCF900AB8A4E /* action-menu-button-update-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53749CA415B4CCF900AB8A4E /* action-menu-button-update-selected@2x.png */; };
+		537DEA8F16249A3400D59AC9 /* CheckInListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 537DEA8E16249A3400D59AC9 /* CheckInListViewController.m */; };
+		537DEA921624A0EF00D59AC9 /* check-in-list-error.png in Resources */ = {isa = PBXBuildFile; fileRef = 537DEA901624A0EF00D59AC9 /* check-in-list-error.png */; };
+		537DEA931624A0EF00D59AC9 /* check-in-list-error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 537DEA911624A0EF00D59AC9 /* check-in-list-error@2x.png */; };
 		5384B24A155481FA00A4E0C1 /* CPapi.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B249155481FA00A4E0C1 /* CPapi.m */; };
 		5384B24D1554822100A4E0C1 /* CPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B24C1554822100A4E0C1 /* CPUtils.m */; };
 		5384B2501554823A00A4E0C1 /* CPVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B24F1554823A00A4E0C1 /* CPVenue.m */; };
-		5384B2531554825F00A4E0C1 /* FoursquareAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2521554825F00A4E0C1 /* FoursquareAPIRequest.m */; };
+		5384B2531554825F00A4E0C1 /* FoursquareAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2521554825F00A4E0C1 /* FoursquareAPIClient.m */; };
 		5384B2561554827600A4E0C1 /* MapDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2551554827600A4E0C1 /* MapDataSet.m */; };
 		5384B2591554831400A4E0C1 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2581554831400A4E0C1 /* User.m */; };
 		5384B25C1554833D00A4E0C1 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B25B1554833D00A4E0C1 /* Settings.m */; };
@@ -506,8 +510,6 @@
 		E43CFC33153756C300A3A716 /* person-login-to-view@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E43CFC31153756C300A3A716 /* person-login-to-view@2x.png */; };
 		E46B562015A8D8AC00AD3C62 /* divider-button.png in Resources */ = {isa = PBXBuildFile; fileRef = E46B561E15A8D8A900AD3C62 /* divider-button.png */; };
 		E46BA2C1161CD89500CA0440 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E46BA2C0161CD89500CA0440 /* CoreText.framework */; };
-		E46BA2CB161CE06100CA0440 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = E46BA2C7161CE06100CA0440 /* LICENSE */; };
-		E46BA2CC161CE06100CA0440 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E46BA2C8161CE06100CA0440 /* README.md */; };
 		E46BA2CD161CE06100CA0440 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E46BA2CA161CE06100CA0440 /* TTTAttributedLabel.m */; };
 		E47C832B15115D0600ECE98D /* drop-down.png in Resources */ = {isa = PBXBuildFile; fileRef = E47C832915115D0600ECE98D /* drop-down.png */; };
 		E47C832C15115D0600ECE98D /* drop-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E47C832A15115D0600ECE98D /* drop-down@2x.png */; };
@@ -826,8 +828,9 @@
 		533AFECC1523E87200D6E6A9 /* default-avatar-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default-avatar-256.png"; path = "User/images/default-avatar-256.png"; sourceTree = "<group>"; };
 		533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default-avatar-256@2x.png"; path = "User/images/default-avatar-256@2x.png"; sourceTree = "<group>"; };
 		533B1DA315A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CheckinStoryboard_iPhone.storyboard; path = Checkin/CheckinStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		533B1DA715A3D3300072997D /* CheckInListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CheckInListTableViewController.h; path = Checkin/CheckInListTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		533B1DA815A3D3300072997D /* CheckInListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInListTableViewController.m; path = Checkin/CheckInListTableViewController.m; sourceTree = "<group>"; };
+		533B1DA715A3D3300072997D /* CheckInListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CheckInListViewController.h; path = Checkin/CheckInListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		533E43EC161B947E00432377 /* wfh-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wfh-icon.png"; path = "Checkin/images/wfh-icon.png"; sourceTree = "<group>"; };
+		533E43ED161B947E00432377 /* wfh-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wfh-icon@2x.png"; path = "Checkin/images/wfh-icon@2x.png"; sourceTree = "<group>"; };
 		533E5ED515A3A88C0042862E /* PostBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostBaseCell.h; sourceTree = "<group>"; };
 		533E5ED615A3A88C0042862E /* PostBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostBaseCell.m; sourceTree = "<group>"; };
 		533E5ED715A3A88C0042862E /* PostLoveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostLoveCell.h; sourceTree = "<group>"; };
@@ -962,14 +965,17 @@
 		53749CA215B4CCF900AB8A4E /* action-menu-button-question-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-question-selected@2x.png"; sourceTree = "<group>"; };
 		53749CA315B4CCF900AB8A4E /* action-menu-button-update-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-update-selected.png"; sourceTree = "<group>"; };
 		53749CA415B4CCF900AB8A4E /* action-menu-button-update-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-update-selected@2x.png"; sourceTree = "<group>"; };
+		537DEA8E16249A3400D59AC9 /* CheckInListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInListViewController.m; path = Checkin/CheckInListViewController.m; sourceTree = "<group>"; };
+		537DEA901624A0EF00D59AC9 /* check-in-list-error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-list-error.png"; path = "Checkin/images/check-in-list-error.png"; sourceTree = "<group>"; };
+		537DEA911624A0EF00D59AC9 /* check-in-list-error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-list-error@2x.png"; path = "Checkin/images/check-in-list-error@2x.png"; sourceTree = "<group>"; };
 		5384B248155481FA00A4E0C1 /* CPapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPapi.h; path = Utils/CPapi.h; sourceTree = "<group>"; };
 		5384B249155481FA00A4E0C1 /* CPapi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CPapi.m; path = Utils/CPapi.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5384B24B1554822100A4E0C1 /* CPUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPUtils.h; path = Utils/CPUtils.h; sourceTree = "<group>"; };
 		5384B24C1554822100A4E0C1 /* CPUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPUtils.m; path = Utils/CPUtils.m; sourceTree = "<group>"; };
 		5384B24E1554823A00A4E0C1 /* CPVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CPVenue.h; path = Venue/CPVenue.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5384B24F1554823A00A4E0C1 /* CPVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPVenue.m; path = Venue/CPVenue.m; sourceTree = "<group>"; };
-		5384B2511554825F00A4E0C1 /* FoursquareAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FoursquareAPIRequest.h; path = Utils/FoursquareAPIRequest.h; sourceTree = "<group>"; };
-		5384B2521554825F00A4E0C1 /* FoursquareAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FoursquareAPIRequest.m; path = Utils/FoursquareAPIRequest.m; sourceTree = "<group>"; };
+		5384B2511554825F00A4E0C1 /* FoursquareAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FoursquareAPIClient.h; path = Utils/FoursquareAPIClient.h; sourceTree = "<group>"; };
+		5384B2521554825F00A4E0C1 /* FoursquareAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FoursquareAPIClient.m; path = Utils/FoursquareAPIClient.m; sourceTree = "<group>"; };
 		5384B2541554827600A4E0C1 /* MapDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapDataSet.h; path = Map/MapDataSet.h; sourceTree = "<group>"; };
 		5384B2551554827600A4E0C1 /* MapDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapDataSet.m; path = Map/MapDataSet.m; sourceTree = "<group>"; };
 		5384B2571554831400A4E0C1 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = User.h; path = User/User.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1271,8 +1277,6 @@
 		E46B561E15A8D8A900AD3C62 /* divider-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "divider-button.png"; path = "Utils/images/buttons/divider-button.png"; sourceTree = "<group>"; };
 		E46B561F15A8D8AA00AD3C62 /* divider-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "divider-button@2x.png"; path = "Utils/images/buttons/divider-button@2x.png"; sourceTree = "<group>"; };
 		E46BA2C0161CD89500CA0440 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		E46BA2C7161CE06100CA0440 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		E46BA2C8161CE06100CA0440 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		E46BA2C9161CE06100CA0440 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		E46BA2CA161CE06100CA0440 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		E47C832915115D0600ECE98D /* drop-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "drop-down.png"; path = "Settings/images/drop-down.png"; sourceTree = "<group>"; };
@@ -1929,8 +1933,8 @@
 				5328935B155488F5007B0157 /* CPConstants.m */,
 				5384B25A1554833D00A4E0C1 /* Settings.h */,
 				5384B25B1554833D00A4E0C1 /* Settings.m */,
-				5384B2511554825F00A4E0C1 /* FoursquareAPIRequest.h */,
-				5384B2521554825F00A4E0C1 /* FoursquareAPIRequest.m */,
+				5384B2511554825F00A4E0C1 /* FoursquareAPIClient.h */,
+				5384B2521554825F00A4E0C1 /* FoursquareAPIClient.m */,
 				5384B24B1554822100A4E0C1 /* CPUtils.h */,
 				5384B24C1554822100A4E0C1 /* CPUtils.m */,
 				5384B248155481FA00A4E0C1 /* CPapi.h */,
@@ -2031,14 +2035,12 @@
 		536DE92A150170CC00794650 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				537DEA901624A0EF00D59AC9 /* check-in-list-error.png */,
+				537DEA911624A0EF00D59AC9 /* check-in-list-error@2x.png */,
+				536E1E6A1554947E00052D40 /* check-in-big.png */,
+				536E1E6B1554947E00052D40 /* check-in-big@2x.png */,
 				5338B0971606C7DC00C23B4B /* check-in-button.png */,
 				5338B0981606C7DC00C23B4B /* check-in-button@2x.png */,
-				53A1EAA91587B4B7009D8E31 /* tab-check-in-clock-hand.png */,
-				53A1EAAA1587B4B7009D8E31 /* tab-check-in-clock-hand@2x.png */,
-				53A1EAAB1587B4B7009D8E31 /* tab-check-in.png */,
-				53A1EAAC1587B4B7009D8E31 /* tab-check-in@2x.png */,
-				53A1EAAD1587B4B7009D8E31 /* tab-check-out.png */,
-				53A1EAAE1587B4B7009D8E31 /* tab-check-out@2x.png */,
 				536E1E6E155494A100052D40 /* check-in-slider-grooves-dark.png */,
 				536E1E6F155494A100052D40 /* check-in-slider-grooves-dark@2x.png */,
 				536E1E70155494A100052D40 /* check-in-slider-grooves-light.png */,
@@ -2047,8 +2049,14 @@
 				536E1E73155494A100052D40 /* check-in-slider-handle@2x.png */,
 				536E1E74155494A100052D40 /* check-in-status-arrow.png */,
 				536E1E75155494A100052D40 /* check-in-status-arrow@2x.png */,
-				536E1E6A1554947E00052D40 /* check-in-big.png */,
-				536E1E6B1554947E00052D40 /* check-in-big@2x.png */,
+				53A1EAA91587B4B7009D8E31 /* tab-check-in-clock-hand.png */,
+				53A1EAAA1587B4B7009D8E31 /* tab-check-in-clock-hand@2x.png */,
+				53A1EAAB1587B4B7009D8E31 /* tab-check-in.png */,
+				53A1EAAC1587B4B7009D8E31 /* tab-check-in@2x.png */,
+				53A1EAAD1587B4B7009D8E31 /* tab-check-out.png */,
+				53A1EAAE1587B4B7009D8E31 /* tab-check-out@2x.png */,
+				533E43EC161B947E00432377 /* wfh-icon.png */,
+				533E43ED161B947E00432377 /* wfh-icon@2x.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -2441,22 +2449,22 @@
 		53D65B4614EEEC3700801C5E /* Checkin */ = {
 			isa = PBXGroup;
 			children = (
-				53D7ADEC15D04AC800BB041E /* CPGeofenceHandler.h */,
-				53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */,
-				533B1DA715A3D3300072997D /* CheckInListTableViewController.h */,
-				533B1DA815A3D3300072997D /* CheckInListTableViewController.m */,
-				533B1DA315A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard */,
-				5328938715548D6D007B0157 /* CheckInDetailsViewController.h */,
-				5328938815548D6D007B0157 /* CheckInDetailsViewController.m */,
 				5328935D15548902007B0157 /* CheckInDetailsFrame.h */,
 				5328935E15548902007B0157 /* CheckInDetailsFrame.m */,
+				5328938715548D6D007B0157 /* CheckInDetailsViewController.h */,
+				5328938815548D6D007B0157 /* CheckInDetailsViewController.m */,
 				5328935F15548902007B0157 /* CheckInListCell.h */,
 				5328936015548902007B0157 /* CheckInListCell.m */,
+				533B1DA715A3D3300072997D /* CheckInListViewController.h */,
+				537DEA8E16249A3400D59AC9 /* CheckInListViewController.m */,
+				533B1DA315A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard */,
+				53A3C78A159A4B73008459B0 /* CPCheckinHandler.h */,
+				53A3C78B159A4B73008459B0 /* CPCheckinHandler.m */,
+				53D7ADEC15D04AC800BB041E /* CPGeofenceHandler.h */,
+				53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */,
 				536DE92A150170CC00794650 /* images */,
 				5319C75F15547157005DA299 /* UIButton+AnimatedClockHand.h */,
 				5319C76015547157005DA299 /* UIButton+AnimatedClockHand.m */,
-				53A3C78A159A4B73008459B0 /* CPCheckinHandler.h */,
-				53A3C78B159A4B73008459B0 /* CPCheckinHandler.m */,
 			);
 			name = Checkin;
 			sourceTree = "<group>";
@@ -2760,8 +2768,6 @@
 		E46BA2C6161CDE5600CA0440 /* TTTAttributedLabel */ = {
 			isa = PBXGroup;
 			children = (
-				E46BA2C7161CE06100CA0440 /* LICENSE */,
-				E46BA2C8161CE06100CA0440 /* README.md */,
 				E46BA2C9161CE06100CA0440 /* TTTAttributedLabel.h */,
 				E46BA2CA161CE06100CA0440 /* TTTAttributedLabel.m */,
 			);
@@ -3213,12 +3219,14 @@
 				53BBBFFA1612B25700F5C14B /* uv_vote_chicklet_empty@2x.png in Resources */,
 				53BBC03F1612B70D00F5C14B /* OATestServer.rb in Resources */,
 				53BBC0421612B70D00F5C14B /* README in Resources */,
-				E46BA2CB161CE06100CA0440 /* LICENSE in Resources */,
-				E46BA2CC161CE06100CA0440 /* README.md in Resources */,
 				3DA3548D161CC37D00275558 /* action-menu-button-check-in.png in Resources */,
 				3DA3548E161CC37D00275558 /* action-menu-button-check-in@2x.png in Resources */,
 				3DA3548F161CC37D00275558 /* action-menu-button-check-out.png in Resources */,
 				3DA35490161CC37D00275558 /* action-menu-button-check-out@2x.png in Resources */,
+				533E43EE161B947E00432377 /* wfh-icon.png in Resources */,
+				533E43EF161B947E00432377 /* wfh-icon@2x.png in Resources */,
+				537DEA921624A0EF00D59AC9 /* check-in-list-error.png in Resources */,
+				537DEA931624A0EF00D59AC9 /* check-in-list-error@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3249,7 +3257,7 @@
 				5384B24A155481FA00A4E0C1 /* CPapi.m in Sources */,
 				5384B24D1554822100A4E0C1 /* CPUtils.m in Sources */,
 				5384B2501554823A00A4E0C1 /* CPVenue.m in Sources */,
-				5384B2531554825F00A4E0C1 /* FoursquareAPIRequest.m in Sources */,
+				5384B2531554825F00A4E0C1 /* FoursquareAPIClient.m in Sources */,
 				5384B2561554827600A4E0C1 /* MapDataSet.m in Sources */,
 				5384B2591554831400A4E0C1 /* User.m in Sources */,
 				5384B25C1554833D00A4E0C1 /* Settings.m in Sources */,
@@ -3301,7 +3309,6 @@
 				533E5EF315A3A88C0042862E /* PostUpdateCell.m in Sources */,
 				533E5EF415A3A88C0042862E /* CPPost.m in Sources */,
 				533E5F0A15A3AD040042862E /* FeedViewController.m in Sources */,
-				533B1DA915A3D3300072997D /* CheckInListTableViewController.m in Sources */,
 				534BD45615AB72BD001FCC5C /* CPVenueFeed.m in Sources */,
 				53019FE415ABA21D00AE3FA1 /* CPUserActionCell.m in Sources */,
 				4E5578BE15AD0575000B588D /* CPUserAction.m in Sources */,
@@ -3371,6 +3378,7 @@
 				53BBC0411612B70D00F5C14B /* OATokenManager.m in Sources */,
 				68B7B126161626BA000987E2 /* NSDictionary+JsonParserWorkaround.m in Sources */,
 				E46BA2CD161CE06100CA0440 /* TTTAttributedLabel.m in Sources */,
+				537DEA8F16249A3400D59AC9 /* CheckInListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -56,6 +56,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // set the title of the nav controller to the place name
     self.title = self.venue.name;
     
@@ -134,7 +135,17 @@
     
     // set the labels for the venue name and address
     self.placeName.text = self.venue.name;
-    self.placeAddress.text = self.venue.address;
+    self.placeAddress.text = !self.venue.isNeighborhood ? self.venue.address : @"You won't appear on the map.";
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (self.navigationController && self.navigationController.navigationBarHidden) {
+        // make sure our navigationController isn't hidden from a search on the CheckInListViewController
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -174,10 +185,10 @@
     NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
     
     [CPApiClient checkInToVenue:self.venue
-                         hoursHere:self.checkInDuration
-                        statusText:statusText
-                         isVirtual:self.checkInIsVirtual
-                       isAutomatic:NO
+                      hoursHere:self.checkInDuration
+                     statusText:statusText
+                      isVirtual:self.checkInIsVirtual
+                    isAutomatic:NO
                    completionBlock:^(NSDictionary *json, NSError *error){
         // hide the SVProgressHUD
         if (!error && ![[json objectForKey:@"error"] boolValue]) {
