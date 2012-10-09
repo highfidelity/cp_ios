@@ -12,7 +12,7 @@
 
 #ifdef PRODUCTION
 
-#elseif
+#else
 
     NSString* const kCandPWebServiceUrl = @"http://staging.candp.me/";
     NSString* const kCandPWebServiceSecureUrl = @"https://staging.candp.me/";
