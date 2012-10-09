@@ -2,7 +2,7 @@
 //  NSDictionary+JsonParserWorkaround.m
 //  candpiosapp
 //  
-//  Created by kevin utecht on 9/28/12.
+//  Created by Kevin Utecht on 9/28/12.
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
@@ -10,10 +10,10 @@
 
 @implementation NSDictionary (JsonParserWorkaround)
 
-- (id)objectForKeyOrNil:(id)key {
+- (id)objectForKey:(id)key orDefault:(id)defaultValue {
     id object = [self objectForKey:key];
     if (object == [NSNull null]) {
-        return nil;
+        return defaultValue;
     }
     
     return object;
