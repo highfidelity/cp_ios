@@ -177,68 +177,57 @@ typedef enum {
     // while we're waiting to hear back from foursquare isWaitingForSearchResults should be YES
     self.currentSearchState = CPCheckInListSearchStateInProgress;
     
-    if (!searchText) {
-        // grab the 20 closest venues to user location
-        self.currentSearchOperation = [FoursquareAPIClient getVenuesCloseToLocation:self.searchLocation
-                                                                         searchText:nil
-                                                                         completion:^(AFHTTPRequestOperation *operation, id json, NSError *error)
-       {
-           if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
-               // add the close venues that foursquare returned to our array of search results
-               [self.closeVenues addObjectsFromArray:[self arrayOfVenuesFromFoursquareResponse:json]];
-               
-               // sort array of venues, prioritizing wether it's a neighboord and the distance from user
-               [self.closeVenues sortUsingSelector:@selector(sortByNeighborhoodAndDistanceToUser:)];
-               
-               self.currentSearchState = CPCheckInListSearchStateComplete;
-               
-               // tell the tableView to reload venues, after filtering for duplicates
-               [self filterDuplicatesAndReloadTableVenues];
-           } else {
-               
-               // we want to show an error cell
-               self.currentSearchState = CPCheckInListSearchStateError;
-               
-               // tell the tableView to reload to show the error cell
-               [self.tableView reloadData];
-           }
-       }];
-    } else {
-        // ask Foursquare API for 20 venues close to location that have venue names matching the passed searchText
-        self.currentSearchOperation = [FoursquareAPIClient getVenuesCloseToLocation:self.checkinLocationManager.location
-                                                                         searchText:searchText
-                                                                         completion:^(AFHTTPRequestOperation *operation, id json, NSError *error)
-       {
-           // check if we get an error from foursquare or during JSON parse
-           // if so just ignore it and don't show the results
-           if (!error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
-               // use parseFoursquareVenueResponse:destinationArray helper to
-               // add the venues to self.searchCloseVenues, sort and filter them and then ask the tableView to reload
-               NSMutableArray *foursquareResultArray = [self arrayOfVenuesFromFoursquareResponse:json];
-               
-               // make sure we have no duplicate venues in the foursquare result array
-               foursquareResultArray = [self filterVenueDuplicatesFromArray:foursquareResultArray
-                                                               againstArray:self.searchCloseVenues
-                                              includeNeighborhoodAndDefault:YES];
-               
-               // add the new venues to self.searchCloseVenues
-               [self.searchCloseVenues addObjectsFromArray:foursquareResultArray];
-               
-               // sort the result set by distance, prioritize neighborhoods
-               [self.searchCloseVenues sortUsingSelector:@selector(sortByNeighborhoodAndDistanceToUser:)];
-               
-               // we've got our result for this search, fix the boolean
-               self.currentSearchState = CPCheckInListSearchStateComplete;
-           } else {
-               // we need to show the error cell in place of the results
-               self.currentSearchState = CPCheckInListSearchStateError;
-           }
-           
-           // reload the tableView
-           [self.tableView reloadData];
-       }];
-    }
+    __block NSMutableArray *stateCloseVenues = !searchText ? self.closeVenues : self.searchCloseVenues;
     
+    // grab the 20 closest venues to user location, use searchText if passed
+    self.currentSearchOperation = [FoursquareAPIClient getVenuesCloseToLocation:self.searchLocation
+                                                                     searchText:searchText
+                                                                     completion:^(AFHTTPRequestOperation *operation, id json, NSError *error)
+    {
+        if (error && [[json valueForKeyPath:@"meta.code"] intValue] == 200) {
+            
+            // pull the resultArray using arrayOfVenuesFromFoursquareResponse
+            NSMutableArray *resultArray = [self arrayOfVenuesFromFoursquareResponse:json];
+            
+            // different handling if this was from a search query
+            if (!searchText) {
+                // just assign the result array to our close venues
+                self.closeVenues = resultArray;
+            } else {
+                // use parseFoursquareVenueResponse:destinationArray helper to
+                // add the venues to self.searchCloseVenues, sort and filter them and then ask the tableView to reload
+                NSMutableArray *foursquareResultArray = [self arrayOfVenuesFromFoursquareResponse:json];
+                
+                // make sure we have no duplicate venues in the foursquare result array
+                foursquareResultArray = [self filterVenueDuplicatesFromArray:foursquareResultArray
+                                                                againstArray:self.searchCloseVenues
+                                               includeNeighborhoodAndDefault:YES];
+                
+                // add the new venues to self.searchCloseVenues
+                [self.searchCloseVenues addObjectsFromArray:foursquareResultArray];
+            }
+            
+            // sort the result set by distance, prioritize neighborhoods
+            [stateCloseVenues sortUsingSelector:@selector(sortByNeighborhoodAndDistanceToUser:)];
+           
+            // we've got our result for this search, fix the boolean
+            self.currentSearchState = CPCheckInListSearchStateComplete;
+           
+            if (!searchText) {
+                // tell the tableView to reload venues, after filtering for duplicates
+                [self filterDuplicatesAndReloadTableVenues];
+            } else {
+                [self.tableView reloadData];
+            }
+        } else {
+           
+            // we want to show an error cell
+            self.currentSearchState = CPCheckInListSearchStateError;
+           
+            // tell the tableView to reload to show the error cell
+            [self.tableView reloadData];
+        }
+    }];    
 }
 
 - (void)filterDuplicatesAndReloadTableVenues
