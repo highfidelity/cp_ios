@@ -654,6 +654,8 @@ typedef enum {
             [self.searchCloseVenues addObjectsFromArray:localResultArray];
         }
 
+        // pull an up-to-date location for the user before searching for closest venues
+        self.searchLocation = [self.checkinLocationManager.location copy];
         
         [self loadTwentyClosestVenues:searchText];
     }
