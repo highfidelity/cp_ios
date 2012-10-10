@@ -65,11 +65,13 @@ static FoursquareAPIClient *_sharedClient;
 #pragma mark - Request Methods
 
 + (AFHTTPRequestOperation *)getVenuesCloseToLocation:(CLLocation *)location
-                           limit:(int)limit
-                      categoryID:(NSString *)categoryID
-                      searchText:(NSString *)searchText
-                   versionString:(NSString *)versionString
-                      completion:(AFRequestCompletionBlock)completion
+                                               limit:(int)limit
+                                          categoryID:(NSString *)categoryID
+                                          searchText:(NSString *)searchText
+                                        intentString:(NSString *)intentString
+                                              radius:(int)radius
+                                       versionString:(NSString *)versionString
+                                          completion:(AFRequestCompletionBlock)completion
 {
     // create dictionary for request parameters
     // pass location as comma seperated floats
@@ -78,14 +80,22 @@ static FoursquareAPIClient *_sharedClient;
     // pass limit for number of venues desired in result
     [parameters setObject:[NSNumber numberWithInt:limit] forKey:@"limit"];
     
-    // if we have a category ID ask for a specific category of venue
+    // if we have any special parameters then add them to the request
+    
     if (categoryID) {
         [parameters setObject:categoryID forKey:@"categoryId"];
     }
     
-    // if we have searchText then pass that as the query
     if (searchText) {
         [parameters setObject:searchText forKey:@"query"];
+    }
+    
+    if (intentString) {
+        [parameters setObject:intentString forKey:@"intent"];
+    }
+    
+    if (radius) {
+        [parameters setObject:[NSNumber numberWithInt:radius] forKey:@"radius"];
     }
     
     // add the passed version string to our dictionary of parameters
@@ -121,22 +131,27 @@ static FoursquareAPIClient *_sharedClient;
 {    
     // use above helper to get 20 closest venues, no matter the category
     return [self getVenuesCloseToLocation:location
-                             limit:20
-                        categoryID:nil
-                        searchText:searchText
-                     versionString:@"20120302"
-                        completion:completion];
+                                    limit:20
+                               categoryID:nil
+                               searchText:searchText
+                             intentString:nil
+                                   radius:0
+                            versionString:@"20120302"
+                               completion:completion];
 }
 
 + (AFHTTPRequestOperation *)getClosestNeighborhoodToLocation:(CLLocation *)location
                                   completion:(AFRequestCompletionBlock)completion
 {
-    // use above helper to return 2 closest venues in the neighborhood category
+    // use above helper to return closest venue in the neighborhood category
+    // foursquare doesn't like to return closest so we'll use the 'browse' intent and use a radius of 1000km
     return [self getVenuesCloseToLocation:location
-                             limit:1
-                        categoryID:kFoursquareNeighborhoodCategoryID
-                        searchText:nil
-                     versionString:@"20121001"
+                                    limit:1
+                               categoryID:kFoursquareNeighborhoodCategoryID
+                               searchText:nil
+                             intentString:@"browse"
+                                   radius:750
+                            versionString:@"20121001"
                         completion:completion];
 }
 

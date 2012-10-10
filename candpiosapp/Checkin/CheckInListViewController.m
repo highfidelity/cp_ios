@@ -38,7 +38,7 @@ typedef enum {
 @property (nonatomic) CPCheckInListSearchState currentSearchState;
 
 - (IBAction)closeWindow:(id)sender;
-- (void)refreshLocations;
+- (void)refreshVenues;
 
 @end
 
@@ -75,7 +75,7 @@ typedef enum {
     
     // add pull to refresh to UITableView using SVPullToRefresh
     [self.tableView addPullToRefreshWithActionHandler:^{
-        [self refreshLocations];
+        [self refreshVenues];
     }];
     
     // trigger a refresh of the tableView
@@ -119,13 +119,15 @@ typedef enum {
 
 #pragma mark - IBActions 
 
-- (IBAction)closeWindow:(id)sender {
+- (IBAction)closeWindow:(id)sender
+{
     [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - View Helpers
 
-- (void)refreshLocations {    
+- (void)refreshVenues
+{
     // take the user's location at the beginning of the search and use that for both requests and the venue sorting
     self.searchLocation = [self.checkinLocationManager.location copy];
     
@@ -134,7 +136,11 @@ typedef enum {
     // reset the closeVenues array
     self.closeVenues = [NSMutableArray array];
     
-    [self.tableView reloadData];
+    // reload the table view to show searching state
+    // only if user isn't in the middle of a query
+    if (!self.isUserSearching) {
+        [self.tableView reloadData];
+    }
     
     // grab the closest neighborhood from foursquare
     [FoursquareAPIClient getClosestNeighborhoodToLocation:self.searchLocation completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
@@ -203,7 +209,8 @@ typedef enum {
                 // make sure we have no duplicate venues in the foursquare result array
                 foursquareResultArray = [self filterVenueDuplicatesFromArray:foursquareResultArray
                                                                 againstArray:self.searchCloseVenues
-                                               includeNeighborhoodAndDefault:YES];
+                                               includeNeighborhoodAndDefault:YES
+                                                           isForSearchResult:YES];
                 
                 // add the new venues to self.searchCloseVenues
                 [self.searchCloseVenues addObjectsFromArray:foursquareResultArray];
@@ -238,27 +245,32 @@ typedef enum {
         if (self.neighborhoodVenue || self.defaultVenue) {
             self.closeVenues = [self filterVenueDuplicatesFromArray:self.closeVenues
                                                        againstArray:nil
-                                      includeNeighborhoodAndDefault:YES];
+                                      includeNeighborhoodAndDefault:YES
+                                                  isForSearchResult:NO];
         }
     }
     
-    // stop the pull to refresh view if it exists in the tableView
-    [self.tableView.pullToRefreshView stopAnimating];
-
-    // tell the tableView to reload its data
-    [self.tableView reloadData];
+    // if the user isn't searching then reload the table view
+    if (!self.isUserSearching) {
+        // stop the pull to refresh view if it exists in the tableView
+        [self.tableView.pullToRefreshView stopAnimating];
+        
+        // tell the tableView to reload its data
+        [self.tableView reloadData];
+    }
 }
 
 - (NSMutableArray *)filterVenueDuplicatesFromArray:(NSMutableArray *)filterArray
                                       againstArray:(NSArray *)againstArray
                     includeNeighborhoodAndDefault:(BOOL)includeND
+                                 isForSearchResult:(BOOL)isForSearchResult
 {
     NSMutableSet *existingIDs = [NSMutableSet set];
     
     // if includeND is yes then we also need to filter out the neighborhood and default venue
     if (includeND) {
-        CPVenue *stateNeighborhoodVenue = !self.isUserSearching ? self.neighborhoodVenue : self.searchNeighborhoodVenue;
-        CPVenue *stateDefaultVenue = !self.isUserSearching ? self.defaultVenue : self.searchDefaultVenue;
+        CPVenue *stateNeighborhoodVenue = !isForSearchResult ? self.neighborhoodVenue : self.searchNeighborhoodVenue;
+        CPVenue *stateDefaultVenue = !isForSearchResult ? self.defaultVenue : self.searchDefaultVenue;
         
         if (stateNeighborhoodVenue) {
             [existingIDs addObject:stateNeighborhoodVenue.foursquareID];
@@ -526,6 +538,13 @@ typedef enum {
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     [self zoomMapViewToLocation:newLocation];
+    
+    // if we've moved more than our maximum stray distance then let's reload
+    int maximumStrayDistance = 200;
+    
+    if ([newLocation distanceFromLocation:self.searchLocation] > maximumStrayDistance) {
+        [self refreshVenues];
+    }
 }
 
 - (void)zoomMapViewToLocation:(CLLocation *)newLocation
@@ -642,7 +661,8 @@ typedef enum {
         if (self.searchCloseVenues.count && localResultArray.count) {
             localResultArray = [self filterVenueDuplicatesFromArray:localResultArray
                                                        againstArray:self.searchCloseVenues
-                                      includeNeighborhoodAndDefault:NO];
+                                      includeNeighborhoodAndDefault:NO
+                                                  isForSearchResult:YES];
             
             // add everything from localResultArray to searchCloseVenues
             [self.searchCloseVenues addObjectsFromArray:localResultArray];
@@ -654,6 +674,8 @@ typedef enum {
             [self.searchCloseVenues addObjectsFromArray:localResultArray];
         }
 
+        // pull an up-to-date location for the user before searching for closest venues
+        self.searchLocation = [self.checkinLocationManager.location copy];
         
         [self loadTwentyClosestVenues:searchText];
     }
@@ -675,7 +697,7 @@ typedef enum {
     
     // reload foursquare close venues if we don't have any
     if (!self.closeVenues.count) {
-        [self refreshLocations];
+        [self refreshVenues];
     }
     
     // re-enable pull to refresh in tableView
