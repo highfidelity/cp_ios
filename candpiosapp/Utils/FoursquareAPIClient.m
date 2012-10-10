@@ -150,7 +150,7 @@ static FoursquareAPIClient *_sharedClient;
                                categoryID:kFoursquareNeighborhoodCategoryID
                                searchText:nil
                              intentString:@"browse"
-                                   radius:1000
+                                   radius:750
                             versionString:@"20121001"
                         completion:completion];
 }
