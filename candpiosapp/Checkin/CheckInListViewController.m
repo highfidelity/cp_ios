@@ -539,8 +539,10 @@ typedef enum {
 {
     [self zoomMapViewToLocation:newLocation];
     
-    // if we've moved more than 200m then let's reload
-    if ([newLocation distanceFromLocation:self.searchLocation] > 200) {
+    // if we've moved more than our maximum stray distance then let's reload
+    int maximumStrayDistance = 200;
+    
+    if ([newLocation distanceFromLocation:self.searchLocation] > maximumStrayDistance) {
         [self refreshVenues];
     }
 }
