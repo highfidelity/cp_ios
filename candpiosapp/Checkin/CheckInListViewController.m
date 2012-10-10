@@ -82,18 +82,6 @@ typedef enum {
     [self.tableView.pullToRefreshView triggerRefresh];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    // listen for notification from AppDelegate when app has come back from background
-    // so that we can reload the list of venues
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(refreshVenues)
-                                                 name:@"applicationDidBecomeActive"
-                                               object:nil];
-}
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -148,7 +136,11 @@ typedef enum {
     // reset the closeVenues array
     self.closeVenues = [NSMutableArray array];
     
-    [self.tableView reloadData];
+    // reload the table view to show searching state
+    // only if user isn't in the middle of a query
+    if (!self.isUserSearching) {
+        [self.tableView reloadData];
+    }
     
     // grab the closest neighborhood from foursquare
     [FoursquareAPIClient getClosestNeighborhoodToLocation:self.searchLocation completion:^(AFHTTPRequestOperation *operation, id json, NSError *error) {
@@ -217,7 +209,8 @@ typedef enum {
                 // make sure we have no duplicate venues in the foursquare result array
                 foursquareResultArray = [self filterVenueDuplicatesFromArray:foursquareResultArray
                                                                 againstArray:self.searchCloseVenues
-                                               includeNeighborhoodAndDefault:YES];
+                                               includeNeighborhoodAndDefault:YES
+                                                           isForSearchResult:YES];
                 
                 // add the new venues to self.searchCloseVenues
                 [self.searchCloseVenues addObjectsFromArray:foursquareResultArray];
@@ -252,27 +245,32 @@ typedef enum {
         if (self.neighborhoodVenue || self.defaultVenue) {
             self.closeVenues = [self filterVenueDuplicatesFromArray:self.closeVenues
                                                        againstArray:nil
-                                      includeNeighborhoodAndDefault:YES];
+                                      includeNeighborhoodAndDefault:YES
+                                                  isForSearchResult:NO];
         }
     }
     
-    // stop the pull to refresh view if it exists in the tableView
-    [self.tableView.pullToRefreshView stopAnimating];
-
-    // tell the tableView to reload its data
-    [self.tableView reloadData];
+    // if the user isn't searching then reload the table view
+    if (!self.isUserSearching) {
+        // stop the pull to refresh view if it exists in the tableView
+        [self.tableView.pullToRefreshView stopAnimating];
+        
+        // tell the tableView to reload its data
+        [self.tableView reloadData];
+    }
 }
 
 - (NSMutableArray *)filterVenueDuplicatesFromArray:(NSMutableArray *)filterArray
                                       againstArray:(NSArray *)againstArray
                     includeNeighborhoodAndDefault:(BOOL)includeND
+                                 isForSearchResult:(BOOL)isForSearchResult
 {
     NSMutableSet *existingIDs = [NSMutableSet set];
     
     // if includeND is yes then we also need to filter out the neighborhood and default venue
     if (includeND) {
-        CPVenue *stateNeighborhoodVenue = !self.isUserSearching ? self.neighborhoodVenue : self.searchNeighborhoodVenue;
-        CPVenue *stateDefaultVenue = !self.isUserSearching ? self.defaultVenue : self.searchDefaultVenue;
+        CPVenue *stateNeighborhoodVenue = !isForSearchResult ? self.neighborhoodVenue : self.searchNeighborhoodVenue;
+        CPVenue *stateDefaultVenue = !isForSearchResult ? self.defaultVenue : self.searchDefaultVenue;
         
         if (stateNeighborhoodVenue) {
             [existingIDs addObject:stateNeighborhoodVenue.foursquareID];
@@ -540,6 +538,11 @@ typedef enum {
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     [self zoomMapViewToLocation:newLocation];
+    
+    // if we've moved more than 200m then let's reload
+    if ([newLocation distanceFromLocation:self.searchLocation] > 200) {
+        [self refreshVenues];
+    }
 }
 
 - (void)zoomMapViewToLocation:(CLLocation *)newLocation
@@ -656,7 +659,8 @@ typedef enum {
         if (self.searchCloseVenues.count && localResultArray.count) {
             localResultArray = [self filterVenueDuplicatesFromArray:localResultArray
                                                        againstArray:self.searchCloseVenues
-                                      includeNeighborhoodAndDefault:NO];
+                                      includeNeighborhoodAndDefault:NO
+                                                  isForSearchResult:YES];
             
             // add everything from localResultArray to searchCloseVenues
             [self.searchCloseVenues addObjectsFromArray:localResultArray];
