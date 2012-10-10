@@ -38,7 +38,7 @@ typedef enum {
 @property (nonatomic) CPCheckInListSearchState currentSearchState;
 
 - (IBAction)closeWindow:(id)sender;
-- (void)refreshLocations;
+- (void)refreshVenues;
 
 @end
 
@@ -75,11 +75,23 @@ typedef enum {
     
     // add pull to refresh to UITableView using SVPullToRefresh
     [self.tableView addPullToRefreshWithActionHandler:^{
-        [self refreshLocations];
+        [self refreshVenues];
     }];
     
     // trigger a refresh of the tableView
     [self.tableView.pullToRefreshView triggerRefresh];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // listen for notification from AppDelegate when app has come back from background
+    // so that we can reload the list of venues
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshVenues)
+                                                 name:@"applicationDidBecomeActive"
+                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -119,13 +131,15 @@ typedef enum {
 
 #pragma mark - IBActions 
 
-- (IBAction)closeWindow:(id)sender {
+- (IBAction)closeWindow:(id)sender
+{
     [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - View Helpers
 
-- (void)refreshLocations {    
+- (void)refreshVenues
+{
     // take the user's location at the beginning of the search and use that for both requests and the venue sorting
     self.searchLocation = [self.checkinLocationManager.location copy];
     
@@ -677,7 +691,7 @@ typedef enum {
     
     // reload foursquare close venues if we don't have any
     if (!self.closeVenues.count) {
-        [self refreshLocations];
+        [self refreshVenues];
     }
     
     // re-enable pull to refresh in tableView
