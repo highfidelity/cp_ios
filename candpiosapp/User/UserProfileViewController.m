@@ -413,22 +413,23 @@ static GRMustacheTemplate *postBadgesTemplate;
     if (!self.postBadgesHTML) {
         NSArray *reviews = [self.user.reviews objectForKey:@"rows"];
         
-        GRMustacheTemplate *template = [UserProfileViewController postBadgesTemplate];
-        template.delegate = self;
-        [dictionary setValue:[NSNumber numberWithBool:reviews.count > 0] forKey:@"hasAnyReview"];
-        
-        NSDictionary *originalPayload = @{
+        NSDictionary *originalData = @{
             @"reviews": reviews,
             @"user_id": @(self.user.userID),
             @"server_api_url": [NSString stringWithFormat:@"%@api.php", kCandPWebServiceUrl]
         };
         NSError *error;
-        NSString *originalPayloadJSON = [[NSString alloc] initWithData:
-                                         [NSJSONSerialization dataWithJSONObject:originalPayload
-                                                                         options:kNilOptions
-                                                                           error:&error]
-                                                              encoding:NSUTF8StringEncoding];
-        [dictionary setValue:originalPayloadJSON forKey:@"originalData"];
+        NSString *originalDataJSON = [[NSString alloc] initWithData:
+                                      [NSJSONSerialization dataWithJSONObject:originalData
+                                                                      options:kNilOptions
+                                                                        error:&error]
+                                                           encoding:NSUTF8StringEncoding];
+        
+        [dictionary setValue:[NSNumber numberWithBool:reviews.count > 0] forKey:@"hasAnyReview"];
+        [dictionary setValue:originalDataJSON forKey:@"originalData"];
+        
+        GRMustacheTemplate *template = [UserProfileViewController postBadgesTemplate];
+        template.delegate = self;
         self.postBadgesHTML = [template renderObject:dictionary];
     }
     return [NSString stringWithFormat:@"%@%@%@", self.preBadgesHTML, self.badgesHTML, self.postBadgesHTML];
@@ -517,7 +518,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     }
     
     if ([url.scheme isEqualToString:@"recompute-webview-height"]) {
-        [self performSelector:@selector(recomputeResumeWebViewheight)
+        [self performSelector:@selector(resetResumeWebViewHeight)
                    withObject:nil
                    afterDelay:0.05];
     }
@@ -525,7 +526,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     return YES;
 }
 
-- (void)recomputeResumeWebViewheight
+- (void)resetResumeWebViewHeight
 {
     self.resumeWebView.scrollView.scrollsToTop = NO;
     self.resumeWebView.userInteractionEnabled = YES;
@@ -557,7 +558,7 @@ static GRMustacheTemplate *postBadgesTemplate;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)aWebView {
-    [self recomputeResumeWebViewheight];
+    [self resetResumeWebViewHeight];
     
     // add the blue overlay where the gradient ends
     [self.scrollView insertSubview:self.blueOverlayExtend atIndex:0];
