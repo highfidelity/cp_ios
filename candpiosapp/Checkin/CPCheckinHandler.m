@@ -122,7 +122,11 @@ static CPCheckinHandler *sharedHandler;
         venue.autoCheckin = staleVenue.autoCheckin;
     }
     
-    [[CPGeofenceHandler sharedHandler] updatePastVenue:venue];
+    // only add this neighborhood to the list of past venues if it's not a neighborhood
+    if (!venue.isNeighborhood) {
+        [[CPGeofenceHandler sharedHandler] updatePastVenue:venue];
+    }
+    
     [self queueLocalNotificationForVenue:venue checkoutTime:checkOutTime];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckInStateChange" object:nil];
 }
