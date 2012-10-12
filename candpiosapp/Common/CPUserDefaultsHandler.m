@@ -8,6 +8,7 @@
 
 #import "CPUserDefaultsHandler.h"
 #import "ContactListViewController.h"
+#import "CPTabBarController.h"
 
 // define a way to quickly grab and set NSUserDefaults
 #define DEFAULTS(type, key) ([[NSUserDefaults standardUserDefaults] type##ForKey:key])
@@ -65,7 +66,7 @@ NSString* const kUDNumberOfContactRequests = @"numberOfContactRequests";
     // update the badge on the contacts tab number
     CPThinTabBar *thinTabBar = (CPThinTabBar *)[[CPAppDelegate  tabBarController] tabBar];
     [thinTabBar setBadgeNumber:[NSNumber numberWithInteger:numberOfContactRequests]
-                    atTabIndex:kContactTabIndex];
+                    atTabIndex:(kNumberOfTabsRightOfButton - 1)];
 }
 
 + (NSInteger)numberOfContactRequests

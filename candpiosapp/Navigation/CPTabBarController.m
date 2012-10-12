@@ -84,7 +84,7 @@
     // only try and change things if this isn't already our selected index
     if (selectedIndex != self.selectedIndex) {
         if (self.selectedIndex > 0 && 
-            self.selectedIndex <= 4 && 
+            self.selectedIndex <= kNumberOfTabsRightOfButton &&
             selectedIndex == 0 && 
             ![CPUserDefaultsHandler currentUser]) {
             // don't change the selected index here
@@ -119,7 +119,7 @@
         UINavigationController *signupController = [signUpStoryboard instantiateInitialViewController];
         
         NSMutableArray *tabVCArray = [self.viewControllers mutableCopy];
-        [tabVCArray replaceObjectAtIndex:3 withObject:signupController];
+        [tabVCArray replaceObjectAtIndex:(kNumberOfTabsRightOfButton - 1) withObject:signupController];
         self.viewControllers = tabVCArray;
         
         // tell the thinBar to update the button
@@ -130,7 +130,7 @@
         UINavigationController *contactsController = [mainStoryboard instantiateViewControllerWithIdentifier:@"contactsNavigationController"];
 
         NSMutableArray *tabVCArray = [self.viewControllers mutableCopy];
-        [tabVCArray replaceObjectAtIndex:3 withObject:contactsController];
+        [tabVCArray replaceObjectAtIndex:(kNumberOfTabsRightOfButton - 1) withObject:contactsController];
         self.viewControllers = tabVCArray;
         
         // tell the thinBar to update the button

@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "CPTabBarController.h"
 
-#define BUTTON_WIDTH 55
-#define LEFT_AREA_WIDTH 100
+#define BUTTON_WIDTH 73
+#define LEFT_AREA_WIDTH 101
 
 typedef enum {
     CPThinTabBarActionButtonStatePlus,

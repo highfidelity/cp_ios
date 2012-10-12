@@ -10,6 +10,8 @@
 #import "CPThinTabBar.h"
 #import "CPPost.h"
 
+#define kNumberOfTabsRightOfButton 3
+
 @interface CPTabBarController : UITabBarController <UIAlertViewDelegate>
 
 // TODO: get rid of the currentVenueID here, let's keep that in NSUserDefaults (my bad)

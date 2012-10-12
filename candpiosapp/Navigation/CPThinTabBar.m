@@ -26,17 +26,16 @@
 
 @implementation CPThinTabBar
 
-static NSArray *tabBarIcons;
+static NSArray *_tabBarIcons;
 
 + (void)initialize
 {
     // setup our array of tab bar icons to be called when creating the custom buttons
-    if (!tabBarIcons) {
-        tabBarIcons = [NSArray arrayWithObjects:[UIImage imageNamed:@"tab-logbook"], 
-                       [UIImage imageNamed:@"tab-venues"], 
-                       [UIImage imageNamed:@"tab-people"], 
-                       [UIImage imageNamed:@"tab-contacts"],
-                       [UIImage imageNamed:@"tab-login"], nil];
+    if (!_tabBarIcons) {
+        _tabBarIcons = [NSArray arrayWithObjects:[UIImage imageNamed:@"tab-venues"],
+                                                [UIImage imageNamed:@"tab-people"], 
+                                                [UIImage imageNamed:@"tab-contacts"],
+                                                [UIImage imageNamed:@"tab-login"], nil];
     }
 }
 -(void)dealloc
@@ -141,9 +140,9 @@ static NSArray *tabBarIcons;
 - (void)refreshLastTab:(BOOL)loggedIn
 {
     // grab the new image from our array of tabBarIcons
-    UIImage *newImage = [tabBarIcons objectAtIndex:(loggedIn ? 3 : 4)];
+    UIImage *newImage = [_tabBarIcons objectAtIndex:(loggedIn ? (kNumberOfTabsRightOfButton - 1) : kNumberOfTabsRightOfButton)];
     // give the new image to the button
-    [[self.customBarButtons objectAtIndex:3] setImage:newImage forState:UIControlStateNormal];
+    [[self.customBarButtons objectAtIndex:(kNumberOfTabsRightOfButton - 1)] setImage:newImage forState:UIControlStateNormal];
     
     // make sure the thinBar is in front of the new button
     [self bringSubviewToFront:self.thinBarBackground];
@@ -171,7 +170,7 @@ static NSArray *tabBarIcons;
     self.customBarBadges = [NSMutableArray array];
     
     // create the four buttons that will be added
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < kNumberOfTabsRightOfButton; i++) {
         // alloc-init the button
         UIButton *tabBarButton = [[UIButton alloc] initWithFrame:CGRectMake(xOrigin, 0, BUTTON_WIDTH, self.frame.size.height)];
         tabBarButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
@@ -180,7 +179,7 @@ static NSArray *tabBarIcons;
         tabBarButton.tag = i;
         
         // give this button the right icon image
-        [tabBarButton setImage:[tabBarIcons objectAtIndex:i] forState:UIControlStateNormal];
+        [tabBarButton setImage:[_tabBarIcons objectAtIndex:i] forState:UIControlStateNormal];
         
         // add a a seperator line on the left of the button
         UIView *sepLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, tabBarButton.frame.size.height)];
