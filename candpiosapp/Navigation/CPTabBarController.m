@@ -53,23 +53,6 @@
                                                object:nil];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [self verifyUserTrialPeriod];
-}
-
-- (void)verifyUserTrialPeriod {
-    User *user = [CPUserDefaultsHandler currentUser];
-    if (user && !user.isDaysOfTrialAccessWithoutInviteCodeOK && !self.modalViewController) {
-        NSLog(@"Trial Period Ended");
-        [CPUserSessionHandler showEnterInvitationCodeModalFromViewController:self
-                               withDontShowTextNoticeAfterLaterButtonPressed:YES
-                                                                pushFromLeft:NO
-                                                                    animated:YES];
-    }
-}
-
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -78,9 +61,7 @@
 }
 
 - (void)setSelectedIndex:(NSUInteger)selectedIndex
-{
-    [self verifyUserTrialPeriod];
-    
+{    
     // only try and change things if this isn't already our selected index
     if (selectedIndex != self.selectedIndex) {
         if (self.selectedIndex > 0 && 
