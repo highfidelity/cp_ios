@@ -419,21 +419,21 @@
     [self.modalViewController dismissModalViewControllerAnimated:YES];
 }
 
-#define BUTTON_PHONE_X_OFFSET 2
-#define BUTTON_ADDRESS_X_OFFSET 10
-#define BUTTON_Y_OFFSET 3
+#define kButtonPhoneXOffset 2
+#define kButtonAddressXOffset 10
+#define kButtonYOffset 3
 
 - (void)repositionAddressAndPhone
 {
     if (self.hasAddress || self.hasPhone) {        
         // set the basic frame for the phone and address buttons
         CGRect phoneFrame = self.phoneButton.frame;
-        phoneFrame.origin.x = self.bottomPhotoOverlayView.frame.size.width - phoneFrame.size.width - BUTTON_PHONE_X_OFFSET;
-        phoneFrame.origin.y = BUTTON_Y_OFFSET;
+        phoneFrame.origin.x = self.bottomPhotoOverlayView.frame.size.width - phoneFrame.size.width - kButtonPhoneXOffset;
+        phoneFrame.origin.y = kButtonYOffset;
         
         CGRect addressFrame = self.addressButton.frame;
-        addressFrame.origin.x = BUTTON_ADDRESS_X_OFFSET;
-        addressFrame.origin.y = BUTTON_Y_OFFSET;
+        addressFrame.origin.x = kButtonAddressXOffset;
+        addressFrame.origin.y = kButtonYOffset;
     
         if (!self.hasAddress || !self.hasPhone) {
             // only need to make changes if one is missing
