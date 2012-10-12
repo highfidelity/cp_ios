@@ -43,8 +43,6 @@ static CPCheckinHandler *sharedHandler;
     // Save current place to venue defaults as it's used in several places in the app
     [CPUserDefaultsHandler setCurrentVenue:venue];
     
-    [self performAfterCheckinActionForVenue:venue];
-    
     if (!venue.isNeighborhood) {
         // If this is the user's first check in to this venue and auto-checkins are enabled,
         // ask the user about checking in automatically to this venue in the future
@@ -139,31 +137,6 @@ static CPCheckinHandler *sharedHandler;
                           otherButtonTitles: @"Check Out", nil];
     alert.tag = 904;
     [alert show];
-}
-
-- (void)performAfterCheckinActionForVenue:(CPVenue *)venue
-{
-    if (self.afterCheckinAction != CPAfterCheckinActionNone) {
-        // Add this venue to the list of recent venues for the feed TVC
-        [CPUserDefaultsHandler addFeedVenue:venue];
-        
-        // if this was due to any action in the action menu we will be showing the venue feed
-        switch (self.afterCheckinAction) {
-            case CPAfterCheckinActionNewUpdate:
-                [[CPAppDelegate tabBarController] showFeedVCForNewPostAtCurrentVenueWithPostType:CPPostTypeUpdate];
-                break;
-            case CPAfterCheckinActionNewQuestion:
-                [[CPAppDelegate tabBarController] showFeedVCForNewPostAtCurrentVenueWithPostType:CPPostTypeQuestion];
-                break;
-            case CPAfterCheckinActionShowFeed:
-                [[CPAppDelegate tabBarController] showFeedVCForVenue:venue];
-                break;
-            default:
-                break;
-        }
-        
-        self.afterCheckinAction = CPAfterCheckinActionNone;
-    }
 }
 
 @end

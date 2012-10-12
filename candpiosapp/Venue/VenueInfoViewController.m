@@ -498,10 +498,7 @@
         if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [CPUserDefaultsHandler currentVenue].venueID == self.venue.venueID){
             // user is checked in here so ask them if they want to be checked out
             [[CPCheckinHandler sharedHandler] promptForCheckout];
-        } else {
-            // tell the CPCheckinHandler that there should be no action after this checkin
-            [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionNone;
-            
+        } else {            
             // show them the check in screen
             CheckInDetailsViewController *checkinVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
             checkinVC.venue = self.venue;

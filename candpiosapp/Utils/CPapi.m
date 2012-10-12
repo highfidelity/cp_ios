@@ -11,7 +11,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import "CPapi.h"
 #import "UIImage+Resize.h"
-#import "CPPost.h"
 
 @interface CPapi()
 
@@ -408,113 +407,6 @@
     [params setValue:[NSString stringWithFormat:@"%f", coordinate.longitude] forKey:@"lng"];
     
     [self makeHTTPRequestWithAction:@"getNearestVenuesAndUsersWithCheckinsDuringInterval" withParameters:params queue:mapQueue timeout:9 completion:completion];
-}
-
-#pragma mark - Feeds
-+ (void)getFeedPreviewsForVenueIDs:(NSArray *)venueIDs withCompletion:(void (^)(NSDictionary *, NSError *))completion
-{
-    NSError *error;
-    NSData *venueIDsData = [NSJSONSerialization dataWithJSONObject:venueIDs
-                                                                options:kNilOptions
-                                                                  error:&error];
-    if (!error) {
-        NSString *venueIDsJSONString = [[NSString alloc] initWithData:venueIDsData
-                                                              encoding:NSUTF8StringEncoding];
-        // setup the params dict with a comma seperated list of venue IDs
-        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:venueIDsJSONString forKey:@"venue_IDs"];
-        
-        // make the call
-        [self makeHTTPRequestWithAction:@"getVenueFeedPreviews" withParameters:params completion:completion];
-    } else {
-        completion(nil, error);
-    }
-}
-
-+ (void)getPostsForVenueFeed:(CPVenueFeed *)venueFeed
-           withCompletion:(void (^)(NSDictionary *, NSError *))completion
-{
-    // our params dict contains one parameter, the ID of the venue we want log entries for
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"%d", venueFeed.venue.venueID] forKey:@"venue_id"];
-
-    [params setObject:[NSString stringWithFormat:@"%d", venueFeed.updateTimestamp] forKey:@"timestamp"];
-    
-    // pretty simple, call action getVenueFeed in api.php
-    [self makeHTTPRequestWithAction:@"getVenueFeed" withParameters:params completion:completion];
-}
-
-+ (void)getPostRepliesForVenueFeed:(CPVenueFeed *)venueFeed
-                    withCompletion:(void (^)(NSDictionary *, NSError *))completion
-{
-    // our params dict contains one parameter, the ID of the venue we want post replies for
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setObject:[NSString stringWithFormat:@"%d", venueFeed.venue.venueID] forKey:@"venue_id"];
-    [params setObject:[NSString stringWithFormat:@"%d", 1] forKey:@"replies_only"];
-    
-    // if we were passed a lastReplyID then add that as a param
-    if (venueFeed.lastReplyID) {
-        [params setObject:[NSString stringWithFormat:@"%d", venueFeed.lastReplyID] forKey:@"last_id"];
-    }
-    
-    // pretty simple, call action getLog in api.php
-    [self makeHTTPRequestWithAction:@"getVenueFeed" withParameters:params completion:completion];
-}
-
-+ (void)newPost:(CPPost *)post
-        atVenue:(CPVenue *)venue
-     completion:(void (^)(NSDictionary *, NSError *))completion
-{
-    // setup the params dictionary
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-
-    NSString *postType;
-    switch (post.type) {
-        case CPPostTypeQuestion:
-            postType = @"question";
-            CLLocationCoordinate2D coordinate = [CPAppDelegate locationManager].location.coordinate;
-            [params setValue:[NSString stringWithFormat:@"%f", coordinate.latitude] forKey:@"lat"];
-            [params setValue:[NSString stringWithFormat:@"%f", coordinate.longitude] forKey:@"lng"];
-            break;
-        case CPPostTypeUpdate:
-            postType = @"update";
-            break;
-        case CPPostTypeLove:
-            postType = @"love";
-            break;
-        case CPPostTypeCheckin:
-            postType = @"checkin";
-            break;
-    }
-    
-    [params setObject:post.entry forKey:@"entry"];
-    [params setObject:postType forKey:@"type"];
-    [params setObject:[NSString stringWithFormat:@"%d", venue.venueID] forKey:@"venue_id"];
-    
-    // if this is a reply/answer to an existing post then send the original post ID
-    if (post.originalPostID) {
-        [params setObject:[NSString stringWithFormat:@"%d", post.originalPostID] forKey:@"original_post_id"];
-    }
-
-    // make the request
-    [self makeHTTPRequestWithAction:@"newPost" withParameters:params completion:completion];
-    [FlurryAnalytics logEvent:[NSString stringWithFormat:@"newPost:%@", postType]];
-}
-
-
-+ (void)getPostableFeedVenueIDs:(void (^)(NSDictionary *, NSError *))completion
-{
-    // no params, this is only for the current user
-    
-    // make the request
-    [self makeHTTPRequestWithAction:@"getPostableFeedVenueIDs" withParameters:nil completion:completion];
-}
-
-+ (void)getQuestionReceiversAtLocation:(CLLocationCoordinate2D)coordinate withCompletion:(void (^)(NSDictionary *, NSError *))completion
-{
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setValue:[NSString stringWithFormat:@"%f", coordinate.latitude] forKey:@"lat"];
-    [params setValue:[NSString stringWithFormat:@"%f", coordinate.longitude] forKey:@"lng"];
-
-    [self makeHTTPRequestWithAction:@"getQuestionReceivers" withParameters:params completion:completion];
 }
 
 #pragma mark - Checkins
