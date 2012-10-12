@@ -206,13 +206,16 @@ static NSArray *_tabBarIcons;
 
 - (void)refreshCheckInButton
 {
-    UIImage *buttonImage = [UIImage imageNamed:[NSString stringWithFormat:@"action-menu-button-%@", [self checkInOutImageSuffix]]];
-    
     // if we don't already have the button set it up now
     if (!self.checkInOutButton) {
+        
+        UIImage *buttonImage = [UIImage imageNamed:@"action-menu-button-base"];
+        
         self.checkInOutButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.checkInOutButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         self.checkInOutButton.frame = CGRectMake(0, 0, buttonImage.size.width, buttonImage.size.height);
+        
+        [self.checkInOutButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
         
         // place the center of the button on the top of the CPThinBar at the center of LEFT_AREA_WIDTH
         self.checkInOutButton.center = CGPointMake(LEFT_AREA_WIDTH / 2, 0);
@@ -229,12 +232,12 @@ static NSArray *_tabBarIcons;
                                                    object:nil];
     }
     
-    [self.checkInOutButton setBackgroundImage:buttonImage forState:UIControlStateNormal];    
+    [self.checkInOutButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"action-menu-button-%@", [self checkInOutSuffix]]] forState:UIControlStateNormal];
 }
 
--(NSString *)checkInOutImageSuffix
+-(NSString *)checkInOutSuffix
 {
-    return [CPUserDefaultsHandler isUserCurrentlyCheckedIn] ? @"check-out" : @"check-in";
+    return ![CPUserDefaultsHandler isUserCurrentlyCheckedIn] ? @"plus" : @"minus";
 }
 
 @end
