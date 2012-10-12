@@ -419,21 +419,21 @@
     [self.modalViewController dismissModalViewControllerAnimated:YES];
 }
 
+#define BUTTON_PHONE_X_OFFSET 2
+#define BUTTON_ADDRESS_X_OFFSET  10
+#define BUTTON_Y_OFFSET       3
+
 - (void)repositionAddressAndPhone
 {
-    // we're here because we have no checkin button and as such the address and phone may need to be moved
-    if (self.hasAddress || self.hasPhone) {
-        
+    if (self.hasAddress || self.hasPhone) {        
         // set the basic frame for the phone and address buttons
         CGRect phoneFrame = self.phoneButton.frame;
-        phoneFrame.origin.x = 11 + round((self.bottomPhotoOverlayView.frame.size.width + 64) / 2);
-        phoneFrame.origin.y = 3;
-             
+        phoneFrame.origin.x = self.bottomPhotoOverlayView.frame.size.width - phoneFrame.size.width - BUTTON_PHONE_X_OFFSET;
+        phoneFrame.origin.y = BUTTON_Y_OFFSET;
         
         CGRect addressFrame = self.addressButton.frame;
-        addressFrame.origin.x = round((self.bottomPhotoOverlayView.frame.size.width - 64) / 2) - 5 - addressFrame.size.width;
-        addressFrame.origin.y = 3;
-        
+        addressFrame.origin.x = BUTTON_ADDRESS_X_OFFSET;
+        addressFrame.origin.y = BUTTON_Y_OFFSET;
     
         if (!self.hasAddress || !self.hasPhone) {
             // only need to make changes if one is missing
