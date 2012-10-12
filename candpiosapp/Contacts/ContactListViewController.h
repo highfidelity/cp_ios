@@ -10,7 +10,6 @@
 #import "CPBaseTableViewController.h"
 
 #define kNumberOfContactRequestsNotification @"kNumberOfContactRequestsNotification"
-#define kContactTabIndex 3
 
 @interface ContactListViewController : CPBaseTableViewController <UISearchBarDelegate, ContactListCellDelegate>
 

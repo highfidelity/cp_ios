@@ -7,19 +7,14 @@
 //
 
 #import "CPTabBarController.h"
-#import "FeedViewController.h"
 #import "CPCheckinHandler.h"
 #import "CPUserSessionHandler.h"
 
 @interface CPTabBarController()
 
-@property (nonatomic, readonly) FeedViewController *feedViewController;
-
 @end
 
 @implementation CPTabBarController
-
-@synthesize feedViewController = _feedViewController;
 
 - (void)viewDidLoad
 {
@@ -53,23 +48,6 @@
                                                object:nil];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [self verifyUserTrialPeriod];
-}
-
-- (void)verifyUserTrialPeriod {
-    User *user = [CPUserDefaultsHandler currentUser];
-    if (user && !user.isDaysOfTrialAccessWithoutInviteCodeOK && !self.modalViewController) {
-        NSLog(@"Trial Period Ended");
-        [CPUserSessionHandler showEnterInvitationCodeModalFromViewController:self
-                               withDontShowTextNoticeAfterLaterButtonPressed:YES
-                                                                pushFromLeft:NO
-                                                                    animated:YES];
-    }
-}
-
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -79,24 +57,13 @@
 
 - (void)setSelectedIndex:(NSUInteger)selectedIndex
 {
-    [self verifyUserTrialPeriod];
-    
     // only try and change things if this isn't already our selected index
     if (selectedIndex != self.selectedIndex) {
-        if (self.selectedIndex > 0 && 
-            self.selectedIndex <= 4 && 
-            selectedIndex == 0 && 
-            ![CPUserDefaultsHandler currentUser]) {
-            // don't change the selected index here
-            // just show the login banner
-            [self promptForLoginToSeeLogbook:CPAfterLoginActionShowLogbook];
-        } else {
-            // switch to the designated VC
-            [super setSelectedIndex:selectedIndex];
-
-            // move the green line to the right spot
-            [self.thinBar moveGreenLineToSelectedIndex:selectedIndex];
-        }
+        // switch to the designated VC
+        [super setSelectedIndex:selectedIndex];
+        
+        // move the green line to the right spot
+        [self.thinBar moveGreenLineToSelectedIndex:selectedIndex];
     }
 }
 
@@ -112,6 +79,15 @@
     self.selectedIndex = tabIndex;
 }
 
+- (IBAction)checkinButtonPressed:(id)sender
+{
+    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
+        [[CPCheckinHandler sharedHandler] promptForCheckout];
+    } else {
+        [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
+    }
+}
+
 - (void)refreshTabBar
 {
     if (![CPUserDefaultsHandler currentUser]) {
@@ -119,7 +95,7 @@
         UINavigationController *signupController = [signUpStoryboard instantiateInitialViewController];
         
         NSMutableArray *tabVCArray = [self.viewControllers mutableCopy];
-        [tabVCArray replaceObjectAtIndex:3 withObject:signupController];
+        [tabVCArray replaceObjectAtIndex:(kNumberOfTabsRightOfButton - 1) withObject:signupController];
         self.viewControllers = tabVCArray;
         
         // tell the thinBar to update the button
@@ -130,164 +106,12 @@
         UINavigationController *contactsController = [mainStoryboard instantiateViewControllerWithIdentifier:@"contactsNavigationController"];
 
         NSMutableArray *tabVCArray = [self.viewControllers mutableCopy];
-        [tabVCArray replaceObjectAtIndex:3 withObject:contactsController];
+        [tabVCArray replaceObjectAtIndex:(kNumberOfTabsRightOfButton - 1) withObject:contactsController];
         self.viewControllers = tabVCArray;
         
         // tell the thinBar to update the button
         [self.thinBar refreshLastTab:YES];
     }  
-}
-
-#define QUESTION_ALERT_TAG 4423
-#define UPDATE_ALERT_TAG 4424
-
-- (void)questionButtonPressed:(id)sender
-{  
-    self.thinBar.actionButtonState = CPThinTabBarActionButtonStatePlus;
-
-    if (![CPUserDefaultsHandler currentUser]) {
-        [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionNewQuestion;
-        [self promptForLoginToSeeLogbook:CPAfterLoginActionPostQuestion];
-    } else if (![CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
-
-        UIAlertView *checkinAlert =  [[UIAlertView alloc] initWithTitle:@"Choose one"
-                                                                message:nil
-                                                               delegate:self
-                                                      cancelButtonTitle:@"Cancel"
-                                                      otherButtonTitles:@"Check in", @"Post to Feed", nil];
-        checkinAlert.tag = QUESTION_ALERT_TAG;
-        [checkinAlert show];
-    } else {
-        [self showFeedVCForNewPostAtCurrentVenueWithPostType:CPPostTypeQuestion];
-    }
-}
-
-- (IBAction)updateButtonPressed:(id)sender
-{
-    // hide the action menu
-    self.thinBar.actionButtonState = CPThinTabBarActionButtonStatePlus;
-    
-    if (![CPUserDefaultsHandler currentUser]) {
-        // if we don't have a current user then we need to just show the login banner
-        [self promptForLoginToSeeLogbook:CPAfterLoginActionAddNewLog];
-    } else if (![CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
-        // if we have a user but they aren't checked in
-        // they need to be checked in before they can log
-        
-        UIAlertView *checkinAlert =  [[UIAlertView alloc] initWithTitle:@"Choose one"
-                                                                message:nil 
-                                                               delegate:self 
-                                                      cancelButtonTitle:@"Cancel"
-                                                      otherButtonTitles:@"Check in", @"Post to Feed", nil];
-        checkinAlert.tag = UPDATE_ALERT_TAG;
-        [checkinAlert show];
-        
-    } else {
-        [self showFeedVCForNewPostAtCurrentVenueWithPostType:CPPostTypeUpdate];
-    }
-}
-
-- (FeedViewController *)feedViewController
-{
-    if (!_feedViewController) {
-        // lazily instantiate our _feedViewController variable
-        // grab it from the first tab
-        UINavigationController *feedNC = [self.viewControllers objectAtIndex:0];
-        FeedViewController *feedVC = [feedNC.viewControllers objectAtIndex:0];
-        _feedViewController = feedVC;
-    }
-    
-    return _feedViewController;
-}
-
-- (void)showFeedVCForNewPost:(BOOL)forNewPost
-{
-    if (self.selectedIndex == 0) {
-        if (forNewPost) {
-            // the user is already on the feed for the right venue
-            // so tell the feedVC that we want to add a new post
-            [self.feedViewController newPost:nil];
-        }
-    } else {
-        if (forNewPost) {
-            // the feedVC isn't on screen yet so tell we want a new post after it loads
-            self.feedViewController.newPostAfterLoad = YES;
-        }
-        
-        // switch to the feed view controller
-        self.selectedIndex = 0;
-    }
-}
-
-- (void)showFeedVCForVenue:(CPVenue *)venue 
-{
-    // tell the feedViewController that it needs to switch to the venue feed for this venue
-    // and then get the CPTabBarController to switch over to it
-    [self.feedViewController showVenueFeedForVenue:venue];    
-    [self showFeedVCForNewPost:NO];
-}
-
-- (void)showFeedVCForNewPostAtCurrentVenueWithPostType:(CPPostType)postType
-{
-    // the user is logged in and checked in
-    // we need to bring them to the feed VC and display the feed for the venue they are checked into
-    self.feedViewController.postType = postType;
-
-    @try {
-
-        // if the FeedViewController doesn't have our the current venue's feed as it's selectedVenueFeed
-        // then pull it from the list of venue feed previews and make it the selected venue feed
-        if (self.feedViewController.venueFeedPreviews.count == 0) {
-            return;
-        }
-
-        [self.feedViewController reloadFeedPreviewVenues];
-
-        NSUInteger index = self.feedViewController.selectedVenueFeed
-            ? [self.feedViewController.venueFeedPreviews indexOfObject:self.feedViewController.selectedVenueFeed]
-            : 0;
-        
-        self.feedViewController.selectedVenueFeed = [self.feedViewController.venueFeedPreviews objectAtIndex:index];
-        [self showFeedVCForNewPost:YES];
-
-    }
-    @catch (NSException *exception) {
-        [FlurryAnalytics logError:@"showFeedVCForNewPostAtCurrentVenueWithPostType" message:exception.reason exception:exception];
-    }
-}
-
-- (IBAction)checkinButtonPressed:(id)sender
-{
-    self.thinBar.actionButtonState = CPThinTabBarActionButtonStatePlus;
-    
-    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
-        [[CPCheckinHandler sharedHandler] promptForCheckout];
-    } else {
-        [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionShowFeed;
-        [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
-    }
-}
-
-- (void)promptForLoginToSeeLogbook:(CPAfterLoginAction)action
-{
-    // set the settingsMenuController CPAfterLoginAction so it knows where to go after login
-    [CPAppDelegate settingsMenuController].afterLoginAction = action;
-    
-    // show the login banner
-    [CPUserSessionHandler showLoginBanner];
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == alertView.firstOtherButtonIndex) {        
-        [CPCheckinHandler sharedHandler].afterCheckinAction = (alertView.tag == UPDATE_ALERT_TAG)
-                ? CPAfterCheckinActionNewUpdate : CPAfterCheckinActionNewQuestion;
-        [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
-    } else if (buttonIndex != alertView.cancelButtonIndex) {
-        // this is the "Post to Feed" button
-        [self showFeedVCForNewPostAtCurrentVenueWithPostType:(alertView.tag == UPDATE_ALERT_TAG)
-                ? CPPostTypeUpdate : CPPostTypeQuestion];
-    }
 }
 
 @end

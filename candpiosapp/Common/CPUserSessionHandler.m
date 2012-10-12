@@ -183,7 +183,7 @@ static CPUserSessionHandler *sharedHandler;
 
 + (void)showLoginBanner
 {
-    if ([CPAppDelegate tabBarController].selectedIndex == 4) {
+    if ([CPAppDelegate tabBarController].selectedIndex == kNumberOfTabsRightOfButton) {
         return;
     }
     

@@ -13,8 +13,6 @@
 #import <Foundation/Foundation.h>
 #import "CPVenue.h"
 #import "ChatHistory.h"
-#import "CPPost.h"
-#import "CPVenueFeed.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface CPapi : NSObject
@@ -55,19 +53,6 @@
                                 completion:(void (^)(NSDictionary *, NSError *))completion;
 + (void)sendDeclineContactRequestFromUserId:(int)userId
                                  completion:(void (^)(NSDictionary *, NSError *))completion;
-
-#pragma mark - Feeds
-+ (void)getFeedPreviewsForVenueIDs:(NSArray *)venueIDs withCompletion:(void (^)(NSDictionary *, NSError *))completion;
-+ (void)getPostsForVenueFeed:(CPVenueFeed *)venueFeed withCompletion:(void (^)(NSDictionary *, NSError *))completion;
-+ (void)getPostRepliesForVenueFeed:(CPVenueFeed *)venueFeed withCompletion:(void (^)(NSDictionary *, NSError *))completion;
-
-+ (void)newPost:(CPPost *)post
-        atVenue:(CPVenue *)venue
-     completion:(void(^)(NSDictionary *json, NSError *error))completion;
-
-+ (void)getPostableFeedVenueIDs:(void (^)(NSDictionary *, NSError *))completion;
-
-+ (void)getQuestionReceiversAtLocation:(CLLocationCoordinate2D)coordinate withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Checkins
 + (void)getNearestCheckedInWithCompletion:(void (^)(NSDictionary *, NSError *))completion;

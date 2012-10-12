@@ -16,27 +16,23 @@
 @property (strong, nonatomic) UIView *thinBarBackground;
 @property (strong, nonatomic) NSMutableArray *customBarButtons;
 @property (strong, nonatomic) NSMutableArray *customBarBadges;
-@property (strong, nonatomic) UIView *actionMenu;
 @property (strong, nonatomic) UIView *greenLine;
-@property (strong, nonatomic) NSMutableArray *actionButtonIconImageViews;
-@property (strong, nonatomic) NSMutableArray *actionMenuButtons;
 @property (strong, nonatomic) UIButton *checkInOutButton;
 
 @end
 
 @implementation CPThinTabBar
 
-static NSArray *tabBarIcons;
+static NSArray *_tabBarIcons;
 
 + (void)initialize
 {
     // setup our array of tab bar icons to be called when creating the custom buttons
-    if (!tabBarIcons) {
-        tabBarIcons = [NSArray arrayWithObjects:[UIImage imageNamed:@"tab-logbook"], 
-                       [UIImage imageNamed:@"tab-venues"], 
-                       [UIImage imageNamed:@"tab-people"], 
-                       [UIImage imageNamed:@"tab-contacts"],
-                       [UIImage imageNamed:@"tab-login"], nil];
+    if (!_tabBarIcons) {
+        _tabBarIcons = [NSArray arrayWithObjects:[UIImage imageNamed:@"tab-venues"],
+                                                [UIImage imageNamed:@"tab-people"], 
+                                                [UIImage imageNamed:@"tab-contacts"],
+                                                [UIImage imageNamed:@"tab-login"], nil];
     }
 }
 -(void)dealloc
@@ -76,43 +72,8 @@ static NSArray *tabBarIcons;
     // add the little green line on the bottom
     [self addBottomGreenLine];
     
-    // setup the action menu
-    [self actionMenuSetup];
-}
-
-- (void)setActionButtonState:(CPThinTabBarActionButtonState)actionButtonState
-{
-    if (_actionButtonState != actionButtonState) {
-        CPThinTabBarActionButtonState previousState = _actionButtonState;
-        _actionButtonState = actionButtonState;
-        
-        // set the alpha of the UIImageView subviews of the leftButton based on the new state
-        [[self.actionButtonIconImageViews objectAtIndex:0] setAlpha:(actionButtonState == CPThinTabBarActionButtonStatePlus)];
-        [[self.actionButtonIconImageViews objectAtIndex:1] setAlpha:(actionButtonState == CPThinTabBarActionButtonStateMinus)];
-        [[self.actionButtonIconImageViews objectAtIndex:2] setAlpha:(actionButtonState == CPThinTabBarActionButtonStateQuestion)];
-        [[self.actionButtonIconImageViews objectAtIndex:3] setAlpha:(actionButtonState == CPThinTabBarActionButtonStateUpdate)];
-        
-        BOOL plusOrMinusState = (self.actionButtonState == CPThinTabBarActionButtonStatePlus || 
-                                 self.actionButtonState == CPThinTabBarActionButtonStateMinus);
-        BOOL previousPlusOrMinusState = (previousState == CPThinTabBarActionButtonStatePlus ||
-                                         previousState == CPThinTabBarActionButtonStateMinus);
-        self.actionButton.userInteractionEnabled = plusOrMinusState;
-        if (plusOrMinusState && previousPlusOrMinusState) {
-            // switching between open and closed interactive menu states
-            [self toggleActionMenu:(self.actionButtonState == CPThinTabBarActionButtonStateMinus)];
-        }
-    }
-}
-
-- (UIImageView *)iconImageView:(NSString *)imageSuffix
-{
-    // alloc-init an imageView and add it to the actionButton
-    UIImageView *iconImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"action-menu-button-%@", imageSuffix]]];
-    iconImageView.alpha = 0.0;
-    [self.actionButton addSubview:iconImageView];
-    
-    // return the iconImageView
-    return iconImageView;
+    // setup the check in / check out button
+    [self refreshCheckInButton];
 }
 
 - (void)moveGreenLineToSelectedIndex:(NSUInteger)selectedIndex
@@ -141,9 +102,9 @@ static NSArray *tabBarIcons;
 - (void)refreshLastTab:(BOOL)loggedIn
 {
     // grab the new image from our array of tabBarIcons
-    UIImage *newImage = [tabBarIcons objectAtIndex:(loggedIn ? 3 : 4)];
+    UIImage *newImage = [_tabBarIcons objectAtIndex:(loggedIn ? (kNumberOfTabsRightOfButton - 1) : kNumberOfTabsRightOfButton)];
     // give the new image to the button
-    [[self.customBarButtons objectAtIndex:3] setImage:newImage forState:UIControlStateNormal];
+    [[self.customBarButtons objectAtIndex:(kNumberOfTabsRightOfButton - 1)] setImage:newImage forState:UIControlStateNormal];
     
     // make sure the thinBar is in front of the new button
     [self bringSubviewToFront:self.thinBarBackground];
@@ -171,7 +132,7 @@ static NSArray *tabBarIcons;
     self.customBarBadges = [NSMutableArray array];
     
     // create the four buttons that will be added
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < kNumberOfTabsRightOfButton; i++) {
         // alloc-init the button
         UIButton *tabBarButton = [[UIButton alloc] initWithFrame:CGRectMake(xOrigin, 0, BUTTON_WIDTH, self.frame.size.height)];
         tabBarButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
@@ -180,7 +141,7 @@ static NSArray *tabBarIcons;
         tabBarButton.tag = i;
         
         // give this button the right icon image
-        [tabBarButton setImage:[tabBarIcons objectAtIndex:i] forState:UIControlStateNormal];
+        [tabBarButton setImage:[_tabBarIcons objectAtIndex:i] forState:UIControlStateNormal];
         
         // add a a seperator line on the left of the button
         UIView *sepLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, tabBarButton.frame.size.height)];
@@ -234,165 +195,49 @@ static NSArray *tabBarIcons;
     }
 }
 
-#define ACTION_MENU_HEIGHT 193
-
-#define CHECKIN_BUTTON_TOP_MARGIN 9
-#define QUESTION_BUTTON_TOP_MARGIN 60
-#define UPDATE_BUTTON_TOP_MARGIN 111
-
-- (void)actionMenuSetup
-{
-    // setup a UIButton with the image
-    UIImage *buttonImage = [UIImage imageNamed:@"action-menu-button-base"];
-    self.actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.actionButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    self.actionButton.frame = CGRectMake(0, 0, buttonImage.size.width, buttonImage.size.height);
-    [self.actionButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    
-    // place the center of the button on the top of the CPThinBar at the center of LEFT_AREA_WIDTH
-    self.actionButton.center = CGPointMake(LEFT_AREA_WIDTH / 2, 0);
-    
-    // add the button to the tab bar controller
-    [self.thinBarBackground addSubview:self.actionButton];    
-    
-    // we are the target for the leftButton
-    [self.actionButton addTarget:self action:@selector(actionMenuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
-    // add the actionMenu
-    // create a resizable image with the background
-    UIImage *resizableBackground = [[UIImage imageNamed:@"action-menu-bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(34, 0, 0, 0)];
-    
-    CGRect actionMenuFrame = CGRectMake((LEFT_AREA_WIDTH / 2) - (resizableBackground.size.width / 2),
-                                        0, 
-                                        resizableBackground.size.width, 
-                                        0);
-    self.actionMenu = [[UIView alloc] initWithFrame:actionMenuFrame];
-    // clip the subviews of the actionMenu to its bounds
-    self.actionMenu.clipsToBounds = YES;
-    
-    UIImageView *actionMenuBackground = [[UIImageView alloc] initWithImage:resizableBackground];
-    actionMenuBackground.frame = CGRectMake(0, 0, resizableBackground.size.width, ACTION_MENU_HEIGHT);
-    [self.actionMenu addSubview:actionMenuBackground];
-    
-    [self.thinBarBackground insertSubview:self.actionMenu belowSubview:self.actionButton];
-    
-    // setup the buttons in the action menu
-    self.actionButtonIconImageViews = [NSMutableArray array];
-    [self.actionButtonIconImageViews addObject:[self iconImageView:@"plus"]];
-    [self.actionButtonIconImageViews addObject:[self iconImageView:@"minus"]];
-    [self.actionButtonIconImageViews addObject:[self iconImageView:@"question-selected"]];
-    [self.actionButtonIconImageViews addObject:[self iconImageView:@"update-selected"]];
-    
-    // make sure that the plus is shown for the default state of the action menu
-    // using the actionButtonState setter won't work here because that's the default state
-    [[self.actionButtonIconImageViews objectAtIndex:0] setAlpha:1.0];
-    
-    // add each of the buttons to the action menu
-    self.actionMenuButtons = [NSMutableArray array];
-    [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"update" topMargin:UPDATE_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(updateButtonPressed:)]];
-    [self.actionMenuButtons addObject:[self actionMenuButtonWithImageSuffix:@"question" topMargin:QUESTION_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(questionButtonPressed:)]];
-    
-    self.checkInOutButton = [self actionMenuButtonWithImageSuffix:[self checkInOutImageSuffix] topMargin:CHECKIN_BUTTON_TOP_MARGIN tabBarControllerAction:@selector(checkinButtonPressed:)];
-    [self.actionMenuButtons addObject:self.checkInOutButton];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(refreshCheckinButton)
-                                                 name:@"userCheckInStateChange"
-                                               object:nil];
-    
-}
-
-- (UIButton *)actionMenuButtonWithImageSuffix:(NSString *)imageSuffix 
-                                    topMargin:(CGFloat)topMargin 
-                       tabBarControllerAction:(SEL)tabBarControllerAction
-{
-    // alloc-init an actionMenuButton
-    UIButton *actionMenuButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    // grab the background image
-    UIImage *backgroundImage = [UIImage imageNamed:[NSString stringWithFormat:@"action-menu-button-%@", imageSuffix]];
-    
-    // give the background image to the button
-    [actionMenuButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
-    
-    // set the right frame
-    actionMenuButton.frame = CGRectMake((self.actionMenu.frame.size.width / 2) - (backgroundImage.size.width / 2),
-                                        topMargin,
-                                        backgroundImage.size.width, 
-                                        backgroundImage.size.height);
-    
-    // give the button the action passed as tabBarControllerAction
-    [actionMenuButton addTarget:self.tabBarController action:tabBarControllerAction forControlEvents:UIControlEventTouchUpInside];
-    
-    // add the the button to the actionMenu
-    [self.actionMenu addSubview:actionMenuButton];
-    
-    // return the created button
-    return actionMenuButton;
-}
-
-- (void)toggleActionMenu:(BOOL)showMenu
-{
-    // show or hide the action menu
-    CGFloat leftButtonTransform = showMenu ? M_PI : (M_PI*2)-0.0001;
-    
-    // if we're showing the menu the action menu background needs to grow
-    // otherwise drop height to 0
-    CGRect newMenuBackgroundFrame = self.actionMenu.frame;
-    newMenuBackgroundFrame.size.height = showMenu ? ACTION_MENU_HEIGHT : 0;
-    newMenuBackgroundFrame.origin.y -= showMenu ? ACTION_MENU_HEIGHT : -ACTION_MENU_HEIGHT;
-    
-    // animate the spinning of the plus button and replacement by the minus button
-    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{ 
-        self.actionButton.transform = CGAffineTransformMakeRotation(leftButtonTransform); 
-        self.actionButtonState = (showMenu ? CPThinTabBarActionButtonStateMinus : CPThinTabBarActionButtonStatePlus);
-    } completion: NULL];
-    
-    // animation of menu buttons shooting out
-    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
-        // give the actionMenu its new frame
-        self.actionMenu.frame = newMenuBackgroundFrame;
-    } completion:^(BOOL finished){
-        
-    }];
-}
-
-- (IBAction)actionMenuButtonPressed:(id)sender
-{    
-    // only toggle the menu if the actionButton is displaying the plus or minus icon
-    if (self.actionButtonState == CPThinTabBarActionButtonStatePlus) {
-        [self toggleActionMenu:YES];
-    } else if (self.actionButtonState == CPThinTabBarActionButtonStateMinus) {
-        [self toggleActionMenu:NO];
-    }
-}
-
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-    if (self.actionButtonState == CPThinTabBarActionButtonStateMinus
-        && !CGRectContainsPoint([self convertRect:self.actionButton.frame fromView:self.actionButton.superview], point)
-        && !CGRectContainsPoint([self convertRect:self.actionMenu.frame fromView:self.actionButton.superview], point)) {
-        [self toggleActionMenu:NO];
-    }
-
-    if (CGRectContainsPoint(self.actionButton.frame, point)) {
-        return self.actionButton;
-    } else if (CGRectContainsPoint(self.actionMenu.frame, point)) {
-        return [self.actionMenu hitTest:[self.actionMenu convertPoint:point fromView:self] withEvent:event];
+    if (CGRectContainsPoint(self.checkInOutButton.frame, point)) {
+        return self.checkInOutButton;
     } else {
         return [super hitTest:point withEvent:event];
     } 
 }
 
-- (void)refreshCheckinButton
+- (void)refreshCheckInButton
 {
-    UIImage *backgroundImage = [UIImage imageNamed:[NSString stringWithFormat:@"action-menu-button-%@", [self checkInOutImageSuffix]]];
-    [self.checkInOutButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
+    // if we don't already have the button set it up now
+    if (!self.checkInOutButton) {
+        
+        UIImage *buttonImage = [UIImage imageNamed:@"action-menu-button-base"];
+        
+        self.checkInOutButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.checkInOutButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+        self.checkInOutButton.frame = CGRectMake(0, 0, buttonImage.size.width, buttonImage.size.height);
+        
+        [self.checkInOutButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        
+        // place the center of the button on the top of the CPThinBar at the center of LEFT_AREA_WIDTH
+        self.checkInOutButton.center = CGPointMake(LEFT_AREA_WIDTH / 2, 0);
+        
+        // add the button to the tab bar controller
+        [self.thinBarBackground addSubview:self.checkInOutButton];
+        
+        // target for check in button is tabBarController
+        [self.checkInOutButton addTarget:self.tabBarController action:@selector(checkinButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(refreshCheckInButton)
+                                                     name:@"userCheckInStateChange"
+                                                   object:nil];
+    }
+    
+    [self.checkInOutButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"action-menu-button-%@", [self checkInOutSuffix]]] forState:UIControlStateNormal];
 }
 
--(NSString *)checkInOutImageSuffix
+-(NSString *)checkInOutSuffix
 {
-    return [CPUserDefaultsHandler isUserCurrentlyCheckedIn] ? @"check-out" : @"check-in";
+    return ![CPUserDefaultsHandler isUserCurrentlyCheckedIn] ? @"plus" : @"minus";
 }
 
 @end

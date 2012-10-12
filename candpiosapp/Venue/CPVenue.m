@@ -33,7 +33,6 @@
         self.virtualCheckinCount = [[json objectForKey:@"virtual_checkins" orDefault:[NSNumber numberWithInt:0]] intValue];
         self.photoURL = [json objectForKey:@"photo_url" orDefault:nil];
         self.specialVenueType = [json objectForKey:@"special_venue_type" orDefault:nil];
-        self.postsCount = [[json objectForKey:@"posts_count" orDefault:[NSNumber numberWithUnsignedInteger:0]] unsignedIntValue];
         
         if ([json objectForKey:@"lat" orDefault:nil] && [json objectForKey:@"lng" orDefault:nil]) {
             self.coordinate = CLLocationCoordinate2DMake([[json objectForKey:@"lat"] doubleValue], [[json objectForKey:@"lng"] doubleValue]);
