@@ -420,8 +420,8 @@
 }
 
 #define BUTTON_PHONE_X_OFFSET 2
-#define BUTTON_ADDRESS_X_OFFSET  10
-#define BUTTON_Y_OFFSET       3
+#define BUTTON_ADDRESS_X_OFFSET 10
+#define BUTTON_Y_OFFSET 3
 
 - (void)repositionAddressAndPhone
 {
