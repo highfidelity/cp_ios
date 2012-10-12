@@ -79,6 +79,15 @@
     self.selectedIndex = tabIndex;
 }
 
+- (IBAction)checkinButtonPressed:(id)sender
+{
+    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
+        [[CPCheckinHandler sharedHandler] promptForCheckout];
+    } else {
+        [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
+    }
+}
+
 - (void)refreshTabBar
 {
     if (![CPUserDefaultsHandler currentUser]) {
@@ -103,17 +112,6 @@
         // tell the thinBar to update the button
         [self.thinBar refreshLastTab:YES];
     }  
-}
-
-- (IBAction)checkinButtonPressed:(id)sender
-{
-    self.thinBar.actionButtonState = CPThinTabBarActionButtonStatePlus;
-    
-    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
-        [[CPCheckinHandler sharedHandler] promptForCheckout];
-    } else {
-        [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
-    }
 }
 
 @end

@@ -12,18 +12,9 @@
 #define BUTTON_WIDTH 72
 #define LEFT_AREA_WIDTH 104
 
-typedef enum {
-    CPThinTabBarActionButtonStatePlus,
-    CPThinTabBarActionButtonStateMinus,
-    CPThinTabBarActionButtonStateUpdate,
-    CPThinTabBarActionButtonStateQuestion
-} CPThinTabBarActionButtonState;
-
 @interface CPThinTabBar : UITabBar
 
-@property (strong, nonatomic) UIButton *actionButton;
 @property (weak, nonatomic) UITabBarController *tabBarController;
-@property (nonatomic) CPThinTabBarActionButtonState actionButtonState;
 
 - (void)moveGreenLineToSelectedIndex:(NSUInteger)selectedIndex;
 - (void)toggleRightSide:(BOOL)shown;
