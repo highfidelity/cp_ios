@@ -32,9 +32,4 @@
 + (void)setAutomaticCheckins:(BOOL)on;
 + (BOOL)automaticCheckins;
 
-+ (void)addFeedVenue:(CPVenue *)venue;
-+ (NSDictionary *)feedVenues;
-+ (BOOL)hasFeedVenues;
-+ (void)removeFeedVenueWithID:(NSUInteger)venueID;
-
 @end
