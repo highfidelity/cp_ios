@@ -481,19 +481,8 @@
     if ([CPUserDefaultsHandler currentUser]) {
         // we have a current user so check if the settings menu controller has an action to perform after login
         switch (self.afterLoginAction) {
-            case CPAfterLoginActionShowLogbook:
-                // show the logbook
-                [CPAppDelegate tabBarController].selectedIndex = 0;
-                break;
-            case CPAfterLoginActionAddNewLog:
-                // show the logbook and allow the user to enter a new log entry
-                [[CPAppDelegate tabBarController] updateButtonPressed:nil];
-                break;
-            case CPAfterLoginActionPostQuestion:
-                [[CPAppDelegate tabBarController] questionButtonPressed:nil];
-                break;
             case CPAfterLoginActionShowMap:
-                [CPAppDelegate tabBarController].selectedIndex = 1;
+                [CPAppDelegate tabBarController].selectedIndex = 0;
             default:
                 // do nothing, the action is CPAfterLoginActionNone
                 break;

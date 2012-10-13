@@ -8,17 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum {
-    CPAfterCheckinActionNone,
-    CPAfterCheckinActionShowFeed,
-    CPAfterCheckinActionNewUpdate,
-    CPAfterCheckinActionNewQuestion
-} CPAfterCheckinAction;
-
 @interface CPCheckinHandler : NSObject
 
 @property (strong, nonatomic) NSTimer *checkOutTimer;
-@property (nonatomic) CPAfterCheckinAction afterCheckinAction;
 
 - (void)presentCheckinModalFromViewController:(UIViewController *)presentingViewController;
 - (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime;

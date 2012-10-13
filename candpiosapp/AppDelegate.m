@@ -629,11 +629,6 @@ void SignalHandler(int sig) {
             [self.tabBarController presentModalViewController:navigationController animated:YES];
         }
         
-    } else if (alertView.tag == kFeedViewAlertTag && alertView.firstOtherButtonIndex == buttonIndex) {
-        CPVenue *venue = [[CPVenue alloc] init];
-        venue.venueID = [[userInfo objectForKey:@"feed_venue_id"] integerValue];
-        venue.name = [userInfo objectForKey:@"feed_venue_name"];
-        [self.tabBarController showFeedVCForVenue:venue];
     }
 }
 

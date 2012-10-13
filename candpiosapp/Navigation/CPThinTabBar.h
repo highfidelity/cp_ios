@@ -9,21 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "CPTabBarController.h"
 
-#define BUTTON_WIDTH 55
-#define LEFT_AREA_WIDTH 100
-
-typedef enum {
-    CPThinTabBarActionButtonStatePlus,
-    CPThinTabBarActionButtonStateMinus,
-    CPThinTabBarActionButtonStateUpdate,
-    CPThinTabBarActionButtonStateQuestion
-} CPThinTabBarActionButtonState;
+#define BUTTON_WIDTH 72
+#define LEFT_AREA_WIDTH 104
 
 @interface CPThinTabBar : UITabBar
 
-@property (strong, nonatomic) UIButton *actionButton;
 @property (weak, nonatomic) UITabBarController *tabBarController;
-@property (nonatomic) CPThinTabBarActionButtonState actionButtonState;
 
 - (void)moveGreenLineToSelectedIndex:(NSUInteger)selectedIndex;
 - (void)toggleRightSide:(BOOL)shown;
