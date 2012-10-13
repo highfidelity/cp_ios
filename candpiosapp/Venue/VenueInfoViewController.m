@@ -8,11 +8,7 @@
 
 #import "VenueInfoViewController.h"
 #import "MapTabController.h"
-#import "CheckInDetailsViewController.h"
 #import "UserProfileViewController.h"
-#import "MapDataSet.h"
-#import "UIButton+AnimatedClockHand.h"
-#import "CPCheckinHandler.h"
 #import "CPUserSessionHandler.h"
 #import "VenueUserCell.h"
 #import "VenueCategoryCell.h"
@@ -22,7 +18,6 @@
 @interface VenueInfoViewController () <UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *bottomPhotoOverlayView;
-@property (weak, nonatomic) UIButton *checkInButton;
 @property (weak, nonatomic) UIButton *phoneButton;
 @property (weak, nonatomic) UIButton *addressButton;
 @property (nonatomic) BOOL checkInIsVirtual;
@@ -98,8 +93,8 @@
         }
     }
     
-    [self repositionAddressAndPhone:NO];
-
+    [self repositionAddressAndPhone];
+    
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-first-aid-kit"]];
         
     // table view header
@@ -113,7 +108,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self checkInAllowed];
 }
 
 - (void)viewDidUnload
@@ -126,28 +120,6 @@
 - (BOOL)isCheckedInHere
 {
     return [CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [CPUserDefaultsHandler currentVenue].venueID == self.venue.venueID;
-}
-
-- (void)refreshVenueViewCheckinButton
-{ 
-    if (!self.checkInButton) {
-        self.checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        
-        // add the clock hand and set the button to the right state
-        [self.checkInButton refreshButtonStateWithBoolean:[self isCheckedInHere]];
-    
-        CGRect checkInButtonFrame = self.bottomPhotoOverlayView.frame;
-        checkInButtonFrame.size = self.checkInButton.currentBackgroundImage.size;
-        checkInButtonFrame.origin.x = ((self.bottomPhotoOverlayView.frame.size.width - checkInButtonFrame.size.width) / 2);
-        checkInButtonFrame.origin.y -= 25;
-        
-        self.checkInButton.frame = checkInButtonFrame;
-        
-        [self.bottomPhotoOverlayView.superview addSubview:self.checkInButton];
-        [self.checkInButton addTarget:self action:@selector(checkInPressed:) forControlEvents:UIControlEventTouchUpInside];
-    } else {
-        [self.checkInButton refreshButtonStateWithBoolean:[self isCheckedInHere]];
-    }
 }
 
 - (void)refreshVenueData:(NSNotification *)notification
@@ -329,76 +301,6 @@
         [userBox addSubview:userCount];
     }
 }
-- (void)checkInAllowed
-{
-    self.checkInIsVirtual = NO;
-    
-    //Find the distance between the user and the venue in Meters
-    CLLocation *venueLocation= [[CLLocation alloc] initWithLatitude:self.venue.coordinate.latitude longitude:self.venue.coordinate.longitude];
-    double distanceFromUserMeters = [venueLocation distanceFromLocation:[CPAppDelegate locationManager].location];
-    
-    // double venueDistance = self.venue.distanceFromUser;
-    if(distanceFromUserMeters > 300) {
-        // User is more than 300m from venue so only a virtual checkin is possible.
-        // If the user has a contact in the venue then they can checkin, otherwise it is not allowed
-        //and the checkin button will not appear.
-        if(self.venue.hasContactAtVenue)
-        {
-            [self checkInButtonSetup];
-            self.checkInIsVirtual = YES;
-        }
-
-    } else {
-        // if the user is within 300m of the venue they can checkin to that venue
-        [self checkInButtonSetup];
-    }
-}
-
-- (void)checkInButtonSetup
-{
-    // reposition the address and phone if required 
-    // or just show them now that we have the button
-    [self repositionAddressAndPhone:YES];
-    
-    //from viewwillappear
-    // place the checkin button on screen and make sure it is consistent with the user states
-    [self refreshVenueViewCheckinButton];
-    
-    //from viewDidLoad
-    //Add observer to update checkIn button
-    [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(refreshVenueViewCheckinButton) 
-                                                 name:@"userCheckInStateChange" 
-                                               object:nil];
-    
-}
-
-- (void)checkInPressed:(id)sender
-{
-    if (![CPUserDefaultsHandler currentUser]) {
-        [CPUserSessionHandler showLoginBanner];
-    } else {
-        if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [CPUserDefaultsHandler currentVenue].venueID == self.venue.venueID){
-            // user is checked in here so ask them if they want to be checked out
-            [[CPCheckinHandler sharedHandler] promptForCheckout];
-        } else {            
-            // show them the check in screen
-            CheckInDetailsViewController *checkinVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
-            checkinVC.venue = self.venue;
-            
-            // be the delgate of the check in view controller
-            checkinVC.delegate = self;
-            
-            // tell the CheckinDetailsViewController that it should hide the tabBar
-            checkinVC.hidesBottomBarWhenPushed = YES;
-            
-            // Pass whether the checkin is virtual or non-virtual
-            checkinVC.checkInIsVirtual = self.checkInIsVirtual;
-            
-            [self.navigationController pushViewController:checkinVC animated:YES];
-        }
-    }
-}
 
 - (void)dismissViewControllerAnimated {
     [self dismissModalViewControllerAnimated:YES];
@@ -409,69 +311,48 @@
     [self.modalViewController dismissModalViewControllerAnimated:YES];
 }
 
-- (void)repositionAddressAndPhone:(BOOL)checkinButtonIsShown
+#define kButtonPhoneXOffset 2
+#define kButtonAddressXOffset 10
+#define kButtonYOffset 3
+
+- (void)repositionAddressAndPhone
 {
-    
-    // we're here because we have no checkin button and as such the address and phone may need to be moved
-    if (self.hasAddress || self.hasPhone) {
-        
+    if (self.hasAddress || self.hasPhone) {        
         // set the basic frame for the phone and address buttons
         CGRect phoneFrame = self.phoneButton.frame;
-        phoneFrame.origin.x = 11 + round((self.bottomPhotoOverlayView.frame.size.width + 64) / 2);
-        phoneFrame.origin.y = 3;
-             
+        phoneFrame.origin.x = self.bottomPhotoOverlayView.frame.size.width - phoneFrame.size.width - kButtonPhoneXOffset;
+        phoneFrame.origin.y = kButtonYOffset;
         
         CGRect addressFrame = self.addressButton.frame;
-        addressFrame.origin.x = round((self.bottomPhotoOverlayView.frame.size.width - 64) / 2) - 5 - addressFrame.size.width;
-        addressFrame.origin.y = 3;
-        
+        addressFrame.origin.x = kButtonAddressXOffset;
+        addressFrame.origin.y = kButtonYOffset;
     
         if (!self.hasAddress || !self.hasPhone) {
             // only need to make changes if one is missing
-            if (!checkinButtonIsShown) {
-                UIButton *move;
-                if (!self.hasAddress) {
-                    move = self.phoneButton;
-                    self.addressButton.hidden = YES;
+            UIButton *move;
+            if (!self.hasAddress) {
+                move = self.phoneButton;
+                self.addressButton.hidden = YES;
                     
-                    // move the phone button to the middle
-                    phoneFrame.origin.x = (self.bottomPhotoOverlayView.frame.size.width / 2) - (phoneFrame.size.width / 2);
-                } else {
-                    move = self.addressButton;
-                    self.phoneButton.hidden = YES;
-                    
-                    // move the address button to the middle
-                    addressFrame.origin.x = (self.bottomPhotoOverlayView.frame.size.width / 2) - (addressFrame.size.width / 2);
-                }
+                // move the phone button to the middle
+                phoneFrame.origin.x = (self.bottomPhotoOverlayView.frame.size.width / 2) - (phoneFrame.size.width / 2);
             } else {
-                // make sure the phone button is around
-                self.phoneButton.hidden = NO;
-                // make sure the address button is around
-                self.addressButton.hidden = NO;
-                
-                // no need to touch the frame here ... it'll get reset
+                move = self.addressButton;
+                self.phoneButton.hidden = YES;
+                    
+                // move the address button to the middle
+                addressFrame.origin.x = (self.bottomPhotoOverlayView.frame.size.width / 2) - (addressFrame.size.width / 2);
             }
         }
         
         self.phoneButton.frame = phoneFrame; 
         self.addressButton.frame = addressFrame;
-    } else {
-        
+    } else {        
         // hide both buttons - no need to show two "N/A" labels
         self.addressButton.hidden = YES;
-        self.phoneButton.hidden = YES;
-        
-        if (checkinButtonIsShown) {
-            // fade in the bottom bar
-            self.bottomPhotoOverlayView.userInteractionEnabled = YES;
-            
-            [UIView animateWithDuration:0.5 animations:^{
-                self.bottomPhotoOverlayView.alpha = 1.0;
-            }];
-        } else {
-            self.bottomPhotoOverlayView.alpha = 0.0;
-            self.bottomPhotoOverlayView.userInteractionEnabled = NO;
-        }
+        self.phoneButton.hidden = YES;        
+        self.bottomPhotoOverlayView.alpha = 0.0;
+        self.bottomPhotoOverlayView.userInteractionEnabled = NO;
     }
 }
 

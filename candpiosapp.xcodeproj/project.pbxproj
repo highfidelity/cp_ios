@@ -61,7 +61,6 @@
 		530FC24215D42BBD00838B5A /* SmartererLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC23715D42BBD00838B5A /* SmartererLoginController.m */; };
 		530FC24515D4335E00838B5A /* CPUserSessionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC24415D4335E00838B5A /* CPUserSessionHandler.m */; };
 		530FC24815D4389D00838B5A /* SignupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC24715D4389D00838B5A /* SignupController.m */; };
-		5319C76115547157005DA299 /* UIButton+AnimatedClockHand.m in Sources */ = {isa = PBXBuildFile; fileRef = 5319C76015547157005DA299 /* UIButton+AnimatedClockHand.m */; };
 		53217F8C156FF89B006258F0 /* LoveSkillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */; };
 		5327E9FA15658CCE005330AD /* UIColor+EasyRGB.m in Sources */ = {isa = PBXBuildFile; fileRef = 5327E9F915658CCD005330AD /* UIColor+EasyRGB.m */; };
 		5328935C155488F5007B0157 /* CPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328935B155488F5007B0157 /* CPConstants.m */; };
@@ -224,12 +223,6 @@
 		53A1EAA61587B496009D8E31 /* tab-people@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A1EA9E1587B496009D8E31 /* tab-people@2x.png */; };
 		53A1EAA71587B496009D8E31 /* tab-venues.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A1EA9F1587B496009D8E31 /* tab-venues.png */; };
 		53A1EAA81587B496009D8E31 /* tab-venues@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A1EAA01587B496009D8E31 /* tab-venues@2x.png */; };
-		53A1EAAF1587B4B7009D8E31 /* tab-check-in-clock-hand.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A1EAA91587B4B7009D8E31 /* tab-check-in-clock-hand.png */; };
-		53A1EAB01587B4B7009D8E31 /* tab-check-in-clock-hand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A1EAAA1587B4B7009D8E31 /* tab-check-in-clock-hand@2x.png */; };
-		53A1EAB11587B4B7009D8E31 /* tab-check-in.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A1EAAB1587B4B7009D8E31 /* tab-check-in.png */; };
-		53A1EAB21587B4B7009D8E31 /* tab-check-in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A1EAAC1587B4B7009D8E31 /* tab-check-in@2x.png */; };
-		53A1EAB31587B4B7009D8E31 /* tab-check-out.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A1EAAD1587B4B7009D8E31 /* tab-check-out.png */; };
-		53A1EAB41587B4B7009D8E31 /* tab-check-out@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A1EAAE1587B4B7009D8E31 /* tab-check-out@2x.png */; };
 		53A1EAD1158813B3009D8E31 /* texture-lightpaperfibers.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A1EACF158813B3009D8E31 /* texture-lightpaperfibers.png */; };
 		53A1EAD2158813B3009D8E31 /* texture-lightpaperfibers@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A1EAD0158813B3009D8E31 /* texture-lightpaperfibers@2x.png */; };
 		53A3C78C159A4B73008459B0 /* CPCheckinHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A3C78B159A4B73008459B0 /* CPCheckinHandler.m */; };
@@ -592,8 +585,6 @@
 		530FC24415D4335E00838B5A /* CPUserSessionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPUserSessionHandler.m; sourceTree = "<group>"; };
 		530FC24615D4389D00838B5A /* SignupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupController.h; sourceTree = "<group>"; };
 		530FC24715D4389D00838B5A /* SignupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupController.m; sourceTree = "<group>"; };
-		5319C75F15547157005DA299 /* UIButton+AnimatedClockHand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+AnimatedClockHand.h"; path = "CheckIn/UIButton+AnimatedClockHand.h"; sourceTree = "<group>"; };
-		5319C76015547157005DA299 /* UIButton+AnimatedClockHand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+AnimatedClockHand.m"; path = "CheckIn/UIButton+AnimatedClockHand.m"; sourceTree = "<group>"; };
 		53217F8A156FF89B006258F0 /* LoveSkillTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = LoveSkillTableViewCell.h; path = User/LoveSkillTableViewCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoveSkillTableViewCell.m; path = User/LoveSkillTableViewCell.m; sourceTree = "<group>"; };
 		5327E9F815658CCD005330AD /* UIColor+EasyRGB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+EasyRGB.h"; path = "Utils/UIColor+EasyRGB.h"; sourceTree = "<group>"; };
@@ -801,12 +792,6 @@
 		53A1EA9E1587B496009D8E31 /* tab-people@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-people@2x.png"; sourceTree = "<group>"; };
 		53A1EA9F1587B496009D8E31 /* tab-venues.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-venues.png"; sourceTree = "<group>"; };
 		53A1EAA01587B496009D8E31 /* tab-venues@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-venues@2x.png"; sourceTree = "<group>"; };
-		53A1EAA91587B4B7009D8E31 /* tab-check-in-clock-hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab-check-in-clock-hand.png"; path = "Checkin/images/tab-check-in-clock-hand.png"; sourceTree = "<group>"; };
-		53A1EAAA1587B4B7009D8E31 /* tab-check-in-clock-hand@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab-check-in-clock-hand@2x.png"; path = "Checkin/images/tab-check-in-clock-hand@2x.png"; sourceTree = "<group>"; };
-		53A1EAAB1587B4B7009D8E31 /* tab-check-in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab-check-in.png"; path = "Checkin/images/tab-check-in.png"; sourceTree = "<group>"; };
-		53A1EAAC1587B4B7009D8E31 /* tab-check-in@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab-check-in@2x.png"; path = "Checkin/images/tab-check-in@2x.png"; sourceTree = "<group>"; };
-		53A1EAAD1587B4B7009D8E31 /* tab-check-out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab-check-out.png"; path = "Checkin/images/tab-check-out.png"; sourceTree = "<group>"; };
-		53A1EAAE1587B4B7009D8E31 /* tab-check-out@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab-check-out@2x.png"; path = "Checkin/images/tab-check-out@2x.png"; sourceTree = "<group>"; };
 		53A1EACF158813B3009D8E31 /* texture-lightpaperfibers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-lightpaperfibers.png"; path = "Utils/images/textures/texture-lightpaperfibers.png"; sourceTree = "<group>"; };
 		53A1EAD0158813B3009D8E31 /* texture-lightpaperfibers@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-lightpaperfibers@2x.png"; path = "Utils/images/textures/texture-lightpaperfibers@2x.png"; sourceTree = "<group>"; };
 		53A3C78A159A4B73008459B0 /* CPCheckinHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CPCheckinHandler.h; path = Checkin/CPCheckinHandler.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1683,12 +1668,6 @@
 				536E1E73155494A100052D40 /* check-in-slider-handle@2x.png */,
 				536E1E74155494A100052D40 /* check-in-status-arrow.png */,
 				536E1E75155494A100052D40 /* check-in-status-arrow@2x.png */,
-				53A1EAA91587B4B7009D8E31 /* tab-check-in-clock-hand.png */,
-				53A1EAAA1587B4B7009D8E31 /* tab-check-in-clock-hand@2x.png */,
-				53A1EAAB1587B4B7009D8E31 /* tab-check-in.png */,
-				53A1EAAC1587B4B7009D8E31 /* tab-check-in@2x.png */,
-				53A1EAAD1587B4B7009D8E31 /* tab-check-out.png */,
-				53A1EAAE1587B4B7009D8E31 /* tab-check-out@2x.png */,
 				533E43EC161B947E00432377 /* wfh-icon.png */,
 				533E43ED161B947E00432377 /* wfh-icon@2x.png */,
 			);
@@ -2097,8 +2076,6 @@
 				53D7ADEC15D04AC800BB041E /* CPGeofenceHandler.h */,
 				53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */,
 				536DE92A150170CC00794650 /* images */,
-				5319C75F15547157005DA299 /* UIButton+AnimatedClockHand.h */,
-				5319C76015547157005DA299 /* UIButton+AnimatedClockHand.m */,
 			);
 			name = Checkin;
 			sourceTree = "<group>";
@@ -2643,12 +2620,6 @@
 				53A1EAA61587B496009D8E31 /* tab-people@2x.png in Resources */,
 				53A1EAA71587B496009D8E31 /* tab-venues.png in Resources */,
 				53A1EAA81587B496009D8E31 /* tab-venues@2x.png in Resources */,
-				53A1EAAF1587B4B7009D8E31 /* tab-check-in-clock-hand.png in Resources */,
-				53A1EAB01587B4B7009D8E31 /* tab-check-in-clock-hand@2x.png in Resources */,
-				53A1EAB11587B4B7009D8E31 /* tab-check-in.png in Resources */,
-				53A1EAB21587B4B7009D8E31 /* tab-check-in@2x.png in Resources */,
-				53A1EAB31587B4B7009D8E31 /* tab-check-out.png in Resources */,
-				53A1EAB41587B4B7009D8E31 /* tab-check-out@2x.png in Resources */,
 				53A1EAD1158813B3009D8E31 /* texture-lightpaperfibers.png in Resources */,
 				53A1EAD2158813B3009D8E31 /* texture-lightpaperfibers@2x.png in Resources */,
 				53FD32F715915102000448EF /* tab-login.png in Resources */,
@@ -2760,7 +2731,6 @@
 				53D9B19C152A5E8600BC1304 /* CPTabBarController.m in Sources */,
 				53463F5115336EA5001CA16D /* UIViewController+isModal.m in Sources */,
 				E41080711539AB2200D7EAA8 /* JobCategoryViewController.m in Sources */,
-				5319C76115547157005DA299 /* UIButton+AnimatedClockHand.m in Sources */,
 				5384B24A155481FA00A4E0C1 /* CPapi.m in Sources */,
 				5384B24D1554822100A4E0C1 /* CPUtils.m in Sources */,
 				5384B2501554823A00A4E0C1 /* CPVenue.m in Sources */,
