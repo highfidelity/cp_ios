@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2840" systemVersion="12C54" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
-        <development version="4400" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1926"/>
+        <development version="4500" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
     </dependencies>
     <scenes>
         <!--Settings Menu Controller-->
@@ -144,98 +144,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="doX-wg-0Sm" kind="relationship" relationship="rootViewController" id="NWj-Dq-IOo"/>
+                        <segue destination="76A-7a-UMN" kind="relationship" relationship="rootViewController" id="8cc-lS-Jy6"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U6H-7w-aEh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1196" y="-1725"/>
-        </scene>
-        <!--Generate Invitation Code View Controller-->
-        <scene sceneID="6oR-C8-wUA">
-            <objects>
-                <viewController id="doX-wg-0Sm" customClass="GenerateInvitationCodeViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="osX-wC-xaK">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="invite-code-background.png" id="WV6-YZ-zQf">
-                                <rect key="frame" x="40" y="75" width="240" height="140"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="WWWW" textAlignment="center" lineBreakMode="clip" minimumFontSize="10" id="Vsh-Sm-6yx">
-                                <rect key="frame" x="65" y="99" width="190" height="94"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="86"/>
-                                <color key="textColor" red="0.792156862745098" green="0.792156862745098" blue="0.792156862745098" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="This invite code will allow someone who is near you right now to join C&amp;P" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="6" baselineAdjustment="alignBaselines" minimumFontSize="10" id="eAE-KP-DCK">
-                                <rect key="frame" x="55" y="6" width="210" height="87"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="textColor" red="0.70196080207824707" green="0.70196080207824707" blue="0.70196080207824707" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="highlightedColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                            </label>
-                            <view contentMode="scaleToFill" id="b9y-qm-ZLS">
-                                <rect key="frame" x="0.0" y="233" width="320" height="2"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="deviceRGB"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="hZA-B0-Cgl">
-                                <rect key="frame" x="55" y="314" width="210" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="linkedin-invite.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="76A-7a-UMN" kind="push" id="CTd-pd-eIL"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Invite LinkedIn Connections" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="10" id="0S6-8E-6de">
-                                <rect key="frame" x="20" y="290" width="280" height="28"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="textColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="highlightedColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" red="0.15294118225574493" green="0.15294118225574493" blue="0.15294118225574493" alpha="1" colorSpace="deviceRGB"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="Z6p-7o-eph">
-                        <barButtonItem key="rightBarButtonItem" id="T6P-CQ-Kc7">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="CYf-R0-GPR">
-                                <rect key="frame" x="273" y="7" width="42" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="settings-button-3.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="gearPressed:" destination="doX-wg-0Sm" eventType="touchUpInside" id="nWS-4C-hCJ"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="codeLabel" destination="Vsh-Sm-6yx" id="hi4-F1-aGF"/>
-                        <outlet property="codeLabelBackground" destination="WV6-YZ-zQf" id="fgz-xY-xND"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="01z-7b-GrR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-719" y="-1716"/>
         </scene>
         <!--Invite Linked In Connections Table View Controller - Invite LinkedIn Connections-->
         <scene sceneID="Vum-QO-w4c">
@@ -260,7 +174,7 @@
                                         </view>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="800-5g-Gty">
                                             <rect key="frame" x="5" y="4" width="51" height="51"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <view contentMode="scaleToFill" id="A1b-sp-d0b">
                                             <rect key="frame" x="0.0" y="59" width="320" height="1"/>
@@ -290,6 +204,23 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Invite LinkedIn Connections" id="oHT-sY-Dl3">
+                        <barButtonItem key="leftBarButtonItem" id="uTH-i9-k1B">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0Aq-dh-aoU">
+                                <rect key="frame" x="5" y="7" width="42" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="settings-button-3.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="gearPressed:" destination="76A-7a-UMN" eventType="touchUpInside" id="ETy-Fw-jTi"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Next" id="oZU-nj-o6Y">
                             <connections>
                                 <segue destination="6Iv-eA-29n" kind="push" identifier="EditLinkedInInvitationMessageViewControllerSegue" id="ILD-Qv-PLf"/>
@@ -299,7 +230,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="syl-8z-sc9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-198" y="-1716"/>
+            <point key="canvasLocation" x="-752" y="-1725"/>
         </scene>
         <!--Edit Linked In Invitation Message View Controller - Send LinkedIn Invitation-->
         <scene sceneID="95r-lC-h93">
@@ -344,7 +275,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oKt-OD-cQB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="260" y="-1708"/>
+            <point key="canvasLocation" x="-312" y="-1725"/>
         </scene>
         <!--Balance View Controller-->
         <scene sceneID="d1R-FS-22a">
@@ -539,7 +470,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MPq-6l-85G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-719" y="-1103"/>
+            <point key="canvasLocation" x="-697" y="-1097"/>
         </scene>
         <!--Job Category View Controller - Job Categories-->
         <scene sceneID="Kag-ik-hPh">
@@ -1592,8 +1523,6 @@ photo?</string>
         <image name="add-funds.png" width="58" height="58"/>
         <image name="default-avatar-256.png" width="256" height="256"/>
         <image name="drop-down.png" width="196" height="27"/>
-        <image name="invite-code-background.png" width="240" height="140"/>
-        <image name="linkedin-invite.png" width="202" height="48"/>
         <image name="list-arrow-dark-grey.png" width="11" height="16"/>
         <image name="map-shadow.png" width="10" height="320"/>
         <image name="refresh-scroll-view.png" width="15" height="40"/>
@@ -1629,17 +1558,11 @@ photo?</string>
                 <relationship kind="outlet" name="subjectTextField" candidateClass="UITextField"/>
             </relationships>
         </class>
-        <class className="GenerateInvitationCodeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GenerateInvitationCodeViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="gearPressed:"/>
-                <relationship kind="outlet" name="codeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="codeLabelBackground" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="doneButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
         <class className="InviteLinkedInConnectionsTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/InviteLinkedInConnectionsTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="gearPressed:" candidateClass="UIButton"/>
+            </relationships>
         </class>
         <class className="JobCategoryViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/JobCategoryViewController.h"/>

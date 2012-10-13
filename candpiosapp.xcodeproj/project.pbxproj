@@ -55,7 +55,6 @@
 		530C5DB71575E4FC003505AC /* CPSoundEffectsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */; };
 		530C5DBB1575E516003505AC /* send-love-switch-sound-off.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */; };
 		530C5DBC1575E516003505AC /* send-love-switch-sound-on.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */; };
-		530FC23A15D42BBD00838B5A /* EnterInvitationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC22B15D42BBD00838B5A /* EnterInvitationCodeViewController.m */; };
 		530FC23F15D42BBD00838B5A /* LinkedInLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC23215D42BBD00838B5A /* LinkedInLoginController.m */; };
 		530FC24115D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 530FC23515D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard */; };
 		530FC24215D42BBD00838B5A /* SmartererLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC23715D42BBD00838B5A /* SmartererLoginController.m */; };
@@ -209,7 +208,6 @@
 		5384B2591554831400A4E0C1 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2581554831400A4E0C1 /* User.m */; };
 		5384B25C1554833D00A4E0C1 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B25B1554833D00A4E0C1 /* Settings.m */; };
 		538EF4331585352E00249AAF /* EditLinkedInInvitationMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538EF42E1585352E00249AAF /* EditLinkedInInvitationMessageViewController.m */; };
-		538EF4341585352E00249AAF /* GenerateInvitationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538EF4301585352E00249AAF /* GenerateInvitationCodeViewController.m */; };
 		538EF4351585352E00249AAF /* InviteLinkedInConnectionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538EF4321585352E00249AAF /* InviteLinkedInConnectionsTableViewController.m */; };
 		538EF4381585354100249AAF /* LinkedInConnectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 538EF4371585354100249AAF /* LinkedInConnectionCell.m */; };
 		5396E0D814E466C200E33E0E /* LeagueGothic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5396E0D714E466C200E33E0E /* LeagueGothic.otf */; };
@@ -574,8 +572,6 @@
 		530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPSoundEffectsManager.m; sourceTree = "<group>"; };
 		530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-off.wav"; sourceTree = "<group>"; };
 		530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-on.wav"; sourceTree = "<group>"; };
-		530FC22A15D42BBD00838B5A /* EnterInvitationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterInvitationCodeViewController.h; sourceTree = "<group>"; };
-		530FC22B15D42BBD00838B5A /* EnterInvitationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterInvitationCodeViewController.m; sourceTree = "<group>"; };
 		530FC23115D42BBD00838B5A /* LinkedInLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedInLoginController.h; sourceTree = "<group>"; };
 		530FC23215D42BBD00838B5A /* LinkedInLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedInLoginController.m; sourceTree = "<group>"; };
 		530FC23515D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignupStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
@@ -775,8 +771,6 @@
 		5384B25B1554833D00A4E0C1 /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Settings.m; path = Utils/Settings.m; sourceTree = "<group>"; };
 		538EF42D1585352E00249AAF /* EditLinkedInInvitationMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditLinkedInInvitationMessageViewController.h; sourceTree = "<group>"; };
 		538EF42E1585352E00249AAF /* EditLinkedInInvitationMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditLinkedInInvitationMessageViewController.m; sourceTree = "<group>"; };
-		538EF42F1585352E00249AAF /* GenerateInvitationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenerateInvitationCodeViewController.h; sourceTree = "<group>"; };
-		538EF4301585352E00249AAF /* GenerateInvitationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenerateInvitationCodeViewController.m; sourceTree = "<group>"; };
 		538EF4311585352E00249AAF /* InviteLinkedInConnectionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteLinkedInConnectionsTableViewController.h; sourceTree = "<group>"; };
 		538EF4321585352E00249AAF /* InviteLinkedInConnectionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteLinkedInConnectionsTableViewController.m; sourceTree = "<group>"; };
 		538EF4361585354100249AAF /* LinkedInConnectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedInConnectionCell.h; sourceTree = "<group>"; };
@@ -1447,8 +1441,6 @@
 				5308DD0215D5E5DF00B4EBC2 /* images */,
 				530FC24615D4389D00838B5A /* SignupController.h */,
 				530FC24715D4389D00838B5A /* SignupController.m */,
-				530FC22A15D42BBD00838B5A /* EnterInvitationCodeViewController.h */,
-				530FC22B15D42BBD00838B5A /* EnterInvitationCodeViewController.m */,
 				530FC23115D42BBD00838B5A /* LinkedInLoginController.h */,
 				530FC23215D42BBD00838B5A /* LinkedInLoginController.m */,
 				530FC23515D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard */,
@@ -1904,8 +1896,6 @@
 			children = (
 				538EF42D1585352E00249AAF /* EditLinkedInInvitationMessageViewController.h */,
 				538EF42E1585352E00249AAF /* EditLinkedInInvitationMessageViewController.m */,
-				538EF42F1585352E00249AAF /* GenerateInvitationCodeViewController.h */,
-				538EF4301585352E00249AAF /* GenerateInvitationCodeViewController.m */,
 				538EF4311585352E00249AAF /* InviteLinkedInConnectionsTableViewController.h */,
 				538EF4321585352E00249AAF /* InviteLinkedInConnectionsTableViewController.m */,
 				538EF4361585354100249AAF /* LinkedInConnectionCell.h */,
@@ -2769,7 +2759,6 @@
 				530C5DB71575E4FC003505AC /* CPSoundEffectsManager.m in Sources */,
 				69120B73156D3EA900521E3F /* CPLinkedInAPI.m in Sources */,
 				538EF4331585352E00249AAF /* EditLinkedInInvitationMessageViewController.m in Sources */,
-				538EF4341585352E00249AAF /* GenerateInvitationCodeViewController.m in Sources */,
 				538EF4351585352E00249AAF /* InviteLinkedInConnectionsTableViewController.m in Sources */,
 				538EF4381585354100249AAF /* LinkedInConnectionCell.m in Sources */,
 				699249E3158A3CFC00EC273A /* ResumeVisibilityViewController.m in Sources */,
@@ -2785,7 +2774,6 @@
 				5343243F15C2123A00BE5075 /* CPApiClient.m in Sources */,
 				69A1582E15CB064300B21971 /* UIViewController+CPUserActionCellAdditions.m in Sources */,
 				53D7ADEE15D04AC800BB041E /* CPGeofenceHandler.m in Sources */,
-				530FC23A15D42BBD00838B5A /* EnterInvitationCodeViewController.m in Sources */,
 				530FC23F15D42BBD00838B5A /* LinkedInLoginController.m in Sources */,
 				530FC24215D42BBD00838B5A /* SmartererLoginController.m in Sources */,
 				530FC24515D4335E00838B5A /* CPUserSessionHandler.m in Sources */,

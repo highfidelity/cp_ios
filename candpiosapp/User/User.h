@@ -10,8 +10,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import "CPVenue.h"
 
-#define kDaysOfTrialAccessWithoutInviteCode 30
-
 @interface User : NSObject <NSCoding>
 
 @property (strong, nonatomic) NSString *nickname;
@@ -55,7 +53,6 @@
 @property (nonatomic) double distance;
 @property (nonatomic) BOOL checkedIn;
 @property (nonatomic) int trusted_by;
-@property (nonatomic) BOOL enteredInviteCode;
 @property (nonatomic) BOOL checkInIsVirtual;
 @property (nonatomic) BOOL contactsOnlyChat;
 @property (nonatomic) BOOL isContact;
@@ -71,10 +68,7 @@
 
 -(NSURL *)photoURL;
 
-- (void)setEnteredInviteCodeFromJSONString:(NSString *)enteredInviteCodeString;
 - (void)setJoinDateFromJSONString:(NSString *)dateString;
-
-- (BOOL)isDaysOfTrialAccessWithoutInviteCodeOK;
 - (NSComparisonResult) compareDistanceToUser:(User *)otherUser;
 
 @end

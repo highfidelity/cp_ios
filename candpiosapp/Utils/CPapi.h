@@ -75,11 +75,6 @@
 + (void)getUserTransactionDataWithCompletitonBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 + (void)getCheckInDataWithUserId:(int)userId
                    andCompletion:(void (^)(NSDictionary *, NSError *))completion;
-+ (void)getInvitationCodeForLocation:(CLLocation *)location
-                withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
-+ (void)enterInvitationCode:(NSString *)invitationCode
-                forLocation:(CLLocation *)location
-       withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
 #pragma mark - Love
 + (void)sendLoveToUserWithID:(int)recieverID
@@ -135,9 +130,6 @@
 
 + (void)saveUserSmartererName:(NSString *)name
                                        :(void(^)(NSDictionary *json, NSError *error))completion;
-
-+ (void)getInvitationCodeForLinkedInConnections:(NSArray *)connectionsIDs
-                            wihtCompletionBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
 + (void)deleteAccountWithParameters:(NSMutableDictionary *)parameters
                          completion:(void(^)(NSDictionary *json, NSError *error))completion;
