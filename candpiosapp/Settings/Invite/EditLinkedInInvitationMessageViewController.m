@@ -12,8 +12,10 @@
 #import "AppDelegate.h"
 
 NSString * const kSubjectTemplate = @"%@ is inviting you to Coffee & Power";
-NSString * const kBodyTemplate = @"Hi! %@ is inviting you to join Coffee & Power\
- the app that lets you see who is working near you, right now.";
+
+NSString * const kBodyTemplate = @"Hi! %@ is inviting you to join Coffee & Power. C&P is an app that lets you see who is working near you right now.\n\n\
+If %@ is also a LinkedIn contact, they will automatically be added to your C&P contact list and you will be notified when they check in to workplaces.\n\n\
+If you have not already, download the app from the iTunes or Google Play stores.";
 
 @interface EditLinkedInInvitationMessageViewController ()
 
@@ -35,7 +37,7 @@ NSString * const kBodyTemplate = @"Hi! %@ is inviting you to join Coffee & Power
     [super viewDidLoad];
 
     self.subjectTextField.text = [NSString stringWithFormat:kSubjectTemplate, self.nickname];
-    self.bodyTextView.text = [NSString stringWithFormat:kBodyTemplate, self.nickname];
+    self.bodyTextView.text = [NSString stringWithFormat:kBodyTemplate, self.nickname, self.nickname];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

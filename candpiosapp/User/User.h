@@ -22,7 +22,6 @@
 @property (strong, nonatomic) NSString *linkedInPublicProfileUrl;
 @property (strong, nonatomic) NSString *profileURLVisibility;
 @property (strong, nonatomic) NSString *bio;
-@property (strong, nonatomic) NSString *sponsorNickname;
 @property (strong, nonatomic) NSString *hourlyRate;
 @property (strong, nonatomic) NSString *photoURLString;
 @property (strong, nonatomic) CPVenue *placeCheckedIn;
@@ -44,7 +43,6 @@
 @property (nonatomic, readonly) NSMutableArray *favoritePlaces;
 @property (nonatomic, readonly) BOOL hasAnyFavoritePlaces;
 @property (nonatomic) CLLocationCoordinate2D location;
-@property (nonatomic) int sponsorId;
 @property (nonatomic) BOOL facebookVerified;
 @property (nonatomic) BOOL linkedInVerified;
 @property (nonatomic) double totalEarned;

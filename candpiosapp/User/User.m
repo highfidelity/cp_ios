@@ -221,14 +221,6 @@
             self.status = [[userDict objectForKey:@"status_text"]
                            stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             
-            if ([[userDict objectForKey:@"sponsorNickname"] isKindOfClass:[NSString class]]) {
-                self.sponsorNickname = [userDict objectForKey:@"sponsorNickname"];
-            }
-            
-            if ([[userDict objectForKey:@"sponsorId"] isKindOfClass:[NSString class]]) {
-                self.sponsorId = [[userDict objectForKey:@"sponsorId"] intValue];
-            }
-            
             if ([[userDict objectForKey:@"job_title"] isKindOfClass:[NSString class]]) {
                 self.jobTitle = [userDict objectForKey:@"job_title"];
             }

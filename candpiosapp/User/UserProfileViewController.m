@@ -512,20 +512,6 @@ static GRMustacheTemplate *postBadgesTemplate;
         [self performSegueWithIdentifier:@"ShowLinkedInProfileWebView" sender:self];
         return NO;
     }
-    
-    if ([url.scheme isEqualToString:@"sponsor-resume"]) {
-        
-        User *user = [[User alloc] init];
-        user.nickname = self.user.sponsorNickname;
-        user.userID = self.user.sponsorId;
-        
-        // instantiate a UserProfileViewController
-        UserProfileViewController *vc = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
-        vc.user = user;
-        [self.navigationController pushViewController:vc animated:YES];
-        return NO;
-    }
-
 
     return YES;
 }
