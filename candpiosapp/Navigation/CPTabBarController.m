@@ -92,7 +92,7 @@
                                                                        message:@"Would you like to check in to this venue?"
                                                                       delegate:self
                                                              cancelButtonTitle:@"Show me list"
-                                                             otherButtonTitles:@"Yes, check in here", nil];
+                                                             otherButtonTitles:@"Check in here", nil];
             [checkinAlertView show];
         } else {
             [CPCheckinHandler presentCheckInListModalFromViewController:self];
