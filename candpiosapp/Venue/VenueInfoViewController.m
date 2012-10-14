@@ -312,11 +312,6 @@ static VenueInfoViewController *_onScreenVenueVC;
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)cancelCheckinModal
-{
-    [self.modalViewController dismissModalViewControllerAnimated:YES];
-}
-
 #define kButtonPhoneXOffset 2
 #define kButtonAddressXOffset 10
 #define kButtonYOffset 3
