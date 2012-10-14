@@ -322,7 +322,7 @@
                     if ([CPUserDefaultsHandler currentUser] && [[CPUserDefaultsHandler currentUser] userID] == self.userID) {
                         if (self.checkedIn) {
                             NSInteger checkOutTime =[[checkinDict objectForKey:@"checkout"] integerValue];
-                            [[CPCheckinHandler sharedHandler] saveCheckInVenue:venue andCheckOutTime:checkOutTime];
+                            [CPCheckinHandler saveCheckInVenue:venue andCheckOutTime:checkOutTime];
                         } else {
                             [[CPCheckinHandler sharedHandler] setCheckedOut];
                         }

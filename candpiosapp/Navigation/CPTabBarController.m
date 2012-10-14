@@ -83,7 +83,7 @@
 - (IBAction)checkinButtonPressed:(id)sender
 {
     if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
-        [[CPCheckinHandler sharedHandler] promptForCheckout];
+        [CPCheckinHandler promptForCheckout];
     } else {
         if ([VenueInfoViewController onScreenVenueVC]) {
             // if we have a VenueInfoVC on screen
