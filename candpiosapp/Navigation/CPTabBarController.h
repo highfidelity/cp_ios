@@ -18,5 +18,4 @@
 - (IBAction)tabBarButtonPressed:(id)sender;
 - (IBAction)checkinButtonPressed:(id)sender;
 
-
 @end

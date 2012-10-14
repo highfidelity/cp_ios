@@ -8,6 +8,7 @@
 
 #import "CPCheckinHandler.h"
 #import "CPGeofenceHandler.h"
+#import "CheckInDetailsViewController.h"
 
 @implementation CPCheckinHandler
 
@@ -25,13 +26,29 @@ static CPCheckinHandler *sharedHandler;
     return sharedHandler;
 }
 
-- (void)presentCheckinModalFromViewController:(UIViewController *)presentingViewController
++ (void)presentCheckInListModalFromViewController:(UIViewController *)presentingViewController
 {
     // grab the inital view controller of the checkin storyboard
     UINavigationController *checkinNVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
     
     // present that VC modally
     [presentingViewController presentModalViewController:checkinNVC animated:YES];
+}
+
++ (void)presentCheckInDetailsModalForVenue:(CPVenue *)venue presentingViewController:(UIViewController *)presentingViewController
+{
+    // present CheckInDetailsViewController modally (inside a navigation controller), pass the venue we were passed
+    CheckInDetailsViewController *checkInDetailsVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil]
+                                                      instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
+    checkInDetailsVC.venue = venue;
+    
+    checkInDetailsVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:checkInDetailsVC
+                                                                          action:@selector(dismissViewControllerAnimated)];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:checkInDetailsVC];
+    [presentingViewController presentModalViewController:navigationController animated:YES];
 }
 
 - (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime

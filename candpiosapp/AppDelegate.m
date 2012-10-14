@@ -615,18 +615,7 @@ void SignalHandler(int sig) {
             
             
             CPVenue *venue = (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:[userInfo objectForKey:@"venue"]];
-            
-            CheckInDetailsViewController *vc = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil]
-                                                instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
-            vc.checkInIsVirtual = false;
-            [vc setVenue:venue];
-            vc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
-                                                                                   style:UIBarButtonItemStylePlain
-                                                                                  target:vc
-                                                                                  action:@selector(dismissViewControllerAnimated)];
-            
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
-            [self.tabBarController presentModalViewController:navigationController animated:YES];
+            [CPCheckinHandler presentCheckInDetailsModalForVenue:venue presentingViewController:self.tabBarController];
         }
         
     }

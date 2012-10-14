@@ -12,7 +12,8 @@
 
 @property (strong, nonatomic) NSTimer *checkOutTimer;
 
-- (void)presentCheckinModalFromViewController:(UIViewController *)presentingViewController;
++ (void)presentCheckInListModalFromViewController:(UIViewController *)presentingViewController;
++ (void)presentCheckInDetailsModalForVenue:(CPVenue *)venue  presentingViewController:(UIViewController *)presentingViewController;
 - (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime;
 - (void)queueLocalNotificationForVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime;
 - (void)setCheckedOut;
