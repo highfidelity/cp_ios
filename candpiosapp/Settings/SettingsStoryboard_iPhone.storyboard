@@ -113,7 +113,6 @@
                         <segue destination="cJS-DT-22N" kind="custom" identifier="ShowUserSettingsFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="Ols-cb-ALz"/>
                         <segue destination="g4S-1W-OlN" kind="custom" identifier="ShowFederationFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="QpH-Nd-etk"/>
                         <segue destination="LIc-1O-LQB" kind="custom" identifier="ShowInvitationCodeMenu" customClass="PushModalViewControllerFromLeftSegue" id="p4O-gm-OdH"/>
-                        <segue destination="l1s-lq-suM" kind="custom" identifier="ShowBalanceFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="Brh-PE-BHX"/>
                         <segue destination="J5h-Z0-hwV" kind="custom" identifier="ShowNotificationsFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="H2X-1v-RWb"/>
                         <segue destination="In7-9a-DvU" kind="modal" identifier="ShowTermsOfServiceModal" customClass="PushModalViewControllerFromLeftSegue" id="xVA-Q5-P4a"/>
                         <segue destination="h9S-r0-abb" kind="custom" identifier="ShowAutoCheckInsFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="rX4-Wg-0cV"/>
@@ -122,21 +121,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YHg-io-CGj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2078" y="107"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="l4p-Xc-Yli">
-            <objects>
-                <navigationController definesPresentationContext="YES" navigationBarHidden="YES" id="l1s-lq-suM" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="GkE-Wp-VvA">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="TbW-wK-vWK" kind="relationship" relationship="rootViewController" id="W2X-yZ-jF5"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YX0-dd-TfY" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1196" y="-1112"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="o7p-JZ-2b9">
@@ -348,201 +332,6 @@
             </objects>
             <point key="canvasLocation" x="260" y="-1708"/>
         </scene>
-        <!--Balance View Controller-->
-        <scene sceneID="d1R-FS-22a">
-            <objects>
-                <viewController storyboardIdentifier="UserWalletViewController" modalTransitionStyle="crossDissolve" id="TbW-wK-vWK" customClass="BalanceViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="UG1-be-cTC">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <navigationBar contentMode="scaleToFill" id="sm4-cK-9XU">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="Wallet" id="J1n-oo-K8G">
-                                        <barButtonItem key="rightBarButtonItem" id="LxU-PW-EiH">
-                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Udq-Js-1Vs">
-                                                <rect key="frame" x="273" y="7" width="42" height="29"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <state key="normal" image="settings-button-3.png">
-                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <state key="highlighted">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="gearPressed:" destination="TbW-wK-vWK" eventType="touchUpInside" id="l14-xO-JnG"/>
-                                                </connections>
-                                            </button>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" id="Ldr-Nv-zwj">
-                                <rect key="frame" x="0.0" y="44" width="320" height="416"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <view opaque="NO" contentMode="scaleToFill" id="igu-6f-7Ee" userLabel="refreshView">
-                                        <rect key="frame" x="0.0" y="-43" width="320" height="35"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" image="refresh-scroll-view.png" id="Y3U-rq-Lwk">
-                                                <rect key="frame" x="30" y="0.0" width="41" height="34"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            </imageView>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Pull down to update" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="l2U-m4-wzo">
-                                                <rect key="frame" x="79" y="2" width="161" height="16"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="13"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="last updated 2/24/2012" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Zxn-fT-UQv">
-                                                <rect key="frame" x="79" y="17.5" width="161" height="16"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="13"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </view>
-                                    <view contentMode="scaleToFill" id="KxF-Te-fcK">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="96"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" id="op3-lT-iwu">
-                                                <rect key="frame" x="0.0" y="-0.5" width="320" height="1"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" white="0.67000000000000004" alpha="1" colorSpace="calibratedWhite"/>
-                                            </view>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="wallet-lock.png" id="Ey6-eW-dfL">
-                                                <rect key="frame" x="5" y="5" width="25" height="25"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            </imageView>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Your Balance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="yTg-fo-Mxm">
-                                                <rect key="frame" x="35" y="7" width="93" height="21"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="$0.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="27" id="EB8-H4-enj">
-                                                <rect key="frame" x="5" y="36" width="262" height="59"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="47"/>
-                                                <color key="textColor" red="0.0" green="0.50196078430000002" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yTg-R3-W1w">
-                                                <rect key="frame" x="250" y="23" width="50" height="50"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <state key="normal" backgroundImage="add-funds.png">
-                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <state key="highlighted">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="SnX-Yi-lnS" kind="modal" id="7ka-o0-PcO"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
-                                    </view>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Xgt-VF-hLb">
-                                        <rect key="frame" x="0.0" y="96" width="320" height="320"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="TransactionListCustomCell" rowHeight="50" id="Omf-Nj-kVN" customClass="WalletCell">
-                                                <rect key="frame" x="0.0" y="22" width="320" height="50"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="aOI-32-Btz">
-                                                            <rect key="frame" x="222" y="1" width="25" height="25"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Y3z-BQ-RBm">
-                                                            <rect key="frame" x="5" y="28" width="304" height="18"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <string key="text">One hour of UI work One hour of UI work One hour of UI work One hour of UI work One hour of UI work One hour of UI work One hour of UI work One hour of UI work One hour of UI work One hour of UI work One hour of UI work </string>
-                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <string key="userLabel">Label - One hour of UI work One hour of UI work One hour of UI work One hour of UI work One hour of UI work One hour of UI work One hour of UI work One hour of UI work One hour of UI work One hour of UI work One hour of UI work</string>
-                                                        </label>
-                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="wallet-cell-arrow-down.png" id="YEX-Gd-I3t">
-                                                            <rect key="frame" x="293" y="21" width="14" height="9"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="$888.88" textAlignment="right" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" minimumFontSize="10" id="pR0-02-Puu">
-                                                            <rect key="frame" x="3" y="5" width="51" height="18"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
-                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="to Philip Rosedale" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="bVT-Mp-B5L">
-                                                            <rect key="frame" x="59" y="5" width="159" height="18"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="12/31/2020" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="FF6-I5-EXg">
-                                                            <rect key="frame" x="252" y="4" width="62" height="16"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </label>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </view>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <connections>
-                                                    <outlet property="amountLabel" destination="pR0-02-Puu" id="naZ-WL-FHZ"/>
-                                                    <outlet property="dateLabel" destination="FF6-I5-EXg" id="Kkv-wM-MAY"/>
-                                                    <outlet property="descriptionLabel" destination="Y3z-BQ-RBm" id="0p0-bD-WF2"/>
-                                                    <outlet property="nicknameLabel" destination="bVT-Mp-B5L" id="StL-Jj-j7E"/>
-                                                    <outlet property="profileImage" destination="aOI-32-Btz" id="AAB-Om-n6e"/>
-                                                    <outlet property="stateImage" destination="YEX-Gd-I3t" id="otz-DU-Bdp"/>
-                                                </connections>
-                                            </tableViewCell>
-                                        </prototypes>
-                                        <connections>
-                                            <outlet property="dataSource" destination="TbW-wK-vWK" id="dsp-Do-dOX"/>
-                                            <outlet property="delegate" destination="TbW-wK-vWK" id="yXN-eh-Jj1"/>
-                                        </connections>
-                                    </tableView>
-                                </subviews>
-                                <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <outlet property="delegate" destination="TbW-wK-vWK" id="lRg-j1-PfG"/>
-                                </connections>
-                            </scrollView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="Fh6-n4-jwx"/>
-                    <connections>
-                        <outlet property="balanceScrollView" destination="Ldr-Nv-zwj" id="cCX-eA-bg7"/>
-                        <outlet property="pullDownLabel" destination="l2U-m4-wzo" id="VvW-zK-ASn"/>
-                        <outlet property="pullIcon" destination="Y3U-rq-Lwk" id="t9w-NX-5A9"/>
-                        <outlet property="transTableView" destination="Xgt-VF-hLb" id="aM6-nU-csI"/>
-                        <outlet property="updateTimeLabel" destination="Zxn-fT-UQv" id="6kb-g5-jnK"/>
-                        <outlet property="userBalance" destination="EB8-H4-enj" id="xYs-xg-hnS"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MPq-6l-85G" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-719" y="-1103"/>
-        </scene>
         <!--Job Category View Controller - Job Categories-->
         <scene sceneID="Kag-ik-hPh">
             <objects>
@@ -608,7 +397,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qbt-Vb-crx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="320" y="62"/>
+            <point key="canvasLocation" x="320" y="-466"/>
         </scene>
         <!--Skills Table View Controller - Skills-->
         <scene sceneID="PvT-Rz-d1d">
@@ -688,7 +477,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kQB-Id-10J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="300" y="-516"/>
+            <point key="canvasLocation" x="300" y="-1044"/>
         </scene>
         <!--Profile View Controller - Profile-->
         <scene sceneID="knC-ev-7nr">
@@ -953,7 +742,7 @@ photo?</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sV4-QQ-w11" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-678" y="-280"/>
+            <point key="canvasLocation" x="-678" y="-808"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dTb-GJ-Nb5">
@@ -968,7 +757,7 @@ photo?</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QTJ-Cb-ZAb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1196" y="1096"/>
+            <point key="canvasLocation" x="-1196" y="568"/>
         </scene>
         <!--Terms Of Service View Controller - Terms of Service-->
         <scene sceneID="kVr-bP-Mxw">
@@ -999,12 +788,11 @@ photo?</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p9S-nV-Qrv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-707" y="2354"/>
+            <point key="canvasLocation" x="-707" y="1826"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Wlv-Ww-VjS">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tk6-lW-hXs" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController definesPresentationContext="YES" id="h9S-r0-abb" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="lvN-eF-OX6">
                         <autoresizingMask key="autoresizingMask"/>
@@ -1013,8 +801,9 @@ photo?</string>
                         <segue destination="Zks-3J-HVT" kind="relationship" relationship="rootViewController" id="ael-rC-ga8"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tk6-lW-hXs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1187" y="1720"/>
+            <point key="canvasLocation" x="-1187" y="1192"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9Jx-na-AFB">
@@ -1029,7 +818,7 @@ photo?</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GiN-Qk-iLV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1196" y="2354"/>
+            <point key="canvasLocation" x="-1196" y="1826"/>
         </scene>
         <!--Profile Notifications View Controller - Notifications-->
         <scene sceneID="Dbf-Iq-Bi0">
@@ -1221,7 +1010,7 @@ photo?</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hCE-vB-9ee" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-719" y="1096"/>
+            <point key="canvasLocation" x="-719" y="568"/>
         </scene>
         <!--Linked Accounts Table View Controller - Linked Accounts-->
         <scene sceneID="nc2-v7-E52">
@@ -1323,7 +1112,7 @@ photo?</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SCP-Eu-ajv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-719" y="405"/>
+            <point key="canvasLocation" x="-719" y="-123"/>
         </scene>
         <!--Smarterer Login Controller-->
         <scene sceneID="W9b-jS-2LZ">
@@ -1351,7 +1140,7 @@ photo?</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wSs-m8-YRB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-265" y="410"/>
+            <point key="canvasLocation" x="-265" y="-118"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Cuu-5f-AYW">
@@ -1366,7 +1155,7 @@ photo?</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ifd-c2-ojS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1196" y="405"/>
+            <point key="canvasLocation" x="-1196" y="-123"/>
         </scene>
         <!--Auto Checkin Table View Controller - Automatic Check Ins-->
         <scene sceneID="jEB-Kv-A8s">
@@ -1473,59 +1262,7 @@ photo?</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cTh-Zc-cxR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-719" y="1720"/>
-        </scene>
-        <!--Add Funds View Controller-->
-        <scene sceneID="LYN-xf-xk9">
-            <objects>
-                <viewController storyboardIdentifier="AddFundsViewController" id="f1M-sl-xRX" customClass="AddFundsViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="fXC-pE-Ejf">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" id="WXX-KT-nmm">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <outlet property="delegate" destination="fXC-pE-Ejf" id="4At-0K-RJ8"/>
-                                </connections>
-                            </webView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="pNN-KM-MjK">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="Clu-ZD-m0o">
-                            <connections>
-                                <action selector="closeWindow:" destination="f1M-sl-xRX" id="T44-td-scl"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="webView" destination="WXX-KT-nmm" id="WKM-6k-3Rw"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9ev-4H-Jox" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="284" y="-1103"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="a73-2I-eFa">
-            <objects>
-                <navigationController id="SnX-Yi-lnS" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="hNg-75-m0b">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="f1M-sl-xRX" kind="relationship" relationship="rootViewController" id="Bmb-Ot-elY"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ors-e0-WQW" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-193" y="-1103"/>
+            <point key="canvasLocation" x="-719" y="1192"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ouw-gO-OVS">
@@ -1543,7 +1280,7 @@ photo?</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uf6-OX-9GJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1196" y="-280"/>
+            <point key="canvasLocation" x="-1196" y="-808"/>
         </scene>
         <!--Resume Visibility View Controller - Resume Visibility-->
         <scene sceneID="QLA-sT-xI4">
@@ -1586,21 +1323,17 @@ photo?</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IOo-v3-sOI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="320" y="679"/>
+            <point key="canvasLocation" x="320" y="151"/>
         </scene>
     </scenes>
     <resources>
-        <image name="add-funds.png" width="58" height="58"/>
         <image name="default-avatar-256.png" width="256" height="256"/>
         <image name="drop-down.png" width="196" height="27"/>
         <image name="invite-code-background.png" width="240" height="140"/>
         <image name="linkedin-invite.png" width="202" height="48"/>
         <image name="list-arrow-dark-grey.png" width="11" height="16"/>
         <image name="map-shadow.png" width="10" height="320"/>
-        <image name="refresh-scroll-view.png" width="15" height="40"/>
         <image name="settings-button-3.png" width="42" height="29"/>
-        <image name="wallet-cell-arrow-down.png" width="14" height="9"/>
-        <image name="wallet-lock.png" width="25" height="25"/>
     </resources>
     <classes>
         <class className="AutoCheckinCell" superclassName="UITableViewCell">
@@ -1615,7 +1348,6 @@ photo?</string>
         <class className="AutoCheckinTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AutoCheckinTableViewController.h"/>
             <relationships>
-                <relationship kind="action" name="gearPressed:" candidateClass="UIButton"/>
                 <relationship kind="action" name="globalCheckinChanged:"/>
                 <relationship kind="outlet" name="globalCheckinSwitch" candidateClass="UISwitch"/>
             </relationships>
