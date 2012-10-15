@@ -443,7 +443,7 @@ static VenueInfoViewController *_onScreenVenueVC;
     }   
 }
 
-- (IBAction)userImageButtonPressed:(id)sender
+- (IBAction)userImageButtonPressed:(UIButton *)sender
 {
     if (![CPUserDefaultsHandler currentUser]) {
         [CPUserSessionHandler showLoginBanner];
@@ -451,11 +451,9 @@ static VenueInfoViewController *_onScreenVenueVC;
     }   else {
         UserProfileViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
         
-        UIButton *thumbnailButton = (UIButton *)sender;
-        
         // set the user object on that view controller
         // using the tag on the button to pull this user out of the NSMutableDictionary of user objects
-        userVC.user = [self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", thumbnailButton.tag]];
+        userVC.user = [self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", sender.tag]];
         
         // push the user profile onto this navigation controller stack
         [self.navigationController pushViewController:userVC animated:YES];
