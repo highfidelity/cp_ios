@@ -187,14 +187,6 @@ static NSArray *_tabBarIcons;
     }
 }
 
-- (void)toggleRightSide:(BOOL)shown
-{    
-    self.greenLine.alpha = shown;
-    for (UIButton *customBarButton in self.customBarButtons) {
-        customBarButton.alpha = shown;
-    }
-}
-
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
     if (CGRectContainsPoint(self.checkInOutButton.frame, point)) {

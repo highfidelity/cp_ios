@@ -13,12 +13,9 @@
 
 @interface CPTabBarController : UITabBarController <UIAlertViewDelegate>
 
-// TODO: get rid of the currentVenueID here, let's keep that in NSUserDefaults (my bad)
-@property (strong, nonatomic) NSString *currentVenueID;
 @property (nonatomic, readonly) CPThinTabBar *thinBar;
 
 - (IBAction)tabBarButtonPressed:(id)sender;
 - (IBAction)checkinButtonPressed:(id)sender;
-
 
 @end

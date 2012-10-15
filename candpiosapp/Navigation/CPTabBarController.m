@@ -9,6 +9,7 @@
 #import "CPTabBarController.h"
 #import "CPCheckinHandler.h"
 #import "CPUserSessionHandler.h"
+#import "VenueInfoViewController.h"
 
 @interface CPTabBarController()
 
@@ -82,9 +83,20 @@
 - (IBAction)checkinButtonPressed:(id)sender
 {
     if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
-        [[CPCheckinHandler sharedHandler] promptForCheckout];
+        [CPCheckinHandler promptForCheckout];
     } else {
-        [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
+        if ([VenueInfoViewController onScreenVenueVC]) {
+            // if we have a VenueInfoVC on screen
+            // prompt the user to see if they want to check directly in to that venue
+            UIAlertView *checkinAlertView = [[UIAlertView alloc] initWithTitle:nil
+                                                                       message:@"Would you like to check in to this venue?"
+                                                                      delegate:self
+                                                             cancelButtonTitle:@"Show me list"
+                                                             otherButtonTitles:@"Check in here", nil];
+            [checkinAlertView show];
+        } else {
+            [CPCheckinHandler presentCheckInListModalFromViewController:self];
+        }
     }
 }
 
@@ -112,6 +124,19 @@
         // tell the thinBar to update the button
         [self.thinBar refreshLastTab:YES];
     }  
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == alertView.cancelButtonIndex) {
+        // just show the regular check in list
+        [CPCheckinHandler presentCheckInListModalFromViewController:self];
+    } else {
+        // show check in details view for the venue on screen
+        [CPCheckinHandler presentCheckInDetailsModalForVenue:[VenueInfoViewController onScreenVenueVC].venue
+                                                    presentingViewController:self];
+        
+    }
 }
 
 @end
