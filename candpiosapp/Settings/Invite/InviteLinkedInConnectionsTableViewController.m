@@ -14,7 +14,6 @@
 #import "PushModalViewControllerFromLeftSegue.h"
 
 @interface InviteLinkedInConnectionsTableViewController ()
-- (IBAction)gearPressed:(UIButton *)sender;
 
 @property (strong, nonatomic) NSArray *connections;
 @property (strong, nonatomic) NSMutableDictionary *selectedConnections;
