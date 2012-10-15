@@ -52,6 +52,7 @@
                              @"Profile",
                              @"Linked Accounts",
                              @"Notifications",
+                             @"Automatic Check Ins",
                              @"Feedback",
                              @"Logout",
                              nil];
@@ -63,6 +64,7 @@
                                       @"ShowUserSettingsFromMenu",
                                       @"ShowFederationFromMenu",
                                       @"ShowNotificationsFromMenu",
+                                      @"ShowAutoCheckInsFromMenu",
                                       kFeedbackSegueID,
                                       @"ShowLogoutFromMenu",
                                       nil];
