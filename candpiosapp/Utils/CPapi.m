@@ -513,30 +513,6 @@
     [self makeHTTPRequestWithAction:@"getContactList" withParameters:nil completion:completion];
 }
 
-+ (void)getInvitationCodeForLocation:(CLLocation *)location
-                withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion {
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       [NSString stringWithFormat:@"%.7lf", location.coordinate.latitude], @"lat",
-                                       [NSString stringWithFormat:@"%.7lf", location.coordinate.longitude], @"lng",
-                                       nil];
-    [self makeHTTPRequestWithAction:@"getInvitationCode"
-                     withParameters:parameters
-                         completion:completion];
-}
-
-+ (void)enterInvitationCode:(NSString *)invitationCode
-                forLocation:(CLLocation *)location
-       withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion {
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       [NSString stringWithFormat:@"%.7lf", location.coordinate.latitude], @"lat",
-                                       [NSString stringWithFormat:@"%.7lf", location.coordinate.longitude], @"lng",
-                                       invitationCode, @"invite_code",
-                                       nil];
-    [self makeHTTPRequestWithAction:@"enterInvitationCode"
-                     withParameters:parameters
-                         completion:completion];
-}
-
 # pragma mark - Love
 
 + (void)sendLoveToUserWithID:(int)recieverID 
@@ -725,22 +701,6 @@
     [self makeHTTPRequestWithAction:@"saveUserSmartererName"
                      withParameters:[NSDictionary dictionaryWithObject:name
                                                                 forKey:@"name"]
-                         completion:completion];
-}
-
-+ (void)getInvitationCodeForLinkedInConnections:(NSArray *)connectionsIDs
-                            wihtCompletionBlock:(void(^)(NSDictionary *json, NSError *error))completion
-{
-    NSError *error;
-    NSData *connectionIDsData = [NSJSONSerialization dataWithJSONObject:connectionsIDs
-                                                                options:kNilOptions
-                                                                  error:&error];
-    NSString *connectionIDsString = [[NSString alloc] initWithData:connectionIDsData
-                                                          encoding:NSUTF8StringEncoding];
-    
-    [self makeHTTPRequestWithAction:@"getInvitationCodeForLinkedInConnections"
-                     withParameters:[NSMutableDictionary dictionaryWithObject:connectionIDsString
-                                                                       forKey:@"connectionIDs"]
                          completion:completion];
 }
 

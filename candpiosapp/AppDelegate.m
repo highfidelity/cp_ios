@@ -9,7 +9,6 @@
 #import "FaceToFaceHelper.h"
 #import "CPChatHelper.h"
 #import "OAuthConsumer.h"
-#import "EnterInvitationCodeViewController.h"
 #import "CheckInDetailsViewController.h"
 #import "CPAlertView.h"
 #import "VenueInfoViewController.h"

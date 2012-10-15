@@ -270,11 +270,6 @@
                     self.newDataFromSync = YES;
                 }
 
-                if (self.currentUser.enteredInviteCode != webSyncUser.enteredInviteCode) {
-                    self.currentUser.enteredInviteCode = webSyncUser.enteredInviteCode;
-                    self.newDataFromSync = YES;
-                }
-
                 if (![self.currentUser.majorJobCategory isEqualToString:webSyncUser.majorJobCategory]) {
                     self.currentUser.majorJobCategory = webSyncUser.majorJobCategory;
                     self.newDataFromSync = YES;

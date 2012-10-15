@@ -188,16 +188,6 @@
         float: left;
         margin-top: 5px;
     }
-
-    .sponsor {
-        float: right;
-        display: inline-block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        width: 59%;
-        text-align: right;
-        white-space: nowrap;
-    }
     .join-date {
         display: inline-block;
         width: 39%;
@@ -267,11 +257,6 @@
 
             <div id="joined-on" class="line-top line-bottom">
                 <span class="join-date">Joined on <span class="highlite">{{join_date}}</span></span>
-                {{#sponsorNickname}}
-                <span ontouchstart="" onclick="document.location='sponsor-resume://';" class="sponsor">
-                    Sponsored by <span class="highlite">{{sponsorNickname}}</span>
-                </span>
-                {{/sponsorNickname}}                
             </div>
 
             <table id="connected-networks">

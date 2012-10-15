@@ -51,7 +51,6 @@
         self.nickname = [decoder decodeObjectForKey:@"nickname"];
         self.email = [decoder decodeObjectForKey:@"email"];
         self.photoURLString = [decoder decodeObjectForKey:@"photoURL"];
-        self.enteredInviteCode = [decoder decodeBoolForKey:@"enteredInviteCode"];
         self.joinDate = [decoder decodeObjectForKey:@"joinDate"];
         self.skills = [decoder decodeObjectForKey:@"skills"];
         self.profileURLVisibility = [decoder decodeObjectForKey:@"profileURLVisibility"];
@@ -68,7 +67,6 @@
     [encoder encodeObject:self.nickname forKey:@"nickname"];
     [encoder encodeObject:self.email forKey:@"email"];
     [encoder encodeObject:self.photoURLString forKey:@"photoURL"];
-    [encoder encodeBool:self.enteredInviteCode forKey:@"enteredInviteCode"];
     [encoder encodeObject:self.joinDate forKey:@"joinDate"];
     [encoder encodeObject:self.skills forKey:@"skills"];
     [encoder encodeObject:self.profileURLVisibility forKey:@"profileURLVisibility"];
@@ -191,32 +189,11 @@
     return self.favoritePlaces.count > 0;
 }
 
-- (void)setEnteredInviteCodeFromJSONString:(NSString *)enteredInviteCodeString {
-    if ([@"Y" isEqual:enteredInviteCodeString]) {
-        self.enteredInviteCode = YES;
-    } else {
-        self.enteredInviteCode = NO;
-    }
-}
-
 - (void)setJoinDateFromJSONString:(NSString *)dateString {
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyy-MM-dd  HH:mm:ss"];
     
     self.joinDate = [dateFormat dateFromString:dateString];
-}
-
-- (BOOL)isDaysOfTrialAccessWithoutInviteCodeOK {
-    if ([self enteredInviteCode]) {
-        return YES;
-    }
-    
-    NSTimeInterval timeIntervalOfTrialAccess = kDaysOfTrialAccessWithoutInviteCode * 24 * 60 * 60;
-    if (0 > timeIntervalOfTrialAccess + [self.joinDate timeIntervalSinceNow]) {
-        return NO;
-    }
-    
-    return YES;
 }
 
 - (void)loadUserResumeOnQueue:(NSOperationQueue *)operationQueue
@@ -243,14 +220,6 @@
 
             self.status = [[userDict objectForKey:@"status_text"]
                            stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-            
-            if ([[userDict objectForKey:@"sponsorNickname"] isKindOfClass:[NSString class]]) {
-                self.sponsorNickname = [userDict objectForKey:@"sponsorNickname"];
-            }
-            
-            if ([[userDict objectForKey:@"sponsorId"] isKindOfClass:[NSString class]]) {
-                self.sponsorId = [[userDict objectForKey:@"sponsorId"] intValue];
-            }
             
             if ([[userDict objectForKey:@"job_title"] isKindOfClass:[NSString class]]) {
                 self.jobTitle = [userDict objectForKey:@"job_title"];
@@ -357,8 +326,6 @@
             self.email = [userDict objectForKey:@"email"];
             
             self.profileURLVisibility = [userDict objectForKey:@"profileURL_visibility"];
-            
-            [self setEnteredInviteCodeFromJSONString:[userDict objectForKey:@"entered_invite_code"]];
             [self setJoinDateFromJSONString:[userDict objectForKey:@"join_date"]];
 
             if ([[userDict objectForKey:@"smarterer_name"] isKindOfClass:[NSString class]]) {
