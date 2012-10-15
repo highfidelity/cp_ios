@@ -13,7 +13,6 @@
 
 @interface AutoCheckinTableViewController ()
 @property (strong, nonatomic) NSMutableArray *placesArray;
-- (IBAction)gearPressed:(UIButton *)sender;
 @end
 
 @implementation AutoCheckinTableViewController
