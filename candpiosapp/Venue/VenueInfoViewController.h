@@ -11,6 +11,8 @@
 
 @interface VenueInfoViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
++ (VenueInfoViewController *)onScreenVenueVC;
+
 @property (strong, nonatomic) CPVenue *venue;
 @property (weak, nonatomic) IBOutlet UIImageView *venuePhoto;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;

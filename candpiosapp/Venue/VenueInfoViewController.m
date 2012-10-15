@@ -13,7 +13,7 @@
 #import "VenueUserCell.h"
 #import "VenueCategoryCell.h"
 
-#define CHAT_MESSAGE_ORIGIN_X 11
+static VenueInfoViewController *_onScreenVenueVC;
 
 @interface VenueInfoViewController () <UIAlertViewDelegate>
 
@@ -29,6 +29,11 @@
 
 @implementation VenueInfoViewController
 
++ (VenueInfoViewController *)onScreenVenueVC
+{
+    return _onScreenVenueVC;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -43,10 +48,6 @@
                                              selector:@selector(populateUserSection) 
                                                  name:@"LoginStateChanged" 
                                                object:nil];
-    
-    
-    // set the property on the tab bar controller for the venue we're looking at
-    [CPAppDelegate tabBarController].currentVenueID = self.venue.foursquareID;
     
     // set the title of the navigation controller
     self.title = self.venue.name;
@@ -105,16 +106,21 @@
     [self populateUserSection]; 
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
+    _onScreenVenueVC = self;
 }
 
-- (void)viewDidUnload
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewDidUnload];
-    [CPAppDelegate tabBarController].currentVenueID = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super viewWillDisappear:animated];
+    _onScreenVenueVC = nil;
+}
+
+- (void)dealloc
+{
+     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)isCheckedInHere
@@ -304,11 +310,6 @@
 
 - (void)dismissViewControllerAnimated {
     [self dismissModalViewControllerAnimated:YES];
-}
-
-- (void)cancelCheckinModal
-{
-    [self.modalViewController dismissModalViewControllerAnimated:YES];
 }
 
 #define kButtonPhoneXOffset 2
