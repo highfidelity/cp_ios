@@ -14,9 +14,6 @@
 
 typedef enum {
     CPAfterLoginActionNone,
-    CPAfterLoginActionShowLogbook,
-    CPAfterLoginActionAddNewLog,
-    CPAfterLoginActionPostQuestion,
     CPAfterLoginActionShowMap
 } CPAfterLoginAction;
 

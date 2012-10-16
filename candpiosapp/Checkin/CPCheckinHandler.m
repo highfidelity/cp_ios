@@ -8,6 +8,7 @@
 
 #import "CPCheckinHandler.h"
 #import "CPGeofenceHandler.h"
+#import "CheckInDetailsViewController.h"
 
 @implementation CPCheckinHandler
 
@@ -25,7 +26,7 @@ static CPCheckinHandler *sharedHandler;
     return sharedHandler;
 }
 
-- (void)presentCheckinModalFromViewController:(UIViewController *)presentingViewController
++ (void)presentCheckInListModalFromViewController:(UIViewController *)presentingViewController
 {
     // grab the inital view controller of the checkin storyboard
     UINavigationController *checkinNVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
@@ -34,16 +35,30 @@ static CPCheckinHandler *sharedHandler;
     [presentingViewController presentModalViewController:checkinNVC animated:YES];
 }
 
-- (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime
++ (void)presentCheckInDetailsModalForVenue:(CPVenue *)venue presentingViewController:(UIViewController *)presentingViewController
+{
+    // present CheckInDetailsViewController modally (inside a navigation controller), pass the venue we were passed
+    CheckInDetailsViewController *checkInDetailsVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil]
+                                                      instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
+    checkInDetailsVC.venue = venue;
+    
+    checkInDetailsVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:checkInDetailsVC
+                                                                          action:@selector(dismissViewControllerAnimated)];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:checkInDetailsVC];
+    [presentingViewController presentModalViewController:navigationController animated:YES];
+}
+
++ (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime
 {       
-    [self setCheckedOut];
+    [[self sharedHandler] setCheckedOut];
     // set the NSUserDefault to the user checkout time
     [CPUserDefaultsHandler setCheckoutTime:checkoutTime];
     
     // Save current place to venue defaults as it's used in several places in the app
     [CPUserDefaultsHandler setCurrentVenue:venue];
-    
-    [self performAfterCheckinActionForVenue:venue];
     
     if (!venue.isNeighborhood) {
         // If this is the user's first check in to this venue and auto-checkins are enabled,
@@ -69,7 +84,7 @@ static CPCheckinHandler *sharedHandler;
     }
 }
 
-- (void)queueLocalNotificationForVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime
++ (void)queueLocalNotificationForVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime
 {
     // Fire a notification 5 minutes before checkout time
     NSInteger minutesBefore = 5;
@@ -102,6 +117,7 @@ static CPCheckinHandler *sharedHandler;
     
     // nil out the venue in NSUserDefaults
     [CPUserDefaultsHandler setCurrentVenue:nil];
+    
     if (self.checkOutTimer) {
         [[self checkOutTimer] invalidate];
         self.checkOutTimer = nil;
@@ -109,10 +125,10 @@ static CPCheckinHandler *sharedHandler;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckInStateChange" object:nil];
 }
 
-- (void)saveCheckInVenue:(CPVenue *)venue andCheckOutTime:(NSInteger)checkOutTime
++ (void)saveCheckInVenue:(CPVenue *)venue andCheckOutTime:(NSInteger)checkOutTime
 {
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    [self setCheckedOut];
+    [[self sharedHandler] setCheckedOut];
     [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
     [CPUserDefaultsHandler setCurrentVenue:venue];
     
@@ -124,12 +140,16 @@ static CPCheckinHandler *sharedHandler;
         venue.autoCheckin = staleVenue.autoCheckin;
     }
     
-    [[CPGeofenceHandler sharedHandler] updatePastVenue:venue];
+    // only add this neighborhood to the list of past venues if it's not a neighborhood
+    if (!venue.isNeighborhood) {
+        [[CPGeofenceHandler sharedHandler] updatePastVenue:venue];
+    }
+    
     [self queueLocalNotificationForVenue:venue checkoutTime:checkOutTime];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"userCheckInStateChange" object:nil];
 }
 
-- (void)promptForCheckout
++ (void)promptForCheckout
 {
     UIAlertView *alert = [[UIAlertView alloc]
                           initWithTitle:@"Check Out"
@@ -139,31 +159,6 @@ static CPCheckinHandler *sharedHandler;
                           otherButtonTitles: @"Check Out", nil];
     alert.tag = 904;
     [alert show];
-}
-
-- (void)performAfterCheckinActionForVenue:(CPVenue *)venue
-{
-    if (self.afterCheckinAction != CPAfterCheckinActionNone) {
-        // Add this venue to the list of recent venues for the feed TVC
-        [CPUserDefaultsHandler addFeedVenue:venue];
-        
-        // if this was due to any action in the action menu we will be showing the venue feed
-        switch (self.afterCheckinAction) {
-            case CPAfterCheckinActionNewUpdate:
-                [[CPAppDelegate tabBarController] showFeedVCForNewPostAtCurrentVenueWithPostType:CPPostTypeUpdate];
-                break;
-            case CPAfterCheckinActionNewQuestion:
-                [[CPAppDelegate tabBarController] showFeedVCForNewPostAtCurrentVenueWithPostType:CPPostTypeQuestion];
-                break;
-            case CPAfterCheckinActionShowFeed:
-                [[CPAppDelegate tabBarController] showFeedVCForVenue:venue];
-                break;
-            default:
-                break;
-        }
-        
-        self.afterCheckinAction = CPAfterCheckinActionNone;
-    }
 }
 
 @end

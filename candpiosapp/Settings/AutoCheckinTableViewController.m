@@ -7,10 +7,9 @@
 //
 
 #import "AutoCheckinTableViewController.h"
-#import "CPVenue.h"
 #import "AutoCheckinCell.h"
-#import "FlurryAnalytics.h"
 #import "CPGeofenceHandler.h"
+#import "PushModalViewControllerFromLeftSegue.h"
 
 @interface AutoCheckinTableViewController ()
 @property (strong, nonatomic) NSMutableArray *placesArray;
@@ -140,4 +139,8 @@
     [self.tableView reloadData];
 }
 
+- (IBAction)gearPressed:(UIButton *)sender
+{
+    [self dismissPushModalViewControllerFromLeftSegue];
+}
 @end

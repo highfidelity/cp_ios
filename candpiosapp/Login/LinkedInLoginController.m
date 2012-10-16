@@ -334,7 +334,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                     CPVenue *venue = [[CPVenue alloc] initFromDictionary:checkInDict];
 
                     NSInteger checkOutTime =[[checkInDict objectForKey:@"checkout"] integerValue];
-                    [[CPCheckinHandler sharedHandler] saveCheckInVenue:venue
+                    [CPCheckinHandler saveCheckInVenue:venue
                                     andCheckOutTime:checkOutTime];
                 } else {
                     [[CPCheckinHandler sharedHandler] setCheckedOut];
