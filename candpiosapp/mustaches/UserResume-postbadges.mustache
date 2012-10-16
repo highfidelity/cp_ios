@@ -77,7 +77,7 @@
                             [[/isNegative]]\
                             <div class="review">\
                                 [[#isLove]]\
-                                <div>bbb from [[&author]]: "[[&review]]"[[#skill]] (Skill: [[skill]])[[/skill]]</div>\
+                                <div>from [[&author]]: "[[&review]]"[[#skill]] (Skill: [[skill]])[[/skill]]</div>\
                                 [[/isLove]]\
                                 [[^isLove]]\
                                 <div>[[&review]]</div>\
@@ -110,6 +110,10 @@
                         document.location = 'recompute-webview-height://';
                     };
                     
+                    var setLoadMoreText = function(text) {
+                        $('#reviews-load-more a').text(text);
+                    }
+
                     renderReviews(ORIGINAL_DATA.reviews);
                     sendRecomputeWebViewHeightSignal();
 
@@ -125,7 +129,10 @@
                             dataType: 'json',
                             context: $(e.target),
                             success: function(json) {
-                                if (!json.error && null != json.payload.rows) {
+                                if (json && !json.error && json.payload != null && json.payload.rows != null) {
+
+                                    setLoadMoreText('Load more...');
+
                                     if (json.payload.rows.length) {
                                         renderReviews(json.payload.rows);
 
@@ -138,7 +145,12 @@
                                         $(e.target).hide();
                                         sendRecomputeWebViewHeightSignal();
                                     }
+                                } else {
+                                    setLoadMoreText('Error loading more');
                                 }
+                            },
+                            error: function(xhr, errorType, error) {
+                                setLoadMoreText('Error loading more');
                             }
                         });
                         
