@@ -54,6 +54,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
 @property (weak, nonatomic) IBOutlet UILabel *propNoteLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *mapMarker;
+@property (weak, nonatomic) UIView *blueOverlayExtend;
 @property (strong, nonatomic) NSOperationQueue *operationQueue;
 @property (nonatomic) BOOL firstLoad;
 @property (nonatomic) int othersAtPlace;
@@ -410,38 +411,28 @@ static GRMustacheTemplate *postBadgesTemplate;
     }
 
     if (!self.postBadgesHTML) {
-        NSMutableArray *reviews = [NSMutableArray arrayWithCapacity:[[self.user.reviews objectForKey:@"rows"] count]];
-        for (NSDictionary *review in [self.user.reviews objectForKey:@"rows"]) {
-            NSMutableDictionary *mutableReview = [NSMutableDictionary dictionaryWithDictionary:review];
-            
-            NSInteger rating = [[review objectForKey:@"rating"] integerValue];
-            if (rating < 0) {
-                [mutableReview setObject:[NSNumber numberWithBool:YES]
-                                  forKey:@"isNegative"];
-            } else if (rating > 0) {
-                [mutableReview setObject:[NSNumber numberWithBool:YES]
-                                  forKey:@"isPositive"];
-            }
-            
-            // is this love?
-            NSInteger loveNumber = [[review objectForKey:@"is_love"] integerValue];
-            if ( loveNumber == 1) {
-                [mutableReview setObject:[NSNumber numberWithBool:YES] forKey:@"isLove"];
-            }
-            
-            [mutableReview setObject:[[review objectForKey:@"review"] gtm_stringByUnescapingFromHTML]
-                              forKey:@"review"];
-            
-            [reviews addObject:mutableReview];
-        }
+        NSArray *reviews = [self.user.reviews objectForKey:@"rows"];
+        
+        NSDictionary *originalData = @{
+            @"reviews": reviews,
+            @"user_id": @(self.user.userID),
+            @"server_api_url": [NSString stringWithFormat:@"%@api.php", kCandPWebServiceUrl]
+        };
+        NSError *error;
+        NSString *originalDataJSON = [[NSString alloc] initWithData:
+                                      [NSJSONSerialization dataWithJSONObject:originalData
+                                                                      options:kNilOptions
+                                                                        error:&error]
+                                                           encoding:NSUTF8StringEncoding];
+        
+        [dictionary setValue:[NSNumber numberWithBool:reviews.count > 0] forKey:@"hasAnyReview"];
+        [dictionary setValue:originalDataJSON forKey:@"originalData"];
         
         GRMustacheTemplate *template = [UserProfileViewController postBadgesTemplate];
         template.delegate = self;
-        [dictionary setValue:reviews forKey:@"reviews"];
-        [dictionary setValue:[NSNumber numberWithBool:reviews.count > 0] forKey:@"hasAnyReview"];
         self.postBadgesHTML = [template renderObject:dictionary];
     }
-    return [NSString stringWithFormat:@"%@%@%@", self.preBadgesHTML, self.badgesHTML,self.postBadgesHTML];
+    return [NSString stringWithFormat:@"%@%@%@", self.preBadgesHTML, self.badgesHTML, self.postBadgesHTML];
 }
 
 - (void) loadBadgesAsync
@@ -512,27 +503,34 @@ static GRMustacheTemplate *postBadgesTemplate;
         [self performSegueWithIdentifier:@"ShowLinkedInProfileWebView" sender:self];
         return NO;
     }
+    
+    if ([url.scheme isEqualToString:@"recompute-webview-height"]) {
+        [self performSelector:@selector(resetResumeWebViewHeight)
+                   withObject:nil
+                   afterDelay:0.05];
+        return NO;
+    }
 
     return YES;
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)aWebView {
-    // tell the webview not to scroll to top when status bar is clicked
-    aWebView.scrollView.scrollsToTop = NO;
-    aWebView.userInteractionEnabled = YES;
+- (void)resetResumeWebViewHeight
+{
+    self.resumeWebView.scrollView.scrollsToTop = NO;
+    self.resumeWebView.userInteractionEnabled = YES;
     
     // resize the webView frame depending on the size of the content
-    CGRect frame = aWebView.frame;
+    CGRect frame = self.resumeWebView.frame;
     frame.size.height = 1;
-    aWebView.frame = frame;
-    CGSize fittingSize = [aWebView sizeThatFits:CGSizeZero];
+    self.resumeWebView.frame = frame;
+    CGSize fittingSize = [self.resumeWebView sizeThatFits:CGSizeZero];
     frame.size = fittingSize;
-    aWebView.frame = frame;
+    self.resumeWebView.frame = frame;
     
     CGRect resumeFrame = self.resumeView.frame;
     resumeFrame.size.height = self.resumeWebView.frame.origin.y + fittingSize.height;
     self.resumeView.frame = resumeFrame;
-
+    
     [CPUIHelper addShadowToView:self.resumeView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     
     // if this is an f2f invite we need some extra height in the scrollview content size
@@ -544,11 +542,14 @@ static GRMustacheTemplate *postBadgesTemplate;
     // set the scrollview content size to accomodate for the resume data
     self.scrollView.contentSize = CGSizeMake(320, self.resumeView.frame.origin.y + self.resumeView.frame.size.height + 50 + f2fbar);
     
+    self.blueOverlayExtend.frame = CGRectMake(0, 416, 320, self.scrollView.contentSize.height - 416);
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)aWebView {
+    [self resetResumeWebViewHeight];
+    
     // add the blue overlay where the gradient ends
-    UIView *blueOverlayExtend = [[UIView alloc] initWithFrame:CGRectMake(0, 416, 320, self.scrollView.contentSize.height - 416)];
-    blueOverlayExtend.backgroundColor = [UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0];
-    self.view.backgroundColor = blueOverlayExtend.backgroundColor;
-    [self.scrollView insertSubview:blueOverlayExtend atIndex:0];
+    [self.scrollView insertSubview:self.blueOverlayExtend atIndex:0];
     
     // call the JS function in the mustache file that will lazyload the images
     [aWebView stringByEvaluatingJavaScriptFromString:@"lazyLoad();"];
@@ -669,6 +670,18 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 - (void)navigationBarTitleTap:(UIGestureRecognizer*)recognizer {
     [_scrollView setContentOffset:CGPointMake(0,0) animated:YES];
+}
+
+#pragma mark - properties
+
+- (UIView *)blueOverlayExtend
+{
+    if (!_blueOverlayExtend) {
+        UIView *blueOverlayExtend = [[UIView alloc] initWithFrame:CGRectMake(0, 416, 320, self.scrollView.contentSize.height - 416)];
+        blueOverlayExtend.backgroundColor = [UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0];
+        self.view.backgroundColor = blueOverlayExtend.backgroundColor;
+    }
+    return _blueOverlayExtend;
 }
 
 @end
