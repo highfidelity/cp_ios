@@ -194,7 +194,9 @@ BOOL clearLocations = NO;
             }                             
         }
 
-        NSMutableArray *annotationsToAdd = [[NSMutableArray alloc] initWithArray:newDataset.annotations];
+        NSMutableArray *annotationsToAdd = [[NSMutableArray alloc]
+                                            initWithArray:[newDataset.annotations
+                                                           filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isNeighborhood == NO"]]];
         
         if(newDataset)
         {
