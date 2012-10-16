@@ -57,6 +57,9 @@
 @property (nonatomic) BOOL hasChatHistory;
 @property (nonatomic) int userID;
 
+- (void)loadUserResumeOnQueue:(NSOperationQueue *)operationQueue
+                topSkillsOnly:(BOOL)topSkills
+                   completion:(void (^)(NSError *error))completion;
 
 - (void)loadUserResumeOnQueue:(NSOperationQueue *)operationQueue
                    completion:(void (^)(NSError *error))completion;
