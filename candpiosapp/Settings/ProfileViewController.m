@@ -237,7 +237,7 @@
     [SVProgressHUD show];
 
     // TODO: Let's not load all of the user resume data here, just what can be changed
-    [webSyncUser loadUserResumeOnQueue:nil completion:^(NSError *error) {
+    [webSyncUser loadUserResumeOnQueue:nil topSkillsOnly:NO completion:^(NSError *error) {
         if (!error) {
             // TODO: make this a better solution by checking for a problem with the PHP session cookie in CPApi
             // for now if the email comes back null this person isn't logged in so we're going to send them to do that.

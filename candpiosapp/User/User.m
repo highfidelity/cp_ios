@@ -197,7 +197,14 @@
 }
 
 - (void)loadUserResumeOnQueue:(NSOperationQueue *)operationQueue
-                  completion:(void (^)(NSError *error))completion
+                   completion:(void (^)(NSError *error))completion
+{
+    [self loadUserResumeOnQueue:operationQueue topSkillsOnly:YES completion:completion];
+}
+
+- (void)loadUserResumeOnQueue:(NSOperationQueue *)operationQueue
+                topSkillsOnly:(BOOL)topSkills
+                   completion:(void (^)(NSError *error))completion
 {
     
     [CPapi getResumeForUserId:self.userID
@@ -263,7 +270,8 @@
             
             // create a CPSkill object for each of the skills we get back for this user
             NSMutableArray *skills = [NSMutableArray array];
-            for (NSDictionary *skillDict in [userDict objectForKey:@"skills"]) {
+            NSString *skillsKey = topSkills ? @"skills" : @"skillsList";
+            for (NSDictionary *skillDict in [userDict objectForKey:skillsKey]) {
                 [skills addObject:[[CPSkill alloc] initFromDictionary:skillDict]];
             }
             self.skills = skills;
