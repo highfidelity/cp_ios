@@ -579,60 +579,6 @@
         <image name="map-marker.png" width="16" height="16"/>
         <image name="wfh-icon.png" width="30" height="21"/>
     </resources>
-    <classes>
-        <class className="CheckInDetailsFrame" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInDetailsFrame.h"/>
-        </class>
-        <class className="CheckInDetailsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInDetailsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="sliderChanged:"/>
-                <relationship kind="outlet" name="blueOverlay" candidateClass="UIView"/>
-                <relationship kind="outlet" name="checkInButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="checkInDetails" candidateClass="UIView"/>
-                <relationship kind="outlet" name="checkInLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="durationHeader" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="fiveHoursLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="infoBubbleNickname" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="infoBubbleStatus" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="oneHourLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="otherUsersScrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="placeAddress" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="placeName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="TPKeyboardAvoidingScrollView"/>
-                <relationship kind="outlet" name="sevenHoursLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="statusTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="threeHoursLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="timeSlider" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="userInfoBubble" candidateClass="UIView"/>
-                <relationship kind="outlet" name="venueInfo" candidateClass="UIView"/>
-                <relationship kind="outlet" name="willLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CheckInListCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInListCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="disclosureImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="distanceString" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="searchingSpinner" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CheckInListViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInListViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeWindow:"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="TPKeyboardAvoidingScrollView" superclassName="UIScrollView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TPKeyboardAvoidingScrollView.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

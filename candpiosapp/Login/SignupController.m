@@ -69,7 +69,7 @@
 - (IBAction) dismissClick:(id)sender
 {
     // make sure the selected index is 1 so it goes to the map
-    [CPAppDelegate tabBarController].selectedIndex = 1;
+    [CPAppDelegate tabBarController].selectedIndex = 0;
     [self dismissModalViewControllerAnimated:YES];
     [FlurryAnalytics logEvent:@"skippedSignup"];
 }

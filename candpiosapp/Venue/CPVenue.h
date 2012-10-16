@@ -32,7 +32,6 @@
 @property (nonatomic) BOOL hasContactAtVenue;
 @property (nonatomic) BOOL autoCheckin;
 @property (nonatomic) BOOL isNeighborhood;
-@property (nonatomic) NSUInteger postsCount;
 @property (nonatomic, readonly) NSString *checkinCountString;
 @property (nonatomic, readonly) NSString *checkinTimeString;
 @property (nonatomic, readonly) NSString *formattedAddress;

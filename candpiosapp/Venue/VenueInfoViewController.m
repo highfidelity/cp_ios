@@ -8,27 +8,19 @@
 
 #import "VenueInfoViewController.h"
 #import "MapTabController.h"
-#import "CheckInDetailsViewController.h"
 #import "UserProfileViewController.h"
-#import "MapDataSet.h"
-#import "UIButton+AnimatedClockHand.h"
-#import "CPCheckinHandler.h"
 #import "CPUserSessionHandler.h"
 #import "VenueUserCell.h"
 #import "VenueCategoryCell.h"
 
-#define CHAT_MESSAGE_ORIGIN_X 11
+static VenueInfoViewController *_onScreenVenueVC;
 
 @interface VenueInfoViewController () <UIAlertViewDelegate>
 
-@property (strong, nonatomic) NSTimer *chatReloadTimer;
 @property (weak, nonatomic) IBOutlet UIView *bottomPhotoOverlayView;
-@property (weak, nonatomic) IBOutlet UIView *venueChatBox;
-@property (weak, nonatomic) IBOutlet UILabel *activeChatText;
-@property (weak, nonatomic) UIButton *checkInButton;
 @property (weak, nonatomic) UIButton *phoneButton;
 @property (weak, nonatomic) UIButton *addressButton;
-@property (nonatomic) BOOL hadNoChat;
+@property (strong, nonatomic) NSMutableDictionary *userObjectsForUsersOnScreen;
 @property (nonatomic) BOOL checkInIsVirtual;
 @property (nonatomic) BOOL hasPhone;
 @property (nonatomic) BOOL hasAddress;
@@ -38,12 +30,9 @@
 
 @implementation VenueInfoViewController
 
-- (NSMutableDictionary *)userObjectsForUsersOnScreen
++ (VenueInfoViewController *)onScreenVenueVC
 {
-    if (!_userObjectsForUsersOnScreen) {
-        _userObjectsForUsersOnScreen = [NSMutableDictionary dictionary];
-    }
-    return _userObjectsForUsersOnScreen;
+    return _onScreenVenueVC;
 }
 
 - (void)viewDidLoad
@@ -60,10 +49,6 @@
                                              selector:@selector(populateUserSection) 
                                                  name:@"LoginStateChanged" 
                                                object:nil];
-    
-    
-    // set the property on the tab bar controller for the venue we're looking at
-    [CPAppDelegate tabBarController].currentVenueID = self.venue.foursquareID;
     
     // set the title of the navigation controller
     self.title = self.venue.name;
@@ -110,101 +95,51 @@
         }
     }
     
-    [self repositionAddressAndPhone:NO];
+    [self repositionAddressAndPhone];
     
-    // put the texture in the bottom view
-    self.firstAidSection.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-first-aid-kit"]];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-first-aid-kit"]];
         
     // table view header
     [self.scrollView removeFromSuperview];
     self.tableView.tableHeaderView = self.scrollView;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    // border on venue chat box
-    // color gets set in view will appear
-    self.venueChatBox.layer.borderWidth = 1.0;
-    
-    // change the active chat labels to league gothic
-    [CPUIHelper changeFontForLabel:self.activeChatText toLeagueGothicOfSize:18];
-    
-    // setup a UIButton to hold the venue chat box
-    UIButton *venueChatButton = [[UIButton alloc] initWithFrame:self.venueChatBox.frame];
-    
-    // targets for the venueChatButton
-    [venueChatButton addTarget:self action:@selector(showVenueChat) forControlEvents:UIControlEventTouchUpInside];
-    [venueChatButton addTarget:self action:@selector(highlightedVenueChatButton) forControlEvents:UIControlEventTouchDown];
-    [venueChatButton addTarget:self action:@selector(normalVenueChatButton) forControlEvents:UIControlEventTouchUpOutside];
-    
-    
-    // disable user interaction on the chat box so the button gets the touch events
-    self.venueChatBox.userInteractionEnabled = NO;
-    
-    // add the button to the bottom section
-    [self.firstAidSection addSubview:venueChatButton];
-    
-    // set hadNoChat to no, it may be changed when the chat gets loaded
-    self.hadNoChat = NO;
 
     [self populateUserSection]; 
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-    
-    if ([CPUserDefaultsHandler currentUser]) {
-    } else {
-        [self hideVenueChatFromAnonymousUser];
-    }
-    
-    // make sure the button borders are back to grey
-    [self normalVenueChatButton];
-    
-    [self checkInAllowed];
+    [super viewDidAppear:animated];
+    _onScreenVenueVC = self;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
-    if (self.chatReloadTimer) {
-        [self.chatReloadTimer invalidate];
-        self.chatReloadTimer = nil;
-    }    
+    _onScreenVenueVC = nil;
 }
 
-- (void)viewDidUnload
+- (void)dealloc
 {
-    [super viewDidUnload];
-    [CPAppDelegate tabBarController].currentVenueID = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (NSMutableDictionary *)userObjectsForUsersOnScreen
+{
+    if (!_userObjectsForUsersOnScreen) {
+        _userObjectsForUsersOnScreen = [NSMutableDictionary dictionary];
+    }
+    return _userObjectsForUsersOnScreen;
+}
+
+- (void)addUserToDictionaryOfUserObjectsFromUser:(User *)user
+{
+    [self.userObjectsForUsersOnScreen setObject:user forKey:[NSString stringWithFormat:@"%d", user.userID]];
 }
 
 - (BOOL)isCheckedInHere
 {
     return [CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [CPUserDefaultsHandler currentVenue].venueID == self.venue.venueID;
-}
-
-- (void)refreshVenueViewCheckinButton
-{ 
-    if (!self.checkInButton) {
-        self.checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        
-        // add the clock hand and set the button to the right state
-        [self.checkInButton refreshButtonStateWithBoolean:[self isCheckedInHere]];
-    
-        CGRect checkInButtonFrame = self.bottomPhotoOverlayView.frame;
-        checkInButtonFrame.size = self.checkInButton.currentBackgroundImage.size;
-        checkInButtonFrame.origin.x = ((self.bottomPhotoOverlayView.frame.size.width - checkInButtonFrame.size.width) / 2);
-        checkInButtonFrame.origin.y -= 25;
-        
-        self.checkInButton.frame = checkInButtonFrame;
-        
-        [self.bottomPhotoOverlayView.superview addSubview:self.checkInButton];
-        [self.checkInButton addTarget:self action:@selector(checkInPressed:) forControlEvents:UIControlEventTouchUpInside];
-    } else {
-        [self.checkInButton refreshButtonStateWithBoolean:[self isCheckedInHere]];
-    }
 }
 
 - (void)refreshVenueData:(NSNotification *)notification
@@ -215,53 +150,6 @@
 
     // repopulate user data with new info
     [self populateUserSection];
-}
-
-- (void)hideVenueChatFromAnonymousUser
-{
-    // this is hard coded to 10 for now
-    // not an actual representation of the number of active people chatting
-    // just here to entice users who aren't logged in
-    self.activeChatText.text = @"Please login to see the venue feed.";
-}
-
-- (void)highlightedVenueChatButton
-{
-    // the button is currently highlighted so make the borders orange
-    // border on venue chat box
-    UIColor *orange = [UIColor colorWithRed:(181.0/255.0) green:(107.0/255.0) blue:(0/255.0) alpha:1.0];
-    self.venueChatBox.layer.borderColor = [orange CGColor];
-}
-
-- (void)normalVenueChatButton
-{
-    // the button has gone back to normal so bring the borders back to the grey color
-    // border on venue chat box
-    UIColor *grey = [UIColor colorWithRed:(198.0/255.0) green:(198.0/255.0) blue:(198.0/255.0) alpha:1.0];
-    self.venueChatBox.layer.borderColor = [grey CGColor];
-}
-
-- (void)showVenueChat
-{
-    if ([CPUserDefaultsHandler currentUser]) {
-        [CPUserDefaultsHandler addFeedVenue:self.venue];
-        // switch over to the feed view controller
-        
-        id fvc = [[self.tabBarController viewControllers] objectAtIndex:0];
-        if ([fvc isKindOfClass:[UINavigationController class]]) {
-            fvc = [(UINavigationController *)fvc visibleViewController];
-        }
-        if ([fvc respondsToSelector:@selector(showVenueFeedForVenue:)]){
-            [fvc performSelector:@selector(showVenueFeedForVenue:)
-                      withObject:self.venue];
-        }
-        self.tabBarController.selectedIndex = 0;
-        
-    } else {
-        // prompt the user to login
-        [CPUserSessionHandler showLoginBanner];
-        [self normalVenueChatButton];
-    }
 }
 
 - (NSArray *)orderedCategories {
@@ -308,7 +196,6 @@
     self.currentUsers = [NSMutableDictionary dictionary];
     self.categoryCount = [NSMutableDictionary dictionary];
     self.previousUsers = [[NSMutableArray alloc] init];
-    self.usersShown =  [NSMutableSet set];
     
     for (NSString *userID in activeUsers) {
         User *user = [[CPAppDelegate settingsMenuController].mapTabController userFromActiveUsers:[userID integerValue]];
@@ -364,11 +251,6 @@
             NSLog(@"User has nil value job category!!!!");
         #endif
     }
-}
-
-- (void)addUserToDictionaryOfUserObjectsFromUser:(User *)user
-{
-    [self.userObjectsForUsersOnScreen setObject:user forKey:[NSString stringWithFormat:@"%d", user.userID]];
 }
 
 - (UIColor *)borderColor {
@@ -438,160 +320,53 @@
         [userBox addSubview:userCount];
     }
 }
-- (void)checkInAllowed
-{
-    self.checkInIsVirtual = NO;
-    
-    //Find the distance between the user and the venue in Meters
-    CLLocation *venueLocation= [[CLLocation alloc] initWithLatitude:self.venue.coordinate.latitude longitude:self.venue.coordinate.longitude];
-    double distanceFromUserMeters = [venueLocation distanceFromLocation:[CPAppDelegate locationManager].location];
-    //double venueDistance = self.venue.distanceFromUser;
-    if(distanceFromUserMeters>300)
-    {
-        // User is more than 300m from venue so only a virtual checkin is possible.
-        // If the user has a contact in the venue then they can checkin, otherwise it is not allowed
-        //and the checkin button will not appear.
-        if(self.venue.hasContactAtVenue)
-        {
-            [self checkInButtonSetup];
-            self.checkInIsVirtual = YES;
-        }
-
-    }
-    else
-    {
-        //If the user is within 300m of the venue they can checkin to that venue
-        [self checkInButtonSetup];
-    }
-        
-
-}
-
-
-
-- (void)checkInButtonSetup
-{
-    // reposition the address and phone if required 
-    // or just show them now that we have the button
-    [self repositionAddressAndPhone:YES];
-    
-    //from viewwillappear
-    // place the checkin button on screen and make sure it is consistent with the user states
-    [self refreshVenueViewCheckinButton];
-    
-    //from viewDidLoad
-    //Add observer to update checkIn button
-    [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(refreshVenueViewCheckinButton) 
-                                                 name:@"userCheckInStateChange" 
-                                               object:nil];
-    
-    
-    
-}
-
-- (void)checkInPressed:(id)sender
-{
-    if (![CPUserDefaultsHandler currentUser]) {
-        [CPUserSessionHandler showLoginBanner];
-    } else {
-        if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [CPUserDefaultsHandler currentVenue].venueID == self.venue.venueID){
-            // user is checked in here so ask them if they want to be checked out
-            [[CPCheckinHandler sharedHandler] promptForCheckout];
-        } else {
-            // tell the CPCheckinHandler that there should be no action after this checkin
-            [CPCheckinHandler sharedHandler].afterCheckinAction = CPAfterCheckinActionNone;
-            
-            // show them the check in screen
-            CheckInDetailsViewController *checkinVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
-            checkinVC.venue = self.venue;
-            
-            // be the delgate of the check in view controller
-            checkinVC.delegate = self;
-            
-            // tell the CheckinDetailsViewController that it should hide the tabBar
-            checkinVC.hidesBottomBarWhenPushed = YES;
-            
-            // Pass whether the checkin is virtual or non-virtual
-            checkinVC.checkInIsVirtual = self.checkInIsVirtual;
-            
-            [self.navigationController pushViewController:checkinVC animated:YES];
-        }
-    }
-}
 
 - (void)dismissViewControllerAnimated {
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)cancelCheckinModal
-{
-    [self.modalViewController dismissModalViewControllerAnimated:YES];
-}
+#define kButtonPhoneXOffset 2
+#define kButtonAddressXOffset 10
+#define kButtonYOffset 3
 
-- (void)repositionAddressAndPhone:(BOOL)checkinButtonIsShown
+- (void)repositionAddressAndPhone
 {
-    
-    // we're here because we have no checkin button and as such the address and phone may need to be moved
-    if (self.hasAddress || self.hasPhone) {
-        
+    if (self.hasAddress || self.hasPhone) {        
         // set the basic frame for the phone and address buttons
         CGRect phoneFrame = self.phoneButton.frame;
-        phoneFrame.origin.x = 11 + round((self.bottomPhotoOverlayView.frame.size.width + 64) / 2);
-        phoneFrame.origin.y = 3;
-             
+        phoneFrame.origin.x = self.bottomPhotoOverlayView.frame.size.width - phoneFrame.size.width - kButtonPhoneXOffset;
+        phoneFrame.origin.y = kButtonYOffset;
         
         CGRect addressFrame = self.addressButton.frame;
-        addressFrame.origin.x = round((self.bottomPhotoOverlayView.frame.size.width - 64) / 2) - 5 - addressFrame.size.width;
-        addressFrame.origin.y = 3;
-        
+        addressFrame.origin.x = kButtonAddressXOffset;
+        addressFrame.origin.y = kButtonYOffset;
     
         if (!self.hasAddress || !self.hasPhone) {
             // only need to make changes if one is missing
-            if (!checkinButtonIsShown) {
-                UIButton *move;
-                if (!self.hasAddress) {
-                    move = self.phoneButton;
-                    self.addressButton.hidden = YES;
+            UIButton *move;
+            if (!self.hasAddress) {
+                move = self.phoneButton;
+                self.addressButton.hidden = YES;
                     
-                    // move the phone button to the middle
-                    phoneFrame.origin.x = (self.bottomPhotoOverlayView.frame.size.width / 2) - (phoneFrame.size.width / 2);
-                } else {
-                    move = self.addressButton;
-                    self.phoneButton.hidden = YES;
-                    
-                    // move the address button to the middle
-                    addressFrame.origin.x = (self.bottomPhotoOverlayView.frame.size.width / 2) - (addressFrame.size.width / 2);
-                }
+                // move the phone button to the middle
+                phoneFrame.origin.x = (self.bottomPhotoOverlayView.frame.size.width / 2) - (phoneFrame.size.width / 2);
             } else {
-                // make sure the phone button is around
-                self.phoneButton.hidden = NO;
-                // make sure the address button is around
-                self.addressButton.hidden = NO;
-                
-                // no need to touch the frame here ... it'll get reset
+                move = self.addressButton;
+                self.phoneButton.hidden = YES;
+                    
+                // move the address button to the middle
+                addressFrame.origin.x = (self.bottomPhotoOverlayView.frame.size.width / 2) - (addressFrame.size.width / 2);
             }
         }
         
         self.phoneButton.frame = phoneFrame; 
         self.addressButton.frame = addressFrame;
-    } else {
-        
+    } else {        
         // hide both buttons - no need to show two "N/A" labels
         self.addressButton.hidden = YES;
-        self.phoneButton.hidden = YES;
-        
-        if (checkinButtonIsShown) {
-            // fade in the bottom bar
-            self.bottomPhotoOverlayView.userInteractionEnabled = YES;
-            
-            [UIView animateWithDuration:0.5 animations:^{
-                self.bottomPhotoOverlayView.alpha = 1.0;
-            }];
-        } else {
-            self.bottomPhotoOverlayView.alpha = 0.0;
-            self.bottomPhotoOverlayView.userInteractionEnabled = NO;
-        }
+        self.phoneButton.hidden = YES;        
+        self.bottomPhotoOverlayView.alpha = 0.0;
+        self.bottomPhotoOverlayView.userInteractionEnabled = NO;
     }
 }
 
@@ -668,20 +443,18 @@
     }   
 }
 
-- (IBAction)userImageButtonPressed:(id)sender
+- (IBAction)userImageButtonPressed:(UIButton *)sender
 {
     if (![CPUserDefaultsHandler currentUser]) {
         [CPUserSessionHandler showLoginBanner];
-
+        
     }   else {
         UserProfileViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
-
-        UIButton *thumbnailButton = (UIButton *)sender;
-
+        
         // set the user object on that view controller
         // using the tag on the button to pull this user out of the NSMutableDictionary of user objects
-        userVC.user = [self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", thumbnailButton.tag]];
-
+        userVC.user = [self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", sender.tag]];
+        
         // push the user profile onto this navigation controller stack
         [self.navigationController pushViewController:userVC animated:YES];
     }
@@ -775,7 +548,6 @@
     }
 }
 
-
 #pragma mark - Table view delegate
 #define HEADER_HEIGHT 29
 #define INTER_SECTION_SPACING 10
@@ -844,9 +616,6 @@
             // add to the xOffset for the next thumbnail
             xOffset += 10 + thumbButton.frame.size.width;
             
-            // add this user to the usersShown set so we know we have them
-            [self.usersShown addObject:[NSNumber numberWithInt:user.userID]];
-            
             if (![self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", user.userID]]) {
                 [self addUserToDictionaryOfUserObjectsFromUser:user];
             }
@@ -857,8 +626,6 @@
         cell.scrollView.showsHorizontalScrollIndicator = NO;
     }
 }
-
-
 
 - (CGFloat)cellWidth {
     return self.view.frame.size.width - (2 * CELL_GUTTER_WIDTH);

@@ -42,8 +42,6 @@ BOOL clearLocations = NO;
 {
     [super viewDidLoad];
     self.mapView.tag = mapTag;
-    
-    self.tabBarController.selectedIndex = 1;
 
     // Register to receive userCheckedIn notification to intitiate map refresh immediately after user checks in
     [[NSNotificationCenter defaultCenter] addObserver:self 

@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12B19" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="crz-ik-TbX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="crz-ik-TbX">
     <dependencies>
-        <deployment defaultVersion="1296" identifier="iOS"/>
+        <deployment defaultVersion="1536" identifier="iOS"/>
         <development version="4300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller - Log In-->
         <scene sceneID="FCd-A8-ej4">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LT5-ih-eU0" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="SignupNavigationController" title="Log In" definesPresentationContext="YES" navigationBarHidden="YES" id="crz-ik-TbX" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Log In" image="tab-login.png" id="qLD-41-OQc"/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -24,13 +23,13 @@
                         <segue destination="shZ-UI-Hx3" kind="relationship" relationship="rootViewController" id="1BI-wm-gVg"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LT5-ih-eU0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-88" y="111"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xrB-8P-cbx">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2NC-Vb-K9M" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="EnterInvitationCodeNavigationController" definesPresentationContext="YES" id="AtA-s5-eJQ" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9bC-uq-M1l">
                         <autoresizingMask key="autoresizingMask"/>
@@ -39,13 +38,13 @@
                         <segue destination="YTE-Yd-6dA" kind="relationship" relationship="rootViewController" id="RKE-Su-NXd"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2NC-Vb-K9M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="353" y="-490"/>
         </scene>
         <!--Enter Invitation Code View Controller-->
         <scene sceneID="0wN-58-DzG">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="anz-G9-zjM" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="EnterInvitationCodeViewController" id="YTE-Yd-6dA" customClass="EnterInvitationCodeViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="76G-9w-bA8">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -99,13 +98,13 @@ you an invite code, type it in above</string>
                         <outlet property="laterButton" destination="4iy-5M-HUK" id="RpN-pa-xaQ"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="anz-G9-zjM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="776" y="-503"/>
         </scene>
         <!--Signup Controller-->
         <scene sceneID="sXP-07-Dtq">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uHK-uN-KEj" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="SignupViewController" id="shZ-UI-Hx3" customClass="SignupController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ctr-Ri-18F">
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
@@ -161,13 +160,13 @@ you an invite code, type it in above</string>
                         <segue destination="0fs-TN-110" kind="push" identifier="ShowLinkedInLoginController" id="Y4e-Sg-yKH"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uHK-uN-KEj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="353" y="111"/>
         </scene>
         <!--Linked In Login Controller-->
         <scene sceneID="hi6-Mt-rjh">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NP3-pU-1zh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="0fs-TN-110" customClass="LinkedInLoginController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qpp-4g-QP8">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
@@ -190,6 +189,7 @@ you an invite code, type it in above</string>
                         <outlet property="myWebView" destination="0aa-43-K68" id="Hew-Jl-YDO"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NP3-pU-1zh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="752" y="105"/>
         </scene>
@@ -204,14 +204,6 @@ you an invite code, type it in above</string>
         <image name="tab-login.png" width="34" height="26"/>
     </resources>
     <classes>
-        <class className="EnterInvitationCodeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EnterInvitationCodeViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="laterButtonAction:"/>
-                <relationship kind="outlet" name="codeTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="laterButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
         <class className="LinkedInLoginController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedInLoginController.h"/>
             <relationships>

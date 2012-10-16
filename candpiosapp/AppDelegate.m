@@ -9,7 +9,6 @@
 #import "FaceToFaceHelper.h"
 #import "CPChatHelper.h"
 #import "OAuthConsumer.h"
-#import "EnterInvitationCodeViewController.h"
 #import "CheckInDetailsViewController.h"
 #import "CPAlertView.h"
 #import "VenueInfoViewController.h"
@@ -615,25 +614,9 @@ void SignalHandler(int sig) {
             
             
             CPVenue *venue = (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:[userInfo objectForKey:@"venue"]];
-            
-            CheckInDetailsViewController *vc = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil]
-                                                instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
-            vc.checkInIsVirtual = false;
-            [vc setVenue:venue];
-            vc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
-                                                                                   style:UIBarButtonItemStylePlain
-                                                                                  target:vc
-                                                                                  action:@selector(dismissViewControllerAnimated)];
-            
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
-            [self.tabBarController presentModalViewController:navigationController animated:YES];
+            [CPCheckinHandler presentCheckInDetailsModalForVenue:venue presentingViewController:self.tabBarController];
         }
         
-    } else if (alertView.tag == kFeedViewAlertTag && alertView.firstOtherButtonIndex == buttonIndex) {
-        CPVenue *venue = [[CPVenue alloc] init];
-        venue.venueID = [[userInfo objectForKey:@"feed_venue_id"] integerValue];
-        venue.name = [userInfo objectForKey:@"feed_venue_name"];
-        [self.tabBarController showFeedVCForVenue:venue];
     }
 }
 

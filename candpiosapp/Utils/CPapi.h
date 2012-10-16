@@ -13,8 +13,6 @@
 #import <Foundation/Foundation.h>
 #import "CPVenue.h"
 #import "ChatHistory.h"
-#import "CPPost.h"
-#import "CPVenueFeed.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface CPapi : NSObject
@@ -56,19 +54,6 @@
 + (void)sendDeclineContactRequestFromUserId:(int)userId
                                  completion:(void (^)(NSDictionary *, NSError *))completion;
 
-#pragma mark - Feeds
-+ (void)getFeedPreviewsForVenueIDs:(NSArray *)venueIDs withCompletion:(void (^)(NSDictionary *, NSError *))completion;
-+ (void)getPostsForVenueFeed:(CPVenueFeed *)venueFeed withCompletion:(void (^)(NSDictionary *, NSError *))completion;
-+ (void)getPostRepliesForVenueFeed:(CPVenueFeed *)venueFeed withCompletion:(void (^)(NSDictionary *, NSError *))completion;
-
-+ (void)newPost:(CPPost *)post
-        atVenue:(CPVenue *)venue
-     completion:(void(^)(NSDictionary *json, NSError *error))completion;
-
-+ (void)getPostableFeedVenueIDs:(void (^)(NSDictionary *, NSError *))completion;
-
-+ (void)getQuestionReceiversAtLocation:(CLLocationCoordinate2D)coordinate withCompletion:(void (^)(NSDictionary *, NSError *))completion;
-
 #pragma mark - Checkins
 + (void)getNearestCheckedInWithCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
@@ -90,11 +75,6 @@
 + (void)getUserTransactionDataWithCompletitonBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 + (void)getCheckInDataWithUserId:(int)userId
                    andCompletion:(void (^)(NSDictionary *, NSError *))completion;
-+ (void)getInvitationCodeForLocation:(CLLocation *)location
-                withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
-+ (void)enterInvitationCode:(NSString *)invitationCode
-                forLocation:(CLLocation *)location
-       withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
 #pragma mark - Love
 + (void)sendLoveToUserWithID:(int)recieverID
@@ -150,9 +130,6 @@
 
 + (void)saveUserSmartererName:(NSString *)name
                                        :(void(^)(NSDictionary *json, NSError *error))completion;
-
-+ (void)getInvitationCodeForLinkedInConnections:(NSArray *)connectionsIDs
-                            wihtCompletionBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
 + (void)deleteAccountWithParameters:(NSMutableDictionary *)parameters
                          completion:(void(^)(NSDictionary *json, NSError *error))completion;

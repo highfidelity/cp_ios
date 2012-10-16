@@ -8,7 +8,6 @@
 
 #import "CPUserSessionHandler.h"
 #import "CPCheckinHandler.h"
-#import "EnterInvitationCodeViewController.h"
 #import "PushModalViewControllerFromLeftSegue.h"
 #import "SSKeychain.h"
 #import "CPConstants.h"
@@ -103,7 +102,6 @@ static CPUserSessionHandler *sharedHandler;
     User *currUser = [[User alloc] init];
     currUser.nickname = nickname;
     currUser.userID = [userId intValue];
-    [currUser setEnteredInviteCodeFromJSONString:[userInfo objectForKey:@"entered_invite_code"]];
     [currUser setJoinDateFromJSONString:[userInfo objectForKey:@"join_date"]];
     currUser.profileURLVisibility = [userInfo objectForKey:@"profileURL_visibility"];
     
@@ -139,29 +137,6 @@ static CPUserSessionHandler *sharedHandler;
     sharedHandler.signUpPresentingViewController = viewController;
 }
 
-+ (void)showEnterInvitationCodeModalFromViewController:(UIViewController *)viewController
-         withDontShowTextNoticeAfterLaterButtonPressed:(BOOL)dontShowTextNoticeAfterLaterButtonPressed
-                                          pushFromLeft:(BOOL)pushFromLeft
-                                              animated:(BOOL)animated
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
-    UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:
-                                                    @"EnterInvitationCodeNavigationController"];
-    
-    EnterInvitationCodeViewController *controller = (EnterInvitationCodeViewController *)navigationController.topViewController;
-    controller.dontShowTextNoticeAfterLaterButtonPressed = dontShowTextNoticeAfterLaterButtonPressed;
-    
-    if (pushFromLeft) {
-        controller.isPushedFromLeft = YES;
-        PushModalViewControllerFromLeftSegue *segue = [[PushModalViewControllerFromLeftSegue alloc] initWithIdentifier:nil
-                                                                                                                source:viewController
-                                                                                                           destination:navigationController];
-        [segue perform];
-    } else {
-        [viewController presentModalViewController:navigationController animated:animated];
-    }
-}
-
 + (void)syncCurrentUserWithWebAndCheckValidLogin
 {
     User *currentUser = [CPUserDefaultsHandler currentUser];
@@ -183,7 +158,7 @@ static CPUserSessionHandler *sharedHandler;
 
 + (void)showLoginBanner
 {
-    if ([CPAppDelegate tabBarController].selectedIndex == 4) {
+    if ([CPAppDelegate tabBarController].selectedIndex == kNumberOfTabsRightOfButton) {
         return;
     }
     
