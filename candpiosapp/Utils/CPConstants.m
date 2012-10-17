@@ -14,13 +14,13 @@
 
 #else
 
-    NSString* const kCandPWebServiceUrl = @"http://staging.candp.me/";
-    NSString* const kCandPWebServiceSecureUrl = @"https://staging.candp.me/";
-    // Devs can test against a their server sandbox by uncommenting and completing the following URL
-    //NSString* const kCandPWebServiceUrl = @"http://dev.worklist.net/~<login>/candpweb2_<job#>/web/";
+NSString* const kCandPWebServiceUrl = @"http://mbp.local/~stojce/candpweb2/web/";
+NSString* const kCandPWebServiceSecureUrl = @"http://mbp.local/~stojce/candpweb2/web/";
+// Devs can test against a their server sandbox by uncommenting and completing the following URL
+//NSString* const kCandPWebServiceUrl = @"http://dev.worklist.net/~<login>/candpweb2_<job#>/web/";
 
-    NSString* const kLinkedInKey = @"hgkjgipubg8b";
-    NSString* const kLinkedInSecret = @"1coFul6Ym82NJC2Z";
+NSString* const kLinkedInKey = @"kzqsgjlewsm4";
+NSString* const kLinkedInSecret = @"kuz8khRIxuM0sVkP";
 
     NSString* const kFoursquareClientID = @"2AT1GDJZHHJ21R5ZAP0G2JN2RTMSQ012Q0C55YCTM50PGXSO";
     NSString* const kFoursquareClientSecret = @"DJOJS4CMQBQTU4RUKSTRAQESFVYZBD1XKYDUYF5PTG1OW30Z";

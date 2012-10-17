@@ -600,7 +600,8 @@
 }
 
 + (void)setNotificationSettingsForDistance:(NSString *)distance
-                              andCheckedId:(BOOL)checkedOnly 
+                              andCheckedId:(BOOL)checkedOnly
+                        contactEndorsement:(BOOL)contactEndorsement
                                  quietTime:(BOOL)quietTime
                              quietTimeFrom:(NSDate *)quietTimeFrom
                                quietTimeTo:(NSDate *)quietTimeTo  
@@ -614,6 +615,7 @@
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setValue:distance forKey:@"push_distance"];
     [parameters setValue:checkedOnly ? @"1" : @"0" forKey:@"checked_in_only"];
+    [parameters setValue:contactEndorsement ? @"1" : @"0" forKey:@"push_contacts_endorsement"];
     [parameters setValue:quietTime ? @"1" : @"0" forKey:@"quiet_time"];
     [parameters setValue:[formatter stringFromDate:quietTimeFrom] forKey:@"quiet_time_from"];
     [parameters setValue:[formatter stringFromDate:quietTimeTo] forKey:@"quiet_time_to"];
