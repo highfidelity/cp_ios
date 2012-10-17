@@ -86,6 +86,7 @@
                         </li>';
                     var ORIGINAL_DATA = {{{originalData}}};
                     var LIMIT = 20;
+                    var ORIGINAL_DATA_MAX_COUNT = 10;
                     var lastOffset = ORIGINAL_DATA.reviews.length;
 
                     var renderReviews = function(reviews) {
@@ -115,6 +116,9 @@
                     }
 
                     renderReviews(ORIGINAL_DATA.reviews);
+                    if (ORIGINAL_DATA.reviews.length < ORIGINAL_DATA_MAX_COUNT) {
+                        $('#reviews-load-more').hide();
+                    }
                     sendRecomputeWebViewHeightSignal();
 
                     $('#reviews-load-more').on('click', 'a', function(e) {
