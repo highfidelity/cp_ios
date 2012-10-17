@@ -227,8 +227,8 @@
                                                         <rect key="frame" x="151" y="1" width="148" height="41"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="RECOGNITION" lineBreakMode="tailTruncation" minimumFontSize="10" id="wy1-Ol-R29">
-                                                                <rect key="frame" x="11" y="0.0" width="77" height="21"/>
+                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="ENDORSEMENTS" lineBreakMode="tailTruncation" minimumFontSize="10" id="wy1-Ol-R29">
+                                                                <rect key="frame" x="11" y="0.0" width="93" height="21"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                 <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
@@ -394,7 +394,6 @@
         <!--One On One Chat View Controller-->
         <scene sceneID="aob-M4-OEa">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GK5-4t-I2j" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="OneOnOneChatView" hidesBottomBarWhenPushed="YES" id="OVL-97-bi7" customClass="OneOnOneChatViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ohT-1I-TXi">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
@@ -586,6 +585,7 @@
                         <outlet property="chatInputs" destination="8Xk-CN-gYQ" id="czC-Oa-prR"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GK5-4t-I2j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1686" y="-534"/>
         </scene>

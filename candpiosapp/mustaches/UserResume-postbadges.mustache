@@ -46,7 +46,7 @@
         {{/user}}
 
         {{#hasAnyReview}}
-            <h2 class="line-bottom">Recognition</h2>
+            <h2 class="line-bottom">Endorsements</h2>
             <ul id="reviews">
                 <li id="reviews-load-more">
                     <a href="recompute-webview-height://">Load more...</a>
@@ -63,7 +63,7 @@
 
                 Zepto(function($){
                     Mustache.tags = ['[[', ']]']
-                    var RECOGNITION_TEMPLATE = '<li>\
+                    var ENDORSEMENTS_TEMPLATE = '<li>\
                             [[#isPositive]]\
                                 [[#isLove]]\
                                     <img src="send-love-small@2x.png" width="16" height="17" />\
@@ -102,7 +102,7 @@
                                 review.isLove = true;
                             }
 
-                            $('#reviews-load-more').before(Mustache.render(RECOGNITION_TEMPLATE, review));
+                            $('#reviews-load-more').before(Mustache.render(ENDORSEMENTS_TEMPLATE, review));
                         }
                     }
                     
