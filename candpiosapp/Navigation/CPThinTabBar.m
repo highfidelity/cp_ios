@@ -261,7 +261,7 @@ static NSArray *_tabBarIcons;
         [self addActionMenuButtonWithImageSuffix:@"update" topMargin:HEADLINE_CHANGE_BUTTON_TOP_MARGIN selectorAction:@selector(changeHeadlineButtonPressed:)];
     }
     
-    [self toggleActionMenu:NO checkedIn:[CPUserDefaultsHandler isUserCurrentlyCheckedIn]];
+    [self toggleActionMenu:self.isActionMenuShowing checkedIn:[CPUserDefaultsHandler isUserCurrentlyCheckedIn]];
 }
 
 - (void)addActionMenuButtonWithImageSuffix:(NSString *)imageSuffix
@@ -318,10 +318,16 @@ static NSArray *_tabBarIcons;
 - (IBAction)changeHeadlineButtonPressed:(id)sender
 {
     [CPCheckinHandler presentChangeHeadlineModalFromViewController:self.tabBarController];
+    [self toggleActionMenu:NO checkedIn:YES];
 }
 
 - (void)toggleActionMenu:(BOOL)showingMenu checkedIn:(BOOL)checkedIn
-{    
+{
+    // if the user is not checkedIn we should be hiding the menu
+    if (!checkedIn) {
+        showingMenu = NO;
+    }
+    
     // set the state of isActionMenuShowing
     self.isActionMenuShowing = showingMenu;
     
