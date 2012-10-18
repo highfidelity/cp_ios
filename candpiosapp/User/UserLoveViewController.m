@@ -13,7 +13,6 @@
 #import "LoveSkillTableViewCell.h"
 
 #define LOVE_CHAR_LIMIT 140
-#define inAppItem @"com.coffeeandpower.love1"
 #define HEADER_SKILL_CELL_HEIGHT 38
 #define NORMAL_SKILL_CELL_HEIGHT 35
 #define ICON_LEFT_MARGIN 18

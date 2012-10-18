@@ -80,26 +80,6 @@
     self.selectedIndex = tabIndex;
 }
 
-- (IBAction)checkinButtonPressed:(id)sender
-{
-    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
-        [CPCheckinHandler promptForCheckout];
-    } else {
-        if ([VenueInfoViewController onScreenVenueVC]) {
-            // if we have a VenueInfoVC on screen
-            // prompt the user to see if they want to check directly in to that venue
-            UIAlertView *checkinAlertView = [[UIAlertView alloc] initWithTitle:nil
-                                                                       message:@"Would you like to check in to this venue?"
-                                                                      delegate:self
-                                                             cancelButtonTitle:@"Show me list"
-                                                             otherButtonTitles:@"Check in here", nil];
-            [checkinAlertView show];
-        } else {
-            [CPCheckinHandler presentCheckInListModalFromViewController:self];
-        }
-    }
-}
-
 - (void)refreshTabBar
 {
     if (![CPUserDefaultsHandler currentUser]) {

@@ -60,6 +60,9 @@
 		530FC24215D42BBD00838B5A /* SmartererLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC23715D42BBD00838B5A /* SmartererLoginController.m */; };
 		530FC24515D4335E00838B5A /* CPUserSessionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC24415D4335E00838B5A /* CPUserSessionHandler.m */; };
 		530FC24815D4389D00838B5A /* SignupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC24715D4389D00838B5A /* SignupController.m */; };
+		5317F256162F63CE00D40405 /* action-menu-button-check-in.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317F254162F63CE00D40405 /* action-menu-button-check-in.png */; };
+		5317F257162F63CE00D40405 /* action-menu-button-check-in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317F255162F63CE00D40405 /* action-menu-button-check-in@2x.png */; };
+		5317F262162F804E00D40405 /* ChangeHeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */; };
 		53217F8C156FF89B006258F0 /* LoveSkillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */; };
 		5327E9FA15658CCE005330AD /* UIColor+EasyRGB.m in Sources */ = {isa = PBXBuildFile; fileRef = 5327E9F915658CCD005330AD /* UIColor+EasyRGB.m */; };
 		5328935C155488F5007B0157 /* CPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328935B155488F5007B0157 /* CPConstants.m */; };
@@ -330,6 +333,12 @@
 		53E2062C150596180000FA8D /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53E2062A150596180000FA8D /* MainStoryboard_iPhone.storyboard */; };
 		53FD32F715915102000448EF /* tab-login.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FD32F515915102000448EF /* tab-login.png */; };
 		53FD32F815915102000448EF /* tab-login@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FD32F615915102000448EF /* tab-login@2x.png */; };
+		53FEA210162F52D600A783DC /* action-menu-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FEA208162F52D600A783DC /* action-menu-bg.png */; };
+		53FEA211162F52D600A783DC /* action-menu-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FEA209162F52D600A783DC /* action-menu-bg@2x.png */; };
+		53FEA212162F52D600A783DC /* action-menu-button-check-out.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FEA20A162F52D600A783DC /* action-menu-button-check-out.png */; };
+		53FEA213162F52D600A783DC /* action-menu-button-check-out@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FEA20B162F52D600A783DC /* action-menu-button-check-out@2x.png */; };
+		53FEA216162F52D600A783DC /* action-menu-button-update.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FEA20E162F52D600A783DC /* action-menu-button-update.png */; };
+		53FEA217162F52D600A783DC /* action-menu-button-update@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FEA20F162F52D600A783DC /* action-menu-button-update@2x.png */; };
 		53FF95ED156D5D0E0046ADDE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FF95EC156D5D0E0046ADDE /* StoreKit.framework */; };
 		5F8413E115619721003B43B8 /* UserProfileLinkedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */; };
 		5FAF891F1555FA6600247B95 /* virtual-check-in-badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAF891D1555FA6600247B95 /* virtual-check-in-badge.png */; };
@@ -581,6 +590,10 @@
 		530FC24415D4335E00838B5A /* CPUserSessionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPUserSessionHandler.m; sourceTree = "<group>"; };
 		530FC24615D4389D00838B5A /* SignupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupController.h; sourceTree = "<group>"; };
 		530FC24715D4389D00838B5A /* SignupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupController.m; sourceTree = "<group>"; };
+		5317F254162F63CE00D40405 /* action-menu-button-check-in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-in.png"; sourceTree = "<group>"; };
+		5317F255162F63CE00D40405 /* action-menu-button-check-in@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-in@2x.png"; sourceTree = "<group>"; };
+		5317F260162F804E00D40405 /* ChangeHeadlineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChangeHeadlineViewController.h; path = Checkin/ChangeHeadlineViewController.h; sourceTree = "<group>"; };
+		5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChangeHeadlineViewController.m; path = Checkin/ChangeHeadlineViewController.m; sourceTree = "<group>"; };
 		53217F8A156FF89B006258F0 /* LoveSkillTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = LoveSkillTableViewCell.h; path = User/LoveSkillTableViewCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoveSkillTableViewCell.m; path = User/LoveSkillTableViewCell.m; sourceTree = "<group>"; };
 		5327E9F815658CCD005330AD /* UIColor+EasyRGB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+EasyRGB.h"; path = "Utils/UIColor+EasyRGB.h"; sourceTree = "<group>"; };
@@ -941,6 +954,12 @@
 		53E2062B150596180000FA8D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		53FD32F515915102000448EF /* tab-login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-login.png"; sourceTree = "<group>"; };
 		53FD32F615915102000448EF /* tab-login@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-login@2x.png"; sourceTree = "<group>"; };
+		53FEA208162F52D600A783DC /* action-menu-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-bg.png"; sourceTree = "<group>"; };
+		53FEA209162F52D600A783DC /* action-menu-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-bg@2x.png"; sourceTree = "<group>"; };
+		53FEA20A162F52D600A783DC /* action-menu-button-check-out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-out.png"; sourceTree = "<group>"; };
+		53FEA20B162F52D600A783DC /* action-menu-button-check-out@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-out@2x.png"; sourceTree = "<group>"; };
+		53FEA20E162F52D600A783DC /* action-menu-button-update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-update.png"; sourceTree = "<group>"; };
+		53FEA20F162F52D600A783DC /* action-menu-button-update@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-update@2x.png"; sourceTree = "<group>"; };
 		53FF95EC156D5D0E0046ADDE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		5F7D21D7155AF1A200EAA540 /* UserProfileLinkedInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileLinkedInViewController.h; path = User/UserProfileLinkedInViewController.h; sourceTree = "<group>"; };
 		5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfileLinkedInViewController.m; path = User/UserProfileLinkedInViewController.m; sourceTree = "<group>"; };
@@ -2066,6 +2085,8 @@
 				53D7ADEC15D04AC800BB041E /* CPGeofenceHandler.h */,
 				53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */,
 				536DE92A150170CC00794650 /* images */,
+				5317F260162F804E00D40405 /* ChangeHeadlineViewController.h */,
+				5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */,
 			);
 			name = Checkin;
 			sourceTree = "<group>";
@@ -2073,6 +2094,14 @@
 		53D6A61D15B0BB50001A76DE /* action-menu */ = {
 			isa = PBXGroup;
 			children = (
+				5317F254162F63CE00D40405 /* action-menu-button-check-in.png */,
+				5317F255162F63CE00D40405 /* action-menu-button-check-in@2x.png */,
+				53FEA208162F52D600A783DC /* action-menu-bg.png */,
+				53FEA209162F52D600A783DC /* action-menu-bg@2x.png */,
+				53FEA20A162F52D600A783DC /* action-menu-button-check-out.png */,
+				53FEA20B162F52D600A783DC /* action-menu-button-check-out@2x.png */,
+				53FEA20E162F52D600A783DC /* action-menu-button-update.png */,
+				53FEA20F162F52D600A783DC /* action-menu-button-update@2x.png */,
 				53D6A63B15B0CD3A001A76DE /* action-menu-button-base.png */,
 				53D6A63C15B0CD3A001A76DE /* action-menu-button-base@2x.png */,
 				53D6A62415B0BB50001A76DE /* action-menu-button-minus.png */,
@@ -2695,6 +2724,14 @@
 				533E43EF161B947E00432377 /* wfh-icon@2x.png in Resources */,
 				537DEA921624A0EF00D59AC9 /* check-in-list-error.png in Resources */,
 				537DEA931624A0EF00D59AC9 /* check-in-list-error@2x.png in Resources */,
+				53FEA210162F52D600A783DC /* action-menu-bg.png in Resources */,
+				53FEA211162F52D600A783DC /* action-menu-bg@2x.png in Resources */,
+				53FEA212162F52D600A783DC /* action-menu-button-check-out.png in Resources */,
+				53FEA213162F52D600A783DC /* action-menu-button-check-out@2x.png in Resources */,
+				53FEA216162F52D600A783DC /* action-menu-button-update.png in Resources */,
+				53FEA217162F52D600A783DC /* action-menu-button-update@2x.png in Resources */,
+				5317F256162F63CE00D40405 /* action-menu-button-check-in.png in Resources */,
+				5317F257162F63CE00D40405 /* action-menu-button-check-in@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2825,6 +2862,7 @@
 				53BBC0411612B70D00F5C14B /* OATokenManager.m in Sources */,
 				68B7B126161626BA000987E2 /* NSDictionary+JsonParserWorkaround.m in Sources */,
 				537DEA8F16249A3400D59AC9 /* CheckInListViewController.m in Sources */,
+				5317F262162F804E00D40405 /* ChangeHeadlineViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
