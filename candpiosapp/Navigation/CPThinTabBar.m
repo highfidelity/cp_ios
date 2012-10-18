@@ -315,6 +315,11 @@ static NSArray *_tabBarIcons;
     [CPCheckinHandler promptForCheckout];
 }
 
+- (IBAction)changeHeadlineButtonPressed:(id)sender
+{
+    [CPCheckinHandler presentChangeHeadlineModalFromViewController:self.tabBarController];
+}
+
 - (void)toggleActionMenu:(BOOL)showingMenu checkedIn:(BOOL)checkedIn
 {    
     // set the state of isActionMenuShowing
