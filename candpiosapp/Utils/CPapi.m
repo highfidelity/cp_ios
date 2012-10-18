@@ -412,6 +412,15 @@
                          completion:completion];
 }
 
++ (void)changeHeadlineToNewHeadline:(NSString *)newHeadline
+                         completion:(void (^)(NSDictionary *, NSError *))completion
+{
+    [self makeHTTPRequestWithAction:@"changeCurrentHeadline"
+                     withParameters:[NSDictionary dictionaryWithObject:newHeadline
+                                                                forKey:@"headline"]
+                         completion:completion];
+}
+
 + (void)checkOutWithCompletion:(void (^)(NSDictionary *, NSError *))completion
 {
     [self makeHTTPRequestWithAction:@"checkout"
