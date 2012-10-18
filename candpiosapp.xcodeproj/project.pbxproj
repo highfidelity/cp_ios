@@ -62,6 +62,7 @@
 		530FC24815D4389D00838B5A /* SignupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC24715D4389D00838B5A /* SignupController.m */; };
 		5317F256162F63CE00D40405 /* action-menu-button-check-in.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317F254162F63CE00D40405 /* action-menu-button-check-in.png */; };
 		5317F257162F63CE00D40405 /* action-menu-button-check-in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317F255162F63CE00D40405 /* action-menu-button-check-in@2x.png */; };
+		5317F262162F804E00D40405 /* ChangeHeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */; };
 		53217F8C156FF89B006258F0 /* LoveSkillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */; };
 		5327E9FA15658CCE005330AD /* UIColor+EasyRGB.m in Sources */ = {isa = PBXBuildFile; fileRef = 5327E9F915658CCD005330AD /* UIColor+EasyRGB.m */; };
 		5328935C155488F5007B0157 /* CPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328935B155488F5007B0157 /* CPConstants.m */; };
@@ -591,6 +592,8 @@
 		530FC24715D4389D00838B5A /* SignupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupController.m; sourceTree = "<group>"; };
 		5317F254162F63CE00D40405 /* action-menu-button-check-in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-in.png"; sourceTree = "<group>"; };
 		5317F255162F63CE00D40405 /* action-menu-button-check-in@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-in@2x.png"; sourceTree = "<group>"; };
+		5317F260162F804E00D40405 /* ChangeHeadlineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChangeHeadlineViewController.h; path = Checkin/ChangeHeadlineViewController.h; sourceTree = "<group>"; };
+		5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChangeHeadlineViewController.m; path = Checkin/ChangeHeadlineViewController.m; sourceTree = "<group>"; };
 		53217F8A156FF89B006258F0 /* LoveSkillTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = LoveSkillTableViewCell.h; path = User/LoveSkillTableViewCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoveSkillTableViewCell.m; path = User/LoveSkillTableViewCell.m; sourceTree = "<group>"; };
 		5327E9F815658CCD005330AD /* UIColor+EasyRGB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+EasyRGB.h"; path = "Utils/UIColor+EasyRGB.h"; sourceTree = "<group>"; };
@@ -2082,6 +2085,8 @@
 				53D7ADEC15D04AC800BB041E /* CPGeofenceHandler.h */,
 				53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */,
 				536DE92A150170CC00794650 /* images */,
+				5317F260162F804E00D40405 /* ChangeHeadlineViewController.h */,
+				5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */,
 			);
 			name = Checkin;
 			sourceTree = "<group>";
@@ -2857,6 +2862,7 @@
 				53BBC0411612B70D00F5C14B /* OATokenManager.m in Sources */,
 				68B7B126161626BA000987E2 /* NSDictionary+JsonParserWorkaround.m in Sources */,
 				537DEA8F16249A3400D59AC9 /* CheckInListViewController.m in Sources */,
+				5317F262162F804E00D40405 /* ChangeHeadlineViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
