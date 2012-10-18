@@ -16,6 +16,5 @@
 @property (nonatomic, readonly) CPThinTabBar *thinBar;
 
 - (IBAction)tabBarButtonPressed:(id)sender;
-- (IBAction)checkinButtonPressed:(id)sender;
 
 @end

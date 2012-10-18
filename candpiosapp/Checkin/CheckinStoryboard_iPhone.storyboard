@@ -307,6 +307,70 @@
             </objects>
             <point key="canvasLocation" x="151" y="863"/>
         </scene>
+        <!--Change Headline View Controller-->
+        <scene sceneID="mXF-Sd-4ZF">
+            <objects>
+                <viewController storyboardIdentifier="ChangeHeadlineViewController" id="Zqs-Dm-r6p" customClass="ChangeHeadlineViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JL4-az-r3r">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" id="yjz-yl-aP7">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem id="hjJ-vL-lVW">
+                                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="9dh-Ze-TTb">
+                                            <connections>
+                                                <action selector="cancelButtonPressed:" destination="Zqs-Dm-r6p" id="9lW-6X-H0L"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <view contentMode="scaleToFill" id="wY7-N3-HwO">
+                                <rect key="frame" x="0.0" y="44" width="320" height="201"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="9pf-ez-0fS" customClass="CPPlaceholderTextView">
+                                        <rect key="frame" x="66" y="6" width="234" height="183"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert" returnKeyType="send"/>
+                                    </textView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="140" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="FZx-Q3-obR">
+                                        <rect key="frame" x="268" y="159" width="42" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="&quot;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TEc-iL-p9W">
+                                        <rect key="frame" x="13" y="2" width="38" height="77"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-BoldOblique" family="Helvetica" pointSize="74"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="a2r-PP-9l2"/>
+                    <connections>
+                        <outlet property="charCounterLabel" destination="FZx-Q3-obR" id="MRv-yf-wJ5"/>
+                        <outlet property="headlineTextView" destination="9pf-ez-0fS" id="QoM-3U-mqt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pRL-Kw-ok0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="151" y="1431"/>
+        </scene>
         <!--Check In Details View Controller-->
         <scene sceneID="ceb-49-aW5">
             <objects>
@@ -579,6 +643,72 @@
         <image name="map-marker.png" width="16" height="16"/>
         <image name="wfh-icon.png" width="30" height="21"/>
     </resources>
+    <classes>
+        <class className="CPPlaceholderTextView" superclassName="UITextView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPPlaceholderTextView.h"/>
+        </class>
+        <class className="ChangeHeadlineViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChangeHeadlineViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancelButtonPressed:"/>
+                <relationship kind="outlet" name="charCounterLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="headlineTextView" candidateClass="CPPlaceholderTextView"/>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
+            </relationships>
+        </class>
+        <class className="CheckInDetailsFrame" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInDetailsFrame.h"/>
+        </class>
+        <class className="CheckInDetailsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInDetailsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="sliderChanged:"/>
+                <relationship kind="outlet" name="blueOverlay" candidateClass="UIView"/>
+                <relationship kind="outlet" name="checkInButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="checkInDetails" candidateClass="UIView"/>
+                <relationship kind="outlet" name="checkInLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="durationHeader" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="fiveHoursLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="infoBubbleNickname" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="infoBubbleStatus" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="oneHourLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="otherUsersScrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="placeAddress" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="placeName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="TPKeyboardAvoidingScrollView"/>
+                <relationship kind="outlet" name="sevenHoursLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="statusTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="threeHoursLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timeSlider" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="userInfoBubble" candidateClass="UIView"/>
+                <relationship kind="outlet" name="venueInfo" candidateClass="UIView"/>
+                <relationship kind="outlet" name="willLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CheckInListCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInListCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="disclosureImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="distanceString" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="searchingSpinner" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CheckInListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="closeWindow:"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="TPKeyboardAvoidingScrollView" superclassName="UIScrollView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TPKeyboardAvoidingScrollView.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

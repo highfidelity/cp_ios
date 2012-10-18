@@ -9,6 +9,7 @@
 #import "CPCheckinHandler.h"
 #import "CPGeofenceHandler.h"
 #import "CheckInDetailsViewController.h"
+#import "ChangeHeadlineViewController.h"
 
 @implementation CPCheckinHandler
 
@@ -49,6 +50,15 @@ static CPCheckinHandler *sharedHandler;
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:checkInDetailsVC];
     [presentingViewController presentModalViewController:navigationController animated:YES];
+}
+
++ (void)presentChangeHeadlineModalFromViewController:(UIViewController *)presentingViewController
+{
+    // grab the ChangeHeadlineVC from check in storyboard
+    ChangeHeadlineViewController *changeHeadlineVC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil]
+                                                      instantiateViewControllerWithIdentifier:@"ChangeHeadlineViewController"];
+    
+    [presentingViewController presentModalViewController:changeHeadlineVC animated:YES];
 }
 
 + (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime

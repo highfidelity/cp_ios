@@ -58,7 +58,10 @@
 + (void)getNearestCheckedInWithCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 + (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID
-                                       :(void(^)(NSDictionary *json, NSError *error))completion; 
+                                       :(void(^)(NSDictionary *json, NSError *error))completion;
+
++ (void)changeHeadlineToNewHeadline:(NSString *)newHeadline
+                         completion:(void (^)(NSDictionary *, NSError *))completion;
 
 + (void)checkOutWithCompletion:(void(^)(NSDictionary *json, NSError *error))completion;
 
