@@ -231,7 +231,8 @@ static GRMustacheTemplate *postBadgesTemplate;
                     // error checking for load of user
                     NSLog(@"Error loading resume: %@", error);
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Resume Load"
-                                                                    message:@"An error has occurred while loading the resume.  Try again later." delegate:nil 
+                                                                    message:[error localizedDescription]
+                                                                   delegate:nil
                                                           cancelButtonTitle:@"OK" 
                                                           otherButtonTitles:nil];
                     [alert show];
@@ -543,6 +544,12 @@ static GRMustacheTemplate *postBadgesTemplate;
     self.scrollView.contentSize = CGSizeMake(320, self.resumeView.frame.origin.y + self.resumeView.frame.size.height + 50 + f2fbar);
     
     self.blueOverlayExtend.frame = CGRectMake(0, 416, 320, self.scrollView.contentSize.height - 416);
+
+    if (self.scrollToBottom) {
+        self.scrollToBottom = NO;
+        CGPoint bottomOffset = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height);
+        [self.scrollView setContentOffset:bottomOffset animated:YES];
+    }
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)aWebView {

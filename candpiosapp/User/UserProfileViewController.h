@@ -13,6 +13,7 @@
 
 @property (strong, nonatomic) User *user;
 @property (nonatomic) BOOL isF2FInvite;
+@property (nonatomic) BOOL scrollToBottom;
 
 - (IBAction)f2fInvite;
 - (void)placeUserDataOnProfile;
