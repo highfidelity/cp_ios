@@ -282,17 +282,7 @@ BOOL clearLocations = NO;
         view.alpha = startingAlpha;
         [UIView commitAnimations];
         
-        if ([view.annotation isKindOfClass:[CPVenue class]]) {
-            // Bring any checked in pins to the front of all subviews
-            CPVenue *place = (CPVenue *)view.annotation;
-            
-            if (place.checkinCount > 0) {
-                [[view superview] bringSubviewToFront:view];
-            }
-            else {
-                [[view superview] sendSubviewToBack:view];                
-            }
-        } else {
+        if (![view.annotation isKindOfClass:[CPVenue class]]) {
             [[view superview] sendSubviewToBack:view];
         }
     }    
@@ -416,7 +406,20 @@ BOOL clearLocations = NO;
 ////// map delegate
 
 - (void)mapView:(MKMapView *)thisMapView regionDidChangeAnimated:(BOOL)animated
-{   
+{
+    // bring any checked-in venues to the front of all subviews.
+    for (CPVenue *ann in [self.mapView.annotations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(self isKindOfClass: %@)", [CPVenue class]]]) {
+        MKAnnotationView *annView = [thisMapView viewForAnnotation:ann];
+        if (annView) {
+            if (ann.checkinCount > 0) {
+                [[annView superview] bringSubviewToFront:annView];
+            }
+            else {
+                [[annView superview] sendSubviewToBack:annView];
+            }
+        }
+    }
+    
     [self refreshLocationsIfNeeded];
 }
 
