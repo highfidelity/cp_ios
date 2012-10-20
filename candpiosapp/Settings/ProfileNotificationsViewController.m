@@ -88,7 +88,7 @@
             NSString *checkInOnly = (NSString *)[dict objectForKey:@"checked_in_only"];
             [[self checkedInOnlySwitch] setOn:[checkInOnly isEqualToString:@"1"]];
 
-            NSString *notifyOnEndorsement = (NSString *)[dict objectForKey:@"push_contacts_endorsement"];
+            NSString *notifyOnEndorsement = [dict objectForKey:@"push_contacts_endorsement"];
             [[self notifyOnEndorsementSwitch] setOn:[notifyOnEndorsement isEqualToString:@"1"]];
 
             NSString *quietTime = (NSString *)[dict objectForKey:@"quiet_time"];
@@ -150,7 +150,7 @@
 
     [CPapi setNotificationSettingsForDistance:distance
                                  andCheckedId:self.checkedInOnlySwitch.on
-                           contactEndorsement:self.notifyOnEndorsementSwitch.on
+                       receiveContactEndorsed:self.notifyOnEndorsementSwitch.on
                                     quietTime:self.quietTimeSwitch.on
                                 quietTimeFrom:[self quietTimeFromDate]
                                   quietTimeTo:[self quietTimeToDate]
@@ -272,8 +272,4 @@
     return dateString;
 }
 
-- (void)viewDidUnload {
-    [self setNotifyOnEndorsementSwitch:nil];
-    [super viewDidUnload];
-}
 @end

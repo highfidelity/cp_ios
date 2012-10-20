@@ -117,7 +117,7 @@
 
 + (void)setNotificationSettingsForDistance:(NSString *)distance
                               andCheckedId:(BOOL)checkedOnly
-                        contactEndorsement:(BOOL)contactEndorsement
+                    receiveContactEndorsed:(BOOL)receiveContactEndorsed
                                  quietTime:(BOOL)quietTime
                              quietTimeFrom:(NSDate *)quietTimeFrom
                                quietTimeTo:(NSDate *)quietTimeTo
