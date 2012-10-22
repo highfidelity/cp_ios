@@ -75,7 +75,7 @@ static FaceToFaceHelper *sharedHelper;
         FaceToFaceAcceptDeclineViewController *f2fVC = [f2fstory instantiateInitialViewController];
         
         // setup a user that we will pass to the UserProfileViewController
-        User *user = [[User alloc] init];
+        CPUser *user = [[CPUser alloc] init];
         user.userID = userId;
         
         // load the user's data so the F2F invite screen will show it all when it gets presented

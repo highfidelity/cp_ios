@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import "User.h"
+#import "CPUser.h"
 #import "CPVenue.h"
 #import <CoreLocation/CoreLocation.h>
 
@@ -36,7 +36,7 @@
 - (IBAction)locateMe:(id)sender;
 
 # pragma mark - Active Venue and Active User grabbing
-- (User *)userFromActiveUsers:(int)userID;
+- (CPUser *)userFromActiveUsers:(int)userID;
 - (CPVenue *)venueFromActiveVenues:(int)venueID;
 
 @end

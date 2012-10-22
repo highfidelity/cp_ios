@@ -83,7 +83,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
             
             UINavigationController *chatNavController = [[UINavigationController alloc] initWithRootViewController:oneOnOneChat];
             
-            oneOnOneChat.user = [[User alloc] init];
+            oneOnOneChat.user = [[CPUser alloc] init];
             oneOnOneChat.user.userID = [userId intValue];
             oneOnOneChat.user.nickname = nickname;
 

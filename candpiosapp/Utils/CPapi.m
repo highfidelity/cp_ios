@@ -253,7 +253,7 @@
     NSLog(@"One on one chat sent, or something: %@", response);
 }
 
-+ (void)oneOnOneChatGetHistoryWith:(User *)user
++ (void)oneOnOneChatGetHistoryWith:(CPUser *)user
                         completion:(void (^)(NSDictionary *, NSError *))completion
 {
     /*

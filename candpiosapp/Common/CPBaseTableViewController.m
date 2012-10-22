@@ -110,22 +110,22 @@
 
 # pragma mark - CPUserActionCellDelegate
 
-- (void)cell:(CPUserActionCell*)cell didSelectSendLoveToUser:(User*)user 
+- (void)cell:(CPUserActionCell*)cell didSelectSendLoveToUser:(CPUser*)user 
 {
     [CPUserAction cell:cell sendLoveFromViewController:self];
 }
 
-- (void)cell:(CPUserActionCell*)cell didSelectSendMessageToUser:(User*)user 
+- (void)cell:(CPUserActionCell*)cell didSelectSendMessageToUser:(CPUser*)user 
 {
     [CPUserAction cell:cell sendMessageFromViewController:self];
 }
 
-- (void)cell:(CPUserActionCell*)cell didSelectExchangeContactsWithUser:(User*)user
+- (void)cell:(CPUserActionCell*)cell didSelectExchangeContactsWithUser:(CPUser*)user
 {
     [CPUserAction cell:cell exchangeContactsFromViewController:self];
 }
 
-- (void)cell:(CPUserActionCell*)cell didSelectRowWithUser:(User*)user 
+- (void)cell:(CPUserActionCell*)cell didSelectRowWithUser:(CPUser*)user 
 {
     [CPUserAction cell:cell showProfileFromViewController:self];
 }

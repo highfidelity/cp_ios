@@ -35,7 +35,7 @@
                 CLLocation *userLocation = [CPAppDelegate currentOrDefaultLocation];
                 NSArray *people = [[json objectForKey:@"payload"] valueForKey:@"people"];
                 for (NSDictionary *personJSON in people) {
-                    User *user = [[User alloc] initFromDictionary:personJSON];
+                    CPUser *user = [[CPUser alloc] initFromDictionary:personJSON];
 
                     CLLocation *location = [[CLLocation alloc] initWithLatitude:user.location.latitude longitude:user.location.longitude];
                     user.distance = [location distanceFromLocation:userLocation];
@@ -100,7 +100,7 @@
     cell.delegate = self;
     
     // Configure the cell...
-    User *user = [self.checkedInUsers objectAtIndex:(NSUInteger) indexPath.row];
+    CPUser *user = [self.checkedInUsers objectAtIndex:(NSUInteger) indexPath.row];
     cell.user = user;
     
     // reset the nickname label since this is a reusable cell

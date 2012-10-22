@@ -9,7 +9,7 @@
 #import "MapDataSet.h"
 #import "MKAnnotationView+SpecialPin.h"
 #import "VenueInfoViewController.h"
-#import "User.h"
+#import "CPUser.h"
 
 @interface MapTabController() 
 -(void)zoomTo:(CLLocationCoordinate2D)loc;
@@ -133,7 +133,7 @@ BOOL clearLocations = NO;
 // and grab them from there and update them when new calls are made
 // instead of reloaded them everytime the map is reloaded and losing the ones no longer on the map
 
-- (User *)userFromActiveUsers:(int)userID
+- (CPUser *)userFromActiveUsers:(int)userID
 {
     return [self.dataset.activeUsers objectForKey:[NSString stringWithFormat:@"%d", userID]];
 }

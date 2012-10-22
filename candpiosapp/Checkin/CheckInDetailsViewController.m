@@ -261,7 +261,7 @@
             // reverse the response so we get latest checkins first
             for (NSDictionary *user in [responseArray reverseObjectEnumerator]) {
                 
-                User *checkedInUser = [[User alloc] init];
+                CPUser *checkedInUser = [[CPUser alloc] init];
                 checkedInUser.nickname = [user objectForKey:@"nickname"];
                 checkedInUser.status = [user objectForKey:@"status_text"];
                 checkedInUser.checkInIsVirtual = [[user objectForKey:@"is_virtual"] boolValue];

@@ -1,5 +1,5 @@
 //
-//  User.h
+//  CPUser.h
 //  candpiosapp
 //
 //  Created by Stephen Birarda on 2/1/12.
@@ -12,7 +12,7 @@
 
 #define kDaysOfTrialAccessWithoutInviteCode 30
 
-@interface User : NSObject <NSCoding>
+@interface CPUser : NSObject <NSCoding>
 
 @property (strong, nonatomic) NSString *nickname;
 
@@ -75,6 +75,6 @@
 - (void)setJoinDateFromJSONString:(NSString *)dateString;
 
 - (BOOL)isDaysOfTrialAccessWithoutInviteCodeOK;
-- (NSComparisonResult) compareDistanceToUser:(User *)otherUser;
+- (NSComparisonResult) compareDistanceToUser:(CPUser *)otherUser;
 
 @end

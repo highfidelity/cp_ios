@@ -206,7 +206,7 @@
 		5384B2501554823A00A4E0C1 /* CPVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B24F1554823A00A4E0C1 /* CPVenue.m */; };
 		5384B2531554825F00A4E0C1 /* FoursquareAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2521554825F00A4E0C1 /* FoursquareAPIClient.m */; };
 		5384B2561554827600A4E0C1 /* MapDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2551554827600A4E0C1 /* MapDataSet.m */; };
-		5384B2591554831400A4E0C1 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2581554831400A4E0C1 /* User.m */; };
+		5384B2591554831400A4E0C1 /* CPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2581554831400A4E0C1 /* CPUser.m */; };
 		5384B25C1554833D00A4E0C1 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B25B1554833D00A4E0C1 /* Settings.m */; };
 		538EF4331585352E00249AAF /* EditLinkedInInvitationMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538EF42E1585352E00249AAF /* EditLinkedInInvitationMessageViewController.m */; };
 		538EF4341585352E00249AAF /* GenerateInvitationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538EF4301585352E00249AAF /* GenerateInvitationCodeViewController.m */; };
@@ -769,8 +769,8 @@
 		5384B2521554825F00A4E0C1 /* FoursquareAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FoursquareAPIClient.m; path = Utils/FoursquareAPIClient.m; sourceTree = "<group>"; };
 		5384B2541554827600A4E0C1 /* MapDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapDataSet.h; path = Map/MapDataSet.h; sourceTree = "<group>"; };
 		5384B2551554827600A4E0C1 /* MapDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapDataSet.m; path = Map/MapDataSet.m; sourceTree = "<group>"; };
-		5384B2571554831400A4E0C1 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = User.h; path = User/User.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		5384B2581554831400A4E0C1 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = User/User.m; sourceTree = "<group>"; };
+		5384B2571554831400A4E0C1 /* CPUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CPUser.h; path = User/CPUser.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		5384B2581554831400A4E0C1 /* CPUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPUser.m; path = User/CPUser.m; sourceTree = "<group>"; };
 		5384B25A1554833D00A4E0C1 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Settings.h; path = Utils/Settings.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5384B25B1554833D00A4E0C1 /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Settings.m; path = Utils/Settings.m; sourceTree = "<group>"; };
 		538EF42D1585352E00249AAF /* EditLinkedInInvitationMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditLinkedInInvitationMessageViewController.h; sourceTree = "<group>"; };
@@ -1592,8 +1592,8 @@
 				53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */,
 				694323A715213D9000EBF585 /* mustaches */,
 				530C5DB81575E516003505AC /* sounds */,
-				5384B2571554831400A4E0C1 /* User.h */,
-				5384B2581554831400A4E0C1 /* User.m */,
+				5384B2571554831400A4E0C1 /* CPUser.h */,
+				5384B2581554831400A4E0C1 /* CPUser.m */,
 				5328939915548EB6007B0157 /* UserListTableViewController.h */,
 				5328939A15548EB6007B0157 /* UserListTableViewController.m */,
 				537255B2156AEBA800263CFA /* UserLoveViewController.h */,
@@ -2736,7 +2736,7 @@
 				5384B2501554823A00A4E0C1 /* CPVenue.m in Sources */,
 				5384B2531554825F00A4E0C1 /* FoursquareAPIClient.m in Sources */,
 				5384B2561554827600A4E0C1 /* MapDataSet.m in Sources */,
-				5384B2591554831400A4E0C1 /* User.m in Sources */,
+				5384B2591554831400A4E0C1 /* CPUser.m in Sources */,
 				5384B25C1554833D00A4E0C1 /* Settings.m in Sources */,
 				5328935C155488F5007B0157 /* CPConstants.m in Sources */,
 				5328936115548902007B0157 /* CheckInDetailsFrame.m in Sources */,

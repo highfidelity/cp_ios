@@ -149,7 +149,7 @@
 - (NSArray *)orderedPreviousUsers {
     // sort the previous users by the number of checkins here
     if (!_orderedPreviousUsers) {
-        NSArray *sortedPreviousUsers = [self.previousUsers sortedArrayUsingComparator:^NSComparisonResult(User *u1, User *u2) {
+        NSArray *sortedPreviousUsers = [self.previousUsers sortedArrayUsingComparator:^NSComparisonResult(CPUser *u1, CPUser *u2) {
             int ch1 = [[[self.venue.activeUsers objectForKey:[NSString stringWithFormat:@"%d", u1.userID]] objectForKey:@"checkin_count"] integerValue];
             int ch2 = [[[self.venue.activeUsers objectForKey:[NSString stringWithFormat:@"%d", u2.userID]] objectForKey:@"checkin_count"] integerValue];
             if (ch1 > ch2) {
@@ -179,7 +179,7 @@
     self.usersShown =  [NSMutableSet set];
     
     for (NSString *userID in activeUsers) {
-        User *user = [[CPAppDelegate settingsMenuController].mapTabController userFromActiveUsers:[userID integerValue]];
+        CPUser *user = [[CPAppDelegate settingsMenuController].mapTabController userFromActiveUsers:[userID integerValue]];
         
         // make sure we get a user here
         // otherwise we'll crash when trying to add nil to self.previousUsers
@@ -210,7 +210,7 @@
     [self.tableView reloadData];
 }
                             
-- (void)addUser:(User *)user
+- (void)addUser:(CPUser *)user
     toArrayForJobCategory:(NSString *)jobCategory
 {
     //If the jobCategory has a null value then don't show anything
@@ -502,7 +502,7 @@
             cell = [[VenueUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             [CPUIHelper changeFontForLabel:cell.nameLabel toLeagueGothicOfSize:18];
         }
-        User *user = [self.orderedPreviousUsers objectAtIndex:indexPath.row];
+        CPUser *user = [self.orderedPreviousUsers objectAtIndex:indexPath.row];
         cell.user = user;
         if (indexPath.row == self.orderedPreviousUsers.count - 1) {
             cell.separatorView.hidden = YES;
@@ -525,7 +525,7 @@
 #define BORDER_SIZE 1
 #define IMAGE_TOP_OFFSET 5
 
-- (UIButton *)thumbnailButtonForUser:(User *)user
+- (UIButton *)thumbnailButtonForUser:(CPUser *)user
                        withSquareDim:(CGFloat)thumbnailDim
                           andXOffset:(CGFloat)xOffset
                           andYOffset:(CGFloat)yOffset
@@ -573,7 +573,7 @@
         CGFloat thumbnailDim = 71;
         CGFloat xOffset = 10;
         CGFloat gradientWidth = 45;
-        for (User *user in [self.currentUsers objectForKey:category]) {
+        for (CPUser *user in [self.currentUsers objectForKey:category]) {
             UIButton *thumbButton = [self thumbnailButtonForUser:user
                                                    withSquareDim:thumbnailDim
                                                       andXOffset:xOffset

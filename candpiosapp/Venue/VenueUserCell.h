@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "User.h"
+#import "CPUser.h"
 
 @interface VenueUserCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *hoursLabel;
-@property (strong, nonatomic) User *user;
+@property (strong, nonatomic) CPUser *user;
 @property (weak, nonatomic) IBOutlet UIView *visibleView;
 @property (weak, nonatomic) IBOutlet UIView *separatorView;
 

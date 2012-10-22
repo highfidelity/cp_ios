@@ -100,7 +100,7 @@ static CPUserSessionHandler *sharedHandler;
     NSString *userId = [userInfo objectForKey:@"id"];
     NSString  *nickname = [userInfo objectForKey:@"nickname"];
     
-    User *currUser = [[User alloc] init];
+    CPUser *currUser = [[CPUser alloc] init];
     currUser.nickname = nickname;
     currUser.userID = [userId intValue];
     [currUser setEnteredInviteCodeFromJSONString:[userInfo objectForKey:@"entered_invite_code"]];
@@ -164,9 +164,9 @@ static CPUserSessionHandler *sharedHandler;
 
 + (void)syncCurrentUserWithWebAndCheckValidLogin
 {
-    User *currentUser = [CPUserDefaultsHandler currentUser];
+    CPUser *currentUser = [CPUserDefaultsHandler currentUser];
     if (currentUser.userID) {
-        User *webSyncUser = [[User alloc] init];
+        CPUser *webSyncUser = [[CPUser alloc] init];
         webSyncUser.userID = currentUser.userID;
 
         [webSyncUser loadUserResumeOnQueue:nil completion:^(NSError *error) {

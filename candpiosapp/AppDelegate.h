@@ -17,7 +17,7 @@
 
 @class AFHTTPClient;
 @class SignupController;
-@class User;
+@class CPUser;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate, CLLocationManagerDelegate>
 

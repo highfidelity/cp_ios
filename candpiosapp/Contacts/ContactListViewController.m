@@ -51,7 +51,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 - (void)handleSendAcceptOrDeclineComletionWithJson:(NSDictionary *)json andError:(NSError *)error;
 - (void)updateBadgeValue;
 - (NSDictionary *)contactForIndexPath:(NSIndexPath *)indexPath;
-- (User *)userForIndexPath:(NSIndexPath *)indexPath;
+- (CPUser *)userForIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
@@ -521,9 +521,9 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
             objectAtIndex:(NSUInteger)indexPath.row];
 }
 
-- (User *)userForIndexPath:(NSIndexPath *)indexPath {
+- (CPUser *)userForIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *contact = [self contactForIndexPath:indexPath];
-    User *user = [[User alloc] init];
+    CPUser *user = [[CPUser alloc] init];
     user.nickname = [contact objectForKey:@"nickname"];
     user.userID = [[contact objectForKey:@"id"] intValue];
     user.status = [contact objectForKey:@"status_text"];

@@ -11,7 +11,7 @@
 
 @interface FaceToFaceAcceptDeclineViewController : UIViewController <UITextFieldDelegate>
 
-@property (strong, nonatomic) User *user;
+@property (strong, nonatomic) CPUser *user;
 @property (strong, nonatomic) UserProfileViewController *userProfile;
 @property (weak, nonatomic) IBOutlet UIView *actionBar;
 @property (weak, nonatomic) IBOutlet UILabel *actionBarHeader;

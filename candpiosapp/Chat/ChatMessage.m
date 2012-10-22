@@ -11,8 +11,8 @@
 @implementation ChatMessage
 
 - (id)initWithMessage:(NSString *)newMessage
-               toUser:(User *)toUser
-             fromUser:(User *)fromUser
+               toUser:(CPUser *)toUser
+             fromUser:(CPUser *)fromUser
 {
     if (self = [super init]) {
         self.message = newMessage;
@@ -32,8 +32,8 @@
 }
 
 - (id) initWithMessage:(NSString *)newMessage
-                toUser:(User *)toUser
-              fromUser:(User *)fromUser
+                toUser:(CPUser *)toUser
+              fromUser:(CPUser *)fromUser
                   date:(NSDate *)date
 {
     if (self = [self initWithMessage:newMessage

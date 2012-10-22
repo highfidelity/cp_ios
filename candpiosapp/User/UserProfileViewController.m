@@ -169,7 +169,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     self.tapRecon = nil;
 }
 
-- (void)setUser:(User *)newUser
+- (void)setUser:(CPUser *)newUser
 {
     // assign the user
     _user = newUser;
@@ -515,7 +515,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     
     if ([url.scheme isEqualToString:@"sponsor-resume"]) {
         
-        User *user = [[User alloc] init];
+        CPUser *user = [[CPUser alloc] init];
         user.nickname = self.user.sponsorNickname;
         user.userID = self.user.sponsorId;
         

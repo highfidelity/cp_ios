@@ -8,7 +8,7 @@
 
 #import "EnterInvitationCodeViewController.h"
 #import "PushModalViewControllerFromLeftSegue.h"
-#import "User.h"
+#import "CPUser.h"
 #import "CPUserSessionHandler.h"
 
 @interface EnterInvitationCodeViewController () <UITextFieldDelegate, UIAlertViewDelegate>

@@ -1,19 +1,19 @@
 //
-//  User.m
+//  CPUser.m
 //  candpiosapp
 //
 //  Created by Stephen Birarda on 2/1/12.
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import "User.h"
+#import "CPUser.h"
 #import "CPSkill.h"
 #import "MapDataSet.h"
 #import "GTMNSString+HTML.h"
 #import "CPCheckinHandler.h"
 #import "ContactListViewController.h"
 
-@implementation User
+@implementation CPUser
 
 -(id)initFromDictionary:(NSDictionary *)userDict
 {
@@ -384,7 +384,7 @@
     }];
 }
 
-- (NSComparisonResult) compareDistanceToUser:(User *)otherUser {
+- (NSComparisonResult) compareDistanceToUser:(CPUser *)otherUser {
     NSNumber *distanceA = [NSNumber numberWithDouble:self.distance];
     NSNumber *distanceB = [NSNumber numberWithDouble:otherUser.distance];
     NSComparisonResult distanceComparison = [distanceA compare:distanceB];

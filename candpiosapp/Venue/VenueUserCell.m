@@ -29,7 +29,7 @@
     self.selectedBackgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"highlight-gradient"]];
 }
 
-- (void) setUser:(User *)user {
+- (void) setUser:(CPUser *)user {
     _user = user;
     //If the user is checkedIn virutally add a virtual badge to their image
     if(self.user.checkedIn) {

@@ -147,7 +147,7 @@ static NSOperationQueue *sMapQueue = nil;
             NSLog(@"Got %d users.", [usersArray count]);
 #endif
             for (NSDictionary *userDict in usersArray) {
-                User *user = [[User alloc] initFromDictionary:userDict];
+                CPUser *user = [[CPUser alloc] initFromDictionary:userDict];
                 
                 int venue_id = [[userDict objectForKey:@"venue_id"] integerValue];
                 user.placeCheckedIn = [self.activeVenues objectForKey:[NSString stringWithFormat:@"%d", venue_id]];

@@ -13,7 +13,7 @@
 
 @interface UserLoveViewController : UIViewController
 
-@property (strong, nonatomic) User *user;
+@property (strong, nonatomic) CPUser *user;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
 @property (weak, nonatomic) IBOutlet CPPlaceholderTextView *descriptionTextView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;

@@ -28,7 +28,7 @@
 // Chat functions
 + (void)sendOneOnOneChatMessage:(NSString *)message
                         toUser:(int)userId;
-+ (void)oneOnOneChatGetHistoryWith:(User *)User
++ (void)oneOnOneChatGetHistoryWith:(CPUser *)User
                         completion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Map Dataset

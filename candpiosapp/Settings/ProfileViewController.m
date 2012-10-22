@@ -19,7 +19,7 @@
 
 @interface ProfileViewController () <CPTouchViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
 
-@property (strong, nonatomic) User *currentUser;
+@property (strong, nonatomic) CPUser *currentUser;
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
 @property (strong, nonatomic) NSString *pendingEmail;
 @property (strong, nonatomic) UIBarButtonItem *gearButton;
@@ -230,7 +230,7 @@
 
 - (void)syncWithWebData
 {
-    User *webSyncUser = [[User alloc] init];
+    CPUser *webSyncUser = [[CPUser alloc] init];
 
     // load the user's data from the web by their id
     webSyncUser.userID = self.currentUser.userID;
