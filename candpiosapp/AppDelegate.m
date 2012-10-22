@@ -65,6 +65,9 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     sigaction(SIGILL, &newSignalAction, NULL);
     sigaction(SIGBUS, &newSignalAction, NULL);
     
+    // temporarily handle decoding of old User object
+    [NSKeyedUnarchiver setClass:[CPUser class] forClassName:@"User"];
+    
     [self setupTestFlightSDK];
     [self setupFlurryAnalytics];
     
