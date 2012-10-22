@@ -2331,9 +2331,6 @@
 		871EFAFB14AE9C810030658B = {
 			isa = PBXGroup;
 			children = (
-				534FD38E163605CD0052C88D /* libxml2.dylib */,
-				534FD38C163605B80052C88D /* CoreData.framework */,
-				E46BA2C0161CD89500CA0440 /* CoreText.framework */,
 				871EFB1014AE9C820030658B /* candpiosapp */,
 				871EFB0914AE9C820030658B /* Frameworks */,
 				871EFB0714AE9C820030658B /* Products */,
@@ -2353,11 +2350,14 @@
 			children = (
 				E4C35C4014F1323A009B6DBF /* AudioToolbox.framework */,
 				3267F66F14D919FE00BFFBAA /* CFNetwork.framework */,
+				534FD38C163605B80052C88D /* CoreData.framework */,
 				871EFB0E14AE9C820030658B /* CoreGraphics.framework */,
 				8726C6C314B00245004E4872 /* CoreLocation.framework */,
 				3267F67B14D91A3600BFFBAA /* CoreTelephony.framework */,
+				E46BA2C0161CD89500CA0440 /* CoreText.framework */,
 				871EFB0C14AE9C820030658B /* Foundation.framework */,
 				3267F67914D91A2E00BFFBAA /* libsqlite3.dylib */,
+				534FD38E163605CD0052C88D /* libxml2.dylib */,
 				3267F67714D91A2600BFFBAA /* libz.dylib */,
 				871EFB5E14AEB4950030658B /* MapKit.framework */,
 				3267F67114D91A0B00BFFBAA /* MobileCoreServices.framework */,
