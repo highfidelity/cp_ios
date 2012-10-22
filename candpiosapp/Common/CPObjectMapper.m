@@ -22,7 +22,10 @@
 
 + (void)setupAllRKObjectMappings
 {
+    RKObjectMappingProvider *sharedMapper = [RKObjectManager sharedManager].mappingProvider;
     
+    [sharedMapper setMapping:[self venueRKObjectMapping] forKeyPath:@"venues"];
+    [sharedMapper setMapping:[self userObjectMapping] forKeyPath:@"users"];
 }
 
 + (RKObjectMapping *)venueRKObjectMapping
@@ -31,13 +34,33 @@
     
     if (!_venueRKObjectMapping) {
         _venueRKObjectMapping = [RKObjectMapping mappingForClass:[CPVenue class]];
-        [_venueRKObjectMapping mapAttributes:@"name", @"address", nil];
+        
         [_venueRKObjectMapping mapKeyPath:@"id" toAttribute:@"venueID"];
+        [_venueRKObjectMapping mapAttributes:@"name", @"address", nil];
         [_venueRKObjectMapping mapKeyPath:@"foursquare_id" toAttribute:@"foursquareID"];
         [_venueRKObjectMapping mapKeyPath:@"photo_url" toAttribute:@"photoURL"];
     }
     
     return _venueRKObjectMapping;
+}
+
++ (RKObjectMapping *)userObjectMapping
+{
+    static RKObjectMapping *_userObjectMapping;
+    
+    if (!_userObjectMapping) {
+        _userObjectMapping = [RKObjectMapping mappingForClass:[CPUser class]];
+        
+        [_userObjectMapping mapKeyPath:@"id" toAttribute:@"userID"];
+        [_userObjectMapping mapAttributes:@"nickname",
+                                          @"major_job_category",
+                                          @"minor_job_category",
+                                          nil];
+        [_userObjectMapping mapKeyPath:@"filename" toAttribute:@"photoURLString"];
+        [_userObjectMapping mapKeyPath:@"is_contact" toAttribute:@"isContact"];
+    }
+    
+    return _userObjectMapping;
 }
 
 @end
