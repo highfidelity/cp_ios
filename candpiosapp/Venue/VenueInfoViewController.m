@@ -131,7 +131,7 @@ static VenueInfoViewController *_onScreenVenueVC;
     return _userObjectsForUsersOnScreen;
 }
 
-- (void)addUserToDictionaryOfUserObjectsFromUser:(User *)user
+- (void)addUserToDictionaryOfUserObjectsFromUser:(CPUser *)user
 {
     [self.userObjectsForUsersOnScreen setObject:user forKey:[NSString stringWithFormat:@"%d", user.userID]];
 }
