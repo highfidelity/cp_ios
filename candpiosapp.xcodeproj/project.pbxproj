@@ -55,13 +55,15 @@
 		530C5DB71575E4FC003505AC /* CPSoundEffectsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */; };
 		530C5DBB1575E516003505AC /* send-love-switch-sound-off.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */; };
 		530C5DBC1575E516003505AC /* send-love-switch-sound-on.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */; };
-		530FC23A15D42BBD00838B5A /* EnterInvitationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC22B15D42BBD00838B5A /* EnterInvitationCodeViewController.m */; };
 		530FC23F15D42BBD00838B5A /* LinkedInLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC23215D42BBD00838B5A /* LinkedInLoginController.m */; };
 		530FC24115D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 530FC23515D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard */; };
 		530FC24215D42BBD00838B5A /* SmartererLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC23715D42BBD00838B5A /* SmartererLoginController.m */; };
 		530FC24515D4335E00838B5A /* CPUserSessionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC24415D4335E00838B5A /* CPUserSessionHandler.m */; };
 		530FC24815D4389D00838B5A /* SignupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC24715D4389D00838B5A /* SignupController.m */; };
 		5319DDAE16360A7000451B13 /* CPObjectMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5319DDAD16360A7000451B13 /* CPObjectMapper.m */; };
+		5317F256162F63CE00D40405 /* action-menu-button-check-in.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317F254162F63CE00D40405 /* action-menu-button-check-in.png */; };
+		5317F257162F63CE00D40405 /* action-menu-button-check-in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317F255162F63CE00D40405 /* action-menu-button-check-in@2x.png */; };
+		5317F262162F804E00D40405 /* ChangeHeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */; };
 		53217F8C156FF89B006258F0 /* LoveSkillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */; };
 		5327E9FA15658CCE005330AD /* UIColor+EasyRGB.m in Sources */ = {isa = PBXBuildFile; fileRef = 5327E9F915658CCD005330AD /* UIColor+EasyRGB.m */; };
 		5328935C155488F5007B0157 /* CPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328935B155488F5007B0157 /* CPConstants.m */; };
@@ -213,7 +215,6 @@
 		5384B2591554831400A4E0C1 /* CPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2581554831400A4E0C1 /* CPUser.m */; };
 		5384B25C1554833D00A4E0C1 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B25B1554833D00A4E0C1 /* Settings.m */; };
 		538EF4331585352E00249AAF /* EditLinkedInInvitationMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538EF42E1585352E00249AAF /* EditLinkedInInvitationMessageViewController.m */; };
-		538EF4341585352E00249AAF /* GenerateInvitationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538EF4301585352E00249AAF /* GenerateInvitationCodeViewController.m */; };
 		538EF4351585352E00249AAF /* InviteLinkedInConnectionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538EF4321585352E00249AAF /* InviteLinkedInConnectionsTableViewController.m */; };
 		538EF4381585354100249AAF /* LinkedInConnectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 538EF4371585354100249AAF /* LinkedInConnectionCell.m */; };
 		5396E0D814E466C200E33E0E /* LeagueGothic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5396E0D714E466C200E33E0E /* LeagueGothic.otf */; };
@@ -336,23 +337,27 @@
 		53E2062C150596180000FA8D /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53E2062A150596180000FA8D /* MainStoryboard_iPhone.storyboard */; };
 		53FD32F715915102000448EF /* tab-login.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FD32F515915102000448EF /* tab-login.png */; };
 		53FD32F815915102000448EF /* tab-login@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FD32F615915102000448EF /* tab-login@2x.png */; };
+		53FEA210162F52D600A783DC /* action-menu-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FEA208162F52D600A783DC /* action-menu-bg.png */; };
+		53FEA211162F52D600A783DC /* action-menu-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FEA209162F52D600A783DC /* action-menu-bg@2x.png */; };
+		53FEA212162F52D600A783DC /* action-menu-button-check-out.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FEA20A162F52D600A783DC /* action-menu-button-check-out.png */; };
+		53FEA213162F52D600A783DC /* action-menu-button-check-out@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FEA20B162F52D600A783DC /* action-menu-button-check-out@2x.png */; };
+		53FEA216162F52D600A783DC /* action-menu-button-update.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FEA20E162F52D600A783DC /* action-menu-button-update.png */; };
+		53FEA217162F52D600A783DC /* action-menu-button-update@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FEA20F162F52D600A783DC /* action-menu-button-update@2x.png */; };
 		53FF95ED156D5D0E0046ADDE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FF95EC156D5D0E0046ADDE /* StoreKit.framework */; };
 		5F8413E115619721003B43B8 /* UserProfileLinkedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */; };
 		5FAF891F1555FA6600247B95 /* virtual-check-in-badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAF891D1555FA6600247B95 /* virtual-check-in-badge.png */; };
 		5FAF89201555FA6600247B95 /* virtual-check-in-badge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAF891E1555FA6600247B95 /* virtual-check-in-badge@2x.png */; };
 		68B7B126161626BA000987E2 /* NSDictionary+JsonParserWorkaround.m in Sources */ = {isa = PBXBuildFile; fileRef = 68B7B125161626BA000987E2 /* NSDictionary+JsonParserWorkaround.m */; };
+		68C26F2316376E82007E9587 /* quick-action-endorse.png in Resources */ = {isa = PBXBuildFile; fileRef = 68C26F2116376E82007E9587 /* quick-action-endorse.png */; };
+		68C26F2416376E82007E9587 /* quick-action-endorse@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 68C26F2216376E82007E9587 /* quick-action-endorse@2x.png */; };
 		69112E6A1580D41B009CCBD0 /* contact-cell-bg-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 69112E681580D41B009CCBD0 /* contact-cell-bg-selected.png */; };
 		69112E6B1580D41B009CCBD0 /* contact-cell-bg-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69112E691580D41B009CCBD0 /* contact-cell-bg-selected@2x.png */; };
 		69120B73156D3EA900521E3F /* CPLinkedInAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 69120B71156D3C2200521E3F /* CPLinkedInAPI.m */; };
 		692552E0155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 692552DF155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m */; };
-		692D768B15D47AD000BA6963 /* texture-light_toast-dark-960wide.png in Resources */ = {isa = PBXBuildFile; fileRef = 692D768915D47ACD00BA6963 /* texture-light_toast-dark-960wide.png */; };
-		692D768C15D47AD000BA6963 /* texture-light_toast-dark-960wide@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 692D768A15D47ACE00BA6963 /* texture-light_toast-dark-960wide@2x.png */; };
 		692D769415D4852300BA6963 /* quick-action-chat.png in Resources */ = {isa = PBXBuildFile; fileRef = 692D768E15D4851B00BA6963 /* quick-action-chat.png */; };
 		692D769515D4852300BA6963 /* quick-action-chat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 692D768F15D4851B00BA6963 /* quick-action-chat@2x.png */; };
 		692D769615D4852300BA6963 /* quick-action-exchange-cards.png in Resources */ = {isa = PBXBuildFile; fileRef = 692D769015D4851D00BA6963 /* quick-action-exchange-cards.png */; };
 		692D769715D4852300BA6963 /* quick-action-exchange-cards@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 692D769115D4851F00BA6963 /* quick-action-exchange-cards@2x.png */; };
-		692D769815D4852300BA6963 /* quick-action-recognize.png in Resources */ = {isa = PBXBuildFile; fileRef = 692D769215D4852000BA6963 /* quick-action-recognize.png */; };
-		692D769915D4852300BA6963 /* quick-action-recognize@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 692D769315D4852200BA6963 /* quick-action-recognize@2x.png */; };
 		694323A915213D9000EBF585 /* UserResume.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 694323A815213D9000EBF585 /* UserResume.mustache */; };
 		6947F40015372B59005D9958 /* exchange-cards.png in Resources */ = {isa = PBXBuildFile; fileRef = 6947F3FE15372B59005D9958 /* exchange-cards.png */; };
 		6947F40115372B59005D9958 /* exchange-cards@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6947F3FF15372B59005D9958 /* exchange-cards@2x.png */; };
@@ -623,8 +628,6 @@
 		530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPSoundEffectsManager.m; sourceTree = "<group>"; };
 		530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-off.wav"; sourceTree = "<group>"; };
 		530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-on.wav"; sourceTree = "<group>"; };
-		530FC22A15D42BBD00838B5A /* EnterInvitationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterInvitationCodeViewController.h; sourceTree = "<group>"; };
-		530FC22B15D42BBD00838B5A /* EnterInvitationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterInvitationCodeViewController.m; sourceTree = "<group>"; };
 		530FC23115D42BBD00838B5A /* LinkedInLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedInLoginController.h; sourceTree = "<group>"; };
 		530FC23215D42BBD00838B5A /* LinkedInLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedInLoginController.m; sourceTree = "<group>"; };
 		530FC23515D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignupStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
@@ -636,6 +639,10 @@
 		530FC24715D4389D00838B5A /* SignupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupController.m; sourceTree = "<group>"; };
 		5319DDAC16360A7000451B13 /* CPObjectMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPObjectMapper.h; sourceTree = "<group>"; };
 		5319DDAD16360A7000451B13 /* CPObjectMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPObjectMapper.m; sourceTree = "<group>"; };
+		5317F254162F63CE00D40405 /* action-menu-button-check-in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-in.png"; sourceTree = "<group>"; };
+		5317F255162F63CE00D40405 /* action-menu-button-check-in@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-in@2x.png"; sourceTree = "<group>"; };
+		5317F260162F804E00D40405 /* ChangeHeadlineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChangeHeadlineViewController.h; path = Checkin/ChangeHeadlineViewController.h; sourceTree = "<group>"; };
+		5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChangeHeadlineViewController.m; path = Checkin/ChangeHeadlineViewController.m; sourceTree = "<group>"; };
 		53217F8A156FF89B006258F0 /* LoveSkillTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = LoveSkillTableViewCell.h; path = User/LoveSkillTableViewCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoveSkillTableViewCell.m; path = User/LoveSkillTableViewCell.m; sourceTree = "<group>"; };
 		5327E9F815658CCD005330AD /* UIColor+EasyRGB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+EasyRGB.h"; path = "Utils/UIColor+EasyRGB.h"; sourceTree = "<group>"; };
@@ -829,8 +836,6 @@
 		5384B25B1554833D00A4E0C1 /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Settings.m; path = Utils/Settings.m; sourceTree = "<group>"; };
 		538EF42D1585352E00249AAF /* EditLinkedInInvitationMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditLinkedInInvitationMessageViewController.h; sourceTree = "<group>"; };
 		538EF42E1585352E00249AAF /* EditLinkedInInvitationMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditLinkedInInvitationMessageViewController.m; sourceTree = "<group>"; };
-		538EF42F1585352E00249AAF /* GenerateInvitationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenerateInvitationCodeViewController.h; sourceTree = "<group>"; };
-		538EF4301585352E00249AAF /* GenerateInvitationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenerateInvitationCodeViewController.m; sourceTree = "<group>"; };
 		538EF4311585352E00249AAF /* InviteLinkedInConnectionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteLinkedInConnectionsTableViewController.h; sourceTree = "<group>"; };
 		538EF4321585352E00249AAF /* InviteLinkedInConnectionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteLinkedInConnectionsTableViewController.m; sourceTree = "<group>"; };
 		538EF4361585354100249AAF /* LinkedInConnectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedInConnectionCell.h; sourceTree = "<group>"; };
@@ -1001,6 +1006,12 @@
 		53E2062B150596180000FA8D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		53FD32F515915102000448EF /* tab-login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-login.png"; sourceTree = "<group>"; };
 		53FD32F615915102000448EF /* tab-login@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-login@2x.png"; sourceTree = "<group>"; };
+		53FEA208162F52D600A783DC /* action-menu-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-bg.png"; sourceTree = "<group>"; };
+		53FEA209162F52D600A783DC /* action-menu-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-bg@2x.png"; sourceTree = "<group>"; };
+		53FEA20A162F52D600A783DC /* action-menu-button-check-out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-out.png"; sourceTree = "<group>"; };
+		53FEA20B162F52D600A783DC /* action-menu-button-check-out@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-out@2x.png"; sourceTree = "<group>"; };
+		53FEA20E162F52D600A783DC /* action-menu-button-update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-update.png"; sourceTree = "<group>"; };
+		53FEA20F162F52D600A783DC /* action-menu-button-update@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-update@2x.png"; sourceTree = "<group>"; };
 		53FF95EC156D5D0E0046ADDE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		5F7D21D7155AF1A200EAA540 /* UserProfileLinkedInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileLinkedInViewController.h; path = User/UserProfileLinkedInViewController.h; sourceTree = "<group>"; };
 		5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfileLinkedInViewController.m; path = User/UserProfileLinkedInViewController.m; sourceTree = "<group>"; };
@@ -1008,20 +1019,18 @@
 		5FAF891E1555FA6600247B95 /* virtual-check-in-badge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "virtual-check-in-badge@2x.png"; sourceTree = "<group>"; };
 		68B7B124161626BA000987E2 /* NSDictionary+JsonParserWorkaround.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+JsonParserWorkaround.h"; path = "Utils/NSDictionary+JsonParserWorkaround.h"; sourceTree = "<group>"; };
 		68B7B125161626BA000987E2 /* NSDictionary+JsonParserWorkaround.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+JsonParserWorkaround.m"; path = "Utils/NSDictionary+JsonParserWorkaround.m"; sourceTree = "<group>"; };
+		68C26F2116376E82007E9587 /* quick-action-endorse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quick-action-endorse.png"; sourceTree = "<group>"; };
+		68C26F2216376E82007E9587 /* quick-action-endorse@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quick-action-endorse@2x.png"; sourceTree = "<group>"; };
 		69112E681580D41B009CCBD0 /* contact-cell-bg-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-cell-bg-selected.png"; sourceTree = "<group>"; };
 		69112E691580D41B009CCBD0 /* contact-cell-bg-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-cell-bg-selected@2x.png"; sourceTree = "<group>"; };
 		69120B70156D3C2200521E3F /* CPLinkedInAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPLinkedInAPI.h; path = Utils/CPLinkedInAPI.h; sourceTree = "<group>"; };
 		69120B71156D3C2200521E3F /* CPLinkedInAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CPLinkedInAPI.m; path = Utils/CPLinkedInAPI.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		692552DE155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushModalViewControllerFromLeftSegue.h; path = Settings/PushModalViewControllerFromLeftSegue.h; sourceTree = "<group>"; };
 		692552DF155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushModalViewControllerFromLeftSegue.m; path = Settings/PushModalViewControllerFromLeftSegue.m; sourceTree = "<group>"; };
-		692D768915D47ACD00BA6963 /* texture-light_toast-dark-960wide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "texture-light_toast-dark-960wide.png"; sourceTree = "<group>"; };
-		692D768A15D47ACE00BA6963 /* texture-light_toast-dark-960wide@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "texture-light_toast-dark-960wide@2x.png"; sourceTree = "<group>"; };
 		692D768E15D4851B00BA6963 /* quick-action-chat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quick-action-chat.png"; sourceTree = "<group>"; };
 		692D768F15D4851B00BA6963 /* quick-action-chat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quick-action-chat@2x.png"; sourceTree = "<group>"; };
 		692D769015D4851D00BA6963 /* quick-action-exchange-cards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quick-action-exchange-cards.png"; sourceTree = "<group>"; };
 		692D769115D4851F00BA6963 /* quick-action-exchange-cards@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quick-action-exchange-cards@2x.png"; sourceTree = "<group>"; };
-		692D769215D4852000BA6963 /* quick-action-recognize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quick-action-recognize.png"; sourceTree = "<group>"; };
-		692D769315D4852200BA6963 /* quick-action-recognize@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quick-action-recognize@2x.png"; sourceTree = "<group>"; };
 		694323A815213D9000EBF585 /* UserResume.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserResume.mustache; sourceTree = "<group>"; };
 		6947F3FE15372B59005D9958 /* exchange-cards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exchange-cards.png"; path = "User/images/exchange-cards.png"; sourceTree = "<group>"; };
 		6947F3FF15372B59005D9958 /* exchange-cards@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exchange-cards@2x.png"; path = "User/images/exchange-cards@2x.png"; sourceTree = "<group>"; };
@@ -1151,14 +1160,12 @@
 		4E28A7BB15AB5DF4003C601A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				68C26F2116376E82007E9587 /* quick-action-endorse.png */,
+				68C26F2216376E82007E9587 /* quick-action-endorse@2x.png */,
 				692D768E15D4851B00BA6963 /* quick-action-chat.png */,
 				692D768F15D4851B00BA6963 /* quick-action-chat@2x.png */,
 				692D769015D4851D00BA6963 /* quick-action-exchange-cards.png */,
 				692D769115D4851F00BA6963 /* quick-action-exchange-cards@2x.png */,
-				692D769215D4852000BA6963 /* quick-action-recognize.png */,
-				692D769315D4852200BA6963 /* quick-action-recognize@2x.png */,
-				692D768915D47ACD00BA6963 /* texture-light_toast-dark-960wide.png */,
-				692D768A15D47ACE00BA6963 /* texture-light_toast-dark-960wide@2x.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -1504,8 +1511,6 @@
 				5308DD0215D5E5DF00B4EBC2 /* images */,
 				530FC24615D4389D00838B5A /* SignupController.h */,
 				530FC24715D4389D00838B5A /* SignupController.m */,
-				530FC22A15D42BBD00838B5A /* EnterInvitationCodeViewController.h */,
-				530FC22B15D42BBD00838B5A /* EnterInvitationCodeViewController.m */,
 				530FC23115D42BBD00838B5A /* LinkedInLoginController.h */,
 				530FC23215D42BBD00838B5A /* LinkedInLoginController.m */,
 				530FC23515D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard */,
@@ -1973,8 +1978,6 @@
 			children = (
 				538EF42D1585352E00249AAF /* EditLinkedInInvitationMessageViewController.h */,
 				538EF42E1585352E00249AAF /* EditLinkedInInvitationMessageViewController.m */,
-				538EF42F1585352E00249AAF /* GenerateInvitationCodeViewController.h */,
-				538EF4301585352E00249AAF /* GenerateInvitationCodeViewController.m */,
 				538EF4311585352E00249AAF /* InviteLinkedInConnectionsTableViewController.h */,
 				538EF4321585352E00249AAF /* InviteLinkedInConnectionsTableViewController.m */,
 				538EF4361585354100249AAF /* LinkedInConnectionCell.h */,
@@ -2147,6 +2150,8 @@
 				53D7ADEC15D04AC800BB041E /* CPGeofenceHandler.h */,
 				53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */,
 				536DE92A150170CC00794650 /* images */,
+				5317F260162F804E00D40405 /* ChangeHeadlineViewController.h */,
+				5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */,
 			);
 			name = Checkin;
 			sourceTree = "<group>";
@@ -2154,6 +2159,14 @@
 		53D6A61D15B0BB50001A76DE /* action-menu */ = {
 			isa = PBXGroup;
 			children = (
+				5317F254162F63CE00D40405 /* action-menu-button-check-in.png */,
+				5317F255162F63CE00D40405 /* action-menu-button-check-in@2x.png */,
+				53FEA208162F52D600A783DC /* action-menu-bg.png */,
+				53FEA209162F52D600A783DC /* action-menu-bg@2x.png */,
+				53FEA20A162F52D600A783DC /* action-menu-button-check-out.png */,
+				53FEA20B162F52D600A783DC /* action-menu-button-check-out@2x.png */,
+				53FEA20E162F52D600A783DC /* action-menu-button-update.png */,
+				53FEA20F162F52D600A783DC /* action-menu-button-update@2x.png */,
 				53D6A63B15B0CD3A001A76DE /* action-menu-button-base.png */,
 				53D6A63C15B0CD3A001A76DE /* action-menu-button-base@2x.png */,
 				53D6A62415B0BB50001A76DE /* action-menu-button-minus.png */,
@@ -2761,14 +2774,10 @@
 				53D6A63515B0BB50001A76DE /* action-menu-button-plus@2x.png in Resources */,
 				53D6A63D15B0CD3A001A76DE /* action-menu-button-base.png in Resources */,
 				53D6A63E15B0CD3A001A76DE /* action-menu-button-base@2x.png in Resources */,
-				692D768B15D47AD000BA6963 /* texture-light_toast-dark-960wide.png in Resources */,
-				692D768C15D47AD000BA6963 /* texture-light_toast-dark-960wide@2x.png in Resources */,
 				692D769415D4852300BA6963 /* quick-action-chat.png in Resources */,
 				692D769515D4852300BA6963 /* quick-action-chat@2x.png in Resources */,
 				692D769615D4852300BA6963 /* quick-action-exchange-cards.png in Resources */,
 				692D769715D4852300BA6963 /* quick-action-exchange-cards@2x.png in Resources */,
-				692D769815D4852300BA6963 /* quick-action-recognize.png in Resources */,
-				692D769915D4852300BA6963 /* quick-action-recognize@2x.png in Resources */,
 				530FC24115D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard in Resources */,
 				5308DD0715D5E5DF00B4EBC2 /* sign-up-with-linkedin.png in Resources */,
 				5308DD0815D5E5DF00B4EBC2 /* sign-up-with-linkedin@2x.png in Resources */,
@@ -2824,6 +2833,16 @@
 				533E43EF161B947E00432377 /* wfh-icon@2x.png in Resources */,
 				537DEA921624A0EF00D59AC9 /* check-in-list-error.png in Resources */,
 				537DEA931624A0EF00D59AC9 /* check-in-list-error@2x.png in Resources */,
+				53FEA210162F52D600A783DC /* action-menu-bg.png in Resources */,
+				53FEA211162F52D600A783DC /* action-menu-bg@2x.png in Resources */,
+				53FEA212162F52D600A783DC /* action-menu-button-check-out.png in Resources */,
+				53FEA213162F52D600A783DC /* action-menu-button-check-out@2x.png in Resources */,
+				53FEA216162F52D600A783DC /* action-menu-button-update.png in Resources */,
+				53FEA217162F52D600A783DC /* action-menu-button-update@2x.png in Resources */,
+				5317F256162F63CE00D40405 /* action-menu-button-check-in.png in Resources */,
+				5317F257162F63CE00D40405 /* action-menu-button-check-in@2x.png in Resources */,
+				68C26F2316376E82007E9587 /* quick-action-endorse.png in Resources */,
+				68C26F2416376E82007E9587 /* quick-action-endorse@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2888,7 +2907,6 @@
 				530C5DB71575E4FC003505AC /* CPSoundEffectsManager.m in Sources */,
 				69120B73156D3EA900521E3F /* CPLinkedInAPI.m in Sources */,
 				538EF4331585352E00249AAF /* EditLinkedInInvitationMessageViewController.m in Sources */,
-				538EF4341585352E00249AAF /* GenerateInvitationCodeViewController.m in Sources */,
 				538EF4351585352E00249AAF /* InviteLinkedInConnectionsTableViewController.m in Sources */,
 				538EF4381585354100249AAF /* LinkedInConnectionCell.m in Sources */,
 				699249E3158A3CFC00EC273A /* ResumeVisibilityViewController.m in Sources */,
@@ -2904,7 +2922,6 @@
 				5343243F15C2123A00BE5075 /* CPApiClient.m in Sources */,
 				69A1582E15CB064300B21971 /* UIViewController+CPUserActionCellAdditions.m in Sources */,
 				53D7ADEE15D04AC800BB041E /* CPGeofenceHandler.m in Sources */,
-				530FC23A15D42BBD00838B5A /* EnterInvitationCodeViewController.m in Sources */,
 				530FC23F15D42BBD00838B5A /* LinkedInLoginController.m in Sources */,
 				530FC24215D42BBD00838B5A /* SmartererLoginController.m in Sources */,
 				530FC24515D4335E00838B5A /* CPUserSessionHandler.m in Sources */,
@@ -2957,6 +2974,7 @@
 				68B7B126161626BA000987E2 /* NSDictionary+JsonParserWorkaround.m in Sources */,
 				537DEA8F16249A3400D59AC9 /* CheckInListViewController.m in Sources */,
 				5319DDAE16360A7000451B13 /* CPObjectMapper.m in Sources */,
+				5317F262162F804E00D40405 /* ChangeHeadlineViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

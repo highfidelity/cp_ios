@@ -199,8 +199,8 @@
             // in case we came from foursquare venue list and didn't have it
             self.venue.venueID = [[json objectForKey:@"venue_id"] intValue];
             
-            [[CPCheckinHandler sharedHandler] queueLocalNotificationForVenue:self.venue checkoutTime:checkOutTime];
-            [[CPCheckinHandler sharedHandler] handleSuccessfulCheckinToVenue:self.venue checkoutTime:checkOutTime];
+            [CPCheckinHandler queueLocalNotificationForVenue:self.venue checkoutTime:checkOutTime];
+            [CPCheckinHandler handleSuccessfulCheckinToVenue:self.venue checkoutTime:checkOutTime];
             
             // hide the checkin screen, we're checked in
             if ([self isModal]) {

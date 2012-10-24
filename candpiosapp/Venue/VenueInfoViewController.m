@@ -13,13 +13,14 @@
 #import "VenueUserCell.h"
 #import "VenueCategoryCell.h"
 
-#define CHAT_MESSAGE_ORIGIN_X 11
+static VenueInfoViewController *_onScreenVenueVC;
 
 @interface VenueInfoViewController () <UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *bottomPhotoOverlayView;
 @property (weak, nonatomic) UIButton *phoneButton;
 @property (weak, nonatomic) UIButton *addressButton;
+@property (strong, nonatomic) NSMutableDictionary *userObjectsForUsersOnScreen;
 @property (nonatomic) BOOL checkInIsVirtual;
 @property (nonatomic) BOOL hasPhone;
 @property (nonatomic) BOOL hasAddress;
@@ -28,6 +29,11 @@
 @end
 
 @implementation VenueInfoViewController
+
++ (VenueInfoViewController *)onScreenVenueVC
+{
+    return _onScreenVenueVC;
+}
 
 - (void)viewDidLoad
 {
@@ -43,10 +49,6 @@
                                              selector:@selector(populateUserSection) 
                                                  name:@"LoginStateChanged" 
                                                object:nil];
-    
-    
-    // set the property on the tab bar controller for the venue we're looking at
-    [CPAppDelegate tabBarController].currentVenueID = self.venue.foursquareID;
     
     // set the title of the navigation controller
     self.title = self.venue.name;
@@ -105,16 +107,34 @@
     [self populateUserSection]; 
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
+    _onScreenVenueVC = self;
 }
 
-- (void)viewDidUnload
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewDidUnload];
-    [CPAppDelegate tabBarController].currentVenueID = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super viewWillDisappear:animated];
+    _onScreenVenueVC = nil;
+}
+
+- (void)dealloc
+{
+     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (NSMutableDictionary *)userObjectsForUsersOnScreen
+{
+    if (!_userObjectsForUsersOnScreen) {
+        _userObjectsForUsersOnScreen = [NSMutableDictionary dictionary];
+    }
+    return _userObjectsForUsersOnScreen;
+}
+
+- (void)addUserToDictionaryOfUserObjectsFromUser:(User *)user
+{
+    [self.userObjectsForUsersOnScreen setObject:user forKey:[NSString stringWithFormat:@"%d", user.userID]];
 }
 
 - (BOOL)isCheckedInHere
@@ -176,7 +196,6 @@
     self.currentUsers = [NSMutableDictionary dictionary];
     self.categoryCount = [NSMutableDictionary dictionary];
     self.previousUsers = [[NSMutableArray alloc] init];
-    self.usersShown =  [NSMutableSet set];
     
     for (NSString *userID in activeUsers) {
         CPUser *user = [[CPAppDelegate settingsMenuController].mapTabController userFromActiveUsers:[userID integerValue]];
@@ -306,11 +325,6 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)cancelCheckinModal
-{
-    [self.modalViewController dismissModalViewControllerAnimated:YES];
-}
-
 #define kButtonPhoneXOffset 2
 #define kButtonAddressXOffset 10
 #define kButtonYOffset 3
@@ -427,6 +441,23 @@
         alertView.tag = 1046;
         [alertView show];
     }   
+}
+
+- (IBAction)userImageButtonPressed:(UIButton *)sender
+{
+    if (![CPUserDefaultsHandler currentUser]) {
+        [CPUserSessionHandler showLoginBanner];
+        
+    }   else {
+        UserProfileViewController *userVC = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+        
+        // set the user object on that view controller
+        // using the tag on the button to pull this user out of the NSMutableDictionary of user objects
+        userVC.user = [self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", sender.tag]];
+        
+        // push the user profile onto this navigation controller stack
+        [self.navigationController pushViewController:userVC animated:YES];
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -585,8 +616,9 @@
             // add to the xOffset for the next thumbnail
             xOffset += 10 + thumbButton.frame.size.width;
             
-            // add this user to the usersShown set so we know we have them
-            [self.usersShown addObject:[NSNumber numberWithInt:user.userID]];
+            if (![self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", user.userID]]) {
+                [self addUserToDictionaryOfUserObjectsFromUser:user];
+            }
         }
         // set the content size on the scrollview
         CGFloat newWidth = [[self.currentUsers objectForKey:category] count] * (thumbnailDim + 10) + gradientWidth;

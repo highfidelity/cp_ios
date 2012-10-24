@@ -188,15 +188,12 @@
         float: left;
         margin-top: 5px;
     }
-
-    .sponsor {
-        float: right;
-        display: inline-block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        width: 59%;
-        text-align: right;
-        white-space: nowrap;
+    ul#reviews li a {
+        color: rgb(68,68,68);
+        display: block;
+        text-decoration: none;
+        line-height: 2em;
+        text-align: center;
     }
     .join-date {
         display: inline-block;
@@ -230,7 +227,7 @@
                 <table id="skills-table">
                     <tr>
                         <th>Skill</th>
-                        <th>Recs</th>
+                        <th>Endrsmnts</th>
                         <th>Top</th>
                     </tr>    
                     {{#skills}}
@@ -267,11 +264,6 @@
 
             <div id="joined-on" class="line-top line-bottom">
                 <span class="join-date">Joined on <span class="highlite">{{join_date}}</span></span>
-                {{#sponsorNickname}}
-                <span ontouchstart="" onclick="document.location='sponsor-resume://';" class="sponsor">
-                    Sponsored by <span class="highlite">{{sponsorNickname}}</span>
-                </span>
-                {{/sponsorNickname}}                
             </div>
 
             <table id="connected-networks">

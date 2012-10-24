@@ -7,6 +7,7 @@
 //
 
 #import "MapDataSet.h"
+#import "VenueInfoViewController.h"
 
 @interface MapDataSet()
 
@@ -123,10 +124,8 @@ static NSOperationQueue *sMapQueue = nil;
                 [venueMutableDict setObject:venue forKey:[NSString stringWithFormat:@"%d", venue.venueID]];
                 
                 // post a notification with this venue if there's currently a venue shown by a VenueInfoViewController
-                if ([CPAppDelegate tabBarController].currentVenueID) {
-                    if ([[CPAppDelegate tabBarController].currentVenueID isEqual:venue.foursquareID]) {
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshVenueAfterCheckin" object:venue];
-                    }                    
+                if ([[VenueInfoViewController onScreenVenueVC].venue isEqual:venue]) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshVenueAfterCheckin" object:venue];
                 }
                 
             }

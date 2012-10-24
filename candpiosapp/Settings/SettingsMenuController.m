@@ -12,7 +12,6 @@
 #import "UserVoice.h"
 
 #define menuWidthPercentage 0.8
-#define kEnterInviteFakeSegueID @"--kEnterInviteFakeSegueID"
 #define kFeedbackSegueID @"ShowFeedbackFromMenu"
 
 @interface SettingsMenuController() <UITabBarControllerDelegate>
@@ -36,33 +35,23 @@
 
 - (void)initMenu 
 {
-    NSString *inviteItemName = @"Invite";
-    NSString *inviteItemSegue = @"ShowInvitationCodeMenu";
-    
-    if (![CPUserDefaultsHandler currentUser].enteredInviteCode) {
-        inviteItemName = @"Enter invite code";
-        inviteItemSegue = kEnterInviteFakeSegueID;
-    }
-    
     // Setup the menu strings and seque identifiers
     self.menuStringsArray = [NSArray arrayWithObjects:
-                             // @"Face To Face", DISABLED (alexi)
-                             inviteItemName,
-                             // @"Wallet", DISABLED (WL #17339 - andyast)
+                             @"Invite",
                              @"Profile",
                              @"Linked Accounts",
                              @"Notifications",
+                             @"Automatic Check Ins",
                              @"Feedback",
                              @"Logout",
                              nil];
     
     self.menuSegueIdentifiersArray = [NSArray arrayWithObjects:
-                                      inviteItemSegue,
-                                      // @"ShowFaceToFaceFromMenu", DISABLED (alexi)
-                                      // @"ShowBalanceFromMenu", DISABLED (WL #17339 - andyast)
+                                      @"ShowInvitationCodeMenu",
                                       @"ShowUserSettingsFromMenu",
                                       @"ShowFederationFromMenu",
                                       @"ShowNotificationsFromMenu",
+                                      @"ShowAutoCheckInsFromMenu",
                                       kFeedbackSegueID,
                                       @"ShowLogoutFromMenu",
                                       nil];
@@ -381,13 +370,7 @@
 
     } else {
         NSString *segueID = [self.menuSegueIdentifiersArray objectAtIndex:indexPath.row];
-        
-        if ([segueID isEqualToString:kEnterInviteFakeSegueID]) {
-            [CPUserSessionHandler showEnterInvitationCodeModalFromViewController:self
-                                     withDontShowTextNoticeAfterLaterButtonPressed:YES
-                                                                      pushFromLeft:YES
-                                                                          animated:YES];
-        } else if ([segueID isEqualToString:kFeedbackSegueID]) {
+        if ([segueID isEqualToString:kFeedbackSegueID]) {
             UVConfig *config = [UVConfig configWithSite:kUserVoiceSite
                                                  andKey:kUserVoiceKey
                                               andSecret:kUserVoiceSecret];

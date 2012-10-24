@@ -10,8 +10,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import "CPVenue.h"
 
-#define kDaysOfTrialAccessWithoutInviteCode 30
-
 @interface CPUser : NSObject <NSCoding>
 
 @property (strong, nonatomic) NSString *nickname;
@@ -24,7 +22,6 @@
 @property (strong, nonatomic) NSString *linkedInPublicProfileUrl;
 @property (strong, nonatomic) NSString *profileURLVisibility;
 @property (strong, nonatomic) NSString *bio;
-@property (strong, nonatomic) NSString *sponsorNickname;
 @property (strong, nonatomic) NSString *hourlyRate;
 @property (strong, nonatomic) NSString *photoURLString;
 @property (strong, nonatomic) CPVenue *placeCheckedIn;
@@ -46,7 +43,6 @@
 @property (nonatomic, readonly) NSMutableArray *favoritePlaces;
 @property (nonatomic, readonly) BOOL hasAnyFavoritePlaces;
 @property (nonatomic) CLLocationCoordinate2D location;
-@property (nonatomic) int sponsorId;
 @property (nonatomic) BOOL facebookVerified;
 @property (nonatomic) BOOL linkedInVerified;
 @property (nonatomic) double totalEarned;
@@ -55,13 +51,15 @@
 @property (nonatomic) double distance;
 @property (nonatomic) BOOL checkedIn;
 @property (nonatomic) int trusted_by;
-@property (nonatomic) BOOL enteredInviteCode;
 @property (nonatomic) BOOL checkInIsVirtual;
 @property (nonatomic) BOOL contactsOnlyChat;
 @property (nonatomic) BOOL isContact;
 @property (nonatomic) BOOL hasChatHistory;
 @property (nonatomic) int userID;
 
+- (void)loadUserResumeOnQueue:(NSOperationQueue *)operationQueue
+                topSkillsOnly:(BOOL)topSkills
+                   completion:(void (^)(NSError *error))completion;
 
 - (void)loadUserResumeOnQueue:(NSOperationQueue *)operationQueue
                    completion:(void (^)(NSError *error))completion;
@@ -71,10 +69,8 @@
 
 -(NSURL *)photoURL;
 
-- (void)setEnteredInviteCodeFromJSONString:(NSString *)enteredInviteCodeString;
 - (void)setJoinDateFromJSONString:(NSString *)dateString;
-
-- (BOOL)isDaysOfTrialAccessWithoutInviteCodeOK;
 - (NSComparisonResult) compareDistanceToUser:(CPUser *)otherUser;
+
 
 @end

@@ -255,24 +255,7 @@
 
 + (void)oneOnOneChatGetHistoryWith:(CPUser *)user
                         completion:(void (^)(NSDictionary *, NSError *))completion
-{
-    /*
-    NSDate *date1 = [NSDate dateWithTimeIntervalSince1970: 1000000];
-    NSDate *date2 = [NSDate dateWithTimeIntervalSince1970: 2000000];
-    
-    ChatMessage *message1 = [[ChatMessage alloc] initWithMessage:@"History 1"
-                                                          toUser:fromUser
-                                                        fromUser:toUser
-                                                            date:date1];
-    ChatMessage *message2 = [[ChatMessage alloc] initWithMessage:@"History 2"
-                                                          toUser:toUser
-                                                        fromUser:fromUser
-                                                            date:date2];
-    
-    [history insertMessage:message1];
-    [history insertMessage:message2];
-     */
-    
+{    
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setValue:[NSString stringWithFormat:@"%d", user.userID]
                   forKey:@"other_user"];
@@ -429,6 +412,15 @@
                          completion:completion];
 }
 
++ (void)changeHeadlineToNewHeadline:(NSString *)newHeadline
+                         completion:(void (^)(NSDictionary *, NSError *))completion
+{
+    [self makeHTTPRequestWithAction:@"changeCurrentHeadline"
+                     withParameters:[NSDictionary dictionaryWithObject:newHeadline
+                                                                forKey:@"headline"]
+                         completion:completion];
+}
+
 + (void)checkOutWithCompletion:(void (^)(NSDictionary *, NSError *))completion
 {
     [self makeHTTPRequestWithAction:@"checkout"
@@ -511,30 +503,6 @@
 + (void)getContactListWithCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion
 {
     [self makeHTTPRequestWithAction:@"getContactList" withParameters:nil completion:completion];
-}
-
-+ (void)getInvitationCodeForLocation:(CLLocation *)location
-                withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion {
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       [NSString stringWithFormat:@"%.7lf", location.coordinate.latitude], @"lat",
-                                       [NSString stringWithFormat:@"%.7lf", location.coordinate.longitude], @"lng",
-                                       nil];
-    [self makeHTTPRequestWithAction:@"getInvitationCode"
-                     withParameters:parameters
-                         completion:completion];
-}
-
-+ (void)enterInvitationCode:(NSString *)invitationCode
-                forLocation:(CLLocation *)location
-       withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion {
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       [NSString stringWithFormat:@"%.7lf", location.coordinate.latitude], @"lat",
-                                       [NSString stringWithFormat:@"%.7lf", location.coordinate.longitude], @"lng",
-                                       invitationCode, @"invite_code",
-                                       nil];
-    [self makeHTTPRequestWithAction:@"enterInvitationCode"
-                     withParameters:parameters
-                         completion:completion];
 }
 
 # pragma mark - Love
@@ -624,7 +592,8 @@
 }
 
 + (void)setNotificationSettingsForDistance:(NSString *)distance
-                              andCheckedId:(BOOL)checkedOnly 
+                              andCheckedId:(BOOL)checkedOnly
+                    receiveContactEndorsed:(BOOL)receiveContactEndorsed
                                  quietTime:(BOOL)quietTime
                              quietTimeFrom:(NSDate *)quietTimeFrom
                                quietTimeTo:(NSDate *)quietTimeTo  
@@ -638,6 +607,7 @@
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setValue:distance forKey:@"push_distance"];
     [parameters setValue:checkedOnly ? @"1" : @"0" forKey:@"checked_in_only"];
+    [parameters setValue:receiveContactEndorsed ? @"1" : @"0" forKey:@"push_contacts_endorsement"];
     [parameters setValue:quietTime ? @"1" : @"0" forKey:@"quiet_time"];
     [parameters setValue:[formatter stringFromDate:quietTimeFrom] forKey:@"quiet_time_from"];
     [parameters setValue:[formatter stringFromDate:quietTimeTo] forKey:@"quiet_time_to"];
@@ -725,22 +695,6 @@
     [self makeHTTPRequestWithAction:@"saveUserSmartererName"
                      withParameters:[NSDictionary dictionaryWithObject:name
                                                                 forKey:@"name"]
-                         completion:completion];
-}
-
-+ (void)getInvitationCodeForLinkedInConnections:(NSArray *)connectionsIDs
-                            wihtCompletionBlock:(void(^)(NSDictionary *json, NSError *error))completion
-{
-    NSError *error;
-    NSData *connectionIDsData = [NSJSONSerialization dataWithJSONObject:connectionsIDs
-                                                                options:kNilOptions
-                                                                  error:&error];
-    NSString *connectionIDsString = [[NSString alloc] initWithData:connectionIDsData
-                                                          encoding:NSUTF8StringEncoding];
-    
-    [self makeHTTPRequestWithAction:@"getInvitationCodeForLinkedInConnections"
-                     withParameters:[NSMutableDictionary dictionaryWithObject:connectionIDsString
-                                                                       forKey:@"connectionIDs"]
                          completion:completion];
 }
 

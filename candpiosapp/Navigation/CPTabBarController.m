@@ -9,6 +9,7 @@
 #import "CPTabBarController.h"
 #import "CPCheckinHandler.h"
 #import "CPUserSessionHandler.h"
+#import "VenueInfoViewController.h"
 
 @interface CPTabBarController()
 
@@ -79,15 +80,6 @@
     self.selectedIndex = tabIndex;
 }
 
-- (IBAction)checkinButtonPressed:(id)sender
-{
-    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn]) {
-        [[CPCheckinHandler sharedHandler] promptForCheckout];
-    } else {
-        [[CPCheckinHandler sharedHandler] presentCheckinModalFromViewController:self];
-    }
-}
-
 - (void)refreshTabBar
 {
     if (![CPUserDefaultsHandler currentUser]) {
@@ -112,6 +104,19 @@
         // tell the thinBar to update the button
         [self.thinBar refreshLastTab:YES];
     }  
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == alertView.cancelButtonIndex) {
+        // just show the regular check in list
+        [CPCheckinHandler presentCheckInListModalFromViewController:self];
+    } else {
+        // show check in details view for the venue on screen
+        [CPCheckinHandler presentCheckInDetailsModalForVenue:[VenueInfoViewController onScreenVenueVC].venue
+                                                    presentingViewController:self];
+        
+    }
 }
 
 @end

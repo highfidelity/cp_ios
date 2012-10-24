@@ -58,7 +58,10 @@
 + (void)getNearestCheckedInWithCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 + (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID
-                                       :(void(^)(NSDictionary *json, NSError *error))completion; 
+                                       :(void(^)(NSDictionary *json, NSError *error))completion;
+
++ (void)changeHeadlineToNewHeadline:(NSString *)newHeadline
+                         completion:(void (^)(NSDictionary *, NSError *))completion;
 
 + (void)checkOutWithCompletion:(void(^)(NSDictionary *json, NSError *error))completion;
 
@@ -75,11 +78,6 @@
 + (void)getUserTransactionDataWithCompletitonBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 + (void)getCheckInDataWithUserId:(int)userId
                    andCompletion:(void (^)(NSDictionary *, NSError *))completion;
-+ (void)getInvitationCodeForLocation:(CLLocation *)location
-                withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
-+ (void)enterInvitationCode:(NSString *)invitationCode
-                forLocation:(CLLocation *)location
-       withCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
 #pragma mark - Love
 + (void)sendLoveToUserWithID:(int)recieverID
@@ -119,6 +117,7 @@
 
 + (void)setNotificationSettingsForDistance:(NSString *)distance
                               andCheckedId:(BOOL)checkedOnly
+                    receiveContactEndorsed:(BOOL)receiveContactEndorsed
                                  quietTime:(BOOL)quietTime
                              quietTimeFrom:(NSDate *)quietTimeFrom
                                quietTimeTo:(NSDate *)quietTimeTo
@@ -135,9 +134,6 @@
 
 + (void)saveUserSmartererName:(NSString *)name
                                        :(void(^)(NSDictionary *json, NSError *error))completion;
-
-+ (void)getInvitationCodeForLinkedInConnections:(NSArray *)connectionsIDs
-                            wihtCompletionBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
 + (void)deleteAccountWithParameters:(NSMutableDictionary *)parameters
                          completion:(void(^)(NSDictionary *json, NSError *error))completion;

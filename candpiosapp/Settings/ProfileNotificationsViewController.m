@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSDate *quietTimeToDate;
 @property (weak, nonatomic) IBOutlet UIButton *venueButton;
 @property (weak, nonatomic) IBOutlet UISwitch *checkedInOnlySwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *notifyOnEndorsementSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *quietTimeSwitch;
 @property (weak, nonatomic) IBOutlet UIView *anyoneChatView;
 @property (weak, nonatomic) IBOutlet UIButton *quietFromButton;
@@ -87,6 +88,9 @@
             NSString *checkInOnly = (NSString *)[dict objectForKey:@"checked_in_only"];
             [[self checkedInOnlySwitch] setOn:[checkInOnly isEqualToString:@"1"]];
 
+            NSString *notifyOnEndorsement = [dict objectForKey:@"push_contacts_endorsement"];
+            [[self notifyOnEndorsementSwitch] setOn:[notifyOnEndorsement isEqualToString:@"1"]];
+
             NSString *quietTime = (NSString *)[dict objectForKey:@"quiet_time"];
             [[self quietTimeSwitch] setOn:[quietTime isEqualToString:@"1"]];
             [self setQuietTime:self.quietTimeSwitch.on];
@@ -143,9 +147,10 @@
     else if ([self.venueButton.currentTitle isEqualToString:kContactsText]) {
         distance = @"contacts";
     }
-    
+
     [CPapi setNotificationSettingsForDistance:distance
                                  andCheckedId:self.checkedInOnlySwitch.on
+                       receiveContactEndorsed:self.notifyOnEndorsementSwitch.on
                                     quietTime:self.quietTimeSwitch.on
                                 quietTimeFrom:[self quietTimeFromDate]
                                   quietTimeTo:[self quietTimeToDate]

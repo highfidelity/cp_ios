@@ -11,6 +11,7 @@
 #import "CPLinkedInAPI.h"
 #import "LinkedInConnectionCell.h"
 #import "EditLinkedInInvitationMessageViewController.h"
+#import "PushModalViewControllerFromLeftSegue.h"
 
 @interface InviteLinkedInConnectionsTableViewController ()
 
@@ -40,7 +41,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self loadLinkedInConnections];
 }
 
@@ -55,7 +55,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [self resetNextButtonEnabledState];
 }
 
@@ -195,4 +194,8 @@
     self.navigationItem.rightBarButtonItem.enabled = enabled;
 }
 
+- (IBAction)gearPressed:(UIButton *)sender
+{
+    [self dismissPushModalViewControllerFromLeftSegue];
+}
 @end

@@ -9,21 +9,20 @@
 #import "FaceToFaceHelper.h"
 #import "CPChatHelper.h"
 #import "OAuthConsumer.h"
-#import "EnterInvitationCodeViewController.h"
-#import "CheckInDetailsViewController.h"
 #import "CPAlertView.h"
 #import "VenueInfoViewController.h"
-#import "PushModalViewControllerFromLeftSegue.h"
-#import "CPApiClient.h"
 #import "CPCheckinHandler.h"
 #import "CPGeofenceHandler.h"
 #import "CPUserSessionHandler.h"
+#import "UserProfileViewController.h"
 
 #define kContactRequestAPNSKey @"contact_request"
 #define kContactRequestAcceptedAPNSKey @"contact_accepted"
+#define kContactEndorsedAPNSKey @"contact_endorsed"
 
 #define kCheckOutAlertTag 602
 #define kFeedViewAlertTag 500
+#define kContactEndorsedTag 501
 
 #define kDefaultLatitude 37.77493
 #define kDefaultLongitude -122.419415
@@ -307,6 +306,16 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
 
     } else if ([userInfo valueForKey:@"geofence"]) {
         [[CPGeofenceHandler sharedHandler] handleGeofenceNotification:alertMessage userInfo:userInfo];
+    } else if ([userInfo valueForKey:kContactEndorsedAPNSKey]) {
+        CPAlertView *alertView = [[CPAlertView alloc] initWithTitle:@"Contact Endorsed"
+                                                            message:alertMessage
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Ignore"
+                                                  otherButtonTitles:@"View", nil];
+        alertView.tag = kContactEndorsedTag;
+        alertView.context = userInfo;
+        [alertView show];
+        
     } else if ([userInfo valueForKey:kContactRequestAPNSKey]) {        
         [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:kContactRequestAPNSKey] intValue]];
     } else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey]) {
@@ -618,20 +627,19 @@ void SignalHandler(int sig) {
             
             
             CPVenue *venue = (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:[userInfo objectForKey:@"venue"]];
-            
-            CheckInDetailsViewController *vc = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil]
-                                                instantiateViewControllerWithIdentifier:@"CheckinDetailsViewController"];
-            vc.checkInIsVirtual = false;
-            [vc setVenue:venue];
-            vc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
-                                                                                   style:UIBarButtonItemStylePlain
-                                                                                  target:vc
-                                                                                  action:@selector(dismissViewControllerAnimated)];
-            
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
-            [self.tabBarController presentModalViewController:navigationController animated:YES];
+            [CPCheckinHandler presentCheckInDetailsModalForVenue:venue presentingViewController:self.tabBarController];
         }
+    } else if (alertView.tag == kContactEndorsedTag && alertView.firstOtherButtonIndex == buttonIndex) {
+
+        User *user = [[User alloc] init];
+        user.userID = [[userInfo objectForKey:kContactEndorsedAPNSKey] intValue];
         
+        UserProfileViewController *vc = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone"
+                                                                   bundle:nil] instantiateInitialViewController];
+        vc.scrollToBottom = YES;
+        vc.user = user;
+        [[self.tabBarController.viewControllers objectAtIndex:self.tabBarController.selectedIndex] pushViewController:vc
+                                                                                                             animated:YES];
     }
 }
 
