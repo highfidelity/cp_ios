@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKInMemoryManagedObjectCache.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKInMemoryManagedObjectCache</TokenIdentifier>
+			<Abstract type="html">Provides a fast managed object cache where-in object instances are retained in memory to avoid hitting the Core Data persistent store. Performance is greatly increased over fetch request based strategy at the expense of memory consumption.</Abstract>
+			<DeclaredIn>RKInMemoryManagedObjectCache.h</DeclaredIn>
+			
+			<NodeRef refid="13"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKInMemoryManagedObjectCache/initWithManagedObjectContext:</TokenIdentifier>
+			<Abstract type="html">Initializes the receiver with a managed object context that is to be observed and used to populate the in memory cache. The receiver may then be used to fulfill cache requests for child contexts of the given managed object context.</Abstract>
+			<DeclaredIn>RKInMemoryManagedObjectCache.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>managedObjectContext</Name>
+					<Abstract type="html">The managed object context with which to initialize the receiver.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The receiver, initialized with the given managed object context.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithManagedObjectContext:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

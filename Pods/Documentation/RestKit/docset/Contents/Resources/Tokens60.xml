@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Categories/NSManagedObjectContext+RKAdditions.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cat/NSManagedObjectContext(RKAdditions)</TokenIdentifier>
+			<Abstract type="html">Provides extensions to NSManagedObjectContext for various common tasks.</Abstract>
+			<DeclaredIn>NSManagedObjectContext+RKAdditions.h</DeclaredIn>
+			
+			<NodeRef refid="60"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSManagedObjectContext(RKAdditions)/insertNewObjectForEntityForName:</TokenIdentifier>
+			<Abstract type="html">Inserts a new managed object for the entity for the given name.</Abstract>
+			<DeclaredIn>NSManagedObjectContext+RKAdditions.h</DeclaredIn>			
+			
+			<Declaration>- (id)insertNewObjectForEntityForName:(NSString *)entityName</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>entityName</Name>
+					<Abstract type="html">The name of an entity.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A new, autoreleased, fully configured instance of the class for the entity named entityName. The instance has its entity description set and is inserted into the receiver.</Abstract></ReturnValue>
+			<Anchor>//api/name/insertNewObjectForEntityForName:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSManagedObjectContext(RKAdditions)/countForEntityForName:predicate:error:</TokenIdentifier>
+			<Abstract type="html">Convenience method for performing a count of the number of instances of an entity with the given name.</Abstract>
+			<DeclaredIn>NSManagedObjectContext+RKAdditions.h</DeclaredIn>			
+			
+			<Declaration>- (NSUInteger)countForEntityForName:(NSString *)entityName predicate:(NSPredicate *)predicate error:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>entityName</Name>
+					<Abstract type="html">The name of an entity.</Abstract>
+				</Parameter><Parameter>
+					<Name>predicate</Name>
+					<Abstract type="html">A predicate to limit the search. May be nil.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">If there is a problem executing the fetch, upon return contains an instance of NSError that describes the problem.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The number of objects a fetch request for the given entity name with the given predicate would have returned if it had been passed to executeFetchRequest:error:, or NSNotFound if an error occurs.</Abstract></ReturnValue>
+			<Anchor>//api/name/countForEntityForName:predicate:error:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSManagedObjectContext(RKAdditions)/fetchObjectForEntity:withValueForPrimaryKeyAttribute:</TokenIdentifier>
+			<Abstract type="html">Fetches a single managed object for the given entity with the given value for the primary key attribute in the receiver.</Abstract>
+			<DeclaredIn>NSManagedObjectContext+RKAdditions.h</DeclaredIn>			
+			
+			<Declaration>- (id)fetchObjectForEntity:(NSEntityDescription *)entity withValueForPrimaryKeyAttribute:(id)primaryKeyValue</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>entity</Name>
+					<Abstract type="html">The entity of the managed object to be retrieved by primary key.</Abstract>
+				</Parameter><Parameter>
+					<Name>primaryKeyValue</Name>
+					<Abstract type="html">The value for the entity&apos;s primary key attribute.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The managed object with the primary key attribute equal to the given value or nil if none was found.</Abstract></ReturnValue>
+			<Anchor>//api/name/fetchObjectForEntity:withValueForPrimaryKeyAttribute:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSManagedObjectContext(RKAdditions)/fetchObjectForEntityForName:withValueForPrimaryKeyAttribute:</TokenIdentifier>
+			<Abstract type="html">Fetches a single managed object for the entity for the given name with the given value for the primary key attribute in the receiver.</Abstract>
+			<DeclaredIn>NSManagedObjectContext+RKAdditions.h</DeclaredIn>			
+			
+			<Declaration>- (id)fetchObjectForEntityForName:(NSString *)entityName withValueForPrimaryKeyAttribute:(id)primaryKeyValue</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>entityName</Name>
+					<Abstract type="html">The name of the entity of the managed object to be retrieved by primary key.</Abstract>
+				</Parameter><Parameter>
+					<Name>primaryKeyValue</Name>
+					<Abstract type="html">The value for the receiving entity&apos;s primary key attribute.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The managed object with the primary key attribute equal to the given value or nil if none was found.</Abstract></ReturnValue>
+			<Anchor>//api/name/fetchObjectForEntityForName:withValueForPrimaryKeyAttribute:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSManagedObjectContext(RKAdditions)/saveToPersistentStore:</TokenIdentifier>
+			<Abstract type="html">Saves the receiver and then traverses up the parent context chain until a parent managed object context with a nil parent is found. If the final ancestor context does not have a reference to the persistent store coordinator, then a warning is generated and the method returns NO.</Abstract>
+			<DeclaredIn>NSManagedObjectContext+RKAdditions.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)saveToPersistentStore:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>error</Name>
+					<Abstract type="html">If there is a problem saving the receiver or any of its ancestor contexts, upon return contains an pointer to an instance of NSError that describes the problem.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">YES if the save to the persistent store was successful, else NO.</Abstract></ReturnValue>
+			<Anchor>//api/name/saveToPersistentStore:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

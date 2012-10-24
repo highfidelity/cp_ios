@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKManagedObjectThreadSafeInvocation.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKManagedObjectThreadSafeInvocation</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKManagedObjectThreadSafeInvocation.h</DeclaredIn>
+			
+			<NodeRef refid="20"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKManagedObjectThreadSafeInvocation/setPrivateQueueManagedObjectContext:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKManagedObjectThreadSafeInvocation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSManagedObjectContext *privateQueueManagedObjectContext</Declaration>
+			
+			
+			<Anchor>//api/name/privateQueueManagedObjectContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKManagedObjectThreadSafeInvocation/privateQueueManagedObjectContext</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKManagedObjectThreadSafeInvocation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSManagedObjectContext *privateQueueManagedObjectContext</Declaration>
+			
+			
+			<Anchor>//api/name/privateQueueManagedObjectContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKManagedObjectThreadSafeInvocation/setMainQueueManagedObjectContext:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKManagedObjectThreadSafeInvocation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSManagedObjectContext *mainQueueManagedObjectContext</Declaration>
+			
+			
+			<Anchor>//api/name/mainQueueManagedObjectContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKManagedObjectThreadSafeInvocation/mainQueueManagedObjectContext</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKManagedObjectThreadSafeInvocation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSManagedObjectContext *mainQueueManagedObjectContext</Declaration>
+			
+			
+			<Anchor>//api/name/mainQueueManagedObjectContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKManagedObjectThreadSafeInvocation/invocationWithMethodSignature:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKManagedObjectThreadSafeInvocation.h</DeclaredIn>			
+			
+			<Declaration>+ (RKManagedObjectThreadSafeInvocation *)invocationWithMethodSignature:(NSMethodSignature *)methodSignature</Declaration>
+			
+			
+			<Anchor>//api/name/invocationWithMethodSignature:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKManagedObjectThreadSafeInvocation/setManagedObjectKeyPaths:forArgument:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKManagedObjectThreadSafeInvocation.h</DeclaredIn>			
+			
+			<Declaration>- (void)setManagedObjectKeyPaths:(NSSet *)keyPaths forArgument:(NSInteger)index</Declaration>
+			
+			
+			<Anchor>//api/name/setManagedObjectKeyPaths:forArgument:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKManagedObjectThreadSafeInvocation/invokeOnMainThread</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKManagedObjectThreadSafeInvocation.h</DeclaredIn>			
+			
+			<Declaration>- (void)invokeOnMainThread</Declaration>
+			
+			
+			<Anchor>//api/name/invokeOnMainThread</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

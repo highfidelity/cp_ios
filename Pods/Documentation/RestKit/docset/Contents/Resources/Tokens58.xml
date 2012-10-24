@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Categories/NSEntityDescription+RKAdditions.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cat/NSEntityDescription(RKAdditions)</TokenIdentifier>
+			<Abstract type="html">Provides extensions to NSEntityDescription for various common tasks.</Abstract>
+			<DeclaredIn>NSEntityDescription+RKAdditions.h</DeclaredIn>
+			
+			<NodeRef refid="58"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSEntityDescription(RKAdditions)/setPrimaryKeyAttributeName:</TokenIdentifier>
+			<Abstract type="html">The name of the attribute that acts as the primary key for the receiver.</Abstract>
+			<DeclaredIn>NSEntityDescription+RKAdditions.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *primaryKeyAttributeName</Declaration>
+			
+			
+			<Anchor>//api/name/primaryKeyAttributeName</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/NSEntityDescription(RKAdditions)/primaryKeyAttributeName</TokenIdentifier>
+			<Abstract type="html">The name of the attribute that acts as the primary key for the receiver.</Abstract>
+			<DeclaredIn>NSEntityDescription+RKAdditions.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *primaryKeyAttributeName</Declaration>
+			
+			
+			<Anchor>//api/name/primaryKeyAttributeName</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSEntityDescription(RKAdditions)/setPrimaryKeyAttribute:</TokenIdentifier>
+			<Abstract type="html">The attribute description object for the attribute designated as the primary key for the receiver.</Abstract>
+			<DeclaredIn>NSEntityDescription+RKAdditions.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSAttributeDescription *primaryKeyAttribute</Declaration>
+			
+			
+			<Anchor>//api/name/primaryKeyAttribute</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/NSEntityDescription(RKAdditions)/primaryKeyAttribute</TokenIdentifier>
+			<Abstract type="html">The attribute description object for the attribute designated as the primary key for the receiver.</Abstract>
+			<DeclaredIn>NSEntityDescription+RKAdditions.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSAttributeDescription *primaryKeyAttribute</Declaration>
+			
+			
+			<Anchor>//api/name/primaryKeyAttribute</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSEntityDescription(RKAdditions)/setPrimaryKeyAttributeClass:</TokenIdentifier>
+			<Abstract type="html">The class representing the value of the attribute designated as the primary key for the receiver.</Abstract>
+			<DeclaredIn>NSEntityDescription+RKAdditions.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) Class primaryKeyAttributeClass</Declaration>
+			
+			
+			<Anchor>//api/name/primaryKeyAttributeClass</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/NSEntityDescription(RKAdditions)/primaryKeyAttributeClass</TokenIdentifier>
+			<Abstract type="html">The class representing the value of the attribute designated as the primary key for the receiver.</Abstract>
+			<DeclaredIn>NSEntityDescription+RKAdditions.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) Class primaryKeyAttributeClass</Declaration>
+			
+			
+			<Anchor>//api/name/primaryKeyAttributeClass</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSEntityDescription(RKAdditions)/predicateForPrimaryKeyAttribute</TokenIdentifier>
+			<Abstract type="html">Returns a cached predicate specifying that the primary key attribute is equal to the $PRIMARYKEYVALUE
+substitution variable.</Abstract>
+			<DeclaredIn>NSEntityDescription+RKAdditions.h</DeclaredIn>			
+			
+			<Declaration>- (NSPredicate *)predicateForPrimaryKeyAttribute</Declaration>
+			
+			<ReturnValue><Abstract type="html">A cached predicate specifying the value of the primary key attribute is equal to the $PRIMARYKEYVALUE
+substitution variable.</Abstract></ReturnValue>
+			<Anchor>//api/name/predicateForPrimaryKeyAttribute</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSEntityDescription(RKAdditions)/predicateForPrimaryKeyAttributeWithValue:</TokenIdentifier>
+			<Abstract type="html">Returns a predicate specifying that the value of the primary key attribute is equal to a given
+value. This predicate is constructed by evaluating the cached predicate returned by the
+predicateForPrimaryKeyAttribute with a dictionary of substitution variables specifying that
+$PRIMARYKEYVALUE is equal to the given value.</Abstract>
+			<DeclaredIn>NSEntityDescription+RKAdditions.h</DeclaredIn>			
+			
+			<Declaration>- (NSPredicate *)predicateForPrimaryKeyAttributeWithValue:(id)value</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>value</Name>
+					<Abstract type="html">The primary key value with which to create the predicate.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A predicate speciying that the value of the primary key attribute is equal to a given value.</Abstract></ReturnValue>
+			<Anchor>//api/name/predicateForPrimaryKeyAttributeWithValue:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSEntityDescription(RKAdditions)/coerceValueForPrimaryKey:</TokenIdentifier>
+			<Abstract type="html">Coerces the given value into the class representing the primary key. Currently support NSString
+and NSNumber coercsions.</Abstract>
+			<DeclaredIn>NSEntityDescription+RKAdditions.h</DeclaredIn>			
+			
+			<Declaration>- (id)coerceValueForPrimaryKey:(id)primaryKeyValue</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>primaryKeyValue</Name>
+					<Abstract type="html">The value of the primary that is to be coerced.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/coerceValueForPrimaryKey:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

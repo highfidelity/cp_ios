@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/RKSerialization.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/RKSerialization</TokenIdentifier>
+			<Abstract type="html">The RKSerialization protocol declares two methods that a class must implement so that it can provide support for serializing objects to and deserializing objects from UTF-8 encoded data representations of a serialization format such as JSON or XML. Serialization implementations typically handle data in a given MIME Type (i.e. application/json) and may be registered with the RKMIMETypeSerialization class.</Abstract>
+			<DeclaredIn>RKSerialization.h</DeclaredIn>
+			
+			<NodeRef refid="65"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/RKSerialization/objectFromData:error:</TokenIdentifier>
+			<Abstract type="html">Deserializes and returns the given data in the format supported by the receiver (i.e. JSON, XML, etc) as a Foundation object representation.</Abstract>
+			<DeclaredIn>RKSerialization.h</DeclaredIn>			
+			
+			<Declaration>+ (id)objectFromData:(NSData *)data error:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>data</Name>
+					<Abstract type="html">The UTF-8 encoded data representation of the object to be deserialized.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">A pointer to an NSError object.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A Foundation object from the serialized data in data, or nil if an error occurs.</Abstract></ReturnValue>
+			<Anchor>//api/name/objectFromData:error:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/RKSerialization/dataFromObject:error:</TokenIdentifier>
+			<Abstract type="html">Serializes and returns a UTF-8 encoded data representation of the given Foundation object in the format supported by the receiver (i.e. JSON, XML, etc).</Abstract>
+			<DeclaredIn>RKSerialization.h</DeclaredIn>			
+			
+			<Declaration>+ (NSData *)dataFromObject:(id)object error:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>object</Name>
+					<Abstract type="html">The object to be serialized.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">A pointer to an NSError object.</Abstract>
+				</Parameter><Parameter>
+					<Name>A</Name>
+					<Abstract type="html">pointer to an NSError object.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A data representation of the given object in UTF-8 encoding, or nil if an error occurred.</Abstract></ReturnValue>
+			<Anchor>//api/name/dataFromObject:error:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

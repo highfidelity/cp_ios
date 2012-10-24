@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKSearchTokenizer.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKSearchTokenizer</TokenIdentifier>
+			<Abstract type="html">The RKSearchTokenizer class provides an interface for tokenizing input text into a set of searchable words. Diacritics are removed and the input text is tokenized case insensitively. A set of stop words can be optionally trimmed from the result token set.</Abstract>
+			<DeclaredIn>RKSearchTokenizer.h</DeclaredIn>
+			
+			<NodeRef refid="47"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKSearchTokenizer/setStopWords:</TokenIdentifier>
+			<Abstract type="html">The set of stop words that are to be removed from the token set.</Abstract>
+			<DeclaredIn>RKSearchTokenizer.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSSet *stopWords</Declaration>
+			
+			
+			<Anchor>//api/name/stopWords</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKSearchTokenizer/stopWords</TokenIdentifier>
+			<Abstract type="html">The set of stop words that are to be removed from the token set.</Abstract>
+			<DeclaredIn>RKSearchTokenizer.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSSet *stopWords</Declaration>
+			
+			
+			<Anchor>//api/name/stopWords</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKSearchTokenizer/tokenize:</TokenIdentifier>
+			<Abstract type="html">Tokenizes the given string by folding it case and diacritic insensitively and then splitting it apart using the the word unit delimiters for the current locale. If a set of stop words has been provided, the resulting token set will have the stop words subtracted.</Abstract>
+			<DeclaredIn>RKSearchTokenizer.h</DeclaredIn>			
+			
+			<Declaration>- (NSSet *)tokenize:(NSString *)string</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>string</Name>
+					<Abstract type="html">A string of text you wish to tokenize.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A set of searchable text tokens extracted from the given string.</Abstract></ReturnValue>
+			<Anchor>//api/name/tokenize:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

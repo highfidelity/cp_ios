@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKSearchIndexer.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKSearchIndexer</TokenIdentifier>
+			<Abstract type="html">The RKSearchIndexer class provides support for adding full text searching to Core Data entities and managing the indexing of managed object instances of searchable entities.</Abstract>
+			<DeclaredIn>RKSearchIndexer.h</DeclaredIn>
+			
+			<NodeRef refid="45"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKSearchIndexer/addSearchIndexingToEntity:onAttributes:</TokenIdentifier>
+			<Abstract type="html">Adds search indexing to the given entity for a given list of attributes identified by name. The entity will have a to-many relationship to the RKSearchWordEntity added and the list of searchable attributes stored into the user info dictionary.</Abstract>
+			<DeclaredIn>RKSearchIndexer.h</DeclaredIn>			
+			
+			<Declaration>+ (void)addSearchIndexingToEntity:(NSEntityDescription *)entity onAttributes:(NSArray *)attributes</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>entity</Name>
+					<Abstract type="html">The entity to which search indexing support is to be added.</Abstract>
+				</Parameter><Parameter>
+					<Name>attributes</Name>
+					<Abstract type="html">An array of NSAttributeDescription objects or NSString attribute names specifying the NSStringAttributeType attributes that are to be indexed for searching.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/addSearchIndexingToEntity:onAttributes:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKSearchIndexer/setStopWords:</TokenIdentifier>
+			<Abstract type="html">An optional set of stop words to be removed from the set of tokens used to create the search words for indexed entities.</Abstract>
+			<DeclaredIn>RKSearchIndexer.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSSet *stopWords</Declaration>
+			
+			
+			<Anchor>//api/name/stopWords</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKSearchIndexer/stopWords</TokenIdentifier>
+			<Abstract type="html">An optional set of stop words to be removed from the set of tokens used to create the search words for indexed entities.</Abstract>
+			<DeclaredIn>RKSearchIndexer.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSSet *stopWords</Declaration>
+			
+			
+			<Anchor>//api/name/stopWords</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKSearchIndexer/setIndexingContext:</TokenIdentifier>
+			<Abstract type="html">An optional NSManagedObjectContext in which to perform indexing operations.</Abstract>
+			<DeclaredIn>RKSearchIndexer.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSManagedObjectContext *indexingContext</Declaration>
+			
+			
+			<Anchor>//api/name/indexingContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKSearchIndexer/indexingContext</TokenIdentifier>
+			<Abstract type="html">An optional NSManagedObjectContext in which to perform indexing operations.</Abstract>
+			<DeclaredIn>RKSearchIndexer.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSManagedObjectContext *indexingContext</Declaration>
+			
+			
+			<Anchor>//api/name/indexingContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKSearchIndexer/startObservingManagedObjectContext:</TokenIdentifier>
+			<Abstract type="html">Tells the receiver to start monitoring the given managed object context for save notifications and to index any changed objects in response to the save.</Abstract>
+			<DeclaredIn>RKSearchIndexer.h</DeclaredIn>			
+			
+			<Declaration>- (void)startObservingManagedObjectContext:(NSManagedObjectContext *)managedObjectContext</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>managedObjectContext</Name>
+					<Abstract type="html">The managed object context to be monitored for save notifications.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/startObservingManagedObjectContext:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKSearchIndexer/stopObservingManagedObjectContext:</TokenIdentifier>
+			<Abstract type="html">Tells the receiver to stop monitoring the given managed object context for save notifications and cease indexing changed objects in response to the save.</Abstract>
+			<DeclaredIn>RKSearchIndexer.h</DeclaredIn>			
+			
+			<Declaration>- (void)stopObservingManagedObjectContext:(NSManagedObjectContext *)managedObjectContext</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>managedObjectContext</Name>
+					<Abstract type="html">The managed object context that is no longer to be monitored for save notifications.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/stopObservingManagedObjectContext:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKSearchIndexer/indexChangedObjectsInManagedObjectContext:waitUntilFinished:</TokenIdentifier>
+			<Abstract type="html">Tells the receiver to build a list of all inserted or updated managed objects in the given context and index each one. Objects for entities that are not indexed are silently ignored.</Abstract>
+			<DeclaredIn>RKSearchIndexer.h</DeclaredIn>			
+			
+			<Declaration>- (void)indexChangedObjectsInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext waitUntilFinished:(BOOL)wait</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>managedObjectContext</Name>
+					<Abstract type="html">The managed object context that is to be indexed.</Abstract>
+				</Parameter><Parameter>
+					<Name>wait</Name>
+					<Abstract type="html">A Boolean value that determines if the current thread will be blocked until all indexing operations have completed.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/indexChangedObjectsInManagedObjectContext:waitUntilFinished:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKSearchIndexer/indexManagedObject:</TokenIdentifier>
+			<Abstract type="html">Tells the receiver to index a given managed object instance.</Abstract>
+			<DeclaredIn>RKSearchIndexer.h</DeclaredIn>			
+			
+			<Declaration>- (NSUInteger)indexManagedObject:(NSManagedObject *)managedObject</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>managedObject</Name>
+					<Abstract type="html">The managed object that is to be indexed.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A count of the number of search words that were indexed from the given object&apos;s searchable attributes.
+@raises NSInvalidArgumentException Raised if the given managed object is not for a searchable entity.</Abstract></ReturnValue>
+			<Anchor>//api/name/indexManagedObject:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKSearchIndexer/cancelAllIndexingOperations</TokenIdentifier>
+			<Abstract type="html">Tells the indexer to cancel all indexing operations in progress.</Abstract>
+			<DeclaredIn>RKSearchIndexer.h</DeclaredIn>			
+			
+			<Declaration>- (void)cancelAllIndexingOperations</Declaration>
+			
+			
+			<Anchor>//api/name/cancelAllIndexingOperations</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKSearchIndexer/waitUntilAllIndexingOperationsAreFinished</TokenIdentifier>
+			<Abstract type="html">Blocks the current thread until all of the receiver’s queued and executing indexing operations finish executing.</Abstract>
+			<DeclaredIn>RKSearchIndexer.h</DeclaredIn>			
+			
+			<Declaration>- (void)waitUntilAllIndexingOperationsAreFinished</Declaration>
+			
+			
+			<Anchor>//api/name/waitUntilAllIndexingOperationsAreFinished</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

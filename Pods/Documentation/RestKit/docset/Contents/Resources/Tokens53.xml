@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKTestNotificationObserver.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKTestNotificationObserver</TokenIdentifier>
+			<Abstract type="html">An RKTestNotificationObserver object provides support for awaiting a notification
+to be posted as the result of an asynchronous operation by spinning the run loop. This
+enables a straight-forward unit testing workflow by blocking execution of the test until
+a notification is posted.</Abstract>
+			<DeclaredIn>RKTestNotificationObserver.h</DeclaredIn>
+			
+			<NodeRef refid="53"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKTestNotificationObserver/setName:</TokenIdentifier>
+			<Abstract type="html">The name of the notification the receiver is awaiting.</Abstract>
+			<DeclaredIn>RKTestNotificationObserver.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKTestNotificationObserver/name</TokenIdentifier>
+			<Abstract type="html">The name of the notification the receiver is awaiting.</Abstract>
+			<DeclaredIn>RKTestNotificationObserver.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKTestNotificationObserver/setObject:</TokenIdentifier>
+			<Abstract type="html">The object expected to post the notification the receiver is awaiting.</Abstract>
+			<DeclaredIn>RKTestNotificationObserver.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, weak) id object</Declaration>
+			
+			
+			<Anchor>//api/name/object</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKTestNotificationObserver/object</TokenIdentifier>
+			<Abstract type="html">The object expected to post the notification the receiver is awaiting.</Abstract>
+			<DeclaredIn>RKTestNotificationObserver.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, weak) id object</Declaration>
+			
+			
+			<Anchor>//api/name/object</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKTestNotificationObserver/setTimeout:</TokenIdentifier>
+			<Abstract type="html">The timeout interval, in seconds, to wait for the notification to be posted.</Abstract>
+			<DeclaredIn>RKTestNotificationObserver.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) NSTimeInterval timeout</Declaration>
+			
+			
+			<Anchor>//api/name/timeout</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKTestNotificationObserver/timeout</TokenIdentifier>
+			<Abstract type="html">The timeout interval, in seconds, to wait for the notification to be posted.</Abstract>
+			<DeclaredIn>RKTestNotificationObserver.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) NSTimeInterval timeout</Declaration>
+			
+			
+			<Anchor>//api/name/timeout</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestNotificationObserver/notificationObserver</TokenIdentifier>
+			<Abstract type="html">Creates and initializes a notification obsercer object.</Abstract>
+			<DeclaredIn>RKTestNotificationObserver.h</DeclaredIn>			
+			
+			<Declaration>+ (RKTestNotificationObserver *)notificationObserver</Declaration>
+			
+			<ReturnValue><Abstract type="html">The newly created notification observer.</Abstract></ReturnValue>
+			<Anchor>//api/name/notificationObserver</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestNotificationObserver/notificationObserverForName:object:</TokenIdentifier>
+			<Abstract type="html">Instantiate a notification observer for the given notification name and object</Abstract>
+			<DeclaredIn>RKTestNotificationObserver.h</DeclaredIn>			
+			
+			<Declaration>+ (RKTestNotificationObserver *)notificationObserverForName:(NSString *)notificationName object:(id)notificationSender</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>notificationName</Name>
+					<Abstract type="html">The name of the NSNotification we want to watch for</Abstract>
+				</Parameter><Parameter>
+					<Name>notificationSender</Name>
+					<Abstract type="html">The source object of the NSNotification we want to watch for</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The newly created notification observer initialized with notificationName and notificationSender.</Abstract></ReturnValue>
+			<Anchor>//api/name/notificationObserverForName:object:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestNotificationObserver/notificationObserverForName:</TokenIdentifier>
+			<Abstract type="html">Instantiate a notification observer for the given notification name</Abstract>
+			<DeclaredIn>RKTestNotificationObserver.h</DeclaredIn>			
+			
+			<Declaration>+ (RKTestNotificationObserver *)notificationObserverForName:(NSString *)notificationName</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>notificationName</Name>
+					<Abstract type="html">The name of the NSNotification we want to watch for</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/notificationObserverForName:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKTestNotificationObserver/addObserver</TokenIdentifier>
+			<Abstract type="html">Adds the receiver as an observer for the notification name and object under test.</Abstract>
+			<DeclaredIn>RKTestNotificationObserver.h</DeclaredIn>			
+			
+			<Declaration>- (void)addObserver</Declaration>
+			
+			
+			<Anchor>//api/name/addObserver</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKTestNotificationObserver/waitForNotification</TokenIdentifier>
+			<Abstract type="html">Wait for a notification matching the name and source object we are observing to be posted.</Abstract>
+			<DeclaredIn>RKTestNotificationObserver.h</DeclaredIn>			
+			
+			<Declaration>- (void)waitForNotification</Declaration>
+			
+			
+			<Anchor>//api/name/waitForNotification</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestNotificationObserver/waitForNotificationWithName:object:usingBlock:</TokenIdentifier>
+			<Abstract type="html">Configures a notification observer to wait for the a notification with the given name to be posted
+by the source object during execution of the block.</Abstract>
+			<DeclaredIn>RKTestNotificationObserver.h</DeclaredIn>			
+			
+			<Declaration>+ (void)waitForNotificationWithName:(NSString *)name object:(id)notificationSender usingBlock:(void ( ^ ) ( ))block</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>name</Name>
+					<Abstract type="html">The name of the notification we are waiting for</Abstract>
+				</Parameter><Parameter>
+					<Name>notificationSender</Name>
+					<Abstract type="html">The object we are waiting to post the notification</Abstract>
+				</Parameter><Parameter>
+					<Name>block</Name>
+					<Abstract type="html">A block to invoke to trigger the notification activity</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/waitForNotificationWithName:object:usingBlock:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestNotificationObserver/waitForNotificationWithName:usingBlock:</TokenIdentifier>
+			<Abstract type="html">Configures a notification observer to wait for the a notification with the given name to be posted
+during execution of the block.</Abstract>
+			<DeclaredIn>RKTestNotificationObserver.h</DeclaredIn>			
+			
+			<Declaration>+ (void)waitForNotificationWithName:(NSString *)name usingBlock:(void ( ^ ) ( ))block</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>name</Name>
+					<Abstract type="html">The name of the notification we are waiting for</Abstract>
+				</Parameter><Parameter>
+					<Name>block</Name>
+					<Abstract type="html">A block to invoke to trigger the notification activity</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/waitForNotificationWithName:usingBlock:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

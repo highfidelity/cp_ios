@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKMappingTest.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKMappingTest</TokenIdentifier>
+			<Abstract type="html">An RKMappingTest object provides support for unit testing a RestKit object mapping operation by evaluation expectations against events recorded during an object mapping operation.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>
+			
+			<NodeRef refid="25"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKMappingTest/testForMapping:sourceObject:destinationObject:</TokenIdentifier>
+			<Abstract type="html">Creates and returns a new test for a given object mapping, source object and destination
+object.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>+ (RKMappingTest *)testForMapping:(RKMapping *)mapping sourceObject:(id)sourceObject destinationObject:(id)destinationObject</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mapping</Name>
+					<Abstract type="html">The mapping being tested.</Abstract>
+				</Parameter><Parameter>
+					<Name>sourceObject</Name>
+					<Abstract type="html">The source object being mapped from.</Abstract>
+				</Parameter><Parameter>
+					<Name>destinationObject</Name>
+					<Abstract type="html">The destionation object being to.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A new mapping test object for a mapping, a source object and a destination object.</Abstract></ReturnValue>
+			<Anchor>//api/name/testForMapping:sourceObject:destinationObject:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/initWithMapping:sourceObject:destinationObject:</TokenIdentifier>
+			<Abstract type="html">Initializes the receiver with a given object mapping, source object, and destination object.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithMapping:(RKMapping *)mapping sourceObject:(id)sourceObject destinationObject:(id)destinationObject</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mapping</Name>
+					<Abstract type="html">The mapping being tested.</Abstract>
+				</Parameter><Parameter>
+					<Name>sourceObject</Name>
+					<Abstract type="html">The source object being mapped from.</Abstract>
+				</Parameter><Parameter>
+					<Name>destinationObject</Name>
+					<Abstract type="html">The destionation object being to.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The receiver, initialized with mapping, sourceObject and destinationObject.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithMapping:sourceObject:destinationObject:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/expectMappingFromKeyPath:toKeyPath:</TokenIdentifier>
+			<Abstract type="html">Creates and adds an expectation that a key path on the source object will be mapped to a new key path on the destination object.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>- (void)expectMappingFromKeyPath:(NSString *)sourceKeyPath toKeyPath:(NSString *)destinationKeyPath</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>sourceKeyPath</Name>
+					<Abstract type="html">A key path on the sourceObject that should be mapped from.</Abstract>
+				</Parameter><Parameter>
+					<Name>destinationKeyPath</Name>
+					<Abstract type="html">A key path on the destinationObject that should be mapped to.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/expectMappingFromKeyPath:toKeyPath:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/expectMappingFromKeyPath:toKeyPath:withValue:</TokenIdentifier>
+			<Abstract type="html">Creates and adds an expectation that a key path on the source object will be mapped to a new key path on the destination object with a given value.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>- (void)expectMappingFromKeyPath:(NSString *)sourceKeyPath toKeyPath:(NSString *)destinationKeyPath withValue:(id)value</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>sourceKeyPath</Name>
+					<Abstract type="html">A key path on the sourceObject that should be mapped from.</Abstract>
+				</Parameter><Parameter>
+					<Name>destinationKeyPath</Name>
+					<Abstract type="html">A key path on the destinationObject that should be mapped from.</Abstract>
+				</Parameter><Parameter>
+					<Name>value</Name>
+					<Abstract type="html">A value that is expected to be assigned to destinationKeyPath on the destinationObject.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/expectMappingFromKeyPath:toKeyPath:withValue:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/expectMappingFromKeyPath:toKeyPath:passingTest:</TokenIdentifier>
+			<Abstract type="html">Creates and adds an expectation that a key path on the source object will be mapped to a new key path on the destination object with a value that passes a given test block.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>- (void)expectMappingFromKeyPath:(NSString *)sourceKeyPath toKeyPath:(NSString *)destinationKeyPath passingTest:(RKMappingTestExpectationEvaluationBlock)evaluationBlock</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>sourceKeyPath</Name>
+					<Abstract type="html">A key path on the sourceObject that should be mapped from.</Abstract>
+				</Parameter><Parameter>
+					<Name>destinationKeyPath</Name>
+					<Abstract type="html">A key path on the destinationObject that should be mapped to.</Abstract>
+				</Parameter><Parameter>
+					<Name>evaluationBlock</Name>
+					<Abstract type="html">A block with which to evaluate the success of the mapping.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/expectMappingFromKeyPath:toKeyPath:passingTest:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/expectMappingFromKeyPath:toKeyPath:usingMapping:</TokenIdentifier>
+			<Abstract type="html">Creates and adds an expectation that a key path on the source object will be mapped to a new key path on the destination object using the given object mapping.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>- (void)expectMappingFromKeyPath:(NSString *)sourceKeyPath toKeyPath:(NSString *)destinationKeyPath usingMapping:(RKMapping *)mapping</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>sourceKeyPath</Name>
+					<Abstract type="html">A key path on the sourceObject that should be mapped from.</Abstract>
+				</Parameter><Parameter>
+					<Name>destinationKeyPath</Name>
+					<Abstract type="html">A key path on the destinationObject that should be mapped to.</Abstract>
+				</Parameter><Parameter>
+					<Name>mapping</Name>
+					<Abstract type="html">An object mapping that should be used for mapping the source key path.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/expectMappingFromKeyPath:toKeyPath:usingMapping:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/addExpectation:</TokenIdentifier>
+			<Abstract type="html">Adds an expectation to the receiver to be evaluated during verification.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>- (void)addExpectation:(RKMappingTestExpectation *)expectation</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>expectation</Name>
+					<Abstract type="html">An expectation object to evaluate during test verification.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/addExpectation:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/performMapping</TokenIdentifier>
+			<Abstract type="html">Performs the object mapping operation and records any mapping events that occur. The mapping events can be verified against expectation through a subsequent call to verify.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>- (void)performMapping</Declaration>
+			
+			
+			<Anchor>//api/name/performMapping</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/verify</TokenIdentifier>
+			<Abstract type="html">Verifies that the mapping is configured correctly by performing an object mapping operation and ensuring that all expectations are met.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>- (void)verify</Declaration>
+			
+			
+			<Anchor>//api/name/verify</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/evaluate</TokenIdentifier>
+			<Abstract type="html">Evaluates the expectations and returns a Boolean value indicating if all expectations are satisfied.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)evaluate</Declaration>
+			
+			<ReturnValue><Abstract type="html">YES if all expectations were met, else NO.</Abstract></ReturnValue>
+			<Anchor>//api/name/evaluate</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/evaluateExpectation:error:</TokenIdentifier>
+			<Abstract type="html">Evaluates the given expectation against the mapping test and returns a Boolean value indicating if the expectation is met by the receiver.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)evaluateExpectation:(RKMappingTestExpectation *)expectation error:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>expectation</Name>
+					<Abstract type="html">The expectation to evaluate against the receiver.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">A pointer to an NSError object to be set describing the failure in the event that the expectation is not met.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">YES if the expectation is met, else NO.</Abstract></ReturnValue>
+			<Anchor>//api/name/evaluateExpectation:error:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/setMapping:</TokenIdentifier>
+			<Abstract type="html">The mapping under test. Can be either an RKObjectMapping or RKDynamicMapping object.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) RKMapping *mapping</Declaration>
+			
+			
+			<Anchor>//api/name/mapping</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKMappingTest/mapping</TokenIdentifier>
+			<Abstract type="html">The mapping under test. Can be either an RKObjectMapping or RKDynamicMapping object.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) RKMapping *mapping</Declaration>
+			
+			
+			<Anchor>//api/name/mapping</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/setMappingOperationDataSource:</TokenIdentifier>
+			<Abstract type="html">A data source for the mapping operation.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) id&lt;RKMappingOperationDataSource&gt; mappingOperationDataSource</Declaration>
+			
+			
+			<Anchor>//api/name/mappingOperationDataSource</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKMappingTest/mappingOperationDataSource</TokenIdentifier>
+			<Abstract type="html">A data source for the mapping operation.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) id&lt;RKMappingOperationDataSource&gt; mappingOperationDataSource</Declaration>
+			
+			
+			<Anchor>//api/name/mappingOperationDataSource</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/setRootKeyPath:</TokenIdentifier>
+			<Abstract type="html">A key path to apply to the source object to specify the location of the root of the data under test. Useful when testing subsets of a larger payload or object graph.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSString *rootKeyPath</Declaration>
+			
+			
+			<Anchor>//api/name/rootKeyPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKMappingTest/rootKeyPath</TokenIdentifier>
+			<Abstract type="html">A key path to apply to the source object to specify the location of the root of the data under test. Useful when testing subsets of a larger payload or object graph.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSString *rootKeyPath</Declaration>
+			
+			
+			<Anchor>//api/name/rootKeyPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/setSourceObject:</TokenIdentifier>
+			<Abstract type="html">The source object being mapped from.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) id sourceObject</Declaration>
+			
+			
+			<Anchor>//api/name/sourceObject</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKMappingTest/sourceObject</TokenIdentifier>
+			<Abstract type="html">The source object being mapped from.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) id sourceObject</Declaration>
+			
+			
+			<Anchor>//api/name/sourceObject</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/setDestinationObject:</TokenIdentifier>
+			<Abstract type="html">The destionation object being mapped to.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) id destinationObject</Declaration>
+			
+			
+			<Anchor>//api/name/destinationObject</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKMappingTest/destinationObject</TokenIdentifier>
+			<Abstract type="html">The destionation object being mapped to.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) id destinationObject</Declaration>
+			
+			
+			<Anchor>//api/name/destinationObject</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/setVerifiesOnExpect:</TokenIdentifier>
+			<Abstract type="html">A Boolean value that determines if expectations should be verified immediately when added to the receiver.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL verifiesOnExpect</Declaration>
+			
+			
+			<Anchor>//api/name/verifiesOnExpect</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKMappingTest/verifiesOnExpect</TokenIdentifier>
+			<Abstract type="html">A Boolean value that determines if expectations should be verified immediately when added to the receiver.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL verifiesOnExpect</Declaration>
+			
+			
+			<Anchor>//api/name/verifiesOnExpect</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/setManagedObjectContext:</TokenIdentifier>
+			<Abstract type="html">The managed object context within which to perform the mapping test. Required if testing an RKEntityMapping object and an appropriate mappingOperationDataSource has not been configured.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext</Declaration>
+			
+			
+			<Anchor>//api/name/managedObjectContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKMappingTest/managedObjectContext</TokenIdentifier>
+			<Abstract type="html">The managed object context within which to perform the mapping test. Required if testing an RKEntityMapping object and an appropriate mappingOperationDataSource has not been configured.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext</Declaration>
+			
+			
+			<Anchor>//api/name/managedObjectContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingTest/setManagedObjectCache:</TokenIdentifier>
+			<Abstract type="html">The managed object cache to use when performing a mapping test.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) id&lt;RKManagedObjectCaching&gt; managedObjectCache</Declaration>
+			
+			
+			<Anchor>//api/name/managedObjectCache</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKMappingTest/managedObjectCache</TokenIdentifier>
+			<Abstract type="html">The managed object cache to use when performing a mapping test.</Abstract>
+			<DeclaredIn>RKMappingTest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) id&lt;RKManagedObjectCaching&gt; managedObjectCache</Declaration>
+			
+			
+			<Anchor>//api/name/managedObjectCache</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKManagedObjectMappingOperationDataSource.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKManagedObjectMappingOperationDataSource</TokenIdentifier>
+			<Abstract type="html">The RKManagedObjectMappingOperationDataSource class provides support for performing object mapping operations where the mapped objects exist within a Core Data managed object context. The class is responsible for finding exist managed object instances by primary key, instantiating new managed objects, and connecting relationships for mapped objects.</Abstract>
+			<DeclaredIn>RKManagedObjectMappingOperationDataSource.h</DeclaredIn>
+			
+			<NodeRef refid="16"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKManagedObjectMappingOperationDataSource/initWithManagedObjectContext:cache:</TokenIdentifier>
+			<Abstract type="html">Initializes the receiver with a given managed object context and managed object cache.</Abstract>
+			<DeclaredIn>RKManagedObjectMappingOperationDataSource.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext cache:(id&lt;RKManagedObjectCaching&gt;)managedObjectCache</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>managedObjectContext</Name>
+					<Abstract type="html">The managed object context with which to associate the receiver. Cannot be nil.</Abstract>
+				</Parameter><Parameter>
+					<Name>managedObjectCache</Name>
+					<Abstract type="html">The managed object cache used by the receiver to find existing object instances by primary key.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The receiver, initialized with the given managed object context and managed objet cache.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithManagedObjectContext:cache:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKManagedObjectMappingOperationDataSource/setManagedObjectContext:</TokenIdentifier>
+			<Abstract type="html">The managed object context with which the receiver is associated.</Abstract>
+			<DeclaredIn>RKManagedObjectMappingOperationDataSource.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext</Declaration>
+			
+			
+			<Anchor>//api/name/managedObjectContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKManagedObjectMappingOperationDataSource/managedObjectContext</TokenIdentifier>
+			<Abstract type="html">The managed object context with which the receiver is associated.</Abstract>
+			<DeclaredIn>RKManagedObjectMappingOperationDataSource.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext</Declaration>
+			
+			
+			<Anchor>//api/name/managedObjectContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKManagedObjectMappingOperationDataSource/setManagedObjectCache:</TokenIdentifier>
+			<Abstract type="html">The managed object cache utilized by the receiver to find existing managed object instances by primary key. A nil managed object cache will result in the insertion of new managed objects for all mapped content.</Abstract>
+			<DeclaredIn>RKManagedObjectMappingOperationDataSource.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) id&lt;RKManagedObjectCaching&gt; managedObjectCache</Declaration>
+			
+			
+			<Anchor>//api/name/managedObjectCache</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKManagedObjectMappingOperationDataSource/managedObjectCache</TokenIdentifier>
+			<Abstract type="html">The managed object cache utilized by the receiver to find existing managed object instances by primary key. A nil managed object cache will result in the insertion of new managed objects for all mapped content.</Abstract>
+			<DeclaredIn>RKManagedObjectMappingOperationDataSource.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) id&lt;RKManagedObjectCaching&gt; managedObjectCache</Declaration>
+			
+			
+			<Anchor>//api/name/managedObjectCache</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKManagedObjectMappingOperationDataSource/setParentOperation:</TokenIdentifier>
+			<Abstract type="html">The parent operation upon which instances of RKRelationshipConnectionOperation created by the data source are dependent upon.</Abstract>
+			<DeclaredIn>RKManagedObjectMappingOperationDataSource.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, weak) NSOperation *parentOperation</Declaration>
+			
+			
+			<Anchor>//api/name/parentOperation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKManagedObjectMappingOperationDataSource/parentOperation</TokenIdentifier>
+			<Abstract type="html">The parent operation upon which instances of RKRelationshipConnectionOperation created by the data source are dependent upon.</Abstract>
+			<DeclaredIn>RKManagedObjectMappingOperationDataSource.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, weak) NSOperation *parentOperation</Declaration>
+			
+			
+			<Anchor>//api/name/parentOperation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKManagedObjectMappingOperationDataSource/setOperationQueue:</TokenIdentifier>
+			<Abstract type="html">The operation queue in which instances of RKRelationshipConnectionOperation will be enqueued to connect the relationships of mapped objects.</Abstract>
+			<DeclaredIn>RKManagedObjectMappingOperationDataSource.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSOperationQueue *operationQueue</Declaration>
+			
+			
+			<Anchor>//api/name/operationQueue</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKManagedObjectMappingOperationDataSource/operationQueue</TokenIdentifier>
+			<Abstract type="html">The operation queue in which instances of RKRelationshipConnectionOperation will be enqueued to connect the relationships of mapped objects.</Abstract>
+			<DeclaredIn>RKManagedObjectMappingOperationDataSource.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSOperationQueue *operationQueue</Declaration>
+			
+			
+			<Anchor>//api/name/operationQueue</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

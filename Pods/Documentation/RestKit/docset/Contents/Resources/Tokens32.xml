@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKObjectRequestOperation.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKObjectRequestOperation</TokenIdentifier>
+			<Abstract type="html">RKObjectRequestOperation is an NSOperation subclass that implements object mapping on the response body of an NSHTTPResponse loaded via an RKHTTPRequestOperation.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>
+			
+			<NodeRef refid="32"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKObjectRequestOperation/initWithHTTPRequestOperation:responseDescriptors:</TokenIdentifier>
+			<Abstract type="html">Initializes an object request operation with an HTTP request operation and a set of response descriptors.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithHTTPRequestOperation:(RKHTTPRequestOperation *)requestOperation responseDescriptors:(NSArray *)responseDescriptors</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>responseDescriptors</Name>
+					<Abstract type="html">An array of RKResponseDescriptor objects specifying how object mapping is to be performed on the response loaded by the network operation.</Abstract>
+				</Parameter><Parameter>
+					<Name>request</Name>
+					<Abstract type="html">The request object to be used with the underlying network operation.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The receiver, initialized with the given request and response descriptors.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithHTTPRequestOperation:responseDescriptors:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKObjectRequestOperation/initWithRequest:responseDescriptors:</TokenIdentifier>
+			<Abstract type="html">Initializes an object request operation with a request object and a set of response descriptors.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithRequest:(NSURLRequest *)request responseDescriptors:(NSArray *)responseDescriptors</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>request</Name>
+					<Abstract type="html">The request object to be used with the underlying network operation.</Abstract>
+				</Parameter><Parameter>
+					<Name>responseDescriptors</Name>
+					<Abstract type="html">An array of RKResponseDescriptor objects specifying how object mapping is to be performed on the response loaded by the network operation.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The receiver, initialized with the given request and response descriptors.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithRequest:responseDescriptors:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKObjectRequestOperation/setResponseDescriptors:</TokenIdentifier>
+			<Abstract type="html">The array of RKResponseDescriptor objects that specify how the deserialized responseData is to be object mapped.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) NSArray *responseDescriptors</Declaration>
+			
+			
+			<Anchor>//api/name/responseDescriptors</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKObjectRequestOperation/responseDescriptors</TokenIdentifier>
+			<Abstract type="html">The array of RKResponseDescriptor objects that specify how the deserialized responseData is to be object mapped.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) NSArray *responseDescriptors</Declaration>
+			
+			
+			<Anchor>//api/name/responseDescriptors</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKObjectRequestOperation/setTargetObject:</TokenIdentifier>
+			<Abstract type="html">The target object for the object mapping operation.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) id targetObject</Declaration>
+			
+			
+			<Anchor>//api/name/targetObject</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKObjectRequestOperation/targetObject</TokenIdentifier>
+			<Abstract type="html">The target object for the object mapping operation.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) id targetObject</Declaration>
+			
+			
+			<Anchor>//api/name/targetObject</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKObjectRequestOperation/setMappingResult:</TokenIdentifier>
+			<Abstract type="html">The mapping result returned by the underlying RKObjectResponseMapperOperation.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) RKMappingResult *mappingResult</Declaration>
+			
+			
+			<Anchor>//api/name/mappingResult</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKObjectRequestOperation/mappingResult</TokenIdentifier>
+			<Abstract type="html">The mapping result returned by the underlying RKObjectResponseMapperOperation.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) RKMappingResult *mappingResult</Declaration>
+			
+			
+			<Anchor>//api/name/mappingResult</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKObjectRequestOperation/setError:</TokenIdentifier>
+			<Abstract type="html">The error, if any, that occurred during execution of the operation.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) NSError *error</Declaration>
+			
+			
+			<Anchor>//api/name/error</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKObjectRequestOperation/error</TokenIdentifier>
+			<Abstract type="html">The error, if any, that occurred during execution of the operation.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) NSError *error</Declaration>
+			
+			
+			<Anchor>//api/name/error</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKObjectRequestOperation/setHTTPRequestOperation:</TokenIdentifier>
+			<Abstract type="html">The underlying RKHTTPRequestOperation object used to manage the HTTP request/response lifecycle of the object request operation.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) RKHTTPRequestOperation *HTTPRequestOperation</Declaration>
+			
+			
+			<Anchor>//api/name/HTTPRequestOperation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKObjectRequestOperation/HTTPRequestOperation</TokenIdentifier>
+			<Abstract type="html">The underlying RKHTTPRequestOperation object used to manage the HTTP request/response lifecycle of the object request operation.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) RKHTTPRequestOperation *HTTPRequestOperation</Declaration>
+			
+			
+			<Anchor>//api/name/HTTPRequestOperation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKObjectRequestOperation/setCompletionBlockWithSuccess:failure:</TokenIdentifier>
+			<Abstract type="html">Sets the completionBlock property with a block that executes either the specified success or failure block, depending on the state of the object request on completion. If error returns a value, which can be set during HTTP transport by the underlying HTTPRequestOperation or during object mapping by the RKResponseMapperOperation object, then failure is executed. If the object request operation is cancelled, then neither success nor failure will be executed. Otherwise, success is executed.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)setCompletionBlockWithSuccess:(void ( ^ ) ( RKObjectRequestOperation *operation , RKMappingResult *mappingResult ))success failure:(void ( ^ ) ( RKObjectRequestOperation *operation , NSError *error ))failure</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>success</Name>
+					<Abstract type="html">The block to be executed on the completion of a successful operation. This block has no return value and takes two arguments: the receiver operation and the mapping result from object mapping the response data of the request.</Abstract>
+				</Parameter><Parameter>
+					<Name>failure</Name>
+					<Abstract type="html">The block to be executed on the completion of an unsuccessful operation. This block has no return value and takes two arguments: the receiver operation and the error that occurred during the execution of the operation.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setCompletionBlockWithSuccess:failure:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKObjectRequestOperation/setSuccessCallbackQueue:</TokenIdentifier>
+			<Abstract type="html">The callback dispatch queue on success. If NULL (default), the main queue is used.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) dispatch_queue_t successCallbackQueue</Declaration>
+			
+			
+			<Anchor>//api/name/successCallbackQueue</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKObjectRequestOperation/successCallbackQueue</TokenIdentifier>
+			<Abstract type="html">The callback dispatch queue on success. If NULL (default), the main queue is used.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) dispatch_queue_t successCallbackQueue</Declaration>
+			
+			
+			<Anchor>//api/name/successCallbackQueue</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKObjectRequestOperation/setFailureCallbackQueue:</TokenIdentifier>
+			<Abstract type="html">The callback dispatch queue on failure. If NULL (default), the main queue is used.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) dispatch_queue_t failureCallbackQueue</Declaration>
+			
+			
+			<Anchor>//api/name/failureCallbackQueue</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKObjectRequestOperation/failureCallbackQueue</TokenIdentifier>
+			<Abstract type="html">The callback dispatch queue on failure. If NULL (default), the main queue is used.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) dispatch_queue_t failureCallbackQueue</Declaration>
+			
+			
+			<Anchor>//api/name/failureCallbackQueue</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKObjectRequestOperation/responseMappingQueue</TokenIdentifier>
+			<Abstract type="html">Returns the operation queue used by all object request operations when object mapping the body of a response loaded via HTTP.</Abstract>
+			<DeclaredIn>RKObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>+ (NSOperationQueue *)responseMappingQueue</Declaration>
+			
+			<ReturnValue><Abstract type="html">The response mapping queue.</Abstract></ReturnValue>
+			<Anchor>//api/name/responseMappingQueue</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKObjectRequestOperation/performMappingOnResponse:</TokenIdentifier>
+			<Abstract type="html">Performs object mapping using the response and responseData properties.</Abstract>
+			<DeclaredIn>RKRequestOperationSubclass.h</DeclaredIn>			
+			
+			<Declaration>- (RKMappingResult *)performMappingOnResponse:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>error</Name>
+					<Abstract type="html">A pointer to an NSError object to be set in the event that the object mapping process has failed.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A mapping result or nil if an error has occurred.</Abstract></ReturnValue>
+			<Anchor>//api/name/performMappingOnResponse:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKObjectRequestOperation/willFinish</TokenIdentifier>
+			<Abstract type="html">Invoked to tell the receiver that the object request operation is finishing its work and is about to transition into the finished state. Used to perform any necessary cleanup before the operation is finished.</Abstract>
+			<DeclaredIn>RKRequestOperationSubclass.h</DeclaredIn>			
+			
+			<Declaration>- (void)willFinish</Declaration>
+			
+			
+			<Anchor>//api/name/willFinish</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

@@ -1,0 +1,1166 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>RKRouteSet Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<meta name="viewport" content="width=550" />
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 840)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">RestKit 0.20.0dev </a></h1>
+				<a id="developerHome" href="../index.html">Blake Watters</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">RKRouteSet Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/addRoute:">&nbsp;&nbsp;&nbsp;&nbsp;- addRoute:</option>
+	
+	<option value="//api/name/allRoutes">&nbsp;&nbsp;&nbsp;&nbsp;- allRoutes</option>
+	
+	<option value="//api/name/classRoutes">&nbsp;&nbsp;&nbsp;&nbsp;- classRoutes</option>
+	
+	<option value="//api/name/containsRoute:">&nbsp;&nbsp;&nbsp;&nbsp;- containsRoute:</option>
+	
+	<option value="//api/name/namedRoutes">&nbsp;&nbsp;&nbsp;&nbsp;- namedRoutes</option>
+	
+	<option value="//api/name/relationshipRoutes">&nbsp;&nbsp;&nbsp;&nbsp;- relationshipRoutes</option>
+	
+	<option value="//api/name/removeRoute:">&nbsp;&nbsp;&nbsp;&nbsp;- removeRoute:</option>
+	
+	<option value="//api/name/routeForClass:method:">&nbsp;&nbsp;&nbsp;&nbsp;- routeForClass:method:</option>
+	
+	<option value="//api/name/routeForName:">&nbsp;&nbsp;&nbsp;&nbsp;- routeForName:</option>
+	
+	<option value="//api/name/routeForObject:method:">&nbsp;&nbsp;&nbsp;&nbsp;- routeForObject:method:</option>
+	
+	<option value="//api/name/routeForRelationship:ofClass:method:">&nbsp;&nbsp;&nbsp;&nbsp;- routeForRelationship:ofClass:method:</option>
+	
+	<option value="//api/name/routesForClass:">&nbsp;&nbsp;&nbsp;&nbsp;- routesForClass:</option>
+	
+	<option value="//api/name/routesForObject:">&nbsp;&nbsp;&nbsp;&nbsp;- routesForObject:</option>
+	
+	<option value="//api/name/routesForRelationship:ofClass:">&nbsp;&nbsp;&nbsp;&nbsp;- routesForRelationship:ofClass:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Adding and Removing Routes">Adding and Removing Routes</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Querying a Route Set">Querying a Route Set</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/addRoute:">addRoute:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/allRoutes">allRoutes</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/classRoutes">classRoutes</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/containsRoute:">containsRoute:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/namedRoutes">namedRoutes</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/relationshipRoutes">relationshipRoutes</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/removeRoute:">removeRoute:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/routeForClass:method:">routeForClass:method:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/routeForName:">routeForName:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/routeForObject:method:">routeForObject:method:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/routeForRelationship:ofClass:method:">routeForRelationship:ofClass:method:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/routesForClass:">routesForClass:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/routesForObject:">routesForObject:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/routesForRelationship:ofClass:">routesForRelationship:ofClass:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="RKRouteSet Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">RKRouteSet Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">RKRouteSet.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <code>RKRouteSet</code> class provides for the storage and retrieval of <a href="../Classes/RKRoute.html"><code>RKRoute</code></a> objects. Route objects are added and removed the route set to manipulate the routing table of the application.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Adding and Removing Routes" name="task_Adding and Removing Routes"></a>
+						<h3 class="subsubtitle task-title">Adding and Removing Routes</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/addRoute:">&ndash;&nbsp;addRoute:</a></code>
+		<span class="tooltip"><p>Adds a route to the receiver.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/removeRoute:">&ndash;&nbsp;removeRoute:</a></code>
+		<span class="tooltip"><p>Removes a route from the receiver.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Querying a Route Set" name="task_Querying a Route Set"></a>
+						<h3 class="subsubtitle task-title">Querying a Route Set</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/containsRoute:">&ndash;&nbsp;containsRoute:</a></code>
+		<span class="tooltip"><p>Determines if a given route exists within the receiver.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/allRoutes">&ndash;&nbsp;allRoutes</a></code>
+		<span class="tooltip"><p>Returns all routes from the receiver in an array.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/namedRoutes">&ndash;&nbsp;namedRoutes</a></code>
+		<span class="tooltip"><p>Returns all named routes from the receiver in an array.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/classRoutes">&ndash;&nbsp;classRoutes</a></code>
+		<span class="tooltip"><p>Returns all class routes from the receiver in an array.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/relationshipRoutes">&ndash;&nbsp;relationshipRoutes</a></code>
+		<span class="tooltip"><p>Returns all relationship routes from the receiver in an array.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/routeForName:">&ndash;&nbsp;routeForName:</a></code>
+		<span class="tooltip"><p>Retrieves a route with the given name.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/routeForClass:method:">&ndash;&nbsp;routeForClass:method:</a></code>
+		<span class="tooltip"><p>Retrieves a route for the given object class and request method.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/routeForRelationship:ofClass:method:">&ndash;&nbsp;routeForRelationship:ofClass:method:</a></code>
+		<span class="tooltip"><p>Retrieves a route for a given relationship of a class with a given request method.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/routesForClass:">&ndash;&nbsp;routesForClass:</a></code>
+		<span class="tooltip"><p>Retrieves all class routes with a given object class.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/routesForObject:">&ndash;&nbsp;routesForObject:</a></code>
+		<span class="tooltip"><p>Retrieves all object routes for a given object.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/routesForRelationship:ofClass:">&ndash;&nbsp;routesForRelationship:ofClass:</a></code>
+		<span class="tooltip"><p>Retrieves all routes for a given relationship name and object class.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/routeForObject:method:">&ndash;&nbsp;routeForObject:method:</a></code>
+		<span class="tooltip"><p>Retrieves a route for a given object and request method.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/addRoute:" title="addRoute:"></a>
+	<h3 class="subsubtitle method-title">addRoute:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Adds a route to the receiver.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)addRoute:(RKRoute *)<em>route</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>route</em></dt>
+			<dd><p>The route to be added.
+@raises NSInvalidArgumentException Raised if the route already exists in the receiver or overlaps an existing name.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Adds a route to the receiver.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">RKRouteSet.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/allRoutes" title="allRoutes"></a>
+	<h3 class="subsubtitle method-title">allRoutes</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns all routes from the receiver in an array.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)allRoutes</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An array containing all the routes in the receiver.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Returns all routes from the receiver in an array.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">RKRouteSet.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/classRoutes" title="classRoutes"></a>
+	<h3 class="subsubtitle method-title">classRoutes</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns all class routes from the receiver in an array.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)classRoutes</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An array containing all the class routes in the receiver.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Returns all class routes from the receiver in an array.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">RKRouteSet.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/containsRoute:" title="containsRoute:"></a>
+	<h3 class="subsubtitle method-title">containsRoute:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Determines if a given route exists within the receiver.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)containsRoute:(RKRoute *)<em>route</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>route</em></dt>
+			<dd><p>The route to be tested for containement.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p><code>YES</code> if the route is contained within the route set, else <code>NO</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Determines if a given route exists within the receiver.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">RKRouteSet.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/namedRoutes" title="namedRoutes"></a>
+	<h3 class="subsubtitle method-title">namedRoutes</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns all named routes from the receiver in an array.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)namedRoutes</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An array containing all the named routes in the receiver.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Returns all named routes from the receiver in an array.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">RKRouteSet.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/relationshipRoutes" title="relationshipRoutes"></a>
+	<h3 class="subsubtitle method-title">relationshipRoutes</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns all relationship routes from the receiver in an array.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)relationshipRoutes</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An array containing all the relationship routes in the receiver.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Returns all relationship routes from the receiver in an array.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">RKRouteSet.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/removeRoute:" title="removeRoute:"></a>
+	<h3 class="subsubtitle method-title">removeRoute:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Removes a route from the receiver.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)removeRoute:(RKRoute *)<em>route</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>route</em></dt>
+			<dd><p>The route to be removed.
+@raises NSInvalidArgumentException Raised if the route does not exist in the receiver.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Removes a route from the receiver.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">RKRouteSet.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/routeForClass:method:" title="routeForClass:method:"></a>
+	<h3 class="subsubtitle method-title">routeForClass:method:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Retrieves a route for the given object class and request method.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (RKRoute *)routeForClass:(Class)<em>objectClass</em> method:(RKRequestMethod)<em>method</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>objectClass</em></dt>
+			<dd><p>The object class of the route to be retrieved.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>method</em></dt>
+			<dd><p>The request method of the route to be retrieved.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A route with the given object class and method or nil if none was found.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Retrieves a route for the given object class and request method.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">RKRouteSet.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/routeForName:" title="routeForName:"></a>
+	<h3 class="subsubtitle method-title">routeForName:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Retrieves a route with the given name.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (RKRoute *)routeForName:(NSString *)<em>name</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>name</em></dt>
+			<dd><p>The name of the named route to be found.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A route with the given name or nil if none was found.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Retrieves a route with the given name.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">RKRouteSet.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/routeForObject:method:" title="routeForObject:method:"></a>
+	<h3 class="subsubtitle method-title">routeForObject:method:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Retrieves a route for a given object and request method.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (RKRoute *)routeForObject:(id)<em>object</em> method:(RKRequestMethod)<em>method</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Retrieves a route for a given object and request method.</p>
+
+<p>The object routes are first searched for an exact match with the given object&rsquo;s class and request method. If no exact match is found for the given request method, but a route is found for the <code>RKRequestMethodAny</code> method, it is returned. If neither are found, the search process begins again and traverses up the inheritance hierarchy.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">RKRouteSet.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/routeForRelationship:ofClass:method:" title="routeForRelationship:ofClass:method:"></a>
+	<h3 class="subsubtitle method-title">routeForRelationship:ofClass:method:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Retrieves a route for a given relationship of a class with a given request method.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (RKRoute *)routeForRelationship:(NSString *)<em>relationship</em> ofClass:(Class)<em>objectClass</em> method:(RKRequestMethod)<em>method</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>relationship</em></dt>
+			<dd><p>The name of the relationship of the route to be retrieved.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>method</em></dt>
+			<dd><p>The request method of the route to be retrieved.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A route with the given relationship name, object class and method or nil if none was found.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Retrieves a route for a given relationship of a class with a given request method.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">RKRouteSet.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/routesForClass:" title="routesForClass:"></a>
+	<h3 class="subsubtitle method-title">routesForClass:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Retrieves all class routes with a given object class.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)routesForClass:(Class)<em>objectClass</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>objectClass</em></dt>
+			<dd><p>The object class of the routes to be retrieved.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An array containing all class routes with the given class.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Retrieves all class routes with a given object class.</p>
+
+<p>Class matches are determined by direct comparison of the class objects. The inheritance hierarchy is not consulted.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">RKRouteSet.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/routesForObject:" title="routesForObject:"></a>
+	<h3 class="subsubtitle method-title">routesForObject:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Retrieves all object routes for a given object.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)routesForObject:(id)<em>object</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>object</em></dt>
+			<dd><p>An object for which all object routes are to be retrieved.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An array containing all object routes where the target class is included in the given object&rsquo;s class hierarchy.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Retrieves all object routes for a given object.</p>
+
+<p>All object routes are searched and returned if they target a class or superclass of the given object (using <code>- [NSObject isKindOfClass:]</code>).</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">RKRouteSet.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/routesForRelationship:ofClass:" title="routesForRelationship:ofClass:"></a>
+	<h3 class="subsubtitle method-title">routesForRelationship:ofClass:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Retrieves all routes for a given relationship name and object class.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)routesForRelationship:(NSString *)<em>relationshipName</em> ofClass:(Class)<em>objectClass</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>relationshipName</em></dt>
+			<dd><p>The name of the relationship of the routes to be retrieved.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>objectClass</em></dt>
+			<dd><p>The object class of the routes to be retrieved.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An array containing all relationship routes with the given relationship name and object class.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Retrieves all routes for a given relationship name and object class.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">RKRouteSet.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2012 Blake Watters. All rights reserved. (Last updated: 2012-10-24)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DocSetNodes version="1.0">
+    <TOC>
+        <Node type="folder">
+            <Name>RestKit 0.20.0dev</Name>
+            <Path>index.html</Path>
+			<Subnodes>
+                
+				
+				<Node type="folder">
+					<Name>Classes</Name>
+					<Path>index.html</Path>
+					<Subnodes>
+						<NodeRef refid="1"/>
+						<NodeRef refid="2"/>
+						<NodeRef refid="3"/>
+						<NodeRef refid="4"/>
+						<NodeRef refid="5"/>
+						<NodeRef refid="6"/>
+						<NodeRef refid="7"/>
+						<NodeRef refid="8"/>
+						<NodeRef refid="9"/>
+						<NodeRef refid="10"/>
+						<NodeRef refid="11"/>
+						<NodeRef refid="12"/>
+						<NodeRef refid="13"/>
+						<NodeRef refid="14"/>
+						<NodeRef refid="15"/>
+						<NodeRef refid="16"/>
+						<NodeRef refid="17"/>
+						<NodeRef refid="18"/>
+						<NodeRef refid="19"/>
+						<NodeRef refid="20"/>
+						<NodeRef refid="21"/>
+						<NodeRef refid="22"/>
+						<NodeRef refid="23"/>
+						<NodeRef refid="24"/>
+						<NodeRef refid="25"/>
+						<NodeRef refid="26"/>
+						<NodeRef refid="27"/>
+						<NodeRef refid="28"/>
+						<NodeRef refid="29"/>
+						<NodeRef refid="30"/>
+						<NodeRef refid="31"/>
+						<NodeRef refid="32"/>
+						<NodeRef refid="33"/>
+						<NodeRef refid="34"/>
+						<NodeRef refid="35"/>
+						<NodeRef refid="36"/>
+						<NodeRef refid="37"/>
+						<NodeRef refid="38"/>
+						<NodeRef refid="39"/>
+						<NodeRef refid="40"/>
+						<NodeRef refid="41"/>
+						<NodeRef refid="42"/>
+						<NodeRef refid="43"/>
+						<NodeRef refid="44"/>
+						<NodeRef refid="45"/>
+						<NodeRef refid="46"/>
+						<NodeRef refid="47"/>
+						<NodeRef refid="48"/>
+						<NodeRef refid="49"/>
+						<NodeRef refid="50"/>
+						<NodeRef refid="51"/>
+						<NodeRef refid="52"/>
+						<NodeRef refid="53"/>
+						<NodeRef refid="54"/>
+						<NodeRef refid="55"/>
+						
+					</Subnodes>
+				</Node>
+				
+				
+				<Node type="folder">
+					<Name>Categories</Name>
+					<Path>index.html</Path>
+					<Subnodes>
+						<NodeRef refid="56"/>
+						<NodeRef refid="57"/>
+						<NodeRef refid="58"/>
+						<NodeRef refid="59"/>
+						<NodeRef refid="60"/>
+						
+					</Subnodes>
+				</Node>
+				
+				
+				<Node type="folder">
+					<Name>Protocols</Name>
+					<Path>index.html</Path>
+					<Subnodes>
+						<NodeRef refid="61"/>
+						<NodeRef refid="62"/>
+						<NodeRef refid="63"/>
+						<NodeRef refid="64"/>
+						<NodeRef refid="65"/>
+						<NodeRef refid="66"/>
+						
+					</Subnodes>
+				</Node>
+				
+			</Subnodes>
+        </Node>
+    </TOC>
+	<Library>
+		
+		<Node id="1">
+			<Name>RKAttributeMapping</Name>
+			<Path>Classes/RKAttributeMapping.html</Path>
+		</Node>
+		<Node id="2">
+			<Name>RKConnectionMapping</Name>
+			<Path>Classes/RKConnectionMapping.html</Path>
+		</Node>
+		<Node id="3">
+			<Name>RKDotNetDateFormatter</Name>
+			<Path>Classes/RKDotNetDateFormatter.html</Path>
+		</Node>
+		<Node id="4">
+			<Name>RKDynamicMapping</Name>
+			<Path>Classes/RKDynamicMapping.html</Path>
+		</Node>
+		<Node id="5">
+			<Name>RKDynamicMappingMatcher</Name>
+			<Path>Classes/RKDynamicMappingMatcher.html</Path>
+		</Node>
+		<Node id="6">
+			<Name>RKEntityByAttributeCache</Name>
+			<Path>Classes/RKEntityByAttributeCache.html</Path>
+		</Node>
+		<Node id="7">
+			<Name>RKEntityCache</Name>
+			<Path>Classes/RKEntityCache.html</Path>
+		</Node>
+		<Node id="8">
+			<Name>RKEntityMapping</Name>
+			<Path>Classes/RKEntityMapping.html</Path>
+		</Node>
+		<Node id="9">
+			<Name>RKErrorMessage</Name>
+			<Path>Classes/RKErrorMessage.html</Path>
+		</Node>
+		<Node id="10">
+			<Name>RKFetchRequestManagedObjectCache</Name>
+			<Path>Classes/RKFetchRequestManagedObjectCache.html</Path>
+		</Node>
+		<Node id="11">
+			<Name>RKHTTPRequestOperation</Name>
+			<Path>Classes/RKHTTPRequestOperation.html</Path>
+		</Node>
+		<Node id="12">
+			<Name>RKISO8601DateFormatter</Name>
+			<Path>Classes/RKISO8601DateFormatter.html</Path>
+		</Node>
+		<Node id="13">
+			<Name>RKInMemoryManagedObjectCache</Name>
+			<Path>Classes/RKInMemoryManagedObjectCache.html</Path>
+		</Node>
+		<Node id="14">
+			<Name>RKMIMETypeSerialization</Name>
+			<Path>Classes/RKMIMETypeSerialization.html</Path>
+		</Node>
+		<Node id="15">
+			<Name>RKManagedObjectImporter</Name>
+			<Path>Classes/RKManagedObjectImporter.html</Path>
+		</Node>
+		<Node id="16">
+			<Name>RKManagedObjectMappingOperationDataSource</Name>
+			<Path>Classes/RKManagedObjectMappingOperationDataSource.html</Path>
+		</Node>
+		<Node id="17">
+			<Name>RKManagedObjectRequestOperation</Name>
+			<Path>Classes/RKManagedObjectRequestOperation.html</Path>
+		</Node>
+		<Node id="18">
+			<Name>RKManagedObjectResponseMapperOperation</Name>
+			<Path>Classes/RKManagedObjectResponseMapperOperation.html</Path>
+		</Node>
+		<Node id="19">
+			<Name>RKManagedObjectStore</Name>
+			<Path>Classes/RKManagedObjectStore.html</Path>
+		</Node>
+		<Node id="20">
+			<Name>RKManagedObjectThreadSafeInvocation</Name>
+			<Path>Classes/RKManagedObjectThreadSafeInvocation.html</Path>
+		</Node>
+		<Node id="21">
+			<Name>RKMapperOperation</Name>
+			<Path>Classes/RKMapperOperation.html</Path>
+		</Node>
+		<Node id="22">
+			<Name>RKMapping</Name>
+			<Path>Classes/RKMapping.html</Path>
+		</Node>
+		<Node id="23">
+			<Name>RKMappingOperation</Name>
+			<Path>Classes/RKMappingOperation.html</Path>
+		</Node>
+		<Node id="24">
+			<Name>RKMappingResult</Name>
+			<Path>Classes/RKMappingResult.html</Path>
+		</Node>
+		<Node id="25">
+			<Name>RKMappingTest</Name>
+			<Path>Classes/RKMappingTest.html</Path>
+		</Node>
+		<Node id="26">
+			<Name>RKMappingTestExpectation</Name>
+			<Path>Classes/RKMappingTestExpectation.html</Path>
+		</Node>
+		<Node id="27">
+			<Name>RKNSJSONSerialization</Name>
+			<Path>Classes/RKNSJSONSerialization.html</Path>
+		</Node>
+		<Node id="28">
+			<Name>RKObjectManager</Name>
+			<Path>Classes/RKObjectManager.html</Path>
+		</Node>
+		<Node id="29">
+			<Name>RKObjectMapping</Name>
+			<Path>Classes/RKObjectMapping.html</Path>
+		</Node>
+		<Node id="30">
+			<Name>RKObjectMappingOperationDataSource</Name>
+			<Path>Classes/RKObjectMappingOperationDataSource.html</Path>
+		</Node>
+		<Node id="31">
+			<Name>RKObjectParameterization</Name>
+			<Path>Classes/RKObjectParameterization.html</Path>
+		</Node>
+		<Node id="32">
+			<Name>RKObjectRequestOperation</Name>
+			<Path>Classes/RKObjectRequestOperation.html</Path>
+		</Node>
+		<Node id="33">
+			<Name>RKObjectResponseMapperOperation</Name>
+			<Path>Classes/RKObjectResponseMapperOperation.html</Path>
+		</Node>
+		<Node id="34">
+			<Name>RKPathMatcher</Name>
+			<Path>Classes/RKPathMatcher.html</Path>
+		</Node>
+		<Node id="35">
+			<Name>RKPropertyInspector</Name>
+			<Path>Classes/RKPropertyInspector.html</Path>
+		</Node>
+		<Node id="36">
+			<Name>RKPropertyMapping</Name>
+			<Path>Classes/RKPropertyMapping.html</Path>
+		</Node>
+		<Node id="37">
+			<Name>RKRelationshipConnectionOperation</Name>
+			<Path>Classes/RKRelationshipConnectionOperation.html</Path>
+		</Node>
+		<Node id="38">
+			<Name>RKRelationshipMapping</Name>
+			<Path>Classes/RKRelationshipMapping.html</Path>
+		</Node>
+		<Node id="39">
+			<Name>RKRequestDescriptor</Name>
+			<Path>Classes/RKRequestDescriptor.html</Path>
+		</Node>
+		<Node id="40">
+			<Name>RKResponseDescriptor</Name>
+			<Path>Classes/RKResponseDescriptor.html</Path>
+		</Node>
+		<Node id="41">
+			<Name>RKResponseMapperOperation</Name>
+			<Path>Classes/RKResponseMapperOperation.html</Path>
+		</Node>
+		<Node id="42">
+			<Name>RKRoute</Name>
+			<Path>Classes/RKRoute.html</Path>
+		</Node>
+		<Node id="43">
+			<Name>RKRouteSet</Name>
+			<Path>Classes/RKRouteSet.html</Path>
+		</Node>
+		<Node id="44">
+			<Name>RKRouter</Name>
+			<Path>Classes/RKRouter.html</Path>
+		</Node>
+		<Node id="45">
+			<Name>RKSearchIndexer</Name>
+			<Path>Classes/RKSearchIndexer.html</Path>
+		</Node>
+		<Node id="46">
+			<Name>RKSearchPredicate</Name>
+			<Path>Classes/RKSearchPredicate.html</Path>
+		</Node>
+		<Node id="47">
+			<Name>RKSearchTokenizer</Name>
+			<Path>Classes/RKSearchTokenizer.html</Path>
+		</Node>
+		<Node id="48">
+			<Name>RKSearchWord</Name>
+			<Path>Classes/RKSearchWord.html</Path>
+		</Node>
+		<Node id="49">
+			<Name>RKSearchWordEntity</Name>
+			<Path>Classes/RKSearchWordEntity.html</Path>
+		</Node>
+		<Node id="50">
+			<Name>RKTestFactory</Name>
+			<Path>Classes/RKTestFactory.html</Path>
+		</Node>
+		<Node id="51">
+			<Name>RKTestFixture</Name>
+			<Path>Classes/RKTestFixture.html</Path>
+		</Node>
+		<Node id="52">
+			<Name>RKTestHelpers</Name>
+			<Path>Classes/RKTestHelpers.html</Path>
+		</Node>
+		<Node id="53">
+			<Name>RKTestNotificationObserver</Name>
+			<Path>Classes/RKTestNotificationObserver.html</Path>
+		</Node>
+		<Node id="54">
+			<Name>RKURLEncodedSerialization</Name>
+			<Path>Classes/RKURLEncodedSerialization.html</Path>
+		</Node>
+		<Node id="55">
+			<Name>RK_FIX_CATEGORY_BUG</Name>
+			<Path>Classes/RK_FIX_CATEGORY_BUG.html</Path>
+		</Node>
+		
+		<Node id="56">
+			<Name>AFHTTPClient()</Name>
+			<Path>Categories/AFHTTPClient+.html</Path>
+		</Node>
+		<Node id="57">
+			<Name>NSBundle(RKAdditions)</Name>
+			<Path>Categories/NSBundle+RKAdditions.html</Path>
+		</Node>
+		<Node id="58">
+			<Name>NSEntityDescription(RKAdditions)</Name>
+			<Path>Categories/NSEntityDescription+RKAdditions.html</Path>
+		</Node>
+		<Node id="59">
+			<Name>NSManagedObject(RKAdditions)</Name>
+			<Path>Categories/NSManagedObject+RKAdditions.html</Path>
+		</Node>
+		<Node id="60">
+			<Name>NSManagedObjectContext(RKAdditions)</Name>
+			<Path>Categories/NSManagedObjectContext+RKAdditions.html</Path>
+		</Node>
+		
+		<Node id="61">
+			<Name>RKManagedObjectCaching</Name>
+			<Path>Protocols/RKManagedObjectCaching.html</Path>
+		</Node>
+		<Node id="62">
+			<Name>RKMapperOperationDelegate</Name>
+			<Path>Protocols/RKMapperOperationDelegate.html</Path>
+		</Node>
+		<Node id="63">
+			<Name>RKMappingOperationDataSource</Name>
+			<Path>Protocols/RKMappingOperationDataSource.html</Path>
+		</Node>
+		<Node id="64">
+			<Name>RKMappingOperationDelegate</Name>
+			<Path>Protocols/RKMappingOperationDelegate.html</Path>
+		</Node>
+		<Node id="65">
+			<Name>RKSerialization</Name>
+			<Path>Protocols/RKSerialization.html</Path>
+		</Node>
+		<Node id="66">
+			<Name>RKTestFactoryCallbacks</Name>
+			<Path>Protocols/RKTestFactoryCallbacks.html</Path>
+		</Node>
+		
+	</Library>
+</DocSetNodes>

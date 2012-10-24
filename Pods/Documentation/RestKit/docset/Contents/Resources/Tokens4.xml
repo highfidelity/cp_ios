@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKDynamicMapping.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKDynamicMapping</TokenIdentifier>
+			<Abstract type="html">Defines a dynamic object mapping that determines the appropriate concrete object mapping to apply at mapping time. This allows you to map very similar payloads differently depending on the type of data contained therein.</Abstract>
+			<DeclaredIn>RKDynamicMapping.h</DeclaredIn>
+			
+			<NodeRef refid="4"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKDynamicMapping/setObjectMappingForRepresentationBlock:</TokenIdentifier>
+			<Abstract type="html">Sets a block to be invoked to determine the appropriate concrete object mapping with which to map an object representation.</Abstract>
+			<DeclaredIn>RKDynamicMapping.h</DeclaredIn>			
+			
+			<Declaration>- (void)setObjectMappingForRepresentationBlock:(RKDynamicMappingDelegateBlock)block</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>block</Name>
+					<Abstract type="html">The block object to invoke to select the object mapping with which to map the given object representation.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setObjectMappingForRepresentationBlock:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKDynamicMapping/setObjectMapping:whenValueOfKeyPath:isEqualTo:</TokenIdentifier>
+			<Abstract type="html">Defines a dynamic mapping rule stating that when the value of the key property matches the specified value, the given mapping should be used to map the representation.</Abstract>
+			<DeclaredIn>RKDynamicMapping.h</DeclaredIn>			
+			
+			<Declaration>- (void)setObjectMapping:(RKObjectMapping *)objectMapping whenValueOfKeyPath:(NSString *)keyPath isEqualTo:(id)value</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>objectMapping</Name>
+					<Abstract type="html">The mapping to be used when the value at the given key path is equal to the given value.</Abstract>
+				</Parameter><Parameter>
+					<Name>keyPath</Name>
+					<Abstract type="html">The key path to retrieve the comparison value from in the object representation being mapped.</Abstract>
+				</Parameter><Parameter>
+					<Name>value</Name>
+					<Abstract type="html">The value to be compared with the value at keyPath. If they are equal, the objectMapping will be used to map the representation.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setObjectMapping:whenValueOfKeyPath:isEqualTo:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKDynamicMapping/setObjectMappings:</TokenIdentifier>
+			<Abstract type="html">Returns an array of object mappings that have been registered with the receiver.</Abstract>
+			<DeclaredIn>RKDynamicMapping.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSArray *objectMappings</Declaration>
+			
+			<ReturnValue><Abstract type="html">An array of RKObjectMapping objects registered with the receiver.</Abstract></ReturnValue>
+			<Anchor>//api/name/objectMappings</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKDynamicMapping/objectMappings</TokenIdentifier>
+			<Abstract type="html">Returns an array of object mappings that have been registered with the receiver.</Abstract>
+			<DeclaredIn>RKDynamicMapping.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSArray *objectMappings</Declaration>
+			
+			<ReturnValue><Abstract type="html">An array of RKObjectMapping objects registered with the receiver.</Abstract></ReturnValue>
+			<Anchor>//api/name/objectMappings</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKDynamicMapping/objectMappingForRepresentation:</TokenIdentifier>
+			<Abstract type="html">Invoked by the RKMapperOperation and RKMappingOperation to determine the appropriate RKObjectMapping to use when mapping the given object representation.</Abstract>
+			<DeclaredIn>RKDynamicMapping.h</DeclaredIn>			
+			
+			<Declaration>- (RKObjectMapping *)objectMappingForRepresentation:(id)representation</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>representation</Name>
+					<Abstract type="html">The object representation that being mapped dynamically for which to determine the appropriate concrete mapping.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The object mapping to be used to map the given object representation.</Abstract></ReturnValue>
+			<Anchor>//api/name/objectMappingForRepresentation:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

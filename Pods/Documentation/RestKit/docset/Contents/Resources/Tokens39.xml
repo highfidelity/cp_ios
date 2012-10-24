@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKRequestDescriptor.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKRequestDescriptor</TokenIdentifier>
+			<Abstract type="html">An RKRequestDescriptor object describes an object mapping configuration that is used to construct the parameters of an HTTP request for an object. Request descriptors are defined by specifying the RKMapping object that is to be used when object mapping an object into an NSDictionary of parameters, the class of the type of object for which the mapping is to be applied, and an optional root key path under which the paramters are to be nested. Response descriptors are only utilized when construct parameters for an NSURLRequest with an HTTP method of POST, PUT, or PATCH.</Abstract>
+			<DeclaredIn>RKRequestDescriptor.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/cl/RKObjectParameterization</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/clm/RKObjectMapping/requestMapping</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instm/RKObjectManager/requestWithObject:method:path:parameters:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<NodeRef refid="39"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKRequestDescriptor/requestDescriptorWithMapping:objectClass:rootKeyPath:</TokenIdentifier>
+			<Abstract type="html">Creates and returns a new RKRequestDescriptor object.</Abstract>
+			<DeclaredIn>RKRequestDescriptor.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/RKObjectMapping/requestMapping</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (id)requestDescriptorWithMapping:(RKMapping *)mapping objectClass:(Class)objectClass rootKeyPath:(NSString *)rootKeyPath</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mapping</Name>
+					<Abstract type="html">The mapping to be used when parameterizing an object using the request descriptor. Cannot be nil and must have an objectClass equal to [NSMutableDictionary class].</Abstract>
+				</Parameter><Parameter>
+					<Name>objectClass</Name>
+					<Abstract type="html">The class of objects for which the request descriptor should be used. Cannot be nil.</Abstract>
+				</Parameter><Parameter>
+					<Name>rootKeyPath</Name>
+					<Abstract type="html">The root key path under which paramters constructed using the response descriptor will be nested. If nil, the parameters will not be nested and returned as a flat dictionary object.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A new RKRequestDescriptor object.</Abstract></ReturnValue>
+			<Anchor>//api/name/requestDescriptorWithMapping:objectClass:rootKeyPath:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKRequestDescriptor/setMapping:</TokenIdentifier>
+			<Abstract type="html">The mapping specifying how the object being parameterized is to be mapped into an NSDictionary representation. The mapping must have an objectClass equal to [NSMutableDictionary class].</Abstract>
+			<DeclaredIn>RKRequestDescriptor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) RKMapping *mapping</Declaration>
+			
+			
+			<Anchor>//api/name/mapping</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKRequestDescriptor/mapping</TokenIdentifier>
+			<Abstract type="html">The mapping specifying how the object being parameterized is to be mapped into an NSDictionary representation. The mapping must have an objectClass equal to [NSMutableDictionary class].</Abstract>
+			<DeclaredIn>RKRequestDescriptor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) RKMapping *mapping</Declaration>
+			
+			
+			<Anchor>//api/name/mapping</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKRequestDescriptor/setObjectClass:</TokenIdentifier>
+			<Abstract type="html">The class of objects that the request descriptor is appropriate for use in parameterizing.</Abstract>
+			<DeclaredIn>RKRequestDescriptor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) Class objectClass</Declaration>
+			
+			
+			<Anchor>//api/name/objectClass</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKRequestDescriptor/objectClass</TokenIdentifier>
+			<Abstract type="html">The class of objects that the request descriptor is appropriate for use in parameterizing.</Abstract>
+			<DeclaredIn>RKRequestDescriptor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) Class objectClass</Declaration>
+			
+			
+			<Anchor>//api/name/objectClass</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKRequestDescriptor/setRootKeyPath:</TokenIdentifier>
+			<Abstract type="html">The root key path that the paramters for the object are to be nested under. May be nil.</Abstract>
+			<DeclaredIn>RKRequestDescriptor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *rootKeyPath</Declaration>
+			
+			
+			<Anchor>//api/name/rootKeyPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKRequestDescriptor/rootKeyPath</TokenIdentifier>
+			<Abstract type="html">The root key path that the paramters for the object are to be nested under. May be nil.</Abstract>
+			<DeclaredIn>RKRequestDescriptor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *rootKeyPath</Declaration>
+			
+			
+			<Anchor>//api/name/rootKeyPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKRequestDescriptor/matchesObject:</TokenIdentifier>
+			<Abstract type="html">Returns YES if the given object is instance of objectClass or any class that inherits from objectClass, else NO.</Abstract>
+			<DeclaredIn>RKRequestDescriptor.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)matchesObject:(id)object</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>object</Name>
+					<Abstract type="html">The object to be matched against the receiver.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">YES if the given object matches objectClass, else NO.</Abstract></ReturnValue>
+			<Anchor>//api/name/matchesObject:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

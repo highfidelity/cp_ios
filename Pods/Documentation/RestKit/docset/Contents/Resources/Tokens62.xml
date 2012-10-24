@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/RKMapperOperationDelegate.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/RKMapperOperationDelegate</TokenIdentifier>
+			<Abstract type="html">Objects wishing to act as the delegate for RKMapperOperation objects must adopt the RKMapperOperationDelegate protocol. The protocol provides a rich set of optional callback methods that provides insight into the lifecycle of a mapper operation.</Abstract>
+			<DeclaredIn>RKMapperOperation.h</DeclaredIn>
+			
+			<NodeRef refid="62"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/RKMapperOperationDelegate/mapperWillStartMapping:</TokenIdentifier>
+			<Abstract type="html">Tells the delegate that the mapper operation is about to start mapping.</Abstract>
+			<DeclaredIn>RKMapperOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)mapperWillStartMapping:(RKMapperOperation *)mapper</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mapper</Name>
+					<Abstract type="html">The mapper operation that is about to start mapping.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/mapperWillStartMapping:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/RKMapperOperationDelegate/mapperDidFinishMapping:</TokenIdentifier>
+			<Abstract type="html">Tells the delegate that the mapper has finished.</Abstract>
+			<DeclaredIn>RKMapperOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)mapperDidFinishMapping:(RKMapperOperation *)mapper</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mapper</Name>
+					<Abstract type="html">The mapper operation that has finished mapping.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/mapperDidFinishMapping:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/RKMapperOperationDelegate/mapperDidCancelMapping:</TokenIdentifier>
+			<Abstract type="html">Tells the delegate that the mapper has been cancelled.</Abstract>
+			<DeclaredIn>RKMapperOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)mapperDidCancelMapping:(RKMapperOperation *)mapper</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mapper</Name>
+					<Abstract type="html">The mapper operation that was cancelled.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/mapperDidCancelMapping:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/RKMapperOperationDelegate/mapper:didFindRepresentationOrArrayOfRepresentations:atKeyPath:</TokenIdentifier>
+			<Abstract type="html">Tells the delegate that the mapper has found one or more mappable object representations at a key path specified in the mappingsDictionary.</Abstract>
+			<DeclaredIn>RKMapperOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)mapper:(RKMapperOperation *)mapper didFindRepresentationOrArrayOfRepresentations:(id)dictionaryOrArrayOfDictionaries atKeyPath:(NSString *)keyPath</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mapper</Name>
+					<Abstract type="html">The mapper operation performing the mapping.</Abstract>
+				</Parameter><Parameter>
+					<Name>dictionaryOrArrayOfDictionaries</Name>
+					<Abstract type="html">The NSDictictionary or NSArray of NSDictionary object representations that was found at the keyPath.</Abstract>
+				</Parameter><Parameter>
+					<Name>keyPath</Name>
+					<Abstract type="html">The key path that the representation was read from in the sourceObject. If the keyPath was [NSNull null] in the mappingsDictionary, it will be given as nil to the delegate.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/mapper:didFindRepresentationOrArrayOfRepresentations:atKeyPath:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/RKMapperOperationDelegate/mapper:didNotFindRepresentationOrArrayOfRepresentationsAtKeyPath:</TokenIdentifier>
+			<Abstract type="html">Tells the delegate that the mapper failed to find any mappable object representations at a key path specified in the mappingsDictionary.</Abstract>
+			<DeclaredIn>RKMapperOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)mapper:(RKMapperOperation *)mapper didNotFindRepresentationOrArrayOfRepresentationsAtKeyPath:(NSString *)keyPath</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mapper</Name>
+					<Abstract type="html">The mapper operation performing the mapping.</Abstract>
+				</Parameter><Parameter>
+					<Name>keyPath</Name>
+					<Abstract type="html">The key path that was searched for a mappable object representation.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/mapper:didNotFindRepresentationOrArrayOfRepresentationsAtKeyPath:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/RKMapperOperationDelegate/mapper:willStartMappingOperation:forKeyPath:</TokenIdentifier>
+			<Abstract type="html">Tells the delegate that the mapper is about to start a mapping operation to map a representation found in the sourceObject.</Abstract>
+			<DeclaredIn>RKMapperOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)mapper:(RKMapperOperation *)mapper willStartMappingOperation:(RKMappingOperation *)mappingOperation forKeyPath:(NSString *)keyPath</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mapper</Name>
+					<Abstract type="html">The mapper operation performing the mapping.</Abstract>
+				</Parameter><Parameter>
+					<Name>mappingOperation</Name>
+					<Abstract type="html">The mapping operation that is about to be started.</Abstract>
+				</Parameter><Parameter>
+					<Name>keyPath</Name>
+					<Abstract type="html">The key path that was mapped. A nil key path indicates that the mapping matched the entire sourceObject.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/mapper:willStartMappingOperation:forKeyPath:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/RKMapperOperationDelegate/mapper:didFinishMappingOperation:forKeyPath:</TokenIdentifier>
+			<Abstract type="html">Tells the delegate that a mapping operation that was started by the mapper has finished executing.</Abstract>
+			<DeclaredIn>RKMapperOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)mapper:(RKMapperOperation *)mapper didFinishMappingOperation:(RKMappingOperation *)mappingOperation forKeyPath:(NSString *)keyPath</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mapper</Name>
+					<Abstract type="html">The mapper operation performing the mapping.</Abstract>
+				</Parameter><Parameter>
+					<Name>mappingOperation</Name>
+					<Abstract type="html">The mapping operation that has finished.</Abstract>
+				</Parameter><Parameter>
+					<Name>keyPath</Name>
+					<Abstract type="html">The key path that was mapped. A nil key path indicates that the mapping matched the entire sourceObject.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/mapper:didFinishMappingOperation:forKeyPath:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/RKMapperOperationDelegate/mapper:didFailMappingOperation:forKeyPath:withError:</TokenIdentifier>
+			<Abstract type="html">Tells the delegate that a mapping operation that was started by the mapper has failed with an error.</Abstract>
+			<DeclaredIn>RKMapperOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)mapper:(RKMapperOperation *)mapper didFailMappingOperation:(RKMappingOperation *)mappingOperation forKeyPath:(NSString *)keyPath withError:(NSError *)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mapper</Name>
+					<Abstract type="html">The mapper operation performing the mapping.</Abstract>
+				</Parameter><Parameter>
+					<Name>mappingOperation</Name>
+					<Abstract type="html">The mapping operation that has failed.</Abstract>
+				</Parameter><Parameter>
+					<Name>keyPath</Name>
+					<Abstract type="html">The key path that was mapped. A nil key path indicates that the mapping matched the entire sourceObject.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">The error that occurred during the execution of the mapping operation.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/mapper:didFailMappingOperation:forKeyPath:withError:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

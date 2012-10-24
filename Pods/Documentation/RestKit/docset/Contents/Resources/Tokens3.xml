@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKDotNetDateFormatter.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKDotNetDateFormatter</TokenIdentifier>
+			<Abstract type="html">A subclass of NSDateFormatter that serves as translator between ASP.NET date serializations in JSON strings and NSDate objects. This is useful for properly mapping these dates from an ASP.NET driven backend.</Abstract>
+			<DeclaredIn>RKDotNetDateFormatter.h</DeclaredIn>
+			
+			<NodeRef refid="3"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKDotNetDateFormatter/dotNetDateFormatterWithTimeZone:</TokenIdentifier>
+			<Abstract type="html">Instantiates an autoreleased RKDotNetDateFormatter object with the timezone set to the given value. The default time zone is UTC.</Abstract>
+			<DeclaredIn>RKDotNetDateFormatter.h</DeclaredIn>			
+			
+			<Declaration>+ (RKDotNetDateFormatter *)dotNetDateFormatterWithTimeZone:(NSTimeZone *)timeZone</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>timeZone</Name>
+					<Abstract type="html">An NSTimeZone object. A nil value sets the timezone to the default value of UTC.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">An autoreleased RKDotNetDateFormatter object</Abstract></ReturnValue>
+			<Anchor>//api/name/dotNetDateFormatterWithTimeZone:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKDotNetDateFormatter/dateFromString:</TokenIdentifier>
+			<Abstract type="html">Returns an NSDate object from an ASP.NET style date string respresentation, as seen in JSON.</Abstract>
+			<DeclaredIn>RKDotNetDateFormatter.h</DeclaredIn>			
+			
+			<Declaration>- (NSDate *)dateFromString:(NSString *)string</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>string</Name>
+					<Abstract type="html">The ASP.NET style string, /Date(1112715000000-0500)/</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">An NSDate object.</Abstract></ReturnValue>
+			<Anchor>//api/name/dateFromString:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKDotNetDateFormatter/stringFromDate:</TokenIdentifier>
+			<Abstract type="html">Returns an ASP.NET style date string from an NSDate, such as /Date(1112715000000+0000)/ Where 1112715000000 is the number of milliseconds since January 1, 1970 00:00 GMT/UTC, and +0000 is the timezone offset from GMT in 24-hour time.</Abstract>
+			<DeclaredIn>RKDotNetDateFormatter.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)stringFromDate:(NSDate *)date</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>date</Name>
+					<Abstract type="html">An NSDate object from which to return a string value.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The ASP.NET style string, /Date(1112715000000-0500)/</Abstract></ReturnValue>
+			<Anchor>//api/name/stringFromDate:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

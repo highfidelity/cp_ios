@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKMappingResult.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKMappingResult</TokenIdentifier>
+			<Abstract type="html">The RKMappingResult class represents the aggregate object mapping results returned by an RKMapperOperation object. The mapping result provides a thin interface on top of an NSDictionary and provides convenient interfaces for accessing the mapping results in various representations.</Abstract>
+			<DeclaredIn>RKMappingResult.h</DeclaredIn>
+			
+			<NodeRef refid="24"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingResult/initWithDictionary:</TokenIdentifier>
+			<Abstract type="html">Initializes the receiver with a dictionary of mapped key paths and object values.</Abstract>
+			<DeclaredIn>RKMappingResult.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithDictionary:(NSDictionary *)dictionary</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>dictionary</Name>
+					<Abstract type="html">A dictionary wherein the keys represent mapped key paths and the values represent the objects mapped at those key paths. Cannot be nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The receiver, initialized with the given dictionary.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithDictionary:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingResult/dictionary</TokenIdentifier>
+			<Abstract type="html">Returns a representation of the mapping result as a dictionary.</Abstract>
+			<DeclaredIn>RKMappingResult.h</DeclaredIn>			
+			
+			<Declaration>- (NSDictionary *)dictionary</Declaration>
+			
+			<ReturnValue><Abstract type="html">A dictionary containing the mapping results.</Abstract></ReturnValue>
+			<Anchor>//api/name/dictionary</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingResult/firstObject</TokenIdentifier>
+			<Abstract type="html">Returns a representation of the mapping result as a single object by returning the first mapped value from the aggregate array of mapped objects.</Abstract>
+			<DeclaredIn>RKMappingResult.h</DeclaredIn>			
+			
+			<Declaration>- (id)firstObject</Declaration>
+			
+			<ReturnValue><Abstract type="html">The first object contained in the mapping result.</Abstract></ReturnValue>
+			<Anchor>//api/name/firstObject</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingResult/array</TokenIdentifier>
+			<Abstract type="html">Returns a representation of the mapping result as an array of objects.</Abstract>
+			<DeclaredIn>RKMappingResult.h</DeclaredIn>			
+			
+			<Declaration>- (NSArray *)array</Declaration>
+			
+			<ReturnValue><Abstract type="html">An array containing the objects contained in the mapping result.</Abstract></ReturnValue>
+			<Anchor>//api/name/array</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingResult/set</TokenIdentifier>
+			<Abstract type="html">Returns a representation of the mapping result as a set of objects.</Abstract>
+			<DeclaredIn>RKMappingResult.h</DeclaredIn>			
+			
+			<Declaration>- (NSSet *)set</Declaration>
+			
+			<ReturnValue><Abstract type="html">A set containing the objects contained in the mapping result.</Abstract></ReturnValue>
+			<Anchor>//api/name/set</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMappingResult/count</TokenIdentifier>
+			<Abstract type="html">Returns a count of the number of objects contained in the mapping result. This is an aggregate count of all objects across all mapped key paths in the result.</Abstract>
+			<DeclaredIn>RKMappingResult.h</DeclaredIn>			
+			
+			<Declaration>- (NSUInteger)count</Declaration>
+			
+			<ReturnValue><Abstract type="html">A count of the number of mapped objects in the mapping result.</Abstract></ReturnValue>
+			<Anchor>//api/name/count</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

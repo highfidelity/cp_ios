@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKEntityMapping.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKEntityMapping</TokenIdentifier>
+			<Abstract type="html">RKEntityMapping objects model an object mapping with a Core Data destination entity.</Abstract>
+			<DeclaredIn>RKEntityMapping.h</DeclaredIn>
+			
+			<NodeRef refid="8"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKEntityMapping/initWithEntity:</TokenIdentifier>
+			<Abstract type="html">Initializes the receiver with a given entity.</Abstract>
+			<DeclaredIn>RKEntityMapping.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithEntity:(NSEntityDescription *)entity</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>entity</Name>
+					<Abstract type="html">An entity with which to initialize the receiver.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The receiver, initialized with the given entity.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithEntity:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKEntityMapping/mappingForEntityForName:inManagedObjectStore:</TokenIdentifier>
+			<Abstract type="html">A convenience initializer that creates and returns an entity mapping for the entity with the given name in
+the managed object model of the given managed object store.</Abstract>
+			<DeclaredIn>RKEntityMapping.h</DeclaredIn>			
+			
+			<Declaration>+ (id)mappingForEntityForName:(NSString *)entityName inManagedObjectStore:(RKManagedObjectStore *)managedObjectStore</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>entityName</Name>
+					<Abstract type="html">The name of the entity in the managed object model for which an entity mapping is to be created.</Abstract>
+				</Parameter><Parameter>
+					<Name>managedObjectStore</Name>
+					<Abstract type="html">A managed object store containing the managed object model in which an entity with the given name is defined.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A new entity mapping for the entity with the given name in the managed object model of the given managed object store.</Abstract></ReturnValue>
+			<Anchor>//api/name/mappingForEntityForName:inManagedObjectStore:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKEntityMapping/setEntity:</TokenIdentifier>
+			<Abstract type="html">The Core Data entity description used for this object mapping</Abstract>
+			<DeclaredIn>RKEntityMapping.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSEntityDescription *entity</Declaration>
+			
+			
+			<Anchor>//api/name/entity</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKEntityMapping/entity</TokenIdentifier>
+			<Abstract type="html">The Core Data entity description used for this object mapping</Abstract>
+			<DeclaredIn>RKEntityMapping.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSEntityDescription *entity</Declaration>
+			
+			
+			<Anchor>//api/name/entity</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKEntityMapping/setPrimaryKeyAttribute:</TokenIdentifier>
+			<Abstract type="html">The name of the attribute on the destination entity that acts as the primary key for instances
+of the entity in the remote backend system. Used to uniquely identify objects within the store
+so that existing objects are updated rather than creating new ones.</Abstract>
+			<DeclaredIn>RKEntityMapping.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSString *primaryKeyAttribute</Declaration>
+			
+			
+			<Anchor>//api/name/primaryKeyAttribute</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKEntityMapping/primaryKeyAttribute</TokenIdentifier>
+			<Abstract type="html">The name of the attribute on the destination entity that acts as the primary key for instances
+of the entity in the remote backend system. Used to uniquely identify objects within the store
+so that existing objects are updated rather than creating new ones.</Abstract>
+			<DeclaredIn>RKEntityMapping.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSString *primaryKeyAttribute</Declaration>
+			
+			
+			<Anchor>//api/name/primaryKeyAttribute</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKEntityMapping/setConnectionMappings:</TokenIdentifier>
+			<Abstract type="html">Retrieves an array of RKConnectionMapping objects for connecting the receiver&apos;s relationships
+by primary key.</Abstract>
+			<DeclaredIn>RKEntityMapping.h</DeclaredIn>			
+			
+			<Declaration>@property (weak, nonatomic, readonly) NSArray *connectionMappings</Declaration>
+			
+			
+			<Anchor>//api/name/connectionMappings</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKEntityMapping/connectionMappings</TokenIdentifier>
+			<Abstract type="html">Retrieves an array of RKConnectionMapping objects for connecting the receiver&apos;s relationships
+by primary key.</Abstract>
+			<DeclaredIn>RKEntityMapping.h</DeclaredIn>			
+			
+			<Declaration>@property (weak, nonatomic, readonly) NSArray *connectionMappings</Declaration>
+			
+			
+			<Anchor>//api/name/connectionMappings</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKEntityMapping/addConnectionMapping:</TokenIdentifier>
+			<Abstract type="html">Adds a connection mapping to the receiver.</Abstract>
+			<DeclaredIn>RKEntityMapping.h</DeclaredIn>			
+			
+			<Declaration>- (void)addConnectionMapping:(RKConnectionMapping *)connectionMapping</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>connectionMapping</Name>
+					<Abstract type="html">The connection mapping to be added.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/addConnectionMapping:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKEntityMapping/addConnectionMappingsFromArray:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKEntityMapping.h</DeclaredIn>			
+			
+			<Declaration>- (void)addConnectionMappingsFromArray:(NSArray *)arrayOfConnectionMappings</Declaration>
+			
+			
+			<Anchor>//api/name/addConnectionMappingsFromArray:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKEntityMapping/addConnectionMappingForRelationshipForName:fromSourceKeyPath:toKeyPath:matcher:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKEntityMapping.h</DeclaredIn>			
+			
+			<Declaration>- (RKConnectionMapping *)addConnectionMappingForRelationshipForName:(NSString *)relationshipName fromSourceKeyPath:(NSString *)sourceKeyPath toKeyPath:(NSString *)destinationKeyPath matcher:(RKDynamicMappingMatcher *)matcher</Declaration>
+			
+			
+			<Anchor>//api/name/addConnectionMappingForRelationshipForName:fromSourceKeyPath:toKeyPath:matcher:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKEntityMapping/removeConnectionMapping:</TokenIdentifier>
+			<Abstract type="html">Removes a connection mapping from the receiver.</Abstract>
+			<DeclaredIn>RKEntityMapping.h</DeclaredIn>			
+			
+			<Declaration>- (void)removeConnectionMapping:(RKConnectionMapping *)connectionMapping</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>connectionMapping</Name>
+					<Abstract type="html">The connection mapping to be added.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/removeConnectionMapping:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKEntityMapping/defaultValueForMissingAttribute:</TokenIdentifier>
+			<Abstract type="html">Returns the default value for the specified attribute as expressed in the Core Data entity definition. This value will
+be assigned if the object mapping is applied and a value for a missing attribute is not present in the payload.</Abstract>
+			<DeclaredIn>RKEntityMapping.h</DeclaredIn>			
+			
+			<Declaration>- (id)defaultValueForMissingAttribute:(NSString *)attributeName</Declaration>
+			
+			
+			<Anchor>//api/name/defaultValueForMissingAttribute:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

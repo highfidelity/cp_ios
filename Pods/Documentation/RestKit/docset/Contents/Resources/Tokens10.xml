@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKFetchRequestManagedObjectCache.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKFetchRequestManagedObjectCache</TokenIdentifier>
+			<Abstract type="html">Provides a simple managed object cache strategy in which every request for an object
+is satisfied by dispatching an NSFetchRequest against the Core Data persistent store.
+Performance can be disappointing for data sets with a large amount of redundant data
+being mapped and connected together, but the memory footprint stays flat.</Abstract>
+			<DeclaredIn>RKFetchRequestManagedObjectCache.h</DeclaredIn>
+			
+			<NodeRef refid="10"/>
+		</Token>
+		
+		
+	</File>
+</Tokens>

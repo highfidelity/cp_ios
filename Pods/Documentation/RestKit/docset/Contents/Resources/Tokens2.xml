@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKConnectionMapping.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKConnectionMapping</TokenIdentifier>
+			<Abstract type="html">Conditionally connect a relationship of the object being mapped when the object being mapped has
+block evaluate to YES. This variant is useful in cases where you want to execute an arbitrary
+block to determine whether or not to connect a relationship.</Abstract>
+			<DeclaredIn>RKConnectionMapping.h</DeclaredIn>
+			
+			<NodeRef refid="2"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKConnectionMapping/setRelationship:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKConnectionMapping.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) NSRelationshipDescription *relationship</Declaration>
+			
+			
+			<Anchor>//api/name/relationship</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKConnectionMapping/relationship</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKConnectionMapping.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) NSRelationshipDescription *relationship</Declaration>
+			
+			
+			<Anchor>//api/name/relationship</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKConnectionMapping/setMatcher:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKConnectionMapping.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) RKDynamicMappingMatcher *matcher</Declaration>
+			
+			
+			<Anchor>//api/name/matcher</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKConnectionMapping/matcher</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKConnectionMapping.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong, readonly) RKDynamicMappingMatcher *matcher</Declaration>
+			
+			
+			<Anchor>//api/name/matcher</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKConnectionMapping/isForeignKeyConnection</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKConnectionMapping.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)isForeignKeyConnection</Declaration>
+			
+			
+			<Anchor>//api/name/isForeignKeyConnection</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKConnectionMapping/isKeyPathConnection</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKConnectionMapping.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)isKeyPathConnection</Declaration>
+			
+			
+			<Anchor>//api/name/isKeyPathConnection</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKConnectionMapping/initWithRelationship:sourceKeyPath:destinationKeyPath:matcher:</TokenIdentifier>
+			<Abstract type="html">**</Abstract>
+			<DeclaredIn>RKConnectionMapping.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithRelationship:(NSRelationshipDescription *)relationship sourceKeyPath:(NSString *)sourceKeyPath destinationKeyPath:(NSString *)destinationKeyPath matcher:(RKDynamicMappingMatcher *)matcher</Declaration>
+			
+			
+			<Anchor>//api/name/initWithRelationship:sourceKeyPath:destinationKeyPath:matcher:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

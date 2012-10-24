@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKManagedObjectRequestOperation.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKManagedObjectRequestOperation</TokenIdentifier>
+			<Abstract type="html">RKManagedObjectRequestOperation is a subclass of RKObjectRequestOperation that implements object mapping on the response body of an NSHTTPResponse loaded via an RKHTTPRequestOperation in which the mapping targets NSManagedObject objects managed by Core Data.</Abstract>
+			<DeclaredIn>RKManagedObjectRequestOperation.h</DeclaredIn>
+			
+			<NodeRef refid="17"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKManagedObjectRequestOperation/setManagedObjectContext:</TokenIdentifier>
+			<Abstract type="html">The managed object context associated with the managed object request operation.</Abstract>
+			<DeclaredIn>RKManagedObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext</Declaration>
+			
+			
+			<Anchor>//api/name/managedObjectContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKManagedObjectRequestOperation/managedObjectContext</TokenIdentifier>
+			<Abstract type="html">The managed object context associated with the managed object request operation.</Abstract>
+			<DeclaredIn>RKManagedObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext</Declaration>
+			
+			
+			<Anchor>//api/name/managedObjectContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKManagedObjectRequestOperation/setManagedObjectCache:</TokenIdentifier>
+			<Abstract type="html">The managed object cache associated with the managed object request operation.</Abstract>
+			<DeclaredIn>RKManagedObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, weak) id&lt;RKManagedObjectCaching&gt; managedObjectCache</Declaration>
+			
+			
+			<Anchor>//api/name/managedObjectCache</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKManagedObjectRequestOperation/managedObjectCache</TokenIdentifier>
+			<Abstract type="html">The managed object cache associated with the managed object request operation.</Abstract>
+			<DeclaredIn>RKManagedObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, weak) id&lt;RKManagedObjectCaching&gt; managedObjectCache</Declaration>
+			
+			
+			<Anchor>//api/name/managedObjectCache</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKManagedObjectRequestOperation/setFetchRequestBlocks:</TokenIdentifier>
+			<Abstract type="html">An array of RKFetchRequestBlock block objects used to map NSURL objects into corresponding NSFetchRequest objects.</Abstract>
+			<DeclaredIn>RKManagedObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSArray *fetchRequestBlocks</Declaration>
+			
+			
+			<Anchor>//api/name/fetchRequestBlocks</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKManagedObjectRequestOperation/fetchRequestBlocks</TokenIdentifier>
+			<Abstract type="html">An array of RKFetchRequestBlock block objects used to map NSURL objects into corresponding NSFetchRequest objects.</Abstract>
+			<DeclaredIn>RKManagedObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSArray *fetchRequestBlocks</Declaration>
+			
+			
+			<Anchor>//api/name/fetchRequestBlocks</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKManagedObjectRequestOperation/setDeletesOrphanedObjects:</TokenIdentifier>
+			<Abstract type="html">A Boolean value that determines if the receiver will delete orphaned objects upon completion of the operation.</Abstract>
+			<DeclaredIn>RKManagedObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL deletesOrphanedObjects</Declaration>
+			
+			
+			<Anchor>//api/name/deletesOrphanedObjects</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKManagedObjectRequestOperation/deletesOrphanedObjects</TokenIdentifier>
+			<Abstract type="html">A Boolean value that determines if the receiver will delete orphaned objects upon completion of the operation.</Abstract>
+			<DeclaredIn>RKManagedObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL deletesOrphanedObjects</Declaration>
+			
+			
+			<Anchor>//api/name/deletesOrphanedObjects</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKManagedObjectRequestOperation/setSavesToPersistentStore:</TokenIdentifier>
+			<Abstract type="html">A Boolean value that determines if the operation saves the mapping results to the persistent store upon successful completion. If the network transport or mapping portions of the operation fail the operation then this option has no effect.</Abstract>
+			<DeclaredIn>RKManagedObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL savesToPersistentStore</Declaration>
+			
+			
+			<Anchor>//api/name/savesToPersistentStore</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKManagedObjectRequestOperation/savesToPersistentStore</TokenIdentifier>
+			<Abstract type="html">A Boolean value that determines if the operation saves the mapping results to the persistent store upon successful completion. If the network transport or mapping portions of the operation fail the operation then this option has no effect.</Abstract>
+			<DeclaredIn>RKManagedObjectRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL savesToPersistentStore</Declaration>
+			
+			
+			<Anchor>//api/name/savesToPersistentStore</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

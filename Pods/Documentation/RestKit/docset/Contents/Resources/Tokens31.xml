@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKObjectParameterization.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKObjectParameterization</TokenIdentifier>
+			<Abstract type="html">The RKObjectParameterization class provides an interface for mapping a local domain object into an NSDictionary representation suitable for use as the parameters of an HTTP request.</Abstract>
+			<DeclaredIn>RKObjectParameterization.h</DeclaredIn>
+			
+			<NodeRef refid="31"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKObjectParameterization/parametersWithObject:requestDescriptor:error:</TokenIdentifier>
+			<Abstract type="html">Returns a dictionary representation of the given object by performing object mapping using the mapping
+from the given request descriptor. If the request descriptor specifies a root key path, the mapped parameters
+will be nested within the dictionary under the specified root key path.</Abstract>
+			<DeclaredIn>RKObjectParameterization.h</DeclaredIn>			
+			
+			<Declaration>+ (NSDictionary *)parametersWithObject:(id)object requestDescriptor:(RKRequestDescriptor *)requestDescriptor error:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>object</Name>
+					<Abstract type="html">The object to be parameterized.</Abstract>
+				</Parameter><Parameter>
+					<Name>requestDescriptor</Name>
+					<Abstract type="html">The request descriptor describing how the object is to be mapped into an NSDictionary of parameters.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">If there is a problem mapping the parameters, upon return contains a pointer to an instance of NSError that describes the problem.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A new dictionary containing the mapped parameters or nil if an error has occurred.</Abstract></ReturnValue>
+			<Anchor>//api/name/parametersWithObject:requestDescriptor:error:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

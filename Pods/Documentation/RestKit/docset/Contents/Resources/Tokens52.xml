@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKTestHelpers.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKTestHelpers</TokenIdentifier>
+			<Abstract type="html">The RKTestHelpers class provides a number of helpful utility methods for use in unit or integration tests for RestKit applications.</Abstract>
+			<DeclaredIn>RKTestHelpers.h</DeclaredIn>
+			
+			<NodeRef refid="52"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestHelpers/stubRouteForClass:method:withPathPattern:onObjectManager:</TokenIdentifier>
+			<Abstract type="html">Stubs the route with the given class and method with a given path pattern.</Abstract>
+			<DeclaredIn>RKTestHelpers.h</DeclaredIn>			
+			
+			<Declaration>+ (RKRoute *)stubRouteForClass:(Class)objectClass method:(RKRequestMethod)method withPathPattern:(NSString *)pathPattern onObjectManager:(RKObjectManager *)nilOrObjectManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>objectClass</Name>
+					<Abstract type="html">The class of the route to stub.</Abstract>
+				</Parameter><Parameter>
+					<Name>method</Name>
+					<Abstract type="html">The method of the route to stub.</Abstract>
+				</Parameter><Parameter>
+					<Name>pathPattern</Name>
+					<Abstract type="html">The path pattern to return instead in place of the current route&apos;s value.</Abstract>
+				</Parameter><Parameter>
+					<Name>nilOrObjectManager</Name>
+					<Abstract type="html">The object manager to stub the route on. If nil, the shared object manager be be used.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The new stubbed route object that was added to the route set of the target object manager.</Abstract></ReturnValue>
+			<Anchor>//api/name/stubRouteForClass:method:withPathPattern:onObjectManager:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestHelpers/stubRouteNamed:withPathPattern:onObjectManager:</TokenIdentifier>
+			<Abstract type="html">Stubs the route with the given name with a given path pattern.</Abstract>
+			<DeclaredIn>RKTestHelpers.h</DeclaredIn>			
+			
+			<Declaration>+ (RKRoute *)stubRouteNamed:(NSString *)routeName withPathPattern:(NSString *)pathPattern onObjectManager:(RKObjectManager *)nilOrObjectManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>routeName</Name>
+					<Abstract type="html">The name of the route to stub.</Abstract>
+				</Parameter><Parameter>
+					<Name>pathPattern</Name>
+					<Abstract type="html">The path pattern to return instead in place of the current route&apos;s value.</Abstract>
+				</Parameter><Parameter>
+					<Name>nilOrObjectManager</Name>
+					<Abstract type="html">The object manager to stub the route on. If nil, the shared object manager be be used.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The new stubbed route object that was added to the route set of the target object manager.</Abstract></ReturnValue>
+			<Anchor>//api/name/stubRouteNamed:withPathPattern:onObjectManager:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestHelpers/stubRouteForRelationship:ofClass:pathPattern:onObjectManager:</TokenIdentifier>
+			<Abstract type="html">Stubs the relationship route for a given class with a given path pattern.</Abstract>
+			<DeclaredIn>RKTestHelpers.h</DeclaredIn>			
+			
+			<Declaration>+ (RKRoute *)stubRouteForRelationship:(NSString *)relationshipName ofClass:(Class)objectClass pathPattern:(NSString *)pathPattern onObjectManager:(RKObjectManager *)nilOrObjectManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>relationshipName</Name>
+					<Abstract type="html">The name of the relationship to stub the route of.</Abstract>
+				</Parameter><Parameter>
+					<Name>objectClass</Name>
+					<Abstract type="html">The class of the route to stub.</Abstract>
+				</Parameter><Parameter>
+					<Name>pathPattern</Name>
+					<Abstract type="html">The path pattern to return instead in place of the current route&apos;s value.</Abstract>
+				</Parameter><Parameter>
+					<Name>nilOrObjectManager</Name>
+					<Abstract type="html">The object manager to stub the route on. If nil, the shared object manager be be used.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The new stubbed route object that was added to the route set of the target object manager.</Abstract></ReturnValue>
+			<Anchor>//api/name/stubRouteForRelationship:ofClass:pathPattern:onObjectManager:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestHelpers/copyFetchRequestBlocksMatchingPathPattern:toBlocksMatchingRelativeString:onObjectManager:</TokenIdentifier>
+			<Abstract type="html">Finds all registered fetch request blocks matching the given path pattern and adds a new fetch request block that returns the same value as the origin block that matches the given relative string portion of a URL object.</Abstract>
+			<DeclaredIn>RKTestHelpers.h</DeclaredIn>			
+			
+			<Declaration>+ (void)copyFetchRequestBlocksMatchingPathPattern:(NSString *)pathPattern toBlocksMatchingRelativeString:(NSString *)relativeString onObjectManager:(RKObjectManager *)nilOrObjectManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>pathPattern</Name>
+					<Abstract type="html">The path pattern that matches the fetch request blocks to be copied.</Abstract>
+				</Parameter><Parameter>
+					<Name>relativeString</Name>
+					<Abstract type="html">The relative string portion of the NSURL objects that the new blocks will match exactly.</Abstract>
+				</Parameter><Parameter>
+					<Name>nilOrObjectManager</Name>
+					<Abstract type="html">The object manager to stub the route on. If nil, the shared object manager be be used.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/copyFetchRequestBlocksMatchingPathPattern:toBlocksMatchingRelativeString:onObjectManager:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestHelpers/disableCaching</TokenIdentifier>
+			<Abstract type="html">Disables caching by setting a new [NSURLCache sharedURLCache] instance in which the memory and disk limits have been set to zero.</Abstract>
+			<DeclaredIn>RKTestHelpers.h</DeclaredIn>			
+			
+			<Declaration>+ (void)disableCaching</Declaration>
+			
+			
+			<Anchor>//api/name/disableCaching</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestHelpers/cacheResponseForRequest:withResponseData:</TokenIdentifier>
+			<Abstract type="html">Creates, stores, and returns a NSCachedURLResponse object containing an NSHTTPURLResponse for the given request with a 200 (OK) status code.</Abstract>
+			<DeclaredIn>RKTestHelpers.h</DeclaredIn>			
+			
+			<Declaration>+ (NSCachedURLResponse *)cacheResponseForRequest:(NSURLRequest *)request withResponseData:(NSData *)responseData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>request</Name>
+					<Abstract type="html">The request to cache the response for.</Abstract>
+				</Parameter><Parameter>
+					<Name>responseData</Name>
+					<Abstract type="html">The response data to be stored in the cache.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The cached URL response that was stored to the cache.</Abstract></ReturnValue>
+			<Anchor>//api/name/cacheResponseForRequest:withResponseData:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestHelpers/cacheResponseForURL:HTTPMethod:headers:withData:</TokenIdentifier>
+			<Abstract type="html">Creates, stores, and returns a NSCachedURLResponse object containing an NSHTTPURLResponse for the given URL and HTTP method with the given response data and a 200 (OK) status code.</Abstract>
+			<DeclaredIn>RKTestHelpers.h</DeclaredIn>			
+			
+			<Declaration>+ (NSCachedURLResponse *)cacheResponseForURL:(NSURL *)URL HTTPMethod:(NSString *)HTTPMethod headers:(NSDictionary *)requestHeaders withData:(NSData *)responseData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>URL</Name>
+					<Abstract type="html">The URL to cache the response for.</Abstract>
+				</Parameter><Parameter>
+					<Name>HTTPMethod</Name>
+					<Abstract type="html">The HTTP method of the request (i.e. &apos;GET&apos;, &apos;POST&apos;, &apos;PUT&apos;, &apos;PATCH&apos;, or &apos;DELETE&apos;).</Abstract>
+				</Parameter><Parameter>
+					<Name>responseData</Name>
+					<Abstract type="html">The response data to be stored in the cache.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The cached URL response that was stored to the cache.</Abstract></ReturnValue>
+			<Anchor>//api/name/cacheResponseForURL:HTTPMethod:headers:withData:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

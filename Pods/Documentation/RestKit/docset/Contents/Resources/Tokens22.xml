@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKMapping.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKMapping</TokenIdentifier>
+			<Abstract type="html">RKMapping is an abstract class for objects defining RestKit object mappings. Its interface is common to all object mapping classes, including its concrete subclasses RKObjectMapping and RKDynamicMapping.</Abstract>
+			<DeclaredIn>RKMapping.h</DeclaredIn>
+			
+			<NodeRef refid="22"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMapping/setForceCollectionMapping:</TokenIdentifier>
+			<Abstract type="html">Forces the mapper to treat the mapped keyPath as a collection even if it does not return an array or a set of objects. This permits mapping where a dictionary identifies a collection of objects.</Abstract>
+			<DeclaredIn>RKMapping.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL forceCollectionMapping</Declaration>
+			
+			
+			<Anchor>//api/name/forceCollectionMapping</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKMapping/forceCollectionMapping</TokenIdentifier>
+			<Abstract type="html">Forces the mapper to treat the mapped keyPath as a collection even if it does not return an array or a set of objects. This permits mapping where a dictionary identifies a collection of objects.</Abstract>
+			<DeclaredIn>RKMapping.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL forceCollectionMapping</Declaration>
+			
+			
+			<Anchor>//api/name/forceCollectionMapping</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKMapping/isEqualToMapping:</TokenIdentifier>
+			<Abstract type="html">Returns YES if the receiver and the specified mapping are considered equivalent.</Abstract>
+			<DeclaredIn>RKMapping.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)isEqualToMapping:(RKMapping *)otherMapping</Declaration>
+			
+			
+			<Anchor>//api/name/isEqualToMapping:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

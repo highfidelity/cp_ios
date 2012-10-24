@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKHTTPRequestOperation.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKHTTPRequestOperation</TokenIdentifier>
+			<Abstract type="html">The RKHTTPRequestOperation class is a subclass of AFHTTPRequestOperation for HTTP or HTTPS requests made by RestKit. It provides per-instance configuration of the acceptable status codes and content types and integrates with the RKLog system to provide detailed requested and response logging. Instances of RKHTTPRequest are created by RKObjectRequestOperation and its subclasses to HTTP requests that will be object mapped. When used to make standalone HTTP requests, RKHTTPRequestOperation instance behave identically to AFHTTPRequestOperation with the exception of emitting logging information.</Abstract>
+			<DeclaredIn>RKHTTPRequestOperation.h</DeclaredIn>
+			
+			<NodeRef refid="11"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKHTTPRequestOperation/setAcceptableStatusCodes:</TokenIdentifier>
+			<Abstract type="html">The set of status codes which the operation considers successful.</Abstract>
+			<DeclaredIn>RKHTTPRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSIndexSet *acceptableStatusCodes</Declaration>
+			
+			
+			<Anchor>//api/name/acceptableStatusCodes</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKHTTPRequestOperation/acceptableStatusCodes</TokenIdentifier>
+			<Abstract type="html">The set of status codes which the operation considers successful.</Abstract>
+			<DeclaredIn>RKHTTPRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSIndexSet *acceptableStatusCodes</Declaration>
+			
+			
+			<Anchor>//api/name/acceptableStatusCodes</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKHTTPRequestOperation/setAcceptableContentTypes:</TokenIdentifier>
+			<Abstract type="html">The set of content types which the operation considers successful.</Abstract>
+			<DeclaredIn>RKHTTPRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSSet *acceptableContentTypes</Declaration>
+			
+			
+			<Anchor>//api/name/acceptableContentTypes</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKHTTPRequestOperation/acceptableContentTypes</TokenIdentifier>
+			<Abstract type="html">The set of content types which the operation considers successful.</Abstract>
+			<DeclaredIn>RKHTTPRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSSet *acceptableContentTypes</Declaration>
+			
+			
+			<Anchor>//api/name/acceptableContentTypes</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKHTTPRequestOperation/setWasNotModified:</TokenIdentifier>
+			<Abstract type="html">Whether the response received a 304 response, whether via the initial request, or by virtue of cache revalidation occurring from NSURLCache.</Abstract>
+			<DeclaredIn>RKHTTPRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) BOOL wasNotModified</Declaration>
+			
+			
+			<Anchor>//api/name/wasNotModified</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKHTTPRequestOperation/wasNotModified</TokenIdentifier>
+			<Abstract type="html">Whether the response received a 304 response, whether via the initial request, or by virtue of cache revalidation occurring from NSURLCache.</Abstract>
+			<DeclaredIn>RKHTTPRequestOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) BOOL wasNotModified</Declaration>
+			
+			
+			<Anchor>//api/name/wasNotModified</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

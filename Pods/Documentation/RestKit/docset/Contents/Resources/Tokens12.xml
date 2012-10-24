@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKISO8601DateFormatter.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKISO8601DateFormatter</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>
+			
+			<NodeRef refid="12"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKISO8601DateFormatter/purgeGlobalCaches</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>+ (void)purgeGlobalCaches</Declaration>
+			
+			
+			<Anchor>//api/name/purgeGlobalCaches</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKISO8601DateFormatter/setDefaultTimeZone:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSTimeZone *defaultTimeZone</Declaration>
+			
+			
+			<Anchor>//api/name/defaultTimeZone</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKISO8601DateFormatter/defaultTimeZone</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSTimeZone *defaultTimeZone</Declaration>
+			
+			
+			<Anchor>//api/name/defaultTimeZone</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKISO8601DateFormatter/setParsesStrictly:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>@property BOOL parsesStrictly</Declaration>
+			
+			
+			<Anchor>//api/name/parsesStrictly</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKISO8601DateFormatter/parsesStrictly</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>@property BOOL parsesStrictly</Declaration>
+			
+			
+			<Anchor>//api/name/parsesStrictly</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKISO8601DateFormatter/dateComponentsFromString:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>- (NSDateComponents *)dateComponentsFromString:(NSString *)string</Declaration>
+			
+			
+			<Anchor>//api/name/dateComponentsFromString:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKISO8601DateFormatter/dateComponentsFromString:timeZone:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>- (NSDateComponents *)dateComponentsFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone</Declaration>
+			
+			
+			<Anchor>//api/name/dateComponentsFromString:timeZone:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKISO8601DateFormatter/dateComponentsFromString:timeZone:range:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>- (NSDateComponents *)dateComponentsFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone range:(out NSRange *)outRange</Declaration>
+			
+			
+			<Anchor>//api/name/dateComponentsFromString:timeZone:range:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKISO8601DateFormatter/dateFromString:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>- (NSDate *)dateFromString:(NSString *)string</Declaration>
+			
+			
+			<Anchor>//api/name/dateFromString:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKISO8601DateFormatter/dateFromString:timeZone:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>- (NSDate *)dateFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone</Declaration>
+			
+			
+			<Anchor>//api/name/dateFromString:timeZone:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKISO8601DateFormatter/dateFromString:timeZone:range:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>- (NSDate *)dateFromString:(NSString *)string timeZone:(out NSTimeZone **)outTimeZone range:(out NSRange *)outRange</Declaration>
+			
+			
+			<Anchor>//api/name/dateFromString:timeZone:range:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKISO8601DateFormatter/setFormat:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>@property RKISO8601DateFormat format</Declaration>
+			
+			
+			<Anchor>//api/name/format</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKISO8601DateFormatter/format</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>@property RKISO8601DateFormat format</Declaration>
+			
+			
+			<Anchor>//api/name/format</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKISO8601DateFormatter/setIncludeTime:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>@property BOOL includeTime</Declaration>
+			
+			
+			<Anchor>//api/name/includeTime</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKISO8601DateFormatter/includeTime</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>@property BOOL includeTime</Declaration>
+			
+			
+			<Anchor>//api/name/includeTime</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKISO8601DateFormatter/setTimeSeparator:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>@property unichar timeSeparator</Declaration>
+			
+			
+			<Anchor>//api/name/timeSeparator</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKISO8601DateFormatter/timeSeparator</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>@property unichar timeSeparator</Declaration>
+			
+			
+			<Anchor>//api/name/timeSeparator</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKISO8601DateFormatter/stringFromDate:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)stringFromDate:(NSDate *)date</Declaration>
+			
+			
+			<Anchor>//api/name/stringFromDate:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKISO8601DateFormatter/stringFromDate:timeZone:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKISO8601DateFormatter.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)stringFromDate:(NSDate *)date timeZone:(NSTimeZone *)timeZone</Declaration>
+			
+			
+			<Anchor>//api/name/stringFromDate:timeZone:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

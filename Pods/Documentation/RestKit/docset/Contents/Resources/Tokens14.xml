@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKMIMETypeSerialization.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKMIMETypeSerialization</TokenIdentifier>
+			<Abstract type="html">The RKMIMETypeSerialization class provides support for the registration of classes conforming to the RKSerialization protocol by MIME Type and the serialization and deserialization of content by MIME Type. Serialization implementations may be registered by an exact string match (i.e. &apos;application/json&apos; for a JSON serialization implementation) or by regular expression to match MIME Type by pattern.</Abstract>
+			<DeclaredIn>RKMIMETypeSerialization.h</DeclaredIn>
+			
+			<NodeRef refid="14"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKMIMETypeSerialization/registerClass:forMIMEType:</TokenIdentifier>
+			<Abstract type="html">Registers the given serialization class to handle content for the given MIME Type identifier.</Abstract>
+			<DeclaredIn>RKMIMETypeSerialization.h</DeclaredIn>			
+			
+			<Declaration>+ (void)registerClass:(Class&lt;RKSerialization&gt;)serializationClass forMIMEType:(id)MIMETypeStringOrRegularExpression</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>serializationClass</Name>
+					<Abstract type="html">The class conforming to the RKSerialization protocol to be registered as handling the given MIME Type.</Abstract>
+				</Parameter><Parameter>
+					<Name>MIMETypeStringOrRegularExpression</Name>
+					<Abstract type="html">A string or regular expression specifying the MIME Type(s) that given serialization implementation is to be registered as handling.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/registerClass:forMIMEType:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKMIMETypeSerialization/unregisterClass:</TokenIdentifier>
+			<Abstract type="html">Unregisters the given serialization class from handling any MIME Types.</Abstract>
+			<DeclaredIn>RKMIMETypeSerialization.h</DeclaredIn>			
+			
+			<Declaration>+ (void)unregisterClass:(Class&lt;RKSerialization&gt;)serializationClass</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>serializationClass</Name>
+					<Abstract type="html">The class conforming to the RKSerialization protocol to be unregistered.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/unregisterClass:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKMIMETypeSerialization/serializationClassForMIMEType:</TokenIdentifier>
+			<Abstract type="html">Returns the serialization class registered to handle the given MIME Type.</Abstract>
+			<DeclaredIn>RKMIMETypeSerialization.h</DeclaredIn>			
+			
+			<Declaration>+ (Class&lt;RKSerialization&gt;)serializationClassForMIMEType:(NSString *)MIMEType</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>MIMEType</Name>
+					<Abstract type="html">The MIME Type for which to return the registered RKSerialization conformant class.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A class conforming to the RKSerialization protocol registered for the given MIME Type or nil if none was found.</Abstract></ReturnValue>
+			<Anchor>//api/name/serializationClassForMIMEType:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKMIMETypeSerialization/registeredMIMETypes</TokenIdentifier>
+			<Abstract type="html">Returns a set containing the string values for all MIME Types for which a serialization implementation has been registered.</Abstract>
+			<DeclaredIn>RKMIMETypeSerialization.h</DeclaredIn>			
+			
+			<Declaration>+ (NSSet *)registeredMIMETypes</Declaration>
+			
+			<ReturnValue><Abstract type="html">An NSSet object whose elements are NSString values enumerating the registered MIME Types.</Abstract></ReturnValue>
+			<Anchor>//api/name/registeredMIMETypes</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKMIMETypeSerialization/objectFromData:MIMEType:error:</TokenIdentifier>
+			<Abstract type="html">Deserializes and returns a Foundation object representation of the given UTF-8 encoded data in the serialization format for the given MIME Type.</Abstract>
+			<DeclaredIn>RKMIMETypeSerialization.h</DeclaredIn>			
+			
+			<Declaration>+ (id)objectFromData:(NSData *)data MIMEType:(NSString *)MIMEType error:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>data</Name>
+					<Abstract type="html">The UTF-8 encoded data representation of the object to be deserialized.</Abstract>
+				</Parameter><Parameter>
+					<Name>MIMEType</Name>
+					<Abstract type="html">The MIME Type of the serialization format the data is in.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">A pointer to an NSError object.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A Foundation object from the serialized data in data, or nil if an error occurs.</Abstract></ReturnValue>
+			<Anchor>//api/name/objectFromData:MIMEType:error:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKMIMETypeSerialization/dataFromObject:MIMEType:error:</TokenIdentifier>
+			<Abstract type="html">Serializes and returns a UTF-8 encoded data representation of the given Foundation object in the serialization format for the given MIME Type.</Abstract>
+			<DeclaredIn>RKMIMETypeSerialization.h</DeclaredIn>			
+			
+			<Declaration>+ (NSData *)dataFromObject:(id)object MIMEType:(NSString *)MIMEType error:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>object</Name>
+					<Abstract type="html">The Foundation object to serialized.</Abstract>
+				</Parameter><Parameter>
+					<Name>MIMEType</Name>
+					<Abstract type="html">The MIME Type of the serialization format the data is in.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">A pointer to an NSError object.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A Foundation object from the serialized data in data, or nil if an error occurs.</Abstract></ReturnValue>
+			<Anchor>//api/name/dataFromObject:MIMEType:error:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

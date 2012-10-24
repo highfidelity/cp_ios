@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKTestFixture.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKTestFixture</TokenIdentifier>
+			<Abstract type="html">Provides a static method API for conveniently accessing fixture data
+contained within a designated NSBundle. Useful when writing unit tests that
+leverage fixture data for testing parsing and object mapping operations.</Abstract>
+			<DeclaredIn>RKTestFixture.h</DeclaredIn>
+			
+			<NodeRef refid="51"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFixture/fixtureBundle</TokenIdentifier>
+			<Abstract type="html">Returns the NSBundle object designated as the source location for unit testing fixture data.</Abstract>
+			<DeclaredIn>RKTestFixture.h</DeclaredIn>			
+			
+			<Declaration>+ (NSBundle *)fixtureBundle</Declaration>
+			
+			<ReturnValue><Abstract type="html">The NSBundle object designated as the source location for unit testing fixture data
+    or nil if none has been configured.</Abstract></ReturnValue>
+			<Anchor>//api/name/fixtureBundle</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFixture/setFixtureBundle:</TokenIdentifier>
+			<Abstract type="html">Designates the specified NSBundle object as the source location for unit testing fixture data.</Abstract>
+			<DeclaredIn>RKTestFixture.h</DeclaredIn>			
+			
+			<Declaration>+ (void)setFixtureBundle:(NSBundle *)bundle</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>bundle</Name>
+					<Abstract type="html">The new fixture NSBundle object.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setFixtureBundle:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFixture/pathForFixture:</TokenIdentifier>
+			<Abstract type="html">Returns the full path to the specified fixture file on within the fixture bundle.</Abstract>
+			<DeclaredIn>RKTestFixture.h</DeclaredIn>			
+			
+			<Declaration>+ (NSString *)pathForFixture:(NSString *)fixtureName</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>fixtureName</Name>
+					<Abstract type="html">The name of the fixture file.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The full path to the specified fixture file or nil if it cannot be located.</Abstract></ReturnValue>
+			<Anchor>//api/name/pathForFixture:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFixture/stringWithContentsOfFixture:</TokenIdentifier>
+			<Abstract type="html">Creates and returns a string object by reading data from the fixture identified by the specified file name using UTF-8 encoding.</Abstract>
+			<DeclaredIn>RKTestFixture.h</DeclaredIn>			
+			
+			<Declaration>+ (NSString *)stringWithContentsOfFixture:(NSString *)fixtureName</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>fixtureName</Name>
+					<Abstract type="html">The name of the fixture file.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A string created by reading data from the specified fixture file using the NSUTF8StringEncoding.</Abstract></ReturnValue>
+			<Anchor>//api/name/stringWithContentsOfFixture:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFixture/dataWithContentsOfFixture:</TokenIdentifier>
+			<Abstract type="html">Creates and returns a data object by reading every byte from the fixture identified by the specified file name.</Abstract>
+			<DeclaredIn>RKTestFixture.h</DeclaredIn>			
+			
+			<Declaration>+ (NSData *)dataWithContentsOfFixture:(NSString *)fixtureName</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>fixtureName</Name>
+					<Abstract type="html">The name of the resource file.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A data object by reading every byte from the fixture file.</Abstract></ReturnValue>
+			<Anchor>//api/name/dataWithContentsOfFixture:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFixture/MIMETypeForFixture:</TokenIdentifier>
+			<Abstract type="html">Returns the MIME Type for the fixture identified by the specified name.</Abstract>
+			<DeclaredIn>RKTestFixture.h</DeclaredIn>			
+			
+			<Declaration>+ (NSString *)MIMETypeForFixture:(NSString *)fixtureName</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>fixtureName</Name>
+					<Abstract type="html">The name of the fixture file.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The MIME Type for the resource file or nil if the file could not be located.</Abstract></ReturnValue>
+			<Anchor>//api/name/MIMETypeForFixture:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFixture/parsedObjectWithContentsOfFixture:</TokenIdentifier>
+			<Abstract type="html">Creates and returns an object representation of the data from the fixture identified by the specified file name by reading the
+data as a string and parsing it using a parser appropriate for the MIME Type of the file.</Abstract>
+			<DeclaredIn>RKTestFixture.h</DeclaredIn>			
+			
+			<Declaration>+ (id)parsedObjectWithContentsOfFixture:(NSString *)fixtureName</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>fixtureName</Name>
+					<Abstract type="html">The name of the resource file.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A new image object for the specified file, or nil if the method could not initialize the image from the specified file.</Abstract></ReturnValue>
+			<Anchor>//api/name/parsedObjectWithContentsOfFixture:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

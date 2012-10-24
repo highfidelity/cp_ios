@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKTestFactory.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKTestFactory</TokenIdentifier>
+			<Abstract type="html">The RKTestFactory class provides an interface for initializing RestKit objects within a unit testing environment. The factory is used to ensure isolation between test cases by ensuring that RestKit&apos;s important singleton objects are torn down between tests and that each test is working within a clean Core Data environment. Callback hooks are provided so that application specific set up and tear down logic can be integrated as well.</Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>
+			
+			<NodeRef refid="50"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFactory/baseURL</TokenIdentifier>
+			<Abstract type="html">Returns the base URL with which to initialize AFHTTPClient and RKObjectManager instances created via the factory.</Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>			
+			
+			<Declaration>+ (NSURL *)baseURL</Declaration>
+			
+			<ReturnValue><Abstract type="html">The base URL for the factory.</Abstract></ReturnValue>
+			<Anchor>//api/name/baseURL</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFactory/setBaseURL:</TokenIdentifier>
+			<Abstract type="html">Sets the base URL for the factory.</Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>			
+			
+			<Declaration>+ (void)setBaseURL:(NSURL *)URL</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>URL</Name>
+					<Abstract type="html">The new base URL.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setBaseURL:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFactory/baseURLString</TokenIdentifier>
+			<Abstract type="html">Returns the base URL as a string value.</Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>			
+			
+			<Declaration>+ (NSString *)baseURLString</Declaration>
+			
+			<ReturnValue><Abstract type="html">The base URL for the factory, as a string.</Abstract></ReturnValue>
+			<Anchor>//api/name/baseURLString</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFactory/setBaseURLString:</TokenIdentifier>
+			<Abstract type="html">Sets the base URL for the factory to a new value by constructing an RKURL
+from the given string.</Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>			
+			
+			<Declaration>+ (void)setBaseURLString:(NSString *)baseURLString</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>baseURLString</Name>
+					<Abstract type="html">A string containing the URL to set as the base URL for the factory.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setBaseURLString:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFactory/managedObjectStoreFilename</TokenIdentifier>
+			<Abstract type="html">Returns the filename used when constructing instances of RKManagedObjectStore via the factory.</Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>			
+			
+			<Declaration>+ (NSString *)managedObjectStoreFilename</Declaration>
+			
+			<ReturnValue><Abstract type="html">A string containing the filename to use when creating a managed object store.</Abstract></ReturnValue>
+			<Anchor>//api/name/managedObjectStoreFilename</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFactory/setManagedObjectStoreFilename:</TokenIdentifier>
+			<Abstract type="html">Sets the filename to use when the factory constructs an instance of RKManagedObjectStore.</Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>			
+			
+			<Declaration>+ (void)setManagedObjectStoreFilename:(NSString *)managedObjectStoreFilename</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>managedObjectStoreFilename</Name>
+					<Abstract type="html">A string containing the filename to use when creating managed object store instances.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setManagedObjectStoreFilename:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFactory/defineFactory:withBlock:</TokenIdentifier>
+			<Abstract type="html">Defines a factory with a given name for building object instances using the
+given block. When the factory singleton receives an objectFromFactory: message,
+the block designated for the given factory name is invoked and the resulting object
+reference is returned.</Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>			
+			
+			<Declaration>+ (void)defineFactory:(NSString *)factoryName withBlock:(id ( ^ ) ( ))block</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>factoryName</Name>
+					<Abstract type="html">The name to assign the factory.</Abstract>
+				</Parameter><Parameter>
+					<Name>block</Name>
+					<Abstract type="html">A block to execute when building an object instance for the factory name.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A configured object instance.</Abstract></ReturnValue>
+			<Anchor>//api/name/defineFactory:withBlock:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFactory/objectFromFactory:properties:</TokenIdentifier>
+			<Abstract type="html">Creates and returns a new instance of an object using the factory with the given name.</Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>			
+			
+			<Declaration>+ (id)objectFromFactory:(NSString *)factoryName properties:(NSDictionary *)properties</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>factoryName</Name>
+					<Abstract type="html">The name of the factory to use when building the requested object.
+@raises NSInvalidArgumentException Raised if a factory with the given name is not defined.</Abstract>
+				</Parameter><Parameter>
+					<Name>properties</Name>
+					<Abstract type="html">An NSDictionary of properties to be set on the created object.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">An object built using the factory registered for the given name.</Abstract></ReturnValue>
+			<Anchor>//api/name/objectFromFactory:properties:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFactory/objectFromFactory:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>			
+			
+			<Declaration>+ (id)objectFromFactory:(NSString *)factoryName</Declaration>
+			
+			
+			<Anchor>//api/name/objectFromFactory:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFactory/sharedObjectFromFactory:</TokenIdentifier>
+			<Abstract type="html">Fetches a shared object from the factory with the given name. If an existing object has already been created, then that instance is returned. If a shared instance does not yet exist, one will be constructed and returned for this and all subsequent invocations of sharedObjectFromFactory:. Shared object instances are discarded when the factory is torn down.</Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>			
+			
+			<Declaration>+ (id)sharedObjectFromFactory:(NSString *)factoryName</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>factoryName</Name>
+					<Abstract type="html">The name of the factory to retrieve the shared instance of.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The shared object instance for the factory registered with the given name.</Abstract></ReturnValue>
+			<Anchor>//api/name/sharedObjectFromFactory:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFactory/insertManagedObjectForEntityForName:inManagedObjectContext:withProperties:</TokenIdentifier>
+			<Abstract type="html">Inserts a new managed object for the NSEntityDescription with the given name into the specified  managed object context and sets properties on the instance from the given dictionary. A permanent managed object ID is obtained for the object so that it can be referenced across threads without any further work.</Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>			
+			
+			<Declaration>+ (id)insertManagedObjectForEntityForName:(NSString *)entityName inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext withProperties:(NSDictionary *)properties</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>entityName</Name>
+					<Abstract type="html">The name of the entity to insert a new managed object for.</Abstract>
+				</Parameter><Parameter>
+					<Name>managedObjectContext</Name>
+					<Abstract type="html">The managed object context to insert the new object into. If nil, then the managed object context returned by invoking [RKTestFactory managedObjectStore].mainQueueManagedObjectContext] is used.</Abstract>
+				</Parameter><Parameter>
+					<Name>properties</Name>
+					<Abstract type="html">A dictionary of properties to be set on the new managed object instance.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A new object inheriting from NSManagedObject.</Abstract></ReturnValue>
+			<Anchor>//api/name/insertManagedObjectForEntityForName:inManagedObjectContext:withProperties:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFactory/factoryNames</TokenIdentifier>
+			<Abstract type="html">Returns a set of names for all defined factories.</Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>			
+			
+			<Declaration>+ (NSSet *)factoryNames</Declaration>
+			
+			<ReturnValue><Abstract type="html">A set of the string names for all defined factories.</Abstract></ReturnValue>
+			<Anchor>//api/name/factoryNames</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFactory/client</TokenIdentifier>
+			<Abstract type="html">Fetches the shared AFHTTPClient object using the factory defined for the name RKTestFactoryDefaultNamesClient.</Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>			
+			
+			<Declaration>+ (id)client</Declaration>
+			
+			<ReturnValue><Abstract type="html">The shared client instance.</Abstract></ReturnValue>
+			<Anchor>//api/name/client</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFactory/objectManager</TokenIdentifier>
+			<Abstract type="html">Fetches the shared RKObjectManager object using the factory defined for the name RKTestFactoryDefaultNamesObjectManager.</Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>			
+			
+			<Declaration>+ (id)objectManager</Declaration>
+			
+			<ReturnValue><Abstract type="html">The shared object manager instance.</Abstract></ReturnValue>
+			<Anchor>//api/name/objectManager</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFactory/managedObjectStore</TokenIdentifier>
+			<Abstract type="html">Fetches the shared an RKManagedObjectStore object using the factory defined for the name RKTestFactoryDefaultNamesManagedObjectStore.</Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>			
+			
+			<Declaration>+ (id)managedObjectStore</Declaration>
+			
+			<ReturnValue><Abstract type="html">The shared managed object store instance.</Abstract></ReturnValue>
+			<Anchor>//api/name/managedObjectStore</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFactory/setUp</TokenIdentifier>
+			<Abstract type="html">Sets up the RestKit testing environment. Invokes the didSetUp callback for application specific setup.</Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>			
+			
+			<Declaration>+ (void)setUp</Declaration>
+			
+			
+			<Anchor>//api/name/setUp</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKTestFactory/tearDown</TokenIdentifier>
+			<Abstract type="html">Tears down the RestKit testing environment by clearing singleton instances, helping to ensure test case isolation. Invokes the didTearDown callback for application specific cleanup.</Abstract>
+			<DeclaredIn>RKTestFactory.h</DeclaredIn>			
+			
+			<Declaration>+ (void)tearDown</Declaration>
+			
+			
+			<Anchor>//api/name/tearDown</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

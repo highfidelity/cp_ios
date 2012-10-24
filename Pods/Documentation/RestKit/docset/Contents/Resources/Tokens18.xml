@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKManagedObjectResponseMapperOperation.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKManagedObjectResponseMapperOperation</TokenIdentifier>
+			<Abstract type="html">RKManagedObjectResponseMapperOperation is an RKResponseMapperOperation subclass that provides support for performing object mapping using RKEntityMapping objects that target NSManagedObject derived classes. It requires an NSManagedObjectContext and a configured RKManagedObjectMappingOperationDataSource data source to execute successfully.</Abstract>
+			<DeclaredIn>RKResponseMapperOperation.h</DeclaredIn>
+			
+			<NodeRef refid="18"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKManagedObjectResponseMapperOperation/setManagedObjectContext:</TokenIdentifier>
+			<Abstract type="html">The managed object context in which the mapping will be performed.</Abstract>
+			<DeclaredIn>RKResponseMapperOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext</Declaration>
+			
+			
+			<Anchor>//api/name/managedObjectContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKManagedObjectResponseMapperOperation/managedObjectContext</TokenIdentifier>
+			<Abstract type="html">The managed object context in which the mapping will be performed.</Abstract>
+			<DeclaredIn>RKResponseMapperOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext</Declaration>
+			
+			
+			<Anchor>//api/name/managedObjectContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKManagedObjectResponseMapperOperation/setManagedObjectCache:</TokenIdentifier>
+			<Abstract type="html">An object implementing the RKManagedObjectCaching protocol to be used for retrieving existing NSManagedObject instances by primary key. If nil, existing object cannot be retrieved and new objects will be created for all mappable content within the response data, likely resulting in the creation of duplicate objects.</Abstract>
+			<DeclaredIn>RKResponseMapperOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, weak) id&lt;RKManagedObjectCaching&gt; managedObjectCache</Declaration>
+			
+			
+			<Anchor>//api/name/managedObjectCache</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKManagedObjectResponseMapperOperation/managedObjectCache</TokenIdentifier>
+			<Abstract type="html">An object implementing the RKManagedObjectCaching protocol to be used for retrieving existing NSManagedObject instances by primary key. If nil, existing object cannot be retrieved and new objects will be created for all mappable content within the response data, likely resulting in the creation of duplicate objects.</Abstract>
+			<DeclaredIn>RKResponseMapperOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, weak) id&lt;RKManagedObjectCaching&gt; managedObjectCache</Declaration>
+			
+			
+			<Anchor>//api/name/managedObjectCache</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKManagedObjectResponseMapperOperation/setTargetObjectID:</TokenIdentifier>
+			<Abstract type="html">The permanent NSManagedObjectID for the target object of the mapping operation. During mapping, an instance local to the managedObjectContext is fetched and used to perform the mapping operation.</Abstract>
+			<DeclaredIn>RKResponseMapperOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSManagedObjectID *targetObjectID</Declaration>
+			
+			
+			<Anchor>//api/name/targetObjectID</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/RKManagedObjectResponseMapperOperation/targetObjectID</TokenIdentifier>
+			<Abstract type="html">The permanent NSManagedObjectID for the target object of the mapping operation. During mapping, an instance local to the managedObjectContext is fetched and used to perform the mapping operation.</Abstract>
+			<DeclaredIn>RKResponseMapperOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSManagedObjectID *targetObjectID</Declaration>
+			
+			
+			<Anchor>//api/name/targetObjectID</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

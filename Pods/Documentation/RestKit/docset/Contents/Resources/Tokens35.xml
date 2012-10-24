@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKPropertyInspector.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKPropertyInspector</TokenIdentifier>
+			<Abstract type="html">The RKPropertyInspector class provides an interface for introspecting the properties and attributes of classes using the reflection capabilities of the Objective-C runtime. Once inspected, the properties and types are cached.</Abstract>
+			<DeclaredIn>RKPropertyInspector.h</DeclaredIn>
+			
+			<NodeRef refid="35"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKPropertyInspector/sharedInspector</TokenIdentifier>
+			<Abstract type="html">Returns the shared property inspector singleton instance.</Abstract>
+			<DeclaredIn>RKPropertyInspector.h</DeclaredIn>			
+			
+			<Declaration>+ (RKPropertyInspector *)sharedInspector</Declaration>
+			
+			<ReturnValue><Abstract type="html">The shared RKPropertyInspector instance.</Abstract></ReturnValue>
+			<Anchor>//api/name/sharedInspector</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKPropertyInspector/propertyNamesAndTypesForClass:</TokenIdentifier>
+			<Abstract type="html">Returns a dictionary of names and types for the properties of a given class.</Abstract>
+			<DeclaredIn>RKPropertyInspector.h</DeclaredIn>			
+			
+			<Declaration>- (NSDictionary *)propertyNamesAndTypesForClass:(Class)objectClass</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>objectClass</Name>
+					<Abstract type="html">The class to retrieve the property name and types for.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A dictionary containing metadata about the properties of the given class, where the keys in the dictionary are the property names and the values are Class objects specifying the type of the property.</Abstract></ReturnValue>
+			<Anchor>//api/name/propertyNamesAndTypesForClass:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKPropertyInspector/typeForProperty:ofClass:</TokenIdentifier>
+			<Abstract type="html">Returns the Class object specifying the type of the property with given name on a class.</Abstract>
+			<DeclaredIn>RKPropertyInspector.h</DeclaredIn>			
+			
+			<Declaration>- (Class)typeForProperty:(NSString *)propertyName ofClass:(Class)objectClass</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>propertyName</Name>
+					<Abstract type="html">The name of the property to retrieve the type of.</Abstract>
+				</Parameter><Parameter>
+					<Name>objectClass</Name>
+					<Abstract type="html">The class to retrieve the property from.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A Class object specifying the type of the requested property.</Abstract></ReturnValue>
+			<Anchor>//api/name/typeForProperty:ofClass:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/RKPropertyInspector/propertyTypeFromAttributeString:</TokenIdentifier>
+			<Abstract type="html">Returns the name of a property when provided the name of a property obtained via the property_getAttributes reflection API.</Abstract>
+			<DeclaredIn>RKPropertyInspector.h</DeclaredIn>			
+			
+			<Declaration>+ (NSString *)propertyTypeFromAttributeString:(NSString *)attributeString</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>attributeString</Name>
+					<Abstract type="html">A string object encoding attribute information.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The class name for the property type encoded in the given attribute string or @&quot;NULL&quot; if the property does not have an object type (the declared property is for a primitive type).</Abstract></ReturnValue>
+			<Anchor>//api/name/propertyTypeFromAttributeString:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKPropertyInspector/propertyNamesAndTypesForEntity:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>RKPropertyInspector+CoreData.h</DeclaredIn>			
+			
+			<Declaration>- (NSDictionary *)propertyNamesAndTypesForEntity:(NSEntityDescription *)entity</Declaration>
+			
+			
+			<Anchor>//api/name/propertyNamesAndTypesForEntity:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/RKPropertyInspector/typeForProperty:ofEntity:</TokenIdentifier>
+			<Abstract type="html">Returns the Class type of the specified property on the object class</Abstract>
+			<DeclaredIn>RKPropertyInspector+CoreData.h</DeclaredIn>			
+			
+			<Declaration>- (Class)typeForProperty:(NSString *)propertyName ofEntity:(NSEntityDescription *)entity</Declaration>
+			
+			
+			<Anchor>//api/name/typeForProperty:ofEntity:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

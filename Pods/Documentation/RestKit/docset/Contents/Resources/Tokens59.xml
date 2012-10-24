@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Categories/NSManagedObject+RKAdditions.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cat/NSManagedObject(RKAdditions)</TokenIdentifier>
+			<Abstract type="html">Provides extensions to NSManagedObject for various common tasks.</Abstract>
+			<DeclaredIn>NSManagedObject+RKAdditions.h</DeclaredIn>
+			
+			<NodeRef refid="59"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSManagedObject(RKAdditions)/hasBeenDeleted</TokenIdentifier>
+			<Abstract type="html">Determines if the receiver has been deleted from the persistent store
+and removed from the object graph.</Abstract>
+			<DeclaredIn>NSManagedObject+RKAdditions.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)hasBeenDeleted</Declaration>
+			
+			<ReturnValue><Abstract type="html">YES if the object has been deleted from the persistent store, else NO.</Abstract></ReturnValue>
+			<Anchor>//api/name/hasBeenDeleted</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSManagedObject(RKAdditions)/isNew</TokenIdentifier>
+			<Abstract type="html">Returns YES when an object has not been saved to the managed object context yet</Abstract>
+			<DeclaredIn>NSManagedObject+RKAdditions.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)isNew</Declaration>
+			
+			
+			<Anchor>//api/name/isNew</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

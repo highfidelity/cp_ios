@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/RKNSJSONSerialization.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/RKNSJSONSerialization</TokenIdentifier>
+			<Abstract type="html">The RKNSJSONSerialization class conforms to the RKSerialization protocol and provides support for the serialization and deserialization of data in the JSON format using the Apple provided NSJSONSerialization class. This is the default JSON implementation for RestKit.</Abstract>
+			<DeclaredIn>RKNSJSONSerialization.h</DeclaredIn>
+			
+			<NodeRef refid="27"/>
+		</Token>
+		
+		
+	</File>
+</Tokens>

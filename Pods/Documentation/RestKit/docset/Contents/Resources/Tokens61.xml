@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/RKManagedObjectCaching.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/RKManagedObjectCaching</TokenIdentifier>
+			<Abstract type="html">Objects implementing the RKManagedObjectCaching protocol can act as the cache
+strategy for RestKit managed object stores. The managed object cache is consulted
+when objects are retrieved from Core Data during object mapping operations and provide
+an opportunity to accelerate the mapping process by trading memory for speed.</Abstract>
+			<DeclaredIn>RKManagedObjectCaching.h</DeclaredIn>
+			
+			<NodeRef refid="61"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/RKManagedObjectCaching/findInstanceOfEntity:withPrimaryKeyAttribute:value:inManagedObjectContext:</TokenIdentifier>
+			<Abstract type="html">Retrieves a model object from the object store given a Core Data entity and
+the primary key attribute and value for the desired object.</Abstract>
+			<DeclaredIn>RKManagedObjectCaching.h</DeclaredIn>			
+			
+			<Declaration>- (NSManagedObject *)findInstanceOfEntity:(NSEntityDescription *)entity withPrimaryKeyAttribute:(NSString *)primaryKeyAttribute value:(id)primaryKeyValue inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>entity</Name>
+					<Abstract type="html">The Core Data entity for the type of object to be retrieved from the cache.</Abstract>
+				</Parameter><Parameter>
+					<Name>primaryKeyAttribute</Name>
+					<Abstract type="html">The name of the attribute that acts as the primary key for the entity.</Abstract>
+				</Parameter><Parameter>
+					<Name>primaryKeyValue</Name>
+					<Abstract type="html">The value for the primary key attribute of the object to be retrieved from the cache.</Abstract>
+				</Parameter><Parameter>
+					<Name>managedObjectContext</Name>
+					<Abstract type="html">The managed object context to be searched for a matching instance.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A managed object that is an instance of the given entity with a primary key and value matching
+the specified parameters, or nil if no object was found.</Abstract></ReturnValue>
+			<Anchor>//api/name/findInstanceOfEntity:withPrimaryKeyAttribute:value:inManagedObjectContext:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/RKManagedObjectCaching/findInstancesOfEntity:withPrimaryKeyAttribute:value:inManagedObjectContext:</TokenIdentifier>
+			<Abstract type="html">Retrieves an array of model objects from the object store given a Core Data entity and
+the primary key attribute and value for the desired object.</Abstract>
+			<DeclaredIn>RKManagedObjectCaching.h</DeclaredIn>			
+			
+			<Declaration>- (NSArray *)findInstancesOfEntity:(NSEntityDescription *)entity withPrimaryKeyAttribute:(NSString *)primaryKeyAttribute value:(id)primaryKeyValue inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>entity</Name>
+					<Abstract type="html">The Core Data entity for the type of object to be retrieved from the cache.</Abstract>
+				</Parameter><Parameter>
+					<Name>primaryKeyAttribute</Name>
+					<Abstract type="html">The name of the attribute that acts as the primary key for the entity.</Abstract>
+				</Parameter><Parameter>
+					<Name>primaryKeyValue</Name>
+					<Abstract type="html">The value for the primary key attribute of the object to be retrieved from the cache.</Abstract>
+				</Parameter><Parameter>
+					<Name>managedObjectContext</Name>
+					<Abstract type="html">The managed object context to be searched for a matching instance.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">An array of managed objects that are instances of the given entity with a primary key and value matching
+the specified parameters, or nil if no object was found.</Abstract></ReturnValue>
+			<Anchor>//api/name/findInstancesOfEntity:withPrimaryKeyAttribute:value:inManagedObjectContext:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/RKManagedObjectCaching/didFetchObject:</TokenIdentifier>
+			<Abstract type="html">Invoked to inform the receiver that an object was fetched and should be added to the cache.</Abstract>
+			<DeclaredIn>RKManagedObjectCaching.h</DeclaredIn>			
+			
+			<Declaration>- (void)didFetchObject:(NSManagedObject *)object</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>object</Name>
+					<Abstract type="html">The object that was fetched from a managed object context.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didFetchObject:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/RKManagedObjectCaching/didCreateObject:</TokenIdentifier>
+			<Abstract type="html">Invoked to inform the receiver that an object was created and should be added to the cache.</Abstract>
+			<DeclaredIn>RKManagedObjectCaching.h</DeclaredIn>			
+			
+			<Declaration>- (void)didCreateObject:(NSManagedObject *)object</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>object</Name>
+					<Abstract type="html">The object that was created in a managed object context.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didCreateObject:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/RKManagedObjectCaching/didDeleteObject:</TokenIdentifier>
+			<Abstract type="html">Invoked to inform the receiver that an object was deleted and should be removed to the cache.</Abstract>
+			<DeclaredIn>RKManagedObjectCaching.h</DeclaredIn>			
+			
+			<Declaration>- (void)didDeleteObject:(NSManagedObject *)object</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>object</Name>
+					<Abstract type="html">The object that was deleted from a managed object context.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didDeleteObject:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>
