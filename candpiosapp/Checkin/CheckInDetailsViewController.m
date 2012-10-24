@@ -187,7 +187,6 @@
     [CPApiClient checkInToVenue:self.venue
                       hoursHere:self.checkInDuration
                      statusText:statusText
-                      isVirtual:self.checkInIsVirtual
                     isAutomatic:NO
                    completionBlock:^(NSDictionary *json, NSError *error){
         // hide the SVProgressHUD
@@ -264,7 +263,6 @@
                 CPUser *checkedInUser = [[CPUser alloc] init];
                 checkedInUser.nickname = [user objectForKey:@"nickname"];
                 checkedInUser.status = [user objectForKey:@"status_text"];
-                checkedInUser.checkInIsVirtual = [[user objectForKey:@"is_virtual"] boolValue];
                 
                 // add this user to the user array
                 // this is how we put the user's info in the info bubble later
@@ -294,11 +292,6 @@
                 
                 // add the imageview to the button
                 [userImageButton addSubview:userImage];
-                
-                //If user is virtually checkedIn then add virtual badge to their profile image
-                [CPUIHelper manageVirtualBadgeForProfileImageView:userImage 
-                                                 checkInIsVirtual:checkedInUser.checkInIsVirtual];        
-
                 
                 // add the button to the scrollview
                 [self.otherUsersScrollView addSubview:userImageButton];
