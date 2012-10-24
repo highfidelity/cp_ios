@@ -89,7 +89,7 @@
     
     // setup the background view
     self.hiddenView = [[UIButton alloc] initWithFrame:self.contentView.frame];
-    self.hiddenView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-light_toast-dark-960wide"]];
+    self.hiddenView.backgroundColor = [UIColor blackColor];
     [self.hiddenView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     
     // setup a CGRect that we'll manipulate to add some subviews
@@ -151,7 +151,7 @@
 
     // Additional buttons for contact exchange and chat
     CGFloat originX = SWITCH_LEFT_MARGIN;
-    self.sendLoveButton = [self addActionButtonWithImageNamed:@"quick-action-recognize"
+    self.sendLoveButton = [self addActionButtonWithImageNamed:@"quick-action-endorse"
                                                       originX:originX
                                                      selector:@selector(sendLoveAction)];
     
