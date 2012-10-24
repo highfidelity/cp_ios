@@ -27,7 +27,7 @@
         self.formattedPhone = [json objectForKey:@"formatted_phone" orDefault:@""];
         self.distanceFromUser = [[json objectForKey:@"distance" orDefault:[NSNumber numberWithDouble:0]] doubleValue];
         self.foursquareID = [json objectForKey:@"foursquare_id" orDefault:@""];
-        self.checkinCount = [[json objectForKey:@"checkins" orDefault:[NSNumber numberWithInt:0]] intValue];
+        self.checkedInNow = [json numberForKey:@"checked_in_now" orDefault:@0];
         self.weeklyCheckinCount = [[json objectForKey:@"checkins_for_week" orDefault:[NSNumber numberWithInt:0]] intValue];
         self.photoURL = [json objectForKey:@"photo_url" orDefault:nil];
         self.specialVenueType = [json objectForKey:@"special_venue_type" orDefault:nil];
@@ -240,11 +240,11 @@
 }
 
 - (NSString *)checkinCountString {
-    if (1 == self.checkinCount) { 
+    if ([self.checkedInNow intValue] == 1) {
         return @"1 checkin";
     }
     
-    return [NSString stringWithFormat:@"%d checkins", self.checkinCount];
+    return [NSString stringWithFormat:@"%@ checkins", self.checkedInNow];
 }
 
 - (NSString *)checkinTimeString {
@@ -277,8 +277,8 @@
 
 - (NSString *)subtitle {
     NSString *subtitleString;
-    if (self.checkinCount > 0) {
-        subtitleString = [NSString stringWithFormat:@"%d %@ here now", self.checkinCount, self.checkinCount > 1 ? @"people" : @"person"];
+    if ([self.checkedInNow intValue] > 0) {
+        subtitleString = [NSString stringWithFormat:@"%@ %@ here now", self.checkedInNow, [self.checkedInNow intValue] > 1 ? @"people" : @"person"];
     } else {
         subtitleString = [NSString stringWithFormat:@"%d %@ in the last week", self.weeklyCheckinCount, self.weeklyCheckinCount > 1 ? @"people" : @"person"];
     }

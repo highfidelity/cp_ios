@@ -22,9 +22,9 @@
 @property (strong, nonatomic) NSMutableDictionary *activeUsers;
 @property (strong, nonatomic) NSString *specialVenueType;
 @property (strong, nonatomic) NSNumber *venueID;
+@property (strong, nonatomic) NSNumber *checkedInNow;
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 @property (nonatomic) double distanceFromUser;
-@property (nonatomic) int checkinCount;
 @property (nonatomic) int checkinTime;
 @property (nonatomic) int weeklyCheckinCount;
 @property (nonatomic) BOOL autoCheckin;

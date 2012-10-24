@@ -291,7 +291,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     self.venueName.text = self.user.placeCheckedIn.name;
     self.venueAddress.text = self.user.placeCheckedIn.address;
     
-    self.othersAtPlace = self.user.checkedIn ? self.user.placeCheckedIn.checkinCount - 1 : self.user.placeCheckedIn.checkinCount;
+    self.othersAtPlace = self.user.checkedIn ? [self.user.placeCheckedIn.checkedInNow intValue] - 1 : [self.user.placeCheckedIn.checkedInNow intValue];
     
     if (self.firstLoad) {
         if (self.othersAtPlace == 0) {

@@ -307,7 +307,7 @@
             }
             
             // user checkin data
-            self.placeCheckedIn.checkinCount = [[userDict valueForKeyPath:@"checkin_data.users_here"] intValue];
+            self.placeCheckedIn.checkedInNow = @([[userDict valueForKeyPath:@"checkin_data.users_here"] intValue]);
             self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict valueForKeyPath:@"checkin_data.checkout"] intValue]]; 
             //self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
             
@@ -315,7 +315,7 @@
             self.checkInHistory = [NSMutableArray array];
             for (NSDictionary *placeDict in [userDict valueForKey:@"checkin_history"]) {
                 CPVenue *place = [CPVenue new];
-                place.checkinCount = [[placeDict valueForKey:@"checkin_count"] intValue];
+                place.checkedInNow = @([[placeDict valueForKey:@"checkin_count"] intValue]);
                 place.checkinTime = [[placeDict valueForKey:@"checkin_time"] intValue];
                 place.venueID = @([[placeDict objectForKey:@"venue_id"] intValue]);
                 place.foursquareID = [placeDict valueForKey:@"foursquare_id"];

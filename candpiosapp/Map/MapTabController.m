@@ -209,7 +209,7 @@ BOOL clearLocations = NO;
                 for (CPVenue *newAnn in newDataset.annotations) {
                     if ([ann.foursquareID isEqual:newAnn.foursquareID]) {
                         foundIt = YES;
-                        if (ann.checkinCount != newAnn.checkinCount || ann.weeklyCheckinCount != newAnn.weeklyCheckinCount) {
+                        if (![ann.checkedInNow isEqualToNumber:newAnn.checkedInNow] || ann.weeklyCheckinCount != newAnn.weeklyCheckinCount) {
                             // the annotation will be added again
                             [self.mapView removeAnnotation:ann];
                         } else {
@@ -300,7 +300,8 @@ BOOL clearLocations = NO;
         
         // Need to set a unique identifier to prevent any weird formatting issues -- use a combination of annotationsInCluster.count + hasCheckedInUsers value + smallPin value
         // @TODO: comment above is now invalid, identifier below is not going to be unique. why not use the foursquare id, or venue id? -- lithium
-        NSString *reuseId = [NSString stringWithFormat:@"place-%d-%d", (placeAnn.checkinCount > 0) ? placeAnn.checkinCount : placeAnn.weeklyCheckinCount, (placeAnn.checkinCount > 0)];
+        NSString *reuseId = [NSString stringWithFormat:@"place-%d-%d", ([placeAnn.checkedInNow intValue] > 0) ? [placeAnn.checkedInNow intValue] : placeAnn.weeklyCheckinCount,
+                                                                       ([placeAnn.checkedInNow intValue] > 0)];
         
         MKAnnotationView *pin = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
         
@@ -315,12 +316,12 @@ BOOL clearLocations = NO;
         
         BOOL solar = [placeAnn.specialVenueType isEqual:@"solar"];
 
-        if (placeAnn.checkinCount == 0) {
+        if ([placeAnn.checkedInNow intValue] == 0) {
             [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO isSolar:solar withLabel:NO];
             [self adjustScaleForPin:pin forNumberOfPeople:placeAnn.weeklyCheckinCount];
         } 
         else {
-            [pin setPin:placeAnn.checkinCount hasCheckins:YES isSolar:solar withLabel:YES];
+            [pin setPin:[placeAnn.checkedInNow intValue] hasCheckins:YES isSolar:solar withLabel:YES];
             pin.centerOffset = CGPointMake(0, -31);
         }
 
@@ -402,7 +403,7 @@ BOOL clearLocations = NO;
     for (CPVenue *ann in [self.mapView.annotations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(self isKindOfClass: %@)", [CPVenue class]]]) {
         MKAnnotationView *annView = [thisMapView viewForAnnotation:ann];
         if (annView) {
-            if (ann.checkinCount > 0) {
+            if ([ann.checkedInNow intValue]> 0) {
                 [[annView superview] bringSubviewToFront:annView];
             }
             else {

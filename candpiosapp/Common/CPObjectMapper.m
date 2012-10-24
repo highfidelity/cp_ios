@@ -40,7 +40,7 @@
         [_venueRKObjectMapping mapKeyPath:@"foursquare_id" toAttribute:@"foursquareID"];
         [_venueRKObjectMapping mapKeyPath:@"photo_url" toAttribute:@"photoURL"];
         
-        [_venueRKObjectMapping mapKeyPath:@"checkins" toAttribute:@"checkinCount"];
+        [_venueRKObjectMapping mapKeyPath:@"checked_in_now" toAttribute:@"checkinCount"];
         
         // the API usually allows for an interval to be passed when asking for venue info
         // as of right now the mobile app never passes this and it's always 7 days

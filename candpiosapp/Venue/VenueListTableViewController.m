@@ -129,11 +129,11 @@
     vcell.venueDistance.text = [NSString stringWithFormat:@"%@ %@", [CPUtils localizedDistanceStringForDistance:venue.distanceFromUser], @"away"];
     
     vcell.venueCheckins.text = @"";
-    if (venue.checkinCount  > 0) {
-        if (venue.checkinCount == 1) {
+    if ([venue.checkedInNow intValue]  > 0) {
+        if ([venue.checkedInNow intValue] == 1) {
             vcell.venueCheckins.text = @"1 person here now";
         } else {
-            vcell.venueCheckins.text = [NSString stringWithFormat:@"%d people here now", venue.checkinCount];
+            vcell.venueCheckins.text = [NSString stringWithFormat:@"%@ people here now", venue.checkedInNow];
         }
     } else {
         vcell.venueCheckins.text = [NSString stringWithFormat:venue.weeklyCheckinCount == 1 ? @"%d person this week" : @"%d people this week", venue.weeklyCheckinCount];        
