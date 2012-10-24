@@ -631,7 +631,7 @@ void SignalHandler(int sig) {
         }
     } else if (alertView.tag == kContactEndorsedTag && alertView.firstOtherButtonIndex == buttonIndex) {
 
-        User *user = [[User alloc] init];
+        CPUser *user = [[CPUser alloc] init];
         user.userID = [[userInfo objectForKey:kContactEndorsedAPNSKey] intValue];
         
         UserProfileViewController *vc = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone"
