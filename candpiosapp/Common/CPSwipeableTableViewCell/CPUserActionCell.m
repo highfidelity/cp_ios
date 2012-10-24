@@ -89,46 +89,13 @@
     
     // setup the background view
     self.hiddenView = [[UIButton alloc] initWithFrame:self.contentView.frame];
-    self.hiddenView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-light_toast-dark-960wide"]];
+    self.hiddenView.backgroundColor = [UIColor blackColor];
     [self.hiddenView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     
     // setup a CGRect that we'll manipulate to add some subviews
     CGRect changeFrame = self.hiddenView.frame;
     
-    // make the UIImageView be as wide as the cell but only 15pts high
-    changeFrame.size.height = 15;
-    
-    // setup the UIImage that is our gradient
-    UIImage *embossedGradient = [[UIImage imageNamed:@"cell-shadow-harsh"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
-    
-    // alloc-init a UIImageView for the top gradient
-    UIImageView *topGradient = [[UIImageView alloc] initWithFrame:changeFrame];
-    [topGradient setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin];
-
-    // give it the gradient image
-    topGradient.image = embossedGradient;
-    
-    // change the frame of the bottom gradient so it's 15 pts high
-    changeFrame.origin.y = self.hiddenView.frame.size.height - 15;
-    
-    // alloc-init a UIImageView for the bottom gradient
-    UIImageView *bottomGradient = [[UIImageView alloc] initWithFrame:changeFrame];
-    [bottomGradient setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin];
-    
-    // give it the gradient image
-    bottomGradient.image = embossedGradient;
-    
-    // rotate the bottom one so it's the other way
-    bottomGradient.layer.transform = CATransform3DMakeRotation(M_PI, 1.0f, 0.0f, 0.0f);
-    
-    bottomGradient.frame = changeFrame;
-    
-    // add the top gradients to the hidden view
-    [self.hiddenView addSubview:topGradient];
-    [self.hiddenView addSubview:bottomGradient];
-    
     // add a line to the buttom of the view to maintain separation when revealing hidden view
-    
     changeFrame.size.height = 1;
     changeFrame.origin.y = self.hiddenView.frame.size.height - 1;
     
@@ -151,7 +118,7 @@
 
     // Additional buttons for contact exchange and chat
     CGFloat originX = SWITCH_LEFT_MARGIN;
-    self.sendLoveButton = [self addActionButtonWithImageNamed:@"quick-action-recognize"
+    self.sendLoveButton = [self addActionButtonWithImageNamed:@"quick-action-endorse"
                                                       originX:originX
                                                      selector:@selector(sendLoveAction)];
     
