@@ -136,17 +136,7 @@
             vcell.venueCheckins.text = [NSString stringWithFormat:@"%d people here now", venue.checkinCount];
         }
     } else {
-        if (venue.weeklyCheckinCount > 0) {
-            
-            vcell.venueCheckins.text = [NSString stringWithFormat:venue.weeklyCheckinCount == 1 ? @"%d person this week" : @"%d people this week", venue.weeklyCheckinCount];
-        } else {
-            if (venue.intervalCheckinCount > 0) {
-                vcell.venueCheckins.text = [NSString stringWithFormat:venue.intervalCheckinCount == 1 ? @"%d person all time" : @"%d people all time", venue.intervalCheckinCount];
-            } else {
-                vcell.venueCheckins.text = @"";
-            }                
-        }
-        
+        vcell.venueCheckins.text = [NSString stringWithFormat:venue.weeklyCheckinCount == 1 ? @"%d person this week" : @"%d people this week", venue.weeklyCheckinCount];        
     }
     
     if (![venue.photoURL isKindOfClass:[NSNull class]]) {
