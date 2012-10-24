@@ -95,22 +95,6 @@ static NSOperationQueue *sMapQueue = nil;
             for(NSDictionary *venueDict in venuesArray) {
                 
                 CPVenue *venue = [[CPVenue alloc] initFromDictionary:venueDict];
-                //See if the user can checkin at a venue because they have a contact there
-                venue.hasContactAtVenue = NO;
-                for(id userIDObj in venue.activeUsers) {
-                    int activeUserID = [userIDObj integerValue];
-                    NSDictionary *currentActiveUser = [venue.activeUsers objectForKey:userIDObj];
-                    BOOL activeUserCheckedIn = [[currentActiveUser objectForKey:@"checked_in"] boolValue];
-                    //Check to see if the activeUser at the venue is checkin
-                    if(activeUserCheckedIn) {
-                        for(NSDictionary *contactDict in contactsArray) {
-                            if(activeUserID == [[contactDict objectForKey:@"other_user_id"] integerValue]) {
-                                venue.hasContactAtVenue = YES;
-                                break;
-                            }
-                        }
-                    }
-                }
                 
                 MKMapPoint venuePoint = MKMapPointForCoordinate(venue.coordinate);
                 MKMapRect pointRect = MKMapRectMake(venuePoint.x, venuePoint.y, 0, 0);

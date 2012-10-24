@@ -28,7 +28,6 @@
 @property (nonatomic) int checkinTime;
 @property (nonatomic) int weeklyCheckinCount;
 @property (nonatomic) int intervalCheckinCount;
-@property (nonatomic) BOOL hasContactAtVenue;
 @property (nonatomic) BOOL autoCheckin;
 @property (nonatomic) BOOL isNeighborhood;
 @property (nonatomic, readonly) NSString *checkinCountString;
