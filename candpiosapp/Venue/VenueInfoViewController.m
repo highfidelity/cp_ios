@@ -138,7 +138,7 @@ static VenueInfoViewController *_onScreenVenueVC;
 
 - (BOOL)isCheckedInHere
 {
-    return [CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [CPUserDefaultsHandler currentVenue].venueID == self.venue.venueID;
+    return [CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [[CPUserDefaultsHandler currentVenue].venueID isEqualToNumber:self.venue.venueID];
 }
 
 - (void)refreshVenueData:(NSNotification *)notification

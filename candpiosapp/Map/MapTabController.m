@@ -138,9 +138,9 @@ BOOL clearLocations = NO;
     return [self.dataset.activeUsers objectForKey:[NSString stringWithFormat:@"%d", userID]];
 }
 
-- (CPVenue *)venueFromActiveVenues:(int)venueID
+- (CPVenue *)venueFromActiveVenues:(NSNumber *)venueID
 {
-    return [self.dataset.activeVenues objectForKey:[NSString stringWithFormat:@"%d", venueID]];
+    return [self.dataset.activeVenues objectForKey:venueID];
 }
 
 - (void)userCheckedIn:(NSNotification *)notification

@@ -480,9 +480,9 @@ static GRMustacheTemplate *postBadgesTemplate;
     NSURL *url = [request URL];
     
     if ([url.scheme isEqualToString:@"favorite-venue-id"]) {
-        NSInteger venueID = [url.host integerValue];
+        NSNumber *venueID = @([url.host integerValue]);
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"venueID == %d", venueID];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"venueID == %@", venueID];
         NSMutableArray *venues = self.user.favoritePlaces;
         [venues filterUsingPredicate:predicate];
         CPVenue *place = [venues objectAtIndex:0];

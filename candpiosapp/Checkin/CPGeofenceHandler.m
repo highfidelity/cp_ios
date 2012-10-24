@@ -17,7 +17,7 @@
 
 @interface CPGeofenceHandler()
 
-@property (nonatomic) int pendingVenueCheckInID;
+@property (strong, nonatomic) NSNumber *pendingVenueCheckInID;
 
 @end
 
@@ -72,7 +72,7 @@ static CPGeofenceHandler *sharedHandler;
 {
     // Check to see if there is an existing checkin request for this venueID to eliminate duplicate check-ins from multiple geofence triggers
     
-    if (self.pendingVenueCheckInID && venue.venueID == self.pendingVenueCheckInID) {
+    if (self.pendingVenueCheckInID && [venue.venueID isEqualToNumber:self.pendingVenueCheckInID]) {
         [FlurryAnalytics logEvent:@"autoCheckedInDuplicateIgnored"];
     }
     else {

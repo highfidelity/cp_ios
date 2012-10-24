@@ -37,7 +37,7 @@
 
 # pragma mark - Active Venue and Active User grabbing
 - (CPUser *)userFromActiveUsers:(int)userID;
-- (CPVenue *)venueFromActiveVenues:(int)venueID;
+- (CPVenue *)venueFromActiveVenues:(NSNumber *)venueID;
 
 @end
 

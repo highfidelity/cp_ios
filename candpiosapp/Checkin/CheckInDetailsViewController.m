@@ -12,6 +12,7 @@
 #import "UIViewController+isModal.h"
 #import "CPCheckinHandler.h"
 #import "CPApiClient.h"
+#import "NSDictionary+JsonParserWorkaround.h"
 
 @interface CheckInDetailsViewController() <UITextFieldDelegate, UIScrollViewDelegate>
 
@@ -196,7 +197,7 @@
             // a successful checkin passes back venue_id
             // give that to this venue before we store it in NSUserDefaults
             // in case we came from foursquare venue list and didn't have it
-            self.venue.venueID = [[json objectForKey:@"venue_id"] intValue];
+            self.venue.venueID = @([[json objectForKey:@"venue_id"] intValue]);
             
             [CPCheckinHandler queueLocalNotificationForVenue:self.venue checkoutTime:checkOutTime];
             [CPCheckinHandler handleSuccessfulCheckinToVenue:self.venue checkoutTime:checkOutTime];

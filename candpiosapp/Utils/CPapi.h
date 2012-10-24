@@ -55,9 +55,6 @@
 
 + (void)checkOutWithCompletion:(void(^)(NSDictionary *json, NSError *error))completion;
 
-+ (void)getCurrentCheckInsCountAtVenue:(CPVenue *)venue 
-                        withCompletion:(void (^)(NSDictionary *, NSError *))completion;
-
 + (void)getDefaultCheckInVenueWithCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - User Profile
@@ -77,12 +74,6 @@
 
 + (void)sendPlusOneForLoveWithID:(int)reviewID 
                     completion:(void(^)(NSDictionary *json, NSError *error))completion;
-
-+ (void)sendPlusOneForLoveWithID:(int)reviewID 
-     fromVenueChatForVenueWithID:(int)venueID
-                 lastChatEntryID:(int)lastID
-                       chatQueue:(NSOperationQueue *)chatQueue
-                      completion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Skills
 + (void)getSkillsForUser:(NSNumber *)userID 

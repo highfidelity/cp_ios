@@ -287,7 +287,7 @@
                 NSDictionary *checkinDict = [userDict valueForKey:@"checkin_data"];
                 if ([checkinDict objectForKey:@"venue_id"]) {
                     // try and grab the venue from the activeVenues from the map
-                    CPVenue *venue = [[CPAppDelegate settingsMenuController].mapTabController venueFromActiveVenues:[[checkinDict objectForKey:@"venue_id"] integerValue]];
+                    CPVenue *venue = [[CPAppDelegate settingsMenuController].mapTabController venueFromActiveVenues:@([[checkinDict objectForKey:@"venue_id"] integerValue])];
                     // otherwise alloc init one from the dictionary
                     if (!venue) {
                         venue = [[CPVenue alloc] initFromDictionary:checkinDict];
@@ -317,7 +317,7 @@
                 CPVenue *place = [CPVenue new];
                 place.checkinCount = [[placeDict valueForKey:@"checkin_count"] intValue];
                 place.checkinTime = [[placeDict valueForKey:@"checkin_time"] intValue];
-                place.venueID = [[placeDict valueForKey:@"venue_id"] intValue];
+                place.venueID = @([[placeDict objectForKey:@"venue_id"] intValue]);
                 place.foursquareID = [placeDict valueForKey:@"foursquare_id"];
                 place.name = [placeDict valueForKey:@"name"];
                 place.address = [placeDict valueForKey:@"address"];

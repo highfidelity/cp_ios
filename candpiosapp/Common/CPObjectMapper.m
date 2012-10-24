@@ -39,6 +39,17 @@
         [_venueRKObjectMapping mapAttributes:@"name", @"address", nil];
         [_venueRKObjectMapping mapKeyPath:@"foursquare_id" toAttribute:@"foursquareID"];
         [_venueRKObjectMapping mapKeyPath:@"photo_url" toAttribute:@"photoURL"];
+        
+        [_venueRKObjectMapping mapKeyPath:@"checkins" toAttribute:@"checkinCount"];
+        
+        // the API usually allows for an interval to be passed when asking for venue info
+        // as of right now the mobile app never passes this and it's always 7 days
+        
+        // if we decide that in some places we want a different interval we should switch
+        // the venue property to also be intervalCheckinCount, and maintain another
+        // parameter so that for a given venue we know which interval it is for
+        [_venueRKObjectMapping mapKeyPath:@"checkins_for_interval" toAttribute:@"weeklyCheckinCount"];
+        
     }
     
     return _venueRKObjectMapping;

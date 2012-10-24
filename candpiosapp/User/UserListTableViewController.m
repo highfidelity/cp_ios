@@ -41,7 +41,7 @@
                     user.distance = [location distanceFromLocation:userLocation];
                     CPVenue *venue = [[CPVenue alloc] init];
                     venue.name = [personJSON objectForKey:@"venue_name" orDefault:@""];
-                    venue.venueID = [[personJSON objectForKey:@"venue_id" orDefault:[NSNumber numberWithInt:0]] intValue];
+                    venue.venueID = [personJSON numberForKey:@"venue_id" orDefault:@0];
                     user.placeCheckedIn = venue;
                     [self.checkedInUsers addObject:user];
                 }

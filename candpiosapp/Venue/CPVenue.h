@@ -21,7 +21,7 @@
 @property (strong, nonatomic) NSString *photoURL;
 @property (strong, nonatomic) NSMutableDictionary *activeUsers;
 @property (strong, nonatomic) NSString *specialVenueType;
-@property (nonatomic) int venueID;
+@property (strong, nonatomic) NSNumber *venueID;
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 @property (nonatomic) double distanceFromUser;
 @property (nonatomic) int checkinCount;

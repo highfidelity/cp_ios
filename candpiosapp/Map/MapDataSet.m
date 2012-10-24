@@ -105,7 +105,7 @@ static NSOperationQueue *sMapQueue = nil;
                 }
                 
                 // add (or update) the new pin in the 
-                [venueMutableDict setObject:venue forKey:[NSString stringWithFormat:@"%d", venue.venueID]];
+                [venueMutableDict setObject:venue forKey:venue.venueID];
                 
                 // post a notification with this venue if there's currently a venue shown by a VenueInfoViewController
                 if ([[VenueInfoViewController onScreenVenueVC].venue isEqual:venue]) {

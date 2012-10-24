@@ -18,7 +18,7 @@
 {
     self = [super init];
     if (self) {
-        self.venueID = [[json objectForKey:@"venue_id" orDefault:[NSNumber numberWithInt:0]] intValue];
+        self.venueID = [json numberForKey:@"venue_id" orDefault:@0];
         self.name = [json objectForKey:@"name" orDefault:@""];
         self.address = [json objectForKey:@"address" orDefault:@""];
         self.city = [json objectForKey:@"city" orDefault:@""];
@@ -81,7 +81,16 @@
     {
         self.name = [decoder decodeObjectForKey:@"name"];
         self.foursquareID = [decoder decodeObjectForKey:@"foursquareID"];
-        self.venueID = [decoder decodeIntegerForKey:@"venueID"];
+        
+        // temporary handling of venues stored with venueID as integer
+        @try {
+            NSNumber *venueID = [decoder decodeObjectOfClass:[NSNumber class] forKey:@"venueID"];
+            self.venueID = venueID;
+        }
+        @catch (NSException *exception) {
+            self.venueID = [NSNumber numberWithInt:[decoder decodeIntForKey:@"venueID"]];
+        }
+        
         self.coordinate = CLLocationCoordinate2DMake([[decoder decodeObjectForKey:@"lat"] doubleValue], [[decoder decodeObjectForKey:@"lng"] doubleValue]);
         self.address = [decoder decodeObjectForKey:@"address"];
         self.phone = [decoder decodeObjectForKey:@"phone"];
@@ -98,7 +107,7 @@
 {
     [encoder encodeObject:self.name forKey:@"name"];
     [encoder encodeObject:self.foursquareID forKey:@"foursquareID"];
-    [encoder encodeInt:self.venueID forKey:@"venueID"];
+    [encoder encodeObject:self.venueID forKey:@"venueID"];
     [encoder encodeObject:[NSNumber numberWithDouble:self.coordinate.latitude] forKey:@"lat"];
     [encoder encodeObject:[NSNumber numberWithDouble:self.coordinate.longitude] forKey:@"lng"];
     [encoder encodeObject:self.address forKey:@"address"];

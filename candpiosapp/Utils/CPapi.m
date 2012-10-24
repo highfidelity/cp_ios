@@ -389,14 +389,6 @@
                          completion:completion];
 }
 
-+ (void)getCurrentCheckInsCountAtVenue:(CPVenue *)venue 
-                        withCompletion:(void (^)(NSDictionary *, NSError *))completion
-{
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:[NSString stringWithFormat:@"%d", venue.venueID] forKey:@"venue_id"];
-    [self makeHTTPRequestWithAction:@"getVenueCheckInsCount" withParameters:parameters completion:completion];
-}
-
 + (void)getDefaultCheckInVenueWithCompletion:(void (^)(NSDictionary *, NSError *))completion
 {
     [self makeHTTPRequestWithAction:@"getDefaultCheckInVenue" withParameters:nil completion:completion];   
@@ -474,23 +466,6 @@
     // make the request
     [self makeHTTPRequestWithAction:@"sendPlusOneForLove" withParameters:parameters completion:completion];
     [FlurryAnalytics logEvent:@"sentPlusOneForLove"];
-}
-
-+ (void)sendPlusOneForLoveWithID:(int)reviewID 
-     fromVenueChatForVenueWithID:(int)venueID
-                 lastChatEntryID:(int)lastID
-                       chatQueue:(NSOperationQueue *)chatQueue
-                      completion:(void (^)(NSDictionary *, NSError *))completion
-{
-    // setup the parameters dictionary
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:3];
-    [parameters setValue:[NSString stringWithFormat:@"%d", reviewID] forKey:@"review_id"];
-    [parameters setValue:[NSString stringWithFormat:@"%d", venueID] forKey:@"venue_id"];
-    [parameters setValue:[NSString stringWithFormat:@"%d", lastID] forKey:@"last_id"];
-    
-    // make the request
-    [self makeHTTPRequestWithAction:@"sendPlusOneForLove" withParameters:parameters queue:chatQueue completion:completion];
-    [FlurryAnalytics logEvent:@"sentPlusOneForLoveFromVenueChat"];
 }
 
 # pragma mark - Skills
@@ -655,7 +630,7 @@
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setValue:[NSString stringWithFormat:@"%d", currentUserID] forKey:@"user_id"];
-    [parameters setValue:[NSString stringWithFormat:@"%d", venue.venueID] forKey:@"venue_id"];
+    [parameters setValue:venue.venueID forKey:@"venue_id"];
     [parameters setValue:[NSString stringWithFormat:@"%d", venue.autoCheckin] forKey:@"autocheckin"];
     
     [self makeHTTPRequestWithAction:@"saveVenueAutoCheckinStatus"
