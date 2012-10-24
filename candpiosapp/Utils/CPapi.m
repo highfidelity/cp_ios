@@ -339,45 +339,6 @@
 }
 
 # pragma mark - Map Dataset
-+ (void)getVenuesWithCheckinsWithinSWCoordinate:(CLLocationCoordinate2D)swCoord
-                                   NECoordinate:(CLLocationCoordinate2D)neCoord
-                                   userLocation:(CLLocationCoordinate2D)userLocation
-                                 checkedInSince:(CGFloat)numberOfDays
-                                          mapQueue:(NSOperationQueue *)mapQueue 
-                                 withCompletion:(void (^)(NSDictionary *, NSError *))completion
-{
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setValue:[NSString stringWithFormat:@"%f", swCoord.latitude] forKey:@"sw_lat"];
-    [params setValue:[NSString stringWithFormat:@"%f", swCoord.longitude] forKey:@"sw_lng"];
-    [params setValue:[NSString stringWithFormat:@"%f", neCoord.latitude] forKey:@"ne_lat"];
-    [params setValue:[NSString stringWithFormat:@"%f", neCoord.longitude] forKey:@"ne_lng"];
-    [params setValue:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970] - (86400 * numberOfDays)] forKey:@"checked_in_since"];
-    
-    // TODO: shouldn't we be able to do the distance sorting locally on the phone?
-    [params setValue:[NSString stringWithFormat:@"%f", userLocation.latitude] forKey:@"user_lat"];
-    [params setValue:[NSString stringWithFormat:@"%f", userLocation.longitude] forKey:@"user_lng"];
-    
-    [params setValue:kCandPAPIVersion forKey:@"version"];
-    
-    // 9 second timeout on this call, the map will try and reload every 10s anyways
-    [self makeHTTPRequestWithAction:@"getVenuesAndUsersWithCheckinsInBoundsDuringInterval" withParameters:params queue:mapQueue timeout:9 completion:completion];
-}
-
-+ (void)getNearestVenuesWithActiveFeeds:(CLLocationCoordinate2D)coordinate
-                             completion:(void (^)(NSDictionary *, NSError *))completion
-{
-    // Venues with active feeds.. generally centered around the user
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setValue:[NSString stringWithFormat:@"%f", coordinate.latitude] forKey:@"lat"];
-    [params setValue:[NSString stringWithFormat:@"%f", coordinate.longitude] forKey:@"lng"];
-    
-    [self makeHTTPRequestWithAction:@"getNearestVenuesWithActiveFeeds"
-                     withParameters:params
-                              queue:nil
-                            timeout:9
-                         completion:completion];
-}
-
 + (void)getNearestVenuesWithCheckinsToCoordinate:(CLLocationCoordinate2D)coordinate
                                      mapQueue:(NSOperationQueue *)mapQueue
                                completion:(void (^)(NSDictionary *, NSError *))completion

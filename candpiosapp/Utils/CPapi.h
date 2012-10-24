@@ -32,16 +32,6 @@
                         completion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Map Dataset
-+ (void)getVenuesWithCheckinsWithinSWCoordinate:(CLLocationCoordinate2D)swCoord
-                      NECoordinate:(CLLocationCoordinate2D)neCoord
-                      userLocation:(CLLocationCoordinate2D)userLocation
-                    checkedInSince:(CGFloat)daysInterval
-                            mapQueue:(NSOperationQueue *)mapQueue
-             withCompletion:(void (^)(NSDictionary *, NSError *))completion;
-
-+ (void)getNearestVenuesWithActiveFeeds:(CLLocationCoordinate2D)coordinate
-                             completion:(void (^)(NSDictionary *, NSError *))completion;
-
 + (void)getNearestVenuesWithCheckinsToCoordinate:(CLLocationCoordinate2D)coordinate
                                         mapQueue:(NSOperationQueue *)mapQueue
                                       completion:(void (^)(NSDictionary *, NSError *))completion;
