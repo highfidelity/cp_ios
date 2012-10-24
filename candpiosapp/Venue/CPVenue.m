@@ -1,5 +1,5 @@
 //
-//  CPPlace.m
+//  CPVenue.m
 //  candpiosapp
 //
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.

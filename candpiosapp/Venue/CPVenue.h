@@ -1,5 +1,5 @@
 //
-//  CPPlace.h
+//  CPVenue.h
 //  candpiosapp
 //
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
