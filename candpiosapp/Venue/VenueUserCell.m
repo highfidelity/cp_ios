@@ -31,15 +31,6 @@
 
 - (void) setUser:(CPUser *)user {
     _user = user;
-    //If the user is checkedIn virutally add a virtual badge to their image
-    if(self.user.checkedIn) {
-        [CPUIHelper manageVirtualBadgeForProfileImageView:self.imageView
-                                         checkInIsVirtual:user.checkInIsVirtual];
-    } else {
-        //Never show a virtual badge if they aren't checkin
-        [CPUIHelper manageVirtualBadgeForProfileImageView:self.imageView
-                                         checkInIsVirtual:NO];
-    }
     
     [CPUIHelper profileImageView:self.imageView
              withProfileImageUrl:user.photoURL];

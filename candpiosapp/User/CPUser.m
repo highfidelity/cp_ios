@@ -36,7 +36,6 @@
         
         self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict objectForKey:@"checkout"] integerValue]];
         self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
-        self.checkInIsVirtual = [[userDict objectForKey:@"is_virtual"] boolValue];
         self.isContact = [[userDict objectForKey:@"is_contact"] boolValue];
 	}
 	return self;

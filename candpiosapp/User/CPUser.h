@@ -51,7 +51,6 @@
 @property (nonatomic) double distance;
 @property (nonatomic) BOOL checkedIn;
 @property (nonatomic) int trusted_by;
-@property (nonatomic) BOOL checkInIsVirtual;
 @property (nonatomic) BOOL contactsOnlyChat;
 @property (nonatomic) BOOL isContact;
 @property (nonatomic) BOOL hasChatHistory;

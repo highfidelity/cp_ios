@@ -315,22 +315,13 @@ BOOL clearLocations = NO;
         
         BOOL solar = [placeAnn.specialVenueType isEqual:@"solar"];
 
-        if (!(placeAnn.checkinCount - placeAnn.virtualCheckinCount) > 0) {
-            [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO hasVirtual:NO isSolar:solar withLabel:NO];
+        if (placeAnn.checkinCount == 0) {
+            [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO isSolar:solar withLabel:NO];
             [self adjustScaleForPin:pin forNumberOfPeople:placeAnn.weeklyCheckinCount];
         } 
         else {
-            if(placeAnn.hasContactAtVenue)
-            {
-                [pin setPin:placeAnn.checkinCount hasCheckins:YES hasVirtual:YES isSolar:solar withLabel:YES];
-                pin.centerOffset = CGPointMake(0, -31);
-            }
-            else
-            {
-                [pin setPin:placeAnn.checkinCount hasCheckins:YES hasVirtual:NO isSolar:solar withLabel:YES];
-                pin.centerOffset = CGPointMake(0, -31);
-
-            }
+            [pin setPin:placeAnn.checkinCount hasCheckins:YES isSolar:solar withLabel:YES];
+            pin.centerOffset = CGPointMake(0, -31);
         }
 
         pin.enabled = YES;

@@ -34,7 +34,6 @@ static AFHTTPClient *sharedClient;
 + (void)checkInToVenue:(CPVenue *)venue
              hoursHere:(int)hoursHere
             statusText:(NSString *)statusText
-             isVirtual:(BOOL)isVirtual
            isAutomatic:(BOOL)isAutomatic
        completionBlock:(void (^)(NSDictionary *, NSError *))completion
 {
@@ -53,7 +52,6 @@ static AFHTTPClient *sharedClient;
     [parameters setValue:venue.phone forKey:@"phone"];
     [parameters setValue:venue.formattedPhone forKey:@"formatted_phone"];
     [parameters setValue:[NSString stringWithFormat:@"%d", isAutomatic] forKey:@"is_automatic"];
-    [parameters setValue:[NSString stringWithFormat:@"%d", isVirtual] forKey:@"is_virtual"];
     [parameters setValue:[NSString stringWithFormat:@"%d", venue.isNeighborhood] forKey:@"is_neighborhood"];
     [parameters setValue:statusText forKey:@"status"];
     

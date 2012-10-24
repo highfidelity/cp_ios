@@ -128,9 +128,6 @@
              withProfileImageUrl:user.photoURL];
     cell.nicknameLabel.text = [CPUIHelper profileNickname:user.nickname];
     
-    //If user is virtually checkedIn then add virtual badge to their profile image
-    [CPUIHelper manageVirtualBadgeForProfileImageView:cell.profilePictureImageView
-                                     checkInIsVirtual:user.checkInIsVirtual];
     if (cell.user.isContact) {
         cell.rightStyle = CPUserActionCellSwipeStyleReducedAction;
     } else{

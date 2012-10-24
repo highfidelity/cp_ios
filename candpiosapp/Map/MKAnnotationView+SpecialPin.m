@@ -10,7 +10,10 @@
 
 @implementation MKAnnotationView (SpecialPin)
 
-- (void)setPin:(NSInteger)number hasCheckins:(BOOL)checkins hasVirtual:(BOOL)virtual isSolar:(BOOL)solar withLabel:(BOOL)withLabel {
+- (void)setPin:(NSInteger)number
+   hasCheckins:(BOOL)checkins
+       isSolar:(BOOL)solar
+     withLabel:(BOOL)withLabel {
     CGFloat fontSize = 20;
     NSString *imageName;
     CGRect labelFrame = CGRectNull;
@@ -19,17 +22,9 @@
         imageName = @"pin-solar";
     } else {
         // If no one is currently checked in, use the smaller image
-        if (checkins) {
-            if(virtual)
-            {
-                imageName = @"pin-virtual-checkedin";
-                labelFrame = CGRectMake(0, 23, 93, 20);
-            }
-            else
-            {
-                imageName = @"pin-checkedin";
-                labelFrame = CGRectMake(0, 15, 93, 20);
-            }
+        if (checkins) {            
+            imageName = @"pin-checkedin";
+            labelFrame = CGRectMake(0, 15, 93, 20);
         } else {
             labelFrame = CGRectMake(0, 9, 54, 12);
             imageName = @"pin-checkedout";
@@ -37,17 +32,15 @@
         }
     }
     
-    
     [self setImage:[UIImage imageNamed:imageName]];
     
     int subViewCount = self.subviews.count;
-    if(subViewCount > 0)
-    {
-        if(subViewCount > 1)
-        {
+    if(subViewCount > 0) {
+        if(subViewCount > 1) {
             //Ideally there would be a better way to identify the subviews
             NSLog(@"MultipleSubviews!  The incorrect subview could be getting hidden!");
         }
+        
         [[self.subviews objectAtIndex:0] removeFromSuperview];
         
     }

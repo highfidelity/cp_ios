@@ -30,7 +30,6 @@
         self.checkinCount = [[json objectForKey:@"checkins" orDefault:[NSNumber numberWithInt:0]] intValue];
         self.weeklyCheckinCount = [[json objectForKey:@"checkins_for_week" orDefault:[NSNumber numberWithInt:0]] intValue];
         self.intervalCheckinCount = [[json objectForKey:@"checkins_for_interval" orDefault:[NSNumber numberWithInt:0]] intValue];
-        self.virtualCheckinCount = [[json objectForKey:@"virtual_checkins" orDefault:[NSNumber numberWithInt:0]] intValue];
         self.photoURL = [json objectForKey:@"photo_url" orDefault:nil];
         self.specialVenueType = [json objectForKey:@"special_venue_type" orDefault:nil];
         self.isNeighborhood = [[json objectForKey:@"is_neighborhood"] boolValue];

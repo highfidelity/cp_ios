@@ -21,7 +21,6 @@ static VenueInfoViewController *_onScreenVenueVC;
 @property (weak, nonatomic) UIButton *phoneButton;
 @property (weak, nonatomic) UIButton *addressButton;
 @property (strong, nonatomic) NSMutableDictionary *userObjectsForUsersOnScreen;
-@property (nonatomic) BOOL checkInIsVirtual;
 @property (nonatomic) BOOL hasPhone;
 @property (nonatomic) BOOL hasAddress;
 @property (nonatomic, readonly) CGFloat cellWidth;
@@ -572,16 +571,6 @@ static VenueInfoViewController *_onScreenVenueVC;
     [thumbButton addTarget:self action:@selector(userImageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     UIImageView *userThumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, thumbnailDim, thumbnailDim)];
-    
-    //If the user is checkedIn virutally add a virtual badge to their image
-    if(user.checkedIn) {
-        [CPUIHelper manageVirtualBadgeForProfileImageView:userThumbnail
-                                         checkInIsVirtual:user.checkInIsVirtual];
-    } else {
-        //Never show a virtual badge if they aren't checkin
-        [CPUIHelper manageVirtualBadgeForProfileImageView:userThumbnail
-                                         checkInIsVirtual:NO];
-    }
     
     [CPUIHelper profileImageView:userThumbnail
              withProfileImageUrl:user.photoURL];

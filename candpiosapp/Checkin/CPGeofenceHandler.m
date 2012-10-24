@@ -92,7 +92,6 @@ static CPGeofenceHandler *sharedHandler;
         [CPApiClient checkInToVenue:venue
                           hoursHere:checkInDuration
                          statusText:statusText
-                          isVirtual:NO
                         isAutomatic:YES
                     completionBlock:^(NSDictionary *json, NSError *error){
             
