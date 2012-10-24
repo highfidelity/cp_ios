@@ -136,7 +136,8 @@
             vcell.venueCheckins.text = [NSString stringWithFormat:@"%@ people here now", venue.checkedInNow];
         }
     } else {
-        vcell.venueCheckins.text = [NSString stringWithFormat:venue.weeklyCheckinCount == 1 ? @"%d person this week" : @"%d people this week", venue.weeklyCheckinCount];        
+        vcell.venueCheckins.text = [NSString stringWithFormat:[venue.weeklyCheckinCount intValue] == 1 ?
+                                        @"%@ person this week" : @"%@ people this week", venue.weeklyCheckinCount];
     }
     
     if (![venue.photoURL isKindOfClass:[NSNull class]]) {

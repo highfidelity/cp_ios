@@ -10,7 +10,7 @@
 
 @implementation MKAnnotationView (SpecialPin)
 
-- (void)setPin:(NSInteger)number
+- (void)setPin:(NSNumber *)number
    hasCheckins:(BOOL)checkins
        isSolar:(BOOL)solar
      withLabel:(BOOL)withLabel {
@@ -54,7 +54,7 @@
         numberLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:fontSize];
         numberLabel.textAlignment = UITextAlignmentCenter;
         
-        numberLabel.text = [NSString stringWithFormat:@"%d", number];
+        numberLabel.text = [NSString stringWithFormat:@"%@", number];
         [self addSubview:numberLabel];
     }
 }

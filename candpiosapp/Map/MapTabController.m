@@ -209,7 +209,7 @@ BOOL clearLocations = NO;
                 for (CPVenue *newAnn in newDataset.annotations) {
                     if ([ann.foursquareID isEqual:newAnn.foursquareID]) {
                         foundIt = YES;
-                        if (![ann.checkedInNow isEqualToNumber:newAnn.checkedInNow] || ann.weeklyCheckinCount != newAnn.weeklyCheckinCount) {
+                        if (![ann.checkedInNow isEqualToNumber:newAnn.checkedInNow] || ![ann.weeklyCheckinCount isEqualToNumber:newAnn.weeklyCheckinCount]) {
                             // the annotation will be added again
                             [self.mapView removeAnnotation:ann];
                         } else {
@@ -300,7 +300,7 @@ BOOL clearLocations = NO;
         
         // Need to set a unique identifier to prevent any weird formatting issues -- use a combination of annotationsInCluster.count + hasCheckedInUsers value + smallPin value
         // @TODO: comment above is now invalid, identifier below is not going to be unique. why not use the foursquare id, or venue id? -- lithium
-        NSString *reuseId = [NSString stringWithFormat:@"place-%d-%d", ([placeAnn.checkedInNow intValue] > 0) ? [placeAnn.checkedInNow intValue] : placeAnn.weeklyCheckinCount,
+        NSString *reuseId = [NSString stringWithFormat:@"place-%@-%d", ([placeAnn.checkedInNow intValue] > 0) ? placeAnn.checkedInNow : placeAnn.weeklyCheckinCount,
                                                                        ([placeAnn.checkedInNow intValue] > 0)];
         
         MKAnnotationView *pin = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
@@ -321,7 +321,7 @@ BOOL clearLocations = NO;
             [self adjustScaleForPin:pin forNumberOfPeople:placeAnn.weeklyCheckinCount];
         } 
         else {
-            [pin setPin:[placeAnn.checkedInNow intValue] hasCheckins:YES isSolar:solar withLabel:YES];
+            [pin setPin:placeAnn.checkedInNow hasCheckins:YES isSolar:solar withLabel:YES];
             pin.centerOffset = CGPointMake(0, -31);
         }
 
@@ -364,9 +364,9 @@ BOOL clearLocations = NO;
     
 }
 
-- (void)adjustScaleForPin:(MKAnnotationView *)pin forNumberOfPeople:(NSInteger)number {
+- (void)adjustScaleForPin:(MKAnnotationView *)pin forNumberOfPeople:(NSNumber *)number {
     if (pin.image) {    
-        float scale = [self getPinScaleForNumberOfPeople:number];
+        float scale = [self getPinScaleForNumberOfPeople:[number intValue]];
         
         // can't simply adjust the pin's transform since that will also scale the callout bubble
         // TODO: if we want to keep the pin touch area the same, we should only scale the image instead
