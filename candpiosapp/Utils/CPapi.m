@@ -462,25 +462,6 @@
                          completion:completion];
 }
 
-+ (void)getVenuesInSWCoords:(CLLocationCoordinate2D)SWCoord
-                andNECoords:(CLLocationCoordinate2D)NECoord
-               userLocation:(CLLocation *)userLocation
-             withCompletion:(void (^)(NSDictionary *, NSError *))completion
-{
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:[NSString stringWithFormat:@"%f", SWCoord.latitude] forKey:@"sw_lat"];
-    [parameters setValue:[NSString stringWithFormat:@"%f", SWCoord.longitude] forKey:@"sw_lng"];
-    [parameters setValue:[NSString stringWithFormat:@"%f", NECoord.latitude] forKey:@"ne_lat"];
-    [parameters setValue:[NSString stringWithFormat:@"%f", NECoord.longitude] forKey:@"ne_lng"];
-    
-    [parameters setValue:[NSString stringWithFormat:@"%f", userLocation.coordinate.latitude] forKey:@"lat"];
-    [parameters setValue:[NSString stringWithFormat:@"%f", userLocation.coordinate.longitude] forKey:@"lng"];
-    
-    [self makeHTTPRequestWithAction:@"getVenuesInBounds"
-                     withParameters:parameters
-                         completion:completion];
-}
-
 + (void)getUserTransactionDataWithCompletitonBlock:(void (^)(NSDictionary *, NSError *))completion
 {
     [self makeHTTPRequestWithAction:@"getTransactionData"

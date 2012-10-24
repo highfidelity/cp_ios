@@ -106,11 +106,6 @@
 #pragma mark - Contact List
 + (void)getContactListWithCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
 
-+ (void)getVenuesInSWCoords:(CLLocationCoordinate2D)SWCoord
-                andNECoords:(CLLocationCoordinate2D)NECoord
-               userLocation:(CLLocation *)userLocation
-              withCompletion:(void (^)(NSDictionary *, NSError *))completion;
-
 #pragma mark - User Settings
 
 + (void)getNotificationSettingsWithCompletition:(void(^)(NSDictionary *json, NSError *error))completion;
