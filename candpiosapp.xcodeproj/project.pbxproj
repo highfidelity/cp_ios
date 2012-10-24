@@ -8,10 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3267F66E14D919A700BFFBAA /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3267F66D14D919A700BFFBAA /* AirshipConfig.plist */; };
-		3267F67014D919FE00BFFBAA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F66F14D919FE00BFFBAA /* CFNetwork.framework */; };
 		3267F67214D91A0B00BFFBAA /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F67114D91A0B00BFFBAA /* MobileCoreServices.framework */; };
-		3267F67414D91A1300BFFBAA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F67314D91A1300BFFBAA /* Security.framework */; };
-		3267F67614D91A1900BFFBAA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F67514D91A1900BFFBAA /* SystemConfiguration.framework */; };
 		3267F67814D91A2600BFFBAA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F67714D91A2600BFFBAA /* libz.dylib */; };
 		3267F67A14D91A2E00BFFBAA /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F67914D91A2E00BFFBAA /* libsqlite3.dylib */; };
 		3267F67C14D91A3600BFFBAA /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3267F67B14D91A3600BFFBAA /* CoreTelephony.framework */; };
@@ -112,9 +109,6 @@
 		534EB7351566FD3A00BDBA57 /* cell-shadow-harsh.png in Resources */ = {isa = PBXBuildFile; fileRef = 534EB7331566FD3A00BDBA57 /* cell-shadow-harsh.png */; };
 		534EB7361566FD3A00BDBA57 /* cell-shadow-harsh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 534EB7341566FD3A00BDBA57 /* cell-shadow-harsh@2x.png */; };
 		534EB73A1567179D00BDBA57 /* CPBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534EB7391567179D00BDBA57 /* CPBaseTableViewController.m */; };
-		534FD38D163605B80052C88D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 534FD38C163605B80052C88D /* CoreData.framework */; };
-		534FD38F163605CD0052C88D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 534FD38E163605CD0052C88D /* libxml2.dylib */; };
-		534FD390163605D40052C88D /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 534FD381163605320052C88D /* libRestKit.a */; };
 		5355B0C215140697006A3D89 /* settings-button-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 5355B0C015140697006A3D89 /* settings-button-3.png */; };
 		5355B0C315140697006A3D89 /* settings-button-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5355B0C115140697006A3D89 /* settings-button-3@2x.png */; };
 		5355C96C15082A56006F64C1 /* FaceToFaceStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5355C96B15082A56006F64C1 /* FaceToFaceStoryboard_iPhone.storyboard */; };
@@ -427,51 +421,6 @@
 		E4E74E07153B08710022F405 /* CPTouchableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E74E07153B08710022F404 /* CPTouchableView.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		534FD380163605320052C88D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 534FD375163605310052C88D /* RestKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 25160D1614564E810060A5C5;
-			remoteInfo = RestKit;
-		};
-		534FD382163605320052C88D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 534FD375163605310052C88D /* RestKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 25160D2614564E820060A5C5;
-			remoteInfo = RestKitTests;
-		};
-		534FD384163605320052C88D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 534FD375163605310052C88D /* RestKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 25160E62145651060060A5C5;
-			remoteInfo = RestKitFramework;
-		};
-		534FD386163605320052C88D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 534FD375163605310052C88D /* RestKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 25160E78145651060060A5C5;
-			remoteInfo = RestKitFrameworkTests;
-		};
-		534FD388163605320052C88D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 534FD375163605310052C88D /* RestKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 259C301615128079003066A2;
-			remoteInfo = RestKitResources;
-		};
-		534FD38A163605A90052C88D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 534FD375163605310052C88D /* RestKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 25160D1514564E810060A5C5;
-			remoteInfo = RestKit;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		3267F66D14D919A700BFFBAA /* AirshipConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = AirshipConfig.plist; sourceTree = "<group>"; };
 		3267F66F14D919FE00BFFBAA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -720,7 +669,6 @@
 		534EB7341566FD3A00BDBA57 /* cell-shadow-harsh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cell-shadow-harsh@2x.png"; path = "Utils/images/textures/cell-shadow-harsh@2x.png"; sourceTree = "<group>"; };
 		534EB7381567179D00BDBA57 /* CPBaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPBaseTableViewController.h; sourceTree = "<group>"; };
 		534EB7391567179D00BDBA57 /* CPBaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CPBaseTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		534FD375163605310052C88D /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		534FD38C163605B80052C88D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		534FD38E163605CD0052C88D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		5355B0C015140697006A3D89 /* settings-button-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-button-3.png"; path = "Settings/images/settings-button-3.png"; sourceTree = "<group>"; };
@@ -1127,18 +1075,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				534FD390163605D40052C88D /* libRestKit.a in Frameworks */,
-				534FD38F163605CD0052C88D /* libxml2.dylib in Frameworks */,
 				3267F67214D91A0B00BFFBAA /* MobileCoreServices.framework in Frameworks */,
-				3267F67414D91A1300BFFBAA /* Security.framework in Frameworks */,
-				534FD38D163605B80052C88D /* CoreData.framework in Frameworks */,
 				E46BA2C1161CD89500CA0440 /* CoreText.framework in Frameworks */,
 				53FF95ED156D5D0E0046ADDE /* StoreKit.framework in Frameworks */,
 				3267F67C14D91A3600BFFBAA /* CoreTelephony.framework in Frameworks */,
 				3267F67A14D91A2E00BFFBAA /* libsqlite3.dylib in Frameworks */,
 				3267F67814D91A2600BFFBAA /* libz.dylib in Frameworks */,
-				3267F67614D91A1900BFFBAA /* SystemConfiguration.framework in Frameworks */,
-				3267F67014D919FE00BFFBAA /* CFNetwork.framework in Frameworks */,
 				32CE875214D27FFF002D391B /* QuartzCore.framework in Frameworks */,
 				8726C6C414B00245004E4872 /* CoreLocation.framework in Frameworks */,
 				871EFB5F14AEB4950030658B /* MapKit.framework in Frameworks */,
@@ -1635,18 +1577,6 @@
 				5343243E15C2123A00BE5075 /* CPApiClient.m */,
 			);
 			name = Utils;
-			sourceTree = "<group>";
-		};
-		534FD376163605310052C88D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				534FD381163605320052C88D /* libRestKit.a */,
-				534FD383163605320052C88D /* RestKitTests.octest */,
-				534FD385163605320052C88D /* RestKit.framework */,
-				534FD387163605320052C88D /* RestKitFrameworkTests.octest */,
-				534FD389163605320052C88D /* RestKitResources.bundle */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		5361F8BF156EBBC00099D303 /* Skills */ = {
@@ -2188,7 +2118,6 @@
 				530BAD19160BCA80007DF806 /* GRMustache */,
 				53D78C62160B99D800148EA3 /* GTMNSString+HTML */,
 				53BBC0041612B70C00F5C14B /* OAuthConsumer */,
-				534FD375163605310052C88D /* RestKit.xcodeproj */,
 				5335D823160BAA56005400FC /* SSKeychain */,
 				5335D848160BAB2F005400FC /* SVProgressHUD */,
 				5335D875160BB369005400FC /* SVPullToRefresh */,
@@ -2486,7 +2415,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				534FD38B163605A90052C88D /* PBXTargetDependency */,
 			);
 			name = coffeeandpower;
 			productName = candpiosapp;
@@ -2515,56 +2443,12 @@
 			mainGroup = 871EFAFB14AE9C810030658B;
 			productRefGroup = 871EFB0714AE9C820030658B /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 534FD376163605310052C88D /* Products */;
-					ProjectRef = 534FD375163605310052C88D /* RestKit.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				871EFB0514AE9C820030658B /* coffeeandpower */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		534FD381163605320052C88D /* libRestKit.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRestKit.a;
-			remoteRef = 534FD380163605320052C88D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		534FD383163605320052C88D /* RestKitTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RestKitTests.octest;
-			remoteRef = 534FD382163605320052C88D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		534FD385163605320052C88D /* RestKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = RestKit.framework;
-			remoteRef = 534FD384163605320052C88D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		534FD387163605320052C88D /* RestKitFrameworkTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RestKitFrameworkTests.octest;
-			remoteRef = 534FD386163605320052C88D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		534FD389163605320052C88D /* RestKitResources.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RestKitResources.bundle;
-			remoteRef = 534FD388163605320052C88D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		871EFB0414AE9C820030658B /* Resources */ = {
@@ -2980,14 +2864,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		534FD38B163605A90052C88D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = RestKit;
-			targetProxy = 534FD38A163605A90052C88D /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
 		53BBBFB21612B25700F5C14B /* UserVoice.strings */ = {
 			isa = PBXVariantGroup;
@@ -3091,7 +2967,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "candpiosapp/candpiosapp-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
-				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "candpiosapp/candpiosapp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3101,10 +2977,7 @@
 					"\"$(SRCROOT)/candpiosapp/Externals/GRMustache/lib\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/FlurryAnalytics\"",
 				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-all_load",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -3127,7 +3000,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "candpiosapp/candpiosapp-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
-				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "candpiosapp/candpiosapp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3137,10 +3010,7 @@
 					"\"$(SRCROOT)/candpiosapp/Externals/GRMustache/lib\"",
 					"\"$(SRCROOT)/candpiosapp/Externals/FlurryAnalytics\"",
 				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-all_load",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

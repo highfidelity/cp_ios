@@ -7,7 +7,6 @@
 //
 
 #import "CPObjectMapper.h"
-#import <RestKit/RestKit.h>
 
 @implementation CPObjectMapper
 
