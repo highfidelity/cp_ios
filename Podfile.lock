@@ -1,26 +1,7 @@
 
-SPEC CHECKSUMS: 
-  AFNetworking: 758a1cb1ab5a0d22795ba1c44abb9cad395bc126
-  RestKit/Support: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
-  RestKit/ObjectMapping: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
-  SOCKit: 179515c1a621dd5652a60e9be02ea4adcd25bc9b
-  RestKit/CoreData: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
-  RestKit/Core: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
-  RestKit/Network: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
-  RestKit: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
-
-COCOAPODS: 0.15.2
-
-DEPENDENCIES: 
-- RestKit (from `https://github.com/RestKit/RestKit.git', branch `development')
-
-EXTERNAL SOURCES: 
-  RestKit: 
-    :git: https://github.com/RestKit/RestKit.git
-    :branch: development
-
 PODS: 
 - AFNetworking (1.0)
+- ActionSheetPicker (0.0.1)
 - RestKit (0.20.0dev): 
   - RestKit/Core (= 0.20.0dev)
 - RestKit/Core (0.20.0dev): 
@@ -36,3 +17,25 @@ PODS:
 - RestKit/ObjectMapping (0.20.0dev)
 - RestKit/Support (0.20.0dev)
 - SOCKit (1.1)
+
+SPEC CHECKSUMS: 
+  RestKit/ObjectMapping: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
+  RestKit: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
+  RestKit/Network: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
+  RestKit/Core: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
+  SOCKit: 179515c1a621dd5652a60e9be02ea4adcd25bc9b
+  RestKit/Support: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
+  RestKit/CoreData: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
+  AFNetworking: 758a1cb1ab5a0d22795ba1c44abb9cad395bc126
+  ActionSheetPicker: f47931cfb6bc65230b323326964fccb4ad339f37
+
+EXTERNAL SOURCES: 
+  RestKit: 
+    :git: https://github.com/RestKit/RestKit.git
+    :branch: development
+
+DEPENDENCIES: 
+- ActionSheetPicker
+- RestKit (from `https://github.com/RestKit/RestKit.git', branch `development')
+
+COCOAPODS: 0.15.2

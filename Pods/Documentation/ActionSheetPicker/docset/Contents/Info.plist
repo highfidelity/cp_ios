@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleIdentifier</key>
+	<string>org.cocoapods.ActionSheetPicker-0.0.1</string>
+	<key>CFBundleName</key>
+	<string>ActionSheetPicker 0.0.1 Documentation</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	
+	
+	<key>DocSetDescription</key>
+	<string>Quickly reproduce the dropdown UIPickerView / ActionSheet functionality from Safari on iPhone/ iOS / CocoaTouch.</string>
+	
+	<key>DocSetFeedName</key>
+	<string>ActionSheetPicker 0.0.1 Documentation</string>
+	
+	<key>DocSetMinimumXcodeVersion</key>
+	<string>3.0</string>
+	
+	<key>DashDocSetFamily</key>
+	<string>appledoc</string>
+	<key>DocSetPublisherIdentifier</key>
+	<string>org.cocoapods.documentation</string>
+	<key>DocSetPublisherName</key>
+	<string>Brett Gibson, Evan Cordell, Filote Stefan, Greg Combs, John Garland, Mark van den Broek, and Tim Cinel</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Brett Gibson, Evan Cordell, Filote Stefan, Greg Combs, John Garland, Mark van den Broek, and Tim Cinel</string>
+</dict>
+</plist>

@@ -41,11 +41,6 @@
 		530BAABD160BC097007DF806 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAAB7160BC097007DF806 /* UIImage+Alpha.m */; };
 		530BAABE160BC097007DF806 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAAB9160BC097007DF806 /* UIImage+Resize.m */; };
 		530BAABF160BC097007DF806 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAABB160BC097007DF806 /* UIImage+RoundedCorner.m */; };
-		530BAAEB160BC143007DF806 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAAC7160BC143007DF806 /* AbstractActionSheetPicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		530BAAEC160BC143007DF806 /* ActionSheetDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAAC9160BC143007DF806 /* ActionSheetDatePicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		530BAAED160BC143007DF806 /* ActionSheetDistancePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAACB160BC143007DF806 /* ActionSheetDistancePicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		530BAAEE160BC143007DF806 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAACD160BC143007DF806 /* ActionSheetStringPicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		530BAAEF160BC143007DF806 /* DistancePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAACF160BC143007DF806 /* DistancePickerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
 		530BAB02160BC244007DF806 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 530BAAFE160BC244007DF806 /* libTestFlight.a */; };
 		530BAE86160BCA80007DF806 /* libGRMustache5-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 530BAD7B160BCA80007DF806 /* libGRMustache5-iOS.a */; };
 		530BAF2B160BCB2A007DF806 /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 530BAF2A160BCB2A007DF806 /* libFlurryAnalytics.a */; };
@@ -541,16 +536,6 @@
 		530BAAB9160BC097007DF806 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		530BAABA160BC097007DF806 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
 		530BAABB160BC097007DF806 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
-		530BAAC6160BC143007DF806 /* AbstractActionSheetPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractActionSheetPicker.h; sourceTree = "<group>"; };
-		530BAAC7160BC143007DF806 /* AbstractActionSheetPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractActionSheetPicker.m; sourceTree = "<group>"; };
-		530BAAC8160BC143007DF806 /* ActionSheetDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetDatePicker.h; sourceTree = "<group>"; };
-		530BAAC9160BC143007DF806 /* ActionSheetDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetDatePicker.m; sourceTree = "<group>"; };
-		530BAACA160BC143007DF806 /* ActionSheetDistancePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetDistancePicker.h; sourceTree = "<group>"; };
-		530BAACB160BC143007DF806 /* ActionSheetDistancePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetDistancePicker.m; sourceTree = "<group>"; };
-		530BAACC160BC143007DF806 /* ActionSheetStringPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetStringPicker.h; sourceTree = "<group>"; };
-		530BAACD160BC143007DF806 /* ActionSheetStringPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetStringPicker.m; sourceTree = "<group>"; };
-		530BAACE160BC143007DF806 /* DistancePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistancePickerView.h; sourceTree = "<group>"; };
-		530BAACF160BC143007DF806 /* DistancePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistancePickerView.m; sourceTree = "<group>"; };
 		530BAAFE160BC244007DF806 /* libTestFlight.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		530BAB01160BC244007DF806 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		530BAD6F160BCA80007DF806 /* GRMustache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustache.h; sourceTree = "<group>"; };
@@ -1321,31 +1306,6 @@
 			path = "UIImage-Categories";
 			sourceTree = "<group>";
 		};
-		530BAAC0160BC143007DF806 /* ActionSheetPicker */ = {
-			isa = PBXGroup;
-			children = (
-				530BAAC5160BC143007DF806 /* Pickers */,
-			);
-			path = ActionSheetPicker;
-			sourceTree = "<group>";
-		};
-		530BAAC5160BC143007DF806 /* Pickers */ = {
-			isa = PBXGroup;
-			children = (
-				530BAAC6160BC143007DF806 /* AbstractActionSheetPicker.h */,
-				530BAAC7160BC143007DF806 /* AbstractActionSheetPicker.m */,
-				530BAAC8160BC143007DF806 /* ActionSheetDatePicker.h */,
-				530BAAC9160BC143007DF806 /* ActionSheetDatePicker.m */,
-				530BAACA160BC143007DF806 /* ActionSheetDistancePicker.h */,
-				530BAACB160BC143007DF806 /* ActionSheetDistancePicker.m */,
-				530BAACC160BC143007DF806 /* ActionSheetStringPicker.h */,
-				530BAACD160BC143007DF806 /* ActionSheetStringPicker.m */,
-				530BAACE160BC143007DF806 /* DistancePickerView.h */,
-				530BAACF160BC143007DF806 /* DistancePickerView.m */,
-			);
-			path = Pickers;
-			sourceTree = "<group>";
-		};
 		530BAAFD160BC244007DF806 /* TestFlightSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -2088,7 +2048,6 @@
 		53D78BC7160B8DE300148EA3 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
-				530BAAC0160BC143007DF806 /* ActionSheetPicker */,
 				530BA8EE160BBEB1007DF806 /* Airship */,
 				53D78C3B160B904000148EA3 /* CustomBadge */,
 				530BAF28160BCB2A007DF806 /* FlurryAnalytics */,
@@ -2786,11 +2745,6 @@
 				530BAABD160BC097007DF806 /* UIImage+Alpha.m in Sources */,
 				530BAABE160BC097007DF806 /* UIImage+Resize.m in Sources */,
 				530BAABF160BC097007DF806 /* UIImage+RoundedCorner.m in Sources */,
-				530BAAEB160BC143007DF806 /* AbstractActionSheetPicker.m in Sources */,
-				530BAAEC160BC143007DF806 /* ActionSheetDatePicker.m in Sources */,
-				530BAAED160BC143007DF806 /* ActionSheetDistancePicker.m in Sources */,
-				530BAAEE160BC143007DF806 /* ActionSheetStringPicker.m in Sources */,
-				530BAAEF160BC143007DF806 /* DistancePickerView.m in Sources */,
 				53BBC02F1612B70D00F5C14B /* NSMutableURLRequest+Parameters.m in Sources */,
 				53BBC0301612B70D00F5C14B /* NSString+URLEncoding.m in Sources */,
 				53BBC0311612B70D00F5C14B /* NSURL+Base.m in Sources */,

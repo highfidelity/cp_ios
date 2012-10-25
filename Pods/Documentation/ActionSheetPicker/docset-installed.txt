@@ -1,0 +1,4 @@
+Documentation set was installed to Xcode!
+
+Path: /Users/birarda/Library/Developer/Shared/Documentation/DocSets/org.cocoapods.ActionSheetPicker-0.0.1.docset
+Time: 2012-10-25 00:39:29 +0000

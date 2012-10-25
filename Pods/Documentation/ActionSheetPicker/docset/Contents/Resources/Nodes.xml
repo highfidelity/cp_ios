@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DocSetNodes version="1.0">
+    <TOC>
+        <Node type="folder">
+            <Name>ActionSheetPicker 0.0.1</Name>
+            <Path>index.html</Path>
+			<Subnodes>
+                
+				
+				<Node type="folder">
+					<Name>Classes</Name>
+					<Path>index.html</Path>
+					<Subnodes>
+						<NodeRef refid="1"/>
+						<NodeRef refid="2"/>
+						<NodeRef refid="3"/>
+						<NodeRef refid="4"/>
+						<NodeRef refid="5"/>
+						
+					</Subnodes>
+				</Node>
+				
+				
+				
+			</Subnodes>
+        </Node>
+    </TOC>
+	<Library>
+		
+		<Node id="1">
+			<Name>AbstractActionSheetPicker</Name>
+			<Path>Classes/AbstractActionSheetPicker.html</Path>
+		</Node>
+		<Node id="2">
+			<Name>ActionSheetDatePicker</Name>
+			<Path>Classes/ActionSheetDatePicker.html</Path>
+		</Node>
+		<Node id="3">
+			<Name>ActionSheetDistancePicker</Name>
+			<Path>Classes/ActionSheetDistancePicker.html</Path>
+		</Node>
+		<Node id="4">
+			<Name>ActionSheetStringPicker</Name>
+			<Path>Classes/ActionSheetStringPicker.html</Path>
+		</Node>
+		<Node id="5">
+			<Name>DistancePickerView</Name>
+			<Path>Classes/DistancePickerView.html</Path>
+		</Node>
+		
+		
+		
+	</Library>
+</DocSetNodes>

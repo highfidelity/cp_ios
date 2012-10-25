@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/ActionSheetStringPicker.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/ActionSheetStringPicker</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>ActionSheetStringPicker.h</DeclaredIn>
+			
+			<NodeRef refid="4"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/ActionSheetStringPicker/showPickerWithTitle:rows:initialSelection:target:successAction:cancelAction:origin:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>ActionSheetStringPicker.h</DeclaredIn>			
+			
+			<Declaration>+ (id)showPickerWithTitle:(NSString *)title rows:(NSArray *)data initialSelection:(NSInteger)index target:(id)target successAction:(SEL)successAction cancelAction:(SEL)cancelActionOrNil origin:(id)origin</Declaration>
+			
+			
+			<Anchor>//api/name/showPickerWithTitle:rows:initialSelection:target:successAction:cancelAction:origin:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ActionSheetStringPicker/initWithTitle:rows:initialSelection:target:successAction:cancelAction:origin:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>ActionSheetStringPicker.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithTitle:(NSString *)title rows:(NSArray *)data initialSelection:(NSInteger)index target:(id)target successAction:(SEL)successAction cancelAction:(SEL)cancelActionOrNil origin:(id)origin</Declaration>
+			
+			
+			<Anchor>//api/name/initWithTitle:rows:initialSelection:target:successAction:cancelAction:origin:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/ActionSheetStringPicker/showPickerWithTitle:rows:initialSelection:doneBlock:cancelBlock:origin:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>ActionSheetStringPicker.h</DeclaredIn>			
+			
+			<Declaration>+ (id)showPickerWithTitle:(NSString *)title rows:(NSArray *)strings initialSelection:(NSInteger)index doneBlock:(ActionStringDoneBlock)doneBlock cancelBlock:(ActionStringCancelBlock)cancelBlock origin:(id)origin</Declaration>
+			
+			
+			<Anchor>//api/name/showPickerWithTitle:rows:initialSelection:doneBlock:cancelBlock:origin:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ActionSheetStringPicker/initWithTitle:rows:initialSelection:doneBlock:cancelBlock:origin:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>ActionSheetStringPicker.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithTitle:(NSString *)title rows:(NSArray *)strings initialSelection:(NSInteger)index doneBlock:(ActionStringDoneBlock)doneBlock cancelBlock:(ActionStringCancelBlock)cancelBlockOrNil origin:(id)origin</Declaration>
+			
+			
+			<Anchor>//api/name/initWithTitle:rows:initialSelection:doneBlock:cancelBlock:origin:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ActionSheetStringPicker/setOnActionSheetDone:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>ActionSheetStringPicker.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) ActionStringDoneBlock onActionSheetDone</Declaration>
+			
+			
+			<Anchor>//api/name/onActionSheetDone</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/ActionSheetStringPicker/onActionSheetDone</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>ActionSheetStringPicker.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) ActionStringDoneBlock onActionSheetDone</Declaration>
+			
+			
+			<Anchor>//api/name/onActionSheetDone</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ActionSheetStringPicker/setOnActionSheetCancel:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>ActionSheetStringPicker.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) ActionStringCancelBlock onActionSheetCancel</Declaration>
+			
+			
+			<Anchor>//api/name/onActionSheetCancel</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/ActionSheetStringPicker/onActionSheetCancel</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>ActionSheetStringPicker.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) ActionStringCancelBlock onActionSheetCancel</Declaration>
+			
+			
+			<Anchor>//api/name/onActionSheetCancel</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

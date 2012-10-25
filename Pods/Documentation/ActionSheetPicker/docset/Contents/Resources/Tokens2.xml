@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/ActionSheetDatePicker.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/ActionSheetDatePicker</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>ActionSheetDatePicker.h</DeclaredIn>
+			
+			<NodeRef refid="2"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/ActionSheetDatePicker/showPickerWithTitle:datePickerMode:selectedDate:target:action:origin:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>ActionSheetDatePicker.h</DeclaredIn>			
+			
+			<Declaration>+ (id)showPickerWithTitle:(NSString *)title datePickerMode:(UIDatePickerMode)datePickerMode selectedDate:(NSDate *)selectedDate target:(id)target action:(SEL)action origin:(id)origin</Declaration>
+			
+			
+			<Anchor>//api/name/showPickerWithTitle:datePickerMode:selectedDate:target:action:origin:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ActionSheetDatePicker/initWithTitle:datePickerMode:selectedDate:target:action:origin:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>ActionSheetDatePicker.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithTitle:(NSString *)title datePickerMode:(UIDatePickerMode)datePickerMode selectedDate:(NSDate *)selectedDate target:(id)target action:(SEL)action origin:(id)origin</Declaration>
+			
+			
+			<Anchor>//api/name/initWithTitle:datePickerMode:selectedDate:target:action:origin:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ActionSheetDatePicker/eventForDatePicker:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>ActionSheetDatePicker.h</DeclaredIn>			
+			
+			<Declaration>- (void)eventForDatePicker:(id)sender</Declaration>
+			
+			
+			<Anchor>//api/name/eventForDatePicker:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

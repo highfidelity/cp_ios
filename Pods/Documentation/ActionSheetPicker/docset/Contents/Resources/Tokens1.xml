@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/AbstractActionSheetPicker.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/AbstractActionSheetPicker</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>
+			
+			<NodeRef refid="1"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AbstractActionSheetPicker/setTitle:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSString *title</Declaration>
+			
+			
+			<Anchor>//api/name/title</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AbstractActionSheetPicker/title</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSString *title</Declaration>
+			
+			
+			<Anchor>//api/name/title</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AbstractActionSheetPicker/setPickerView:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIView *pickerView</Declaration>
+			
+			
+			<Anchor>//api/name/pickerView</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AbstractActionSheetPicker/pickerView</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIView *pickerView</Declaration>
+			
+			
+			<Anchor>//api/name/pickerView</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AbstractActionSheetPicker/setViewSize:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) CGSize viewSize</Declaration>
+			
+			
+			<Anchor>//api/name/viewSize</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AbstractActionSheetPicker/viewSize</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) CGSize viewSize</Declaration>
+			
+			
+			<Anchor>//api/name/viewSize</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AbstractActionSheetPicker/setCustomButtons:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableArray *customButtons</Declaration>
+			
+			
+			<Anchor>//api/name/customButtons</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AbstractActionSheetPicker/customButtons</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableArray *customButtons</Declaration>
+			
+			
+			<Anchor>//api/name/customButtons</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AbstractActionSheetPicker/setHideCancel:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL hideCancel</Declaration>
+			
+			
+			<Anchor>//api/name/hideCancel</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AbstractActionSheetPicker/hideCancel</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL hideCancel</Declaration>
+			
+			
+			<Anchor>//api/name/hideCancel</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AbstractActionSheetPicker/setPresentFromRect:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) CGRect presentFromRect</Declaration>
+			
+			
+			<Anchor>//api/name/presentFromRect</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/AbstractActionSheetPicker/presentFromRect</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) CGRect presentFromRect</Declaration>
+			
+			
+			<Anchor>//api/name/presentFromRect</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AbstractActionSheetPicker/initWithTarget:successAction:cancelAction:origin:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithTarget:(id)target successAction:(SEL)successAction cancelAction:(SEL)cancelActionOrNil origin:(id)origin</Declaration>
+			
+			
+			<Anchor>//api/name/initWithTarget:successAction:cancelAction:origin:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AbstractActionSheetPicker/showActionSheetPicker</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>- (void)showActionSheetPicker</Declaration>
+			
+			
+			<Anchor>//api/name/showActionSheetPicker</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AbstractActionSheetPicker/notifyTarget:didSucceedWithAction:origin:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>- (void)notifyTarget:(id)target didSucceedWithAction:(SEL)successAction origin:(id)origin</Declaration>
+			
+			
+			<Anchor>//api/name/notifyTarget:didSucceedWithAction:origin:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AbstractActionSheetPicker/notifyTarget:didCancelWithAction:origin:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>- (void)notifyTarget:(id)target didCancelWithAction:(SEL)cancelAction origin:(id)origin</Declaration>
+			
+			
+			<Anchor>//api/name/notifyTarget:didCancelWithAction:origin:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AbstractActionSheetPicker/configuredPickerView</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>- (UIPickerView *)configuredPickerView</Declaration>
+			
+			
+			<Anchor>//api/name/configuredPickerView</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AbstractActionSheetPicker/addCustomButtonWithTitle:value:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>- (void)addCustomButtonWithTitle:(NSString *)title value:(id)value</Declaration>
+			
+			
+			<Anchor>//api/name/addCustomButtonWithTitle:value:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/AbstractActionSheetPicker/customButtonPressed:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AbstractActionSheetPicker.h</DeclaredIn>			
+			
+			<Declaration>- (IBAction)customButtonPressed:(id)sender</Declaration>
+			
+			
+			<Anchor>//api/name/customButtonPressed:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>
