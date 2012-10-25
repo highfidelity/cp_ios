@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVUserButton.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVUserButton</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUserButton.h</DeclaredIn>
+			
+			<NodeRef refid="58"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUserButton/setUserId:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUserButton.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger userId</Declaration>
+			
+			
+			<Anchor>//api/name/userId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVUserButton/userId</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUserButton.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger userId</Declaration>
+			
+			
+			<Anchor>//api/name/userId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUserButton/setUserName:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUserButton.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *userName</Declaration>
+			
+			
+			<Anchor>//api/name/userName</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVUserButton/userName</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUserButton.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *userName</Declaration>
+			
+			
+			<Anchor>//api/name/userName</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUserButton/setController:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUserButton.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) UVBaseViewController *controller</Declaration>
+			
+			
+			<Anchor>//api/name/controller</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVUserButton/controller</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUserButton.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) UVBaseViewController *controller</Declaration>
+			
+			
+			<Anchor>//api/name/controller</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVUserButton/buttonWithUserId:name:controller:origin:maxWidth:font:color:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUserButton.h</DeclaredIn>			
+			
+			<Declaration>+ (UVUserButton *)buttonWithUserId:(NSInteger)userId name:(NSString *)userName controller:(UVBaseViewController *)controller origin:(CGPoint)origin maxWidth:(CGFloat)maxWidth font:(UIFont *)font color:(UIColor *)color</Declaration>
+			
+			
+			<Anchor>//api/name/buttonWithUserId:name:controller:origin:maxWidth:font:color:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVUserButton/buttonWithcontroller:font:color:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUserButton.h</DeclaredIn>			
+			
+			<Declaration>+ (UVUserButton *)buttonWithcontroller:(UVBaseViewController *)controller font:(UIFont *)font color:(UIColor *)color</Declaration>
+			
+			
+			<Anchor>//api/name/buttonWithcontroller:font:color:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUserButton/updateWithUserId:name:origin:maxWidth:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUserButton.h</DeclaredIn>			
+			
+			<Declaration>- (void)updateWithUserId:(NSInteger)userId name:(NSString *)userName origin:(CGPoint)origin maxWidth:(CGFloat)maxWidth</Declaration>
+			
+			
+			<Anchor>//api/name/updateWithUserId:name:origin:maxWidth:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVCustomField.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVCustomField</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCustomField.h</DeclaredIn>
+			
+			<NodeRef refid="18"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCustomField/setFieldId:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCustomField.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger fieldId</Declaration>
+			
+			
+			<Anchor>//api/name/fieldId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVCustomField/fieldId</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCustomField.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger fieldId</Declaration>
+			
+			
+			<Anchor>//api/name/fieldId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCustomField/setName:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCustomField.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVCustomField/name</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCustomField.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCustomField/setValues:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCustomField.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSArray *values</Declaration>
+			
+			
+			<Anchor>//api/name/values</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVCustomField/values</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCustomField.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSArray *values</Declaration>
+			
+			
+			<Anchor>//api/name/values</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCustomField/initWithDictionary:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCustomField.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithDictionary:(NSDictionary *)dict</Declaration>
+			
+			
+			<Anchor>//api/name/initWithDictionary:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCustomField/isPredefined</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCustomField.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)isPredefined</Declaration>
+			
+			
+			<Anchor>//api/name/isPredefined</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

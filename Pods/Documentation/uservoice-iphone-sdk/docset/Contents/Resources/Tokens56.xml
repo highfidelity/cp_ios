@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVUser.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVUser</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>
+			
+			<NodeRef refid="56"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/setUserId:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger userId</Declaration>
+			
+			
+			<Anchor>//api/name/userId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVUser/userId</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger userId</Declaration>
+			
+			
+			<Anchor>//api/name/userId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/setName:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVUser/name</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/setDisplayName:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *displayName</Declaration>
+			
+			
+			<Anchor>//api/name/displayName</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVUser/displayName</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *displayName</Declaration>
+			
+			
+			<Anchor>//api/name/displayName</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/setEmail:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *email</Declaration>
+			
+			
+			<Anchor>//api/name/email</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVUser/email</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *email</Declaration>
+			
+			
+			<Anchor>//api/name/email</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/setEmailConfirmed:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) BOOL emailConfirmed</Declaration>
+			
+			
+			<Anchor>//api/name/emailConfirmed</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVUser/emailConfirmed</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) BOOL emailConfirmed</Declaration>
+			
+			
+			<Anchor>//api/name/emailConfirmed</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/setSuggestionsNeedReload:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) BOOL suggestionsNeedReload</Declaration>
+			
+			
+			<Anchor>//api/name/suggestionsNeedReload</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVUser/suggestionsNeedReload</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) BOOL suggestionsNeedReload</Declaration>
+			
+			
+			<Anchor>//api/name/suggestionsNeedReload</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/setIdeaScore:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger ideaScore</Declaration>
+			
+			
+			<Anchor>//api/name/ideaScore</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVUser/ideaScore</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger ideaScore</Declaration>
+			
+			
+			<Anchor>//api/name/ideaScore</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/setActivityScore:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger activityScore</Declaration>
+			
+			
+			<Anchor>//api/name/activityScore</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVUser/activityScore</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger activityScore</Declaration>
+			
+			
+			<Anchor>//api/name/activityScore</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/setKarmaScore:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger karmaScore</Declaration>
+			
+			
+			<Anchor>//api/name/karmaScore</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVUser/karmaScore</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger karmaScore</Declaration>
+			
+			
+			<Anchor>//api/name/karmaScore</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/setUrl:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *url</Declaration>
+			
+			
+			<Anchor>//api/name/url</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVUser/url</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *url</Declaration>
+			
+			
+			<Anchor>//api/name/url</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/setAvatarUrl:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *avatarUrl</Declaration>
+			
+			
+			<Anchor>//api/name/avatarUrl</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVUser/avatarUrl</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *avatarUrl</Declaration>
+			
+			
+			<Anchor>//api/name/avatarUrl</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/setSupportedSuggestions:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableArray *supportedSuggestions</Declaration>
+			
+			
+			<Anchor>//api/name/supportedSuggestions</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVUser/supportedSuggestions</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableArray *supportedSuggestions</Declaration>
+			
+			
+			<Anchor>//api/name/supportedSuggestions</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/setCreatedSuggestions:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableArray *createdSuggestions</Declaration>
+			
+			
+			<Anchor>//api/name/createdSuggestions</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVUser/createdSuggestions</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableArray *createdSuggestions</Declaration>
+			
+			
+			<Anchor>//api/name/createdSuggestions</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/setCreatedAt:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSDate *createdAt</Declaration>
+			
+			
+			<Anchor>//api/name/createdAt</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVUser/createdAt</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSDate *createdAt</Declaration>
+			
+			
+			<Anchor>//api/name/createdAt</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/createdSuggestionsCount</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>- (NSInteger)createdSuggestionsCount</Declaration>
+			
+			
+			<Anchor>//api/name/createdSuggestionsCount</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/supportedSuggestionsCount</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>- (NSInteger)supportedSuggestionsCount</Declaration>
+			
+			
+			<Anchor>//api/name/supportedSuggestionsCount</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVUser/getWithUserId:delegate:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>+ (id)getWithUserId:(NSInteger)userId delegate:(id)delegate</Declaration>
+			
+			
+			<Anchor>//api/name/getWithUserId:delegate:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVUser/discoverWithEmail:delegate:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>+ (id)discoverWithEmail:(NSString *)email delegate:(id)delegate</Declaration>
+			
+			
+			<Anchor>//api/name/discoverWithEmail:delegate:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVUser/discoverWithGUID:delegate:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>+ (id)discoverWithGUID:(NSString *)guid delegate:(id)delegate</Declaration>
+			
+			
+			<Anchor>//api/name/discoverWithGUID:delegate:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVUser/findOrCreateWithEmail:andName:andDelegate:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>+ (id)findOrCreateWithEmail:(NSString *)anEmail andName:(NSString *)aName andDelegate:(id)delegate</Declaration>
+			
+			
+			<Anchor>//api/name/findOrCreateWithEmail:andName:andDelegate:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVUser/findOrCreateWithGUID:andEmail:andName:andDelegate:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>+ (id)findOrCreateWithGUID:(NSString *)aGUID andEmail:(NSString *)anEmail andName:(NSString *)aName andDelegate:(id)delegate</Declaration>
+			
+			
+			<Anchor>//api/name/findOrCreateWithGUID:andEmail:andName:andDelegate:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVUser/findOrCreateWithSsoToken:delegate:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>+ (id)findOrCreateWithSsoToken:(NSString *)aToken delegate:(id)delegate</Declaration>
+			
+			
+			<Anchor>//api/name/findOrCreateWithSsoToken:delegate:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVUser/retrieveCurrentUser:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>+ (id)retrieveCurrentUser:(id)delegate</Declaration>
+			
+			
+			<Anchor>//api/name/retrieveCurrentUser:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVUser/useHTTPS:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>+ (void)useHTTPS:(BOOL)secure</Declaration>
+			
+			
+			<Anchor>//api/name/useHTTPS:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/updateName:email:delegate:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>- (id)updateName:(NSString *)newName email:(NSString *)newEmail delegate:(id)delegate</Declaration>
+			
+			
+			<Anchor>//api/name/updateName:email:delegate:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/didSupportSuggestion:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>- (void)didSupportSuggestion:(UVSuggestion *)suggestion</Declaration>
+			
+			
+			<Anchor>//api/name/didSupportSuggestion:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/didWithdrawSupportForSuggestion:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>- (void)didWithdrawSupportForSuggestion:(UVSuggestion *)suggestion</Declaration>
+			
+			
+			<Anchor>//api/name/didWithdrawSupportForSuggestion:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/didCreateSuggestion:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>- (void)didCreateSuggestion:(UVSuggestion *)suggestion</Declaration>
+			
+			
+			<Anchor>//api/name/didCreateSuggestion:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/didLoadSuggestions:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>- (void)didLoadSuggestions:(NSArray *)suggestions</Declaration>
+			
+			
+			<Anchor>//api/name/didLoadSuggestions:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/forgotPasswordForEmail:andDelegate:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>- (id)forgotPasswordForEmail:(NSString *)anEmail andDelegate:(id)delegate</Declaration>
+			
+			
+			<Anchor>//api/name/forgotPasswordForEmail:andDelegate:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/hasEmail</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)hasEmail</Declaration>
+			
+			
+			<Anchor>//api/name/hasEmail</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/hasConfirmedEmail</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)hasConfirmedEmail</Declaration>
+			
+			
+			<Anchor>//api/name/hasConfirmedEmail</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/hasUnconfirmedEmail</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)hasUnconfirmedEmail</Declaration>
+			
+			
+			<Anchor>//api/name/hasUnconfirmedEmail</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVUser/nameOrAnonymous</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVUser.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)nameOrAnonymous</Declaration>
+			
+			
+			<Anchor>//api/name/nameOrAnonymous</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DocSetNodes version="1.0">
+    <TOC>
+        <Node type="folder">
+            <Name>uservoice-iphone-sdk 1.2.2</Name>
+            <Path>index.html</Path>
+			<Subnodes>
+                
+				
+				<Node type="folder">
+					<Name>Classes</Name>
+					<Path>index.html</Path>
+					<Subnodes>
+						<NodeRef refid="1"/>
+						<NodeRef refid="2"/>
+						<NodeRef refid="3"/>
+						<NodeRef refid="4"/>
+						<NodeRef refid="5"/>
+						<NodeRef refid="6"/>
+						<NodeRef refid="7"/>
+						<NodeRef refid="8"/>
+						<NodeRef refid="9"/>
+						<NodeRef refid="10"/>
+						<NodeRef refid="11"/>
+						<NodeRef refid="12"/>
+						<NodeRef refid="13"/>
+						<NodeRef refid="14"/>
+						<NodeRef refid="15"/>
+						<NodeRef refid="16"/>
+						<NodeRef refid="17"/>
+						<NodeRef refid="18"/>
+						<NodeRef refid="19"/>
+						<NodeRef refid="20"/>
+						<NodeRef refid="21"/>
+						<NodeRef refid="22"/>
+						<NodeRef refid="23"/>
+						<NodeRef refid="24"/>
+						<NodeRef refid="25"/>
+						<NodeRef refid="26"/>
+						<NodeRef refid="27"/>
+						<NodeRef refid="28"/>
+						<NodeRef refid="29"/>
+						<NodeRef refid="30"/>
+						<NodeRef refid="31"/>
+						<NodeRef refid="32"/>
+						<NodeRef refid="33"/>
+						<NodeRef refid="34"/>
+						<NodeRef refid="35"/>
+						<NodeRef refid="36"/>
+						<NodeRef refid="37"/>
+						<NodeRef refid="38"/>
+						<NodeRef refid="39"/>
+						<NodeRef refid="40"/>
+						<NodeRef refid="41"/>
+						<NodeRef refid="42"/>
+						<NodeRef refid="43"/>
+						<NodeRef refid="44"/>
+						<NodeRef refid="45"/>
+						<NodeRef refid="46"/>
+						<NodeRef refid="47"/>
+						<NodeRef refid="48"/>
+						<NodeRef refid="49"/>
+						<NodeRef refid="50"/>
+						<NodeRef refid="51"/>
+						<NodeRef refid="52"/>
+						<NodeRef refid="53"/>
+						<NodeRef refid="54"/>
+						<NodeRef refid="55"/>
+						<NodeRef refid="56"/>
+						<NodeRef refid="57"/>
+						<NodeRef refid="58"/>
+						<NodeRef refid="59"/>
+						<NodeRef refid="60"/>
+						<NodeRef refid="61"/>
+						<NodeRef refid="62"/>
+						<NodeRef refid="63"/>
+						<NodeRef refid="64"/>
+						<NodeRef refid="65"/>
+						<NodeRef refid="66"/>
+						<NodeRef refid="67"/>
+						
+					</Subnodes>
+				</Node>
+				
+				
+				<Node type="folder">
+					<Name>Categories</Name>
+					<Path>index.html</Path>
+					<Subnodes>
+						<NodeRef refid="68"/>
+						<NodeRef refid="69"/>
+						<NodeRef refid="70"/>
+						<NodeRef refid="71"/>
+						<NodeRef refid="72"/>
+						<NodeRef refid="73"/>
+						<NodeRef refid="74"/>
+						<NodeRef refid="75"/>
+						<NodeRef refid="76"/>
+						<NodeRef refid="77"/>
+						<NodeRef refid="78"/>
+						<NodeRef refid="79"/>
+						<NodeRef refid="80"/>
+						<NodeRef refid="81"/>
+						<NodeRef refid="82"/>
+						<NodeRef refid="83"/>
+						
+					</Subnodes>
+				</Node>
+				
+				
+				<Node type="folder">
+					<Name>Protocols</Name>
+					<Path>index.html</Path>
+					<Subnodes>
+						<NodeRef refid="84"/>
+						<NodeRef refid="85"/>
+						<NodeRef refid="86"/>
+						<NodeRef refid="87"/>
+						<NodeRef refid="88"/>
+						<NodeRef refid="89"/>
+						<NodeRef refid="90"/>
+						
+					</Subnodes>
+				</Node>
+				
+			</Subnodes>
+        </Node>
+    </TOC>
+	<Library>
+		
+		<Node id="1">
+			<Name>HRBase64</Name>
+			<Path>Classes/HRBase64.html</Path>
+		</Node>
+		<Node id="2">
+			<Name>HRFormatJSON</Name>
+			<Path>Classes/HRFormatJSON.html</Path>
+		</Node>
+		<Node id="3">
+			<Name>HROperationQueue</Name>
+			<Path>Classes/HROperationQueue.html</Path>
+		</Node>
+		<Node id="4">
+			<Name>HRRequestOperation</Name>
+			<Path>Classes/HRRequestOperation.html</Path>
+		</Node>
+		<Node id="5">
+			<Name>HRRestModel</Name>
+			<Path>Classes/HRRestModel.html</Path>
+		</Node>
+		<Node id="6">
+			<Name>UVActivityIndicator</Name>
+			<Path>Classes/UVActivityIndicator.html</Path>
+		</Node>
+		<Node id="7">
+			<Name>UVArticle</Name>
+			<Path>Classes/UVArticle.html</Path>
+		</Node>
+		<Node id="8">
+			<Name>UVArticleViewController</Name>
+			<Path>Classes/UVArticleViewController.html</Path>
+		</Node>
+		<Node id="9">
+			<Name>UVBaseModel</Name>
+			<Path>Classes/UVBaseModel.html</Path>
+		</Node>
+		<Node id="10">
+			<Name>UVBaseViewController</Name>
+			<Path>Classes/UVBaseViewController.html</Path>
+		</Node>
+		<Node id="11">
+			<Name>UVCategory</Name>
+			<Path>Classes/UVCategory.html</Path>
+		</Node>
+		<Node id="12">
+			<Name>UVCategorySelectViewController</Name>
+			<Path>Classes/UVCategorySelectViewController.html</Path>
+		</Node>
+		<Node id="13">
+			<Name>UVCellViewWithIndex</Name>
+			<Path>Classes/UVCellViewWithIndex.html</Path>
+		</Node>
+		<Node id="14">
+			<Name>UVClientConfig</Name>
+			<Path>Classes/UVClientConfig.html</Path>
+		</Node>
+		<Node id="15">
+			<Name>UVComment</Name>
+			<Path>Classes/UVComment.html</Path>
+		</Node>
+		<Node id="16">
+			<Name>UVCommentListViewController</Name>
+			<Path>Classes/UVCommentListViewController.html</Path>
+		</Node>
+		<Node id="17">
+			<Name>UVConfig</Name>
+			<Path>Classes/UVConfig.html</Path>
+		</Node>
+		<Node id="18">
+			<Name>UVCustomField</Name>
+			<Path>Classes/UVCustomField.html</Path>
+		</Node>
+		<Node id="19">
+			<Name>UVCustomFieldValueSelectViewController</Name>
+			<Path>Classes/UVCustomFieldValueSelectViewController.html</Path>
+		</Node>
+		<Node id="20">
+			<Name>UVFooterView</Name>
+			<Path>Classes/UVFooterView.html</Path>
+		</Node>
+		<Node id="21">
+			<Name>UVForum</Name>
+			<Path>Classes/UVForum.html</Path>
+		</Node>
+		<Node id="22">
+			<Name>UVImageCache</Name>
+			<Path>Classes/UVImageCache.html</Path>
+		</Node>
+		<Node id="23">
+			<Name>UVImageView</Name>
+			<Path>Classes/UVImageView.html</Path>
+		</Node>
+		<Node id="24">
+			<Name>UVInfo</Name>
+			<Path>Classes/UVInfo.html</Path>
+		</Node>
+		<Node id="25">
+			<Name>UVInfoViewController</Name>
+			<Path>Classes/UVInfoViewController.html</Path>
+		</Node>
+		<Node id="26">
+			<Name>UVJSON</Name>
+			<Path>Classes/UVJSON.html</Path>
+		</Node>
+		<Node id="27">
+			<Name>UVJsonBase</Name>
+			<Path>Classes/UVJsonBase.html</Path>
+		</Node>
+		<Node id="28">
+			<Name>UVJsonParser</Name>
+			<Path>Classes/UVJsonParser.html</Path>
+		</Node>
+		<Node id="29">
+			<Name>UVJsonWriter</Name>
+			<Path>Classes/UVJsonWriter.html</Path>
+		</Node>
+		<Node id="30">
+			<Name>UVNetworkUtils</Name>
+			<Path>Classes/UVNetworkUtils.html</Path>
+		</Node>
+		<Node id="31">
+			<Name>UVNewSuggestionViewController</Name>
+			<Path>Classes/UVNewSuggestionViewController.html</Path>
+		</Node>
+		<Node id="32">
+			<Name>UVNewTicketViewController</Name>
+			<Path>Classes/UVNewTicketViewController.html</Path>
+		</Node>
+		<Node id="33">
+			<Name>UVProfileEditViewController</Name>
+			<Path>Classes/UVProfileEditViewController.html</Path>
+		</Node>
+		<Node id="34">
+			<Name>UVProfileIdeaListViewController</Name>
+			<Path>Classes/UVProfileIdeaListViewController.html</Path>
+		</Node>
+		<Node id="35">
+			<Name>UVProfileViewController</Name>
+			<Path>Classes/UVProfileViewController.html</Path>
+		</Node>
+		<Node id="36">
+			<Name>UVResponseDelegate</Name>
+			<Path>Classes/UVResponseDelegate.html</Path>
+		</Node>
+		<Node id="37">
+			<Name>UVResponseViewController</Name>
+			<Path>Classes/UVResponseViewController.html</Path>
+		</Node>
+		<Node id="38">
+			<Name>UVRootViewController</Name>
+			<Path>Classes/UVRootViewController.html</Path>
+		</Node>
+		<Node id="39">
+			<Name>UVSession</Name>
+			<Path>Classes/UVSession.html</Path>
+		</Node>
+		<Node id="40">
+			<Name>UVSignInViewController</Name>
+			<Path>Classes/UVSignInViewController.html</Path>
+		</Node>
+		<Node id="41">
+			<Name>UVStatus</Name>
+			<Path>Classes/UVStatus.html</Path>
+		</Node>
+		<Node id="42">
+			<Name>UVStreamEvent</Name>
+			<Path>Classes/UVStreamEvent.html</Path>
+		</Node>
+		<Node id="43">
+			<Name>UVStreamPoller</Name>
+			<Path>Classes/UVStreamPoller.html</Path>
+		</Node>
+		<Node id="44">
+			<Name>UVStyleSheet</Name>
+			<Path>Classes/UVStyleSheet.html</Path>
+		</Node>
+		<Node id="45">
+			<Name>UVSubdomain</Name>
+			<Path>Classes/UVSubdomain.html</Path>
+		</Node>
+		<Node id="46">
+			<Name>UVSubject</Name>
+			<Path>Classes/UVSubject.html</Path>
+		</Node>
+		<Node id="47">
+			<Name>UVSuggestion</Name>
+			<Path>Classes/UVSuggestion.html</Path>
+		</Node>
+		<Node id="48">
+			<Name>UVSuggestionButton</Name>
+			<Path>Classes/UVSuggestionButton.html</Path>
+		</Node>
+		<Node id="49">
+			<Name>UVSuggestionChickletView</Name>
+			<Path>Classes/UVSuggestionChickletView.html</Path>
+		</Node>
+		<Node id="50">
+			<Name>UVSuggestionDetailsViewController</Name>
+			<Path>Classes/UVSuggestionDetailsViewController.html</Path>
+		</Node>
+		<Node id="51">
+			<Name>UVSuggestionListViewController</Name>
+			<Path>Classes/UVSuggestionListViewController.html</Path>
+		</Node>
+		<Node id="52">
+			<Name>UVTextEditor</Name>
+			<Path>Classes/UVTextEditor.html</Path>
+		</Node>
+		<Node id="53">
+			<Name>UVTicket</Name>
+			<Path>Classes/UVTicket.html</Path>
+		</Node>
+		<Node id="54">
+			<Name>UVToken</Name>
+			<Path>Classes/UVToken.html</Path>
+		</Node>
+		<Node id="55">
+			<Name>UVTopic</Name>
+			<Path>Classes/UVTopic.html</Path>
+		</Node>
+		<Node id="56">
+			<Name>UVUser</Name>
+			<Path>Classes/UVUser.html</Path>
+		</Node>
+		<Node id="57">
+			<Name>UVUserAvatarView</Name>
+			<Path>Classes/UVUserAvatarView.html</Path>
+		</Node>
+		<Node id="58">
+			<Name>UVUserButton</Name>
+			<Path>Classes/UVUserButton.html</Path>
+		</Node>
+		<Node id="59">
+			<Name>UVUserChickletView</Name>
+			<Path>Classes/UVUserChickletView.html</Path>
+		</Node>
+		<Node id="60">
+			<Name>UVWelcomeViewController</Name>
+			<Path>Classes/UVWelcomeViewController.html</Path>
+		</Node>
+		<Node id="61">
+			<Name>UserVoice</Name>
+			<Path>Classes/UserVoice.html</Path>
+		</Node>
+		<Node id="62">
+			<Name>YOAuthConsumer</Name>
+			<Path>Classes/YOAuthConsumer.html</Path>
+		</Node>
+		<Node id="63">
+			<Name>YOAuthRequest</Name>
+			<Path>Classes/YOAuthRequest.html</Path>
+		</Node>
+		<Node id="64">
+			<Name>YOAuthSignatureMethod_HMAC_SHA1</Name>
+			<Path>Classes/YOAuthSignatureMethod_HMAC_SHA1.html</Path>
+		</Node>
+		<Node id="65">
+			<Name>YOAuthSignatureMethod_PLAINTEXT</Name>
+			<Path>Classes/YOAuthSignatureMethod_PLAINTEXT.html</Path>
+		</Node>
+		<Node id="66">
+			<Name>YOAuthToken</Name>
+			<Path>Classes/YOAuthToken.html</Path>
+		</Node>
+		<Node id="67">
+			<Name>YOAuthUtil</Name>
+			<Path>Classes/YOAuthUtil.html</Path>
+		</Node>
+		
+		<Node id="68">
+			<Name>NSData(UVOAuthResponseAdditions)</Name>
+			<Path>Categories/NSData+UVOAuthResponseAdditions.html</Path>
+		</Node>
+		<Node id="69">
+			<Name>NSDictionary(UVParamUtils)</Name>
+			<Path>Categories/NSDictionary+UVParamUtils.html</Path>
+		</Node>
+		<Node id="70">
+			<Name>NSDictionary(UVQueryStringAdditions)</Name>
+			<Path>Categories/NSDictionary+UVQueryStringAdditions.html</Path>
+		</Node>
+		<Node id="71">
+			<Name>NSError(UVExtras)</Name>
+			<Path>Categories/NSError+UVExtras.html</Path>
+		</Node>
+		<Node id="72">
+			<Name>NSObject(InvocationUtils)</Name>
+			<Path>Categories/NSObject+InvocationUtils.html</Path>
+		</Node>
+		<Node id="73">
+			<Name>NSObject(NSObject_UVJSON)</Name>
+			<Path>Categories/NSObject+NSObject_UVJSON.html</Path>
+		</Node>
+		<Node id="74">
+			<Name>NSObject(SBProxyForJson)</Name>
+			<Path>Categories/NSObject+SBProxyForJson.html</Path>
+		</Node>
+		<Node id="75">
+			<Name>NSString(Base64)</Name>
+			<Path>Categories/NSString+Base64.html</Path>
+		</Node>
+		<Node id="76">
+			<Name>NSString(EscapingUtils)</Name>
+			<Path>Categories/NSString+EscapingUtils.html</Path>
+		</Node>
+		<Node id="77">
+			<Name>NSString(HTMLEntities)</Name>
+			<Path>Categories/NSString+HTMLEntities.html</Path>
+		</Node>
+		<Node id="78">
+			<Name>NSString(NSString_UVJSON)</Name>
+			<Path>Categories/NSString+NSString_UVJSON.html</Path>
+		</Node>
+		<Node id="79">
+			<Name>NSString(UVURLEncodingAdditions)</Name>
+			<Path>Categories/NSString+UVURLEncodingAdditions.html</Path>
+		</Node>
+		<Node id="80">
+			<Name>NSURL(UVParseCategory)</Name>
+			<Path>Categories/NSURL+UVParseCategory.html</Path>
+		</Node>
+		<Node id="81">
+			<Name>UIColor(UV_UIColor_Additions)</Name>
+			<Path>Categories/UIColor+UV_UIColor_Additions.html</Path>
+		</Node>
+		<Node id="82">
+			<Name>UIFont(UVExtras)</Name>
+			<Path>Categories/UIFont+UVExtras.html</Path>
+		</Node>
+		<Node id="83">
+			<Name>UIView(UVExtras)</Name>
+			<Path>Categories/UIView+UVExtras.html</Path>
+		</Node>
+		
+		<Node id="84">
+			<Name>HRFormatterProtocol</Name>
+			<Path>Protocols/HRFormatterProtocol.html</Path>
+		</Node>
+		<Node id="85">
+			<Name>HRResponseDelegate</Name>
+			<Path>Protocols/HRResponseDelegate.html</Path>
+		</Node>
+		<Node id="86">
+			<Name>UVDelegate</Name>
+			<Path>Protocols/UVDelegate.html</Path>
+		</Node>
+		<Node id="87">
+			<Name>UVJsonParser</Name>
+			<Path>Protocols/UVJsonParser.html</Path>
+		</Node>
+		<Node id="88">
+			<Name>UVJsonWriter</Name>
+			<Path>Protocols/UVJsonWriter.html</Path>
+		</Node>
+		<Node id="89">
+			<Name>UVTextEditorDelegate</Name>
+			<Path>Protocols/UVTextEditorDelegate.html</Path>
+		</Node>
+		<Node id="90">
+			<Name>YOAuthSignatureMethod</Name>
+			<Path>Protocols/YOAuthSignatureMethod.html</Path>
+		</Node>
+		
+	</Library>
+</DocSetNodes>

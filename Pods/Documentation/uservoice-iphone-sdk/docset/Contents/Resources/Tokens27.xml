@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVJsonBase.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVJsonBase</TokenIdentifier>
+			<Abstract type="html">@brief Common base class for parsing &amp;amp; writing.</Abstract>
+			<DeclaredIn>UVJsonBase.h</DeclaredIn>
+			
+			<NodeRef refid="27"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVJsonBase/setMaxDepth:</TokenIdentifier>
+			<Abstract type="html">@brief The maximum recursing depth.</Abstract>
+			<DeclaredIn>UVJsonBase.h</DeclaredIn>			
+			
+			<Declaration>@property NSUInteger maxDepth</Declaration>
+			
+			
+			<Anchor>//api/name/maxDepth</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVJsonBase/maxDepth</TokenIdentifier>
+			<Abstract type="html">@brief The maximum recursing depth.</Abstract>
+			<DeclaredIn>UVJsonBase.h</DeclaredIn>			
+			
+			<Declaration>@property NSUInteger maxDepth</Declaration>
+			
+			
+			<Anchor>//api/name/maxDepth</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVJsonBase/setErrorTrace:</TokenIdentifier>
+			<Abstract type="html">@brief Return an error trace, or nil if there was no errors.</Abstract>
+			<DeclaredIn>UVJsonBase.h</DeclaredIn>			
+			
+			<Declaration>@property (copy, readonly) NSArray *errorTrace</Declaration>
+			
+			
+			<Anchor>//api/name/errorTrace</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVJsonBase/errorTrace</TokenIdentifier>
+			<Abstract type="html">@brief Return an error trace, or nil if there was no errors.</Abstract>
+			<DeclaredIn>UVJsonBase.h</DeclaredIn>			
+			
+			<Declaration>@property (copy, readonly) NSArray *errorTrace</Declaration>
+			
+			
+			<Anchor>//api/name/errorTrace</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVJsonBase/addErrorWithCode:description:</TokenIdentifier>
+			<Abstract type="html">@internal for use in subclasses to add errors to the stack trace</Abstract>
+			<DeclaredIn>UVJsonBase.h</DeclaredIn>			
+			
+			<Declaration>- (void)addErrorWithCode:(NSUInteger)code description:(NSString *)str</Declaration>
+			
+			
+			<Anchor>//api/name/addErrorWithCode:description:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVJsonBase/clearErrorTrace</TokenIdentifier>
+			<Abstract type="html">@internal for use in subclasess to clear the error before a new parsing attempt</Abstract>
+			<DeclaredIn>UVJsonBase.h</DeclaredIn>			
+			
+			<Declaration>- (void)clearErrorTrace</Declaration>
+			
+			
+			<Anchor>//api/name/clearErrorTrace</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

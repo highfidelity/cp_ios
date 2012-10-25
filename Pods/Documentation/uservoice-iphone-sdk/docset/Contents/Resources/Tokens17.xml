@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVConfig.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVConfig</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>
+			
+			<NodeRef refid="17"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVConfig/configWithSite:andKey:andSecret:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>+ (UVConfig *)configWithSite:(NSString *)site andKey:(NSString *)key andSecret:(NSString *)secret</Declaration>
+			
+			
+			<Anchor>//api/name/configWithSite:andKey:andSecret:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVConfig/configWithSite:andKey:andSecret:andSSOToken:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>+ (UVConfig *)configWithSite:(NSString *)site andKey:(NSString *)key andSecret:(NSString *)secret andSSOToken:(NSString *)token</Declaration>
+			
+			
+			<Anchor>//api/name/configWithSite:andKey:andSecret:andSSOToken:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVConfig/configWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>+ (UVConfig *)configWithSite:(NSString *)site andKey:(NSString *)key andSecret:(NSString *)secret andEmail:(NSString *)email andDisplayName:(NSString *)displayName andGUID:(NSString *)guid</Declaration>
+			
+			
+			<Anchor>//api/name/configWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVConfig/setSite:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *site</Declaration>
+			
+			
+			<Anchor>//api/name/site</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVConfig/site</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *site</Declaration>
+			
+			
+			<Anchor>//api/name/site</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVConfig/setKey:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *key</Declaration>
+			
+			
+			<Anchor>//api/name/key</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVConfig/key</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *key</Declaration>
+			
+			
+			<Anchor>//api/name/key</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVConfig/setSecret:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *secret</Declaration>
+			
+			
+			<Anchor>//api/name/secret</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVConfig/secret</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *secret</Declaration>
+			
+			
+			<Anchor>//api/name/secret</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVConfig/setSsoToken:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *ssoToken</Declaration>
+			
+			
+			<Anchor>//api/name/ssoToken</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVConfig/ssoToken</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *ssoToken</Declaration>
+			
+			
+			<Anchor>//api/name/ssoToken</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVConfig/setDisplayName:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *displayName</Declaration>
+			
+			
+			<Anchor>//api/name/displayName</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVConfig/displayName</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *displayName</Declaration>
+			
+			
+			<Anchor>//api/name/displayName</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVConfig/setEmail:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *email</Declaration>
+			
+			
+			<Anchor>//api/name/email</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVConfig/email</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *email</Declaration>
+			
+			
+			<Anchor>//api/name/email</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVConfig/setGuid:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *guid</Declaration>
+			
+			
+			<Anchor>//api/name/guid</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVConfig/guid</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *guid</Declaration>
+			
+			
+			<Anchor>//api/name/guid</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVConfig/initWithSite:andKey:andSecret:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithSite:(NSString *)theSite andKey:(NSString *)theKey andSecret:(NSString *)theSecret</Declaration>
+			
+			
+			<Anchor>//api/name/initWithSite:andKey:andSecret:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVConfig/initWithSite:andKey:andSecret:andSSOToken:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithSite:(NSString *)theSite andKey:(NSString *)theKey andSecret:(NSString *)theSecret andSSOToken:(NSString *)theToken</Declaration>
+			
+			
+			<Anchor>//api/name/initWithSite:andKey:andSecret:andSSOToken:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVConfig/initWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithSite:(NSString *)theSite andKey:(NSString *)theKey andSecret:(NSString *)theSecret andEmail:(NSString *)theEmail andDisplayName:(NSString *)theDisplayName andGUID:(NSString *)theGuid</Declaration>
+			
+			
+			<Anchor>//api/name/initWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVConfig/wasSignedInBySDK</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVConfig.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)wasSignedInBySDK</Declaration>
+			
+			
+			<Anchor>//api/name/wasSignedInBySDK</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

@@ -1,0 +1,853 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>UVBaseViewController Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<meta name="viewport" content="width=550" />
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 840)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">uservoice-iphone-sdk 1.2.2 </a></h1>
+				<a id="developerHome" href="../index.html">UserVoice</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">UVBaseViewController Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/activityIndicator">&nbsp;&nbsp;&nbsp;&nbsp;activityIndicator</option>
+	
+	<option value="//api/name/exitButton">&nbsp;&nbsp;&nbsp;&nbsp;exitButton</option>
+	
+	<option value="//api/name/needsReload">&nbsp;&nbsp;&nbsp;&nbsp;needsReload</option>
+	
+	<option value="//api/name/tableView">&nbsp;&nbsp;&nbsp;&nbsp;tableView</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/addHighlightToCell:">&nbsp;&nbsp;&nbsp;&nbsp;- addHighlightToCell:</option>
+	
+	<option value="//api/name/addShadowSeparatorToTableView:">&nbsp;&nbsp;&nbsp;&nbsp;- addShadowSeparatorToTableView:</option>
+	
+	<option value="//api/name/alertError:">&nbsp;&nbsp;&nbsp;&nbsp;- alertError:</option>
+	
+	<option value="//api/name/alertSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- alertSuccess:</option>
+	
+	<option value="//api/name/backButtonTitle">&nbsp;&nbsp;&nbsp;&nbsp;- backButtonTitle</option>
+	
+	<option value="//api/name/contentFrame">&nbsp;&nbsp;&nbsp;&nbsp;- contentFrame</option>
+	
+	<option value="//api/name/contentFrameWithNavBar:">&nbsp;&nbsp;&nbsp;&nbsp;- contentFrameWithNavBar:</option>
+	
+	<option value="//api/name/createCellForIdentifier:tableView:indexPath:style:selectable:">&nbsp;&nbsp;&nbsp;&nbsp;- createCellForIdentifier:tableView:indexPath:style:selectable:</option>
+	
+	<option value="//api/name/didReceiveError:">&nbsp;&nbsp;&nbsp;&nbsp;- didReceiveError:</option>
+	
+	<option value="//api/name/dismissUserVoice">&nbsp;&nbsp;&nbsp;&nbsp;- dismissUserVoice</option>
+	
+	<option value="//api/name/hideActivityIndicator">&nbsp;&nbsp;&nbsp;&nbsp;- hideActivityIndicator</option>
+	
+	<option value="//api/name/hideExitButton">&nbsp;&nbsp;&nbsp;&nbsp;- hideExitButton</option>
+	
+	<option value="//api/name/initNavigationItem">&nbsp;&nbsp;&nbsp;&nbsp;- initNavigationItem</option>
+	
+	<option value="//api/name/keyboardDidHide:">&nbsp;&nbsp;&nbsp;&nbsp;- keyboardDidHide:</option>
+	
+	<option value="//api/name/keyboardDidShow:">&nbsp;&nbsp;&nbsp;&nbsp;- keyboardDidShow:</option>
+	
+	<option value="//api/name/promptUserToSignIn">&nbsp;&nbsp;&nbsp;&nbsp;- promptUserToSignIn</option>
+	
+	<option value="//api/name/registerForKeyboardNotifications">&nbsp;&nbsp;&nbsp;&nbsp;- registerForKeyboardNotifications</option>
+	
+	<option value="//api/name/removeBackgroundFromCell:">&nbsp;&nbsp;&nbsp;&nbsp;- removeBackgroundFromCell:</option>
+	
+	<option value="//api/name/setVoteLabelTextAndColorForVotesRemaining:label:">&nbsp;&nbsp;&nbsp;&nbsp;- setVoteLabelTextAndColorForVotesRemaining:label:</option>
+	
+	<option value="//api/name/setupGroupedTableView">&nbsp;&nbsp;&nbsp;&nbsp;- setupGroupedTableView</option>
+	
+	<option value="//api/name/showActivityIndicator">&nbsp;&nbsp;&nbsp;&nbsp;- showActivityIndicator</option>
+	
+	<option value="//api/name/showActivityIndicatorWithText:">&nbsp;&nbsp;&nbsp;&nbsp;- showActivityIndicatorWithText:</option>
+	
+	<option value="//api/name/showExitButton">&nbsp;&nbsp;&nbsp;&nbsp;- showExitButton</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/activityIndicator">activityIndicator</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/exitButton">exitButton</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/needsReload">needsReload</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/tableView">tableView</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/addHighlightToCell:">addHighlightToCell:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/addShadowSeparatorToTableView:">addShadowSeparatorToTableView:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/alertError:">alertError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/alertSuccess:">alertSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/backButtonTitle">backButtonTitle</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/contentFrame">contentFrame</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/contentFrameWithNavBar:">contentFrameWithNavBar:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createCellForIdentifier:tableView:indexPath:style:selectable:">createCellForIdentifier:tableView:indexPath:style:selectable:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/didReceiveError:">didReceiveError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/dismissUserVoice">dismissUserVoice</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/hideActivityIndicator">hideActivityIndicator</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/hideExitButton">hideExitButton</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initNavigationItem">initNavigationItem</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/keyboardDidHide:">keyboardDidHide:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/keyboardDidShow:">keyboardDidShow:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/promptUserToSignIn">promptUserToSignIn</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registerForKeyboardNotifications">registerForKeyboardNotifications</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/removeBackgroundFromCell:">removeBackgroundFromCell:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setVoteLabelTextAndColorForVotesRemaining:label:">setVoteLabelTextAndColorForVotesRemaining:label:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setupGroupedTableView">setupGroupedTableView</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/showActivityIndicator">showActivityIndicator</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/showActivityIndicatorWithText:">showActivityIndicatorWithText:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/showExitButton">showExitButton</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="UVBaseViewController Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">UVBaseViewController Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value">UIViewController</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">UVBaseViewController.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						
+						
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/activityIndicator">&nbsp;&nbsp;activityIndicator</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/needsReload">&nbsp;&nbsp;needsReload</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/tableView">&nbsp;&nbsp;tableView</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/exitButton">&nbsp;&nbsp;exitButton</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/dismissUserVoice">&ndash;&nbsp;dismissUserVoice</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/contentFrameWithNavBar:">&ndash;&nbsp;contentFrameWithNavBar:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/contentFrame">&ndash;&nbsp;contentFrame</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/showActivityIndicator">&ndash;&nbsp;showActivityIndicator</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/showActivityIndicatorWithText:">&ndash;&nbsp;showActivityIndicatorWithText:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/hideActivityIndicator">&ndash;&nbsp;hideActivityIndicator</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setVoteLabelTextAndColorForVotesRemaining:label:">&ndash;&nbsp;setVoteLabelTextAndColorForVotesRemaining:label:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initNavigationItem">&ndash;&nbsp;initNavigationItem</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/didReceiveError:">&ndash;&nbsp;didReceiveError:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/backButtonTitle">&ndash;&nbsp;backButtonTitle</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/removeBackgroundFromCell:">&ndash;&nbsp;removeBackgroundFromCell:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/addHighlightToCell:">&ndash;&nbsp;addHighlightToCell:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/addShadowSeparatorToTableView:">&ndash;&nbsp;addShadowSeparatorToTableView:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/registerForKeyboardNotifications">&ndash;&nbsp;registerForKeyboardNotifications</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/keyboardDidShow:">&ndash;&nbsp;keyboardDidShow:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/keyboardDidHide:">&ndash;&nbsp;keyboardDidHide:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createCellForIdentifier:tableView:indexPath:style:selectable:">&ndash;&nbsp;createCellForIdentifier:tableView:indexPath:style:selectable:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/alertError:">&ndash;&nbsp;alertError:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/alertSuccess:">&ndash;&nbsp;alertSuccess:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/hideExitButton">&ndash;&nbsp;hideExitButton</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/showExitButton">&ndash;&nbsp;showExitButton</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/promptUserToSignIn">&ndash;&nbsp;promptUserToSignIn</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setupGroupedTableView">&ndash;&nbsp;setupGroupedTableView</a></code>
+		
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/activityIndicator" title="activityIndicator"></a>
+	<h3 class="subsubtitle method-title">activityIndicator</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) UVActivityIndicator *activityIndicator</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/exitButton" title="exitButton"></a>
+	<h3 class="subsubtitle method-title">exitButton</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) UIBarButtonItem *exitButton</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/needsReload" title="needsReload"></a>
+	<h3 class="subsubtitle method-title">needsReload</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (assign) BOOL needsReload</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/tableView" title="tableView"></a>
+	<h3 class="subsubtitle method-title">tableView</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) UITableView *tableView</code></div>
+
+    
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/addHighlightToCell:" title="addHighlightToCell:"></a>
+	<h3 class="subsubtitle method-title">addHighlightToCell:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)addHighlightToCell:(UITableViewCell *)<em>cell</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/addShadowSeparatorToTableView:" title="addShadowSeparatorToTableView:"></a>
+	<h3 class="subsubtitle method-title">addShadowSeparatorToTableView:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)addShadowSeparatorToTableView:(UITableView *)<em>tableView</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/alertError:" title="alertError:"></a>
+	<h3 class="subsubtitle method-title">alertError:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)alertError:(NSString *)<em>message</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/alertSuccess:" title="alertSuccess:"></a>
+	<h3 class="subsubtitle method-title">alertSuccess:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)alertSuccess:(NSString *)<em>message</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/backButtonTitle" title="backButtonTitle"></a>
+	<h3 class="subsubtitle method-title">backButtonTitle</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (NSString *)backButtonTitle</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/contentFrame" title="contentFrame"></a>
+	<h3 class="subsubtitle method-title">contentFrame</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (CGRect)contentFrame</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/contentFrameWithNavBar:" title="contentFrameWithNavBar:"></a>
+	<h3 class="subsubtitle method-title">contentFrameWithNavBar:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (CGRect)contentFrameWithNavBar:(BOOL)<em>navBarEnabled</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/createCellForIdentifier:tableView:indexPath:style:selectable:" title="createCellForIdentifier:tableView:indexPath:style:selectable:"></a>
+	<h3 class="subsubtitle method-title">createCellForIdentifier:tableView:indexPath:style:selectable:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (UITableViewCell *)createCellForIdentifier:(NSString *)<em>identifier</em> tableView:(UITableView *)<em>tableView</em> indexPath:(NSIndexPath *)<em>indexPath</em> style:(UITableViewCellStyle)<em>style</em> selectable:(BOOL)<em>selectable</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/didReceiveError:" title="didReceiveError:"></a>
+	<h3 class="subsubtitle method-title">didReceiveError:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)didReceiveError:(NSError *)<em>error</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/dismissUserVoice" title="dismissUserVoice"></a>
+	<h3 class="subsubtitle method-title">dismissUserVoice</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)dismissUserVoice</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/hideActivityIndicator" title="hideActivityIndicator"></a>
+	<h3 class="subsubtitle method-title">hideActivityIndicator</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)hideActivityIndicator</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/hideExitButton" title="hideExitButton"></a>
+	<h3 class="subsubtitle method-title">hideExitButton</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)hideExitButton</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initNavigationItem" title="initNavigationItem"></a>
+	<h3 class="subsubtitle method-title">initNavigationItem</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)initNavigationItem</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/keyboardDidHide:" title="keyboardDidHide:"></a>
+	<h3 class="subsubtitle method-title">keyboardDidHide:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)keyboardDidHide:(NSNotification *)<em>notification</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/keyboardDidShow:" title="keyboardDidShow:"></a>
+	<h3 class="subsubtitle method-title">keyboardDidShow:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)keyboardDidShow:(NSNotification *)<em>notification</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/promptUserToSignIn" title="promptUserToSignIn"></a>
+	<h3 class="subsubtitle method-title">promptUserToSignIn</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)promptUserToSignIn</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/registerForKeyboardNotifications" title="registerForKeyboardNotifications"></a>
+	<h3 class="subsubtitle method-title">registerForKeyboardNotifications</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)registerForKeyboardNotifications</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/removeBackgroundFromCell:" title="removeBackgroundFromCell:"></a>
+	<h3 class="subsubtitle method-title">removeBackgroundFromCell:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)removeBackgroundFromCell:(UITableViewCell *)<em>cell</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setVoteLabelTextAndColorForVotesRemaining:label:" title="setVoteLabelTextAndColorForVotesRemaining:label:"></a>
+	<h3 class="subsubtitle method-title">setVoteLabelTextAndColorForVotesRemaining:label:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)setVoteLabelTextAndColorForVotesRemaining:(NSInteger)<em>votesRemaining</em> label:(UILabel *)<em>label</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setupGroupedTableView" title="setupGroupedTableView"></a>
+	<h3 class="subsubtitle method-title">setupGroupedTableView</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)setupGroupedTableView</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/showActivityIndicator" title="showActivityIndicator"></a>
+	<h3 class="subsubtitle method-title">showActivityIndicator</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)showActivityIndicator</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/showActivityIndicatorWithText:" title="showActivityIndicatorWithText:"></a>
+	<h3 class="subsubtitle method-title">showActivityIndicatorWithText:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)showActivityIndicatorWithText:(NSString *)<em>text</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/showExitButton" title="showExitButton"></a>
+	<h3 class="subsubtitle method-title">showExitButton</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)showExitButton</code></div>
+
+    
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2012 UserVoice. All rights reserved. (Last updated: 2012-10-24)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

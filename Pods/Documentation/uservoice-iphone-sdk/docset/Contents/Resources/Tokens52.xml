@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVTextEditor.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVTextEditor</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>
+			
+			<NodeRef refid="52"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVTextEditor/setDelegate:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) id&lt;UVTextEditorDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVTextEditor/delegate</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) id&lt;UVTextEditorDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVTextEditor/setText:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSString *text</Declaration>
+			
+			
+			<Anchor>//api/name/text</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVTextEditor/text</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSString *text</Declaration>
+			
+			
+			<Anchor>//api/name/text</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVTextEditor/setPlaceholder:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSString *placeholder</Declaration>
+			
+			
+			<Anchor>//api/name/placeholder</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVTextEditor/placeholder</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, copy) NSString *placeholder</Declaration>
+			
+			
+			<Anchor>//api/name/placeholder</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVTextEditor/setFont:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIFont *font</Declaration>
+			
+			
+			<Anchor>//api/name/font</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVTextEditor/font</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIFont *font</Declaration>
+			
+			
+			<Anchor>//api/name/font</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVTextEditor/setTextColor:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIColor *textColor</Declaration>
+			
+			
+			<Anchor>//api/name/textColor</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVTextEditor/textColor</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIColor *textColor</Declaration>
+			
+			
+			<Anchor>//api/name/textColor</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVTextEditor/setMinNumberOfLines:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic) NSInteger minNumberOfLines</Declaration>
+			
+			
+			<Anchor>//api/name/minNumberOfLines</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVTextEditor/minNumberOfLines</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic) NSInteger minNumberOfLines</Declaration>
+			
+			
+			<Anchor>//api/name/minNumberOfLines</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVTextEditor/setMaxNumberOfLines:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic) NSInteger maxNumberOfLines</Declaration>
+			
+			
+			<Anchor>//api/name/maxNumberOfLines</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVTextEditor/maxNumberOfLines</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic) NSInteger maxNumberOfLines</Declaration>
+			
+			
+			<Anchor>//api/name/maxNumberOfLines</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVTextEditor/setEditing:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) BOOL editing</Declaration>
+			
+			
+			<Anchor>//api/name/editing</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVTextEditor/editing</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) BOOL editing</Declaration>
+			
+			
+			<Anchor>//api/name/editing</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVTextEditor/setAutoresizesToText:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic) BOOL autoresizesToText</Declaration>
+			
+			
+			<Anchor>//api/name/autoresizesToText</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVTextEditor/autoresizesToText</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic) BOOL autoresizesToText</Declaration>
+			
+			
+			<Anchor>//api/name/autoresizesToText</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVTextEditor/setShowsExtraLine:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic) BOOL showsExtraLine</Declaration>
+			
+			
+			<Anchor>//api/name/showsExtraLine</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVTextEditor/showsExtraLine</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic) BOOL showsExtraLine</Declaration>
+			
+			
+			<Anchor>//api/name/showsExtraLine</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVTextEditor/scrollContainerToCursor:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>- (void)scrollContainerToCursor:(UIScrollView *)scrollView</Declaration>
+			
+			
+			<Anchor>//api/name/scrollContainerToCursor:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

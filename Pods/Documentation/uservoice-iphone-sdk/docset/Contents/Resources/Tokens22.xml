@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVImageCache.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVImageCache</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageCache.h</DeclaredIn>
+			
+			<NodeRef refid="22"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVImageCache/sharedInstance</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageCache.h</DeclaredIn>			
+			
+			<Declaration>+ (UVImageCache *)sharedInstance</Declaration>
+			
+			
+			<Anchor>//api/name/sharedInstance</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVImageCache/setImage:forURL:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageCache.h</DeclaredIn>			
+			
+			<Declaration>- (void)setImage:(UIImage *)image forURL:(NSString *)url</Declaration>
+			
+			
+			<Anchor>//api/name/setImage:forURL:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVImageCache/imageForURL:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageCache.h</DeclaredIn>			
+			
+			<Declaration>- (UIImage *)imageForURL:(NSString *)url</Declaration>
+			
+			
+			<Anchor>//api/name/imageForURL:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVImageCache/flush</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageCache.h</DeclaredIn>			
+			
+			<Declaration>- (void)flush</Declaration>
+			
+			
+			<Anchor>//api/name/flush</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVNetworkUtils.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVNetworkUtils</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVNetworkUtils.h</DeclaredIn>
+			
+			<NodeRef refid="30"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVNetworkUtils/hasInternetAccess</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVNetworkUtils.h</DeclaredIn>			
+			
+			<Declaration>+ (BOOL)hasInternetAccess</Declaration>
+			
+			
+			<Anchor>//api/name/hasInternetAccess</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVClientConfig.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVClientConfig</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>
+			
+			<NodeRef refid="14"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVClientConfig/setTicketsEnabled:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) BOOL ticketsEnabled</Declaration>
+			
+			
+			<Anchor>//api/name/ticketsEnabled</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVClientConfig/ticketsEnabled</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) BOOL ticketsEnabled</Declaration>
+			
+			
+			<Anchor>//api/name/ticketsEnabled</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVClientConfig/setFeedbackEnabled:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) BOOL feedbackEnabled</Declaration>
+			
+			
+			<Anchor>//api/name/feedbackEnabled</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVClientConfig/feedbackEnabled</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) BOOL feedbackEnabled</Declaration>
+			
+			
+			<Anchor>//api/name/feedbackEnabled</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVClientConfig/setForum:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVForum *forum</Declaration>
+			
+			
+			<Anchor>//api/name/forum</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVClientConfig/forum</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVForum *forum</Declaration>
+			
+			
+			<Anchor>//api/name/forum</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVClientConfig/setSubdomain:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVSubdomain *subdomain</Declaration>
+			
+			
+			<Anchor>//api/name/subdomain</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVClientConfig/subdomain</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVSubdomain *subdomain</Declaration>
+			
+			
+			<Anchor>//api/name/subdomain</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVClientConfig/setCustomFields:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSArray *customFields</Declaration>
+			
+			
+			<Anchor>//api/name/customFields</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVClientConfig/customFields</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSArray *customFields</Declaration>
+			
+			
+			<Anchor>//api/name/customFields</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVClientConfig/setTopArticles:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSArray *topArticles</Declaration>
+			
+			
+			<Anchor>//api/name/topArticles</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVClientConfig/topArticles</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSArray *topArticles</Declaration>
+			
+			
+			<Anchor>//api/name/topArticles</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVClientConfig/setTopSuggestions:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSArray *topSuggestions</Declaration>
+			
+			
+			<Anchor>//api/name/topSuggestions</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVClientConfig/topSuggestions</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSArray *topSuggestions</Declaration>
+			
+			
+			<Anchor>//api/name/topSuggestions</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVClientConfig/setClientId:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger clientId</Declaration>
+			
+			
+			<Anchor>//api/name/clientId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVClientConfig/clientId</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger clientId</Declaration>
+			
+			
+			<Anchor>//api/name/clientId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVClientConfig/getWithDelegate:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>+ (id)getWithDelegate:(id)delegate</Declaration>
+			
+			
+			<Anchor>//api/name/getWithDelegate:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVClientConfig/getScreenWidth</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>+ (CGFloat)getScreenWidth</Declaration>
+			
+			
+			<Anchor>//api/name/getScreenWidth</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVClientConfig/getScreenHeight</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>+ (CGFloat)getScreenHeight</Declaration>
+			
+			
+			<Anchor>//api/name/getScreenHeight</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVClientConfig/getOrientation</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>+ (UIInterfaceOrientation)getOrientation</Declaration>
+			
+			
+			<Anchor>//api/name/getOrientation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVClientConfig/setOrientation</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVClientConfig.h</DeclaredIn>			
+			
+			<Declaration>+ (void)setOrientation</Declaration>
+			
+			
+			<Anchor>//api/name/setOrientation</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

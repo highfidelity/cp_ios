@@ -1,0 +1,976 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>UVSuggestion Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<meta name="viewport" content="width=550" />
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 840)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">uservoice-iphone-sdk 1.2.2 </a></h1>
+				<a id="developerHome" href="../index.html">UserVoice</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">UVSuggestion Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/abstract">&nbsp;&nbsp;&nbsp;&nbsp;abstract</option>
+	
+	<option value="//api/name/category">&nbsp;&nbsp;&nbsp;&nbsp;category</option>
+	
+	<option value="//api/name/categoryString">&nbsp;&nbsp;&nbsp;&nbsp;categoryString</option>
+	
+	<option value="//api/name/closedAt">&nbsp;&nbsp;&nbsp;&nbsp;closedAt</option>
+	
+	<option value="//api/name/commentsCount">&nbsp;&nbsp;&nbsp;&nbsp;commentsCount</option>
+	
+	<option value="//api/name/createdAt">&nbsp;&nbsp;&nbsp;&nbsp;createdAt</option>
+	
+	<option value="//api/name/creatorId">&nbsp;&nbsp;&nbsp;&nbsp;creatorId</option>
+	
+	<option value="//api/name/creatorName">&nbsp;&nbsp;&nbsp;&nbsp;creatorName</option>
+	
+	<option value="//api/name/forumId">&nbsp;&nbsp;&nbsp;&nbsp;forumId</option>
+	
+	<option value="//api/name/forumName">&nbsp;&nbsp;&nbsp;&nbsp;forumName</option>
+	
+	<option value="//api/name/responseText">&nbsp;&nbsp;&nbsp;&nbsp;responseText</option>
+	
+	<option value="//api/name/responseUserAvatarUrl">&nbsp;&nbsp;&nbsp;&nbsp;responseUserAvatarUrl</option>
+	
+	<option value="//api/name/responseUserId">&nbsp;&nbsp;&nbsp;&nbsp;responseUserId</option>
+	
+	<option value="//api/name/responseUserName">&nbsp;&nbsp;&nbsp;&nbsp;responseUserName</option>
+	
+	<option value="//api/name/status">&nbsp;&nbsp;&nbsp;&nbsp;status</option>
+	
+	<option value="//api/name/statusColor">&nbsp;&nbsp;&nbsp;&nbsp;statusColor</option>
+	
+	<option value="//api/name/statusHexColor">&nbsp;&nbsp;&nbsp;&nbsp;statusHexColor</option>
+	
+	<option value="//api/name/suggestionId">&nbsp;&nbsp;&nbsp;&nbsp;suggestionId</option>
+	
+	<option value="//api/name/text">&nbsp;&nbsp;&nbsp;&nbsp;text</option>
+	
+	<option value="//api/name/title">&nbsp;&nbsp;&nbsp;&nbsp;title</option>
+	
+	<option value="//api/name/updatedAt">&nbsp;&nbsp;&nbsp;&nbsp;updatedAt</option>
+	
+	<option value="//api/name/voteCount">&nbsp;&nbsp;&nbsp;&nbsp;voteCount</option>
+	
+	<option value="//api/name/votesFor">&nbsp;&nbsp;&nbsp;&nbsp;votesFor</option>
+	
+	<option value="//api/name/votesRemaining">&nbsp;&nbsp;&nbsp;&nbsp;votesRemaining</option>
+	
+	
+	
+	
+	<option value="class_methods">Class Methods</option>
+	
+	<option value="//api/name/createWithForum:category:title:text:votes:delegate:">&nbsp;&nbsp;&nbsp;&nbsp;+ createWithForum:category:title:text:votes:delegate:</option>
+	
+	<option value="//api/name/getWithForum:page:delegate:">&nbsp;&nbsp;&nbsp;&nbsp;+ getWithForum:page:delegate:</option>
+	
+	<option value="//api/name/getWithForumAndUser:user:delegate:">&nbsp;&nbsp;&nbsp;&nbsp;+ getWithForumAndUser:user:delegate:</option>
+	
+	<option value="//api/name/getWithUser:delegate:">&nbsp;&nbsp;&nbsp;&nbsp;+ getWithUser:delegate:</option>
+	
+	<option value="//api/name/searchWithForum:query:delegate:">&nbsp;&nbsp;&nbsp;&nbsp;+ searchWithForum:query:delegate:</option>
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/flag:delegate:">&nbsp;&nbsp;&nbsp;&nbsp;- flag:delegate:</option>
+	
+	<option value="//api/name/statusColor">&nbsp;&nbsp;&nbsp;&nbsp;- statusColor</option>
+	
+	<option value="//api/name/vote:delegate:">&nbsp;&nbsp;&nbsp;&nbsp;- vote:delegate:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/abstract">abstract</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/category">category</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/categoryString">categoryString</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/closedAt">closedAt</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/commentsCount">commentsCount</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createdAt">createdAt</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/creatorId">creatorId</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/creatorName">creatorName</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/forumId">forumId</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/forumName">forumName</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/responseText">responseText</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/responseUserAvatarUrl">responseUserAvatarUrl</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/responseUserId">responseUserId</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/responseUserName">responseUserName</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/status">status</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/statusColor">statusColor</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/statusHexColor">statusHexColor</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/suggestionId">suggestionId</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/text">text</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/title">title</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/updatedAt">updatedAt</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/voteCount">voteCount</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/votesFor">votesFor</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/votesRemaining">votesRemaining</a></span></li>
+	
+</ul></li>
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#class_methods">Class Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createWithForum:category:title:text:votes:delegate:">createWithForum:category:title:text:votes:delegate:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getWithForum:page:delegate:">getWithForum:page:delegate:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getWithForumAndUser:user:delegate:">getWithForumAndUser:user:delegate:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getWithUser:delegate:">getWithUser:delegate:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/searchWithForum:query:delegate:">searchWithForum:query:delegate:</a></span></li>
+	
+</ul></li>
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/flag:delegate:">flag:delegate:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/statusColor">statusColor</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/vote:delegate:">vote:delegate:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="UVSuggestion Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">UVSuggestion Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value"><a href="../Classes/UVBaseModel.html">UVBaseModel</a> : <a href="../Classes/HRRestModel.html">HRRestModel</a> : NSObject</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">UVSuggestion.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						
+						
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/suggestionId">&nbsp;&nbsp;suggestionId</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/forumId">&nbsp;&nbsp;forumId</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/commentsCount">&nbsp;&nbsp;commentsCount</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/voteCount">&nbsp;&nbsp;voteCount</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/votesFor">&nbsp;&nbsp;votesFor</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/votesRemaining">&nbsp;&nbsp;votesRemaining</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/title">&nbsp;&nbsp;title</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/abstract">&nbsp;&nbsp;abstract</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/text">&nbsp;&nbsp;text</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/status">&nbsp;&nbsp;status</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/statusHexColor">&nbsp;&nbsp;statusHexColor</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/forumName">&nbsp;&nbsp;forumName</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createdAt">&nbsp;&nbsp;createdAt</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/updatedAt">&nbsp;&nbsp;updatedAt</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/closedAt">&nbsp;&nbsp;closedAt</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/creatorName">&nbsp;&nbsp;creatorName</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/creatorId">&nbsp;&nbsp;creatorId</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/responseText">&nbsp;&nbsp;responseText</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/responseUserName">&nbsp;&nbsp;responseUserName</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/responseUserAvatarUrl">&nbsp;&nbsp;responseUserAvatarUrl</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/responseUserId">&nbsp;&nbsp;responseUserId</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/category">&nbsp;&nbsp;category</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/statusColor">&nbsp;&nbsp;statusColor</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/categoryString">&nbsp;&nbsp;categoryString</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getWithForum:page:delegate:">+&nbsp;getWithForum:page:delegate:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getWithForumAndUser:user:delegate:">+&nbsp;getWithForumAndUser:user:delegate:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getWithUser:delegate:">+&nbsp;getWithUser:delegate:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/searchWithForum:query:delegate:">+&nbsp;searchWithForum:query:delegate:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createWithForum:category:title:text:votes:delegate:">+&nbsp;createWithForum:category:title:text:votes:delegate:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/vote:delegate:">&ndash;&nbsp;vote:delegate:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/flag:delegate:">&ndash;&nbsp;flag:delegate:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/statusColor">&ndash;&nbsp;statusColor</a></code>
+		
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/abstract" title="abstract"></a>
+	<h3 class="subsubtitle method-title">abstract</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *abstract</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/category" title="category"></a>
+	<h3 class="subsubtitle method-title">category</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) UVCategory *category</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/categoryString" title="categoryString"></a>
+	<h3 class="subsubtitle method-title">categoryString</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) NSString *categoryString</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/closedAt" title="closedAt"></a>
+	<h3 class="subsubtitle method-title">closedAt</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSDate *closedAt</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/commentsCount" title="commentsCount"></a>
+	<h3 class="subsubtitle method-title">commentsCount</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (assign) NSInteger commentsCount</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/createdAt" title="createdAt"></a>
+	<h3 class="subsubtitle method-title">createdAt</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSDate *createdAt</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/creatorId" title="creatorId"></a>
+	<h3 class="subsubtitle method-title">creatorId</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (assign) NSInteger creatorId</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/creatorName" title="creatorName"></a>
+	<h3 class="subsubtitle method-title">creatorName</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *creatorName</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/forumId" title="forumId"></a>
+	<h3 class="subsubtitle method-title">forumId</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (assign) NSInteger forumId</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/forumName" title="forumName"></a>
+	<h3 class="subsubtitle method-title">forumName</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *forumName</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/responseText" title="responseText"></a>
+	<h3 class="subsubtitle method-title">responseText</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *responseText</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/responseUserAvatarUrl" title="responseUserAvatarUrl"></a>
+	<h3 class="subsubtitle method-title">responseUserAvatarUrl</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *responseUserAvatarUrl</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/responseUserId" title="responseUserId"></a>
+	<h3 class="subsubtitle method-title">responseUserId</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (assign) NSInteger responseUserId</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/responseUserName" title="responseUserName"></a>
+	<h3 class="subsubtitle method-title">responseUserName</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *responseUserName</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/status" title="status"></a>
+	<h3 class="subsubtitle method-title">status</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *status</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/statusColor" title="statusColor"></a>
+	<h3 class="subsubtitle method-title">statusColor</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) UIColor *statusColor</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/statusHexColor" title="statusHexColor"></a>
+	<h3 class="subsubtitle method-title">statusHexColor</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *statusHexColor</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/suggestionId" title="suggestionId"></a>
+	<h3 class="subsubtitle method-title">suggestionId</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (assign) NSInteger suggestionId</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/text" title="text"></a>
+	<h3 class="subsubtitle method-title">text</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *text</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/title" title="title"></a>
+	<h3 class="subsubtitle method-title">title</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *title</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/updatedAt" title="updatedAt"></a>
+	<h3 class="subsubtitle method-title">updatedAt</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSDate *updatedAt</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/voteCount" title="voteCount"></a>
+	<h3 class="subsubtitle method-title">voteCount</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (assign) NSInteger voteCount</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/votesFor" title="votesFor"></a>
+	<h3 class="subsubtitle method-title">votesFor</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (assign) NSInteger votesFor</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/votesRemaining" title="votesRemaining"></a>
+	<h3 class="subsubtitle method-title">votesRemaining</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (assign) NSInteger votesRemaining</code></div>
+
+    
+</div>
+						
+					</div>
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Class Methods" name="class_methods"></a>
+						<h2 class="subtitle subtitle-methods">Class Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/createWithForum:category:title:text:votes:delegate:" title="createWithForum:category:title:text:votes:delegate:"></a>
+	<h3 class="subsubtitle method-title">createWithForum:category:title:text:votes:delegate:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (id)createWithForum:(UVForum *)<em>forum</em> category:(UVCategory *)<em>category</em> title:(NSString *)<em>title</em> text:(NSString *)<em>text</em> votes:(NSInteger)<em>votes</em> delegate:(id)<em>delegate</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getWithForum:page:delegate:" title="getWithForum:page:delegate:"></a>
+	<h3 class="subsubtitle method-title">getWithForum:page:delegate:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (id)getWithForum:(UVForum *)<em>forum</em> page:(NSInteger)<em>page</em> delegate:(id)<em>delegate</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getWithForumAndUser:user:delegate:" title="getWithForumAndUser:user:delegate:"></a>
+	<h3 class="subsubtitle method-title">getWithForumAndUser:user:delegate:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (id)getWithForumAndUser:(UVForum *)<em>forum</em> user:(UVUser *)<em>user</em> delegate:(id)<em>delegate</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getWithUser:delegate:" title="getWithUser:delegate:"></a>
+	<h3 class="subsubtitle method-title">getWithUser:delegate:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (id)getWithUser:(UVUser *)<em>user</em> delegate:(id)<em>delegate</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/searchWithForum:query:delegate:" title="searchWithForum:query:delegate:"></a>
+	<h3 class="subsubtitle method-title">searchWithForum:query:delegate:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (id)searchWithForum:(UVForum *)<em>forum</em> query:(NSString *)<em>query</em> delegate:(id)<em>delegate</em></code></div>
+
+    
+</div>
+						
+					</div>
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/flag:delegate:" title="flag:delegate:"></a>
+	<h3 class="subsubtitle method-title">flag:delegate:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (id)flag:(NSString *)<em>code</em> delegate:(id)<em>delegate</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/statusColor" title="statusColor"></a>
+	<h3 class="subsubtitle method-title">statusColor</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (UIColor *)statusColor</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/vote:delegate:" title="vote:delegate:"></a>
+	<h3 class="subsubtitle method-title">vote:delegate:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (id)vote:(NSInteger)<em>number</em> delegate:(id)<em>delegate</em></code></div>
+
+    
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2012 UserVoice. All rights reserved. (Last updated: 2012-10-24)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

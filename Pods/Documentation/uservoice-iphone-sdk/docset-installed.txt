@@ -1,0 +1,4 @@
+Documentation set was installed to Xcode!
+
+Path: /Users/birarda/Library/Developer/Shared/Documentation/DocSets/org.cocoapods.uservoice-iphone-sdk-1.2.2.docset
+Time: 2012-10-25 01:51:56 +0000

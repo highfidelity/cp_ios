@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Categories/NSObject+NSObject_UVJSON.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cat/NSObject(NSObject_UVJSON)</TokenIdentifier>
+			<Abstract type="html">@brief Adds JSON generation to Foundation classes</Abstract>
+			<DeclaredIn>NSObject+UVJSON.h</DeclaredIn>
+			
+			<NodeRef refid="73"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSObject(NSObject_UVJSON)/JSONFragment</TokenIdentifier>
+			<Abstract type="html">@brief Returns a string containing the receiver encoded as a JSON fragment.</Abstract>
+			<DeclaredIn>NSObject+UVJSON.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)JSONFragment</Declaration>
+			
+			
+			<Anchor>//api/name/JSONFragment</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSObject(NSObject_UVJSON)/JSONRepresentation</TokenIdentifier>
+			<Abstract type="html">@brief Returns a string containing the receiver encoded in JSON.</Abstract>
+			<DeclaredIn>NSObject+UVJSON.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)JSONRepresentation</Declaration>
+			
+			
+			<Anchor>//api/name/JSONRepresentation</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

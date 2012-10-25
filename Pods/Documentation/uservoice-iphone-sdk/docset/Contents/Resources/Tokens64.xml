@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/YOAuthSignatureMethod_HMAC_SHA1.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/YOAuthSignatureMethod_HMAC_SHA1</TokenIdentifier>
+			<Abstract type="html">YOAuthSignatureMethodHMACSHA1 is a sub-class of YOAuthSignatureMethod that provides HMAC-SHA1 signature generation.</Abstract>
+			<DeclaredIn>YOAuthSignatureMethod_HMAC-SHA1.h</DeclaredIn>
+			
+			<NodeRef refid="64"/>
+		</Token>
+		
+		
+	</File>
+</Tokens>

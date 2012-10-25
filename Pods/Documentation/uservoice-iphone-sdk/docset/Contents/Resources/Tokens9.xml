@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVBaseModel.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVBaseModel</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>
+			
+			<NodeRef refid="9"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVBaseModel/siteURLWithHTTPS:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>+ (NSURL *)siteURLWithHTTPS:(BOOL)https</Declaration>
+			
+			
+			<Anchor>//api/name/siteURLWithHTTPS:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVBaseModel/siteURL</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>+ (NSURL *)siteURL</Declaration>
+			
+			
+			<Anchor>//api/name/siteURL</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVBaseModel/apiPrefix</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>+ (NSString *)apiPrefix</Declaration>
+			
+			
+			<Anchor>//api/name/apiPrefix</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVBaseModel/apiPath:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>+ (NSString *)apiPath:(NSString *)path</Declaration>
+			
+			
+			<Anchor>//api/name/apiPath:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVBaseModel/getPath:withParams:target:selector:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>+ (id)getPath:(NSString *)path withParams:(NSDictionary *)params target:(id)target selector:(SEL)selector</Declaration>
+			
+			
+			<Anchor>//api/name/getPath:withParams:target:selector:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVBaseModel/postPath:withParams:target:selector:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>+ (id)postPath:(NSString *)path withParams:(NSDictionary *)params target:(id)target selector:(SEL)selector</Declaration>
+			
+			
+			<Anchor>//api/name/postPath:withParams:target:selector:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVBaseModel/putPath:withParams:target:selector:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>+ (id)putPath:(NSString *)path withParams:(NSDictionary *)params target:(id)target selector:(SEL)selector</Declaration>
+			
+			
+			<Anchor>//api/name/putPath:withParams:target:selector:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVBaseModel/headersForPath:params:method:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>+ (NSMutableDictionary *)headersForPath:(NSString *)path params:(NSDictionary *)params method:(NSString *)method</Declaration>
+			
+			
+			<Anchor>//api/name/headersForPath:params:method:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVBaseModel/processModel:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>+ (void)processModel:(id)model</Declaration>
+			
+			
+			<Anchor>//api/name/processModel:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVBaseModel/processModels:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>+ (void)processModels:(NSArray *)models</Declaration>
+			
+			
+			<Anchor>//api/name/processModels:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVBaseModel/modelForDictionary:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>+ (UVBaseModel *)modelForDictionary:(NSDictionary *)dict</Declaration>
+			
+			
+			<Anchor>//api/name/modelForDictionary:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVBaseModel/didReturnModel:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>+ (void)didReturnModel:(id)model callback:(NSInvocation *)callback</Declaration>
+			
+			
+			<Anchor>//api/name/didReturnModel:callback:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVBaseModel/didReturnModels:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>+ (void)didReturnModels:(NSArray *)models callback:(NSInvocation *)callback</Declaration>
+			
+			
+			<Anchor>//api/name/didReturnModels:callback:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVBaseModel/didReceiveError:callback:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>+ (void)didReceiveError:(NSError *)error callback:(NSInvocation *)callback</Declaration>
+			
+			
+			<Anchor>//api/name/didReceiveError:callback:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseModel/initWithDictionary:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithDictionary:(NSDictionary *)dict</Declaration>
+			
+			
+			<Anchor>//api/name/initWithDictionary:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseModel/objectOrNilForDict:key:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>- (id)objectOrNilForDict:(NSDictionary *)dict key:(id)key</Declaration>
+			
+			
+			<Anchor>//api/name/objectOrNilForDict:key:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseModel/arrayForJSONArray:withClass:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>- (NSArray *)arrayForJSONArray:(NSArray *)array withClass:(Class)klass</Declaration>
+			
+			
+			<Anchor>//api/name/arrayForJSONArray:withClass:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseModel/parseJsonDate:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseModel.h</DeclaredIn>			
+			
+			<Declaration>- (NSDate *)parseJsonDate:(NSString *)str</Declaration>
+			
+			
+			<Anchor>//api/name/parseJsonDate:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

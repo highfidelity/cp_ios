@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVBaseViewController.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVBaseViewController</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>
+			
+			<NodeRef refid="10"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/setActivityIndicator:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVActivityIndicator *activityIndicator</Declaration>
+			
+			
+			<Anchor>//api/name/activityIndicator</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVBaseViewController/activityIndicator</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVActivityIndicator *activityIndicator</Declaration>
+			
+			
+			<Anchor>//api/name/activityIndicator</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/setNeedsReload:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) BOOL needsReload</Declaration>
+			
+			
+			<Anchor>//api/name/needsReload</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVBaseViewController/needsReload</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) BOOL needsReload</Declaration>
+			
+			
+			<Anchor>//api/name/needsReload</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/setTableView:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UITableView *tableView</Declaration>
+			
+			
+			<Anchor>//api/name/tableView</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVBaseViewController/tableView</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UITableView *tableView</Declaration>
+			
+			
+			<Anchor>//api/name/tableView</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/setExitButton:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIBarButtonItem *exitButton</Declaration>
+			
+			
+			<Anchor>//api/name/exitButton</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVBaseViewController/exitButton</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIBarButtonItem *exitButton</Declaration>
+			
+			
+			<Anchor>//api/name/exitButton</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/dismissUserVoice</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)dismissUserVoice</Declaration>
+			
+			
+			<Anchor>//api/name/dismissUserVoice</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/contentFrameWithNavBar:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (CGRect)contentFrameWithNavBar:(BOOL)navBarEnabled</Declaration>
+			
+			
+			<Anchor>//api/name/contentFrameWithNavBar:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/contentFrame</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (CGRect)contentFrame</Declaration>
+			
+			
+			<Anchor>//api/name/contentFrame</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/showActivityIndicator</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)showActivityIndicator</Declaration>
+			
+			
+			<Anchor>//api/name/showActivityIndicator</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/showActivityIndicatorWithText:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)showActivityIndicatorWithText:(NSString *)text</Declaration>
+			
+			
+			<Anchor>//api/name/showActivityIndicatorWithText:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/hideActivityIndicator</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)hideActivityIndicator</Declaration>
+			
+			
+			<Anchor>//api/name/hideActivityIndicator</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/setVoteLabelTextAndColorForVotesRemaining:label:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)setVoteLabelTextAndColorForVotesRemaining:(NSInteger)votesRemaining label:(UILabel *)label</Declaration>
+			
+			
+			<Anchor>//api/name/setVoteLabelTextAndColorForVotesRemaining:label:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/initNavigationItem</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)initNavigationItem</Declaration>
+			
+			
+			<Anchor>//api/name/initNavigationItem</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/didReceiveError:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)didReceiveError:(NSError *)error</Declaration>
+			
+			
+			<Anchor>//api/name/didReceiveError:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/backButtonTitle</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)backButtonTitle</Declaration>
+			
+			
+			<Anchor>//api/name/backButtonTitle</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/removeBackgroundFromCell:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)removeBackgroundFromCell:(UITableViewCell *)cell</Declaration>
+			
+			
+			<Anchor>//api/name/removeBackgroundFromCell:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/addHighlightToCell:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)addHighlightToCell:(UITableViewCell *)cell</Declaration>
+			
+			
+			<Anchor>//api/name/addHighlightToCell:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/addShadowSeparatorToTableView:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)addShadowSeparatorToTableView:(UITableView *)tableView</Declaration>
+			
+			
+			<Anchor>//api/name/addShadowSeparatorToTableView:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/registerForKeyboardNotifications</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)registerForKeyboardNotifications</Declaration>
+			
+			
+			<Anchor>//api/name/registerForKeyboardNotifications</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/keyboardDidShow:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)keyboardDidShow:(NSNotification *)notification</Declaration>
+			
+			
+			<Anchor>//api/name/keyboardDidShow:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/keyboardDidHide:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)keyboardDidHide:(NSNotification *)notification</Declaration>
+			
+			
+			<Anchor>//api/name/keyboardDidHide:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/createCellForIdentifier:tableView:indexPath:style:selectable:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (UITableViewCell *)createCellForIdentifier:(NSString *)identifier tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath style:(UITableViewCellStyle)style selectable:(BOOL)selectable</Declaration>
+			
+			
+			<Anchor>//api/name/createCellForIdentifier:tableView:indexPath:style:selectable:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/alertError:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)alertError:(NSString *)message</Declaration>
+			
+			
+			<Anchor>//api/name/alertError:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/alertSuccess:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)alertSuccess:(NSString *)message</Declaration>
+			
+			
+			<Anchor>//api/name/alertSuccess:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/hideExitButton</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)hideExitButton</Declaration>
+			
+			
+			<Anchor>//api/name/hideExitButton</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/showExitButton</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)showExitButton</Declaration>
+			
+			
+			<Anchor>//api/name/showExitButton</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/promptUserToSignIn</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)promptUserToSignIn</Declaration>
+			
+			
+			<Anchor>//api/name/promptUserToSignIn</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVBaseViewController/setupGroupedTableView</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVBaseViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)setupGroupedTableView</Declaration>
+			
+			
+			<Anchor>//api/name/setupGroupedTableView</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

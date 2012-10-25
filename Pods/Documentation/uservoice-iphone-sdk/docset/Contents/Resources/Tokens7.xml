@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVArticle.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVArticle</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVArticle.h</DeclaredIn>
+			
+			<NodeRef refid="7"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVArticle/setQuestion:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVArticle.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *question</Declaration>
+			
+			
+			<Anchor>//api/name/question</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVArticle/question</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVArticle.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *question</Declaration>
+			
+			
+			<Anchor>//api/name/question</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVArticle/setAnswerHTML:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVArticle.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *answerHTML</Declaration>
+			
+			
+			<Anchor>//api/name/answerHTML</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVArticle/answerHTML</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVArticle.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *answerHTML</Declaration>
+			
+			
+			<Anchor>//api/name/answerHTML</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVArticle/setArticleId:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVArticle.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger articleId</Declaration>
+			
+			
+			<Anchor>//api/name/articleId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVArticle/articleId</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVArticle.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger articleId</Declaration>
+			
+			
+			<Anchor>//api/name/articleId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVArticle/initWithDictionary:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVArticle.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithDictionary:(NSDictionary *)dict</Declaration>
+			
+			
+			<Anchor>//api/name/initWithDictionary:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

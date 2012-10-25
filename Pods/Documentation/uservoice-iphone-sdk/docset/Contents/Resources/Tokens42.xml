@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVStreamEvent.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVStreamEvent</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVStreamEvent.h</DeclaredIn>
+			
+			<NodeRef refid="42"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVStreamEvent/setType:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVStreamEvent.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *type</Declaration>
+			
+			
+			<Anchor>//api/name/type</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVStreamEvent/type</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVStreamEvent.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *type</Declaration>
+			
+			
+			<Anchor>//api/name/type</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVStreamEvent/setObject:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVStreamEvent.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSDictionary *object</Declaration>
+			
+			
+			<Anchor>//api/name/object</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVStreamEvent/object</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVStreamEvent.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSDictionary *object</Declaration>
+			
+			
+			<Anchor>//api/name/object</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVStreamEvent/publicForForum:andDelegate:since:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVStreamEvent.h</DeclaredIn>			
+			
+			<Declaration>+ (id)publicForForum:(UVForum *)theForum andDelegate:(id)delegate since:(NSDate *)aDateOrNil</Declaration>
+			
+			
+			<Anchor>//api/name/publicForForum:andDelegate:since:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVStreamEvent/privateForForum:andDelegate:since:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVStreamEvent.h</DeclaredIn>			
+			
+			<Declaration>+ (id)privateForForum:(UVForum *)theForum andDelegate:(id)delegate since:(NSDate *)aDateOrNil</Declaration>
+			
+			
+			<Anchor>//api/name/privateForForum:andDelegate:since:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

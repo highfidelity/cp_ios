@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/HRResponseDelegate.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/HRResponseDelegate</TokenIdentifier>
+			<Abstract type="html">@protocol HRResponseDelegate</Abstract>
+			<DeclaredIn>HRResponseDelegate.h</DeclaredIn>
+			
+			<NodeRef refid="85"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/HRResponseDelegate/restConnection:didReturnResource:object:</TokenIdentifier>
+			<Abstract type="html">Called when the resource was succeffully fetched and encoded</Abstract>
+			<DeclaredIn>HRResponseDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (void)restConnection:(NSURLConnection *)connection didReturnResource:(id)resource object:(id)object</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>connection</Name>
+					<Abstract type="html">The connection object for the current request</Abstract>
+				</Parameter><Parameter>
+					<Name>resource</Name>
+					<Abstract type="html">The converted objc representation of the response data returned by the server.</Abstract>
+				</Parameter><Parameter>
+					<Name>object</Name>
+					<Abstract type="html">Any custom object you passed in while making the request.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/restConnection:didReturnResource:object:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/HRResponseDelegate/restConnection:didFailWithError:object:</TokenIdentifier>
+			<Abstract type="html">Called when the connection fails in situations where the server is not available, etc.</Abstract>
+			<DeclaredIn>HRResponseDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (void)restConnection:(NSURLConnection *)connection didFailWithError:(NSError *)error object:(id)object</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>connection</Name>
+					<Abstract type="html">The connection object for the current request</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">The error returned by the connection.</Abstract>
+				</Parameter><Parameter>
+					<Name>object</Name>
+					<Abstract type="html">Any custom object you passed in while making the request.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/restConnection:didFailWithError:object:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/HRResponseDelegate/restConnection:didReceiveResponse:object:</TokenIdentifier>
+			<Abstract type="html">Called when the connection receieves any type of response</Abstract>
+			<DeclaredIn>HRResponseDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (void)restConnection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)response object:(id)object</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>connection</Name>
+					<Abstract type="html">The connection object for the current request</Abstract>
+				</Parameter><Parameter>
+					<Name>response</Name>
+					<Abstract type="html">The response object returned by the server.</Abstract>
+				</Parameter><Parameter>
+					<Name>object</Name>
+					<Abstract type="html">Any custom object you passed in while making the request.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/restConnection:didReceiveResponse:object:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/HRResponseDelegate/restConnection:didReceiveError:response:object:</TokenIdentifier>
+			<Abstract type="html">Called when the connection receieves a statusCode that isn&apos;t a success code.</Abstract>
+			<DeclaredIn>HRResponseDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (void)restConnection:(NSURLConnection *)connection didReceiveError:(NSError *)error response:(NSHTTPURLResponse *)response object:(id)object</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>connection</Name>
+					<Abstract type="html">The connection object for the current request</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">The error returned by the connection.</Abstract>
+				</Parameter><Parameter>
+					<Name>response</Name>
+					<Abstract type="html">The response object returned by the server.</Abstract>
+				</Parameter><Parameter>
+					<Name>object</Name>
+					<Abstract type="html">Any custom object you passed in while making the request.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/restConnection:didReceiveError:response:object:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/HRResponseDelegate/restConnection:didReceiveParseError:responseBody:object:</TokenIdentifier>
+			<Abstract type="html">Called when the HRFormatter recieved an error parsing the response data.</Abstract>
+			<DeclaredIn>HRResponseDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (void)restConnection:(NSURLConnection *)connection didReceiveParseError:(NSError *)error responseBody:(NSString *)body object:(id)object</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>connection</Name>
+					<Abstract type="html">The connection object for the current request</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">The parser error returned by the formatter.</Abstract>
+				</Parameter><Parameter>
+					<Name>body</Name>
+					<Abstract type="html">A string representation of the response body returned by the server.</Abstract>
+				</Parameter><Parameter>
+					<Name>object</Name>
+					<Abstract type="html">Any custom object you passed in while making the request.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/restConnection:didReceiveParseError:responseBody:object:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

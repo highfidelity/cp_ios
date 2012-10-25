@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/YOAuthRequest.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/YOAuthRequest</TokenIdentifier>
+			<Abstract type="html">YOAuthRequest is used to create a request and apply a signature.
+&lt;p&gt;It provides methods to extract the request parameters as a dictionary or as an Authorization header.&lt;/p&gt;</Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>
+			
+			<NodeRef refid="63"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/setConsumer:</TokenIdentifier>
+			<Abstract type="html">Returns the generated &lt;code&gt;oauth_timestamp&lt;/code&gt;.
+&lt;p&gt;This value must be +-600 seconds of the current time.&lt;/p&gt;</Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) YOAuthConsumer *consumer</Declaration>
+			
+			
+			<Anchor>//api/name/consumer</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/YOAuthRequest/consumer</TokenIdentifier>
+			<Abstract type="html">Returns the generated &lt;code&gt;oauth_timestamp&lt;/code&gt;.
+&lt;p&gt;This value must be +-600 seconds of the current time.&lt;/p&gt;</Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) YOAuthConsumer *consumer</Declaration>
+			
+			
+			<Anchor>//api/name/consumer</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/setToken:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) YOAuthToken *token</Declaration>
+			
+			
+			<Anchor>//api/name/token</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/YOAuthRequest/token</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) YOAuthToken *token</Declaration>
+			
+			
+			<Anchor>//api/name/token</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/setRealm:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSString *realm</Declaration>
+			
+			
+			<Anchor>//api/name/realm</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/YOAuthRequest/realm</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSString *realm</Declaration>
+			
+			
+			<Anchor>//api/name/realm</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/setHTTPMethod:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSString *HTTPMethod</Declaration>
+			
+			
+			<Anchor>//api/name/HTTPMethod</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/YOAuthRequest/HTTPMethod</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSString *HTTPMethod</Declaration>
+			
+			
+			<Anchor>//api/name/HTTPMethod</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/setUrl:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSURL *url</Declaration>
+			
+			
+			<Anchor>//api/name/url</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/YOAuthRequest/url</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSURL *url</Declaration>
+			
+			
+			<Anchor>//api/name/url</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/setRequestParams:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSMutableDictionary *requestParams</Declaration>
+			
+			
+			<Anchor>//api/name/requestParams</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/YOAuthRequest/requestParams</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSMutableDictionary *requestParams</Declaration>
+			
+			
+			<Anchor>//api/name/requestParams</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/setOauthParams:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSMutableDictionary *oauthParams</Declaration>
+			
+			
+			<Anchor>//api/name/oauthParams</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/YOAuthRequest/oauthParams</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSMutableDictionary *oauthParams</Declaration>
+			
+			
+			<Anchor>//api/name/oauthParams</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/setOauthSignature:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSString *oauthSignature</Declaration>
+			
+			
+			<Anchor>//api/name/oauthSignature</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/YOAuthRequest/oauthSignature</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSString *oauthSignature</Declaration>
+			
+			
+			<Anchor>//api/name/oauthSignature</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/setOauthNonce:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSString *oauthNonce</Declaration>
+			
+			
+			<Anchor>//api/name/oauthNonce</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/YOAuthRequest/oauthNonce</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSString *oauthNonce</Declaration>
+			
+			
+			<Anchor>//api/name/oauthNonce</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/setOauthVersion:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSString *oauthVersion</Declaration>
+			
+			
+			<Anchor>//api/name/oauthVersion</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/YOAuthRequest/oauthVersion</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSString *oauthVersion</Declaration>
+			
+			
+			<Anchor>//api/name/oauthVersion</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/setOauthTimestamp:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSString *oauthTimestamp</Declaration>
+			
+			
+			<Anchor>//api/name/oauthTimestamp</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/YOAuthRequest/oauthTimestamp</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite, retain) NSString *oauthTimestamp</Declaration>
+			
+			
+			<Anchor>//api/name/oauthTimestamp</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/initWithConsumer:andUrl:andHTTPMethod:andSignatureMethod:</TokenIdentifier>
+			<Abstract type="html">Returns an oauth request for the specified consumer, url, HTTP method and signature method to sign.</Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithConsumer:(YOAuthConsumer *)aConsumer andUrl:(NSURL *)aUrl andHTTPMethod:(NSString *)aHTTPMethod andSignatureMethod:(NSString *)aMethod</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aConsumer</Name>
+					<Abstract type="html">An OAuth consumer for this request.</Abstract>
+				</Parameter><Parameter>
+					<Name>aUrl</Name>
+					<Abstract type="html">A URL for this request. A URL should not contain a query string.</Abstract>
+				</Parameter><Parameter>
+					<Name>aHTTPMethod</Name>
+					<Abstract type="html">A HTTP method for this request.</Abstract>
+				</Parameter><Parameter>
+					<Name>aMethod</Name>
+					<Abstract type="html">The name of a signature method to use in signing this request.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The initialized request.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithConsumer:andUrl:andHTTPMethod:andSignatureMethod:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/initWithConsumer:andUrl:andHTTPMethod:andToken:andSignatureMethod:</TokenIdentifier>
+			<Abstract type="html">Returns an oauth request for the specified consumer, url, HTTP method, token and signature method to sign.</Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithConsumer:(YOAuthConsumer *)aConsumer andUrl:(NSURL *)aUrl andHTTPMethod:(NSString *)aHTTPMethod andToken:(YOAuthToken *)aToken andSignatureMethod:(NSString *)aMethod</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aConsumer</Name>
+					<Abstract type="html">An OAuth consumer for this request.</Abstract>
+				</Parameter><Parameter>
+					<Name>aUrl</Name>
+					<Abstract type="html">A URL for this request. A URL should not contain a query string.</Abstract>
+				</Parameter><Parameter>
+					<Name>aHTTPMethod</Name>
+					<Abstract type="html">A HTTP method for this request.</Abstract>
+				</Parameter><Parameter>
+					<Name>aToken</Name>
+					<Abstract type="html">An OAuth token.</Abstract>
+				</Parameter><Parameter>
+					<Name>aMethod</Name>
+					<Abstract type="html">The name of a signature method to use in signing this request.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The initialized request.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithConsumer:andUrl:andHTTPMethod:andToken:andSignatureMethod:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/prepareRequest</TokenIdentifier>
+			<Abstract type="html">Prepares the oauth request by setting all required OAuth parameters and building the signature.</Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>- (void)prepareRequest</Declaration>
+			
+			
+			<Anchor>//api/name/prepareRequest</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/allRequestParametersAsDictionary</TokenIdentifier>
+			<Abstract type="html">Returns a dictionary of all request parameters along with generated OAuth parameters.</Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>- (NSMutableDictionary *)allRequestParametersAsDictionary</Declaration>
+			
+			<ReturnValue><Abstract type="html">A dictionary containing all the request parameters for this object.</Abstract></ReturnValue>
+			<Anchor>//api/name/allRequestParametersAsDictionary</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/allNonOAuthRequestParametersAsDictionary</TokenIdentifier>
+			<Abstract type="html">Returns a dictionary of all the non OAuth request parameters.</Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>- (NSMutableDictionary *)allNonOAuthRequestParametersAsDictionary</Declaration>
+			
+			<ReturnValue><Abstract type="html">A dictionary containing non OAuth variables as key value pairs.</Abstract></ReturnValue>
+			<Anchor>//api/name/allNonOAuthRequestParametersAsDictionary</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/allOAuthRequestParametersAsDictionary</TokenIdentifier>
+			<Abstract type="html">Returns a dictionary of all the generated OAuth request parameters.</Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>- (NSMutableDictionary *)allOAuthRequestParametersAsDictionary</Declaration>
+			
+			<ReturnValue><Abstract type="html">A dictionary containing OAuth variables as key value pairs.</Abstract></ReturnValue>
+			<Anchor>//api/name/allOAuthRequestParametersAsDictionary</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/YOAuthRequest/buildAuthorizationHeaderValue</TokenIdentifier>
+			<Abstract type="html">Returns an OAuth Authorization header.</Abstract>
+			<DeclaredIn>YOAuthRequest.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)buildAuthorizationHeaderValue</Declaration>
+			
+			<ReturnValue><Abstract type="html">An OAuth Authorization header usable in an URL request.</Abstract></ReturnValue>
+			<Anchor>//api/name/buildAuthorizationHeaderValue</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

@@ -1,0 +1,580 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>UVConfig Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<meta name="viewport" content="width=550" />
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 840)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">uservoice-iphone-sdk 1.2.2 </a></h1>
+				<a id="developerHome" href="../index.html">UserVoice</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">UVConfig Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/displayName">&nbsp;&nbsp;&nbsp;&nbsp;displayName</option>
+	
+	<option value="//api/name/email">&nbsp;&nbsp;&nbsp;&nbsp;email</option>
+	
+	<option value="//api/name/guid">&nbsp;&nbsp;&nbsp;&nbsp;guid</option>
+	
+	<option value="//api/name/key">&nbsp;&nbsp;&nbsp;&nbsp;key</option>
+	
+	<option value="//api/name/secret">&nbsp;&nbsp;&nbsp;&nbsp;secret</option>
+	
+	<option value="//api/name/site">&nbsp;&nbsp;&nbsp;&nbsp;site</option>
+	
+	<option value="//api/name/ssoToken">&nbsp;&nbsp;&nbsp;&nbsp;ssoToken</option>
+	
+	
+	
+	
+	<option value="class_methods">Class Methods</option>
+	
+	<option value="//api/name/configWithSite:andKey:andSecret:">&nbsp;&nbsp;&nbsp;&nbsp;+ configWithSite:andKey:andSecret:</option>
+	
+	<option value="//api/name/configWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:">&nbsp;&nbsp;&nbsp;&nbsp;+ configWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:</option>
+	
+	<option value="//api/name/configWithSite:andKey:andSecret:andSSOToken:">&nbsp;&nbsp;&nbsp;&nbsp;+ configWithSite:andKey:andSecret:andSSOToken:</option>
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/initWithSite:andKey:andSecret:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithSite:andKey:andSecret:</option>
+	
+	<option value="//api/name/initWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:</option>
+	
+	<option value="//api/name/initWithSite:andKey:andSecret:andSSOToken:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithSite:andKey:andSecret:andSSOToken:</option>
+	
+	<option value="//api/name/wasSignedInBySDK">&nbsp;&nbsp;&nbsp;&nbsp;- wasSignedInBySDK</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/displayName">displayName</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/email">email</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/guid">guid</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/key">key</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/secret">secret</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/site">site</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/ssoToken">ssoToken</a></span></li>
+	
+</ul></li>
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#class_methods">Class Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/configWithSite:andKey:andSecret:">configWithSite:andKey:andSecret:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/configWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:">configWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/configWithSite:andKey:andSecret:andSSOToken:">configWithSite:andKey:andSecret:andSSOToken:</a></span></li>
+	
+</ul></li>
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithSite:andKey:andSecret:">initWithSite:andKey:andSecret:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:">initWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithSite:andKey:andSecret:andSSOToken:">initWithSite:andKey:andSecret:andSSOToken:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/wasSignedInBySDK">wasSignedInBySDK</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="UVConfig Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">UVConfig Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">UVConfig.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						
+						
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/configWithSite:andKey:andSecret:">+&nbsp;configWithSite:andKey:andSecret:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/configWithSite:andKey:andSecret:andSSOToken:">+&nbsp;configWithSite:andKey:andSecret:andSSOToken:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/configWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:">+&nbsp;configWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/site">&nbsp;&nbsp;site</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/key">&nbsp;&nbsp;key</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/secret">&nbsp;&nbsp;secret</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/ssoToken">&nbsp;&nbsp;ssoToken</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/displayName">&nbsp;&nbsp;displayName</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/email">&nbsp;&nbsp;email</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/guid">&nbsp;&nbsp;guid</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithSite:andKey:andSecret:">&ndash;&nbsp;initWithSite:andKey:andSecret:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithSite:andKey:andSecret:andSSOToken:">&ndash;&nbsp;initWithSite:andKey:andSecret:andSSOToken:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:">&ndash;&nbsp;initWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/wasSignedInBySDK">&ndash;&nbsp;wasSignedInBySDK</a></code>
+		
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/displayName" title="displayName"></a>
+	<h3 class="subsubtitle method-title">displayName</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *displayName</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/email" title="email"></a>
+	<h3 class="subsubtitle method-title">email</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *email</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/guid" title="guid"></a>
+	<h3 class="subsubtitle method-title">guid</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *guid</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/key" title="key"></a>
+	<h3 class="subsubtitle method-title">key</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *key</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/secret" title="secret"></a>
+	<h3 class="subsubtitle method-title">secret</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *secret</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/site" title="site"></a>
+	<h3 class="subsubtitle method-title">site</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *site</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/ssoToken" title="ssoToken"></a>
+	<h3 class="subsubtitle method-title">ssoToken</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *ssoToken</code></div>
+
+    
+</div>
+						
+					</div>
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Class Methods" name="class_methods"></a>
+						<h2 class="subtitle subtitle-methods">Class Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/configWithSite:andKey:andSecret:" title="configWithSite:andKey:andSecret:"></a>
+	<h3 class="subsubtitle method-title">configWithSite:andKey:andSecret:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (UVConfig *)configWithSite:(NSString *)<em>site</em> andKey:(NSString *)<em>key</em> andSecret:(NSString *)<em>secret</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/configWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:" title="configWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:"></a>
+	<h3 class="subsubtitle method-title">configWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (UVConfig *)configWithSite:(NSString *)<em>site</em> andKey:(NSString *)<em>key</em> andSecret:(NSString *)<em>secret</em> andEmail:(NSString *)<em>email</em> andDisplayName:(NSString *)<em>displayName</em> andGUID:(NSString *)<em>guid</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/configWithSite:andKey:andSecret:andSSOToken:" title="configWithSite:andKey:andSecret:andSSOToken:"></a>
+	<h3 class="subsubtitle method-title">configWithSite:andKey:andSecret:andSSOToken:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (UVConfig *)configWithSite:(NSString *)<em>site</em> andKey:(NSString *)<em>key</em> andSecret:(NSString *)<em>secret</em> andSSOToken:(NSString *)<em>token</em></code></div>
+
+    
+</div>
+						
+					</div>
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithSite:andKey:andSecret:" title="initWithSite:andKey:andSecret:"></a>
+	<h3 class="subsubtitle method-title">initWithSite:andKey:andSecret:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (id)initWithSite:(NSString *)<em>theSite</em> andKey:(NSString *)<em>theKey</em> andSecret:(NSString *)<em>theSecret</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:" title="initWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:"></a>
+	<h3 class="subsubtitle method-title">initWithSite:andKey:andSecret:andEmail:andDisplayName:andGUID:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (id)initWithSite:(NSString *)<em>theSite</em> andKey:(NSString *)<em>theKey</em> andSecret:(NSString *)<em>theSecret</em> andEmail:(NSString *)<em>theEmail</em> andDisplayName:(NSString *)<em>theDisplayName</em> andGUID:(NSString *)<em>theGuid</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithSite:andKey:andSecret:andSSOToken:" title="initWithSite:andKey:andSecret:andSSOToken:"></a>
+	<h3 class="subsubtitle method-title">initWithSite:andKey:andSecret:andSSOToken:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (id)initWithSite:(NSString *)<em>theSite</em> andKey:(NSString *)<em>theKey</em> andSecret:(NSString *)<em>theSecret</em> andSSOToken:(NSString *)<em>theToken</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/wasSignedInBySDK" title="wasSignedInBySDK"></a>
+	<h3 class="subsubtitle method-title">wasSignedInBySDK</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)wasSignedInBySDK</code></div>
+
+    
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2012 UserVoice. All rights reserved. (Last updated: 2012-10-24)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVStreamPoller.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVStreamPoller</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVStreamPoller.h</DeclaredIn>
+			
+			<NodeRef refid="43"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVStreamPoller/setRepeatingTimer:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVStreamPoller.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSTimer *repeatingTimer</Declaration>
+			
+			
+			<Anchor>//api/name/repeatingTimer</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVStreamPoller/repeatingTimer</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVStreamPoller.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSTimer *repeatingTimer</Declaration>
+			
+			
+			<Anchor>//api/name/repeatingTimer</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVStreamPoller/setLastPollTime:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVStreamPoller.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSDate *lastPollTime</Declaration>
+			
+			
+			<Anchor>//api/name/lastPollTime</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVStreamPoller/lastPollTime</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVStreamPoller.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSDate *lastPollTime</Declaration>
+			
+			
+			<Anchor>//api/name/lastPollTime</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVStreamPoller/instance</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVStreamPoller.h</DeclaredIn>			
+			
+			<Declaration>+ (UVStreamPoller *)instance</Declaration>
+			
+			
+			<Anchor>//api/name/instance</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVStreamPoller/startTimer</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVStreamPoller.h</DeclaredIn>			
+			
+			<Declaration>- (void)startTimer</Declaration>
+			
+			
+			<Anchor>//api/name/startTimer</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVStreamPoller/stopTimer</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVStreamPoller.h</DeclaredIn>			
+			
+			<Declaration>- (void)stopTimer</Declaration>
+			
+			
+			<Anchor>//api/name/stopTimer</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVStreamPoller/pollServer:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVStreamPoller.h</DeclaredIn>			
+			
+			<Declaration>- (void)pollServer:(NSTimer *)theTimer</Declaration>
+			
+			
+			<Anchor>//api/name/pollServer:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVStreamPoller/timerIsRunning</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVStreamPoller.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)timerIsRunning</Declaration>
+			
+			
+			<Anchor>//api/name/timerIsRunning</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

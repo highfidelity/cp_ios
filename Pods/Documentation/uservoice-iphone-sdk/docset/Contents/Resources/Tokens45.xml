@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVSubdomain.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVSubdomain</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubdomain.h</DeclaredIn>
+			
+			<NodeRef refid="45"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSubdomain/setSubdomainId:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubdomain.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger subdomainId</Declaration>
+			
+			
+			<Anchor>//api/name/subdomainId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSubdomain/subdomainId</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubdomain.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger subdomainId</Declaration>
+			
+			
+			<Anchor>//api/name/subdomainId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSubdomain/setName:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubdomain.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSubdomain/name</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubdomain.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSubdomain/setHost:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubdomain.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *host</Declaration>
+			
+			
+			<Anchor>//api/name/host</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSubdomain/host</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubdomain.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *host</Declaration>
+			
+			
+			<Anchor>//api/name/host</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSubdomain/setKey:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubdomain.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *key</Declaration>
+			
+			
+			<Anchor>//api/name/key</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSubdomain/key</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubdomain.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *key</Declaration>
+			
+			
+			<Anchor>//api/name/key</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSubdomain/setStatuses:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubdomain.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSArray *statuses</Declaration>
+			
+			
+			<Anchor>//api/name/statuses</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSubdomain/statuses</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubdomain.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSArray *statuses</Declaration>
+			
+			
+			<Anchor>//api/name/statuses</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSubdomain/setDefaultSort:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubdomain.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *defaultSort</Declaration>
+			
+			
+			<Anchor>//api/name/defaultSort</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSubdomain/defaultSort</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubdomain.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *defaultSort</Declaration>
+			
+			
+			<Anchor>//api/name/defaultSort</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSubdomain/ideasHeading</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubdomain.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)ideasHeading</Declaration>
+			
+			
+			<Anchor>//api/name/ideasHeading</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSubdomain/suggestionSort</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubdomain.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)suggestionSort</Declaration>
+			
+			
+			<Anchor>//api/name/suggestionSort</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

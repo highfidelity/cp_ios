@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/UVJsonWriter.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/UVJsonWriter</TokenIdentifier>
+			<Abstract type="html">@brief Options for the writer class.</Abstract>
+			<DeclaredIn>UVJsonWriter.h</DeclaredIn>
+			
+			<NodeRef refid="88"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/UVJsonWriter/setHumanReadable:</TokenIdentifier>
+			<Abstract type="html">@brief Whether we are generating human-readable (multiline) JSON.</Abstract>
+			<DeclaredIn>UVJsonWriter.h</DeclaredIn>			
+			
+			<Declaration>@property BOOL humanReadable</Declaration>
+			
+			
+			<Anchor>//api/name/humanReadable</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/UVJsonWriter/humanReadable</TokenIdentifier>
+			<Abstract type="html">@brief Whether we are generating human-readable (multiline) JSON.</Abstract>
+			<DeclaredIn>UVJsonWriter.h</DeclaredIn>			
+			
+			<Declaration>@property BOOL humanReadable</Declaration>
+			
+			
+			<Anchor>//api/name/humanReadable</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/UVJsonWriter/setSortKeys:</TokenIdentifier>
+			<Abstract type="html">@brief Whether or not to sort the dictionary keys in the output.</Abstract>
+			<DeclaredIn>UVJsonWriter.h</DeclaredIn>			
+			
+			<Declaration>@property BOOL sortKeys</Declaration>
+			
+			
+			<Anchor>//api/name/sortKeys</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/UVJsonWriter/sortKeys</TokenIdentifier>
+			<Abstract type="html">@brief Whether or not to sort the dictionary keys in the output.</Abstract>
+			<DeclaredIn>UVJsonWriter.h</DeclaredIn>			
+			
+			<Declaration>@property BOOL sortKeys</Declaration>
+			
+			
+			<Anchor>//api/name/sortKeys</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/UVJsonWriter/stringWithObject:</TokenIdentifier>
+			<Abstract type="html">@brief Return JSON representation (or fragment) for the given object.</Abstract>
+			<DeclaredIn>UVJsonWriter.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)stringWithObject:(id)value</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>value</Name>
+					<Abstract type="html">any instance that can be represented as a JSON fragment</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/stringWithObject:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

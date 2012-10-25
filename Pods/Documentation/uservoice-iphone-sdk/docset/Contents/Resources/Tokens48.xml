@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVSuggestionButton.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVSuggestionButton</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionButton.h</DeclaredIn>
+			
+			<NodeRef refid="48"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSuggestionButton/initWithIndex:andFrame:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionButton.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithIndex:(NSInteger)index andFrame:(CGRect)theFrame</Declaration>
+			
+			
+			<Anchor>//api/name/initWithIndex:andFrame:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSuggestionButton/showSuggestion:withIndex:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionButton.h</DeclaredIn>			
+			
+			<Declaration>- (void)showSuggestion:(UVSuggestion *)suggestion withIndex:(NSInteger)theIndex</Declaration>
+			
+			
+			<Anchor>//api/name/showSuggestion:withIndex:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

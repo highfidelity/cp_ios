@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/UVTextEditorDelegate.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/UVTextEditorDelegate</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>
+			
+			<NodeRef refid="89"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/UVTextEditorDelegate/textEditorShouldBeginEditing:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)textEditorShouldBeginEditing:(UVTextEditor *)textEditor</Declaration>
+			
+			
+			<Anchor>//api/name/textEditorShouldBeginEditing:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/UVTextEditorDelegate/textEditorShouldEndEditing:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)textEditorShouldEndEditing:(UVTextEditor *)textEditor</Declaration>
+			
+			
+			<Anchor>//api/name/textEditorShouldEndEditing:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/UVTextEditorDelegate/textEditorDidBeginEditing:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>- (void)textEditorDidBeginEditing:(UVTextEditor *)textEditor</Declaration>
+			
+			
+			<Anchor>//api/name/textEditorDidBeginEditing:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/UVTextEditorDelegate/textEditorDidEndEditing:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>- (void)textEditorDidEndEditing:(UVTextEditor *)textEditor</Declaration>
+			
+			
+			<Anchor>//api/name/textEditorDidEndEditing:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/UVTextEditorDelegate/textEditor:shouldChangeTextInRange:replacementText:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)textEditor:(UVTextEditor *)textEditor shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)replacementText</Declaration>
+			
+			
+			<Anchor>//api/name/textEditor:shouldChangeTextInRange:replacementText:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/UVTextEditorDelegate/textEditorDidChange:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>- (void)textEditorDidChange:(UVTextEditor *)textEditor</Declaration>
+			
+			
+			<Anchor>//api/name/textEditorDidChange:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/UVTextEditorDelegate/textEditor:shouldResizeBy:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)textEditor:(UVTextEditor *)textEditor shouldResizeBy:(CGFloat)height</Declaration>
+			
+			
+			<Anchor>//api/name/textEditor:shouldResizeBy:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/UVTextEditorDelegate/textEditorShouldReturn:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVTextEditor.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)textEditorShouldReturn:(UVTextEditor *)textEditor</Declaration>
+			
+			
+			<Anchor>//api/name/textEditorShouldReturn:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

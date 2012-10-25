@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVSuggestionChickletView.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVSuggestionChickletView</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionChickletView.h</DeclaredIn>
+			
+			<NodeRef refid="49"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSuggestionChickletView/setStatusColorLayer:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionChickletView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) CALayer *statusColorLayer</Declaration>
+			
+			
+			<Anchor>//api/name/statusColorLayer</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSuggestionChickletView/statusColorLayer</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionChickletView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) CALayer *statusColorLayer</Declaration>
+			
+			
+			<Anchor>//api/name/statusColorLayer</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSuggestionChickletView/setBackgroundImageView:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionChickletView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIImageView *backgroundImageView</Declaration>
+			
+			
+			<Anchor>//api/name/backgroundImageView</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSuggestionChickletView/backgroundImageView</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionChickletView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIImageView *backgroundImageView</Declaration>
+			
+			
+			<Anchor>//api/name/backgroundImageView</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSuggestionChickletView/setVoteNumLabel:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionChickletView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UILabel *voteNumLabel</Declaration>
+			
+			
+			<Anchor>//api/name/voteNumLabel</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSuggestionChickletView/voteNumLabel</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionChickletView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UILabel *voteNumLabel</Declaration>
+			
+			
+			<Anchor>//api/name/voteNumLabel</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSuggestionChickletView/setVoteLabel:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionChickletView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UILabel *voteLabel</Declaration>
+			
+			
+			<Anchor>//api/name/voteLabel</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSuggestionChickletView/voteLabel</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionChickletView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UILabel *voteLabel</Declaration>
+			
+			
+			<Anchor>//api/name/voteLabel</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSuggestionChickletView/setStatusLabel:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionChickletView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UILabel *statusLabel</Declaration>
+			
+			
+			<Anchor>//api/name/statusLabel</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSuggestionChickletView/statusLabel</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionChickletView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UILabel *statusLabel</Declaration>
+			
+			
+			<Anchor>//api/name/statusLabel</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVSuggestionChickletView/heightForView</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionChickletView.h</DeclaredIn>			
+			
+			<Declaration>+ (CGFloat)heightForView</Declaration>
+			
+			
+			<Anchor>//api/name/heightForView</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVSuggestionChickletView/widthForView</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionChickletView.h</DeclaredIn>			
+			
+			<Declaration>+ (CGFloat)widthForView</Declaration>
+			
+			
+			<Anchor>//api/name/widthForView</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVSuggestionChickletView/suggestionChickletViewWithOrigin:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionChickletView.h</DeclaredIn>			
+			
+			<Declaration>+ (UVSuggestionChickletView *)suggestionChickletViewWithOrigin:(CGPoint)origin</Declaration>
+			
+			
+			<Anchor>//api/name/suggestionChickletViewWithOrigin:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSuggestionChickletView/initWithOrigin:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionChickletView.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithOrigin:(CGPoint)origin</Declaration>
+			
+			
+			<Anchor>//api/name/initWithOrigin:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSuggestionChickletView/updateWithSuggestion:style:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionChickletView.h</DeclaredIn>			
+			
+			<Declaration>- (void)updateWithSuggestion:(UVSuggestion *)suggestion style:(UVSuggestionChickletStyle)style</Declaration>
+			
+			
+			<Anchor>//api/name/updateWithSuggestion:style:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

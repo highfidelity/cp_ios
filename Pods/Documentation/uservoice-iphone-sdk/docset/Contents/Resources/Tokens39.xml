@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVSession.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVSession</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>
+			
+			<NodeRef refid="39"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSession/setIsModal:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) BOOL isModal</Declaration>
+			
+			
+			<Anchor>//api/name/isModal</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSession/isModal</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) BOOL isModal</Declaration>
+			
+			
+			<Anchor>//api/name/isModal</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSession/setConfig:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVConfig *config</Declaration>
+			
+			
+			<Anchor>//api/name/config</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSession/config</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVConfig *config</Declaration>
+			
+			
+			<Anchor>//api/name/config</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSession/setClientConfig:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVClientConfig *clientConfig</Declaration>
+			
+			
+			<Anchor>//api/name/clientConfig</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSession/clientConfig</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVClientConfig *clientConfig</Declaration>
+			
+			
+			<Anchor>//api/name/clientConfig</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSession/setUser:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVUser *user</Declaration>
+			
+			
+			<Anchor>//api/name/user</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSession/user</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVUser *user</Declaration>
+			
+			
+			<Anchor>//api/name/user</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSession/setInfo:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVInfo *info</Declaration>
+			
+			
+			<Anchor>//api/name/info</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSession/info</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVInfo *info</Declaration>
+			
+			
+			<Anchor>//api/name/info</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSession/setCurrentToken:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVToken *currentToken</Declaration>
+			
+			
+			<Anchor>//api/name/currentToken</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSession/currentToken</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVToken *currentToken</Declaration>
+			
+			
+			<Anchor>//api/name/currentToken</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSession/setUserCache:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableDictionary *userCache</Declaration>
+			
+			
+			<Anchor>//api/name/userCache</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSession/userCache</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableDictionary *userCache</Declaration>
+			
+			
+			<Anchor>//api/name/userCache</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSession/setStartTime:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSDate *startTime</Declaration>
+			
+			
+			<Anchor>//api/name/startTime</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSession/startTime</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSDate *startTime</Declaration>
+			
+			
+			<Anchor>//api/name/startTime</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSession/setInteractions:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableDictionary *interactions</Declaration>
+			
+			
+			<Anchor>//api/name/interactions</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSession/interactions</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableDictionary *interactions</Declaration>
+			
+			
+			<Anchor>//api/name/interactions</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSession/setInteractionSequence:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableArray *interactionSequence</Declaration>
+			
+			
+			<Anchor>//api/name/interactionSequence</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSession/interactionSequence</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableArray *interactionSequence</Declaration>
+			
+			
+			<Anchor>//api/name/interactionSequence</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSession/setInteractionDetails:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableArray *interactionDetails</Declaration>
+			
+			
+			<Anchor>//api/name/interactionDetails</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSession/interactionDetails</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableArray *interactionDetails</Declaration>
+			
+			
+			<Anchor>//api/name/interactionDetails</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSession/setInteractionId:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSUInteger interactionId</Declaration>
+			
+			
+			<Anchor>//api/name/interactionId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSession/interactionId</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSUInteger interactionId</Declaration>
+			
+			
+			<Anchor>//api/name/interactionId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVSession/currentSession</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>+ (UVSession *)currentSession</Declaration>
+			
+			
+			<Anchor>//api/name/currentSession</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSession/yOAuthConsumer</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>- (YOAuthConsumer *)yOAuthConsumer</Declaration>
+			
+			
+			<Anchor>//api/name/yOAuthConsumer</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSession/loggedIn</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)loggedIn</Declaration>
+			
+			
+			<Anchor>//api/name/loggedIn</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSession/trackInteraction:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>- (void)trackInteraction:(NSString *)interaction</Declaration>
+			
+			
+			<Anchor>//api/name/trackInteraction:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSession/trackInteraction:details:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>- (void)trackInteraction:(NSString *)interaction details:(NSDictionary *)details</Declaration>
+			
+			
+			<Anchor>//api/name/trackInteraction:details:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSession/flushInteractions</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSession.h</DeclaredIn>			
+			
+			<Declaration>- (void)flushInteractions</Declaration>
+			
+			
+			<Anchor>//api/name/flushInteractions</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

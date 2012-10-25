@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVCommentListViewController.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVCommentListViewController</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>
+			
+			<NodeRef refid="16"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCommentListViewController/setSuggestion:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVSuggestion *suggestion</Declaration>
+			
+			
+			<Anchor>//api/name/suggestion</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVCommentListViewController/suggestion</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVSuggestion *suggestion</Declaration>
+			
+			
+			<Anchor>//api/name/suggestion</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCommentListViewController/setComments:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableArray *comments</Declaration>
+			
+			
+			<Anchor>//api/name/comments</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVCommentListViewController/comments</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableArray *comments</Declaration>
+			
+			
+			<Anchor>//api/name/comments</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCommentListViewController/setCommentToFlag:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVComment *commentToFlag</Declaration>
+			
+			
+			<Anchor>//api/name/commentToFlag</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVCommentListViewController/commentToFlag</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVComment *commentToFlag</Declaration>
+			
+			
+			<Anchor>//api/name/commentToFlag</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCommentListViewController/setTextEditor:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVTextEditor *textEditor</Declaration>
+			
+			
+			<Anchor>//api/name/textEditor</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVCommentListViewController/textEditor</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVTextEditor *textEditor</Declaration>
+			
+			
+			<Anchor>//api/name/textEditor</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCommentListViewController/setPrevLeftBarButton:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIBarButtonItem *prevLeftBarButton</Declaration>
+			
+			
+			<Anchor>//api/name/prevLeftBarButton</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVCommentListViewController/prevLeftBarButton</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIBarButtonItem *prevLeftBarButton</Declaration>
+			
+			
+			<Anchor>//api/name/prevLeftBarButton</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCommentListViewController/setPrevRightBarButton:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIBarButtonItem *prevRightBarButton</Declaration>
+			
+			
+			<Anchor>//api/name/prevRightBarButton</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVCommentListViewController/prevRightBarButton</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIBarButtonItem *prevRightBarButton</Declaration>
+			
+			
+			<Anchor>//api/name/prevRightBarButton</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCommentListViewController/setTextBar:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIView *textBar</Declaration>
+			
+			
+			<Anchor>//api/name/textBar</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVCommentListViewController/textBar</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIView *textBar</Declaration>
+			
+			
+			<Anchor>//api/name/textBar</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCommentListViewController/setHeaderView:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIView *headerView</Declaration>
+			
+			
+			<Anchor>//api/name/headerView</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVCommentListViewController/headerView</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIView *headerView</Declaration>
+			
+			
+			<Anchor>//api/name/headerView</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCommentListViewController/initWithSuggestion:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCommentListViewController.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithSuggestion:(UVSuggestion *)theSuggestion</Declaration>
+			
+			
+			<Anchor>//api/name/initWithSuggestion:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

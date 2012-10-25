@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVForum.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVForum</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVForum.h</DeclaredIn>
+			
+			<NodeRef refid="21"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVForum/setForumId:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVForum.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger forumId</Declaration>
+			
+			
+			<Anchor>//api/name/forumId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVForum/forumId</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVForum.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger forumId</Declaration>
+			
+			
+			<Anchor>//api/name/forumId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVForum/setIsPrivate:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVForum.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) BOOL isPrivate</Declaration>
+			
+			
+			<Anchor>//api/name/isPrivate</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVForum/isPrivate</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVForum.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) BOOL isPrivate</Declaration>
+			
+			
+			<Anchor>//api/name/isPrivate</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVForum/setName:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVForum.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVForum/name</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVForum.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVForum/setTopics:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVForum.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableArray *topics</Declaration>
+			
+			
+			<Anchor>//api/name/topics</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVForum/topics</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVForum.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableArray *topics</Declaration>
+			
+			
+			<Anchor>//api/name/topics</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVForum/setCurrentTopic:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVForum.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVTopic *currentTopic</Declaration>
+			
+			
+			<Anchor>//api/name/currentTopic</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVForum/currentTopic</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVForum.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVTopic *currentTopic</Declaration>
+			
+			
+			<Anchor>//api/name/currentTopic</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVForum/availableCategories</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVForum.h</DeclaredIn>			
+			
+			<Declaration>- (NSArray *)availableCategories</Declaration>
+			
+			
+			<Anchor>//api/name/availableCategories</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVForum/prompt</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVForum.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)prompt</Declaration>
+			
+			
+			<Anchor>//api/name/prompt</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVForum/example</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVForum.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)example</Declaration>
+			
+			
+			<Anchor>//api/name/example</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

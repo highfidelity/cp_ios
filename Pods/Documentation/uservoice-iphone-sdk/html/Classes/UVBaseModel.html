@@ -1,0 +1,655 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>UVBaseModel Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<meta name="viewport" content="width=550" />
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 840)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">uservoice-iphone-sdk 1.2.2 </a></h1>
+				<a id="developerHome" href="../index.html">UserVoice</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">UVBaseModel Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	
+	
+	<option value="class_methods">Class Methods</option>
+	
+	<option value="//api/name/apiPath:">&nbsp;&nbsp;&nbsp;&nbsp;+ apiPath:</option>
+	
+	<option value="//api/name/apiPrefix">&nbsp;&nbsp;&nbsp;&nbsp;+ apiPrefix</option>
+	
+	<option value="//api/name/didReceiveError:callback:">&nbsp;&nbsp;&nbsp;&nbsp;+ didReceiveError:callback:</option>
+	
+	<option value="//api/name/didReturnModel:callback:">&nbsp;&nbsp;&nbsp;&nbsp;+ didReturnModel:callback:</option>
+	
+	<option value="//api/name/didReturnModels:callback:">&nbsp;&nbsp;&nbsp;&nbsp;+ didReturnModels:callback:</option>
+	
+	<option value="//api/name/getPath:withParams:target:selector:">&nbsp;&nbsp;&nbsp;&nbsp;+ getPath:withParams:target:selector:</option>
+	
+	<option value="//api/name/headersForPath:params:method:">&nbsp;&nbsp;&nbsp;&nbsp;+ headersForPath:params:method:</option>
+	
+	<option value="//api/name/modelForDictionary:">&nbsp;&nbsp;&nbsp;&nbsp;+ modelForDictionary:</option>
+	
+	<option value="//api/name/postPath:withParams:target:selector:">&nbsp;&nbsp;&nbsp;&nbsp;+ postPath:withParams:target:selector:</option>
+	
+	<option value="//api/name/processModel:">&nbsp;&nbsp;&nbsp;&nbsp;+ processModel:</option>
+	
+	<option value="//api/name/processModels:">&nbsp;&nbsp;&nbsp;&nbsp;+ processModels:</option>
+	
+	<option value="//api/name/putPath:withParams:target:selector:">&nbsp;&nbsp;&nbsp;&nbsp;+ putPath:withParams:target:selector:</option>
+	
+	<option value="//api/name/siteURL">&nbsp;&nbsp;&nbsp;&nbsp;+ siteURL</option>
+	
+	<option value="//api/name/siteURLWithHTTPS:">&nbsp;&nbsp;&nbsp;&nbsp;+ siteURLWithHTTPS:</option>
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/arrayForJSONArray:withClass:">&nbsp;&nbsp;&nbsp;&nbsp;- arrayForJSONArray:withClass:</option>
+	
+	<option value="//api/name/initWithDictionary:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithDictionary:</option>
+	
+	<option value="//api/name/objectOrNilForDict:key:">&nbsp;&nbsp;&nbsp;&nbsp;- objectOrNilForDict:key:</option>
+	
+	<option value="//api/name/parseJsonDate:">&nbsp;&nbsp;&nbsp;&nbsp;- parseJsonDate:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+</ul></li>
+
+
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#class_methods">Class Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/apiPath:">apiPath:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/apiPrefix">apiPrefix</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/didReceiveError:callback:">didReceiveError:callback:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/didReturnModel:callback:">didReturnModel:callback:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/didReturnModels:callback:">didReturnModels:callback:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getPath:withParams:target:selector:">getPath:withParams:target:selector:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/headersForPath:params:method:">headersForPath:params:method:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/modelForDictionary:">modelForDictionary:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/postPath:withParams:target:selector:">postPath:withParams:target:selector:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/processModel:">processModel:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/processModels:">processModels:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/putPath:withParams:target:selector:">putPath:withParams:target:selector:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/siteURL">siteURL</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/siteURLWithHTTPS:">siteURLWithHTTPS:</a></span></li>
+	
+</ul></li>
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/arrayForJSONArray:withClass:">arrayForJSONArray:withClass:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithDictionary:">initWithDictionary:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/objectOrNilForDict:key:">objectOrNilForDict:key:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/parseJsonDate:">parseJsonDate:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="UVBaseModel Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">UVBaseModel Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value"><a href="../Classes/HRRestModel.html">HRRestModel</a> : NSObject</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">UVBaseModel.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						
+						
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/siteURLWithHTTPS:">+&nbsp;siteURLWithHTTPS:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/siteURL">+&nbsp;siteURL</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/apiPrefix">+&nbsp;apiPrefix</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/apiPath:">+&nbsp;apiPath:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getPath:withParams:target:selector:">+&nbsp;getPath:withParams:target:selector:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/postPath:withParams:target:selector:">+&nbsp;postPath:withParams:target:selector:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/putPath:withParams:target:selector:">+&nbsp;putPath:withParams:target:selector:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/headersForPath:params:method:">+&nbsp;headersForPath:params:method:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/processModel:">+&nbsp;processModel:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/processModels:">+&nbsp;processModels:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/modelForDictionary:">+&nbsp;modelForDictionary:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/didReturnModel:callback:">+&nbsp;didReturnModel:callback:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/didReturnModels:callback:">+&nbsp;didReturnModels:callback:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/didReceiveError:callback:">+&nbsp;didReceiveError:callback:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithDictionary:">&ndash;&nbsp;initWithDictionary:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/objectOrNilForDict:key:">&ndash;&nbsp;objectOrNilForDict:key:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/arrayForJSONArray:withClass:">&ndash;&nbsp;arrayForJSONArray:withClass:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/parseJsonDate:">&ndash;&nbsp;parseJsonDate:</a></code>
+		
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Class Methods" name="class_methods"></a>
+						<h2 class="subtitle subtitle-methods">Class Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/apiPath:" title="apiPath:"></a>
+	<h3 class="subsubtitle method-title">apiPath:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (NSString *)apiPath:(NSString *)<em>path</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/apiPrefix" title="apiPrefix"></a>
+	<h3 class="subsubtitle method-title">apiPrefix</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (NSString *)apiPrefix</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/didReceiveError:callback:" title="didReceiveError:callback:"></a>
+	<h3 class="subsubtitle method-title">didReceiveError:callback:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (void)didReceiveError:(NSError *)<em>error</em> callback:(NSInvocation *)<em>callback</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/didReturnModel:callback:" title="didReturnModel:callback:"></a>
+	<h3 class="subsubtitle method-title">didReturnModel:callback:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (void)didReturnModel:(id)<em>model</em> callback:(NSInvocation *)<em>callback</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/didReturnModels:callback:" title="didReturnModels:callback:"></a>
+	<h3 class="subsubtitle method-title">didReturnModels:callback:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (void)didReturnModels:(NSArray *)<em>models</em> callback:(NSInvocation *)<em>callback</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getPath:withParams:target:selector:" title="getPath:withParams:target:selector:"></a>
+	<h3 class="subsubtitle method-title">getPath:withParams:target:selector:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (id)getPath:(NSString *)<em>path</em> withParams:(NSDictionary *)<em>params</em> target:(id)<em>target</em> selector:(SEL)<em>selector</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/headersForPath:params:method:" title="headersForPath:params:method:"></a>
+	<h3 class="subsubtitle method-title">headersForPath:params:method:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (NSMutableDictionary *)headersForPath:(NSString *)<em>path</em> params:(NSDictionary *)<em>params</em> method:(NSString *)<em>method</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/modelForDictionary:" title="modelForDictionary:"></a>
+	<h3 class="subsubtitle method-title">modelForDictionary:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (UVBaseModel *)modelForDictionary:(NSDictionary *)<em>dict</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/postPath:withParams:target:selector:" title="postPath:withParams:target:selector:"></a>
+	<h3 class="subsubtitle method-title">postPath:withParams:target:selector:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (id)postPath:(NSString *)<em>path</em> withParams:(NSDictionary *)<em>params</em> target:(id)<em>target</em> selector:(SEL)<em>selector</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/processModel:" title="processModel:"></a>
+	<h3 class="subsubtitle method-title">processModel:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (void)processModel:(id)<em>model</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/processModels:" title="processModels:"></a>
+	<h3 class="subsubtitle method-title">processModels:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (void)processModels:(NSArray *)<em>models</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/putPath:withParams:target:selector:" title="putPath:withParams:target:selector:"></a>
+	<h3 class="subsubtitle method-title">putPath:withParams:target:selector:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (id)putPath:(NSString *)<em>path</em> withParams:(NSDictionary *)<em>params</em> target:(id)<em>target</em> selector:(SEL)<em>selector</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/siteURL" title="siteURL"></a>
+	<h3 class="subsubtitle method-title">siteURL</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (NSURL *)siteURL</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/siteURLWithHTTPS:" title="siteURLWithHTTPS:"></a>
+	<h3 class="subsubtitle method-title">siteURLWithHTTPS:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>+ (NSURL *)siteURLWithHTTPS:(BOOL)<em>https</em></code></div>
+
+    
+</div>
+						
+					</div>
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/arrayForJSONArray:withClass:" title="arrayForJSONArray:withClass:"></a>
+	<h3 class="subsubtitle method-title">arrayForJSONArray:withClass:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)arrayForJSONArray:(NSArray *)<em>array</em> withClass:(Class)<em>klass</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithDictionary:" title="initWithDictionary:"></a>
+	<h3 class="subsubtitle method-title">initWithDictionary:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (id)initWithDictionary:(NSDictionary *)<em>dict</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/objectOrNilForDict:key:" title="objectOrNilForDict:key:"></a>
+	<h3 class="subsubtitle method-title">objectOrNilForDict:key:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (id)objectOrNilForDict:(NSDictionary *)<em>dict</em> key:(id)<em>key</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/parseJsonDate:" title="parseJsonDate:"></a>
+	<h3 class="subsubtitle method-title">parseJsonDate:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (NSDate *)parseJsonDate:(NSString *)<em>str</em></code></div>
+
+    
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2012 UserVoice. All rights reserved. (Last updated: 2012-10-24)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

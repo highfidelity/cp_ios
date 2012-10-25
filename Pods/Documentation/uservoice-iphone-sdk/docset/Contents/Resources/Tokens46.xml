@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVSubject.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVSubject</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubject.h</DeclaredIn>
+			
+			<NodeRef refid="46"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSubject/setSubjectId:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubject.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger subjectId</Declaration>
+			
+			
+			<Anchor>//api/name/subjectId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSubject/subjectId</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubject.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger subjectId</Declaration>
+			
+			
+			<Anchor>//api/name/subjectId</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSubject/setText:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubject.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *text</Declaration>
+			
+			
+			<Anchor>//api/name/text</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSubject/text</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubject.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *text</Declaration>
+			
+			
+			<Anchor>//api/name/text</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSubject/initWithDictionary:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSubject.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithDictionary:(NSDictionary *)dict</Declaration>
+			
+			
+			<Anchor>//api/name/initWithDictionary:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

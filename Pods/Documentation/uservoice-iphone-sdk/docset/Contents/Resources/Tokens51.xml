@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVSuggestionListViewController.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVSuggestionListViewController</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionListViewController.h</DeclaredIn>
+			
+			<NodeRef refid="51"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSuggestionListViewController/setForum:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVForum *forum</Declaration>
+			
+			
+			<Anchor>//api/name/forum</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSuggestionListViewController/forum</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVForum *forum</Declaration>
+			
+			
+			<Anchor>//api/name/forum</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSuggestionListViewController/setTextEditor:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVTextEditor *textEditor</Declaration>
+			
+			
+			<Anchor>//api/name/textEditor</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSuggestionListViewController/textEditor</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVTextEditor *textEditor</Declaration>
+			
+			
+			<Anchor>//api/name/textEditor</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSuggestionListViewController/setSuggestions:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableArray *suggestions</Declaration>
+			
+			
+			<Anchor>//api/name/suggestions</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVSuggestionListViewController/suggestions</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionListViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableArray *suggestions</Declaration>
+			
+			
+			<Anchor>//api/name/suggestions</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSuggestionListViewController/initWithForum:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionListViewController.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithForum:(UVForum *)theForum</Declaration>
+			
+			
+			<Anchor>//api/name/initWithForum:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSuggestionListViewController/initWithForum:andSuggestions:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionListViewController.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithForum:(UVForum *)theForum andSuggestions:(NSArray *)theSuggestions</Declaration>
+			
+			
+			<Anchor>//api/name/initWithForum:andSuggestions:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSuggestionListViewController/reloadTableData</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionListViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)reloadTableData</Declaration>
+			
+			
+			<Anchor>//api/name/reloadTableData</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSuggestionListViewController/supportsSearch</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionListViewController.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)supportsSearch</Declaration>
+			
+			
+			<Anchor>//api/name/supportsSearch</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVSuggestionListViewController/dismissTextEditor</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVSuggestionListViewController.h</DeclaredIn>			
+			
+			<Declaration>- (void)dismissTextEditor</Declaration>
+			
+			
+			<Anchor>//api/name/dismissTextEditor</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

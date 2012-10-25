@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVCustomFieldValueSelectViewController.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVCustomFieldValueSelectViewController</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCustomFieldValueSelectViewController.h</DeclaredIn>
+			
+			<NodeRef refid="19"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCustomFieldValueSelectViewController/setValueDictionary:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCustomFieldValueSelectViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableDictionary *valueDictionary</Declaration>
+			
+			
+			<Anchor>//api/name/valueDictionary</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVCustomFieldValueSelectViewController/valueDictionary</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCustomFieldValueSelectViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableDictionary *valueDictionary</Declaration>
+			
+			
+			<Anchor>//api/name/valueDictionary</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCustomFieldValueSelectViewController/setCustomField:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCustomFieldValueSelectViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVCustomField *customField</Declaration>
+			
+			
+			<Anchor>//api/name/customField</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVCustomFieldValueSelectViewController/customField</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCustomFieldValueSelectViewController.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UVCustomField *customField</Declaration>
+			
+			
+			<Anchor>//api/name/customField</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCustomFieldValueSelectViewController/initWithCustomField:valueDictionary:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCustomFieldValueSelectViewController.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithCustomField:(UVCustomField *)customField valueDictionary:(NSMutableDictionary *)valueDictionary</Declaration>
+			
+			
+			<Anchor>//api/name/initWithCustomField:valueDictionary:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVResponseDelegate.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVResponseDelegate</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVResponseDelegate.h</DeclaredIn>
+			
+			<NodeRef refid="36"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVResponseDelegate/setModelClass:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVResponseDelegate.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) Class modelClass</Declaration>
+			
+			
+			<Anchor>//api/name/modelClass</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVResponseDelegate/modelClass</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVResponseDelegate.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) Class modelClass</Declaration>
+			
+			
+			<Anchor>//api/name/modelClass</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVResponseDelegate/initWithModelClass:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVResponseDelegate.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithModelClass:(Class)clazz</Declaration>
+			
+			
+			<Anchor>//api/name/initWithModelClass:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

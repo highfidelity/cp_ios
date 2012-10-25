@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/YOAuthSignatureMethod.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/YOAuthSignatureMethod</TokenIdentifier>
+			<Abstract type="html">A base protocol for all signature methods. This cannot be used as a signature method alone;
+instead use &lt;code&gt;YOAuthSignatureMethodPLAINTEXT&lt;/code&gt; or &lt;code&gt;YOAuthSignatureMethodHMAC-SHA1&lt;/code&gt;.</Abstract>
+			<DeclaredIn>YOAuthSignatureMethod.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/cl/YOAuthSignatureMethod_PLAINTEXT</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<NodeRef refid="90"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/YOAuthSignatureMethod/name</TokenIdentifier>
+			<Abstract type="html">Returns the name of the signature method.</Abstract>
+			<DeclaredIn>YOAuthSignatureMethod.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/YOAuthSignatureMethod/buildSignatureWithRequest:andSecrets:</TokenIdentifier>
+			<Abstract type="html">Returns a signature generated with the provided signature base string and combined token.</Abstract>
+			<DeclaredIn>YOAuthSignatureMethod.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)buildSignatureWithRequest:(NSString *)aSignableString andSecrets:(NSString *)aSecret</Declaration>
+			
+			
+			<Anchor>//api/name/buildSignatureWithRequest:andSecrets:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/YOAuthSignatureMethod/checkSignature:withSignableString:andSecrets:</TokenIdentifier>
+			<Abstract type="html">Checks the provided signature against one built with the signable string and secrets.</Abstract>
+			<DeclaredIn>YOAuthSignatureMethod.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)checkSignature:(NSString *)aSignature withSignableString:(NSString *)aSignableString andSecrets:(NSString *)aSecret</Declaration>
+			
+			<ReturnValue><Abstract type="html">A Boolean, true if the signature provided matches the signature built from the provided strings.</Abstract></ReturnValue>
+			<Anchor>//api/name/checkSignature:withSignableString:andSecrets:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVInfo.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVInfo</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVInfo.h</DeclaredIn>
+			
+			<NodeRef refid="24"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVInfo/setAbout_title:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVInfo.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *about_title</Declaration>
+			
+			
+			<Anchor>//api/name/about_title</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVInfo/about_title</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVInfo.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *about_title</Declaration>
+			
+			
+			<Anchor>//api/name/about_title</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVInfo/setAbout_body:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVInfo.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *about_body</Declaration>
+			
+			
+			<Anchor>//api/name/about_body</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVInfo/about_body</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVInfo.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *about_body</Declaration>
+			
+			
+			<Anchor>//api/name/about_body</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVInfo/setMotivation_title:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVInfo.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *motivation_title</Declaration>
+			
+			
+			<Anchor>//api/name/motivation_title</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVInfo/motivation_title</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVInfo.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *motivation_title</Declaration>
+			
+			
+			<Anchor>//api/name/motivation_title</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVInfo/setMotivation_body:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVInfo.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *motivation_body</Declaration>
+			
+			
+			<Anchor>//api/name/motivation_body</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVInfo/motivation_body</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVInfo.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *motivation_body</Declaration>
+			
+			
+			<Anchor>//api/name/motivation_body</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVInfo/setManagement:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVInfo.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSDictionary *management</Declaration>
+			
+			
+			<Anchor>//api/name/management</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVInfo/management</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVInfo.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSDictionary *management</Declaration>
+			
+			
+			<Anchor>//api/name/management</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVInfo/setContacts:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVInfo.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSDictionary *contacts</Declaration>
+			
+			
+			<Anchor>//api/name/contacts</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVInfo/contacts</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVInfo.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSDictionary *contacts</Declaration>
+			
+			
+			<Anchor>//api/name/contacts</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UVInfo/getWithDelegate:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVInfo.h</DeclaredIn>			
+			
+			<Declaration>+ (id)getWithDelegate:(id)delegate</Declaration>
+			
+			
+			<Anchor>//api/name/getWithDelegate:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

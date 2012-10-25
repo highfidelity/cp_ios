@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVImageView.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVImageView</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageView.h</DeclaredIn>
+			
+			<NodeRef refid="23"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVImageView/setURL:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *URL</Declaration>
+			
+			
+			<Anchor>//api/name/URL</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVImageView/URL</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *URL</Declaration>
+			
+			
+			<Anchor>//api/name/URL</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVImageView/setImage:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIImage *image</Declaration>
+			
+			
+			<Anchor>//api/name/image</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVImageView/image</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIImage *image</Declaration>
+			
+			
+			<Anchor>//api/name/image</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVImageView/setDefaultImage:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIImage *defaultImage</Declaration>
+			
+			
+			<Anchor>//api/name/defaultImage</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVImageView/defaultImage</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIImage *defaultImage</Declaration>
+			
+			
+			<Anchor>//api/name/defaultImage</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVImageView/setPayload:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableData *payload</Declaration>
+			
+			
+			<Anchor>//api/name/payload</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVImageView/payload</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableData *payload</Declaration>
+			
+			
+			<Anchor>//api/name/payload</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVImageView/setConnection:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSURLConnection *connection</Declaration>
+			
+			
+			<Anchor>//api/name/connection</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVImageView/connection</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageView.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSURLConnection *connection</Declaration>
+			
+			
+			<Anchor>//api/name/connection</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVImageView/reload</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageView.h</DeclaredIn>			
+			
+			<Declaration>- (void)reload</Declaration>
+			
+			
+			<Anchor>//api/name/reload</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVImageView/stopLoading</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageView.h</DeclaredIn>			
+			
+			<Declaration>- (void)stopLoading</Declaration>
+			
+			
+			<Anchor>//api/name/stopLoading</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVImageView/connection:didReceiveData:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageView.h</DeclaredIn>			
+			
+			<Declaration>- (void)connection:(NSURLConnection *)conn didReceiveData:(NSData *)data</Declaration>
+			
+			
+			<Anchor>//api/name/connection:didReceiveData:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVImageView/connectionDidFinishLoading:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageView.h</DeclaredIn>			
+			
+			<Declaration>- (void)connectionDidFinishLoading:(NSURLConnection *)conn</Declaration>
+			
+			
+			<Anchor>//api/name/connectionDidFinishLoading:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVImageView/connection:didFailWithError:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVImageView.h</DeclaredIn>			
+			
+			<Declaration>- (void)connection:(NSURLConnection *)conn didFailWithError:(NSError *)error</Declaration>
+			
+			
+			<Anchor>//api/name/connection:didFailWithError:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

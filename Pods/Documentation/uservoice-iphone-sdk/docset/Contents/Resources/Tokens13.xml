@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UVCellViewWithIndex.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UVCellViewWithIndex</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCellViewWithIndex.h</DeclaredIn>
+			
+			<NodeRef refid="13"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCellViewWithIndex/setIndex:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCellViewWithIndex.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger index</Declaration>
+			
+			
+			<Anchor>//api/name/index</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UVCellViewWithIndex/index</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCellViewWithIndex.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) NSInteger index</Declaration>
+			
+			
+			<Anchor>//api/name/index</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCellViewWithIndex/index</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCellViewWithIndex.h</DeclaredIn>			
+			
+			<Declaration>- (NSInteger)index</Declaration>
+			
+			
+			<Anchor>//api/name/index</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCellViewWithIndex/initWithIndex:andFrame:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCellViewWithIndex.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithIndex:(NSInteger)index andFrame:(CGRect)theFrame</Declaration>
+			
+			
+			<Anchor>//api/name/initWithIndex:andFrame:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UVCellViewWithIndex/setZebraColorFromIndex:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UVCellViewWithIndex.h</DeclaredIn>			
+			
+			<Declaration>- (void)setZebraColorFromIndex:(NSInteger)index</Declaration>
+			
+			
+			<Anchor>//api/name/setZebraColorFromIndex:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Categories/NSError+UVExtras.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cat/NSError(UVExtras)</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>NSError+UVExtras.h</DeclaredIn>
+			
+			<NodeRef refid="71"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSError(UVExtras)/isConnectionError</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>NSError+UVExtras.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)isConnectionError</Declaration>
+			
+			
+			<Anchor>//api/name/isConnectionError</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSError(UVExtras)/isUserVoiceError</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>NSError+UVExtras.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)isUserVoiceError</Declaration>
+			
+			
+			<Anchor>//api/name/isUserVoiceError</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSError(UVExtras)/userVoiceErrorMessage</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>NSError+UVExtras.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)userVoiceErrorMessage</Declaration>
+			
+			
+			<Anchor>//api/name/userVoiceErrorMessage</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSError(UVExtras)/isUVErrorWithMessage:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>NSError+UVExtras.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)isUVErrorWithMessage:(NSString *)message</Declaration>
+			
+			
+			<Anchor>//api/name/isUVErrorWithMessage:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSError(UVExtras)/isUVRecordInvalid</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>NSError+UVExtras.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)isUVRecordInvalid</Declaration>
+			
+			
+			<Anchor>//api/name/isUVRecordInvalid</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSError(UVExtras)/isUVRecordInvalidForField:withMessage:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>NSError+UVExtras.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)isUVRecordInvalidForField:(NSString *)field withMessage:(NSString *)message</Declaration>
+			
+			
+			<Anchor>//api/name/isUVRecordInvalidForField:withMessage:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSError(UVExtras)/isAuthError</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>NSError+UVExtras.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)isAuthError</Declaration>
+			
+			
+			<Anchor>//api/name/isAuthError</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSError(UVExtras)/isNotFoundError</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>NSError+UVExtras.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)isNotFoundError</Declaration>
+			
+			
+			<Anchor>//api/name/isNotFoundError</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSError(UVExtras)/isUnprocessableError</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>NSError+UVExtras.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)isUnprocessableError</Declaration>
+			
+			
+			<Anchor>//api/name/isUnprocessableError</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>
