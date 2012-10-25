@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/SSKeychain.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/SSKeychain</TokenIdentifier>
+			<Abstract type="html">Simple wrapper for accessing accounts, getting passwords, setting passwords, and deleting passwords using the system
+Keychain on Mac OS X and iOS.</Abstract>
+			<DeclaredIn>SSKeychain.h</DeclaredIn>
+			
+			<NodeRef refid="1"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/allAccounts</TokenIdentifier>
+			<Abstract type="html">Returns an array containing the Keychain&apos;s accounts, or nil if the Keychain has no accounts.</Abstract>
+			<DeclaredIn>SSKeychain.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/allAccounts:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (NSArray *)allAccounts</Declaration>
+			
+			<ReturnValue><Abstract type="html">An array of dictionarires containing the Keychain&apos;s accounts, or nil if the Keychain doesn&apos;t have any
+accounts. The order of the objects in the array isn&apos;t defined.</Abstract></ReturnValue>
+			<Anchor>//api/name/allAccounts</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/allAccounts:</TokenIdentifier>
+			<Abstract type="html">Returns an array containing the Keychain&apos;s accounts, or nil if the Keychain doesn&apos;t have any
+accounts.</Abstract>
+			<DeclaredIn>SSKeychain.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/allAccounts</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (NSArray *)allAccounts:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>error</Name>
+					<Abstract type="html">If accessing the accounts fails, upon return contains an error that describes the problem.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">An array of dictionarires containing the Keychain&apos;s accounts, or nil if the Keychain doesn&apos;t have any
+accounts. The order of the objects in the array isn&apos;t defined.
+  </Abstract></ReturnValue>
+			<Anchor>//api/name/allAccounts:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/accountsForService:</TokenIdentifier>
+			<Abstract type="html">Returns an array containing the Keychain&apos;s accounts for a given service, or nil if the Keychain doesn&apos;t have any
+accounts for the given service.</Abstract>
+			<DeclaredIn>SSKeychain.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/accountsForService:error:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (NSArray *)accountsForService:(NSString *)serviceName</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>serviceName</Name>
+					<Abstract type="html">The service for which to return the corresponding accounts.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">An array of dictionarires containing the Keychain&apos;s accountsfor a given serviceName, or nil if the Keychain
+doesn&apos;t have any accounts for the given serviceName. The order of the objects in the array isn&apos;t defined.</Abstract></ReturnValue>
+			<Anchor>//api/name/accountsForService:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/accountsForService:error:</TokenIdentifier>
+			<Abstract type="html">Returns an array containing the Keychain&apos;s accounts for a given service, or nil if the Keychain doesn&apos;t have any
+accounts for the given service.</Abstract>
+			<DeclaredIn>SSKeychain.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/accountsForService:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (NSArray *)accountsForService:(NSString *)serviceName error:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>serviceName</Name>
+					<Abstract type="html">The service for which to return the corresponding accounts.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">If accessing the accounts fails, upon return contains an error that describes the problem.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">An array of dictionarires containing the Keychain&apos;s accountsfor a given serviceName, or nil if the Keychain
+doesn&apos;t have any accounts for the given serviceName. The order of the objects in the array isn&apos;t defined.</Abstract></ReturnValue>
+			<Anchor>//api/name/accountsForService:error:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/passwordForService:account:</TokenIdentifier>
+			<Abstract type="html">Returns a string containing the password for a given accounts and service, or nil if the Keychain doesn&apos;t have a
+password for the given parameters.</Abstract>
+			<DeclaredIn>SSKeychain.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/passwordForService:account:error:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>serviceName</Name>
+					<Abstract type="html">The service for which to return the corresponding password.</Abstract>
+				</Parameter><Parameter>
+					<Name>account</Name>
+					<Abstract type="html">The account for which to return the corresponding password.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">Returns a string containing the password for a given accounts and service, or nil if the Keychain doesn&apos;t
+have a password for the given parameters.</Abstract></ReturnValue>
+			<Anchor>//api/name/passwordForService:account:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/passwordForService:account:error:</TokenIdentifier>
+			<Abstract type="html">Returns a string containing the password for a given accounts and service, or nil if the Keychain doesn&apos;t have a
+password for the given parameters.</Abstract>
+			<DeclaredIn>SSKeychain.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/passwordForService:account:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>serviceName</Name>
+					<Abstract type="html">The service for which to return the corresponding password.</Abstract>
+				</Parameter><Parameter>
+					<Name>account</Name>
+					<Abstract type="html">The account for which to return the corresponding password.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">If accessing the password fails, upon return contains an error that describes the problem.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">Returns a string containing the password for a given accounts and service, or nil if the Keychain doesn&apos;t
+have a password for the given parameters.</Abstract></ReturnValue>
+			<Anchor>//api/name/passwordForService:account:error:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/passwordDataForService:account:</TokenIdentifier>
+			<Abstract type="html">Returns the password data for a given accounts and service, or nil if the Keychain doesn&apos;t have data
+for the given parameters.</Abstract>
+			<DeclaredIn>SSKeychain.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/passwordDataForService:account:error:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (NSData *)passwordDataForService:(NSString *)serviceName account:(NSString *)account</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>serviceName</Name>
+					<Abstract type="html">The service for which to return the corresponding password.</Abstract>
+				</Parameter><Parameter>
+					<Name>account</Name>
+					<Abstract type="html">The account for which to return the corresponding password.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">If accessing the password fails, upon return contains an error that describes the problem.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">Returns a string containing the password for a given accounts and service, or nil if the Keychain doesn&apos;t
+have a password for the given parameters.</Abstract></ReturnValue>
+			<Anchor>//api/name/passwordDataForService:account:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/passwordDataForService:account:error:</TokenIdentifier>
+			<Abstract type="html">Returns the password data for a given accounts and service, or nil if the Keychain doesn&apos;t have data
+for the given parameters.</Abstract>
+			<DeclaredIn>SSKeychain.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/passwordDataForService:account:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (NSData *)passwordDataForService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>serviceName</Name>
+					<Abstract type="html">The service for which to return the corresponding password.</Abstract>
+				</Parameter><Parameter>
+					<Name>account</Name>
+					<Abstract type="html">The account for which to return the corresponding password.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">If accessing the password fails, upon return contains an error that describes the problem.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">Returns a string containing the password for a given accounts and service, or nil if the Keychain doesn&apos;t
+have a password for the given parameters.</Abstract></ReturnValue>
+			<Anchor>//api/name/passwordDataForService:account:error:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/deletePasswordForService:account:</TokenIdentifier>
+			<Abstract type="html">Deletes a password from the Keychain.</Abstract>
+			<DeclaredIn>SSKeychain.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/deletePasswordForService:account:error:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (BOOL)deletePasswordForService:(NSString *)serviceName account:(NSString *)account</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>serviceName</Name>
+					<Abstract type="html">The service for which to delete the corresponding password.</Abstract>
+				</Parameter><Parameter>
+					<Name>account</Name>
+					<Abstract type="html">The account for which to delete the corresponding password.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">Returns YES on success, or NO on failure.</Abstract></ReturnValue>
+			<Anchor>//api/name/deletePasswordForService:account:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/deletePasswordForService:account:error:</TokenIdentifier>
+			<Abstract type="html">Deletes a password from the Keychain.</Abstract>
+			<DeclaredIn>SSKeychain.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/deletePasswordForService:account:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (BOOL)deletePasswordForService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>serviceName</Name>
+					<Abstract type="html">The service for which to delete the corresponding password.</Abstract>
+				</Parameter><Parameter>
+					<Name>account</Name>
+					<Abstract type="html">The account for which to delete the corresponding password.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">If deleting the password fails, upon return contains an error that describes the problem.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">Returns YES on success, or NO on failure.</Abstract></ReturnValue>
+			<Anchor>//api/name/deletePasswordForService:account:error:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/setPassword:forService:account:</TokenIdentifier>
+			<Abstract type="html">Sets a password in the Keychain.</Abstract>
+			<DeclaredIn>SSKeychain.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/setPassword:forService:account:error:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>password</Name>
+					<Abstract type="html">The password to store in the Keychain.</Abstract>
+				</Parameter><Parameter>
+					<Name>serviceName</Name>
+					<Abstract type="html">The service for which to set the corresponding password.</Abstract>
+				</Parameter><Parameter>
+					<Name>account</Name>
+					<Abstract type="html">The account for which to set the corresponding password.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">Returns YES on success, or NO on failure.</Abstract></ReturnValue>
+			<Anchor>//api/name/setPassword:forService:account:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/setPassword:forService:account:error:</TokenIdentifier>
+			<Abstract type="html">Sets a password in the Keychain.</Abstract>
+			<DeclaredIn>SSKeychain.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/setPassword:forService:account:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (BOOL)setPassword:(NSString *)password forService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>password</Name>
+					<Abstract type="html">The password to store in the Keychain.</Abstract>
+				</Parameter><Parameter>
+					<Name>serviceName</Name>
+					<Abstract type="html">The service for which to set the corresponding password.</Abstract>
+				</Parameter><Parameter>
+					<Name>account</Name>
+					<Abstract type="html">The account for which to set the corresponding password.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">If setting the password fails, upon return contains an error that describes the problem.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">Returns YES on success, or NO on failure.</Abstract></ReturnValue>
+			<Anchor>//api/name/setPassword:forService:account:error:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/setPasswordData:forService:account:</TokenIdentifier>
+			<Abstract type="html">Sets arbirary data in the Keychain.</Abstract>
+			<DeclaredIn>SSKeychain.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/setPasswordData:forService:account:error:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (BOOL)setPasswordData:(NSData *)password forService:(NSString *)serviceName account:(NSString *)account</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>password</Name>
+					<Abstract type="html">The data to store in the Keychain.</Abstract>
+				</Parameter><Parameter>
+					<Name>serviceName</Name>
+					<Abstract type="html">The service for which to set the corresponding password.</Abstract>
+				</Parameter><Parameter>
+					<Name>account</Name>
+					<Abstract type="html">The account for which to set the corresponding password.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">If setting the password fails, upon return contains an error that describes the problem.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">Returns YES on success, or NO on failure.</Abstract></ReturnValue>
+			<Anchor>//api/name/setPasswordData:forService:account:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/setPasswordData:forService:account:error:</TokenIdentifier>
+			<Abstract type="html">Sets arbirary data in the Keychain.</Abstract>
+			<DeclaredIn>SSKeychain.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/setPasswordData:forService:account:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (BOOL)setPasswordData:(NSData *)password forService:(NSString *)serviceName account:(NSString *)account error:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>password</Name>
+					<Abstract type="html">The data to store in the Keychain.</Abstract>
+				</Parameter><Parameter>
+					<Name>serviceName</Name>
+					<Abstract type="html">The service for which to set the corresponding password.</Abstract>
+				</Parameter><Parameter>
+					<Name>account</Name>
+					<Abstract type="html">The account for which to set the corresponding password.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">If setting the password fails, upon return contains an error that describes the problem.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">Returns YES on success, or NO on failure.</Abstract></ReturnValue>
+			<Anchor>//api/name/setPasswordData:forService:account:error:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/accessibilityType</TokenIdentifier>
+			<Abstract type="html">Returns the accessibility type for all future passwords saved to the Keychain.</Abstract>
+			<DeclaredIn>SSKeychain.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/accessibilityType</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (CFTypeRef)accessibilityType</Declaration>
+			
+			<ReturnValue><Abstract type="html">Returns the accessibility type.
+
+The return value will be NULL or one of the &quot;Keychain Item Accessibility Constants&quot; used for determining when a
+keychain item should be readable.</Abstract></ReturnValue>
+			<Anchor>//api/name/accessibilityType</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/setAccessibilityType:</TokenIdentifier>
+			<Abstract type="html">Sets the accessibility type for all future passwords saved to the Keychain.</Abstract>
+			<DeclaredIn>SSKeychain.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/SSKeychain/accessibilityType</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (void)setAccessibilityType:(CFTypeRef)accessibilityType</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>accessibilityType</Name>
+					<Abstract type="html">One of the &quot;Keychain Item Accessibility Constants&quot; used for determining when a keychain item
+should be readable.
+
+If the value is NULL (the default), the Keychain default will be used.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setAccessibilityType:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

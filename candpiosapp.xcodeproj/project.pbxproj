@@ -77,7 +77,6 @@
 		5332FB42152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5332FB40152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg */; };
 		5335CF6F1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */; };
 		5335D821160BA801005400FC /* MKAnnotationView+SpecialPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D820160BA801005400FC /* MKAnnotationView+SpecialPin.m */; };
-		5335D83C160BAA56005400FC /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D82A160BAA56005400FC /* SSKeychain.m */; };
 		5335D86F160BAB2F005400FC /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5335D85D160BAB2F005400FC /* SVProgressHUD.bundle */; };
 		5335D870160BAB2F005400FC /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D85F160BAB2F005400FC /* SVProgressHUD.m */; };
 		5335D89A160BB369005400FC /* SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D88B160BB369005400FC /* SVPullToRefresh.m */; };
@@ -514,8 +513,6 @@
 		5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SettingsStoryboard_iPhone.storyboard; path = Settings/SettingsStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		5335D81F160BA801005400FC /* MKAnnotationView+SpecialPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MKAnnotationView+SpecialPin.h"; path = "Map/MKAnnotationView+SpecialPin.h"; sourceTree = "<group>"; };
 		5335D820160BA801005400FC /* MKAnnotationView+SpecialPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MKAnnotationView+SpecialPin.m"; path = "Map/MKAnnotationView+SpecialPin.m"; sourceTree = "<group>"; };
-		5335D829160BAA56005400FC /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
-		5335D82A160BAA56005400FC /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		5335D85D160BAB2F005400FC /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		5335D85E160BAB2F005400FC /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		5335D85F160BAB2F005400FC /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
@@ -1080,15 +1077,6 @@
 				5355B0C115140697006A3D89 /* settings-button-3@2x.png */,
 			);
 			name = images;
-			sourceTree = "<group>";
-		};
-		5335D823160BAA56005400FC /* SSKeychain */ = {
-			isa = PBXGroup;
-			children = (
-				5335D829160BAA56005400FC /* SSKeychain.h */,
-				5335D82A160BAA56005400FC /* SSKeychain.m */,
-			);
-			path = SSKeychain;
 			sourceTree = "<group>";
 		};
 		5335D848160BAB2F005400FC /* SVProgressHUD */ = {
@@ -1711,7 +1699,6 @@
 			children = (
 				53D78C62160B99D800148EA3 /* GTMNSString+HTML */,
 				53BBC0041612B70C00F5C14B /* OAuthConsumer */,
-				5335D823160BAA56005400FC /* SSKeychain */,
 				5335D848160BAB2F005400FC /* SVProgressHUD */,
 				5335D875160BB369005400FC /* SVPullToRefresh */,
 				530BAAFD160BC244007DF806 /* TestFlightSDK */,
@@ -2377,7 +2364,6 @@
 				5338B0A11606C82200C23B4B /* VenueUserCell.m in Sources */,
 				53D78C65160B99D800148EA3 /* GTMNSString+HTML.m in Sources */,
 				5335D821160BA801005400FC /* MKAnnotationView+SpecialPin.m in Sources */,
-				5335D83C160BAA56005400FC /* SSKeychain.m in Sources */,
 				5335D870160BAB2F005400FC /* SVProgressHUD.m in Sources */,
 				5335D89A160BB369005400FC /* SVPullToRefresh.m in Sources */,
 				5335D8FA160BB404005400FC /* TPKeyboardAvoidingScrollView.m in Sources */,
