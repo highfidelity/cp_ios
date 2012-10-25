@@ -245,29 +245,6 @@ you an invite code, type it in above</string>
         <image name="sign-up-with-linkedin.png" width="124" height="74"/>
         <image name="tab-login.png" width="34" height="26"/>
     </resources>
-    <classes>
-        <class className="LinkedInLoginController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedInLoginController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="myWebView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="SignupController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupController.h"/>
-            <relationships>
-                <relationship kind="action" name="dismissClick:"/>
-                <relationship kind="action" name="loginWithLinkedInTapped:"/>
-                <relationship kind="outlet" name="dismissButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="linkedinLoginButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="TutorialViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TutorialViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
