@@ -28,7 +28,7 @@
         self.majorJobCategory = [userDict objectForKey:@"major_job_category"];
         self.minorJobCategory = [userDict objectForKey:@"minor_job_category"];
         
-        self.photoURLString = [userDict objectForKey:@"filename"];
+        [self setPhotoURLFromString:[userDict objectForKey:@"filename"]];
         
         double lat = [[userDict objectForKey:@"lat"] doubleValue];
         double lng = [[userDict objectForKey:@"lng"] doubleValue];
@@ -49,7 +49,16 @@
         self.userID = [decoder decodeIntForKey:@"userID"];
         self.nickname = [decoder decodeObjectForKey:@"nickname"];
         self.email = [decoder decodeObjectForKey:@"email"];
-        self.photoURLString = [decoder decodeObjectForKey:@"photoURL"];
+        
+        // temporary handling of venues stored with venueID as integer
+        @try {
+            NSURL *decodedPhotoURL = [decoder decodeObjectOfClass:[NSURL class] forKey:@"photoURL"];
+            self.photoURL = decodedPhotoURL;
+        }
+        @catch (NSException *exception) {
+            [self setPhotoURLFromString:[decoder decodeObjectForKey:@"photoURL"]];
+        }
+        
         self.joinDate = [decoder decodeObjectForKey:@"joinDate"];
         self.skills = [decoder decodeObjectForKey:@"skills"];
         self.profileURLVisibility = [decoder decodeObjectForKey:@"profileURLVisibility"];
@@ -65,7 +74,7 @@
     [encoder encodeInt:self.userID forKey:@"userID"];
     [encoder encodeObject:self.nickname forKey:@"nickname"];
     [encoder encodeObject:self.email forKey:@"email"];
-    [encoder encodeObject:self.photoURLString forKey:@"photoURL"];
+    [encoder encodeObject:self.photoURL forKey:@"photoURL"];
     [encoder encodeObject:self.joinDate forKey:@"joinDate"];
     [encoder encodeObject:self.skills forKey:@"skills"];
     [encoder encodeObject:self.profileURLVisibility forKey:@"profileURLVisibility"];
@@ -120,15 +129,11 @@
     }
 }
 
-// override setter for photoURLString so that we handle when it is nil
--(void)setPhotoURLString:(NSString *)photoURLString
+// provide setter to set photoURL using a string
+// need this during RestKit transition
+-(void)setPhotoURLFromString:(NSString *)photoURLString
 {
-    _photoURLString = [photoURLString isKindOfClass:[NSNull class]] ? nil : photoURLString;
-}
-
--(NSURL *)photoURL
-{
-    return self.photoURLString ? [NSURL URLWithString:self.photoURLString] : nil;
+    _photoURL = [NSURL URLWithString:[photoURLString isKindOfClass:[NSNull class]] ? nil : photoURLString];
 }
 
 - (NSString *)firstName
@@ -230,10 +235,10 @@
             if ([[userDict objectForKey:@"job_title"] isKindOfClass:[NSString class]]) {
                 self.jobTitle = [userDict objectForKey:@"job_title"];
             }
-            // set the user's photo url        
-            self.photoURLString = [userDict objectForKey:@"urlPhoto"];
-            self.location = CLLocationCoordinate2DMake(
-                                                       [[userDict valueForKeyPath:@"location.lat"] doubleValue],
+            // set the user's photo url
+            [self setPhotoURLFromString:[userDict objectForKey:@"urlPhoto"]];
+            
+            self.location = CLLocationCoordinate2DMake([[userDict valueForKeyPath:@"location.lat"] doubleValue],
                                                        [[userDict valueForKeyPath:@"location.lng"] doubleValue]);
             
             // set the booleans if the user is facebook/linkedin verified

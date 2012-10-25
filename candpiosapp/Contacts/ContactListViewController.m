@@ -527,7 +527,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     user.nickname = [contact objectForKey:@"nickname"];
     user.userID = [[contact objectForKey:@"id"] intValue];
     user.status = [contact objectForKey:@"status_text"];
-    user.photoURLString = [contact objectForKey:@"imageUrl"];
+    [user setPhotoURLFromString:[contact objectForKey:@"imageUrl"]];
     
     return user;
 }

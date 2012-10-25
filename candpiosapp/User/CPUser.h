@@ -23,7 +23,7 @@
 @property (strong, nonatomic) NSString *profileURLVisibility;
 @property (strong, nonatomic) NSString *bio;
 @property (strong, nonatomic) NSString *hourlyRate;
-@property (strong, nonatomic) NSString *photoURLString;
+@property (strong, nonatomic) NSURL *photoURL;
 @property (strong, nonatomic) CPVenue *placeCheckedIn;
 @property (strong, nonatomic) NSDate *checkoutEpoch;
 @property (strong, nonatomic) NSString *join_date;
@@ -66,7 +66,7 @@
 -(id)initFromDictionary:(NSDictionary *)userDict;
 -(NSString *)firstName;
 
--(NSURL *)photoURL;
+- (void)setPhotoURLFromString:(NSString *)photoURLString;
 
 - (void)setJoinDateFromJSONString:(NSString *)dateString;
 - (NSComparisonResult) compareDistanceToUser:(CPUser *)otherUser;

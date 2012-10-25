@@ -260,8 +260,8 @@
                 }
 
                 // check photo url
-                if (![self.currentUser.photoURLString isEqual:webSyncUser.photoURLString]) {
-                    self.currentUser.photoURLString = webSyncUser.photoURLString;
+                if (![self.currentUser.photoURL isEqual:webSyncUser.photoURL]) {
+                    self.currentUser.photoURL = webSyncUser.photoURL;
                     self.newDataFromSync = YES;
                 }
 
@@ -374,7 +374,7 @@
         // update the user's photo url
         NSString *newPhoto = [paramsDict objectForKey:@"picture"];
         if (newPhoto) {
-            self.currentUser.photoURLString = [paramsDict objectForKey:@"picture"];
+            [self.currentUser setPhotoURLFromString:[paramsDict objectForKey:@"picture"]];
             animated = YES;
         }
 
