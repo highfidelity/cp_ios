@@ -4,3 +4,4 @@ pod 'RestKit', :git => 'https://github.com/RestKit/RestKit.git', :branch => 'dev
 
 pod 'UrbanAirship-iOS-SDK'
 pod 'ActionSheetPicker'
+pod 'CustomBadge'

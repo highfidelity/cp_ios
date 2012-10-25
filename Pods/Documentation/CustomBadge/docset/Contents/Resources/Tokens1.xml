@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/CustomBadge.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/CustomBadge</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>
+			
+			<NodeRef refid="1"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CustomBadge/setBadgeText:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *badgeText</Declaration>
+			
+			
+			<Anchor>//api/name/badgeText</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/CustomBadge/badgeText</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *badgeText</Declaration>
+			
+			
+			<Anchor>//api/name/badgeText</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CustomBadge/setBadgeTextColor:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIColor *badgeTextColor</Declaration>
+			
+			
+			<Anchor>//api/name/badgeTextColor</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/CustomBadge/badgeTextColor</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIColor *badgeTextColor</Declaration>
+			
+			
+			<Anchor>//api/name/badgeTextColor</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CustomBadge/setBadgeInsetColor:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIColor *badgeInsetColor</Declaration>
+			
+			
+			<Anchor>//api/name/badgeInsetColor</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/CustomBadge/badgeInsetColor</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIColor *badgeInsetColor</Declaration>
+			
+			
+			<Anchor>//api/name/badgeInsetColor</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CustomBadge/setBadgeFrameColor:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIColor *badgeFrameColor</Declaration>
+			
+			
+			<Anchor>//api/name/badgeFrameColor</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/CustomBadge/badgeFrameColor</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) UIColor *badgeFrameColor</Declaration>
+			
+			
+			<Anchor>//api/name/badgeFrameColor</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CustomBadge/setBadgeFrame:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite) BOOL badgeFrame</Declaration>
+			
+			
+			<Anchor>//api/name/badgeFrame</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/CustomBadge/badgeFrame</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite) BOOL badgeFrame</Declaration>
+			
+			
+			<Anchor>//api/name/badgeFrame</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CustomBadge/setBadgeShining:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite) BOOL badgeShining</Declaration>
+			
+			
+			<Anchor>//api/name/badgeShining</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/CustomBadge/badgeShining</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite) BOOL badgeShining</Declaration>
+			
+			
+			<Anchor>//api/name/badgeShining</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CustomBadge/setBadgeCornerRoundness:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite) CGFloat badgeCornerRoundness</Declaration>
+			
+			
+			<Anchor>//api/name/badgeCornerRoundness</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/CustomBadge/badgeCornerRoundness</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite) CGFloat badgeCornerRoundness</Declaration>
+			
+			
+			<Anchor>//api/name/badgeCornerRoundness</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CustomBadge/setBadgeScaleFactor:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite) CGFloat badgeScaleFactor</Declaration>
+			
+			
+			<Anchor>//api/name/badgeScaleFactor</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/CustomBadge/badgeScaleFactor</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readwrite) CGFloat badgeScaleFactor</Declaration>
+			
+			
+			<Anchor>//api/name/badgeScaleFactor</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/CustomBadge/customBadgeWithString:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>+ (CustomBadge *)customBadgeWithString:(NSString *)badgeString</Declaration>
+			
+			
+			<Anchor>//api/name/customBadgeWithString:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/CustomBadge/customBadgeWithString:withStringColor:withInsetColor:withBadgeFrame:withBadgeFrameColor:withScale:withShining:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>+ (CustomBadge *)customBadgeWithString:(NSString *)badgeString withStringColor:(UIColor *)stringColor withInsetColor:(UIColor *)insetColor withBadgeFrame:(BOOL)badgeFrameYesNo withBadgeFrameColor:(UIColor *)frameColor withScale:(CGFloat)scale withShining:(BOOL)shining</Declaration>
+			
+			
+			<Anchor>//api/name/customBadgeWithString:withStringColor:withInsetColor:withBadgeFrame:withBadgeFrameColor:withScale:withShining:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CustomBadge/autoBadgeSizeWithString:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>CustomBadge.h</DeclaredIn>			
+			
+			<Declaration>- (void)autoBadgeSizeWithString:(NSString *)badgeString</Declaration>
+			
+			
+			<Anchor>//api/name/autoBadgeSizeWithString:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>
