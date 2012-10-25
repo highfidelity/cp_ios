@@ -95,7 +95,7 @@ If you have not already, download the app from the iTunes or Google Play stores.
         [[CPAppDelegate settingsMenuController] dismissViewControllerAnimated:YES
                                                                           completion:NULL];
         [SVProgressHUD dismissWithSuccess:@"Invitation has been sent"];
-        [FlurryAnalytics logEvent:@"invitedLinkedInConnections"];
+        [Flurry logEvent:@"invitedLinkedInConnections"];
     } else {
         [SVProgressHUD dismissWithError:[json objectForKey:@"message"] afterDelay:kDefaultDismissDelay];
         

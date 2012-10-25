@@ -7,7 +7,7 @@
 //
 
 #import "SmartererLoginController.h"
-#import "FlurryAnalytics.h"
+#import "Flurry.h"
 #import "CPapi.h"
 
 @implementation SmartererLoginController

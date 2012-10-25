@@ -65,7 +65,7 @@ static CPGeofenceHandler *sharedHandler;
     
     [CPapi saveVenueAutoCheckinStatus:venue];
     
-    [FlurryAnalytics logEvent:@"automaticCheckinLocationDisabled"];
+    [Flurry logEvent:@"automaticCheckinLocationDisabled"];
 }
 
 - (void)autoCheckInForVenue:(CPVenue *)venue
@@ -73,11 +73,11 @@ static CPGeofenceHandler *sharedHandler;
     // Check to see if there is an existing checkin request for this venueID to eliminate duplicate check-ins from multiple geofence triggers
     
     if (self.pendingVenueCheckInID && [venue.venueID isEqualToNumber:self.pendingVenueCheckInID]) {
-        [FlurryAnalytics logEvent:@"autoCheckedInDuplicateIgnored"];
+        [Flurry logEvent:@"autoCheckedInDuplicateIgnored"];
     }
     else {
         // Check the user in automatically now
-        [FlurryAnalytics logEvent:@"autoCheckedIn"];
+        [Flurry logEvent:@"autoCheckedIn"];
 
         self.pendingVenueCheckInID = venue.venueID;
 
@@ -126,7 +126,7 @@ static CPGeofenceHandler *sharedHandler;
 
 - (void)autoCheckOutForRegion:(CLRegion *)region
 {
-    [FlurryAnalytics logEvent:@"autoCheckedOut"];
+    [Flurry logEvent:@"autoCheckedOut"];
     
     [SVProgressHUD showWithStatus:@"Checking out..."];
     

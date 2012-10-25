@@ -7,7 +7,7 @@
 //
 
 #import "SignupController.h"
-#import "FlurryAnalytics.h"
+#import "Flurry.h"
 #import "UIViewController+isModal.h"
 
 @implementation SignupController
@@ -18,7 +18,7 @@
 {
     [super viewDidLoad];
     
-    [FlurryAnalytics logEvent:@"signupScreen"];
+    [Flurry logEvent:@"signupScreen"];
     
     // if this is being presented inside the app from the UITabBarController
     // then don't show the later button
@@ -63,7 +63,7 @@
 	// Handle LinkedIn login
 	// The LinkedIn login object will handle the sequence that follows
     [self performSegueWithIdentifier:@"ShowLinkedInLoginController" sender:sender];
-    [FlurryAnalytics logEvent:@"startedLinkedInLogin"];
+    [Flurry logEvent:@"startedLinkedInLogin"];
 }
 
 - (IBAction) dismissClick:(id)sender
@@ -71,7 +71,7 @@
     // make sure the selected index is 1 so it goes to the map
     [CPAppDelegate tabBarController].selectedIndex = 0;
     [self dismissModalViewControllerAnimated:YES];
-    [FlurryAnalytics logEvent:@"skippedSignup"];
+    [Flurry logEvent:@"skippedSignup"];
 }
 
 @end

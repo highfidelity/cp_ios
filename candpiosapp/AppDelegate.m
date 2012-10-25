@@ -49,21 +49,7 @@
 
 - (BOOL)application:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    // Override point for customization after application launch.
-    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
-
-    // create the signal action structure 
-    struct sigaction newSignalAction;
-    // initialize the signal action structure
-    memset(&newSignalAction, 0, sizeof(newSignalAction));
-    // set SignalHandler as the handler in the signal action structure
-    newSignalAction.sa_handler = &SignalHandler;
-    // set SignalHandler as the handlers for SIGABRT, SIGILL and SIGBUS
-    sigaction(SIGABRT, &newSignalAction, NULL);
-    sigaction(SIGILL, &newSignalAction, NULL);
-    sigaction(SIGBUS, &newSignalAction, NULL);
-    
+{    
     // temporarily handle decoding of old User object
     [NSKeyedUnarchiver setClass:[CPUser class] forClassName:@"User"];
     
@@ -402,7 +388,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 -(void)setupFlurryAnalytics
 {
-    [FlurryAnalytics startSession:flurryAnalyticsKey];
+    [Flurry startSession:flurryAnalyticsKey];
     
     // See what notifications the user has set and push to Flurry
     UIRemoteNotificationType types = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
@@ -425,7 +411,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
         }
     }
     [flurryParams setValue:alertValue forKey:@"Notifications"];
-    [FlurryAnalytics logEvent:@"enabled_notifications" withParameters:flurryParams];
+    [Flurry logEvent:@"enabled_notifications" withParameters:flurryParams];
     NSLog(@"Notification types: %@", flurryParams);
 }
 
@@ -588,17 +574,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
         UINavigationController *checkInNC = [[UIStoryboard storyboardWithName:@"CheckinStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
         [self.tabBarController presentModalViewController:checkInNC animated:YES];
     }
-}
-
-#pragma mark - Crash Handlers
-
-void uncaughtExceptionHandler(NSException *exception) {
-    [FlurryAnalytics logError:@"Uncaught" message:@"Crash!" exception:exception];
-}
-
-void SignalHandler(int sig) {
-    // NSLog(@"This is where we save the application data during a signal");
-    // Save application data on crash
 }
 
 #pragma mark - appCache

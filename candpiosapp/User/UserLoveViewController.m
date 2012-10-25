@@ -8,7 +8,7 @@
 
 #import "UserLoveViewController.h"
 #import "UserProfileViewController.h"
-#import "FlurryAnalytics.h"
+#import "Flurry.h"
 #import "CPSkill.h"
 #import "LoveSkillTableViewCell.h"
 

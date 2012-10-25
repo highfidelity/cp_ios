@@ -65,7 +65,7 @@ static AFHTTPClient *sharedClient;
         completion(nil, error);
     }];
     
-    [FlurryAnalytics logEvent:@"checkedIn"];
+    [Flurry logEvent:@"checkedIn"];
 }
 
 

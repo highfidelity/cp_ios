@@ -7,7 +7,7 @@
 //
 
 #import "LinkedInLoginController.h"
-#import "FlurryAnalytics.h"
+#import "Flurry.h"
 #import "OAConsumer.h"
 #import "OAMutableURLRequest.h"
 #import "OADataFetcher.h"
@@ -340,8 +340,8 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                     [[CPCheckinHandler sharedHandler] setCheckedOut];
                 }
 
-                [FlurryAnalytics logEvent:@"login_linkedin"];
-                [FlurryAnalytics setUserID:userId];
+                [Flurry logEvent:@"login_linkedin"];
+                [Flurry setUserID:userId];
                 
                 [CPUserSessionHandler performAfterLoginActions];
                 

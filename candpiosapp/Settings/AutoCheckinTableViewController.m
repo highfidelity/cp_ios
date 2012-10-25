@@ -120,7 +120,7 @@
             [[CPAppDelegate locationManager] stopMonitoringForRegion:reg];
         }
         
-        [FlurryAnalytics logEvent:@"automaticCheckinsDisabled"];
+        [Flurry logEvent:@"automaticCheckinsDisabled"];
     }
     else {
         [self setupPlacesArray];
@@ -133,7 +133,7 @@
             }
         }
 
-        [FlurryAnalytics logEvent:@"automaticCheckinsEnabled"];
+        [Flurry logEvent:@"automaticCheckinsEnabled"];
     }
     
     [self.tableView reloadData];

@@ -245,7 +245,7 @@
     [self makeHTTPRequestWithAction:@"oneOnOneChatFromMobile"
                      withParameters:parameters
                     responseHandler:@selector(oneOnOneChatResponseHandler:)];
-    [FlurryAnalytics logEvent:@"sentChatMessage"];
+    [Flurry logEvent:@"sentChatMessage"];
 }
 
 + (void)oneOnOneChatResponseHandler:(NSData *)response
@@ -310,7 +310,7 @@
              [CPAppDelegate settingsMenuController].f2fInviteAlert = alert;
          }
          
-         [FlurryAnalytics logEvent:@"contactRequestSent"];
+         [Flurry logEvent:@"contactRequestSent"];
     }];
 }
 
@@ -323,7 +323,7 @@
     [self makeHTTPRequestWithAction:@"acceptContactRequest"
                      withParameters:params
                          completion:completion];
-    [FlurryAnalytics logEvent:@"contactRequestAccepted"];
+    [Flurry logEvent:@"contactRequestAccepted"];
 }
 
 + (void)sendDeclineContactRequestFromUserId:(int)userId
@@ -335,7 +335,7 @@
     [self makeHTTPRequestWithAction:@"declineContactRequest"
                      withParameters:params
                          completion:completion];
-    [FlurryAnalytics logEvent:@"contactRequestDeclined"];    
+    [Flurry logEvent:@"contactRequestDeclined"];    
 }
 
 # pragma mark - Map Dataset
@@ -452,7 +452,7 @@
     [reviewParams setObject:message forKey:@"reviewText"];
     
     [self makeHTTPRequestWithAction:@"sendLove" withParameters:reviewParams completion:completion];
-    [FlurryAnalytics logEvent:@"sentLove"];
+    [Flurry logEvent:@"sentLove"];
 }
 
 
@@ -465,7 +465,7 @@
     
     // make the request
     [self makeHTTPRequestWithAction:@"sendPlusOneForLove" withParameters:parameters completion:completion];
-    [FlurryAnalytics logEvent:@"sentPlusOneForLove"];
+    [Flurry logEvent:@"sentPlusOneForLove"];
 }
 
 # pragma mark - Skills
