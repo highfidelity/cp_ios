@@ -37,7 +37,7 @@ examle json:
 
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) UIButton *dismissButton;
-@property (nonatomic, strong) CPPageControl *pageControll;
+@property (nonatomic, strong) CPPageControl *pageControl;
 
 @property (nonatomic, retain) NSMutableArray *pageImageViews;
 @property (nonatomic, retain) NSArray *pageInfos;
@@ -52,15 +52,10 @@ examle json:
     self = [super initWithCoder:aDecoder];
     if (self) {
         self.isShownFromLeft = NO;
-        self.pageImageViews = [NSMutableArray arrayWithCapacity:3];
+        self.pageImageViews = [NSMutableArray array];
         [self startLoadingJSON];
     }
     return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -68,7 +63,7 @@ examle json:
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     NSInteger pageIndex = round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width);
-    self.pageControll.currentPage = pageIndex;
+    self.pageControl.currentPage = pageIndex;
     [self pageWasSelectedWithIndex:pageIndex];
 }
 
@@ -85,8 +80,8 @@ examle json:
 
 - (void)pageWasSelected
 {
-    [self.scrollView setContentOffset:CGPointMake(self.pageControll.currentPage * self.scrollView.frame.size.width, 0) animated:YES];
-    [self pageWasSelectedWithIndex:self.pageControll.currentPage];
+    [self.scrollView setContentOffset:CGPointMake(self.pageControl.currentPage * self.scrollView.frame.size.width, 0) animated:YES];
+    [self pageWasSelectedWithIndex:self.pageControl.currentPage];
 }
 
 #pragma mark - properties
@@ -106,18 +101,13 @@ examle json:
 
 - (void)startLoadingJSON
 {
-    AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"http://tomashoracek.com"]];
+    AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://s3.amazonaws.com"]];
+    [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
 
-    [client getPath:@"/media/tutorial.json"
+    [client getPath:@"/coffeeandpower-prod/tutorial/tutorial.json"
          parameters:nil
             success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSError *error = nil;
-                NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject
-                                                                     options:kNilOptions
-                                                                       error:&error];
-                if (error) {
-                    [self dismissAction];
-                }
+                NSDictionary *json = responseObject;
 
                 self.pageInfos = json[@"pages"];
                 [self initializeSubviewsWithInfo:json];
@@ -128,11 +118,11 @@ examle json:
 
 - (void)initializeSubviewsWithInfo:(NSDictionary *)info
 {
-    self.pageControll = [[CPPageControl alloc] initWithFrame:CGRectFromString(info[@"pager_frame"])];
-    self.pageControll.numberOfPages = [self.pageInfos count] + 1;
-    [self.pageControll addTarget:self action:@selector(pageWasSelected) forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:self.pageControll];
-    [self.view bringSubviewToFront:self.pageControll];
+    self.pageControl = [[CPPageControl alloc] initWithFrame:CGRectFromString(info[@"pager_frame"])];
+    self.pageControl.numberOfPages = [self.pageInfos count] + 1;
+    [self.pageControl addTarget:self action:@selector(pageWasSelected) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:self.pageControl];
+    [self.view bringSubviewToFront:self.pageControl];
 
     self.scrollView.backgroundColor = [UIColor colorWithR:246 G:247 B:245 A:246];
     self.scrollView.contentSize = CGSizeMake(([self.pageInfos count] + 1 ) * self.scrollView.frame.size.width,
@@ -170,7 +160,7 @@ examle json:
         [CPUIHelper changeFontForLabel:cell.nicknameLabel toLeagueGothicOfSize:18.0];
 
         cell.nicknameLabel.text = cellInfo[@"name"];
-        cell.statusLabel.text = @"";
+        cell.statusLabel.text = @" ";
         cell.frame = CGRectFromString(cellInfo[@"frame"]);
         [cell.profilePicture setImageWithURL:[NSURL URLWithString:cellInfo[@"image"]]
                             placeholderImage:[CPUIHelper defaultProfileImage]];
