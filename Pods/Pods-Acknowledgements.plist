@@ -353,6 +353,19 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>All text and design is copyright © 2010-2012 TestFlight App, Inc.
+
+All rights reserved.
+
+https://testflightapp.com/tos/
+</string>
+			<key>Title</key>
+			<string>TestFlightSDK</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>/*
  Copyright 2009-2012 Urban Airship Inc. All rights reserved.
  
