@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleIdentifier</key>
+	<string>org.cocoapods.TPKeyboardAvoiding-0.0.1</string>
+	<key>CFBundleName</key>
+	<string>TPKeyboardAvoiding 0.0.1 Documentation</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	
+	
+	<key>DocSetDescription</key>
+	<string>This is a relatively universal, drop-in solution: UIScrollView and UITableView subclasses that handle everything.When the keyboard is about to appear, the subclass will find the subview that&apos;s about to be edited, and adjust its frame and content offset to make sure that view is visible, with an animation to match the keyboard pop-up. When the keyboard disappears, it restores its prior size.</string>
+	
+	<key>DocSetFeedName</key>
+	<string>TPKeyboardAvoiding 0.0.1 Documentation</string>
+	
+	<key>DocSetMinimumXcodeVersion</key>
+	<string>3.0</string>
+	
+	<key>DashDocSetFamily</key>
+	<string>appledoc</string>
+	<key>DocSetPublisherIdentifier</key>
+	<string>org.cocoapods.documentation</string>
+	<key>DocSetPublisherName</key>
+	<string>Michael Tyson</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Michael Tyson</string>
+</dict>
+</plist>

@@ -76,8 +76,6 @@
 		5332FB42152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5332FB40152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg */; };
 		5335CF6F1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */; };
 		5335D821160BA801005400FC /* MKAnnotationView+SpecialPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D820160BA801005400FC /* MKAnnotationView+SpecialPin.m */; };
-		5335D8FA160BB404005400FC /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D8E8160BB404005400FC /* TPKeyboardAvoidingScrollView.m */; };
-		5335D8FB160BB404005400FC /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D8EA160BB404005400FC /* TPKeyboardAvoidingTableView.m */; };
 		5338B0991606C7DC00C23B4B /* check-in-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 5338B0971606C7DC00C23B4B /* check-in-button.png */; };
 		5338B09A1606C7DC00C23B4B /* check-in-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5338B0981606C7DC00C23B4B /* check-in-button@2x.png */; };
 		5338B09D1606C80B00C23B4B /* paper-texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 5338B09B1606C80B00C23B4B /* paper-texture.png */; };
@@ -507,10 +505,6 @@
 		5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SettingsStoryboard_iPhone.storyboard; path = Settings/SettingsStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		5335D81F160BA801005400FC /* MKAnnotationView+SpecialPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MKAnnotationView+SpecialPin.h"; path = "Map/MKAnnotationView+SpecialPin.h"; sourceTree = "<group>"; };
 		5335D820160BA801005400FC /* MKAnnotationView+SpecialPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MKAnnotationView+SpecialPin.m"; path = "Map/MKAnnotationView+SpecialPin.m"; sourceTree = "<group>"; };
-		5335D8E7160BB404005400FC /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
-		5335D8E8160BB404005400FC /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
-		5335D8E9160BB404005400FC /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
-		5335D8EA160BB404005400FC /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
 		5338B0971606C7DC00C23B4B /* check-in-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-button.png"; path = "Checkin/images/check-in-button.png"; sourceTree = "<group>"; };
 		5338B0981606C7DC00C23B4B /* check-in-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-button@2x.png"; path = "Checkin/images/check-in-button@2x.png"; sourceTree = "<group>"; };
 		5338B09B1606C80B00C23B4B /* paper-texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "paper-texture.png"; path = "Utils/images/textures/paper-texture.png"; sourceTree = "<group>"; };
@@ -1056,17 +1050,6 @@
 				5355B0C115140697006A3D89 /* settings-button-3@2x.png */,
 			);
 			name = images;
-			sourceTree = "<group>";
-		};
-		5335D8CF160BB404005400FC /* TPKeyboardAvoiding */ = {
-			isa = PBXGroup;
-			children = (
-				5335D8E7160BB404005400FC /* TPKeyboardAvoidingScrollView.h */,
-				5335D8E8160BB404005400FC /* TPKeyboardAvoidingScrollView.m */,
-				5335D8E9160BB404005400FC /* TPKeyboardAvoidingTableView.h */,
-				5335D8EA160BB404005400FC /* TPKeyboardAvoidingTableView.m */,
-			);
-			path = TPKeyboardAvoiding;
 			sourceTree = "<group>";
 		};
 		53412E5714FEFC0D00C87666 /* images */ = {
@@ -1643,7 +1626,6 @@
 			children = (
 				53D78C62160B99D800148EA3 /* GTMNSString+HTML */,
 				53BBC0041612B70C00F5C14B /* OAuthConsumer */,
-				5335D8CF160BB404005400FC /* TPKeyboardAvoiding */,
 				530BAAB4160BC097007DF806 /* UIImage-Categories */,
 				53BBBFA81612B25700F5C14B /* UserVoiceSDK */,
 			);
@@ -2304,8 +2286,6 @@
 				5338B0A11606C82200C23B4B /* VenueUserCell.m in Sources */,
 				53D78C65160B99D800148EA3 /* GTMNSString+HTML.m in Sources */,
 				5335D821160BA801005400FC /* MKAnnotationView+SpecialPin.m in Sources */,
-				5335D8FA160BB404005400FC /* TPKeyboardAvoidingScrollView.m in Sources */,
-				5335D8FB160BB404005400FC /* TPKeyboardAvoidingTableView.m in Sources */,
 				530BAABD160BC097007DF806 /* UIImage+Alpha.m in Sources */,
 				530BAABE160BC097007DF806 /* UIImage+Resize.m in Sources */,
 				530BAABF160BC097007DF806 /* UIImage+RoundedCorner.m in Sources */,
