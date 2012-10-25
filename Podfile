@@ -5,8 +5,13 @@ platform :ios, '5.0'
 # that you're trying to debug
 # inhibit_all_warnings!
 
+# github pods
 pod 'RestKit', :git => 'https://github.com/RestKit/RestKit.git', :branch => 'development'
 
+# C&P forked repo pods
+pod 'OAuthConsumer', :git => 'https://github.com/worklist/oauthconsumer'
+
+# pods from cocoapods repo
 pod 'ActionSheetPicker'
 pod 'CustomBadge'
 pod 'FlurrySDK'
