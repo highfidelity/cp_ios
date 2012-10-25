@@ -32,9 +32,8 @@
         self.specialVenueType = [json objectForKey:@"special_venue_type" orDefault:nil];
         self.isNeighborhood = [[json objectForKey:@"is_neighborhood"] boolValue];
 
-        if ([json objectForKey:@"lat" orDefault:nil] && [json objectForKey:@"lng" orDefault:nil]) {
-            self.coordinate = CLLocationCoordinate2DMake([[json objectForKey:@"lat"] doubleValue], [[json objectForKey:@"lng"] doubleValue]);
-        }
+        self.lat = [json numberForKey:@"lat" orDefault:@0];
+        self.lng = [json numberForKey:@"lng" orDefault:@0];
         
         self.activeUsers = [json objectForKey:@"users"];
         self.utc = [json objectForKey:@"utc" orDefault:@""];
@@ -51,7 +50,8 @@
         self.city = [[json valueForKey:@"location"] valueForKey:@"city"];
         self.state = [[json valueForKey:@"location"] valueForKey:@"state"];
         self.zip = [[json valueForKey:@"location"] valueForKey:@"postalCode"];
-        self.coordinate = CLLocationCoordinate2DMake([[json valueForKeyPath:@"location.lat"] doubleValue], [[json valueForKeyPath:@"location.lng"] doubleValue]);
+        self.lat = [json numberForKey:@"lat" orDefault:@0];
+        self.lng = [json numberForKey:@"lat" orDefault:@0];
         self.phone = [[json valueForKey:@"contact"] valueForKey:@"phone"];
         self.formattedPhone = [json valueForKeyPath:@"contact.formattedPhone"];
         
@@ -90,7 +90,8 @@
             self.venueID = [NSNumber numberWithInt:[decoder decodeIntForKey:@"venueID"]];
         }
         
-        self.coordinate = CLLocationCoordinate2DMake([[decoder decodeObjectForKey:@"lat"] doubleValue], [[decoder decodeObjectForKey:@"lng"] doubleValue]);
+        self.lat = [decoder decodeObjectForKey:@"lat"];
+        self.lng = [decoder decodeObjectForKey:@"lng"];
         self.address = [decoder decodeObjectForKey:@"address"];
         self.phone = [decoder decodeObjectForKey:@"phone"];
         self.photoURL = [decoder decodeObjectForKey:@"photoURL"];
@@ -107,8 +108,8 @@
     [encoder encodeObject:self.name forKey:@"name"];
     [encoder encodeObject:self.foursquareID forKey:@"foursquareID"];
     [encoder encodeObject:self.venueID forKey:@"venueID"];
-    [encoder encodeObject:[NSNumber numberWithDouble:self.coordinate.latitude] forKey:@"lat"];
-    [encoder encodeObject:[NSNumber numberWithDouble:self.coordinate.longitude] forKey:@"lng"];
+    [encoder encodeObject:self.lat forKey:@"lat"];
+    [encoder encodeObject:self.lng forKey:@"lng"];
     [encoder encodeObject:self.address forKey:@"address"];
     [encoder encodeObject:self.phone forKey:@"phone"];
     [encoder encodeObject:self.photoURL forKey:@"photoURL"];
@@ -209,6 +210,11 @@
     }
 }
 
+- (CLLocationCoordinate2D)coordinate
+{
+    return CLLocationCoordinate2DMake([self.lat doubleValue], [self.lng doubleValue]);
+}
+
 - (NSMutableDictionary *)activeUsers
 {
     if (!_activeUsers) {
@@ -216,8 +222,6 @@
     }
     return _activeUsers;
 }
-
-
 
 // this method is used in CheckInListViewController to sort the array of places
 // by the distance of each place from the user

@@ -24,11 +24,13 @@
 @property (strong, nonatomic) NSNumber *venueID;
 @property (strong, nonatomic) NSNumber *checkedInNow;
 @property (strong, nonatomic) NSNumber *weeklyCheckinCount;
-@property (nonatomic) CLLocationCoordinate2D coordinate;
+@property (strong, nonatomic) NSNumber *lat;
+@property (strong, nonatomic) NSNumber *lng;
 @property (nonatomic) double distanceFromUser;
 @property (nonatomic) int checkinTime;
 @property (nonatomic) BOOL autoCheckin;
 @property (nonatomic) BOOL isNeighborhood;
+@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 @property (nonatomic, readonly) NSString *checkinCountString;
 @property (nonatomic, readonly) NSString *checkinTimeString;
 @property (nonatomic, readonly) NSString *formattedAddress;

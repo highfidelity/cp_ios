@@ -43,6 +43,8 @@
             @"id" : @"venueID",
             @"name": @"name",
             @"address": @"address",
+            @"lat": @"lat",
+            @"lng": @"lng",
             @"foursquare_id": @"foursquareID",
             @"photo_url": @"photoURL",
             @"checked_in_now": @"checkedInNow",
