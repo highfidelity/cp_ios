@@ -1,0 +1,1 @@
+../../UrbanAirship-iOS-SDK/Airship/Common/UAStandardLocationProvider.h

@@ -1,0 +1,1 @@
+../../UrbanAirship-iOS-SDK/Airship/Library/SubscriptionLib/UASubscriptionProduct.h
