@@ -10,6 +10,7 @@ pod 'RestKit', :git => 'https://github.com/RestKit/RestKit.git', :branch => 'dev
 
 # C&P forked repo pods
 pod 'OAuthConsumer', :git => 'https://github.com/worklist/oauthconsumer'
+pod 'UIImage-Categories', :git => 'https://github.com/worklist/UIImage-Categories'
 
 # pods from cocoapods repo
 pod 'ActionSheetPicker'

@@ -37,9 +37,6 @@
 		53019FE415ABA21D00AE3FA1 /* CPUserActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53019FE315ABA21D00AE3FA1 /* CPUserActionCell.m */; };
 		5308DD0715D5E5DF00B4EBC2 /* sign-up-with-linkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 5308DD0315D5E5DF00B4EBC2 /* sign-up-with-linkedin.png */; };
 		5308DD0815D5E5DF00B4EBC2 /* sign-up-with-linkedin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5308DD0415D5E5DF00B4EBC2 /* sign-up-with-linkedin@2x.png */; };
-		530BAABD160BC097007DF806 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAAB7160BC097007DF806 /* UIImage+Alpha.m */; };
-		530BAABE160BC097007DF806 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAAB9160BC097007DF806 /* UIImage+Resize.m */; };
-		530BAABF160BC097007DF806 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAABB160BC097007DF806 /* UIImage+RoundedCorner.m */; };
 		530C5DB71575E4FC003505AC /* CPSoundEffectsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */; };
 		530C5DBB1575E516003505AC /* send-love-switch-sound-off.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */; };
 		530C5DBC1575E516003505AC /* send-love-switch-sound-on.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */; };
@@ -384,12 +381,6 @@
 		53019FE315ABA21D00AE3FA1 /* CPUserActionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPUserActionCell.m; sourceTree = "<group>"; };
 		5308DD0315D5E5DF00B4EBC2 /* sign-up-with-linkedin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin.png"; sourceTree = "<group>"; };
 		5308DD0415D5E5DF00B4EBC2 /* sign-up-with-linkedin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin@2x.png"; sourceTree = "<group>"; };
-		530BAAB6160BC097007DF806 /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
-		530BAAB7160BC097007DF806 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
-		530BAAB8160BC097007DF806 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
-		530BAAB9160BC097007DF806 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		530BAABA160BC097007DF806 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
-		530BAABB160BC097007DF806 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		530C5DB51575E4FC003505AC /* CPSoundEffectsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPSoundEffectsManager.h; sourceTree = "<group>"; };
 		530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPSoundEffectsManager.m; sourceTree = "<group>"; };
 		530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-off.wav"; sourceTree = "<group>"; };
@@ -839,19 +830,6 @@
 				5308DD0415D5E5DF00B4EBC2 /* sign-up-with-linkedin@2x.png */,
 			);
 			path = images;
-			sourceTree = "<group>";
-		};
-		530BAAB4160BC097007DF806 /* UIImage-Categories */ = {
-			isa = PBXGroup;
-			children = (
-				530BAAB6160BC097007DF806 /* UIImage+Alpha.h */,
-				530BAAB7160BC097007DF806 /* UIImage+Alpha.m */,
-				530BAAB8160BC097007DF806 /* UIImage+Resize.h */,
-				530BAAB9160BC097007DF806 /* UIImage+Resize.m */,
-				530BAABA160BC097007DF806 /* UIImage+RoundedCorner.h */,
-				530BAABB160BC097007DF806 /* UIImage+RoundedCorner.m */,
-			);
-			path = "UIImage-Categories";
 			sourceTree = "<group>";
 		};
 		530C5DAE1575E4F3003505AC /* CPUserActionCell */ = {
@@ -1365,7 +1343,6 @@
 			isa = PBXGroup;
 			children = (
 				53D78C62160B99D800148EA3 /* GTMNSString+HTML */,
-				530BAAB4160BC097007DF806 /* UIImage-Categories */,
 			);
 			path = Externals;
 			sourceTree = "<group>";
@@ -1989,9 +1966,6 @@
 				5338B0A11606C82200C23B4B /* VenueUserCell.m in Sources */,
 				53D78C65160B99D800148EA3 /* GTMNSString+HTML.m in Sources */,
 				5335D821160BA801005400FC /* MKAnnotationView+SpecialPin.m in Sources */,
-				530BAABD160BC097007DF806 /* UIImage+Alpha.m in Sources */,
-				530BAABE160BC097007DF806 /* UIImage+Resize.m in Sources */,
-				530BAABF160BC097007DF806 /* UIImage+RoundedCorner.m in Sources */,
 				68B7B126161626BA000987E2 /* NSDictionary+JsonParserWorkaround.m in Sources */,
 				537DEA8F16249A3400D59AC9 /* CheckInListViewController.m in Sources */,
 				5319DDAE16360A7000451B13 /* CPObjectMapper.m in Sources */,
