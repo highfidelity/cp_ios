@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GRMustacheSectionTagHelper.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GRMustacheSectionTagHelper</TokenIdentifier>
+			<Abstract type="html">The GRMustacheSectionTagHelper class helps building mustache helpers without
+writing a custom class that conforms to the GRMustacheSectionTagHelper protocol.</Abstract>
+			<DeclaredIn>GRMustacheSectionTagHelper.h</DeclaredIn>
+			
+			<NodeRef refid="9"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustacheSectionTagHelper/helperWithBlock:</TokenIdentifier>
+			<Abstract type="html">Returns a GRMustacheSectionTagHelper object that executes the provided block
+when rendering a Mustache section.</Abstract>
+			<DeclaredIn>GRMustacheSectionTagHelper.h</DeclaredIn>			
+			
+			<Declaration>+ (id)helperWithBlock:(NSString *( ^ ) ( GRMustacheSectionTagRenderingContext *context ))block</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>block</Name>
+					<Abstract type="html">The block that renders a section.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">a GRMustacheSectionTagHelper object.</Abstract></ReturnValue>
+			<Anchor>//api/name/helperWithBlock:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

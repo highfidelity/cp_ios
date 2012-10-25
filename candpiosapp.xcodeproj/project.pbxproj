@@ -41,7 +41,6 @@
 		530BAABE160BC097007DF806 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAAB9160BC097007DF806 /* UIImage+Resize.m */; };
 		530BAABF160BC097007DF806 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 530BAABB160BC097007DF806 /* UIImage+RoundedCorner.m */; };
 		530BAB02160BC244007DF806 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 530BAAFE160BC244007DF806 /* libTestFlight.a */; };
-		530BAE86160BCA80007DF806 /* libGRMustache5-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 530BAD7B160BCA80007DF806 /* libGRMustache5-iOS.a */; };
 		530C5DB71575E4FC003505AC /* CPSoundEffectsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */; };
 		530C5DBB1575E516003505AC /* send-love-switch-sound-off.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */; };
 		530C5DBC1575E516003505AC /* send-love-switch-sound-on.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */; };
@@ -454,18 +453,6 @@
 		530BAABB160BC097007DF806 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		530BAAFE160BC244007DF806 /* libTestFlight.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		530BAB01160BC244007DF806 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
-		530BAD6F160BCA80007DF806 /* GRMustache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustache.h; sourceTree = "<group>"; };
-		530BAD70160BCA80007DF806 /* GRMustacheAvailabilityMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheAvailabilityMacros.h; sourceTree = "<group>"; };
-		530BAD71160BCA80007DF806 /* GRMustacheError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheError.h; sourceTree = "<group>"; };
-		530BAD72160BCA80007DF806 /* GRMustacheFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheFilter.h; sourceTree = "<group>"; };
-		530BAD73160BCA80007DF806 /* GRMustacheHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheHelper.h; sourceTree = "<group>"; };
-		530BAD74160BCA80007DF806 /* GRMustacheInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheInvocation.h; sourceTree = "<group>"; };
-		530BAD75160BCA80007DF806 /* GRMustacheSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheSection.h; sourceTree = "<group>"; };
-		530BAD76160BCA80007DF806 /* GRMustacheTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplate.h; sourceTree = "<group>"; };
-		530BAD77160BCA80007DF806 /* GRMustacheTemplateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplateDelegate.h; sourceTree = "<group>"; };
-		530BAD78160BCA80007DF806 /* GRMustacheTemplateRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplateRepository.h; sourceTree = "<group>"; };
-		530BAD79160BCA80007DF806 /* GRMustacheVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheVersion.h; sourceTree = "<group>"; };
-		530BAD7B160BCA80007DF806 /* libGRMustache5-iOS.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; path = "libGRMustache5-iOS.a"; sourceTree = "<group>"; };
 		530C5DB51575E4FC003505AC /* CPSoundEffectsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPSoundEffectsManager.h; sourceTree = "<group>"; };
 		530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPSoundEffectsManager.m; sourceTree = "<group>"; };
 		530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-off.wav"; sourceTree = "<group>"; };
@@ -965,7 +952,6 @@
 				871EFB0F14AE9C820030658B /* CoreGraphics.framework in Frameworks */,
 				E4C35C4114F1323A009B6DBF /* AudioToolbox.framework in Frameworks */,
 				530BAB02160BC244007DF806 /* libTestFlight.a in Frameworks */,
-				530BAE86160BCA80007DF806 /* libGRMustache5-iOS.a in Frameworks */,
 				53BBBFD81612B25700F5C14B /* libUserVoice.a in Frameworks */,
 				8E849599CB28489CB0A55E5F /* libPods.a in Frameworks */,
 			);
@@ -1032,41 +1018,6 @@
 				530BAB01160BC244007DF806 /* TestFlight.h */,
 			);
 			path = TestFlightSDK;
-			sourceTree = "<group>";
-		};
-		530BAD19160BCA80007DF806 /* GRMustache */ = {
-			isa = PBXGroup;
-			children = (
-				530BAD6E160BCA80007DF806 /* include */,
-				530BAD7A160BCA80007DF806 /* lib */,
-			);
-			path = GRMustache;
-			sourceTree = "<group>";
-		};
-		530BAD6E160BCA80007DF806 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				530BAD6F160BCA80007DF806 /* GRMustache.h */,
-				530BAD70160BCA80007DF806 /* GRMustacheAvailabilityMacros.h */,
-				530BAD71160BCA80007DF806 /* GRMustacheError.h */,
-				530BAD72160BCA80007DF806 /* GRMustacheFilter.h */,
-				530BAD73160BCA80007DF806 /* GRMustacheHelper.h */,
-				530BAD74160BCA80007DF806 /* GRMustacheInvocation.h */,
-				530BAD75160BCA80007DF806 /* GRMustacheSection.h */,
-				530BAD76160BCA80007DF806 /* GRMustacheTemplate.h */,
-				530BAD77160BCA80007DF806 /* GRMustacheTemplateDelegate.h */,
-				530BAD78160BCA80007DF806 /* GRMustacheTemplateRepository.h */,
-				530BAD79160BCA80007DF806 /* GRMustacheVersion.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		530BAD7A160BCA80007DF806 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				530BAD7B160BCA80007DF806 /* libGRMustache5-iOS.a */,
-			);
-			path = lib;
 			sourceTree = "<group>";
 		};
 		530C5DAE1575E4F3003505AC /* CPUserActionCell */ = {
@@ -1758,7 +1709,6 @@
 		53D78BC7160B8DE300148EA3 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
-				530BAD19160BCA80007DF806 /* GRMustache */,
 				53D78C62160B99D800148EA3 /* GTMNSString+HTML */,
 				53BBC0041612B70C00F5C14B /* OAuthConsumer */,
 				5335D823160BAA56005400FC /* SSKeychain */,

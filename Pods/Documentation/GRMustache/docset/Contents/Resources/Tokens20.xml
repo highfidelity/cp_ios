@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/GRMustacheSectionTagHelper.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/GRMustacheSectionTagHelper</TokenIdentifier>
+			<Abstract type="html">The protocol for implementing Section tag helpers.</Abstract>
+			<DeclaredIn>GRMustacheSectionTagHelper.h</DeclaredIn>
+			
+			<NodeRef refid="20"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GRMustacheSectionTagHelper/renderForSectionTagInContext:</TokenIdentifier>
+			<Abstract type="html">Returns the rendering of a Mustache section.</Abstract>
+			<DeclaredIn>GRMustacheSectionTagHelper.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)renderForSectionTagInContext:(GRMustacheSectionTagRenderingContext *)context</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>context</Name>
+					<Abstract type="html">A section tag rendering context</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The rendering of the section</Abstract></ReturnValue>
+			<Anchor>//api/name/renderForSectionTagInContext:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

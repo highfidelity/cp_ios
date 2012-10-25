@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleIdentifier</key>
+	<string>org.cocoapods.JRSwizzle-1.0</string>
+	<key>CFBundleName</key>
+	<string>JRSwizzle 1.0 Documentation</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	
+	
+	<key>DocSetDescription</key>
+	<string>JRSwizzle is source code package that offers a single, easy, correct+consistent interface for exchanging Objective-C method implementations (&quot;method swizzling&quot;) across many versions of Mac OS X, iOS, Objective-C and runtime architectures.</string>
+	
+	<key>DocSetFeedName</key>
+	<string>JRSwizzle 1.0 Documentation</string>
+	
+	<key>DocSetMinimumXcodeVersion</key>
+	<string>3.0</string>
+	
+	<key>DashDocSetFamily</key>
+	<string>appledoc</string>
+	<key>DocSetPublisherIdentifier</key>
+	<string>org.cocoapods.documentation</string>
+	<key>DocSetPublisherName</key>
+	<string>Jonathan &apos;Wolf&apos; Rentzsch</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Jonathan &apos;Wolf&apos; Rentzsch</string>
+</dict>
+</plist>

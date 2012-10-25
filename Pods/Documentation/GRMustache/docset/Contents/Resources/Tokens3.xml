@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GRMustacheFilter.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GRMustacheFilter</TokenIdentifier>
+			<Abstract type="html">The GRMustacheFilter class helps building mustache filters without writing a
+custom class that conforms to the GRMustacheFilter protocol.</Abstract>
+			<DeclaredIn>GRMustacheFilter.h</DeclaredIn>
+			
+			<NodeRef refid="3"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustacheFilter/filterWithBlock:</TokenIdentifier>
+			<Abstract type="html">Returns a GRMustacheFilter object that executes the provided block when
+tranforming a value.</Abstract>
+			<DeclaredIn>GRMustacheFilter.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/GRMustacheFilter/variadicFilterWithBlock:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (id)filterWithBlock:(id ( ^ ) ( id value ))block</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>block</Name>
+					<Abstract type="html">The block that transforms its input.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">a GRMustacheFilter object.</Abstract></ReturnValue>
+			<Anchor>//api/name/filterWithBlock:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustacheFilter/variadicFilterWithBlock:</TokenIdentifier>
+			<Abstract type="html">Returns a GRMustacheFilter object that executes the provided block, given an
+array of arguments.</Abstract>
+			<DeclaredIn>GRMustacheFilter.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/clm/GRMustacheFilter/filterWithBlock:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (id)variadicFilterWithBlock:(id ( ^ ) ( NSArray *arguments ))block</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>block</Name>
+					<Abstract type="html">The block that transforms its input.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">a GRMustacheFilter object.</Abstract></ReturnValue>
+			<Anchor>//api/name/variadicFilterWithBlock:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

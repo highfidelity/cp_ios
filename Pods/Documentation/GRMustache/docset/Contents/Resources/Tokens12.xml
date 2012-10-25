@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GRMustacheTemplateRepository.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GRMustacheTemplateRepository</TokenIdentifier>
+			<Abstract type="html">Given a data source that provides Mustache template strings, a
+GRMustacheTemplateRepository&apos;s responsability is to provide
+GRMustacheTemplate instances.</Abstract>
+			<DeclaredIn>GRMustacheTemplateRepository.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/cl/GRMustacheTemplate</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/intf/GRMustacheTemplateRepositoryDataSource</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<NodeRef refid="12"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustacheTemplateRepository/templateRepositoryWithBaseURL:</TokenIdentifier>
+			<Abstract type="html">Returns a GRMustacheTemplateRepository that loads Mustache template strings
+from files of extension .mustache, encoded in UTF8, stored in the provided
+base URL.</Abstract>
+			<DeclaredIn>GRMustacheTemplateRepository.h</DeclaredIn>			
+			
+			<Declaration>+ (id)templateRepositoryWithBaseURL:(NSURL *)URL</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>URL</Name>
+					<Abstract type="html">the base URL where to look templates from.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">a GRMustacheTemplateRepository</Abstract></ReturnValue>
+			<Anchor>//api/name/templateRepositoryWithBaseURL:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustacheTemplateRepository/templateRepositoryWithBaseURL:templateExtension:</TokenIdentifier>
+			<Abstract type="html">Returns a GRMustacheTemplateRepository that loads Mustache template strings
+from files of provided extension, encoded in UTF8, stored in the provided
+base URL.</Abstract>
+			<DeclaredIn>GRMustacheTemplateRepository.h</DeclaredIn>			
+			
+			<Declaration>+ (id)templateRepositoryWithBaseURL:(NSURL *)URL templateExtension:(NSString *)ext</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>URL</Name>
+					<Abstract type="html">The base URL where to look templates from.</Abstract>
+				</Parameter><Parameter>
+					<Name>ext</Name>
+					<Abstract type="html">The extension of template files.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">a GRMustacheTemplateRepository</Abstract></ReturnValue>
+			<Anchor>//api/name/templateRepositoryWithBaseURL:templateExtension:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustacheTemplateRepository/templateRepositoryWithBaseURL:templateExtension:encoding:</TokenIdentifier>
+			<Abstract type="html">Returns a GRMustacheTemplateRepository that loads Mustache template strings
+from files of provided extension, encoded in the provided encoding, stored in
+the provided base URL.</Abstract>
+			<DeclaredIn>GRMustacheTemplateRepository.h</DeclaredIn>			
+			
+			<Declaration>+ (id)templateRepositoryWithBaseURL:(NSURL *)URL templateExtension:(NSString *)ext encoding:(NSStringEncoding)encoding</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>URL</Name>
+					<Abstract type="html">The base URL where to look templates from.</Abstract>
+				</Parameter><Parameter>
+					<Name>ext</Name>
+					<Abstract type="html">The extension of template files.</Abstract>
+				</Parameter><Parameter>
+					<Name>encoding</Name>
+					<Abstract type="html">The encoding of template files.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">a GRMustacheTemplateRepository</Abstract></ReturnValue>
+			<Anchor>//api/name/templateRepositoryWithBaseURL:templateExtension:encoding:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustacheTemplateRepository/templateRepositoryWithDirectory:</TokenIdentifier>
+			<Abstract type="html">Returns a GRMustacheTemplateRepository that loads Mustache template strings
+from files of extension .mustache, encoded in UTF8, stored in the provided
+directory.</Abstract>
+			<DeclaredIn>GRMustacheTemplateRepository.h</DeclaredIn>			
+			
+			<Declaration>+ (id)templateRepositoryWithDirectory:(NSString *)path</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>path</Name>
+					<Abstract type="html">The path of the directory that stores templates.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">a GRMustacheTemplateRepository</Abstract></ReturnValue>
+			<Anchor>//api/name/templateRepositoryWithDirectory:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustacheTemplateRepository/templateRepositoryWithDirectory:templateExtension:</TokenIdentifier>
+			<Abstract type="html">Returns a GRMustacheTemplateRepository that loads Mustache template strings
+from files of provided extension, encoded in UTF8, stored in the provided
+directory.</Abstract>
+			<DeclaredIn>GRMustacheTemplateRepository.h</DeclaredIn>			
+			
+			<Declaration>+ (id)templateRepositoryWithDirectory:(NSString *)path templateExtension:(NSString *)ext</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>path</Name>
+					<Abstract type="html">The path of the directory that stores templates.</Abstract>
+				</Parameter><Parameter>
+					<Name>ext</Name>
+					<Abstract type="html">The extension of template files.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">a GRMustacheTemplateRepository</Abstract></ReturnValue>
+			<Anchor>//api/name/templateRepositoryWithDirectory:templateExtension:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustacheTemplateRepository/templateRepositoryWithDirectory:templateExtension:encoding:</TokenIdentifier>
+			<Abstract type="html">Returns a GRMustacheTemplateRepository that loads Mustache template strings
+from files of provided extension, encoded in the provided encoding, stored in
+the provided directory.</Abstract>
+			<DeclaredIn>GRMustacheTemplateRepository.h</DeclaredIn>			
+			
+			<Declaration>+ (id)templateRepositoryWithDirectory:(NSString *)path templateExtension:(NSString *)ext encoding:(NSStringEncoding)encoding</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>path</Name>
+					<Abstract type="html">The path of the directory that stores templates.</Abstract>
+				</Parameter><Parameter>
+					<Name>ext</Name>
+					<Abstract type="html">The extension of template files.</Abstract>
+				</Parameter><Parameter>
+					<Name>encoding</Name>
+					<Abstract type="html">The encoding of template files.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">a GRMustacheTemplateRepository</Abstract></ReturnValue>
+			<Anchor>//api/name/templateRepositoryWithDirectory:templateExtension:encoding:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustacheTemplateRepository/templateRepositoryWithBundle:</TokenIdentifier>
+			<Abstract type="html">Returns a GRMustacheTemplateRepository that loads Mustache template strings
+from resources of extension .mustache, encoded in UTF8, stored in the
+provided bundle.</Abstract>
+			<DeclaredIn>GRMustacheTemplateRepository.h</DeclaredIn>			
+			
+			<Declaration>+ (id)templateRepositoryWithBundle:(NSBundle *)bundle</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>bundle</Name>
+					<Abstract type="html">The bundle that stores templates as resources.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">a GRMustacheTemplateRepository</Abstract></ReturnValue>
+			<Anchor>//api/name/templateRepositoryWithBundle:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustacheTemplateRepository/templateRepositoryWithBundle:templateExtension:</TokenIdentifier>
+			<Abstract type="html">Returns a GRMustacheTemplateRepository that loads Mustache template strings
+from resources of provided extension, encoded in UTF8, stored in the provided
+bundle.</Abstract>
+			<DeclaredIn>GRMustacheTemplateRepository.h</DeclaredIn>			
+			
+			<Declaration>+ (id)templateRepositoryWithBundle:(NSBundle *)bundle templateExtension:(NSString *)ext</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>bundle</Name>
+					<Abstract type="html">The bundle that stores templates as resources.</Abstract>
+				</Parameter><Parameter>
+					<Name>ext</Name>
+					<Abstract type="html">The extension of template files.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">a GRMustacheTemplateRepository</Abstract></ReturnValue>
+			<Anchor>//api/name/templateRepositoryWithBundle:templateExtension:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustacheTemplateRepository/templateRepositoryWithBundle:templateExtension:encoding:</TokenIdentifier>
+			<Abstract type="html">Returns a GRMustacheTemplateRepository that loads Mustache template strings
+from resources of provided extension, encoded in the provided encoding,
+stored in the provided bundle.</Abstract>
+			<DeclaredIn>GRMustacheTemplateRepository.h</DeclaredIn>			
+			
+			<Declaration>+ (id)templateRepositoryWithBundle:(NSBundle *)bundle templateExtension:(NSString *)ext encoding:(NSStringEncoding)encoding</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>bundle</Name>
+					<Abstract type="html">The bundle that stores templates as resources.</Abstract>
+				</Parameter><Parameter>
+					<Name>ext</Name>
+					<Abstract type="html">The extension of template files.</Abstract>
+				</Parameter><Parameter>
+					<Name>encoding</Name>
+					<Abstract type="html">The encoding of template files.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">a GRMustacheTemplateRepository</Abstract></ReturnValue>
+			<Anchor>//api/name/templateRepositoryWithBundle:templateExtension:encoding:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustacheTemplateRepository/templateRepositoryWithPartialsDictionary:</TokenIdentifier>
+			<Abstract type="html">Returns a GRMustacheTemplateRepository that loads Mustache template strings
+from a dictionary whose keys are template names, and values template strings.</Abstract>
+			<DeclaredIn>GRMustacheTemplateRepository.h</DeclaredIn>			
+			
+			<Declaration>+ (id)templateRepositoryWithPartialsDictionary:(NSDictionary *)partialsDictionary</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>partialsDictionary</Name>
+					<Abstract type="html">A dictionary of whose keys are template names, and
+values Mustache template strings.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">a GRMustacheTemplateRepository</Abstract></ReturnValue>
+			<Anchor>//api/name/templateRepositoryWithPartialsDictionary:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustacheTemplateRepository/templateRepository</TokenIdentifier>
+			<Abstract type="html">Returns a GRMustacheTemplateRepository.</Abstract>
+			<DeclaredIn>GRMustacheTemplateRepository.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/intf/GRMustacheTemplateRepositoryDataSource</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>+ (id)templateRepository</Declaration>
+			
+			<ReturnValue><Abstract type="html">a GRMustacheTemplateRepository</Abstract></ReturnValue>
+			<Anchor>//api/name/templateRepository</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GRMustacheTemplateRepository/setAVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER:</TokenIdentifier>
+			<Abstract type="html">The repository&apos;s data source.</Abstract>
+			<DeclaredIn>GRMustacheTemplateRepository.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/intf/GRMustacheTemplateRepositoryDataSource</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) id&lt;GRMustacheTemplateRepositoryDataSource&gt; dataSource AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER</Declaration>
+			
+			
+			<Anchor>//api/name/AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GRMustacheTemplateRepository/AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER</TokenIdentifier>
+			<Abstract type="html">The repository&apos;s data source.</Abstract>
+			<DeclaredIn>GRMustacheTemplateRepository.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/intf/GRMustacheTemplateRepositoryDataSource</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) id&lt;GRMustacheTemplateRepositoryDataSource&gt; dataSource AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER</Declaration>
+			
+			
+			<Anchor>//api/name/AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GRMustacheTemplateRepository/templateForName:error:</TokenIdentifier>
+			<Abstract type="html">Returns a template identified by its name.</Abstract>
+			<DeclaredIn>GRMustacheTemplateRepository.h</DeclaredIn>			
+			
+			<Declaration>- (GRMustacheTemplate *)templateForName:(NSString *)name error:(NSError **)outError</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>name</Name>
+					<Abstract type="html">The template name</Abstract>
+				</Parameter><Parameter>
+					<Name>outError</Name>
+					<Abstract type="html">If there is an error loading or parsing template and
+partials, upon return contains an NSError object that
+describes the problem.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">a GRMustacheTemplate</Abstract></ReturnValue>
+			<Anchor>//api/name/templateForName:error:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GRMustacheTemplateRepository/templateFromString:error:</TokenIdentifier>
+			<Abstract type="html">Returns a template built from the provided Mustache template string.</Abstract>
+			<DeclaredIn>GRMustacheTemplateRepository.h</DeclaredIn>			
+			
+			<Declaration>- (GRMustacheTemplate *)templateFromString:(NSString *)templateString error:(NSError **)outError</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>templateString</Name>
+					<Abstract type="html">A Mustache template string</Abstract>
+				</Parameter><Parameter>
+					<Name>outError</Name>
+					<Abstract type="html">If there is an error loading or parsing template and
+partials, upon return contains an NSError object that
+describes the problem.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">a GRMustacheTemplate</Abstract></ReturnValue>
+			<Anchor>//api/name/templateFromString:error:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

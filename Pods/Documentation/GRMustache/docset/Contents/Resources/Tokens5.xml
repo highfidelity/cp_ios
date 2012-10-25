@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GRMustacheInvocation.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GRMustacheInvocation</TokenIdentifier>
+			<Abstract type="html">The GRMustacheInvocation class gives you information about the values that
+are rendered.</Abstract>
+			<DeclaredIn>GRMustacheInvocation.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/intf/GRMustacheTemplateDelegate</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<NodeRef refid="5"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GRMustacheInvocation/description</TokenIdentifier>
+			<Abstract type="html">Returns a string that describes the invocation.</Abstract>
+			<DeclaredIn>GRMustacheInvocation.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)description</Declaration>
+			
+			<ReturnValue><Abstract type="html">a string that describes the invocation.</Abstract></ReturnValue>
+			<Anchor>//api/name/description</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GRMustacheInvocation/setAVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER:</TokenIdentifier>
+			<Abstract type="html">The return value of the invocation.</Abstract>
+			<DeclaredIn>GRMustacheInvocation.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/intf/GRMustacheTemplateDelegate</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, retain) id returnValue AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER</Declaration>
+			
+			
+			<Anchor>//api/name/AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GRMustacheInvocation/AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER</TokenIdentifier>
+			<Abstract type="html">The return value of the invocation.</Abstract>
+			<DeclaredIn>GRMustacheInvocation.h</DeclaredIn>			
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/intf/GRMustacheTemplateDelegate</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, retain) id returnValue AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER</Declaration>
+			
+			
+			<Anchor>//api/name/AVAILABLE_GRMUSTACHE_VERSION_5_0_AND_LATER</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

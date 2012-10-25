@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GRMustache.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GRMustache</TokenIdentifier>
+			<Abstract type="html">The GRMustache class provides with global-level information and configuration
+of the GRMustache library.</Abstract>
+			<DeclaredIn>GRMustache.h</DeclaredIn>
+			
+			<NodeRef refid="1"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustache/version</TokenIdentifier>
+			<Abstract type="html">The version of GRMustache as a GRMustacheVersion struct.</Abstract>
+			<DeclaredIn>GRMustache.h</DeclaredIn>			
+			
+			<Declaration>+ (GRMustacheVersion)version</Declaration>
+			
+			<ReturnValue><Abstract type="html">The version of GRMustache as a GRMustacheVersion struct.</Abstract></ReturnValue>
+			<Anchor>//api/name/version</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustache/preventNSUndefinedKeyExceptionAttack</TokenIdentifier>
+			<Abstract type="html">Have GRMustache avoid most NSUndefinedKeyExceptions when rendering
+templates.</Abstract>
+			<DeclaredIn>GRMustache.h</DeclaredIn>			
+			
+			<Declaration>+ (void)preventNSUndefinedKeyExceptionAttack</Declaration>
+			
+			
+			<Anchor>//api/name/preventNSUndefinedKeyExceptionAttack</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

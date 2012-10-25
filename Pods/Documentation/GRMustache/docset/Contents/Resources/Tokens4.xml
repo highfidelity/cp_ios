@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GRMustacheHelper.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GRMustacheHelper</TokenIdentifier>
+			<Abstract type="html">Deprecated. Use GRMustacheSectionHelper instead.</Abstract>
+			<DeclaredIn>GRMustacheSectionHelper.h</DeclaredIn>
+			
+			<NodeRef refid="4"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustacheHelper/helperWithBlock:</TokenIdentifier>
+			<Abstract type="html">Returns a GRMustacheSectionHelper object that executes the provided block
+when rendering a section tag.</Abstract>
+			<DeclaredIn>GRMustacheSectionHelper.h</DeclaredIn>			
+			
+			<Declaration>+ (id)helperWithBlock:(NSString *( ^ ) ( GRMustacheSection *section ))block</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>block</Name>
+					<Abstract type="html">The block that renders a section.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">a GRMustacheSectionHelper object.</Abstract></ReturnValue>
+			<Anchor>//api/name/helperWithBlock:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

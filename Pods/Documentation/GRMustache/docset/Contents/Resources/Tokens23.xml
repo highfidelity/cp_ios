@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/GRMustacheVariableHelper.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/GRMustacheVariableHelper</TokenIdentifier>
+			<Abstract type="html">Deprecated protocol. Use GRMustacheVariableTagHelper protocol instead.</Abstract>
+			<DeclaredIn>GRMustacheVariableHelper.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/cl/GRMustacheVariableTagHelper</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<NodeRef refid="23"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GRMustacheVariableHelper/renderVariable:</TokenIdentifier>
+			<Abstract type="html">Returns the rendering of a Mustache variable.</Abstract>
+			<DeclaredIn>GRMustacheVariableHelper.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)renderVariable:(GRMustacheVariable *)variable</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>variable</Name>
+					<Abstract type="html">The variable to render</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The rendering of the variable</Abstract></ReturnValue>
+			<Anchor>//api/name/renderVariable:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GRMustacheVariableHelper.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GRMustacheVariableHelper</TokenIdentifier>
+			<Abstract type="html">Deprecated class. Use GRMustacheVariableTagHelper class instead.</Abstract>
+			<DeclaredIn>GRMustacheVariableHelper.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/cl/GRMustacheVariableTagHelper</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<NodeRef refid="14"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GRMustacheVariableHelper/helperWithBlock:</TokenIdentifier>
+			<Abstract type="html">Returns a GRMustacheVariableHelper object that executes the provided block
+when rendering a variable tag.</Abstract>
+			<DeclaredIn>GRMustacheVariableHelper.h</DeclaredIn>			
+			
+			<Declaration>+ (id)helperWithBlock:(NSString *( ^ ) ( GRMustacheVariable *variable ))block</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>block</Name>
+					<Abstract type="html">The block that renders a variable.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">a GRMustacheVariableHelper object.</Abstract></ReturnValue>
+			<Anchor>//api/name/helperWithBlock:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

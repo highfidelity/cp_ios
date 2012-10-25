@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/GRMustacheFilter.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/GRMustacheFilter</TokenIdentifier>
+			<Abstract type="html">The protocol for implementing GRMustache filters.</Abstract>
+			<DeclaredIn>GRMustacheFilter.h</DeclaredIn>
+			
+			<NodeRef refid="17"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GRMustacheFilter/transformedValue:</TokenIdentifier>
+			<Abstract type="html">Applies some transformation to its input, and returns the transformed value.</Abstract>
+			<DeclaredIn>GRMustacheFilter.h</DeclaredIn>			
+			
+			<Declaration>- (id)transformedValue:(id)object</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>object</Name>
+					<Abstract type="html">An object to be processed by the filter.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A transformed value.</Abstract></ReturnValue>
+			<Anchor>//api/name/transformedValue:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>
