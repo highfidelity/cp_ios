@@ -77,8 +77,6 @@
 		5332FB42152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5332FB40152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg */; };
 		5335CF6F1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */; };
 		5335D821160BA801005400FC /* MKAnnotationView+SpecialPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D820160BA801005400FC /* MKAnnotationView+SpecialPin.m */; };
-		5335D86F160BAB2F005400FC /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5335D85D160BAB2F005400FC /* SVProgressHUD.bundle */; };
-		5335D870160BAB2F005400FC /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D85F160BAB2F005400FC /* SVProgressHUD.m */; };
 		5335D89A160BB369005400FC /* SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D88B160BB369005400FC /* SVPullToRefresh.m */; };
 		5335D8FA160BB404005400FC /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D8E8160BB404005400FC /* TPKeyboardAvoidingScrollView.m */; };
 		5335D8FB160BB404005400FC /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335D8EA160BB404005400FC /* TPKeyboardAvoidingTableView.m */; };
@@ -513,9 +511,6 @@
 		5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SettingsStoryboard_iPhone.storyboard; path = Settings/SettingsStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		5335D81F160BA801005400FC /* MKAnnotationView+SpecialPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MKAnnotationView+SpecialPin.h"; path = "Map/MKAnnotationView+SpecialPin.h"; sourceTree = "<group>"; };
 		5335D820160BA801005400FC /* MKAnnotationView+SpecialPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MKAnnotationView+SpecialPin.m"; path = "Map/MKAnnotationView+SpecialPin.m"; sourceTree = "<group>"; };
-		5335D85D160BAB2F005400FC /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
-		5335D85E160BAB2F005400FC /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
-		5335D85F160BAB2F005400FC /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		5335D88A160BB369005400FC /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
 		5335D88B160BB369005400FC /* SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPullToRefresh.m; sourceTree = "<group>"; };
 		5335D8E7160BB404005400FC /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
@@ -1077,24 +1072,6 @@
 				5355B0C115140697006A3D89 /* settings-button-3@2x.png */,
 			);
 			name = images;
-			sourceTree = "<group>";
-		};
-		5335D848160BAB2F005400FC /* SVProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				5335D85C160BAB2F005400FC /* SVProgressHUD */,
-			);
-			path = SVProgressHUD;
-			sourceTree = "<group>";
-		};
-		5335D85C160BAB2F005400FC /* SVProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				5335D85D160BAB2F005400FC /* SVProgressHUD.bundle */,
-				5335D85E160BAB2F005400FC /* SVProgressHUD.h */,
-				5335D85F160BAB2F005400FC /* SVProgressHUD.m */,
-			);
-			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
 		5335D875160BB369005400FC /* SVPullToRefresh */ = {
@@ -1699,7 +1676,6 @@
 			children = (
 				53D78C62160B99D800148EA3 /* GTMNSString+HTML */,
 				53BBC0041612B70C00F5C14B /* OAuthConsumer */,
-				5335D848160BAB2F005400FC /* SVProgressHUD */,
 				5335D875160BB369005400FC /* SVPullToRefresh */,
 				530BAAFD160BC244007DF806 /* TestFlightSDK */,
 				5335D8CF160BB404005400FC /* TPKeyboardAvoiding */,
@@ -2210,7 +2186,6 @@
 				5338B09E1606C80B00C23B4B /* paper-texture@2x.png in Resources */,
 				5338B0A41606C84600C23B4B /* highlight-gradient.png in Resources */,
 				5338B0A51606C84600C23B4B /* highlight-gradient@2x.png in Resources */,
-				5335D86F160BAB2F005400FC /* SVProgressHUD.bundle in Resources */,
 				53BBBFDA1612B25700F5C14B /* UserVoice.strings in Resources */,
 				53BBBFDB1612B25700F5C14B /* uv_alert.png in Resources */,
 				53BBBFDC1612B25700F5C14B /* uv_alert@2x.png in Resources */,
@@ -2364,7 +2339,6 @@
 				5338B0A11606C82200C23B4B /* VenueUserCell.m in Sources */,
 				53D78C65160B99D800148EA3 /* GTMNSString+HTML.m in Sources */,
 				5335D821160BA801005400FC /* MKAnnotationView+SpecialPin.m in Sources */,
-				5335D870160BAB2F005400FC /* SVProgressHUD.m in Sources */,
 				5335D89A160BB369005400FC /* SVPullToRefresh.m in Sources */,
 				5335D8FA160BB404005400FC /* TPKeyboardAvoidingScrollView.m in Sources */,
 				5335D8FB160BB404005400FC /* TPKeyboardAvoidingTableView.m in Sources */,
