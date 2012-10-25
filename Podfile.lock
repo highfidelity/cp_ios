@@ -1,4 +1,41 @@
 
+COCOAPODS: 0.15.2
+
+EXTERNAL SOURCES: 
+  RestKit: 
+    :git: https://github.com/RestKit/RestKit.git
+    :branch: development
+
+SPEC CHECKSUMS: 
+  SVProgressHUD: f37a38ee4d9f9a8d57f2f22c702f994ecc59a364
+  RestKit/CoreData: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
+  UrbanAirship-iOS-SDK: aedc5f41dabb77b52db1e2ff5ad26773d945f368
+  SSKeychain: a81ff6b65eb5e8fc1fddecf11fe167dba81d4314
+  AFNetworking: 758a1cb1ab5a0d22795ba1c44abb9cad395bc126
+  SVPullToRefresh: f6047698fc0530e9ab42266fce4dc1882e718d0e
+  GRMustache: 2f4c5479ce0f7380fbe15ef347897c6b3b1eb86f
+  CustomBadge: 07ca87331a9644bc355963ff47c9d1b1f2516acf
+  RestKit/ObjectMapping: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
+  RestKit/Network: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
+  SOCKit: 179515c1a621dd5652a60e9be02ea4adcd25bc9b
+  RestKit/Support: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
+  JRSwizzle: 6242ff38485d870fc2636899048ee1ab883ae587
+  ActionSheetPicker: f47931cfb6bc65230b323326964fccb4ad339f37
+  RestKit: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
+  RestKit/Core: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
+  FlurrySDK: 75dec170404f5cb8344d2097b7e8df23a6ca9325
+
+DEPENDENCIES: 
+- ActionSheetPicker
+- CustomBadge
+- FlurrySDK
+- GRMustache
+- RestKit (from `https://github.com/RestKit/RestKit.git', branch `development')
+- SSKeychain
+- SVProgressHUD (= 0.7)
+- SVPullToRefresh
+- UrbanAirship-iOS-SDK
+
 PODS: 
 - AFNetworking (1.0)
 - ActionSheetPicker (0.0.1)
@@ -24,39 +61,5 @@ PODS:
 - SOCKit (1.1)
 - SSKeychain (0.1.4)
 - SVProgressHUD (0.7)
+- SVPullToRefresh (0.3)
 - UrbanAirship-iOS-SDK (1.3.3)
-
-SPEC CHECKSUMS: 
-  SVProgressHUD: f37a38ee4d9f9a8d57f2f22c702f994ecc59a364
-  RestKit/ObjectMapping: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
-  AFNetworking: 758a1cb1ab5a0d22795ba1c44abb9cad395bc126
-  JRSwizzle: 6242ff38485d870fc2636899048ee1ab883ae587
-  RestKit/Network: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
-  RestKit/Core: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
-  RestKit: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
-  UrbanAirship-iOS-SDK: aedc5f41dabb77b52db1e2ff5ad26773d945f368
-  SSKeychain: a81ff6b65eb5e8fc1fddecf11fe167dba81d4314
-  RestKit/Support: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
-  FlurrySDK: 75dec170404f5cb8344d2097b7e8df23a6ca9325
-  RestKit/CoreData: 99ffc129fb9eb0c7472ed6230b2c2df81ddb0eff
-  GRMustache: 2f4c5479ce0f7380fbe15ef347897c6b3b1eb86f
-  CustomBadge: 07ca87331a9644bc355963ff47c9d1b1f2516acf
-  SOCKit: 179515c1a621dd5652a60e9be02ea4adcd25bc9b
-  ActionSheetPicker: f47931cfb6bc65230b323326964fccb4ad339f37
-
-COCOAPODS: 0.15.2
-
-EXTERNAL SOURCES: 
-  RestKit: 
-    :git: https://github.com/RestKit/RestKit.git
-    :branch: development
-
-DEPENDENCIES: 
-- ActionSheetPicker
-- CustomBadge
-- FlurrySDK
-- GRMustache
-- RestKit (from `https://github.com/RestKit/RestKit.git', branch `development')
-- SSKeychain
-- SVProgressHUD (= 0.7)
-- UrbanAirship-iOS-SDK

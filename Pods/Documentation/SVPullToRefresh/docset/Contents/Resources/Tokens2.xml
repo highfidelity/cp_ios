@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Categories/UIScrollView+SVPullToRefresh.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cat/UIScrollView(SVPullToRefresh)</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SVPullToRefresh.h</DeclaredIn>
+			
+			<NodeRef refid="2"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/UIScrollView(SVPullToRefresh)/addPullToRefreshWithActionHandler:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SVPullToRefresh.h</DeclaredIn>			
+			
+			<Declaration>- (void)addPullToRefreshWithActionHandler:(void ( ^ ) ( void ))actionHandler</Declaration>
+			
+			
+			<Anchor>//api/name/addPullToRefreshWithActionHandler:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/UIScrollView(SVPullToRefresh)/addInfiniteScrollingWithActionHandler:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SVPullToRefresh.h</DeclaredIn>			
+			
+			<Declaration>- (void)addInfiniteScrollingWithActionHandler:(void ( ^ ) ( void ))actionHandler</Declaration>
+			
+			
+			<Anchor>//api/name/addInfiniteScrollingWithActionHandler:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/UIScrollView(SVPullToRefresh)/setPullToRefreshView:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SVPullToRefresh.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) SVPullToRefresh *pullToRefreshView</Declaration>
+			
+			
+			<Anchor>//api/name/pullToRefreshView</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/UIScrollView(SVPullToRefresh)/pullToRefreshView</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SVPullToRefresh.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) SVPullToRefresh *pullToRefreshView</Declaration>
+			
+			
+			<Anchor>//api/name/pullToRefreshView</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/UIScrollView(SVPullToRefresh)/setInfiniteScrollingView:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SVPullToRefresh.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) SVPullToRefresh *infiniteScrollingView</Declaration>
+			
+			
+			<Anchor>//api/name/infiniteScrollingView</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/UIScrollView(SVPullToRefresh)/infiniteScrollingView</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SVPullToRefresh.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, strong) SVPullToRefresh *infiniteScrollingView</Declaration>
+			
+			
+			<Anchor>//api/name/infiniteScrollingView</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/UIScrollView(SVPullToRefresh)/setShowsPullToRefresh:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SVPullToRefresh.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL showsPullToRefresh</Declaration>
+			
+			
+			<Anchor>//api/name/showsPullToRefresh</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/UIScrollView(SVPullToRefresh)/showsPullToRefresh</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SVPullToRefresh.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL showsPullToRefresh</Declaration>
+			
+			
+			<Anchor>//api/name/showsPullToRefresh</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/UIScrollView(SVPullToRefresh)/setShowsInfiniteScrolling:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SVPullToRefresh.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL showsInfiniteScrolling</Declaration>
+			
+			
+			<Anchor>//api/name/showsInfiniteScrolling</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/UIScrollView(SVPullToRefresh)/showsInfiniteScrolling</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SVPullToRefresh.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL showsInfiniteScrolling</Declaration>
+			
+			
+			<Anchor>//api/name/showsInfiniteScrolling</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>
