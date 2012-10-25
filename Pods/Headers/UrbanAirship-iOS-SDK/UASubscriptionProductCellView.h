@@ -1,1 +1,0 @@
-../../UrbanAirship-iOS-SDK/Airship/UI/Default/Subscription/Classes/Shared/UASubscriptionProductCellView.h

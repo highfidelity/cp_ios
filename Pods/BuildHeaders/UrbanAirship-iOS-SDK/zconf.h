@@ -1,1 +1,0 @@
-../../UrbanAirship-iOS-SDK/Airship/External/ZipFile-OC/minizip/zconf.h

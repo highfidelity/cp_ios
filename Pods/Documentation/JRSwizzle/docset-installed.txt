@@ -1,4 +1,0 @@
-Documentation set was installed to Xcode!
-
-Path: /Users/birarda/Library/Developer/Shared/Documentation/DocSets/org.cocoapods.JRSwizzle-1.0.docset
-Time: 2012-10-25 01:21:20 +0000

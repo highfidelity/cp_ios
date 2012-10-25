@@ -1,1 +1,0 @@
-../../UrbanAirship-iOS-SDK/Airship/External/UA_Base64.h

@@ -16,3 +16,4 @@ DerivedData
 *.orig
 .idea
 .DS_Store
+Pods/

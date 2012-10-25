@@ -1,4 +1,0 @@
-Documentation set was installed to Xcode!
-
-Path: /Users/birarda/Library/Developer/Shared/Documentation/DocSets/org.cocoapods.SVPullToRefresh-0.3.docset
-Time: 2012-10-25 01:37:17 +0000

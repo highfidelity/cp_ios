@@ -1,1 +1,0 @@
-../../UrbanAirship-iOS-SDK/Airship/UI/Default/StoreFront/Classes/Shared/UAStoreFrontAlertHandler.h

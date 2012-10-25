@@ -1,1 +1,0 @@
-../../uservoice-iphone-sdk/Classes/UVResponseViewController.h

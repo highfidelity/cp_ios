@@ -1,1 +1,0 @@
-../../uservoice-iphone-sdk/Vendor/HTTPRiot/Utilities/HRBase64.h

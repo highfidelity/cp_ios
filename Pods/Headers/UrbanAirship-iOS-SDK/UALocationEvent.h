@@ -1,1 +1,0 @@
-../../UrbanAirship-iOS-SDK/Airship/Common/UALocationEvent.h

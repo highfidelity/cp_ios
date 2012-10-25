@@ -1,1 +1,0 @@
-../../UrbanAirship-iOS-SDK/Airship/Library/StoreFrontLib/UAStoreFrontAlertProtocol.h
