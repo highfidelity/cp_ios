@@ -16,6 +16,7 @@
 #import "CPapi.h"
 #import "CPCheckinHandler.h"
 #import "CPUserSessionHandler.h"
+#import "TutorialViewController.h"
 
 typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
@@ -314,6 +315,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
         NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"api.php" parameters:loginParams];
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
             NSInteger succeeded = [[JSON objectForKey:@"succeeded"] intValue];
+            BOOL isNewUser = NO;
 
             if(succeeded == 0) {
                 NSString *outerErrorMessage = [JSON objectForKey:@"message"];// often just 'error'
@@ -346,12 +348,29 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                 [CPUserSessionHandler performAfterLoginActions];
                 
                 [SVProgressHUD dismiss];
-            }            
-            
-            [self performSelector:@selector(dismissModalViewControllerAnimated:)
-                       withObject:[NSNumber numberWithBool:YES]
-                       afterDelay:kDefaultDismissDelay];
 
+                NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+                [dateFormat setDateFormat:@"yyyy-MM-dd  HH:mm:ss"];
+                NSDate *joinDate = [dateFormat dateFromString:userInfo[@"join_date"]];
+
+                if ([[NSDate date] timeIntervalSinceDate:joinDate] < 24 * 60 * 60) {
+                    isNewUser = YES;
+                }
+            }
+
+            if (isNewUser) {
+                UIStoryboard *signupStoryboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
+                UINavigationController *navigationViewController = [signupStoryboard instantiateViewControllerWithIdentifier:@"TutorialViewControllerNavigationViewController"];
+
+                TutorialViewController *viewController = (TutorialViewController *)navigationViewController.topViewController;
+                [self.navigationController setNavigationBarHidden:YES animated:YES];
+                [self.navigationController pushViewController:viewController animated:YES];
+            } else {
+                [self performSelector:@selector(dismissModalViewControllerAnimated:)
+                           withObject:[NSNumber numberWithBool:YES]
+                           afterDelay:kDefaultDismissDelay];
+            }
+            
             // Remove NSNotification as it's no longer needed once logged in
             [[NSNotificationCenter defaultCenter] removeObserver:self name:@"linkedInCredentials" object:nil];
 

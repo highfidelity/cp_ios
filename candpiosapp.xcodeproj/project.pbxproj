@@ -358,8 +358,14 @@
 		694323A915213D9000EBF585 /* UserResume.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 694323A815213D9000EBF585 /* UserResume.mustache */; };
 		6947F40015372B59005D9958 /* exchange-cards.png in Resources */ = {isa = PBXBuildFile; fileRef = 6947F3FE15372B59005D9958 /* exchange-cards.png */; };
 		6947F40115372B59005D9958 /* exchange-cards@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6947F3FF15372B59005D9958 /* exchange-cards@2x.png */; };
+		6958D9D816383BEC00C288C5 /* CPPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 6958D9D716383BEC00C288C5 /* CPPageControl.m */; };
+		6958D9DE16383C8C00C288C5 /* page-normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6958D9DA16383C8C00C288C5 /* page-normal@2x.png */; };
+		6958D9DF16383C8C00C288C5 /* page-current@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6958D9DB16383C8C00C288C5 /* page-current@2x.png */; };
+		6958D9E016383C8C00C288C5 /* page-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 6958D9DC16383C8C00C288C5 /* page-normal.png */; };
+		6958D9E116383C8C00C288C5 /* page-current.png in Resources */ = {isa = PBXBuildFile; fileRef = 6958D9DD16383C8C00C288C5 /* page-current.png */; };
 		697A686B156C3E8D001BEB35 /* TermsOfServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 697A686A156C3E8D001BEB35 /* TermsOfServiceViewController.m */; };
 		697A6870156C4ED4001BEB35 /* TermsOfService.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 697A686F156C4ED4001BEB35 /* TermsOfService.mustache */; };
+		69812EBC1637480000B3CE72 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69812EBB1637480000B3CE72 /* TutorialViewController.m */; };
 		6983394A15641509007CD32F /* contact-accept.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983394615641509007CD32F /* contact-accept.png */; };
 		6983394B15641509007CD32F /* contact-accept@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983394715641509007CD32F /* contact-accept@2x.png */; };
 		6983394C15641509007CD32F /* contact-ignore.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983394815641509007CD32F /* contact-ignore.png */; };
@@ -982,9 +988,17 @@
 		694323A815213D9000EBF585 /* UserResume.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserResume.mustache; sourceTree = "<group>"; };
 		6947F3FE15372B59005D9958 /* exchange-cards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exchange-cards.png"; path = "User/images/exchange-cards.png"; sourceTree = "<group>"; };
 		6947F3FF15372B59005D9958 /* exchange-cards@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exchange-cards@2x.png"; path = "User/images/exchange-cards@2x.png"; sourceTree = "<group>"; };
+		6958D9D616383BEC00C288C5 /* CPPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPPageControl.h; path = Utils/CPPageControl.h; sourceTree = "<group>"; };
+		6958D9D716383BEC00C288C5 /* CPPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPPageControl.m; path = Utils/CPPageControl.m; sourceTree = "<group>"; };
+		6958D9DA16383C8C00C288C5 /* page-normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "page-normal@2x.png"; sourceTree = "<group>"; };
+		6958D9DB16383C8C00C288C5 /* page-current@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "page-current@2x.png"; sourceTree = "<group>"; };
+		6958D9DC16383C8C00C288C5 /* page-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "page-normal.png"; sourceTree = "<group>"; };
+		6958D9DD16383C8C00C288C5 /* page-current.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "page-current.png"; sourceTree = "<group>"; };
 		697A6869156C3E8C001BEB35 /* TermsOfServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TermsOfServiceViewController.h; path = Settings/TermsOfServiceViewController.h; sourceTree = "<group>"; };
 		697A686A156C3E8D001BEB35 /* TermsOfServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TermsOfServiceViewController.m; path = Settings/TermsOfServiceViewController.m; sourceTree = "<group>"; };
 		697A686F156C4ED4001BEB35 /* TermsOfService.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = TermsOfService.mustache; path = mustaches/TermsOfService.mustache; sourceTree = "<group>"; };
+		69812EBA1637480000B3CE72 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
+		69812EBB1637480000B3CE72 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		6983394615641509007CD32F /* contact-accept.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-accept.png"; sourceTree = "<group>"; };
 		6983394715641509007CD32F /* contact-accept@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-accept@2x.png"; sourceTree = "<group>"; };
 		6983394815641509007CD32F /* contact-ignore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-ignore.png"; sourceTree = "<group>"; };
@@ -1461,6 +1475,8 @@
 				530FC23515D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard */,
 				530FC23615D42BBD00838B5A /* SmartererLoginController.h */,
 				530FC23715D42BBD00838B5A /* SmartererLoginController.m */,
+				69812EBA1637480000B3CE72 /* TutorialViewController.h */,
+				69812EBB1637480000B3CE72 /* TutorialViewController.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1578,6 +1594,8 @@
 				E41AD9CB15A25D9500B6E360 /* UIImage+ImageBlur.m */,
 				5343243D15C2123A00BE5075 /* CPApiClient.h */,
 				5343243E15C2123A00BE5075 /* CPApiClient.m */,
+				6958D9D616383BEC00C288C5 /* CPPageControl.h */,
+				6958D9D716383BEC00C288C5 /* CPPageControl.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1839,6 +1857,10 @@
 				53A96DCA156EED3A00A8CF2E /* expand-arrow-down@2x.png */,
 				536E1F0415549C0900052D40 /* logo.png */,
 				536E1F0515549C0900052D40 /* logo@2x.png */,
+				6958D9DD16383C8C00C288C5 /* page-current.png */,
+				6958D9DB16383C8C00C288C5 /* page-current@2x.png */,
+				6958D9DC16383C8C00C288C5 /* page-normal.png */,
+				6958D9DA16383C8C00C288C5 /* page-normal@2x.png */,
 				536E1F0015549BE100052D40 /* refresh-scroll-view.png */,
 				536E1F0115549BE100052D40 /* refresh-scroll-view@2x.png */,
 			);
@@ -2724,6 +2746,10 @@
 				53FEA217162F52D600A783DC /* action-menu-button-update@2x.png in Resources */,
 				5317F256162F63CE00D40405 /* action-menu-button-check-in.png in Resources */,
 				5317F257162F63CE00D40405 /* action-menu-button-check-in@2x.png in Resources */,
+				6958D9DE16383C8C00C288C5 /* page-normal@2x.png in Resources */,
+				6958D9DF16383C8C00C288C5 /* page-current@2x.png in Resources */,
+				6958D9E016383C8C00C288C5 /* page-normal.png in Resources */,
+				6958D9E116383C8C00C288C5 /* page-current.png in Resources */,
 				68C26F2316376E82007E9587 /* quick-action-endorse.png in Resources */,
 				68C26F2416376E82007E9587 /* quick-action-endorse@2x.png in Resources */,
 				688A16C3163861DB00BFB4CC /* endorse-with-transparent-star.png in Resources */,
@@ -2859,6 +2885,8 @@
 				68B7B126161626BA000987E2 /* NSDictionary+JsonParserWorkaround.m in Sources */,
 				537DEA8F16249A3400D59AC9 /* CheckInListViewController.m in Sources */,
 				5317F262162F804E00D40405 /* ChangeHeadlineViewController.m in Sources */,
+				69812EBC1637480000B3CE72 /* TutorialViewController.m in Sources */,
+				6958D9D816383BEC00C288C5 /* CPPageControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

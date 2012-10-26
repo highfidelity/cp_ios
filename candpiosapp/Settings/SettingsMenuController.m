@@ -10,9 +10,13 @@
 #import "CPGeofenceHandler.h"
 #import "CPUserSessionHandler.h"
 #import "UserVoice.h"
+#import "AppDelegate.h"
+#import "PushModalViewControllerFromLeftSegue.h"
+#import "TutorialViewController.h"
 
 #define menuWidthPercentage 0.8
 #define kFeedbackSegueID @"ShowFeedbackFromMenu"
+#define kTutorialSegueID @"ShowTutorialFromMenu"
 
 @interface SettingsMenuController() <UITabBarControllerDelegate>
 
@@ -43,6 +47,7 @@
                              @"Notifications",
                              @"Automatic Check Ins",
                              @"Feedback",
+                             @"Tutorial",
                              @"Logout",
                              nil];
     
@@ -53,6 +58,7 @@
                                       @"ShowNotificationsFromMenu",
                                       @"ShowAutoCheckInsFromMenu",
                                       kFeedbackSegueID,
+                                      kTutorialSegueID,
                                       @"ShowLogoutFromMenu",
                                       nil];
     
@@ -375,6 +381,17 @@
                                                  andKey:kUserVoiceKey
                                               andSecret:kUserVoiceSecret];
             [UserVoice presentUserVoiceForumForParentViewController:self andConfig:config];
+        } else if ([segueID isEqualToString:kTutorialSegueID]) {
+            UIStoryboard *signupStoryboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
+            UINavigationController *navigationViewController = [signupStoryboard instantiateViewControllerWithIdentifier:@"TutorialViewControllerNavigationViewController"];
+
+            TutorialViewController *viewController = (TutorialViewController *)navigationViewController.topViewController;
+            viewController.isShownFromLeft = YES;
+
+            PushModalViewControllerFromLeftSegue *segue = [[PushModalViewControllerFromLeftSegue alloc] initWithIdentifier:kTutorialSegueID
+                                                                                                                    source:self
+                                                                                                               destination:navigationViewController];
+            [segue perform];
         } else {
             [self performSegueWithIdentifier:segueID sender:self];
         }

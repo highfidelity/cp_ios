@@ -41,7 +41,11 @@
     UIViewController *src = (UIViewController *) self.navigationController;
     UIViewController *dst = (UIViewController *) self.presentingViewController;
     float shift = [UIScreen mainScreen].bounds.size.width;
-    
+
+    if (!src) {
+        src = self;
+    }
+
     src.view.transform = CGAffineTransformMakeTranslation(0, 0);
     dst.view.transform = CGAffineTransformMakeTranslation(shift, 0);
     
