@@ -16,11 +16,12 @@
 #import "CPapi.h"
 #import "CPCheckinHandler.h"
 #import "CPUserSessionHandler.h"
+#import "CPAlertView.h"
 #import "TutorialViewController.h"
 
 typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
-@interface LinkedInLoginController ()
+@interface LinkedInLoginController () <UIAlertViewDelegate>
 
 @property (strong, nonatomic) AFHTTPClient *httpClient;
 @property (strong, nonatomic) LoadLinkedInConnectionsCompletionBlockType loadLinkedInConnectionsCompletionBlock;
@@ -308,79 +309,10 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
         [loginParams setObject:oauthSecret forKey:@"oauth_secret"];
         [loginParams setObject:password forKey:@"signupPassword"];
         [loginParams setObject:password forKey:@"signupConfirm"];
+        [loginParams setObject:@"0" forKey:@"reactivate"];
         [loginParams setObject:@"mobileSignup" forKey:@"action"];
 
-        [SVProgressHUD showWithStatus:@"Logging in..."];
-
-        NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"api.php" parameters:loginParams];
-        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-            NSInteger succeeded = [[JSON objectForKey:@"succeeded"] intValue];
-            BOOL isNewUser = NO;
-
-            if(succeeded == 0) {
-                NSString *outerErrorMessage = [JSON objectForKey:@"message"];// often just 'error'
-                // we get here if we failed to login
-                NSString *errorMessage = [NSString stringWithFormat:@"The error was: %@", outerErrorMessage];\
-                [SVProgressHUD showErrorWithStatus:errorMessage duration:kDefaultDismissDelay];
-            } else {
-                // remember that we're logged in!
-                // (it's really the persistent cookie that tracks our login, but we need a superficial indicator, too)
-                NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"params"];
-                
-                [CPUserSessionHandler storeUserLoginDataFromDictionary:userInfo];
-
-                NSString *userId = [userInfo objectForKey:@"id"];
-
-                NSDictionary *checkInDict = [userInfo valueForKey:@"checkin_data"];
-                if ([[checkInDict objectForKey:@"checked_in"] boolValue]) {
-                    CPVenue *venue = [[CPVenue alloc] initFromDictionary:checkInDict];
-
-                    NSInteger checkOutTime =[[checkInDict objectForKey:@"checkout"] integerValue];
-                    [CPCheckinHandler saveCheckInVenue:venue
-                                    andCheckOutTime:checkOutTime];
-                } else {
-                    [[CPCheckinHandler sharedHandler] setCheckedOut];
-                }
-
-                [FlurryAnalytics logEvent:@"login_linkedin"];
-                [FlurryAnalytics setUserID:userId];
-                
-                [CPUserSessionHandler performAfterLoginActions];
-                
-                [SVProgressHUD dismiss];
-
-                NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-                [dateFormat setDateFormat:@"yyyy-MM-dd  HH:mm:ss"];
-                NSDate *joinDate = [dateFormat dateFromString:userInfo[@"join_date"]];
-
-                if ([[NSDate date] timeIntervalSinceDate:joinDate] < 24 * 60 * 60) {
-                    isNewUser = YES;
-                }
-            }
-
-            if (isNewUser) {
-                UIStoryboard *signupStoryboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
-                UINavigationController *navigationViewController = [signupStoryboard instantiateViewControllerWithIdentifier:@"TutorialViewControllerNavigationViewController"];
-
-                TutorialViewController *viewController = (TutorialViewController *)navigationViewController.topViewController;
-                [self.navigationController setNavigationBarHidden:YES animated:YES];
-                [self.navigationController pushViewController:viewController animated:YES];
-            } else {
-                [self performSelector:@selector(dismissModalViewControllerAnimated:)
-                           withObject:[NSNumber numberWithBool:YES]
-                           afterDelay:kDefaultDismissDelay];
-            }
-            
-            // Remove NSNotification as it's no longer needed once logged in
-            [[NSNotificationCenter defaultCenter] removeObserver:self name:@"linkedInCredentials" object:nil];
-
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-            [SVProgressHUD showErrorWithStatus:[error localizedDescription] duration:kDefaultDismissDelay];
-
-        }];
-        
-        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-        [queue addOperation:operation];  
+        [self makeSignupRequest:loginParams];
     }
 }
 
@@ -456,6 +388,124 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
             [[UIApplication sharedApplication]openURL:request.URL];
         }
         return NO;
+    }
+}
+
+#pragma mark UIAlertViewDelegate
+-(void)alertView:(CPAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == alertView.firstOtherButtonIndex) {
+        NSMutableDictionary *loginParams = (NSMutableDictionary *)alertView.context;
+        [loginParams setObject:@"1" forKey:@"reactivate"];
+        [self makeSignupRequest:loginParams];
+    } else {
+        [self close:0];
+    }
+}
+
+#pragma mark private
+
+-(void)makeSignupRequest:(NSMutableDictionary *)loginParams
+{
+    [SVProgressHUD showWithStatus:@"Logging in..."];
+
+    NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"api.php" parameters:loginParams];
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation
+                                         JSONRequestOperationWithRequest:request
+                                         success:
+                                         ^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                                             NSInteger succeeded = [[JSON objectForKey:@"succeeded"] intValue];
+
+                                             if(succeeded == 0) {
+                                                 NSString *outerErrorMessage = [JSON objectForKey:@"message"];// often just 'error'
+                                                 // we get here if we failed to login
+                                                 NSString *errorMessage = [NSString stringWithFormat:@"The error was: %@", outerErrorMessage];
+                                                 [SVProgressHUD showErrorWithStatus:errorMessage duration:kDefaultDismissDelay];
+                                                 [self close:kDefaultDismissDelay];
+
+                                             } else {
+
+                                                 NSString *status = [JSON objectForKey:@"message"];
+
+                                                 [SVProgressHUD dismiss];
+
+                                                 if ([status isEqualToString:@"reactivate"]) {
+
+                                                     CPAlertView *alertView = [[CPAlertView alloc] initWithTitle:@"Inactive Account"
+                                                                                                         message:@"Your account is currently inactive. Would you like to reactivate it?"
+                                                                                                        delegate:self
+                                                                                               cancelButtonTitle:@"Cancel"
+                                                                                               otherButtonTitles:@"Reactivate", nil];
+                                                     alertView.context = loginParams;
+                                                     [alertView show];
+                                                 } else {
+                                                     [self setLoginData:JSON];
+                                                     if([status isEqualToString:@"welcome-back"]) {
+
+                                                         NSString *infoMessage = @"Welcome back!"
+                                                         @"\nYour inactive account has been reactivated and you have been logged in.";
+
+                                                         [SVProgressHUD showSuccessWithStatus:infoMessage
+                                                                                     duration:kDefaultDismissDelay];
+                                                     }
+                                                     [self close:kDefaultDismissDelay];
+                                                 }
+
+                                             }
+                                             
+                                             
+                                         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                                             [SVProgressHUD showErrorWithStatus:[error localizedDescription] duration:kDefaultDismissDelay];
+                                             
+                                         }];
+
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [queue addOperation:operation];
+}
+
+-(void)close:(int)afterDelay
+{
+    [self performSelector:@selector(dismissModalViewControllerAnimated:)
+               withObject:[NSNumber numberWithBool:YES]
+               afterDelay:afterDelay];
+
+    // Remove NSNotification as it's no longer needed once logged in
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"linkedInCredentials" object:nil];
+}
+
+-(void)setLoginData:(id)JSON
+{
+    @try {
+        NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"params"];
+        if (userInfo) {
+            [CPUserSessionHandler storeUserLoginDataFromDictionary:userInfo];
+
+            NSString *userId = [userInfo objectForKey:@"id"];
+
+            NSDictionary *checkInDict = [userInfo valueForKey:@"checkin_data"];
+            if ([[checkInDict objectForKey:@"checked_in"] boolValue]) {
+                CPVenue *venue = [[CPVenue alloc] initFromDictionary:checkInDict];
+
+                NSInteger checkOutTime =[[checkInDict objectForKey:@"checkout"] integerValue];
+                [CPCheckinHandler saveCheckInVenue:venue
+                                   andCheckOutTime:checkOutTime];
+            } else {
+                [[CPCheckinHandler sharedHandler] setCheckedOut];
+            }
+
+            [FlurryAnalytics logEvent:@"login_linkedin"];
+            [FlurryAnalytics setUserID:userId];
+            
+            [CPUserSessionHandler performAfterLoginActions];
+        }
+    }
+    @catch (NSException* ex) {
+        [FlurryAnalytics logError:@"login_linkedin"
+                          message:ex.description
+                        exception:ex];
+
+        [SVProgressHUD showErrorWithStatus:@"Error occurred during the login process. Please, try again later."
+                                    duration:kDefaultDismissDelay];
     }
 }
 @end

@@ -13,11 +13,12 @@
 #import "CPSkill.h"
 #import "UIImage+ImageBlur.h"
 #import "CPUserSessionHandler.h"
+#import "CPAlertView.h"
 
 #define kActionSheetDeleteAccountTag 7911
 #define kActionSheetChooseNewProfileImageTag 7912
 
-@interface ProfileViewController () <CPTouchViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate>
+@interface ProfileViewController () <CPTouchViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) User *currentUser;
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
@@ -420,35 +421,6 @@
         }
     } else if (kActionSheetDeleteAccountTag == actionSheet.tag) {
         if (actionSheet.destructiveButtonIndex == buttonIndex) {
-            [SVProgressHUD showWithStatus:@"Loading..."];
-
-            [CPapi deleteAccountWithParameters:nil
-                                    completion:
-                                            ^(NSDictionary *json, NSError *error) {
-                                                if (error) {
-                                                    [SVProgressHUD dismissWithError:[error localizedDescription]
-                                                            afterDelay:kDefaultDismissDelay];
-                                                    return;
-                                                }
-
-                                                if (NO == [[json objectForKey:@"succeeded"] boolValue]) {
-                                                    [SVProgressHUD dismissWithError:[json objectForKey:@"message"]
-                                                            afterDelay:kDefaultDismissDelay];
-                                                    return;
-                                                }
-
-                                                SettingsMenuController *presentingViewController = (SettingsMenuController *)self.presentingViewController;
-                                                if (presentingViewController.isMenuShowing) {
-                                                    [presentingViewController showMenu:NO];
-                                                }
-
-                                                [self dismissModalViewControllerAnimated:NO];
-
-                                                [CPUserSessionHandler showSignupModalFromViewController:presentingViewController
-                                                                                        animated:YES];
-
-                                                [SVProgressHUD dismissWithSuccess:[json objectForKey:@"message"]];
-                                            }];
         }
     }
 }
@@ -569,14 +541,53 @@
     }
 
     if (sender == self.deleteTouchable) {
+        CPAlertView *alertView = [[CPAlertView alloc] initWithTitle:@"You've asked to have your account deactivated.\n\nAre you sure?"
+                                                            message:@"You can always reactivate your account later by logging back in."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Deactivate"
+                                                  otherButtonTitles:@"Cancel", nil];
+        [alertView show];
+    }
+}
 
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Once you delete your account you can't get it back!"
-                                                                 delegate:self
-                                                        cancelButtonTitle:@"Cancel"
-                                                   destructiveButtonTitle:@"Delete Account"
-                                                        otherButtonTitles:nil];
-        actionSheet.tag = kActionSheetDeleteAccountTag;
-        [actionSheet showInView:self.view];
+#pragma mark UIAlertViewDelegate
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.cancelButtonIndex == buttonIndex) {
+
+        [SVProgressHUD showWithStatus:@"Loading..."];
+
+        [CPapi deleteAccountWithParameters:nil
+                                completion:
+         ^(NSDictionary *json, NSError *error) {
+             if (error) {
+                 [SVProgressHUD dismissWithError:[error localizedDescription]
+                                      afterDelay:kDefaultDismissDelay];
+                 return;
+             }
+
+             if (![[json objectForKey:@"succeeded"] boolValue]) {
+                 [SVProgressHUD dismissWithError:[json objectForKey:@"message"]
+                                      afterDelay:kDefaultDismissDelay];
+                 return;
+             }
+
+
+             SettingsMenuController *presentingViewController = (SettingsMenuController *)self.presentingViewController;
+             if (presentingViewController.isMenuShowing) {
+                 [presentingViewController showMenu:NO];
+             }
+
+             [self dismissModalViewControllerAnimated:NO];
+
+             [CPUserSessionHandler showSignupModalFromViewController:presentingViewController
+                                                            animated:YES];
+
+             [SVProgressHUD dismissWithSuccess:@"Thanks for spending time on Coffee & Power. We hope to see you again soon."
+                                    afterDelay:kDefaultDismissDelay];
+
+         }];
     }
 }
 
