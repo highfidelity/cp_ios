@@ -83,8 +83,7 @@
         
         // temporary handling of venues stored with venueID as integer
         @try {
-            NSNumber *venueID = [decoder decodeObjectOfClass:[NSNumber class] forKey:@"venueID"];
-            self.venueID = venueID;
+            self.venueID = [decoder decodeObjectOfClass:[NSNumber class] forKey:@"venueID"];
         }
         @catch (NSException *exception) {
             self.venueID = [NSNumber numberWithInt:[decoder decodeIntForKey:@"venueID"]];
