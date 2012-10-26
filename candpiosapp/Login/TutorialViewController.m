@@ -160,7 +160,7 @@ examle json:
         [CPUIHelper changeFontForLabel:cell.nicknameLabel toLeagueGothicOfSize:18.0];
 
         cell.nicknameLabel.text = cellInfo[@"name"];
-        cell.statusLabel.text = @" ";
+        cell.statusLabel.text = nil;
         cell.frame = CGRectFromString(cellInfo[@"frame"]);
         [cell.profilePicture setImageWithURL:[NSURL URLWithString:cellInfo[@"image"]]
                             placeholderImage:[CPUIHelper defaultProfileImage]];
