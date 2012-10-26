@@ -17,6 +17,7 @@
 #import "CPCheckinHandler.h"
 #import "CPUserSessionHandler.h"
 #import "CPAlertView.h"
+#import "TutorialViewController.h"
 
 typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
@@ -310,6 +311,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
         [loginParams setObject:password forKey:@"signupConfirm"];
         [loginParams setObject:@"0" forKey:@"reactivate"];
         [loginParams setObject:@"mobileSignup" forKey:@"action"];
+
         [self makeSignupRequest:loginParams];
     }
 }
