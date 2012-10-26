@@ -35,12 +35,12 @@ examle json:
 
 @interface TutorialViewController ()
 
-@property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, weak) UIButton *dismissButton;
-@property (nonatomic, strong) CPPageControl *pageControl;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) UIButton *dismissButton;
+@property (strong, nonatomic) CPPageControl *pageControl;
 
-@property (nonatomic, retain) NSMutableArray *pageImageViews;
-@property (nonatomic, retain) NSArray *pageInfos;
+@property (strong, nonatomic) NSMutableArray *pageImageViews;
+@property (strong, nonatomic) NSArray *pageInfos;
 
 @end
 
