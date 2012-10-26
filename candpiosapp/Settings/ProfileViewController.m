@@ -567,7 +567,7 @@
                  return;
              }
 
-             if ([[json objectForKey:@"succeeded"] boolValue] == NO) {
+             if (![[json objectForKey:@"succeeded"] boolValue]) {
                  [SVProgressHUD dismissWithError:[json objectForKey:@"message"]
                                       afterDelay:kDefaultDismissDelay];
                  return;

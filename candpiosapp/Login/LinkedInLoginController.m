@@ -410,14 +410,14 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     NSMutableURLRequest *request = [self.httpClient requestWithMethod:@"POST" path:@"api.php" parameters:loginParams];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation
                                          JSONRequestOperationWithRequest:request
-                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
-                                         {
+                                         success:
+                                         ^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
                                              NSInteger succeeded = [[JSON objectForKey:@"succeeded"] intValue];
 
                                              if(succeeded == 0) {
                                                  NSString *outerErrorMessage = [JSON objectForKey:@"message"];// often just 'error'
                                                  // we get here if we failed to login
-                                                 NSString *errorMessage = [NSString stringWithFormat:@"The error was: %@", outerErrorMessage];\
+                                                 NSString *errorMessage = [NSString stringWithFormat:@"The error was: %@", outerErrorMessage];
                                                  [SVProgressHUD showErrorWithStatus:errorMessage duration:kDefaultDismissDelay];
                                                  [self close:kDefaultDismissDelay];
 
@@ -456,7 +456,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                                              [SVProgressHUD showErrorWithStatus:[error localizedDescription] duration:kDefaultDismissDelay];
                                              
                                          }];
-    
+
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     [queue addOperation:operation];
 }
