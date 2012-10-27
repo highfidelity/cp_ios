@@ -36,7 +36,7 @@
         
         self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict objectForKey:@"checkout"] integerValue]];
         self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
-        self.isContact = [[userDict objectForKey:@"is_contact"] boolValue];
+        self.isContact = @([[userDict objectForKey:@"is_contact"] boolValue]);
 	}
 	return self;
 }
@@ -233,7 +233,7 @@
             self.majorJobCategory = [userDict objectForKey:@"major_job_category"];
             self.minorJobCategory = [userDict objectForKey:@"minor_job_category"];
             self.contactsOnlyChat = [[userDict objectForKey:@"contacts_only_chat"] boolValue];
-            self.isContact = [[userDict objectForKey:@"user_is_contact"] boolValue];
+            self.isContact = @([[userDict objectForKey:@"user_is_contact"] boolValue]);
             self.hasChatHistory = [[userDict objectForKey:@"has_chat_history"] boolValue];
 
             self.status = [[userDict objectForKey:@"status_text"]

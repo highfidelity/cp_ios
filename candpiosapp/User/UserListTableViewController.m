@@ -128,7 +128,7 @@
              withProfileImageUrl:user.photoURL];
     cell.nicknameLabel.text = [CPUIHelper profileNickname:user.nickname];
     
-    if (cell.user.isContact) {
+    if ([cell.user.isContact boolValue]) {
         cell.rightStyle = CPUserActionCellSwipeStyleReducedAction;
     } else{
         cell.rightStyle = CPUserActionCellSwipeStyleQuickAction;

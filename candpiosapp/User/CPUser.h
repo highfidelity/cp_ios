@@ -36,6 +36,7 @@
 @property (strong, nonatomic) NSDate *joinDate;
 @property (strong, nonatomic) NSMutableArray *badges;
 @property (strong, nonatomic) NSString *smartererName;
+@property (strong, nonatomic) NSNumber *isContact;
 @property (nonatomic, readonly) BOOL hasAnyTopSkills;
 @property (nonatomic, readonly) BOOL hasAnyWorkInformation;
 @property (nonatomic, readonly) BOOL hasAnyEducationInformation;
@@ -52,7 +53,7 @@
 @property (nonatomic) BOOL checkedIn;
 @property (nonatomic) int trusted_by;
 @property (nonatomic) BOOL contactsOnlyChat;
-@property (nonatomic) BOOL isContact;
+
 @property (nonatomic) BOOL hasChatHistory;
 
 

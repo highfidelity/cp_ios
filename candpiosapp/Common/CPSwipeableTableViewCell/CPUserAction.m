@@ -67,7 +67,7 @@
     // get a user object with resume data.. which includes its contact settings
     [cell.user loadUserResumeOnQueue:nil completion:^(NSError *error) {
         if (!error) {
-            if (cell.user.contactsOnlyChat && !cell.user.isContact && !cell.user.hasChatHistory) {
+            if (cell.user.contactsOnlyChat && ![cell.user.isContact boolValue] && !cell.user.hasChatHistory) {
                 NSString *errorMessage = [NSString stringWithFormat:@"You can not chat with %@ until the two of you have exchanged contact information", cell.user.nickname];
                 [SVProgressHUD showErrorWithStatus:errorMessage
                                           duration:kDefaultDismissDelay];

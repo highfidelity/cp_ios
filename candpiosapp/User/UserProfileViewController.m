@@ -585,7 +585,7 @@ static GRMustacheTemplate *postBadgesTemplate;
     // animation of menu buttons shooting out
     
     [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
-        if (self.user.isContact) {
+        if ([self.user.isContact boolValue]) {
             self.f2fButton.hidden = YES;
             self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, -110);
         } else {
@@ -657,7 +657,7 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 - (IBAction)chatButtonPressed:(id)sender
 {
-    if (self.user.contactsOnlyChat && !self.user.isContact && !self.user.hasChatHistory) {
+    if (self.user.contactsOnlyChat && ![self.user.isContact boolValue] && !self.user.hasChatHistory) {
         NSString *errorMessage = [NSString stringWithFormat:@"You can not chat with %@ until the two of you have exchanged contact information", self.user.nickname];
         [SVProgressHUD showErrorWithStatus:errorMessage
                                   duration:kDefaultDismissDelay];
