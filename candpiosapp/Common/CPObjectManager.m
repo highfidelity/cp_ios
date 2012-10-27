@@ -93,7 +93,11 @@
 
 + (void)setupAllRKRouting
 {
+    RKObjectManager *sharedManager = [self sharedManager];
     
+    [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:@"markers"
+                                                       pathPattern:@"api.php?action=getMarkers&ne_lat=:ne_lat&ne_lng=:ne_lng&sw_lng=:sw_lng&sw_lat=:sw_lat"
+                                                            method:RKRequestMethodGET]];
 }
 
 @end
