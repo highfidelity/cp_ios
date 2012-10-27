@@ -48,7 +48,6 @@
 		5317F256162F63CE00D40405 /* action-menu-button-check-in.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317F254162F63CE00D40405 /* action-menu-button-check-in.png */; };
 		5317F257162F63CE00D40405 /* action-menu-button-check-in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317F255162F63CE00D40405 /* action-menu-button-check-in@2x.png */; };
 		5317F262162F804E00D40405 /* ChangeHeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */; };
-		5319DDAE16360A7000451B13 /* CPObjectMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5319DDAD16360A7000451B13 /* CPObjectMapper.m */; };
 		53217F8C156FF89B006258F0 /* LoveSkillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */; };
 		5327E9FA15658CCE005330AD /* UIColor+EasyRGB.m in Sources */ = {isa = PBXBuildFile; fileRef = 5327E9F915658CCD005330AD /* UIColor+EasyRGB.m */; };
 		5328935C155488F5007B0157 /* CPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328935B155488F5007B0157 /* CPConstants.m */; };
@@ -91,6 +90,7 @@
 		534EB7351566FD3A00BDBA57 /* cell-shadow-harsh.png in Resources */ = {isa = PBXBuildFile; fileRef = 534EB7331566FD3A00BDBA57 /* cell-shadow-harsh.png */; };
 		534EB7361566FD3A00BDBA57 /* cell-shadow-harsh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 534EB7341566FD3A00BDBA57 /* cell-shadow-harsh@2x.png */; };
 		534EB73A1567179D00BDBA57 /* CPBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534EB7391567179D00BDBA57 /* CPBaseTableViewController.m */; };
+		5353EED8163C6C2C00C7825D /* CPObjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353EED7163C6C2C00C7825D /* CPObjectManager.m */; };
 		5355B0C215140697006A3D89 /* settings-button-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 5355B0C015140697006A3D89 /* settings-button-3.png */; };
 		5355B0C315140697006A3D89 /* settings-button-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5355B0C115140697006A3D89 /* settings-button-3@2x.png */; };
 		5355C96C15082A56006F64C1 /* FaceToFaceStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5355C96B15082A56006F64C1 /* FaceToFaceStoryboard_iPhone.storyboard */; };
@@ -398,8 +398,6 @@
 		5317F255162F63CE00D40405 /* action-menu-button-check-in@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-in@2x.png"; sourceTree = "<group>"; };
 		5317F260162F804E00D40405 /* ChangeHeadlineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChangeHeadlineViewController.h; path = Checkin/ChangeHeadlineViewController.h; sourceTree = "<group>"; };
 		5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChangeHeadlineViewController.m; path = Checkin/ChangeHeadlineViewController.m; sourceTree = "<group>"; };
-		5319DDAC16360A7000451B13 /* CPObjectMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPObjectMapper.h; sourceTree = "<group>"; };
-		5319DDAD16360A7000451B13 /* CPObjectMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPObjectMapper.m; sourceTree = "<group>"; };
 		53217F8A156FF89B006258F0 /* LoveSkillTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = LoveSkillTableViewCell.h; path = User/LoveSkillTableViewCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoveSkillTableViewCell.m; path = User/LoveSkillTableViewCell.m; sourceTree = "<group>"; };
 		5327E9F815658CCD005330AD /* UIColor+EasyRGB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+EasyRGB.h"; path = "Utils/UIColor+EasyRGB.h"; sourceTree = "<group>"; };
@@ -468,6 +466,8 @@
 		534EB7391567179D00BDBA57 /* CPBaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CPBaseTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		534FD38C163605B80052C88D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		534FD38E163605CD0052C88D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		5353EED6163C6C2C00C7825D /* CPObjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPObjectManager.h; sourceTree = "<group>"; };
+		5353EED7163C6C2C00C7825D /* CPObjectManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPObjectManager.m; sourceTree = "<group>"; };
 		5355B0C015140697006A3D89 /* settings-button-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-button-3.png"; path = "Settings/images/settings-button-3.png"; sourceTree = "<group>"; };
 		5355B0C115140697006A3D89 /* settings-button-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-button-3@2x.png"; path = "Settings/images/settings-button-3@2x.png"; sourceTree = "<group>"; };
 		5355C96B15082A56006F64C1 /* FaceToFaceStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = FaceToFaceStoryboard_iPhone.storyboard; path = FaceToFace/FaceToFaceStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
@@ -1276,21 +1276,21 @@
 		53C578AC156468ED00EFE69E /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				E4E74E07153B08710022F406 /* CPTouchableView.h */,
-				E4E74E07153B08710022F404 /* CPTouchableView.m */,
-				530C5DB51575E4FC003505AC /* CPSoundEffectsManager.h */,
-				530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */,
-				530C5DAE1575E4F3003505AC /* CPUserActionCell */,
 				534EB7381567179D00BDBA57 /* CPBaseTableViewController.h */,
 				534EB7391567179D00BDBA57 /* CPBaseTableViewController.m */,
+				5353EED6163C6C2C00C7825D /* CPObjectManager.h */,
+				5353EED7163C6C2C00C7825D /* CPObjectManager.m */,
 				537255B6156AF0C800263CFA /* CPPlaceholderTextView.h */,
 				537255B7156AF0C800263CFA /* CPPlaceholderTextView.m */,
+				530C5DB51575E4FC003505AC /* CPSoundEffectsManager.h */,
+				530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */,
+				E4E74E07153B08710022F406 /* CPTouchableView.h */,
+				E4E74E07153B08710022F404 /* CPTouchableView.m */,
+				530C5DAE1575E4F3003505AC /* CPUserActionCell */,
 				53A5622115A386EC00ACD920 /* CPUserDefaultsHandler.h */,
 				53A5622215A386EC00ACD920 /* CPUserDefaultsHandler.m */,
 				530FC24315D4335E00838B5A /* CPUserSessionHandler.h */,
 				530FC24415D4335E00838B5A /* CPUserSessionHandler.m */,
-				5319DDAC16360A7000451B13 /* CPObjectMapper.h */,
-				5319DDAD16360A7000451B13 /* CPObjectMapper.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1968,8 +1968,8 @@
 				5335D821160BA801005400FC /* MKAnnotationView+SpecialPin.m in Sources */,
 				68B7B126161626BA000987E2 /* NSDictionary+JsonParserWorkaround.m in Sources */,
 				537DEA8F16249A3400D59AC9 /* CheckInListViewController.m in Sources */,
-				5319DDAE16360A7000451B13 /* CPObjectMapper.m in Sources */,
 				5317F262162F804E00D40405 /* ChangeHeadlineViewController.m in Sources */,
+				5353EED8163C6C2C00C7825D /* CPObjectManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

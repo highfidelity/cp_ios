@@ -1,28 +1,44 @@
 //
-//  CPObjectMapper.m
+//  CPObjectManager.m
 //  candpiosapp
 //
 //  Created by Stephen Birarda on 10/22/12.
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import "CPObjectMapper.h"
+#import "CPObjectManager.h"
 #import <RestKit/RestKit.h>
 
-@implementation CPObjectMapper
+@implementation CPObjectManager
 
 + (void)initialize
 {
     // make sure that RestKit is ready to go
-    [RKObjectManager managerWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
+    [self managerWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
     
     // show the network activity spinner during requests
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    
+    // get RK to log out request/response
+#if DEBUG
+    RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
+#endif
+    
+    [self setupAllRKObjectMappings];
+    [self setupAllRKRouting];
 }
 
 + (void)setupAllRKObjectMappings
 {
+    RKObjectManager *sharedManager = [self sharedManager];
+    NSIndexSet *successCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
     
+    RKResponseDescriptor *venueDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[self venueRKObjectMapping]
+                                                                                   pathPattern:nil
+                                                                                       keyPath:@"payload.venues"
+                                                                                   statusCodes:successCodes];
+    
+    [sharedManager addResponseDescriptor:venueDescriptor];
 }
 
 + (RKObjectMapping *)venueRKObjectMapping
@@ -73,6 +89,11 @@
     }
     
     return _userObjectMapping;
+}
+
++ (void)setupAllRKRouting
+{
+    
 }
 
 @end

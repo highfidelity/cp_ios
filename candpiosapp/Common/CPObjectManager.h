@@ -1,5 +1,5 @@
 //
-//  CPObjectMapper.h
+//  CPObjectManager.h
 //  candpiosapp
 //
 //  Created by Stephen Birarda on 10/22/12.
@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <RestKit/RestKit.h>
 
-@interface CPObjectMapper : NSObject
+@interface CPObjectManager : RKObjectManager
 
-+ (void)setupAllRKObjectMappings;
 
 @end
