@@ -235,12 +235,12 @@
 #pragma mark - One-on-One Chat
 
 + (void)sendOneOnOneChatMessage:(NSString *)message
-                        toUser:(int)userId
+                        toUserID:(NSNumber *)userID
 {
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setValue:message forKey:@"message"];
-    [parameters setValue:[NSString stringWithFormat:@"%d", userId] forKey:@"toUserId"];
+    [parameters setValue:[NSString stringWithFormat:@"%@", userID] forKey:@"toUserId"];
     
     [self makeHTTPRequestWithAction:@"oneOnOneChatFromMobile"
                      withParameters:parameters
@@ -256,12 +256,8 @@
 + (void)oneOnOneChatGetHistoryWith:(CPUser *)user
                         completion:(void (^)(NSDictionary *, NSError *))completion
 {    
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:[NSString stringWithFormat:@"%d", user.userID]
-                  forKey:@"other_user"];
-    
     [self makeHTTPRequestWithAction:@"getOneOnOneChatHistory"
-                     withParameters:parameters
+                     withParameters:[@{@"other_user": [NSString stringWithFormat:@"%@", user.userID]} mutableCopy]
                          completion:completion];
 }
 
@@ -271,10 +267,10 @@
     [self makeHTTPRequestWithAction:@"getNumberOfContactRequests" withParameters:nil completion:completion];
 }
 
-+ (void)sendContactRequestToUserId:(int)userId {
++ (void)sendContactRequestToUserID:(NSNumber *)userID {
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   [NSString stringWithFormat:@"%d", userId], @"acceptor_id",
+                                   [NSString stringWithFormat:@"%@", userID], @"acceptor_id",
                                    nil];
     
     [SVProgressHUD showWithStatus:@"Sending Request..."];
@@ -314,10 +310,10 @@
     }];
 }
 
-+ (void)sendAcceptContactRequestFromUserId:(int)userId
++ (void)sendAcceptContactRequestFromUserID:(NSNumber *)userID
                                 completion:(void (^)(NSDictionary *, NSError *))completion {
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   [NSString stringWithFormat:@"%d", userId], @"initiator_id",
+                                   [NSString stringWithFormat:@"%@", userID], @"initiator_id",
                                    nil];
     
     [self makeHTTPRequestWithAction:@"acceptContactRequest"
@@ -326,10 +322,10 @@
     [Flurry logEvent:@"contactRequestAccepted"];
 }
 
-+ (void)sendDeclineContactRequestFromUserId:(int)userId
++ (void)sendDeclineContactRequestFromUserID:(NSNumber *)userID
                                  completion:(void (^)(NSDictionary *, NSError *))completion {
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   [NSString stringWithFormat:@"%d", userId], @"initiator_id",
+                                   [NSString stringWithFormat:@"%@", userID], @"initiator_id",
                                    nil];
     
     [self makeHTTPRequestWithAction:@"declineContactRequest"
@@ -394,12 +390,12 @@
     [self makeHTTPRequestWithAction:@"getDefaultCheckInVenue" withParameters:nil completion:completion];   
 }
 
-+ (void)getResumeForUserId:(int)userId
++ (void)getResumeForUserID:(NSNumber *)userID
                      queue:(NSOperationQueue *)operationQueue
              completion:(void (^)(NSDictionary *, NSError *))completion
 {
     // params dict with user id
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d", userId], @"user_id", nil];
+    NSMutableDictionary *parameters = [@{@"user_id":[NSString stringWithFormat:@"%@", userID]} mutableCopy];
     
     // make the request
     [self makeHTTPRequestWithAction:@"getResume"
@@ -441,13 +437,13 @@
 
 # pragma mark - Love
 
-+ (void)sendLoveToUserWithID:(int)recieverID 
++ (void)sendLoveToUserWithID:(NSNumber *)recieverID
                  loveMessage:(NSString *)message
                      skillID:(NSUInteger)skillID 
                   completion:(void (^)(NSDictionary *, NSError *))completion
 {
     NSMutableDictionary *reviewParams = [NSMutableDictionary dictionaryWithCapacity:2];
-    [reviewParams setObject:[NSString stringWithFormat:@"%d", recieverID] forKey:@"recipientID"];
+    [reviewParams setObject:[NSString stringWithFormat:@"%@", recieverID] forKey:@"recipientID"];
     [reviewParams setObject:[NSString stringWithFormat:@"%d", skillID] forKey:@"skill_id"];
     [reviewParams setObject:message forKey:@"reviewText"];
     
@@ -578,7 +574,7 @@
         
         // setup the request to pass the image
         NSURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:@"api.php" parameters:params constructingBodyWithBlock: ^(id <AFMultipartFormData> formData) {
-            [formData appendPartWithFileData:imageData name:@"profile" fileName:[NSString stringWithFormat:@"%d_iPhone_Profile_Upload.jpeg", [CPUserDefaultsHandler currentUser].userID] mimeType:@"image/jpeg"];
+            [formData appendPartWithFileData:imageData name:@"profile" fileName:[NSString stringWithFormat:@"%@_iPhone_Profile_Upload.jpeg", [CPUserDefaultsHandler currentUser].userID] mimeType:@"image/jpeg"];
         }];
         
         // go back to the main queue and make the request (the makeHTTPRequest method will queue it in an operation queue)
@@ -626,10 +622,10 @@
 {
     NSLog(@"Saving checkin status of %d for venue: %@", venue.autoCheckin, venue.name);
 
-    NSInteger currentUserID = [[CPUserDefaultsHandler currentUser] userID];
+    NSNumber *currentUserID = [[CPUserDefaultsHandler currentUser] userID];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:[NSString stringWithFormat:@"%d", currentUserID] forKey:@"user_id"];
+    [parameters setValue:[NSString stringWithFormat:@"%@", currentUserID] forKey:@"user_id"];
     [parameters setValue:venue.venueID forKey:@"venue_id"];
     [parameters setValue:[NSString stringWithFormat:@"%d", venue.autoCheckin] forKey:@"autocheckin"];
     

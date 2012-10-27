@@ -303,7 +303,7 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
         [alertView show];
         
     } else if ([userInfo valueForKey:kContactRequestAPNSKey]) {        
-        [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:kContactRequestAPNSKey] intValue]];
+        [FaceToFaceHelper presentF2FInviteFromUserID:@([[userInfo valueForKey:kContactRequestAPNSKey] intValue])];
     } else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey]) {
         [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"acceptor"]];
     } else {
@@ -361,10 +361,10 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 - (void)pushAliasUpdate {
     // Set my UserID as an UrbanAirship alias for push notifications
-    NSString *userid = [NSString stringWithFormat:@"%d", [CPUserDefaultsHandler currentUser].userID];
+    NSString *userIDString = [NSString stringWithFormat:@"%@", [CPUserDefaultsHandler currentUser].userID];
     
-    NSLog(@"Attempting to register user alias %@ with UrbanAirship", userid);
-    [UAPush shared].alias = userid;
+    NSLog(@"Attempting to register user alias %@ with UrbanAirship", userIDString);
+    [UAPush shared].alias = userIDString;
     [[UAPush shared] updateRegistration];
 }
 
@@ -607,7 +607,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     } else if (alertView.tag == kContactEndorsedTag && alertView.firstOtherButtonIndex == buttonIndex) {
 
         CPUser *user = [[CPUser alloc] init];
-        user.userID = [[userInfo objectForKey:kContactEndorsedAPNSKey] intValue];
+        user.userID = @([[userInfo objectForKey:kContactEndorsedAPNSKey] intValue]);
         
         UserProfileViewController *vc = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone"
                                                                    bundle:nil] instantiateInitialViewController];

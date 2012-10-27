@@ -24,7 +24,7 @@ NSString* const kUDCurrentUser = @"loggedUser";
 + (void)setCurrentUser:(CPUser *)currentUser
 {
 #if DEBUG
-    NSLog(@"Storing user data for user with ID %d and nickname %@ to NSUserDefaults", currentUser.userID, currentUser.nickname);
+    NSLog(@"Storing user data for user with ID %@ and nickname %@ to NSUserDefaults", currentUser.userID, currentUser.nickname);
 #endif
 
     [[CPAppDelegate appCache] removeObjectForKey:kUDCurrentUser];

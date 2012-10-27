@@ -63,8 +63,8 @@
                 // Extract user details from json...
                 CPUser *fromUser = nil;
                 CPUser *toUser = nil;
-                int chatUserId = [[chatDict valueForKey:@"user_id"] intValue];
-                if (chatUserId == self.myUser.userID)
+                NSNumber *chatUserID = @([[chatDict valueForKey:@"user_id"] intValue]);
+                if ([chatUserID isEqualToNumber:self.myUser.userID])
                 {
                     fromUser = self.myUser;
                     toUser = self.otherUser;

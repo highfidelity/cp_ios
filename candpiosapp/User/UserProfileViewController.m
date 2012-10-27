@@ -185,7 +185,7 @@ static GRMustacheTemplate *postBadgesTemplate;
                  withProfileImageUrl:self.user.photoURL];
         
         // hide the go menu if this profile is current user's profile
-        if (self.user.userID == [CPUserDefaultsHandler currentUser].userID || self.isF2FInvite) {
+        if ([self.user.userID isEqualToNumber:[CPUserDefaultsHandler currentUser].userID] || self.isF2FInvite) {
             for (NSNumber *viewID in [NSArray arrayWithObjects:[NSNumber numberWithInt:1005], [NSNumber numberWithInt:1006], [NSNumber numberWithInt:1007], [NSNumber numberWithInt:1008], [NSNumber numberWithInt:1009], [NSNumber numberWithInt:1010], [NSNumber numberWithInt:1020], nil]) {
                 [self.view viewWithTag:[viewID intValue]].alpha = 0.0;
             }
@@ -416,7 +416,7 @@ static GRMustacheTemplate *postBadgesTemplate;
         
         NSDictionary *originalData = @{
             @"reviews": reviews,
-            @"user_id": @(self.user.userID),
+            @"user_id": self.user.userID,
             @"server_api_url": [NSString stringWithFormat:@"%@api.php", kCandPWebServiceUrl]
         };
         NSError *error;

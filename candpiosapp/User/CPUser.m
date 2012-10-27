@@ -20,7 +20,7 @@
     self = [super init];
 	if(self)
 	{
-        self.userID = [[userDict objectForKey:@"id"] integerValue];
+        self.userID = @([[userDict objectForKey:@"id"] intValue]);
         self.nickname = [userDict objectForKey:@"nickname"];
         
         self.status = [userDict objectForKey:@"status_text"];
@@ -45,15 +45,22 @@
 {
     self = [super init];
     if (self) 
-    {         
-        self.userID = [decoder decodeIntForKey:@"userID"];
+    {
+        
+        // temporary handling of users stored with userID as integer
+        @try {
+            self.userID = [decoder decodeObjectOfClass:[NSNumber class] forKey:@"userID"];;
+        }
+        @catch (NSException *exception) {
+            self.userID = [NSNumber numberWithInt:[decoder decodeIntForKey:@"userID"]];
+        }
+        
         self.nickname = [decoder decodeObjectForKey:@"nickname"];
         self.email = [decoder decodeObjectForKey:@"email"];
         
         // temporary handling of venues stored with venueID as integer
         @try {
-            NSURL *decodedPhotoURL = [decoder decodeObjectOfClass:[NSURL class] forKey:@"photoURL"];
-            self.photoURL = decodedPhotoURL;
+            self.photoURL = [decoder decodeObjectOfClass:[NSURL class] forKey:@"photoURL"];;
         }
         @catch (NSException *exception) {
             [self setPhotoURLFromString:[decoder decodeObjectForKey:@"photoURL"]];
@@ -71,7 +78,7 @@
 
 -(void)encodeWithCoder:(NSCoder *)encoder
 {
-    [encoder encodeInt:self.userID forKey:@"userID"];
+    [encoder encodeObject:self.userID forKey:@"userID"];
     [encoder encodeObject:self.nickname forKey:@"nickname"];
     [encoder encodeObject:self.email forKey:@"email"];
     [encoder encodeObject:self.photoURL forKey:@"photoURL"];
@@ -211,7 +218,7 @@
                    completion:(void (^)(NSError *error))completion
 {
     
-    [CPapi getResumeForUserId:self.userID
+    [CPapi getResumeForUserID:self.userID
                         queue:operationQueue
                    completion:^(NSDictionary *response, NSError *error) {
 
@@ -300,7 +307,7 @@
                     self.placeCheckedIn = venue;
                     self.checkedIn = [[checkinDict valueForKey:@"checked_in"] boolValue];
 
-                    if ([CPUserDefaultsHandler currentUser] && [[CPUserDefaultsHandler currentUser] userID] == self.userID) {
+                    if ([[CPUserDefaultsHandler currentUser].userID isEqualToNumber:self.userID]) {
                         if (self.checkedIn) {
                             NSInteger checkOutTime =[[checkinDict objectForKey:@"checkout"] integerValue];
                             [CPCheckinHandler saveCheckInVenue:venue andCheckOutTime:checkOutTime];

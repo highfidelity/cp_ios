@@ -27,7 +27,7 @@
 
 // Chat functions
 + (void)sendOneOnOneChatMessage:(NSString *)message
-                        toUser:(int)userId;
+                        toUserID:(NSNumber *)userID;
 + (void)oneOnOneChatGetHistoryWith:(CPUser *)User
                         completion:(void (^)(NSDictionary *, NSError *))completion;
 
@@ -38,10 +38,10 @@
 
 #pragma mark - Contact Request
 + (void)getNumberOfContactRequests:(void (^)(NSDictionary *json, NSError *error))completion;
-+ (void)sendContactRequestToUserId:(int)userId;
-+ (void)sendAcceptContactRequestFromUserId:(int)userId
++ (void)sendContactRequestToUserID:(NSNumber *)userID;
++ (void)sendAcceptContactRequestFromUserID:(NSNumber *)userID
                                 completion:(void (^)(NSDictionary *, NSError *))completion;
-+ (void)sendDeclineContactRequestFromUserId:(int)userId
++ (void)sendDeclineContactRequestFromUserID:(NSNumber *)userID
                                  completion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Checkins
@@ -58,7 +58,7 @@
 + (void)getDefaultCheckInVenueWithCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - User Profile
-+ (void)getResumeForUserId:(int)userId
++ (void)getResumeForUserID:(NSNumber *)userID
                      queue:(NSOperationQueue *)operationQueue
                 completion:(void(^)(NSDictionary *json, NSError *error))completion;
 + (void)getUserProfileWithCompletionBlock:(void(^)(NSDictionary *json, NSError *error))completion;
@@ -67,7 +67,7 @@
                    andCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Love
-+ (void)sendLoveToUserWithID:(int)recieverID
++ (void)sendLoveToUserWithID:(NSNumber *)recieverID
                  loveMessage:(NSString *)loveMessage
                      skillID:(NSUInteger)skillID
                   completion:(void(^)(NSDictionary *json, NSError *error))completion;

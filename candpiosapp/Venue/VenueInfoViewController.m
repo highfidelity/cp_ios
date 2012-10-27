@@ -133,7 +133,7 @@ static VenueInfoViewController *_onScreenVenueVC;
 
 - (void)addUserToDictionaryOfUserObjectsFromUser:(CPUser *)user
 {
-    [self.userObjectsForUsersOnScreen setObject:user forKey:[NSString stringWithFormat:@"%d", user.userID]];
+    [self.userObjectsForUsersOnScreen setObject:user forKey:user.userID];
 }
 
 - (BOOL)isCheckedInHere
@@ -169,8 +169,8 @@ static VenueInfoViewController *_onScreenVenueVC;
     // sort the previous users by the number of checkins here
     if (!_orderedPreviousUsers) {
         NSArray *sortedPreviousUsers = [self.previousUsers sortedArrayUsingComparator:^NSComparisonResult(CPUser *u1, CPUser *u2) {
-            int ch1 = [[[self.venue.activeUsers objectForKey:[NSString stringWithFormat:@"%d", u1.userID]] objectForKey:@"checkin_count"] integerValue];
-            int ch2 = [[[self.venue.activeUsers objectForKey:[NSString stringWithFormat:@"%d", u2.userID]] objectForKey:@"checkin_count"] integerValue];
+            int ch1 = [self.venue.activeUsers[u1.userID][@"checkin_count"] integerValue];
+            int ch2 = [self.venue.activeUsers[u2.userID][@"checkin_count"] integerValue];
             if (ch1 > ch2) {
                 return (NSComparisonResult)NSOrderedDescending;
             }
@@ -196,8 +196,8 @@ static VenueInfoViewController *_onScreenVenueVC;
     self.categoryCount = [NSMutableDictionary dictionary];
     self.previousUsers = [[NSMutableArray alloc] init];
     
-    for (NSString *userID in activeUsers) {
-        CPUser *user = [[CPAppDelegate settingsMenuController].mapTabController userFromActiveUsers:[userID integerValue]];
+    for (NSNumber *userID in activeUsers) {
+        CPUser *user = [[CPAppDelegate settingsMenuController].mapTabController userFromActiveUsers:userID];
         
         // make sure we get a user here
         // otherwise we'll crash when trying to add nil to self.previousUsers
@@ -452,7 +452,7 @@ static VenueInfoViewController *_onScreenVenueVC;
         
         // set the user object on that view controller
         // using the tag on the button to pull this user out of the NSMutableDictionary of user objects
-        userVC.user = [self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", sender.tag]];
+        userVC.user = self.userObjectsForUsersOnScreen[@(sender.tag)];
         
         // push the user profile onto this navigation controller stack
         [self.navigationController pushViewController:userVC animated:YES];
@@ -540,8 +540,7 @@ static VenueInfoViewController *_onScreenVenueVC;
             cell.separatorView.hidden = NO;
         }
         // assign the checkin hours
-        NSString *userID = [NSString stringWithFormat:@"%d", user.userID];
-        int checkinTime = [[[self.venue.activeUsers objectForKey:userID] objectForKey:@"checkin_time"] integerValue];
+        int checkinTime = [self.venue.activeUsers[user.userID][@"checkin_time"] integerValue];
         cell.hoursLabel.text = [NSString stringWithFormat:@"%d hrs/week", checkinTime / 3600];
         return cell;
     }
@@ -565,7 +564,7 @@ static VenueInfoViewController *_onScreenVenueVC;
     thumbButton.frame = CGRectMake(xOffset, yOffset, thumbnailDim, thumbnailDim);
     
     // set the tag to the user ID
-    thumbButton.tag = user.userID;
+    thumbButton.tag = [user.userID intValue];
     
     // add a target for this user thumbnail button
     [thumbButton addTarget:self action:@selector(userImageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -605,7 +604,7 @@ static VenueInfoViewController *_onScreenVenueVC;
             // add to the xOffset for the next thumbnail
             xOffset += 10 + thumbButton.frame.size.width;
             
-            if (![self.userObjectsForUsersOnScreen objectForKey:[NSString stringWithFormat:@"%d", user.userID]]) {
+            if (!self.userObjectsForUsersOnScreen[user.userID]) {
                 [self addUserToDictionaryOfUserObjectsFromUser:user];
             }
         }

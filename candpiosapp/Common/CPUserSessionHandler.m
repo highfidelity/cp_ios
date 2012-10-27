@@ -96,12 +96,11 @@ static CPUserSessionHandler *sharedHandler;
 
 + (void)storeUserLoginDataFromDictionary:(NSDictionary *)userInfo
 {
-    NSString *userId = [userInfo objectForKey:@"id"];
     NSString  *nickname = [userInfo objectForKey:@"nickname"];
     
     CPUser *currUser = [[CPUser alloc] init];
     currUser.nickname = nickname;
-    currUser.userID = [userId intValue];
+    currUser.userID = @([[userInfo objectForKey:@"id"] intValue]);
     [currUser setJoinDateFromJSONString:[userInfo objectForKey:@"join_date"]];
     currUser.profileURLVisibility = [userInfo objectForKey:@"profileURL_visibility"];
     

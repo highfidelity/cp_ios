@@ -126,9 +126,9 @@
     };
     
     if (isAcceptance) {
-        [CPapi sendAcceptContactRequestFromUserId:self.user.userID completion:completionBlock];
+        [CPapi sendAcceptContactRequestFromUserID:self.user.userID completion:completionBlock];
     } else {
-        [CPapi sendDeclineContactRequestFromUserId:self.user.userID completion:completionBlock];
+        [CPapi sendDeclineContactRequestFromUserID:self.user.userID completion:completionBlock];
     }
     
 }

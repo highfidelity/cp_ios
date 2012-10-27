@@ -400,7 +400,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 - (void)deliverChatMessage:(ChatMessage *)message
 {
     [CPapi sendOneOnOneChatMessage:message.message
-                            toUser:message.toUser.userID];
+                            toUserID:message.toUser.userID];
     [self.history addMessage:message];
     [self.chatContents reloadData];
     [self scrollToLastChat];

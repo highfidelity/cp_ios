@@ -137,7 +137,7 @@ static NSOperationQueue *sMapQueue = nil;
     
                 
                 // add the user to the MapTabController activeUsers array
-                [userMutableDict setObject:user forKey:[NSString stringWithFormat:@"%d", user.userID]];
+                [userMutableDict setObject:user forKey:user.userID];
             }
         } 
         self.activeUsers = [NSDictionary dictionaryWithDictionary:userMutableDict];

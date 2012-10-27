@@ -21,7 +21,7 @@
         self.date = [NSDate date];
         
         // Automatically determine if this is my message
-        if ([CPUserDefaultsHandler currentUser].userID == fromUser.userID) {
+        if ([[CPUserDefaultsHandler currentUser].userID isEqualToNumber:fromUser.userID]) {
             self.fromMe = YES;
         } else {
             self.fromMe = NO;

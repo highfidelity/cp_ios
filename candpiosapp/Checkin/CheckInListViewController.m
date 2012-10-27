@@ -434,7 +434,7 @@ typedef enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([CPUserDefaultsHandler currentUser].userID) {
+    if ([CPUserDefaultsHandler currentUser]) {
         
         if ((self.currentSearchState != CPCheckInListSearchStateComplete) && indexPath.row == [self numberOfRowsForTableView] - 1) {
             if (self.currentSearchState == CPCheckInListSearchStateError) {

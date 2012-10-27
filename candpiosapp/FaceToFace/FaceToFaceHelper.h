@@ -11,13 +11,13 @@
 
 @interface FaceToFaceHelper : NSObject <UIActionSheetDelegate>
 
-- (void)showContactRequestActionSheetForUserID:(int)userID;
+- (void)showContactRequestActionSheetForUserID:(NSNumber *)userID;
 
 + (FaceToFaceHelper *)sharedHelper;
 
 // Handle an incoming F2F request
 // Present the 'greeted' with the option to Accept or Decline
-+ (void)presentF2FInviteFromUser:(int) userId;
++ (void)presentF2FInviteFromUserID:(NSNumber *)userID;
 
 // F2F is compelte. Congratulate both parties!
 + (void)presentF2FSuccessFrom:(NSString *) nickname;

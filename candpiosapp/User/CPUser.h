@@ -12,8 +12,8 @@
 
 @interface CPUser : NSObject <NSCoding>
 
+@property (strong, nonatomic) NSNumber *userID;
 @property (strong, nonatomic) NSString *nickname;
-
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *jobTitle;
@@ -54,7 +54,7 @@
 @property (nonatomic) BOOL contactsOnlyChat;
 @property (nonatomic) BOOL isContact;
 @property (nonatomic) BOOL hasChatHistory;
-@property (nonatomic) int userID;
+
 
 - (void)loadUserResumeOnQueue:(NSOperationQueue *)operationQueue
                 topSkillsOnly:(BOOL)topSkills
