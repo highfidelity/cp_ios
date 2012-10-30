@@ -90,8 +90,6 @@
 		534EB7351566FD3A00BDBA57 /* cell-shadow-harsh.png in Resources */ = {isa = PBXBuildFile; fileRef = 534EB7331566FD3A00BDBA57 /* cell-shadow-harsh.png */; };
 		534EB7361566FD3A00BDBA57 /* cell-shadow-harsh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 534EB7341566FD3A00BDBA57 /* cell-shadow-harsh@2x.png */; };
 		534EB73A1567179D00BDBA57 /* CPBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534EB7391567179D00BDBA57 /* CPBaseTableViewController.m */; };
-		5353EED8163C6C2C00C7825D /* CPObjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353EED7163C6C2C00C7825D /* CPObjectManager.m */; };
-		5353EEDB163C6C6C00C7825D /* CPMarkerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353EEDA163C6C6C00C7825D /* CPMarkerManager.m */; };
 		5355B0C215140697006A3D89 /* settings-button-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 5355B0C015140697006A3D89 /* settings-button-3.png */; };
 		5355B0C315140697006A3D89 /* settings-button-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5355B0C115140697006A3D89 /* settings-button-3@2x.png */; };
 		5355C96C15082A56006F64C1 /* FaceToFaceStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5355C96B15082A56006F64C1 /* FaceToFaceStoryboard_iPhone.storyboard */; };
@@ -249,6 +247,8 @@
 		53D7ADEE15D04AC800BB041E /* CPGeofenceHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */; };
 		53D9B198152A5D9300BC1304 /* VenueListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D9B197152A5D9300BC1304 /* VenueListTableViewController.m */; };
 		53D9B19C152A5E8600BC1304 /* CPTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D9B19B152A5E8600BC1304 /* CPTabBarController.m */; };
+		53DCCF7D163F72F800A79E25 /* CPObjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DCCF7C163F72F800A79E25 /* CPObjectManager.m */; };
+		53DCCF80163F730D00A79E25 /* CPMarkerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DCCF7F163F730D00A79E25 /* CPMarkerManager.m */; };
 		53E2062C150596180000FA8D /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53E2062A150596180000FA8D /* MainStoryboard_iPhone.storyboard */; };
 		53FD32F715915102000448EF /* tab-login.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FD32F515915102000448EF /* tab-login.png */; };
 		53FD32F815915102000448EF /* tab-login@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FD32F615915102000448EF /* tab-login@2x.png */; };
@@ -467,10 +467,6 @@
 		534EB7391567179D00BDBA57 /* CPBaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CPBaseTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		534FD38C163605B80052C88D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		534FD38E163605CD0052C88D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
-		5353EED6163C6C2C00C7825D /* CPObjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPObjectManager.h; sourceTree = "<group>"; };
-		5353EED7163C6C2C00C7825D /* CPObjectManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPObjectManager.m; sourceTree = "<group>"; };
-		5353EED9163C6C6C00C7825D /* CPMarkerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPMarkerManager.h; path = Map/CPMarkerManager.h; sourceTree = "<group>"; };
-		5353EEDA163C6C6C00C7825D /* CPMarkerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPMarkerManager.m; path = Map/CPMarkerManager.m; sourceTree = "<group>"; };
 		5355B0C015140697006A3D89 /* settings-button-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-button-3.png"; path = "Settings/images/settings-button-3.png"; sourceTree = "<group>"; };
 		5355B0C115140697006A3D89 /* settings-button-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-button-3@2x.png"; path = "Settings/images/settings-button-3@2x.png"; sourceTree = "<group>"; };
 		5355C96B15082A56006F64C1 /* FaceToFaceStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = FaceToFaceStoryboard_iPhone.storyboard; path = FaceToFace/FaceToFaceStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
@@ -650,6 +646,10 @@
 		53D9B197152A5D9300BC1304 /* VenueListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = VenueListTableViewController.m; path = Venue/VenueListTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53D9B19A152A5E8600BC1304 /* CPTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPTabBarController.h; sourceTree = "<group>"; };
 		53D9B19B152A5E8600BC1304 /* CPTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPTabBarController.m; sourceTree = "<group>"; };
+		53DCCF7B163F72F800A79E25 /* CPObjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPObjectManager.h; sourceTree = "<group>"; };
+		53DCCF7C163F72F800A79E25 /* CPObjectManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPObjectManager.m; sourceTree = "<group>"; };
+		53DCCF7E163F730D00A79E25 /* CPMarkerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPMarkerManager.h; path = Map/CPMarkerManager.h; sourceTree = "<group>"; };
+		53DCCF7F163F730D00A79E25 /* CPMarkerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPMarkerManager.m; path = Map/CPMarkerManager.m; sourceTree = "<group>"; };
 		53E2062B150596180000FA8D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		53FD32F515915102000448EF /* tab-login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-login.png"; sourceTree = "<group>"; };
 		53FD32F615915102000448EF /* tab-login@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-login@2x.png"; sourceTree = "<group>"; };
@@ -1100,13 +1100,13 @@
 		536DE93A1501737000794650 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				5353EED9163C6C6C00C7825D /* CPMarkerManager.h */,
-				5353EEDA163C6C6C00C7825D /* CPMarkerManager.m */,
-				5328938D15548D90007B0157 /* MapTabController.h */,
-				5328938E15548D90007B0157 /* MapTabController.m */,
+				53DCCF7E163F730D00A79E25 /* CPMarkerManager.h */,
+				53DCCF7F163F730D00A79E25 /* CPMarkerManager.m */,
+				536DE93B1501737500794650 /* images */,
 				5384B2541554827600A4E0C1 /* MapDataSet.h */,
 				5384B2551554827600A4E0C1 /* MapDataSet.m */,
-				536DE93B1501737500794650 /* images */,
+				5328938D15548D90007B0157 /* MapTabController.h */,
+				5328938E15548D90007B0157 /* MapTabController.m */,
 				5335D81F160BA801005400FC /* MKAnnotationView+SpecialPin.h */,
 				5335D820160BA801005400FC /* MKAnnotationView+SpecialPin.m */,
 			);
@@ -1283,8 +1283,8 @@
 			children = (
 				534EB7381567179D00BDBA57 /* CPBaseTableViewController.h */,
 				534EB7391567179D00BDBA57 /* CPBaseTableViewController.m */,
-				5353EED6163C6C2C00C7825D /* CPObjectManager.h */,
-				5353EED7163C6C2C00C7825D /* CPObjectManager.m */,
+				53DCCF7B163F72F800A79E25 /* CPObjectManager.h */,
+				53DCCF7C163F72F800A79E25 /* CPObjectManager.m */,
 				537255B6156AF0C800263CFA /* CPPlaceholderTextView.h */,
 				537255B7156AF0C800263CFA /* CPPlaceholderTextView.m */,
 				530C5DB51575E4FC003505AC /* CPSoundEffectsManager.h */,
@@ -1974,8 +1974,8 @@
 				68B7B126161626BA000987E2 /* NSDictionary+JsonParserWorkaround.m in Sources */,
 				537DEA8F16249A3400D59AC9 /* CheckInListViewController.m in Sources */,
 				5317F262162F804E00D40405 /* ChangeHeadlineViewController.m in Sources */,
-				5353EED8163C6C2C00C7825D /* CPObjectManager.m in Sources */,
-				5353EEDB163C6C6C00C7825D /* CPMarkerManager.m in Sources */,
+				53DCCF7D163F72F800A79E25 /* CPObjectManager.m in Sources */,
+				53DCCF80163F730D00A79E25 /* CPMarkerManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
