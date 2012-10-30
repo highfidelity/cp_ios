@@ -16,6 +16,7 @@
 
 
 - (void)getMarkersWithinRegionDefinedByNortheastCoordinate:(CLLocationCoordinate2D)northeastCoord
-                                       southwestCoordinate:(CLLocationCoordinate2D)southwestCoord;
+                                       southwestCoordinate:(CLLocationCoordinate2D)southwestCoord
+                                                completion:(void (^)(NSError *))completion;
 
 @end

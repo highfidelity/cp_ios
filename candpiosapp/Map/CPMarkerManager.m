@@ -27,6 +27,7 @@ static CPMarkerManager *_sharedManager;
 
 - (void)getMarkersWithinRegionDefinedByNortheastCoordinate:(CLLocationCoordinate2D)northeastCoord
                                        southwestCoordinate:(CLLocationCoordinate2D)southwestCoord
+                                                completion:(void (^)(NSError *))completion
 {
     NSDictionary *coordinateDictionary = @{
         @"ne_lat" : [NSString stringWithFormat:@"%f", northeastCoord.latitude],
@@ -40,8 +41,10 @@ static CPMarkerManager *_sharedManager;
                                                         parameters:nil
                                                            success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
                                                                self.venues = result.array;
+                                                               completion(nil);
                                                            }
                                                            failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                               completion(error);
                                                            }];
 
 }
