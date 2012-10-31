@@ -472,11 +472,8 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     }
 }
 
-- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {    
-    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [[CPUserDefaultsHandler currentVenue].name isEqualToString:region.identifier]) {
-        // Log user out immediately
-        [[CPGeofenceHandler sharedHandler] autoCheckOutForRegion:region];
-    }
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+    [[CPGeofenceHandler sharedHandler] hanldeAutoCheckOutForRegion:region];
 }
 
 - (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error
