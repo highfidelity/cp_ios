@@ -219,16 +219,14 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    NSString *selection = @"city";
-    if (buttonIndex == 1) {
-        selection = @"venue";
+    if (buttonIndex == 0) {
+        [self setVenue:@"city"];
+    } else if (buttonIndex == 1) {
+        [self setVenue:@"venue"];
+    } else if (buttonIndex == 2) {
+        [self setVenue:@"contacts"];
     }
-    
-    else if (buttonIndex == 2) {
-        selection = @"contacts";
-    }
-
-    [self setVenue:selection];
+    // Do nothing if "Cancel" was hit
 }
 
 - (void)setVenue:(NSString *)setting
