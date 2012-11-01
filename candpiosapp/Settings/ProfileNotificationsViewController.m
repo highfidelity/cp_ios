@@ -221,11 +221,9 @@
 {
     if (buttonIndex == 0) {
         [self setVenue:@"city"];
-    }
-    else if (buttonIndex == 1) {
+    } else if (buttonIndex == 1) {
         [self setVenue:@"venue"];
-    }
-    else if (buttonIndex == 2) {
+    } else if (buttonIndex == 2) {
         [self setVenue:@"contacts"];
     }
     // Do nothing if "Cancel" was hit
