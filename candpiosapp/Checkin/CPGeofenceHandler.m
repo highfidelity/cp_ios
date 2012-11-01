@@ -78,7 +78,7 @@ static CPGeofenceHandler *sharedHandler;
         [CPCheckinHandler sharedHandler].pendingAutoCheckInVenue = nil;
         // use CPapi to checkin
         [CPApiClient autoCheckInToVenue:venue
-                        completionBlock:^(NSDictionary *json, NSError *error) {
+                        completion:^(NSDictionary *json, NSError *error) {
 
                             if (!error) {
                                 [FlurryAnalytics logEvent:@"autoCheckInRequest" withParameters:json timed:YES];

@@ -72,7 +72,7 @@ static AFHTTPClient *sharedClient;
 
 
 + (void)autoCheckInToVenue:(CPVenue *)venue
-           completionBlock:(void (^)(NSDictionary *, NSError *))completion
+           completion:(void (^)(NSDictionary *, NSError *))completion
 {
 
     NSDictionary *parameters = @{
