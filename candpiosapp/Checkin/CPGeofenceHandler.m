@@ -168,20 +168,19 @@ static CPGeofenceHandler *sharedHandler;
     NSString *geofence = [userInfo objectForKey:@"geofence"];
     if (![geofence isEqualToString:@"exit"]) {
 
-        int venue_id = [[userInfo objectForKey:@"venue_id"] integerValue];
-        int checkout_time = [[userInfo objectForKey:@"check_out_time"] integerValue];
+        int venueId = [[userInfo objectForKey:@"venue_id"] intValue];
+        int checkoutTime = [[userInfo objectForKey:@"check_out_time"] intValue];
         // Cancel all old local notifications
         [[UIApplication sharedApplication] cancelAllLocalNotifications];
 
         CPVenue *venue = [[CPVenue alloc] init];
-        if ([CPCheckinHandler sharedHandler].pendingAutoCheckInVenue &&
-            [CPCheckinHandler sharedHandler].pendingAutoCheckInVenue.venueID == venue_id) {
+        if ([CPCheckinHandler sharedHandler].pendingAutoCheckInVenue.venueID == venueId) {
             venue = [CPCheckinHandler sharedHandler].pendingAutoCheckInVenue;
         } else {
-            venue = [self venueWithID:venue_id];
+            venue = [self venueWithID:venueId];
         }
 
-        [CPCheckinHandler handleSuccessfulCheckinToVenue:venue checkoutTime:checkout_time];
+        [CPCheckinHandler handleSuccessfulCheckinToVenue:venue checkoutTime:checkoutTime];
     }
 
     // check if the app is currently active

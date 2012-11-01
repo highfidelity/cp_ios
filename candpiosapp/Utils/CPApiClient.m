@@ -74,18 +74,14 @@ static AFHTTPClient *sharedClient;
 + (void)autoCheckInToVenue:(CPVenue *)venue
            completionBlock:(void (^)(NSDictionary *, NSError *))completion
 {
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
 
-    [parameters setValue:[NSString stringWithFormat:@"%.7lf", venue.coordinate.latitude]
-                  forKey:@"lat"];
-    [parameters setValue:[NSString stringWithFormat:@"%.7lf", venue.coordinate.longitude]
-                  forKey:@"lng"];
-    [parameters setValue:venue.foursquareID
-                  forKey:@"foursquare"];
-    [parameters setValue:[NSString stringWithFormat:@"%d", venue.venueID]
-                  forKey:@"venue_id"];
-
-    [parameters setValue:@"autoCheckIn" forKey:@"action"];
+    NSDictionary *parameters = @{
+        @"lat": [NSString stringWithFormat:@"%.7lf", venue.coordinate.latitude],
+        @"lng": [NSString stringWithFormat:@"%.7lf", venue.coordinate.longitude],
+        @"foursquare": venue.foursquareID,
+        @"venue_id": [NSString stringWithFormat:@"%d", venue.venueID],
+        @"action": @"autoCheckIn"
+    };
 
     [sharedClient postPath:@"api.php" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         completion(responseObject, nil);
@@ -97,10 +93,7 @@ static AFHTTPClient *sharedClient;
 
 + (void)cancelAutoCheckInRequestWithCompletion:(void (^)(NSDictionary *, NSError *))completion
 {
-
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:@"cancelAutoCheckIn" forKey:@"action"];
-    
+    NSDictionary *parameters = @{ @"action": @"cancelAutoCheckIn" };
     [sharedClient postPath:@"api.php" parameters:parameters
                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
                        completion(responseObject, nil);
