@@ -2304,8 +2304,8 @@
 		871EFAFB14AE9C810030658B = {
 			isa = PBXGroup;
 			children = (
-				E46BA2C0161CD89500CA0440 /* CoreText.framework */,
 				871EFB1014AE9C820030658B /* candpiosapp */,
+				E46BA2C0161CD89500CA0440 /* CoreText.framework */,
 				871EFB0914AE9C820030658B /* Frameworks */,
 				871EFB0714AE9C820030658B /* Products */,
 			);

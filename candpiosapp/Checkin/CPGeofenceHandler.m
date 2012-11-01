@@ -13,12 +13,10 @@
 
 #define kGeoFenceAlertTag 601
 #define kRadiusForCheckins 10 // measure in meters, from lat/lng of CPVenue
-#define kMaxCheckInDuration 24
 
 @interface CPGeofenceHandler()
 
 @property (nonatomic) int pendingVenueCheckInID;
-
 @end
 
 @implementation CPGeofenceHandler
@@ -76,59 +74,49 @@ static CPGeofenceHandler *sharedHandler;
         [FlurryAnalytics logEvent:@"autoCheckedInDuplicateIgnored"];
     }
     else {
-        // Check the user in automatically now
-        [FlurryAnalytics logEvent:@"autoCheckedIn"];
-
         self.pendingVenueCheckInID = venue.venueID;
-
-        NSTimeInterval checkInTime = [[NSDate date] timeIntervalSince1970];
-        // Set a maximum checkInDuration to 24 hours
-        NSInteger checkInDuration = kMaxCheckInDuration;
-        
-        NSInteger checkOutTime = checkInTime + checkInDuration * 3600;
-        NSString *statusText = @"";
-        
+        [CPCheckinHandler sharedHandler].pendingAutoCheckInVenue = nil;
         // use CPapi to checkin
-        [CPApiClient checkInToVenue:venue
-                          hoursHere:checkInDuration
-                         statusText:statusText
-                          isVirtual:NO
-                        isAutomatic:YES
-                    completionBlock:^(NSDictionary *json, NSError *error){
-            
-            if (!error) {
-                if (![[json objectForKey:@"error"] boolValue]) {
-                                        
-                    // Cancel all old local notifications
-                    [[UIApplication sharedApplication] cancelAllLocalNotifications];
-                    
-                    [[CPCheckinHandler sharedHandler] setCheckedOut];
-                    
-                    [CPUserDefaultsHandler setCheckoutTime:checkOutTime];
-                    
-                    // Save current place to venue defaults as it's used in several places in the app
-                    [CPUserDefaultsHandler setCurrentVenue:venue];
-                    
-                    // update this venue in the list of past venues
-                    [self updatePastVenue:venue];
-                }
-                else {
-                    // There was an error checking in; probably safe to ignore
-                }
-            } else {
-                // There was an error in the main call while checking in; probably safe to ignore
-            }
-            
-            // Reset pendingVenueCheckInID to 0 upon completion, regardless of success since we would want the check-in to complete if it failed previously
-            self.pendingVenueCheckInID = 0;
-        }];
+        [CPApiClient autoCheckInToVenue:venue
+                        completion:^(NSDictionary *json, NSError *error) {
+
+                            if (!error) {
+                                [FlurryAnalytics logEvent:@"autoCheckInRequest" withParameters:json timed:YES];
+                                [CPCheckinHandler sharedHandler].pendingAutoCheckInVenue = venue;
+                            }
+                            // Reset pendingVenueCheckInID to 0 upon completion,
+                            // regardless of success since we would want the check-in to complete if it failed previously
+                            self.pendingVenueCheckInID = 0;
+                        }];
     }
+}
+
+- (void)hanldeAutoCheckOutForRegion:(CLRegion *)region
+{
+    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [[CPUserDefaultsHandler currentVenue].name isEqualToString:region.identifier]) {
+        [self autoCheckOutForRegion:region];
+    }
+
+    if ([CPCheckinHandler sharedHandler].pendingAutoCheckInVenue) {
+        [self cancelAutoCheckInRequest];
+    }
+}
+
+- (void)cancelAutoCheckInRequest
+{
+    // use CPapi to checkin
+    [CPApiClient cancelAutoCheckInRequestWithCompletion:^(NSDictionary *json, NSError *error) {
+        if (!error) {
+            [FlurryAnalytics logEvent:@"cancelAutoCheckInRequest" withParameters:json timed:YES];
+            [CPCheckinHandler sharedHandler].pendingAutoCheckInVenue = nil;
+        }
+    }];
 }
 
 - (void)autoCheckOutForRegion:(CLRegion *)region
 {
     [FlurryAnalytics logEvent:@"autoCheckedOut"];
-    
+
     [SVProgressHUD showWithStatus:@"Checking out..."];
     
     [CPapi checkOutWithCompletion:^(NSDictionary *json, NSError *error) {
@@ -177,6 +165,24 @@ static CPGeofenceHandler *sharedHandler;
 
 -(void)handleGeofenceNotification:(NSString *)message userInfo:(NSDictionary *)userInfo
 {
+    NSString *geofence = [userInfo objectForKey:@"geofence"];
+    if (![geofence isEqualToString:@"exit"]) {
+
+        int venueId = [[userInfo objectForKey:@"venue_id"] intValue];
+        int checkoutTime = [[userInfo objectForKey:@"check_out_time"] intValue];
+        // Cancel all old local notifications
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
+
+        CPVenue *venue = [[CPVenue alloc] init];
+        if ([CPCheckinHandler sharedHandler].pendingAutoCheckInVenue.venueID == venueId) {
+            venue = [CPCheckinHandler sharedHandler].pendingAutoCheckInVenue;
+        } else {
+            venue = [self venueWithID:venueId];
+        }
+
+        [CPCheckinHandler handleSuccessfulCheckinToVenue:venue checkoutTime:checkoutTime];
+    }
+
     // check if the app is currently active
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
         // alloc-init a CPAlertView
@@ -251,6 +257,22 @@ static CPGeofenceHandler *sharedHandler;
         }
     }
     
+    return venueMatch;
+}
+
+- (CPVenue *)venueWithID:(int)venueID
+{
+    NSArray *pastVenues = [CPUserDefaultsHandler pastVenues];
+
+    CPVenue *venueMatch;
+
+    for (NSData *encodedObject in pastVenues) {
+        CPVenue *venue = (CPVenue *)[NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
+
+        if (venue.venueID == venueID) {
+            venueMatch = venue;
+        }
+    }
     return venueMatch;
 }
 

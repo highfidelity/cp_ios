@@ -16,7 +16,6 @@
 #import "FlurryAnalytics.h"
 
 @class AFHTTPClient;
-@class SignupController;
 @class User;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate, CLLocationManagerDelegate>
@@ -27,7 +26,6 @@
 @property (strong, nonatomic, readonly) CLLocation *currentOrDefaultLocation;
 @property (strong, nonatomic) SettingsMenuController *settingsMenuController;
 @property (strong, nonatomic) CPTabBarController *tabBarController;
-@property (strong, nonatomic) NSTimer *checkOutTimer;
            
 - (void)pushAliasUpdate;
 - (void)saveSettings;

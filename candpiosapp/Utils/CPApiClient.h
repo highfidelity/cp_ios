@@ -17,4 +17,8 @@
            isAutomatic:(BOOL)isAutomatic
        completionBlock:(void (^)(NSDictionary *, NSError *))completion;
 
++ (void)autoCheckInToVenue:(CPVenue *)venue
+           completion:(void (^)(NSDictionary *, NSError *))completion;
+
++ (void)cancelAutoCheckInRequestWithCompletion:(void (^)(NSDictionary *, NSError *))completion;
 @end
