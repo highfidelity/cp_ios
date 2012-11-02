@@ -630,7 +630,7 @@ void SignalHandler(int sig) {
         
         UserProfileViewController *vc = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone"
                                                                    bundle:nil] instantiateInitialViewController];
-        vc.scrollToBottom = YES;
+        vc.scrollToReviews = YES;
         vc.user = user;
         [[self.tabBarController.viewControllers objectAtIndex:self.tabBarController.selectedIndex] pushViewController:vc
                                                                                                              animated:YES];
