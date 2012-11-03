@@ -11,6 +11,7 @@
 #import "GTMNSString+HTML.h"
 #import "UIViewController+CPUserActionCellAdditions.h"
 #import "NSDictionary+JsonParserWorkaround.h"
+#import "SVPullToRefresh.h"
 
 @interface UserListTableViewController()
 
@@ -23,9 +24,26 @@
 
 #pragma mark - View lifecycle
 
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    __weak UserListTableViewController *weakSelf = self;
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        [weakSelf refreshData];
+    }];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     [SVProgressHUD showWithStatus:@"Loading..."];
+    [self refreshData];
+}
+
+#pragma mark - private Methods/Data
+
+- (void)refreshData
+{
     [CPapi getNearestCheckedInWithCompletion:^(NSDictionary *json, NSError *error) {
         [SVProgressHUD dismiss];
         if (!error) {
@@ -65,6 +83,7 @@
             [SVProgressHUD showErrorWithStatus:[error localizedDescription]
                                       duration:kDefaultDismissDelay];
         }
+        [self.tableView.pullToRefreshView stopAnimating];
     }];
 }
 

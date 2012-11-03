@@ -153,7 +153,7 @@ BOOL clearLocations = NO;
 - (IBAction)refreshButtonClicked:(id)sender
 {
     clearLocations = NO;
-    [self refreshLocations];
+    [self refreshLocations:nil];
 }
 
 -(void)refreshLocationsIfNeeded
@@ -166,12 +166,12 @@ BOOL clearLocations = NO;
         // prevent the refresh of locations when we have a valid dataset or the map is not yet loaded
         if(self.mapHasLoaded && (!self.dataset || ![self.dataset isValidFor:mapRect mapCenter:self.mapView.centerCoordinate]))
         {
-            [self refreshLocations];
+            [self refreshLocations:nil];
         }
     }
 }
 
--(void)refreshLocations
+-(void)refreshLocations:(void (^)(void))completion
 {
     [self startRefreshArrowAnimation];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"mapIsLoadingNewData" object:nil];
@@ -238,7 +238,11 @@ BOOL clearLocations = NO;
         // so that the places and venue tabs can dismiss their own ProgressHUDs
         
         if (self.isViewLoaded && self.view.window) {
-           [SVProgressHUD dismiss];
+            [SVProgressHUD dismiss];
+        }
+
+        if (completion) {
+            completion();
         }
         
         // post two notifications for places and people reload
