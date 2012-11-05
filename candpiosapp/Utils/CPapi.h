@@ -146,5 +146,4 @@
 + (void)saveLinkedInPostStatus:(BOOL)status;
 + (void)addContactsByLinkedInIDs:(NSArray *)connections;
 
-+ (void)setNotificationSettingsForDistance:(NSString *)string andCheckedId:(BOOL)id receiveContactEndorsed:(BOOL)endorsed contactHeadlineChange:(BOOL)change quietTime:(BOOL)time quietTimeFrom:(NSDate *)from quietTimeTo:(NSDate *)to timezoneOffsetInSeconds:(NSInteger)seconds chatFromContactsOnly:(BOOL)only;
 @end
