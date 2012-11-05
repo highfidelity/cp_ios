@@ -836,15 +836,15 @@ photo?</string>
                                     <action selector="quietTimeValueChanged:" destination="Oyl-sh-T3U" eventType="valueChanged" id="GJU-FL-s4l"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Headline changes from contacts" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="N9Q-B5-Plh">
-                                <rect key="frame" x="21" y="176" width="199" height="20"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Tell me when my contacts change their headline" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="N9Q-B5-Plh">
+                                <rect key="frame" x="21" y="166" width="199" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="SYn-D4-Tap" userLabel="Switch - Headline change">
-                                <rect key="frame" x="223" y="172" width="79" height="27"/>
+                                <rect key="frame" x="223" y="171" width="79" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
                             </switch>
