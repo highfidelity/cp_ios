@@ -594,6 +594,7 @@
 + (void)setNotificationSettingsForDistance:(NSString *)distance
                               andCheckedId:(BOOL)checkedOnly
                     receiveContactEndorsed:(BOOL)receiveContactEndorsed
+                     contactHeadlineChange:(BOOL)contactHeadlineChange
                                  quietTime:(BOOL)quietTime
                              quietTimeFrom:(NSDate *)quietTimeFrom
                                quietTimeTo:(NSDate *)quietTimeTo  
@@ -608,6 +609,7 @@
     [parameters setValue:distance forKey:@"push_distance"];
     [parameters setValue:checkedOnly ? @"1" : @"0" forKey:@"checked_in_only"];
     [parameters setValue:receiveContactEndorsed ? @"1" : @"0" forKey:@"push_contacts_endorsement"];
+    [parameters setValue:contactHeadlineChange ? @"1" : @"0" forKey:@"push_headline_changes"];
     [parameters setValue:quietTime ? @"1" : @"0" forKey:@"quiet_time"];
     [parameters setValue:[formatter stringFromDate:quietTimeFrom] forKey:@"quiet_time_from"];
     [parameters setValue:[formatter stringFromDate:quietTimeTo] forKey:@"quiet_time_to"];
@@ -756,6 +758,5 @@
                                                                        forKey:@"connections"]
                          completion:NULL];
 }
-
 
 @end

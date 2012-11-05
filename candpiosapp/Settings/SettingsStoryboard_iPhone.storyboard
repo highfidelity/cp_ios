@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2840" systemVersion="11G63b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <development version="4500" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1926"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
     </dependencies>
     <scenes>
         <!--Settings Menu Controller-->
@@ -776,25 +776,6 @@ photo?</string>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Only when I am checked in" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="KAA-nj-Dpl">
-                                <rect key="frame" x="20" y="93" width="177" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" id="msq-ay-7A6" userLabel="white line">
-                                <rect key="frame" x="0.0" y="122" width="320" height="1"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Tell me when my contacts are Endorsed" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="leM-dN-eJw" userLabel="Label - Endorsment notification">
-                                <rect key="frame" x="20" y="129" width="177" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="WYv-d1-E2c">
                                 <rect key="frame" x="103" y="50" width="196" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -811,15 +792,64 @@ photo?</string>
                                     <action selector="selectVenueCity:" destination="Oyl-sh-T3U" eventType="touchUpInside" id="m2L-Hz-dLp"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Quiet time" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="jQz-GS-m06">
-                                <rect key="frame" x="20" y="172" width="129" height="20"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Only when I am checked in" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="KAA-nj-Dpl">
+                                <rect key="frame" x="20" y="93" width="177" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="6Kq-XY-CWZ" userLabel="Swithc - only when checked in">
+                                <rect key="frame" x="222" y="89" width="79" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
+                            </switch>
+                            <view contentMode="scaleToFill" id="msq-ay-7A6" userLabel="white line - first">
+                                <rect key="frame" x="0.0" y="122" width="320" height="1"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Tell me when my contacts are Endorsed" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="leM-dN-eJw" userLabel="Label - Endorsment notification">
+                                <rect key="frame" x="20" y="129" width="194" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="omC-De-bLw" userLabel="Switch - endorsement">
+                                <rect key="frame" x="222" y="129" width="79" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Quiet time" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="jQz-GS-m06">
+                                <rect key="frame" x="20" y="215" width="129" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="CzO-7x-w0O" userLabel="Switch - Quiet time">
+                                <rect key="frame" x="222" y="211" width="79" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="quietTimeValueChanged:" destination="Oyl-sh-T3U" eventType="valueChanged" id="GJU-FL-s4l"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Tell me when my contacts change their headline" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="N9Q-B5-Plh">
+                                <rect key="frame" x="21" y="166" width="199" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="SYn-D4-Tap" userLabel="Switch - Headline change">
+                                <rect key="frame" x="223" y="171" width="79" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
+                            </switch>
                             <view contentMode="scaleToFill" id="cX0-GX-mm2">
-                                <rect key="frame" x="0.0" y="201" width="320" height="39"/>
+                                <rect key="frame" x="0.0" y="244" width="320" height="39"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="From" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" id="Aj4-Uy-yzx">
@@ -867,7 +897,7 @@ photo?</string>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="oHx-V4-TMp">
-                                <rect key="frame" x="0.0" y="240" width="320" height="133"/>
+                                <rect key="frame" x="0.0" y="283" width="320" height="133"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="416-pJ-fQf" userLabel="white line">
@@ -900,24 +930,6 @@ photo?</string>
                                 </subviews>
                                 <color key="backgroundColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="6Kq-XY-CWZ">
-                                <rect key="frame" x="222" y="89" width="79" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
-                            </switch>
-                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="omC-De-bLw">
-                                <rect key="frame" x="222" y="129" width="79" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
-                            </switch>
-                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="CzO-7x-w0O">
-                                <rect key="frame" x="222" y="168" width="79" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="quietTimeValueChanged:" destination="Oyl-sh-T3U" eventType="valueChanged" id="GJU-FL-s4l"/>
-                                </connections>
-                            </switch>
                         </subviews>
                         <color key="backgroundColor" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -947,6 +959,7 @@ photo?</string>
                         <outlet property="contactsOnlyChatSwitch" destination="Rhs-hN-YNW" id="cqq-sR-Eom"/>
                         <outlet property="fromToSuperview" destination="cX0-GX-mm2" id="K4i-fW-5xN"/>
                         <outlet property="headerView" destination="29t-LB-tsx" id="XD9-eS-NQk"/>
+                        <outlet property="notifyHeadlineChangesSwitch" destination="SYn-D4-Tap" id="wmu-xw-0kR"/>
                         <outlet property="notifyOnEndorsementSwitch" destination="omC-De-bLw" id="rVx-xg-fHZ"/>
                         <outlet property="quietFromButton" destination="wxb-H5-mQy" id="X3M-R0-zF8"/>
                         <outlet property="quietTimeSwitch" destination="CzO-7x-w0O" id="qaa-jB-XdP"/>
@@ -1337,7 +1350,6 @@ photo?</string>
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ProfileNotificationsViewController.h"/>
             <relationships>
                 <relationship kind="action" name="anyoneChatSwitchChanged:"/>
-                <relationship kind="action" name="gearPressed:"/>
                 <relationship kind="action" name="quietFromClicked:" candidateClass="UIButton"/>
                 <relationship kind="action" name="quietTimeValueChanged:" candidateClass="UISwitch"/>
                 <relationship kind="action" name="quietToClicked:" candidateClass="UIButton"/>
@@ -1348,6 +1360,7 @@ photo?</string>
                 <relationship kind="outlet" name="contactsOnlyChatSwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="fromToSuperview" candidateClass="UIView"/>
                 <relationship kind="outlet" name="headerView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="notifyHeadlineChangesSwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="notifyOnEndorsementSwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="quietFromButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="quietTimeSwitch" candidateClass="UISwitch"/>
