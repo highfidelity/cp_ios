@@ -29,14 +29,14 @@
     // highlight appearance
     self.selectedBackgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"highlight-gradient"]];
 
-    self.hiddenView.frame = CGRectInset(self.hiddenView.frame, 11, 0);
-
-    UIView *clippingContainerView = [[UIView alloc] initWithFrame:self.hiddenView.frame];
+    UIView *clippingContainerView = [[UIView alloc] initWithFrame:CGRectInset(self.hiddenView.frame, 11, 0)];
+    self.hiddenView.frame = clippingContainerView.bounds;
     clippingContainerView.clipsToBounds = YES;
     clippingContainerView.opaque = NO;
     clippingContainerView.backgroundColor = [UIColor clearColor];
 
     [self addSubview:clippingContainerView];
+    [clippingContainerView addSubview:self.hiddenView];
     [clippingContainerView addSubview:self.contentView];
     self.visibleView.frame = CGRectOffset(self.visibleView.frame, -10, 0);
 
@@ -44,6 +44,8 @@
                                         height:self.frame.size.height]];
     [self addSubview:[self verticalLineViewAtX:self.frame.size.width - 11
                                         height:self.frame.size.height]];
+
+    self.inactiveColor = [UIColor colorWithWhite:237./255 alpha:1];
 }
 
 - (void) setUser:(User *)user {
@@ -65,6 +67,35 @@
     self.nameLabel.text = self.user.nickname;
     self.titleLabel.text = self.user.jobTitle;
     // hours label managed by the controller
+}
+
+#pragma mark - CPUserActionCell
+
+#define HIGHLIGHT_DURATION 0.1
+
+- (void)highlight {
+    [UIView animateWithDuration:HIGHLIGHT_DURATION animations:^{
+        self.visibleView.backgroundColor = self.activeColor;
+        if ([self.superview isKindOfClass:[UITableView class]]) {
+            UITableView *tableView = (UITableView *)self.superview;
+            for (VenueUserCell *cell in tableView.visibleCells) {
+                if (self == cell) {
+                    continue;
+                }
+
+                if ([cell isKindOfClass:[VenueUserCell class]]) {
+                    cell.visibleView.backgroundColor = cell.inactiveColor;
+                } else {
+                    [cell setSelected:NO animated:YES];
+                }
+            }
+        }
+    }];
+}
+
+- (void)setInactiveColor:(UIColor *)inactiveColor {
+    [super setInactiveColor:inactiveColor];
+    self.visibleView.backgroundColor = inactiveColor;
 }
 
 #pragma mark - private
