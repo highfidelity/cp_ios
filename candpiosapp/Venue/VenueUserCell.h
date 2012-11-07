@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
+#import "CPUserActionCell.h"
 
-@interface VenueUserCell : UITableViewCell
+@interface VenueUserCell : CPUserActionCell
+
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
