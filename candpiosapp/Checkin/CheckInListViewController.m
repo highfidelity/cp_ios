@@ -479,7 +479,7 @@ typedef enum {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
         // Tell the user they aren't logged in and show them the Signup Page
-        [SVProgressHUD showErrorWithStatus:@"You must be logged in to C&P in order to check in."
+        [SVProgressHUD showErrorWithStatus:@"You must be logged in to Workclub in order to check in."
                                   duration:kDefaultDismissDelay];
         [CPUserSessionHandler performSelector:@selector(showSignupModalFromViewController:animated:) withObject:self afterDelay:kDefaultDismissDelay];
     }
