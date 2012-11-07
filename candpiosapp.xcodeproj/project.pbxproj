@@ -1477,9 +1477,7 @@
 		871EFAFB14AE9C810030658B = {
 			isa = PBXGroup;
 			children = (
-				53621D451638C48F00D78B6C /* MessageUI.framework */,
 				871EFB1014AE9C820030658B /* candpiosapp */,
-				E46BA2C0161CD89500CA0440 /* CoreText.framework */,
 				871EFB0914AE9C820030658B /* Frameworks */,
 				871EFB0714AE9C820030658B /* Products */,
 				5F94CB9511754232A112BDF9 /* Pods.xcconfig */,
@@ -1505,10 +1503,12 @@
 				3267F67B14D91A3600BFFBAA /* CoreTelephony.framework */,
 				E46BA2C0161CD89500CA0440 /* CoreText.framework */,
 				871EFB0C14AE9C820030658B /* Foundation.framework */,
+				0E061CFAA8C943A4B87BC76E /* libPods.a */,
 				3267F67914D91A2E00BFFBAA /* libsqlite3.dylib */,
 				534FD38E163605CD0052C88D /* libxml2.dylib */,
 				3267F67714D91A2600BFFBAA /* libz.dylib */,
 				871EFB5E14AEB4950030658B /* MapKit.framework */,
+				53621D451638C48F00D78B6C /* MessageUI.framework */,
 				3267F67114D91A0B00BFFBAA /* MobileCoreServices.framework */,
 				32CE875114D27FFF002D391B /* QuartzCore.framework */,
 				3267F67314D91A1300BFFBAA /* Security.framework */,
@@ -1516,7 +1516,7 @@
 				53FF95EC156D5D0E0046ADDE /* StoreKit.framework */,
 				3267F67514D91A1900BFFBAA /* SystemConfiguration.framework */,
 				871EFB0A14AE9C820030658B /* UIKit.framework */,
-				0E061CFAA8C943A4B87BC76E /* libPods.a */,
+				E46BA2C0161CD89500CA0440 /* CoreText.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
