@@ -461,11 +461,8 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     }
 }
 
-- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {    
-    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [[CPUserDefaultsHandler currentVenue].name isEqualToString:region.identifier]) {
-        // Log user out immediately
-        [[CPGeofenceHandler sharedHandler] autoCheckOutForRegion:region];
-    }
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+    [[CPGeofenceHandler sharedHandler] hanldeAutoCheckOutForRegion:region];
 }
 
 - (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error
@@ -611,7 +608,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
         
         UserProfileViewController *vc = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone"
                                                                    bundle:nil] instantiateInitialViewController];
-        vc.scrollToBottom = YES;
+        vc.scrollToReviews = YES;
         vc.user = user;
         [[self.tabBarController.viewControllers objectAtIndex:self.tabBarController.selectedIndex] pushViewController:vc
                                                                                                              animated:YES];

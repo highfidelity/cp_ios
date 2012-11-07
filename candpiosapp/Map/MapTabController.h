@@ -30,7 +30,7 @@
 @property (nonatomic) BOOL mapHasLoaded;
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification;
-- (void)refreshLocations;
+- (void)refreshLocations:(void (^)(void))completion;
 - (void)userCheckedIn:(NSNotification *)notification;
 - (IBAction)refreshButtonClicked:(id)sender;
 - (IBAction)locateMe:(id)sender;

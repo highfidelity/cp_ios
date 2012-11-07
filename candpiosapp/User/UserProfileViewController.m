@@ -15,6 +15,8 @@
 #import "UserProfileLinkedInViewController.h"
 #import "FaceToFaceHelper.h"
 
+#define kResumeWebViewOffsetTop 304
+
 @interface UserProfileViewController() <UIWebViewDelegate, UIActionSheetDelegate, GRMustacheTemplateDelegate>
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapRecon;
@@ -545,10 +547,16 @@ static GRMustacheTemplate *postBadgesTemplate;
     
     self.blueOverlayExtend.frame = CGRectMake(0, 416, 320, self.scrollView.contentSize.height - 416);
 
-    if (self.scrollToBottom) {
-        self.scrollToBottom = NO;
-        CGPoint bottomOffset = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height);
-        [self.scrollView setContentOffset:bottomOffset animated:YES];
+    if (self.scrollToReviews) {
+        self.scrollToReviews = NO;
+
+        int offsetTop = [[self.resumeWebView stringByEvaluatingJavaScriptFromString:@"document.getElementById('reviews').offsetTop"] intValue];
+
+        if (offsetTop > 0) {
+            offsetTop += kResumeWebViewOffsetTop;
+            int bottomOffset = (int) (self.scrollView.contentSize.height - self.scrollView.bounds.size.height);
+            [self.scrollView setContentOffset:CGPointMake(0, MIN(offsetTop, bottomOffset)) animated:YES];
+        }
     }
 }
 

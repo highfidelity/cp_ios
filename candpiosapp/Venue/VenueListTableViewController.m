@@ -11,6 +11,7 @@
 #import "VenueInfoViewController.h"
 #import "MapTabController.h"
 #import "MapDataSet.h"
+#import "SVPullToRefresh.h"
 
 @implementation VenueListTableViewController
 
@@ -40,7 +41,13 @@
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(refreshFromNewMapData:) 
                                                  name:@"refreshVenuesFromNewMapData"
-                                               object:nil]; 
+                                               object:nil];
+    
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        [self.delegate refreshLocations:^{
+            [self.tableView.pullToRefreshView stopAnimating];
+        }];
+    }];
 }
 
 - (void)viewDidUnload

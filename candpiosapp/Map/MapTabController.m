@@ -54,9 +54,6 @@
                                                  name:@"applicationDidBecomeActive"
                                                object:nil];
     
-    // Title view styling
-    self.navigationItem.title = @"C&P"; // TODO: Remove once back button with mug logo is added to pushed views
-    
     self.mapHasLoaded = NO;
     
 	self.hasUpdatedUserLocation = false;
@@ -162,12 +159,12 @@
         // prevent the refresh of locations when we have a valid dataset or the map is not yet loaded
         if(self.mapHasLoaded && (!self.dataset || ![self.dataset isValidFor:mapRect mapCenter:self.mapView.centerCoordinate]))
         {
-            [self refreshLocations];
+            [self refreshLocations:nil];
         }
     }
 }
 
--(void)refreshLocations
+-(void)refreshLocations:(void (^)(void))completion
 {
     [self startRefreshArrowAnimation];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"mapIsLoadingNewData" object:nil];
@@ -226,7 +223,7 @@
         [CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied ||
         [CLLocationManager authorizationStatus] == kCLAuthorizationStatusRestricted) {
         
-        NSString *message = @"We're unable to get your location and the application relies on it.\n\nPlease go to your settings and enable location for the C&P app.";
+        NSString *message = @"We're unable to get your location and the application relies on it.\n\nPlease go to your settings and enable location for the Workclub app.";
         [SVProgressHUD showErrorWithStatus:message
                                   duration:kDefaultDismissDelay];
     } else {

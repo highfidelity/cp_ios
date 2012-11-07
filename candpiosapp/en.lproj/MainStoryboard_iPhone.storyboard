@@ -312,7 +312,7 @@
         <!--Contact List View Controller - Contacts-->
         <scene sceneID="pcU-Dh-0ng">
             <objects>
-                <tableViewController id="v81-7I-y3p" customClass="ContactListViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ContactListViewController" id="v81-7I-y3p" customClass="ContactListViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="d0W-bb-TdX">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
