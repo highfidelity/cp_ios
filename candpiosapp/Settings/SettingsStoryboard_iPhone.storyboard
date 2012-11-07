@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="WGr-Yo-Vg9">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <development version="4500" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
     </dependencies>
     <scenes>
         <!--Settings Menu Controller-->
@@ -226,7 +226,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="14" id="BwN-8y-Pmc" userLabel="Text Field - [name of sender] is inviting you to Coffee &amp; Power">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="14" id="BwN-8y-Pmc" userLabel="Text Field - [name of sender] is inviting you to Workclub">
                                 <rect key="frame" x="8" y="0.0" width="304" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -367,7 +367,7 @@
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="9" baselineAdjustment="alignBaselines" minimumFontSize="10" id="vUI-fA-gQW">
                                             <rect key="frame" x="23" y="63" width="274" height="195"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <string key="text">Coffee &amp; Power displays the skills you select in your LinkedIn profile to others who want to send you recognition. As they write their recognition message, they are given the chance to map it to one of your listed skills. You cannot select five of your best representative skills on this screen because you must first add some on LinkedIn. To add some:</string>
+                                            <string key="text">Workclub displays the skills you select in your LinkedIn profile to others who want to send you recognition. As they write their recognition message, they are given the chance to map it to one of your listed skills. You cannot select five of your best representative skills on this screen because you must first add some on LinkedIn. To add some:</string>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -375,14 +375,14 @@
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" numberOfLines="9" baselineAdjustment="alignBaselines" minimumFontSize="10" id="xhT-ZA-0Ed">
                                             <rect key="frame" x="20" y="240" width="280" height="146"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <string key="text">1) Sign out of C&amp;P
+                                            <string key="text">1) Sign out of Workclub
 
 2) Sign in to LinkedIn and select some skills for
     yourself
 
-3) Sign in to C&amp;P and come back to this screen.
-    Your new skills will automagically be pulled in
-    for you to select.</string>
+3) Sign in to Workclub and come back to this
+    screen.  Your new skills will automagically be
+    pulled in for you to select.</string>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1292,148 +1292,6 @@ photo?</string>
         <image name="map-shadow.png" width="10" height="320"/>
         <image name="settings-button-3.png" width="42" height="29"/>
     </resources>
-    <classes>
-        <class className="AutoCheckinCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AutoCheckinCell.h"/>
-            <relationships>
-                <relationship kind="action" name="venueSwitchChanged:"/>
-                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueSwitch" candidateClass="UISwitch"/>
-            </relationships>
-        </class>
-        <class className="AutoCheckinTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AutoCheckinTableViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="globalCheckinChanged:"/>
-                <relationship kind="outlet" name="globalCheckinSwitch" candidateClass="UISwitch"/>
-            </relationships>
-        </class>
-        <class className="CPTouchableView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPTouchableView.h"/>
-        </class>
-        <class className="EditLinkedInInvitationMessageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EditLinkedInInvitationMessageViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="sendAction"/>
-                <relationship kind="outlet" name="bodyTextView" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="subjectTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="InviteLinkedInConnectionsTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/InviteLinkedInConnectionsTableViewController.h"/>
-        </class>
-        <class className="JobCategoryViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/JobCategoryViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="majorCategoryButtonClick:"/>
-                <relationship kind="action" name="minorCategoryButtonClick:"/>
-                <relationship kind="outlet" name="majorCategoryButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="minorCategoryButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="LinkedAccountsTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedAccountsTableViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="gearPressed:"/>
-                <relationship kind="outlet" name="postToLinkedInSwitch" candidateClass="UISwitch"/>
-            </relationships>
-        </class>
-        <class className="LinkedInConnectionCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedInConnectionCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="linkedInName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="linkedInProfileImage" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="ProfileNotificationsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ProfileNotificationsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="anyoneChatSwitchChanged:"/>
-                <relationship kind="action" name="quietFromClicked:" candidateClass="UIButton"/>
-                <relationship kind="action" name="quietTimeValueChanged:" candidateClass="UISwitch"/>
-                <relationship kind="action" name="quietToClicked:" candidateClass="UIButton"/>
-                <relationship kind="action" name="selectVenueCity:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="anyoneChatView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="chatNotificationLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="checkedInOnlySwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="contactsOnlyChatSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="fromToSuperview" candidateClass="UIView"/>
-                <relationship kind="outlet" name="headerView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="notifyHeadlineChangesSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="notifyOnEndorsementSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="quietFromButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="quietTimeSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="quietToButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="venueButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="ProfileViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ProfileViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="chooseNewProfileImage:"/>
-                <relationship kind="action" name="gearPressed:"/>
-                <relationship kind="outlet" name="arrowImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="categoriesLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="categoryView" candidateClass="CPTouchableView"/>
-                <relationship kind="outlet" name="changePhotoLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="deleteTouchable" candidateClass="CPTouchableView"/>
-                <relationship kind="outlet" name="detailsView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="emailValidationMsg" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="emailView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="floatView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="nicknameTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="profileHeaderView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="profileImageButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="profileImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="skillsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="skillsTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="skillsView" candidateClass="CPTouchableView"/>
-                <relationship kind="outlet" name="visibilityLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="visibilityView" candidateClass="CPTouchableView"/>
-            </relationships>
-        </class>
-        <class className="ResumeVisibilityViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ResumeVisibilityViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="resumeVisibilityButtonClick:"/>
-                <relationship kind="outlet" name="resumeVisibilityButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="SettingsMenuController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsMenuController.h"/>
-            <relationships>
-                <relationship kind="action" name="blockUIButtonClick:"/>
-                <relationship kind="action" name="loginButtonClick:"/>
-                <relationship kind="action" name="showTermsOfServiceModal:"/>
-                <relationship kind="outlet" name="blockUIButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="edgeShadow" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="loginBanner" candidateClass="UIView"/>
-                <relationship kind="outlet" name="loginButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="termsOfServiceButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="versionNumberLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="SkillsTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SkillsTableViewController.h"/>
-        </class>
-        <class className="SmartererLoginController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SmartererLoginController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="myWebView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="TermsOfServiceViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TermsOfServiceViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="dismissTermsOfService:"/>
-                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
