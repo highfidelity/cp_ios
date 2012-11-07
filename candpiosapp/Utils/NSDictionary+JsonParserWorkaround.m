@@ -27,7 +27,7 @@
     if ([stringValue isKindOfClass:[NSNull class]]) {
         return defaultValue;
     } else {
-        return [NSNumber numberWithDouble:[stringValue doubleValue]];
+        return @([stringValue doubleValue]);
     }
 }
 

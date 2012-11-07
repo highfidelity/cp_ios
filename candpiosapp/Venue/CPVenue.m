@@ -50,8 +50,8 @@
         self.city = [[json valueForKey:@"location"] valueForKey:@"city"];
         self.state = [[json valueForKey:@"location"] valueForKey:@"state"];
         self.zip = [[json valueForKey:@"location"] valueForKey:@"postalCode"];
-        self.lat = [json numberForKey:@"lat" orDefault:@0];
-        self.lng = [json numberForKey:@"lat" orDefault:@0];
+        self.lat = [[json valueForKey:@"location"] numberForKey:@"lat" orDefault:@0];
+        self.lng = [[json valueForKey:@"location"] numberForKey:@"lng" orDefault:@0];
         self.phone = [[json valueForKey:@"contact"] valueForKey:@"phone"];
         self.formattedPhone = [json valueForKeyPath:@"contact.formattedPhone"];
         
