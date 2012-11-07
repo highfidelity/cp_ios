@@ -226,7 +226,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="14" id="BwN-8y-Pmc" userLabel="Text Field - [name of sender] is inviting you to Coffee &amp; Power">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="14" id="BwN-8y-Pmc" userLabel="Text Field - [name of sender] is inviting you to Workclub">
                                 <rect key="frame" x="8" y="0.0" width="304" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -367,7 +367,7 @@
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="9" baselineAdjustment="alignBaselines" minimumFontSize="10" id="vUI-fA-gQW">
                                             <rect key="frame" x="23" y="63" width="274" height="195"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <string key="text">Coffee &amp; Power displays the skills you select in your LinkedIn profile to others who want to send you recognition. As they write their recognition message, they are given the chance to map it to one of your listed skills. You cannot select five of your best representative skills on this screen because you must first add some on LinkedIn. To add some:</string>
+                                            <string key="text">Workclub displays the skills you select in your LinkedIn profile to others who want to send you recognition. As they write their recognition message, they are given the chance to map it to one of your listed skills. You cannot select five of your best representative skills on this screen because you must first add some on LinkedIn. To add some:</string>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -375,14 +375,14 @@
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" numberOfLines="9" baselineAdjustment="alignBaselines" minimumFontSize="10" id="xhT-ZA-0Ed">
                                             <rect key="frame" x="20" y="240" width="280" height="146"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <string key="text">1) Sign out of C&amp;P
+                                            <string key="text">1) Sign out of Workclub
 
 2) Sign in to LinkedIn and select some skills for
     yourself
 
-3) Sign in to C&amp;P and come back to this screen.
-    Your new skills will automagically be pulled in
-    for you to select.</string>
+3) Sign in to Workclub and come back to this
+    screen.  Your new skills will automagically be
+    pulled in for you to select.</string>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

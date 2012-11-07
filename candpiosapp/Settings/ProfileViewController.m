@@ -584,7 +584,7 @@
              [CPUserSessionHandler showSignupModalFromViewController:presentingViewController
                                                             animated:YES];
 
-             [SVProgressHUD dismissWithSuccess:@"Thanks for spending time on Coffee & Power. We hope to see you again soon."
+             [SVProgressHUD dismissWithSuccess:@"Thanks for spending time on Workclub. We hope to see you again soon."
                                     afterDelay:kDefaultDismissDelay];
 
          }];

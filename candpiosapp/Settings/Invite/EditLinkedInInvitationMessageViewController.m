@@ -11,10 +11,10 @@
 #import "EditLinkedInInvitationMessageViewController.h"
 #import "AppDelegate.h"
 
-NSString * const kSubjectTemplate = @"%@ is inviting you to Coffee & Power";
+NSString * const kSubjectTemplate = @"%@ is inviting you to Workclub";
 
-NSString * const kBodyTemplate = @"Hi! %@ is inviting you to join Coffee & Power. C&P is an app that lets you see who is working near you right now.\n\n\
-If %@ is also a LinkedIn contact, they will automatically be added to your C&P contact list and you will be notified when they check in to workplaces.\n\n\
+NSString * const kBodyTemplate = @"Hi! %@ is inviting you to join Workclub. Workclub is an app that lets you see who is working near you right now.\n\n\
+If %@ is also a LinkedIn contact, they will automatically be added to your Workclub contact list and you will be notified when they check in to workplaces.\n\n\
 If you have not already, download the app from the iTunes or Google Play stores.";
 
 @interface EditLinkedInInvitationMessageViewController ()

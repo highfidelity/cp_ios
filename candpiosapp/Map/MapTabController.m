@@ -55,9 +55,6 @@ BOOL clearLocations = NO;
                                                  name:@"applicationDidBecomeActive" 
                                                object:nil];
     
-    // Title view styling
-    self.navigationItem.title = @"C&P"; // TODO: Remove once back button with mug logo is added to pushed views
-    
     self.mapHasLoaded = NO;
     
 	self.hasUpdatedUserLocation = false;
@@ -260,7 +257,7 @@ BOOL clearLocations = NO;
         [CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied ||
         [CLLocationManager authorizationStatus] == kCLAuthorizationStatusRestricted) {
         
-        NSString *message = @"We're unable to get your location and the application relies on it.\n\nPlease go to your settings and enable location for the C&P app.";
+        NSString *message = @"We're unable to get your location and the application relies on it.\n\nPlease go to your settings and enable location for the Workclub app.";
         [SVProgressHUD showErrorWithStatus:message
                              duration:kDefaultDismissDelay];
     } else {

@@ -67,7 +67,7 @@
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="10" id="gv0-xw-nqc">
                                 <rect key="frame" x="-118" y="229" width="558" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <string key="text">If another C&amp;P user has given
+                                <string key="text">If another Workclub user has given
 you an invite code, type it in above</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -245,29 +245,6 @@ you an invite code, type it in above</string>
         <image name="sign-up-with-linkedin.png" width="124" height="74"/>
         <image name="tab-login.png" width="34" height="26"/>
     </resources>
-    <classes>
-        <class className="LinkedInLoginController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedInLoginController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="myWebView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="SignupController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupController.h"/>
-            <relationships>
-                <relationship kind="action" name="dismissClick:"/>
-                <relationship kind="action" name="loginWithLinkedInTapped:"/>
-                <relationship kind="outlet" name="dismissButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="linkedinLoginButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="TutorialViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TutorialViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
