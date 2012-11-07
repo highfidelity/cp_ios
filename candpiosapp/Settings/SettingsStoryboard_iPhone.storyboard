@@ -983,33 +983,11 @@ photo?</string>
                         <sections>
                             <tableViewSection id="wTe-GE-ZMp">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="0.0" shouldIndentWhileEditing="NO" textLabel="zhV-xR-nMc" style="IBUITableViewCellStyleDefault" id="YaC-ST-p7h">
-                                        <rect key="frame" x="0.0" y="10" width="320" height="45"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="1" width="280" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Smarterer Badges" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zhV-xR-nMc" userLabel="Label - Smarterer">
-                                                    <rect key="frame" x="10" y="0.0" width="260" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" red="0.8862745098" green="0.89019607840000003" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" red="0.24313725529999999" green="0.24313725529999999" blue="0.24313725529999999" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <segue destination="N65-G8-6X2" kind="push" identifier="AccountsToSmartererSegue" id="Fu4-6b-4Hp"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" shouldIndentWhileEditing="NO" rowHeight="72" id="KiV-4M-LPh">
-                                        <rect key="frame" x="0.0" y="55" width="320" height="73"/>
+                                        <rect key="frame" x="0.0" y="10" width="320" height="74"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="0.0" width="300" height="71"/>
+                                            <rect key="frame" x="10" y="1" width="300" height="71"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Post recognition received to my activity feed" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="57L-Y1-o35" userLabel="Label - linkedIn">
@@ -1072,34 +1050,6 @@ photo?</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SCP-Eu-ajv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-719" y="405"/>
-        </scene>
-        <!--Smarterer Login Controller-->
-        <scene sceneID="W9b-jS-2LZ">
-            <objects>
-                <viewController id="N65-G8-6X2" customClass="SmartererLoginController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Boe-pk-R9B">
-                        <rect key="frame" x="0.0" y="64" width="320" height="372"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" id="pyQ-wl-Awg">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <outlet property="delegate" destination="N65-G8-6X2" id="Obk-ca-tx9"/>
-                                </connections>
-                            </webView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="g7U-S9-gxl"/>
-                    <connections>
-                        <outlet property="myWebView" destination="pyQ-wl-Awg" id="sUA-hD-8GA"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wSs-m8-YRB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-193" y="522"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Cuu-5f-AYW">
@@ -1292,6 +1242,142 @@ photo?</string>
         <image name="map-shadow.png" width="10" height="320"/>
         <image name="settings-button-3.png" width="42" height="29"/>
     </resources>
+    <classes>
+        <class className="AutoCheckinCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AutoCheckinCell.h"/>
+            <relationships>
+                <relationship kind="action" name="venueSwitchChanged:"/>
+                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueSwitch" candidateClass="UISwitch"/>
+            </relationships>
+        </class>
+        <class className="AutoCheckinTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AutoCheckinTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="globalCheckinChanged:"/>
+                <relationship kind="outlet" name="globalCheckinSwitch" candidateClass="UISwitch"/>
+            </relationships>
+        </class>
+        <class className="CPTouchableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPTouchableView.h"/>
+        </class>
+        <class className="EditLinkedInInvitationMessageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EditLinkedInInvitationMessageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="sendAction"/>
+                <relationship kind="outlet" name="bodyTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="subjectTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="InviteLinkedInConnectionsTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/InviteLinkedInConnectionsTableViewController.h"/>
+        </class>
+        <class className="JobCategoryViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/JobCategoryViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="majorCategoryButtonClick:"/>
+                <relationship kind="action" name="minorCategoryButtonClick:"/>
+                <relationship kind="outlet" name="majorCategoryButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="minorCategoryButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="LinkedAccountsTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedAccountsTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="gearPressed:"/>
+                <relationship kind="outlet" name="postToLinkedInSwitch" candidateClass="UISwitch"/>
+            </relationships>
+        </class>
+        <class className="LinkedInConnectionCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedInConnectionCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="linkedInName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="linkedInProfileImage" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="ProfileNotificationsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ProfileNotificationsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="anyoneChatSwitchChanged:"/>
+                <relationship kind="action" name="quietFromClicked:" candidateClass="UIButton"/>
+                <relationship kind="action" name="quietTimeValueChanged:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="quietToClicked:" candidateClass="UIButton"/>
+                <relationship kind="action" name="selectVenueCity:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="anyoneChatView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="chatNotificationLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="checkedInOnlySwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="contactsOnlyChatSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="fromToSuperview" candidateClass="UIView"/>
+                <relationship kind="outlet" name="headerView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="notifyHeadlineChangesSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="notifyOnEndorsementSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="quietFromButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="quietTimeSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="quietToButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="venueButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="ProfileViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ProfileViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="chooseNewProfileImage:"/>
+                <relationship kind="action" name="gearPressed:"/>
+                <relationship kind="outlet" name="arrowImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="categoriesLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="categoryView" candidateClass="CPTouchableView"/>
+                <relationship kind="outlet" name="changePhotoLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="deleteTouchable" candidateClass="CPTouchableView"/>
+                <relationship kind="outlet" name="detailsView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="emailValidationMsg" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="emailView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="floatView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="nicknameTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="profileHeaderView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="profileImageButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="profileImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="skillsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="skillsTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="skillsView" candidateClass="CPTouchableView"/>
+                <relationship kind="outlet" name="visibilityLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="visibilityView" candidateClass="CPTouchableView"/>
+            </relationships>
+        </class>
+        <class className="ResumeVisibilityViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ResumeVisibilityViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="resumeVisibilityButtonClick:"/>
+                <relationship kind="outlet" name="resumeVisibilityButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="SettingsMenuController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsMenuController.h"/>
+            <relationships>
+                <relationship kind="action" name="blockUIButtonClick:"/>
+                <relationship kind="action" name="loginButtonClick:"/>
+                <relationship kind="action" name="showTermsOfServiceModal:"/>
+                <relationship kind="outlet" name="blockUIButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="edgeShadow" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="loginBanner" candidateClass="UIView"/>
+                <relationship kind="outlet" name="loginButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="termsOfServiceButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="versionNumberLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="SkillsTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SkillsTableViewController.h"/>
+        </class>
+        <class className="TermsOfServiceViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TermsOfServiceViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="dismissTermsOfService:"/>
+                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

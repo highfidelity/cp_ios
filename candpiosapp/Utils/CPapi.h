@@ -133,9 +133,6 @@
 + (void)saveUserMajorJobCategory:(NSString *)majorJobCategory
              andMinorJobCategory:(NSString *)minorJobCategory;
 
-+ (void)saveUserSmartererName:(NSString *)name
-                                       :(void(^)(NSDictionary *json, NSError *error))completion;
-
 + (void)deleteAccountWithParameters:(NSMutableDictionary *)parameters
                          completion:(void(^)(NSDictionary *json, NSError *error))completion;
 
