@@ -44,9 +44,8 @@
                                                object:nil];
     
     [self.tableView addPullToRefreshWithActionHandler:^{
-        [self.delegate refreshLocations:^{
-            [self.tableView.pullToRefreshView stopAnimating];
-        }];
+#warning NEED NSNOTIFICATION TO CANCEL PULL TO REFRESH!
+        [self.delegate refreshLocations];
     }];
 }
 

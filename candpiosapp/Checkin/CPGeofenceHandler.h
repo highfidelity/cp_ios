@@ -14,7 +14,7 @@
 - (void)startMonitoringVenue:(CPVenue *)venue;
 - (void)stopMonitoringVenue:(CPVenue *)venue;
 - (void)autoCheckInForVenue:(CPVenue *)venue;
-- (void)hanldeAutoCheckOutForRegion:region;
+- (void)handleAutoCheckOutForRegion:region;
 - (void)autoCheckOutForRegion:(CLRegion *)region;
 -(void)handleGeofenceNotification:(NSString *)message userInfo:(NSDictionary *)userInfo;
 - (void)updatePastVenue:(CPVenue *)venue;

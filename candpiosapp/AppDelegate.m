@@ -462,7 +462,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 }
 
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
-    [[CPGeofenceHandler sharedHandler] hanldeAutoCheckOutForRegion:region];
+    [[CPGeofenceHandler sharedHandler] handleAutoCheckOutForRegion:region];
 }
 
 - (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error

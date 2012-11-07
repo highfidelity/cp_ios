@@ -297,7 +297,7 @@
         return YES;
     } else if (![object isKindOfClass:[self class]]) {
         return NO;
-    } else if (self.venueID == [object venueID]) {
+    } else if ([self.venueID isEqualToNumber:[object venueID]]) {
         return YES;
     } else {
         return NO;

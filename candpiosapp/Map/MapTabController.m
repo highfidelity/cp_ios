@@ -159,12 +159,12 @@
         // prevent the refresh of locations when we have a valid dataset or the map is not yet loaded
         if(self.mapHasLoaded && (!self.dataset || ![self.dataset isValidFor:mapRect mapCenter:self.mapView.centerCoordinate]))
         {
-            [self refreshLocations:nil];
+            [self refreshLocations];
         }
     }
 }
 
--(void)refreshLocations:(void (^)(void))completion
+-(void)refreshLocations
 {
     [self startRefreshArrowAnimation];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"mapIsLoadingNewData" object:nil];
@@ -361,8 +361,6 @@
         [self.navigationController pushViewController:venueVC animated:YES];
     }
 }
-
-////// map delegate
 
 - (void)mapView:(MKMapView *)thisMapView regionDidChangeAnimated:(BOOL)animated
 {

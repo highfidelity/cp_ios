@@ -493,14 +493,14 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                 [[CPCheckinHandler sharedHandler] setCheckedOut];
             }
 
-            [FlurryAnalytics logEvent:@"login_linkedin"];
-            [FlurryAnalytics setUserID:userId];
+            [Flurry logEvent:@"login_linkedin"];
+            [Flurry setUserID:userId];
             
             [CPUserSessionHandler performAfterLoginActions];
         }
     }
     @catch (NSException* ex) {
-        [FlurryAnalytics logError:@"login_linkedin"
+        [Flurry logError:@"login_linkedin"
                           message:ex.description
                         exception:ex];
 

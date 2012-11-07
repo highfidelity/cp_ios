@@ -77,7 +77,7 @@ static AFHTTPClient *sharedClient;
         @"lat": [NSString stringWithFormat:@"%.7lf", venue.coordinate.latitude],
         @"lng": [NSString stringWithFormat:@"%.7lf", venue.coordinate.longitude],
         @"foursquare": venue.foursquareID,
-        @"venue_id": [NSString stringWithFormat:@"%d", venue.venueID],
+        @"venue_id": [NSString stringWithFormat:@"%@", venue.venueID],
         @"action": @"autoCheckIn"
     };
 
