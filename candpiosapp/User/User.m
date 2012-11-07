@@ -336,10 +336,6 @@
             self.profileURLVisibility = [userDict objectForKey:@"profileURL_visibility"];
             [self setJoinDateFromJSONString:[userDict objectForKey:@"join_date"]];
 
-            if ([[userDict objectForKey:@"smarterer_name"] isKindOfClass:[NSString class]]) {
-                self.smartererName = [userDict objectForKey:@"smarterer_name"];
-            }
-            
             // call the completion block passed by the caller
             if(completion) {
                 completion(nil);

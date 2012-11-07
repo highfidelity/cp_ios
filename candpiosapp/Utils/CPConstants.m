@@ -27,9 +27,6 @@
 
     NSString* const flurryAnalyticsKey = @"BI59BJPSZZTIFB5H87HQ";
 
-    NSString* const kSmartererKey = @"3f883e6fc3d54834ac93c3bfe6f33553";
-    NSString* const kSmartererSecret = @"ea670a5ca21c7d54d4e17972059b4f07";
-
     NSString* const kTestFlightKey = @"2ed46ba74d908aecc8ead4558ff3c7f5_MTA4NjQyMDEyLTAxLTAzIDIxOjA2OjE3LjcxODkwNA";
 
     NSString* const kUserVoiceSite = @"coffeeandpower.uservoice.com";
@@ -38,7 +35,6 @@
 
 #endif
 
-NSString* const kSmartererCallback = @"candp://smarterer";
 NSString* const kCandPAPIVersion = @"0.1";
 NSString* const kCandPAPIErrorDomain = @"com.coffeeandpower.api.error";
 NSString* const kLinkedInAPIUrl = @"https://api.linkedin.com";

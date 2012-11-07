@@ -20,9 +20,7 @@
 @interface UserProfileViewController() <UIWebViewDelegate, UIActionSheetDelegate, GRMustacheTemplateDelegate>
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapRecon;
-@property (strong, nonatomic) NSString* preBadgesHTML;
-@property (strong, nonatomic) NSString* postBadgesHTML;
-@property (strong, nonatomic) NSString* badgesHTML;
+@property (strong, nonatomic) NSString* resumeHTML;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UILabel *checkedIn;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
@@ -73,28 +71,13 @@
 
 @implementation UserProfileViewController
 
-static GRMustacheTemplate *preBadgesTemplate;
-static GRMustacheTemplate *badgesTemplate;
-static GRMustacheTemplate *postBadgesTemplate;
+static GRMustacheTemplate *resumeTemplate;
 
-+ (GRMustacheTemplate*) preBadgesTemplate {
-    if (!preBadgesTemplate) { 
-        NSError *error;
-        preBadgesTemplate = [GRMustacheTemplate templateFromResource:@"UserResume-prebadges" bundle:nil error:&error];
++ (GRMustacheTemplate*) resumeTemplate {
+    if (!resumeTemplate) {
+        resumeTemplate = [GRMustacheTemplate templateFromResource:@"UserResume" bundle:nil error:NULL];
     }
-    return preBadgesTemplate;
-}
-+ (GRMustacheTemplate*) postBadgesTemplate {
-    if (!postBadgesTemplate) { 
-        postBadgesTemplate = [GRMustacheTemplate templateFromResource:@"UserResume-postbadges" bundle:nil error:NULL];
-    }
-    return postBadgesTemplate;
-}
-+ (GRMustacheTemplate*) badgesTemplate {
-    if (!badgesTemplate) { 
-        badgesTemplate = [GRMustacheTemplate templateFromResource:@"UserResume-badges" bundle:nil error:NULL];
-    }
-    return badgesTemplate;
+    return resumeTemplate;
 }
 
 #pragma mark - View lifecycle
@@ -382,7 +365,6 @@ static GRMustacheTemplate *postBadgesTemplate;
     self.resumeEarned.text = [NSString stringWithFormat:@"%d", self.user.totalHours];
     self.loveReceived.text = [self.user.reviews objectForKey:@"love_received"];
     
-    [self loadBadgesAsync];
     dispatch_queue_t q_profile = dispatch_queue_create("com.candp.profile", NULL);
     dispatch_async(q_profile, ^{
         // load html into the bottom of the resume view for all the user data
@@ -397,23 +379,8 @@ static GRMustacheTemplate *postBadgesTemplate;
 }
 
 - (NSString *)htmlStringWithResumeText {
-    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.user, @"user",nil];
-    
-    if (!self.preBadgesHTML) {
-        GRMustacheTemplate *template = [UserProfileViewController preBadgesTemplate];
-        template.delegate = self;
-        self.preBadgesHTML = [template renderObject:dictionary];
-    }
-
-    if (self.user.badges.count > 0) { 
-        GRMustacheTemplate *template = [UserProfileViewController badgesTemplate];
-        template.delegate = self;
-        self.badgesHTML = [template renderObject:dictionary];        
-    } else {
-        self.badgesHTML = @"";
-    }
-
-    if (!self.postBadgesHTML) {
+    if (!self.resumeHTML) {
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.user, @"user",nil];
         NSArray *reviews = [self.user.reviews objectForKey:@"rows"];
         
         NSDictionary *originalData = @{
@@ -431,43 +398,14 @@ static GRMustacheTemplate *postBadgesTemplate;
         [dictionary setValue:[NSNumber numberWithBool:reviews.count > 0] forKey:@"hasAnyReview"];
         [dictionary setValue:originalDataJSON forKey:@"originalData"];
         
-        GRMustacheTemplate *template = [UserProfileViewController postBadgesTemplate];
+        GRMustacheTemplate *template = [UserProfileViewController resumeTemplate];
         template.delegate = self;
-        self.postBadgesHTML = [template renderObject:dictionary];
+        self.resumeHTML = [template renderObject:dictionary];
     }
-    return [NSString stringWithFormat:@"%@%@%@", self.preBadgesHTML, self.badgesHTML, self.postBadgesHTML];
+    return self.resumeHTML;
 }
 
-- (void) loadBadgesAsync
-{
-    if (self.user.smartererName.length) {
-        // Get user's current badges asynchronously from smarterer if they've linked their account
-        NSString *urlString = [NSString stringWithFormat:@"https://smarterer.com/api/badges/%@", self.user.smartererName];
-        NSURL *url = [NSURL URLWithString:urlString];
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        AFJSONRequestOperation *operation = [AFJSONRequestOperation 
-                                             JSONRequestOperationWithRequest:request 
-                                             success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) 
-                                             {
-                                                 // load our badges
-                                                 NSArray *returnedBadges = [JSON objectForKey:@"badges"];
-                                                 NSMutableArray *badges = [[NSMutableArray alloc] init];
-                                                 for (NSDictionary *badge in returnedBadges) {
-                                                     NSString *badgeURL = [[badge objectForKey:@"badge"] objectForKey:@"image"];
-                                                     [badges addObject:[NSDictionary dictionaryWithObjectsAndKeys:badgeURL,@"badgeURL", nil]];
-                                                 }
-                                                 self.user.badges = badges;
-                                                 // re-render the resume
-                                                 [self updateResumeWithHTML:[self htmlStringWithResumeText]];                                                 
-                                             } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) 
-                                             {
-                                                 NSLog(@"%@", error.localizedDescription);
-                                             }];
-        [self.operationQueue addOperation:operation];
-        [operation start];
-    }
-}
-- (void) updateResumeWithHTML:(NSString*)html 
+- (void) updateResumeWithHTML:(NSString*)html
 {
     NSString *path = [[NSBundle mainBundle] bundlePath];
     NSURL *baseURL = [NSURL fileURLWithPath:path];
