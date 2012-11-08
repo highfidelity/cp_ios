@@ -6,10 +6,10 @@
 //  Copyright (c) 2011 Coffee and Power Inc. All rights reserved.
 //
 
-#import "MapDataSet.h"
 #import "MKAnnotationView+SpecialPin.h"
 #import "VenueInfoViewController.h"
 #import "CPUser.h"
+#import "CPObjectManager.h"
 #import "CPMarkerManager.h"
 
 @interface MapTabController()
@@ -18,8 +18,10 @@
 @property (strong, nonatomic) NSTimer *reloadTimer;
 @property (strong, nonatomic) NSTimer *locationAllowTimer;
 @property (strong, nonatomic) NSTimer *arrowSpinTimer;
+@property (strong, nonatomic) NSDate *dataLoadDate;
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 @property (nonatomic) BOOL locationStatusKnown;
+@property (nonatomic) MKMapRect dataCoveredMapRect;
 
 -(void)refreshLocationsIfNeeded;
 -(void)startRefreshArrowAnimation;
@@ -122,23 +124,6 @@
     }
 }
 
-# pragma mark - Active Venue and Active User Grabbing
-
-// TODO: For both users and venues let's have a caching strategy
-// probably store them after they are loaded in core data
-// and grab them from there and update them when new calls are made
-// instead of reloaded them everytime the map is reloaded and losing the ones no longer on the map
-
-- (CPUser *)userFromActiveUsers:(NSNumber *)userID
-{
-    return [self.dataset.activeUsers objectForKey:userID];
-}
-
-- (CPVenue *)venueFromActiveVenues:(NSNumber *)venueID
-{
-    return [self.dataset.activeVenues objectForKey:venueID];
-}
-
 - (void)userCheckedIn:(NSNotification *)notification
 {
     [self refreshButtonClicked:notification];
@@ -149,30 +134,67 @@
     [self refreshLocations];
 }
 
+- (CLLocationCoordinate2D)northeastCoordinateForMapView
+{
+    return [self.mapView convertPoint:CGPointMake(self.mapView.bounds.origin.x + self.mapView.bounds.size.width,
+                                                  self.mapView.bounds.origin.y) toCoordinateFromView:self.mapView];
+}
+
+- (CLLocationCoordinate2D)southwestCoordinateForMapView
+{
+    return [self.mapView convertPoint:CGPointMake(self.mapView.bounds.origin.x,
+                                                  self.mapView.bounds.origin.y + self.mapView.bounds.size.height) toCoordinateFromView:self.mapView];
+}
+
+-(BOOL)isCurrentMarkerDataStillValid
+{
+	const double kTwoMinutesAgo = -2 * 60;
+	
+	// if the data is old, we need to reload anyway
+	double age = [self.dataLoadDate timeIntervalSinceNow];
+	
+    if(self.dataLoadDate && age < kTwoMinutesAgo) {
+		NSLog(@"Forcing refresh of map data ... it's too old (%.2f seconds old)", age);
+		return false;
+	}
+    
+	// if the new map region is contained within the region defined by the venues that are the furthest away
+    // then we don't need to reload
+	if(MKMapRectContainsRect(self.dataCoveredMapRect, self.mapView.visibleMapRect)) {
+		return true;
+    } else {
+		return false;
+	}
+}
+
 -(void)refreshLocationsIfNeeded
 {
-    
-    if (self.locationStatusKnown) {
-        
-        MKMapRect mapRect = self.mapView.visibleMapRect;
-        
-        // prevent the refresh of locations when we have a valid dataset or the map is not yet loaded
-        if(self.mapHasLoaded && (!self.dataset || ![self.dataset isValidFor:mapRect mapCenter:self.mapView.centerCoordinate]))
-        {
-            [self refreshLocations];
-        }
+    // prevent the refresh of locations when we have a valid dataset or the map is not yet loaded
+    if(self.locationStatusKnown && self.mapHasLoaded && (![CPMarkerManager sharedManager].venues || ![self isCurrentMarkerDataStillValid])) {
+        [self refreshLocations];
     }
 }
 
 -(void)refreshLocations
 {
+    // cancel any current requests for new map data or active users for venues
+    RKRoute *markerRoute = [[CPObjectManager sharedManager].router.routeSet routeForName:@"markers"];
+    RKRoute *venueCheckedInRoute = [[CPObjectManager sharedManager].router.routeSet routeForName:@"venueCheckedInUsers"];
+    [[CPObjectManager sharedManager] cancelAllObjectRequestOperationsWithMethod:RKRequestMethodGET matchingPathPattern:markerRoute.pathPattern];
+    [[CPObjectManager sharedManager] cancelAllObjectRequestOperationsWithMethod:RKRequestMethodGET matchingPathPattern:venueCheckedInRoute.pathPattern];
+    
     [self startRefreshArrowAnimation];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"mapIsLoadingNewData" object:nil];
     
+    MKMapRect mapRectForRequest = self.mapView.visibleMapRect;
+        
     [[CPMarkerManager sharedManager] getMarkersWithinRegionDefinedByNortheastCoordinate:[self northeastCoordinateForMapView]
                                                                     southwestCoordinate:[self southwestCoordinateForMapView]
                                                                              completion:^(NSError *error)
      {
+         self.dataLoadDate = [NSDate date];
+         self.dataCoveredMapRect = mapRectForRequest;
+         
          NSMutableArray *filteredVenues = [[[CPMarkerManager sharedManager].venues filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isNeighborhood == NO"]] mutableCopy];
          
          for (CPVenue *newVenue in [filteredVenues mutableCopy]) {
@@ -203,18 +225,6 @@
              [SVProgressHUD dismiss];
          }
      }];
-}
-
-- (CLLocationCoordinate2D)northeastCoordinateForMapView
-{
-    return [self.mapView convertPoint:CGPointMake(self.mapView.bounds.origin.x + self.mapView.bounds.size.width,
-                                                  self.mapView.bounds.origin.y) toCoordinateFromView:self.mapView];
-}
-
-- (CLLocationCoordinate2D)southwestCoordinateForMapView
-{
-    return [self.mapView convertPoint:CGPointMake(self.mapView.bounds.origin.x,
-                                                  self.mapView.bounds.origin.y + self.mapView.bounds.size.height) toCoordinateFromView:self.mapView];
 }
 
 - (IBAction)locateMe:(id)sender
