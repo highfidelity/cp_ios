@@ -11,7 +11,8 @@
 
 @interface CPObjectManager : RKObjectManager
 
-extern NSString* const kRKRouteMarkers;
-extern NSString* const kRKVenueCheckedInUsers;
+extern NSString* const kRouteMarkers;
+extern NSString* const kRouteVenueCheckedInUsers;
+extern NSString* const kRouteVenueFullDetails;
 
 @end

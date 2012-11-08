@@ -75,8 +75,9 @@
             @"checkins_for_interval": @"weeklyCheckinCount"
          }];
         
-        RKRelationshipMapping *activeUserRelationship = [RKRelationshipMapping relationshipMappingFromKeyPath:@"users" toKeyPath:@"activeUsers" withMapping:[self userObjectMapping]];
-        [_venueRKObjectMapping addPropertyMapping:activeUserRelationship];
+        RKRelationshipMapping *checkedInUsersRel = [RKRelationshipMapping relationshipMappingFromKeyPath:@"checked_in_users" toKeyPath:@"activeUsers" withMapping:[self userObjectMapping]];
+        RKRelationshipMapping *previousUsersRel = [RKRelationshipMapping relationshipMappingFromKeyPath:@"previous_users" toKeyPath:@"previousUsers" withMapping:[self userObjectMapping]];
+        [_venueRKObjectMapping addPropertyMappingsFromArray:@[checkedInUsersRel, previousUsersRel]];
     }
     
     return _venueRKObjectMapping;
@@ -93,6 +94,7 @@
             @"id" : @"userID",
             @"nickname": @"nickname",
             @"photo_url" : @"photoURL",
+            @"job_title" : @"jobTitle",
             @"major_job_category": @"majorJobCategory",
             @"minor_job_category": @"minorJobCategory",
             @"is_contact" : @"isContact"
@@ -102,18 +104,22 @@
     return _userObjectMapping;
 }
 
-NSString* const kRKRouteMarkers = @"markers";
-NSString* const kRKVenueCheckedInUsers = @"venueCheckedInUsers";
+NSString* const kRouteMarkers = @"markers";
+NSString* const kRouteVenueCheckedInUsers = @"venueCheckedInUsers";
+NSString* const kRouteVenueFullDetails = @"venueDetails";
 
 + (void)setupAllRKRouting
 {
     RKObjectManager *sharedManager = [self sharedManager];
     
-    [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:kRKRouteMarkers
+    [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:kRouteMarkers
                                                        pathPattern:@"api.php?action=getMarkers&ne_lat=:ne_lat&ne_lng=:ne_lng&sw_lng=:sw_lng&sw_lat=:sw_lat"
                                                             method:RKRequestMethodGET]];
-    [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:kRKVenueCheckedInUsers
+    [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:kRouteVenueCheckedInUsers
                                                        pathPattern:@"api.php?action=getVenueDetails&venue_id=:venueID"
+                                                            method:RKRequestMethodGET]];
+    [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:kRouteVenueFullDetails
+                                                       pathPattern:@"api.php?action=getVenueCheckInData&venue_id=:venueID"
                                                             method:RKRequestMethodGET]];
 }
 
