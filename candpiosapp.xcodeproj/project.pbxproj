@@ -187,7 +187,6 @@
 		5384B24D1554822100A4E0C1 /* CPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B24C1554822100A4E0C1 /* CPUtils.m */; };
 		5384B2501554823A00A4E0C1 /* CPVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B24F1554823A00A4E0C1 /* CPVenue.m */; };
 		5384B2531554825F00A4E0C1 /* FoursquareAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2521554825F00A4E0C1 /* FoursquareAPIClient.m */; };
-		5384B2561554827600A4E0C1 /* MapDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2551554827600A4E0C1 /* MapDataSet.m */; };
 		5384B2591554831400A4E0C1 /* CPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B2581554831400A4E0C1 /* CPUser.m */; };
 		5384B25C1554833D00A4E0C1 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5384B25B1554833D00A4E0C1 /* Settings.m */; };
 		538EF4331585352E00249AAF /* EditLinkedInInvitationMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538EF42E1585352E00249AAF /* EditLinkedInInvitationMessageViewController.m */; };
@@ -580,8 +579,6 @@
 		5384B24F1554823A00A4E0C1 /* CPVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPVenue.m; path = Venue/CPVenue.m; sourceTree = "<group>"; };
 		5384B2511554825F00A4E0C1 /* FoursquareAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FoursquareAPIClient.h; path = Utils/FoursquareAPIClient.h; sourceTree = "<group>"; };
 		5384B2521554825F00A4E0C1 /* FoursquareAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FoursquareAPIClient.m; path = Utils/FoursquareAPIClient.m; sourceTree = "<group>"; };
-		5384B2541554827600A4E0C1 /* MapDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapDataSet.h; path = Map/MapDataSet.h; sourceTree = "<group>"; };
-		5384B2551554827600A4E0C1 /* MapDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapDataSet.m; path = Map/MapDataSet.m; sourceTree = "<group>"; };
 		5384B2571554831400A4E0C1 /* CPUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CPUser.h; path = User/CPUser.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5384B2581554831400A4E0C1 /* CPUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPUser.m; path = User/CPUser.m; sourceTree = "<group>"; };
 		5384B25A1554833D00A4E0C1 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Settings.h; path = Utils/Settings.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1126,8 +1123,6 @@
 				53DCCF7E163F730D00A79E25 /* CPMarkerManager.h */,
 				53DCCF7F163F730D00A79E25 /* CPMarkerManager.m */,
 				536DE93B1501737500794650 /* images */,
-				5384B2541554827600A4E0C1 /* MapDataSet.h */,
-				5384B2551554827600A4E0C1 /* MapDataSet.m */,
 				5328938D15548D90007B0157 /* MapTabController.h */,
 				5328938E15548D90007B0157 /* MapTabController.m */,
 				5335D81F160BA801005400FC /* MKAnnotationView+SpecialPin.h */,
@@ -1947,7 +1942,6 @@
 				5384B24D1554822100A4E0C1 /* CPUtils.m in Sources */,
 				5384B2501554823A00A4E0C1 /* CPVenue.m in Sources */,
 				5384B2531554825F00A4E0C1 /* FoursquareAPIClient.m in Sources */,
-				5384B2561554827600A4E0C1 /* MapDataSet.m in Sources */,
 				5384B2591554831400A4E0C1 /* CPUser.m in Sources */,
 				5384B25C1554833D00A4E0C1 /* Settings.m in Sources */,
 				5328935C155488F5007B0157 /* CPConstants.m in Sources */,
