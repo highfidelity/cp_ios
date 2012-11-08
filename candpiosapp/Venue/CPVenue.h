@@ -19,7 +19,7 @@
 @property (strong, nonatomic) NSString *phone;
 @property (strong, nonatomic) NSString *formattedPhone;
 @property (strong, nonatomic) NSString *photoURL;
-@property (strong, nonatomic) NSMutableDictionary *activeUsers;
+@property (strong, nonatomic) NSArray *activeUsers;
 @property (strong, nonatomic) NSString *specialVenueType;
 @property (strong, nonatomic) NSNumber *venueID;
 @property (strong, nonatomic) NSNumber *checkedInNow;

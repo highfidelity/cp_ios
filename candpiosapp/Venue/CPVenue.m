@@ -214,14 +214,6 @@
     return CLLocationCoordinate2DMake([self.lat doubleValue], [self.lng doubleValue]);
 }
 
-- (NSMutableDictionary *)activeUsers
-{
-    if (!_activeUsers) {
-        _activeUsers = [NSMutableDictionary dictionary];
-    }
-    return _activeUsers;
-}
-
 // this method is used in CheckInListViewController to sort the array of places
 // by the distance of each place from the user
 // might be a faster way to accomplish this (sorting while inserting the foursquare returned
