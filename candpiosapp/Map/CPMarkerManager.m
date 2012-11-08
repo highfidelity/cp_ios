@@ -36,7 +36,7 @@ static CPMarkerManager *_sharedManager;
         @"sw_lng" : [NSString stringWithFormat:@"%f", southwestCoord.longitude]
     };
         
-    [[CPObjectManager sharedManager] getObjectsAtPathForRouteNamed:kRKRouteMarkers
+    [[CPObjectManager sharedManager] getObjectsAtPathForRouteNamed:kRouteMarkers
                                                             object:coordinateDictionary
                                                         parameters:nil
                                                            success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
@@ -66,13 +66,13 @@ static CPMarkerManager *_sharedManager;
     // if we went over the limit on the backend and didn't get active users for some of the venues let's do that now
     for (CPVenue *markerVenue in self.venues) {
         // check if we have checkins for this venue but no people
-        if ([markerVenue.checkedInNow intValue] > 0 && markerVenue.activeUsers.count == 0) {
-            [[CPObjectManager sharedManager] getObjectsAtPathForRouteNamed:kRKVenueCheckedInUsers
+        if ([markerVenue.checkedInNow intValue] > 0 && markerVenue.checkedInUsers.count == 0) {
+            [[CPObjectManager sharedManager] getObjectsAtPathForRouteNamed:kRouteVenueCheckedInUsers
                                                                     object:markerVenue
                                                                 parameters:nil
                                                                    success:^(RKObjectRequestOperation *operation, RKMappingResult *result)
             {
-                markerVenue.activeUsers = result.array;
+                markerVenue.checkedInUsers = result.array;
             } failure:^(RKObjectRequestOperation *operation, NSError *error) {
                 // we didn't get the activeUsers for this venue
                 // it's not the end of the world
