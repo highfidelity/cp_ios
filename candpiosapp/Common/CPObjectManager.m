@@ -40,13 +40,17 @@
                                                                                    pathPattern:nil
                                                                                        keyPath:@"payload.venues"
                                                                                    statusCodes:successCodes];
+    RKResponseDescriptor *venueDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[self venueRKObjectMapping]
+                                                                                    pathPattern:nil
+                                                                                        keyPath:@"payload.venue"
+                                                                                    statusCodes:successCodes];
     
     RKResponseDescriptor *usersDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[self userObjectMapping]
                                                                                     pathPattern:nil
                                                                                         keyPath:@"payload.users"
                                                                                     statusCodes:successCodes];
     
-    [sharedManager addResponseDescriptorsFromArray:@[venuesDescriptor, usersDescriptor]];
+    [sharedManager addResponseDescriptorsFromArray:@[venueDescriptor, venuesDescriptor, usersDescriptor]];
 }
 
 + (RKObjectMapping *)venueRKObjectMapping
@@ -75,7 +79,7 @@
             @"checkins_for_interval": @"weeklyCheckinCount"
          }];
         
-        RKRelationshipMapping *checkedInUsersRel = [RKRelationshipMapping relationshipMappingFromKeyPath:@"checked_in_users" toKeyPath:@"activeUsers" withMapping:[self userObjectMapping]];
+        RKRelationshipMapping *checkedInUsersRel = [RKRelationshipMapping relationshipMappingFromKeyPath:@"checked_in_users" toKeyPath:@"checkedInUsers" withMapping:[self userObjectMapping]];
         RKRelationshipMapping *previousUsersRel = [RKRelationshipMapping relationshipMappingFromKeyPath:@"previous_users" toKeyPath:@"previousUsers" withMapping:[self userObjectMapping]];
         [_venueRKObjectMapping addPropertyMappingsFromArray:@[checkedInUsersRel, previousUsersRel]];
     }
