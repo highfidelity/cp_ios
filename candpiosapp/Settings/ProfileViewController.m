@@ -155,6 +155,7 @@
     self.nicknameTextField.text = self.currentUser.nickname;
 
     if (self.currentUser.skills.count > 1) {
+        self.skillsLabel.text = @"";
         for (CPSkill *skill in self.currentUser.skills) {
             if (self.skillsLabel.text.length == 0) {
                 self.skillsLabel.text = skill.name;
