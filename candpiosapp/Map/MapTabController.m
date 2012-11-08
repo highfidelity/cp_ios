@@ -195,7 +195,7 @@
          self.dataLoadDate = [NSDate date];
          self.dataCoveredMapRect = mapRectForRequest;
          
-         NSMutableArray *filteredVenues = [[[CPMarkerManager sharedManager].venues filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isNeighborhood == [NSNumber numberWithBool:NO]"]] mutableCopy];
+         NSMutableArray *filteredVenues = [[[CPMarkerManager sharedManager].venues filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isNeighborhood == NO"]] mutableCopy];
          
          for (CPVenue *newVenue in [filteredVenues mutableCopy]) {
              if ([self.mapView.annotations containsObject:newVenue]) {
