@@ -46,7 +46,18 @@ static CPMarkerManager *_sharedManager;
                                                            failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                                completion(error);
                                                            }];
+}
 
+- (CPVenue *)markerVenueWithID:(NSNumber *)venueID
+{
+    // leverage the isEqual method in CPVenue to pull out the desired venue
+    CPVenue *searchVenue = [[CPVenue alloc] init];
+    searchVenue.venueID = venueID;
+    
+    NSUInteger venueIndex;
+    venueIndex = [self.venues indexOfObject:searchVenue];
+    
+    return venueIndex != NSNotFound ? [self.venues objectAtIndex:venueIndex] : nil;
 }
 
 @end

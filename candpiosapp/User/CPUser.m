@@ -8,7 +8,7 @@
 
 #import "CPUser.h"
 #import "CPSkill.h"
-#import "MapDataSet.h"
+#import "CPMarkerManager.h"
 #import "GTMNSString+HTML.h"
 #import "CPCheckinHandler.h"
 #import "ContactListViewController.h"
@@ -298,8 +298,8 @@
                 // we don't have a check in for this user so pull it here
                 NSDictionary *checkinDict = [userDict valueForKey:@"checkin_data"];
                 if ([checkinDict objectForKey:@"venue_id"]) {
-                    // try and grab the venue from the activeVenues from the map
-                    CPVenue *venue = [[CPAppDelegate settingsMenuController].mapTabController venueFromActiveVenues:@([[checkinDict objectForKey:@"venue_id"] integerValue])];
+                    // try and grab the venue from CPMarkerManager                    
+                    CPVenue *venue = [[CPMarkerManager sharedManager] markerVenueWithID:@([[checkinDict objectForKey:@"venue_id"] integerValue])];
                     // otherwise alloc init one from the dictionary
                     if (!venue) {
                         venue = [[CPVenue alloc] initFromDictionary:checkinDict];

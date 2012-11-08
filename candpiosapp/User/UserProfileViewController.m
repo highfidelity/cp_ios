@@ -14,6 +14,7 @@
 #import "GTMNSString+HTML.h"
 #import "UserProfileLinkedInViewController.h"
 #import "FaceToFaceHelper.h"
+#import "CPMarkerManager.h"
 
 #define kResumeWebViewOffsetTop 304
 
@@ -489,7 +490,7 @@ static GRMustacheTemplate *postBadgesTemplate;
         [venues filterUsingPredicate:predicate];
         CPVenue *place = [venues objectAtIndex:0];
         
-        CPVenue *activeVenue = [[CPAppDelegate settingsMenuController].mapTabController venueFromActiveVenues:venueID];
+        CPVenue *activeVenue = [[CPMarkerManager sharedManager] markerVenueWithID:venueID];
         if (activeVenue) {
             // we had this venue in the map dictionary of activeVenues so use that
             place = activeVenue;

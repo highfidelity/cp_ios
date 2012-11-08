@@ -14,9 +14,10 @@
 
 + (CPMarkerManager *)sharedManager;
 
-
+- (CPVenue *)markerVenueWithID:(NSNumber *)venueID;
 - (void)getMarkersWithinRegionDefinedByNortheastCoordinate:(CLLocationCoordinate2D)northeastCoord
                                        southwestCoordinate:(CLLocationCoordinate2D)southwestCoord
                                                 completion:(void (^)(NSError *))completion;
+
 
 @end
