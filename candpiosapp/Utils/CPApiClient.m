@@ -52,7 +52,7 @@ static AFHTTPClient *sharedClient;
     [parameters setValue:venue.phone forKey:@"phone"];
     [parameters setValue:venue.formattedPhone forKey:@"formatted_phone"];
     [parameters setValue:[NSString stringWithFormat:@"%d", isAutomatic] forKey:@"is_automatic"];
-    [parameters setValue:[NSString stringWithFormat:@"%d", venue.isNeighborhood] forKey:@"is_neighborhood"];
+    [parameters setValue:[NSString stringWithFormat:@"%d", [venue.isNeighborhood boolValue]] forKey:@"is_neighborhood"];
     [parameters setValue:statusText forKey:@"status"];
     
     [parameters setValue:@"checkin" forKey:@"action"];

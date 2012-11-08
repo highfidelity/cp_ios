@@ -78,7 +78,8 @@
             @"foursquare_id": @"foursquareID",
             @"photo_url": @"photoURL",
             @"checked_in_now": @"checkedInNow",
-            @"checkins_for_interval": @"weeklyCheckinCount"
+            @"checkins_for_interval": @"weeklyCheckinCount",
+            @"is_neighborhood": @"isNeighborhood"
          }];
         
         RKRelationshipMapping *checkedInUsersRel = [RKRelationshipMapping relationshipMappingFromKeyPath:@"checked_in_users" toKeyPath:@"checkedInUsers" withMapping:[self userObjectMapping]];

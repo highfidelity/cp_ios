@@ -388,7 +388,7 @@ typedef enum {
         // default for main label is venue name
         NSString *nameLabelText = cellVenue.name;
         
-        if ((!self.isUserSearching && indexPath.row == 0) || cellVenue.isNeighborhood) {
+        if ((!self.isUserSearching && indexPath.row == 0) || [cellVenue.isNeighborhood boolValue]) {
             if (cellVenue) {
                 // this cell is for a neighborhood so grab the right cell
                 cell = [tableView dequeueReusableCellWithIdentifier:@"WFHCheckInListTableCell"];
@@ -491,7 +491,7 @@ typedef enum {
     // otherwise it's the standard 45
     if ((self.currentSearchState != CPCheckInListSearchStateComplete) && indexPath.row == [self numberOfRowsForTableView] - 1) {
         return 45;
-    } else if ((!self.isUserSearching && indexPath.row == 0) || [self venueForTableViewIndexPath:indexPath].isNeighborhood) {
+    } else if ((!self.isUserSearching && indexPath.row == 0) || [[self venueForTableViewIndexPath:indexPath].isNeighborhood boolValue]) {
         return 60;
     } else {
         return 45;

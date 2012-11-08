@@ -26,10 +26,10 @@
 @property (strong, nonatomic) NSNumber *weeklyCheckinCount;
 @property (strong, nonatomic) NSNumber *lat;
 @property (strong, nonatomic) NSNumber *lng;
+@property (strong, nonatomic) NSNumber* isNeighborhood;
 @property (nonatomic) double distanceFromUser;
 @property (nonatomic) int checkinTime;
 @property (nonatomic) BOOL autoCheckin;
-@property (nonatomic) BOOL isNeighborhood;
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 @property (nonatomic, readonly) NSString *checkinCountString;
 @property (nonatomic, readonly) NSString *checkinTimeString;

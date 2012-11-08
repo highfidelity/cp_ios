@@ -30,7 +30,7 @@
         self.checkedInNow = [json numberForKey:@"checked_in_now" orDefault:@0];
         self.photoURL = [json objectForKey:@"photo_url" orDefault:nil];
         self.specialVenueType = [json objectForKey:@"special_venue_type" orDefault:nil];
-        self.isNeighborhood = [[json objectForKey:@"is_neighborhood"] boolValue];
+        self.isNeighborhood = @([[json objectForKey:@"is_neighborhood"] boolValue]);
 
         self.lat = [json numberForKey:@"lat" orDefault:@0];
         self.lng = [json numberForKey:@"lng" orDefault:@0];
@@ -54,13 +54,13 @@
         
         // check if this venue is considered a neighborhood
         for (NSDictionary *categoryDict in [json valueForKey:@"categories"]) {
-            if (self.isNeighborhood = [[categoryDict objectForKey:@"id"] isEqualToString:kFoursquareNeighborhoodCategoryID]) {
+            if (self.isNeighborhood = @([[categoryDict objectForKey:@"id"] isEqualToString:kFoursquareNeighborhoodCategoryID])) {
                 break;
             }
         }
         
         // if it's not a neighborhood then we need to set the distanceFromUser property
-        if (!self.isNeighborhood) {
+        if (![self.isNeighborhood boolValue]) {
             
             CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:self.coordinate.latitude longitude:self.coordinate.longitude];
             self.distanceFromUser = [placeLocation distanceFromLocation:userLocation];
@@ -206,9 +206,9 @@
 // data) but this seems to be quite quick anyways, as we aren't displaying a ton of places
 - (NSComparisonResult)sortByNeighborhoodAndDistanceToUser:(CPVenue *)place
 {
-    if (self.isNeighborhood && !place.isNeighborhood) {
+    if ([self.isNeighborhood boolValue] && ![place.isNeighborhood boolValue]) {
         return NSOrderedAscending;
-    } else if (!self.isNeighborhood && place.isNeighborhood) {
+    } else if (![self.isNeighborhood boolValue] && [place.isNeighborhood boolValue]) {
         return NSOrderedDescending;
     } if (self.distanceFromUser < place.distanceFromUser) {
         return NSOrderedAscending;
