@@ -165,9 +165,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 
     NSString *urlString = [NSString stringWithFormat:@"%@", url];
     
-    NSRange textRangeLinkedIn, textRangeSmarterer;
+    NSRange textRangeLinkedIn;
     textRangeLinkedIn = [urlString rangeOfString:@"candp://linkedin"];
-    textRangeSmarterer = [urlString rangeOfString:@"candp://smarterer"];
     
     if (textRangeLinkedIn.location != NSNotFound)
     {
@@ -176,16 +175,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
                               nil];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"linkedInCredentials" object:self userInfo:dict];
-        
-        succeeded = YES;
-    }
-    else if (textRangeSmarterer.location != NSNotFound)
-    {
-        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                              urlString, @"url",
-                              nil];
-        NSLog(@"smarterer url: %@", urlString);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"smartererCredentials" object:self userInfo:dict];
         
         succeeded = YES;
     }

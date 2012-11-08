@@ -35,7 +35,6 @@
 @property (strong, nonatomic) NSString *minorJobCategory;
 @property (strong, nonatomic) NSDate *joinDate;
 @property (strong, nonatomic) NSMutableArray *badges;
-@property (strong, nonatomic) NSString *smartererName;
 @property (nonatomic, readonly) BOOL hasAnyTopSkills;
 @property (nonatomic, readonly) BOOL hasAnyWorkInformation;
 @property (nonatomic, readonly) BOOL hasAnyEducationInformation;
