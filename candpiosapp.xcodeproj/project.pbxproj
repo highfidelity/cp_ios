@@ -141,16 +141,6 @@
 		536E1E881554988300052D40 /* ContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E1E841554988300052D40 /* ContactListViewController.m */; };
 		536E1E891554988300052D40 /* contacts-blank-slate.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1E861554988300052D40 /* contacts-blank-slate.png */; };
 		536E1E8A1554988300052D40 /* contacts-blank-slate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1E871554988300052D40 /* contacts-blank-slate@2x.png */; };
-		536E1E95155498E800052D40 /* go-button@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1E8B155498E800052D40 /* go-button@2x~iphone.png */; };
-		536E1E96155498E800052D40 /* go-button~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1E8C155498E800052D40 /* go-button~iphone.png */; };
-		536E1E97155498E800052D40 /* go-menu-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1E8D155498E800052D40 /* go-menu-bg.png */; };
-		536E1E98155498E800052D40 /* go-menu-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1E8E155498E800052D40 /* go-menu-bg@2x.png */; };
-		536E1E99155498E800052D40 /* go-menu-button-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1E8F155498E800052D40 /* go-menu-button-2.png */; };
-		536E1E9A155498E800052D40 /* go-menu-button-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1E90155498E800052D40 /* go-menu-button-2@2x.png */; };
-		536E1E9B155498E800052D40 /* go-menu-button-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1E91155498E800052D40 /* go-menu-button-3.png */; };
-		536E1E9C155498E800052D40 /* go-menu-button-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1E92155498E800052D40 /* go-menu-button-3@2x.png */; };
-		536E1E9D155498E800052D40 /* go-menu-button-minus.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1E93155498E800052D40 /* go-menu-button-minus.png */; };
-		536E1E9E155498E800052D40 /* go-menu-button-minus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1E94155498E800052D40 /* go-menu-button-minus@2x.png */; };
 		536E1EA31554996800052D40 /* thumbs-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1E9F1554996800052D40 /* thumbs-down.png */; };
 		536E1EA41554996800052D40 /* thumbs-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1EA01554996800052D40 /* thumbs-down@2x.png */; };
 		536E1EA51554996800052D40 /* thumbs-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1EA11554996800052D40 /* thumbs-up.png */; };
@@ -704,16 +694,6 @@
 		536E1E841554988300052D40 /* ContactListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ContactListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		536E1E861554988300052D40 /* contacts-blank-slate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contacts-blank-slate.png"; sourceTree = "<group>"; };
 		536E1E871554988300052D40 /* contacts-blank-slate@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contacts-blank-slate@2x.png"; sourceTree = "<group>"; };
-		536E1E8B155498E800052D40 /* go-button@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-button@2x~iphone.png"; path = "User/images/go-button@2x~iphone.png"; sourceTree = "<group>"; };
-		536E1E8C155498E800052D40 /* go-button~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-button~iphone.png"; path = "User/images/go-button~iphone.png"; sourceTree = "<group>"; };
-		536E1E8D155498E800052D40 /* go-menu-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-menu-bg.png"; path = "User/images/go-menu-bg.png"; sourceTree = "<group>"; };
-		536E1E8E155498E800052D40 /* go-menu-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-menu-bg@2x.png"; path = "User/images/go-menu-bg@2x.png"; sourceTree = "<group>"; };
-		536E1E8F155498E800052D40 /* go-menu-button-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-menu-button-2.png"; path = "User/images/go-menu-button-2.png"; sourceTree = "<group>"; };
-		536E1E90155498E800052D40 /* go-menu-button-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-menu-button-2@2x.png"; path = "User/images/go-menu-button-2@2x.png"; sourceTree = "<group>"; };
-		536E1E91155498E800052D40 /* go-menu-button-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-menu-button-3.png"; path = "User/images/go-menu-button-3.png"; sourceTree = "<group>"; };
-		536E1E92155498E800052D40 /* go-menu-button-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-menu-button-3@2x.png"; path = "User/images/go-menu-button-3@2x.png"; sourceTree = "<group>"; };
-		536E1E93155498E800052D40 /* go-menu-button-minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-menu-button-minus.png"; path = "User/images/go-menu-button-minus.png"; sourceTree = "<group>"; };
-		536E1E94155498E800052D40 /* go-menu-button-minus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "go-menu-button-minus@2x.png"; path = "User/images/go-menu-button-minus@2x.png"; sourceTree = "<group>"; };
 		536E1E9F1554996800052D40 /* thumbs-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "thumbs-down.png"; path = "User/images/thumbs-down.png"; sourceTree = "<group>"; };
 		536E1EA01554996800052D40 /* thumbs-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "thumbs-down@2x.png"; path = "User/images/thumbs-down@2x.png"; sourceTree = "<group>"; };
 		536E1EA11554996800052D40 /* thumbs-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "thumbs-up.png"; path = "User/images/thumbs-up.png"; sourceTree = "<group>"; };
@@ -1638,16 +1618,6 @@
 				533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */,
 				6947F3FE15372B59005D9958 /* exchange-cards.png */,
 				6947F3FF15372B59005D9958 /* exchange-cards@2x.png */,
-				536E1E8B155498E800052D40 /* go-button@2x~iphone.png */,
-				536E1E8C155498E800052D40 /* go-button~iphone.png */,
-				536E1E8D155498E800052D40 /* go-menu-bg.png */,
-				536E1E8E155498E800052D40 /* go-menu-bg@2x.png */,
-				536E1E8F155498E800052D40 /* go-menu-button-2.png */,
-				536E1E90155498E800052D40 /* go-menu-button-2@2x.png */,
-				536E1E91155498E800052D40 /* go-menu-button-3.png */,
-				536E1E92155498E800052D40 /* go-menu-button-3@2x.png */,
-				536E1E93155498E800052D40 /* go-menu-button-minus.png */,
-				536E1E94155498E800052D40 /* go-menu-button-minus@2x.png */,
 				536E1EC715549A5100052D40 /* network-icon-facebook.png */,
 				536E1EC815549A5100052D40 /* network-icon-facebook@2x.png */,
 				536E1EC915549A5100052D40 /* network-icon-linkedin.png */,
@@ -2554,16 +2524,6 @@
 				536E1E811554955E00052D40 /* checked-in-location~iphone.png in Resources */,
 				536E1E891554988300052D40 /* contacts-blank-slate.png in Resources */,
 				536E1E8A1554988300052D40 /* contacts-blank-slate@2x.png in Resources */,
-				536E1E95155498E800052D40 /* go-button@2x~iphone.png in Resources */,
-				536E1E96155498E800052D40 /* go-button~iphone.png in Resources */,
-				536E1E97155498E800052D40 /* go-menu-bg.png in Resources */,
-				536E1E98155498E800052D40 /* go-menu-bg@2x.png in Resources */,
-				536E1E99155498E800052D40 /* go-menu-button-2.png in Resources */,
-				536E1E9A155498E800052D40 /* go-menu-button-2@2x.png in Resources */,
-				536E1E9B155498E800052D40 /* go-menu-button-3.png in Resources */,
-				536E1E9C155498E800052D40 /* go-menu-button-3@2x.png in Resources */,
-				536E1E9D155498E800052D40 /* go-menu-button-minus.png in Resources */,
-				536E1E9E155498E800052D40 /* go-menu-button-minus@2x.png in Resources */,
 				536E1EA31554996800052D40 /* thumbs-down.png in Resources */,
 				536E1EA41554996800052D40 /* thumbs-down@2x.png in Resources */,
 				536E1EA51554996800052D40 /* thumbs-up.png in Resources */,
