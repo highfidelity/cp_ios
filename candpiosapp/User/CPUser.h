@@ -37,6 +37,8 @@
 @property (strong, nonatomic) NSMutableArray *badges;
 @property (strong, nonatomic) NSString *smartererName;
 @property (strong, nonatomic) NSNumber *isContact;
+@property (strong, nonatomic) NSNumber *totalCheckInTime;
+@property (strong, nonatomic) NSNumber *totalCheckInCount;
 @property (nonatomic, readonly) BOOL hasAnyTopSkills;
 @property (nonatomic, readonly) BOOL hasAnyWorkInformation;
 @property (nonatomic, readonly) BOOL hasAnyEducationInformation;
@@ -47,13 +49,12 @@
 @property (nonatomic) BOOL facebookVerified;
 @property (nonatomic) BOOL linkedInVerified;
 @property (nonatomic) double totalEarned;
-@property (nonatomic) int totalHours;
 @property (nonatomic) double totalSpent;
+@property (nonatomic) int totalHours;
 @property (nonatomic) double distance;
 @property (nonatomic) BOOL checkedIn;
 @property (nonatomic) int trusted_by;
 @property (nonatomic) BOOL contactsOnlyChat;
-
 @property (nonatomic) BOOL hasChatHistory;
 
 

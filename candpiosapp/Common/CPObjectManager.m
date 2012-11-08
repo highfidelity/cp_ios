@@ -101,7 +101,9 @@
             @"job_title" : @"jobTitle",
             @"major_job_category": @"majorJobCategory",
             @"minor_job_category": @"minorJobCategory",
-            @"is_contact" : @"isContact"
+            @"is_contact" : @"isContact",
+            @"total_check_in_time" : @"totalCheckInTime",
+            @"total_check_in_count" : @"totalCheckInCount"
          }];
     }
     
