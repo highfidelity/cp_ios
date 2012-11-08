@@ -14,6 +14,7 @@
 #import "GTMNSString+HTML.h"
 #import "UserProfileLinkedInViewController.h"
 #import "FaceToFaceHelper.h"
+#import "CPUserAction.h"
 
 #define kResumeWebViewOffsetTop 304
 
@@ -45,15 +46,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *resumeEarned;
 @property (weak, nonatomic) IBOutlet UILabel *loveReceived;
 @property (weak, nonatomic) IBOutlet UIWebView *resumeWebView;
-@property (weak, nonatomic) IBOutlet UIButton *plusButton;
-@property (weak, nonatomic) IBOutlet UIButton *minusButton;
-@property (weak, nonatomic) IBOutlet UIButton *f2fButton;
-@property (weak, nonatomic) IBOutlet UIButton *chatButton;
 @property (weak, nonatomic) IBOutlet UIButton *payButton;
-@property (weak, nonatomic) IBOutlet UIButton *reviewButton;
-@property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
 @property (weak, nonatomic) IBOutlet UILabel *propNoteLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *mapMarker;
+@property (weak, nonatomic) IBOutlet CPUserActionCell *userActionCell;
 @property (weak, nonatomic) UIView *blueOverlayExtend;
 @property (strong, nonatomic) NSOperationQueue *operationQueue;
 @property (nonatomic) BOOL firstLoad;
@@ -62,10 +58,7 @@
 @property (nonatomic) BOOL mapAndDistanceLoaded;
 
 -(NSString *)htmlStringWithResumeText;
--(IBAction)plusButtonPressed:(id)sender;
--(IBAction)minusButtonPressed:(id)sender;
 -(IBAction)venueViewButtonPressed:(id)sender;
--(IBAction)chatButtonPressed:(id)sender;
 
 @end
 
@@ -130,6 +123,9 @@ static GRMustacheTemplate *resumeTemplate;
     // make sure there's a shadow on the userCard and resumeView
     [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     [CPUIHelper addShadowToView:self.resumeView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
+
+    self.userActionCell.user = self.user;
+    self.userActionCell.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -145,6 +141,13 @@ static GRMustacheTemplate *resumeTemplate;
         _tapRecon.cancelsTouchesInView = NO;
         [self.navigationController.navigationBar addGestureRecognizer:_tapRecon];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -168,20 +171,7 @@ static GRMustacheTemplate *resumeTemplate;
         // set the card image to the user's profile image
         [CPUIHelper profileImageView:self.cardImage
                  withProfileImageUrl:self.user.photoURL];
-        
-        // hide the go menu if this profile is current user's profile
-        if (self.user.userID == [CPUserDefaultsHandler currentUser].userID || self.isF2FInvite) {
-            for (NSNumber *viewID in [NSArray arrayWithObjects:[NSNumber numberWithInt:1005], [NSNumber numberWithInt:1006], [NSNumber numberWithInt:1007], [NSNumber numberWithInt:1008], [NSNumber numberWithInt:1009], [NSNumber numberWithInt:1010], [NSNumber numberWithInt:1020], nil]) {
-                [self.view viewWithTag:[viewID intValue]].alpha = 0.0;
-            }
-        } else {
-            for (NSNumber *viewID in [NSArray arrayWithObjects:[NSNumber numberWithInt:1005], [NSNumber numberWithInt:1006], [NSNumber numberWithInt:1007], [NSNumber numberWithInt:1008], [NSNumber numberWithInt:1009], [NSNumber numberWithInt:1010], [NSNumber numberWithInt:1020], nil]) {
-                [self.view viewWithTag:[viewID intValue]].alpha = 1.0;
-            }
-            self.minusButton.alpha = 0.0;
-            
-        }
-        
+
         // set the labels on the user business card
         self.cardNickname.text = self.user.nickname;
         [self setUserStatusWithQuotes:self.user.status];
@@ -515,80 +505,19 @@ static GRMustacheTemplate *resumeTemplate;
     [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
 }
 
--(IBAction)plusButtonPressed:(id)sender {
-    self.payButton.hidden = YES;
-    
-    // animate the spinning of the plus button and replacement by the minus button
-    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{ 
-        self.plusButton.transform = CGAffineTransformMakeRotation(M_PI); 
-        self.minusButton.transform = CGAffineTransformMakeRotation(M_PI);
-        self.minusButton.alpha = 1.0;
-    } completion: NULL];
-    // alpha transition on the plus button so there isn't a gap where we see the background
-    [UIView animateWithDuration:0.2 delay:0.2 options:UIViewAnimationCurveEaseInOut animations:^{
-        self.plusButton.alpha = 0.0;
-    } completion:NULL];
-    // animation of menu buttons shooting out
-    
-    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
-        if (self.user.isContact) {
-            self.f2fButton.hidden = YES;
-            self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, -110);
-        } else {
-            self.f2fButton.hidden = NO;
-            self.f2fButton.transform = CGAffineTransformMakeTranslation(0, -165);            
-            self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, -165);
-        }
-        self.chatButton.transform = CGAffineTransformMakeTranslation(0, -110);
-        self.reviewButton.transform = CGAffineTransformMakeTranslation(0, -55);
-        //self.payButton.transform = CGAffineTransformMakeTranslation(0, -55);
-    } completion:^(BOOL finished){
-        [self.view viewWithTag:1005].userInteractionEnabled = YES;
-    }];
-}
-
--(IBAction)minusButtonPressed:(id)sender {
-    // animate the spinning of the minus button and replacement by the plus button
-    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{ 
-        self.minusButton.transform = CGAffineTransformMakeRotation((M_PI*2)-0.0001); 
-        self.plusButton.transform = CGAffineTransformMakeRotation((M_PI*2)-0.0001);
-        self.plusButton.alpha = 1.0;
-    } completion: NULL];
-    // alpha transition on the minus button so there isn't a gap where we see the background
-    [UIView animateWithDuration:0.2 delay:0.2 options:UIViewAnimationCurveEaseInOut animations:^{
-        self.minusButton.alpha = 0.0;
-    } completion:NULL];
-    // animation of menu buttons being sucked back in
-    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
-        self.f2fButton.transform = CGAffineTransformMakeTranslation(0, 0);
-        self.chatButton.transform = CGAffineTransformMakeTranslation(0, 0);
-        //self.payButton.transform = CGAffineTransformMakeTranslation(0, 0);
-        self.reviewButton.transform = CGAffineTransformMakeTranslation(0, 0);
-        self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, 0);
-    } completion:^(BOOL finished){
-        [self.view viewWithTag:1005].userInteractionEnabled = NO;
-    }];
-    
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"ProfileToOneOnOneSegue"])
     {
         [[segue destinationViewController] setUser:self.user];
-        [self minusButtonPressed:nil];
     }
     else if ([[segue identifier] isEqualToString:@"ProfileToPayUserSegue"])
     {
         [[segue destinationViewController] setUser:self.user];
-        [self minusButtonPressed:nil];        
     } else if ([[segue identifier] isEqualToString:@"ShowLinkedInProfileWebView"]) {
         // set the linkedInPublicProfileUrl in the destination VC
         [[segue destinationViewController] setLinkedInProfileUrlAddress:self.user.linkedInPublicProfileUrl];
     } else if ([[segue identifier] isEqualToString:@"SendLoveToUser"]) {
-        // hide the go menu
-        [self minusButtonPressed:nil];  
-        
         [[segue destinationViewController] setUser:self.user];
         [[segue destinationViewController] setDelegate:self];
     }
@@ -601,28 +530,32 @@ static GRMustacheTemplate *resumeTemplate;
     [self.navigationController pushViewController:venueVC animated:YES];
 }
 
-- (IBAction)chatButtonPressed:(id)sender
-{
-    if (self.user.contactsOnlyChat && !self.user.isContact && !self.user.hasChatHistory) {
-        NSString *errorMessage = [NSString stringWithFormat:@"You can not chat with %@ until the two of you have exchanged contact information", self.user.nickname];
-        [SVProgressHUD showErrorWithStatus:errorMessage
-                                  duration:kDefaultDismissDelay];
-    } else {
-        [self performSegueWithIdentifier:@"ProfileToOneOnOneSegue" sender:sender];
-    }
-    [self minusButtonPressed:nil];
-}
-
-- (IBAction)f2fInvite {
-    // use the FaceToFaceHelper to show the contact request UIActionSheet
-    [[FaceToFaceHelper sharedHelper] showContactRequestActionSheetForUserID:self.user.userID];
-    
-    // drop the action menu
-    [self minusButtonPressed:nil];
-}
-
 - (void)navigationBarTitleTap:(UIGestureRecognizer*)recognizer {
     [_scrollView setContentOffset:CGPointMake(0,0) animated:YES];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
+}
+
+#pragma mark - CPUserActionCellDelegate
+
+- (void)cell:(CPUserActionCell*)cell didSelectSendLoveToUser:(User*)user
+{
+    [CPUserAction cell:cell sendLoveFromViewController:self];
+}
+
+- (void)cell:(CPUserActionCell*)cell didSelectSendMessageToUser:(User*)user
+{
+    [CPUserAction cell:cell sendMessageFromViewController:self];
+}
+
+- (void)cell:(CPUserActionCell*)cell didSelectExchangeContactsWithUser:(User*)user
+{
+    [CPUserAction cell:cell exchangeContactsFromViewController:self];
 }
 
 #pragma mark - properties

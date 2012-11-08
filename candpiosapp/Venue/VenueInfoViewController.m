@@ -10,6 +10,7 @@
 #import "MapTabController.h"
 #import "UserProfileViewController.h"
 #import "CPUserSessionHandler.h"
+#import "CPUserAction.h"
 #import "VenueUserCell.h"
 #import "VenueCategoryCell.h"
 
@@ -111,6 +112,10 @@ static VenueInfoViewController *_onScreenVenueVC;
 {
     [super viewDidAppear:animated];
     _onScreenVenueVC = self;
+
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
+
+    [self unhighlightCells:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -485,17 +490,6 @@ static VenueInfoViewController *_onScreenVenueVC;
     }         
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // push the user profile
-    UserProfileViewController *userProfileViewController =
-        [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
-    VenueUserCell *cell = (VenueUserCell *)[tableView cellForRowAtIndexPath:indexPath];
-    userProfileViewController.title = cell.user.nickname;
-    [self.navigationController pushViewController:userProfileViewController animated:YES];
-    userProfileViewController.user = cell.user;
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -544,6 +538,9 @@ static VenueInfoViewController *_onScreenVenueVC;
         NSString *userID = [NSString stringWithFormat:@"%d", user.userID];
         int checkinTime = [[[self.venue.activeUsers objectForKey:userID] objectForKey:@"checkin_time"] integerValue];
         cell.hoursLabel.text = [NSString stringWithFormat:@"%d hrs/week", checkinTime / 3600];
+
+        cell.delegate = self;
+        
         return cell;
     }
 }
@@ -676,6 +673,50 @@ static VenueInfoViewController *_onScreenVenueVC;
     [view addSubview:topBorder];
     [fullView addSubview:view];
     return fullView;
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
+    [self unhighlightCells:YES];
+}
+
+# pragma mark - CPUserActionCellDelegate
+
+- (void)cell:(CPUserActionCell*)cell didSelectSendLoveToUser:(User*)user
+{
+    [CPUserAction cell:cell sendLoveFromViewController:self];
+}
+
+- (void)cell:(CPUserActionCell*)cell didSelectSendMessageToUser:(User*)user
+{
+    [CPUserAction cell:cell sendMessageFromViewController:self];
+}
+
+- (void)cell:(CPUserActionCell*)cell didSelectExchangeContactsWithUser:(User*)user
+{
+    [CPUserAction cell:cell exchangeContactsFromViewController:self];
+}
+
+- (void)cell:(CPUserActionCell*)cell didSelectRowWithUser:(User*)user
+{
+    [CPUserAction cell:cell showProfileFromViewController:self];
+}
+
+- (void)unhighlightCells:(BOOL)animated {
+    NSTimeInterval duration = 0;
+    if (animated) {
+        duration = 0.1;
+    }
+    
+    [UIView animateWithDuration:duration animations:^{
+        for (VenueUserCell *cell in self.tableView.visibleCells) {
+            if ([cell isKindOfClass:[VenueUserCell class]]) {
+                cell.visibleView.backgroundColor = cell.inactiveColor;
+            }
+        }
+    } completion:nil];
 }
 
 @end
