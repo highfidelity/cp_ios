@@ -85,7 +85,6 @@ static CPUserSessionHandler *sharedHandler;
     // alert to state change
     if ([CPUserDefaultsHandler currentUser]) {
         [CPUserDefaultsHandler setCurrentUser:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
     }
     
     [[CPCheckinHandler sharedHandler] setCheckedOut];
