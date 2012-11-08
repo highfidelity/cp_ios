@@ -69,6 +69,9 @@
             @"checked_in_now": @"checkedInNow",
             @"checkins_for_interval": @"weeklyCheckinCount"
          }];
+        
+        RKRelationshipMapping *activeUserRelationship = [RKRelationshipMapping relationshipMappingFromKeyPath:@"users" toKeyPath:@"activeUsers" withMapping:[self userObjectMapping]];
+        [_venueRKObjectMapping addPropertyMapping:activeUserRelationship];
     }
     
     return _venueRKObjectMapping;
