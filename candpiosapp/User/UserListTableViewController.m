@@ -11,6 +11,7 @@
 #import "GTMNSString+HTML.h"
 #import "UIViewController+CPUserActionCellAdditions.h"
 #import "NSDictionary+JsonParserWorkaround.h"
+#import "CPMarkerManager.h"
 #import "SVPullToRefresh.h"
 
 @interface UserListTableViewController()
@@ -57,10 +58,18 @@
 
                     CLLocation *location = [[CLLocation alloc] initWithLatitude:user.location.latitude longitude:user.location.longitude];
                     user.distance = [location distanceFromLocation:userLocation];
-                    CPVenue *venue = [[CPVenue alloc] init];
-                    venue.name = [personJSON objectForKey:@"venue_name" orDefault:@""];
-                    venue.venueID = [personJSON numberForKey:@"venue_id" orDefault:@0];
-                    user.placeCheckedIn = venue;
+                   
+                    NSNumber *venueID = [personJSON numberForKey:@"venue_id" orDefault:@0];
+                    CPVenue *userVenue;
+                    
+                    if (!(userVenue = [[CPMarkerManager sharedManager] markerVenueWithID:venueID])) {
+                        userVenue = [[CPVenue alloc] init];
+                        userVenue.venueID = venueID;
+                        userVenue.name = [personJSON objectForKey:@"name" orDefault:@""];
+                        user.placeCheckedIn = userVenue;
+                    }
+                    
+                    user.placeCheckedIn = userVenue;
                     [self.checkedInUsers addObject:user];
                 }
                 
