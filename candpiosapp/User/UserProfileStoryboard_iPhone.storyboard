@@ -672,7 +672,6 @@
         <class className="UserProfileViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UserProfileViewController.h"/>
             <relationships>
-                <relationship kind="action" name="f2fInvite"/>
                 <relationship kind="action" name="venueViewButtonPressed:"/>
                 <relationship kind="outlet" name="availabilityView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="cardImage" candidateClass="UIImageView"/>
