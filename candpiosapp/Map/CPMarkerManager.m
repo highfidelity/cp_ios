@@ -13,14 +13,14 @@
 
 static CPMarkerManager *_sharedManager;
 
-+ (void)initialize
++(void)initialize
 {
     if(!_sharedManager) {
         _sharedManager = [[self alloc] init];
     }
 }
 
-+ (CPMarkerManager *)sharedManager
++(CPMarkerManager *)sharedManager
 {
     return _sharedManager;
 }
@@ -41,6 +41,7 @@ static CPMarkerManager *_sharedManager;
                                                         parameters:nil
                                                            success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
                                                                self.venues = result.array;
+                                                               [self getActiveUsersForMarkers];
                                                                completion(nil);
                                                            }
                                                            failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -48,7 +49,7 @@ static CPMarkerManager *_sharedManager;
                                                            }];
 }
 
-- (CPVenue *)markerVenueWithID:(NSNumber *)venueID
+-(CPVenue *)markerVenueWithID:(NSNumber *)venueID
 {
     // leverage the isEqual method in CPVenue to pull out the desired venue
     CPVenue *searchVenue = [[CPVenue alloc] init];
@@ -58,6 +59,27 @@ static CPMarkerManager *_sharedManager;
     venueIndex = [self.venues indexOfObject:searchVenue];
     
     return venueIndex != NSNotFound ? [self.venues objectAtIndex:venueIndex] : nil;
+}
+
+-(void)getActiveUsersForMarkers
+{
+    // if we went over the limit on the backend and didn't get active users for some of the venues let's do that now
+    for (CPVenue *markerVenue in self.venues) {
+        // check if we have checkins for this venue but no people
+        if ([markerVenue.checkedInNow intValue] > 0 && markerVenue.activeUsers.count == 0) {
+            [[CPObjectManager sharedManager] getObjectsAtPathForRouteNamed:@"venueCheckedInUsers"
+                                                                    object:markerVenue
+                                                                parameters:nil
+                                                                   success:^(RKObjectRequestOperation *operation, RKMappingResult *result)
+            {
+                markerVenue.activeUsers = result.array;
+            } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                // we didn't get the activeUsers for this venue
+                // it's not the end of the world
+                // fail safe will be additional call when venue page is loaded
+            }];
+        }
+    }
 }
 
 @end
