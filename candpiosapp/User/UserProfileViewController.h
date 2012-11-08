@@ -15,7 +15,6 @@
 @property (nonatomic) BOOL isF2FInvite;
 @property (nonatomic) BOOL scrollToReviews;
 
-- (IBAction)f2fInvite;
 - (void)placeUserDataOnProfile;
 
 @end
