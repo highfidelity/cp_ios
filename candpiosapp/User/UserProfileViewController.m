@@ -14,6 +14,7 @@
 #import "GTMNSString+HTML.h"
 #import "UserProfileLinkedInViewController.h"
 #import "FaceToFaceHelper.h"
+#import "CPUserAction.h"
 
 #define kResumeWebViewOffsetTop 304
 
@@ -56,6 +57,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
 @property (weak, nonatomic) IBOutlet UILabel *propNoteLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *mapMarker;
+@property (weak, nonatomic) IBOutlet CPUserActionCell *userActionCell;
 @property (weak, nonatomic) UIView *blueOverlayExtend;
 @property (strong, nonatomic) NSOperationQueue *operationQueue;
 @property (nonatomic) BOOL firstLoad;
@@ -147,6 +149,9 @@ static GRMustacheTemplate *postBadgesTemplate;
     // make sure there's a shadow on the userCard and resumeView
     [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     [CPUIHelper addShadowToView:self.resumeView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
+
+    self.userActionCell.user = self.user;
+    self.userActionCell.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -162,6 +167,13 @@ static GRMustacheTemplate *postBadgesTemplate;
         _tapRecon.cancelsTouchesInView = NO;
         [self.navigationController.navigationBar addGestureRecognizer:_tapRecon];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -685,6 +697,30 @@ static GRMustacheTemplate *postBadgesTemplate;
 
 - (void)navigationBarTitleTap:(UIGestureRecognizer*)recognizer {
     [_scrollView setContentOffset:CGPointMake(0,0) animated:YES];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
+}
+
+#pragma mark - CPUserActionCellDelegate
+
+- (void)cell:(CPUserActionCell*)cell didSelectSendLoveToUser:(User*)user
+{
+    [CPUserAction cell:cell sendLoveFromViewController:self];
+}
+
+- (void)cell:(CPUserActionCell*)cell didSelectSendMessageToUser:(User*)user
+{
+    [CPUserAction cell:cell sendMessageFromViewController:self];
+}
+
+- (void)cell:(CPUserActionCell*)cell didSelectExchangeContactsWithUser:(User*)user
+{
+    [CPUserAction cell:cell exchangeContactsFromViewController:self];
 }
 
 #pragma mark - properties
