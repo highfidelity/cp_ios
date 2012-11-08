@@ -24,6 +24,9 @@
     RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
 #endif
     
+    // set the api version header so that we get RK friendly responses from C&P backend
+    [[self sharedManager].HTTPClient setDefaultHeader:kCPAPIVersionHeader value:kCPAPIVersionValue];
+    
     [self setupAllRKObjectMappings];
     [self setupAllRKRouting];
 }

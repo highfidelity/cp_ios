@@ -15,7 +15,8 @@
 
 extern NSString* const kCandPWebServiceUrl;
 extern NSString* const kCandPWebServiceSecureUrl;
-extern NSString* const kCandPAPIVersion;
+extern NSString* const kCPAPIVersionHeader;
+extern NSString* const kCPAPIVersionValue;
 extern NSString* const kCandPAPIErrorDomain;
 extern NSString* const kLinkedInKey;
 extern NSString* const kLinkedInSecret;
