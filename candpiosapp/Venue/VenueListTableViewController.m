@@ -10,7 +10,6 @@
 #import "VenueCell.h"
 #import "VenueInfoViewController.h"
 #import "MapTabController.h"
-#import "MapDataSet.h"
 #import "SVPullToRefresh.h"
 
 @implementation VenueListTableViewController
