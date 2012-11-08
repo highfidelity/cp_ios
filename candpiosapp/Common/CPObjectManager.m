@@ -36,12 +36,17 @@
     RKObjectManager *sharedManager = [self sharedManager];
     NSIndexSet *successCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
     
-    RKResponseDescriptor *venueDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[self venueRKObjectMapping]
+    RKResponseDescriptor *venuesDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[self venueRKObjectMapping]
                                                                                    pathPattern:nil
                                                                                        keyPath:@"payload.venues"
                                                                                    statusCodes:successCodes];
     
-    [sharedManager addResponseDescriptor:venueDescriptor];
+    RKResponseDescriptor *usersDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[self userObjectMapping]
+                                                                                    pathPattern:nil
+                                                                                        keyPath:@"payload.users"
+                                                                                    statusCodes:successCodes];
+    
+    [sharedManager addResponseDescriptorsFromArray:@[venuesDescriptor, usersDescriptor]];
 }
 
 + (RKObjectMapping *)venueRKObjectMapping
@@ -97,6 +102,7 @@
     return _userObjectMapping;
 }
 
+
 + (void)setupAllRKRouting
 {
     RKObjectManager *sharedManager = [self sharedManager];
@@ -104,6 +110,7 @@
     [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:@"markers"
                                                        pathPattern:@"api.php?action=getMarkers&ne_lat=:ne_lat&ne_lng=:ne_lng&sw_lng=:sw_lng&sw_lat=:sw_lat"
                                                             method:RKRequestMethodGET]];
+    [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:@"venueCheckedInUsers" pathPattern:@"api.php?action=getVenueDetails&venue_id=:venueID" method:RKRequestMethodGET]];
 }
 
 @end
