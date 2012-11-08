@@ -34,8 +34,6 @@
 
         self.lat = [json numberForKey:@"lat" orDefault:@0];
         self.lng = [json numberForKey:@"lng" orDefault:@0];
-        
-        self.utc = [json objectForKey:@"utc" orDefault:@""];
     }
     return self;
 }
@@ -96,7 +94,6 @@
         self.checkinTime = [decoder decodeIntegerForKey:@"checkinTime"];
         self.autoCheckin = [[decoder decodeObjectForKey:@"autoCheckin"] boolValue];
         self.specialVenueType = [decoder decodeObjectForKey:@"specialVenueType"];
-        self.utc = [decoder decodeObjectForKey:@"utc"];
     }
     return self;
 }
@@ -114,7 +111,6 @@
     [encoder encodeInt:self.checkinTime forKey:@"checkinTime"];
     [encoder encodeObject:[NSNumber numberWithBool:self.autoCheckin] forKey:@"autoCheckin"];
     [encoder encodeObject:self.specialVenueType forKey:@"specialVenueType"];
-    [encoder encodeObject:self.utc forKey:@"utc"];
 }
 
 - (void)setAddress:(NSString *)address
