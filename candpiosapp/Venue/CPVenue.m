@@ -158,15 +158,6 @@
     }
 }
 
-- (void)setUtc:(NSString *)utc
-{
-    if ([utc isKindOfClass:[NSString class]]) {
-        _utc = utc;
-    } else {
-        _utc = @"";
-    }
-}
-
 - (void)setPhone:(NSString *)phone
 {
     if (![phone isKindOfClass:[NSNull class]]) {
