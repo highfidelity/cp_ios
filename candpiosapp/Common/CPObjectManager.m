@@ -71,6 +71,8 @@
             @"id" : @"venueID",
             @"name": @"name",
             @"address": @"address",
+            @"city" : @"city",
+            @"state" : @"state",
             @"lat": @"lat",
             @"lng": @"lng",
             @"foursquare_id": @"foursquareID",
