@@ -102,15 +102,19 @@
     return _userObjectMapping;
 }
 
+NSString* const kRKRouteMarkers = @"markers";
+NSString* const kRKVenueCheckedInUsers = @"venueCheckedInUsers";
 
 + (void)setupAllRKRouting
 {
     RKObjectManager *sharedManager = [self sharedManager];
     
-    [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:@"markers"
+    [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:kRKRouteMarkers
                                                        pathPattern:@"api.php?action=getMarkers&ne_lat=:ne_lat&ne_lng=:ne_lng&sw_lng=:sw_lng&sw_lat=:sw_lat"
                                                             method:RKRequestMethodGET]];
-    [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:@"venueCheckedInUsers" pathPattern:@"api.php?action=getVenueDetails&venue_id=:venueID" method:RKRequestMethodGET]];
+    [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:kRKVenueCheckedInUsers
+                                                       pathPattern:@"api.php?action=getVenueDetails&venue_id=:venueID"
+                                                            method:RKRequestMethodGET]];
 }
 
 @end

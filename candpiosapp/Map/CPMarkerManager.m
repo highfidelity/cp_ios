@@ -36,7 +36,7 @@ static CPMarkerManager *_sharedManager;
         @"sw_lng" : [NSString stringWithFormat:@"%f", southwestCoord.longitude]
     };
         
-    [[CPObjectManager sharedManager] getObjectsAtPathForRouteNamed:@"markers"
+    [[CPObjectManager sharedManager] getObjectsAtPathForRouteNamed:kRKRouteMarkers
                                                             object:coordinateDictionary
                                                         parameters:nil
                                                            success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
@@ -67,7 +67,7 @@ static CPMarkerManager *_sharedManager;
     for (CPVenue *markerVenue in self.venues) {
         // check if we have checkins for this venue but no people
         if ([markerVenue.checkedInNow intValue] > 0 && markerVenue.activeUsers.count == 0) {
-            [[CPObjectManager sharedManager] getObjectsAtPathForRouteNamed:@"venueCheckedInUsers"
+            [[CPObjectManager sharedManager] getObjectsAtPathForRouteNamed:kRKVenueCheckedInUsers
                                                                     object:markerVenue
                                                                 parameters:nil
                                                                    success:^(RKObjectRequestOperation *operation, RKMappingResult *result)
