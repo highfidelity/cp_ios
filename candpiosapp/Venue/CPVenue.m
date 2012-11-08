@@ -35,7 +35,6 @@
         self.lat = [json numberForKey:@"lat" orDefault:@0];
         self.lng = [json numberForKey:@"lng" orDefault:@0];
         
-        self.checkedInUsers = [json objectForKey:@"users"];
         self.utc = [json objectForKey:@"utc" orDefault:@""];
     }
     return self;
