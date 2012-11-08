@@ -68,11 +68,13 @@
         // parameter so that for a given venue we know which interval it is for
         
         [_venueRKObjectMapping addAttributeMappingsFromDictionary:@{
-            @"id" : @"venueID",
+            @"id": @"venueID",
             @"name": @"name",
             @"address": @"address",
-            @"city" : @"city",
-            @"state" : @"state",
+            @"city": @"city",
+            @"state": @"state",
+            @"phone": @"phone",
+            @"formatted_phone": @"formattedPhone",
             @"lat": @"lat",
             @"lng": @"lng",
             @"foursquare_id": @"foursquareID",
@@ -98,15 +100,15 @@
         _userObjectMapping = [RKObjectMapping mappingForClass:[CPUser class]];
         
         [_userObjectMapping addAttributeMappingsFromDictionary:@{
-            @"id" : @"userID",
+            @"id": @"userID",
             @"nickname": @"nickname",
-            @"photo_url" : @"photoURL",
-            @"job_title" : @"jobTitle",
+            @"photo_url": @"photoURL",
+            @"job_title": @"jobTitle",
             @"major_job_category": @"majorJobCategory",
             @"minor_job_category": @"minorJobCategory",
-            @"is_contact" : @"isContact",
-            @"total_check_in_time" : @"totalCheckInTime",
-            @"total_check_in_count" : @"totalCheckInCount"
+            @"is_contact": @"isContact",
+            @"total_check_in_time": @"totalCheckInTime",
+            @"total_check_in_count": @"totalCheckInCount"
          }];
     }
     
