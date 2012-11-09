@@ -136,7 +136,7 @@
     
     // set the labels for the venue name and address
     self.placeName.text = self.venue.name;
-    self.placeAddress.text = !self.venue.isNeighborhood ? self.venue.address : @"You won't appear on the map.";
+    self.placeAddress.text = ![self.venue.isNeighborhood boolValue] ? self.venue.address : @"You won't appear on the map.";
 }
 
 - (void)viewWillAppear:(BOOL)animated
