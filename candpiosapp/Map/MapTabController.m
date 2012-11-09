@@ -178,8 +178,8 @@
 -(void)refreshLocations
 {
     // cancel any current requests for new map data or active users for venues
-    RKRoute *markerRoute = [[CPObjectManager sharedManager].router.routeSet routeForName:@"markers"];
-    RKRoute *venueCheckedInRoute = [[CPObjectManager sharedManager].router.routeSet routeForName:@"venueCheckedInUsers"];
+    RKRoute *markerRoute = [[CPObjectManager sharedManager].router.routeSet routeForName:kRouteMarkers];
+    RKRoute *venueCheckedInRoute = [[CPObjectManager sharedManager].router.routeSet routeForName:kRouteVenueCheckedInUsers];
     [[CPObjectManager sharedManager] cancelAllObjectRequestOperationsWithMethod:RKRequestMethodGET matchingPathPattern:markerRoute.pathPattern];
     [[CPObjectManager sharedManager] cancelAllObjectRequestOperationsWithMethod:RKRequestMethodGET matchingPathPattern:venueCheckedInRoute.pathPattern];
     
