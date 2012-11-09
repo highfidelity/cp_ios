@@ -17,3 +17,4 @@ DerivedData
 .idea
 .DS_Store
 Pods/
+Podfile.lock
