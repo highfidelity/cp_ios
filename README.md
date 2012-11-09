@@ -11,15 +11,15 @@ Make sure you have Xcode's command line tools installed. This can be done by goi
 
 1. Update rubygems to the latest version
 
-`sudo gem update --system`
+    `sudo gem update --system`
 
 2. Install the cocoapods gem
     
-`sudo gem install cocoapods`
+    `sudo gem install cocoapods`
 
 3. Get cocoapods to pull down dependencies
     
-`pod install`
+    `pod install`
 
 4. Open `candpiosapp.xcworkspace` - NOT `candpiosapp.xcodeproj`!
 
