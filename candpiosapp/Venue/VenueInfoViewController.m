@@ -12,6 +12,7 @@
 #import "CPUserSessionHandler.h"
 #import "VenueUserCell.h"
 #import "VenueCategoryCell.h"
+#import "CPObjectManager.h"
 
 static VenueInfoViewController *_onScreenVenueVC;
 
@@ -38,15 +39,14 @@ static VenueInfoViewController *_onScreenVenueVC;
 {
     [super viewDidLoad];
     
-    // Add a notification catcher for refreshVenueAfterCheckin to refresh the view
-    [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(refreshVenueData:) 
-                                                 name:@"refreshVenueAfterCheckin" 
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshVenueData)
+                                                 name:@"userCheckInStateChange"
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(populateUserSection) 
-                                                 name:@"LoginStateChanged" 
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshVenueData)
+                                                 name:@"LoginStateChanged"
                                                object:nil];
     
     // set the title of the navigation controller
@@ -55,46 +55,7 @@ static VenueInfoViewController *_onScreenVenueVC;
     // don't try to scroll to the user's thumbnail, not a checkin
     self.scrollToUserThumbnail = NO;
     
-    // put the photo in the top box
-    UIImage *comingSoon = [UIImage imageNamed:@"picture-coming-soon-rectangle.jpg"];
-    if (![self.venue.photoURL isKindOfClass:[NSNull class]]) {
-        [self.venuePhoto setImageWithURL:[NSURL URLWithString:self.venue.photoURL] placeholderImage:comingSoon];
-    } else {
-        [self.venuePhoto setImage:comingSoon];
-    }
-    
-    // shadow that shows above user info
-    [CPUIHelper addShadowToView:[self.view viewWithTag:3548]  color:[UIColor blackColor] offset:CGSizeMake(0, 1) radius:5 opacity:0.7];
-    
-    {
-        self.phoneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.bottomPhotoOverlayView addSubview:self.phoneButton];
-        
-        if ([self.venue.formattedPhone length] > 0) {
-            self.hasPhone = YES;
-            [self setupVenueButton:self.phoneButton withIconNamed:@"place-phone" andlabelText:self.venue.formattedPhone];
-            [self.phoneButton addTarget:self action:@selector(tappedPhone:) forControlEvents:UIControlEventTouchUpInside];
-        } else {
-            self.hasPhone = NO;
-            [self setupVenueButton:self.phoneButton withIconNamed:@"place-phone" andlabelText:@"N/A"];
-        }
-    }
-    
-    {
-        self.addressButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.bottomPhotoOverlayView addSubview:self.addressButton];
-        
-        if ([self.venue.address length] > 0) {
-            self.hasAddress = YES;
-            [self setupVenueButton:self.addressButton withIconNamed:@"place-location" andlabelText:self.venue.address];
-            [self.addressButton addTarget:self action:@selector(tappedAddress:) forControlEvents:UIControlEventTouchUpInside];
-        } else {
-            self.hasAddress = NO;
-            [self setupVenueButton:self.addressButton withIconNamed:@"place-location" andlabelText:@"N/A"];
-        }
-    }
-    
-    [self repositionAddressAndPhone];
+    [self populateTopVenueView];
     
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-first-aid-kit"]];
         
@@ -103,7 +64,9 @@ static VenueInfoViewController *_onScreenVenueVC;
     self.tableView.tableHeaderView = self.scrollView;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
-    [self populateUserSection]; 
+    // setup interface with whatever we have and then ask API for other data
+    [self populateUserSection];
+    [self refreshVenueData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -141,14 +104,67 @@ static VenueInfoViewController *_onScreenVenueVC;
     return [CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [[CPUserDefaultsHandler currentVenue].venueID isEqualToNumber:self.venue.venueID];
 }
 
-- (void)refreshVenueData:(NSNotification *)notification
+- (void)refreshVenueData
 {
-    // we'll get a notification if this venue has been updated (by an API call)
-    // so set our venue to that as information will be updated
-    self.venue = notification.object;
+    // let's ask the API for refreshed data on this venue
+    [[CPObjectManager sharedManager] getObjectsAtPathForRouteNamed:kRouteVenueFullDetails
+                                                            object:self.venue
+                                                        parameters:nil
+                                                           success:^(RKObjectRequestOperation *operation, RKMappingResult *result)
+    {
+        self.venue = result.firstObject;
+    
+        // repopulate user and venue sections with new info
+        [self populateTopVenueView];
+        [self populateUserSection];
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        
+    }];
+}
 
-    // repopulate user data with new info
-    [self populateUserSection];
+- (void)populateTopVenueView
+{
+    // put the photo in the top box
+    UIImage *comingSoon = [UIImage imageNamed:@"picture-coming-soon-rectangle.jpg"];
+    if (self.venue.photoURL.length > 0) {
+        [self.venuePhoto setImageWithURL:[NSURL URLWithString:self.venue.photoURL] placeholderImage:comingSoon];
+    } else {
+        [self.venuePhoto setImage:comingSoon];
+    }
+    
+    // shadow that shows above user info
+    [CPUIHelper addShadowToView:[self.view viewWithTag:3548]  color:[UIColor blackColor] offset:CGSizeMake(0, 1) radius:5 opacity:0.7];
+    
+    if (!self.phoneButton) {
+        self.phoneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.bottomPhotoOverlayView addSubview:self.phoneButton];
+    }
+    
+    
+    if ([self.venue.formattedPhone length] > 0) {
+        self.hasPhone = YES;
+        [self setupVenueButton:self.phoneButton withIconNamed:@"place-phone" andlabelText:self.venue.formattedPhone];
+        [self.phoneButton addTarget:self action:@selector(tappedPhone:) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        self.hasPhone = NO;
+        [self setupVenueButton:self.phoneButton withIconNamed:@"place-phone" andlabelText:@"N/A"];
+    }
+
+    if (!self.addressButton) {
+        self.addressButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.bottomPhotoOverlayView addSubview:self.addressButton];
+    }
+    
+    if ([self.venue.address length] > 0) {
+        self.hasAddress = YES;
+        [self setupVenueButton:self.addressButton withIconNamed:@"place-location" andlabelText:self.venue.address];
+        [self.addressButton addTarget:self action:@selector(tappedAddress:) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        self.hasAddress = NO;
+        [self setupVenueButton:self.addressButton withIconNamed:@"place-location" andlabelText:@"N/A"];
+    }
+    
+    [self repositionAddressAndPhone];
 }
 
 - (NSArray *)orderedCategories {
@@ -168,20 +184,14 @@ static VenueInfoViewController *_onScreenVenueVC;
 - (NSArray *)orderedPreviousUsers {
     // sort the previous users by the number of checkins here
     if (!_orderedPreviousUsers) {
-        NSArray *sortedPreviousUsers = [self.previousUsers sortedArrayUsingComparator:^NSComparisonResult(CPUser *u1, CPUser *u2) {
-            int ch1 = [self.venue.activeUsers[u1.userID][@"checkin_count"] integerValue];
-            int ch2 = [self.venue.activeUsers[u2.userID][@"checkin_count"] integerValue];
-            if (ch1 > ch2) {
-                return (NSComparisonResult)NSOrderedDescending;
-            }
-            
-            if (ch1 < ch2) {
-                return (NSComparisonResult)NSOrderedAscending;
-            }
-            return (NSComparisonResult)NSOrderedSame;
-        }];
+        NSArray *sortDescriptorArray = @[[NSSortDescriptor sortDescriptorWithKey:@"totalCheckInTime" ascending:NO selector:@selector(compare:)]];
+        NSArray *sortedPreviousUsers = [self.venue.previousUsers sortedArrayUsingDescriptors:sortDescriptorArray];
         
-        _orderedPreviousUsers = [[sortedPreviousUsers reverseObjectEnumerator] allObjects];
+        for (CPUser *sortedUser in sortedPreviousUsers) {
+            NSLog(@"user: %@", sortedUser.nickname);
+        }
+        
+        _orderedPreviousUsers = sortedPreviousUsers;
     }
     return _orderedPreviousUsers;
 }
@@ -189,32 +199,18 @@ static VenueInfoViewController *_onScreenVenueVC;
 - (void)processUsers {
     // TODO: If this venue wasn't loaded by the map it will appear as if it has no active users
     // Add the ability to make an API call to get that data
-    NSMutableDictionary *activeUsers = self.venue.activeUsers;
     
     // init the data structures
     self.currentUsers = [NSMutableDictionary dictionary];
     self.categoryCount = [NSMutableDictionary dictionary];
-    self.previousUsers = [[NSMutableArray alloc] init];
     
-    for (NSNumber *userID in activeUsers) {
-        CPUser *user = [[CPAppDelegate settingsMenuController].mapTabController userFromActiveUsers:userID];
-        
-        // make sure we get a user here
-        // otherwise we'll crash when trying to add nil to self.previousUsers
-        if (user) {
-            if ([[[activeUsers objectForKey:userID] objectForKey:@"checked_in"] boolValue]) {
-                [self addUser:user toArrayForJobCategory:user.majorJobCategory];
-                // if the major and minor job categories differ also add this person to the minor category
-                if (![user.majorJobCategory isEqualToString:user.minorJobCategory] &&
-                    ![user.minorJobCategory isEqualToString:@"other"] &&
-                    ![user.minorJobCategory isEqualToString:@""]) {
-                    [self addUser:user toArrayForJobCategory:user.minorJobCategory];
-                }
-            } else {
-                // this is a non-checked in user
-                // add them to the previous users dictionary
-                [self.previousUsers addObject:user];
-            }
+    for (CPUser *user in self.venue.checkedInUsers) {
+        [self addUser:user toArrayForJobCategory:user.majorJobCategory];
+        // if the major and minor job categories differ also add this person to the minor category
+        if (![user.majorJobCategory isEqualToString:user.minorJobCategory] &&
+            ![user.minorJobCategory isEqualToString:@"other"] &&
+            ![user.minorJobCategory isEqualToString:@""]) {
+            [self addUser:user toArrayForJobCategory:user.minorJobCategory];
         }
     }
 }
@@ -499,7 +495,7 @@ static VenueInfoViewController *_onScreenVenueVC;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.categoryCount.count + (self.previousUsers.count > 0 ? 1 : 0);
+    return self.categoryCount.count + (self.venue.previousUsers.count > 0 ? 1 : 0);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -507,7 +503,7 @@ static VenueInfoViewController *_onScreenVenueVC;
     if (section < self.categoryCount.count) {
         return 1;
     } else {
-        return self.previousUsers.count;
+        return self.venue.previousUsers.count;
     }
 }
 
@@ -539,9 +535,8 @@ static VenueInfoViewController *_onScreenVenueVC;
         } else {
             cell.separatorView.hidden = NO;
         }
-        // assign the checkin hours
-        int checkinTime = [self.venue.activeUsers[user.userID][@"checkin_time"] integerValue];
-        cell.hoursLabel.text = [NSString stringWithFormat:@"%d hrs/week", checkinTime / 3600];
+
+        cell.hoursLabel.text = [NSString stringWithFormat:@"%d hrs/week", [user.totalCheckInTime intValue] / 3600];
         return cell;
     }
 }
@@ -636,7 +631,7 @@ static VenueInfoViewController *_onScreenVenueVC;
         NSString *title =  [[self orderedCategories] objectAtIndex:section];
         [self stylingForUserBox:view withTitle:title forCheckedInUsers:YES];
     } else {
-        NSString *title = [self.previousUsers count] > 1 ? @"Have worked here..." : @"Has worked here...";
+        NSString *title = [self.venue.previousUsers count] > 1 ? @"Have worked here..." : @"Has worked here...";
         [self stylingForUserBox:view withTitle:title forCheckedInUsers:NO];
     }
     UIView *bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(CELL_GUTTER_WIDTH + BORDER_SIZE,
