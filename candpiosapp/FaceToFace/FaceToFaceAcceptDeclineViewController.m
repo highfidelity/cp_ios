@@ -60,7 +60,7 @@
 #pragma mark - Actions
 
 - (IBAction)acceptContactRequest {
-    // prevent double tape on the Accept button during the existing request
+    // prevent double tap on the Accept button during the existing request
     self.f2fAcceptButton.enabled = NO;
     
     // use common handler method
