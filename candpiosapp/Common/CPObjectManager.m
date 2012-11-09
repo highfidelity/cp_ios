@@ -19,8 +19,9 @@
     // show the network activity spinner during requests
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     
-    // get RK to log out request/response
-#if DEBUG
+    // if you want RK to log out request/response
+    // flip this to 1
+#if 0
     RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
 #endif
     
