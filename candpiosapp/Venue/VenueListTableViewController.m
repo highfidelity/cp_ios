@@ -36,7 +36,7 @@
     [self.tableView addPullToRefreshWithActionHandler:^{
         [self.delegate refreshLocations:^{
             [venueListVC refreshFromNewMapData];
-        }];        
+        }];
     }];
 }
 
@@ -44,21 +44,14 @@
 {
     [super viewDidAppear:animated];
     [self refreshFromNewMapData];
-    [self.tableView.pullToRefreshView triggerRefresh];
 }
 
 - (void)refreshFromNewMapData
 {
-    // get the venues from the notification
-    self.venues = [[[CPMarkerManager sharedManager].venues sortedArrayUsingComparator:^(id a, id b) {
-        NSNumber *first = [NSNumber numberWithDouble:[a distanceFromUser]];
-        NSNumber *second = [NSNumber numberWithDouble:[b distanceFromUser]];
-        
-        return [first compare:second];
-    }] mutableCopy];
-    
     CLLocation *currentLocation = [CPAppDelegate locationManager].location;
     
+    self.venues = [CPMarkerManager sharedManager].venues;
+   
     // although distanceFromUser has already been set after the API call in the map
     // it's been set to distance from the center of the map, which isn't necessarily the user's location
     // so iterate through the venues now and make sure that the distances are correct
@@ -66,6 +59,14 @@
         CLLocation *location = [[CLLocation alloc] initWithLatitude:venue.coordinate.latitude longitude:venue.coordinate.longitude];
         venue.distanceFromUser = [location distanceFromLocation:currentLocation];
     }
+    
+    // get the venues from the notification
+    self.venues = [[self.venues sortedArrayUsingComparator:^(id a, id b) {
+        NSNumber *first = [NSNumber numberWithDouble:[a distanceFromUser]];
+        NSNumber *second = [NSNumber numberWithDouble:[b distanceFromUser]];
+        
+        return [first compare:second];
+    }] mutableCopy];
 
     // we're visible
     [self.tableView.pullToRefreshView stopAnimating];
