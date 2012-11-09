@@ -111,6 +111,13 @@ static VenueInfoViewController *_onScreenVenueVC;
 
 - (void)refreshVenueData
 {
+    // cancel any existing requests that map may have making for this venue
+    // or any previous refreshVenueData requests
+    NSString *venueCheckedInPath = RKPathFromPatternWithObject([[CPObjectManager sharedManager].router.routeSet routeForName:kRouteVenueCheckedInUsers].pathPattern, self.venue);
+    NSString *venueFullDetailsPath = RKPathFromPatternWithObject([[CPObjectManager sharedManager].router.routeSet routeForName:kRouteVenueFullDetails].pathPattern, self.venue);
+    [[CPObjectManager sharedManager] cancelAllObjectRequestOperationsWithMethod:RKRequestMethodGET matchingPathPattern:venueCheckedInPath];
+    [[CPObjectManager sharedManager] cancelAllObjectRequestOperationsWithMethod:RKRequestMethodGET matchingPathPattern:venueFullDetailsPath];
+    
     // let's ask the API for refreshed data on this venue
     [[CPObjectManager sharedManager] getObjectsAtPathForRouteNamed:kRouteVenueFullDetails
                                                             object:self.venue
