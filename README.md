@@ -10,15 +10,15 @@ Since this is an Xcode project, let's assume you're on OS X and ruby is already 
 Make sure you have Xcode's command line tools installed. This can be done by going to Xcode->Preferences->Downloads. You should see the option to install Command Line Tools under the Components tab.
 
 (1) Updating rubygems to the latest version.
-    sudo gem update --system
+`sudo gem update --system`
 
 (2) Install the cocoapods gem
-    sudo gem install cocoapods
+`sudo gem install cocoapods`
 
 (3) Get cocoapods to pull down dependencies
-    pod install
+`pod install`
 
-(4) Open candpiosapp.xcworkspace - not candpiosapp.xcodeproj!
+(4) Open `candpiosapp.xcworkspace` - not `candpiosapp.xcodeproj`!
 
 (5) Make sure that the target in the top left is candpiosapp, not Pods.
 
