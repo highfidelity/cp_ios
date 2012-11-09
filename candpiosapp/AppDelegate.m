@@ -350,7 +350,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 - (void)pushAliasUpdate {
     // Set my UserID as an UrbanAirship alias for push notifications
-    NSString *userIDString = [NSString stringWithFormat:@"%@", [CPUserDefaultsHandler currentUser].userID];
+    NSString *userIDString = [[CPUserDefaultsHandler currentUser].userID stringValue];
     
     NSLog(@"Attempting to register user alias %@ with UrbanAirship", userIDString);
     [UAPush shared].alias = userIDString;
