@@ -14,7 +14,7 @@
 @property (strong, nonatomic) NSArray *resumeVisibilityOptions;
 @property (strong, nonatomic) NSArray *resumeVisibilityOptionsKeys;
 @property (strong, nonatomic) NSString *originalProfileURLVisibility;
-@property (strong, nonatomic) User *user;
+@property (strong, nonatomic) CPUser *user;
 @property (weak, nonatomic) IBOutlet UIButton *resumeVisibilityButton;
 
 

@@ -21,10 +21,10 @@
 
 NSString* const kUDCurrentUser = @"loggedUser";
 
-+ (void)setCurrentUser:(User *)currentUser
++ (void)setCurrentUser:(CPUser *)currentUser
 {
 #if DEBUG
-    NSLog(@"Storing user data for user with ID %d and nickname %@ to NSUserDefaults", currentUser.userID, currentUser.nickname);
+    NSLog(@"Storing user data for user with ID %@ and nickname %@ to NSUserDefaults", currentUser.userID, currentUser.nickname);
 #endif
 
     [[CPAppDelegate appCache] removeObjectForKey:kUDCurrentUser];
@@ -37,15 +37,15 @@ NSString* const kUDCurrentUser = @"loggedUser";
     [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
 }
 
-+ (User *)currentUser
++ (CPUser *)currentUser
 {
     if (DEFAULTS(object, kUDCurrentUser)) {
-        User *user = [[CPAppDelegate appCache] objectForKey:kUDCurrentUser];
+        CPUser *user = [[CPAppDelegate appCache] objectForKey:kUDCurrentUser];
 
         if (!user) {
             // grab the coded user from NSUserDefaults
             NSData *myEncodedObject = DEFAULTS(object, kUDCurrentUser);
-            user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData:myEncodedObject];
+            user = (CPUser *)[NSKeyedUnarchiver unarchiveObjectWithData:myEncodedObject];
             if (!user) {
                 return nil;
             }

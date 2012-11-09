@@ -11,17 +11,17 @@
 @interface ChatMessage : NSObject
 
 @property (nonatomic) BOOL fromMe;
-@property (strong, nonatomic) User *fromUser;
-@property (strong, nonatomic) User *toUser;
+@property (strong, nonatomic) CPUser *fromUser;
+@property (strong, nonatomic) CPUser *toUser;
 @property (strong, nonatomic) NSString *message;
 @property (strong, nonatomic) NSDate *date;
 
 - (id)initWithMessage:(NSString *)newMessage
-               toUser:(User *)toUser
-             fromUser:(User *)fromUser;
+               toUser:(CPUser *)toUser
+             fromUser:(CPUser *)fromUser;
 - (id)initWithMessage:(NSString *)newMessage
-               toUser:(User *)toUser
-             fromUser:(User *)fromUser
+               toUser:(CPUser *)toUser
+             fromUser:(CPUser *)fromUser
                  date:(NSDate *)date;
 
 - (NSComparisonResult)compareDateWith:(ChatMessage *)message;

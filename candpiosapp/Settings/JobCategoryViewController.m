@@ -11,7 +11,7 @@
 
 @interface JobCategoryViewController ()
 
-@property (strong, nonatomic) User *user;
+@property (strong, nonatomic) CPUser *user;
 @property (strong, nonatomic) NSArray *jobCategories;
 @property (weak, nonatomic) IBOutlet UIButton *majorCategoryButton;
 @property (weak, nonatomic) IBOutlet UIButton *minorCategoryButton;

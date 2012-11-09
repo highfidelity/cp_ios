@@ -11,7 +11,7 @@
 
 @interface UserProfileViewController : UIViewController <UIScrollViewDelegate, CPUserActionCellDelegate>
 
-@property (strong, nonatomic) User *user;
+@property (strong, nonatomic) CPUser *user;
 @property (nonatomic) BOOL isF2FInvite;
 @property (nonatomic) BOOL scrollToReviews;
 

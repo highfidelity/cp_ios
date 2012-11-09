@@ -19,4 +19,16 @@
     return object;
 }
 
+- (NSNumber *)numberForKey:(id)key orDefault:(NSNumber *)defaultValue {
+    // during the period of transitioning over to RestKit this is used
+    // to map String JSON keys to NSNumber via numberWithDouble
+    NSString *stringValue = [self objectForKey:key];
+    
+    if ([stringValue isKindOfClass:[NSNull class]]) {
+        return defaultValue;
+    } else {
+        return @([stringValue doubleValue]);
+    }
+}
+
 @end

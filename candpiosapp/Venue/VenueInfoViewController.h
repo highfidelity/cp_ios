@@ -19,7 +19,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableDictionary *categoryCount;
 @property (strong, nonatomic) NSMutableDictionary *currentUsers;
-@property (strong, nonatomic) NSMutableArray *previousUsers;
 @property (nonatomic) BOOL scrollToUserThumbnail;
 @property (strong, nonatomic) NSArray *orderedPreviousUsers;
 @property (strong, nonatomic) NSArray *orderedCategories;

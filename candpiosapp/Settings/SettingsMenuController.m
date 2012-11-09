@@ -442,13 +442,13 @@
             // Start monitoring the new location to allow auto-checkout and checkin (if enabled) 
             autoPromptVenue.autoCheckin = YES;
             [[CPGeofenceHandler sharedHandler] startMonitoringVenue:autoPromptVenue];
-            [FlurryAnalytics logEvent:@"autoCheckInPromptAccepted"];
+            [Flurry logEvent:@"autoCheckInPromptAccepted"];
         }
         else if (buttonIndex == 2) {
             autoPromptVenue.autoCheckin = NO;
             // User does NOT want to automatically check in to this venue        
             [[CPGeofenceHandler sharedHandler] stopMonitoringVenue:autoPromptVenue];
-            [FlurryAnalytics logEvent:@"autoCheckInPromptDenied"];
+            [Flurry logEvent:@"autoCheckInPromptDenied"];
         }
     
         // add this venue to the array of past venues in NSUserDefaults

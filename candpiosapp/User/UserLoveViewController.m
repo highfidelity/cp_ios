@@ -8,7 +8,7 @@
 
 #import "UserLoveViewController.h"
 #import "UserProfileViewController.h"
-#import "FlurryAnalytics.h"
+#import "Flurry.h"
 #import "CPSkill.h"
 #import "LoveSkillTableViewCell.h"
 
@@ -75,7 +75,7 @@
     [self.view addSubview:self.keyboardBackground];
     
     // grab the user's skills
-    [CPapi getSkillsForUser:[NSNumber numberWithInt:self.user.userID] completion:^(NSDictionary *json, NSError *error) {
+    [CPapi getSkillsForUser:self.user.userID completion:^(NSDictionary *json, NSError *error) {
         if (!error) {
             if (![[json objectForKey:@"error"] boolValue]) {
                 
@@ -464,7 +464,7 @@
     [self dismissViewControllerAnimated:YES
                              completion:^{
                                  if (buttonIndex == alertView.firstOtherButtonIndex) {
-                                     [CPapi sendContactRequestToUserId:self.user.userID];
+                                     [CPapi sendContactRequestToUserID:self.user.userID];
                                  }
                              }];
 }

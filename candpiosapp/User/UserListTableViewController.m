@@ -11,6 +11,7 @@
 #import "GTMNSString+HTML.h"
 #import "UIViewController+CPUserActionCellAdditions.h"
 #import "NSDictionary+JsonParserWorkaround.h"
+#import "CPMarkerManager.h"
 #import "SVPullToRefresh.h"
 
 @interface UserListTableViewController()
@@ -53,14 +54,22 @@
                 CLLocation *userLocation = [CPAppDelegate currentOrDefaultLocation];
                 NSArray *people = [[json objectForKey:@"payload"] valueForKey:@"people"];
                 for (NSDictionary *personJSON in people) {
-                    User *user = [[User alloc] initFromDictionary:personJSON];
+                    CPUser *user = [[CPUser alloc] initFromDictionary:personJSON];
 
                     CLLocation *location = [[CLLocation alloc] initWithLatitude:user.location.latitude longitude:user.location.longitude];
                     user.distance = [location distanceFromLocation:userLocation];
-                    CPVenue *venue = [[CPVenue alloc] init];
-                    venue.name = [personJSON objectForKey:@"venue_name" orDefault:@""];
-                    venue.venueID = [[personJSON objectForKey:@"venue_id" orDefault:[NSNumber numberWithInt:0]] intValue];
-                    user.placeCheckedIn = venue;
+                   
+                    NSNumber *venueID = [personJSON numberForKey:@"venue_id" orDefault:@0];
+                    CPVenue *userVenue;
+                    
+                    if (!(userVenue = [[CPMarkerManager sharedManager] markerVenueWithID:venueID])) {
+                        userVenue = [[CPVenue alloc] init];
+                        userVenue.venueID = venueID;
+                        userVenue.name = [personJSON objectForKey:@"name" orDefault:@""];
+                        user.placeCheckedIn = userVenue;
+                    }
+                    
+                    user.placeCheckedIn = userVenue;
                     [self.checkedInUsers addObject:user];
                 }
                 
@@ -119,7 +128,7 @@
     cell.delegate = self;
     
     // Configure the cell...
-    User *user = [self.checkedInUsers objectAtIndex:(NSUInteger) indexPath.row];
+    CPUser *user = [self.checkedInUsers objectAtIndex:(NSUInteger) indexPath.row];
     cell.user = user;
     
     // reset the nickname label since this is a reusable cell
@@ -147,10 +156,7 @@
              withProfileImageUrl:user.photoURL];
     cell.nicknameLabel.text = [CPUIHelper profileNickname:user.nickname];
     
-    //If user is virtually checkedIn then add virtual badge to their profile image
-    [CPUIHelper manageVirtualBadgeForProfileImageView:cell.profilePictureImageView
-                                     checkInIsVirtual:user.checkInIsVirtual];
-    if (cell.user.isContact) {
+    if ([cell.user.isContact boolValue]) {
         cell.rightStyle = CPUserActionCellSwipeStyleReducedAction;
     } else{
         cell.rightStyle = CPUserActionCellSwipeStyleQuickAction;

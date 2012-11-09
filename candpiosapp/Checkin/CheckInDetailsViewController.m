@@ -12,6 +12,7 @@
 #import "UIViewController+isModal.h"
 #import "CPCheckinHandler.h"
 #import "CPApiClient.h"
+#import "NSDictionary+JsonParserWorkaround.h"
 
 @interface CheckInDetailsViewController() <UITextFieldDelegate, UIScrollViewDelegate>
 
@@ -135,7 +136,7 @@
     
     // set the labels for the venue name and address
     self.placeName.text = self.venue.name;
-    self.placeAddress.text = !self.venue.isNeighborhood ? self.venue.address : @"You won't appear on the map.";
+    self.placeAddress.text = ![self.venue.isNeighborhood boolValue] ? self.venue.address : @"You won't appear on the map.";
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -187,7 +188,6 @@
     [CPApiClient checkInToVenue:self.venue
                       hoursHere:self.checkInDuration
                      statusText:statusText
-                      isVirtual:self.checkInIsVirtual
                     isAutomatic:NO
                    completionBlock:^(NSDictionary *json, NSError *error){
         // hide the SVProgressHUD
@@ -197,7 +197,7 @@
             // a successful checkin passes back venue_id
             // give that to this venue before we store it in NSUserDefaults
             // in case we came from foursquare venue list and didn't have it
-            self.venue.venueID = [[json objectForKey:@"venue_id"] intValue];
+            self.venue.venueID = @([[json objectForKey:@"venue_id"] intValue]);
             
             [CPCheckinHandler queueLocalNotificationForVenue:self.venue checkoutTime:checkOutTime];
             [CPCheckinHandler handleSuccessfulCheckinToVenue:self.venue checkoutTime:checkOutTime];
@@ -261,10 +261,9 @@
             // reverse the response so we get latest checkins first
             for (NSDictionary *user in [responseArray reverseObjectEnumerator]) {
                 
-                User *checkedInUser = [[User alloc] init];
+                CPUser *checkedInUser = [[CPUser alloc] init];
                 checkedInUser.nickname = [user objectForKey:@"nickname"];
                 checkedInUser.status = [user objectForKey:@"status_text"];
-                checkedInUser.checkInIsVirtual = [[user objectForKey:@"is_virtual"] boolValue];
                 
                 // add this user to the user array
                 // this is how we put the user's info in the info bubble later
@@ -294,11 +293,6 @@
                 
                 // add the imageview to the button
                 [userImageButton addSubview:userImage];
-                
-                //If user is virtually checkedIn then add virtual badge to their profile image
-                [CPUIHelper manageVirtualBadgeForProfileImageView:userImage 
-                                                 checkInIsVirtual:checkedInUser.checkInIsVirtual];        
-
                 
                 // add the button to the scrollview
                 [self.otherUsersScrollView addSubview:userImageButton];

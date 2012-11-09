@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <UIKit/UIKit.h>
 #import "CPSoundEffectsManager.h"
-#import "User.h"
+#import "CPUser.h"
 
 #define kCancelOpenSlideActionButtonsNotification @"kCancelOpenSlideActionButtonsNotification"
 
@@ -29,16 +29,16 @@ typedef enum {
 @protocol CPUserActionCellDelegate <NSObject>
 
 @optional
-- (void)cell:(CPUserActionCell*)cell didSelectSendLoveToUser:(User*)user;
-- (void)cell:(CPUserActionCell*)cell didSelectSendMessageToUser:(User*)user;
-- (void)cell:(CPUserActionCell*)cell didSelectExchangeContactsWithUser:(User*)user;
-- (void)cell:(CPUserActionCell*)cell didSelectRowWithUser:(User*)user;
+- (void)cell:(CPUserActionCell*)cell didSelectSendLoveToUser:(CPUser*)user;
+- (void)cell:(CPUserActionCell*)cell didSelectSendMessageToUser:(CPUser*)user;
+- (void)cell:(CPUserActionCell*)cell didSelectExchangeContactsWithUser:(CPUser*)user;
+- (void)cell:(CPUserActionCell*)cell didSelectRowWithUser:(CPUser*)user;
 
 @end
 
 @interface CPUserActionCell : UITableViewCell <UIGestureRecognizerDelegate, UIActionSheetDelegate>
 
-@property (strong, nonatomic) User *user;
+@property (strong, nonatomic) CPUser *user;
 @property (strong, nonatomic) UIView *hiddenView;
 @property (strong, nonatomic) UIButton *sendLoveButton;
 @property (strong, nonatomic) UIButton *sendMessageButton;

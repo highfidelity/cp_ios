@@ -20,7 +20,7 @@
 
 @interface ProfileViewController () <CPTouchViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
 
-@property (strong, nonatomic) User *currentUser;
+@property (strong, nonatomic) CPUser *currentUser;
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
 @property (strong, nonatomic) NSString *pendingEmail;
 @property (strong, nonatomic) UIBarButtonItem *gearButton;
@@ -227,7 +227,7 @@
 
 - (void)syncWithWebData
 {
-    User *webSyncUser = [[User alloc] init];
+    CPUser *webSyncUser = [[CPUser alloc] init];
 
     // load the user's data from the web by their id
     webSyncUser.userID = self.currentUser.userID;
@@ -257,8 +257,8 @@
                 }
 
                 // check photo url
-                if (![self.currentUser.photoURLString isEqual:webSyncUser.photoURLString]) {
-                    self.currentUser.photoURLString = webSyncUser.photoURLString;
+                if (![self.currentUser.photoURL isEqual:webSyncUser.photoURL]) {
+                    self.currentUser.photoURL = webSyncUser.photoURL;
                     self.newDataFromSync = YES;
                 }
 
@@ -371,7 +371,7 @@
         // update the user's photo url
         NSString *newPhoto = [paramsDict objectForKey:@"picture"];
         if (newPhoto) {
-            self.currentUser.photoURLString = [paramsDict objectForKey:@"picture"];
+            [self.currentUser setPhotoURLFromString:[paramsDict objectForKey:@"picture"]];
             animated = YES;
         }
 

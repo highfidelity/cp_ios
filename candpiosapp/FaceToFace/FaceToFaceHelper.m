@@ -30,11 +30,11 @@ static FaceToFaceHelper *sharedHelper;
     return sharedHelper;
 }
 
-+ (void)presentF2FInviteFromUser:(int)userId
++ (void)presentF2FInviteFromUserID:(NSNumber *)userID
 {   
     
 #if DEBUG
-    NSLog(@"Recieved a F2F Invite from user with ID %d", userId);
+    NSLog(@"Recieved a F2F Invite from user with ID %@", userID);
 #endif
     
     // make sure that we're not already showing another modal view controller
@@ -43,7 +43,7 @@ static FaceToFaceHelper *sharedHelper;
         // we have another modal on screen
         // if it's this same request already on screen we're not going to do anything
         if (![[CPAppDelegate tabBarController].presentedViewController isKindOfClass:[FaceToFaceAcceptDeclineViewController class]] ||
-            ((FaceToFaceAcceptDeclineViewController *)[CPAppDelegate tabBarController].presentedViewController).user.userID != userId) {
+            ![((FaceToFaceAcceptDeclineViewController *)[CPAppDelegate tabBarController].presentedViewController).user.userID isEqualToNumber:userID]) {
             
             // new contact request ... don't take over the screen but give the user an alert
             UIAlertView *contactRequestAlert = [[UIAlertView alloc] initWithTitle:@"New contact request!"
@@ -62,7 +62,7 @@ static FaceToFaceHelper *sharedHelper;
         // no other modal on screen, good to go for display of contact request
         
 #if DEBUG
-        NSLog(@"Display an F2F Invite from user with ID %d", userId);
+        NSLog(@"Display an F2F Invite from user with ID %@", userID);
 #endif
         
         // Show the SVProgressHUD so the user knows they're waiting for an invite
@@ -75,8 +75,8 @@ static FaceToFaceHelper *sharedHelper;
         FaceToFaceAcceptDeclineViewController *f2fVC = [f2fstory instantiateInitialViewController];
         
         // setup a user that we will pass to the UserProfileViewController
-        User *user = [[User alloc] init];
-        user.userID = userId;
+        CPUser *user = [[CPUser alloc] init];
+        user.userID = userID;
         
         // load the user's data so the F2F invite screen will show it all when it gets presented
         [user loadUserResumeOnQueue:nil completion:^(NSError *error){
@@ -111,14 +111,14 @@ static FaceToFaceHelper *sharedHelper;
 
 #pragma mark - Instance Methods
 
-- (void)showContactRequestActionSheetForUserID:(int)userID
+- (void)showContactRequestActionSheetForUserID:(NSNumber *)userID
 {
     // Offer to exchange contacts
     
     // make sure that the
     if (![CPUserDefaultsHandler currentUser]) {
         [CPUserSessionHandler showLoginBanner];
-    } else if (userID == [CPUserDefaultsHandler currentUser].userID) {
+    } else if ([userID isEqualToNumber:[CPUserDefaultsHandler currentUser].userID]) {
         // cheeky response for self-talk
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Add a Contact"
                                                             message:@"You should have already met yourself..."
@@ -137,7 +137,7 @@ static FaceToFaceHelper *sharedHelper;
         
         // use the ID of the user with which contact information is being exchanged
         // as the tag for the UIActionSheet
-        actionSheet.tag = userID;
+        actionSheet.tag = [userID intValue];
         
         // show the UIActionSheet in the passed view
         [actionSheet showFromTabBar:[CPAppDelegate tabBarController].tabBar];
@@ -147,7 +147,7 @@ static FaceToFaceHelper *sharedHelper;
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != [actionSheet cancelButtonIndex]) {
-        [CPapi sendContactRequestToUserId:actionSheet.tag];
+        [CPapi sendContactRequestToUserID:@(actionSheet.tag)];
     }
 }
 

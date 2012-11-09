@@ -51,7 +51,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 - (void)handleSendAcceptOrDeclineComletionWithJson:(NSDictionary *)json andError:(NSError *)error;
 - (void)updateBadgeValue;
 - (NSDictionary *)contactForIndexPath:(NSIndexPath *)indexPath;
-- (User *)userForIndexPath:(NSIndexPath *)indexPath;
+- (CPUser *)userForIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
@@ -430,7 +430,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     }
     [self.tableView endUpdates];
     
-    [CPapi sendAcceptContactRequestFromUserId:[[contactData objectForKey:@"id"] intValue]
+    [CPapi sendAcceptContactRequestFromUserID:@([[contactData objectForKey:@"id"] intValue])
                                    completion:^(NSDictionary *json, NSError *error) {
                                        [self handleSendAcceptOrDeclineComletionWithJson:json andError:error];
                                    }];
@@ -445,7 +445,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     [self.contactRequests removeObjectAtIndex:indexPath.row];
     [self animateRemoveContactRequestAtIndex:indexPath.row];
     
-    [CPapi sendDeclineContactRequestFromUserId:[[contactData objectForKey:@"id"] intValue]
+    [CPapi sendDeclineContactRequestFromUserID:@([[contactData objectForKey:@"id"] intValue])
                                     completion:^(NSDictionary *json, NSError *error) {
                                         [self handleSendAcceptOrDeclineComletionWithJson:json andError:error];
                                     }];
@@ -521,13 +521,13 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
             objectAtIndex:(NSUInteger)indexPath.row];
 }
 
-- (User *)userForIndexPath:(NSIndexPath *)indexPath {
+- (CPUser *)userForIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *contact = [self contactForIndexPath:indexPath];
-    User *user = [[User alloc] init];
+    CPUser *user = [[CPUser alloc] init];
     user.nickname = [contact objectForKey:@"nickname"];
-    user.userID = [[contact objectForKey:@"id"] intValue];
+    user.userID = @([[contact objectForKey:@"id"] intValue]);
     user.status = [contact objectForKey:@"status_text"];
-    user.photoURLString = [contact objectForKey:@"imageUrl"];
+    [user setPhotoURLFromString:[contact objectForKey:@"imageUrl"]];
     
     return user;
 }

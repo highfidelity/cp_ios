@@ -60,7 +60,7 @@
 #pragma mark - Actions
 
 - (IBAction)acceptContactRequest {
-    // prevent double tape on the Accept button during the existing request
+    // prevent double tap on the Accept button during the existing request
     self.f2fAcceptButton.enabled = NO;
     
     // use common handler method
@@ -126,9 +126,9 @@
     };
     
     if (isAcceptance) {
-        [CPapi sendAcceptContactRequestFromUserId:self.user.userID completion:completionBlock];
+        [CPapi sendAcceptContactRequestFromUserID:self.user.userID completion:completionBlock];
     } else {
-        [CPapi sendDeclineContactRequestFromUserId:self.user.userID completion:completionBlock];
+        [CPapi sendDeclineContactRequestFromUserID:self.user.userID completion:completionBlock];
     }
     
 }

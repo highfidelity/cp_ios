@@ -27,31 +27,21 @@
 
 // Chat functions
 + (void)sendOneOnOneChatMessage:(NSString *)message
-                        toUser:(int)userId;
-+ (void)oneOnOneChatGetHistoryWith:(User *)User
+                        toUserID:(NSNumber *)userID;
++ (void)oneOnOneChatGetHistoryWith:(CPUser *)User
                         completion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Map Dataset
-+ (void)getVenuesWithCheckinsWithinSWCoordinate:(CLLocationCoordinate2D)swCoord
-                      NECoordinate:(CLLocationCoordinate2D)neCoord
-                      userLocation:(CLLocationCoordinate2D)userLocation
-                    checkedInSince:(CGFloat)daysInterval
-                            mapQueue:(NSOperationQueue *)mapQueue
-             withCompletion:(void (^)(NSDictionary *, NSError *))completion;
-
-+ (void)getNearestVenuesWithActiveFeeds:(CLLocationCoordinate2D)coordinate
-                             completion:(void (^)(NSDictionary *, NSError *))completion;
-
 + (void)getNearestVenuesWithCheckinsToCoordinate:(CLLocationCoordinate2D)coordinate
                                         mapQueue:(NSOperationQueue *)mapQueue
                                       completion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Contact Request
 + (void)getNumberOfContactRequests:(void (^)(NSDictionary *json, NSError *error))completion;
-+ (void)sendContactRequestToUserId:(int)userId;
-+ (void)sendAcceptContactRequestFromUserId:(int)userId
++ (void)sendContactRequestToUserID:(NSNumber *)userID;
++ (void)sendAcceptContactRequestFromUserID:(NSNumber *)userID
                                 completion:(void (^)(NSDictionary *, NSError *))completion;
-+ (void)sendDeclineContactRequestFromUserId:(int)userId
++ (void)sendDeclineContactRequestFromUserID:(NSNumber *)userID
                                  completion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Checkins
@@ -65,13 +55,10 @@
 
 + (void)checkOutWithCompletion:(void(^)(NSDictionary *json, NSError *error))completion;
 
-+ (void)getCurrentCheckInsCountAtVenue:(CPVenue *)venue 
-                        withCompletion:(void (^)(NSDictionary *, NSError *))completion;
-
 + (void)getDefaultCheckInVenueWithCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - User Profile
-+ (void)getResumeForUserId:(int)userId
++ (void)getResumeForUserID:(NSNumber *)userID
                      queue:(NSOperationQueue *)operationQueue
                 completion:(void(^)(NSDictionary *json, NSError *error))completion;
 + (void)getUserProfileWithCompletionBlock:(void(^)(NSDictionary *json, NSError *error))completion;
@@ -80,19 +67,13 @@
                    andCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Love
-+ (void)sendLoveToUserWithID:(int)recieverID
++ (void)sendLoveToUserWithID:(NSNumber *)recieverID
                  loveMessage:(NSString *)loveMessage
                      skillID:(NSUInteger)skillID
                   completion:(void(^)(NSDictionary *json, NSError *error))completion;
 
 + (void)sendPlusOneForLoveWithID:(int)reviewID 
                     completion:(void(^)(NSDictionary *json, NSError *error))completion;
-
-+ (void)sendPlusOneForLoveWithID:(int)reviewID 
-     fromVenueChatForVenueWithID:(int)venueID
-                 lastChatEntryID:(int)lastID
-                       chatQueue:(NSOperationQueue *)chatQueue
-                      completion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Skills
 + (void)getSkillsForUser:(NSNumber *)userID 
@@ -105,11 +86,6 @@
 
 #pragma mark - Contact List
 + (void)getContactListWithCompletionsBlock:(void(^)(NSDictionary *json, NSError *error))completion;
-
-+ (void)getVenuesInSWCoords:(CLLocationCoordinate2D)SWCoord
-                andNECoords:(CLLocationCoordinate2D)NECoord
-               userLocation:(CLLocation *)userLocation
-              withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - User Settings
 

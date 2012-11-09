@@ -15,10 +15,11 @@
 #import "UserProfileLinkedInViewController.h"
 #import "FaceToFaceHelper.h"
 #import "CPUserAction.h"
+#import "CPMarkerManager.h"
 
 #define kResumeWebViewOffsetTop 304
 
-@interface UserProfileViewController() <UIWebViewDelegate, UIActionSheetDelegate, GRMustacheTemplateDelegate>
+@interface UserProfileViewController() <UIWebViewDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapRecon;
 @property (strong, nonatomic) NSString* resumeHTML;
@@ -63,15 +64,6 @@
 @end
 
 @implementation UserProfileViewController
-
-static GRMustacheTemplate *resumeTemplate;
-
-+ (GRMustacheTemplate*) resumeTemplate {
-    if (!resumeTemplate) {
-        resumeTemplate = [GRMustacheTemplate templateFromResource:@"UserResume" bundle:nil error:NULL];
-    }
-    return resumeTemplate;
-}
 
 #pragma mark - View lifecycle
 
@@ -158,7 +150,7 @@ static GRMustacheTemplate *resumeTemplate;
     self.tapRecon = nil;
 }
 
-- (void)setUser:(User *)newUser
+- (void)setUser:(CPUser *)newUser
 {
     // assign the user
     _user = newUser;
@@ -266,7 +258,7 @@ static GRMustacheTemplate *resumeTemplate;
     self.venueName.text = self.user.placeCheckedIn.name;
     self.venueAddress.text = self.user.placeCheckedIn.address;
     
-    self.othersAtPlace = self.user.checkedIn ? self.user.placeCheckedIn.checkinCount - 1 : self.user.placeCheckedIn.checkinCount;
+    self.othersAtPlace = self.user.checkedIn ? [self.user.placeCheckedIn.checkedInNow intValue] - 1 : [self.user.placeCheckedIn.checkedInNow intValue];
     
     if (self.firstLoad) {
         if (self.othersAtPlace == 0) {
@@ -368,14 +360,15 @@ static GRMustacheTemplate *resumeTemplate;
     });
 }
 
-- (NSString *)htmlStringWithResumeText {
+- (NSString *)htmlStringWithResumeText
+{
     if (!self.resumeHTML) {
         NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.user, @"user",nil];
         NSArray *reviews = [self.user.reviews objectForKey:@"rows"];
         
         NSDictionary *originalData = @{
             @"reviews": reviews,
-            @"user_id": @(self.user.userID),
+            @"user_id": self.user.userID,
             @"server_api_url": [NSString stringWithFormat:@"%@api.php", kCandPWebServiceUrl]
         };
         NSError *error;
@@ -388,10 +381,16 @@ static GRMustacheTemplate *resumeTemplate;
         [dictionary setValue:[NSNumber numberWithBool:reviews.count > 0] forKey:@"hasAnyReview"];
         [dictionary setValue:originalDataJSON forKey:@"originalData"];
         
-        GRMustacheTemplate *template = [UserProfileViewController resumeTemplate];
-        template.delegate = self;
-        self.resumeHTML = [template renderObject:dictionary];
+        NSError *mustacheError;       
+        self.resumeHTML = [GRMustacheTemplate renderObject:dictionary fromResource:@"UserResume" bundle:nil error:&mustacheError];
+        
+#if DEBUG
+        if (mustacheError) {
+            NSLog(@"Error mustaching user resume: %@", mustacheError.localizedDescription);
+        }
+#endif
     }
+    
     return self.resumeHTML;
 }
 
@@ -410,14 +409,14 @@ static GRMustacheTemplate *resumeTemplate;
     NSURL *url = [request URL];
     
     if ([url.scheme isEqualToString:@"favorite-venue-id"]) {
-        NSInteger venueID = [url.host integerValue];
+        NSNumber *venueID = @([url.host integerValue]);
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"venueID == %d", venueID];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"venueID == %@", venueID];
         NSMutableArray *venues = self.user.favoritePlaces;
         [venues filterUsingPredicate:predicate];
         CPVenue *place = [venues objectAtIndex:0];
         
-        CPVenue *activeVenue = [[CPAppDelegate settingsMenuController].mapTabController venueFromActiveVenues:venueID];
+        CPVenue *activeVenue = [[CPMarkerManager sharedManager] markerVenueWithID:venueID];
         if (activeVenue) {
             // we had this venue in the map dictionary of activeVenues so use that
             place = activeVenue;
@@ -541,19 +540,20 @@ static GRMustacheTemplate *resumeTemplate;
     [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
 
+
 #pragma mark - CPUserActionCellDelegate
 
-- (void)cell:(CPUserActionCell*)cell didSelectSendLoveToUser:(User*)user
+- (void)cell:(CPUserActionCell*)cell didSelectSendLoveToUser:(CPUser *)user
 {
     [CPUserAction cell:cell sendLoveFromViewController:self];
 }
 
-- (void)cell:(CPUserActionCell*)cell didSelectSendMessageToUser:(User*)user
+- (void)cell:(CPUserActionCell*)cell didSelectSendMessageToUser:(CPUser *)user
 {
     [CPUserAction cell:cell sendMessageFromViewController:self];
 }
 
-- (void)cell:(CPUserActionCell*)cell didSelectExchangeContactsWithUser:(User*)user
+- (void)cell:(CPUserActionCell*)cell didSelectExchangeContactsWithUser:(CPUser *)user
 {
     [CPUserAction cell:cell exchangeContactsFromViewController:self];
 }

@@ -254,54 +254,6 @@
     return [UIImage imageNamed:@"default-avatar-256"];
 }
 
-+ (void)manageVirtualBadgeForProfileImageView:(UIImageView *)profileImageView
-                             checkInIsVirtual:(BOOL)checkInIsVirtual
-{
-    //This function adds a "V" badge to the lower right hand corner of the profileImage
-    int subViewCount = profileImageView.subviews.count;
-    if(subViewCount > 0)
-    {
-        if(subViewCount > 1)
-        {
-            //Ideally there would be a better way to identify the subviews so that
-            //if a future developer adds another subview we can only hide the virtual
-            //badge
-            NSLog(@"MultipleSubviews!  The incorrect subview could be getting hidden!");
-        }
-        UIImageView *currentProfileView = [profileImageView.subviews objectAtIndex:0];
-        if(checkInIsVirtual)
-        {
-            currentProfileView.hidden = NO;
-        }
-        else {
-            currentProfileView.hidden = YES;
-        }
-        /*
-        for(int i = 0; i < subViewCount; i++)
-        {
-            UIImage *tmpImage = [[profileImageView.subviews objectAtIndex:i] image];
-            int test = 5;
-        }
-         */
-
-        
-    }
-    else 
-    {
-        if(checkInIsVirtual)
-        {
-            UIImageView *badgeImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"virtual-check-in-badge"]];
-            //Make badge a fraction of the size of the profile image and place it in the lower right corner
-            int fractionSize = 3;
-            badgeImageView.frame = CGRectMake(profileImageView.frame.size.width-profileImageView.frame.size.width/fractionSize,
-                                              profileImageView.frame.size.height-profileImageView.frame.size.height/fractionSize,
-                                              (profileImageView.frame.size.width/fractionSize),
-                                              (profileImageView.frame.size.height/fractionSize));
-            [profileImageView addSubview:badgeImageView];
-        }
-    }
-}
-
 + (void)profileImageView:(UIImageView *)imageView
      withProfileImageUrl:(NSURL *)photoUrl
 {

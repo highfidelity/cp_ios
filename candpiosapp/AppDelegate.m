@@ -49,20 +49,9 @@
 
 - (BOOL)application:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    // Override point for customization after application launch.
-    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
-
-    // create the signal action structure 
-    struct sigaction newSignalAction;
-    // initialize the signal action structure
-    memset(&newSignalAction, 0, sizeof(newSignalAction));
-    // set SignalHandler as the handler in the signal action structure
-    newSignalAction.sa_handler = &SignalHandler;
-    // set SignalHandler as the handlers for SIGABRT, SIGILL and SIGBUS
-    sigaction(SIGABRT, &newSignalAction, NULL);
-    sigaction(SIGILL, &newSignalAction, NULL);
-    sigaction(SIGBUS, &newSignalAction, NULL);
+{    
+    // temporarily handle decoding of old User object
+    [NSKeyedUnarchiver setClass:[CPUser class] forClassName:@"User"];
     
     [self setupTestFlightSDK];
     [self setupFlurryAnalytics];
@@ -303,7 +292,7 @@ didReceiveRemoteNotification:(NSDictionary*)userInfo
         [alertView show];
         
     } else if ([userInfo valueForKey:kContactRequestAPNSKey]) {        
-        [FaceToFaceHelper presentF2FInviteFromUser:[[userInfo valueForKey:kContactRequestAPNSKey] intValue]];
+        [FaceToFaceHelper presentF2FInviteFromUserID:@([[userInfo valueForKey:kContactRequestAPNSKey] intValue])];
     } else if ([userInfo valueForKey:kContactRequestAcceptedAPNSKey]) {
         [FaceToFaceHelper presentF2FSuccessFrom:[userInfo valueForKey:@"acceptor"]];
     } else {
@@ -361,10 +350,10 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 - (void)pushAliasUpdate {
     // Set my UserID as an UrbanAirship alias for push notifications
-    NSString *userid = [NSString stringWithFormat:@"%d", [CPUserDefaultsHandler currentUser].userID];
+    NSString *userIDString = [[CPUserDefaultsHandler currentUser].userID stringValue];
     
-    NSLog(@"Attempting to register user alias %@ with UrbanAirship", userid);
-    [UAPush shared].alias = userid;
+    NSLog(@"Attempting to register user alias %@ with UrbanAirship", userIDString);
+    [UAPush shared].alias = userIDString;
     [[UAPush shared] updateRegistration];
 }
 
@@ -388,7 +377,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 -(void)setupFlurryAnalytics
 {
-    [FlurryAnalytics startSession:flurryAnalyticsKey];
+    [Flurry startSession:flurryAnalyticsKey];
     
     // See what notifications the user has set and push to Flurry
     UIRemoteNotificationType types = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
@@ -411,7 +400,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
         }
     }
     [flurryParams setValue:alertValue forKey:@"Notifications"];
-    [FlurryAnalytics logEvent:@"enabled_notifications" withParameters:flurryParams];
+    [Flurry logEvent:@"enabled_notifications" withParameters:flurryParams];
     NSLog(@"Notification types: %@", flurryParams);
 }
 
@@ -462,7 +451,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 }
 
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
-    [[CPGeofenceHandler sharedHandler] hanldeAutoCheckOutForRegion:region];
+    [[CPGeofenceHandler sharedHandler] handleAutoCheckOutForRegion:region];
 }
 
 - (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error
@@ -573,17 +562,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     }
 }
 
-#pragma mark - Crash Handlers
-
-void uncaughtExceptionHandler(NSException *exception) {
-    [FlurryAnalytics logError:@"Uncaught" message:@"Crash!" exception:exception];
-}
-
-void SignalHandler(int sig) {
-    // NSLog(@"This is where we save the application data during a signal");
-    // Save application data on crash
-}
-
 #pragma mark - appCache
 - (NSCache *)appCache
 {
@@ -614,8 +592,8 @@ void SignalHandler(int sig) {
         }
     } else if (alertView.tag == kContactEndorsedTag && alertView.firstOtherButtonIndex == buttonIndex) {
 
-        User *user = [[User alloc] init];
-        user.userID = [[userInfo objectForKey:kContactEndorsedAPNSKey] intValue];
+        CPUser *user = [[CPUser alloc] init];
+        user.userID = @([[userInfo objectForKey:kContactEndorsedAPNSKey] intValue]);
         
         UserProfileViewController *vc = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone"
                                                                    bundle:nil] instantiateInitialViewController];

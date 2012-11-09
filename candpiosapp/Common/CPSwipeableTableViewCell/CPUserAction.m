@@ -26,7 +26,7 @@
         cell.selected = NO;
         return;
     }    
-    if (cell.user.userID == [CPUserDefaultsHandler currentUser].userID) {
+    if ([cell.user.userID isEqualToNumber:[CPUserDefaultsHandler currentUser].userID]) {
         // cheeky response for self-talk
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Self-Love" 
                                                             message:@"Feeling lonely?  Try sharing some love with others." 
@@ -38,7 +38,7 @@
     }
     if ([CPUserDefaultsHandler currentUser]) {
         // only show the love modal if this isn't the user themselves
-        if (cell.user.userID != [CPUserDefaultsHandler currentUser].userID) {
+        if (![cell.user.userID isEqualToNumber:[CPUserDefaultsHandler currentUser].userID]) {
             UserLoveViewController *loveModal = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"SendLoveModal"];
             loveModal.user = cell.user;
             
@@ -53,8 +53,8 @@
         [CPUserSessionHandler showLoginBanner];
         cell.selected = NO;
         return;
-    }    
-    if (cell.user.userID == [CPUserDefaultsHandler currentUser].userID) {
+    }
+    if ([cell.user.userID isEqualToNumber:[CPUserDefaultsHandler currentUser].userID]) {
         // cheeky response for self-talk
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Self-Chat" 
                                                             message:@"γνῶθι σεαυτόν (Know Thyself)\n--The Temple of Delphi" 
@@ -67,7 +67,7 @@
     // get a user object with resume data.. which includes its contact settings
     [cell.user loadUserResumeOnQueue:nil completion:^(NSError *error) {
         if (!error) {
-            if (cell.user.contactsOnlyChat && !cell.user.isContact && !cell.user.hasChatHistory) {
+            if (cell.user.contactsOnlyChat && ![cell.user.isContact boolValue] && !cell.user.hasChatHistory) {
                 NSString *errorMessage = [NSString stringWithFormat:@"You can not chat with %@ until the two of you have exchanged contact information", cell.user.nickname];
                 [SVProgressHUD showErrorWithStatus:errorMessage
                                           duration:kDefaultDismissDelay];

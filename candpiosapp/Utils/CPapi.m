@@ -235,17 +235,17 @@
 #pragma mark - One-on-One Chat
 
 + (void)sendOneOnOneChatMessage:(NSString *)message
-                        toUser:(int)userId
+                        toUserID:(NSNumber *)userID
 {
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setValue:message forKey:@"message"];
-    [parameters setValue:[NSString stringWithFormat:@"%d", userId] forKey:@"toUserId"];
+    [parameters setValue:[NSString stringWithFormat:@"%@", userID] forKey:@"toUserId"];
     
     [self makeHTTPRequestWithAction:@"oneOnOneChatFromMobile"
                      withParameters:parameters
                     responseHandler:@selector(oneOnOneChatResponseHandler:)];
-    [FlurryAnalytics logEvent:@"sentChatMessage"];
+    [Flurry logEvent:@"sentChatMessage"];
 }
 
 + (void)oneOnOneChatResponseHandler:(NSData *)response
@@ -253,15 +253,11 @@
     NSLog(@"One on one chat sent, or something: %@", response);
 }
 
-+ (void)oneOnOneChatGetHistoryWith:(User *)user
++ (void)oneOnOneChatGetHistoryWith:(CPUser *)user
                         completion:(void (^)(NSDictionary *, NSError *))completion
 {    
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:[NSString stringWithFormat:@"%d", user.userID]
-                  forKey:@"other_user"];
-    
     [self makeHTTPRequestWithAction:@"getOneOnOneChatHistory"
-                     withParameters:parameters
+                     withParameters:[@{@"other_user": [NSString stringWithFormat:@"%@", user.userID]} mutableCopy]
                          completion:completion];
 }
 
@@ -271,10 +267,10 @@
     [self makeHTTPRequestWithAction:@"getNumberOfContactRequests" withParameters:nil completion:completion];
 }
 
-+ (void)sendContactRequestToUserId:(int)userId {
++ (void)sendContactRequestToUserID:(NSNumber *)userID {
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   [NSString stringWithFormat:@"%d", userId], @"acceptor_id",
+                                   [NSString stringWithFormat:@"%@", userID], @"acceptor_id",
                                    nil];
     
     [SVProgressHUD showWithStatus:@"Sending Request..."];
@@ -310,74 +306,35 @@
              [CPAppDelegate settingsMenuController].f2fInviteAlert = alert;
          }
          
-         [FlurryAnalytics logEvent:@"contactRequestSent"];
+         [Flurry logEvent:@"contactRequestSent"];
     }];
 }
 
-+ (void)sendAcceptContactRequestFromUserId:(int)userId
++ (void)sendAcceptContactRequestFromUserID:(NSNumber *)userID
                                 completion:(void (^)(NSDictionary *, NSError *))completion {
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   [NSString stringWithFormat:@"%d", userId], @"initiator_id",
+                                   [NSString stringWithFormat:@"%@", userID], @"initiator_id",
                                    nil];
     
     [self makeHTTPRequestWithAction:@"acceptContactRequest"
                      withParameters:params
                          completion:completion];
-    [FlurryAnalytics logEvent:@"contactRequestAccepted"];
+    [Flurry logEvent:@"contactRequestAccepted"];
 }
 
-+ (void)sendDeclineContactRequestFromUserId:(int)userId
++ (void)sendDeclineContactRequestFromUserID:(NSNumber *)userID
                                  completion:(void (^)(NSDictionary *, NSError *))completion {
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   [NSString stringWithFormat:@"%d", userId], @"initiator_id",
+                                   [NSString stringWithFormat:@"%@", userID], @"initiator_id",
                                    nil];
     
     [self makeHTTPRequestWithAction:@"declineContactRequest"
                      withParameters:params
                          completion:completion];
-    [FlurryAnalytics logEvent:@"contactRequestDeclined"];    
+    [Flurry logEvent:@"contactRequestDeclined"];    
 }
 
 # pragma mark - Map Dataset
-+ (void)getVenuesWithCheckinsWithinSWCoordinate:(CLLocationCoordinate2D)swCoord
-                                   NECoordinate:(CLLocationCoordinate2D)neCoord
-                                   userLocation:(CLLocationCoordinate2D)userLocation
-                                 checkedInSince:(CGFloat)numberOfDays
-                                          mapQueue:(NSOperationQueue *)mapQueue 
-                                 withCompletion:(void (^)(NSDictionary *, NSError *))completion
-{
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setValue:[NSString stringWithFormat:@"%f", swCoord.latitude] forKey:@"sw_lat"];
-    [params setValue:[NSString stringWithFormat:@"%f", swCoord.longitude] forKey:@"sw_lng"];
-    [params setValue:[NSString stringWithFormat:@"%f", neCoord.latitude] forKey:@"ne_lat"];
-    [params setValue:[NSString stringWithFormat:@"%f", neCoord.longitude] forKey:@"ne_lng"];
-    [params setValue:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970] - (86400 * numberOfDays)] forKey:@"checked_in_since"];
-    
-    // TODO: shouldn't we be able to do the distance sorting locally on the phone?
-    [params setValue:[NSString stringWithFormat:@"%f", userLocation.latitude] forKey:@"user_lat"];
-    [params setValue:[NSString stringWithFormat:@"%f", userLocation.longitude] forKey:@"user_lng"];
-    
-    [params setValue:kCandPAPIVersion forKey:@"version"];
-    
-    // 9 second timeout on this call, the map will try and reload every 10s anyways
-    [self makeHTTPRequestWithAction:@"getVenuesAndUsersWithCheckinsInBoundsDuringInterval" withParameters:params queue:mapQueue timeout:9 completion:completion];
-}
-
-+ (void)getNearestVenuesWithActiveFeeds:(CLLocationCoordinate2D)coordinate
-                             completion:(void (^)(NSDictionary *, NSError *))completion
-{
-    // Venues with active feeds.. generally centered around the user
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setValue:[NSString stringWithFormat:@"%f", coordinate.latitude] forKey:@"lat"];
-    [params setValue:[NSString stringWithFormat:@"%f", coordinate.longitude] forKey:@"lng"];
-    
-    [self makeHTTPRequestWithAction:@"getNearestVenuesWithActiveFeeds"
-                     withParameters:params
-                              queue:nil
-                            timeout:9
-                         completion:completion];
-}
-
 + (void)getNearestVenuesWithCheckinsToCoordinate:(CLLocationCoordinate2D)coordinate
                                      mapQueue:(NSOperationQueue *)mapQueue
                                completion:(void (^)(NSDictionary *, NSError *))completion
@@ -428,25 +385,17 @@
                          completion:completion];
 }
 
-+ (void)getCurrentCheckInsCountAtVenue:(CPVenue *)venue 
-                        withCompletion:(void (^)(NSDictionary *, NSError *))completion
-{
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:[NSString stringWithFormat:@"%d", venue.venueID] forKey:@"venue_id"];
-    [self makeHTTPRequestWithAction:@"getVenueCheckInsCount" withParameters:parameters completion:completion];
-}
-
 + (void)getDefaultCheckInVenueWithCompletion:(void (^)(NSDictionary *, NSError *))completion
 {
     [self makeHTTPRequestWithAction:@"getDefaultCheckInVenue" withParameters:nil completion:completion];   
 }
 
-+ (void)getResumeForUserId:(int)userId
++ (void)getResumeForUserID:(NSNumber *)userID
                      queue:(NSOperationQueue *)operationQueue
              completion:(void (^)(NSDictionary *, NSError *))completion
 {
     // params dict with user id
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d", userId], @"user_id", nil];
+    NSMutableDictionary *parameters = [@{@"user_id":[NSString stringWithFormat:@"%@", userID]} mutableCopy];
     
     // make the request
     [self makeHTTPRequestWithAction:@"getResume"
@@ -459,25 +408,6 @@
 {
     [self makeHTTPRequestWithAction:@"getUserData"
                      withParameters:nil
-                         completion:completion];
-}
-
-+ (void)getVenuesInSWCoords:(CLLocationCoordinate2D)SWCoord
-                andNECoords:(CLLocationCoordinate2D)NECoord
-               userLocation:(CLLocation *)userLocation
-             withCompletion:(void (^)(NSDictionary *, NSError *))completion
-{
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:[NSString stringWithFormat:@"%f", SWCoord.latitude] forKey:@"sw_lat"];
-    [parameters setValue:[NSString stringWithFormat:@"%f", SWCoord.longitude] forKey:@"sw_lng"];
-    [parameters setValue:[NSString stringWithFormat:@"%f", NECoord.latitude] forKey:@"ne_lat"];
-    [parameters setValue:[NSString stringWithFormat:@"%f", NECoord.longitude] forKey:@"ne_lng"];
-    
-    [parameters setValue:[NSString stringWithFormat:@"%f", userLocation.coordinate.latitude] forKey:@"lat"];
-    [parameters setValue:[NSString stringWithFormat:@"%f", userLocation.coordinate.longitude] forKey:@"lng"];
-    
-    [self makeHTTPRequestWithAction:@"getVenuesInBounds"
-                     withParameters:parameters
                          completion:completion];
 }
 
@@ -507,18 +437,18 @@
 
 # pragma mark - Love
 
-+ (void)sendLoveToUserWithID:(int)recieverID 
++ (void)sendLoveToUserWithID:(NSNumber *)recieverID
                  loveMessage:(NSString *)message
                      skillID:(NSUInteger)skillID 
                   completion:(void (^)(NSDictionary *, NSError *))completion
 {
     NSMutableDictionary *reviewParams = [NSMutableDictionary dictionaryWithCapacity:2];
-    [reviewParams setObject:[NSString stringWithFormat:@"%d", recieverID] forKey:@"recipientID"];
+    [reviewParams setObject:[NSString stringWithFormat:@"%@", recieverID] forKey:@"recipientID"];
     [reviewParams setObject:[NSString stringWithFormat:@"%d", skillID] forKey:@"skill_id"];
     [reviewParams setObject:message forKey:@"reviewText"];
     
     [self makeHTTPRequestWithAction:@"sendLove" withParameters:reviewParams completion:completion];
-    [FlurryAnalytics logEvent:@"sentLove"];
+    [Flurry logEvent:@"sentLove"];
 }
 
 
@@ -531,24 +461,7 @@
     
     // make the request
     [self makeHTTPRequestWithAction:@"sendPlusOneForLove" withParameters:parameters completion:completion];
-    [FlurryAnalytics logEvent:@"sentPlusOneForLove"];
-}
-
-+ (void)sendPlusOneForLoveWithID:(int)reviewID 
-     fromVenueChatForVenueWithID:(int)venueID
-                 lastChatEntryID:(int)lastID
-                       chatQueue:(NSOperationQueue *)chatQueue
-                      completion:(void (^)(NSDictionary *, NSError *))completion
-{
-    // setup the parameters dictionary
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:3];
-    [parameters setValue:[NSString stringWithFormat:@"%d", reviewID] forKey:@"review_id"];
-    [parameters setValue:[NSString stringWithFormat:@"%d", venueID] forKey:@"venue_id"];
-    [parameters setValue:[NSString stringWithFormat:@"%d", lastID] forKey:@"last_id"];
-    
-    // make the request
-    [self makeHTTPRequestWithAction:@"sendPlusOneForLove" withParameters:parameters queue:chatQueue completion:completion];
-    [FlurryAnalytics logEvent:@"sentPlusOneForLoveFromVenueChat"];
+    [Flurry logEvent:@"sentPlusOneForLove"];
 }
 
 # pragma mark - Skills
@@ -663,7 +576,7 @@
         
         // setup the request to pass the image
         NSURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:@"api.php" parameters:params constructingBodyWithBlock: ^(id <AFMultipartFormData> formData) {
-            [formData appendPartWithFileData:imageData name:@"profile" fileName:[NSString stringWithFormat:@"%d_iPhone_Profile_Upload.jpeg", [CPUserDefaultsHandler currentUser].userID] mimeType:@"image/jpeg"];
+            [formData appendPartWithFileData:imageData name:@"profile" fileName:[NSString stringWithFormat:@"%@_iPhone_Profile_Upload.jpeg", [CPUserDefaultsHandler currentUser].userID] mimeType:@"image/jpeg"];
         }];
         
         // go back to the main queue and make the request (the makeHTTPRequest method will queue it in an operation queue)
@@ -702,11 +615,11 @@
 {
     NSLog(@"Saving checkin status of %d for venue: %@", venue.autoCheckin, venue.name);
 
-    NSInteger currentUserID = [[CPUserDefaultsHandler currentUser] userID];
+    NSNumber *currentUserID = [[CPUserDefaultsHandler currentUser] userID];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:[NSString stringWithFormat:@"%d", currentUserID] forKey:@"user_id"];
-    [parameters setValue:[NSString stringWithFormat:@"%d", venue.venueID] forKey:@"venue_id"];
+    [parameters setValue:[NSString stringWithFormat:@"%@", currentUserID] forKey:@"user_id"];
+    [parameters setValue:venue.venueID forKey:@"venue_id"];
     [parameters setValue:[NSString stringWithFormat:@"%d", venue.autoCheckin] forKey:@"autocheckin"];
     
     [self makeHTTPRequestWithAction:@"saveVenueAutoCheckinStatus"

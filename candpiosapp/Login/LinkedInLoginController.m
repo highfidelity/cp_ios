@@ -7,7 +7,7 @@
 //
 
 #import "LinkedInLoginController.h"
-#import "FlurryAnalytics.h"
+#import "Flurry.h"
 #import "OAConsumer.h"
 #import "OAMutableURLRequest.h"
 #import "OADataFetcher.h"
@@ -311,7 +311,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
         [loginParams setObject:password forKey:@"signupConfirm"];
         [loginParams setObject:@"0" forKey:@"reactivate"];
         [loginParams setObject:@"mobileSignup" forKey:@"action"];
-
+        
         [self makeSignupRequest:loginParams];
     }
 }
@@ -384,8 +384,8 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
         }
     } else {
         // handle candp:// url scheme
-        if ([[UIApplication sharedApplication]canOpenURL:request.URL]) {
-            [[UIApplication sharedApplication]openURL:request.URL];
+        if ([[UIApplication sharedApplication] canOpenURL:request.URL]) {
+            [[UIApplication sharedApplication] openURL:request.URL];
         }
         return NO;
     }
@@ -440,7 +440,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                                                      [alertView show];
                                                  } else {
                                                      [self setLoginData:JSON];
-                                                     if([status isEqualToString:@"welcome-back"]) {
+                                                     if ([status isEqualToString:@"welcome-back"]) {
 
                                                          NSString *infoMessage = @"Welcome back!"
                                                          @"\nYour inactive account has been reactivated and you have been logged in.";
@@ -493,14 +493,14 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                 [[CPCheckinHandler sharedHandler] setCheckedOut];
             }
 
-            [FlurryAnalytics logEvent:@"login_linkedin"];
-            [FlurryAnalytics setUserID:userId];
+            [Flurry logEvent:@"login_linkedin"];
+            [Flurry setUserID:userId];
             
             [CPUserSessionHandler performAfterLoginActions];
         }
     }
     @catch (NSException* ex) {
-        [FlurryAnalytics logError:@"login_linkedin"
+        [Flurry logError:@"login_linkedin"
                           message:ex.description
                         exception:ex];
 

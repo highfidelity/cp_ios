@@ -10,6 +10,10 @@
 
 @interface MKAnnotationView (SpecialPin)
 
-- (void)setPin:(NSInteger)number hasCheckins:(BOOL)checkins hasVirtual:(BOOL)virtual isSolar:(BOOL)solar withLabel:(BOOL)withLabel;
+- (void)setPin:(NSNumber *)number
+   hasCheckins:(BOOL)checkins
+   hasContacts:(BOOL)hasContacts
+       isSolar:(BOOL)solar
+     withLabel:(BOOL)withLabel;
 
 @end

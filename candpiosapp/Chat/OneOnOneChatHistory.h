@@ -10,11 +10,11 @@
 
 @interface OneOnOneChatHistory : ChatHistory
 
-@property (strong, nonatomic) User *myUser;
-@property (strong, nonatomic) User *otherUser;
+@property (strong, nonatomic) CPUser *myUser;
+@property (strong, nonatomic) CPUser *otherUser;
 
-- (id)initWithMyUser:(User *)myUser
-        andOtherUser:(User *)otherUser;
+- (id)initWithMyUser:(CPUser *)myUser
+        andOtherUser:(CPUser *)otherUser;
 
 - (void)loadChatHistoryWithSuccessBlock:(void (^)())successfulLoading;
 

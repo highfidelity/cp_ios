@@ -71,7 +71,7 @@ static CPCheckinHandler *sharedHandler;
     // Save current place to venue defaults as it's used in several places in the app
     [CPUserDefaultsHandler setCurrentVenue:venue];
     
-    if (!venue.isNeighborhood) {
+    if (![venue.isNeighborhood boolValue]) {
         // If this is the user's first check in to this venue and auto-checkins are enabled,
         // ask the user about checking in automatically to this venue in the future
         
@@ -152,7 +152,7 @@ static CPCheckinHandler *sharedHandler;
     }
     
     // only add this neighborhood to the list of past venues if it's not a neighborhood
-    if (!venue.isNeighborhood) {
+    if (![venue.isNeighborhood boolValue]) {
         [[CPGeofenceHandler sharedHandler] updatePastVenue:venue];
     }
     

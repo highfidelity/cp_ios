@@ -13,10 +13,10 @@
 #import "SettingsMenuController.h"
 #import "CPTabBarController.h"
 #import <CoreLocation/CoreLocation.h>
-#import "FlurryAnalytics.h"
+#import "Flurry.h"
 
 @class AFHTTPClient;
-@class User;
+@class CPUser;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate, CLLocationManagerDelegate>
 

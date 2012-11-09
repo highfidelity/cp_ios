@@ -36,7 +36,7 @@ static CPChatHelper *sharedHelper;
 
     NSString *unescapedMessage = [message gtm_stringByUnescapingFromHTML];
     
-    if ([sharedHelper activeChatViewController].user.userID == userId) {
+    if ([[sharedHelper activeChatViewController].user.userID integerValue] == userId) {
         
         // If the person is in the chat window AND is talking with the user that
         // sent the chat send the message straight to the chat window
@@ -58,7 +58,7 @@ static CPChatHelper *sharedHelper;
         
         NSDictionary *chatInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
                                   unescapedMessage, @"message",
-                                  [NSString stringWithFormat:@"%d", userId], @"userid",
+                                  @(userId), @"userid",
                                   nickname, @"nickname",
                                   nil];
         alert.delegate = self;
@@ -76,16 +76,13 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 {    
     if (alertView.tag == kChatAlertTag) {
         if (buttonIndex == 1) {
-            NSString *userId   = [alertView.context objectForKey:@"userid"];
-            NSString *nickname = [alertView.context objectForKey:@"nickname"];
-            
             OneOnOneChatViewController *oneOnOneChat = [[UIStoryboard storyboardWithName:@"UserProfileStoryboard_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"OneOnOneChatView"];
             
             UINavigationController *chatNavController = [[UINavigationController alloc] initWithRootViewController:oneOnOneChat];
             
-            oneOnOneChat.user = [[User alloc] init];
-            oneOnOneChat.user.userID = [userId intValue];
-            oneOnOneChat.user.nickname = nickname;
+            oneOnOneChat.user = [[CPUser alloc] init];
+            oneOnOneChat.user.userID = alertView.context[@"userid"];
+            oneOnOneChat.user.nickname = alertView.context[@"nickname"];
 
             // Set up the view
             [oneOnOneChat addCloseButton];

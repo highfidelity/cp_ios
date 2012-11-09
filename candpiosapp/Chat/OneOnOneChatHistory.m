@@ -11,8 +11,8 @@
 
 @implementation OneOnOneChatHistory
 
-- (id)initWithMyUser:(User *)myUser
-        andOtherUser:(User *)otherUser
+- (id)initWithMyUser:(CPUser *)myUser
+        andOtherUser:(CPUser *)otherUser
 {
     if (self = [super init]) {
         if (!myUser ||!otherUser)
@@ -61,10 +61,10 @@
                 NSString *messageString = [[chatDict valueForKey:@"entry_text"] gtm_stringByUnescapingFromHTML];
                 
                 // Extract user details from json...
-                User *fromUser = nil;
-                User *toUser = nil;
-                int chatUserId = [[chatDict valueForKey:@"user_id"] intValue];
-                if (chatUserId == self.myUser.userID)
+                CPUser *fromUser = nil;
+                CPUser *toUser = nil;
+                NSNumber *chatUserID = @([[chatDict valueForKey:@"user_id"] intValue]);
+                if ([chatUserID isEqualToNumber:self.myUser.userID])
                 {
                     fromUser = self.myUser;
                     toUser = self.otherUser;

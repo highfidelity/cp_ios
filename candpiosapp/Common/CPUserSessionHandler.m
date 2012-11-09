@@ -85,7 +85,6 @@ static CPUserSessionHandler *sharedHandler;
     // alert to state change
     if ([CPUserDefaultsHandler currentUser]) {
         [CPUserDefaultsHandler setCurrentUser:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginStateChanged" object:nil];
     }
     
     [[CPCheckinHandler sharedHandler] setCheckedOut];
@@ -96,12 +95,11 @@ static CPUserSessionHandler *sharedHandler;
 
 + (void)storeUserLoginDataFromDictionary:(NSDictionary *)userInfo
 {
-    NSString *userId = [userInfo objectForKey:@"id"];
     NSString  *nickname = [userInfo objectForKey:@"nickname"];
     
-    User *currUser = [[User alloc] init];
+    CPUser *currUser = [[CPUser alloc] init];
     currUser.nickname = nickname;
-    currUser.userID = [userId intValue];
+    currUser.userID = @([[userInfo objectForKey:@"id"] intValue]);
     [currUser setJoinDateFromJSONString:[userInfo objectForKey:@"join_date"]];
     currUser.profileURLVisibility = [userInfo objectForKey:@"profileURL_visibility"];
     
@@ -139,9 +137,9 @@ static CPUserSessionHandler *sharedHandler;
 
 + (void)syncCurrentUserWithWebAndCheckValidLogin
 {
-    User *currentUser = [CPUserDefaultsHandler currentUser];
+    CPUser *currentUser = [CPUserDefaultsHandler currentUser];
     if (currentUser.userID) {
-        User *webSyncUser = [[User alloc] init];
+        CPUser *webSyncUser = [[CPUser alloc] init];
         webSyncUser.userID = currentUser.userID;
 
         [webSyncUser loadUserResumeOnQueue:nil completion:^(NSError *error) {
