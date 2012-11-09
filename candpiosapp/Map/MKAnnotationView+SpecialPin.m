@@ -12,6 +12,7 @@
 
 - (void)setPin:(NSNumber *)number
    hasCheckins:(BOOL)checkins
+    hasContacts:(BOOL)hasContacts
        isSolar:(BOOL)solar
      withLabel:(BOOL)withLabel {
     CGFloat fontSize = 20;
@@ -22,9 +23,14 @@
         imageName = @"pin-solar";
     } else {
         // If no one is currently checked in, use the smaller image
-        if (checkins) {            
-            imageName = @"pin-checkedin";
-            labelFrame = CGRectMake(0, 15, 93, 20);
+        if (checkins) {
+            if (hasContacts) {
+                imageName = @"pin-checkedin-with-contacts";
+                labelFrame = CGRectMake(0, 23, 93, 20);
+            } else {
+                imageName = @"pin-checkedin";
+                labelFrame = CGRectMake(0, 15, 93, 20);
+            }
         } else {
             labelFrame = CGRectMake(0, 9, 54, 12);
             imageName = @"pin-checkedout";

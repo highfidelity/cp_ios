@@ -298,11 +298,11 @@
         BOOL solar = [placeAnn.specialVenueType isEqual:@"solar"];
         
         if ([placeAnn.checkedInNow intValue] == 0) {
-            [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO isSolar:solar withLabel:NO];
+            [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO hasContacts:NO isSolar:solar withLabel:NO];
             [self adjustScaleForPin:pin forNumberOfPeople:placeAnn.weeklyCheckinCount];
         }
         else {
-            [pin setPin:placeAnn.checkedInNow hasCheckins:YES isSolar:solar withLabel:YES];
+            [pin setPin:placeAnn.checkedInNow hasCheckins:YES hasContacts:[placeAnn.hasCheckedInContacts boolValue] isSolar:solar withLabel:YES];
             pin.centerOffset = CGPointMake(0, -31);
         }
         

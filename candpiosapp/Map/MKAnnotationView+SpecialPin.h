@@ -12,6 +12,7 @@
 
 - (void)setPin:(NSNumber *)number
    hasCheckins:(BOOL)checkins
+   hasContacts:(BOOL)hasContacts
        isSolar:(BOOL)solar
      withLabel:(BOOL)withLabel;
 
