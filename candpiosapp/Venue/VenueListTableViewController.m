@@ -50,7 +50,7 @@
 {
     CLLocation *currentLocation = [CPAppDelegate locationManager].location;
     
-    self.venues = [CPMarkerManager sharedManager].venues;
+    self.venues = [[CPMarkerManager sharedManager].venues mutableCopy];
    
     // although distanceFromUser has already been set after the API call in the map
     // it's been set to distance from the center of the map, which isn't necessarily the user's location
