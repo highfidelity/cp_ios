@@ -155,8 +155,6 @@
     self.nicknameTextField.text = self.currentUser.nickname;
 
     if (self.currentUser.skills.count > 1) {
-        self.skillsTitle.text = [NSString stringWithFormat:@"My %d strongest skills are ...", self.currentUser.skills.count];
-
         self.skillsLabel.text = @"";
         for (CPSkill *skill in self.currentUser.skills) {
             if (self.skillsLabel.text.length == 0) {
@@ -166,8 +164,6 @@
             }
         }
     } else {
-        self.skillsTitle.text = @"My strongest skill is ...";
-
         if (self.currentUser.skills.count == 1) {
             CPSkill *skill = (CPSkill *)[self.currentUser.skills objectAtIndex:0];
             self.skillsLabel.text = skill.name;

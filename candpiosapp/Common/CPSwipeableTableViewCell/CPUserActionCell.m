@@ -205,6 +205,11 @@
 
 - (void)handleTap {
     UITableView *tableView = (UITableView*)self.superview;
+
+    if (![tableView isKindOfClass:[UITableView class]]) {
+        return;
+    }
+
     NSIndexPath *indexPath = [tableView indexPathForCell: self];
     // for some reason selectRowAtIndexPath:indexPath was not invoking the delegate :( Notifications not sent by this.
     if ([tableView.delegate respondsToSelector:@selector(tableView:willSelectRowAtIndexPath:)]) {

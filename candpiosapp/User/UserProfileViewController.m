@@ -14,6 +14,7 @@
 #import "GTMNSString+HTML.h"
 #import "UserProfileLinkedInViewController.h"
 #import "FaceToFaceHelper.h"
+#import "CPUserAction.h"
 #import "CPMarkerManager.h"
 
 #define kResumeWebViewOffsetTop 304
@@ -21,9 +22,7 @@
 @interface UserProfileViewController() <UIWebViewDelegate, UIActionSheetDelegate, GRMustacheTemplateDelegate>
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapRecon;
-@property (strong, nonatomic) NSString* preBadgesHTML;
-@property (strong, nonatomic) NSString* postBadgesHTML;
-@property (strong, nonatomic) NSString* badgesHTML;
+@property (strong, nonatomic) NSString* resumeHTML;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UILabel *checkedIn;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
@@ -48,15 +47,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *resumeEarned;
 @property (weak, nonatomic) IBOutlet UILabel *loveReceived;
 @property (weak, nonatomic) IBOutlet UIWebView *resumeWebView;
-@property (weak, nonatomic) IBOutlet UIButton *plusButton;
-@property (weak, nonatomic) IBOutlet UIButton *minusButton;
-@property (weak, nonatomic) IBOutlet UIButton *f2fButton;
-@property (weak, nonatomic) IBOutlet UIButton *chatButton;
 @property (weak, nonatomic) IBOutlet UIButton *payButton;
-@property (weak, nonatomic) IBOutlet UIButton *reviewButton;
-@property (weak, nonatomic) IBOutlet UIImageView *goMenuBackground;
 @property (weak, nonatomic) IBOutlet UILabel *propNoteLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *mapMarker;
+@property (weak, nonatomic) IBOutlet CPUserActionCell *userActionCell;
 @property (weak, nonatomic) UIView *blueOverlayExtend;
 @property (strong, nonatomic) NSOperationQueue *operationQueue;
 @property (nonatomic) BOOL firstLoad;
@@ -65,37 +59,19 @@
 @property (nonatomic) BOOL mapAndDistanceLoaded;
 
 -(NSString *)htmlStringWithResumeText;
--(IBAction)plusButtonPressed:(id)sender;
--(IBAction)minusButtonPressed:(id)sender;
 -(IBAction)venueViewButtonPressed:(id)sender;
--(IBAction)chatButtonPressed:(id)sender;
 
 @end
 
 @implementation UserProfileViewController
 
-static GRMustacheTemplate *preBadgesTemplate;
-static GRMustacheTemplate *badgesTemplate;
-static GRMustacheTemplate *postBadgesTemplate;
+static GRMustacheTemplate *resumeTemplate;
 
-+ (GRMustacheTemplate*) preBadgesTemplate {
-    if (!preBadgesTemplate) { 
-        NSError *error;
-        preBadgesTemplate = [GRMustacheTemplate templateFromResource:@"UserResume-prebadges" bundle:nil error:&error];
++ (GRMustacheTemplate*) resumeTemplate {
+    if (!resumeTemplate) {
+        resumeTemplate = [GRMustacheTemplate templateFromResource:@"UserResume" bundle:nil error:NULL];
     }
-    return preBadgesTemplate;
-}
-+ (GRMustacheTemplate*) postBadgesTemplate {
-    if (!postBadgesTemplate) { 
-        postBadgesTemplate = [GRMustacheTemplate templateFromResource:@"UserResume-postbadges" bundle:nil error:NULL];
-    }
-    return postBadgesTemplate;
-}
-+ (GRMustacheTemplate*) badgesTemplate {
-    if (!badgesTemplate) { 
-        badgesTemplate = [GRMustacheTemplate templateFromResource:@"UserResume-badges" bundle:nil error:NULL];
-    }
-    return badgesTemplate;
+    return resumeTemplate;
 }
 
 #pragma mark - View lifecycle
@@ -148,6 +124,9 @@ static GRMustacheTemplate *postBadgesTemplate;
     // make sure there's a shadow on the userCard and resumeView
     [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     [CPUIHelper addShadowToView:self.resumeView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
+
+    self.userActionCell.user = self.user;
+    self.userActionCell.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -163,6 +142,13 @@ static GRMustacheTemplate *postBadgesTemplate;
         _tapRecon.cancelsTouchesInView = NO;
         [self.navigationController.navigationBar addGestureRecognizer:_tapRecon];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -186,20 +172,7 @@ static GRMustacheTemplate *postBadgesTemplate;
         // set the card image to the user's profile image
         [CPUIHelper profileImageView:self.cardImage
                  withProfileImageUrl:self.user.photoURL];
-        
-        // hide the go menu if this profile is current user's profile
-        if ([self.user.userID isEqualToNumber:[CPUserDefaultsHandler currentUser].userID] || self.isF2FInvite) {
-            for (NSNumber *viewID in [NSArray arrayWithObjects:[NSNumber numberWithInt:1005], [NSNumber numberWithInt:1006], [NSNumber numberWithInt:1007], [NSNumber numberWithInt:1008], [NSNumber numberWithInt:1009], [NSNumber numberWithInt:1010], [NSNumber numberWithInt:1020], nil]) {
-                [self.view viewWithTag:[viewID intValue]].alpha = 0.0;
-            }
-        } else {
-            for (NSNumber *viewID in [NSArray arrayWithObjects:[NSNumber numberWithInt:1005], [NSNumber numberWithInt:1006], [NSNumber numberWithInt:1007], [NSNumber numberWithInt:1008], [NSNumber numberWithInt:1009], [NSNumber numberWithInt:1010], [NSNumber numberWithInt:1020], nil]) {
-                [self.view viewWithTag:[viewID intValue]].alpha = 1.0;
-            }
-            self.minusButton.alpha = 0.0;
-            
-        }
-        
+
         // set the labels on the user business card
         self.cardNickname.text = self.user.nickname;
         [self setUserStatusWithQuotes:self.user.status];
@@ -383,7 +356,6 @@ static GRMustacheTemplate *postBadgesTemplate;
     self.resumeEarned.text = [NSString stringWithFormat:@"%d", self.user.totalHours];
     self.loveReceived.text = [self.user.reviews objectForKey:@"love_received"];
     
-    [self loadBadgesAsync];
     dispatch_queue_t q_profile = dispatch_queue_create("com.candp.profile", NULL);
     dispatch_async(q_profile, ^{
         // load html into the bottom of the resume view for all the user data
@@ -398,23 +370,8 @@ static GRMustacheTemplate *postBadgesTemplate;
 }
 
 - (NSString *)htmlStringWithResumeText {
-    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.user, @"user",nil];
-    
-    if (!self.preBadgesHTML) {
-        GRMustacheTemplate *template = [UserProfileViewController preBadgesTemplate];
-        template.delegate = self;
-        self.preBadgesHTML = [template renderObject:dictionary];
-    }
-
-    if (self.user.badges.count > 0) { 
-        GRMustacheTemplate *template = [UserProfileViewController badgesTemplate];
-        template.delegate = self;
-        self.badgesHTML = [template renderObject:dictionary];        
-    } else {
-        self.badgesHTML = @"";
-    }
-
-    if (!self.postBadgesHTML) {
+    if (!self.resumeHTML) {
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.user, @"user",nil];
         NSArray *reviews = [self.user.reviews objectForKey:@"rows"];
         
         NSDictionary *originalData = @{
@@ -432,43 +389,14 @@ static GRMustacheTemplate *postBadgesTemplate;
         [dictionary setValue:[NSNumber numberWithBool:reviews.count > 0] forKey:@"hasAnyReview"];
         [dictionary setValue:originalDataJSON forKey:@"originalData"];
         
-        GRMustacheTemplate *template = [UserProfileViewController postBadgesTemplate];
+        GRMustacheTemplate *template = [UserProfileViewController resumeTemplate];
         template.delegate = self;
-        self.postBadgesHTML = [template renderObject:dictionary];
+        self.resumeHTML = [template renderObject:dictionary];
     }
-    return [NSString stringWithFormat:@"%@%@%@", self.preBadgesHTML, self.badgesHTML, self.postBadgesHTML];
+    return self.resumeHTML;
 }
 
-- (void) loadBadgesAsync
-{
-    if (self.user.smartererName.length) {
-        // Get user's current badges asynchronously from smarterer if they've linked their account
-        NSString *urlString = [NSString stringWithFormat:@"https://smarterer.com/api/badges/%@", self.user.smartererName];
-        NSURL *url = [NSURL URLWithString:urlString];
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        AFJSONRequestOperation *operation = [AFJSONRequestOperation 
-                                             JSONRequestOperationWithRequest:request 
-                                             success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) 
-                                             {
-                                                 // load our badges
-                                                 NSArray *returnedBadges = [JSON objectForKey:@"badges"];
-                                                 NSMutableArray *badges = [[NSMutableArray alloc] init];
-                                                 for (NSDictionary *badge in returnedBadges) {
-                                                     NSString *badgeURL = [[badge objectForKey:@"badge"] objectForKey:@"image"];
-                                                     [badges addObject:[NSDictionary dictionaryWithObjectsAndKeys:badgeURL,@"badgeURL", nil]];
-                                                 }
-                                                 self.user.badges = badges;
-                                                 // re-render the resume
-                                                 [self updateResumeWithHTML:[self htmlStringWithResumeText]];                                                 
-                                             } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) 
-                                             {
-                                                 NSLog(@"%@", error.localizedDescription);
-                                             }];
-        [self.operationQueue addOperation:operation];
-        [operation start];
-    }
-}
-- (void) updateResumeWithHTML:(NSString*)html 
+- (void) updateResumeWithHTML:(NSString*)html
 {
     NSString *path = [[NSBundle mainBundle] bundlePath];
     NSURL *baseURL = [NSURL fileURLWithPath:path];
@@ -578,80 +506,19 @@ static GRMustacheTemplate *postBadgesTemplate;
     [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:NO];
 }
 
--(IBAction)plusButtonPressed:(id)sender {
-    self.payButton.hidden = YES;
-    
-    // animate the spinning of the plus button and replacement by the minus button
-    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{ 
-        self.plusButton.transform = CGAffineTransformMakeRotation(M_PI); 
-        self.minusButton.transform = CGAffineTransformMakeRotation(M_PI);
-        self.minusButton.alpha = 1.0;
-    } completion: NULL];
-    // alpha transition on the plus button so there isn't a gap where we see the background
-    [UIView animateWithDuration:0.2 delay:0.2 options:UIViewAnimationCurveEaseInOut animations:^{
-        self.plusButton.alpha = 0.0;
-    } completion:NULL];
-    // animation of menu buttons shooting out
-    
-    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
-        if ([self.user.isContact boolValue]) {
-            self.f2fButton.hidden = YES;
-            self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, -110);
-        } else {
-            self.f2fButton.hidden = NO;
-            self.f2fButton.transform = CGAffineTransformMakeTranslation(0, -165);            
-            self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, -165);
-        }
-        self.chatButton.transform = CGAffineTransformMakeTranslation(0, -110);
-        self.reviewButton.transform = CGAffineTransformMakeTranslation(0, -55);
-        //self.payButton.transform = CGAffineTransformMakeTranslation(0, -55);
-    } completion:^(BOOL finished){
-        [self.view viewWithTag:1005].userInteractionEnabled = YES;
-    }];
-}
-
--(IBAction)minusButtonPressed:(id)sender {
-    // animate the spinning of the minus button and replacement by the plus button
-    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{ 
-        self.minusButton.transform = CGAffineTransformMakeRotation((M_PI*2)-0.0001); 
-        self.plusButton.transform = CGAffineTransformMakeRotation((M_PI*2)-0.0001);
-        self.plusButton.alpha = 1.0;
-    } completion: NULL];
-    // alpha transition on the minus button so there isn't a gap where we see the background
-    [UIView animateWithDuration:0.2 delay:0.2 options:UIViewAnimationCurveEaseInOut animations:^{
-        self.minusButton.alpha = 0.0;
-    } completion:NULL];
-    // animation of menu buttons being sucked back in
-    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
-        self.f2fButton.transform = CGAffineTransformMakeTranslation(0, 0);
-        self.chatButton.transform = CGAffineTransformMakeTranslation(0, 0);
-        //self.payButton.transform = CGAffineTransformMakeTranslation(0, 0);
-        self.reviewButton.transform = CGAffineTransformMakeTranslation(0, 0);
-        self.goMenuBackground.transform = CGAffineTransformMakeTranslation(0, 0);
-    } completion:^(BOOL finished){
-        [self.view viewWithTag:1005].userInteractionEnabled = NO;
-    }];
-    
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"ProfileToOneOnOneSegue"])
     {
         [[segue destinationViewController] setUser:self.user];
-        [self minusButtonPressed:nil];
     }
     else if ([[segue identifier] isEqualToString:@"ProfileToPayUserSegue"])
     {
         [[segue destinationViewController] setUser:self.user];
-        [self minusButtonPressed:nil];        
     } else if ([[segue identifier] isEqualToString:@"ShowLinkedInProfileWebView"]) {
         // set the linkedInPublicProfileUrl in the destination VC
         [[segue destinationViewController] setLinkedInProfileUrlAddress:self.user.linkedInPublicProfileUrl];
     } else if ([[segue identifier] isEqualToString:@"SendLoveToUser"]) {
-        // hide the go menu
-        [self minusButtonPressed:nil];  
-        
         [[segue destinationViewController] setUser:self.user];
         [[segue destinationViewController] setDelegate:self];
     }
@@ -664,28 +531,33 @@ static GRMustacheTemplate *postBadgesTemplate;
     [self.navigationController pushViewController:venueVC animated:YES];
 }
 
-- (IBAction)chatButtonPressed:(id)sender
-{
-    if (self.user.contactsOnlyChat && ![self.user.isContact boolValue] && !self.user.hasChatHistory) {
-        NSString *errorMessage = [NSString stringWithFormat:@"You can not chat with %@ until the two of you have exchanged contact information", self.user.nickname];
-        [SVProgressHUD showErrorWithStatus:errorMessage
-                                  duration:kDefaultDismissDelay];
-    } else {
-        [self performSegueWithIdentifier:@"ProfileToOneOnOneSegue" sender:sender];
-    }
-    [self minusButtonPressed:nil];
-}
-
-- (IBAction)f2fInvite {
-    // use the FaceToFaceHelper to show the contact request UIActionSheet
-    [[FaceToFaceHelper sharedHelper] showContactRequestActionSheetForUserID:self.user.userID];
-    
-    // drop the action menu
-    [self minusButtonPressed:nil];
-}
-
 - (void)navigationBarTitleTap:(UIGestureRecognizer*)recognizer {
     [_scrollView setContentOffset:CGPointMake(0,0) animated:YES];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
+}
+
+
+#pragma mark - CPUserActionCellDelegate
+
+- (void)cell:(CPUserActionCell*)cell didSelectSendLoveToUser:(CPUser *)user
+{
+    [CPUserAction cell:cell sendLoveFromViewController:self];
+}
+
+- (void)cell:(CPUserActionCell*)cell didSelectSendMessageToUser:(CPUser *)user
+{
+    [CPUserAction cell:cell sendMessageFromViewController:self];
+}
+
+- (void)cell:(CPUserActionCell*)cell didSelectExchangeContactsWithUser:(CPUser *)user
+{
+    [CPUserAction cell:cell exchangeContactsFromViewController:self];
 }
 
 #pragma mark - properties

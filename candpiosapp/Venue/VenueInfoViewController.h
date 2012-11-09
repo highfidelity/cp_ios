@@ -6,10 +6,10 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "CPVenue.h"
+#import "CPUserActionCell.h"
 
-@interface VenueInfoViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface VenueInfoViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CPUserActionCellDelegate>
 
 + (VenueInfoViewController *)onScreenVenueVC;
 

@@ -604,15 +604,6 @@
                          completion:nil];
 }
 
-+ (void)saveUserSmartererName:(NSString *)name 
-                                       :(void (^)(NSDictionary *, NSError *))completion
-{
-    [self makeHTTPRequestWithAction:@"saveUserSmartererName"
-                     withParameters:[NSDictionary dictionaryWithObject:name
-                                                                forKey:@"name"]
-                         completion:completion];
-}
-
 + (void)deleteAccountWithParameters:(NSMutableDictionary *)parameters completion:(void(^)(NSDictionary *json, NSError *error))completion {
     [self makeHTTPRequestWithAction:@"deleteAccount"
                      withParameters:parameters
