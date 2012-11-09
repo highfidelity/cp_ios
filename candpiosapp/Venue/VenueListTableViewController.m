@@ -11,6 +11,7 @@
 #import "VenueInfoViewController.h"
 #import "MapTabController.h"
 #import "SVPullToRefresh.h"
+#import "CPMarkerManager.h"
 
 @implementation VenueListTableViewController
 
@@ -30,57 +31,26 @@
     // our delegate is the map tab controller
     self.delegate = [[CPAppDelegate settingsMenuController] mapTabController];
     
-    // Add a notification catcher for refreshTableViewWithNewMapData to refresh the view
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(newDataBeingLoaded:) 
-                                                 name:@"mapIsLoadingNewData" 
-                                               object:nil]; 
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self 
-                                             selector:@selector(refreshFromNewMapData:) 
-                                                 name:@"refreshVenuesFromNewMapData"
-                                               object:nil];
+    __block VenueListTableViewController *venueListVC = self;
     
     [self.tableView addPullToRefreshWithActionHandler:^{
-#warning NEED NSNOTIFICATION TO CANCEL PULL TO REFRESH!
-        [self.delegate refreshLocations];
+        [self.delegate refreshLocations:^{
+            [venueListVC refreshFromNewMapData];
+        }];        
     }];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    // setup the tableView with whatever we already have
-    [self.tableView reloadData];
-    
-    // show the right loading spinner
-    [self showCorrectLoadingSpinnerForCount:self.venues.count];
-    
-    // tell the map to reload data
-    // we'll get a notification when that's done to reload ours
-    [self.delegate refreshButtonClicked:nil];   
+    [self refreshFromNewMapData];
+    [self.tableView.pullToRefreshView triggerRefresh];
 }
 
--(void)newDataBeingLoaded:(NSNotification *)notification
+- (void)refreshFromNewMapData
 {
-    // check if we're visible
-    if ([[[self tabBarController] selectedViewController] isEqual:self]) {
-        [self showCorrectLoadingSpinnerForCount:self.venues.count];
-    }
-}
-
-- (void)refreshFromNewMapData:(NSNotification *)notification {
-    
     // get the venues from the notification
-    self.venues = [[(NSArray *)notification.object sortedArrayUsingComparator:^(id a, id b) {
+    self.venues = [[[CPMarkerManager sharedManager].venues sortedArrayUsingComparator:^(id a, id b) {
         NSNumber *first = [NSNumber numberWithDouble:[a distanceFromUser]];
         NSNumber *second = [NSNumber numberWithDouble:[b distanceFromUser]];
         
@@ -97,15 +67,9 @@
         venue.distanceFromUser = [location distanceFromLocation:currentLocation];
     }
 
-
-    if (self.isViewLoaded && self.view.window) {
-        // we're visible
-        // dismiss the SVProgressHUD and reload our data
-        [self stopAppropriateLoadingSpinner];
-        
-        [self.tableView reloadData];
-    }
-   
+    // we're visible
+    [self.tableView.pullToRefreshView stopAnimating];
+    [self.tableView reloadData];   
 }
 
 #pragma mark - Table view data source

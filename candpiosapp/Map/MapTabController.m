@@ -131,7 +131,7 @@
 
 - (IBAction)refreshButtonClicked:(id)sender
 {
-    [self refreshLocations];
+    [self refreshLocations:nil];
 }
 
 - (CLLocationCoordinate2D)northeastCoordinateForMapView
@@ -171,11 +171,11 @@
 {
     // prevent the refresh of locations when we have a valid dataset or the map is not yet loaded
     if(self.locationStatusKnown && self.mapHasLoaded && (![CPMarkerManager sharedManager].venues || ![self isCurrentMarkerDataStillValid])) {
-        [self refreshLocations];
+        [self refreshLocations:nil];
     }
 }
 
--(void)refreshLocations
+-(void)refreshLocations:(void (^)(void))completion
 {
     // cancel any current requests for new map data or active users for venues
     RKRoute *markerRoute = [[CPObjectManager sharedManager].router.routeSet routeForName:kRouteMarkers];
@@ -194,6 +194,10 @@
      {
          self.dataLoadDate = [NSDate date];
          self.dataCoveredMapRect = mapRectForRequest;
+         
+         if (completion) {
+             completion();
+         }
          
          NSMutableArray *filteredVenues = [[[CPMarkerManager sharedManager].venues filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isNeighborhood == NO"]] mutableCopy];
          
