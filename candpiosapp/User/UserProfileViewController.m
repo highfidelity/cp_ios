@@ -19,7 +19,7 @@
 
 #define kResumeWebViewOffsetTop 304
 
-@interface UserProfileViewController() <UIWebViewDelegate, UIActionSheetDelegate, GRMustacheTemplateDelegate>
+@interface UserProfileViewController() <UIWebViewDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapRecon;
 @property (strong, nonatomic) NSString* resumeHTML;
@@ -64,15 +64,6 @@
 @end
 
 @implementation UserProfileViewController
-
-static GRMustacheTemplate *resumeTemplate;
-
-+ (GRMustacheTemplate*) resumeTemplate {
-    if (!resumeTemplate) {
-        resumeTemplate = [GRMustacheTemplate templateFromResource:@"UserResume" bundle:nil error:NULL];
-    }
-    return resumeTemplate;
-}
 
 #pragma mark - View lifecycle
 
@@ -369,7 +360,8 @@ static GRMustacheTemplate *resumeTemplate;
     });
 }
 
-- (NSString *)htmlStringWithResumeText {
+- (NSString *)htmlStringWithResumeText
+{
     if (!self.resumeHTML) {
         NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.user, @"user",nil];
         NSArray *reviews = [self.user.reviews objectForKey:@"rows"];
@@ -389,10 +381,16 @@ static GRMustacheTemplate *resumeTemplate;
         [dictionary setValue:[NSNumber numberWithBool:reviews.count > 0] forKey:@"hasAnyReview"];
         [dictionary setValue:originalDataJSON forKey:@"originalData"];
         
-        GRMustacheTemplate *template = [UserProfileViewController resumeTemplate];
-        template.delegate = self;
-        self.resumeHTML = [template renderObject:dictionary];
+        NSError *mustacheError;       
+        self.resumeHTML = [GRMustacheTemplate renderObject:dictionary fromResource:@"UserResume" bundle:nil error:&mustacheError];
+        
+#if DEBUG
+        if (mustacheError) {
+            NSLog(@"Error mustaching user resume: %@", mustacheError.localizedDescription);
+        }
+#endif
     }
+    
     return self.resumeHTML;
 }
 

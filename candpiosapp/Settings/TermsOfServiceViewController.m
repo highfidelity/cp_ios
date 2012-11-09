@@ -32,13 +32,9 @@
         NSData *responseData = responseObject;
         NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
         
-        GRMustacheTemplate *template = [GRMustacheTemplate templateFromResource:@"TermsOfService"
-                                                                         bundle:nil
-                                                                          error:NULL];
-        
-        NSString *fullHTML = [template renderObject:[NSDictionary dictionaryWithObjectsAndKeys:
+        NSString *fullHTML = [GRMustacheTemplate renderObject:[NSDictionary dictionaryWithObjectsAndKeys:
                                                      responseString, @"terms",
-                                                     nil]];
+                                                     nil] fromResource:@"TermsOfService" bundle:nil error:nil];
         
         [self.webView loadHTMLString:fullHTML baseURL:termsURL];
         
