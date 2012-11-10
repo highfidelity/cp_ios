@@ -60,13 +60,12 @@
                     user.distance = [location distanceFromLocation:userLocation];
                    
                     NSNumber *venueID = [personJSON numberForKey:@"venue_id" orDefault:@0];
-                    CPVenue *userVenue;
+                    CPVenue *userVenue = [[CPMarkerManager sharedManager] markerVenueWithID:venueID];
                     
-                    if (!(userVenue = [[CPMarkerManager sharedManager] markerVenueWithID:venueID])) {
+                    if (!userVenue) {
                         userVenue = [[CPVenue alloc] init];
                         userVenue.venueID = venueID;
-                        userVenue.name = [personJSON objectForKey:@"name" orDefault:@""];
-                        user.placeCheckedIn = userVenue;
+                        userVenue.name = [personJSON objectForKey:@"venue_name" orDefault:@""];
                     }
                     
                     user.placeCheckedIn = userVenue;
