@@ -524,7 +524,9 @@
 
 -(IBAction)venueViewButtonPressed:(id)sender {
     VenueInfoViewController *venueVC = [[UIStoryboard storyboardWithName:@"VenueStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
-    venueVC.venue = self.user.placeCheckedIn;
+    CPVenue *markerVenue = [[CPMarkerManager sharedManager] markerVenueWithID:self.user.placeCheckedIn.venueID];
+    
+    venueVC.venue = markerVenue ? markerVenue : self.user.placeCheckedIn;
     
     [self.navigationController pushViewController:venueVC animated:YES];
 }
