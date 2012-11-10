@@ -49,21 +49,21 @@
         
         // temporary handling of users stored with userID as integer
         @try {
-            self.userID = [decoder decodeObjectOfClass:[NSNumber class] forKey:@"userID"];;
+            self.userID = @([decoder decodeIntForKey:@"userID"]);
         }
         @catch (NSException *exception) {
-            self.userID = [NSNumber numberWithInt:[decoder decodeIntForKey:@"userID"]];
+            self.userID = [decoder decodeObjectForKey:@"userID"];
         }
         
         self.nickname = [decoder decodeObjectForKey:@"nickname"];
         self.email = [decoder decodeObjectForKey:@"email"];
         
-        // temporary handling of venues stored with venueID as integer
-        @try {
-            self.photoURL = [decoder decodeObjectOfClass:[NSURL class] forKey:@"photoURL"];;
-        }
-        @catch (NSException *exception) {
-            [self setPhotoURLFromString:[decoder decodeObjectForKey:@"photoURL"]];
+        id photoURLObject = [decoder decodeObjectForKey:@"photoURL"];
+       
+        if ([photoURLObject isKindOfClass:[NSURL class]]) {
+            self.photoURL = photoURLObject;
+        } else {
+            [self setPhotoURLFromString:photoURLObject];
         }
         
         self.joinDate = [decoder decodeObjectForKey:@"joinDate"];
