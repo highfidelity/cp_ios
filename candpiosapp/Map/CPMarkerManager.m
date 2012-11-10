@@ -55,8 +55,7 @@ static CPMarkerManager *_sharedManager;
     CPVenue *searchVenue = [[CPVenue alloc] init];
     searchVenue.venueID = venueID;
     
-    NSUInteger venueIndex;
-    venueIndex = [self.venues indexOfObject:searchVenue];
+    NSUInteger venueIndex = [self.venues indexOfObject:searchVenue];
     
     return venueIndex != NSNotFound ? [self.venues objectAtIndex:venueIndex] : nil;
 }

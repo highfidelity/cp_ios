@@ -299,18 +299,13 @@
                 NSDictionary *checkinDict = [userDict valueForKey:@"checkin_data"];
                 if ([checkinDict objectForKey:@"venue_id"]) {
                     // try and grab the venue from CPMarkerManager                    
-                    CPVenue *venue = [[CPMarkerManager sharedManager] markerVenueWithID:@([[checkinDict objectForKey:@"venue_id"] integerValue])];
-                    // otherwise alloc init one from the dictionary
-                    if (!venue) {
-                        venue = [[CPVenue alloc] initFromDictionary:checkinDict];
-                    }
-                    self.placeCheckedIn = venue;
+                    self.placeCheckedIn = [[CPVenue alloc] initFromDictionary:checkinDict];
                     self.checkedIn = [[checkinDict valueForKey:@"checked_in"] boolValue];
 
                     if ([[CPUserDefaultsHandler currentUser].userID isEqualToNumber:self.userID]) {
                         if (self.checkedIn) {
                             NSInteger checkOutTime =[[checkinDict objectForKey:@"checkout"] integerValue];
-                            [CPCheckinHandler saveCheckInVenue:venue andCheckOutTime:checkOutTime];
+                            [CPCheckinHandler saveCheckInVenue:self.placeCheckedIn andCheckOutTime:checkOutTime];
                         } else {
                             [[CPCheckinHandler sharedHandler] setCheckedOut];
                         }
