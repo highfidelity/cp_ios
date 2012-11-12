@@ -618,8 +618,8 @@
     NSNumber *currentUserID = [[CPUserDefaultsHandler currentUser] userID];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:[NSString stringWithFormat:@"%@", currentUserID] forKey:@"user_id"];
-    [parameters setValue:venue.venueID forKey:@"venue_id"];
+    [parameters setValue:currentUserID.stringValue forKey:@"user_id"];
+    [parameters setValue:venue.venueID.stringValue forKey:@"venue_id"];
     [parameters setValue:[NSString stringWithFormat:@"%d", venue.autoCheckin] forKey:@"autocheckin"];
     
     [self makeHTTPRequestWithAction:@"saveVenueAutoCheckinStatus"
