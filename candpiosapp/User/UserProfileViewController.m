@@ -289,11 +289,8 @@
         MKCoordinateRegion region = MKCoordinateRegionMake(self.user.location, MKCoordinateSpanMake(0.005, 0.005));
         [self.mapView setRegion:region];
         
-        // this will always be the point on iPhones up to iPhone4
-        // if this needs to be used on iPad we'll need to do this programatically or use an if-else
-        CGPoint rightAndUp = CGPointMake(84, 232);
-        CLLocationCoordinate2D coordinate = [self.mapView convertPoint:rightAndUp toCoordinateFromView:self.mapView];
-        [self.mapView setCenterCoordinate:coordinate animated:NO];
+        // use method in CPUIHelper to shift the map to the right spot
+        [CPUIHelper shiftMapView:self.mapView forPinCenterInMapview:[self.mapView convertPoint:self.mapMarker.center fromView:self.scrollView]];
         
         CLLocation *myLocation = [CPAppDelegate locationManager].location;
         CLLocation *otherUserLocation = [[CLLocation alloc] initWithLatitude:self.user.location.latitude longitude:self.user.location.longitude];

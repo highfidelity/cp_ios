@@ -309,4 +309,17 @@
     }
 }
 
+# pragma mark - MapView shifting
++ (void)shiftMapView:(MKMapView *)mapView forPinCenterInMapview:(CGPoint)mapPinCenter
+{
+    mapPinCenter.x -= 7;
+    mapPinCenter.y += 18;
+    mapPinCenter.x = mapView.frame.size.width -  mapPinCenter.x;
+    mapPinCenter.y = mapView.frame.size.height - mapPinCenter.y;
+    
+    CLLocationCoordinate2D coordinate = [mapView convertPoint:mapPinCenter toCoordinateFromView:mapView];
+    [mapView setCenterCoordinate:coordinate animated:NO];
+}
+
+
 @end

@@ -142,7 +142,13 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self setupMapViewRegionAndPin];
+    
+    // make an MKCoordinate region for the zoom level on the map
+    MKCoordinateRegion region = MKCoordinateRegionMake(self.venue.coordinate, MKCoordinateSpanMake(0.006, 0.006));
+    [self.mapView setRegion:region];
+    
+    CGPoint mapPinCenter = [self.mapView convertPoint:self.mapPinImageView.center fromView:self.blueOverlay];
+    [CPUIHelper shiftMapView:self.mapView forPinCenterInMapview:mapPinCenter];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -151,22 +157,6 @@
     return YES;
 }
 
-- (void)setupMapViewRegionAndPin
-{
-    // make an MKCoordinate region for the zoom level on the map
-    MKCoordinateRegion region = MKCoordinateRegionMake(self.venue.coordinate, MKCoordinateSpanMake(0.006, 0.006));
-    [self.mapView setRegion:region];
-    
-    CGPoint mapPinCenter = [self.mapView convertPoint:self.mapPinImageView.center fromView:self.blueOverlay];
-    mapPinCenter.x -= 7;
-    mapPinCenter.y += 18;
-    mapPinCenter.x = self.mapView.frame.size.width -  mapPinCenter.x;
-    mapPinCenter.y = self.mapView.frame.size.height - mapPinCenter.y;
-    
-    
-    CLLocationCoordinate2D coordinate = [self.mapView convertPoint:mapPinCenter toCoordinateFromView:self.mapView];
-    [self.mapView setCenterCoordinate:coordinate animated:NO];
-}
 
 // customer getter for infoBubbleArrow
 // lazily instantiates it if it's not on the screen yet
