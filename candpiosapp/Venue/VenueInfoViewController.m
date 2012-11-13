@@ -478,9 +478,11 @@ static VenueInfoViewController *_onScreenVenueVC;
             CLLocationCoordinate2D currentLocation = [CPAppDelegate locationManager].location.coordinate;
             NSString *fullAddress = [NSString stringWithFormat:@"%@, %@, %@", self.venue.address, self.venue.city, self.venue.state];
             // setup the url to open google maps
-            urlString = [NSString stringWithFormat: @"http://maps.google.com/maps?saddr=%f,%f&daddr=%@",
-                                   currentLocation.latitude, currentLocation.longitude,
-                                   [CPapi urlEncode:fullAddress]];
+            NSString *googleOrAppleMaps = [[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0 ? @"apple" : @"google";
+            urlString = [NSString stringWithFormat: @"http://maps.%@.com/maps?saddr=%f,%f&daddr=%@",
+                                    googleOrAppleMaps,
+                                    currentLocation.latitude, currentLocation.longitude,
+                                    [CPapi urlEncode:fullAddress]];
             
         } else if (alertView.tag == 1046) {
             // setup the url to call venue
