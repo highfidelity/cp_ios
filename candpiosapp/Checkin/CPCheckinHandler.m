@@ -100,15 +100,15 @@ static CPCheckinHandler *sharedHandler;
     // Fire a notification 5 minutes before checkout time
     NSInteger minutesBefore = 5;
     NSDate *fireDate = [NSDate dateWithTimeIntervalSince1970:(checkoutTime - minutesBefore * 60)];
-    
-    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-    NSDictionary *venueDataDict;
 
     // don't queue notification if fireDate has expired
     if ([fireDate compare:[NSDate date]] == NSOrderedAscending) {
         return;
     }
-    
+
+    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+    NSDictionary *venueDataDict;
+
     // Cancel all old local notifications
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     
