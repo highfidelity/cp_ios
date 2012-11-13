@@ -38,6 +38,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *threeHoursLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fiveHoursLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sevenHoursLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *mapPinImageView;
 @property (weak, nonatomic) UIImageView *infoBubbleArrow;
 @property (nonatomic) int checkInDuration;
 @property (nonatomic) BOOL sliderButtonPressed;
@@ -97,18 +98,7 @@
     bubbleSub.layer.mask = maskLayer;
     
     // add bubbleSubview to the userInfoBubble
-    [self.userInfoBubble insertSubview:bubbleSub atIndex:0];    
-    
-    
-    // make an MKCoordinate region for the zoom level on the map
-    MKCoordinateRegion region = MKCoordinateRegionMake(self.venue.coordinate, MKCoordinateSpanMake(0.006, 0.006));
-    [self.mapView setRegion:region];
-    
-    // this will always be the point on iPhones up to iPhone4
-    // if this needs to be used on iPad we'll need to do this programatically or use an if-else
-    CGPoint moveRight = CGPointMake(71, 136);
-    CLLocationCoordinate2D coordinate = [self.mapView convertPoint:moveRight toCoordinateFromView:self.mapView];
-    [self.mapView setCenterCoordinate:coordinate animated:NO];
+    [self.userInfoBubble insertSubview:bubbleSub atIndex:0];
     
     // set LeagueGothic font where applicable
     for (UILabel *labelNeedsGothic in [NSArray arrayWithObjects:self.checkInLabel, self.durationHeader, nil]) {
@@ -149,10 +139,33 @@
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self setupMapViewRegionAndPin];
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)setupMapViewRegionAndPin
+{
+    // make an MKCoordinate region for the zoom level on the map
+    MKCoordinateRegion region = MKCoordinateRegionMake(self.venue.coordinate, MKCoordinateSpanMake(0.006, 0.006));
+    [self.mapView setRegion:region];
+    
+    CGPoint mapPinCenter = [self.mapView convertPoint:self.mapPinImageView.center fromView:self.blueOverlay];
+    mapPinCenter.x -= 7;
+    mapPinCenter.y += 18;
+    mapPinCenter.x = self.mapView.frame.size.width -  mapPinCenter.x;
+    mapPinCenter.y = self.mapView.frame.size.height - mapPinCenter.y;
+    
+    
+    CLLocationCoordinate2D coordinate = [self.mapView convertPoint:mapPinCenter toCoordinateFromView:self.mapView];
+    [self.mapView setCenterCoordinate:coordinate animated:NO];
 }
 
 // customer getter for infoBubbleArrow
@@ -529,4 +542,8 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
+- (void)viewDidUnload {
+    [self setMapPinImageView:nil];
+    [super viewDidUnload];
+}
 @end

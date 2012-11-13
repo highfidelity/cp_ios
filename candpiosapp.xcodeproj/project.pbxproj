@@ -45,6 +45,8 @@
 		5317F257162F63CE00D40405 /* action-menu-button-check-in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317F255162F63CE00D40405 /* action-menu-button-check-in@2x.png */; };
 		5317F262162F804E00D40405 /* ChangeHeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */; };
 		531ADE911652D34700FB8BF0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 531ADE901652D34700FB8BF0 /* Default-568h@2x.png */; };
+		531ADE951652E3EE00FB8BF0 /* map-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 531ADE931652E3EE00FB8BF0 /* map-marker.png */; };
+		531ADE961652E3EE00FB8BF0 /* map-marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 531ADE941652E3EE00FB8BF0 /* map-marker@2x.png */; };
 		53217F8C156FF89B006258F0 /* LoveSkillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */; };
 		5327E9FA15658CCE005330AD /* UIColor+EasyRGB.m in Sources */ = {isa = PBXBuildFile; fileRef = 5327E9F915658CCD005330AD /* UIColor+EasyRGB.m */; };
 		5328935C155488F5007B0157 /* CPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328935B155488F5007B0157 /* CPConstants.m */; };
@@ -218,8 +220,6 @@
 		53E2062C150596180000FA8D /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53E2062A150596180000FA8D /* MainStoryboard_iPhone.storyboard */; };
 		53EC52E9164D95DC00067280 /* map-locate.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EC52CF164D95DC00067280 /* map-locate.png */; };
 		53EC52EA164D95DC00067280 /* map-locate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EC52D0164D95DC00067280 /* map-locate@2x.png */; };
-		53EC52EB164D95DC00067280 /* map-marker@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EC52D1164D95DC00067280 /* map-marker@2x~iphone.png */; };
-		53EC52EC164D95DC00067280 /* map-marker~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EC52D2164D95DC00067280 /* map-marker~iphone.png */; };
 		53EC52ED164D95DC00067280 /* map-refresh-progress-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EC52D3164D95DC00067280 /* map-refresh-progress-arrow.png */; };
 		53EC52EE164D95DC00067280 /* map-refresh-progress-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EC52D4164D95DC00067280 /* map-refresh-progress-arrow@2x.png */; };
 		53EC52EF164D95DC00067280 /* map-refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EC52D5164D95DC00067280 /* map-refresh.png */; };
@@ -389,6 +389,8 @@
 		5317F260162F804E00D40405 /* ChangeHeadlineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChangeHeadlineViewController.h; path = Checkin/ChangeHeadlineViewController.h; sourceTree = "<group>"; };
 		5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChangeHeadlineViewController.m; path = Checkin/ChangeHeadlineViewController.m; sourceTree = "<group>"; };
 		531ADE901652D34700FB8BF0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		531ADE931652E3EE00FB8BF0 /* map-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-marker.png"; sourceTree = "<group>"; };
+		531ADE941652E3EE00FB8BF0 /* map-marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-marker@2x.png"; sourceTree = "<group>"; };
 		53217F8A156FF89B006258F0 /* LoveSkillTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = LoveSkillTableViewCell.h; path = User/LoveSkillTableViewCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoveSkillTableViewCell.m; path = User/LoveSkillTableViewCell.m; sourceTree = "<group>"; };
 		5327E9F815658CCD005330AD /* UIColor+EasyRGB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+EasyRGB.h"; path = "Utils/UIColor+EasyRGB.h"; sourceTree = "<group>"; };
@@ -611,8 +613,6 @@
 		53E2062B150596180000FA8D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		53EC52CF164D95DC00067280 /* map-locate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-locate.png"; sourceTree = "<group>"; };
 		53EC52D0164D95DC00067280 /* map-locate@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-locate@2x.png"; sourceTree = "<group>"; };
-		53EC52D1164D95DC00067280 /* map-marker@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-marker@2x~iphone.png"; sourceTree = "<group>"; };
-		53EC52D2164D95DC00067280 /* map-marker~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-marker~iphone.png"; sourceTree = "<group>"; };
 		53EC52D3164D95DC00067280 /* map-refresh-progress-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-refresh-progress-arrow.png"; sourceTree = "<group>"; };
 		53EC52D4164D95DC00067280 /* map-refresh-progress-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-refresh-progress-arrow@2x.png"; sourceTree = "<group>"; };
 		53EC52D5164D95DC00067280 /* map-refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-refresh.png"; sourceTree = "<group>"; };
@@ -1333,10 +1333,10 @@
 		53EC52CE164D95DC00067280 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				531ADE931652E3EE00FB8BF0 /* map-marker.png */,
+				531ADE941652E3EE00FB8BF0 /* map-marker@2x.png */,
 				53EC52CF164D95DC00067280 /* map-locate.png */,
 				53EC52D0164D95DC00067280 /* map-locate@2x.png */,
-				53EC52D1164D95DC00067280 /* map-marker@2x~iphone.png */,
-				53EC52D2164D95DC00067280 /* map-marker~iphone.png */,
 				53EC52D3164D95DC00067280 /* map-refresh-progress-arrow.png */,
 				53EC52D4164D95DC00067280 /* map-refresh-progress-arrow@2x.png */,
 				53EC52D5164D95DC00067280 /* map-refresh.png */,
@@ -1824,8 +1824,6 @@
 				688A16C4163861DB00BFB4CC /* endorse-with-transparent-star@2x.png in Resources */,
 				53EC52E9164D95DC00067280 /* map-locate.png in Resources */,
 				53EC52EA164D95DC00067280 /* map-locate@2x.png in Resources */,
-				53EC52EB164D95DC00067280 /* map-marker@2x~iphone.png in Resources */,
-				53EC52EC164D95DC00067280 /* map-marker~iphone.png in Resources */,
 				53EC52ED164D95DC00067280 /* map-refresh-progress-arrow.png in Resources */,
 				53EC52EE164D95DC00067280 /* map-refresh-progress-arrow@2x.png in Resources */,
 				53EC52EF164D95DC00067280 /* map-refresh.png in Resources */,
@@ -1847,6 +1845,8 @@
 				53EC52FF164D95DC00067280 /* pin-solar@2x.png in Resources */,
 				53EC5300164D95DC00067280 /* pin_small.png in Resources */,
 				531ADE911652D34700FB8BF0 /* Default-568h@2x.png in Resources */,
+				531ADE951652E3EE00FB8BF0 /* map-marker.png in Resources */,
+				531ADE961652E3EE00FB8BF0 /* map-marker@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
