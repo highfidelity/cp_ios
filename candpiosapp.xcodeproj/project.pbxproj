@@ -44,6 +44,7 @@
 		5317F256162F63CE00D40405 /* action-menu-button-check-in.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317F254162F63CE00D40405 /* action-menu-button-check-in.png */; };
 		5317F257162F63CE00D40405 /* action-menu-button-check-in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317F255162F63CE00D40405 /* action-menu-button-check-in@2x.png */; };
 		5317F262162F804E00D40405 /* ChangeHeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */; };
+		531ADE911652D34700FB8BF0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 531ADE901652D34700FB8BF0 /* Default-568h@2x.png */; };
 		53217F8C156FF89B006258F0 /* LoveSkillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */; };
 		5327E9FA15658CCE005330AD /* UIColor+EasyRGB.m in Sources */ = {isa = PBXBuildFile; fileRef = 5327E9F915658CCD005330AD /* UIColor+EasyRGB.m */; };
 		5328935C155488F5007B0157 /* CPConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328935B155488F5007B0157 /* CPConstants.m */; };
@@ -387,6 +388,7 @@
 		5317F255162F63CE00D40405 /* action-menu-button-check-in@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-in@2x.png"; sourceTree = "<group>"; };
 		5317F260162F804E00D40405 /* ChangeHeadlineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChangeHeadlineViewController.h; path = Checkin/ChangeHeadlineViewController.h; sourceTree = "<group>"; };
 		5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChangeHeadlineViewController.m; path = Checkin/ChangeHeadlineViewController.m; sourceTree = "<group>"; };
+		531ADE901652D34700FB8BF0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		53217F8A156FF89B006258F0 /* LoveSkillTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = LoveSkillTableViewCell.h; path = User/LoveSkillTableViewCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoveSkillTableViewCell.m; path = User/LoveSkillTableViewCell.m; sourceTree = "<group>"; };
 		5327E9F815658CCD005330AD /* UIColor+EasyRGB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+EasyRGB.h"; path = "Utils/UIColor+EasyRGB.h"; sourceTree = "<group>"; };
@@ -1434,6 +1436,7 @@
 		871EFAFB14AE9C810030658B = {
 			isa = PBXGroup;
 			children = (
+				531ADE901652D34700FB8BF0 /* Default-568h@2x.png */,
 				871EFB1014AE9C820030658B /* candpiosapp */,
 				871EFB0914AE9C820030658B /* Frameworks */,
 				871EFB0714AE9C820030658B /* Products */,
@@ -1843,6 +1846,7 @@
 				53EC52FE164D95DC00067280 /* pin-solar.png in Resources */,
 				53EC52FF164D95DC00067280 /* pin-solar@2x.png in Resources */,
 				53EC5300164D95DC00067280 /* pin_small.png in Resources */,
+				531ADE911652D34700FB8BF0 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
