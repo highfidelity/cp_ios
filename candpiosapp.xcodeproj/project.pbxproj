@@ -441,6 +441,7 @@
 		5338B0A01606C82200C23B4B /* VenueUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VenueUserCell.m; path = Venue/VenueUserCell.m; sourceTree = "<group>"; };
 		5338B0A21606C84600C23B4B /* highlight-gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "highlight-gradient.png"; path = "Venue/images/highlight-gradient.png"; sourceTree = "<group>"; };
 		5338B0A31606C84600C23B4B /* highlight-gradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "highlight-gradient@2x.png"; path = "Venue/images/highlight-gradient@2x.png"; sourceTree = "<group>"; };
+		5338B4D716530B230086B85A /* CPMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPMacros.h; sourceTree = "<group>"; };
 		533AFECC1523E87200D6E6A9 /* default-avatar-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default-avatar-256.png"; path = "User/images/default-avatar-256.png"; sourceTree = "<group>"; };
 		533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default-avatar-256@2x.png"; path = "User/images/default-avatar-256@2x.png"; sourceTree = "<group>"; };
 		533B1DA315A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CheckinStoryboard_iPhone.storyboard; path = Checkin/CheckinStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
@@ -1239,20 +1240,21 @@
 			isa = PBXGroup;
 			children = (
 				534EB7381567179D00BDBA57 /* CPBaseTableViewController.h */,
-				534EB7391567179D00BDBA57 /* CPBaseTableViewController.m */,
+				5338B4D716530B230086B85A /* CPMacros.h */,
 				53DCCF7B163F72F800A79E25 /* CPObjectManager.h */,
-				53DCCF7C163F72F800A79E25 /* CPObjectManager.m */,
 				537255B6156AF0C800263CFA /* CPPlaceholderTextView.h */,
-				537255B7156AF0C800263CFA /* CPPlaceholderTextView.m */,
 				530C5DB51575E4FC003505AC /* CPSoundEffectsManager.h */,
-				530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */,
 				E4E74E07153B08710022F406 /* CPTouchableView.h */,
-				E4E74E07153B08710022F404 /* CPTouchableView.m */,
-				530C5DAE1575E4F3003505AC /* CPUserActionCell */,
 				53A5622115A386EC00ACD920 /* CPUserDefaultsHandler.h */,
-				53A5622215A386EC00ACD920 /* CPUserDefaultsHandler.m */,
 				530FC24315D4335E00838B5A /* CPUserSessionHandler.h */,
+				534EB7391567179D00BDBA57 /* CPBaseTableViewController.m */,
+				53DCCF7C163F72F800A79E25 /* CPObjectManager.m */,
+				537255B7156AF0C800263CFA /* CPPlaceholderTextView.m */,
+				530C5DB61575E4FC003505AC /* CPSoundEffectsManager.m */,
+				E4E74E07153B08710022F404 /* CPTouchableView.m */,
+				53A5622215A386EC00ACD920 /* CPUserDefaultsHandler.m */,
 				530FC24415D4335E00838B5A /* CPUserSessionHandler.m */,
+				530C5DAE1575E4F3003505AC /* CPUserActionCell */,
 			);
 			path = Common;
 			sourceTree = "<group>";
