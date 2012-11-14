@@ -199,7 +199,7 @@
                                     </label>
                                     <view contentMode="scaleToFill" id="qvF-Ed-Z1a">
                                         <rect key="frame" x="10" y="263" width="300" height="153"/>
-                                        <autoresizingMask key="autoresizingMask"/>
+                                        <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                         <subviews>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.75" contentMode="left" text="Resume" lineBreakMode="tailTruncation" minimumFontSize="10" id="Do4-zK-XAE">
                                                 <rect key="frame" x="14" y="0.0" width="132" height="48"/>
