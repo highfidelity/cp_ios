@@ -39,8 +39,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [SVProgressHUD showWithStatus:@"Loading..."];
-    [self refreshData];
+    [self.tableView.pullToRefreshView triggerRefresh];
 }
 
 #pragma mark - private Methods/Data
@@ -48,7 +47,6 @@
 - (void)refreshData
 {
     [CPapi getNearestCheckedInWithCompletion:^(NSDictionary *json, NSError *error) {
-        [SVProgressHUD dismiss];
         if (!error) {
             [self.checkedInUsers removeAllObjects];
             if (![[json objectForKey:@"error"] boolValue]) {
