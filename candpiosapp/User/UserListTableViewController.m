@@ -34,12 +34,14 @@
     }];
     
     self.tableView.tableFooterView = [self tabBarButtonAvoidingFooterView];
+    
+    [self.tableView.pullToRefreshView triggerRefresh];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.tableView.pullToRefreshView triggerRefresh];
+    [self refreshData];
 }
 
 #pragma mark - private Methods/Data
