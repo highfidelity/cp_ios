@@ -32,6 +32,8 @@
     [self.tableView addPullToRefreshWithActionHandler:^{
         [weakSelf refreshData];
     }];
+    
+    self.tableView.tableFooterView = [self tabBarButtonAvoidingFooterView];
 }
 
 - (void)viewDidAppear:(BOOL)animated
