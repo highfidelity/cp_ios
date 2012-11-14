@@ -199,11 +199,12 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
         self.placeholderImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"contacts-blank-slate"]];
     }
     
-    self.tableView.tableFooterView = hiddenPlaceholder ? nil : self.placeholderImageView;
+    self.tableView.tableFooterView = hiddenPlaceholder ?
+                                    [self tabBarButtonAvoidingFooterView] :
+                                    self.placeholderImageView;
     
-    [self.tableView setScrollEnabled:hiddenPlaceholder];
-    [self.searchBar setHidden:!hiddenPlaceholder];
-    self.isSearching = !hiddenPlaceholder;
+    self.tableView.scrollEnabled = hiddenPlaceholder;
+    self.searchBar.hidden = !hiddenPlaceholder;
 }
 
 - (NSArray*)sectionIndexTitles
@@ -254,7 +255,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-    if (self.isSearching) {
+    if (self.isSearching || self.sortedContactList.count == 0) {
         return nil;
     }
     
@@ -383,9 +384,11 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 - (void)performSearch:(NSString *)searchText {
     if ([searchText isEqualToString:@""]) {
         self.searchResults = [NSArray arrayWithArray:self.sortedContactList];
+        self.tableView.tableFooterView = [self tabBarButtonAvoidingFooterView];
     }
     else {
         self.searchResults = [self.sortedContactList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(nickname contains[cd] %@)", searchText]];
+        self.tableView.tableFooterView = nil;
     }
     [self.tableView reloadData];
 }

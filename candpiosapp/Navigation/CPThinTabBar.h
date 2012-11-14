@@ -16,10 +16,12 @@
 
 @property (weak, nonatomic) UITabBarController *tabBarController;
 
+- (CGFloat)actionButtonRadius;
 - (void)moveGreenLineToSelectedIndex:(NSUInteger)selectedIndex;
 - (void)refreshLastTab:(BOOL)loggedIn;
 - (void)setBadgeNumber:(NSNumber *)number atTabIndex:(NSUInteger)index;
 
 + (UIImage *)backgroundImage;
+
 
 @end

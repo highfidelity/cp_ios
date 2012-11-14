@@ -14,6 +14,7 @@
 @property (strong, nonatomic) UIActivityIndicatorView *barSpinner;
 @property (weak, nonatomic) id delegate;
 
+- (UIView *)tabBarButtonAvoidingFooterView;
 - (void)placeSpinnerOnRightBarButtonItem;
 - (void)showCorrectLoadingSpinnerForCount:(int)count;
 - (void)stopAppropriateLoadingSpinner;
