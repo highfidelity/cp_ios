@@ -170,7 +170,10 @@ static VenueInfoViewController *_onScreenVenueVC;
     if ([self.venue.address length] > 0) {
         self.hasAddress = YES;
         [self setupVenueButton:self.addressButton withIconNamed:@"place-location" andlabelText:self.venue.address];
-        [self.addressButton addTarget:self action:@selector(tappedAddress:) forControlEvents:UIControlEventTouchUpInside];
+        
+        if (![self.venue.isNeighborhood boolValue]) {
+             [self.addressButton addTarget:self action:@selector(tappedAddress:) forControlEvents:UIControlEventTouchUpInside];
+        }
     } else {
         self.hasAddress = NO;
         [self setupVenueButton:self.addressButton withIconNamed:@"place-location" andlabelText:@"N/A"];
@@ -426,10 +429,10 @@ static VenueInfoViewController *_onScreenVenueVC;
 - (IBAction)tappedAddress:(id)sender 
 {
     NSString *message = [NSString stringWithFormat:@"Do you want directions to %@?", self.venue.name];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Directions" 
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Directions"
                                                         message:message
-                                                       delegate:self 
-                                              cancelButtonTitle:@"Cancel" 
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
                                               otherButtonTitles:@"Launch Map", nil];
     alertView.tag = 1045;
     [alertView show];
