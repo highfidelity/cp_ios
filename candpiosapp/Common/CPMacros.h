@@ -18,4 +18,6 @@
 // quick way to check iOS version
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] floatValue] >= v)
 
+#define IS_DEVICE_WITH_FOUR_INCH_DISPLAY    (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && [[UIScreen mainScreen] bounds].size.height == 568)
+
 #endif

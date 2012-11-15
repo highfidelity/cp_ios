@@ -91,7 +91,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     self.tableView.allowsSelection = NO;
     
     // hide the search bar if it hasn't been scrolled
-    if (self.tableView.contentOffset.y == 0.0f) {
+    if (self.tableView.contentOffset.y == 0.0f && !IS_DEVICE_WITH_FOUR_INCH_DISPLAY) {
         [self.tableView setContentOffset:CGPointMake(0, 44) animated:NO];
     }
     
