@@ -88,8 +88,10 @@
 
 - (UIView *)tabBarButtonAvoidingFooterView
 {
-    UIView *avoidingFooter = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, [[CPAppDelegate tabBarController].thinBar actionButtonRadius])];
-    return avoidingFooter;
+    return [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                    0,
+                                                    self.tableView.frame.size.width,
+                                                    [[CPAppDelegate tabBarController].thinBar actionButtonRadius])];
 }
 
 - (void)unhighlightCells:(BOOL)animated {
