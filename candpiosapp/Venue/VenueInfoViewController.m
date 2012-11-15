@@ -62,6 +62,14 @@ static VenueInfoViewController *_onScreenVenueVC;
     [self.scrollView removeFromSuperview];
     self.tableView.tableHeaderView = self.scrollView;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    // add a footer view to the table view so we aren't stuck right to the bottom
+    // and so we clear the tab bar button if it's there
+    CGFloat footerHeight = self.tabBarController ? [CPAppDelegate tabBarController].thinBar.actionButtonRadius : 10;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                                             0,
+                                                                             self.tableView.frame.size.width,
+                                                                              footerHeight)];
 
     // setup interface with whatever we have and then ask API for other data
     [self populateUserSection];
