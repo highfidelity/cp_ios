@@ -10,6 +10,17 @@
 #import "Flurry.h"
 #import "UIViewController+isModal.h"
 
+@interface SignupController()
+
+- (IBAction)loginWithLinkedInTapped:(id)sender;
+- (IBAction) dismissClick:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
+@property (weak, nonatomic) IBOutlet UIButton *linkedinLoginButton;
+@property (weak, nonatomic) IBOutlet UIButton *dismissButton;
+
+@end
+
 @implementation SignupController
 
 #pragma mark - View lifecycle
@@ -28,6 +39,15 @@
         // if the user is currently on the 4th tab
         // then bring them to the map once they login
         [CPAppDelegate settingsMenuController].afterLoginAction = CPAfterLoginActionShowMap;
+    }
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    if (IS_DEVICE_WITH_FOUR_INCH_DISPLAY) {
+        self.backgroundImageView.image = [UIImage imageNamed:@"Default-568h"];
     }
 }
 
@@ -74,4 +94,8 @@
     [Flurry logEvent:@"skippedSignup"];
 }
 
+- (void)viewDidUnload {
+    [self setBackgroundImageView:nil];
+    [super viewDidUnload];
+}
 @end
