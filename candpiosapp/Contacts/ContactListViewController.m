@@ -199,9 +199,9 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
         self.placeholderImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"contacts-blank-slate"]];
     }
     
-    self.tableView.tableFooterView = hiddenPlaceholder ?
-                                    [self tabBarButtonAvoidingFooterView] :
-                                    self.placeholderImageView;
+    self.tableView.tableFooterView = hiddenPlaceholder
+        ? [self tabBarButtonAvoidingFooterView]
+        : self.placeholderImageView;    
     
     self.tableView.scrollEnabled = hiddenPlaceholder;
     self.searchBar.hidden = !hiddenPlaceholder;
