@@ -82,6 +82,30 @@
     // set the navigation controller title to the user's nickname
     self.title = self.user.nickname;
     
+    // set the booleans this VC uses in later control statements
+    self.firstLoad = YES;
+    self.mapAndDistanceLoaded = NO;
+    
+    // set LeagueGothic font where applicable
+    [CPUIHelper changeFontForLabel:self.checkedIn toLeagueGothicOfSize:24];
+    [CPUIHelper changeFontForLabel:self.resumeLabel toLeagueGothicOfSize:26];
+    [CPUIHelper changeFontForLabel:self.cardNickname toLeagueGothicOfSize:28];
+    
+    // set the paper background color where applicable
+    UIColor *paper = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paper-texture.png"]];
+    self.userCard.backgroundColor = paper;
+    self.resumeView.backgroundColor = paper;
+    self.resumeWebView.opaque = NO;
+    self.resumeWebView.backgroundColor = paper;
+    
+    self.userActionCell.user = self.user;
+    self.userActionCell.delegate = self;
+    
+    // set the labels on the user business card
+    self.cardNickname.text = self.user.nickname;
+    [self setUserStatusWithQuotes:self.user.status];
+    self.cardJobPosition.text = self.user.jobTitle;
+    
     if (!self.isF2FInvite) {
         // get a user object with resume data
         [self.user loadUserResumeOnQueue:self.operationQueue completion:^(NSError *error) {
@@ -108,13 +132,10 @@
 {
     [super viewDidLayoutSubviews];
     
-    // set the booleans this VC uses in later control statements
-    self.firstLoad = YES;
-    self.mapAndDistanceLoaded = NO;
-    
     // when pulling the scroll view top down, present the map
     self.mapView.frame = CGRectUnion(self.mapView.frame,
                                      CGRectOffset(self.mapView.frame, 0, -self.mapView.frame.size.height));
+    
     // add the blue overlay gradient in front of the map
     [self addGradientWithFrame:self.mapView.frame
                      locations:@[[NSNumber numberWithFloat:0.25],
@@ -129,33 +150,13 @@
      (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor]]
      ];
     
-    // set LeagueGothic font where applicable
-    [CPUIHelper changeFontForLabel:self.checkedIn toLeagueGothicOfSize:24];
-    [CPUIHelper changeFontForLabel:self.resumeLabel toLeagueGothicOfSize:26];
-    [CPUIHelper changeFontForLabel:self.cardNickname toLeagueGothicOfSize:28];
-    
-    // set the paper background color where applicable
-    UIColor *paper = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paper-texture.png"]];
-    self.userCard.backgroundColor = paper;
-    self.resumeView.backgroundColor = paper;
-    self.resumeWebView.opaque = NO;
-    self.resumeWebView.backgroundColor = paper;
-    
     // make sure there's a shadow on the userCard and resumeView
     [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     [CPUIHelper addShadowToView:self.resumeView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
-    
-    self.userActionCell.user = self.user;
-    self.userActionCell.delegate = self;
-    
+
     // set the card image to the user's profile image
     [CPUIHelper profileImageView:self.cardImage
              withProfileImageUrl:self.user.photoURL];
-    
-    // set the labels on the user business card
-    self.cardNickname.text = self.user.nickname;
-    [self setUserStatusWithQuotes:self.user.status];
-    self.cardJobPosition.text = self.user.jobTitle;
     
     // don't allow scrolling in the mustache view until it's loaded
     self.resumeWebView.userInteractionEnabled = NO;
