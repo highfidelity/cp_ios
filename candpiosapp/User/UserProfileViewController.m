@@ -106,7 +106,20 @@
     [self setUserStatusWithQuotes:self.user.status];
     self.cardJobPosition.text = self.user.jobTitle;
     
-    if (!self.isF2FInvite) {
+    // set the card image to the user's profile image
+    [CPUIHelper profileImageView:self.cardImage
+             withProfileImageUrl:self.user.photoURL];
+    
+    // don't allow scrolling in the mustache view until it's loaded
+    self.resumeWebView.userInteractionEnabled = NO;
+    
+    if (self.isF2FInvite) {
+        // we're in an F2F invite
+        [self placeUserDataOnProfile];
+    } else {
+        // lock the scrollView
+        self.scrollView.scrollEnabled = NO;
+        
         // get a user object with resume data
         [self.user loadUserResumeOnQueue:self.operationQueue completion:^(NSError *error) {
             if (!error) {
@@ -153,21 +166,9 @@
     // make sure there's a shadow on the userCard and resumeView
     [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     [CPUIHelper addShadowToView:self.resumeView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
-
-    // set the card image to the user's profile image
-    [CPUIHelper profileImageView:self.cardImage
-             withProfileImageUrl:self.user.photoURL];
-    
-    // don't allow scrolling in the mustache view until it's loaded
-    self.resumeWebView.userInteractionEnabled = NO;
     
     // check if this is an F2F invite
-    if (self.isF2FInvite) {
-        // we're in an F2F invite
-        [self placeUserDataOnProfile];
-    } else {
-        // lock the scrollView
-        self.scrollView.scrollEnabled = NO;
+    if (!self.isF2FInvite) {     
         
         // put three animated dots after the Loading Resume text
         [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:YES];
