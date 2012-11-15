@@ -22,4 +22,8 @@
 + (NSString *)relativeTimeStringFromDateToNow:(NSDate *)date;
 
 + (BOOL)validateEmailWithString:(NSString*)email;
+
++ (BOOL)systemVersionGreaterThanOrEqualTo:(CGFloat)version;
++ (BOOL)isDeviceWithFourInchDisplay;
+
 @end

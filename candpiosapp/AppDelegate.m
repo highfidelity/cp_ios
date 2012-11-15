@@ -476,7 +476,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
     [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIFont fontWithName:@"LeagueGothic" size:16]
                                                                                      forKey:UITextAttributeFont]
                                                 forState:UIControlStateNormal];
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(1, (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(6.0) ? 1 : -2))
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(1, ([CPUtils systemVersionGreaterThanOrEqualTo:6.0] ? 1 : -2))
                                                          forBarMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearance] setTitlePositionAdjustment:UIOffsetMake(0, 0)
                                                forBarMetrics:UIBarMetricsDefault];

@@ -481,7 +481,7 @@ static VenueInfoViewController *_onScreenVenueVC;
             CLLocationCoordinate2D currentLocation = [CPAppDelegate locationManager].location.coordinate;
             NSString *fullAddress = [NSString stringWithFormat:@"%@, %@, %@", self.venue.address, self.venue.city, self.venue.state];
             // setup the url to open google maps
-            NSString *googleOrAppleMaps = SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(6.0) ? @"apple" : @"google";
+            NSString *googleOrAppleMaps = [CPUtils systemVersionGreaterThanOrEqualTo:6.0] ? @"apple" : @"google";
             urlString = [NSString stringWithFormat: @"http://maps.%@.com/maps?saddr=%f,%f&daddr=%@",
                                     googleOrAppleMaps,
                                     currentLocation.latitude, currentLocation.longitude,

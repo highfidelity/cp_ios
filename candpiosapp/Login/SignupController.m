@@ -38,7 +38,7 @@
         [CPAppDelegate settingsMenuController].afterLoginAction = CPAfterLoginActionShowMap;
     }
     
-    if (IS_DEVICE_WITH_FOUR_INCH_DISPLAY) {
+    if ([CPUtils isDeviceWithFourInchDisplay]) {
         self.backgroundImageView.image = [UIImage imageNamed:@"Default-568h"];
     }
 }

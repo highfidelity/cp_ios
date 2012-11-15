@@ -148,7 +148,7 @@ examle json:
                      
                                                                                self.scrollView.frame.size.height)];
     
-    NSString *imageURLString = IS_DEVICE_WITH_FOUR_INCH_DISPLAY ?
+    NSString *imageURLString = [CPUtils isDeviceWithFourInchDisplay] ?
         [pageInfo[@"url"] stringByReplacingOccurrencesOfString:@".png" withString:@"-568h.png"] :
         pageInfo[@"url"];
     
