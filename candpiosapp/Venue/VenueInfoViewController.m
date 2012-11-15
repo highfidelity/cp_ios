@@ -153,7 +153,6 @@ static VenueInfoViewController *_onScreenVenueVC;
         [self.bottomPhotoOverlayView addSubview:self.phoneButton];
     }
     
-    self.venue.formattedPhone = @"510-555-5555";
     if ([self.venue.formattedPhone length] > 0) {
         self.hasPhone = YES;
         [self setupVenueButton:self.phoneButton withIconNamed:@"place-phone" andlabelText:self.venue.formattedPhone];
