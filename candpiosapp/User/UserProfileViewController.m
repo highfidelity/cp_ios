@@ -152,15 +152,15 @@
     // add the blue overlay gradient in front of the map
     [self addGradientWithFrame:self.mapView.frame
                      locations:@[[NSNumber numberWithFloat:0.25],
-     [NSNumber numberWithFloat:0.30],
-     [NSNumber numberWithFloat:0.5],
-     [NSNumber numberWithFloat:0.90],
-     [NSNumber numberWithFloat:1.0]]
+                                 [NSNumber numberWithFloat:0.30],
+                                 [NSNumber numberWithFloat:0.5],
+                                 [NSNumber numberWithFloat:0.90],
+                                 [NSNumber numberWithFloat:1.0]]
                         colors:@[(id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor],
-     (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:0.75] CGColor],
-     (id)[[UIColor colorWithRed:0.40 green:0.62 blue:0.64 alpha:0.4] CGColor],
-     (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:0.75] CGColor],
-     (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor]]
+                                 (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:0.75] CGColor],
+                                 (id)[[UIColor colorWithRed:0.40 green:0.62 blue:0.64 alpha:0.4] CGColor],
+                                 (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:0.75] CGColor],
+                                 (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor]]
      ];
     
     // make sure there's a shadow on the userCard and resumeView
