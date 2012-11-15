@@ -23,7 +23,7 @@ Make sure you have Xcode's command line tools installed. This can be done by goi
 
 4. Open `candpiosapp.xcworkspace` - NOT `candpiosapp.xcodeproj`!
 
-5. Make sure that the target in the top left is candpiosapp, not Pods.
+5. Make sure that the target in the top left is coffeeandpower, not Pods.
 
 ![Xcode target](http://f.cl.ly/items/1z3m2w3N1T2b1E0R0I1b/Screen%20Shot%202012-11-09%20at%204.46.36%20PM.png)
 
