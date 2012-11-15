@@ -148,9 +148,9 @@ examle json:
                      
                                                                                self.scrollView.frame.size.height)];
     
-    NSString *imageURLString = [CPUtils isDeviceWithFourInchDisplay] ?
-        [pageInfo[@"url"] stringByReplacingOccurrencesOfString:@".png" withString:@"-568h.png"] :
-        pageInfo[@"url"];
+    NSString *imageURLString = [CPUtils isDeviceWithFourInchDisplay]
+        ? [pageInfo[@"url"] stringByReplacingOccurrencesOfString:@".png" withString:@"-568h.png"]
+        : pageInfo[@"url"];
     
     [pageImageView setImageWithURL:[NSURL URLWithString:imageURLString]];
     pageImageView.clipsToBounds = YES;
