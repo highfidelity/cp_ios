@@ -532,8 +532,4 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)viewDidUnload {
-    [self setMapPinImageView:nil];
-    [super viewDidUnload];
-}
 @end
