@@ -40,11 +40,6 @@
         // then bring them to the map once they login
         [CPAppDelegate settingsMenuController].afterLoginAction = CPAfterLoginActionShowMap;
     }
-}
-
-- (void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
     
     if (IS_DEVICE_WITH_FOUR_INCH_DISPLAY) {
         self.backgroundImageView.image = [UIImage imageNamed:@"Default-568h"];
