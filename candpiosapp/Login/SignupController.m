@@ -12,9 +12,6 @@
 
 @interface SignupController()
 
-- (IBAction)loginWithLinkedInTapped:(id)sender;
-- (IBAction) dismissClick:(id)sender;
-
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UIButton *linkedinLoginButton;
 @property (weak, nonatomic) IBOutlet UIButton *dismissButton;
@@ -62,6 +59,8 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
     // fade in the icons to direct user attention at them
     [UIView animateWithDuration:0.3 animations:^{
         self.linkedinLoginButton.alpha = 1.0;
@@ -70,6 +69,8 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
@@ -89,8 +90,4 @@
     [Flurry logEvent:@"skippedSignup"];
 }
 
-- (void)viewDidUnload {
-    [self setBackgroundImageView:nil];
-    [super viewDidUnload];
-}
 @end
