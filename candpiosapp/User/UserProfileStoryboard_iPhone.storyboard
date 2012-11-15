@@ -198,8 +198,8 @@
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <view contentMode="scaleToFill" id="qvF-Ed-Z1a">
-                                        <rect key="frame" x="10" y="263" width="300" height="153"/>
-                                        <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
+                                        <rect key="frame" x="10" y="263" width="300" height="123"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.75" contentMode="left" text="Resume" lineBreakMode="tailTruncation" minimumFontSize="10" id="Do4-zK-XAE">
                                                 <rect key="frame" x="14" y="0.0" width="132" height="48"/>
@@ -620,7 +620,7 @@
     </scenes>
     <resources>
         <image name="Default.png" width="320" height="480"/>
-        <image name="available-for-icon.png" width="16" height="16"/>
+        <image name="available-for-icon.png" width="9" height="9"/>
         <image name="chat-bubble-left-bottom.png" width="261" height="14"/>
         <image name="chat-bubble-left-middle.png" width="261" height="13"/>
         <image name="chat-bubble-left-top.png" width="261" height="14"/>
@@ -628,7 +628,7 @@
         <image name="chat-bubble-right-middle.png" width="261" height="13"/>
         <image name="chat-bubble-right-top.png" width="261" height="14"/>
         <image name="map-marker.png" width="40" height="36"/>
-        <image name="others-at-venue.png" width="16" height="16"/>
+        <image name="others-at-venue.png" width="11" height="9"/>
     </resources>
     <classes>
         <class className="CPPlaceholderTextView" superclassName="UITextView">
