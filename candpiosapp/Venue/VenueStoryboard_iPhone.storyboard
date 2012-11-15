@@ -26,7 +26,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="venue-bar-divider" id="sIy-Uz-nyf">
-                                                <rect key="frame" x="159" y="0.0" width="1" height="52"/>
+                                                <rect key="frame" x="159" y="0.0" width="1" height="48"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </imageView>
                                         </subviews>
