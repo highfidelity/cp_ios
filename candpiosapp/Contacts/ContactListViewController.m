@@ -78,7 +78,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self togglePlaceholder:YES];
+    [self hidePlaceholderImageView:YES];
     // place the settings button on the navigation item if required
     // or remove it if the user isn't logged in
     [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
@@ -119,7 +119,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
                 NSArray *payload = [json objectForKey:@"payload"];
                 NSArray *contactRequests = [json objectForKey:@"contact_requests"];
                 
-                [self togglePlaceholder:[payload count] > 0 || [contactRequests count] > 0];
+                [self hidePlaceholderImageView:[payload count] > 0 || [contactRequests count] > 0];
                 
                 NSSortDescriptor *nicknameSort = [[NSSortDescriptor alloc] initWithKey:@"nickname" ascending:YES];
                 
@@ -193,7 +193,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     self.sortedContactList = [contactList mutableCopy];
 }
 
-- (void)togglePlaceholder:(BOOL)hiddenPlaceholder
+- (void)hidePlaceholderImageView:(BOOL)hiddenPlaceholder
 {
     if (!hiddenPlaceholder && !self.placeholderImageView) {
         self.placeholderImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"contacts-blank-slate"]];
