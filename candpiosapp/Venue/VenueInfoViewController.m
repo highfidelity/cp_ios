@@ -338,8 +338,6 @@ static VenueInfoViewController *_onScreenVenueVC;
     [self dismissModalViewControllerAnimated:YES];
 }
 
-#define kButtonPhoneXOffset 0
-#define kButtonAddressXOffset 0
 #define kButtonYOffset 3
 
 - (void)repositionAddressAndPhone
@@ -347,11 +345,11 @@ static VenueInfoViewController *_onScreenVenueVC;
     if (self.hasAddress || self.hasPhone) {        
         // set the basic frame for the phone and address buttons
         CGRect phoneFrame = self.phoneButton.frame;
-        phoneFrame.origin.x = self.bottomPhotoOverlayView.frame.size.width * 3/4 - (phoneFrame.size.width / 2) - kButtonPhoneXOffset;
+        phoneFrame.origin.x = round(self.bottomPhotoOverlayView.frame.size.width * 3/4 - (phoneFrame.size.width / 2));
         phoneFrame.origin.y = kButtonYOffset;
         
         CGRect addressFrame = self.addressButton.frame;
-        addressFrame.origin.x = self.bottomPhotoOverlayView.frame.size.width * 1/4 - (addressFrame.size.width / 2) - kButtonAddressXOffset;
+        addressFrame.origin.x = round(self.bottomPhotoOverlayView.frame.size.width / 4 - (addressFrame.size.width / 2));
         addressFrame.origin.y = kButtonYOffset;
     
         if (!self.hasAddress || !self.hasPhone) {
