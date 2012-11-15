@@ -26,15 +26,16 @@ float const TIMESTAMP_CELL_HEIGHT         = 18.0f;
 static CGFloat const FONTSIZE = 14.0;
 
 @interface OneOnOneChatViewController()
+
 - (CGFloat)labelHeight:(ChatMessage *)message;
 - (void)scrollToLastChat;
+
 @end
+
 
 @implementation OneOnOneChatViewController
 
-
 #pragma mark - View lifecycle
-
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
@@ -65,9 +66,6 @@ static CGFloat const FONTSIZE = 14.0;
     
     [self.chatButton setBackgroundImage:chatButtonImage forState:UIControlStateNormal];
     
-    // Set up the chat entry field
-    self.chatEntryField.delegate = self;
-    
     // Add notifications for keyboard showing / hiding
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -77,7 +75,6 @@ static CGFloat const FONTSIZE = 14.0;
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -407,24 +404,35 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 }
 
 - (IBAction)sendChat {
-    if (![self.chatEntryField.text isEqualToString:@""]) {
+    if (![self.chatEntryTextView.text isEqualToString:@""]) {
         // Don't do squat on empty chat entries
         ChatMessage *message = [[ChatMessage alloc]
-                                initWithMessage:self.chatEntryField.text
+                                initWithMessage:self.chatEntryTextView.text
                                          toUser:self.user
                                        fromUser:self.me];
         
         [self deliverChatMessage:message];
         // Clear chat box text
-        self.chatEntryField.text = @"";
+        self.chatEntryTextView.text = @"";
     }
 }
 
+#pragma mark - UITextViewDelegate
 
-#pragma mark - Delegate & Outlet functions
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    NSCharacterSet *newlineCharacterSet = [NSCharacterSet newlineCharacterSet];
+    if (NSNotFound != [text rangeOfCharacterFromSet:newlineCharacterSet].location) {
+        NSString *trimmedText = [text stringByTrimmingCharactersInSet:newlineCharacterSet];
+        NSArray *stringComponents = [trimmedText componentsSeparatedByCharactersInSet:newlineCharacterSet];
+        NSString *stringWithoutNewlines = [stringComponents componentsJoinedByString:@" "];
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {    
-    [textField resignFirstResponder];
+        textView.text = [textView.text stringByReplacingCharactersInRange:range
+                                                               withString:stringWithoutNewlines];
+
+        [textView resignFirstResponder];
+        return NO;
+    }
     return YES;
 }
 

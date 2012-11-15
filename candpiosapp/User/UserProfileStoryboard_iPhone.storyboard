@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="6Bs-xG-Mnl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2840" systemVersion="11G63b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="6Bs-xG-Mnl">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1926"/>
     </dependencies>
     <scenes>
         <!--User Profile View Controller-->
@@ -470,17 +470,27 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" id="8Xk-CN-gYQ">
-                                <rect key="frame" x="0.0" y="376" width="320" height="40"/>
+                                <rect key="frame" x="0.0" y="375" width="320" height="41"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type to chat" minimumFontSize="17" id="idG-ly-PzE">
-                                        <rect key="frame" x="7" y="4" width="228" height="31"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="Yvu-KJ-htD">
+                                        <rect key="frame" x="7" y="10" width="4238" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <inset key="contentInset" minX="5" minY="-5" maxX="4005" maxY="0.0"/>
+                                        <inset key="scrollIndicatorInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="OVL-97-bi7" id="L9d-It-PPe"/>
+                                        </connections>
+                                    </textView>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" image="chat-entry-field.png" id="VTb-En-7L9">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="B2W-c3-vfe">
-                                        <rect key="frame" x="241" y="4" width="72" height="32"/>
+                                        <rect key="frame" x="253" y="6" width="63" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="Send">
@@ -504,7 +514,7 @@
                         <outlet property="backgroundView" destination="ohT-1I-TXi" id="lPT-g7-Ijh"/>
                         <outlet property="chatButton" destination="B2W-c3-vfe" id="srY-Aq-Vd9"/>
                         <outlet property="chatContents" destination="q9R-xR-eLD" id="SKC-7i-6SK"/>
-                        <outlet property="chatEntryField" destination="idG-ly-PzE" id="Rrx-LB-YAF"/>
+                        <outlet property="chatEntryTextView" destination="Yvu-KJ-htD" id="XuT-U5-37s"/>
                         <outlet property="chatInputs" destination="8Xk-CN-gYQ" id="czC-Oa-prR"/>
                     </connections>
                 </viewController>
@@ -627,6 +637,7 @@
         <image name="chat-bubble-right-bottom.png" width="261" height="14"/>
         <image name="chat-bubble-right-middle.png" width="261" height="13"/>
         <image name="chat-bubble-right-top.png" width="261" height="14"/>
+        <image name="chat-entry-field.png" width="320" height="41"/>
         <image name="map-marker.png" width="40" height="36"/>
         <image name="others-at-venue.png" width="11" height="9"/>
     </resources>
@@ -648,6 +659,7 @@
                 <relationship kind="outlet" name="chatButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="chatContents" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="chatEntryField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="chatEntryTextView" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="chatInputs" candidateClass="UIView"/>
             </relationships>
         </class>
