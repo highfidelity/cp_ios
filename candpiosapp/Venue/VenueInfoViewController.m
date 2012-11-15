@@ -58,8 +58,6 @@ static VenueInfoViewController *_onScreenVenueVC;
     
     [self populateTopVenueView];
     
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-first-aid-kit"]];
-        
     // table view header
     [self.scrollView removeFromSuperview];
     self.tableView.tableHeaderView = self.scrollView;
@@ -147,11 +145,13 @@ static VenueInfoViewController *_onScreenVenueVC;
     // shadow that shows above user info
     [CPUIHelper addShadowToView:[self.view viewWithTag:3548]  color:[UIColor blackColor] offset:CGSizeMake(0, 1) radius:5 opacity:0.7];
     
+    // add background gradient
+    [self.bottomPhotoOverlayView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"venue-bar"]]];
+    
     if (!self.phoneButton) {
         self.phoneButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.bottomPhotoOverlayView addSubview:self.phoneButton];
     }
-    
     
     if ([self.venue.formattedPhone length] > 0) {
         self.hasPhone = YES;
@@ -174,6 +174,12 @@ static VenueInfoViewController *_onScreenVenueVC;
     } else {
         self.hasAddress = NO;
         [self setupVenueButton:self.addressButton withIconNamed:@"place-location" andlabelText:@"N/A"];
+    }
+    
+    if (self.hasAddress && self.hasPhone) {
+        self.venueBarSeparator.alpha = 1;
+    } else {
+        self.venueBarSeparator.alpha = 0;
     }
     
     [self repositionAddressAndPhone];
@@ -332,8 +338,6 @@ static VenueInfoViewController *_onScreenVenueVC;
     [self dismissModalViewControllerAnimated:YES];
 }
 
-#define kButtonPhoneXOffset 2
-#define kButtonAddressXOffset 10
 #define kButtonYOffset 3
 
 - (void)repositionAddressAndPhone
@@ -341,11 +345,11 @@ static VenueInfoViewController *_onScreenVenueVC;
     if (self.hasAddress || self.hasPhone) {        
         // set the basic frame for the phone and address buttons
         CGRect phoneFrame = self.phoneButton.frame;
-        phoneFrame.origin.x = self.bottomPhotoOverlayView.frame.size.width - phoneFrame.size.width - kButtonPhoneXOffset;
+        phoneFrame.origin.x = round(self.bottomPhotoOverlayView.frame.size.width * 3/4 - (phoneFrame.size.width / 2));
         phoneFrame.origin.y = kButtonYOffset;
         
         CGRect addressFrame = self.addressButton.frame;
-        addressFrame.origin.x = kButtonAddressXOffset;
+        addressFrame.origin.x = round(self.bottomPhotoOverlayView.frame.size.width / 4 - (addressFrame.size.width / 2));
         addressFrame.origin.y = kButtonYOffset;
     
         if (!self.hasAddress || !self.hasPhone) {
@@ -375,6 +379,7 @@ static VenueInfoViewController *_onScreenVenueVC;
         self.bottomPhotoOverlayView.alpha = 0.0;
         self.bottomPhotoOverlayView.userInteractionEnabled = NO;
     }
+    
 }
 
 - (void)setupVenueButton:(UIButton *)venueButton
@@ -382,7 +387,7 @@ static VenueInfoViewController *_onScreenVenueVC;
         andlabelText:(NSString *)labelText
 {
     CGRect venueButtonFrame = venueButton.frame;
-    venueButtonFrame.size.height = 36;
+    venueButtonFrame.size.height = 44;
     venueButton.frame = venueButtonFrame;
     
     // alloc-init the icon
@@ -709,4 +714,8 @@ static VenueInfoViewController *_onScreenVenueVC;
     } completion:nil];
 }
 
+- (void)viewDidUnload {
+    [self setVenueBarSeparator:nil];
+    [super viewDidUnload];
+}
 @end
