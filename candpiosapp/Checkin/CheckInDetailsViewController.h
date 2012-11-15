@@ -16,6 +16,4 @@
 
 -(void)userImageButtonPressed:(UIButton *)sender;
 
-+ (AppDelegate *)sharedDelegate;
-
 @end
