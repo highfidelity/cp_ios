@@ -492,14 +492,13 @@
 		539F7DAC16558ACB005FF3F0 /* FoursquareAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoursquareAPIClient.h; sourceTree = "<group>"; };
 		539F7DAD16558ACB005FF3F0 /* FoursquareAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoursquareAPIClient.m; sourceTree = "<group>"; };
 		539F7DB016558AE6005FF3F0 /* CPapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPapi.h; sourceTree = "<group>"; };
-		539F7DB116558AE6005FF3F0 /* CPapi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPapi.m; sourceTree = "<group>"; };
+		539F7DB116558AE6005FF3F0 /* CPapi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CPapi.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		539F7DB216558AE6005FF3F0 /* CPApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPApiClient.h; sourceTree = "<group>"; };
 		539F7DB316558AE6005FF3F0 /* CPApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPApiClient.m; sourceTree = "<group>"; };
 		539F7DB416558AE6005FF3F0 /* CPConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPConstants.h; sourceTree = "<group>"; };
 		539F7DB516558AE6005FF3F0 /* CPConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPConstants.m; sourceTree = "<group>"; };
 		539F7DB616558AE6005FF3F0 /* CPLinkedInAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPLinkedInAPI.h; sourceTree = "<group>"; };
 		539F7DB716558AE6005FF3F0 /* CPLinkedInAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPLinkedInAPI.m; sourceTree = "<group>"; };
-		539F7DB816558AE6005FF3F0 /* CPMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPMacros.h; sourceTree = "<group>"; };
 		539F7DB916558AE6005FF3F0 /* CPObjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPObjectManager.h; sourceTree = "<group>"; };
 		539F7DBA16558AE6005FF3F0 /* CPObjectManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPObjectManager.m; sourceTree = "<group>"; };
 		539F7DBB16558AE6005FF3F0 /* CPSoundEffectsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPSoundEffectsManager.h; sourceTree = "<group>"; };
@@ -517,7 +516,7 @@
 		539F7DC816558AE6005FF3F0 /* CPAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPAlertView.h; sourceTree = "<group>"; };
 		539F7DC916558AE6005FF3F0 /* CPAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPAlertView.m; sourceTree = "<group>"; };
 		539F7DCA16558AE6005FF3F0 /* CPBaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPBaseTableViewController.h; sourceTree = "<group>"; };
-		539F7DCB16558AE6005FF3F0 /* CPBaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPBaseTableViewController.m; sourceTree = "<group>"; };
+		539F7DCB16558AE6005FF3F0 /* CPBaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CPBaseTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		539F7DCC16558AE6005FF3F0 /* CPPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPPageControl.h; sourceTree = "<group>"; };
 		539F7DCD16558AE6005FF3F0 /* CPPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPPageControl.m; sourceTree = "<group>"; };
 		539F7DCE16558AE6005FF3F0 /* CPPlaceholderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPPlaceholderTextView.h; sourceTree = "<group>"; };
@@ -599,6 +598,7 @@
 		539F7E1F16558AE6005FF3F0 /* UIImage+ImageBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageBlur.m"; sourceTree = "<group>"; };
 		539F7E2016558AE6005FF3F0 /* UIViewController+isModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+isModal.h"; sourceTree = "<group>"; };
 		539F7E2116558AE6005FF3F0 /* UIViewController+isModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+isModal.m"; sourceTree = "<group>"; };
+		539F7E7616558D42005FF3F0 /* CPMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPMacros.h; sourceTree = "<group>"; };
 		53A1EA951587B418009D8E31 /* thin-nav-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thin-nav-bg.png"; sourceTree = "<group>"; };
 		53A1EA961587B418009D8E31 /* thin-nav-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thin-nav-bg@2x.png"; sourceTree = "<group>"; };
 		53A1EA991587B496009D8E31 /* tab-contacts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-contacts.png"; sourceTree = "<group>"; };
@@ -610,7 +610,7 @@
 		53A1EA9F1587B496009D8E31 /* tab-venues.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-venues.png"; sourceTree = "<group>"; };
 		53A1EAA01587B496009D8E31 /* tab-venues@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-venues@2x.png"; sourceTree = "<group>"; };
 		53A3C78A159A4B73008459B0 /* CPCheckinHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CPCheckinHandler.h; path = Checkin/CPCheckinHandler.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		53A3C78B159A4B73008459B0 /* CPCheckinHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPCheckinHandler.m; path = Checkin/CPCheckinHandler.m; sourceTree = "<group>"; };
+		53A3C78B159A4B73008459B0 /* CPCheckinHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CPCheckinHandler.m; path = Checkin/CPCheckinHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53A9F7741561912A0049F427 /* send-love.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-love.png"; path = "User/images/send-love.png"; sourceTree = "<group>"; };
 		53A9F7751561912A0049F427 /* send-love@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-love@2x.png"; path = "User/images/send-love@2x.png"; sourceTree = "<group>"; };
 		53AA7A821566CB1500006E85 /* ContactListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactListCell.h; sourceTree = "<group>"; };
@@ -634,7 +634,7 @@
 		53D78C63160B99D800148EA3 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
 		53D78C64160B99D800148EA3 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
 		53D7ADEC15D04AC800BB041E /* CPGeofenceHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPGeofenceHandler.h; path = Checkin/CPGeofenceHandler.h; sourceTree = "<group>"; };
-		53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPGeofenceHandler.m; path = Checkin/CPGeofenceHandler.m; sourceTree = "<group>"; };
+		53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CPGeofenceHandler.m; path = Checkin/CPGeofenceHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53D9B196152A5D9300BC1304 /* VenueListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VenueListTableViewController.h; path = Venue/VenueListTableViewController.h; sourceTree = "<group>"; };
 		53D9B197152A5D9300BC1304 /* VenueListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = VenueListTableViewController.m; path = Venue/VenueListTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53D9B19A152A5E8600BC1304 /* CPTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPTabBarController.h; sourceTree = "<group>"; };
@@ -705,7 +705,7 @@
 		69E3A73B1573CAC80046E687 /* linkedin-invite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "linkedin-invite.png"; path = "candpiosapp/Settings/images/linkedin-invite.png"; sourceTree = SOURCE_ROOT; };
 		69E3A73C1573CAC90046E687 /* linkedin-invite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "linkedin-invite@2x.png"; path = "candpiosapp/Settings/images/linkedin-invite@2x.png"; sourceTree = SOURCE_ROOT; };
 		6F0B453714F6BCC50074DBD9 /* CPChatHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPChatHelper.h; path = candpiosapp/Chat/CPChatHelper.h; sourceTree = SOURCE_ROOT; };
-		6F0B453814F6BCD10074DBD9 /* CPChatHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPChatHelper.m; path = candpiosapp/Chat/CPChatHelper.m; sourceTree = SOURCE_ROOT; };
+		6F0B453814F6BCD10074DBD9 /* CPChatHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CPChatHelper.m; path = candpiosapp/Chat/CPChatHelper.m; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		6F0B453A14F6BD560074DBD9 /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ChatMessage.h; path = candpiosapp/Chat/ChatMessage.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		6F0B453B14F6BD560074DBD9 /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatMessage.m; path = candpiosapp/Chat/ChatMessage.m; sourceTree = SOURCE_ROOT; };
 		6F0B453D14F6BD850074DBD9 /* ChatHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ChatHistory.h; path = candpiosapp/Chat/ChatHistory.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1096,7 +1096,7 @@
 				539F7DB516558AE6005FF3F0 /* CPConstants.m */,
 				539F7DB616558AE6005FF3F0 /* CPLinkedInAPI.h */,
 				539F7DB716558AE6005FF3F0 /* CPLinkedInAPI.m */,
-				539F7DB816558AE6005FF3F0 /* CPMacros.h */,
+				539F7E7616558D42005FF3F0 /* CPMacros.h */,
 				539F7DB916558AE6005FF3F0 /* CPObjectManager.h */,
 				539F7DBA16558AE6005FF3F0 /* CPObjectManager.m */,
 				539F7DBB16558AE6005FF3F0 /* CPSoundEffectsManager.h */,
