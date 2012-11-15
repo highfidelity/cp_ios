@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *venuePhoto;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIImageView *venueBarSeparator;
 @property (strong, nonatomic) NSMutableDictionary *categoryCount;
 @property (strong, nonatomic) NSMutableDictionary *currentUsers;
 @property (nonatomic) BOOL scrollToUserThumbnail;
