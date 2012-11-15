@@ -192,7 +192,9 @@
                 if (!error) {
                     // fill out the resume and unlock the scrollView
                     NSLog(@"Received resume response.");
+                    
                     self.scrollView.scrollEnabled = YES;
+                    
                     [self placeUserDataOnProfile];
                 } else {
                     // error checking for load of user
@@ -346,6 +348,10 @@
 
     self.resumeEarned.text = [NSString stringWithFormat:@"%d", self.user.totalHours];
     self.loveReceived.text = [self.user.reviews objectForKey:@"love_received"];
+    
+    if ([self.user.isContact boolValue]) {
+        self.userActionCell.rightStyle = CPUserActionCellSwipeStyleReducedAction;
+    }
     
     dispatch_queue_t q_profile = dispatch_queue_create("com.candp.profile", NULL);
     dispatch_async(q_profile, ^{
