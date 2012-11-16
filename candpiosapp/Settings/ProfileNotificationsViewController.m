@@ -14,6 +14,10 @@
 #define kInCityText @"in city"
 #define kContactsText @"contacts"
 
+#define kNotificationsViewPosition 295
+#define kAnyoneChatViewPosition 75
+#define kQuietTimeOffset 40
+
 @interface ProfileNotificationsViewController () <UIActionSheetDelegate>
 
 @property (strong, nonatomic) NSDate *quietTimeFromDate;
@@ -31,7 +35,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *chatNotificationLabel;
 @property (weak, nonatomic) IBOutlet UIView *dimView;
 @property (weak, nonatomic) IBOutlet UIView *fromToSuperview;
-
+@property (weak, nonatomic) IBOutlet UIView *notificationsView;
 
 - (void)setVenue:(NSString *)setting;
 
@@ -265,16 +269,18 @@
 - (void)setQuietTime:(BOOL)quietTime
 {
     [UIView animateWithDuration:0.3 animations:^ {
-        CGRect fromToFrame = self.fromToSuperview.frame;
-        CGFloat anyoneChatViewY = fromToFrame.origin.y;
-        if (quietTime) {
-            anyoneChatViewY += fromToFrame.size.height;
-        }
-
         CGRect anyoneChatFrame = self.anyoneChatView.frame;
-        anyoneChatFrame.origin.y = anyoneChatViewY;
-        
+        CGRect notificationsFrame = self.notificationsView.frame;
+
+        if (quietTime) {
+            anyoneChatFrame.origin.y = kNotificationsViewPosition;
+            notificationsFrame.origin.y = kAnyoneChatViewPosition;
+        } else {
+            notificationsFrame.origin.y = kAnyoneChatViewPosition - kQuietTimeOffset;
+            anyoneChatFrame.origin.y = kNotificationsViewPosition - kQuietTimeOffset;
+        }
         self.anyoneChatView.frame = anyoneChatFrame;
+        self.notificationsView.frame = notificationsFrame;
     }];
 }
 
@@ -287,5 +293,8 @@
     
     return dateString;
 }
-
+- (void)viewDidUnload {
+    [self setNotificationsView:nil];
+    [super viewDidUnload];
+}
 @end
