@@ -79,26 +79,12 @@
     // keep our own queue, so we can safely cancel
     self.operationQueue = [NSOperationQueue new];
     
-    // when pulling the scroll view top down, present the map
-    self.mapView.frame = CGRectUnion(self.mapView.frame,
-                                     CGRectOffset(self.mapView.frame, 0, -self.mapView.frame.size.height));
-    // add the blue overlay gradient in front of the map
-    [self addGradientWithFrame:self.mapView.frame
-                     locations:[NSArray arrayWithObjects:
-                                [NSNumber numberWithFloat:0.25],
-                                [NSNumber numberWithFloat:0.30],
-                                [NSNumber numberWithFloat:0.5],
-                                [NSNumber numberWithFloat:0.90],
-                                [NSNumber numberWithFloat:1.0],
-                                nil]
-                        colors:[NSArray arrayWithObjects:
-                                (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor],
-                                (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:0.75] CGColor],
-                                (id)[[UIColor colorWithRed:0.40 green:0.62 blue:0.64 alpha:0.4] CGColor],
-                                (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:0.75] CGColor],
-                                (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor],
-                                nil]
-     ];
+    // set the navigation controller title to the user's nickname
+    self.title = self.user.nickname;
+    
+    // set the booleans this VC uses in later control statements
+    self.firstLoad = YES;
+    self.mapAndDistanceLoaded = NO;
     
     // set LeagueGothic font where applicable
     [CPUIHelper changeFontForLabel:self.checkedIn toLeagueGothicOfSize:24];
@@ -112,12 +98,82 @@
     self.resumeWebView.opaque = NO;
     self.resumeWebView.backgroundColor = paper;
     
+    self.userActionCell.user = self.user;
+    self.userActionCell.delegate = self;
+    
+    // set the labels on the user business card
+    self.cardNickname.text = self.user.nickname;
+    [self setUserStatusWithQuotes:self.user.status];
+    self.cardJobPosition.text = self.user.jobTitle;
+    
+    // set the card image to the user's profile image
+    [CPUIHelper profileImageView:self.cardImage
+             withProfileImageUrl:self.user.photoURL];
+    
+    // don't allow scrolling in the mustache view until it's loaded
+    self.resumeWebView.userInteractionEnabled = NO;
+    
+    if (self.isF2FInvite) {
+        // we're in an F2F invite
+        [self placeUserDataOnProfile];
+    } else {
+        // lock the scrollView
+        self.scrollView.scrollEnabled = NO;
+        
+        // get a user object with resume data
+        [self.user loadUserResumeOnQueue:self.operationQueue completion:^(NSError *error) {
+            if (!error) {
+                // fill out the resume and unlock the scrollView
+                NSLog(@"Received resume response.");
+                self.scrollView.scrollEnabled = YES;
+                [self placeUserDataOnProfile];
+            } else {
+                // error checking for load of user
+                NSLog(@"Error loading resume: %@", error);
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Resume Load"
+                                                                message:[error localizedDescription]
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+        }];
+    }
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    // when pulling the scroll view top down, present the map
+    self.mapView.frame = CGRectUnion(self.mapView.frame,
+                                     CGRectOffset(self.mapView.frame, 0, -self.mapView.frame.size.height));
+    
+    // add the blue overlay gradient in front of the map
+    [self addGradientWithFrame:self.mapView.frame
+                     locations:@[[NSNumber numberWithFloat:0.25],
+                                 [NSNumber numberWithFloat:0.30],
+                                 [NSNumber numberWithFloat:0.5],
+                                 [NSNumber numberWithFloat:0.90],
+                                 [NSNumber numberWithFloat:1.0]]
+                        colors:@[(id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor],
+                                 (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:0.75] CGColor],
+                                 (id)[[UIColor colorWithRed:0.40 green:0.62 blue:0.64 alpha:0.4] CGColor],
+                                 (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:0.75] CGColor],
+                                 (id)[[UIColor colorWithRed:0.67 green:0.83 blue:0.94 alpha:1.0] CGColor]]
+     ];
+    
     // make sure there's a shadow on the userCard and resumeView
     [CPUIHelper addShadowToView:self.userCard color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
     [CPUIHelper addShadowToView:self.resumeView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
-
-    self.userActionCell.user = self.user;
-    self.userActionCell.delegate = self;
+    
+    // check if this is an F2F invite
+    if (!self.isF2FInvite) {     
+        
+        // put three animated dots after the Loading Resume text
+        [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:YES];
+        [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:YES];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -148,67 +204,6 @@
     
     [self.navigationController.navigationBar removeGestureRecognizer:_tapRecon];
     self.tapRecon = nil;
-}
-
-- (void)setUser:(CPUser *)newUser
-{
-    // assign the user
-    _user = newUser;
-    
-    if (_user) {
-        // set the booleans this VC uses in later control statements
-        self.firstLoad = YES;
-        self.mapAndDistanceLoaded = NO;
-        
-        // set the card image to the user's profile image
-        [CPUIHelper profileImageView:self.cardImage
-                 withProfileImageUrl:self.user.photoURL];
-
-        // set the labels on the user business card
-        self.cardNickname.text = self.user.nickname;
-        [self setUserStatusWithQuotes:self.user.status];
-        self.cardJobPosition.text = self.user.jobTitle;
-        
-        // set the navigation controller title to the user's nickname
-        self.title = self.user.nickname;  
-        
-        // don't allow scrolling in the mustache view until it's loaded
-        self.resumeWebView.userInteractionEnabled = NO;
-        
-        // check if this is an F2F invite
-        if (self.isF2FInvite) {
-            // we're in an F2F invite
-            [self placeUserDataOnProfile];
-        } else {  
-            // lock the scrollView
-            self.scrollView.scrollEnabled = NO;
-            
-            // put three animated dots after the Loading Resume text
-            [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:YES];
-            [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:YES];
-            
-            // get a user object with resume data
-            [self.user loadUserResumeOnQueue:self.operationQueue completion:^(NSError *error) {
-                if (!error) {
-                    // fill out the resume and unlock the scrollView
-                    NSLog(@"Received resume response.");
-                    
-                    self.scrollView.scrollEnabled = YES;
-                    
-                    [self placeUserDataOnProfile];
-                } else {
-                    // error checking for load of user
-                    NSLog(@"Error loading resume: %@", error);
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Resume Load"
-                                                                    message:[error localizedDescription]
-                                                                   delegate:nil
-                                                          cancelButtonTitle:@"OK" 
-                                                          otherButtonTitles:nil];
-                    [alert show];
-                }
-            }];
-        }
-    }
 }
 
 - (void)addGradientWithFrame:(CGRect)frame locations:(NSArray*)locations colors:(NSArray*)colors 
@@ -291,11 +286,8 @@
         MKCoordinateRegion region = MKCoordinateRegionMake(self.user.location, MKCoordinateSpanMake(0.005, 0.005));
         [self.mapView setRegion:region];
         
-        // this will always be the point on iPhones up to iPhone4
-        // if this needs to be used on iPad we'll need to do this programatically or use an if-else
-        CGPoint rightAndUp = CGPointMake(84, 232);
-        CLLocationCoordinate2D coordinate = [self.mapView convertPoint:rightAndUp toCoordinateFromView:self.mapView];
-        [self.mapView setCenterCoordinate:coordinate animated:NO];
+        // use method in CPUIHelper to shift the map to the right spot
+        [CPUIHelper shiftMapView:self.mapView forPinCenterInMapview:[self.mapView convertPoint:self.mapMarker.center fromView:self.scrollView]];
         
         CLLocation *myLocation = [CPAppDelegate locationManager].location;
         CLLocation *otherUserLocation = [[CLLocation alloc] initWithLatitude:self.user.location.latitude longitude:self.user.location.longitude];

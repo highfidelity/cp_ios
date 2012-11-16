@@ -62,6 +62,14 @@ static VenueInfoViewController *_onScreenVenueVC;
     [self.scrollView removeFromSuperview];
     self.tableView.tableHeaderView = self.scrollView;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    // add a footer view to the table view so we aren't stuck right to the bottom
+    // and so we clear the tab bar button if it's there
+    CGFloat footerHeight = self.tabBarController ? [CPAppDelegate tabBarController].thinBar.actionButtonRadius : 10;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                                             0,
+                                                                             self.tableView.frame.size.width,
+                                                                              footerHeight)];
 
     // setup interface with whatever we have and then ask API for other data
     [self populateUserSection];
@@ -170,7 +178,10 @@ static VenueInfoViewController *_onScreenVenueVC;
     if ([self.venue.address length] > 0) {
         self.hasAddress = YES;
         [self setupVenueButton:self.addressButton withIconNamed:@"place-location" andlabelText:self.venue.address];
-        [self.addressButton addTarget:self action:@selector(tappedAddress:) forControlEvents:UIControlEventTouchUpInside];
+        
+        if (![self.venue.isNeighborhood boolValue]) {
+             [self.addressButton addTarget:self action:@selector(tappedAddress:) forControlEvents:UIControlEventTouchUpInside];
+        }
     } else {
         self.hasAddress = NO;
         [self setupVenueButton:self.addressButton withIconNamed:@"place-location" andlabelText:@"N/A"];
@@ -431,10 +442,10 @@ static VenueInfoViewController *_onScreenVenueVC;
 - (IBAction)tappedAddress:(id)sender 
 {
     NSString *message = [NSString stringWithFormat:@"Do you want directions to %@?", self.venue.name];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Directions" 
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Directions"
                                                         message:message
-                                                       delegate:self 
-                                              cancelButtonTitle:@"Cancel" 
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
                                               otherButtonTitles:@"Launch Map", nil];
     alertView.tag = 1045;
     [alertView show];
@@ -483,9 +494,11 @@ static VenueInfoViewController *_onScreenVenueVC;
             CLLocationCoordinate2D currentLocation = [CPAppDelegate locationManager].location.coordinate;
             NSString *fullAddress = [NSString stringWithFormat:@"%@, %@, %@", self.venue.address, self.venue.city, self.venue.state];
             // setup the url to open google maps
-            urlString = [NSString stringWithFormat: @"http://maps.google.com/maps?saddr=%f,%f&daddr=%@",
-                                   currentLocation.latitude, currentLocation.longitude,
-                                   [CPapi urlEncode:fullAddress]];
+            NSString *googleOrAppleMaps = [CPUtils systemVersionGreaterThanOrEqualTo:6.0] ? @"apple" : @"google";
+            urlString = [NSString stringWithFormat: @"http://maps.%@.com/maps?saddr=%f,%f&daddr=%@",
+                                    googleOrAppleMaps,
+                                    currentLocation.latitude, currentLocation.longitude,
+                                    [CPapi urlEncode:fullAddress]];
             
         } else if (alertView.tag == 1046) {
             // setup the url to call venue

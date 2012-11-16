@@ -10,6 +10,14 @@
 #import "Flurry.h"
 #import "UIViewController+isModal.h"
 
+@interface SignupController()
+
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
+@property (weak, nonatomic) IBOutlet UIButton *linkedinLoginButton;
+@property (weak, nonatomic) IBOutlet UIButton *dismissButton;
+
+@end
+
 @implementation SignupController
 
 #pragma mark - View lifecycle
@@ -29,6 +37,10 @@
         // then bring them to the map once they login
         [CPAppDelegate settingsMenuController].afterLoginAction = CPAfterLoginActionShowMap;
     }
+    
+    if ([CPUtils isDeviceWithFourInchDisplay]) {
+        self.backgroundImageView.image = [UIImage imageNamed:@"Default-568h"];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -47,6 +59,8 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
     // fade in the icons to direct user attention at them
     [UIView animateWithDuration:0.3 animations:^{
         self.linkedinLoginButton.alpha = 1.0;
@@ -55,6 +69,8 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 

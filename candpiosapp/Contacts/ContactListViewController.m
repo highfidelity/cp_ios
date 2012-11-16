@@ -41,7 +41,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 @property (strong, nonatomic) NSMutableArray *sortedContactList;
 @property (strong, nonatomic) NSArray *searchResults;
-@property (weak, nonatomic) IBOutlet UIImageView *placeholderImage;
+@property (strong, nonatomic) IBOutlet UIImageView *placeholderImageView;
 @property (nonatomic) BOOL userIsPerformingQuickAction;
 @property (nonatomic) BOOL reloadPrevented;
 @property (nonatomic) BOOL isSearching;
@@ -78,7 +78,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self hidePlaceholder:YES];
+    [self hidePlaceholderImageView:YES];
     // place the settings button on the navigation item if required
     // or remove it if the user isn't logged in
     [CPUIHelper settingsButtonForNavigationItem:self.navigationItem];
@@ -91,7 +91,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     self.tableView.allowsSelection = NO;
     
     // hide the search bar if it hasn't been scrolled
-    if (self.tableView.contentOffset.y == 0.0f) {
+    if (self.tableView.contentOffset.y == 0.0f && ![CPUtils isDeviceWithFourInchDisplay]) {
         [self.tableView setContentOffset:CGPointMake(0, 44) animated:NO];
     }
     
@@ -119,7 +119,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
                 NSArray *payload = [json objectForKey:@"payload"];
                 NSArray *contactRequests = [json objectForKey:@"contact_requests"];
                 
-                [self hidePlaceholder:[payload count] > 0 || [contactRequests count] > 0];
+                [self hidePlaceholderImageView:[payload count] > 0 || [contactRequests count] > 0];
                 
                 NSSortDescriptor *nicknameSort = [[NSSortDescriptor alloc] initWithKey:@"nickname" ascending:YES];
                 
@@ -193,12 +193,22 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     self.sortedContactList = [contactList mutableCopy];
 }
 
-- (void)hidePlaceholder:(BOOL)hide
+- (void)hidePlaceholderImageView:(BOOL)hiddenPlaceholder
 {
-    [self.placeholderImage setHidden:hide];
-    [self.tableView setScrollEnabled:hide];
-    [self.searchBar setHidden:!hide];
-    self.isSearching = !hide;
+    if (!hiddenPlaceholder && !self.placeholderImageView) {
+        self.placeholderImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"contacts-blank-slate"]];
+    }
+    
+    self.tableView.tableFooterView = hiddenPlaceholder
+        ? [self tabBarButtonAvoidingFooterView]
+        : self.placeholderImageView;
+    
+    self.tableView.backgroundColor = hiddenPlaceholder
+        ? [UIColor colorWithR:51 G:51 B:51 A:1]
+        : [UIColor colorWithR:246 G:247 B:245 A:1]  ;
+    
+    self.tableView.scrollEnabled = hiddenPlaceholder;
+    self.searchBar.hidden = !hiddenPlaceholder;
 }
 
 - (NSArray*)sectionIndexTitles
@@ -249,7 +259,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-    if (self.isSearching) {
+    if (self.isSearching || self.sortedContactList.count == 0) {
         return nil;
     }
     
@@ -378,9 +388,11 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 - (void)performSearch:(NSString *)searchText {
     if ([searchText isEqualToString:@""]) {
         self.searchResults = [NSArray arrayWithArray:self.sortedContactList];
+        self.tableView.tableFooterView = [self tabBarButtonAvoidingFooterView];
     }
     else {
         self.searchResults = [self.sortedContactList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(nickname contains[cd] %@)", searchText]];
+        self.tableView.tableFooterView = nil;
     }
     [self.tableView reloadData];
 }

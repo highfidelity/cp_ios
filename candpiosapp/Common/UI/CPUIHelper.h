@@ -75,4 +75,7 @@ typedef enum {
 # pragma mark - Settings Button
 + (void)settingsButtonForNavigationItem:(UINavigationItem *)navigationItem;
 
+# pragma mark - MapView shifting
++ (void)shiftMapView:(MKMapView *)mapView forPinCenterInMapview:(CGPoint)mapPinCenter;
+
 @end

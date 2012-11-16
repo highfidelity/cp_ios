@@ -12,7 +12,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="FvT-cB-xLT">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" id="FvT-cB-xLT">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
@@ -185,7 +185,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="map-marker.png" id="hs9-Nt-iuJ">
-                                        <rect key="frame" x="221" y="171" width="41" height="41"/>
+                                        <rect key="frame" x="222" y="171" width="40" height="36"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="jCv-cB-4k0">
@@ -198,8 +198,8 @@
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <view contentMode="scaleToFill" id="qvF-Ed-Z1a">
-                                        <rect key="frame" x="10" y="263" width="300" height="153"/>
-                                        <autoresizingMask key="autoresizingMask"/>
+                                        <rect key="frame" x="10" y="263" width="300" height="123"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.75" contentMode="left" text="Resume" lineBreakMode="tailTruncation" minimumFontSize="10" id="Do4-zK-XAE">
                                                 <rect key="frame" x="14" y="0.0" width="132" height="48"/>
@@ -471,7 +471,7 @@
                             </tableView>
                             <view contentMode="scaleToFill" id="8Xk-CN-gYQ">
                                 <rect key="frame" x="0.0" y="376" width="320" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type to chat" minimumFontSize="17" id="idG-ly-PzE">
                                         <rect key="frame" x="7" y="4" width="228" height="31"/>
@@ -562,7 +562,7 @@
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="UOQ-R0-oNk">
                                 <rect key="frame" x="0.0" y="246" width="320" height="214"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" red="0.22745098039215686" green="0.22745098039215686" blue="0.22745098039215686" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -620,15 +620,15 @@
     </scenes>
     <resources>
         <image name="Default.png" width="320" height="480"/>
-        <image name="available-for-icon.png" width="16" height="16"/>
+        <image name="available-for-icon.png" width="9" height="9"/>
         <image name="chat-bubble-left-bottom.png" width="261" height="14"/>
         <image name="chat-bubble-left-middle.png" width="261" height="13"/>
         <image name="chat-bubble-left-top.png" width="261" height="14"/>
         <image name="chat-bubble-right-bottom.png" width="261" height="14"/>
         <image name="chat-bubble-right-middle.png" width="261" height="13"/>
         <image name="chat-bubble-right-top.png" width="261" height="14"/>
-        <image name="map-marker.png" width="16" height="16"/>
-        <image name="others-at-venue.png" width="16" height="16"/>
+        <image name="map-marker.png" width="40" height="36"/>
+        <image name="others-at-venue.png" width="11" height="9"/>
     </resources>
     <classes>
         <class className="CPPlaceholderTextView" superclassName="UITextView">

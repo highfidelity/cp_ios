@@ -9,10 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface SignupController : UIViewController
-- (IBAction)loginWithLinkedInTapped:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UIButton *linkedinLoginButton;
-@property (weak, nonatomic) IBOutlet UIButton *dismissButton;
-
-- (IBAction) dismissClick:(id)sender;
 @end
