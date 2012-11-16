@@ -201,7 +201,11 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     
     self.tableView.tableFooterView = hiddenPlaceholder
         ? [self tabBarButtonAvoidingFooterView]
-        : self.placeholderImageView;    
+        : self.placeholderImageView;
+    
+    self.tableView.backgroundColor = hiddenPlaceholder
+        ? [UIColor colorWithR:51 G:51 B:51 A:1]
+        : [UIColor colorWithR:246 G:247 B:245 A:1]  ;
     
     self.tableView.scrollEnabled = hiddenPlaceholder;
     self.searchBar.hidden = !hiddenPlaceholder;
