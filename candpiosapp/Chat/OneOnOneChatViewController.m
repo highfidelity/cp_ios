@@ -57,9 +57,6 @@ static CGFloat const FONTSIZE = 14.0;
     };
     [self.history loadChatHistoryWithSuccessBlock:afterLoadingHistory];
     
-    // Set up the fancy background on view
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-diagonal-noise-light.png"]];
-    
     // Make our chat button FANCY!
     UIImage *chatButtonImage = [[UIImage imageNamed:@"button-turquoise-32pt.png"]
                                 resizableImageWithCapInsets:UIEdgeInsetsMake(0, 7, 0, 9)];
@@ -320,13 +317,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     // Create scalable images
     UIImage *topBubbleImg = [[UIImage imageNamed:[imageFilenamePrefix stringByAppendingString:@"top.png"]] resizableImageWithCapInsets:UIEdgeInsetsMake(13, 0, 0, 0)];
     topBubble.image = topBubbleImg;
-    
+
     UIImage *middleBubbleImg = [UIImage imageNamed:[imageFilenamePrefix stringByAppendingString:@"middle.png"]];
     middleBubble.image = middleBubbleImg;
-    
+
     UIImage *bottomBubbleImg = [[UIImage imageNamed:[imageFilenamePrefix stringByAppendingString:@"bottom.png"]] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 13, 0)];
     bottomBubble.image = bottomBubbleImg;
-        
+
     CGRect labelRect = CGRectMake(chatMessageLabel.frame.origin.x,
                                   chatMessageLabel.frame.origin.y,
                                   CHAT_MESSAGE_LABEL_WIDTH,
@@ -334,9 +331,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     
     chatMessageLabel.frame = labelRect;
     chatMessageLabel.text = message.message;
-        
+
     // Figure out the dynamic height portion of the top and bottom bubble
-    CGFloat topAndBottomHeight = [self labelHeight:message] / 2 +CHAT_MESSAGE_LABEL_BOTTOM_PADDING;
+    CGFloat topAndBottomHeight = round([self labelHeight:message] / 2 + CHAT_MESSAGE_LABEL_BOTTOM_PADDING);
     
     // Calculate the Y and HEIGHT of the top bubble
     CGFloat topBubbleHeight = CHAT_BUBBLE_IMG_TOP_HEIGHT;
@@ -360,7 +357,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
                                          middleBubble.frame.size.width, 
                                          middleBubble.frame.size.height);
     middleBubble.frame = middleBubbleRect;
-    
+
     // Calculate the Y and HEIGHT of the bottm bubble
     CGFloat bottomBubbleY = middleBubble.frame.origin.y +
                             middleBubble.frame.size.height;
@@ -375,7 +372,16 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
                                          bottomBubble.frame.size.width, 
                                          bottomBubbleHeight);
     bottomBubble.frame = bottomBubbleRect;
-        
+
+    if (cell.profileImage) {
+        [cell.profileImage setImageWithURL:self.user.photoURL
+                          placeholderImage:[CPUIHelper defaultProfileImage]];
+
+        CGPoint profileImageCenter = cell.profileImage.center;
+        profileImageCenter.y = middleBubble.center.y;
+        cell.profileImage.center = profileImageCenter;
+    }
+
     return cell;
 }
 
