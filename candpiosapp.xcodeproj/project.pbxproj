@@ -274,8 +274,6 @@
 		53FEA217162F52D600A783DC /* action-menu-button-update@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53FEA20F162F52D600A783DC /* action-menu-button-update@2x.png */; };
 		53FF95ED156D5D0E0046ADDE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FF95EC156D5D0E0046ADDE /* StoreKit.framework */; };
 		5F8413E115619721003B43B8 /* UserProfileLinkedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */; };
-		5FAF891F1555FA6600247B95 /* virtual-check-in-badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAF891D1555FA6600247B95 /* virtual-check-in-badge.png */; };
-		5FAF89201555FA6600247B95 /* virtual-check-in-badge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAF891E1555FA6600247B95 /* virtual-check-in-badge@2x.png */; };
 		688A16C3163861DB00BFB4CC /* endorse-with-transparent-star.png in Resources */ = {isa = PBXBuildFile; fileRef = 688A16C1163861DB00BFB4CC /* endorse-with-transparent-star.png */; };
 		688A16C4163861DB00BFB4CC /* endorse-with-transparent-star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 688A16C2163861DB00BFB4CC /* endorse-with-transparent-star@2x.png */; };
 		69112E6A1580D41B009CCBD0 /* contact-cell-bg-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 69112E681580D41B009CCBD0 /* contact-cell-bg-selected.png */; };
@@ -680,8 +678,6 @@
 		5F7D21D7155AF1A200EAA540 /* UserProfileLinkedInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileLinkedInViewController.h; path = User/UserProfileLinkedInViewController.h; sourceTree = "<group>"; };
 		5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfileLinkedInViewController.m; path = User/UserProfileLinkedInViewController.m; sourceTree = "<group>"; };
 		5F94CB9511754232A112BDF9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
-		5FAF891D1555FA6600247B95 /* virtual-check-in-badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "virtual-check-in-badge.png"; sourceTree = "<group>"; };
-		5FAF891E1555FA6600247B95 /* virtual-check-in-badge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "virtual-check-in-badge@2x.png"; sourceTree = "<group>"; };
 		688A16C1163861DB00BFB4CC /* endorse-with-transparent-star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "endorse-with-transparent-star.png"; path = "User/images/endorse-with-transparent-star.png"; sourceTree = "<group>"; };
 		688A16C2163861DB00BFB4CC /* endorse-with-transparent-star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "endorse-with-transparent-star@2x.png"; path = "User/images/endorse-with-transparent-star@2x.png"; sourceTree = "<group>"; };
 		69112E681580D41B009CCBD0 /* contact-cell-bg-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-cell-bg-selected.png"; sourceTree = "<group>"; };
@@ -997,8 +993,6 @@
 				69112E691580D41B009CCBD0 /* contact-cell-bg-selected@2x.png */,
 				6983394815641509007CD32F /* contact-ignore.png */,
 				6983394915641509007CD32F /* contact-ignore@2x.png */,
-				5FAF891D1555FA6600247B95 /* virtual-check-in-badge.png */,
-				5FAF891E1555FA6600247B95 /* virtual-check-in-badge@2x.png */,
 				536E1E861554988300052D40 /* contacts-blank-slate.png */,
 				536E1E871554988300052D40 /* contacts-blank-slate@2x.png */,
 			);
@@ -1689,8 +1683,6 @@
 				536E1ECE15549A5100052D40 /* network-icon-facebook@2x.png in Resources */,
 				536E1ECF15549A5100052D40 /* network-icon-linkedin.png in Resources */,
 				536E1ED015549A5100052D40 /* network-icon-linkedin@2x.png in Resources */,
-				5FAF891F1555FA6600247B95 /* virtual-check-in-badge.png in Resources */,
-				5FAF89201555FA6600247B95 /* virtual-check-in-badge@2x.png in Resources */,
 				53A9F7761561912A0049F427 /* send-love.png in Resources */,
 				53A9F7771561912A0049F427 /* send-love@2x.png in Resources */,
 				6983394A15641509007CD32F /* contact-accept.png in Resources */,
