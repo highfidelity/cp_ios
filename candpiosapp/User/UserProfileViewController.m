@@ -114,6 +114,8 @@
     self.resumeWebView.userInteractionEnabled = NO;
     
     if (self.isF2FInvite) {
+        self.userActionCell.rightStyle = CPUserActionCellSwipeStyleNone;
+        
         // we're in an F2F invite
         [self placeUserDataOnProfile];
     } else {
