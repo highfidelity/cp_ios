@@ -6,16 +6,16 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "OneOnOneChatHistory.h"
 
 @interface OneOnOneChatViewController : UIViewController
-    <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
+    <UITextViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) CPUser *user;
 @property (strong, nonatomic) CPUser *me;
 @property (strong, nonatomic) OneOnOneChatHistory *history;
 @property (weak, nonatomic) IBOutlet UITextField *chatEntryField;
+@property (weak, nonatomic) IBOutlet UITextView *chatEntryTextView;
 @property (weak, nonatomic) IBOutlet UITableView *chatContents;
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIView *chatInputs;

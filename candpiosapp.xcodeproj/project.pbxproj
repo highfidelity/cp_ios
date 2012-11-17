@@ -296,6 +296,8 @@
 		69D5C3591533911300B3530F /* plug-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D5C3551533911300B3530F /* plug-logo@2x.png */; };
 		69E3A73D1573CAC90046E687 /* linkedin-invite.png in Resources */ = {isa = PBXBuildFile; fileRef = 69E3A73B1573CAC80046E687 /* linkedin-invite.png */; };
 		69E3A73E1573CAC90046E687 /* linkedin-invite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69E3A73C1573CAC90046E687 /* linkedin-invite@2x.png */; };
+		69E91512165530AF00366C2D /* chat-entry-field.png in Resources */ = {isa = PBXBuildFile; fileRef = 69E91510165530AF00366C2D /* chat-entry-field.png */; };
+		69E91513165530AF00366C2D /* chat-entry-field@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69E91511165530AF00366C2D /* chat-entry-field@2x.png */; };
 		6F0B453914F6BCD10074DBD9 /* CPChatHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453814F6BCD10074DBD9 /* CPChatHelper.m */; };
 		6F0B453C14F6BD560074DBD9 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453B14F6BD560074DBD9 /* ChatMessage.m */; };
 		6F0B453F14F6BD850074DBD9 /* ChatHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B453E14F6BD850074DBD9 /* ChatHistory.m */; };
@@ -704,6 +706,8 @@
 		69D5C3551533911300B3530F /* plug-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "plug-logo@2x.png"; path = "Settings/images/plug-logo@2x.png"; sourceTree = "<group>"; };
 		69E3A73B1573CAC80046E687 /* linkedin-invite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "linkedin-invite.png"; path = "candpiosapp/Settings/images/linkedin-invite.png"; sourceTree = SOURCE_ROOT; };
 		69E3A73C1573CAC90046E687 /* linkedin-invite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "linkedin-invite@2x.png"; path = "candpiosapp/Settings/images/linkedin-invite@2x.png"; sourceTree = SOURCE_ROOT; };
+		69E91510165530AF00366C2D /* chat-entry-field.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-entry-field.png"; path = "candpiosapp/Chat/images/chat-entry-field.png"; sourceTree = SOURCE_ROOT; };
+		69E91511165530AF00366C2D /* chat-entry-field@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat-entry-field@2x.png"; path = "candpiosapp/Chat/images/chat-entry-field@2x.png"; sourceTree = SOURCE_ROOT; };
 		6F0B453714F6BCC50074DBD9 /* CPChatHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPChatHelper.h; path = candpiosapp/Chat/CPChatHelper.h; sourceTree = SOURCE_ROOT; };
 		6F0B453814F6BCD10074DBD9 /* CPChatHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CPChatHelper.m; path = candpiosapp/Chat/CPChatHelper.m; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		6F0B453A14F6BD560074DBD9 /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ChatMessage.h; path = candpiosapp/Chat/ChatMessage.h; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1416,6 +1420,8 @@
 				6F8EF74414FD8D2100F9BDC0 /* chat-bubble-right-middle@2x.png */,
 				6F8EF74514FD8D2100F9BDC0 /* chat-bubble-right-top.png */,
 				6F8EF74614FD8D2100F9BDC0 /* chat-bubble-right-top@2x.png */,
+				69E91510165530AF00366C2D /* chat-entry-field.png */,
+				69E91511165530AF00366C2D /* chat-entry-field@2x.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -1837,6 +1843,8 @@
 				539F7E6E16558AE6005FF3F0 /* texture-diagonal-noise@2x.png in Resources */,
 				539F7E7116558AE6005FF3F0 /* texture-lightpaperfibers.png in Resources */,
 				539F7E7216558AE6005FF3F0 /* texture-lightpaperfibers@2x.png in Resources */,
+				69E91512165530AF00366C2D /* chat-entry-field.png in Resources */,
+				69E91513165530AF00366C2D /* chat-entry-field@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
