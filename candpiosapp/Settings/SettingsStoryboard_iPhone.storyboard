@@ -75,7 +75,7 @@
                                     <outlet property="delegate" destination="WGr-Yo-Vg9" id="egh-Cb-sq2"/>
                                 </connections>
                             </tableView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="map-shadow.png" id="rBQ-Tw-WrU">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="settings-menu-shadow.png" id="rBQ-Tw-WrU">
                                 <rect key="frame" x="-10" y="0.0" width="10" height="460"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -1239,8 +1239,8 @@ photo?</string>
         <image name="default-avatar-256.png" width="256" height="256"/>
         <image name="drop-down.png" width="196" height="27"/>
         <image name="list-arrow-dark-grey.png" width="11" height="16"/>
-        <image name="map-shadow.png" width="10" height="320"/>
         <image name="settings-button-3.png" width="42" height="29"/>
+        <image name="settings-menu-shadow.png" width="9" height="1"/>
     </resources>
     <classes>
         <class className="AutoCheckinCell" superclassName="UITableViewCell">
