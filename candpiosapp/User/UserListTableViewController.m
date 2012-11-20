@@ -54,12 +54,15 @@
             if (![[json objectForKey:@"error"] boolValue]) {
 
                 CLLocation *userLocation = [CPAppDelegate currentOrDefaultLocation];
-                NSArray *people = [[json objectForKey:@"payload"] valueForKey:@"people"];
+                NSArray *people = [[json objectForKey:@"payload"] valueForKey:@"checked_in_users"];
                 for (NSDictionary *personJSON in people) {
                     CPUser *user = [[CPUser alloc] initFromDictionary:personJSON];
 
                     CLLocation *location = [[CLLocation alloc] initWithLatitude:user.location.latitude longitude:user.location.longitude];
                     user.distance = [location distanceFromLocation:userLocation];
+
+                    user.totalCheckInTime = @((int)round([personJSON[@"total_check_in_count"] intValue] / 3600.));
+                    user.totalEndorsementCount = @([personJSON[@"total_endorsement_count"] intValue]);
                    
                     NSNumber *venueID = [personJSON numberForKey:@"venue_id" orDefault:@0];
                     CPVenue *userVenue = [[CPMarkerManager sharedManager] markerVenueWithID:venueID];
@@ -117,7 +120,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     static NSString *CellIdentifier = @"UserListCustomCell";
     
     UserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -163,6 +165,10 @@
         cell.rightStyle = CPUserActionCellSwipeStyleQuickAction;
     }
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+
+    cell.hoursWorkedLabel.text = [NSString stringWithFormat:@"%d", [user.totalCheckInTime intValue]];
+    cell.endorseCountLabel.text = [NSString stringWithFormat:@"%d", [user.totalEndorsementCount intValue]];
+
     return cell;
 }
 

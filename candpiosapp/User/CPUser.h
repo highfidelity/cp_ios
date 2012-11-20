@@ -39,6 +39,7 @@
 @property (strong, nonatomic) NSNumber *isContact;
 @property (strong, nonatomic) NSNumber *totalCheckInTime;
 @property (strong, nonatomic) NSNumber *totalCheckInCount;
+@property (strong, nonatomic) NSNumber *totalEndorsementCount;
 @property (nonatomic, readonly) BOOL hasAnyTopSkills;
 @property (nonatomic, readonly) BOOL hasAnyWorkInformation;
 @property (nonatomic, readonly) BOOL hasAnyEducationInformation;
