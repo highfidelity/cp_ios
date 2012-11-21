@@ -63,7 +63,7 @@
                     CLLocation *location = [[CLLocation alloc] initWithLatitude:user.location.latitude longitude:user.location.longitude];
                     user.distance = [location distanceFromLocation:userLocation];
 
-                    user.totalCheckInTime = @((int)round([personJSON[@"total_check_in_count"] intValue] / 3600.));
+                    user.totalCheckInTime = @([personJSON[@"total_hours_checked_in"] intValue]);
                     user.totalEndorsementCount = @([personJSON[@"total_endorsement_count"] intValue]);
 
                     NSDictionary *placeCheckedInDictionary = [personJSON valueForKeyPath:@"last_checkin.venue"];
