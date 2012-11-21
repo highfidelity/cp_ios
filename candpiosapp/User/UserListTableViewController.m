@@ -58,21 +58,20 @@
                 for (NSDictionary *personJSON in people) {
                     CPUser *user = [[CPUser alloc] initFromDictionary:personJSON];
 
+                    [user setPhotoURLFromString:personJSON[@"photo_url"]];
+
                     CLLocation *location = [[CLLocation alloc] initWithLatitude:user.location.latitude longitude:user.location.longitude];
                     user.distance = [location distanceFromLocation:userLocation];
 
                     user.totalCheckInTime = @((int)round([personJSON[@"total_check_in_count"] intValue] / 3600.));
                     user.totalEndorsementCount = @([personJSON[@"total_endorsement_count"] intValue]);
-                   
-                    NSNumber *venueID = [personJSON numberForKey:@"venue_id" orDefault:@0];
-                    CPVenue *userVenue = [[CPMarkerManager sharedManager] markerVenueWithID:venueID];
-                    
-                    if (!userVenue) {
-                        userVenue = [[CPVenue alloc] init];
-                        userVenue.venueID = venueID;
-                        userVenue.name = [personJSON objectForKey:@"venue_name" orDefault:@""];
+
+                    NSDictionary *placeCheckedInDictionary = [personJSON valueForKeyPath:@"last_checkin.venue"];
+                    CPVenue *userVenue = [[CPVenue alloc] initFromDictionary:placeCheckedInDictionary];
+                    if (!userVenue.name) {
+                        userVenue.name = @"";
                     }
-                    
+
                     user.placeCheckedIn = userVenue;
                     [self.checkedInUsers addObject:user];
                 }
