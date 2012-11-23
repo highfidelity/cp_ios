@@ -65,6 +65,8 @@
 
                     user.totalCheckInTime = @([personJSON[@"total_hours_checked_in"] intValue]);
                     user.totalEndorsementCount = @([personJSON[@"total_endorsement_count"] intValue]);
+                    user.status = [personJSON valueForKeyPath:@"last_checkin.status_text"];
+                    user.checkedIn = [[personJSON valueForKeyPath:@"last_checkin.checked_in"] boolValue];
 
                     NSDictionary *placeCheckedInDictionary = [personJSON valueForKeyPath:@"last_checkin.venue"];
                     CPVenue *userVenue = [[CPVenue alloc] initFromDictionary:placeCheckedInDictionary];
