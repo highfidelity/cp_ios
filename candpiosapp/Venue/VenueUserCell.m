@@ -64,23 +64,30 @@
 
 #define HIGHLIGHT_DURATION 0.1
 
-- (void)highlight {
+- (void)highlight:(BOOL)highlight {
     [UIView animateWithDuration:HIGHLIGHT_DURATION animations:^{
-        self.visibleView.backgroundColor = self.activeColor;
-        if ([self.superview isKindOfClass:[UITableView class]]) {
-            UITableView *tableView = (UITableView *)self.superview;
-            for (VenueUserCell *cell in tableView.visibleCells) {
-                if (self == cell) {
-                    continue;
-                }
+        if (highlight) {
+            self.visibleView.backgroundColor = self.activeColor;
 
-                if ([cell isKindOfClass:[VenueUserCell class]]) {
-                    cell.visibleView.backgroundColor = cell.inactiveColor;
-                } else {
-                    [cell setSelected:NO animated:YES];
+            if ([self.superview isKindOfClass:[UITableView class]]) {
+                UITableView *tableView = (UITableView *)self.superview;
+                for (VenueUserCell *cell in tableView.visibleCells) {
+                    if (self == cell) {
+                        continue;
+                    }
+
+                    if ([cell isKindOfClass:[VenueUserCell class]]) {
+                        [cell highlight:NO];
+                    } else {
+                        [cell setSelected:NO animated:YES];
+                    }
                 }
             }
+        } else {
+            self.visibleView.backgroundColor = self.inactiveColor;
         }
+
+        [self additionalHighlightAnimations:highlight];
     }];
 }
 

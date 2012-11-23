@@ -102,14 +102,15 @@
     
     [UIView animateWithDuration:duration animations:^{
         for (CPUserActionCell *cell in self.tableView.visibleCells) {
-            if ([cell respondsToSelector:@selector(inactiveColor)]) {
-                cell.contentView.backgroundColor = cell.inactiveColor;
+            if ([cell respondsToSelector:@selector(highlight:)]) {
+                [cell highlight:NO];
             }
         }
     } completion:nil];
 }
 
 #pragma mark - UIScrollViewDelegate
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self unhighlightCells:YES];
     [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];

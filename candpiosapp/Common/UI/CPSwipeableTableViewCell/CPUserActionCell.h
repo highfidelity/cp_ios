@@ -55,4 +55,7 @@ typedef enum {
 + (void)cancelOpenSlideActionButtonsNotification:(CPUserActionCell *)cell;
 - (void)animateSlideButtonsWithNewCenter:(CGFloat)newCenter delay:(NSTimeInterval)delay duration:(NSTimeInterval)duration animated:(BOOL)animated;
 
+- (void)highlight:(BOOL)highlight;
+- (void)additionalHighlightAnimations:(BOOL)highlight;
+
 @end
