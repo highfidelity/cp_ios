@@ -92,6 +92,7 @@
 + (void)getNotificationSettingsWithCompletition:(void(^)(NSDictionary *json, NSError *error))completion;
 
 + (void)setNotificationSettingsForDistance:(NSString *)distance
+                      receiveNotifications:(BOOL)receiveNotifications
                               andCheckedId:(BOOL)checkedOnly
                     receiveContactEndorsed:(BOOL)receiveContactEndorsed
                      contactHeadlineChange:(BOOL)contactHeadlineChange
