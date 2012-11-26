@@ -179,7 +179,7 @@
 {
     [UIView animateWithDuration:0.3
                      animations:^{
-                         self.dimView.alpha = 1 - [[NSNumber numberWithBool:sender.on] intValue];
+                         self.dimView.alpha = sender.on ? 0 : 1;
                          self.dimView.userInteractionEnabled = !sender.on;
                      }];
 }
