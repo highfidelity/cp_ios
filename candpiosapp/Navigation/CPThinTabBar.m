@@ -39,10 +39,6 @@ static NSArray *_tabBarIcons;
                                                 [UIImage imageNamed:@"tab-login"], nil];
     }
 }
--(void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
 + (UIImage *)backgroundImage
 {
@@ -78,6 +74,17 @@ static NSArray *_tabBarIcons;
     
     // setup the check in / check out button
     [self refreshActionButton];
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (CGFloat)actionButtonRadius
+{
+    // this seems kludgy but it keeps the actionButton as a private property of the thin bar
+    return (self.actionButton.frame.size.height / 2);
 }
 
 - (void)moveGreenLineToSelectedIndex:(NSUInteger)selectedIndex

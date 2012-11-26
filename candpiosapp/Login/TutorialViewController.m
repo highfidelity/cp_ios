@@ -145,8 +145,14 @@ examle json:
     UIImageView *pageImageView = [[UIImageView alloc] initWithFrame:CGRectMake(pageIndex * self.scrollView.frame.size.width,
                                                                                0,
                                                                                self.scrollView.frame.size.width,
+                     
                                                                                self.scrollView.frame.size.height)];
-    [pageImageView setImageWithURL:[NSURL URLWithString:pageInfo[@"url"]]];
+    
+    NSString *imageURLString = [CPUtils isDeviceWithFourInchDisplay]
+        ? [pageInfo[@"url"] stringByReplacingOccurrencesOfString:@".png" withString:@"-568h.png"]
+        : pageInfo[@"url"];
+    
+    [pageImageView setImageWithURL:[NSURL URLWithString:imageURLString]];
     pageImageView.clipsToBounds = YES;
     [self.pageImageViews addObject:pageImageView];
     [self.scrollView addSubview:pageImageView];

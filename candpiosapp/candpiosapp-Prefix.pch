@@ -18,11 +18,10 @@
     #import "AppDelegate.h"
     #import "CPUIHelper.h"
     #import "CPConstants.h"
+    #import "CPMacros.h"
     #import "CPUserDefaultsHandler.h"
     #import "CPapi.h"
     #import "CPUtils.h"
     #import "CPUser.h"
     #import "TestFlight.h"
-
-    #define NSLog(__FORMAT__, ...) TFLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 #endif

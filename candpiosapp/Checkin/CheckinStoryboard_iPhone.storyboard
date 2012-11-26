@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="5pX-Lb-n2Z">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="5pX-Lb-n2Z">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
     </dependencies>
     <scenes>
         <!--Check In List View Controller - Check In-->
@@ -22,7 +22,7 @@
                             </mapView>
                             <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="2H0-SI-Sqf">
                                 <rect key="frame" x="0.0" y="159" width="320" height="257"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="WFHCheckInListTableCell" rowHeight="60" id="d53-uh-L1i" customClass="CheckInListCell">
@@ -381,7 +381,7 @@
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="OYo-pF-ieq" customClass="TPKeyboardAvoidingScrollView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="QW5-Gd-uZB">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="229"/>
@@ -389,23 +389,11 @@
                                     </mapView>
                                     <view contentMode="scaleToFill" id="MX5-sA-hqL">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="229"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wd4-JM-Egc">
-                                                <rect key="frame" x="234" y="55" width="41" height="41"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <state key="normal" image="map-marker.png">
-                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <state key="highlighted">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                            </button>
                                             <view contentMode="scaleToFill" id="QI7-2q-JQT">
                                                 <rect key="frame" x="10" y="38" width="173" height="75"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="CHECK IN AT..." lineBreakMode="tailTruncation" minimumFontSize="10" id="KoU-s2-WaU">
                                                         <rect key="frame" x="10" y="0.0" width="173" height="39"/>
@@ -436,6 +424,10 @@
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
                                             </view>
+                                            <imageView userInteractionEnabled="NO" tag="3462" contentMode="scaleToFill" image="map-marker.png" id="9Eb-1n-IXx">
+                                                <rect key="frame" x="235" y="55" width="40" height="36"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                            </imageView>
                                         </subviews>
                                         <color key="backgroundColor" red="0.4039215686" green="0.62352941179999999" blue="0.63921568630000003" alpha="0.5" colorSpace="calibratedRGB"/>
                                     </view>
@@ -445,7 +437,7 @@
                                     </scrollView>
                                     <view contentMode="scaleToFill" id="fk3-HP-Rqj">
                                         <rect key="frame" x="0.0" y="229" width="320" height="188"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <subviews>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="34" contentMode="left" text="What are you working on right now?" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="dCW-JF-dCz">
                                                 <rect key="frame" x="15" y="5" width="290" height="33"/>
@@ -562,7 +554,7 @@
                                     </view>
                                     <view alpha="0.0" contentMode="scaleToFill" id="hJZ-rQ-25X">
                                         <rect key="frame" x="10" y="172" width="193" height="65"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                         <subviews>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="&quot;This is the user's status&quot;" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" id="gzl-sw-w15">
                                                 <rect key="frame" x="14" y="23" width="169" height="42"/>
@@ -597,6 +589,7 @@
                         <outlet property="fiveHoursLabel" destination="Vdp-oJ-Fay" id="GRj-y6-w9r"/>
                         <outlet property="infoBubbleNickname" destination="xwp-Zl-7Vm" id="vqz-KK-7D1"/>
                         <outlet property="infoBubbleStatus" destination="gzl-sw-w15" id="1XA-Se-t0K"/>
+                        <outlet property="mapPinImageView" destination="9Eb-1n-IXx" id="HAt-Cf-G9g"/>
                         <outlet property="mapView" destination="QW5-Gd-uZB" id="0Ih-5u-8Fb"/>
                         <outlet property="oneHourLabel" destination="0Vb-1f-sge" id="anq-gQ-vRJ"/>
                         <outlet property="otherUsersScrollView" destination="szL-LL-Gvb" id="j67-8k-pqJ"/>
@@ -640,75 +633,9 @@
         <image name="check-in-list-error.png" width="24" height="19"/>
         <image name="checked-in-location.png" width="16" height="16"/>
         <image name="list-arrow-dark-grey.png" width="11" height="16"/>
-        <image name="map-marker.png" width="16" height="16"/>
+        <image name="map-marker.png" width="40" height="36"/>
         <image name="wfh-icon.png" width="30" height="21"/>
     </resources>
-    <classes>
-        <class className="CPPlaceholderTextView" superclassName="UITextView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPPlaceholderTextView.h"/>
-        </class>
-        <class className="ChangeHeadlineViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChangeHeadlineViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancelButtonPressed:"/>
-                <relationship kind="outlet" name="charCounterLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="headlineTextView" candidateClass="CPPlaceholderTextView"/>
-                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
-            </relationships>
-        </class>
-        <class className="CheckInDetailsFrame" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInDetailsFrame.h"/>
-        </class>
-        <class className="CheckInDetailsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInDetailsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="sliderChanged:"/>
-                <relationship kind="outlet" name="blueOverlay" candidateClass="UIView"/>
-                <relationship kind="outlet" name="checkInButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="checkInDetails" candidateClass="UIView"/>
-                <relationship kind="outlet" name="checkInLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="durationHeader" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="fiveHoursLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="infoBubbleNickname" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="infoBubbleStatus" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="oneHourLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="otherUsersScrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="placeAddress" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="placeName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="TPKeyboardAvoidingScrollView"/>
-                <relationship kind="outlet" name="sevenHoursLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="statusTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="threeHoursLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="timeSlider" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="userInfoBubble" candidateClass="UIView"/>
-                <relationship kind="outlet" name="venueInfo" candidateClass="UIView"/>
-                <relationship kind="outlet" name="willLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CheckInListCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInListCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="disclosureImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="distanceString" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="searchingSpinner" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CheckInListViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CheckInListViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeWindow:"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="TPKeyboardAvoidingScrollView" superclassName="UIScrollView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TPKeyboardAvoidingScrollView.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

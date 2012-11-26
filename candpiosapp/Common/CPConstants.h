@@ -8,13 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-// define a way to quickly grab the app delegate
-#define CPAppDelegate (AppDelegate *)[UIApplication sharedApplication].delegate
-
 @interface CPConstants : NSObject
 
 extern NSString* const kCandPWebServiceUrl;
 extern NSString* const kCandPWebServiceSecureUrl;
+extern NSString* const kAppPlatform;
 extern NSString* const kCPAPIVersionHeader;
 extern NSString* const kCPAPIVersionValue;
 extern NSString* const kCandPAPIErrorDomain;

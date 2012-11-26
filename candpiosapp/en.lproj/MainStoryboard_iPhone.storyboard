@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2843" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="k3E-ap-M38">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2844" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="k3E-ap-M38">
     <dependencies>
         <deployment version="1280" identifier="iOS"/>
         <development version="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
     </dependencies>
     <scenes>
         <!--Map Tab Controller - Map-->
@@ -325,10 +325,6 @@
                                 <outlet property="delegate" destination="v81-7I-y3p" id="w4Q-mW-diG"/>
                             </connections>
                         </searchBar>
-                        <imageView key="tableFooterView" hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="contacts-blank-slate.png" id="7ZR-TF-GRW">
-                            <rect key="frame" x="0.0" y="186" width="320" height="340"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </imageView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ContactRequestCell" rowHeight="60" id="Vlx-4o-pmE" customClass="ContactListCell">
                                 <rect key="frame" x="0.0" y="66" width="320" height="60"/>
@@ -452,7 +448,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Contacts" id="Bzk-ce-tPT"/>
                     <connections>
-                        <outlet property="placeholderImage" destination="7ZR-TF-GRW" id="AsQ-Xm-0gr"/>
                         <outlet property="searchBar" destination="Nwo-wJ-9Mq" id="X7G-ZJ-yC9"/>
                     </connections>
                 </tableViewController>
@@ -480,7 +475,6 @@
     <resources>
         <image name="contact-accept.png" width="38" height="38"/>
         <image name="contact-ignore.png" width="38" height="38"/>
-        <image name="contacts-blank-slate.png" width="320" height="340"/>
         <image name="default-avatar-256.png" width="256" height="256"/>
         <image name="map-locate.png" width="40" height="41"/>
         <image name="map-refresh-progress-arrow.png" width="24" height="24"/>

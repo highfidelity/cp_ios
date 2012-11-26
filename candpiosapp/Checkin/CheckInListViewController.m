@@ -591,6 +591,10 @@ typedef enum {
         // bring the mapView back down
         mapShift.origin.y = self.searchBar.frame.size.height;
         
+        // pre-grow the tableview by the height of the navigation bar so the animation isn't ugly
+        tableShift.size.height += 44;
+        self.tableView.frame = tableShift;
+        
         // slide the tableView back down and shrink it back to previous size
         tableShift.size.height = self.view.frame.size.height - mapShift.size.height - self.searchBar.frame.size.height;
         tableShift.origin.y = mapShift.origin.y + mapShift.size.height;

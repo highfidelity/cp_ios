@@ -58,12 +58,18 @@ static VenueInfoViewController *_onScreenVenueVC;
     
     [self populateTopVenueView];
     
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"texture-first-aid-kit"]];
-        
     // table view header
     [self.scrollView removeFromSuperview];
     self.tableView.tableHeaderView = self.scrollView;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    // add a footer view to the table view so we aren't stuck right to the bottom
+    // and so we clear the tab bar button if it's there
+    CGFloat footerHeight = self.tabBarController ? [CPAppDelegate tabBarController].thinBar.actionButtonRadius : 10;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                                             0,
+                                                                             self.tableView.frame.size.width,
+                                                                              footerHeight)];
 
     // setup interface with whatever we have and then ask API for other data
     [self populateUserSection];
@@ -147,11 +153,13 @@ static VenueInfoViewController *_onScreenVenueVC;
     // shadow that shows above user info
     [CPUIHelper addShadowToView:[self.view viewWithTag:3548]  color:[UIColor blackColor] offset:CGSizeMake(0, 1) radius:5 opacity:0.7];
     
+    // add background gradient
+    [self.bottomPhotoOverlayView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"venue-bar"]]];
+    
     if (!self.phoneButton) {
         self.phoneButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.bottomPhotoOverlayView addSubview:self.phoneButton];
     }
-    
     
     if ([self.venue.formattedPhone length] > 0) {
         self.hasPhone = YES;
@@ -170,10 +178,19 @@ static VenueInfoViewController *_onScreenVenueVC;
     if ([self.venue.address length] > 0) {
         self.hasAddress = YES;
         [self setupVenueButton:self.addressButton withIconNamed:@"place-location" andlabelText:self.venue.address];
-        [self.addressButton addTarget:self action:@selector(tappedAddress:) forControlEvents:UIControlEventTouchUpInside];
+        
+        if (![self.venue.isNeighborhood boolValue]) {
+             [self.addressButton addTarget:self action:@selector(tappedAddress:) forControlEvents:UIControlEventTouchUpInside];
+        }
     } else {
         self.hasAddress = NO;
         [self setupVenueButton:self.addressButton withIconNamed:@"place-location" andlabelText:@"N/A"];
+    }
+    
+    if (self.hasAddress && self.hasPhone) {
+        self.venueBarSeparator.alpha = 1;
+    } else {
+        self.venueBarSeparator.alpha = 0;
     }
     
     [self repositionAddressAndPhone];
@@ -332,8 +349,6 @@ static VenueInfoViewController *_onScreenVenueVC;
     [self dismissModalViewControllerAnimated:YES];
 }
 
-#define kButtonPhoneXOffset 2
-#define kButtonAddressXOffset 10
 #define kButtonYOffset 3
 
 - (void)repositionAddressAndPhone
@@ -341,11 +356,11 @@ static VenueInfoViewController *_onScreenVenueVC;
     if (self.hasAddress || self.hasPhone) {        
         // set the basic frame for the phone and address buttons
         CGRect phoneFrame = self.phoneButton.frame;
-        phoneFrame.origin.x = self.bottomPhotoOverlayView.frame.size.width - phoneFrame.size.width - kButtonPhoneXOffset;
+        phoneFrame.origin.x = round(self.bottomPhotoOverlayView.frame.size.width * 3/4 - (phoneFrame.size.width / 2));
         phoneFrame.origin.y = kButtonYOffset;
         
         CGRect addressFrame = self.addressButton.frame;
-        addressFrame.origin.x = kButtonAddressXOffset;
+        addressFrame.origin.x = round(self.bottomPhotoOverlayView.frame.size.width / 4 - (addressFrame.size.width / 2));
         addressFrame.origin.y = kButtonYOffset;
     
         if (!self.hasAddress || !self.hasPhone) {
@@ -375,6 +390,7 @@ static VenueInfoViewController *_onScreenVenueVC;
         self.bottomPhotoOverlayView.alpha = 0.0;
         self.bottomPhotoOverlayView.userInteractionEnabled = NO;
     }
+    
 }
 
 - (void)setupVenueButton:(UIButton *)venueButton
@@ -382,7 +398,7 @@ static VenueInfoViewController *_onScreenVenueVC;
         andlabelText:(NSString *)labelText
 {
     CGRect venueButtonFrame = venueButton.frame;
-    venueButtonFrame.size.height = 36;
+    venueButtonFrame.size.height = 44;
     venueButton.frame = venueButtonFrame;
     
     // alloc-init the icon
@@ -426,10 +442,10 @@ static VenueInfoViewController *_onScreenVenueVC;
 - (IBAction)tappedAddress:(id)sender 
 {
     NSString *message = [NSString stringWithFormat:@"Do you want directions to %@?", self.venue.name];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Directions" 
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Directions"
                                                         message:message
-                                                       delegate:self 
-                                              cancelButtonTitle:@"Cancel" 
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
                                               otherButtonTitles:@"Launch Map", nil];
     alertView.tag = 1045;
     [alertView show];
@@ -478,9 +494,11 @@ static VenueInfoViewController *_onScreenVenueVC;
             CLLocationCoordinate2D currentLocation = [CPAppDelegate locationManager].location.coordinate;
             NSString *fullAddress = [NSString stringWithFormat:@"%@, %@, %@", self.venue.address, self.venue.city, self.venue.state];
             // setup the url to open google maps
-            urlString = [NSString stringWithFormat: @"http://maps.google.com/maps?saddr=%f,%f&daddr=%@",
-                                   currentLocation.latitude, currentLocation.longitude,
-                                   [CPapi urlEncode:fullAddress]];
+            NSString *googleOrAppleMaps = [CPUtils systemVersionGreaterThanOrEqualTo:6.0] ? @"apple" : @"google";
+            urlString = [NSString stringWithFormat: @"http://maps.%@.com/maps?saddr=%f,%f&daddr=%@",
+                                    googleOrAppleMaps,
+                                    currentLocation.latitude, currentLocation.longitude,
+                                    [CPapi urlEncode:fullAddress]];
             
         } else if (alertView.tag == 1046) {
             // setup the url to call venue
@@ -709,4 +727,8 @@ static VenueInfoViewController *_onScreenVenueVC;
     } completion:nil];
 }
 
+- (void)viewDidUnload {
+    [self setVenueBarSeparator:nil];
+    [super viewDidUnload];
+}
 @end

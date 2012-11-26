@@ -32,12 +32,15 @@
     [self.tableView addPullToRefreshWithActionHandler:^{
         [weakSelf refreshData];
     }];
+    
+    self.tableView.tableFooterView = [self tabBarButtonAvoidingFooterView];
+    
+    [self.tableView.pullToRefreshView triggerRefresh];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [SVProgressHUD showWithStatus:@"Loading..."];
     [self refreshData];
 }
 
@@ -46,7 +49,6 @@
 - (void)refreshData
 {
     [CPapi getNearestCheckedInWithCompletion:^(NSDictionary *json, NSError *error) {
-        [SVProgressHUD dismiss];
         if (!error) {
             [self.checkedInUsers removeAllObjects];
             if (![[json objectForKey:@"error"] boolValue]) {
