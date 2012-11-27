@@ -63,7 +63,8 @@
                     CLLocation *location = [[CLLocation alloc] initWithLatitude:user.location.latitude longitude:user.location.longitude];
                     user.distance = [location distanceFromLocation:userLocation];
 
-                    user.totalCheckInTime = @([personJSON[@"total_hours_checked_in"] intValue]);
+                    user.totalCheckInTime = @((int)round([personJSON[@"total_hours_checked_in"] floatValue]));
+
                     user.totalEndorsementCount = @([personJSON[@"total_endorsement_count"] intValue]);
                     user.status = [personJSON valueForKeyPath:@"last_checkin.status_text"];
                     user.checkedIn = [[personJSON valueForKeyPath:@"last_checkin.checked_in"] boolValue];
