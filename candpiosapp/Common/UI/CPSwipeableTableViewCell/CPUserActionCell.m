@@ -58,9 +58,13 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void) setInactiveColor:(UIColor *)inactiveColor {
+- (UIView *)viewToHighlight {
+    return self.contentView;
+}
+
+- (void)setInactiveColor:(UIColor *)inactiveColor {
     _inactiveColor = inactiveColor;
-    self.contentView.backgroundColor = inactiveColor;
+    self.viewToHighlight.backgroundColor = inactiveColor;
 }
 
 - (void)awakeFromNib
@@ -164,28 +168,40 @@
     }
 }
 
-- (void) highlight {
+- (void)highlight:(BOOL)highlight {
     // mimic row selection - highlight and push the child view
     [UIView animateWithDuration:HIGHLIGHT_DURATION animations:^{
-        self.contentView.backgroundColor = self.activeColor;
-        if ([self.superview isKindOfClass:[UITableView class]]) {
-            UITableView *tableView = (UITableView *)self.superview;
-            for (CPUserActionCell *cell in tableView.visibleCells) {
-                if (cell != self) {
-                    if ([cell respondsToSelector:@selector(inactiveColor)]) {
-                        cell.contentView.backgroundColor = cell.inactiveColor;
-                    } else {
-                        [cell setSelected:NO animated:YES];
+        if (highlight) {
+            self.viewToHighlight.backgroundColor = self.activeColor;
+
+            if ([self.superview isKindOfClass:[UITableView class]]) {
+                UITableView *tableView = (UITableView *)self.superview;
+                for (CPUserActionCell *cell in tableView.visibleCells) {
+                    if (cell != self) {
+                        if ([cell respondsToSelector:@selector(highlight:)]) {
+                            [cell highlight:NO];
+                        } else {
+                            [cell setSelected:NO animated:YES];
+                        }
                     }
                 }
             }
+        } else {
+            self.viewToHighlight.backgroundColor = self.inactiveColor;
         }
+
+        [self additionalHighlightAnimations:highlight];
     }];
+}
+
+- (void)additionalHighlightAnimations:(BOOL)highlight
+{
+    // to be overridden in subclasses
 }
 
 -(void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)evt {
     if (!self.areActionButtonsVisible) {
-        [self highlight];
+        [self highlight:YES];
     }
 }
 
@@ -195,7 +211,7 @@
     // handle taps
     if (!self.areActionButtonsVisible) {
         // mimic row selection - highlight and push the child view
-        [self highlight];
+        [self highlight:YES];
         if (recognizer.state == UIGestureRecognizerStateEnded) {
             // return immediately.. next view must be initialized on main thread
             [self performSelectorOnMainThread:@selector(handleTap) withObject:nil waitUntilDone:NO];

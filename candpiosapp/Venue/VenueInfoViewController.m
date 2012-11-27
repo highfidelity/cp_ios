@@ -721,7 +721,7 @@ static VenueInfoViewController *_onScreenVenueVC;
     [UIView animateWithDuration:duration animations:^{
         for (VenueUserCell *cell in self.tableView.visibleCells) {
             if ([cell isKindOfClass:[VenueUserCell class]]) {
-                cell.visibleView.backgroundColor = cell.inactiveColor;
+                [cell highlight:NO];
             }
         }
     } completion:nil];

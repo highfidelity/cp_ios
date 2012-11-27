@@ -14,11 +14,16 @@
 #define kInCityText @"in city"
 #define kContactsText @"contacts"
 
+#define kNotificationsViewPosition 295
+#define kAnyoneChatViewPosition 75
+#define kQuietTimeOffset 40
+
 @interface ProfileNotificationsViewController () <UIActionSheetDelegate>
 
 @property (strong, nonatomic) NSDate *quietTimeFromDate;
 @property (strong, nonatomic) NSDate *quietTimeToDate;
 @property (weak, nonatomic) IBOutlet UIButton *venueButton;
+@property (weak, nonatomic) IBOutlet UISwitch *notificationsSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *checkedInOnlySwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *notifyOnEndorsementSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *notifyHeadlineChangesSwitch;
@@ -28,14 +33,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *quietToButton;
 @property (weak, nonatomic) IBOutlet UISwitch *contactsOnlyChatSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *chatNotificationLabel;
-@property (weak, nonatomic) IBOutlet UIView *headerView;
+@property (weak, nonatomic) IBOutlet UIView *dimView;
 @property (weak, nonatomic) IBOutlet UIView *fromToSuperview;
-
-- (IBAction)selectVenueCity:(UIButton *)sender;
-- (IBAction)quietFromClicked:(UIButton *)sender;
-- (IBAction)quietToClicked:(UIButton *)sender;
-- (IBAction)quietTimeValueChanged:(UISwitch *)sender;
-- (IBAction)anyoneChatSwitchChanged:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *notificationsView;
 
 - (void)setVenue:(NSString *)setting;
 
@@ -77,11 +77,16 @@
             [SVProgressHUD dismissWithError:message
                                  afterDelay:kDefaultDismissDelay];
         } else {
+
             NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
             [dateFormat setDateFormat:@"HH:mm:ss"];
             [dateFormat setTimeZone:[NSTimeZone localTimeZone]];
             
             NSDictionary *dict = [json objectForKey:@"payload"];
+
+            NSString *receiveNotifications = (NSString *)[dict objectForKey:@"receive_push_notifications"];
+            [[self notificationsSwitch] setOn:[receiveNotifications isEqualToString:@"1"]];
+            [self notificationSwitchChanged:self.notificationsSwitch];
 
             NSString *venue = (NSString *)[dict objectForKey:@"push_distance"];
             [self setVenue:venue];
@@ -153,6 +158,7 @@
     }
 
     [CPapi setNotificationSettingsForDistance:distance
+                         receiveNotifications:self.notificationsSwitch.on
                                  andCheckedId:self.checkedInOnlySwitch.on
                        receiveContactEndorsed:self.notifyOnEndorsementSwitch.on
                         contactHeadlineChange:self.notifyHeadlineChangesSwitch.on
@@ -168,6 +174,16 @@
 {
     [self dismissPushModalViewControllerFromLeftSegue];
 }
+
+- (IBAction)notificationSwitchChanged:(UISwitch *)sender
+{
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.dimView.alpha = sender.on ? 0 : 1;
+                         self.dimView.userInteractionEnabled = !sender.on;
+                     }];
+}
+
 
 - (IBAction)quietFromClicked:(UIButton *)sender
 {
@@ -253,16 +269,18 @@
 - (void)setQuietTime:(BOOL)quietTime
 {
     [UIView animateWithDuration:0.3 animations:^ {
-        CGRect fromToFrame = self.fromToSuperview.frame;
-        CGFloat anyoneChatViewY = fromToFrame.origin.y;
-        if (quietTime) {
-            anyoneChatViewY += fromToFrame.size.height;
-        }
-
         CGRect anyoneChatFrame = self.anyoneChatView.frame;
-        anyoneChatFrame.origin.y = anyoneChatViewY;
-        
+        CGRect notificationsFrame = self.notificationsView.frame;
+
+        if (quietTime) {
+            anyoneChatFrame.origin.y = kNotificationsViewPosition;
+            notificationsFrame.origin.y = kAnyoneChatViewPosition;
+        } else {
+            notificationsFrame.origin.y = kAnyoneChatViewPosition - kQuietTimeOffset;
+            anyoneChatFrame.origin.y = kNotificationsViewPosition - kQuietTimeOffset;
+        }
         self.anyoneChatView.frame = anyoneChatFrame;
+        self.notificationsView.frame = notificationsFrame;
     }];
 }
 
@@ -275,5 +293,8 @@
     
     return dateString;
 }
-
+- (void)viewDidUnload {
+    [self setNotificationsView:nil];
+    [super viewDidUnload];
+}
 @end

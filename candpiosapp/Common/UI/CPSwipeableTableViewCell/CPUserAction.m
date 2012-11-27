@@ -93,7 +93,7 @@
     [cell animateSlideButtonsWithNewCenter:cell.originalCenter delay:0 duration:0.2 animated:YES];
     
     // make sure the cell is no longer highlighted
-    cell.contentView.backgroundColor = cell.inactiveColor;
+    [cell highlight:NO];
 }
 
 + (void)cell:(CPUserActionCell*)cell showProfileFromViewController:(UIViewController*)viewController
