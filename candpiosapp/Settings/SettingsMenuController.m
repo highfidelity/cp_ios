@@ -164,7 +164,7 @@
         CGFloat touchViewHeight = self.cpTabBarController.view.frame.size.height - navBarHeight;
        
         CGRect touchFrame = CGRectMake(0,
-                                       0 + navBarHeight,
+                                       navBarHeight,
                                        self.cpTabBarController.view.frame.size.width,
                                        touchViewHeight);
         touchView = [[UIView alloc] initWithFrame:touchFrame];
