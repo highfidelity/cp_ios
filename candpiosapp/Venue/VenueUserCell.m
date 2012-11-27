@@ -62,31 +62,8 @@
 
 #pragma mark - CPUserActionCell
 
-#define HIGHLIGHT_DURATION 0.1
-
-- (void)highlight {
-    [UIView animateWithDuration:HIGHLIGHT_DURATION animations:^{
-        self.visibleView.backgroundColor = self.activeColor;
-        if ([self.superview isKindOfClass:[UITableView class]]) {
-            UITableView *tableView = (UITableView *)self.superview;
-            for (VenueUserCell *cell in tableView.visibleCells) {
-                if (self == cell) {
-                    continue;
-                }
-
-                if ([cell isKindOfClass:[VenueUserCell class]]) {
-                    cell.visibleView.backgroundColor = cell.inactiveColor;
-                } else {
-                    [cell setSelected:NO animated:YES];
-                }
-            }
-        }
-    }];
-}
-
-- (void)setInactiveColor:(UIColor *)inactiveColor {
-    [super setInactiveColor:inactiveColor];
-    self.visibleView.backgroundColor = inactiveColor;
+- (UIView *)viewToHighlight {
+    return self.visibleView;
 }
 
 #pragma mark - private

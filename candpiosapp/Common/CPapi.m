@@ -353,11 +353,15 @@
 + (void)getNearestCheckedInWithCompletion:(void (^)(NSDictionary *, NSError *))completion
 {
     CLLocation *userLocation = [CPAppDelegate currentOrDefaultLocation];
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setValue:[NSString stringWithFormat:@"%f", userLocation.coordinate.latitude] forKey:@"lat"];
-    [params setValue:[NSString stringWithFormat:@"%f", userLocation.coordinate.longitude] forKey:@"lng"];
+    NSDictionary *params = @{
+        @"lat": [NSString stringWithFormat:@"%f", userLocation.coordinate.latitude],
+        @"lng": [NSString stringWithFormat:@"%f", userLocation.coordinate.longitude],
+        @"v": @"20121116",
+    };
 
-    [self makeHTTPRequestWithAction:@"getNearestCheckedIn" withParameters:params completion:completion];
+    [self makeHTTPRequestWithAction:@"getNearestCheckedIn"
+                     withParameters:[params mutableCopy]
+                         completion:completion];
 }
 
 + (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID 

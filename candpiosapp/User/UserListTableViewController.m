@@ -54,22 +54,27 @@
             if (![[json objectForKey:@"error"] boolValue]) {
 
                 CLLocation *userLocation = [CPAppDelegate currentOrDefaultLocation];
-                NSArray *people = [[json objectForKey:@"payload"] valueForKey:@"people"];
+                NSArray *people = [[json objectForKey:@"payload"] valueForKey:@"checked_in_users"];
                 for (NSDictionary *personJSON in people) {
                     CPUser *user = [[CPUser alloc] initFromDictionary:personJSON];
 
+                    [user setPhotoURLFromString:personJSON[@"photo_url"]];
+
                     CLLocation *location = [[CLLocation alloc] initWithLatitude:user.location.latitude longitude:user.location.longitude];
                     user.distance = [location distanceFromLocation:userLocation];
-                   
-                    NSNumber *venueID = [personJSON numberForKey:@"venue_id" orDefault:@0];
-                    CPVenue *userVenue = [[CPMarkerManager sharedManager] markerVenueWithID:venueID];
-                    
-                    if (!userVenue) {
-                        userVenue = [[CPVenue alloc] init];
-                        userVenue.venueID = venueID;
-                        userVenue.name = [personJSON objectForKey:@"venue_name" orDefault:@""];
+
+                    user.totalCheckInTime = @((int)round([personJSON[@"total_hours_checked_in"] floatValue]));
+
+                    user.totalEndorsementCount = @([personJSON[@"total_endorsement_count"] intValue]);
+                    user.status = [personJSON valueForKeyPath:@"last_checkin.status_text"];
+                    user.checkedIn = [[personJSON valueForKeyPath:@"last_checkin.checked_in"] boolValue];
+
+                    NSDictionary *placeCheckedInDictionary = [personJSON valueForKeyPath:@"last_checkin.venue"];
+                    CPVenue *userVenue = [[CPVenue alloc] initFromDictionary:placeCheckedInDictionary];
+                    if (!userVenue.name) {
+                        userVenue.name = @"";
                     }
-                    
+
                     user.placeCheckedIn = userVenue;
                     [self.checkedInUsers addObject:user];
                 }
@@ -117,7 +122,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     static NSString *CellIdentifier = @"UserListCustomCell";
     
     UserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -163,6 +167,10 @@
         cell.rightStyle = CPUserActionCellSwipeStyleQuickAction;
     }
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+
+    cell.hoursWorkedLabel.text = [NSString stringWithFormat:@"%d", [user.totalCheckInTime intValue]];
+    cell.endorseCountLabel.text = [NSString stringWithFormat:@"%d", [user.totalEndorsementCount intValue]];
+
     return cell;
 }
 
