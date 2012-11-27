@@ -353,11 +353,15 @@
 + (void)getNearestCheckedInWithCompletion:(void (^)(NSDictionary *, NSError *))completion
 {
     CLLocation *userLocation = [CPAppDelegate currentOrDefaultLocation];
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setValue:[NSString stringWithFormat:@"%f", userLocation.coordinate.latitude] forKey:@"lat"];
-    [params setValue:[NSString stringWithFormat:@"%f", userLocation.coordinate.longitude] forKey:@"lng"];
+    NSDictionary *params = @{
+        @"lat": [NSString stringWithFormat:@"%f", userLocation.coordinate.latitude],
+        @"lng": [NSString stringWithFormat:@"%f", userLocation.coordinate.longitude],
+        @"v": @"20121116",
+    };
 
-    [self makeHTTPRequestWithAction:@"getNearestCheckedIn" withParameters:params completion:completion];
+    [self makeHTTPRequestWithAction:@"getNearestCheckedIn"
+                     withParameters:[params mutableCopy]
+                         completion:completion];
 }
 
 + (void)getUsersCheckedInAtFoursquareID:(NSString *)foursquareID 
@@ -505,6 +509,7 @@
 }
 
 + (void)setNotificationSettingsForDistance:(NSString *)distance
+                      receiveNotifications:(BOOL)receiveNotifications
                               andCheckedId:(BOOL)checkedOnly
                     receiveContactEndorsed:(BOOL)receiveContactEndorsed
                      contactHeadlineChange:(BOOL)contactHeadlineChange
@@ -520,6 +525,7 @@
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setValue:distance forKey:@"push_distance"];
+    [parameters setValue:receiveNotifications ? @"1" : @"0" forKey:@"receive_push_notifications"];
     [parameters setValue:checkedOnly ? @"1" : @"0" forKey:@"checked_in_only"];
     [parameters setValue:receiveContactEndorsed ? @"1" : @"0" forKey:@"push_contacts_endorsement"];
     [parameters setValue:contactHeadlineChange ? @"1" : @"0" forKey:@"push_headline_changes"];

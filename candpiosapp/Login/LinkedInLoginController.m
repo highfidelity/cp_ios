@@ -299,6 +299,10 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
         // TODO: Move this functionality to api.php
         
         NSMutableDictionary *loginParams = [NSMutableDictionary dictionary];
+
+        NSString *fullBuildVersion = [[NSString alloc] initWithFormat:@"%@.%@",
+                                      [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
+                                      [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
         
         [loginParams setObject:fullName forKey:@"signupNickname"];
         [loginParams setObject:linkedinID forKey:@"linkedin_id"];
@@ -310,6 +314,8 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
         [loginParams setObject:password forKey:@"signupPassword"];
         [loginParams setObject:password forKey:@"signupConfirm"];
         [loginParams setObject:@"0" forKey:@"reactivate"];
+        [loginParams setObject:kAppPlatform forKey:@"app_platform"];
+        [loginParams setObject:fullBuildVersion forKey:@"build_version"];
         [loginParams setObject:@"mobileSignup" forKey:@"action"];
         
         [self makeSignupRequest:loginParams];

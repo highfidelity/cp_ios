@@ -12,6 +12,7 @@
 
 extern NSString* const kCandPWebServiceUrl;
 extern NSString* const kCandPWebServiceSecureUrl;
+extern NSString* const kAppPlatform;
 extern NSString* const kCPAPIVersionHeader;
 extern NSString* const kCPAPIVersionValue;
 extern NSString* const kCandPAPIErrorDomain;

@@ -35,6 +35,7 @@
 
 #endif
 
+NSString* const kAppPlatform = @"iOS";
 NSString* const kCPAPIVersionHeader = @"X-CP-API-VERSION";
 NSString* const kCPAPIVersionValue = @"2.0";
 NSString* const kCandPAPIErrorDomain = @"com.coffeeandpower.api.error";
