@@ -265,7 +265,7 @@ static NSArray *_tabBarIcons;
         
         // add check out and change headline buttons to action menu
         [self addActionMenuButtonWithImageSuffix:@"check-out" topMargin:CHECK_OUT_BUTTON_TOP_MARGIN selectorAction:@selector(checkOutButtonPressed:)];
-        [self addActionMenuButtonWithImageSuffix:@"update" topMargin:HEADLINE_CHANGE_BUTTON_TOP_MARGIN selectorAction:@selector(changeHeadlineButtonPressed:)];
+        [self addActionMenuButtonWithImageSuffix:@"headline" topMargin:HEADLINE_CHANGE_BUTTON_TOP_MARGIN selectorAction:@selector(changeHeadlineButtonPressed:)];
     }
     
     [self toggleActionMenu:self.isActionMenuShowing checkedIn:[CPUserDefaultsHandler isUserCurrentlyCheckedIn]];
