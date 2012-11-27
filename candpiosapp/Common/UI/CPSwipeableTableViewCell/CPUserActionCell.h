@@ -51,6 +51,7 @@ typedef enum {
 @property (nonatomic) CPUserActionCellSwipeStyle rightStyle;
 @property (nonatomic, getter = isRevealing) BOOL revealing;
 @property (nonatomic, readonly) CGFloat originalCenter;
+@property (nonatomic, readonly) UIView *viewToHighlight;
 
 + (void)cancelOpenSlideActionButtonsNotification:(CPUserActionCell *)cell;
 - (void)animateSlideButtonsWithNewCenter:(CGFloat)newCenter delay:(NSTimeInterval)delay duration:(NSTimeInterval)duration animated:(BOOL)animated;

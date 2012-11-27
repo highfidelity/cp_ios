@@ -33,7 +33,7 @@
     self.categoryLabel.highlighted = highlight;
     self.checkInLabel.highlighted = highlight;
 
-    CGFloat newAlpha = (highlight) ? 0.1 : 1;
+    CGFloat newAlpha = highlight ? 0.1 : 1;
     self.endorseCountUnderlineView.alpha = newAlpha;
     self.hoursWorkedUnderlineView.alpha = newAlpha;
 }

@@ -58,9 +58,13 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (UIView *)viewToHighlight {
+    return self.contentView;
+}
+
 - (void)setInactiveColor:(UIColor *)inactiveColor {
     _inactiveColor = inactiveColor;
-    self.contentView.backgroundColor = inactiveColor;
+    self.viewToHighlight.backgroundColor = inactiveColor;
 }
 
 - (void)awakeFromNib
@@ -168,7 +172,7 @@
     // mimic row selection - highlight and push the child view
     [UIView animateWithDuration:HIGHLIGHT_DURATION animations:^{
         if (highlight) {
-            self.contentView.backgroundColor = self.activeColor;
+            self.viewToHighlight.backgroundColor = self.activeColor;
 
             if ([self.superview isKindOfClass:[UITableView class]]) {
                 UITableView *tableView = (UITableView *)self.superview;
@@ -183,7 +187,7 @@
                 }
             }
         } else {
-            self.contentView.backgroundColor = self.inactiveColor;
+            self.viewToHighlight.backgroundColor = self.inactiveColor;
         }
 
         [self additionalHighlightAnimations:highlight];
