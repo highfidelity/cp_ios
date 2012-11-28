@@ -113,7 +113,7 @@
             @"total_endorsement_count": @"totalEndorsementCount"
          }];
         
-        RKRelationshipMapping *lastCheckIn = [RKRelationshipMapping relationshipMappingFromKeyPath:@"last_checkin" toKeyPath:@"lastCheckIn" withMapping:[self checkInObjectMapping]];
+        RKRelationshipMapping *lastCheckIn = [RKRelationshipMapping relationshipMappingFromKeyPath:@"last_check_in" toKeyPath:@"lastCheckIn" withMapping:[self checkInObjectMapping]];
         [_userObjectMapping addPropertyMapping:lastCheckIn];
     }
     
@@ -145,6 +145,7 @@
 NSString* const kRouteMarkers = @"markers";
 NSString* const kRouteVenueCheckedInUsers = @"venueCheckedInUsers";
 NSString* const kRouteVenueFullDetails = @"venueDetails";
+NSString* const kRouteNearestCheckedIn = @"nearestCheckedIn";
 
 + (void)setupAllRKRouting
 {
@@ -158,6 +159,9 @@ NSString* const kRouteVenueFullDetails = @"venueDetails";
                                                             method:RKRequestMethodGET]];
     [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:kRouteVenueFullDetails
                                                        pathPattern:@"api.php?action=getVenueCheckInData&venue_id=:venueID"
+                                                            method:RKRequestMethodGET]];
+    [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:kRouteNearestCheckedIn
+                                                       pathPattern:@"api.php?action=getNearestCheckedIn&lat=:lat&lng=:lng"
                                                             method:RKRequestMethodGET]];
 }
 

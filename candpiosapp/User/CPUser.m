@@ -361,16 +361,4 @@
     }];
 }
 
-- (NSComparisonResult) compareDistanceToUser:(CPUser *)otherUser {
-    NSNumber *distanceA = [NSNumber numberWithDouble:self.distance];
-    NSNumber *distanceB = [NSNumber numberWithDouble:otherUser.distance];
-    NSComparisonResult distanceComparison = [distanceA compare:distanceB];
-    if (distanceComparison == NSOrderedSame) {
-        // order by case insensitive nicknames to keep sorting stable
-        return [self.nickname compare:otherUser.nickname options:NSCaseInsensitiveSearch];
-    } else {
-        return distanceComparison;
-    }
-}
-
 @end

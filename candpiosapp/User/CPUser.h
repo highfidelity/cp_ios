@@ -55,7 +55,6 @@
 @property (nonatomic) double totalEarned;
 @property (nonatomic) double totalSpent;
 @property (nonatomic) int totalHours;
-@property (nonatomic) double distance;
 @property (nonatomic) BOOL checkedIn;
 @property (nonatomic) int trusted_by;
 @property (nonatomic) BOOL contactsOnlyChat;
@@ -75,7 +74,6 @@
 - (void)setPhotoURLFromString:(NSString *)photoURLString;
 
 - (void)setJoinDateFromJSONString:(NSString *)dateString;
-- (NSComparisonResult) compareDistanceToUser:(CPUser *)otherUser;
 
 
 @end
