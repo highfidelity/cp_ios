@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import "CPVenue.h"
+#import "CPCheckIn.h"
 
 @interface CPUser : NSObject <NSCoding>
 
@@ -41,6 +42,7 @@
 @property (strong, nonatomic) NSNumber *totalCheckInCount;
 @property (strong, nonatomic) NSNumber *totalHoursCheckedIn;
 @property (strong, nonatomic) NSNumber *totalEndorsementCount;
+@property (strong, nonatomic) CPCheckIn *lastCheckIn;
 @property (nonatomic, readonly) BOOL hasAnyTopSkills;
 @property (nonatomic, readonly) BOOL hasAnyWorkInformation;
 @property (nonatomic, readonly) BOOL hasAnyEducationInformation;

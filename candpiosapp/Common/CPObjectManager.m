@@ -8,6 +8,7 @@
 
 #import "CPObjectManager.h"
 #import <RestKit/RestKit.h>
+#import "CPCheckIn.h"
 
 @implementation CPObjectManager
 
@@ -114,9 +115,34 @@
             @"total_hours_checked_in": @"totalHoursCheckedIn",
             @"total_endorsement_count": @"totalEndorsementCount"
          }];
+        
+        RKRelationshipMapping *lastCheckIn = [RKRelationshipMapping relationshipMappingFromKeyPath:@"last_checkin" toKeyPath:@"lastCheckIn" withMapping:[self checkInObjectMapping]];
+        [_userObjectMapping addPropertyMapping:lastCheckIn];
     }
     
     return _userObjectMapping;
+}
+
++ (RKObjectMapping *)checkInObjectMapping
+{
+    static RKObjectMapping *_checkinObjectMapping;
+    
+    if (!_checkinObjectMapping) {
+        _checkinObjectMapping = [RKObjectMapping mappingForClass:[CPCheckIn class]];
+        
+        [_checkinObjectMapping addAttributeMappingsFromDictionary:@{
+            @"id": @"checkInID",
+            @"lat": @"lat",
+            @"lng": @"lng",
+            @"status_text": @"statusText",
+            @"checked_in": @"isCurrentlyCheckedIn"
+         }];
+        
+        RKRelationshipMapping *venueRel = [RKRelationshipMapping relationshipMappingFromKeyPath:@"venue" toKeyPath:@"venue" withMapping:[self venueRKObjectMapping]];
+        [_checkinObjectMapping addPropertyMapping:venueRel];
+    }
+    
+    return _checkinObjectMapping;
 }
 
 NSString* const kRouteMarkers = @"markers";
