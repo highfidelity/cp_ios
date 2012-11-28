@@ -13,6 +13,7 @@
 #import "NSDictionary+JsonParserWorkaround.h"
 #import "CPMarkerManager.h"
 #import "SVPullToRefresh.h"
+#import "CPObjectManager.h"
 
 @interface UserListTableViewController()
 
@@ -48,56 +49,32 @@
 
 - (void)refreshData
 {
-    [CPapi getNearestCheckedInWithCompletion:^(NSDictionary *json, NSError *error) {
-        if (!error) {
-            [self.checkedInUsers removeAllObjects];
-            if (![[json objectForKey:@"error"] boolValue]) {
-
-                CLLocation *userLocation = [CPAppDelegate currentOrDefaultLocation];
-                NSArray *people = [[json objectForKey:@"payload"] valueForKey:@"checked_in_users"];
-                for (NSDictionary *personJSON in people) {
-                    CPUser *user = [[CPUser alloc] initFromDictionary:personJSON];
-
-                    [user setPhotoURLFromString:personJSON[@"photo_url"]];
-
-                    CLLocation *location = [[CLLocation alloc] initWithLatitude:user.location.latitude longitude:user.location.longitude];
-                    user.distance = [location distanceFromLocation:userLocation];
-
-                    user.totalCheckInTime = @((int)round([personJSON[@"total_hours_checked_in"] floatValue]));
-
-                    user.totalEndorsementCount = @([personJSON[@"total_endorsement_count"] intValue]);
-                    user.status = [personJSON valueForKeyPath:@"last_checkin.status_text"];
-                    user.checkedIn = [[personJSON valueForKeyPath:@"last_checkin.checked_in"] boolValue];
-
-                    NSDictionary *placeCheckedInDictionary = [personJSON valueForKeyPath:@"last_checkin.venue"];
-                    CPVenue *userVenue = [[CPVenue alloc] initFromDictionary:placeCheckedInDictionary];
-                    if (!userVenue.name) {
-                        userVenue.name = @"";
-                    }
-
-                    user.placeCheckedIn = userVenue;
-                    [self.checkedInUsers addObject:user];
-                }
-                
-                if (!self.userIsPerformingQuickAction) {
-                    NSUInteger preReloadVisibleCellsCount = [self.tableView.visibleCells count];
-
-                    [self.tableView reloadData];
-
-                    if (!preReloadVisibleCellsCount) {
-                        [self animateSlideWaveWithCPUserActionCells:self.tableView.visibleCells];
-                    }
-                } else {
-                    self.reloadPrevented = YES;
-                }
-            } else {
-                [SVProgressHUD showErrorWithStatus:[json objectForKey:@"message"]
-                                          duration:kDefaultDismissDelay];
+    CLLocationCoordinate2D currentCoord = [CPAppDelegate currentOrDefaultLocation].coordinate;
+    NSDictionary *latLngDict = @{@"lat" : @(currentCoord.latitude), @"lng" : @(currentCoord.longitude)};
+    [[CPObjectManager sharedManager] getObjectsAtPathForRouteNamed:kRouteNearestCheckedIn
+                                                            object:latLngDict
+                                                        parameters:@{@"v" : @"20121128"}
+                                                           success:^(RKObjectRequestOperation *operation, RKMappingResult *result)
+    {
+        self.checkedInUsers = [result.array mutableCopy];
+        
+        if (!self.userIsPerformingQuickAction) {
+            NSUInteger preReloadVisibleCellsCount = [self.tableView.visibleCells count];
+            
+            [self.tableView reloadData];
+            
+            if (!preReloadVisibleCellsCount) {
+                [self animateSlideWaveWithCPUserActionCells:self.tableView.visibleCells];
             }
         } else {
-            [SVProgressHUD showErrorWithStatus:[error localizedDescription]
-                                      duration:kDefaultDismissDelay];
+            self.reloadPrevented = YES;
         }
+        
+        [self.tableView.pullToRefreshView stopAnimating];
+
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        [SVProgressHUD showErrorWithStatus:[error localizedDescription]
+                                  duration:kDefaultDismissDelay];
         [self.tableView.pullToRefreshView stopAnimating];
     }];
 }
