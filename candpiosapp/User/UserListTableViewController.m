@@ -128,11 +128,11 @@
     cell.nicknameLabel.frame = nicknameFrameChanger;
     
     cell.statusLabel.text = @"";
-    if (user.status.length > 0 && user.checkedIn) {
+    if (user.status.length > 0 && [user.lastCheckIn.isCurrentlyCheckedIn boolValue]) {
         cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",[user.status gtm_stringByUnescapingFromHTML]];
     }
     
-    cell.checkInLabel.text = [NSString stringWithFormat:@"@%@", user.placeCheckedIn.name];
+    cell.checkInLabel.text = [NSString stringWithFormat:@"@%@", user.lastCheckIn.venue.name];
 
     [CPUIHelper profileImageView:cell.profilePictureImageView
              withProfileImageUrl:user.photoURL];

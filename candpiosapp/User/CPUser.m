@@ -35,7 +35,8 @@
         self.location = CLLocationCoordinate2DMake(lat, lng);
         
         self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict objectForKey:@"checkout"] integerValue]];
-        self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
+        self.lastCheckIn = [[CPCheckIn alloc] init];
+        self.lastCheckIn.isCurrentlyCheckedIn = @([[userDict objectForKey:@"checked_in"] boolValue]);
         self.isContact = @([[userDict objectForKey:@"is_contact"] boolValue]);
 	}
 	return self;
@@ -294,18 +295,19 @@
             // badge information
             // self.badges = [userDict objectForKey:@"badges"];
             
-            if (!self.placeCheckedIn) {
+            if (!self.lastCheckIn.venue) {
                 // we don't have a check in for this user so pull it here
                 NSDictionary *checkinDict = [userDict valueForKey:@"checkin_data"];
                 if ([checkinDict objectForKey:@"venue_id"]) {
-                    // try and grab the venue from CPMarkerManager                    
-                    self.placeCheckedIn = [[CPVenue alloc] initFromDictionary:checkinDict];
-                    self.checkedIn = [[checkinDict valueForKey:@"checked_in"] boolValue];
+                    // try and grab the venue from CPMarkerManager
+                    self.lastCheckIn = [[CPCheckIn alloc] init];
+                    self.lastCheckIn.venue = [[CPVenue alloc] initFromDictionary:checkinDict];
+                    self.lastCheckIn.isCurrentlyCheckedIn = @([[checkinDict valueForKey:@"checked_in"] boolValue]);
 
                     if ([[CPUserDefaultsHandler currentUser].userID isEqualToNumber:self.userID]) {
-                        if (self.checkedIn) {
+                        if ([self.lastCheckIn.isCurrentlyCheckedIn boolValue]) {
                             NSInteger checkOutTime =[[checkinDict objectForKey:@"checkout"] integerValue];
-                            [CPCheckinHandler saveCheckInVenue:self.placeCheckedIn andCheckOutTime:checkOutTime];
+                            [CPCheckinHandler saveCheckInVenue:self.lastCheckIn.venue andCheckOutTime:checkOutTime];
                         } else {
                             [[CPCheckinHandler sharedHandler] setCheckedOut];
                         }
@@ -314,7 +316,7 @@
             }
             
             // user checkin data
-            self.placeCheckedIn.checkedInNow = @([[userDict valueForKeyPath:@"checkin_data.users_here"] intValue]);
+            self.lastCheckIn.venue.checkedInNow = @([[userDict valueForKeyPath:@"checkin_data.users_here"] intValue]);
             self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict valueForKeyPath:@"checkin_data.checkout"] intValue]]; 
             //self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
             

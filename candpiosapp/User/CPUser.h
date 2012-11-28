@@ -25,7 +25,6 @@
 @property (strong, nonatomic) NSString *bio;
 @property (strong, nonatomic) NSString *hourlyRate;
 @property (strong, nonatomic) NSURL *photoURL;
-@property (strong, nonatomic) CPVenue *placeCheckedIn;
 @property (strong, nonatomic) NSDate *checkoutEpoch;
 @property (strong, nonatomic) NSString *join_date;
 @property (strong, nonatomic) NSArray *workInformation;
@@ -55,7 +54,6 @@
 @property (nonatomic) double totalEarned;
 @property (nonatomic) double totalSpent;
 @property (nonatomic) int totalHours;
-@property (nonatomic) BOOL checkedIn;
 @property (nonatomic) int trusted_by;
 @property (nonatomic) BOOL contactsOnlyChat;
 @property (nonatomic) BOOL hasChatHistory;
