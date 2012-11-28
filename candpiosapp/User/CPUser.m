@@ -127,6 +127,11 @@
     _bio = [bio gtm_stringByUnescapingFromHTML];
 }
 
+- (void)setTotalHoursCheckedIn:(NSNumber *)totalHoursCheckedIn
+{
+    _totalHoursCheckedIn = @((int)round([totalHoursCheckedIn doubleValue]));
+}
+
 // override job title setter to decode html entities
 -(void)setJobTitle:(NSString *)jobTitle
 {
