@@ -67,21 +67,21 @@
         // parameter so that for a given venue we know which interval it is for
         
         [_venueRKObjectMapping addAttributeMappingsFromDictionary:@{
-            @"id": @"venueID",
-            @"name": @"name",
-            @"address": @"address",
-            @"city": @"city",
-            @"state": @"state",
-            @"phone": @"phone",
-            @"formatted_phone": @"formattedPhone",
-            @"lat": @"lat",
-            @"lng": @"lng",
-            @"foursquare_id": @"foursquareID",
-            @"photo_url": @"photoURL",
-            @"checked_in_now": @"checkedInNow",
-            @"checkins_for_interval": @"weeklyCheckinCount",
-            @"is_neighborhood": @"isNeighborhood",
-            @"has_contacts": @"hasCheckedInContacts"
+            @"id" : @"venueID",
+            @"name" : @"name",
+            @"address" : @"address",
+            @"city" : @"city",
+            @"state" : @"state",
+            @"phone" : @"phone",
+            @"formatted_phone" : @"formattedPhone",
+            @"lat" : @"lat",
+            @"lng" : @"lng",
+            @"foursquare_id" : @"foursquareID",
+            @"photo_url" : @"photoURL",
+            @"checked_in_now" : @"checkedInNow",
+            @"checkins_for_interval" : @"weeklyCheckinCount",
+            @"is_neighborhood" : @"isNeighborhood",
+            @"has_contacts" : @"hasCheckedInContacts"
          }];
         
         RKRelationshipMapping *checkedInUsersRel = [RKRelationshipMapping relationshipMappingFromKeyPath:@"checked_in_users" toKeyPath:@"checkedInUsers" withMapping:[self userObjectMapping]];
@@ -100,17 +100,17 @@
         _userObjectMapping = [RKObjectMapping mappingForClass:[CPUser class]];
         
         [_userObjectMapping addAttributeMappingsFromDictionary:@{
-            @"id": @"userID",
-            @"nickname": @"nickname",
-            @"photo_url": @"photoURL",
-            @"job_title": @"jobTitle",
-            @"major_job_category": @"majorJobCategory",
-            @"minor_job_category": @"minorJobCategory",
-            @"is_contact": @"isContact",
-            @"total_check_in_time": @"totalCheckInTime",
-            @"total_check_in_count": @"totalCheckInCount",
-            @"total_hours_checked_in": @"totalHoursCheckedIn",
-            @"total_endorsement_count": @"totalEndorsementCount"
+            @"id" : @"userID",
+            @"nickname" : @"nickname",
+            @"photo_url" : @"photoURL",
+            @"job_title" : @"jobTitle",
+            @"major_job_category" : @"majorJobCategory",
+            @"minor_job_category" : @"minorJobCategory",
+            @"is_contact" : @"isContact",
+            @"total_check_in_time" : @"totalCheckInTime",
+            @"total_check_in_count" : @"totalCheckInCount",
+            @"total_hours_checked_in" : @"totalHoursCheckedIn",
+            @"total_endorsement_count" : @"totalEndorsementCount"
          }];
         
         RKRelationshipMapping *lastCheckIn = [RKRelationshipMapping relationshipMappingFromKeyPath:@"last_check_in" toKeyPath:@"lastCheckIn" withMapping:[self checkInObjectMapping]];
@@ -128,11 +128,11 @@
         _checkinObjectMapping = [RKObjectMapping mappingForClass:[CPCheckIn class]];
         
         [_checkinObjectMapping addAttributeMappingsFromDictionary:@{
-            @"id": @"checkInID",
-            @"lat": @"lat",
-            @"lng": @"lng",
-            @"status_text": @"statusText",
-            @"checked_in": @"isCurrentlyCheckedIn"
+            @"id" : @"checkInID",
+            @"lat" : @"lat",
+            @"lng" : @"lng",
+            @"status_text" : @"statusText",
+            @"checked_in" : @"isCurrentlyCheckedIn"
          }];
         
         RKRelationshipMapping *venueRel = [RKRelationshipMapping relationshipMappingFromKeyPath:@"venue" toKeyPath:@"venue" withMapping:[self venueRKObjectMapping]];
