@@ -127,7 +127,7 @@ static VenueInfoViewController *_onScreenVenueVC;
     // let's ask the API for refreshed data on this venue
     [[CPObjectManager sharedManager] getObjectsAtPathForRouteNamed:kRouteVenueFullDetails
                                                             object:self.venue
-                                                        parameters:nil
+                                                        parameters:@{@"v" : @"20121128"}
                                                            success:^(RKObjectRequestOperation *operation, RKMappingResult *result)
     {
         self.venue = result.firstObject;
