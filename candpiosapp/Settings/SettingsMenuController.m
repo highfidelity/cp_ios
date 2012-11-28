@@ -27,8 +27,6 @@
 @property (strong, nonatomic) UITapGestureRecognizer *menuCloseGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanFromNavbarGestureRecognizer;
-@property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanFromTabbarGestureRecognizer;
-@property (strong, nonatomic) UITapGestureRecognizer *menuCloseTapFromTabbarGestureRecognizer;
 @property (nonatomic) CGPoint panStartLocation;
 
 - (void)setMapAndButtonsViewXOffset:(CGFloat)xOffset;
@@ -71,12 +69,6 @@
 {
     _f2fInviteAlert = f2fInviteAlert;
     _f2fInviteAlert.delegate = self;
-}
-
-- (void)setF2fPasswordAlert:(UIAlertView *)f2fPasswordAlert 
-{
-    _f2fPasswordAlert = f2fPasswordAlert;
-    _f2fPasswordAlert.delegate = self;
 }
 
 #pragma mark - View lifecycle
@@ -162,31 +154,24 @@
     
     int touchViewTag = 3040;
     
+    // add a view in front of the tab bar controller to handle pan and tap
     UINavigationController *visibleNC = (UINavigationController *)self.cpTabBarController.selectedViewController;
-    UIViewController *visibleVC = visibleNC.visibleViewController; 
-    
-    // make sure we have a touchView layer
-    UIView *touchView = [visibleVC.view viewWithTag:touchViewTag];
+    UIView *touchView = [self.cpTabBarController.view viewWithTag:touchViewTag];
     
     if (!touchView) {
-        // place an invisible view over the VC's view to handle touch
-        CGRect touchFrame = CGRectMake(0, 0, visibleVC.view.frame.size.width, visibleVC.view.frame.size.height);
+        // height of the touch view is the device height, minus navigation bar
+        CGFloat navBarHeight = visibleNC.navigationBar.frame.size.height;
+        CGFloat touchViewHeight = self.cpTabBarController.view.frame.size.height - navBarHeight;
+       
+        CGRect touchFrame = CGRectMake(0,
+                                       navBarHeight,
+                                       self.cpTabBarController.view.frame.size.width,
+                                       touchViewHeight);
         touchView = [[UIView alloc] initWithFrame:touchFrame];
         touchView.tag = touchViewTag;
-        [visibleVC.view addSubview:touchView];        
+        [self.cpTabBarController.view addSubview:touchView];
     }   
-    
-    // make sure we have a tabTouch layer over the tabBar
-    UIView *tabTouch = [self.cpTabBarController.tabBar viewWithTag:touchViewTag];
-    
-    if (!tabTouch) {
-        // place an invisible view over the tab bar to handle tap
-        CGRect tabFrame = CGRectMake(0, 0, self.cpTabBarController.tabBar.frame.size.width, self.cpTabBarController.tabBar.frame.size.height);
-        tabTouch = [[UIView alloc] initWithFrame:tabFrame];
-        tabTouch.tag = touchViewTag;
-        [self.cpTabBarController.tabBar addSubview:tabTouch];
-    }
-   
+
     if (showMenu) {
         
         // shift to the right, hiding buttons 
@@ -207,17 +192,7 @@
         if (!self.menuClosePanFromNavbarGestureRecognizer) { 
             // Pan to close from navbar
             self.menuClosePanFromNavbarGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(menuClosePan:)];
-            [visibleVC.navigationController.navigationBar addGestureRecognizer:self.menuClosePanFromNavbarGestureRecognizer];
-        }
-        if (!self.menuClosePanFromTabbarGestureRecognizer) {
-            // Pan to close from tab bar
-            self.menuClosePanFromTabbarGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(menuClosePan:)];
-            [tabTouch addGestureRecognizer:self.menuClosePanFromTabbarGestureRecognizer];
-        }
-        if (!self.menuCloseTapFromTabbarGestureRecognizer) {
-            // Tap to close from tab bar
-            self.menuCloseTapFromTabbarGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeMenu)];
-            [tabTouch addGestureRecognizer:self.menuCloseTapFromTabbarGestureRecognizer];
+            [visibleNC.navigationBar addGestureRecognizer:self.menuClosePanFromNavbarGestureRecognizer];
         }
     } else {
         // shift to the left, restoring the buttons
@@ -232,18 +207,8 @@
         // remove the touch view from the VC
         [touchView removeFromSuperview];
         
-        [visibleVC.navigationController.navigationBar removeGestureRecognizer:self.menuClosePanFromNavbarGestureRecognizer];
+        [visibleNC.navigationBar removeGestureRecognizer:self.menuClosePanFromNavbarGestureRecognizer];
         self.menuClosePanFromNavbarGestureRecognizer = nil;
-        
-        [tabTouch removeGestureRecognizer:self.menuClosePanFromTabbarGestureRecognizer];
-        self.menuClosePanFromTabbarGestureRecognizer = nil; 
-        
-        [tabTouch removeGestureRecognizer:self.menuCloseTapFromTabbarGestureRecognizer];
-        self.menuCloseTapFromTabbarGestureRecognizer = nil; 
-        
-        // remove the tab touch view from the tab bar
-        [tabTouch removeFromSuperview];
-        
     }
     [UIView commitAnimations];
     self.isMenuShowing = showMenu ? 1 : 0;

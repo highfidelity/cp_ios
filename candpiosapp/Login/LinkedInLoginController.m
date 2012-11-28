@@ -368,8 +368,23 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 #pragma mark UIWebViewDelegate methods
 
 -(void)webViewDidFinishLoad:(UIWebView *) webView {
-	[self.activityIndicator stopAnimating];
+    [self.activityIndicator stopAnimating];
+    
+    // Patch up the linkedIn login page so the Email input field has type required to show email keyboard.
+    // Remove once linkedIn fixes their webform.
+    NSRegularExpression *inputRegex = [NSRegularExpression regularExpressionWithPattern:@"<input type=\"text\" (.* placeholder=\"Email\">)"
+                                                                                options:NSRegularExpressionCaseInsensitive
+                                                                                  error:NULL];
+    NSString *html = [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.innerHTML;"];
+    NSString *modifiedHTML = [inputRegex stringByReplacingMatchesInString:html
+                                                                  options:NSRegularExpressionCaseInsensitive
+                                                                    range:NSMakeRange(0, [html length])
+                                                             withTemplate:@"<input type=\"email\" $1"];
+    if (![modifiedHTML isEqualToString:html]) {
+        [webView loadHTMLString:modifiedHTML baseURL:webView.request.URL];
+    }
 }
+
 -(void)webViewDidStartLoad:(UIWebView *) webView {
 	[self.activityIndicator startAnimating];
 }
