@@ -38,7 +38,7 @@ static CPMarkerManager *_sharedManager;
         
     [[CPObjectManager sharedManager] getObjectsAtPathForRouteNamed:kRouteMarkers
                                                             object:coordinateDictionary
-                                                        parameters:nil
+                                                        parameters:@{@"v" : @"20121128"}
                                                            success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
                                                                self.venues = result.array;
                                                                [self getActiveUsersForMarkers];

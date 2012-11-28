@@ -35,7 +35,8 @@
         self.location = CLLocationCoordinate2DMake(lat, lng);
         
         self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict objectForKey:@"checkout"] integerValue]];
-        self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
+        self.lastCheckIn = [[CPCheckIn alloc] init];
+        self.lastCheckIn.isCurrentlyCheckedIn = @([[userDict objectForKey:@"checked_in"] boolValue]);
         self.isContact = @([[userDict objectForKey:@"is_contact"] boolValue]);
 	}
 	return self;
@@ -124,6 +125,11 @@
 - (void)setBio:(NSString *)bio
 {
     _bio = [bio gtm_stringByUnescapingFromHTML];
+}
+
+- (void)setTotalHoursCheckedIn:(NSNumber *)totalHoursCheckedIn
+{
+    _totalHoursCheckedIn = @((int)round([totalHoursCheckedIn doubleValue]));
 }
 
 // override job title setter to decode html entities
@@ -294,18 +300,19 @@
             // badge information
             // self.badges = [userDict objectForKey:@"badges"];
             
-            if (!self.placeCheckedIn) {
+            if (!self.lastCheckIn.venue) {
                 // we don't have a check in for this user so pull it here
                 NSDictionary *checkinDict = [userDict valueForKey:@"checkin_data"];
                 if ([checkinDict objectForKey:@"venue_id"]) {
-                    // try and grab the venue from CPMarkerManager                    
-                    self.placeCheckedIn = [[CPVenue alloc] initFromDictionary:checkinDict];
-                    self.checkedIn = [[checkinDict valueForKey:@"checked_in"] boolValue];
+                    // try and grab the venue from CPMarkerManager
+                    self.lastCheckIn = [[CPCheckIn alloc] init];
+                    self.lastCheckIn.venue = [[CPVenue alloc] initFromDictionary:checkinDict];
+                    self.lastCheckIn.isCurrentlyCheckedIn = @([[checkinDict valueForKey:@"checked_in"] boolValue]);
 
                     if ([[CPUserDefaultsHandler currentUser].userID isEqualToNumber:self.userID]) {
-                        if (self.checkedIn) {
+                        if ([self.lastCheckIn.isCurrentlyCheckedIn boolValue]) {
                             NSInteger checkOutTime =[[checkinDict objectForKey:@"checkout"] integerValue];
-                            [CPCheckinHandler saveCheckInVenue:self.placeCheckedIn andCheckOutTime:checkOutTime];
+                            [CPCheckinHandler saveCheckInVenue:self.lastCheckIn.venue andCheckOutTime:checkOutTime];
                         } else {
                             [[CPCheckinHandler sharedHandler] setCheckedOut];
                         }
@@ -314,7 +321,7 @@
             }
             
             // user checkin data
-            self.placeCheckedIn.checkedInNow = @([[userDict valueForKeyPath:@"checkin_data.users_here"] intValue]);
+            self.lastCheckIn.venue.checkedInNow = @([[userDict valueForKeyPath:@"checkin_data.users_here"] intValue]);
             self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict valueForKeyPath:@"checkin_data.checkout"] intValue]]; 
             //self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
             
@@ -359,18 +366,6 @@
             }
         }
     }];
-}
-
-- (NSComparisonResult) compareDistanceToUser:(CPUser *)otherUser {
-    NSNumber *distanceA = [NSNumber numberWithDouble:self.distance];
-    NSNumber *distanceB = [NSNumber numberWithDouble:otherUser.distance];
-    NSComparisonResult distanceComparison = [distanceA compare:distanceB];
-    if (distanceComparison == NSOrderedSame) {
-        // order by case insensitive nicknames to keep sorting stable
-        return [self.nickname compare:otherUser.nickname options:NSCaseInsensitiveSearch];
-    } else {
-        return distanceComparison;
-    }
 }
 
 @end

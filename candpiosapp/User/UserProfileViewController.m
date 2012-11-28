@@ -254,10 +254,12 @@
         }
     }
     
-    self.venueName.text = self.user.placeCheckedIn.name;
-    self.venueAddress.text = self.user.placeCheckedIn.address;
+    self.venueName.text = self.user.lastCheckIn.venue.name;
+    self.venueAddress.text = self.user.lastCheckIn.venue.address;
     
-    self.othersAtPlace = self.user.checkedIn ? [self.user.placeCheckedIn.checkedInNow intValue] - 1 : [self.user.placeCheckedIn.checkedInNow intValue];
+    self.othersAtPlace = [self.user.lastCheckIn.isCurrentlyCheckedIn boolValue]
+        ? [self.user.lastCheckIn.venue.checkedInNow intValue] - 1
+        : [self.user.lastCheckIn.venue.checkedInNow intValue];
     
     if (self.firstLoad) {
         if (self.othersAtPlace == 0) {
@@ -313,7 +315,7 @@
 
 - (void)setUserStatusWithQuotes:(NSString *)status
 {
-    if ([self.user.status length] > 0 && self.user.checkedIn) {
+    if ([self.user.status length] > 0 && [self.user.lastCheckIn.isCurrentlyCheckedIn boolValue]) {
         self.cardStatus.text = [NSString stringWithFormat:@"\"%@\"", status];
     } else {
         self.cardStatus.text = @"";
@@ -524,9 +526,9 @@
 
 -(IBAction)venueViewButtonPressed:(id)sender {
     VenueInfoViewController *venueVC = [[UIStoryboard storyboardWithName:@"VenueStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
-    CPVenue *markerVenue = [[CPMarkerManager sharedManager] markerVenueWithID:self.user.placeCheckedIn.venueID];
+    CPVenue *markerVenue = [[CPMarkerManager sharedManager] markerVenueWithID:self.user.lastCheckIn.venue.venueID];
     
-    venueVC.venue = markerVenue ? markerVenue : self.user.placeCheckedIn;
+    venueVC.venue = markerVenue ? markerVenue : self.user.lastCheckIn.venue;
     
     [self.navigationController pushViewController:venueVC animated:YES];
 }

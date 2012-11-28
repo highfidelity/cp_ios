@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import "CPVenue.h"
+#import "CPCheckIn.h"
 
 @interface CPUser : NSObject <NSCoding>
 
@@ -24,7 +25,6 @@
 @property (strong, nonatomic) NSString *bio;
 @property (strong, nonatomic) NSString *hourlyRate;
 @property (strong, nonatomic) NSURL *photoURL;
-@property (strong, nonatomic) CPVenue *placeCheckedIn;
 @property (strong, nonatomic) NSDate *checkoutEpoch;
 @property (strong, nonatomic) NSString *join_date;
 @property (strong, nonatomic) NSArray *workInformation;
@@ -39,7 +39,9 @@
 @property (strong, nonatomic) NSNumber *isContact;
 @property (strong, nonatomic) NSNumber *totalCheckInTime;
 @property (strong, nonatomic) NSNumber *totalCheckInCount;
+@property (strong, nonatomic) NSNumber *totalHoursCheckedIn;
 @property (strong, nonatomic) NSNumber *totalEndorsementCount;
+@property (strong, nonatomic) CPCheckIn *lastCheckIn;
 @property (nonatomic, readonly) BOOL hasAnyTopSkills;
 @property (nonatomic, readonly) BOOL hasAnyWorkInformation;
 @property (nonatomic, readonly) BOOL hasAnyEducationInformation;
@@ -52,8 +54,6 @@
 @property (nonatomic) double totalEarned;
 @property (nonatomic) double totalSpent;
 @property (nonatomic) int totalHours;
-@property (nonatomic) double distance;
-@property (nonatomic) BOOL checkedIn;
 @property (nonatomic) int trusted_by;
 @property (nonatomic) BOOL contactsOnlyChat;
 @property (nonatomic) BOOL hasChatHistory;
@@ -72,7 +72,6 @@
 - (void)setPhotoURLFromString:(NSString *)photoURLString;
 
 - (void)setJoinDateFromJSONString:(NSString *)dateString;
-- (NSComparisonResult) compareDistanceToUser:(CPUser *)otherUser;
 
 
 @end

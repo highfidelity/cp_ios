@@ -102,6 +102,7 @@
 		536E1ECF15549A5100052D40 /* network-icon-linkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1EC915549A5100052D40 /* network-icon-linkedin.png */; };
 		536E1ED015549A5100052D40 /* network-icon-linkedin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 536E1ECA15549A5100052D40 /* network-icon-linkedin@2x.png */; };
 		537255B4156AEBA800263CFA /* UserLoveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 537255B3156AEBA800263CFA /* UserLoveViewController.m */; };
+		537B80891666A4AC002CAECB /* CPCheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 537B80881666A4AC002CAECB /* CPCheckIn.m */; };
 		537DEA8F16249A3400D59AC9 /* CheckInListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 537DEA8E16249A3400D59AC9 /* CheckInListViewController.m */; };
 		537DEA921624A0EF00D59AC9 /* check-in-list-error.png in Resources */ = {isa = PBXBuildFile; fileRef = 537DEA901624A0EF00D59AC9 /* check-in-list-error.png */; };
 		537DEA931624A0EF00D59AC9 /* check-in-list-error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 537DEA911624A0EF00D59AC9 /* check-in-list-error@2x.png */; };
@@ -471,6 +472,8 @@
 		536E1ECA15549A5100052D40 /* network-icon-linkedin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "network-icon-linkedin@2x.png"; path = "User/images/network-icon-linkedin@2x.png"; sourceTree = "<group>"; };
 		537255B2156AEBA800263CFA /* UserLoveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = UserLoveViewController.h; path = User/UserLoveViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		537255B3156AEBA800263CFA /* UserLoveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = UserLoveViewController.m; path = User/UserLoveViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		537B80871666A4AC002CAECB /* CPCheckIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPCheckIn.h; path = Checkin/CPCheckIn.h; sourceTree = "<group>"; };
+		537B80881666A4AC002CAECB /* CPCheckIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CPCheckIn.m; path = Checkin/CPCheckIn.m; sourceTree = "<group>"; };
 		537DEA8E16249A3400D59AC9 /* CheckInListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInListViewController.m; path = Checkin/CheckInListViewController.m; sourceTree = "<group>"; };
 		537DEA901624A0EF00D59AC9 /* check-in-list-error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-list-error.png"; path = "Checkin/images/check-in-list-error.png"; sourceTree = "<group>"; };
 		537DEA911624A0EF00D59AC9 /* check-in-list-error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-in-list-error@2x.png"; path = "Checkin/images/check-in-list-error@2x.png"; sourceTree = "<group>"; };
@@ -1254,6 +1257,8 @@
 				53D7ADEC15D04AC800BB041E /* CPGeofenceHandler.h */,
 				53D7ADED15D04AC800BB041E /* CPGeofenceHandler.m */,
 				536DE92A150170CC00794650 /* images */,
+				537B80871666A4AC002CAECB /* CPCheckIn.h */,
+				537B80881666A4AC002CAECB /* CPCheckIn.m */,
 			);
 			name = Checkin;
 			sourceTree = "<group>";
@@ -1832,10 +1837,6 @@
 				539F7E6E16558AE6005FF3F0 /* texture-diagonal-noise@2x.png in Resources */,
 				539F7E7116558AE6005FF3F0 /* texture-lightpaperfibers.png in Resources */,
 				539F7E7216558AE6005FF3F0 /* texture-lightpaperfibers@2x.png in Resources */,
-				69E91512165530AF00366C2D /* chat-entry-field.png in Resources */,
-				69E91513165530AF00366C2D /* chat-entry-field@2x.png in Resources */,
-				691E7BE3165B0D9C00587381 /* endorse-count-in-list.png in Resources */,
-				691E7BE4165B0D9C00587381 /* endorse-count-in-list@2x.png in Resources */,
 				E493787816655E18004AEAC0 /* action-menu-button-headline.png in Resources */,
 				E493787916655E18004AEAC0 /* action-menu-button-headline@2x.png in Resources */,
 				E493787C16655E5F004AEAC0 /* headline-icon.png in Resources */,
@@ -1967,6 +1968,7 @@
 				539F7E7316558AE6005FF3F0 /* UIColor+EasyRGB.m in Sources */,
 				539F7E7416558AE6005FF3F0 /* UIImage+ImageBlur.m in Sources */,
 				539F7E7516558AE6005FF3F0 /* UIViewController+isModal.m in Sources */,
+				537B80891666A4AC002CAECB /* CPCheckIn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
