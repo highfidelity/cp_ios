@@ -15,7 +15,6 @@
 
 @property (weak, nonatomic) IBOutlet CPPlaceholderTextView *headlineTextView;
 @property (weak, nonatomic) IBOutlet UILabel *charCounterLabel;
-@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 @end
 
