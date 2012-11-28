@@ -372,24 +372,17 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     
     // Patch up the linkedIn login page so the Email input field has type required to show email keyboard.
     // Remove once linkedIn fixes their webform.
-    NSRegularExpression *inputRegex = [NSRegularExpression regularExpressionWithPattern:@"<input type=\"text\" .* placeholder=\"Email\">"
+    NSRegularExpression *inputRegex = [NSRegularExpression regularExpressionWithPattern:@"<input type=\"text\" (.* placeholder=\"Email\">)"
                                                                                 options:NSRegularExpressionCaseInsensitive
                                                                                   error:NULL];
-    NSRegularExpression *typeRegex = [NSRegularExpression regularExpressionWithPattern:@"type=\"text\""
-                                                                               options:NSRegularExpressionCaseInsensitive
-                                                                                 error:NULL];
     NSString *html = [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.innerHTML;"];
-    [inputRegex enumerateMatchesInString:html
-                                 options:0
-                                   range:NSMakeRange(0, [html length])
-                              usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-        NSString *modifiedHTML = [typeRegex stringByReplacingMatchesInString:html
-                                                                     options:0
-                                                                       range:result.range
-                                                                withTemplate:@"type=\"email\""];
+    NSString *modifiedHTML = [inputRegex stringByReplacingMatchesInString:html
+                                                                  options:NSRegularExpressionCaseInsensitive
+                                                                    range:NSMakeRange(0, [html length])
+                                                             withTemplate:@"<input type=\"email\" $1"];
+    if (![modifiedHTML isEqualToString:html]) {
         [webView loadHTMLString:modifiedHTML baseURL:webView.request.URL];
-    }];
-    
+    }
 }
 
 -(void)webViewDidStartLoad:(UIWebView *) webView {
