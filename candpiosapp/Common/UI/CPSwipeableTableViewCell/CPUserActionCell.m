@@ -23,7 +23,8 @@
 #import "OneOnOneChatViewController.h"
 #import "UserProfileViewController.h"
 
-#define SWITCH_LEFT_MARGIN 23
+#define SWITCH_LEFT_MARGIN 10
+#define SWITCH_PADDING 20
 #define QUICK_ACTION_MARGIN 56
 #define QUICK_ACTION_LOCK 3 * (QUICK_ACTION_MARGIN + 10)
 #define REDUCED_ACTION_LOCK 2 * (QUICK_ACTION_MARGIN + 10)
@@ -479,6 +480,8 @@
     UIImageView *quickActionImageView = [[UIImageView alloc] initWithImage:image];
     // move the secretImageView to the right spot
     CGRect switchFrame = quickActionImageView.frame;
+    switchFrame.size.height += SWITCH_PADDING;
+    switchFrame.size.width += SWITCH_PADDING;
     switchFrame.origin.x = originX;
     switchFrame.origin.y = (self.contentView.frame.size.height / 2) - (switchFrame.size.height / 2);
     button.frame = switchFrame;
