@@ -104,7 +104,7 @@ examle json:
     AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"https://s3.amazonaws.com"]];
     [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
 
-    [client getPath:@"/coffeeandpower-prod/tutorial/tutorial.json"
+    [client getPath:kTutorialConfigPath
          parameters:nil
             success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSDictionary *json = responseObject;

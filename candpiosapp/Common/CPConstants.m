@@ -12,6 +12,7 @@
 
 #ifdef PRODUCTION
 
+    NSString* const kTutorialConfigPath = @"coffeeandpower-prod/tutorial/tutorial.json";
 #else
 
     NSString* const kCandPWebServiceUrl = @"http://staging.candp.me/";
@@ -32,6 +33,8 @@
     NSString* const kUserVoiceSite = @"coffeeandpower.uservoice.com";
     NSString* const kUserVoiceKey = @"IBW0MSWGNnhVhBLi2Jlug";
     NSString* const kUserVoiceSecret = @"cWb3mvt7zsMxG1c2lldnSbSle3VGbCAVUsGi2YIbU";
+
+    NSString* const kTutorialConfigPath = @"coffeeandpower-staging/tutorial/tutorial.json";
 
 #endif
 

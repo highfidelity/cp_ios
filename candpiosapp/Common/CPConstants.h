@@ -24,6 +24,7 @@ extern NSString* const kUserVoiceSite;
 extern NSString* const kUserVoiceKey;
 extern NSString* const kUserVoiceSecret;
 extern NSString* const kLinkedInAPIUrl;
+extern NSString* const kTutorialConfigPath;
 
 extern int const kDefaultDismissDelay;
 
