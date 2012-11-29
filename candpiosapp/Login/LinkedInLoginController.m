@@ -469,7 +469,9 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                                                          [SVProgressHUD showSuccessWithStatus:infoMessage
                                                                                      duration:kDefaultDismissDelay];
                                                      }
-                                                     [self close:kDefaultDismissDelay];
+                                                     [self loadLinkedInConnectionsWithCompletion:^{
+                                                         [self close:kDefaultDismissDelay];
+                                                     }];
                                                  }
 
                                              }
