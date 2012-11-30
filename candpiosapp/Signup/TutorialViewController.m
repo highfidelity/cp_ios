@@ -165,7 +165,19 @@ examle json:
     }
     
     self.backButton.hidden = (pageIndex == 0);
-
+    
+    // if this is one of the last two pages
+    // we might need to change the next button image
+    if (pageIndex >= self.pageControl.numberOfPages - 2) {
+        NSString *nextPrefixName = pageIndex == self.pageControl.numberOfPages - 1
+            ? @"tutorial-done"
+            : @"tutorial-next";
+        [self.nextButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-default", nextPrefixName]]
+                                   forState:UIControlStateNormal];
+        [self.nextButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-highlighted", nextPrefixName]]
+                                   forState:UIControlStateHighlighted];
+    }
+    
     NSDictionary *pageInfo = self.pageInfos[pageIndex];
     NSDictionary *cellInfo = pageInfo[@"user_cell"];
     if (cellInfo) {
@@ -192,13 +204,12 @@ examle json:
 }
 
 - (IBAction)nextButtonPressed:(id)sender {
-    self.pageControl.currentPage += 1;
-    [self pageWasSelected];
+    if (self.pageControl.currentPage == self.pageControl.numberOfPages - 1) {
+        [self dismissAction];
+    } else {
+        self.pageControl.currentPage += 1;
+        [self pageWasSelected];
+    }
 }
 
-- (void)viewDidUnload {
-    [self setBackButton:nil];
-    [self setNextButton:nil];
-    [super viewDidUnload];
-}
 @end
