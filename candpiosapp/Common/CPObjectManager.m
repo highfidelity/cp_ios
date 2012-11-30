@@ -132,7 +132,6 @@
             @"lat" : @"lat",
             @"lng" : @"lng",
             @"status_text" : @"statusText",
-            @"checked_in" : @"isCurrentlyCheckedIn",
             @"checkout_timestamp" : @"checkoutSinceEpoch"
          }];
         

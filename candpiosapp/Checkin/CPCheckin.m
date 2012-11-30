@@ -25,4 +25,9 @@
     return [NSDate dateWithTimeIntervalSince1970:[self.checkoutSinceEpoch intValue]];
 }
 
+- (BOOL)isCurrentlyCheckedIn
+{
+    return [self.checkoutDate compare:[NSDate date]] != NSOrderedAscending;
+}
+
 @end

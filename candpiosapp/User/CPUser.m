@@ -34,7 +34,6 @@
         self.location = CLLocationCoordinate2DMake(lat, lng);
         
         self.lastCheckIn = [[CPCheckIn alloc] init];
-        self.lastCheckIn.isCurrentlyCheckedIn = @([[userDict objectForKey:@"checked_in"] boolValue]);
         self.lastCheckIn.statusText = [userDict objectForKey:@"status_text"];
         self.lastCheckIn.checkoutSinceEpoch = @([[userDict objectForKey:@"checkout"] integerValue]);
         
@@ -291,11 +290,11 @@
                 // try and grab the venue from CPMarkerManager
                 self.lastCheckIn = [[CPCheckIn alloc] init];
                 self.lastCheckIn.venue = [[CPVenue alloc] initFromDictionary:checkinDict];
-                self.lastCheckIn.isCurrentlyCheckedIn = @([[checkinDict valueForKey:@"checked_in"] boolValue]);
+                self.lastCheckIn.checkoutSinceEpoch = @([checkinDict[@"checkout"] intValue]);
                 self.lastCheckIn.statusText = [userDict objectForKey:@"status_text"];
                 
                 if ([[CPUserDefaultsHandler currentUser].userID isEqualToNumber:self.userID]) {
-                    if ([self.lastCheckIn.isCurrentlyCheckedIn boolValue]) {
+                    if (self.lastCheckIn.isCurrentlyCheckedIn) {
                         NSInteger checkOutTime =[[checkinDict objectForKey:@"checkout"] integerValue];
                         [CPCheckinHandler saveCheckInVenue:self.lastCheckIn.venue andCheckOutTime:checkOutTime];
                     } else {

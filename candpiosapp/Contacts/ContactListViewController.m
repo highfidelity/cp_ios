@@ -268,7 +268,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
     cell.statusLabel.text = @"";
     
-    if (contact.lastCheckIn.statusText.length > 0 && [contact.lastCheckIn.isCurrentlyCheckedIn boolValue]) {
+    if (contact.lastCheckIn.statusText.length > 0 && contact.lastCheckIn.isCurrentlyCheckedIn) {
         cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"", contact.lastCheckIn.statusText];
     }
 

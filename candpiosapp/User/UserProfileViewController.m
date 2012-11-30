@@ -257,7 +257,7 @@
     self.venueName.text = self.user.lastCheckIn.venue.name;
     self.venueAddress.text = self.user.lastCheckIn.venue.address;
     
-    self.othersAtPlace = [self.user.lastCheckIn.isCurrentlyCheckedIn boolValue]
+    self.othersAtPlace = self.user.lastCheckIn.isCurrentlyCheckedIn
         ? [self.user.lastCheckIn.venue.checkedInNow intValue] - 1
         : [self.user.lastCheckIn.venue.checkedInNow intValue];
     
@@ -315,7 +315,7 @@
 
 - (void)setUserStatusWithQuotes:(NSString *)status
 {
-    if (status.length > 0 && [self.user.lastCheckIn.isCurrentlyCheckedIn boolValue]) {
+    if (status.length > 0 && self.user.lastCheckIn.isCurrentlyCheckedIn) {
         self.cardStatus.text = [NSString stringWithFormat:@"\"%@\"", status];
     } else {
         self.cardStatus.text = @"";
