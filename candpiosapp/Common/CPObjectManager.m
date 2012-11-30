@@ -146,6 +146,7 @@ NSString* const kRouteMarkers = @"markers";
 NSString* const kRouteVenueCheckedInUsers = @"venueCheckedInUsers";
 NSString* const kRouteVenueFullDetails = @"venueDetails";
 NSString* const kRouteNearestCheckedIn = @"nearestCheckedIn";
+NSString* const kRouteContactsAndRequests = @"contactsAndRequests";
 
 + (void)setupAllRKRouting
 {
@@ -162,6 +163,9 @@ NSString* const kRouteNearestCheckedIn = @"nearestCheckedIn";
                                                             method:RKRequestMethodGET]];
     [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:kRouteNearestCheckedIn
                                                        pathPattern:@"api.php?action=getNearestCheckedIn&lat=:lat&lng=:lng"
+                                                            method:RKRequestMethodGET]];
+    [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:kRouteContactsAndRequests
+                                                       pathPattern:@"api.php?action=getContactsAndContactRequests"
                                                             method:RKRequestMethodGET]];
 }
 
