@@ -224,10 +224,10 @@
 {
     if (self.firstLoad) {
         // if the user is checked in show how much longer they'll be available for
-        if ([self.user.checkoutEpoch timeIntervalSinceNow] > 0) {
+        if ([self.user.lastCheckIn.checkoutDate timeIntervalSinceNow] > 0) {
             self.checkedIn.text = @"Checked in";
             // get the number of seconds until they'll checkout
-            NSTimeInterval secondsToCheckout = [self.user.checkoutEpoch timeIntervalSinceNow];
+            NSTimeInterval secondsToCheckout = [self.user.lastCheckIn.checkoutDate timeIntervalSinceNow];
             // convert to minutes and then hours + minutes to next our
             int minutesToCheckout = floor(secondsToCheckout / 60.0);
             int hoursToCheckout = floor(minutesToCheckout / 60.0);
@@ -315,7 +315,7 @@
 
 - (void)setUserStatusWithQuotes:(NSString *)status
 {
-    if ([self.user.lastCheckIn.statusText length] > 0 && [self.user.lastCheckIn.isCurrentlyCheckedIn boolValue]) {
+    if (status.length > 0 && [self.user.lastCheckIn.isCurrentlyCheckedIn boolValue]) {
         self.cardStatus.text = [NSString stringWithFormat:@"\"%@\"", status];
     } else {
         self.cardStatus.text = @"";

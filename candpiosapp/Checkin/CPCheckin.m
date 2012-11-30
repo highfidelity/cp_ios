@@ -7,7 +7,22 @@
 //
 
 #import "CPCheckIn.h"
+#import "GTMNSString+HTML.h"
 
 @implementation CPCheckIn
+
+- (void)setStatusText:(NSString *)statusText
+{
+    if (statusText.length > 0) {
+        statusText = [statusText gtm_stringByUnescapingFromHTML];
+        statusText = [statusText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    }
+    _statusText = statusText;
+}
+
+- (NSDate *)checkoutDate
+{
+    return [NSDate dateWithTimeIntervalSince1970:[self.checkoutSinceEpoch intValue]];
+}
 
 @end

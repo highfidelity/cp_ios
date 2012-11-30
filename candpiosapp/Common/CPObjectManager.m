@@ -132,7 +132,8 @@
             @"lat" : @"lat",
             @"lng" : @"lng",
             @"status_text" : @"statusText",
-            @"checked_in" : @"isCurrentlyCheckedIn"
+            @"checked_in" : @"isCurrentlyCheckedIn",
+            @"checkout_timestamp" : @"checkoutSinceEpoch"
          }];
         
         RKRelationshipMapping *venueRel = [RKRelationshipMapping relationshipMappingFromKeyPath:@"venue" toKeyPath:@"venue" withMapping:[self venueRKObjectMapping]];

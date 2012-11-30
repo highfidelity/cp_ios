@@ -108,6 +108,8 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
             }
         }
         
+        self.contacts = [self partitionObjects:self.contacts collationStringSelector:@selector(nickname)];
+        
         [self hidePlaceholderImageView:(mappingResult.count > 0)];
         
         if (!self.userIsPerformingQuickAction) {
@@ -156,13 +158,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     }
 
     return sections;
-}
-
-- (void)setContacts:(NSMutableArray *)contactList {
-    _contacts = [self partitionObjects:contactList collationStringSelector:@selector(nickname)];
-    
-    // store the array for search
-    self.sortedContactList = [contactList mutableCopy];
 }
 
 - (void)hidePlaceholderImageView:(BOOL)hiddenPlaceholder
