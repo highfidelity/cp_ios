@@ -84,19 +84,6 @@ examle json:
     [self pageWasSelectedWithIndex:self.pageControl.currentPage];
 }
 
-#pragma mark - properties
-
-- (UIButton *)dismissButton
-{
-    if (!_dismissButton) {
-        _dismissButton = [CPUIHelper CPButtonWithText:@"Continue" color:CPButtonGrey frame:CGRectZero];
-        [_dismissButton addTarget:self
-                            action:@selector(dismissAction)
-                  forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _dismissButton;
-}
-
 #pragma mark - private
 
 - (void)startLoadingJSON
@@ -119,25 +106,19 @@ examle json:
 - (void)initializeSubviewsWithInfo:(NSDictionary *)info
 {
     self.pageControl = [[CPPageControl alloc] initWithFrame:CGRectFromString(info[@"pager_frame"])];
-    self.pageControl.numberOfPages = [self.pageInfos count] + 1;
+    self.pageControl.numberOfPages = [self.pageInfos count];
     [self.pageControl addTarget:self action:@selector(pageWasSelected) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:self.pageControl];
     [self.view bringSubviewToFront:self.pageControl];
 
     self.scrollView.backgroundColor = [UIColor colorWithR:246 G:247 B:245 A:246];
-    self.scrollView.contentSize = CGSizeMake(([self.pageInfos count] + 1 ) * self.scrollView.frame.size.width,
+    self.scrollView.contentSize = CGSizeMake(self.pageControl.numberOfPages * self.scrollView.frame.size.width,
                                              self.scrollView.frame.size.height);
 
     for (NSUInteger pageIndex = 0; pageIndex < [self.pageInfos count]; pageIndex++) {
         NSDictionary *pageInfo = self.pageInfos[pageIndex];
         [self initializePageAtIndex:pageIndex withPageInfo:pageInfo];
     }
-
-    [self.scrollView addSubview:self.dismissButton];
-    [self.dismissButton sizeToFit];
-    self.dismissButton.frame = CGRectMake(0, 0, 120, 43);
-    self.dismissButton.center = CGPointMake(round(self.scrollView.frame.size.width / 2) + [self.pageInfos count] * self.scrollView.frame.size.width,
-                                             round(self.scrollView.frame.size.height / 2));
 }
 
 - (void)initializePageAtIndex:(NSUInteger)pageIndex withPageInfo:(NSDictionary *)pageInfo
@@ -204,12 +185,12 @@ examle json:
 
 - (IBAction)backButtonPressed:(id)sender {
     self.pageControl.currentPage -= 1;
-    [self pageWasSelectedWithIndex:self.pageControl.currentPage];
+    [self pageWasSelected];
 }
 
 - (IBAction)nextButtonPressed:(id)sender {
     self.pageControl.currentPage += 1;
-    [self pageWasSelectedWithIndex:self.pageControl.currentPage];
+    [self pageWasSelected];
 }
 
 @end
