@@ -145,7 +145,7 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 
-    cell.hoursWorkedLabel.text = [NSString stringWithFormat:@"%d", [user.totalCheckInTime intValue]];
+    cell.hoursWorkedLabel.text = [NSString stringWithFormat:@"%d", [user.totalHoursCheckedIn intValue]];
     cell.endorseCountLabel.text = [NSString stringWithFormat:@"%d", [user.totalEndorsementCount intValue]];
 
     return cell;
