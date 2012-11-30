@@ -69,7 +69,7 @@ examle json:
 
 #pragma mark - actions
 
-- (void)dismissAction
+- (IBAction)dismissAction
 {
     if (self.isShownFromLeft) {
         [self dismissPushModalViewControllerFromLeftSegue];
@@ -199,4 +199,17 @@ examle json:
                                                 animated:YES];
     }
 }
+
+#pragma mark - Button IBActions
+
+- (IBAction)backButtonPressed:(id)sender {
+    self.pageControl.currentPage -= 1;
+    [self pageWasSelectedWithIndex:self.pageControl.currentPage];
+}
+
+- (IBAction)nextButtonPressed:(id)sender {
+    self.pageControl.currentPage += 1;
+    [self pageWasSelectedWithIndex:self.pageControl.currentPage];
+}
+
 @end

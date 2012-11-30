@@ -19,20 +19,9 @@
 		4E6DA0E2165461A7000FB7A3 /* venue-bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E6DA0E0165461A7000FB7A3 /* venue-bar@2x.png */; };
 		4E6DA0E5165465FF000FB7A3 /* venue-bar-divider.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E6DA0E3165465FF000FB7A3 /* venue-bar-divider.png */; };
 		4E6DA0E6165465FF000FB7A3 /* venue-bar-divider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E6DA0E4165465FF000FB7A3 /* venue-bar-divider@2x.png */; };
-		4EB79F8815F2BF12004D254F /* sign-in-later-active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB79F8615F2BF12004D254F /* sign-in-later-active@2x.png */; };
-		4EB79F8915F2BF12004D254F /* sign-in-later@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB79F8715F2BF12004D254F /* sign-in-later@2x.png */; };
-		4EB79F8E15F2C0C2004D254F /* sign-in-later-active.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB79F8B15F2C0C2004D254F /* sign-in-later-active.png */; };
-		4EB79F8F15F2C0C2004D254F /* sign-in-later.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB79F8C15F2C0C2004D254F /* sign-in-later.png */; };
-		4EB79F9015F2C0C2004D254F /* sign-up-with-linkedin-active.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB79F8D15F2C0C2004D254F /* sign-up-with-linkedin-active.png */; };
-		4EB79F9215F2C606004D254F /* sign-up-with-linkedin-active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EB79F9115F2C606004D254F /* sign-up-with-linkedin-active@2x.png */; };
 		4EF559C915E8533200DAE3BA /* VenueCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF559C815E8533200DAE3BA /* VenueCategoryCell.m */; };
-		5308DD0715D5E5DF00B4EBC2 /* sign-up-with-linkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 5308DD0315D5E5DF00B4EBC2 /* sign-up-with-linkedin.png */; };
-		5308DD0815D5E5DF00B4EBC2 /* sign-up-with-linkedin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5308DD0415D5E5DF00B4EBC2 /* sign-up-with-linkedin@2x.png */; };
 		530C5DBB1575E516003505AC /* send-love-switch-sound-off.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */; };
 		530C5DBC1575E516003505AC /* send-love-switch-sound-on.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */; };
-		530FC23F15D42BBD00838B5A /* LinkedInLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC23215D42BBD00838B5A /* LinkedInLoginController.m */; };
-		530FC24115D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 530FC23515D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard */; };
-		530FC24815D4389D00838B5A /* SignupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC24715D4389D00838B5A /* SignupController.m */; };
 		5317F256162F63CE00D40405 /* action-menu-button-check-in.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317F254162F63CE00D40405 /* action-menu-button-check-in.png */; };
 		5317F257162F63CE00D40405 /* action-menu-button-check-in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5317F255162F63CE00D40405 /* action-menu-button-check-in@2x.png */; };
 		5317F262162F804E00D40405 /* ChangeHeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */; };
@@ -67,6 +56,34 @@
 		533AFECE1523E87200D6E6A9 /* default-avatar-256.png in Resources */ = {isa = PBXBuildFile; fileRef = 533AFECC1523E87200D6E6A9 /* default-avatar-256.png */; };
 		533AFECF1523E87200D6E6A9 /* default-avatar-256@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */; };
 		533B1DA515A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 533B1DA315A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard */; };
+		533DCA08166956E600A0901E /* sign-in-later-active.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DC9F8166956E600A0901E /* sign-in-later-active.png */; };
+		533DCA09166956E600A0901E /* sign-in-later-active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DC9F9166956E600A0901E /* sign-in-later-active@2x.png */; };
+		533DCA0A166956E600A0901E /* sign-in-later.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DC9FA166956E600A0901E /* sign-in-later.png */; };
+		533DCA0B166956E600A0901E /* sign-in-later@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DC9FB166956E600A0901E /* sign-in-later@2x.png */; };
+		533DCA0C166956E600A0901E /* sign-up-with-linkedin-active.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DC9FC166956E600A0901E /* sign-up-with-linkedin-active.png */; };
+		533DCA0D166956E600A0901E /* sign-up-with-linkedin-active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DC9FD166956E600A0901E /* sign-up-with-linkedin-active@2x.png */; };
+		533DCA0E166956E600A0901E /* sign-up-with-linkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DC9FE166956E600A0901E /* sign-up-with-linkedin.png */; };
+		533DCA0F166956E600A0901E /* sign-up-with-linkedin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DC9FF166956E600A0901E /* sign-up-with-linkedin@2x.png */; };
+		533DCA10166956E600A0901E /* LinkedInLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533DCA01166956E600A0901E /* LinkedInLoginController.m */; };
+		533DCA11166956E600A0901E /* SignupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533DCA03166956E600A0901E /* SignupController.m */; };
+		533DCA12166956E600A0901E /* SignupStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 533DCA04166956E600A0901E /* SignupStoryboard_iPhone.storyboard */; };
+		533DCA13166956E600A0901E /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533DCA06166956E600A0901E /* TutorialViewController.m */; };
+		533DCA241669573E00A0901E /* tutorial-back-default.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DCA141669573E00A0901E /* tutorial-back-default.png */; };
+		533DCA251669573E00A0901E /* tutorial-back-default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DCA151669573E00A0901E /* tutorial-back-default@2x.png */; };
+		533DCA261669573E00A0901E /* tutorial-back-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DCA161669573E00A0901E /* tutorial-back-highlighted.png */; };
+		533DCA271669573E00A0901E /* tutorial-back-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DCA171669573E00A0901E /* tutorial-back-highlighted@2x.png */; };
+		533DCA281669573E00A0901E /* tutorial-done-default.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DCA181669573E00A0901E /* tutorial-done-default.png */; };
+		533DCA291669573E00A0901E /* tutorial-done-default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DCA191669573E00A0901E /* tutorial-done-default@2x.png */; };
+		533DCA2A1669573E00A0901E /* tutorial-done-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DCA1A1669573E00A0901E /* tutorial-done-highlighted.png */; };
+		533DCA2B1669573E00A0901E /* tutorial-done-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DCA1B1669573E00A0901E /* tutorial-done-highlighted@2x.png */; };
+		533DCA2C1669573E00A0901E /* tutorial-exit-default.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DCA1C1669573E00A0901E /* tutorial-exit-default.png */; };
+		533DCA2D1669573E00A0901E /* tutorial-exit-default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DCA1D1669573E00A0901E /* tutorial-exit-default@2x.png */; };
+		533DCA2E1669573E00A0901E /* tutorial-exit-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DCA1E1669573E00A0901E /* tutorial-exit-highlighted.png */; };
+		533DCA2F1669573E00A0901E /* tutorial-exit-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DCA1F1669573E00A0901E /* tutorial-exit-highlighted@2x.png */; };
+		533DCA301669573E00A0901E /* tutorial-next-default.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DCA201669573E00A0901E /* tutorial-next-default.png */; };
+		533DCA311669573E00A0901E /* tutorial-next-default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DCA211669573E00A0901E /* tutorial-next-default@2x.png */; };
+		533DCA321669573E00A0901E /* tutorial-next-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DCA221669573E00A0901E /* tutorial-next-highlighted.png */; };
+		533DCA331669573E00A0901E /* tutorial-next-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533DCA231669573E00A0901E /* tutorial-next-highlighted@2x.png */; };
 		533E43EE161B947E00432377 /* wfh-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 533E43EC161B947E00432377 /* wfh-icon.png */; };
 		533E43EF161B947E00432377 /* wfh-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533E43ED161B947E00432377 /* wfh-icon@2x.png */; };
 		534B6EF0156DAE7900DA9F74 /* SkillsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534B6EEF156DAE7900DA9F74 /* SkillsTableViewController.m */; };
@@ -291,7 +308,6 @@
 		6947F40115372B59005D9958 /* exchange-cards@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6947F3FF15372B59005D9958 /* exchange-cards@2x.png */; };
 		697A686B156C3E8D001BEB35 /* TermsOfServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 697A686A156C3E8D001BEB35 /* TermsOfServiceViewController.m */; };
 		697A6870156C4ED4001BEB35 /* TermsOfService.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 697A686F156C4ED4001BEB35 /* TermsOfService.mustache */; };
-		69812EBC1637480000B3CE72 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69812EBB1637480000B3CE72 /* TutorialViewController.m */; };
 		6983394A15641509007CD32F /* contact-accept.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983394615641509007CD32F /* contact-accept.png */; };
 		6983394B15641509007CD32F /* contact-accept@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983394715641509007CD32F /* contact-accept@2x.png */; };
 		6983394C15641509007CD32F /* contact-ignore.png in Resources */ = {isa = PBXBuildFile; fileRef = 6983394815641509007CD32F /* contact-ignore.png */; };
@@ -363,23 +379,10 @@
 		4E6DA0E0165461A7000FB7A3 /* venue-bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "venue-bar@2x.png"; path = "Venue/images/venue-bar@2x.png"; sourceTree = "<group>"; };
 		4E6DA0E3165465FF000FB7A3 /* venue-bar-divider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "venue-bar-divider.png"; path = "Venue/images/venue-bar-divider.png"; sourceTree = "<group>"; };
 		4E6DA0E4165465FF000FB7A3 /* venue-bar-divider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "venue-bar-divider@2x.png"; path = "Venue/images/venue-bar-divider@2x.png"; sourceTree = "<group>"; };
-		4EB79F8615F2BF12004D254F /* sign-in-later-active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-in-later-active@2x.png"; sourceTree = "<group>"; };
-		4EB79F8715F2BF12004D254F /* sign-in-later@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-in-later@2x.png"; sourceTree = "<group>"; };
-		4EB79F8B15F2C0C2004D254F /* sign-in-later-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-in-later-active.png"; sourceTree = "<group>"; };
-		4EB79F8C15F2C0C2004D254F /* sign-in-later.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-in-later.png"; sourceTree = "<group>"; };
-		4EB79F8D15F2C0C2004D254F /* sign-up-with-linkedin-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin-active.png"; sourceTree = "<group>"; };
-		4EB79F9115F2C606004D254F /* sign-up-with-linkedin-active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin-active@2x.png"; sourceTree = "<group>"; };
 		4EF559C715E8533200DAE3BA /* VenueCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VenueCategoryCell.h; path = Venue/VenueCategoryCell.h; sourceTree = "<group>"; };
 		4EF559C815E8533200DAE3BA /* VenueCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VenueCategoryCell.m; path = Venue/VenueCategoryCell.m; sourceTree = "<group>"; };
-		5308DD0315D5E5DF00B4EBC2 /* sign-up-with-linkedin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin.png"; sourceTree = "<group>"; };
-		5308DD0415D5E5DF00B4EBC2 /* sign-up-with-linkedin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin@2x.png"; sourceTree = "<group>"; };
 		530C5DB91575E516003505AC /* send-love-switch-sound-off.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-off.wav"; sourceTree = "<group>"; };
 		530C5DBA1575E516003505AC /* send-love-switch-sound-on.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send-love-switch-sound-on.wav"; sourceTree = "<group>"; };
-		530FC23115D42BBD00838B5A /* LinkedInLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedInLoginController.h; sourceTree = "<group>"; };
-		530FC23215D42BBD00838B5A /* LinkedInLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedInLoginController.m; sourceTree = "<group>"; };
-		530FC23515D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignupStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		530FC24615D4389D00838B5A /* SignupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupController.h; sourceTree = "<group>"; };
-		530FC24715D4389D00838B5A /* SignupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupController.m; sourceTree = "<group>"; };
 		5317F254162F63CE00D40405 /* action-menu-button-check-in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-in.png"; sourceTree = "<group>"; };
 		5317F255162F63CE00D40405 /* action-menu-button-check-in@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "action-menu-button-check-in@2x.png"; sourceTree = "<group>"; };
 		5317F260162F804E00D40405 /* ChangeHeadlineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChangeHeadlineViewController.h; path = Checkin/ChangeHeadlineViewController.h; sourceTree = "<group>"; };
@@ -432,6 +435,37 @@
 		533AFECD1523E87200D6E6A9 /* default-avatar-256@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default-avatar-256@2x.png"; path = "User/images/default-avatar-256@2x.png"; sourceTree = "<group>"; };
 		533B1DA315A3C0D30072997D /* CheckinStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CheckinStoryboard_iPhone.storyboard; path = Checkin/CheckinStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		533B1DA715A3D3300072997D /* CheckInListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CheckInListViewController.h; path = Checkin/CheckInListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		533DC9F8166956E600A0901E /* sign-in-later-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-in-later-active.png"; sourceTree = "<group>"; };
+		533DC9F9166956E600A0901E /* sign-in-later-active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-in-later-active@2x.png"; sourceTree = "<group>"; };
+		533DC9FA166956E600A0901E /* sign-in-later.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-in-later.png"; sourceTree = "<group>"; };
+		533DC9FB166956E600A0901E /* sign-in-later@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-in-later@2x.png"; sourceTree = "<group>"; };
+		533DC9FC166956E600A0901E /* sign-up-with-linkedin-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin-active.png"; sourceTree = "<group>"; };
+		533DC9FD166956E600A0901E /* sign-up-with-linkedin-active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin-active@2x.png"; sourceTree = "<group>"; };
+		533DC9FE166956E600A0901E /* sign-up-with-linkedin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin.png"; sourceTree = "<group>"; };
+		533DC9FF166956E600A0901E /* sign-up-with-linkedin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign-up-with-linkedin@2x.png"; sourceTree = "<group>"; };
+		533DCA00166956E600A0901E /* LinkedInLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedInLoginController.h; sourceTree = "<group>"; };
+		533DCA01166956E600A0901E /* LinkedInLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedInLoginController.m; sourceTree = "<group>"; };
+		533DCA02166956E600A0901E /* SignupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupController.h; sourceTree = "<group>"; };
+		533DCA03166956E600A0901E /* SignupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupController.m; sourceTree = "<group>"; };
+		533DCA04166956E600A0901E /* SignupStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignupStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		533DCA05166956E600A0901E /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
+		533DCA06166956E600A0901E /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
+		533DCA141669573E00A0901E /* tutorial-back-default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-back-default.png"; sourceTree = "<group>"; };
+		533DCA151669573E00A0901E /* tutorial-back-default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-back-default@2x.png"; sourceTree = "<group>"; };
+		533DCA161669573E00A0901E /* tutorial-back-highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-back-highlighted.png"; sourceTree = "<group>"; };
+		533DCA171669573E00A0901E /* tutorial-back-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-back-highlighted@2x.png"; sourceTree = "<group>"; };
+		533DCA181669573E00A0901E /* tutorial-done-default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-done-default.png"; sourceTree = "<group>"; };
+		533DCA191669573E00A0901E /* tutorial-done-default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-done-default@2x.png"; sourceTree = "<group>"; };
+		533DCA1A1669573E00A0901E /* tutorial-done-highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-done-highlighted.png"; sourceTree = "<group>"; };
+		533DCA1B1669573E00A0901E /* tutorial-done-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-done-highlighted@2x.png"; sourceTree = "<group>"; };
+		533DCA1C1669573E00A0901E /* tutorial-exit-default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-exit-default.png"; sourceTree = "<group>"; };
+		533DCA1D1669573E00A0901E /* tutorial-exit-default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-exit-default@2x.png"; sourceTree = "<group>"; };
+		533DCA1E1669573E00A0901E /* tutorial-exit-highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-exit-highlighted.png"; sourceTree = "<group>"; };
+		533DCA1F1669573E00A0901E /* tutorial-exit-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-exit-highlighted@2x.png"; sourceTree = "<group>"; };
+		533DCA201669573E00A0901E /* tutorial-next-default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-next-default.png"; sourceTree = "<group>"; };
+		533DCA211669573E00A0901E /* tutorial-next-default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-next-default@2x.png"; sourceTree = "<group>"; };
+		533DCA221669573E00A0901E /* tutorial-next-highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-next-highlighted.png"; sourceTree = "<group>"; };
+		533DCA231669573E00A0901E /* tutorial-next-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-next-highlighted@2x.png"; sourceTree = "<group>"; };
 		533E43EC161B947E00432377 /* wfh-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wfh-icon.png"; path = "Checkin/images/wfh-icon.png"; sourceTree = "<group>"; };
 		533E43ED161B947E00432377 /* wfh-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wfh-icon@2x.png"; path = "Checkin/images/wfh-icon@2x.png"; sourceTree = "<group>"; };
 		534B6EEE156DAE7900DA9F74 /* SkillsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillsTableViewController.h; path = Settings/SkillsTableViewController.h; sourceTree = "<group>"; };
@@ -707,8 +741,6 @@
 		697A6869156C3E8C001BEB35 /* TermsOfServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TermsOfServiceViewController.h; path = Settings/TermsOfServiceViewController.h; sourceTree = "<group>"; };
 		697A686A156C3E8D001BEB35 /* TermsOfServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TermsOfServiceViewController.m; path = Settings/TermsOfServiceViewController.m; sourceTree = "<group>"; };
 		697A686F156C4ED4001BEB35 /* TermsOfService.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = TermsOfService.mustache; path = mustaches/TermsOfService.mustache; sourceTree = "<group>"; };
-		69812EBA1637480000B3CE72 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
-		69812EBB1637480000B3CE72 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		6983394615641509007CD32F /* contact-accept.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-accept.png"; sourceTree = "<group>"; };
 		6983394715641509007CD32F /* contact-accept@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-accept@2x.png"; sourceTree = "<group>"; };
 		6983394815641509007CD32F /* contact-ignore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-ignore.png"; sourceTree = "<group>"; };
@@ -801,21 +833,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5308DD0215D5E5DF00B4EBC2 /* images */ = {
-			isa = PBXGroup;
-			children = (
-				4EB79F9115F2C606004D254F /* sign-up-with-linkedin-active@2x.png */,
-				4EB79F8B15F2C0C2004D254F /* sign-in-later-active.png */,
-				4EB79F8C15F2C0C2004D254F /* sign-in-later.png */,
-				4EB79F8D15F2C0C2004D254F /* sign-up-with-linkedin-active.png */,
-				4EB79F8615F2BF12004D254F /* sign-in-later-active@2x.png */,
-				4EB79F8715F2BF12004D254F /* sign-in-later@2x.png */,
-				5308DD0315D5E5DF00B4EBC2 /* sign-up-with-linkedin.png */,
-				5308DD0415D5E5DF00B4EBC2 /* sign-up-with-linkedin@2x.png */,
-			);
-			path = images;
-			sourceTree = "<group>";
-		};
 		530C5DB81575E516003505AC /* sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -826,19 +843,50 @@
 			path = User/sounds;
 			sourceTree = "<group>";
 		};
-		530FC22515D42BBD00838B5A /* Login */ = {
+		533DC9F5166956E600A0901E /* Signup */ = {
 			isa = PBXGroup;
 			children = (
-				5308DD0215D5E5DF00B4EBC2 /* images */,
-				530FC24615D4389D00838B5A /* SignupController.h */,
-				530FC24715D4389D00838B5A /* SignupController.m */,
-				530FC23115D42BBD00838B5A /* LinkedInLoginController.h */,
-				530FC23215D42BBD00838B5A /* LinkedInLoginController.m */,
-				530FC23515D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard */,
-				69812EBA1637480000B3CE72 /* TutorialViewController.h */,
-				69812EBB1637480000B3CE72 /* TutorialViewController.m */,
+				533DC9F7166956E600A0901E /* images */,
+				533DCA00166956E600A0901E /* LinkedInLoginController.h */,
+				533DCA01166956E600A0901E /* LinkedInLoginController.m */,
+				533DCA02166956E600A0901E /* SignupController.h */,
+				533DCA03166956E600A0901E /* SignupController.m */,
+				533DCA04166956E600A0901E /* SignupStoryboard_iPhone.storyboard */,
+				533DCA05166956E600A0901E /* TutorialViewController.h */,
+				533DCA06166956E600A0901E /* TutorialViewController.m */,
 			);
-			path = Login;
+			path = Signup;
+			sourceTree = "<group>";
+		};
+		533DC9F7166956E600A0901E /* images */ = {
+			isa = PBXGroup;
+			children = (
+				533DCA141669573E00A0901E /* tutorial-back-default.png */,
+				533DCA151669573E00A0901E /* tutorial-back-default@2x.png */,
+				533DCA161669573E00A0901E /* tutorial-back-highlighted.png */,
+				533DCA171669573E00A0901E /* tutorial-back-highlighted@2x.png */,
+				533DCA181669573E00A0901E /* tutorial-done-default.png */,
+				533DCA191669573E00A0901E /* tutorial-done-default@2x.png */,
+				533DCA1A1669573E00A0901E /* tutorial-done-highlighted.png */,
+				533DCA1B1669573E00A0901E /* tutorial-done-highlighted@2x.png */,
+				533DCA1C1669573E00A0901E /* tutorial-exit-default.png */,
+				533DCA1D1669573E00A0901E /* tutorial-exit-default@2x.png */,
+				533DCA1E1669573E00A0901E /* tutorial-exit-highlighted.png */,
+				533DCA1F1669573E00A0901E /* tutorial-exit-highlighted@2x.png */,
+				533DCA201669573E00A0901E /* tutorial-next-default.png */,
+				533DCA211669573E00A0901E /* tutorial-next-default@2x.png */,
+				533DCA221669573E00A0901E /* tutorial-next-highlighted.png */,
+				533DCA231669573E00A0901E /* tutorial-next-highlighted@2x.png */,
+				533DC9F8166956E600A0901E /* sign-in-later-active.png */,
+				533DC9F9166956E600A0901E /* sign-in-later-active@2x.png */,
+				533DC9FA166956E600A0901E /* sign-in-later.png */,
+				533DC9FB166956E600A0901E /* sign-in-later@2x.png */,
+				533DC9FC166956E600A0901E /* sign-up-with-linkedin-active.png */,
+				533DC9FD166956E600A0901E /* sign-up-with-linkedin-active@2x.png */,
+				533DC9FE166956E600A0901E /* sign-up-with-linkedin.png */,
+				533DC9FF166956E600A0901E /* sign-up-with-linkedin@2x.png */,
+			);
+			path = images;
 			sourceTree = "<group>";
 		};
 		53412E5714FEFC0D00C87666 /* images */ = {
@@ -1504,11 +1552,11 @@
 				6F3651DA14EAE8BB00E9322B /* FaceToFace */,
 				539F7DAB16558ACB005FF3F0 /* Foursquare */,
 				536E1E4D1554908800052D40 /* Icon */,
-				530FC22515D42BBD00838B5A /* Login */,
 				53E2062A150596180000FA8D /* MainStoryboard_iPhone.storyboard */,
 				536DE93A1501737000794650 /* Map */,
 				53D9B199152A5E6100BC1304 /* Navigation */,
 				537F7CAF1507F1E70057A70E /* Settings */,
+				533DC9F5166956E600A0901E /* Signup */,
 				5361F8BF156EBBC00099D303 /* Skills */,
 				871EFB1114AE9C820030658B /* Supporting Files */,
 				536DE9271501707400794650 /* User */,
@@ -1726,15 +1774,6 @@
 				53D6A63515B0BB50001A76DE /* action-menu-button-plus@2x.png in Resources */,
 				53D6A63D15B0CD3A001A76DE /* action-menu-button-base.png in Resources */,
 				53D6A63E15B0CD3A001A76DE /* action-menu-button-base@2x.png in Resources */,
-				530FC24115D42BBD00838B5A /* SignupStoryboard_iPhone.storyboard in Resources */,
-				5308DD0715D5E5DF00B4EBC2 /* sign-up-with-linkedin.png in Resources */,
-				5308DD0815D5E5DF00B4EBC2 /* sign-up-with-linkedin@2x.png in Resources */,
-				4EB79F8815F2BF12004D254F /* sign-in-later-active@2x.png in Resources */,
-				4EB79F8915F2BF12004D254F /* sign-in-later@2x.png in Resources */,
-				4EB79F8E15F2C0C2004D254F /* sign-in-later-active.png in Resources */,
-				4EB79F8F15F2C0C2004D254F /* sign-in-later.png in Resources */,
-				4EB79F9015F2C0C2004D254F /* sign-up-with-linkedin-active.png in Resources */,
-				4EB79F9215F2C606004D254F /* sign-up-with-linkedin-active@2x.png in Resources */,
 				5338B0991606C7DC00C23B4B /* check-in-button.png in Resources */,
 				5338B09A1606C7DC00C23B4B /* check-in-button@2x.png in Resources */,
 				5338B0A41606C84600C23B4B /* highlight-gradient.png in Resources */,
@@ -1867,6 +1906,31 @@
 				69D4AC98166586D700BA1160 /* endorse-count-in-list@2x.png in Resources */,
 				69C0057316681FD200242664 /* chat-entry-field.png in Resources */,
 				69C0057416681FD200242664 /* chat-entry-field@2x.png in Resources */,
+				533DCA08166956E600A0901E /* sign-in-later-active.png in Resources */,
+				533DCA09166956E600A0901E /* sign-in-later-active@2x.png in Resources */,
+				533DCA0A166956E600A0901E /* sign-in-later.png in Resources */,
+				533DCA0B166956E600A0901E /* sign-in-later@2x.png in Resources */,
+				533DCA0C166956E600A0901E /* sign-up-with-linkedin-active.png in Resources */,
+				533DCA0D166956E600A0901E /* sign-up-with-linkedin-active@2x.png in Resources */,
+				533DCA0E166956E600A0901E /* sign-up-with-linkedin.png in Resources */,
+				533DCA0F166956E600A0901E /* sign-up-with-linkedin@2x.png in Resources */,
+				533DCA12166956E600A0901E /* SignupStoryboard_iPhone.storyboard in Resources */,
+				533DCA241669573E00A0901E /* tutorial-back-default.png in Resources */,
+				533DCA251669573E00A0901E /* tutorial-back-default@2x.png in Resources */,
+				533DCA261669573E00A0901E /* tutorial-back-highlighted.png in Resources */,
+				533DCA271669573E00A0901E /* tutorial-back-highlighted@2x.png in Resources */,
+				533DCA281669573E00A0901E /* tutorial-done-default.png in Resources */,
+				533DCA291669573E00A0901E /* tutorial-done-default@2x.png in Resources */,
+				533DCA2A1669573E00A0901E /* tutorial-done-highlighted.png in Resources */,
+				533DCA2B1669573E00A0901E /* tutorial-done-highlighted@2x.png in Resources */,
+				533DCA2C1669573E00A0901E /* tutorial-exit-default.png in Resources */,
+				533DCA2D1669573E00A0901E /* tutorial-exit-default@2x.png in Resources */,
+				533DCA2E1669573E00A0901E /* tutorial-exit-highlighted.png in Resources */,
+				533DCA2F1669573E00A0901E /* tutorial-exit-highlighted@2x.png in Resources */,
+				533DCA301669573E00A0901E /* tutorial-next-default.png in Resources */,
+				533DCA311669573E00A0901E /* tutorial-next-default@2x.png in Resources */,
+				533DCA321669573E00A0901E /* tutorial-next-highlighted.png in Resources */,
+				533DCA331669573E00A0901E /* tutorial-next-highlighted@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1942,8 +2006,6 @@
 				53A3C78C159A4B73008459B0 /* CPCheckinHandler.m in Sources */,
 				E410F9DC159DF0A500D32F86 /* ProfileViewController.m in Sources */,
 				53D7ADEE15D04AC800BB041E /* CPGeofenceHandler.m in Sources */,
-				530FC23F15D42BBD00838B5A /* LinkedInLoginController.m in Sources */,
-				530FC24815D4389D00838B5A /* SignupController.m in Sources */,
 				4EF559C915E8533200DAE3BA /* VenueCategoryCell.m in Sources */,
 				5338B0A11606C82200C23B4B /* VenueUserCell.m in Sources */,
 				53D78C65160B99D800148EA3 /* GTMNSString+HTML.m in Sources */,
@@ -1951,7 +2013,6 @@
 				537DEA8F16249A3400D59AC9 /* CheckInListViewController.m in Sources */,
 				5317F262162F804E00D40405 /* ChangeHeadlineViewController.m in Sources */,
 				53DCCF80163F730D00A79E25 /* CPMarkerManager.m in Sources */,
-				69812EBC1637480000B3CE72 /* TutorialViewController.m in Sources */,
 				539F7DAE16558ACB005FF3F0 /* FoursquareAPIClient.m in Sources */,
 				539F7E2216558AE6005FF3F0 /* CPapi.m in Sources */,
 				539F7E2316558AE6005FF3F0 /* CPApiClient.m in Sources */,
@@ -1977,6 +2038,9 @@
 				539F7E7416558AE6005FF3F0 /* UIImage+ImageBlur.m in Sources */,
 				539F7E7516558AE6005FF3F0 /* UIViewController+isModal.m in Sources */,
 				537B80891666A4AC002CAECB /* CPCheckIn.m in Sources */,
+				533DCA10166956E600A0901E /* LinkedInLoginController.m in Sources */,
+				533DCA11166956E600A0901E /* SignupController.m in Sources */,
+				533DCA13166956E600A0901E /* TutorialViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
