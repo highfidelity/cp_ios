@@ -36,8 +36,9 @@ examle json:
 @interface TutorialViewController ()
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (strong, nonatomic) UIButton *dismissButton;
 @property (strong, nonatomic) CPPageControl *pageControl;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
 
 @property (strong, nonatomic) NSMutableArray *pageImageViews;
 @property (strong, nonatomic) NSArray *pageInfos;
@@ -162,6 +163,8 @@ examle json:
     if (pageIndex >= self.pageInfos.count) {
         return;
     }
+    
+    self.backButton.hidden = (pageIndex == 0);
 
     NSDictionary *pageInfo = self.pageInfos[pageIndex];
     NSDictionary *cellInfo = pageInfo[@"user_cell"];
@@ -193,4 +196,9 @@ examle json:
     [self pageWasSelected];
 }
 
+- (void)viewDidUnload {
+    [self setBackButton:nil];
+    [self setNextButton:nil];
+    [super viewDidUnload];
+}
 @end

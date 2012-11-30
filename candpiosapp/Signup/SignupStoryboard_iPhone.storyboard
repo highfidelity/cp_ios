@@ -224,7 +224,7 @@ you an invite code, type it in above</string>
                                     <outlet property="delegate" destination="kdt-VF-ctH" id="lOD-hS-TFS"/>
                                 </connections>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Qy6-8t-qoi">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Qy6-8t-qoi">
                                 <rect key="frame" x="20" y="401" width="80" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
@@ -270,6 +270,8 @@ you an invite code, type it in above</string>
                     </view>
                     <navigationItem key="navigationItem" id="v7b-AG-AG0"/>
                     <connections>
+                        <outlet property="backButton" destination="Qy6-8t-qoi" id="DUt-av-R84"/>
+                        <outlet property="nextButton" destination="bTw-Jt-dow" id="S2H-bd-aae"/>
                         <outlet property="scrollView" destination="c8i-48-bnC" id="LFC-Hb-hsp"/>
                     </connections>
                 </viewController>
@@ -312,6 +314,8 @@ you an invite code, type it in above</string>
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TutorialViewController.h"/>
             <relationships>
                 <relationship kind="action" name="backButtonPressed:"/>
+                <relationship kind="outlet" name="backButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="nextButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
             </relationships>
         </class>
