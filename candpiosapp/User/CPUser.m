@@ -23,7 +23,6 @@
         self.userID = @([[userDict objectForKey:@"id"] intValue]);
         self.nickname = [userDict objectForKey:@"nickname"];
         
-        self.status = [userDict objectForKey:@"status_text"];
         self.jobTitle = [userDict objectForKey:@"headline"];
         self.majorJobCategory = [userDict objectForKey:@"major_job_category"];
         self.minorJobCategory = [userDict objectForKey:@"minor_job_category"];
@@ -37,6 +36,8 @@
         self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict objectForKey:@"checkout"] integerValue]];
         self.lastCheckIn = [[CPCheckIn alloc] init];
         self.lastCheckIn.isCurrentlyCheckedIn = @([[userDict objectForKey:@"checked_in"] boolValue]);
+        self.lastCheckIn.statusText = [userDict objectForKey:@"status_text"];
+        
         self.isContact = @([[userDict objectForKey:@"is_contact"] boolValue]);
 	}
 	return self;
@@ -99,20 +100,6 @@
     } else {
         _nickname = [nickname gtm_stringByUnescapingFromHTML];
     }  
-}
-
-// override nickname setter to decode html entities
-- (void)setStatus:(NSString *)status
-{
-    if ([status isKindOfClass:[NSNull class]]) {
-        status = @"";
-    }
-    
-    if ([status length] > 0) {
-        status = [status gtm_stringByUnescapingFromHTML];
-        status = [status stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    }    
-    _status = status;
 }
 
 // override rate setter to decode any html entities
@@ -242,8 +229,6 @@
             self.isContact = @([[userDict objectForKey:@"user_is_contact"] boolValue]);
             self.hasChatHistory = [[userDict objectForKey:@"has_chat_history"] boolValue];
 
-            self.status = [[userDict objectForKey:@"status_text"]
-                           stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             
             if ([[userDict objectForKey:@"job_title"] isKindOfClass:[NSString class]]) {
                 self.jobTitle = [userDict objectForKey:@"job_title"];
@@ -308,7 +293,9 @@
                     self.lastCheckIn = [[CPCheckIn alloc] init];
                     self.lastCheckIn.venue = [[CPVenue alloc] initFromDictionary:checkinDict];
                     self.lastCheckIn.isCurrentlyCheckedIn = @([[checkinDict valueForKey:@"checked_in"] boolValue]);
-
+                    self.lastCheckIn.statusText = [[userDict objectForKey:@"status_text"]
+                                   stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                    
                     if ([[CPUserDefaultsHandler currentUser].userID isEqualToNumber:self.userID]) {
                         if ([self.lastCheckIn.isCurrentlyCheckedIn boolValue]) {
                             NSInteger checkOutTime =[[checkinDict objectForKey:@"checkout"] integerValue];

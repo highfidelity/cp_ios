@@ -273,10 +273,8 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
     cell.statusLabel.text = @"";
     
-    NSString *status = contact.lastCheckIn.statusText;
-    if (status.length > 0 && [contact.lastCheckIn.isCurrentlyCheckedIn boolValue]) {
-        NSString *escapedStatus = [[status gtm_stringByUnescapingFromHTML] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"", escapedStatus];
+    if (contact.lastCheckIn.statusText.length > 0 && [contact.lastCheckIn.isCurrentlyCheckedIn boolValue]) {
+        cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"", contact.lastCheckIn.statusText];
     }
 
     [cell.profilePicture setImageWithURL:contact.photoURL placeholderImage:[CPUIHelper defaultProfileImage]];

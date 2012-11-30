@@ -18,7 +18,6 @@
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *jobTitle;
-@property (strong, nonatomic) NSString *status;
 @property (strong, nonatomic) NSArray *skills;
 @property (strong, nonatomic) NSString *linkedInPublicProfileUrl;
 @property (strong, nonatomic) NSString *profileURLVisibility;

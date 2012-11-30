@@ -103,7 +103,7 @@
     
     // set the labels on the user business card
     self.cardNickname.text = self.user.nickname;
-    [self setUserStatusWithQuotes:self.user.status];
+    [self setUserStatusWithQuotes:self.user.lastCheckIn.statusText];
     self.cardJobPosition.text = self.user.jobTitle;
     
     // set the card image to the user's profile image
@@ -315,7 +315,7 @@
 
 - (void)setUserStatusWithQuotes:(NSString *)status
 {
-    if ([self.user.status length] > 0 && [self.user.lastCheckIn.isCurrentlyCheckedIn boolValue]) {
+    if ([self.user.lastCheckIn.statusText length] > 0 && [self.user.lastCheckIn.isCurrentlyCheckedIn boolValue]) {
         self.cardStatus.text = [NSString stringWithFormat:@"\"%@\"", status];
     } else {
         self.cardStatus.text = @"";
@@ -335,7 +335,7 @@
 
     self.cardJobPosition.text = self.user.jobTitle;
     
-    [self setUserStatusWithQuotes:self.user.status];
+    [self setUserStatusWithQuotes:self.user.lastCheckIn.statusText];
         
     // if the user has an hourly rate then put it, otherwise it comes up as N/A
     if (self.user.hourlyRate) {
