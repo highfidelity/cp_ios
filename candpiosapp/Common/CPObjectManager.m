@@ -107,8 +107,8 @@
             @"major_job_category" : @"majorJobCategory",
             @"minor_job_category" : @"minorJobCategory",
             @"is_contact" : @"isContact",
-            @"total_check_in_time" : @"totalCheckInTime",
-            @"total_check_in_count" : @"totalCheckInCount",
+            @"venue_check_in_time" : @"venueSecondsCheckedIn",
+            @"venue_check_in_count" : @"venueCheckInCount",
             @"total_hours_checked_in" : @"totalHoursCheckedIn",
             @"total_endorsement_count" : @"totalEndorsementCount"
          }];
