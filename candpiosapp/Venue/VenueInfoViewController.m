@@ -213,7 +213,7 @@ static VenueInfoViewController *_onScreenVenueVC;
 - (NSArray *)orderedPreviousUsers {
     // sort the previous users by the number of checkins here
     if (!_orderedPreviousUsers) {
-        NSArray *sortDescriptorArray = @[[NSSortDescriptor sortDescriptorWithKey:@"totalCheckInTime" ascending:NO selector:@selector(compare:)]];
+        NSArray *sortDescriptorArray = @[[NSSortDescriptor sortDescriptorWithKey:@"venueSecondsCheckedIn" ascending:NO selector:@selector(compare:)]];
         NSArray *sortedPreviousUsers = [self.venue.previousUsers sortedArrayUsingDescriptors:sortDescriptorArray];
         
         for (CPUser *sortedUser in sortedPreviousUsers) {
@@ -555,7 +555,7 @@ static VenueInfoViewController *_onScreenVenueVC;
             cell.separatorView.hidden = NO;
         }
     
-        cell.hoursLabel.text = [NSString stringWithFormat:@"%d hrs/week", [user.totalCheckInTime intValue] / 3600];
+        cell.hoursLabel.text = [NSString stringWithFormat:@"%d hrs/week", [user.venueSecondsCheckedIn intValue] / 3600];
 
         cell.delegate = self;
         
