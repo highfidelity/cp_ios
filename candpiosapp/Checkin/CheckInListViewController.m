@@ -15,7 +15,8 @@
 typedef enum {
     CPCheckInListSearchStateComplete,
     CPCheckInListSearchStateInProgress,
-    CPCheckInListSearchStateError
+    CPCheckInListSearchStateError,
+    CPCheckInListSearchStateDisabledLocationService
 } CPCheckInListSearchState;
 
 @interface CheckInListViewController() <UIAlertViewDelegate, UITableViewDataSource,
@@ -176,6 +177,12 @@ typedef enum {
 
 - (void)loadTwentyClosestVenues:(NSString *)searchText
 {
+    if (![CLLocationManager locationServicesEnabled] || ![CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized) {
+        self.currentSearchState = CPCheckInListSearchStateDisabledLocationService;
+        [self.tableView.pullToRefreshView stopAnimating];
+        return;
+    }
+    
     // search foursquare for more venues which match the search text
     // first cancel the existing search operation if it's still going
     [self.currentSearchOperation cancel];
@@ -381,6 +388,13 @@ typedef enum {
         } else {
             // this is the acitivity spinner cell that shows up when the user is searching
             cell = [tableView dequeueReusableCellWithIdentifier:@"SearchErrorCheckInListTableCell"];
+            if (self.currentSearchState == CPCheckInListSearchStateDisabledLocationService) {
+                cell.venueName.text = @"Location Services are disabled.";
+                cell.venueAddress.text = @"... please enable them to get nearby venues.";
+            } else {
+                cell.venueName.text = @"Error getting venues from Foursqare";
+                cell.venueAddress.text = @"Tap to retry!";
+            }
         }
     } else {
         CPVenue *cellVenue = [self venueForTableViewIndexPath:indexPath];
