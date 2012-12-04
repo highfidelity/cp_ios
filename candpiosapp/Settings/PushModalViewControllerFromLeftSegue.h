@@ -14,5 +14,6 @@
 @interface UIViewController (DismissPushModalViewControllerFromLeftSegue)
 
 - (void)dismissPushModalViewControllerFromLeftSegue;
+- (void)dismissPushModalViewControllerFromLeftSegueWithCompletion:(void (^)(void))completion;
 
 @end
