@@ -47,6 +47,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *floatView;
 @property (weak, nonatomic) IBOutlet UIImageView *arrowImageView;
+@property (weak, nonatomic) IBOutlet UIView *imageUploadPlaceholder;
 @property (nonatomic) BOOL finishedSync;
 @property (nonatomic) BOOL newDataFromSync;
 
@@ -195,7 +196,9 @@
                              profileImageFrame.origin.x = 0;
                              self.profileImageView.frame = profileImageFrame;
                          }
-                         completion:nil];
+                         completion:^(BOOL finished){
+                             self.imageUploadPlaceholder.hidden = YES;
+                         }];
     }
 }
 
@@ -290,12 +293,13 @@
 
 - (void)imagePickedFromSettingsMenuImagePicker:(UIImage *)image
 {
+    self.imageUploadPlaceholder.hidden = NO;
+    
     // upload the image
     [CPapi uploadUserProfilePhoto:image withCompletion:^(NSDictionary *json, NSError *error) {
         if ([[json objectForKey:@"succeeded"] boolValue]) {
             // response was success ... we uploaded a new profile picture
             [self updateCurrentUserWithNewData:json];
-            [SVProgressHUD dismiss];
         } else {
 #if DEBUG
             NSLog(@"Error while uploading file. Here's the json: %@", json);
@@ -541,4 +545,8 @@
     }
 }
 
+- (void)viewDidUnload {
+    [self setImageUploadPlaceholder:nil];
+    [super viewDidUnload];
+}
 @end
