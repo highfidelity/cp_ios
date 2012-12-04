@@ -96,19 +96,18 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
                                                         parameters:@{@"v" : @"20121129"}
                                                            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult)
     {
-        self.contacts = [NSMutableArray array];
+        self.sortedContactList = [NSMutableArray array];
         self.contactRequests = [NSMutableArray array];
         
         for (CPUser *potentialContact in mappingResult.array) {
             if ([potentialContact.isContact boolValue]) {
-                [self.contacts addObject:potentialContact];
+                [self.sortedContactList addObject:potentialContact];
             } else {
                 [self.contactRequests addObject:potentialContact];
             }
         }
         
-        self.sortedContactList = [[self.contacts sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"nickname" ascending:YES]]] mutableCopy];
-        self.contacts = [self partitionObjects:self.contacts collationStringSelector:@selector(nickname)];
+        self.contacts = [self partitionObjects:self.sortedContactList collationStringSelector:@selector(nickname)];
         
         [self hidePlaceholderImageView:(mappingResult.count > 0)];
         
