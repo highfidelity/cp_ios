@@ -11,31 +11,13 @@
 #import "GTMNSString+HTML.h"
 #import "UserLoveViewController.h"
 #import "UIViewController+CPUserActionCellAdditions.h"
+#import "CPObjectManager.h"
 
 #define kContactRequestsSection 0
 #define kExtraContactRequestsSections 1
 #define kHeightForHeader 22.0
 #define kContactRequestsCellIdentifier @"ContactRequestCell"
 NSString *const kQuickActionPrefix = @"send-love-switch";
-
-// add a nickname selector to NSDictionary so we can sort the contact list
-@interface NSDictionary (nickname)
-
-- (NSString *)nickname;
-
-@end
-
-@implementation NSDictionary (nickname)
-
-- (NSString *)nickname
-{
-    if (![self objectForKey:@"nickname"]) {
-        return nil;
-    }
-    return [self objectForKey:@"nickname"];
-}
-
-@end
 
 @interface ContactListViewController ()
 
@@ -50,8 +32,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 - (void)animateRemoveContactRequestAtIndex:(NSUInteger)index;
 - (void)handleSendAcceptOrDeclineComletionWithJson:(NSDictionary *)json andError:(NSError *)error;
 - (void)updateBadgeValue;
-- (NSDictionary *)contactForIndexPath:(NSIndexPath *)indexPath;
-- (CPUser *)userForIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
@@ -112,49 +92,43 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 - (void)reloadContactList
 {
-    [CPapi getContactListWithCompletionsBlock:^(NSDictionary *json, NSError *error) {
+    [[CPObjectManager sharedManager] getObjectsAtPathForRouteNamed:kRouteContactsAndRequests
+                                                            object:nil
+                                                        parameters:@{@"v" : @"20121129"}
+                                                           success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult)
+    {
+        self.contacts = [NSMutableArray array];
+        self.contactRequests = [NSMutableArray array];
+        
+        for (CPUser *potentialContact in mappingResult.array) {
+            if ([potentialContact.isContact boolValue]) {
+                [self.contacts addObject:potentialContact];
+            } else {
+                [self.contactRequests addObject:potentialContact];
+            }
+        }
+        
+        self.contacts = [self partitionObjects:self.contacts collationStringSelector:@selector(nickname)];
+        
+        [self hidePlaceholderImageView:(mappingResult.count > 0)];
+        
+        if (!self.userIsPerformingQuickAction) {
+            NSUInteger preReloadVisibleCellsCount = [self.tableView.visibleCells count];
+            
+            [self.tableView reloadData];
+            
+            if (!preReloadVisibleCellsCount) {
+                [self animateSlideWaveWithCPUserActionCells:self.tableView.visibleCells];
+            }
+        } else {
+            self.reloadPrevented = YES;
+        }
+        
+        [self updateBadgeValue];        
         [self stopAppropriateLoadingSpinner];
-        if (!error) {
-            if (![[json objectForKey:@"error"] boolValue]) {
-                NSArray *payload = [json objectForKey:@"payload"];
-                NSArray *contactRequests = [json objectForKey:@"contact_requests"];
-                
-                [self hidePlaceholderImageView:[payload count] > 0 || [contactRequests count] > 0];
-                
-                NSSortDescriptor *nicknameSort = [[NSSortDescriptor alloc] initWithKey:@"nickname" ascending:YES];
-                
-                // No reason to sort if there is 1 or less
-                if (payload.count > 1) {
-                    payload = [payload sortedArrayUsingDescriptors:[NSArray arrayWithObject:nicknameSort]];
-                }
-                if (contactRequests.count > 1) {
-                    contactRequests = [contactRequests sortedArrayUsingDescriptors:[NSArray arrayWithObject:nicknameSort]];
-                }
-                
-                self.contacts = [payload mutableCopy];
-                self.contactRequests = [contactRequests mutableCopy];
-                
-                if (!self.userIsPerformingQuickAction) {
-                    NSUInteger preReloadVisibleCellsCount = [self.tableView.visibleCells count];
-                    
-                    [self.tableView reloadData];
-                    
-                    if (!preReloadVisibleCellsCount) {
-                        [self animateSlideWaveWithCPUserActionCells:self.tableView.visibleCells];
-                    }
-                } else {
-                    self.reloadPrevented = YES;
-                }
-                [self updateBadgeValue];
-            }
-            else {
-                NSLog(@"%@",[json objectForKey:@"payload"]);
-                [SVProgressHUD showErrorWithStatus:[json objectForKey:@"payload"] duration:kDefaultDismissDelay];
-            }
-        }
-        else {
-            NSLog(@"Coundn't fetch contact list");
-        }
+        
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        [SVProgressHUD dismissWithError:@"Problem getting contact list.\nPlease try again!" afterDelay:kDefaultDismissDelay];
     }];
 }
 
@@ -184,13 +158,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     }
 
     return sections;
-}
-
-- (void)setContacts:(NSMutableArray *)contactList {
-    _contacts = [self partitionObjects:contactList collationStringSelector:@selector(nickname)];
-    
-    // store the array for search
-    self.sortedContactList = [contactList mutableCopy];
 }
 
 - (void)hidePlaceholderImageView:(BOOL)hiddenPlaceholder
@@ -294,30 +261,20 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
         cell = [[ContactListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
 
-    NSDictionary *contact = [self contactForIndexPath:indexPath];
+    CPUser *contact = [self contactForIndexPath:indexPath];
 
-    cell.nicknameLabel.text = [[contact objectForKey:@"nickname"] gtm_stringByUnescapingFromHTML];
+    cell.nicknameLabel.text = [contact.nickname gtm_stringByUnescapingFromHTML];
     [CPUIHelper changeFontForLabel:cell.nicknameLabel toLeagueGothicOfSize:18.0];
 
-    NSString *status = [contact objectForKey:@"status_text"];
-    bool checkedIn = [[contact objectForKey:@"checked_in"]boolValue];
     cell.statusLabel.text = @"";
-    if (status.length > 0 && checkedIn) {
-        status = [[status gtm_stringByUnescapingFromHTML] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",status];
+    
+    if (contact.lastCheckIn.statusText.length > 0 && contact.lastCheckIn.isCurrentlyCheckedIn) {
+        cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"", contact.lastCheckIn.statusText];
     }
 
-    UIImageView *imageView = cell.profilePicture;
-    if (![[contact objectForKey:@"imageUrl"] isKindOfClass:[NSNull class]]) {
+    [cell.profilePicture setImageWithURL:contact.photoURL placeholderImage:[CPUIHelper defaultProfileImage]];
 
-        imageView.contentMode = UIViewContentModeScaleAspectFill;
-        [imageView setImageWithURL:[NSURL URLWithString:[contact objectForKey:@"imageUrl"]]
-                       placeholderImage:[CPUIHelper defaultProfileImage]];
-    } else {
-        imageView.image = [CPUIHelper defaultProfileImage];
-    }
-
-    cell.user = [self userForIndexPath:indexPath];
+    cell.user = contact;
 
     if ([CellIdentifier isEqualToString:kContactRequestsCellIdentifier]) {
         cell.acceptContactRequestButton.hidden = NO;
@@ -520,7 +477,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     [CPUserDefaultsHandler setNumberOfContactRequests:self.contactRequests.count];
 }
 
-- (NSDictionary *)contactForIndexPath:(NSIndexPath *)indexPath {
+- (CPUser *)contactForIndexPath:(NSIndexPath *)indexPath {
     if (self.isSearching) {
         return [self.searchResults objectAtIndex:(NSUInteger)[indexPath row]];
     }
@@ -531,17 +488,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     
     return [[self.contacts objectAtIndex:(NSUInteger)indexPath.section - kExtraContactRequestsSections]
             objectAtIndex:(NSUInteger)indexPath.row];
-}
-
-- (CPUser *)userForIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *contact = [self contactForIndexPath:indexPath];
-    CPUser *user = [[CPUser alloc] init];
-    user.nickname = [contact objectForKey:@"nickname"];
-    user.userID = @([[contact objectForKey:@"id"] intValue]);
-    user.status = [contact objectForKey:@"status_text"];
-    [user setPhotoURLFromString:[contact objectForKey:@"imageUrl"]];
-    
-    return user;
 }
 
 @end

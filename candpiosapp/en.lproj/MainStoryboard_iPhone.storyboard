@@ -378,7 +378,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                                         </view>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="4LH-Pu-1oy">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" id="4LH-Pu-1oy">
                                             <rect key="frame" x="5" y="4" width="51" height="51"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -447,7 +447,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                                         </view>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="NWy-G2-PVn">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" id="NWy-G2-PVn">
                                             <rect key="frame" x="5" y="4" width="51" height="51"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
