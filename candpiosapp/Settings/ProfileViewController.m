@@ -61,7 +61,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [SVProgressHUD show];
     
     self.view.backgroundColor = RGBA(230, 230, 230, 1);
     
