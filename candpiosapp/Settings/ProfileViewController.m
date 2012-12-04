@@ -11,7 +11,6 @@
 #import "GRMustacheTemplate.h"
 #import "CPTouchableView.h"
 #import "CPSkill.h"
-#import "UIImage+ImageBlur.h"
 #import "CPUserSessionHandler.h"
 #import "CPAlertView.h"
 
@@ -28,7 +27,6 @@
 @property (strong, nonatomic) CPUser *currentUser;
 @property (strong, nonatomic) NSString *pendingEmail;
 @property (strong, nonatomic) UIBarButtonItem *gearButton;
-@property (strong, nonatomic, getter = cacheManager) NSCache *cache;
 @property (weak, nonatomic) IBOutlet UIButton *profileImageButton;
 @property (weak, nonatomic) IBOutlet UITextField *nicknameTextField;
 @property (weak, nonatomic) IBOutlet UILabel *skillsLabel;
@@ -59,17 +57,10 @@
 
 @implementation ProfileViewController
 
-- (NSCache *)cacheManager
-{
-    if (!_cache) {
-        _cache = [[NSCache alloc] init];
-    }
-    return _cache;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [SVProgressHUD show];
     
     self.view.backgroundColor = RGBA(230, 230, 230, 1);
     
@@ -109,13 +100,14 @@
     [CPUIHelper addShadowToView:self.detailsView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
 }
 
-- (void)viewDidLayoutSubviews
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewDidLayoutSubviews];
+    [super viewDidAppear:animated];
     
-    [self syncWithWebData];
     if (self.profileImageToUpload) {
         [self imagePickedFromSettingsMenuImagePicker:self.profileImageToUpload];
+    } else {
+        [self syncWithWebData];
     }
 }
 
@@ -131,14 +123,7 @@
 
 - (void)placeCurrentUserDataAnimated:(BOOL)animated
 {
-    
-    UIImage *profilePhoto = [self.cache objectForKey:@"profilePhoto"];
-    
-    if (!profilePhoto) {    
-        profilePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.currentUser.photoURL]];    
-    }
-    
-    [self.profileImageView setImage:profilePhoto];
+    [self.profileImageView setImageWithURL:self.currentUser.photoURL placeholderImage:[CPUIHelper defaultProfileImage]];
     
     // put the nickname
     self.nicknameTextField.text = self.currentUser.nickname;
@@ -305,9 +290,6 @@
 
 - (void)imagePickedFromSettingsMenuImagePicker:(UIImage *)image
 {
-    [self.cache removeAllObjects];
-    
-    [SVProgressHUD showWithStatus:@"Uploading photo"];
     // upload the image
     [CPapi uploadUserProfilePhoto:image withCompletion:^(NSDictionary *json, NSError *error) {
         if ([[json objectForKey:@"succeeded"] boolValue]) {
