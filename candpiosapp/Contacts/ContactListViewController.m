@@ -28,7 +28,6 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 @property (nonatomic) BOOL reloadPrevented;
 @property (nonatomic) BOOL isSearching;
 
-- (NSIndexPath *)addToContacts:(NSDictionary *)contactData;
 - (void)animateRemoveContactRequestAtIndex:(NSUInteger)index;
 - (void)handleSendAcceptOrDeclineComletionWithJson:(NSDictionary *)json andError:(NSError *)error;
 - (void)updateBadgeValue;
@@ -108,6 +107,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
             }
         }
         
+        self.sortedContactList = [[self.contacts sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"nickname" ascending:YES]]] mutableCopy];
         self.contacts = [self partitionObjects:self.contacts collationStringSelector:@selector(nickname)];
         
         [self hidePlaceholderImageView:(mappingResult.count > 0)];
@@ -381,14 +381,14 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 - (void)clickedAcceptButtonInUserTableViewCell:(ContactListCell *)contactListCell {
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:contactListCell];
-    NSDictionary *contactData = [self.contactRequests objectAtIndex:indexPath.row];
+    CPUser *contactFromRequest = [self.contactRequests objectAtIndex:indexPath.row];
     
     [self.tableView beginUpdates];
     {
         [self.contactRequests removeObjectAtIndex:indexPath.row];
         [self animateRemoveContactRequestAtIndex:indexPath.row];
         
-        NSIndexPath *newContactIndexPath = [self addToContacts:contactData];
+        NSIndexPath *newContactIndexPath = [self addToContacts:contactFromRequest];
         
         [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newContactIndexPath]
                               withRowAnimation:UITableViewRowAnimationFade];
@@ -399,7 +399,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
     }
     [self.tableView endUpdates];
     
-    [CPapi sendAcceptContactRequestFromUserID:@([[contactData objectForKey:@"id"] intValue])
+    [CPapi sendAcceptContactRequestFromUserID:contactFromRequest.userID
                                    completion:^(NSDictionary *json, NSError *error) {
                                        [self handleSendAcceptOrDeclineComletionWithJson:json andError:error];
                                    }];
@@ -424,21 +424,21 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 #pragma mark - private
 
-- (NSIndexPath *)addToContacts:(NSDictionary *)contactData {
-    NSInteger sectionIndex = [[UILocalizedIndexedCollation currentCollation] sectionForObject:contactData
+- (NSIndexPath *)addToContacts:(CPUser *)contact {
+    NSInteger sectionIndex = [[UILocalizedIndexedCollation currentCollation] sectionForObject:contact
                                                                       collationStringSelector:@selector(nickname)];
     NSMutableArray *sectionContacts = [self.contacts objectAtIndex:sectionIndex];
     NSArray *sortDescriptors = [NSArray arrayWithObject:
                                 [[NSSortDescriptor alloc] initWithKey:@"nickname" ascending:YES]];
     
     
-    [sectionContacts addObject:contactData];
-    [self.sortedContactList addObject:contactData];
+    [sectionContacts addObject:contact];
+    [self.sortedContactList addObject:contact];
     
     [sectionContacts sortUsingDescriptors:sortDescriptors];
     [self.sortedContactList sortUsingDescriptors:sortDescriptors];
     
-    NSIndexPath *contactIndexPath = [NSIndexPath indexPathForRow:[sectionContacts indexOfObject:contactData]
+    NSIndexPath *contactIndexPath = [NSIndexPath indexPathForRow:[sectionContacts indexOfObject:contact]
                                                        inSection:sectionIndex + kExtraContactRequestsSections];
     return contactIndexPath;
 }
