@@ -9,4 +9,6 @@
 #import <UIKit/UIKit.h>
 @interface ProfileViewController : UIViewController
 
+@property (strong, nonatomic) UIImage *profileImageToUpload;
+
 @end

@@ -18,10 +18,14 @@
 #define kActionSheetDeleteAccountTag 7911
 #define kActionSheetChooseNewProfileImageTag 7912
 
-@interface ProfileViewController () <CPTouchViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
+@interface ProfileViewController () <CPTouchViewDelegate,
+                                     UITextFieldDelegate,
+                                     UINavigationControllerDelegate,
+                                     UIImagePickerControllerDelegate,
+                                     UIActionSheetDelegate,
+                                     UIAlertViewDelegate>
 
 @property (strong, nonatomic) CPUser *currentUser;
-@property (strong, nonatomic) UIImagePickerController *imagePicker;
 @property (strong, nonatomic) NSString *pendingEmail;
 @property (strong, nonatomic) UIBarButtonItem *gearButton;
 @property (strong, nonatomic, getter = cacheManager) NSCache *cache;
@@ -55,15 +59,6 @@
 
 @implementation ProfileViewController
 
-// lazily instantiate image picker when we call the getter
-- (UIImagePickerController *)imagePicker
-{
-    if (!_imagePicker) {
-        _imagePicker = [[UIImagePickerController alloc] init];
-    }
-    return _imagePicker;
-}
-
 - (NSCache *)cacheManager
 {
     if (!_cache) {
@@ -85,7 +80,6 @@
     self.visibilityView.delegate = self;
     self.categoryView.delegate = self;
     self.deleteTouchable.delegate = self;
-    self.imagePicker.delegate = self;
 
     UIColor *paper = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paper-texture.png"]];
     self.profileHeaderView.backgroundColor = paper;
@@ -119,23 +113,24 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if (!self.finishedSync) {
-        // show a loading HUD
-        [SVProgressHUD showWithStatus:@"Loading..."];
-        [self syncWithWebData];
+    
+    if (self.profileImageToUpload) {
+        [self imagePickedFromSettingsMenuImagePicker:self.profileImageToUpload];
+    } else {
+        if (!self.finishedSync) {
+            // show a loading HUD
+            [SVProgressHUD showWithStatus:@"Loading..."];
+            [self syncWithWebData];
+        }
     }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+    [super viewDidDisappear:animated];
     CGRect profileImageFrame = self.profileImageView.frame;
     profileImageFrame.origin.x = -100;
     self.profileImageView.frame = profileImageFrame;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Web Data Sync
@@ -310,21 +305,12 @@
 }
 
 
-#pragma mark - Image Picker Controller Delegate
+#pragma mark - image picker controller handling
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [picker dismissModalViewControllerAnimated:YES];
-    [self placeCurrentUserDataAnimated:YES];
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker
-       didFinishPickingImage:(UIImage *)image
-                 editingInfo:(NSDictionary *)editingInfo
+- (void)imagePickedFromSettingsMenuImagePicker:(UIImage *)image
 {
     [self.cache removeAllObjects];
-    // get rid of the image picker
-    [picker dismissModalViewControllerAnimated:YES];
+    
     [SVProgressHUD showWithStatus:@"Uploading photo"];
     // upload the image
     [CPapi uploadUserProfilePhoto:image withCompletion:^(NSDictionary *json, NSError *error) {
@@ -344,6 +330,8 @@
 
             [SVProgressHUD dismissWithError:message afterDelay:kDefaultDismissDelay];
         }
+        
+        self.profileImageToUpload = nil;
     }];
 }
 
@@ -400,23 +388,11 @@
     if (kActionSheetChooseNewProfileImageTag == actionSheet.tag) {
         if (buttonIndex == 0 || buttonIndex == 1) {
             if (buttonIndex == 0) {
-                // user wants to pick from camera
-                self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-                // use the front camera by default (if we have one)
-                // if there's no front camera we'll use the back (3GS)
-                if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerCameraDeviceFront]) {
-                    self.imagePicker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
-                }
-
+                [((SettingsMenuController *) self.presentingViewController) showProfilePicturePickerModalForSource:UIImagePickerControllerSourceTypeCamera];
             } else if (buttonIndex == 1) {
                 // user wants to pick from photo library
-                self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                [((SettingsMenuController *) self.presentingViewController) showProfilePicturePickerModalForSource:UIImagePickerControllerSourceTypePhotoLibrary];
             }
-            // show the image picker
-            [self presentModalViewController:self.imagePicker animated:YES];
-        }
-    } else if (kActionSheetDeleteAccountTag == actionSheet.tag) {
-        if (actionSheet.destructiveButtonIndex == buttonIndex) {
         }
     }
 }

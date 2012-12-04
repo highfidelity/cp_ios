@@ -17,7 +17,11 @@ typedef enum {
     CPAfterLoginActionShowMap
 } CPAfterLoginAction;
 
-@interface SettingsMenuController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
+@interface SettingsMenuController : UIViewController <UITableViewDelegate,
+                                                      UITableViewDataSource,
+                                                      UIAlertViewDelegate,
+                                                      UINavigationControllerDelegate,
+                                                      UIImagePickerControllerDelegate>
 
 @property (strong, nonatomic) CPTabBarController *cpTabBarController;
 @property (strong, nonatomic) MapTabController *mapTabController;
@@ -38,5 +42,7 @@ typedef enum {
 
 - (void)showMenu:(BOOL)shouldReveal;
 - (void)closeMenu;
+
+- (void)showProfilePicturePickerModalForSource:(UIImagePickerControllerSourceType)imagePickerSource;
 
 @end
