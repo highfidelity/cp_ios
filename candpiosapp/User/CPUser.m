@@ -228,10 +228,8 @@
             self.isContact = @([[userDict objectForKey:@"user_is_contact"] boolValue]);
             self.hasChatHistory = [[userDict objectForKey:@"has_chat_history"] boolValue];
 
+            self.jobTitle = [userDict objectForKey:@"headline"];
             
-            if ([[userDict objectForKey:@"job_title"] isKindOfClass:[NSString class]]) {
-                self.jobTitle = [userDict objectForKey:@"job_title"];
-            }
             // set the user's photo url
             [self setPhotoURLFromString:[userDict objectForKey:@"urlPhoto"]];
             
