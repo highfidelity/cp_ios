@@ -70,7 +70,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [SVProgressHUD show];
     
     self.view.backgroundColor = RGBA(230, 230, 230, 1);
     
@@ -110,18 +109,13 @@
     [CPUIHelper addShadowToView:self.detailsView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewDidLayoutSubviews
 {
-    [super viewDidAppear:animated];
+    [super viewDidLayoutSubviews];
     
+    [self syncWithWebData];
     if (self.profileImageToUpload) {
         [self imagePickedFromSettingsMenuImagePicker:self.profileImageToUpload];
-    } else {
-        if (!self.finishedSync) {
-            // show a loading HUD
-            [SVProgressHUD showWithStatus:@"Loading..."];
-            [self syncWithWebData];
-        }
     }
 }
 
@@ -222,86 +216,88 @@
 
 - (void)syncWithWebData
 {
-    CPUser *webSyncUser = [[CPUser alloc] init];
-
-    // load the user's data from the web by their id
-    webSyncUser.userID = self.currentUser.userID;
-    [SVProgressHUD show];
-
-    // TODO: Let's not load all of the user resume data here, just what can be changed
-    [webSyncUser loadUserResumeOnQueue:nil topSkillsOnly:NO completion:^(NSError *error) {
-        if (!error) {
-            // TODO: make this a better solution by checking for a problem with the PHP session cookie in CPApi
-            // for now if the email comes back null this person isn't logged in so we're going to send them to do that.
-            if ([webSyncUser.email isKindOfClass:[NSNull class]] || [webSyncUser.email length] == 0) {
-                [self dismissModalViewControllerAnimated:YES];
-                NSString *message = @"There was a problem getting your data!\nPlease logout and login again.";
-                [SVProgressHUD dismissWithError:message afterDelay:kDefaultDismissDelay];
+    if (!self.finishedSync) {
+        CPUser *webSyncUser = [[CPUser alloc] init];
+        
+        // load the user's data from the web by their id
+        webSyncUser.userID = self.currentUser.userID;
+        [SVProgressHUD showWithStatus:@"Loading..."];
+        
+        // TODO: Let's not load all of the user resume data here, just what can be changed
+        [webSyncUser loadUserResumeOnQueue:nil topSkillsOnly:NO completion:^(NSError *error) {
+            if (!error) {
+                // TODO: make this a better solution by checking for a problem with the PHP session cookie in CPApi
+                // for now if the email comes back null this person isn't logged in so we're going to send them to do that.
+                if ([webSyncUser.email isKindOfClass:[NSNull class]] || [webSyncUser.email length] == 0) {
+                    [self dismissModalViewControllerAnimated:YES];
+                    NSString *message = @"There was a problem getting your data!\nPlease logout and login again.";
+                    [SVProgressHUD dismissWithError:message afterDelay:kDefaultDismissDelay];
+                } else {
+                    // let's update the local current user with any new data
+                    
+                    if (![self.currentUser.nickname isEqualToString:webSyncUser.nickname]) {
+                        self.currentUser.nickname = webSyncUser.nickname;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    // check email
+                    if (![self.currentUser.email isEqualToString:webSyncUser.email]) {
+                        self.currentUser.email = webSyncUser.email;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    // check photo url
+                    if (![self.currentUser.photoURL isEqual:webSyncUser.photoURL]) {
+                        self.currentUser.photoURL = webSyncUser.photoURL;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    if (![self.currentUser.joinDate isEqual:webSyncUser.joinDate]) {
+                        self.currentUser.joinDate = webSyncUser.joinDate;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    if (![self.currentUser.majorJobCategory isEqualToString:webSyncUser.majorJobCategory]) {
+                        self.currentUser.majorJobCategory = webSyncUser.majorJobCategory;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    if (![self.currentUser.minorJobCategory isEqualToString:webSyncUser.minorJobCategory]) {
+                        self.currentUser.minorJobCategory = webSyncUser.minorJobCategory;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    if (![self.currentUser.hourlyRate isEqualToString:webSyncUser.hourlyRate]) {
+                        self.currentUser.hourlyRate = webSyncUser.hourlyRate;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    if (![self.currentUser.skills isEqualToArray:webSyncUser.skills]) {
+                        self.currentUser.skills = webSyncUser.skills;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    if (![self.currentUser.profileURLVisibility isEqualToString:webSyncUser.profileURLVisibility]) {
+                        self.currentUser.profileURLVisibility = webSyncUser.profileURLVisibility;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    if (self.newDataFromSync) {
+                        [CPUserDefaultsHandler setCurrentUser:self.currentUser];
+                        [self placeCurrentUserDataAnimated:YES];
+                    }
+                    
+                    [SVProgressHUD dismiss];
+                    self.newDataFromSync = NO;
+                    self.finishedSync = YES;
+                }
             } else {
-                // let's update the local current user with any new data
-
-                if (![self.currentUser.nickname isEqualToString:webSyncUser.nickname]) {
-                    self.currentUser.nickname = webSyncUser.nickname;
-                    self.newDataFromSync = YES;
-                }
-
-                // check email
-                if (![self.currentUser.email isEqualToString:webSyncUser.email]) {
-                    self.currentUser.email = webSyncUser.email;
-                    self.newDataFromSync = YES;
-                }
-
-                // check photo url
-                if (![self.currentUser.photoURL isEqual:webSyncUser.photoURL]) {
-                    self.currentUser.photoURL = webSyncUser.photoURL;
-                    self.newDataFromSync = YES;
-                }
-
-                if (![self.currentUser.joinDate isEqual:webSyncUser.joinDate]) {
-                    self.currentUser.joinDate = webSyncUser.joinDate;
-                    self.newDataFromSync = YES;
-                }
-
-                if (![self.currentUser.majorJobCategory isEqualToString:webSyncUser.majorJobCategory]) {
-                    self.currentUser.majorJobCategory = webSyncUser.majorJobCategory;
-                    self.newDataFromSync = YES;
-                }
-
-                if (![self.currentUser.minorJobCategory isEqualToString:webSyncUser.minorJobCategory]) {
-                    self.currentUser.minorJobCategory = webSyncUser.minorJobCategory;
-                    self.newDataFromSync = YES;
-                }
-
-                if (![self.currentUser.hourlyRate isEqualToString:webSyncUser.hourlyRate]) {
-                    self.currentUser.hourlyRate = webSyncUser.hourlyRate;
-                    self.newDataFromSync = YES;
-                }
-
-                if (![self.currentUser.skills isEqualToArray:webSyncUser.skills]) {
-                    self.currentUser.skills = webSyncUser.skills;
-                    self.newDataFromSync = YES;
-                }
-
-                if (![self.currentUser.profileURLVisibility isEqualToString:webSyncUser.profileURLVisibility]) {
-                    self.currentUser.profileURLVisibility = webSyncUser.profileURLVisibility;
-                    self.newDataFromSync = YES;
-                }
-
-                if (self.newDataFromSync) {
-                    [CPUserDefaultsHandler setCurrentUser:self.currentUser];
-                    [self placeCurrentUserDataAnimated:YES];
-                }
-                
-                [SVProgressHUD dismiss];
-                self.newDataFromSync = NO;
-                self.finishedSync = YES;
+                [self dismissModalViewControllerAnimated:YES];
+                NSString *message = @"There was a problem getting current data. Please try again in a little while.";
+                [SVProgressHUD showErrorWithStatus:message duration:kDefaultDismissDelay];
             }
-        } else {
-            [self dismissModalViewControllerAnimated:YES];
-            NSString *message = @"There was a problem getting current data. Please try again in a little while.";
-            [SVProgressHUD showErrorWithStatus:message duration:kDefaultDismissDelay];
-        }
-    }];
+        }];
+    }
 }
 
 
