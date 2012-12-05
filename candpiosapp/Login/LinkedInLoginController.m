@@ -477,7 +477,6 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                                                              UINavigationController *navigationViewController = [signupStoryboard instantiateViewControllerWithIdentifier:@"TutorialViewControllerNavigationViewController"];
                                                              
                                                              TutorialViewController *viewController = (TutorialViewController *)navigationViewController.topViewController;
-                                                             [self.navigationController setNavigationBarHidden:YES animated:YES];
                                                              [self.navigationController pushViewController:viewController animated:YES];
                                                          } else {
                                                              [self close:kDefaultDismissDelay];
