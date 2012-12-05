@@ -23,7 +23,6 @@
         self.userID = @([[userDict objectForKey:@"id"] intValue]);
         self.nickname = [userDict objectForKey:@"nickname"];
         
-        self.status = [userDict objectForKey:@"status_text"];
         self.jobTitle = [userDict objectForKey:@"headline"];
         self.majorJobCategory = [userDict objectForKey:@"major_job_category"];
         self.minorJobCategory = [userDict objectForKey:@"minor_job_category"];
@@ -34,9 +33,10 @@
         double lng = [[userDict objectForKey:@"lng"] doubleValue];
         self.location = CLLocationCoordinate2DMake(lat, lng);
         
-        self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict objectForKey:@"checkout"] integerValue]];
         self.lastCheckIn = [[CPCheckIn alloc] init];
-        self.lastCheckIn.isCurrentlyCheckedIn = @([[userDict objectForKey:@"checked_in"] boolValue]);
+        self.lastCheckIn.statusText = [userDict objectForKey:@"status_text"];
+        self.lastCheckIn.checkoutSinceEpoch = @([[userDict objectForKey:@"checkout"] integerValue]);
+        
         self.isContact = @([[userDict objectForKey:@"is_contact"] boolValue]);
 	}
 	return self;
@@ -99,20 +99,6 @@
     } else {
         _nickname = [nickname gtm_stringByUnescapingFromHTML];
     }  
-}
-
-// override nickname setter to decode html entities
-- (void)setStatus:(NSString *)status
-{
-    if ([status isKindOfClass:[NSNull class]]) {
-        status = @"";
-    }
-    
-    if ([status length] > 0) {
-        status = [status gtm_stringByUnescapingFromHTML];
-        status = [status stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    }    
-    _status = status;
 }
 
 // override rate setter to decode any html entities
@@ -242,12 +228,8 @@
             self.isContact = @([[userDict objectForKey:@"user_is_contact"] boolValue]);
             self.hasChatHistory = [[userDict objectForKey:@"has_chat_history"] boolValue];
 
-            self.status = [[userDict objectForKey:@"status_text"]
-                           stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            self.jobTitle = [userDict objectForKey:@"headline"];
             
-            if ([[userDict objectForKey:@"job_title"] isKindOfClass:[NSString class]]) {
-                self.jobTitle = [userDict objectForKey:@"job_title"];
-            }
             // set the user's photo url
             [self setPhotoURLFromString:[userDict objectForKey:@"urlPhoto"]];
             
@@ -300,30 +282,28 @@
             // badge information
             // self.badges = [userDict objectForKey:@"badges"];
             
-            if (!self.lastCheckIn.venue) {
-                // we don't have a check in for this user so pull it here
-                NSDictionary *checkinDict = [userDict valueForKey:@"checkin_data"];
-                if ([checkinDict objectForKey:@"venue_id"]) {
-                    // try and grab the venue from CPMarkerManager
-                    self.lastCheckIn = [[CPCheckIn alloc] init];
-                    self.lastCheckIn.venue = [[CPVenue alloc] initFromDictionary:checkinDict];
-                    self.lastCheckIn.isCurrentlyCheckedIn = @([[checkinDict valueForKey:@"checked_in"] boolValue]);
-
-                    if ([[CPUserDefaultsHandler currentUser].userID isEqualToNumber:self.userID]) {
-                        if ([self.lastCheckIn.isCurrentlyCheckedIn boolValue]) {
-                            NSInteger checkOutTime =[[checkinDict objectForKey:@"checkout"] integerValue];
-                            [CPCheckinHandler saveCheckInVenue:self.lastCheckIn.venue andCheckOutTime:checkOutTime];
-                        } else {
-                            [[CPCheckinHandler sharedHandler] setCheckedOut];
-                        }
+            // we don't have a check in for this user so pull it here
+            NSDictionary *checkinDict = [userDict valueForKey:@"checkin_data"];
+            if ([checkinDict objectForKey:@"venue_id"]) {
+                // try and grab the venue from CPMarkerManager
+                self.lastCheckIn = [[CPCheckIn alloc] init];
+                self.lastCheckIn.venue = [[CPVenue alloc] initFromDictionary:checkinDict];
+                self.lastCheckIn.checkoutSinceEpoch = @([checkinDict[@"checkout"] intValue]);
+                self.lastCheckIn.statusText = [userDict objectForKey:@"status_text"];
+                
+                if ([[CPUserDefaultsHandler currentUser].userID isEqualToNumber:self.userID]) {
+                    if (self.lastCheckIn.isCurrentlyCheckedIn) {
+                        NSInteger checkOutTime =[[checkinDict objectForKey:@"checkout"] integerValue];
+                        [CPCheckinHandler saveCheckInVenue:self.lastCheckIn.venue andCheckOutTime:checkOutTime];
+                    } else {
+                        [[CPCheckinHandler sharedHandler] setCheckedOut];
                     }
                 }
             }
             
             // user checkin data
             self.lastCheckIn.venue.checkedInNow = @([[userDict valueForKeyPath:@"checkin_data.users_here"] intValue]);
-            self.checkoutEpoch = [NSDate dateWithTimeIntervalSince1970:[[userDict valueForKeyPath:@"checkin_data.checkout"] intValue]]; 
-            //self.checkedIn = [[userDict objectForKey:@"checked_in"] boolValue];
+            self.lastCheckIn.checkoutSinceEpoch = @([[userDict valueForKeyPath:@"checkin_data.checkout"] intValue]);
             
             // checkin history
             self.checkInHistory = [NSMutableArray array];

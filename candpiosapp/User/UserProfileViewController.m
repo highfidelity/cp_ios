@@ -103,7 +103,7 @@
     
     // set the labels on the user business card
     self.cardNickname.text = self.user.nickname;
-    [self setUserStatusWithQuotes:self.user.status];
+    [self setUserStatusWithQuotes:self.user.lastCheckIn.statusText];
     self.cardJobPosition.text = self.user.jobTitle;
     
     // set the card image to the user's profile image
@@ -224,10 +224,10 @@
 {
     if (self.firstLoad) {
         // if the user is checked in show how much longer they'll be available for
-        if ([self.user.checkoutEpoch timeIntervalSinceNow] > 0) {
+        if ([self.user.lastCheckIn.checkoutDate timeIntervalSinceNow] > 0) {
             self.checkedIn.text = @"Checked in";
             // get the number of seconds until they'll checkout
-            NSTimeInterval secondsToCheckout = [self.user.checkoutEpoch timeIntervalSinceNow];
+            NSTimeInterval secondsToCheckout = [self.user.lastCheckIn.checkoutDate timeIntervalSinceNow];
             // convert to minutes and then hours + minutes to next our
             int minutesToCheckout = floor(secondsToCheckout / 60.0);
             int hoursToCheckout = floor(minutesToCheckout / 60.0);
@@ -257,7 +257,7 @@
     self.venueName.text = self.user.lastCheckIn.venue.name;
     self.venueAddress.text = self.user.lastCheckIn.venue.address;
     
-    self.othersAtPlace = [self.user.lastCheckIn.isCurrentlyCheckedIn boolValue]
+    self.othersAtPlace = self.user.lastCheckIn.isCurrentlyCheckedIn
         ? [self.user.lastCheckIn.venue.checkedInNow intValue] - 1
         : [self.user.lastCheckIn.venue.checkedInNow intValue];
     
@@ -315,7 +315,7 @@
 
 - (void)setUserStatusWithQuotes:(NSString *)status
 {
-    if ([self.user.status length] > 0 && [self.user.lastCheckIn.isCurrentlyCheckedIn boolValue]) {
+    if (status.length > 0 && self.user.lastCheckIn.isCurrentlyCheckedIn) {
         self.cardStatus.text = [NSString stringWithFormat:@"\"%@\"", status];
     } else {
         self.cardStatus.text = @"";
@@ -335,7 +335,7 @@
 
     self.cardJobPosition.text = self.user.jobTitle;
     
-    [self setUserStatusWithQuotes:self.user.status];
+    [self setUserStatusWithQuotes:self.user.lastCheckIn.statusText];
         
     // if the user has an hourly rate then put it, otherwise it comes up as N/A
     if (self.user.hourlyRate) {

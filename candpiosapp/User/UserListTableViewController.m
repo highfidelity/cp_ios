@@ -128,8 +128,8 @@
     cell.nicknameLabel.frame = nicknameFrameChanger;
     
     cell.statusLabel.text = @"";
-    if (user.status.length > 0 && [user.lastCheckIn.isCurrentlyCheckedIn boolValue]) {
-        cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"",[user.status gtm_stringByUnescapingFromHTML]];
+    if (user.lastCheckIn.statusText.length > 0 && user.lastCheckIn.isCurrentlyCheckedIn) {
+        cell.statusLabel.text = [NSString stringWithFormat:@"\"%@\"", user.lastCheckIn.statusText];
     }
     
     cell.checkInLabel.text = [NSString stringWithFormat:@"@%@", user.lastCheckIn.venue.name];
