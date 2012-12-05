@@ -11,20 +11,22 @@
 #import "GRMustacheTemplate.h"
 #import "CPTouchableView.h"
 #import "CPSkill.h"
-#import "UIImage+ImageBlur.h"
 #import "CPUserSessionHandler.h"
 #import "CPAlertView.h"
 
 #define kActionSheetDeleteAccountTag 7911
 #define kActionSheetChooseNewProfileImageTag 7912
 
-@interface ProfileViewController () <CPTouchViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
+@interface ProfileViewController () <CPTouchViewDelegate,
+                                     UITextFieldDelegate,
+                                     UINavigationControllerDelegate,
+                                     UIImagePickerControllerDelegate,
+                                     UIActionSheetDelegate,
+                                     UIAlertViewDelegate>
 
 @property (strong, nonatomic) CPUser *currentUser;
-@property (strong, nonatomic) UIImagePickerController *imagePicker;
 @property (strong, nonatomic) NSString *pendingEmail;
 @property (strong, nonatomic) UIBarButtonItem *gearButton;
-@property (strong, nonatomic, getter = cacheManager) NSCache *cache;
 @property (weak, nonatomic) IBOutlet UIButton *profileImageButton;
 @property (weak, nonatomic) IBOutlet UITextField *nicknameTextField;
 @property (weak, nonatomic) IBOutlet UILabel *skillsLabel;
@@ -45,6 +47,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *floatView;
 @property (weak, nonatomic) IBOutlet UIImageView *arrowImageView;
+@property (weak, nonatomic) IBOutlet UIView *imageUploadPlaceholder;
 @property (nonatomic) BOOL finishedSync;
 @property (nonatomic) BOOL newDataFromSync;
 
@@ -55,27 +58,9 @@
 
 @implementation ProfileViewController
 
-// lazily instantiate image picker when we call the getter
-- (UIImagePickerController *)imagePicker
-{
-    if (!_imagePicker) {
-        _imagePicker = [[UIImagePickerController alloc] init];
-    }
-    return _imagePicker;
-}
-
-- (NSCache *)cacheManager
-{
-    if (!_cache) {
-        _cache = [[NSCache alloc] init];
-    }
-    return _cache;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [SVProgressHUD show];
     
     self.view.backgroundColor = RGBA(230, 230, 230, 1);
     
@@ -85,7 +70,6 @@
     self.visibilityView.delegate = self;
     self.categoryView.delegate = self;
     self.deleteTouchable.delegate = self;
-    self.imagePicker.delegate = self;
 
     UIColor *paper = [UIColor colorWithPatternImage:[UIImage imageNamed:@"paper-texture.png"]];
     self.profileHeaderView.backgroundColor = paper;
@@ -119,37 +103,27 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if (!self.finishedSync) {
-        // show a loading HUD
-        [SVProgressHUD showWithStatus:@"Loading..."];
+    
+    if (self.profileImageToUpload) {
+        [self imagePickedFromSettingsMenuImagePicker:self.profileImageToUpload];
+    } else {
         [self syncWithWebData];
     }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+    [super viewDidDisappear:animated];
     CGRect profileImageFrame = self.profileImageView.frame;
     profileImageFrame.origin.x = -100;
     self.profileImageView.frame = profileImageFrame;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Web Data Sync
 
 - (void)placeCurrentUserDataAnimated:(BOOL)animated
 {
-    
-    UIImage *profilePhoto = [self.cache objectForKey:@"profilePhoto"];
-    
-    if (!profilePhoto) {    
-        profilePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.currentUser.photoURL]];    
-    }
-    
-    [self.profileImageView setImage:profilePhoto];
+    [self.profileImageView setImageWithURL:self.currentUser.photoURL placeholderImage:[CPUIHelper defaultProfileImage]];
     
     // put the nickname
     self.nicknameTextField.text = self.currentUser.nickname;
@@ -221,117 +195,110 @@
                              profileImageFrame.origin.x = 0;
                              self.profileImageView.frame = profileImageFrame;
                          }
-                         completion:nil];
+                         completion:^(BOOL finished){
+                             self.imageUploadPlaceholder.hidden = YES;
+                         }];
     }
 }
 
 - (void)syncWithWebData
 {
-    CPUser *webSyncUser = [[CPUser alloc] init];
-
-    // load the user's data from the web by their id
-    webSyncUser.userID = self.currentUser.userID;
-    [SVProgressHUD show];
-
-    // TODO: Let's not load all of the user resume data here, just what can be changed
-    [webSyncUser loadUserResumeOnQueue:nil topSkillsOnly:NO completion:^(NSError *error) {
-        if (!error) {
-            // TODO: make this a better solution by checking for a problem with the PHP session cookie in CPApi
-            // for now if the email comes back null this person isn't logged in so we're going to send them to do that.
-            if ([webSyncUser.email isKindOfClass:[NSNull class]] || [webSyncUser.email length] == 0) {
-                [self dismissModalViewControllerAnimated:YES];
-                NSString *message = @"There was a problem getting your data!\nPlease logout and login again.";
-                [SVProgressHUD dismissWithError:message afterDelay:kDefaultDismissDelay];
+    if (!self.finishedSync) {
+        CPUser *webSyncUser = [[CPUser alloc] init];
+        
+        // load the user's data from the web by their id
+        webSyncUser.userID = self.currentUser.userID;
+        [SVProgressHUD showWithStatus:@"Loading..."];
+        
+        // TODO: Let's not load all of the user resume data here, just what can be changed
+        [webSyncUser loadUserResumeOnQueue:nil topSkillsOnly:NO completion:^(NSError *error) {
+            if (!error) {
+                // TODO: make this a better solution by checking for a problem with the PHP session cookie in CPApi
+                // for now if the email comes back null this person isn't logged in so we're going to send them to do that.
+                if ([webSyncUser.email isKindOfClass:[NSNull class]] || [webSyncUser.email length] == 0) {
+                    [self dismissModalViewControllerAnimated:YES];
+                    NSString *message = @"There was a problem getting your data!\nPlease logout and login again.";
+                    [SVProgressHUD dismissWithError:message afterDelay:kDefaultDismissDelay];
+                } else {
+                    // let's update the local current user with any new data
+                    
+                    if (![self.currentUser.nickname isEqualToString:webSyncUser.nickname]) {
+                        self.currentUser.nickname = webSyncUser.nickname;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    // check email
+                    if (![self.currentUser.email isEqualToString:webSyncUser.email]) {
+                        self.currentUser.email = webSyncUser.email;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    // check photo url
+                    if (![self.currentUser.photoURL isEqual:webSyncUser.photoURL]) {
+                        self.currentUser.photoURL = webSyncUser.photoURL;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    if (![self.currentUser.joinDate isEqual:webSyncUser.joinDate]) {
+                        self.currentUser.joinDate = webSyncUser.joinDate;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    if (![self.currentUser.majorJobCategory isEqualToString:webSyncUser.majorJobCategory]) {
+                        self.currentUser.majorJobCategory = webSyncUser.majorJobCategory;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    if (![self.currentUser.minorJobCategory isEqualToString:webSyncUser.minorJobCategory]) {
+                        self.currentUser.minorJobCategory = webSyncUser.minorJobCategory;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    if (![self.currentUser.hourlyRate isEqualToString:webSyncUser.hourlyRate]) {
+                        self.currentUser.hourlyRate = webSyncUser.hourlyRate;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    if (![self.currentUser.skills isEqualToArray:webSyncUser.skills]) {
+                        self.currentUser.skills = webSyncUser.skills;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    if (![self.currentUser.profileURLVisibility isEqualToString:webSyncUser.profileURLVisibility]) {
+                        self.currentUser.profileURLVisibility = webSyncUser.profileURLVisibility;
+                        self.newDataFromSync = YES;
+                    }
+                    
+                    if (self.newDataFromSync) {
+                        [CPUserDefaultsHandler setCurrentUser:self.currentUser];
+                        [self placeCurrentUserDataAnimated:YES];
+                    }
+                    
+                    [SVProgressHUD dismiss];
+                    self.newDataFromSync = NO;
+                    self.finishedSync = YES;
+                }
             } else {
-                // let's update the local current user with any new data
-
-                if (![self.currentUser.nickname isEqualToString:webSyncUser.nickname]) {
-                    self.currentUser.nickname = webSyncUser.nickname;
-                    self.newDataFromSync = YES;
-                }
-
-                // check email
-                if (![self.currentUser.email isEqualToString:webSyncUser.email]) {
-                    self.currentUser.email = webSyncUser.email;
-                    self.newDataFromSync = YES;
-                }
-
-                // check photo url
-                if (![self.currentUser.photoURL isEqual:webSyncUser.photoURL]) {
-                    self.currentUser.photoURL = webSyncUser.photoURL;
-                    self.newDataFromSync = YES;
-                }
-
-                if (![self.currentUser.joinDate isEqual:webSyncUser.joinDate]) {
-                    self.currentUser.joinDate = webSyncUser.joinDate;
-                    self.newDataFromSync = YES;
-                }
-
-                if (![self.currentUser.majorJobCategory isEqualToString:webSyncUser.majorJobCategory]) {
-                    self.currentUser.majorJobCategory = webSyncUser.majorJobCategory;
-                    self.newDataFromSync = YES;
-                }
-
-                if (![self.currentUser.minorJobCategory isEqualToString:webSyncUser.minorJobCategory]) {
-                    self.currentUser.minorJobCategory = webSyncUser.minorJobCategory;
-                    self.newDataFromSync = YES;
-                }
-
-                if (![self.currentUser.hourlyRate isEqualToString:webSyncUser.hourlyRate]) {
-                    self.currentUser.hourlyRate = webSyncUser.hourlyRate;
-                    self.newDataFromSync = YES;
-                }
-
-                if (![self.currentUser.skills isEqualToArray:webSyncUser.skills]) {
-                    self.currentUser.skills = webSyncUser.skills;
-                    self.newDataFromSync = YES;
-                }
-
-                if (![self.currentUser.profileURLVisibility isEqualToString:webSyncUser.profileURLVisibility]) {
-                    self.currentUser.profileURLVisibility = webSyncUser.profileURLVisibility;
-                    self.newDataFromSync = YES;
-                }
-
-                if (self.newDataFromSync) {
-                    [CPUserDefaultsHandler setCurrentUser:self.currentUser];
-                    [self placeCurrentUserDataAnimated:YES];
-                }
-                
-                [SVProgressHUD dismiss];
-                self.newDataFromSync = NO;
-                self.finishedSync = YES;
+                [self dismissModalViewControllerAnimated:YES];
+                NSString *message = @"There was a problem getting current data. Please try again in a little while.";
+                [SVProgressHUD showErrorWithStatus:message duration:kDefaultDismissDelay];
             }
-        } else {
-            [self dismissModalViewControllerAnimated:YES];
-            NSString *message = @"There was a problem getting current data. Please try again in a little while.";
-            [SVProgressHUD showErrorWithStatus:message duration:kDefaultDismissDelay];
-        }
-    }];
+        }];
+    }
 }
 
 
-#pragma mark - Image Picker Controller Delegate
+#pragma mark - image picker controller handling
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+- (void)imagePickedFromSettingsMenuImagePicker:(UIImage *)image
 {
-    [picker dismissModalViewControllerAnimated:YES];
-    [self placeCurrentUserDataAnimated:YES];
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker
-       didFinishPickingImage:(UIImage *)image
-                 editingInfo:(NSDictionary *)editingInfo
-{
-    [self.cache removeAllObjects];
-    // get rid of the image picker
-    [picker dismissModalViewControllerAnimated:YES];
-    [SVProgressHUD showWithStatus:@"Uploading photo"];
+    self.imageUploadPlaceholder.hidden = NO;
+    
     // upload the image
     [CPapi uploadUserProfilePhoto:image withCompletion:^(NSDictionary *json, NSError *error) {
         if ([[json objectForKey:@"succeeded"] boolValue]) {
             // response was success ... we uploaded a new profile picture
             [self updateCurrentUserWithNewData:json];
-            [SVProgressHUD dismiss];
         } else {
 #if DEBUG
             NSLog(@"Error while uploading file. Here's the json: %@", json);
@@ -344,6 +311,8 @@
 
             [SVProgressHUD dismissWithError:message afterDelay:kDefaultDismissDelay];
         }
+        
+        self.profileImageToUpload = nil;
     }];
 }
 
@@ -400,23 +369,11 @@
     if (kActionSheetChooseNewProfileImageTag == actionSheet.tag) {
         if (buttonIndex == 0 || buttonIndex == 1) {
             if (buttonIndex == 0) {
-                // user wants to pick from camera
-                self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-                // use the front camera by default (if we have one)
-                // if there's no front camera we'll use the back (3GS)
-                if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerCameraDeviceFront]) {
-                    self.imagePicker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
-                }
-
+                [((SettingsMenuController *) self.presentingViewController) showProfilePicturePickerModalForSource:UIImagePickerControllerSourceTypeCamera];
             } else if (buttonIndex == 1) {
                 // user wants to pick from photo library
-                self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                [((SettingsMenuController *) self.presentingViewController) showProfilePicturePickerModalForSource:UIImagePickerControllerSourceTypePhotoLibrary];
             }
-            // show the image picker
-            [self presentModalViewController:self.imagePicker animated:YES];
-        }
-    } else if (kActionSheetDeleteAccountTag == actionSheet.tag) {
-        if (actionSheet.destructiveButtonIndex == buttonIndex) {
         }
     }
 }

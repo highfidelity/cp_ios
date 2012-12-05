@@ -64,6 +64,7 @@
                                 </state>
                                 <connections>
                                     <action selector="blockUIButtonClick:" destination="WGr-Yo-Vg9" eventType="touchUpInside" id="kzQ-Ak-Tme"/>
+                                    <segue destination="cJS-DT-22N" kind="custom" identifier="ShowUserSettingsFromMenuForPickedImage" customClass="PushModalViewControllerFromLeftSegue" id="RLW-GK-xrl"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="B0T-Il-Eqh">
@@ -120,7 +121,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YHg-io-CGj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2050" y="-557"/>
+            <point key="canvasLocation" x="-1948" y="-509"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="o7p-JZ-2b9">
@@ -602,6 +603,17 @@ photo?</string>
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.51000000000000001" colorSpace="calibratedRGB"/>
                                     </label>
+                                    <view hidden="YES" contentMode="scaleToFill" id="7u7-YT-erx">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" animating="YES" style="whiteLarge" id="j9F-Nb-Ek3">
+                                                <rect key="frame" x="32" y="31" width="37" height="37"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </activityIndicatorView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="default-avatar-256.png" id="g6r-Ox-wcS">
                                         <rect key="frame" x="-110" y="0.0" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -656,6 +668,7 @@ photo?</string>
                         <outlet property="emailValidationMsg" destination="oAe-Yh-7tx" id="f3V-PZ-fEE"/>
                         <outlet property="emailView" destination="bJC-rD-suX" id="f5C-QK-dzq"/>
                         <outlet property="floatView" destination="Fxj-7Y-1yW" id="hjh-Ib-V6I"/>
+                        <outlet property="imageUploadPlaceholder" destination="7u7-YT-erx" id="P26-jY-8Ie"/>
                         <outlet property="nicknameTextField" destination="oK8-OI-GYf" id="7tf-TT-aGT"/>
                         <outlet property="profileHeaderView" destination="wSJ-cC-czs" id="jk4-FB-k7G"/>
                         <outlet property="profileImageButton" destination="KQF-R7-ru9" id="ySk-J4-Smx"/>
@@ -1213,6 +1226,7 @@ photo?</string>
             <objects>
                 <navigationController id="cJS-DT-22N" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="2di-UE-RGu"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="HFU-6a-cmg">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1365,6 +1379,7 @@ photo?</string>
                 <relationship kind="outlet" name="emailValidationMsg" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="emailView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="floatView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="imageUploadPlaceholder" candidateClass="UIView"/>
                 <relationship kind="outlet" name="nicknameTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="profileHeaderView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="profileImageButton" candidateClass="UIButton"/>
@@ -1415,4 +1430,7 @@ photo?</string>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="RLW-GK-xrl"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -11,6 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "CPapi.h"
 #import "UIImage+Resize.h"
+#import "UIImage+FixOrientation.h"
 
 @interface CPapi()
 
@@ -555,6 +556,8 @@
     // setup a client for this request so we can do the file uploading magic
     AFHTTPClient *httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kCandPWebServiceUrl]];
     
+    image = [image fixOrientation];
+    
     // do this in a thread so we don't block ui
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
        
@@ -582,7 +585,10 @@
         
         // setup the request to pass the image
         NSURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:@"api.php" parameters:params constructingBodyWithBlock: ^(id <AFMultipartFormData> formData) {
-            [formData appendPartWithFileData:imageData name:@"profile" fileName:[NSString stringWithFormat:@"%@_iPhone_Profile_Upload.jpeg", [CPUserDefaultsHandler currentUser].userID] mimeType:@"image/jpeg"];
+            [formData appendPartWithFileData:imageData
+                                        name:@"profile"
+                                    fileName:[NSString stringWithFormat:@"%@_iPhone_Profile_Upload.jpeg", [CPUserDefaultsHandler currentUser].userID]
+                                    mimeType:@"image/jpeg"];
         }];
         
         // go back to the main queue and make the request (the makeHTTPRequest method will queue it in an operation queue)

@@ -55,6 +55,7 @@
 		532893A115548EB6007B0157 /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939E15548EB6007B0157 /* UserTableViewCell.m */; };
 		532B4159158FD293005B55C0 /* VenueViewToggleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532B4158158FD293005B55C0 /* VenueViewToggleViewController.m */; };
 		532F2CBB156AB8950018DB96 /* UserProfileStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 532F2CBA156AB8950018DB96 /* UserProfileStoryboard_iPhone.storyboard */; };
+		533096F2166EC44C005BA9BC /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 533096F1166EC44C005BA9BC /* UIImage+FixOrientation.m */; };
 		5332FB41152141A4002E7035 /* picture-coming-soon-rectangle.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5332FB3F152141A4002E7035 /* picture-coming-soon-rectangle.jpg */; };
 		5332FB42152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5332FB40152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg */; };
 		5335CF6F1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */; };
@@ -417,6 +418,8 @@
 		532B4157158FD293005B55C0 /* VenueViewToggleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VenueViewToggleViewController.h; path = Venue/VenueViewToggleViewController.h; sourceTree = "<group>"; };
 		532B4158158FD293005B55C0 /* VenueViewToggleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VenueViewToggleViewController.m; path = Venue/VenueViewToggleViewController.m; sourceTree = "<group>"; };
 		532F2CBA156AB8950018DB96 /* UserProfileStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = UserProfileStoryboard_iPhone.storyboard; path = User/UserProfileStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		533096F0166EC44C005BA9BC /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
+		533096F1166EC44C005BA9BC /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
 		5332FB3F152141A4002E7035 /* picture-coming-soon-rectangle.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "picture-coming-soon-rectangle.jpg"; path = "Venue/images/picture-coming-soon-rectangle.jpg"; sourceTree = "<group>"; };
 		5332FB40152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "picture-coming-soon-rectangle@2x.jpg"; path = "Venue/images/picture-coming-soon-rectangle@2x.jpg"; sourceTree = "<group>"; };
 		5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SettingsStoryboard_iPhone.storyboard; path = Settings/SettingsStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
@@ -1108,6 +1111,8 @@
 				539F7DC516558AE6005FF3F0 /* Settings.h */,
 				539F7DC616558AE6005FF3F0 /* Settings.m */,
 				539F7DC716558AE6005FF3F0 /* UI */,
+				533096F0166EC44C005BA9BC /* UIImage+FixOrientation.h */,
+				533096F1166EC44C005BA9BC /* UIImage+FixOrientation.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1977,6 +1982,7 @@
 				539F7E7416558AE6005FF3F0 /* UIImage+ImageBlur.m in Sources */,
 				539F7E7516558AE6005FF3F0 /* UIViewController+isModal.m in Sources */,
 				537B80891666A4AC002CAECB /* CPCheckIn.m in Sources */,
+				533096F2166EC44C005BA9BC /* UIImage+FixOrientation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
