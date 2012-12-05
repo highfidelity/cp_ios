@@ -89,9 +89,16 @@ static AFHTTPClient *sharedClient;
 
 }
 
-+ (void)cancelAutoCheckInRequestWithCompletion:(void (^)(NSDictionary *, NSError *))completion
++ (void)cancelAutoCheckInRequestToVenue:(CPVenue *)venue WithCompletion:(void (^)(NSDictionary *, NSError *))completion
 {
-    NSDictionary *parameters = @{ @"action": @"cancelAutoCheckIn" };
+    
+    NSDictionary *parameters = @{
+        @"lat": [NSString stringWithFormat:@"%.7lf", venue.coordinate.latitude],
+        @"lng": [NSString stringWithFormat:@"%.7lf", venue.coordinate.longitude],
+        @"venue_id": [NSString stringWithFormat:@"%@", venue.venueID],
+        @"action": @"cancelAutoCheckIn"
+    };
+    
     [sharedClient postPath:@"api.php" parameters:parameters
                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
                        completion(responseObject, nil);
