@@ -25,6 +25,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
 @property (strong, nonatomic) AFHTTPClient *httpClient;
 @property (strong, nonatomic) LoadLinkedInConnectionsCompletionBlockType loadLinkedInConnectionsCompletionBlock;
+@property (nonatomic) BOOL isNewUser;
 
 @end
 
@@ -469,8 +470,17 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                                                          [SVProgressHUD showSuccessWithStatus:infoMessage
                                                                                      duration:kDefaultDismissDelay];
                                                      }
+                                                     
                                                      [self loadLinkedInConnectionsWithCompletion:^{
-                                                         [self close:kDefaultDismissDelay];
+                                                         if (self.isNewUser) {
+                                                             UIStoryboard *signupStoryboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
+                                                             UINavigationController *navigationViewController = [signupStoryboard instantiateViewControllerWithIdentifier:@"TutorialViewControllerNavigationViewController"];
+                                                             
+                                                             TutorialViewController *viewController = (TutorialViewController *)navigationViewController.topViewController;
+                                                             [self.navigationController pushViewController:viewController animated:YES];
+                                                         } else {
+                                                             [self close:kDefaultDismissDelay];
+                                                         }
                                                      }];
                                                  }
 
@@ -505,6 +515,8 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
             NSString *userId = [userInfo objectForKey:@"id"];
 
+            self.isNewUser = [[userInfo objectForKey:@"new_user"] boolValue];
+            
             NSDictionary *checkInDict = [userInfo valueForKey:@"checkin_data"];
             if ([[checkInDict objectForKey:@"checked_in"] boolValue]) {
                 CPVenue *venue = [[CPVenue alloc] initFromDictionary:checkInDict];
