@@ -544,8 +544,4 @@
     }
 }
 
-- (void)viewDidUnload {
-    [self setImageUploadPlaceholder:nil];
-    [super viewDidUnload];
-}
 @end
