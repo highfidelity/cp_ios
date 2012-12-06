@@ -18,7 +18,6 @@
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *jobTitle;
-@property (strong, nonatomic) NSString *status;
 @property (strong, nonatomic) NSArray *skills;
 @property (strong, nonatomic) NSString *linkedInPublicProfileUrl;
 @property (strong, nonatomic) NSString *profileURLVisibility;
@@ -37,8 +36,8 @@
 @property (strong, nonatomic) NSMutableArray *badges;
 @property (strong, nonatomic) NSString *smartererName;
 @property (strong, nonatomic) NSNumber *isContact;
-@property (strong, nonatomic) NSNumber *totalCheckInTime;
-@property (strong, nonatomic) NSNumber *totalCheckInCount;
+@property (strong, nonatomic) NSNumber *venueSecondsCheckedIn;
+@property (strong, nonatomic) NSNumber *venueCheckInCount;
 @property (strong, nonatomic) NSNumber *totalHoursCheckedIn;
 @property (strong, nonatomic) NSNumber *totalEndorsementCount;
 @property (strong, nonatomic) CPCheckIn *lastCheckIn;

@@ -13,10 +13,13 @@
 #import "AppDelegate.h"
 #import "PushModalViewControllerFromLeftSegue.h"
 #import "TutorialViewController.h"
+#import "ProfileViewController.h"
 
 #define menuWidthPercentage 0.8
 #define kFeedbackSegueID @"ShowFeedbackFromMenu"
 #define kTutorialSegueID @"ShowTutorialFromMenu"
+#define kProfileSegueID @"ShowUserSettingsFromMenu"
+#define kProfilePickedImageSegueID @"ShowUserSettingsFromMenuForPickedImage"
 
 @interface SettingsMenuController() <UITabBarControllerDelegate>
 
@@ -27,6 +30,7 @@
 @property (strong, nonatomic) UITapGestureRecognizer *menuCloseGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanFromNavbarGestureRecognizer;
+@property (strong, nonatomic) UIImage *pickedImage;
 @property (nonatomic) CGPoint panStartLocation;
 
 - (void)setMapAndButtonsViewXOffset:(CGFloat)xOffset;
@@ -453,6 +457,49 @@
                 break;
         }
     }
+}
+
+#pragma mark - prepareForSegue
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:kProfilePickedImageSegueID]) {
+        ((ProfileViewController *) [segue.destinationViewController topViewController]).profileImageToUpload = self.pickedImage;
+    }
+}
+
+#pragma mark - UIImagePickerController
+- (void)showProfilePicturePickerModalForSource:(UIImagePickerControllerSourceType)imagePickerSource
+{
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    imagePickerController.sourceType = imagePickerSource;
+    
+    if (imagePickerSource == UIImagePickerControllerSourceTypeCamera) {
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerCameraDeviceFront]) {
+            imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+        }
+    }
+    
+    [self.presentedViewController dismissPushModalViewControllerFromLeftSegueWithCompletion:^{
+        [self presentViewController:imagePickerController animated:YES completion:nil];
+    }];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    self.pickedImage = info[UIImagePickerControllerOriginalImage];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self performSegueWithIdentifier:kProfilePickedImageSegueID sender:self];
+    }];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self performSegueWithIdentifier:kProfileSegueID sender:self];
+    }];
+    
 }
 
 @end

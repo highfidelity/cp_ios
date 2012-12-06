@@ -10,6 +10,7 @@
 #import "CPCheckinHandler.h"
 #import "CPUserSessionHandler.h"
 #import "VenueInfoViewController.h"
+#import "LinkedInLoginController.h"
 
 @interface CPTabBarController()
 
@@ -98,11 +99,15 @@
         UINavigationController *contactsController = [mainStoryboard instantiateViewControllerWithIdentifier:@"contactsNavigationController"];
 
         NSMutableArray *tabVCArray = [self.viewControllers mutableCopy];
-        [tabVCArray replaceObjectAtIndex:(kNumberOfTabsRightOfButton - 1) withObject:contactsController];
-        self.viewControllers = tabVCArray;
+        UINavigationController *replacedController = [tabVCArray objectAtIndex:(kNumberOfTabsRightOfButton - 1)];
         
-        // tell the thinBar to update the button
-        [self.thinBar refreshLastTab:YES];
+        // replace last tab if the conntroller is LinkedIn login
+        if ([[replacedController visibleViewController] class] == [LinkedInLoginController class]) {
+            [tabVCArray replaceObjectAtIndex:(kNumberOfTabsRightOfButton - 1) withObject:contactsController];
+            self.viewControllers = tabVCArray;
+            // tell the thinBar to update the button
+            [self.thinBar refreshLastTab:YES];
+        }
     }  
 }
 

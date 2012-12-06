@@ -15,5 +15,6 @@ extern NSString* const kRouteMarkers;
 extern NSString* const kRouteVenueCheckedInUsers;
 extern NSString* const kRouteVenueFullDetails;
 extern NSString* const kRouteNearestCheckedIn;
+extern NSString* const kRouteContactsAndRequests;
 
 @end

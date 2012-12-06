@@ -107,8 +107,8 @@
             @"major_job_category" : @"majorJobCategory",
             @"minor_job_category" : @"minorJobCategory",
             @"is_contact" : @"isContact",
-            @"total_check_in_time" : @"totalCheckInTime",
-            @"total_check_in_count" : @"totalCheckInCount",
+            @"venue_check_in_time" : @"venueSecondsCheckedIn",
+            @"venue_check_in_count" : @"venueCheckInCount",
             @"total_hours_checked_in" : @"totalHoursCheckedIn",
             @"total_endorsement_count" : @"totalEndorsementCount"
          }];
@@ -132,7 +132,7 @@
             @"lat" : @"lat",
             @"lng" : @"lng",
             @"status_text" : @"statusText",
-            @"checked_in" : @"isCurrentlyCheckedIn"
+            @"checkout_timestamp" : @"checkoutSinceEpoch"
          }];
         
         RKRelationshipMapping *venueRel = [RKRelationshipMapping relationshipMappingFromKeyPath:@"venue" toKeyPath:@"venue" withMapping:[self venueRKObjectMapping]];
@@ -146,6 +146,7 @@ NSString* const kRouteMarkers = @"markers";
 NSString* const kRouteVenueCheckedInUsers = @"venueCheckedInUsers";
 NSString* const kRouteVenueFullDetails = @"venueDetails";
 NSString* const kRouteNearestCheckedIn = @"nearestCheckedIn";
+NSString* const kRouteContactsAndRequests = @"contactsAndRequests";
 
 + (void)setupAllRKRouting
 {
@@ -162,6 +163,9 @@ NSString* const kRouteNearestCheckedIn = @"nearestCheckedIn";
                                                             method:RKRequestMethodGET]];
     [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:kRouteNearestCheckedIn
                                                        pathPattern:@"api.php?action=getNearestCheckedIn&lat=:lat&lng=:lng"
+                                                            method:RKRequestMethodGET]];
+    [sharedManager.router.routeSet addRoute:[RKRoute routeWithName:kRouteContactsAndRequests
+                                                       pathPattern:@"api.php?action=getContactsAndContactRequests"
                                                             method:RKRequestMethodGET]];
 }
 

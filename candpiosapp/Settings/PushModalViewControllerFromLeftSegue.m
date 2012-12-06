@@ -37,7 +37,12 @@
 
 @implementation UIViewController (DismissPushModalViewControllerFromLeftSegue)
 
-- (void)dismissPushModalViewControllerFromLeftSegue {
+- (void)dismissPushModalViewControllerFromLeftSegue
+{
+    [self dismissPushModalViewControllerFromLeftSegueWithCompletion:nil];
+}
+
+- (void)dismissPushModalViewControllerFromLeftSegueWithCompletion:(void (^)(void))completion {
     UIViewController *src = (UIViewController *) self.navigationController;
     UIViewController *dst = (UIViewController *) self.presentingViewController;
     float shift = [UIScreen mainScreen].bounds.size.width;
@@ -55,7 +60,11 @@
                          src.view.transform = CGAffineTransformMakeTranslation(-shift, 0);
                      }
                      completion:^(BOOL finished){
-                         [src dismissModalViewControllerAnimated:NO];
+                         [src dismissViewControllerAnimated:NO completion:^{
+                             if (completion) {
+                                 completion();
+                             }
+                         }];
                      }
      ];
 }
