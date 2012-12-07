@@ -266,7 +266,8 @@
                 
                 CPUser *checkedInUser = [[CPUser alloc] init];
                 checkedInUser.nickname = [user objectForKey:@"nickname"];
-                checkedInUser.status = [user objectForKey:@"status_text"];
+                checkedInUser.lastCheckIn = [[CPCheckIn alloc] init];
+                checkedInUser.lastCheckIn.statusText = [user objectForKey:@"status_text"];
                 
                 // add this user to the user array
                 // this is how we put the user's info in the info bubble later
@@ -454,7 +455,7 @@
     // set the nickname and status on the info bubble
     // decode the HTML entities
     self.infoBubbleNickname.text = [[self.userArray objectAtIndex:userIndex] nickname];
-    NSString *status = [[self.userArray objectAtIndex:userIndex] status];
+    NSString *status = [[[self.userArray objectAtIndex:userIndex] lastCheckIn] statusText];
     if ([status length] > 0) {
         self.infoBubbleStatus.text = [NSString stringWithFormat:@"\"%@\"", status];
     } else {

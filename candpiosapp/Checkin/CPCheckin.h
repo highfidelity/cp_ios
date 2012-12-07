@@ -14,7 +14,9 @@
 @property (strong, nonatomic) NSNumber *lat;
 @property (strong, nonatomic) NSNumber *lng;
 @property (strong, nonatomic) NSString *statusText;
-@property (strong, nonatomic) NSNumber *isCurrentlyCheckedIn;
+@property (nonatomic, readonly) BOOL isCurrentlyCheckedIn;
+@property (strong, nonatomic) NSNumber *checkoutSinceEpoch;
+@property (strong, nonatomic, readonly) NSDate *checkoutDate;
 @property (strong, nonatomic) CPVenue *venue;
 
 @end
