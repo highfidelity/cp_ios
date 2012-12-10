@@ -435,11 +435,11 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     AFJSONRequestOperation *operation = [AFJSONRequestOperation
                                          JSONRequestOperationWithRequest:request
                                          success:
-                                         ^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-                                             NSInteger succeeded = [[JSON objectForKey:@"succeeded"] intValue];
+                                         ^(NSURLRequest *request, NSHTTPURLResponse *response, id json) {
+                                             NSInteger succeeded = [[json objectForKey:@"succeeded"] intValue];
 
                                              if(succeeded == 0) {
-                                                 NSString *outerErrorMessage = [JSON objectForKey:@"message"];// often just 'error'
+                                                 NSString *outerErrorMessage = [json objectForKey:@"message"];// often just 'error'
                                                  // we get here if we failed to login
                                                  NSString *errorMessage = [NSString stringWithFormat:@"The error was: %@", outerErrorMessage];
                                                  [SVProgressHUD showErrorWithStatus:errorMessage duration:kDefaultDismissDelay];
@@ -447,7 +447,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 
                                              } else {
 
-                                                 NSString *status = [JSON objectForKey:@"message"];
+                                                 NSString *status = [json objectForKey:@"message"];
 
                                                  [SVProgressHUD dismiss];
 
@@ -461,27 +461,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
                                                      alertView.context = loginParams;
                                                      [alertView show];
                                                  } else {
-                                                     [self setLoginData:JSON];
-                                                     if ([status isEqualToString:@"welcome-back"]) {
-
-                                                         NSString *infoMessage = @"Welcome back!"
-                                                         @"\nYour inactive account has been reactivated and you have been logged in.";
-
-                                                         [SVProgressHUD showSuccessWithStatus:infoMessage
-                                                                                     duration:kDefaultDismissDelay];
-                                                     }
-                                                     
-                                                     [self loadLinkedInConnectionsWithCompletion:^{
-                                                         if (self.isNewUser) {
-                                                             UIStoryboard *signupStoryboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
-                                                             UINavigationController *navigationViewController = [signupStoryboard instantiateViewControllerWithIdentifier:@"TutorialViewControllerNavigationViewController"];
-                                                             
-                                                             TutorialViewController *viewController = (TutorialViewController *)navigationViewController.topViewController;
-                                                             [self.navigationController pushViewController:viewController animated:YES];
-                                                         } else {
-                                                             [self close:kDefaultDismissDelay];
-                                                         }
-                                                     }];
+                                                     [self completeLoginwithJSON:json];
                                                  }
 
                                              }
@@ -506,10 +486,11 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"linkedInCredentials" object:nil];
 }
 
--(void)setLoginData:(id)JSON
+-(void)completeLoginwithJSON:(NSDictionary *)json
 {
     @try {
-        NSDictionary *userInfo = [[JSON objectForKey:@"params"] objectForKey:@"params"];
+        NSDictionary *userInfo = json[@"params"][@"params"];
+        NSLog(@"%@", userInfo);
         if (userInfo) {
             [CPUserSessionHandler storeUserLoginDataFromDictionary:userInfo];
 
@@ -532,6 +513,27 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
             [Flurry setUserID:userId];
             
             [CPUserSessionHandler performAfterLoginActions];
+            
+            if ([json[@"status"] isEqualToString:@"welcome-back"]) {
+                
+                NSString *infoMessage = @"Welcome back!"
+                @"\nYour inactive account has been reactivated and you have been logged in.";
+                
+                [SVProgressHUD showSuccessWithStatus:infoMessage
+                                            duration:kDefaultDismissDelay];
+            }
+            
+            [self loadLinkedInConnectionsWithCompletion:^{
+                if (self.isNewUser) {
+                    UIStoryboard *signupStoryboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
+                    UINavigationController *navigationViewController = [signupStoryboard instantiateViewControllerWithIdentifier:@"TutorialViewControllerNavigationViewController"];
+                    
+                    TutorialViewController *viewController = (TutorialViewController *)navigationViewController.topViewController;
+                    [self.navigationController pushViewController:viewController animated:YES];
+                } else {
+                    [self close:kDefaultDismissDelay];
+                }
+            }];
         }
     }
     @catch (NSException* ex) {

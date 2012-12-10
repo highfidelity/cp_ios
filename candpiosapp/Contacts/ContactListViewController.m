@@ -408,12 +408,12 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
 
 - (void)clickedDeclineButtonInUserTableViewCell:(ContactListCell *)contactListCell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:contactListCell];
-    NSDictionary *contactData = [self.contactRequests objectAtIndex:indexPath.row];
+    CPUser *contactFromRequest = [self.contactRequests objectAtIndex:indexPath.row];
     
     [self.contactRequests removeObjectAtIndex:indexPath.row];
     [self animateRemoveContactRequestAtIndex:indexPath.row];
     
-    [CPapi sendDeclineContactRequestFromUserID:@([[contactData objectForKey:@"id"] intValue])
+    [CPapi sendDeclineContactRequestFromUserID:contactFromRequest.userID
                                     completion:^(NSDictionary *json, NSError *error) {
                                         [self handleSendAcceptOrDeclineComletionWithJson:json andError:error];
                                     }];
