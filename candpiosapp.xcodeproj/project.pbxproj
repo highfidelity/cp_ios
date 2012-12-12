@@ -342,6 +342,8 @@
 		E493787C16655E5F004AEAC0 /* headline-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E493787A16655E5F004AEAC0 /* headline-icon.png */; };
 		E493787D16655E5F004AEAC0 /* headline-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E493787B16655E5F004AEAC0 /* headline-icon@2x.png */; };
 		E4C35C4114F1323A009B6DBF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C35C4014F1323A009B6DBF /* AudioToolbox.framework */; };
+		E4D3B40E1677CDF50083BCF3 /* powered-by-foursquare@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4D3B40C1677CDF50083BCF3 /* powered-by-foursquare@2x.png */; };
+		E4D3B40F1677CDF50083BCF3 /* powered-by-foursquare.png in Resources */ = {isa = PBXBuildFile; fileRef = E4D3B40D1677CDF50083BCF3 /* powered-by-foursquare.png */; };
 		E4DFEB4E1554915100AE90F0 /* ProfileNotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4DFEB4D1554915100AE90F0 /* ProfileNotificationsViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -773,6 +775,8 @@
 		E493787A16655E5F004AEAC0 /* headline-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "headline-icon.png"; path = "Checkin/images/headline-icon.png"; sourceTree = "<group>"; };
 		E493787B16655E5F004AEAC0 /* headline-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "headline-icon@2x.png"; path = "Checkin/images/headline-icon@2x.png"; sourceTree = "<group>"; };
 		E4C35C4014F1323A009B6DBF /* AudioToolbox.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		E4D3B40C1677CDF50083BCF3 /* powered-by-foursquare@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "powered-by-foursquare@2x.png"; path = "Checkin/images/powered-by-foursquare@2x.png"; sourceTree = "<group>"; };
+		E4D3B40D1677CDF50083BCF3 /* powered-by-foursquare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "powered-by-foursquare.png"; path = "Checkin/images/powered-by-foursquare.png"; sourceTree = "<group>"; };
 		E4DFEB4C1554915100AE90F0 /* ProfileNotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileNotificationsViewController.h; path = Settings/ProfileNotificationsViewController.h; sourceTree = "<group>"; };
 		E4DFEB4D1554915100AE90F0 /* ProfileNotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileNotificationsViewController.m; path = Settings/ProfileNotificationsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -923,6 +927,8 @@
 		536DE92A150170CC00794650 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				E4D3B40C1677CDF50083BCF3 /* powered-by-foursquare@2x.png */,
+				E4D3B40D1677CDF50083BCF3 /* powered-by-foursquare.png */,
 				E493787A16655E5F004AEAC0 /* headline-icon.png */,
 				E493787B16655E5F004AEAC0 /* headline-icon@2x.png */,
 				537DEA901624A0EF00D59AC9 /* check-in-list-error.png */,
@@ -1872,6 +1878,8 @@
 				69D4AC98166586D700BA1160 /* endorse-count-in-list@2x.png in Resources */,
 				69C0057316681FD200242664 /* chat-entry-field.png in Resources */,
 				69C0057416681FD200242664 /* chat-entry-field@2x.png in Resources */,
+				E4D3B40E1677CDF50083BCF3 /* powered-by-foursquare@2x.png in Resources */,
+				E4D3B40F1677CDF50083BCF3 /* powered-by-foursquare.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
