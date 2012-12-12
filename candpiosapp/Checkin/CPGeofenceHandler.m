@@ -14,11 +14,6 @@
 #define kGeoFenceAlertTag 601
 #define kRadiusForCheckins 10 // measure in meters, from lat/lng of CPVenue
 
-@interface CPGeofenceHandler()
-
-@property (strong, nonatomic) NSNumber *pendingVenueCheckInID;
-@end
-
 @implementation CPGeofenceHandler
 
 static CPGeofenceHandler *sharedHandler;
@@ -68,26 +63,14 @@ static CPGeofenceHandler *sharedHandler;
 
 - (void)autoCheckInForVenue:(CPVenue *)venue
 {
-    // Check to see if there is an existing checkin request for this venueID to eliminate duplicate check-ins from multiple geofence triggers
-    
-    if (self.pendingVenueCheckInID && [venue.venueID isEqualToNumber:self.pendingVenueCheckInID]) {
-        [Flurry logEvent:@"autoCheckedInDuplicateIgnored"];
-    } else {
-        self.pendingVenueCheckInID = venue.venueID;
-        [CPCheckinHandler sharedHandler].pendingAutoCheckInVenue = nil;
-        // use CPapi to checkin
-        [CPApiClient autoCheckInToVenue:venue
-                             completion:^(NSDictionary *json, NSError *error) {
-                                 
-                                 if (!error) {
-                                     [Flurry logEvent:@"autoCheckInRequest" withParameters:json timed:YES];
-                                     [CPCheckinHandler sharedHandler].pendingAutoCheckInVenue = venue;
-                                 }
-                                 // Reset pendingVenueCheckInID to 0 upon completion,
-                                 // regardless of success since we would want the check-in to complete if it failed previously
-                                 self.pendingVenueCheckInID = nil;
-                             }];
-    }
+    // use CPapi to checkin
+    [CPApiClient autoCheckInToVenue:venue
+                         completion:^(NSDictionary *json, NSError *error)
+    {
+         if (!error) {
+             [Flurry logEvent:@"autoCheckInRequest" withParameters:json timed:YES];
+         }
+    }];
 }
 
 - (void)handleAutoCheckOutForVenue:(CPVenue *)venue
@@ -104,10 +87,10 @@ static CPGeofenceHandler *sharedHandler;
 - (void)cancelAutoCheckInRequest:(CPVenue *)venue
 {
     [CPApiClient cancelAutoCheckInRequestToVenue:venue
-                                  WithCompletion:^(NSDictionary *json, NSError *error) {
+                                  WithCompletion:^(NSDictionary *json, NSError *error)
+    {
         if (!error) {
             [Flurry logEvent:@"cancelAutoCheckInRequest" withParameters:json timed:YES];
-            [CPCheckinHandler sharedHandler].pendingAutoCheckInVenue = nil;
         }
     }];
 }
