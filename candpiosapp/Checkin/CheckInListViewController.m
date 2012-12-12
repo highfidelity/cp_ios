@@ -103,6 +103,8 @@ typedef enum {
     
     // we're going offscreen, stop listening to see if the keyboard comes up or goes away
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    self.checkinLocationManager = nil;
 }
 
 #pragma mark - Overriden getters
