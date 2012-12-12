@@ -85,26 +85,26 @@ static CPGeofenceHandler *sharedHandler;
                                  }
                                  // Reset pendingVenueCheckInID to 0 upon completion,
                                  // regardless of success since we would want the check-in to complete if it failed previously
-                                 self.pendingVenueCheckInID = 0;
+                                 self.pendingVenueCheckInID = nil;
                              }];
     }
 }
 
-- (void)handleAutoCheckOutForRegion:(CLRegion *)region
+- (void)handleAutoCheckOutForVenue:(CPVenue *)venue
 {
-    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [[CPUserDefaultsHandler currentVenue].name isEqualToString:region.identifier]) {
-        [self autoCheckOutForRegion:region];
+    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [[CPUserDefaultsHandler currentVenue].venueID isEqualToNumber:venue.venueID]) {
+        [self autoCheckOutForVenue:venue];
     }
     
     if ([CPCheckinHandler sharedHandler].pendingAutoCheckInVenue) {
-        [self cancelAutoCheckInRequest];
+        [self cancelAutoCheckInRequest:venue];
     }
 }
 
-- (void)cancelAutoCheckInRequest
+- (void)cancelAutoCheckInRequest:(CPVenue *)venue
 {
-    // use CPapi to checkin
-    [CPApiClient cancelAutoCheckInRequestWithCompletion:^(NSDictionary *json, NSError *error) {
+    [CPApiClient cancelAutoCheckInRequestToVenue:venue
+                                  WithCompletion:^(NSDictionary *json, NSError *error) {
         if (!error) {
             [Flurry logEvent:@"cancelAutoCheckInRequest" withParameters:json timed:YES];
             [CPCheckinHandler sharedHandler].pendingAutoCheckInVenue = nil;
@@ -112,7 +112,7 @@ static CPGeofenceHandler *sharedHandler;
     }];
 }
 
-- (void)autoCheckOutForRegion:(CLRegion *)region
+- (void)autoCheckOutForVenue:(CPVenue *)venue
 {
     [Flurry logEvent:@"autoCheckedOut"];
     
@@ -126,8 +126,8 @@ static CPGeofenceHandler *sharedHandler;
             [[UIApplication sharedApplication] cancelAllLocalNotifications];
             
             NSDictionary *jsonDict = [json objectForKey:@"payload"];
-            NSString *venue = [jsonDict valueForKey:@"venue_name"];
-            NSMutableString *alertText = [NSMutableString stringWithFormat:@"Checked out of %@.", venue];
+            NSString *venueName = [jsonDict valueForKey:@"venue_name"];
+            NSMutableString *alertText = [NSMutableString stringWithFormat:@"Checked out of %@.", venueName];
             
             int hours = [[jsonDict valueForKey:@"hours_checked_in"] intValue];
             if (hours == 1) {
@@ -143,7 +143,7 @@ static CPGeofenceHandler *sharedHandler;
             
             localNotif.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @"exit", @"geofence",
-                                   region.identifier, @"venue_name",
+                                   venue.name, @"venue_name",
                                    nil];
             
             [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
@@ -172,7 +172,7 @@ static CPGeofenceHandler *sharedHandler;
         // Cancel all old local notifications
         [[UIApplication sharedApplication] cancelAllLocalNotifications];
 
-        CPVenue *venue = [[CPVenue alloc] init];
+        CPVenue *venue;
         if ([[CPCheckinHandler sharedHandler].pendingAutoCheckInVenue.venueID isEqualToNumber:venueID]) {
             venue = [CPCheckinHandler sharedHandler].pendingAutoCheckInVenue;
         } else {
