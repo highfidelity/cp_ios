@@ -279,7 +279,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="powered-by-foursquare.png" id="zNd-0W-rZa">
-                                                    <rect key="frame" x="160" y="9" width="150" height="16"/>
+                                                    <rect key="frame" x="85" y="9" width="150" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
