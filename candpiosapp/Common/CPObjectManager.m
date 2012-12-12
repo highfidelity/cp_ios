@@ -22,7 +22,7 @@
     
     // if you want RK to log out request/response
     // flip this to 1
-#if 0
+#if 1
     RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
 #endif
     
