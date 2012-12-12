@@ -31,11 +31,6 @@
 
 @implementation MapTabController
 
-- (void)applicationDidBecomeActive:(NSNotification *)notification {
-    // Reload all pins when the app comes back into the foreground
-    [self refreshButtonClicked:nil];
-}
-
 #pragma mark - View lifecycle
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -46,18 +41,15 @@
     
     // Register to receive userCheckedIn notification to intitiate map refresh immediately after user checks in
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(userCheckedIn:)
+                                             selector:@selector(refreshLocationsIfNeeded)
                                                  name:@"userCheckInStateChange"
                                                object:nil];
     
-    // Add a notification catcher for applicationDidBecomeActive to refresh map pins
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationDidBecomeActive:)
-                                                 name:@"applicationDidBecomeActive"
+                                             selector:@selector(stopReloadTimer) name:@"applicationDidEnterBackground"
                                                object:nil];
     
     self.mapHasLoaded = NO;
-    
 	self.hasUpdatedUserLocation = false;
     
 	// let's assume when this view loads we don't know the location status
@@ -92,16 +84,6 @@
     [self.view addSubview:shadowView];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-	[self.reloadTimer invalidate];
-	self.reloadTimer = nil;
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"userCheckInStateChange" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"applicationDidBecomeActive" object:nil];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     
@@ -124,9 +106,13 @@
     }
 }
 
-- (void)userCheckedIn:(NSNotification *)notification
-{
-    [self refreshButtonClicked:notification];
+- (void)restartActiveAppTasks {
+    
+    // Reload all pins when the app comes back into the foreground
+    [self refreshLocations:nil];
+    
+    // restart the reload timer that was stopped when we backgrounded
+    [self startReloadTimer];
 }
 
 - (IBAction)refreshButtonClicked:(id)sender
@@ -456,18 +442,32 @@
         
         // every 10 seconds, see if it's time to refresh the data
         // (the data invalidates every 2 minutes, but we check more often)
+        [self startReloadTimer];
         
-        self.reloadTimer = [NSTimer scheduledTimerWithTimeInterval:10.0
-                                                            target:self
-                                                          selector:@selector(refreshLocationsIfNeeded)
-                                                          userInfo:nil
-                                                           repeats:YES];
-        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(restartActiveAppTasks)
+                                                     name:@"applicationWillEnterForeground"
+                                                   object:nil];
         
         // invalidate this timer so its done
         [self.locationAllowTimer invalidate];
         self.locationAllowTimer = nil;
     }
+}
+
+- (void)startReloadTimer
+{
+    self.reloadTimer = [NSTimer scheduledTimerWithTimeInterval:10.0
+                                                        target:self
+                                                      selector:@selector(refreshLocationsIfNeeded)
+                                                      userInfo:nil
+                                                       repeats:YES];
+}
+
+- (void)stopReloadTimer
+{
+    [self.reloadTimer invalidate];
+    self.reloadTimer = nil;
 }
 
 - (void)spinRefreshArrow
