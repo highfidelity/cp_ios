@@ -354,25 +354,31 @@ typedef enum {
 - (NSInteger)numberOfRowsForTableView
 {
     if (!self.isUserSearching) {
-        // 1 for neighborhood, 1 for default if it exists, number of close venues
-        return 1 + !!self.defaultVenue + self.closeVenues.count + (self.currentSearchState != CPCheckInListSearchStateComplete);
+        // 1 for neighborhood, 1 for default if it exists, number of close venues + 1 for foursquare logo
+        return 2 + !!self.defaultVenue + self.closeVenues.count + (self.currentSearchState != CPCheckInListSearchStateComplete);
     } else {
-        // one row for each venue in search result array
-        return !!self.searchNeighborhoodVenue + !!self.searchDefaultVenue + self.searchCloseVenues.count + (self.currentSearchState != CPCheckInListSearchStateComplete);
+        // one row for each venue in search result array + 1 for foursquare logo
+        return !!self.searchNeighborhoodVenue + !!self.searchDefaultVenue + self.searchCloseVenues.count + (self.currentSearchState != CPCheckInListSearchStateComplete) + 1;
     }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self numberOfRowsForTableView];
+    NSInteger ret =  [self numberOfRowsForTableView];
+    return ret;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // foursquare cell for last row
+    if (indexPath.row == [self numberOfRowsForTableView] - 1) {
+        return [tableView dequeueReusableCellWithIdentifier:@"FoursquareListTableCell"];
+    }
+    
     CheckInListCell *cell;
     
-    if ((self.currentSearchState != CPCheckInListSearchStateComplete) && indexPath.row == [self numberOfRowsForTableView] - 1) {
+    if ((self.currentSearchState != CPCheckInListSearchStateComplete) && indexPath.row == [self numberOfRowsForTableView] - 2) {
         if (self.currentSearchState == CPCheckInListSearchStateInProgress) {
             // this is the acitivity spinner cell that shows up when the user is searching
             cell = [tableView dequeueReusableCellWithIdentifier:@"SearchingCheckInListTableCell"];
@@ -385,6 +391,7 @@ typedef enum {
             cell = [tableView dequeueReusableCellWithIdentifier:@"SearchErrorCheckInListTableCell"];
         }
     } else {
+        
         CPVenue *cellVenue = [self venueForTableViewIndexPath:indexPath];
         
         // default for main label is venue name
@@ -435,10 +442,10 @@ typedef enum {
 #define SWITCH_VENUE_ALERT_TAG 1230
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{   
     if ([CPUserDefaultsHandler currentUser]) {
         
-        if ((self.currentSearchState != CPCheckInListSearchStateComplete) && indexPath.row == [self numberOfRowsForTableView] - 1) {
+        if ((self.currentSearchState != CPCheckInListSearchStateComplete) && indexPath.row == [self numberOfRowsForTableView] - 2) {
             if (self.currentSearchState == CPCheckInListSearchStateError) {
                 // this is the error cell and the user has tapped to reload
                 
@@ -489,9 +496,13 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // foursquare logo cell
+    if (indexPath.row == [self numberOfRowsForTableView] - 1) {
+        return 35;
+    }
     // if this is a WFH cell make it a little taller
     // otherwise it's the standard 45
-    if ((self.currentSearchState != CPCheckInListSearchStateComplete) && indexPath.row == [self numberOfRowsForTableView] - 1) {
+    else if ((self.currentSearchState != CPCheckInListSearchStateComplete) && indexPath.row == [self numberOfRowsForTableView] - 2) {
         return 45;
     } else if ((!self.isUserSearching && indexPath.row == 0) || [[self venueForTableViewIndexPath:indexPath].isNeighborhood boolValue]) {
         return 60;

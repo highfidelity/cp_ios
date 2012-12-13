@@ -14,7 +14,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" showsUserLocation="YES" id="mze-wm-xvZ">
-                                <rect key="frame" x="0.0" y="44" width="320" height="115"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="115"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="wkj-5I-5nj" id="l99-H5-GMg"/>
@@ -270,6 +270,21 @@
                                         <connections>
                                             <outlet property="venueName" destination="sNv-6o-aVK" id="tYq-yB-u40"/>
                                         </connections>
+                                    </tableViewCell>
+                                    <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FoursquareListTableCell" rowHeight="35" id="ngM-92-AKi" customClass="CheckInListCell">
+                                        <rect key="frame" x="0.0" y="277" width="320" height="35"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="34"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="powered-by-foursquare.png" id="zNd-0W-rZa">
+                                                    <rect key="frame" x="85" y="9" width="150" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -632,6 +647,7 @@
         <image name="headline-icon.png" width="27" height="24"/>
         <image name="list-arrow-dark-grey.png" width="11" height="16"/>
         <image name="map-marker.png" width="40" height="36"/>
+        <image name="powered-by-foursquare.png" width="150" height="16"/>
         <image name="wfh-icon.png" width="30" height="21"/>
     </resources>
     <classes>
