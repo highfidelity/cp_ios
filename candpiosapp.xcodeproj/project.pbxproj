@@ -44,7 +44,6 @@
 		532893A115548EB6007B0157 /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939E15548EB6007B0157 /* UserTableViewCell.m */; };
 		532B4159158FD293005B55C0 /* VenueViewToggleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532B4158158FD293005B55C0 /* VenueViewToggleViewController.m */; };
 		532F2CBB156AB8950018DB96 /* UserProfileStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 532F2CBA156AB8950018DB96 /* UserProfileStoryboard_iPhone.storyboard */; };
-		533096F2166EC44C005BA9BC /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 533096F1166EC44C005BA9BC /* UIImage+FixOrientation.m */; };
 		5332FB41152141A4002E7035 /* picture-coming-soon-rectangle.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5332FB3F152141A4002E7035 /* picture-coming-soon-rectangle.jpg */; };
 		5332FB42152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5332FB40152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg */; };
 		5335CF6F1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */; };
@@ -234,6 +233,7 @@
 		53A9F7761561912A0049F427 /* send-love.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A9F7741561912A0049F427 /* send-love.png */; };
 		53A9F7771561912A0049F427 /* send-love@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53A9F7751561912A0049F427 /* send-love@2x.png */; };
 		53AA7A841566CB1500006E85 /* ContactListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AA7A831566CB1500006E85 /* ContactListCell.m */; };
+		53B2B2D4167BBE8500D73096 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B2B2D3167BBE8500D73096 /* UIImage+FixOrientation.m */; };
 		53B6C4D2152108B5002934B8 /* place-location.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B6C4CE152108B5002934B8 /* place-location.png */; };
 		53B6C4D3152108B5002934B8 /* place-location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B6C4CF152108B5002934B8 /* place-location@2x.png */; };
 		53B6C4D4152108B5002934B8 /* place-phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B6C4D0152108B5002934B8 /* place-phone.png */; };
@@ -423,8 +423,6 @@
 		532B4157158FD293005B55C0 /* VenueViewToggleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VenueViewToggleViewController.h; path = Venue/VenueViewToggleViewController.h; sourceTree = "<group>"; };
 		532B4158158FD293005B55C0 /* VenueViewToggleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VenueViewToggleViewController.m; path = Venue/VenueViewToggleViewController.m; sourceTree = "<group>"; };
 		532F2CBA156AB8950018DB96 /* UserProfileStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = UserProfileStoryboard_iPhone.storyboard; path = User/UserProfileStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		533096F0166EC44C005BA9BC /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
-		533096F1166EC44C005BA9BC /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
 		5332FB3F152141A4002E7035 /* picture-coming-soon-rectangle.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "picture-coming-soon-rectangle.jpg"; path = "Venue/images/picture-coming-soon-rectangle.jpg"; sourceTree = "<group>"; };
 		5332FB40152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "picture-coming-soon-rectangle@2x.jpg"; path = "Venue/images/picture-coming-soon-rectangle@2x.jpg"; sourceTree = "<group>"; };
 		5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SettingsStoryboard_iPhone.storyboard; path = Settings/SettingsStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
@@ -659,6 +657,8 @@
 		53A9F7751561912A0049F427 /* send-love@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-love@2x.png"; path = "User/images/send-love@2x.png"; sourceTree = "<group>"; };
 		53AA7A821566CB1500006E85 /* ContactListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactListCell.h; sourceTree = "<group>"; };
 		53AA7A831566CB1500006E85 /* ContactListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactListCell.m; sourceTree = "<group>"; };
+		53B2B2D2167BBE8500D73096 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
+		53B2B2D3167BBE8500D73096 /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
 		53B6C4CE152108B5002934B8 /* place-location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "place-location.png"; path = "Venue/images/place-location.png"; sourceTree = "<group>"; };
 		53B6C4CF152108B5002934B8 /* place-location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "place-location@2x.png"; path = "Venue/images/place-location@2x.png"; sourceTree = "<group>"; };
 		53B6C4D0152108B5002934B8 /* place-phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "place-phone.png"; path = "Venue/images/place-phone.png"; sourceTree = "<group>"; };
@@ -1165,8 +1165,8 @@
 				539F7DC516558AE6005FF3F0 /* Settings.h */,
 				539F7DC616558AE6005FF3F0 /* Settings.m */,
 				539F7DC716558AE6005FF3F0 /* UI */,
-				533096F0166EC44C005BA9BC /* UIImage+FixOrientation.h */,
-				533096F1166EC44C005BA9BC /* UIImage+FixOrientation.m */,
+				53B2B2D2167BBE8500D73096 /* UIImage+FixOrientation.h */,
+				53B2B2D3167BBE8500D73096 /* UIImage+FixOrientation.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2054,6 +2054,7 @@
 				533DCA10166956E600A0901E /* LinkedInLoginController.m in Sources */,
 				533DCA11166956E600A0901E /* SignupController.m in Sources */,
 				533DCA13166956E600A0901E /* TutorialViewController.m in Sources */,
+				53B2B2D4167BBE8500D73096 /* UIImage+FixOrientation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
