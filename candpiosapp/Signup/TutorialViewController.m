@@ -153,14 +153,15 @@ examle json:
     NSDictionary *cellInfo = pageInfo[@"user_cell"];
     if (cellInfo) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
-        ContactListViewController *contacListViewController = [storyboard instantiateViewControllerWithIdentifier:@"ContactListViewController"];
+        ContactListViewController *contactListViewController = [storyboard instantiateViewControllerWithIdentifier:@"ContactListViewController"];
 
-        ContactListCell *cell = [contacListViewController.tableView dequeueReusableCellWithIdentifier:@"ContactListCell"];
+        ContactListCell *cell = [contactListViewController.tableView dequeueReusableCellWithIdentifier:@"ContactListCell"];
         [CPUIHelper changeFontForLabel:cell.nicknameLabel toLeagueGothicOfSize:18.0];
 
         cell.nicknameLabel.text = cellInfo[@"name"];
-        cell.statusLabel.text = nil;
+        cell.statusLabel.text = nil; 
         cell.frame = CGRectFromString(cellInfo[@"frame"]);
+        
         [cell.profilePicture setImageWithURL:[NSURL URLWithString:cellInfo[@"image"]]
                             placeholderImage:[CPUIHelper defaultProfileImage]];
         cell.rightStyle = CPUserActionCellSwipeStyleReducedAction;
