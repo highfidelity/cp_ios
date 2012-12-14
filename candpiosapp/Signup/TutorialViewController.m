@@ -112,7 +112,11 @@ examle json:
 
 - (void)initializeSubviewsWithInfo:(NSDictionary *)info
 {
-    self.pageControl = [[CPPageControl alloc] initWithFrame:CGRectFromString(info[@"pager_frame"])];
+    CGFloat pageControlHeight = 34;
+    self.pageControl = [[CPPageControl alloc] initWithFrame:CGRectMake(0,
+                                                                       self.nextButton.center.y - (pageControlHeight / 2),
+                                                                       self.scrollView.frame.size.width,
+                                                                       pageControlHeight)];
     self.pageControl.numberOfPages = [self.pageInfos count];
     [self.pageControl addTarget:self action:@selector(pageWasSelected) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:self.pageControl];
