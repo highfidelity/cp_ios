@@ -1917,6 +1917,8 @@
 				69D4AC98166586D700BA1160 /* endorse-count-in-list@2x.png in Resources */,
 				69C0057316681FD200242664 /* chat-entry-field.png in Resources */,
 				69C0057416681FD200242664 /* chat-entry-field@2x.png in Resources */,
+				E4D3B40E1677CDF50083BCF3 /* powered-by-foursquare@2x.png in Resources */,
+				E4D3B40F1677CDF50083BCF3 /* powered-by-foursquare.png in Resources */,
 				533DCA08166956E600A0901E /* sign-in-later-active.png in Resources */,
 				533DCA09166956E600A0901E /* sign-in-later-active@2x.png in Resources */,
 				533DCA0A166956E600A0901E /* sign-in-later.png in Resources */,
