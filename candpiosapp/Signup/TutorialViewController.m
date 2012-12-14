@@ -59,6 +59,12 @@ examle json:
     return self;
 }
 
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView

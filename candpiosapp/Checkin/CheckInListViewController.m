@@ -15,7 +15,8 @@
 typedef enum {
     CPCheckInListSearchStateComplete,
     CPCheckInListSearchStateInProgress,
-    CPCheckInListSearchStateError
+    CPCheckInListSearchStateError,
+    CPCheckInListSearchStateDisabledLocationService
 } CPCheckInListSearchState;
 
 @interface CheckInListViewController() <UIAlertViewDelegate, UITableViewDataSource,
@@ -103,6 +104,8 @@ typedef enum {
     
     // we're going offscreen, stop listening to see if the keyboard comes up or goes away
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    self.checkinLocationManager = nil;
 }
 
 #pragma mark - Overriden getters
@@ -176,6 +179,16 @@ typedef enum {
 
 - (void)loadTwentyClosestVenues:(NSString *)searchText
 {
+    if (![CLLocationManager locationServicesEnabled] || ![CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized) {
+        self.currentSearchState = CPCheckInListSearchStateDisabledLocationService;
+        [self.tableView.pullToRefreshView stopAnimating];
+        
+        NSString *message = @"We're unable to get your location and the application relies on it.\n\nPlease go to your settings and enable location for the Workclub app.";
+        [SVProgressHUD showErrorWithStatus:message
+                                  duration:kDefaultDismissDelay];
+        return;
+    }
+    
     // search foursquare for more venues which match the search text
     // first cancel the existing search operation if it's still going
     [self.currentSearchOperation cancel];
@@ -352,25 +365,31 @@ typedef enum {
 - (NSInteger)numberOfRowsForTableView
 {
     if (!self.isUserSearching) {
-        // 1 for neighborhood, 1 for default if it exists, number of close venues
-        return 1 + !!self.defaultVenue + self.closeVenues.count + (self.currentSearchState != CPCheckInListSearchStateComplete);
+        // 1 for neighborhood, 1 for default if it exists, number of close venues + 1 for foursquare logo
+        return 2 + !!self.defaultVenue + self.closeVenues.count + (self.currentSearchState != CPCheckInListSearchStateComplete);
     } else {
-        // one row for each venue in search result array
-        return !!self.searchNeighborhoodVenue + !!self.searchDefaultVenue + self.searchCloseVenues.count + (self.currentSearchState != CPCheckInListSearchStateComplete);
+        // one row for each venue in search result array + 1 for foursquare logo
+        return !!self.searchNeighborhoodVenue + !!self.searchDefaultVenue + self.searchCloseVenues.count + (self.currentSearchState != CPCheckInListSearchStateComplete) + 1;
     }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self numberOfRowsForTableView];
+    NSInteger ret =  [self numberOfRowsForTableView];
+    return ret;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // foursquare cell for last row
+    if (indexPath.row == [self numberOfRowsForTableView] - 1) {
+        return [tableView dequeueReusableCellWithIdentifier:@"FoursquareListTableCell"];
+    }
+    
     CheckInListCell *cell;
     
-    if ((self.currentSearchState != CPCheckInListSearchStateComplete) && indexPath.row == [self numberOfRowsForTableView] - 1) {
+    if ((self.currentSearchState != CPCheckInListSearchStateComplete) && indexPath.row == [self numberOfRowsForTableView] - 2) {
         if (self.currentSearchState == CPCheckInListSearchStateInProgress) {
             // this is the acitivity spinner cell that shows up when the user is searching
             cell = [tableView dequeueReusableCellWithIdentifier:@"SearchingCheckInListTableCell"];
@@ -381,8 +400,18 @@ typedef enum {
         } else {
             // this is the acitivity spinner cell that shows up when the user is searching
             cell = [tableView dequeueReusableCellWithIdentifier:@"SearchErrorCheckInListTableCell"];
+            if (self.currentSearchState == CPCheckInListSearchStateDisabledLocationService) {
+                cell.userInteractionEnabled = NO;
+                cell.venueName.text = @"Location Services are disabled.";
+                cell.venueAddress.text = @"... please enable them to get nearby venues.";
+            } else {
+                cell.userInteractionEnabled = YES;
+                cell.venueName.text = @"Error getting venues from Foursqare";
+                cell.venueAddress.text = @"Tap to retry!";
+            }
         }
     } else {
+        
         CPVenue *cellVenue = [self venueForTableViewIndexPath:indexPath];
         
         // default for main label is venue name
@@ -433,10 +462,10 @@ typedef enum {
 #define SWITCH_VENUE_ALERT_TAG 1230
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{   
     if ([CPUserDefaultsHandler currentUser]) {
         
-        if ((self.currentSearchState != CPCheckInListSearchStateComplete) && indexPath.row == [self numberOfRowsForTableView] - 1) {
+        if ((self.currentSearchState != CPCheckInListSearchStateComplete) && indexPath.row == [self numberOfRowsForTableView] - 2) {
             if (self.currentSearchState == CPCheckInListSearchStateError) {
                 // this is the error cell and the user has tapped to reload
                 
@@ -487,9 +516,13 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // foursquare logo cell
+    if (indexPath.row == [self numberOfRowsForTableView] - 1) {
+        return 35;
+    }
     // if this is a WFH cell make it a little taller
     // otherwise it's the standard 45
-    if ((self.currentSearchState != CPCheckInListSearchStateComplete) && indexPath.row == [self numberOfRowsForTableView] - 1) {
+    else if ((self.currentSearchState != CPCheckInListSearchStateComplete) && indexPath.row == [self numberOfRowsForTableView] - 2) {
         return 45;
     } else if ((!self.isUserSearching && indexPath.row == 0) || [[self venueForTableViewIndexPath:indexPath].isNeighborhood boolValue]) {
         return 60;
