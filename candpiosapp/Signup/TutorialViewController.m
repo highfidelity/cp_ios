@@ -113,9 +113,12 @@ examle json:
 - (void)initializeSubviewsWithInfo:(NSDictionary *)info
 {
     CGFloat pageControlHeight = 34;
-    self.pageControl = [[CPPageControl alloc] initWithFrame:CGRectMake(0,
-                                                                       self.nextButton.center.y - (pageControlHeight / 2),
-                                                                       self.scrollView.frame.size.width,
+    CGFloat pageControlWidth = self.nextButton.frame.origin.x - CGRectGetMaxX(self.backButton.frame);
+    
+    // dot center should 2 pt lower than button center
+    self.pageControl = [[CPPageControl alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.backButton.frame),
+                                                                       (self.nextButton.center.y + 2) - (pageControlHeight / 2),
+                                                                       pageControlWidth,
                                                                        pageControlHeight)];
     self.pageControl.numberOfPages = [self.pageInfos count];
     [self.pageControl addTarget:self action:@selector(pageWasSelected) forControlEvents:UIControlEventValueChanged];
