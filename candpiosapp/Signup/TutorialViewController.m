@@ -124,17 +124,15 @@ examle json:
 
 - (void)initializePageAtIndex:(NSUInteger)pageIndex withPageInfo:(NSDictionary *)pageInfo
 {
+    // regardless of iPhone 4 vs iPhone 5 the imageView is 460 pts
+    float imageViewHeight = 460;
+    
     UIImageView *pageImageView = [[UIImageView alloc] initWithFrame:CGRectMake(pageIndex * self.scrollView.frame.size.width,
-                                                                               0,
+                                                                               (self.scrollView.frame.size.height - imageViewHeight) / 2,
                                                                                self.scrollView.frame.size.width,
-                     
-                                                                               self.scrollView.frame.size.height)];
+                                                                               imageViewHeight)];
     
-    NSString *imageURLString = [CPUtils isDeviceWithFourInchDisplay]
-        ? [pageInfo[@"url"] stringByReplacingOccurrencesOfString:@".png" withString:@"-568h.png"]
-        : pageInfo[@"url"];
-    
-    [pageImageView setImageWithURL:[NSURL URLWithString:imageURLString]];
+    [pageImageView setImageWithURL:[NSURL URLWithString:pageInfo[@"url"]]];
     pageImageView.clipsToBounds = YES;
     [self.pageImageViews addObject:pageImageView];
     [self.scrollView addSubview:pageImageView];
