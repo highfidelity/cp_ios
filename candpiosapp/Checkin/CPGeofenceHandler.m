@@ -73,17 +73,6 @@ static CPGeofenceHandler *sharedHandler;
     }];
 }
 
-- (void)handleAutoCheckOutForVenue:(CPVenue *)venue
-{
-    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [[CPUserDefaultsHandler currentVenue].venueID isEqualToNumber:venue.venueID]) {
-        [self autoCheckOutForVenue:venue];
-    }
-    
-    if ([CPCheckinHandler sharedHandler].pendingAutoCheckInVenue) {
-        [self cancelAutoCheckInRequest:venue];
-    }
-}
-
 - (void)cancelAutoCheckInRequest:(CPVenue *)venue
 {
     [CPApiClient cancelAutoCheckInRequestToVenue:venue
@@ -156,11 +145,7 @@ static CPGeofenceHandler *sharedHandler;
         [[UIApplication sharedApplication] cancelAllLocalNotifications];
 
         CPVenue *venue;
-        if ([[CPCheckinHandler sharedHandler].pendingAutoCheckInVenue.venueID isEqualToNumber:venueID]) {
-            venue = [CPCheckinHandler sharedHandler].pendingAutoCheckInVenue;
-        } else {
-            venue = [self venueWithID:venueID];
-        }
+        venue = [self venueWithID:venueID];
 
         [CPCheckinHandler handleSuccessfulCheckinToVenue:venue checkoutTime:checkoutTime];
     }

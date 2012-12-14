@@ -11,7 +11,6 @@
 @interface CPCheckinHandler : NSObject
 
 @property (strong, nonatomic) NSTimer *checkOutTimer;
-@property (nonatomic) CPVenue *pendingAutoCheckInVenue;
 
 + (void)presentCheckInListModalFromViewController:(UIViewController *)presentingViewController;
 + (void)presentCheckInDetailsModalForVenue:(CPVenue *)venue  presentingViewController:(UIViewController *)presentingViewController;
