@@ -14,7 +14,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" showsUserLocation="YES" id="mze-wm-xvZ">
-                                <rect key="frame" x="0.0" y="64" width="320" height="115"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="115"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="wkj-5I-5nj" id="l99-H5-GMg"/>
