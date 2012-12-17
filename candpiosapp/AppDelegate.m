@@ -453,8 +453,8 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
     // grab the right venue from our past venues
-    CPVenue * autoVenue = [[CPGeofenceHandler sharedHandler] venueWithName:region.identifier];
-    [[CPGeofenceHandler sharedHandler] handleAutoCheckOutForVenue:autoVenue];
+    CPVenue *autoVenue = [[CPGeofenceHandler sharedHandler] venueWithName:region.identifier];
+    [[CPGeofenceHandler sharedHandler] autoCheckOutForVenue:autoVenue];
 }
 
 - (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error
