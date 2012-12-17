@@ -63,7 +63,6 @@ static CPCheckinHandler *sharedHandler;
 
 + (void)handleSuccessfulCheckinToVenue:(CPVenue *)venue checkoutTime:(NSInteger)checkoutTime
 {
-    [CPCheckinHandler sharedHandler].pendingAutoCheckInVenue = nil;
     [[self sharedHandler] setCheckedOut];
     // set the NSUserDefault to the user checkout time
     [CPUserDefaultsHandler setCheckoutTime:checkoutTime];

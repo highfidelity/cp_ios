@@ -72,10 +72,10 @@ static AFHTTPClient *sharedClient;
 + (void)autoCheckInToVenue:(CPVenue *)venue
            completion:(void (^)(NSDictionary *, NSError *))completion
 {
-
+    CLLocationCoordinate2D currentCoordinate = [CPAppDelegate locationManager].location.coordinate;
     NSDictionary *parameters = @{
-        @"lat": [NSString stringWithFormat:@"%.7lf", venue.coordinate.latitude],
-        @"lng": [NSString stringWithFormat:@"%.7lf", venue.coordinate.longitude],
+        @"lat": [NSString stringWithFormat:@"%.7lf", currentCoordinate.latitude],
+        @"lng": [NSString stringWithFormat:@"%.7lf", currentCoordinate.longitude],
         @"foursquare": venue.foursquareID,
         @"venue_id": [NSString stringWithFormat:@"%@", venue.venueID],
         @"action": @"autoCheckIn"
@@ -89,21 +89,4 @@ static AFHTTPClient *sharedClient;
 
 }
 
-+ (void)cancelAutoCheckInRequestToVenue:(CPVenue *)venue WithCompletion:(void (^)(NSDictionary *, NSError *))completion
-{
-    
-    NSDictionary *parameters = @{
-        @"lat": [NSString stringWithFormat:@"%.7lf", venue.coordinate.latitude],
-        @"lng": [NSString stringWithFormat:@"%.7lf", venue.coordinate.longitude],
-        @"venue_id": [NSString stringWithFormat:@"%@", venue.venueID],
-        @"action": @"cancelAutoCheckIn"
-    };
-    
-    [sharedClient postPath:@"api.php" parameters:parameters
-                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                       completion(responseObject, nil);
-                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                       completion(nil, error);
-                   }];
-}
 @end
