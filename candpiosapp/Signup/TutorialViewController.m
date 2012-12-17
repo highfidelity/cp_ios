@@ -36,8 +36,9 @@ examle json:
 @interface TutorialViewController ()
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (strong, nonatomic) UIButton *dismissButton;
 @property (strong, nonatomic) CPPageControl *pageControl;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
 
 @property (strong, nonatomic) NSMutableArray *pageImageViews;
 @property (strong, nonatomic) NSArray *pageInfos;
@@ -75,7 +76,7 @@ examle json:
 
 #pragma mark - actions
 
-- (void)dismissAction
+- (IBAction)dismissAction
 {
     if (self.isShownFromLeft) {
         [self dismissPushModalViewControllerFromLeftSegue];
@@ -88,19 +89,6 @@ examle json:
 {
     [self.scrollView setContentOffset:CGPointMake(self.pageControl.currentPage * self.scrollView.frame.size.width, 0) animated:YES];
     [self pageWasSelectedWithIndex:self.pageControl.currentPage];
-}
-
-#pragma mark - properties
-
-- (UIButton *)dismissButton
-{
-    if (!_dismissButton) {
-        _dismissButton = [CPUIHelper CPButtonWithText:@"Continue" color:CPButtonGrey frame:CGRectZero];
-        [_dismissButton addTarget:self
-                            action:@selector(dismissAction)
-                  forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _dismissButton;
 }
 
 #pragma mark - private
@@ -124,41 +112,40 @@ examle json:
 
 - (void)initializeSubviewsWithInfo:(NSDictionary *)info
 {
-    self.pageControl = [[CPPageControl alloc] initWithFrame:CGRectFromString(info[@"pager_frame"])];
-    self.pageControl.numberOfPages = [self.pageInfos count] + 1;
+    CGFloat pageControlHeight = 34;
+    CGFloat pageControlWidth = self.nextButton.frame.origin.x - CGRectGetMaxX(self.backButton.frame);
+    
+    // dot center should 2 pt lower than button center
+    self.pageControl = [[CPPageControl alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.backButton.frame),
+                                                                       (self.nextButton.center.y + 2) - (pageControlHeight / 2),
+                                                                       pageControlWidth,
+                                                                       pageControlHeight)];
+    self.pageControl.numberOfPages = [self.pageInfos count];
     [self.pageControl addTarget:self action:@selector(pageWasSelected) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:self.pageControl];
     [self.view bringSubviewToFront:self.pageControl];
 
     self.scrollView.backgroundColor = [UIColor colorWithR:246 G:247 B:245 A:246];
-    self.scrollView.contentSize = CGSizeMake(([self.pageInfos count] + 1 ) * self.scrollView.frame.size.width,
+    self.scrollView.contentSize = CGSizeMake(self.pageControl.numberOfPages * self.scrollView.frame.size.width,
                                              self.scrollView.frame.size.height);
 
     for (NSUInteger pageIndex = 0; pageIndex < [self.pageInfos count]; pageIndex++) {
         NSDictionary *pageInfo = self.pageInfos[pageIndex];
         [self initializePageAtIndex:pageIndex withPageInfo:pageInfo];
     }
-
-    [self.scrollView addSubview:self.dismissButton];
-    [self.dismissButton sizeToFit];
-    self.dismissButton.frame = CGRectMake(0, 0, 120, 43);
-    self.dismissButton.center = CGPointMake(round(self.scrollView.frame.size.width / 2) + [self.pageInfos count] * self.scrollView.frame.size.width,
-                                             round(self.scrollView.frame.size.height / 2));
 }
 
 - (void)initializePageAtIndex:(NSUInteger)pageIndex withPageInfo:(NSDictionary *)pageInfo
 {
+    // regardless of iPhone 4 vs iPhone 5 the imageView is 460 pts
+    float imageViewHeight = 460;
+    
     UIImageView *pageImageView = [[UIImageView alloc] initWithFrame:CGRectMake(pageIndex * self.scrollView.frame.size.width,
-                                                                               0,
+                                                                               (self.scrollView.frame.size.height - imageViewHeight) / 2,
                                                                                self.scrollView.frame.size.width,
-                     
-                                                                               self.scrollView.frame.size.height)];
+                                                                               imageViewHeight)];
     
-    NSString *imageURLString = [CPUtils isDeviceWithFourInchDisplay]
-        ? [pageInfo[@"url"] stringByReplacingOccurrencesOfString:@".png" withString:@"-568h.png"]
-        : pageInfo[@"url"];
-    
-    [pageImageView setImageWithURL:[NSURL URLWithString:imageURLString]];
+    [pageImageView setImageWithURL:[NSURL URLWithString:pageInfo[@"url"]]];
     pageImageView.clipsToBounds = YES;
     [self.pageImageViews addObject:pageImageView];
     [self.scrollView addSubview:pageImageView];
@@ -166,14 +153,15 @@ examle json:
     NSDictionary *cellInfo = pageInfo[@"user_cell"];
     if (cellInfo) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
-        ContactListViewController *contacListViewController = [storyboard instantiateViewControllerWithIdentifier:@"ContactListViewController"];
+        ContactListViewController *contactListViewController = [storyboard instantiateViewControllerWithIdentifier:@"ContactListViewController"];
 
-        ContactListCell *cell = [contacListViewController.tableView dequeueReusableCellWithIdentifier:@"ContactListCell"];
+        ContactListCell *cell = [contactListViewController.tableView dequeueReusableCellWithIdentifier:@"ContactListCell"];
         [CPUIHelper changeFontForLabel:cell.nicknameLabel toLeagueGothicOfSize:18.0];
 
         cell.nicknameLabel.text = cellInfo[@"name"];
-        cell.statusLabel.text = nil;
+        cell.statusLabel.text = nil; 
         cell.frame = CGRectFromString(cellInfo[@"frame"]);
+        
         [cell.profilePicture setImageWithURL:[NSURL URLWithString:cellInfo[@"image"]]
                             placeholderImage:[CPUIHelper defaultProfileImage]];
         cell.rightStyle = CPUserActionCellSwipeStyleReducedAction;
@@ -187,7 +175,21 @@ examle json:
     if (pageIndex >= self.pageInfos.count) {
         return;
     }
-
+    
+    self.backButton.hidden = (pageIndex == 0);
+    
+    // if this is one of the last two pages
+    // we might need to change the next button image
+    if (pageIndex >= self.pageControl.numberOfPages - 2) {
+        NSString *nextPrefixName = pageIndex == self.pageControl.numberOfPages - 1
+            ? @"tutorial-done"
+            : @"tutorial-next";
+        [self.nextButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-default", nextPrefixName]]
+                                   forState:UIControlStateNormal];
+        [self.nextButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-highlighted", nextPrefixName]]
+                                   forState:UIControlStateHighlighted];
+    }
+    
     NSDictionary *pageInfo = self.pageInfos[pageIndex];
     NSDictionary *cellInfo = pageInfo[@"user_cell"];
     if (cellInfo) {
@@ -205,4 +207,21 @@ examle json:
                                                 animated:YES];
     }
 }
+
+#pragma mark - Button IBActions
+
+- (IBAction)backButtonPressed:(id)sender {
+    self.pageControl.currentPage -= 1;
+    [self pageWasSelected];
+}
+
+- (IBAction)nextButtonPressed:(id)sender {
+    if (self.pageControl.currentPage == self.pageControl.numberOfPages - 1) {
+        [self dismissAction];
+    } else {
+        self.pageControl.currentPage += 1;
+        [self pageWasSelected];
+    }
+}
+
 @end
