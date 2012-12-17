@@ -12,7 +12,6 @@
 
 #ifdef PRODUCTION
 
-    NSString* const kTutorialConfigPath = @"coffeeandpower-prod/tutorial/tutorial.json";
 #else
 
     NSString* const kCandPWebServiceUrl = @"http://staging.candp.me/";
@@ -34,13 +33,12 @@
     NSString* const kUserVoiceKey = @"IBW0MSWGNnhVhBLi2Jlug";
     NSString* const kUserVoiceSecret = @"cWb3mvt7zsMxG1c2lldnSbSle3VGbCAVUsGi2YIbU";
 
-    NSString* const kTutorialConfigPath = @"coffeeandpower-staging/tutorial/tutorial.json";
-
 #endif
 
 NSString* const kAppPlatform = @"iOS";
 NSString* const kCandPAPIErrorDomain = @"com.coffeeandpower.api.error";
 NSString* const kLinkedInAPIUrl = @"https://api.linkedin.com";
+NSString* const kTutorialConfigPath = @"coffeeandpower-prod/tutorial/button_tutorial.json";
 
 int const kDefaultDismissDelay = 3;
 
