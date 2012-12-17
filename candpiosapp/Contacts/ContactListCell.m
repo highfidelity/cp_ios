@@ -31,7 +31,6 @@
                                              action:@selector(declineButtonAction)
                                    forControlEvents:UIControlEventTouchUpInside];
     }
-    self.activeColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"contact-cell-bg-selected.png"]];    
 }
 
 - (void)layoutSubviews {
