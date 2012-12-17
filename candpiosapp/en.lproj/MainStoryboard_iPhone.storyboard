@@ -442,11 +442,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" id="JpS-As-1dP">
-                                            <rect key="frame" x="60" y="0.0" width="1" height="60"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        </view>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" id="NWy-G2-PVn">
                                             <rect key="frame" x="5" y="4" width="51" height="51"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -523,6 +518,87 @@
         <image name="map-shadow.png" width="10" height="320"/>
         <image name="picture-coming-soon.jpg" width="100" height="100"/>
     </resources>
+    <classes>
+        <class className="CPBaseTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPBaseTableViewController.h"/>
+        </class>
+        <class className="CPTabBarController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPTabBarController.h"/>
+            <relationships>
+                <relationship kind="action" name="tabBarButtonPressed:"/>
+            </relationships>
+        </class>
+        <class className="CPThinTabBar" superclassName="UITabBar">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPThinTabBar.h"/>
+        </class>
+        <class className="CPUserActionCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPUserActionCell.h"/>
+        </class>
+        <class className="ContactListCell" superclassName="CPUserActionCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ContactListCell.h"/>
+            <relationships>
+                <relationship kind="action" name="acceptButtonAction"/>
+                <relationship kind="action" name="declineButtonAction"/>
+                <relationship kind="outlet" name="acceptContactRequestButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="declineContactRequestButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="ContactListViewController" superclassName="CPBaseTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ContactListViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="placeholderImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="MapTabController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapTabController.h"/>
+            <relationships>
+                <relationship kind="action" name="locateMe:"/>
+                <relationship kind="action" name="refreshButtonClicked:"/>
+                <relationship kind="outlet" name="mapAndButtonsView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="UserListTableViewController" superclassName="CPBaseTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserListTableViewController.h"/>
+        </class>
+        <class className="UserTableViewCell" superclassName="CPUserActionCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserTableViewCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="categoryLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="checkInCountLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="checkInLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="endorseCountLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="endorseCountUnderlineView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="hoursWorkedLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="hoursWorkedUnderlineView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="hoursWorkedUnitLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nicknameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="profilePictureImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="VenueCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueCheckins" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueDistance" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venuePicture" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="VenueListTableViewController" superclassName="CPBaseTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueListTableViewController.h"/>
+        </class>
+        <class className="VenueViewToggleViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenueViewToggleViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
