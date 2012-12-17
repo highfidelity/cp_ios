@@ -442,7 +442,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="NWy-G2-PVn">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" id="NWy-G2-PVn">
                                             <rect key="frame" x="5" y="4" width="51" height="51"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
