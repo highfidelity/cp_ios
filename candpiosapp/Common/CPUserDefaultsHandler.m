@@ -97,6 +97,21 @@ NSString* const kUDCurrentVenue = @"currentCheckIn";
     }
 }
 
+NSString* const kUDGeofenceRequestLog = @"geofenceRequestLog";
+
++ (void)addGeofenceRequest:(NSDictionary *)geofenceRequestDictionary
+{
+    NSMutableArray *geofenceRequestLog = [[self geofenceRequestLog] mutableCopy];
+    [geofenceRequestLog addObject:geofenceRequestDictionary];
+    
+    SET_DEFAULTS(Object, kUDGeofenceRequestLog, [NSArray arrayWithArray:geofenceRequestLog]);
+}
+
++ (NSArray *)geofenceRequestLog
+{
+    return DEFAULTS(object, kUDGeofenceRequestLog);
+}
+
 
 NSString* const kUDPastVenues = @"pastVenues";
 + (void)setPastVenues:(NSArray *)pastVenues
