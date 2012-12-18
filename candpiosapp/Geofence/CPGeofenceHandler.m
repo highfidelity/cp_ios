@@ -67,6 +67,7 @@ static CPGeofenceHandler *sharedHandler;
     CLLocationCoordinate2D currentCoordinate = [CPAppDelegate locationManager].location.coordinate;
     
     return @{
+        @"venueName" : venue.name,
         @"venueID" : venue.venueID,
         @"lat" : @(currentCoordinate.latitude),
         @"lng" : @(currentCoordinate.longitude),
