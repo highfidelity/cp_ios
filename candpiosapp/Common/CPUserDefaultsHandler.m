@@ -129,7 +129,7 @@ NSString* const kUDGeofenceRequestLog = @"geofenceRequestLog";
         for (NSDictionary *geofenceLogDict in [geofenceRequestLog mutableCopy]) {
             NSDate *requestDate = geofenceLogDict[@"date"];
             
-            if ([requestDate compare:[NSDate dateWithTimeIntervalSinceNow:secondsToLimit]] != NSOrderedAscending) {
+            if ([requestDate compare:[NSDate dateWithTimeIntervalSinceNow:secondsToLimit]] == NSOrderedAscending) {
                 [geofenceRequestLog removeObject:geofenceLogDict];
             } else {
                 break;
