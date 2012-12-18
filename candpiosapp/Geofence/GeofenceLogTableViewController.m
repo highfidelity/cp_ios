@@ -8,8 +8,9 @@
 
 #import "GeofenceLogTableViewController.h"
 #import "GeofenceLogEntryCell.h"
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface GeofenceLogTableViewController ()
+@interface GeofenceLogTableViewController () <MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) NSArray *logEntries;
 @property (strong, nonatomic) NSDateFormatter *entryDateFormatter;
@@ -54,6 +55,28 @@
     cell.entryDateLabel.text = [self.entryDateFormatter stringFromDate:logEntryDict[@"date"]];
     
     return cell;
+}
+
+#pragma mark - IBActions
+- (IBAction)emailLogButtonPressed:(id)sender
+{
+    if ([MFMailComposeViewController canSendMail]) {
+        MFMailComposeViewController *composeVC = [[MFMailComposeViewController alloc] init];
+        composeVC.mailComposeDelegate = self;
+        [composeVC setSubject:@"Geofence Log"];
+        [composeVC setMessageBody:@"Hello World!" isHTML:NO];
+        [self presentModalViewController:composeVC animated:YES];
+    } else {
+        
+    }
+}
+
+#pragma mark - MFMailComposeViewControllerDelegate
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError *)error
+{
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

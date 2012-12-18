@@ -1313,7 +1313,13 @@ photo?</string>
                             <outlet property="delegate" destination="eCb-Hi-nsC" id="h74-Ta-jaL"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Geofence Log" id="fKg-Yd-8IP"/>
+                    <navigationItem key="navigationItem" title="Geofence Log" id="fKg-Yd-8IP">
+                        <barButtonItem key="rightBarButtonItem" title="Email" id="szs-O5-fM9">
+                            <connections>
+                                <action selector="emailLogButtonPressed:" destination="eCb-Hi-nsC" id="EtI-XP-wSZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z1d-yE-mcR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1426,6 +1432,9 @@ photo?</string>
         </class>
         <class className="GeofenceLogTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GeofenceLogTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="emailLogButtonPressed:"/>
+            </relationships>
         </class>
         <class className="InviteLinkedInConnectionsTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/InviteLinkedInConnectionsTableViewController.h"/>
