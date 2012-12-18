@@ -369,10 +369,10 @@
     if (kActionSheetChooseNewProfileImageTag == actionSheet.tag) {
         if (buttonIndex == 0 || buttonIndex == 1) {
             if (buttonIndex == 0) {
-                [((SettingsMenuController *) self.presentingViewController) showProfilePicturePickerModalForSource:UIImagePickerControllerSourceTypeCamera];
+                [((SettingsMenuViewController *) self.presentingViewController) showProfilePicturePickerModalForSource:UIImagePickerControllerSourceTypeCamera];
             } else if (buttonIndex == 1) {
                 // user wants to pick from photo library
-                [((SettingsMenuController *) self.presentingViewController) showProfilePicturePickerModalForSource:UIImagePickerControllerSourceTypePhotoLibrary];
+                [((SettingsMenuViewController *) self.presentingViewController) showProfilePicturePickerModalForSource:UIImagePickerControllerSourceTypePhotoLibrary];
             }
         }
     }
@@ -527,7 +527,7 @@
              }
 
 
-             SettingsMenuController *presentingViewController = (SettingsMenuController *)self.presentingViewController;
+             SettingsMenuViewController *presentingViewController = (SettingsMenuViewController *)self.presentingViewController;
              if (presentingViewController.isMenuShowing) {
                  [presentingViewController showMenu:NO];
              }

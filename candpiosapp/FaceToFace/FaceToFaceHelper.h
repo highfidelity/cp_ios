@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SettingsMenuController.h"
+#import "SettingsMenuViewController.h"
 
 @interface FaceToFaceHelper : NSObject <UIActionSheetDelegate>
 

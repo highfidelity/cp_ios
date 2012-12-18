@@ -38,7 +38,7 @@
 		5328937515548A2D007B0157 /* OneOnOneChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328937415548A2D007B0157 /* OneOnOneChatViewController.m */; };
 		5328938B15548D6D007B0157 /* CheckInDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328938815548D6D007B0157 /* CheckInDetailsViewController.m */; };
 		5328938F15548D90007B0157 /* MapTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328938E15548D90007B0157 /* MapTabController.m */; };
-		5328939815548E63007B0157 /* SettingsMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939715548E63007B0157 /* SettingsMenuController.m */; };
+		5328939815548E63007B0157 /* SettingsMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939715548E63007B0157 /* SettingsMenuViewController.m */; };
 		5328939F15548EB6007B0157 /* UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939A15548EB6007B0157 /* UserListTableViewController.m */; };
 		532893A015548EB6007B0157 /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939C15548EB6007B0157 /* UserProfileViewController.m */; };
 		532893A115548EB6007B0157 /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939E15548EB6007B0157 /* UserTableViewCell.m */; };
@@ -410,8 +410,8 @@
 		5328938815548D6D007B0157 /* CheckInDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInDetailsViewController.m; path = CheckIn/CheckInDetailsViewController.m; sourceTree = "<group>"; };
 		5328938D15548D90007B0157 /* MapTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapTabController.h; path = Map/MapTabController.h; sourceTree = "<group>"; };
 		5328938E15548D90007B0157 /* MapTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MapTabController.m; path = Map/MapTabController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5328939615548E63007B0157 /* SettingsMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsMenuController.h; path = Settings/SettingsMenuController.h; sourceTree = "<group>"; };
-		5328939715548E63007B0157 /* SettingsMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SettingsMenuController.m; path = Settings/SettingsMenuController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5328939615548E63007B0157 /* SettingsMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsMenuViewController.h; path = Settings/SettingsMenuViewController.h; sourceTree = "<group>"; };
+		5328939715548E63007B0157 /* SettingsMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SettingsMenuViewController.m; path = Settings/SettingsMenuViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5328939915548EB6007B0157 /* UserListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserListTableViewController.h; path = User/UserListTableViewController.h; sourceTree = "<group>"; };
 		5328939A15548EB6007B0157 /* UserListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = UserListTableViewController.m; path = User/UserListTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5328939B15548EB6007B0157 /* UserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileViewController.h; path = User/UserProfileViewController.h; sourceTree = "<group>"; };
@@ -1102,8 +1102,8 @@
 				692552DF155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m */,
 				699249E1158A3CFC00EC273A /* ResumeVisibilityViewController.h */,
 				699249E2158A3CFC00EC273A /* ResumeVisibilityViewController.m */,
-				5328939615548E63007B0157 /* SettingsMenuController.h */,
-				5328939715548E63007B0157 /* SettingsMenuController.m */,
+				5328939615548E63007B0157 /* SettingsMenuViewController.h */,
+				5328939715548E63007B0157 /* SettingsMenuViewController.m */,
 				5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */,
 				534B6EEE156DAE7900DA9F74 /* SkillsTableViewController.h */,
 				534B6EEF156DAE7900DA9F74 /* SkillsTableViewController.m */,
@@ -1987,7 +1987,7 @@
 				5328937515548A2D007B0157 /* OneOnOneChatViewController.m in Sources */,
 				5328938B15548D6D007B0157 /* CheckInDetailsViewController.m in Sources */,
 				5328938F15548D90007B0157 /* MapTabController.m in Sources */,
-				5328939815548E63007B0157 /* SettingsMenuController.m in Sources */,
+				5328939815548E63007B0157 /* SettingsMenuViewController.m in Sources */,
 				5328939F15548EB6007B0157 /* UserListTableViewController.m in Sources */,
 				532893A015548EB6007B0157 /* UserProfileViewController.m in Sources */,
 				532893A115548EB6007B0157 /* UserTableViewCell.m in Sources */,

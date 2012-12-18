@@ -63,7 +63,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
         
     // Switch out the UINavigationController in the rootviewcontroller for the SettingsMenuController
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"SettingsStoryboard_iPhone" bundle:nil];
-    self.settingsMenuController = (SettingsMenuController*)[mainStoryboard instantiateViewControllerWithIdentifier:@"SettingsMenu"];
+    self.settingsMenuController = (SettingsMenuViewController*)[mainStoryboard instantiateViewControllerWithIdentifier:@"SettingsMenu"];
     self.tabBarController = (CPTabBarController *)self.window.rootViewController;
     self.settingsMenuController.cpTabBarController = self.tabBarController;
     [self.settingsMenuController.view addSubview:self.tabBarController.view];

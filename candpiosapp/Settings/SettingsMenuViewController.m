@@ -21,7 +21,7 @@
 #define kProfileSegueID @"ShowUserSettingsFromMenu"
 #define kProfilePickedImageSegueID @"ShowUserSettingsFromMenuForPickedImage"
 
-@interface SettingsMenuController() <UITabBarControllerDelegate>
+@interface SettingsMenuViewController() <UITabBarControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *versionNumberLabel;
 @property (weak, nonatomic) IBOutlet UIButton *termsOfServiceButton;
@@ -37,7 +37,7 @@
 
 @end
 
-@implementation SettingsMenuController
+@implementation SettingsMenuViewController
 
 - (void)initMenu 
 {

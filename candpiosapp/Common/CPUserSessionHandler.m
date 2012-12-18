@@ -160,7 +160,7 @@ static CPUserSessionHandler *sharedHandler;
         return;
     }
     
-    SettingsMenuController *settingsMenuController = [CPAppDelegate settingsMenuController];
+    SettingsMenuViewController *settingsMenuController = [CPAppDelegate settingsMenuController];
     
     settingsMenuController.blockUIButton.frame = CGRectMake(0.0,
                                                             settingsMenuController.loginBanner.frame.size.height,
@@ -179,7 +179,7 @@ static CPUserSessionHandler *sharedHandler;
 
 + (void)hideLoginBannerWithCompletion:(void (^)(void))completion
 {
-    SettingsMenuController *settingsMenuController = [CPAppDelegate settingsMenuController];
+    SettingsMenuViewController *settingsMenuController = [CPAppDelegate settingsMenuController];
     settingsMenuController.blockUIButton.frame = CGRectMake(0.0, 0.0, 0.0, 0.0);
     [settingsMenuController.view sendSubviewToBack:[CPAppDelegate settingsMenuController].blockUIButton];
     
