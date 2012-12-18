@@ -12,11 +12,11 @@
 @interface GeofenceLogTableViewController ()
 
 @property (strong, nonatomic) NSArray *logEntries;
+@property (strong, nonatomic) NSDateFormatter *entryDateFormatter;
 
 @end
 
 @implementation GeofenceLogTableViewController
-
 
 - (void)viewDidLoad
 {
@@ -25,6 +25,15 @@
     self.logEntries = [CPUserDefaultsHandler geofenceRequestLog];
 }
 
+- (NSDateFormatter *)entryDateFormatter
+{
+    if (!_entryDateFormatter) {
+        _entryDateFormatter = [[NSDateFormatter alloc] init];
+        _entryDateFormatter.dateFormat = @"MMMM d - h:mma";
+    }
+    
+    return _entryDateFormatter;
+}
 
 #pragma mark - Table view data source
 
@@ -42,6 +51,7 @@
     NSDictionary *logEntryDict = [self.logEntries objectAtIndex:indexPath.row];
     
     cell.venueNameLabel.text = logEntryDict[@"venueName"];
+    cell.entryDateLabel.text = [self.entryDateFormatter stringFromDate:logEntryDict[@"date"]];
     
     return cell;
 }
