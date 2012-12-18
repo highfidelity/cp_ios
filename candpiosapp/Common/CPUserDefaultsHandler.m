@@ -122,12 +122,21 @@ NSString* const kUDGeofenceRequestLog = @"geofenceRequestLog";
 + (void)cleanGeofenceRequestLog
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSArray *geofenceRequestLog = [self geofenceRequestLog];
+        NSMutableArray *geofenceRequestLog = [[self geofenceRequestLog] mutableCopy];
        
-        NSTimeInterval secondsToLimit = GEOFENCE_REQUEST_DAYS_TO_KEEP * 24 * 60 * 60;
-        NSPredicate *removeOldRequestsPredicate = [NSPredicate predicateWithFormat:@"date >= %@", [NSDate dateWithTimeIntervalSinceNow:secondsToLimit]];
+        NSTimeInterval secondsToLimit = -GEOFENCE_REQUEST_DAYS_TO_KEEP * 24 * 60 * 60;
+        
+        for (NSDictionary *geofenceLogDict in [geofenceRequestLog mutableCopy]) {
+            NSDate *requestDate = geofenceLogDict[@"date"];
+            
+            if ([requestDate compare:[NSDate dateWithTimeIntervalSinceNow:secondsToLimit]] != NSOrderedAscending) {
+                [geofenceRequestLog removeObject:geofenceLogDict];
+            } else {
+                break;
+            }
+        }
        
-        SET_DEFAULTS(Object, kUDGeofenceRequestLog, [geofenceRequestLog filteredArrayUsingPredicate:removeOldRequestsPredicate]);
+        SET_DEFAULTS(Object, kUDGeofenceRequestLog, [NSArray arrayWithArray:geofenceRequestLog]);
     });   
 }
 
