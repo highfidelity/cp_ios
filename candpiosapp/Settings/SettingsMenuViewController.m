@@ -18,15 +18,13 @@
 #define menuWidthPercentage 0.8
 #define kFeedbackSegueID @"ShowFeedbackFromMenu"
 #define kTutorialSegueID @"ShowTutorialFromMenu"
-#define kProfileSegueID @"ShowUserSettingsFromMenu"
-#define kProfilePickedImageSegueID @"ShowUserSettingsFromMenuForPickedImage"
 
 @interface SettingsMenuViewController() <UITabBarControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *versionNumberLabel;
 @property (weak, nonatomic) IBOutlet UIButton *termsOfServiceButton;
 @property (strong, nonatomic) NSArray *menuStringsArray;
-@property (strong, nonatomic) NSArray *menuSegueIdentifiersArray;
+@property (strong, nonatomic) NSArray *menuAssociatedIdentifiersArray;
 @property (strong, nonatomic) UITapGestureRecognizer *menuCloseGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanFromNavbarGestureRecognizer;
@@ -53,7 +51,7 @@
                              @"Logout",
                              nil];
     
-    self.menuSegueIdentifiersArray = [NSArray arrayWithObjects:
+    self.menuAssociatedIdentifiersArray = [NSArray arrayWithObjects:
                                       @"ShowInvitationCodeMenu",
                                       @"ShowUserSettingsFromMenu",
                                       @"ShowFederationFromMenu",
@@ -344,7 +342,7 @@
         [CPUserSessionHandler showSignupModalFromViewController:self animated:YES];
 
     } else {
-        NSString *segueID = [self.menuSegueIdentifiersArray objectAtIndex:indexPath.row];
+        NSString *segueID = [self.menuAssociatedIdentifiersArray objectAtIndex:indexPath.row];
         if ([segueID isEqualToString:kFeedbackSegueID]) {
             UVConfig *config = [UVConfig configWithSite:kUserVoiceSite
                                                  andKey:kUserVoiceKey
@@ -457,49 +455,6 @@
                 break;
         }
     }
-}
-
-#pragma mark - prepareForSegue
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:kProfilePickedImageSegueID]) {
-        ((ProfileViewController *) [segue.destinationViewController topViewController]).profileImageToUpload = self.pickedImage;
-    }
-}
-
-#pragma mark - UIImagePickerController
-- (void)showProfilePicturePickerModalForSource:(UIImagePickerControllerSourceType)imagePickerSource
-{
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-    imagePickerController.delegate = self;
-    imagePickerController.sourceType = imagePickerSource;
-    
-    if (imagePickerSource == UIImagePickerControllerSourceTypeCamera) {
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerCameraDeviceFront]) {
-            imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;
-        }
-    }
-    
-    [self.presentedViewController dismissPushModalViewControllerFromLeftSegueWithCompletion:^{
-        [self presentViewController:imagePickerController animated:YES completion:nil];
-    }];
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    self.pickedImage = info[UIImagePickerControllerOriginalImage];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self performSegueWithIdentifier:kProfilePickedImageSegueID sender:self];
-    }];
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self performSegueWithIdentifier:kProfileSegueID sender:self];
-    }];
-    
 }
 
 @end

@@ -43,6 +43,4 @@ typedef enum {
 - (void)showMenu:(BOOL)shouldReveal;
 - (void)closeMenu;
 
-- (void)showProfilePicturePickerModalForSource:(UIImagePickerControllerSourceType)imagePickerSource;
-
 @end
