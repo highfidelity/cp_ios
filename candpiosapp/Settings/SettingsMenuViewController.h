@@ -19,9 +19,7 @@ typedef enum {
 
 @interface SettingsMenuViewController : UIViewController <UITableViewDelegate,
                                                       UITableViewDataSource,
-                                                      UIAlertViewDelegate,
-                                                      UINavigationControllerDelegate,
-                                                      UIImagePickerControllerDelegate>
+                                                      UIAlertViewDelegate>
 
 @property (strong, nonatomic) CPTabBarController *cpTabBarController;
 @property (strong, nonatomic) MapTabController *mapTabController;

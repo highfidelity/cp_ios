@@ -1,5 +1,5 @@
 //
-//  SettingsMenuController.m
+//  SettingsMenuViewController.m
 //  candpiosapp
 //
 //  Created by Andrew Hammond on 2/23/12.
@@ -28,7 +28,6 @@
 @property (strong, nonatomic) UITapGestureRecognizer *menuCloseGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanFromNavbarGestureRecognizer;
-@property (strong, nonatomic) UIImage *pickedImage;
 @property (nonatomic) CGPoint panStartLocation;
 
 - (void)setMapAndButtonsViewXOffset:(CGFloat)xOffset;
