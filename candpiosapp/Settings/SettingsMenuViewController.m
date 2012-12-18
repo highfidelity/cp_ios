@@ -51,14 +51,14 @@
                              nil];
     
     self.menuAssociatedIdentifiersArray = [NSArray arrayWithObjects:
-                                      @"ShowInvitationCodeMenu",
-                                      @"ShowUserSettingsFromMenu",
-                                      @"ShowFederationFromMenu",
-                                      @"ShowNotificationsFromMenu",
-                                      @"ShowAutoCheckInsFromMenu",
+                                      @"LinkedInConnectionsNC",
+                                      @"ProfileViewControllerNC",
+                                      @"LinkedAccountsNC",
+                                      @"NotificationSettingsNC",
+                                      @"GeofenceSettingsNC",
                                       kFeedbackSegueID,
                                       kTutorialSegueID,
-                                      @"ShowLogoutFromMenu",
+                                      @"PerformLogoutFromMenu",
                                       nil];
     
     [self.tableView reloadData];
