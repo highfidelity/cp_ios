@@ -24,7 +24,7 @@
 @property (strong, nonatomic, readonly) Settings *settings;
 @property (strong, nonatomic, readonly) CLLocationManager *locationManager;
 @property (strong, nonatomic, readonly) CLLocation *currentOrDefaultLocation;
-@property (strong, nonatomic) SettingsMenuViewController *settingsMenuController;
+@property (strong, nonatomic) SettingsMenuViewController *settingsMenuViewController;
 @property (strong, nonatomic) CPTabBarController *tabBarController;
            
 - (void)pushAliasUpdate;

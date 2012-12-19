@@ -160,7 +160,7 @@ static CPUserSessionHandler *sharedHandler;
         return;
     }
     
-    SettingsMenuViewController *settingsMenuController = [CPAppDelegate settingsMenuController];
+    SettingsMenuViewController *settingsMenuController = [CPAppDelegate settingsMenuViewController];
     
     settingsMenuController.blockUIButton.frame = CGRectMake(0.0,
                                                             settingsMenuController.loginBanner.frame.size.height,
@@ -168,7 +168,7 @@ static CPUserSessionHandler *sharedHandler;
                                                             [CPAppDelegate window].frame.size.height);
     
     [settingsMenuController.view bringSubviewToFront:settingsMenuController.blockUIButton];
-    [settingsMenuController.view bringSubviewToFront:[CPAppDelegate settingsMenuController].loginBanner];
+    [settingsMenuController.view bringSubviewToFront:[CPAppDelegate settingsMenuViewController].loginBanner];
     
     [UIView animateWithDuration:0.3 animations:^ {
         settingsMenuController.loginBanner.frame = CGRectMake(0.0, 0.0,
@@ -179,9 +179,9 @@ static CPUserSessionHandler *sharedHandler;
 
 + (void)hideLoginBannerWithCompletion:(void (^)(void))completion
 {
-    SettingsMenuViewController *settingsMenuController = [CPAppDelegate settingsMenuController];
+    SettingsMenuViewController *settingsMenuController = [CPAppDelegate settingsMenuViewController];
     settingsMenuController.blockUIButton.frame = CGRectMake(0.0, 0.0, 0.0, 0.0);
-    [settingsMenuController.view sendSubviewToBack:[CPAppDelegate settingsMenuController].blockUIButton];
+    [settingsMenuController.view sendSubviewToBack:[CPAppDelegate settingsMenuViewController].blockUIButton];
     
     [UIView animateWithDuration:0.3 animations:^ {
         settingsMenuController.loginBanner.frame = CGRectMake(0.0,
