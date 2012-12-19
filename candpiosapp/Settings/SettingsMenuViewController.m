@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
+#import "SettingsMenuViewController.h"
+#import "SettingsMenuView.h"
 #import "CPCheckinHandler.h"
 #import "CPGeofenceHandler.h"
 #import "CPUserSessionHandler.h"
@@ -28,6 +30,7 @@
 @property (strong, nonatomic) UITapGestureRecognizer *menuCloseGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanFromNavbarGestureRecognizer;
+@property (strong, nonatomic) UIViewController *currentChildViewController;
 @property (nonatomic) CGPoint panStartLocation;
 
 - (void)setMapAndButtonsViewXOffset:(CGFloat)xOffset;
@@ -103,6 +106,35 @@
     
     [self initMenu];
 }
+
+#pragma mark - Child View Controller Handling
+
+#define PUSH_LEFT_AND_POP_ANIMATION_DURATION 0.35
+
+- (void)setCurrentChildViewController:(UIViewController *)currentChildViewController
+{
+    if (currentChildViewController) {
+        [self addChildViewController:currentChildViewController];
+        currentChildViewController.view.frame = CGRectOffset(self.view.bounds, -currentChildViewController.view.frame.size.width, 0);
+        [self.view addSubview:currentChildViewController.view];
+    }
+    
+    float shift = [UIScreen mainScreen].bounds.size.width * (!!currentChildViewController ? 1 : -1);
+    
+    [UIView animateWithDuration:PUSH_LEFT_AND_POP_ANIMATION_DURATION animations:^{
+        self.view.transform = CGAffineTransformMakeTranslation(shift, 0);
+    }];
+    
+    if (currentChildViewController) {
+        ((SettingsMenuView *) self.view).menuChildViewControllerView = currentChildViewController.view;
+    } else {
+        [currentChildViewController removeFromParentViewController];
+    }    
+    
+    _currentChildViewController = currentChildViewController;
+}
+
+#pragma mark - Menu Movement
 
 - (void)menuClosePan:(UIPanGestureRecognizer*) sender {
     if (sender.state == UIGestureRecognizerStateBegan) {
@@ -341,25 +373,22 @@
         [CPUserSessionHandler showSignupModalFromViewController:self animated:YES];
 
     } else {
-        NSString *segueID = [self.menuAssociatedIdentifiersArray objectAtIndex:indexPath.row];
-        if ([segueID isEqualToString:kFeedbackSegueID]) {
+        NSString *identifierID = [self.menuAssociatedIdentifiersArray objectAtIndex:indexPath.row];
+        if ([identifierID isEqualToString:kFeedbackSegueID]) {
             UVConfig *config = [UVConfig configWithSite:kUserVoiceSite
                                                  andKey:kUserVoiceKey
                                               andSecret:kUserVoiceSecret];
             [UserVoice presentUserVoiceForumForParentViewController:self andConfig:config];
-        } else if ([segueID isEqualToString:kTutorialSegueID]) {
-            UIStoryboard *signupStoryboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
-            UINavigationController *navigationViewController = [signupStoryboard instantiateViewControllerWithIdentifier:@"TutorialViewControllerNavigationViewController"];
-
-            TutorialViewController *viewController = (TutorialViewController *)navigationViewController.topViewController;
-            viewController.isShownFromLeft = YES;
-
-            PushModalViewControllerFromLeftSegue *segue = [[PushModalViewControllerFromLeftSegue alloc] initWithIdentifier:kTutorialSegueID
-                                                                                                                    source:self
-                                                                                                               destination:navigationViewController];
-            [segue perform];
+        } else if ([identifierID isEqualToString:kTutorialSegueID]) {
+            UINavigationController *tutorialNC = [[UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil]
+                                                  instantiateViewControllerWithIdentifier:@"TutorialViewControllerNavigationViewController"];
+            
+            ((TutorialViewController *) tutorialNC.topViewController).isShownFromLeft = YES;
+            
+            self.currentChildViewController = tutorialNC;
         } else {
-            [self performSegueWithIdentifier:segueID sender:self];
+            UINavigationController *childNC = [self.storyboard instantiateViewControllerWithIdentifier:identifierID];
+            self.currentChildViewController = childNC;
         }
     }
 }
