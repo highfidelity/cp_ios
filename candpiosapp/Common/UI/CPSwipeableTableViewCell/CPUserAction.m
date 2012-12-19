@@ -24,6 +24,7 @@
     if (![CPUserDefaultsHandler currentUser]) {
         [CPUserSessionHandler showLoginBanner];
         cell.selected = NO;
+        [cell highlight:NO];
         return;
     }    
     if ([cell.user.userID isEqualToNumber:[CPUserDefaultsHandler currentUser].userID]) {
@@ -52,6 +53,7 @@
     if (![CPUserDefaultsHandler currentUser]) {
         [CPUserSessionHandler showLoginBanner];
         cell.selected = NO;
+        [cell highlight:NO];
         return;
     }
     if ([cell.user.userID isEqualToNumber:[CPUserDefaultsHandler currentUser].userID]) {
@@ -101,6 +103,7 @@
     if (![CPUserDefaultsHandler currentUser]) {
         [CPUserSessionHandler showLoginBanner];
         cell.selected = NO;
+        [cell highlight:NO];
         return;
     }
     

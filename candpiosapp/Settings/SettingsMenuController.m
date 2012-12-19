@@ -460,6 +460,11 @@
 }
 
 #pragma mark - prepareForSegue
+-(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    return [CPUserDefaultsHandler currentUser] ? YES : NO;
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:kProfilePickedImageSegueID]) {
