@@ -440,15 +440,10 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
         return;
     }
     
-    // Don't show notification if user is currently checked in to this venue
-    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [[CPUserDefaultsHandler currentVenue].name isEqualToString:region.identifier]) {
-        return;
-    } else {
-        // grab the right venue from our past venues
-        CPVenue * autoVenue = [[CPGeofenceHandler sharedHandler] venueWithName:region.identifier];
-        // Check in the user immediately
-        [[CPGeofenceHandler sharedHandler] autoCheckInForVenue:autoVenue];
-    }
+    // grab the right venue from our past venues
+    CPVenue * autoVenue = [[CPGeofenceHandler sharedHandler] venueWithName:region.identifier];
+    // Check in the user immediately
+    [[CPGeofenceHandler sharedHandler] autoCheckInForVenue:autoVenue];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
