@@ -8,7 +8,6 @@
 
 #import "CPUserSessionHandler.h"
 #import "CPCheckinHandler.h"
-#import "PushModalViewControllerFromLeftSegue.h"
 #import "SSKeychain.h"
 #import "CPConstants.h"
 #import "LinkedInLoginController.h"

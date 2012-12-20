@@ -8,7 +8,6 @@
 
 #import "ProfileNotificationsViewController.h"
 #import "ActionSheetDatePicker.h"
-#import "PushModalViewControllerFromLeftSegue.h"
 
 #define kInVenueText @"in venue"
 #define kInCityText @"in city"
@@ -172,7 +171,7 @@
 #pragma mark - UI Events
 -(IBAction)gearPressed:(id)sender
 {
-    [self dismissPushModalViewControllerFromLeftSegue];
+    [[CPAppDelegate settingsMenuViewController] slideAwayChildViewController];
 }
 
 - (IBAction)notificationSwitchChanged:(UISwitch *)sender

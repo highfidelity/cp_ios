@@ -302,7 +302,6 @@
 		5F8413E115619721003B43B8 /* UserProfileLinkedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */; };
 		688A16C3163861DB00BFB4CC /* endorse-with-transparent-star.png in Resources */ = {isa = PBXBuildFile; fileRef = 688A16C1163861DB00BFB4CC /* endorse-with-transparent-star.png */; };
 		688A16C4163861DB00BFB4CC /* endorse-with-transparent-star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 688A16C2163861DB00BFB4CC /* endorse-with-transparent-star@2x.png */; };
-		692552E0155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 692552DF155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m */; };
 		694323A915213D9000EBF585 /* UserResume.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 694323A815213D9000EBF585 /* UserResume.mustache */; };
 		6947F40015372B59005D9958 /* exchange-cards.png in Resources */ = {isa = PBXBuildFile; fileRef = 6947F3FE15372B59005D9958 /* exchange-cards.png */; };
 		6947F40115372B59005D9958 /* exchange-cards@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6947F3FF15372B59005D9958 /* exchange-cards@2x.png */; };
@@ -737,8 +736,6 @@
 		688A16C2163861DB00BFB4CC /* endorse-with-transparent-star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "endorse-with-transparent-star@2x.png"; path = "User/images/endorse-with-transparent-star@2x.png"; sourceTree = "<group>"; };
 		691E7BE1165B0D9C00587381 /* endorse-count-in-list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "endorse-count-in-list.png"; path = "User/images/endorse-count-in-list.png"; sourceTree = "<group>"; };
 		691E7BE2165B0D9C00587381 /* endorse-count-in-list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "endorse-count-in-list@2x.png"; path = "User/images/endorse-count-in-list@2x.png"; sourceTree = "<group>"; };
-		692552DE155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushModalViewControllerFromLeftSegue.h; path = Settings/PushModalViewControllerFromLeftSegue.h; sourceTree = "<group>"; };
-		692552DF155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushModalViewControllerFromLeftSegue.m; path = Settings/PushModalViewControllerFromLeftSegue.m; sourceTree = "<group>"; };
 		694323A815213D9000EBF585 /* UserResume.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserResume.mustache; sourceTree = "<group>"; };
 		6947F3FE15372B59005D9958 /* exchange-cards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exchange-cards.png"; path = "User/images/exchange-cards.png"; sourceTree = "<group>"; };
 		6947F3FF15372B59005D9958 /* exchange-cards@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exchange-cards@2x.png"; path = "User/images/exchange-cards@2x.png"; sourceTree = "<group>"; };
@@ -1101,8 +1098,6 @@
 				E4DFEB4D1554915100AE90F0 /* ProfileNotificationsViewController.m */,
 				E410F9DA159DF0A500D32F86 /* ProfileViewController.h */,
 				E410F9DB159DF0A500D32F86 /* ProfileViewController.m */,
-				692552DE155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.h */,
-				692552DF155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m */,
 				699249E1158A3CFC00EC273A /* ResumeVisibilityViewController.h */,
 				699249E2158A3CFC00EC273A /* ResumeVisibilityViewController.m */,
 				531E609F168268B200FD64A1 /* SettingsMenuViewController.h */,
@@ -1999,7 +1994,6 @@
 				536E1E881554988300052D40 /* ContactListViewController.m in Sources */,
 				328452BF155A0EE800CF32F5 /* AutoCheckinTableViewController.m in Sources */,
 				328452C3155A17CB00CF32F5 /* AutoCheckinCell.m in Sources */,
-				692552E0155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m in Sources */,
 				53AA7A841566CB1500006E85 /* ContactListCell.m in Sources */,
 				537255B4156AEBA800263CFA /* UserLoveViewController.m in Sources */,
 				697A686B156C3E8D001BEB35 /* TermsOfServiceViewController.m in Sources */,

@@ -41,4 +41,6 @@ typedef enum {
 - (void)showMenu:(BOOL)shouldReveal;
 - (void)closeMenu;
 
+- (void)slideAwayChildViewController;
+
 @end

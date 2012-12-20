@@ -13,7 +13,6 @@
 #import "CPUserSessionHandler.h"
 #import "UserVoice.h"
 #import "AppDelegate.h"
-#import "PushModalViewControllerFromLeftSegue.h"
 #import "TutorialViewController.h"
 #import "ProfileViewController.h"
 
@@ -122,7 +121,7 @@
     float shift = [UIScreen mainScreen].bounds.size.width * (!!currentChildViewController ? 1 : -1);
     
     [UIView animateWithDuration:PUSH_LEFT_AND_POP_ANIMATION_DURATION animations:^{
-        self.view.transform = CGAffineTransformMakeTranslation(shift, 0);
+        self.view.frame = CGRectOffset(self.view.frame, shift, 0);
     }];
     
     if (currentChildViewController) {
@@ -132,6 +131,11 @@
     }    
     
     _currentChildViewController = currentChildViewController;
+}
+
+- (void)slideAwayChildViewController
+{
+    self.currentChildViewController = nil;
 }
 
 #pragma mark - Menu Movement
@@ -363,8 +367,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Handle the selected menu item, closing the menu for when we return
     NSInteger logoutRowIndex = [self.menuStringsArray indexOfObject:@"Logout"];
+    
     if (indexPath.row == logoutRowIndex) { 
-        //TODO: Merge logout xib with storyboard, adding segue for logout
         if (self.isMenuShowing) { 
             [self showMenu:NO]; 
         }
@@ -374,6 +378,7 @@
 
     } else {
         NSString *identifierID = [self.menuAssociatedIdentifiersArray objectAtIndex:indexPath.row];
+        
         if ([identifierID isEqualToString:kFeedbackSegueID]) {
             UVConfig *config = [UVConfig configWithSite:kUserVoiceSite
                                                  andKey:kUserVoiceKey
@@ -391,6 +396,8 @@
             self.currentChildViewController = childNC;
         }
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex

@@ -7,7 +7,7 @@
 //
 
 #import "ProfileViewController.h"
-#import "PushModalViewControllerFromLeftSegue.h"
+#import "SettingsMenuViewController.h"
 #import "GRMustacheTemplate.h"
 #import "CPTouchableView.h"
 #import "CPSkill.h"
@@ -475,7 +475,7 @@
 
 -(IBAction)gearPressed:(id)sender
 {
-    [self dismissPushModalViewControllerFromLeftSegue];
+    [[CPAppDelegate settingsMenuViewController] slideAwayChildViewController];
 }
 
 -(IBAction)chooseNewProfileImage:(id)sender
@@ -534,15 +534,17 @@
              }
 
 
-             SettingsMenuViewController *presentingViewController = (SettingsMenuViewController *)self.presentingViewController;
-             if (presentingViewController.isMenuShowing) {
-                 [presentingViewController showMenu:NO];
+             SettingsMenuViewController *settingsVC = [CPAppDelegate settingsMenuViewController];
+             
+             if (settingsVC.isMenuShowing) {
+                 [settingsVC showMenu:NO];
              }
-
-             [self dismissModalViewControllerAnimated:NO];
-
-             [CPUserSessionHandler showSignupModalFromViewController:presentingViewController
+             
+             [settingsVC slideAwayChildViewController];
+             
+             [CPUserSessionHandler showSignupModalFromViewController:settingsVC
                                                             animated:YES];
+             
 
              [SVProgressHUD dismissWithSuccess:@"Thanks for spending time on Workclub. We hope to see you again soon."
                                     afterDelay:kDefaultDismissDelay];

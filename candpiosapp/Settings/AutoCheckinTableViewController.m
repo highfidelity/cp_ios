@@ -9,7 +9,6 @@
 #import "AutoCheckinTableViewController.h"
 #import "AutoCheckinCell.h"
 #import "CPGeofenceHandler.h"
-#import "PushModalViewControllerFromLeftSegue.h"
 
 @interface AutoCheckinTableViewController ()
 @property (strong, nonatomic) NSMutableArray *placesArray;
@@ -141,6 +140,6 @@
 
 - (IBAction)gearPressed:(UIButton *)sender
 {
-    [self dismissPushModalViewControllerFromLeftSegue];
+    [[CPAppDelegate settingsMenuViewController] slideAwayChildViewController];
 }
 @end
