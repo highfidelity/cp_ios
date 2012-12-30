@@ -12,7 +12,6 @@
 #define kControlHeight 24
 #define kLabelFontSize 14
 #define kControlDefaultPadding 4
-#define kLabelWidth 38
 
 #define kOnLabelText @"On"
 #define kOffLabelText @"Off"
@@ -29,15 +28,15 @@
 
 @implementation CPSwitch
 
-@synthesize on;
-
 -(void) awakeFromNib
 {
 	[super awakeFromNib];
 	self.backgroundColor = [UIColor clearColor];
     
-    UIImage *switchOnImage = [[UIImage imageNamed:@"switchOnBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(12, 5, 12, 0)];
-    UIImage *switchOffImage = [[UIImage imageNamed:@"switchOffBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(12, 0, 12, 5)];
+    UIImage *switchOnImage = [[UIImage imageNamed:@"switchOnBg"]
+                              resizableImageWithCapInsets:UIEdgeInsetsMake(kControlHeight / 2, 5, kControlHeight / 2, 0)];
+    UIImage *switchOffImage = [[UIImage imageNamed:@"switchOffBg"]
+                               resizableImageWithCapInsets:UIEdgeInsetsMake(kControlHeight / 2, 0, kControlHeight / 2, 5)];
     
 	[self setThumbImage:[UIImage imageNamed:@"switchThumb"] forState:UIControlStateNormal];
 	[self setMinimumTrackImage:switchOnImage forState:UIControlStateNormal];
@@ -51,16 +50,15 @@
 	self.value = self.minimumValue;
     
 	self.clippingView = [[UIView alloc]
-                         initWithFrame:CGRectMake(kControlDefaultPadding, 2, kControlWidth - kControlDefaultPadding * 2, kControlHeight - kControlDefaultPadding)];
+                         initWithFrame:CGRectMake(kControlDefaultPadding, 1, kControlWidth - kControlDefaultPadding * 2, kControlHeight - kControlDefaultPadding)];
 	self.clippingView.clipsToBounds = YES;
 	self.clippingView.userInteractionEnabled = NO;
 	self.clippingView.backgroundColor = [UIColor clearColor];
 	[self addSubview:self.clippingView];
 	
 	self.leftLabel = [[UILabel alloc] init];
-	self.leftLabel.frame = CGRectMake(0, 0, kLabelWidth, kControlHeight - kControlDefaultPadding * 2);
 	self.leftLabel.text = kOnLabelText;
-	self.leftLabel.textAlignment = UITextAlignmentCenter;
+	self.leftLabel.textAlignment = NSTextAlignmentCenter;
 	self.leftLabel.font = [UIFont boldSystemFontOfSize:kLabelFontSize];
 	self.leftLabel.textColor = [UIColor whiteColor];
 	self.leftLabel.backgroundColor = [UIColor clearColor];
@@ -69,23 +67,12 @@
 	[self.clippingView addSubview:self.leftLabel];
 	
 	self.rightLabel = [[UILabel alloc] init];
-	self.rightLabel.frame = CGRectMake(kControlWidth, 0, kLabelWidth, kControlHeight - kControlDefaultPadding * 2);
 	self.rightLabel.text = kOffLabelText;
-	self.rightLabel.textAlignment = UITextAlignmentCenter;
+	self.rightLabel.textAlignment = NSTextAlignmentCenter;
 	self.rightLabel.font = [UIFont boldSystemFontOfSize:kLabelFontSize];
-	self.rightLabel.textColor = [UIColor grayColor];
+	self.rightLabel.textColor = [UIColor whiteColor];
 	self.rightLabel.backgroundColor = [UIColor clearColor];
-	//self.rightLabel.shadowColor = [UIColor lightGrayColor];
-	//self.rightLabel.shadowOffset = CGSizeMake(0, -1);
 	[self.clippingView addSubview:self.rightLabel];
-	
-    // gesture recognizers
-//    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
-//    [self addGestureRecognizer:singleTap];
-    
-//    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
-//    longPress.minimumPressDuration = 0.3;
-//    [self addGestureRecognizer:longPress];
 }
 
 
@@ -102,31 +89,28 @@
 	CGFloat labelWidth = switchWidth - thumbWidth;
 	CGFloat inset = self.clippingView.frame.origin.x;
 	
-	NSInteger xPos = self.value * labelWidth - labelWidth - inset;
+	NSInteger xPos = (NSInteger) (self.value * labelWidth - labelWidth - inset + 2);
 	self.leftLabel.frame = CGRectMake(xPos, 0, labelWidth, kControlHeight - kControlDefaultPadding);
 	
-	xPos = switchWidth + (self.value * labelWidth - labelWidth) - inset;
+	xPos = (NSInteger) (switchWidth + (self.value * labelWidth - labelWidth) - inset - 2);
 	self.rightLabel.frame = CGRectMake(xPos, 0, labelWidth, kControlHeight - kControlDefaultPadding);
 }
 
 - (void)setOn:(BOOL)turnOn animated:(BOOL)animated;
 {
-    on = turnOn;
-    
 	if (animated) {
 		[UIView beginAnimations:@"CPSwitch" context:nil];
 		[UIView setAnimationDuration:0.2];
 	}
 	
-	if (on) {
+	if (turnOn) {
 		self.value = self.maximumValue;
 	}
 	else {
 		self.value = self.minimumValue;
 	}
 	
-	if (animated)
-	{
+	if (animated) {
 		[UIView	commitAnimations];
 	}
 }
@@ -136,7 +120,7 @@
 	[self setOn:turnOn animated:NO];
 }
 
--(BOOL) on
+-(BOOL)on
 {
     return self.value > (self.maximumValue - self.minimumValue) / 2;
 }
@@ -147,39 +131,18 @@
     self.initialValue = self.value;
 }
 
-
 - (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
 {
+    BOOL val = self.value > 0.5;
     float diff = fabsf(self.initialValue - self.value);
     if (diff < 0.02) {
-        on = !on;
-    } else {
-        on = self.value > 0.5;
+        val = !self.value > 0.5;
     }
     
 	[super touchesEnded:touches withEvent:event];
-    [self setOn:on animated:YES];
+    [self setOn:val animated:YES];
     [self sendActionsForControlEvents:UIControlEventValueChanged];
 	
 }
-
-/** /
-- (void)handleSingleTap:(UITapGestureRecognizer *)recognizer
-{
-    if (recognizer.state == UIGestureRecognizerStateEnded) {
-        [self setOn:!on animated:YES];
-        [self sendActionsForControlEvents:UIControlEventValueChanged];
-    }
-}
-
-- (void)handleLongPress:(UILongPressGestureRecognizer *)recognizer
-{
-    if (recognizer.state == UIGestureRecognizerStateEnded) {
-        BOOL newValue = self.value > 0.5;
-        [self setOn:newValue animated:YES];
-        [self sendActionsForControlEvents:UIControlEventValueChanged];
-    }
-}
-/**/
 
 @end
