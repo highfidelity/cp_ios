@@ -795,7 +795,7 @@ photo?</string>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" continuous="NO" id="ShJ-WH-jAY" customClass="CPSwitch">
-                                                    <rect key="frame" x="203" y="14" width="75" height="23"/>
+                                                    <rect key="frame" x="203" y="14" width="79" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </slider>
                                             </subviews>
@@ -817,7 +817,7 @@ photo?</string>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" continuous="NO" id="iVo-HR-ADk" customClass="CPSwitch">
-                                                    <rect key="frame" x="203" y="9" width="75" height="23"/>
+                                                    <rect key="frame" x="203" y="9" width="79" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <connections>
                                                         <action selector="notificationSwitchChanged:" destination="MeN-HC-Vg0" eventType="valueChanged" id="vhi-gz-2ba"/>
@@ -828,11 +828,11 @@ photo?</string>
                                         </view>
                                         <color key="backgroundColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="45" id="OAx-fh-dgt">
-                                        <rect key="frame" x="0.0" y="121" width="320" height="45"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="46" id="OAx-fh-dgt">
+                                        <rect key="frame" x="0.0" y="121" width="320" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="10" y="0.0" width="300" height="44"/>
+                                            <rect key="frame" x="10" y="0.0" width="300" height="45"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="from" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Dvb-1L-a6W">
@@ -887,7 +887,7 @@ photo?</string>
                             <tableViewSection headerTitle="Show check ins ..." id="wct-Vw-mBH">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="37" id="oum-Ks-bYN">
-                                        <rect key="frame" x="0.0" y="212" width="320" height="38"/>
+                                        <rect key="frame" x="0.0" y="213" width="320" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="36"/>
@@ -905,7 +905,7 @@ photo?</string>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="37" id="Rge-a9-7UJ">
-                                        <rect key="frame" x="0.0" y="250" width="320" height="37"/>
+                                        <rect key="frame" x="0.0" y="251" width="320" height="37"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="36"/>
@@ -923,7 +923,7 @@ photo?</string>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="2" indentationWidth="8" rowHeight="37" id="5jo-xC-Ecb">
-                                        <rect key="frame" x="0.0" y="287" width="320" height="37"/>
+                                        <rect key="frame" x="0.0" y="288" width="320" height="37"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="36"/>
@@ -941,7 +941,7 @@ photo?</string>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="2" indentationWidth="8" rowHeight="45" id="15T-J4-hjh">
-                                        <rect key="frame" x="0.0" y="324" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="325" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="44"/>
@@ -954,7 +954,7 @@ photo?</string>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" continuous="NO" id="4cr-fl-tIG" customClass="CPSwitch">
-                                                    <rect key="frame" x="203" y="9" width="75" height="23"/>
+                                                    <rect key="frame" x="203" y="9" width="79" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </slider>
                                             </subviews>
@@ -967,7 +967,7 @@ photo?</string>
                             <tableViewSection headerTitle="Notifications from my contacts" id="XjL-T6-tli">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="55" id="wMP-rt-9oL">
-                                        <rect key="frame" x="0.0" y="415" width="320" height="56"/>
+                                        <rect key="frame" x="0.0" y="416" width="320" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="54"/>
@@ -980,7 +980,7 @@ photo?</string>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" continuous="NO" id="Jzd-T5-Nlj" customClass="CPSwitch">
-                                                    <rect key="frame" x="203" y="15" width="75" height="23"/>
+                                                    <rect key="frame" x="203" y="16" width="79" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </slider>
                                             </subviews>
@@ -989,7 +989,7 @@ photo?</string>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="55" id="w2u-Mc-ehe">
-                                        <rect key="frame" x="0.0" y="471" width="320" height="55"/>
+                                        <rect key="frame" x="0.0" y="472" width="320" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="300" height="54"/>
@@ -1002,7 +1002,7 @@ photo?</string>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" continuous="NO" id="u4r-gM-RUG" customClass="CPSwitch">
-                                                    <rect key="frame" x="203" y="14" width="75" height="23"/>
+                                                    <rect key="frame" x="203" y="16" width="79" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </slider>
                                             </subviews>
@@ -1015,7 +1015,7 @@ photo?</string>
                             <tableViewSection headerTitle="Chat" id="wW4-UH-srJ">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="80" id="g9c-M9-FGE">
-                                        <rect key="frame" x="0.0" y="572" width="320" height="81"/>
+                                        <rect key="frame" x="0.0" y="573" width="320" height="81"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="1" width="300" height="79"/>
@@ -1034,7 +1034,7 @@ photo?</string>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" continuous="NO" id="SaY-Se-QZ1" customClass="CPSwitch">
-                                                    <rect key="frame" x="203" y="17" width="75" height="23"/>
+                                                    <rect key="frame" x="203" y="19" width="79" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <connections>
                                                         <action selector="contactsOnlyChatSwitchChanged:" destination="MeN-HC-Vg0" eventType="valueChanged" id="pwb-b7-f1S"/>

@@ -8,7 +8,6 @@
 
 #import "CPSwitch.h"
 
-#define kControlWidth 75
 #define kControlHeight 24
 #define kLabelFontSize 14
 #define kControlDefaultPadding 4
@@ -45,12 +44,12 @@
 	self.minimumValue = 0.0;
 	self.maximumValue = 1.0;
 	self.continuous = NO;
-	
+     
 	self.on = NO;
 	self.value = self.minimumValue;
     
 	self.clippingView = [[UIView alloc]
-                         initWithFrame:CGRectMake(kControlDefaultPadding, 1, kControlWidth - kControlDefaultPadding * 2, kControlHeight - kControlDefaultPadding)];
+                         initWithFrame:CGRectMake(kControlDefaultPadding, 1, self.frame.size.width - kControlDefaultPadding * 2, kControlHeight - kControlDefaultPadding)];
 	self.clippingView.clipsToBounds = YES;
 	self.clippingView.userInteractionEnabled = NO;
 	self.clippingView.backgroundColor = [UIColor clearColor];
@@ -62,7 +61,7 @@
 	self.leftLabel.font = [UIFont boldSystemFontOfSize:kLabelFontSize];
 	self.leftLabel.textColor = [UIColor whiteColor];
 	self.leftLabel.backgroundColor = [UIColor clearColor];
-	self.leftLabel.shadowColor = [UIColor grayColor];
+	self.leftLabel.shadowColor = [UIColor blackColor];
 	self.leftLabel.shadowOffset = CGSizeMake(0, -1);
 	[self.clippingView addSubview:self.leftLabel];
 	
