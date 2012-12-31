@@ -170,7 +170,6 @@
             
             NSString *contactsOnlyChat = (NSString *)[dict objectForKey:@"contacts_only_chat"];
             [[self contactsOnlyChatSwitch] setOn:[contactsOnlyChat isEqualToString:@"0"]];
-            [[self chatNotificationLabel] setHidden:!self.contactsOnlyChatSwitch.on];
             
             [SVProgressHUD dismiss];
         }
@@ -233,6 +232,13 @@
     }
 }
 
+-(void)setChatLabelText:(BOOL)publicChat
+{
+    self.chatNotificationLabel.text = publicChat ?
+        @"Anyone on Workclub can send you a chat message" :
+        @"Only people in your contacts can send you a chat message";
+}
+
 - (NSString *)setTimeText:(NSDate *)timeValue
 {
     NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
@@ -250,7 +256,7 @@
 
 - (IBAction)contactsOnlyChatSwitchChanged:(id)sender
 {
-    [[self chatNotificationLabel] setHidden:!self.contactsOnlyChatSwitch.on];
+    [self setChatLabelText:self.contactsOnlyChatSwitch.on];
 }
 
 - (IBAction)notificationSwitchChanged:(CPSwitch *)sender
