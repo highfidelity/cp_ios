@@ -32,12 +32,12 @@
 	[super awakeFromNib];
 	self.backgroundColor = [UIColor clearColor];
     
-    UIImage *switchOnImage = [[UIImage imageNamed:@"switchOnBg"]
+    UIImage *switchOnImage = [[UIImage imageNamed:@"switch-on-background"]
                               resizableImageWithCapInsets:UIEdgeInsetsMake(kControlHeight / 2, 5, kControlHeight / 2, 0)];
-    UIImage *switchOffImage = [[UIImage imageNamed:@"switchOffBg"]
+    UIImage *switchOffImage = [[UIImage imageNamed:@"switch-off-background"]
                                resizableImageWithCapInsets:UIEdgeInsetsMake(kControlHeight / 2, 0, kControlHeight / 2, 5)];
     
-	[self setThumbImage:[UIImage imageNamed:@"switchThumb"] forState:UIControlStateNormal];
+	[self setThumbImage:[UIImage imageNamed:@"switch-thumb"] forState:UIControlStateNormal];
 	[self setMinimumTrackImage:switchOnImage forState:UIControlStateNormal];
 	[self setMaximumTrackImage:switchOffImage forState:UIControlStateNormal];
 	
@@ -117,6 +117,7 @@
 -(void)setOn:(BOOL)turnOn
 {
 	[self setOn:turnOn animated:NO];
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
 -(BOOL)on

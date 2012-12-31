@@ -795,7 +795,7 @@ photo?</string>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" continuous="NO" id="ShJ-WH-jAY" customClass="CPSwitch">
-                                                    <rect key="frame" x="203" y="14" width="79" height="23"/>
+                                                    <rect key="frame" x="203" y="15" width="79" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </slider>
                                             </subviews>
@@ -811,13 +811,13 @@ photo?</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Quiet time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0fU-wl-PnK">
-                                                    <rect key="frame" x="27" y="13" width="153" height="21"/>
+                                                    <rect key="frame" x="27" y="12" width="153" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <color key="textColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" continuous="NO" id="iVo-HR-ADk" customClass="CPSwitch">
-                                                    <rect key="frame" x="203" y="9" width="79" height="23"/>
+                                                    <rect key="frame" x="203" y="11" width="79" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <connections>
                                                         <action selector="notificationSwitchChanged:" destination="MeN-HC-Vg0" eventType="valueChanged" id="vhi-gz-2ba"/>
@@ -848,7 +848,7 @@ photo?</string>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ejn-ko-Zlb">
-                                                    <rect key="frame" x="64" y="9" width="78" height="25"/>
+                                                    <rect key="frame" x="64" y="10" width="78" height="25"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <state key="normal" title="10:00 AM" backgroundImage="quiet-time-button.png">
@@ -863,7 +863,7 @@ photo?</string>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="yTo-Iv-pfU">
-                                                    <rect key="frame" x="167" y="9" width="78" height="25"/>
+                                                    <rect key="frame" x="167" y="10" width="78" height="25"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <state key="normal" title="6:00 PM" backgroundImage="quiet-time-button.png">
@@ -948,13 +948,13 @@ photo?</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Only when I am checked in" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5h7-uN-rV4">
-                                                    <rect key="frame" x="27" y="4" width="174" height="36"/>
+                                                    <rect key="frame" x="27" y="5" width="174" height="36"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" continuous="NO" id="4cr-fl-tIG" customClass="CPSwitch">
-                                                    <rect key="frame" x="203" y="9" width="79" height="23"/>
+                                                    <rect key="frame" x="203" y="11" width="79" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </slider>
                                             </subviews>
@@ -980,7 +980,7 @@ photo?</string>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" continuous="NO" id="Jzd-T5-Nlj" customClass="CPSwitch">
-                                                    <rect key="frame" x="203" y="16" width="79" height="23"/>
+                                                    <rect key="frame" x="203" y="17" width="79" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </slider>
                                             </subviews>
@@ -1002,7 +1002,7 @@ photo?</string>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" continuous="NO" id="u4r-gM-RUG" customClass="CPSwitch">
-                                                    <rect key="frame" x="203" y="16" width="79" height="23"/>
+                                                    <rect key="frame" x="203" y="17" width="79" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </slider>
                                             </subviews>

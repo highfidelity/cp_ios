@@ -331,12 +331,12 @@
 		8E849599CB28489CB0A55E5F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E061CFAA8C943A4B87BC76E /* libPods.a */; };
 		E41080711539AB2200D7EAA8 /* JobCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E41080701539AB2200D7EAA8 /* JobCategoryViewController.m */; };
 		E410F9DC159DF0A500D32F86 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E410F9DB159DF0A500D32F86 /* ProfileViewController.m */; };
-		E4173EB3168A57B7004B65BC /* switchOffBg.png in Resources */ = {isa = PBXBuildFile; fileRef = E4173EAD168A57B7004B65BC /* switchOffBg.png */; };
-		E4173EB4168A57B7004B65BC /* switchOffBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4173EAE168A57B7004B65BC /* switchOffBg@2x.png */; };
-		E4173EB5168A57B7004B65BC /* switchOnBg.png in Resources */ = {isa = PBXBuildFile; fileRef = E4173EAF168A57B7004B65BC /* switchOnBg.png */; };
-		E4173EB6168A57B7004B65BC /* switchOnBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4173EB0168A57B7004B65BC /* switchOnBg@2x.png */; };
-		E4173EB7168A57B7004B65BC /* switchThumb.png in Resources */ = {isa = PBXBuildFile; fileRef = E4173EB1168A57B7004B65BC /* switchThumb.png */; };
-		E4173EB8168A57B7004B65BC /* switchThumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4173EB2168A57B7004B65BC /* switchThumb@2x.png */; };
+		E414DA351690DD1000F25C18 /* switch-off-background.png in Resources */ = {isa = PBXBuildFile; fileRef = E414DA2F1690DD0F00F25C18 /* switch-off-background.png */; };
+		E414DA361690DD1000F25C18 /* switch-off-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E414DA301690DD0F00F25C18 /* switch-off-background@2x.png */; };
+		E414DA371690DD1000F25C18 /* switch-on-background.png in Resources */ = {isa = PBXBuildFile; fileRef = E414DA311690DD0F00F25C18 /* switch-on-background.png */; };
+		E414DA381690DD1000F25C18 /* switch-on-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E414DA321690DD0F00F25C18 /* switch-on-background@2x.png */; };
+		E414DA391690DD1000F25C18 /* switch-thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = E414DA331690DD1000F25C18 /* switch-thumb.png */; };
+		E414DA3A1690DD1000F25C18 /* switch-thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E414DA341690DD1000F25C18 /* switch-thumb@2x.png */; };
 		E43CFC32153756C300A3A716 /* person-login-to-view.png in Resources */ = {isa = PBXBuildFile; fileRef = E43CFC30153756C300A3A716 /* person-login-to-view.png */; };
 		E43CFC33153756C300A3A716 /* person-login-to-view@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E43CFC31153756C300A3A716 /* person-login-to-view@2x.png */; };
 		E440BEF71685E395001B5BD5 /* quiet-time-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E440BEF51685E395001B5BD5 /* quiet-time-button@2x.png */; };
@@ -776,12 +776,12 @@
 		E41080701539AB2200D7EAA8 /* JobCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JobCategoryViewController.m; path = Settings/JobCategoryViewController.m; sourceTree = "<group>"; };
 		E410F9DA159DF0A500D32F86 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileViewController.h; path = Settings/ProfileViewController.h; sourceTree = "<group>"; };
 		E410F9DB159DF0A500D32F86 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = ProfileViewController.m; path = Settings/ProfileViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		E4173EAD168A57B7004B65BC /* switchOffBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switchOffBg.png; sourceTree = "<group>"; };
-		E4173EAE168A57B7004B65BC /* switchOffBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "switchOffBg@2x.png"; sourceTree = "<group>"; };
-		E4173EAF168A57B7004B65BC /* switchOnBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switchOnBg.png; sourceTree = "<group>"; };
-		E4173EB0168A57B7004B65BC /* switchOnBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "switchOnBg@2x.png"; sourceTree = "<group>"; };
-		E4173EB1168A57B7004B65BC /* switchThumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switchThumb.png; sourceTree = "<group>"; };
-		E4173EB2168A57B7004B65BC /* switchThumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "switchThumb@2x.png"; sourceTree = "<group>"; };
+		E414DA2F1690DD0F00F25C18 /* switch-off-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "switch-off-background.png"; sourceTree = "<group>"; };
+		E414DA301690DD0F00F25C18 /* switch-off-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "switch-off-background@2x.png"; sourceTree = "<group>"; };
+		E414DA311690DD0F00F25C18 /* switch-on-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "switch-on-background.png"; sourceTree = "<group>"; };
+		E414DA321690DD0F00F25C18 /* switch-on-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "switch-on-background@2x.png"; sourceTree = "<group>"; };
+		E414DA331690DD1000F25C18 /* switch-thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "switch-thumb.png"; sourceTree = "<group>"; };
+		E414DA341690DD1000F25C18 /* switch-thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "switch-thumb@2x.png"; sourceTree = "<group>"; };
 		E43CFC30153756C300A3A716 /* person-login-to-view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "person-login-to-view.png"; path = "User/images/person-login-to-view.png"; sourceTree = "<group>"; };
 		E43CFC31153756C300A3A716 /* person-login-to-view@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "person-login-to-view@2x.png"; path = "User/images/person-login-to-view@2x.png"; sourceTree = "<group>"; };
 		E440BEF51685E395001B5BD5 /* quiet-time-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quiet-time-button@2x.png"; sourceTree = "<group>"; };
@@ -1239,12 +1239,12 @@
 		539F7DF216558AE6005FF3F0 /* common */ = {
 			isa = PBXGroup;
 			children = (
-				E4173EAD168A57B7004B65BC /* switchOffBg.png */,
-				E4173EAE168A57B7004B65BC /* switchOffBg@2x.png */,
-				E4173EAF168A57B7004B65BC /* switchOnBg.png */,
-				E4173EB0168A57B7004B65BC /* switchOnBg@2x.png */,
-				E4173EB1168A57B7004B65BC /* switchThumb.png */,
-				E4173EB2168A57B7004B65BC /* switchThumb@2x.png */,
+				E414DA2F1690DD0F00F25C18 /* switch-off-background.png */,
+				E414DA301690DD0F00F25C18 /* switch-off-background@2x.png */,
+				E414DA311690DD0F00F25C18 /* switch-on-background.png */,
+				E414DA321690DD0F00F25C18 /* switch-on-background@2x.png */,
+				E414DA331690DD1000F25C18 /* switch-thumb.png */,
+				E414DA341690DD1000F25C18 /* switch-thumb@2x.png */,
 				E4925FDB1687DDEF00F3F1C5 /* check-mark.png */,
 				E4925FDC1687DDF600F3F1C5 /* check-mark@2x.png */,
 				539F7DF316558AE6005FF3F0 /* bullet.png */,
@@ -1929,12 +1929,12 @@
 				E440BEFA1685E3F9001B5BD5 /* quiet-time-button.png in Resources */,
 				E4925FDD1687DE0800F3F1C5 /* check-mark.png in Resources */,
 				E4925FDE1687DE0800F3F1C5 /* check-mark@2x.png in Resources */,
-				E4173EB3168A57B7004B65BC /* switchOffBg.png in Resources */,
-				E4173EB4168A57B7004B65BC /* switchOffBg@2x.png in Resources */,
-				E4173EB5168A57B7004B65BC /* switchOnBg.png in Resources */,
-				E4173EB6168A57B7004B65BC /* switchOnBg@2x.png in Resources */,
-				E4173EB7168A57B7004B65BC /* switchThumb.png in Resources */,
-				E4173EB8168A57B7004B65BC /* switchThumb@2x.png in Resources */,
+				E414DA351690DD1000F25C18 /* switch-off-background.png in Resources */,
+				E414DA361690DD1000F25C18 /* switch-off-background@2x.png in Resources */,
+				E414DA371690DD1000F25C18 /* switch-on-background.png in Resources */,
+				E414DA381690DD1000F25C18 /* switch-on-background@2x.png in Resources */,
+				E414DA391690DD1000F25C18 /* switch-thumb.png in Resources */,
+				E414DA3A1690DD1000F25C18 /* switch-thumb@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

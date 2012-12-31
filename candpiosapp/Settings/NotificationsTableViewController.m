@@ -1,4 +1,4 @@
-//
+	//
 //  NotificationsTableViewController.m
 //  candpiosapp
 //
@@ -257,8 +257,10 @@
 {
     [UIView animateWithDuration:0.3
                      animations:^{
-                         UIView *contentView = [self.timeFrameCell.subviews objectAtIndex:1];
-                         contentView.alpha = sender.on ? 1.0 : 0.5;
+                         if ([self.timeFrameCell.subviews count] > 1) {
+                             UIView *contentView = [self.timeFrameCell.subviews objectAtIndex:1];
+                             contentView.alpha = sender.on ? 1.0 : 0.5;
+                         }
                          self.timeFrameCell.userInteractionEnabled = sender.on;
                      }];
 }
