@@ -22,8 +22,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.imageNormal = [UIImage imageNamed:@"page-normal.png"];
-        self.imageCurrent = [UIImage imageNamed:@"page-current.png"];
+        self.imageNormal = [UIImage imageNamed:@"tutorial-dot-unfilled.png"];
+        self.imageCurrent = [UIImage imageNamed:@"tutorial-dot-filled.png"];
     }
     return self;
 }

@@ -179,7 +179,7 @@ typedef enum {
 
 - (void)loadTwentyClosestVenues:(NSString *)searchText
 {
-    if (![CLLocationManager locationServicesEnabled] || ![CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized) {
+    if (![CLLocationManager locationServicesEnabled] || [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized) {
         self.currentSearchState = CPCheckInListSearchStateDisabledLocationService;
         [self.tableView.pullToRefreshView stopAnimating];
         

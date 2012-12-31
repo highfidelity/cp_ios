@@ -19,6 +19,4 @@
 + (void)autoCheckInToVenue:(CPVenue *)venue
            completion:(void (^)(NSDictionary *, NSError *))completion;
 
-+ (void)cancelAutoCheckInRequestToVenue:(CPVenue *)venue
-                         WithCompletion:(void (^)(NSDictionary *, NSError *))completion;
 @end

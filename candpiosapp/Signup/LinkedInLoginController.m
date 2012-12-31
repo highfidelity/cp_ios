@@ -490,7 +490,7 @@ typedef void (^LoadLinkedInConnectionsCompletionBlockType)();
 {
     @try {
         NSDictionary *userInfo = json[@"params"][@"params"];
-        NSLog(@"%@", userInfo);
+        
         if (userInfo) {
             [CPUserSessionHandler storeUserLoginDataFromDictionary:userInfo];
 

@@ -10,6 +10,7 @@
 #import "CPCheckinHandler.h"
 #import "CPApiClient.h"
 #import "CPAlertView.h"
+#import "CPObjectManager.h"
 
 #define kGeoFenceAlertTag 601
 #define kRadiusForCheckins 10 // measure in meters, from lat/lng of CPVenue
@@ -73,75 +74,27 @@ static CPGeofenceHandler *sharedHandler;
     }];
 }
 
-- (void)handleAutoCheckOutForVenue:(CPVenue *)venue
-{
-    if ([CPUserDefaultsHandler isUserCurrentlyCheckedIn] && [[CPUserDefaultsHandler currentVenue].venueID isEqualToNumber:venue.venueID]) {
-        [self autoCheckOutForVenue:venue];
-    }
-    
-    if ([CPCheckinHandler sharedHandler].pendingAutoCheckInVenue) {
-        [self cancelAutoCheckInRequest:venue];
-    }
-}
-
-- (void)cancelAutoCheckInRequest:(CPVenue *)venue
-{
-    [CPApiClient cancelAutoCheckInRequestToVenue:venue
-                                  WithCompletion:^(NSDictionary *json, NSError *error)
-    {
-        if (!error) {
-            [Flurry logEvent:@"cancelAutoCheckInRequest" withParameters:json timed:YES];
-        }
-    }];
-}
-
 - (void)autoCheckOutForVenue:(CPVenue *)venue
 {
-    [Flurry logEvent:@"autoCheckedOut"];
+    CLLocationCoordinate2D currentCoordinate = [CPAppDelegate locationManager].location.coordinate;
     
-    [SVProgressHUD showWithStatus:@"Checking out..."];
+    NSDictionary *requestObject = @{
+        @"venueID": venue.venueID,
+        @"lat": @(currentCoordinate.latitude),
+        @"lng": @(currentCoordinate.longitude)
+    };
     
-    [CPapi checkOutWithCompletion:^(NSDictionary *json, NSError *error) {
-        
-        BOOL respError = [[json objectForKey:@"error"] boolValue];
-        
-        if (!error && !respError) {
-            [[UIApplication sharedApplication] cancelAllLocalNotifications];
-            
-            NSDictionary *jsonDict = [json objectForKey:@"payload"];
-            NSString *venueName = [jsonDict valueForKey:@"venue_name"];
-            NSMutableString *alertText = [NSMutableString stringWithFormat:@"Checked out of %@.", venueName];
-            
-            int hours = [[jsonDict valueForKey:@"hours_checked_in"] intValue];
-            if (hours == 1) {
-                [alertText appendString:@" You were there for 1 hour."];
-            } else if (hours > 1) {
-                [alertText appendFormat:@" You were there for %d hours.", hours];
-            }
-            
-            UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-            localNotif.alertBody = alertText;
-            localNotif.alertAction = @"View";
-            localNotif.soundName = UILocalNotificationDefaultSoundName;
-            
-            localNotif.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   @"exit", @"geofence",
-                                   venue.name, @"venue_name",
-                                   nil];
-            
-            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
-            [[CPCheckinHandler sharedHandler] setCheckedOut];
-            
-            [SVProgressHUD dismissWithSuccess:alertText
-                                   afterDelay:kDefaultDismissDelay];
-        } else {
-            NSString *message = [json objectForKey:@"payload"];
-            if (!message) {
-                message = @"Oops. Something went wrong.";
-            }
-            [SVProgressHUD dismissWithError:message
-                                 afterDelay:kDefaultDismissDelay];
-        }
+    [[CPObjectManager sharedManager] getObjectsAtPathForRouteNamed:kRouteGeofenceCheckout
+                                                            object:requestObject
+                                                        parameters:@{@"v": @"20121214"}
+                                                           success:^(RKObjectRequestOperation *operation, RKMappingResult *result)
+    {
+        // log success with Flurry now that checkout succeded
+        [Flurry logEvent:@"autoCheckedOut"];
+    }
+                                                           failure:^(RKObjectRequestOperation *operation, NSError *error)
+    {
+        // geofence checkout failed, nothing to do here
     }];
 }
 
@@ -156,13 +109,11 @@ static CPGeofenceHandler *sharedHandler;
         [[UIApplication sharedApplication] cancelAllLocalNotifications];
 
         CPVenue *venue;
-        if ([[CPCheckinHandler sharedHandler].pendingAutoCheckInVenue.venueID isEqualToNumber:venueID]) {
-            venue = [CPCheckinHandler sharedHandler].pendingAutoCheckInVenue;
-        } else {
-            venue = [self venueWithID:venueID];
-        }
+        venue = [self venueWithID:venueID];
 
         [CPCheckinHandler handleSuccessfulCheckinToVenue:venue checkoutTime:checkoutTime];
+    } else {
+        [[CPCheckinHandler sharedHandler] setCheckedOut];
     }
 
     // check if the app is currently active
