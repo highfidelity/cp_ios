@@ -40,7 +40,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [CPCheckedLabel setGroup:@[
+    [CPCheckedLabel createRadioButtonGroup:@[
         self.checkedInContactsLabel,
         self.checkedInCityLabel,
         self.checkedInVenueLabel
@@ -81,10 +81,7 @@
     
     UILabel *tempLabel=[[UILabel alloc]initWithFrame:CGRectMake(37, 0, 300, 44)];
     tempLabel.backgroundColor=[UIColor clearColor];
-    //    tempLabel.shadowColor = [UIColor blackColor];
-    //    tempLabel.shadowOffset = CGSizeMake(0,2);
-    tempLabel.textColor = [UIColor lightGrayColor]; //here you can change the text color of header.
-    //    tempLabel.font = [UIFont fontWithName:@"Helvetica" size:14];
+    tempLabel.textColor = [UIColor lightGrayColor];
     tempLabel.font = [UIFont boldSystemFontOfSize:14];
     tempLabel.text = [sectionHeaders objectAtIndex:(NSUInteger) section];
     
@@ -112,11 +109,11 @@
             
             NSDictionary *dict = [json objectForKey:@"payload"];
             
-            NSString *receiveNotifications = (NSString *)[dict objectForKey:@"receive_push_notifications"];
+            NSString *receiveNotifications = [dict objectForKey:@"receive_push_notifications"];
             [[self notificationsSwitch] setOn:[receiveNotifications isEqualToString:@"1"]];
             [self notificationSwitchChanged:self.notificationsSwitch];
             
-            NSString *push_distance = (NSString *)[dict objectForKey:@"push_distance"];
+            NSString *push_distance = [dict objectForKey:@"push_distance"];
             if ([push_distance isEqualToString:@"venue"]) {
                 self.checkedInVenueLabel.checked = YES;
             } else if ([push_distance isEqualToString:@"city"]) {
@@ -125,7 +122,7 @@
                 self.checkedInContactsLabel.checked = YES;
             }
             
-            NSString *checkInOnly = (NSString *)[dict objectForKey:@"checked_in_only"];
+            NSString *checkInOnly = [dict objectForKey:@"checked_in_only"];
             [[self checkedInOnlySwitch] setOn:[checkInOnly isEqualToString:@"1"]];
             
             NSString *notifyOnEndorsement = [dict objectForKey:@"push_contacts_endorsement"];
@@ -134,10 +131,10 @@
             NSString *notifyHealdineChanges = [dict objectForKey:@"push_headline_changes"];
             [[self notifyHeadlineChangesSwitch] setOn:[notifyHealdineChanges isEqualToString:@"1"]];
             
-            NSString *quietTime = (NSString *)[dict objectForKey:@"quiet_time"];
+            NSString *quietTime = [dict objectForKey:@"quiet_time"];
             [[self quietTimeSwitch] setOn:[quietTime isEqualToString:@"1"]];
             
-            NSString *quietTimeFrom = (NSString *)[dict objectForKey:@"quiet_time_from"];
+            NSString *quietTimeFrom = [dict objectForKey:@"quiet_time_from"];
             if ([quietTimeFrom isKindOfClass:[NSNull class]]) {
                 quietTimeFrom = @"20:00:00";
             }
@@ -153,7 +150,7 @@
                           forState:UIControlStateNormal];
             
             
-            NSString *quietTimeTo = (NSString *)[dict objectForKey:@"quiet_time_to"];
+            NSString *quietTimeTo = [dict objectForKey:@"quiet_time_to"];
             if ([quietTimeTo isKindOfClass:[NSNull class]]) {
                 quietTimeTo = @"07:00:00";
             }
@@ -166,9 +163,9 @@
             }
             
             [[self quietTimeToButton] setTitle:[self setTimeText:self.quietTimeToDate]
-                                  forState:UIControlStateNormal];
+                                      forState:UIControlStateNormal];
             
-            NSString *contactsOnlyChat = (NSString *)[dict objectForKey:@"contacts_only_chat"];
+            NSString *contactsOnlyChat = [dict objectForKey:@"contacts_only_chat"];
             [[self contactsOnlyChatSwitch] setOn:[contactsOnlyChat isEqualToString:@"0"]];
             
             [SVProgressHUD dismiss];

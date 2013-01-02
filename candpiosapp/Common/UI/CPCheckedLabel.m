@@ -10,7 +10,8 @@
 
 @interface CPCheckedLabel ()
 
-@property (strong, nonatomic) NSArray *group;
+@property (strong, nonatomic) NSArray *radioButtonGroup;
+@property (strong, nonatomic) UIImageView *checkMarkImageView;
 
 @end
 
@@ -26,9 +27,9 @@
         topOffset = 0;
     }
     
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, topOffset, 15, 15)];
-    imgView.image = checkImg;
-    [self addSubview:imgView];
+    self.checkMarkImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, topOffset, 15, 15)];
+    self.checkMarkImageView.image = checkImg;
+    [self addSubview:self.checkMarkImageView];
     
     [self setUserInteractionEnabled:YES];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
@@ -53,8 +54,8 @@
     _checked = checked;
     [self setLayout];
     
-    if (self.group && checked) {
-        for (id item in self.group) {
+    if (self.radioButtonGroup && checked) {
+        for (id item in self.radioButtonGroup) {
             if ([item isKindOfClass:[CPCheckedLabel class]]) {
                 if (![item isEqual:self] && ((CPCheckedLabel *)item).checked) {
                     ((CPCheckedLabel *)item).checked = NO;
@@ -64,11 +65,11 @@
     }
 }
 
-+(void)setGroup:(NSArray *)group
++(void)createRadioButtonGroup:(NSArray *)radioButtonGroup
 {
-    for (id item in group) {
+    for (id item in radioButtonGroup) {
         if ([item isKindOfClass:[CPCheckedLabel class]]) {
-            ((CPCheckedLabel *)item).group = group;
+            ((CPCheckedLabel *)item).radioButtonGroup = radioButtonGroup;
         }
     }
 }
@@ -76,14 +77,14 @@
 #pragma - mark Private
 - (void)handleSingleTap:(UITapGestureRecognizer *)recognizer
 {
-    if (!self.group || !_checked) {
+    if (!self.radioButtonGroup || !_checked) {
         [self setChecked:!_checked];
     }
 }
 
 - (void)setLayout
 {
-    [[self.subviews objectAtIndex:0] setHidden:!self.checked];
+    [self.checkMarkImageView setHidden:!self.checked];
     self.textColor = self.checked ? [UIColor whiteColor] : [UIColor lightGrayColor];
 }
 

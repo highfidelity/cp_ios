@@ -11,6 +11,6 @@
 
 @interface CPSwitch : UISlider
 
-@property(nonatomic) BOOL on;
+@property (nonatomic) BOOL on;
 
 @end

@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface CPCheckedLabel : UILabel <UIGestureRecognizerDelegate>
+
 @property(nonatomic) BOOL checked;
-+(void)setGroup:(NSArray *)group;
++(void)createRadioButtonGroup:(NSArray *)radioButtonGroup;
+
 @end
