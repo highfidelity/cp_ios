@@ -2098,7 +2098,6 @@
 				539F7E7416558AE6005FF3F0 /* UIImage+ImageBlur.m in Sources */,
 				539F7E7516558AE6005FF3F0 /* UIViewController+isModal.m in Sources */,
 				537B80891666A4AC002CAECB /* CPCheckIn.m in Sources */,
-				533096F2166EC44C005BA9BC,
 				E4CFA0A416878B8600CC335D /* NotificationsTableViewController.m in Sources */,
 				E4CFA0AB1687A66900CC335D /* CPCheckedLabel.m in Sources */,
 				E45862BF168A14FB00CC92A6 /* CPSwitch.m in Sources */,
