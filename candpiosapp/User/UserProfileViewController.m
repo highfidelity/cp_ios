@@ -16,6 +16,7 @@
 #import "FaceToFaceHelper.h"
 #import "CPUserAction.h"
 #import "CPMarkerManager.h"
+#import "UIViewController+CPUserActionCellAdditions.h"
 
 #define kResumeWebViewOffsetTop 304
 
@@ -171,10 +172,11 @@
     
     // check if this is an F2F invite
     if (!self.isF2FInvite) {     
-        
         // put three animated dots after the Loading Resume text
         [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:YES];
         [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:YES];
+        
+        [self animateSlideWaveWithCPUserActionCells:@[self.userActionCell]];
     }
 }
 
