@@ -175,8 +175,6 @@
         // put three animated dots after the Loading Resume text
         [CPUIHelper animatedEllipsisAfterLabel:self.resumeLabel start:YES];
         [CPUIHelper animatedEllipsisAfterLabel:self.checkedIn start:YES];
-        
-        [self animateSlideWaveWithCPUserActionCells:@[self.userActionCell]];
     }
 }
 
@@ -198,7 +196,11 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
+    
+    if (!self.isF2FInvite) {
+        [self animateSlideWaveWithCPUserActionCells:@[self.userActionCell]];
+    }
+    
     [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
 
