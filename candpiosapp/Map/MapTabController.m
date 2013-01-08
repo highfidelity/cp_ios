@@ -205,8 +205,6 @@
          // add modified dataset to map - new/updated annotations
          [self.mapView addAnnotations:filteredVenues];
          
-         [self restackAnnotations];
-         
          // stop spinning the refresh icon and dismiss the HUD
          [self stopRefreshArrowAnimation];
          
@@ -217,27 +215,6 @@
              [SVProgressHUD dismiss];
          }
      }];
-}
-
-- (void)restackAnnotations
-{
-    NSArray *venueAnnotationArray = [self.mapView.annotations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(self isKindOfClass: %@)", [CPVenue class]]];
-    
-    NSArray *sortedAnnotationArray = [venueAnnotationArray sortedArrayUsingComparator:^NSComparisonResult(CPVenue *v1, CPVenue *v2){
-        if ([v1.checkedInNow intValue] > 0 || [v2.checkedInNow intValue] > 0) {
-            return [v1.checkedInNow compare:v2.checkedInNow];
-        } else {
-            return [v1.weeklyCheckinCount compare:v2.weeklyCheckinCount];
-        }
-    }];
-    
-    // bring any checked-in venues to the front of all subviews.
-    for (CPVenue *venueAnnotation in sortedAnnotationArray) {
-        MKAnnotationView *annView = [self.mapView viewForAnnotation:venueAnnotation];
-        if (annView) {
-            [[annView superview] bringSubviewToFront:annView];
-        }
-    }
 }
 
 - (IBAction)locateMe:(id)sender
@@ -271,10 +248,6 @@
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         view.alpha = startingAlpha;
         [UIView commitAnimations];
-        
-        if (![view.annotation isKindOfClass:[CPVenue class]]) {
-            [[view superview] sendSubviewToBack:view];
-        }
     }
 }
 
@@ -286,12 +259,12 @@
 	MKAnnotationView *pinToReturn = nil;
     
     if ([annotation isKindOfClass:[CPVenue class]]) {
-        CPVenue *placeAnn = (CPVenue *)annotation;
+        CPVenue *venueAnnotation = (CPVenue *)annotation;
         
         // Need to set a unique identifier to prevent any weird formatting issues -- use a combination of annotationsInCluster.count + hasCheckedInUsers value + smallPin value
         // @TODO: comment above is now invalid, identifier below is not going to be unique. why not use the foursquare id, or venue id? -- lithium
-        NSString *reuseId = [NSString stringWithFormat:@"place-%@-%d", ([placeAnn.checkedInNow intValue] > 0) ? placeAnn.checkedInNow : placeAnn.weeklyCheckinCount,
-                             ([placeAnn.checkedInNow intValue] > 0)];
+        NSString *reuseId = [NSString stringWithFormat:@"place-%@-%d", ([venueAnnotation.checkedInNow intValue] > 0) ? venueAnnotation.checkedInNow : venueAnnotation.weeklyCheckinCount,
+                             ([venueAnnotation.checkedInNow intValue] > 0)];
         
         MKAnnotationView *pin = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
         
@@ -304,14 +277,14 @@
             pin.annotation = annotation;
         }
         
-        BOOL solar = [placeAnn.specialVenueType isEqual:@"solar"];
+        BOOL solar = [venueAnnotation.specialVenueType isEqual:@"solar"];
         
-        if ([placeAnn.checkedInNow intValue] == 0) {
-            [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO hasContacts:NO isSolar:solar withLabel:NO];
-            [self adjustScaleForPin:pin forNumberOfPeople:placeAnn.weeklyCheckinCount];
+        if ([venueAnnotation.checkedInNow intValue] == 0) {
+            [pin setPin:venueAnnotation.weeklyCheckinCount hasCheckins:NO hasContacts:NO isSolar:solar withLabel:NO];
+            [self adjustScaleForPin:pin forNumberOfPeople:venueAnnotation.weeklyCheckinCount];
         }
         else {
-            [pin setPin:placeAnn.checkedInNow hasCheckins:YES hasContacts:[placeAnn.hasCheckedInContacts boolValue] isSolar:solar withLabel:YES];
+            [pin setPin:venueAnnotation.checkedInNow hasCheckins:YES hasContacts:[venueAnnotation.hasCheckedInContacts boolValue] isSolar:solar withLabel:YES];
             pin.centerOffset = CGPointMake(0, -31);
         }
         
@@ -327,8 +300,22 @@
         // Set up correct callout offset for custom pin images
         pinToReturn.calloutOffset = CGPointMake(0,0);
         
+        pinToReturn.layer.zPosition = [self zPositionForVenueAnnotation:venueAnnotation];
     }
     return pinToReturn;
+}
+
+- (CGFloat)zPositionForVenueAnnotation:(CPVenue *)venue
+{
+    CGFloat zPosition;
+    
+    if ([venue.checkedInNow intValue] > 0) {
+        zPosition = 20000 + [venue.checkedInNow intValue];
+    } else {
+        zPosition = 10000 + [venue.weeklyCheckinCount intValue];
+    }
+    
+    return zPosition;
 }
 
 - (float)getPinScaleForNumberOfPeople:(NSInteger)number {
@@ -386,7 +373,7 @@
 }
 
 - (void)mapView:(MKMapView *)thisMapView regionDidChangeAnimated:(BOOL)animated
-{    
+{
     [self refreshLocationsIfNeeded];
 }
 
