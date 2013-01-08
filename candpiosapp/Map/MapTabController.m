@@ -239,15 +239,13 @@
 
 - (void) mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     for (MKAnnotationView *view in views) {
-        CGFloat startingAlpha = view.alpha;
         
-        // Fade in any new annotations
+        CGFloat startingAlpha = view.alpha;
         view.alpha = 0;
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:1.5];
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-        view.alpha = startingAlpha;
-        [UIView commitAnimations];
+        
+        [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationCurveEaseInOut animations:^{
+            view.alpha = startingAlpha;
+        } completion:nil];
     }
 }
 
