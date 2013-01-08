@@ -205,6 +205,8 @@
          // add modified dataset to map - new/updated annotations
          [self.mapView addAnnotations:filteredVenues];
          
+         [self restackAnnotations];
+         
          // stop spinning the refresh icon and dismiss the HUD
          [self stopRefreshArrowAnimation];
          
@@ -217,13 +219,34 @@
      }];
 }
 
+- (void)restackAnnotations
+{
+    NSArray *venueAnnotationArray = [self.mapView.annotations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(self isKindOfClass: %@)", [CPVenue class]]];
+    
+    NSArray *sortedAnnotationArray = [venueAnnotationArray sortedArrayUsingComparator:^NSComparisonResult(CPVenue *v1, CPVenue *v2){
+        if ([v1.checkedInNow intValue] > 0 || [v2.checkedInNow intValue] > 0) {
+            return [v1.checkedInNow compare:v2.checkedInNow];
+        } else {
+            return [v1.weeklyCheckinCount compare:v2.weeklyCheckinCount];
+        }
+    }];
+    
+    // bring any checked-in venues to the front of all subviews.
+    for (CPVenue *venueAnnotation in sortedAnnotationArray) {
+        MKAnnotationView *annView = [self.mapView viewForAnnotation:venueAnnotation];
+        if (annView) {
+            [[annView superview] bringSubviewToFront:annView];
+        }
+    }
+}
+
 - (IBAction)locateMe:(id)sender
 {
     if (![CLLocationManager locationServicesEnabled] ||
         [CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied ||
         [CLLocationManager authorizationStatus] == kCLAuthorizationStatusRestricted) {
         
-        NSString *message = @"We're unable to get your location and the application relies on it.\n\nPlease go to your settings and enable location for the Workclub app.";
+        NSString *message = @"We're unable to get your location and the application relies on it.\n\nPlease go to your settings and enable location for the  app.";
         [SVProgressHUD showErrorWithStatus:message
                                   duration:kDefaultDismissDelay];
     } else {
@@ -363,20 +386,7 @@
 }
 
 - (void)mapView:(MKMapView *)thisMapView regionDidChangeAnimated:(BOOL)animated
-{
-    // bring any checked-in venues to the front of all subviews.
-    for (CPVenue *ann in [self.mapView.annotations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(self isKindOfClass: %@)", [CPVenue class]]]) {
-        MKAnnotationView *annView = [thisMapView viewForAnnotation:ann];
-        if (annView) {
-            if ([ann.checkedInNow intValue]> 0) {
-                [[annView superview] bringSubviewToFront:annView];
-            }
-            else {
-                [[annView superview] sendSubviewToBack:annView];
-            }
-        }
-    }
-    
+{    
     [self refreshLocationsIfNeeded];
 }
 
