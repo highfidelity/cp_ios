@@ -266,12 +266,10 @@
         
         MKAnnotationView *pin = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
         
-        if (!pin)
-        {
+        if (!pin) {
             pin = [[MKAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: reuseId];
         }
-        else
-        {
+        else {
             pin.annotation = annotation;
         }
         
