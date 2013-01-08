@@ -347,24 +347,57 @@
 	}
 }
 
-- (void)animateSlideButtonsWithNewCenter:(CGFloat)newCenter delay:(NSTimeInterval)delay duration:(NSTimeInterval)duration animated:(BOOL)animated {
+#define kInitialBounceDistance 30
+
+- (void)animateSlideButtonsWithNewCenter:(CGFloat)newCenter
+                                   delay:(NSTimeInterval)delay
+                                duration:(NSTimeInterval)duration
+                                animated:(BOOL)animated
+{
+    [self animateSlideButtonsWithNewCenter:newCenter delay:delay duration:duration animated:animated bounce:NO];
+}
+
+- (void)animateSlideButtonsWithNewCenter:(CGFloat)newCenter
+                                   delay:(NSTimeInterval)delay
+                                duration:(NSTimeInterval)duration
+                                animated:(BOOL)animated
+                                  bounce:(BOOL)bounce {
     [self animateButtonsBumpForNewCenter:newCenter withDelay:delay duration:duration animated:animated];
     
-    CGPoint center = self.contentView.center;
+    CGPoint center = self.contentView.layer.position;
+    NSLog(@"new: %f, old: %f", newCenter, center.x);
     center.x = newCenter;
     
     void (^animations)(void) = ^{
         self.contentView.layer.position = center;
     };
     
+    void (^bounceCell)(BOOL) = ^(BOOL finished){
+        [self cellBounceTimes:3 duration:(duration * 0.75) distance:30];
+    };
+    
     if (0 == duration) {
         animations();
     } else {
-        [UIView animateWithDuration:duration
-                              delay:delay
-                            options:kNilOptions
-                         animations:animations
-                         completion:nil];
+        [UIView animateWithDuration:duration delay:delay options:UIViewAnimationCurveEaseIn animations:animations completion:(bounce ? bounceCell : nil)];
+        
+    }
+}
+
+- (void)cellBounceTimes:(int)numberOfBounces duration:(NSTimeInterval)duration distance:(float)distance
+{
+    if (numberOfBounces > 0) {
+        [UIView animateWithDuration:(duration * 0.75) delay:0 options:UIViewAnimationCurveEaseOut animations:^{
+            CGPoint bounceCenter = self.contentView.layer.position;
+            bounceCenter.x += distance;
+            self.contentView.layer.position = bounceCenter;
+        } completion:^(BOOL finished){
+            [UIView animateWithDuration:(duration * 0.75) delay:0 options:UIViewAnimationCurveEaseIn animations:^{
+                self.contentView.layer.position = CGPointMake(self.originalCenter, self.contentView.layer.position.y);
+            } completion:^(BOOL finished){
+                [self cellBounceTimes:(numberOfBounces - 1) duration:(duration * 0.75) distance:(distance * 1/3.0)];
+            }];
+        }];
     }
 }
 

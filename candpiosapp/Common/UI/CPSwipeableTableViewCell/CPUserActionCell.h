@@ -54,7 +54,15 @@ typedef enum {
 @property (nonatomic, readonly) UIView *viewToHighlight;
 
 + (void)cancelOpenSlideActionButtonsNotification:(CPUserActionCell *)cell;
-- (void)animateSlideButtonsWithNewCenter:(CGFloat)newCenter delay:(NSTimeInterval)delay duration:(NSTimeInterval)duration animated:(BOOL)animated;
+- (void)animateSlideButtonsWithNewCenter:(CGFloat)newCenter
+                                   delay:(NSTimeInterval)delay
+                                duration:(NSTimeInterval)duration
+                                animated:(BOOL)animated;
+- (void)animateSlideButtonsWithNewCenter:(CGFloat)newCenter
+                                   delay:(NSTimeInterval)delay
+                                duration:(NSTimeInterval)duration
+                                animated:(BOOL)animated
+                                  bounce:(BOOL)bounce;
 
 - (void)highlight:(BOOL)highlight;
 - (void)additionalHighlightAnimations:(BOOL)highlight;

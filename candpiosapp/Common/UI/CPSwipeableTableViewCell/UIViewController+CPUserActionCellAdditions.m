@@ -11,7 +11,7 @@
 
 @implementation UIViewController (CPUserActionCellAdditions)
 
-- (void)animateSlideWaveWithCPUserActionCells:(NSArray *)cells {
+- (void)animateSlideWaveWithCPUserActionCells:(NSArray *)cells bounce:(BOOL)bounce {
     NSTimeInterval delay = 0.5;
     for (UITableViewCell *cell in cells) {
         if ([cell isKindOfClass:[CPUserActionCell class]]) {
@@ -24,7 +24,8 @@
             [userActionCell animateSlideButtonsWithNewCenter:userActionCell.originalCenter
                                                        delay:delay
                                                     duration:0.3
-                                                    animated:YES];
+                                                    animated:YES
+                                                      bounce:bounce];
         }
         
         delay += 0.1;

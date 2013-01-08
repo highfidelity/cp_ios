@@ -117,7 +117,7 @@ NSString *const kQuickActionPrefix = @"send-love-switch";
             [self.tableView reloadData];
             
             if (!preReloadVisibleCellsCount) {
-                [self animateSlideWaveWithCPUserActionCells:self.tableView.visibleCells];
+                [self animateSlideWaveWithCPUserActionCells:self.tableView.visibleCells bounce:NO];
             }
         } else {
             self.reloadPrevented = YES;
