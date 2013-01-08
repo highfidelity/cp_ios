@@ -289,6 +289,7 @@
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         button.frame = CGRectMake(0, 0, 32, 32);
+
         pin.rightCalloutAccessoryView = button;
         pinToReturn = pin;
         
@@ -298,6 +299,16 @@
         pinToReturn.layer.zPosition = [self zPositionForVenueAnnotation:venueAnnotation];
     }
     return pinToReturn;
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    view.layer.zPosition = 30000;
+}
+
+- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view
+{
+    view.layer.zPosition = [self zPositionForVenueAnnotation:(CPVenue *)view.annotation];
 }
 
 - (CGFloat)zPositionForVenueAnnotation:(CPVenue *)venue
