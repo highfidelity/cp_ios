@@ -182,6 +182,10 @@
 {
     [super viewWillAppear:animated];
     
+    if (!self.isF2FInvite) {
+        [self animateSlideWaveWithCPUserActionCells:@[self.userActionCell]];
+    }
+    
     // custom back button to allow event capture
     
     if(!_tapRecon){
@@ -196,10 +200,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    if (!self.isF2FInvite) {
-        [self animateSlideWaveWithCPUserActionCells:@[self.userActionCell]];
-    }
     
     [CPUserActionCell cancelOpenSlideActionButtonsNotification:nil];
 }
