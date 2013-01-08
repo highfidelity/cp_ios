@@ -183,7 +183,7 @@
     [super viewWillAppear:animated];
     
     if (!self.isF2FInvite) {
-        [self animateSlideWaveWithCPUserActionCells:@[self.userActionCell] bounce:YES];
+        [self animateSlideWaveWithCPUserActionCells:@[self.userActionCell]];
     }
     
     // custom back button to allow event capture

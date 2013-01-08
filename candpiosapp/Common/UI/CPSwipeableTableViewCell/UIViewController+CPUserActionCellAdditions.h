@@ -8,6 +8,6 @@
 
 @interface UIViewController (CPUserActionCellAdditions)
 
-- (void)animateSlideWaveWithCPUserActionCells:(NSArray *)cells bounce:(BOOL)bounce;
+- (void)animateSlideWaveWithCPUserActionCells:(NSArray *)cells;
 
 @end

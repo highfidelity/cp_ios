@@ -64,7 +64,7 @@
             [self.tableView reloadData];
             
             if (!preReloadVisibleCellsCount) {
-                [self animateSlideWaveWithCPUserActionCells:self.tableView.visibleCells bounce:NO];
+                [self animateSlideWaveWithCPUserActionCells:self.tableView.visibleCells];
             }
         } else {
             self.reloadPrevented = YES;
