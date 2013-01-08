@@ -289,7 +289,6 @@
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         button.frame = CGRectMake(0, 0, 32, 32);
-        //      button.tag = [dataset.annotations indexOfObject:candpanno];
         pin.rightCalloutAccessoryView = button;
         pinToReturn = pin;
         
