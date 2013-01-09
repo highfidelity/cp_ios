@@ -223,7 +223,7 @@
         [CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied ||
         [CLLocationManager authorizationStatus] == kCLAuthorizationStatusRestricted) {
         
-        NSString *message = @"We're unable to get your location and the application relies on it.\n\nPlease go to your settings and enable location for the Workclub app.";
+        NSString *message = @"We're unable to get your location and the application relies on it.\n\nPlease go to your settings and enable location for the  app.";
         [SVProgressHUD showErrorWithStatus:message
                                   duration:kDefaultDismissDelay];
     } else {
@@ -239,19 +239,13 @@
 
 - (void) mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     for (MKAnnotationView *view in views) {
+        
         CGFloat startingAlpha = view.alpha;
-        
-        // Fade in any new annotations
         view.alpha = 0;
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:1.5];
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-        view.alpha = startingAlpha;
-        [UIView commitAnimations];
         
-        if (![view.annotation isKindOfClass:[CPVenue class]]) {
-            [[view superview] sendSubviewToBack:view];
-        }
+        [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationCurveEaseInOut animations:^{
+            view.alpha = startingAlpha;
+        } completion:nil];
     }
 }
 
@@ -263,32 +257,30 @@
 	MKAnnotationView *pinToReturn = nil;
     
     if ([annotation isKindOfClass:[CPVenue class]]) {
-        CPVenue *placeAnn = (CPVenue *)annotation;
+        CPVenue *venueAnnotation = (CPVenue *)annotation;
         
         // Need to set a unique identifier to prevent any weird formatting issues -- use a combination of annotationsInCluster.count + hasCheckedInUsers value + smallPin value
         // @TODO: comment above is now invalid, identifier below is not going to be unique. why not use the foursquare id, or venue id? -- lithium
-        NSString *reuseId = [NSString stringWithFormat:@"place-%@-%d", ([placeAnn.checkedInNow intValue] > 0) ? placeAnn.checkedInNow : placeAnn.weeklyCheckinCount,
-                             ([placeAnn.checkedInNow intValue] > 0)];
+        NSString *reuseId = [NSString stringWithFormat:@"place-%@-%d", ([venueAnnotation.checkedInNow intValue] > 0) ? venueAnnotation.checkedInNow : venueAnnotation.weeklyCheckinCount,
+                             ([venueAnnotation.checkedInNow intValue] > 0)];
         
         MKAnnotationView *pin = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: reuseId];
         
-        if (!pin)
-        {
+        if (!pin) {
             pin = [[MKAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: reuseId];
         }
-        else
-        {
+        else {
             pin.annotation = annotation;
         }
         
-        BOOL solar = [placeAnn.specialVenueType isEqual:@"solar"];
+        BOOL solar = [venueAnnotation.specialVenueType isEqual:@"solar"];
         
-        if ([placeAnn.checkedInNow intValue] == 0) {
-            [pin setPin:placeAnn.weeklyCheckinCount hasCheckins:NO hasContacts:NO isSolar:solar withLabel:NO];
-            [self adjustScaleForPin:pin forNumberOfPeople:placeAnn.weeklyCheckinCount];
+        if ([venueAnnotation.checkedInNow intValue] == 0) {
+            [pin setPin:venueAnnotation.weeklyCheckinCount hasCheckins:NO hasContacts:NO isSolar:solar withLabel:NO];
+            [self adjustScaleForPin:pin forNumberOfPeople:venueAnnotation.weeklyCheckinCount];
         }
         else {
-            [pin setPin:placeAnn.checkedInNow hasCheckins:YES hasContacts:[placeAnn.hasCheckedInContacts boolValue] isSolar:solar withLabel:YES];
+            [pin setPin:venueAnnotation.checkedInNow hasCheckins:YES hasContacts:[venueAnnotation.hasCheckedInContacts boolValue] isSolar:solar withLabel:YES];
             pin.centerOffset = CGPointMake(0, -31);
         }
         
@@ -297,15 +289,39 @@
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         button.frame = CGRectMake(0, 0, 32, 32);
-        //      button.tag = [dataset.annotations indexOfObject:candpanno];
+
         pin.rightCalloutAccessoryView = button;
         pinToReturn = pin;
         
         // Set up correct callout offset for custom pin images
         pinToReturn.calloutOffset = CGPointMake(0,0);
         
+        pinToReturn.layer.zPosition = [self zPositionForVenueAnnotation:venueAnnotation];
     }
     return pinToReturn;
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    view.layer.zPosition = 30000;
+}
+
+- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view
+{
+    view.layer.zPosition = [self zPositionForVenueAnnotation:(CPVenue *)view.annotation];
+}
+
+- (CGFloat)zPositionForVenueAnnotation:(CPVenue *)venue
+{
+    CGFloat zPosition;
+    
+    if ([venue.checkedInNow intValue] > 0) {
+        zPosition = 20000 + [venue.checkedInNow intValue];
+    } else {
+        zPosition = 10000 + [venue.weeklyCheckinCount intValue];
+    }
+    
+    return zPosition;
 }
 
 - (float)getPinScaleForNumberOfPeople:(NSInteger)number {
@@ -364,19 +380,6 @@
 
 - (void)mapView:(MKMapView *)thisMapView regionDidChangeAnimated:(BOOL)animated
 {
-    // bring any checked-in venues to the front of all subviews.
-    for (CPVenue *ann in [self.mapView.annotations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(self isKindOfClass: %@)", [CPVenue class]]]) {
-        MKAnnotationView *annView = [thisMapView viewForAnnotation:ann];
-        if (annView) {
-            if ([ann.checkedInNow intValue]> 0) {
-                [[annView superview] bringSubviewToFront:annView];
-            }
-            else {
-                [[annView superview] sendSubviewToBack:annView];
-            }
-        }
-    }
-    
     [self refreshLocationsIfNeeded];
 }
 
