@@ -371,7 +371,6 @@
 		E4CFA0AB1687A66900CC335D /* CPCheckedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CFA0AA1687A66900CC335D /* CPCheckedLabel.m */; };
 		E4D3B40E1677CDF50083BCF3 /* powered-by-foursquare@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4D3B40C1677CDF50083BCF3 /* powered-by-foursquare@2x.png */; };
 		E4D3B40F1677CDF50083BCF3 /* powered-by-foursquare.png in Resources */ = {isa = PBXBuildFile; fileRef = E4D3B40D1677CDF50083BCF3 /* powered-by-foursquare.png */; };
-		E4DFEB4E1554915100AE90F0 /* ProfileNotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4DFEB4D1554915100AE90F0 /* ProfileNotificationsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -834,8 +833,6 @@
 		E4CFA0AA1687A66900CC335D /* CPCheckedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPCheckedLabel.m; sourceTree = "<group>"; };
 		E4D3B40C1677CDF50083BCF3 /* powered-by-foursquare@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "powered-by-foursquare@2x.png"; path = "Checkin/images/powered-by-foursquare@2x.png"; sourceTree = "<group>"; };
 		E4D3B40D1677CDF50083BCF3 /* powered-by-foursquare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "powered-by-foursquare.png"; path = "Checkin/images/powered-by-foursquare.png"; sourceTree = "<group>"; };
-		E4DFEB4C1554915100AE90F0 /* ProfileNotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileNotificationsViewController.h; path = Settings/ProfileNotificationsViewController.h; sourceTree = "<group>"; };
-		E4DFEB4D1554915100AE90F0 /* ProfileNotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileNotificationsViewController.m; path = Settings/ProfileNotificationsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1123,8 +1120,6 @@
 				6FC4EF0E151928BC003C63A5 /* LinkedAccountsTableViewController.h */,
 				6FC4EF0F151928BC003C63A5 /* LinkedAccountsTableViewController.m */,
 				697A686C156C4E3C001BEB35 /* mustaches */,
-				E4DFEB4C1554915100AE90F0 /* ProfileNotificationsViewController.h */,
-				E4DFEB4D1554915100AE90F0 /* ProfileNotificationsViewController.m */,
 				E410F9DA159DF0A500D32F86 /* ProfileViewController.h */,
 				E410F9DB159DF0A500D32F86 /* ProfileViewController.m */,
 				699249E1158A3CFC00EC273A /* ResumeVisibilityViewController.h */,
@@ -1136,6 +1131,8 @@
 				534B6EEF156DAE7900DA9F74 /* SkillsTableViewController.m */,
 				697A6869156C3E8C001BEB35 /* TermsOfServiceViewController.h */,
 				697A686A156C3E8D001BEB35 /* TermsOfServiceViewController.m */,
+				E4CFA0A216878B8600CC335D /* NotificationsTableViewController.h */,
+				E4CFA0A316878B8600CC335D /* NotificationsTableViewController.m */,
 				532C59031682761100B582B8 /* SettingsMenuView.h */,
 				532C59041682761100B582B8 /* SettingsMenuView.m */,
 			);
@@ -2043,7 +2040,6 @@
 				5328939F15548EB6007B0157 /* UserListTableViewController.m in Sources */,
 				532893A015548EB6007B0157 /* UserProfileViewController.m in Sources */,
 				532893A115548EB6007B0157 /* UserTableViewCell.m in Sources */,
-				E4DFEB4E1554915100AE90F0 /* ProfileNotificationsViewController.m in Sources */,
 				536E1E881554988300052D40 /* ContactListViewController.m in Sources */,
 				328452BF155A0EE800CF32F5 /* AutoCheckinTableViewController.m in Sources */,
 				328452C3155A17CB00CF32F5 /* AutoCheckinCell.m in Sources */,
