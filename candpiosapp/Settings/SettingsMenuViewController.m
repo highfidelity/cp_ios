@@ -121,7 +121,9 @@
     float shift = [UIScreen mainScreen].bounds.size.width * (!!currentChildViewController ? 1 : -1);
     
     [UIView animateWithDuration:PUSH_LEFT_AND_POP_ANIMATION_DURATION animations:^{
-        self.view.frame = CGRectOffset(self.view.frame, shift, 0);
+        for (UIView *subview in self.view.subviews) {
+            subview.frame = CGRectOffset(subview.frame, shift, 0);
+        }
     }];
     
     if (currentChildViewController) {
