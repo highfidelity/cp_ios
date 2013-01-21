@@ -54,6 +54,9 @@
     cell.venueNameLabel.text = logEntryDict[@"venueName"];
     cell.entryDateLabel.text = [self.entryDateFormatter stringFromDate:logEntryDict[@"date"]];
     
+    NSString *imageName = [logEntryDict[@"type"] isEqualToString:@"checkIn"] ? @"check-in-for-list" : @"check-out-for-list";
+    cell.iconImageView.image = [UIImage imageNamed:imageName];
+    
     return cell;
 }
 

@@ -256,6 +256,10 @@
 		53EC52FE164D95DC00067280 /* pin-solar.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EC52E4164D95DC00067280 /* pin-solar.png */; };
 		53EC52FF164D95DC00067280 /* pin-solar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EC52E5164D95DC00067280 /* pin-solar@2x.png */; };
 		53EC5300164D95DC00067280 /* pin_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EC52E6164D95DC00067280 /* pin_small.png */; };
+		53F46A6016ADFEA10065FABF /* check-in-for-list.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F46A5C16ADFEA10065FABF /* check-in-for-list.png */; };
+		53F46A6116ADFEA10065FABF /* check-in-for-list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F46A5D16ADFEA10065FABF /* check-in-for-list@2x.png */; };
+		53F46A6216ADFEA10065FABF /* check-out-for-list.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F46A5E16ADFEA10065FABF /* check-out-for-list.png */; };
+		53F46A6316ADFEA10065FABF /* check-out-for-list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F46A5F16ADFEA10065FABF /* check-out-for-list@2x.png */; };
 		53F70429167BDA6A00C8B190 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F70428167BDA6A00C8B190 /* TutorialViewController.m */; };
 		53F7043E167BDA7500C8B190 /* tutorial-back-default.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F7042A167BDA7500C8B190 /* tutorial-back-default.png */; };
 		53F7043F167BDA7500C8B190 /* tutorial-back-default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F7042B167BDA7500C8B190 /* tutorial-back-default@2x.png */; };
@@ -701,6 +705,10 @@
 		53EC52E4164D95DC00067280 /* pin-solar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-solar.png"; sourceTree = "<group>"; };
 		53EC52E5164D95DC00067280 /* pin-solar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-solar@2x.png"; sourceTree = "<group>"; };
 		53EC52E6164D95DC00067280 /* pin_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_small.png; sourceTree = "<group>"; };
+		53F46A5C16ADFEA10065FABF /* check-in-for-list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-in-for-list.png"; sourceTree = "<group>"; };
+		53F46A5D16ADFEA10065FABF /* check-in-for-list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-in-for-list@2x.png"; sourceTree = "<group>"; };
+		53F46A5E16ADFEA10065FABF /* check-out-for-list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-out-for-list.png"; sourceTree = "<group>"; };
+		53F46A5F16ADFEA10065FABF /* check-out-for-list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-out-for-list@2x.png"; sourceTree = "<group>"; };
 		53F70427167BDA6A00C8B190 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
 		53F70428167BDA6A00C8B190 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		53F7042A167BDA7500C8B190 /* tutorial-back-default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tutorial-back-default.png"; sourceTree = "<group>"; };
@@ -884,6 +892,7 @@
 		531E0287168008CF00800D47 /* Geofence */ = {
 			isa = PBXGroup;
 			children = (
+				53F46A5B16ADFEA10065FABF /* images */,
 				531E0288168008CF00800D47 /* AutoCheckinCell.h */,
 				531E0289168008CF00800D47 /* AutoCheckinCell.m */,
 				531E028A168008CF00800D47 /* AutoCheckinTableViewController.h */,
@@ -1460,6 +1469,17 @@
 			path = Map/images;
 			sourceTree = "<group>";
 		};
+		53F46A5B16ADFEA10065FABF /* images */ = {
+			isa = PBXGroup;
+			children = (
+				53F46A5C16ADFEA10065FABF /* check-in-for-list.png */,
+				53F46A5D16ADFEA10065FABF /* check-in-for-list@2x.png */,
+				53F46A5E16ADFEA10065FABF /* check-out-for-list.png */,
+				53F46A5F16ADFEA10065FABF /* check-out-for-list@2x.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 		53FF5F5016570C5A002296D4 /* images */ = {
 			isa = PBXGroup;
 			children = (
@@ -2009,6 +2029,10 @@
 				53F7044F167BDA7500C8B190 /* tutorial-next-default@2x.png in Resources */,
 				53F70450167BDA7500C8B190 /* tutorial-next-highlighted.png in Resources */,
 				53F70451167BDA7500C8B190 /* tutorial-next-highlighted@2x.png in Resources */,
+				53F46A6016ADFEA10065FABF /* check-in-for-list.png in Resources */,
+				53F46A6116ADFEA10065FABF /* check-in-for-list@2x.png in Resources */,
+				53F46A6216ADFEA10065FABF /* check-out-for-list.png in Resources */,
+				53F46A6316ADFEA10065FABF /* check-out-for-list@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

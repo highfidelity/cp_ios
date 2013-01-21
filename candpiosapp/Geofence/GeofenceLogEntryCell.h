@@ -11,5 +11,6 @@
 @interface GeofenceLogEntryCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *venueNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *entryDateLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 
 @end
