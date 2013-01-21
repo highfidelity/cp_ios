@@ -480,7 +480,12 @@
 
 -(IBAction)chooseNewProfileImage:(id)sender
 {
-    UIActionSheet *cameraSheet = [[UIActionSheet alloc] initWithTitle:@"Image Source" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera", @"Photo Library", nil];
+    UIActionSheet *cameraSheet = [[UIActionSheet alloc] initWithTitle:@"Image Source"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Camera", @"Photo Library", nil];
+    
     cameraSheet.tag = kActionSheetChooseNewProfileImageTag;
     [cameraSheet showInView:self.view];
 }
