@@ -5,11 +5,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
     </dependencies>
     <scenes>
-        <!--Settings Menu Controller-->
+        <!--Settings Menu View Controller-->
         <scene sceneID="6r0-kD-pJQ">
             <objects>
-                <viewController storyboardIdentifier="SettingsMenu" id="WGr-Yo-Vg9" customClass="SettingsMenuController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="KXi-o7-FH1">
+                <viewController storyboardIdentifier="SettingsMenu" id="WGr-Yo-Vg9" customClass="SettingsMenuViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KXi-o7-FH1" customClass="SettingsMenuView">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -63,7 +63,6 @@
                                 </state>
                                 <connections>
                                     <action selector="blockUIButtonClick:" destination="WGr-Yo-Vg9" eventType="touchUpInside" id="kzQ-Ak-Tme"/>
-                                    <segue destination="cJS-DT-22N" kind="custom" identifier="ShowUserSettingsFromMenuForPickedImage" customClass="PushModalViewControllerFromLeftSegue" id="RLW-GK-xrl"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="B0T-Il-Eqh">
@@ -76,11 +75,11 @@
                                 </connections>
                             </tableView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="settings-menu-shadow.png" id="rBQ-Tw-WrU">
-                                <rect key="frame" x="-10" y="0.0" width="10" height="548"/>
+                                <rect key="frame" x="-10" y="0.0" width="10" height="652"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ZWv-dm-FCa">
-                                <rect key="frame" x="85" y="515" width="40" height="25"/>
+                                <rect key="frame" x="85" y="603" width="40" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="TOS ">
@@ -92,7 +91,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="| v#.#" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wo4-C3-Xr7">
-                                <rect key="frame" x="125" y="513" width="46" height="25"/>
+                                <rect key="frame" x="125" y="601" width="46" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="0.66274509800000003" green="0.66274509800000003" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -110,12 +109,7 @@
                         <outlet property="tableView" destination="B0T-Il-Eqh" id="QWr-pZ-Bem"/>
                         <outlet property="termsOfServiceButton" destination="ZWv-dm-FCa" id="3Hc-OM-z4y"/>
                         <outlet property="versionNumberLabel" destination="Wo4-C3-Xr7" id="zRb-kx-BSu"/>
-                        <segue destination="cJS-DT-22N" kind="custom" identifier="ShowUserSettingsFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="Ols-cb-ALz"/>
-                        <segue destination="g4S-1W-OlN" kind="custom" identifier="ShowFederationFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="QpH-Nd-etk"/>
-                        <segue destination="LIc-1O-LQB" kind="custom" identifier="ShowInvitationCodeMenu" customClass="PushModalViewControllerFromLeftSegue" id="p4O-gm-OdH"/>
-                        <segue destination="J5h-Z0-hwV" kind="custom" identifier="ShowNotificationsFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="H2X-1v-RWb"/>
                         <segue destination="In7-9a-DvU" kind="modal" identifier="ShowTermsOfServiceModal" customClass="PushModalViewControllerFromLeftSegue" id="xVA-Q5-P4a"/>
-                        <segue destination="h9S-r0-abb" kind="custom" identifier="ShowAutoCheckInsFromMenu" customClass="PushModalViewControllerFromLeftSegue" id="rX4-Wg-0cV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YHg-io-CGj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -125,7 +119,7 @@
         <!--Navigation Controller-->
         <scene sceneID="o7p-JZ-2b9">
             <objects>
-                <navigationController definesPresentationContext="YES" id="LIc-1O-LQB" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="LinkedInConnectionsNC" definesPresentationContext="YES" id="LIc-1O-LQB" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="1ov-tY-gCf">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -135,7 +129,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U6H-7w-aEh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1196" y="-1725"/>
+            <point key="canvasLocation" x="-1498" y="-935"/>
         </scene>
         <!--Invite Linked In Connections Table View Controller - Invite LinkedIn Connections-->
         <scene sceneID="Vum-QO-w4c">
@@ -216,7 +210,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="syl-8z-sc9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-752" y="-1725"/>
+            <point key="canvasLocation" x="-1043" y="-935"/>
         </scene>
         <!--Edit Linked In Invitation Message View Controller - Send LinkedIn Invitation-->
         <scene sceneID="95r-lC-h93">
@@ -261,7 +255,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oKt-OD-cQB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-312" y="-1725"/>
+            <point key="canvasLocation" x="-564" y="-929"/>
         </scene>
         <!--Job Category View Controller - Job Categories-->
         <scene sceneID="Kag-ik-hPh">
@@ -328,7 +322,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qbt-Vb-crx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="320" y="62"/>
+            <point key="canvasLocation" x="104" y="-112"/>
         </scene>
         <!--Skills Table View Controller - Skills-->
         <scene sceneID="PvT-Rz-d1d">
@@ -408,7 +402,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kQB-Id-10J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="300" y="-516"/>
+            <point key="canvasLocation" x="114" y="-716"/>
         </scene>
         <!--Profile View Controller - Profile-->
         <scene sceneID="knC-ev-7nr">
@@ -685,12 +679,12 @@ photo?</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sV4-QQ-w11" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-678" y="-280"/>
+            <point key="canvasLocation" x="-1043" y="-318"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dTb-GJ-Nb5">
             <objects>
-                <navigationController definesPresentationContext="YES" id="J5h-Z0-hwV" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NotificationSettingsNC" definesPresentationContext="YES" id="J5h-Z0-hwV" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="GMs-lG-rZT">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -700,7 +694,7 @@ photo?</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QTJ-Cb-ZAb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1196" y="1096"/>
+            <point key="canvasLocation" x="-1504" y="956"/>
         </scene>
         <!--Terms Of Service View Controller - Terms of Service-->
         <scene sceneID="kVr-bP-Mxw">
@@ -731,12 +725,12 @@ photo?</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p9S-nV-Qrv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-719" y="2420"/>
+            <point key="canvasLocation" x="-1059" y="2248"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Wlv-Ww-VjS">
             <objects>
-                <navigationController definesPresentationContext="YES" id="h9S-r0-abb" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="GeofenceSettingsNC" definesPresentationContext="YES" id="h9S-r0-abb" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="lvN-eF-OX6">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -746,7 +740,7 @@ photo?</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tk6-lW-hXs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1187" y="1720"/>
+            <point key="canvasLocation" x="-1504" y="1616"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9Jx-na-AFB">
@@ -761,7 +755,7 @@ photo?</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GiN-Qk-iLV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1187" y="2420"/>
+            <point key="canvasLocation" x="-1491" y="2228"/>
         </scene>
         <!--Notifications Table View Controller - Notifications-->
         <scene sceneID="mm4-DJ-RY3">
@@ -1091,7 +1085,7 @@ photo?</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cB6-uF-cDQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-738" y="1096"/>
+            <point key="canvasLocation" x="-1059" y="956"/>
         </scene>
         <!--Linked Accounts Table View Controller - Linked Accounts-->
         <scene sceneID="nc2-v7-E52">
@@ -1171,12 +1165,12 @@ photo?</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SCP-Eu-ajv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-719" y="405"/>
+            <point key="canvasLocation" x="-1059" y="313"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Cuu-5f-AYW">
             <objects>
-                <navigationController definesPresentationContext="YES" id="g4S-1W-OlN" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="LinkedAccountsNC" definesPresentationContext="YES" id="g4S-1W-OlN" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="tvL-Z8-cSZ">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1186,7 +1180,7 @@ photo?</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ifd-c2-ojS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1196" y="405"/>
+            <point key="canvasLocation" x="-1504" y="301"/>
         </scene>
         <!--Auto Checkin Table View Controller - Automatic Check Ins-->
         <scene sceneID="jEB-Kv-A8s">
@@ -1293,12 +1287,12 @@ photo?</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cTh-Zc-cxR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-727" y="1720"/>
+            <point key="canvasLocation" x="-1059" y="1628"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ouw-gO-OVS">
             <objects>
-                <navigationController id="cJS-DT-22N" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ProfileViewControllerNC" id="cJS-DT-22N" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="2di-UE-RGu"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="HFU-6a-cmg">
@@ -1312,7 +1306,7 @@ photo?</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uf6-OX-9GJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1196" y="-280"/>
+            <point key="canvasLocation" x="-1498" y="-324"/>
         </scene>
         <!--Resume Visibility View Controller - Resume Visibility-->
         <scene sceneID="QLA-sT-xI4">
@@ -1355,23 +1349,20 @@ photo?</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IOo-v3-sOI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="320" y="679"/>
+            <point key="canvasLocation" x="114" y="487"/>
         </scene>
     </scenes>
     <resources>
-        <image name="default-avatar-256.png" width="16" height="16"/>
-        <image name="drop-down.png" width="16" height="16"/>
-        <image name="list-arrow-dark-grey.png" width="16" height="16"/>
-        <image name="quiet-time-button.png" width="16" height="16"/>
-        <image name="settings-button-3.png" width="16" height="16"/>
-        <image name="settings-menu-shadow.png" width="16" height="16"/>
+        <image name="default-avatar-256.png" width="256" height="256"/>
+        <image name="drop-down.png" width="196" height="27"/>
+        <image name="list-arrow-dark-grey.png" width="11" height="16"/>
+        <image name="quiet-time-button.png" width="80" height="25"/>
+        <image name="settings-button-3.png" width="42" height="29"/>
+        <image name="settings-menu-shadow.png" width="9" height="1"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="RLW-GK-xrl"/>
-    </inferredMetricsTieBreakers>
 </document>

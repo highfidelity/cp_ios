@@ -84,7 +84,7 @@ static CPCheckinHandler *sharedHandler;
             if (!matchedVenue) {
                 UIAlertView *autoCheckinAlert = [[UIAlertView alloc] initWithTitle:nil
                                                                            message:@"Automatically check in to this venue in the future?"
-                                                                          delegate:[CPAppDelegate settingsMenuController]
+                                                                          delegate:[CPAppDelegate settingsMenuViewController]
                                                                  cancelButtonTitle:@"No"
                                                                  otherButtonTitles:@"Yes", nil];
                 autoCheckinAlert.tag = AUTOCHECKIN_PROMPT_TAG;
@@ -171,7 +171,7 @@ static CPCheckinHandler *sharedHandler;
     UIAlertView *alert = [[UIAlertView alloc]
                           initWithTitle:@"Check Out"
                           message:@"Are you sure you want to be checked out?"
-                          delegate:[CPAppDelegate settingsMenuController]
+                          delegate:[CPAppDelegate settingsMenuViewController]
                           cancelButtonTitle:@"Cancel"
                           otherButtonTitles: @"Check Out", nil];
     alert.tag = 904;

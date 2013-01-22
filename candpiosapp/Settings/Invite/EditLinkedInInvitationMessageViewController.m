@@ -92,7 +92,7 @@ If you have not already, download the app from the iTunes or Google Play stores.
     NSInteger statusCode = [[json objectForKey:@"status"] integerValue];
     
     if (statusCode < 300) {
-        [[CPAppDelegate settingsMenuController] dismissViewControllerAnimated:YES
+        [[CPAppDelegate settingsMenuViewController] dismissViewControllerAnimated:YES
                                                                           completion:NULL];
         [SVProgressHUD dismissWithSuccess:@"Invitation has been sent"];
         [Flurry logEvent:@"invitedLinkedInConnections"];

@@ -63,17 +63,17 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
         
     // Switch out the UINavigationController in the rootviewcontroller for the SettingsMenuController
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"SettingsStoryboard_iPhone" bundle:nil];
-    self.settingsMenuController = (SettingsMenuController*)[mainStoryboard instantiateViewControllerWithIdentifier:@"SettingsMenu"];
+    self.settingsMenuViewController = (SettingsMenuViewController*)[mainStoryboard instantiateViewControllerWithIdentifier:@"SettingsMenu"];
     self.tabBarController = (CPTabBarController *)self.window.rootViewController;
-    self.settingsMenuController.cpTabBarController = self.tabBarController;
-    [self.settingsMenuController.view addSubview:self.tabBarController.view];
-    [self.settingsMenuController addChildViewController:self.tabBarController];
-    self.window.rootViewController = self.settingsMenuController;
+    self.settingsMenuViewController.cpTabBarController = self.tabBarController;
+    [self.settingsMenuViewController.view addSubview:self.tabBarController.view];
+    [self.settingsMenuViewController addChildViewController:self.tabBarController];
+    self.window.rootViewController = self.settingsMenuViewController;
     
     // TODO: move the data that we take from the map to a different class so that we have a model for the data that the map and other views can pull from
     // for now we're forcing the map view to get loaded here so that the data is ready
     // because it's no longer the first view in the app
-    self.settingsMenuController.mapTabController = [[self.tabBarController storyboard] instantiateViewControllerWithIdentifier:@"venueMapController"];
+    self.settingsMenuViewController.mapTabController = [[self.tabBarController storyboard] instantiateViewControllerWithIdentifier:@"venueMapController"];
     
     // make the status bar the black style
     application.statusBarStyle = UIStatusBarStyleBlackOpaque;
@@ -491,7 +491,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 # pragma mark - Settings Menu
 - (void)toggleSettingsMenu
 {
-    [self.settingsMenuController showMenu: !self.settingsMenuController.isMenuShowing];
+    [self.settingsMenuViewController showMenu: !self.settingsMenuViewController.isMenuShowing];
 }
 
 #pragma mark - User Settings

@@ -27,6 +27,7 @@
 		5317F262162F804E00D40405 /* ChangeHeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */; };
 		531ADE951652E3EE00FB8BF0 /* map-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 531ADE931652E3EE00FB8BF0 /* map-marker.png */; };
 		531ADE961652E3EE00FB8BF0 /* map-marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 531ADE941652E3EE00FB8BF0 /* map-marker@2x.png */; };
+		531E60A1168268B200FD64A1 /* SettingsMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531E60A0168268B200FD64A1 /* SettingsMenuViewController.m */; };
 		53217F8C156FF89B006258F0 /* LoveSkillTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */; };
 		5328936115548902007B0157 /* CheckInDetailsFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328935E15548902007B0157 /* CheckInDetailsFrame.m */; };
 		5328936215548902007B0157 /* CheckInListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328936015548902007B0157 /* CheckInListCell.m */; };
@@ -38,11 +39,11 @@
 		5328937515548A2D007B0157 /* OneOnOneChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328937415548A2D007B0157 /* OneOnOneChatViewController.m */; };
 		5328938B15548D6D007B0157 /* CheckInDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328938815548D6D007B0157 /* CheckInDetailsViewController.m */; };
 		5328938F15548D90007B0157 /* MapTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328938E15548D90007B0157 /* MapTabController.m */; };
-		5328939815548E63007B0157 /* SettingsMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939715548E63007B0157 /* SettingsMenuController.m */; };
 		5328939F15548EB6007B0157 /* UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939A15548EB6007B0157 /* UserListTableViewController.m */; };
 		532893A015548EB6007B0157 /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939C15548EB6007B0157 /* UserProfileViewController.m */; };
 		532893A115548EB6007B0157 /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5328939E15548EB6007B0157 /* UserTableViewCell.m */; };
 		532B4159158FD293005B55C0 /* VenueViewToggleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532B4158158FD293005B55C0 /* VenueViewToggleViewController.m */; };
+		532C59051682761100B582B8 /* SettingsMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 532C59041682761100B582B8 /* SettingsMenuView.m */; };
 		532F2CBB156AB8950018DB96 /* UserProfileStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 532F2CBA156AB8950018DB96 /* UserProfileStoryboard_iPhone.storyboard */; };
 		5332FB41152141A4002E7035 /* picture-coming-soon-rectangle.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5332FB3F152141A4002E7035 /* picture-coming-soon-rectangle.jpg */; };
 		5332FB42152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5332FB40152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg */; };
@@ -301,7 +302,6 @@
 		5F8413E115619721003B43B8 /* UserProfileLinkedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7D21D8155AF1A200EAA540 /* UserProfileLinkedInViewController.m */; };
 		688A16C3163861DB00BFB4CC /* endorse-with-transparent-star.png in Resources */ = {isa = PBXBuildFile; fileRef = 688A16C1163861DB00BFB4CC /* endorse-with-transparent-star.png */; };
 		688A16C4163861DB00BFB4CC /* endorse-with-transparent-star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 688A16C2163861DB00BFB4CC /* endorse-with-transparent-star@2x.png */; };
-		692552E0155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 692552DF155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m */; };
 		694323A915213D9000EBF585 /* UserResume.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 694323A815213D9000EBF585 /* UserResume.mustache */; };
 		6947F40015372B59005D9958 /* exchange-cards.png in Resources */ = {isa = PBXBuildFile; fileRef = 6947F3FE15372B59005D9958 /* exchange-cards.png */; };
 		6947F40115372B59005D9958 /* exchange-cards@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6947F3FF15372B59005D9958 /* exchange-cards@2x.png */; };
@@ -371,7 +371,6 @@
 		E4CFA0AB1687A66900CC335D /* CPCheckedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CFA0AA1687A66900CC335D /* CPCheckedLabel.m */; };
 		E4D3B40E1677CDF50083BCF3 /* powered-by-foursquare@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4D3B40C1677CDF50083BCF3 /* powered-by-foursquare@2x.png */; };
 		E4D3B40F1677CDF50083BCF3 /* powered-by-foursquare.png in Resources */ = {isa = PBXBuildFile; fileRef = E4D3B40D1677CDF50083BCF3 /* powered-by-foursquare.png */; };
-		E4DFEB4E1554915100AE90F0 /* ProfileNotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4DFEB4D1554915100AE90F0 /* ProfileNotificationsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -403,6 +402,8 @@
 		5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChangeHeadlineViewController.m; path = Checkin/ChangeHeadlineViewController.m; sourceTree = "<group>"; };
 		531ADE931652E3EE00FB8BF0 /* map-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-marker.png"; sourceTree = "<group>"; };
 		531ADE941652E3EE00FB8BF0 /* map-marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-marker@2x.png"; sourceTree = "<group>"; };
+		531E609F168268B200FD64A1 /* SettingsMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsMenuViewController.h; path = Settings/SettingsMenuViewController.h; sourceTree = "<group>"; };
+		531E60A0168268B200FD64A1 /* SettingsMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsMenuViewController.m; path = Settings/SettingsMenuViewController.m; sourceTree = "<group>"; };
 		53217F8A156FF89B006258F0 /* LoveSkillTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = LoveSkillTableViewCell.h; path = User/LoveSkillTableViewCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoveSkillTableViewCell.m; path = User/LoveSkillTableViewCell.m; sourceTree = "<group>"; };
 		5328935D15548902007B0157 /* CheckInDetailsFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckInDetailsFrame.h; path = CheckIn/CheckInDetailsFrame.h; sourceTree = "<group>"; };
@@ -423,8 +424,6 @@
 		5328938815548D6D007B0157 /* CheckInDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInDetailsViewController.m; path = CheckIn/CheckInDetailsViewController.m; sourceTree = "<group>"; };
 		5328938D15548D90007B0157 /* MapTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapTabController.h; path = Map/MapTabController.h; sourceTree = "<group>"; };
 		5328938E15548D90007B0157 /* MapTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MapTabController.m; path = Map/MapTabController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5328939615548E63007B0157 /* SettingsMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsMenuController.h; path = Settings/SettingsMenuController.h; sourceTree = "<group>"; };
-		5328939715548E63007B0157 /* SettingsMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SettingsMenuController.m; path = Settings/SettingsMenuController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5328939915548EB6007B0157 /* UserListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserListTableViewController.h; path = User/UserListTableViewController.h; sourceTree = "<group>"; };
 		5328939A15548EB6007B0157 /* UserListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = UserListTableViewController.m; path = User/UserListTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5328939B15548EB6007B0157 /* UserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserProfileViewController.h; path = User/UserProfileViewController.h; sourceTree = "<group>"; };
@@ -433,6 +432,8 @@
 		5328939E15548EB6007B0157 /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTableViewCell.m; path = User/UserTableViewCell.m; sourceTree = "<group>"; };
 		532B4157158FD293005B55C0 /* VenueViewToggleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VenueViewToggleViewController.h; path = Venue/VenueViewToggleViewController.h; sourceTree = "<group>"; };
 		532B4158158FD293005B55C0 /* VenueViewToggleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VenueViewToggleViewController.m; path = Venue/VenueViewToggleViewController.m; sourceTree = "<group>"; };
+		532C59031682761100B582B8 /* SettingsMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsMenuView.h; path = Settings/SettingsMenuView.h; sourceTree = "<group>"; };
+		532C59041682761100B582B8 /* SettingsMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsMenuView.m; path = Settings/SettingsMenuView.m; sourceTree = "<group>"; };
 		532F2CBA156AB8950018DB96 /* UserProfileStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = UserProfileStoryboard_iPhone.storyboard; path = User/UserProfileStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		5332FB3F152141A4002E7035 /* picture-coming-soon-rectangle.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "picture-coming-soon-rectangle.jpg"; path = "Venue/images/picture-coming-soon-rectangle.jpg"; sourceTree = "<group>"; };
 		5332FB40152141A4002E7035 /* picture-coming-soon-rectangle@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "picture-coming-soon-rectangle@2x.jpg"; path = "Venue/images/picture-coming-soon-rectangle@2x.jpg"; sourceTree = "<group>"; };
@@ -747,8 +748,6 @@
 		688A16C2163861DB00BFB4CC /* endorse-with-transparent-star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "endorse-with-transparent-star@2x.png"; path = "User/images/endorse-with-transparent-star@2x.png"; sourceTree = "<group>"; };
 		691E7BE1165B0D9C00587381 /* endorse-count-in-list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "endorse-count-in-list.png"; path = "User/images/endorse-count-in-list.png"; sourceTree = "<group>"; };
 		691E7BE2165B0D9C00587381 /* endorse-count-in-list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "endorse-count-in-list@2x.png"; path = "User/images/endorse-count-in-list@2x.png"; sourceTree = "<group>"; };
-		692552DE155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushModalViewControllerFromLeftSegue.h; path = Settings/PushModalViewControllerFromLeftSegue.h; sourceTree = "<group>"; };
-		692552DF155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushModalViewControllerFromLeftSegue.m; path = Settings/PushModalViewControllerFromLeftSegue.m; sourceTree = "<group>"; };
 		694323A815213D9000EBF585 /* UserResume.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserResume.mustache; sourceTree = "<group>"; };
 		6947F3FE15372B59005D9958 /* exchange-cards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exchange-cards.png"; path = "User/images/exchange-cards.png"; sourceTree = "<group>"; };
 		6947F3FF15372B59005D9958 /* exchange-cards@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exchange-cards@2x.png"; path = "User/images/exchange-cards@2x.png"; sourceTree = "<group>"; };
@@ -834,8 +833,6 @@
 		E4CFA0AA1687A66900CC335D /* CPCheckedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPCheckedLabel.m; sourceTree = "<group>"; };
 		E4D3B40C1677CDF50083BCF3 /* powered-by-foursquare@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "powered-by-foursquare@2x.png"; path = "Checkin/images/powered-by-foursquare@2x.png"; sourceTree = "<group>"; };
 		E4D3B40D1677CDF50083BCF3 /* powered-by-foursquare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "powered-by-foursquare.png"; path = "Checkin/images/powered-by-foursquare.png"; sourceTree = "<group>"; };
-		E4DFEB4C1554915100AE90F0 /* ProfileNotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileNotificationsViewController.h; path = Settings/ProfileNotificationsViewController.h; sourceTree = "<group>"; };
-		E4DFEB4D1554915100AE90F0 /* ProfileNotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileNotificationsViewController.m; path = Settings/ProfileNotificationsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1123,16 +1120,12 @@
 				6FC4EF0E151928BC003C63A5 /* LinkedAccountsTableViewController.h */,
 				6FC4EF0F151928BC003C63A5 /* LinkedAccountsTableViewController.m */,
 				697A686C156C4E3C001BEB35 /* mustaches */,
-				E4DFEB4C1554915100AE90F0 /* ProfileNotificationsViewController.h */,
-				E4DFEB4D1554915100AE90F0 /* ProfileNotificationsViewController.m */,
 				E410F9DA159DF0A500D32F86 /* ProfileViewController.h */,
 				E410F9DB159DF0A500D32F86 /* ProfileViewController.m */,
-				692552DE155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.h */,
-				692552DF155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m */,
 				699249E1158A3CFC00EC273A /* ResumeVisibilityViewController.h */,
 				699249E2158A3CFC00EC273A /* ResumeVisibilityViewController.m */,
-				5328939615548E63007B0157 /* SettingsMenuController.h */,
-				5328939715548E63007B0157 /* SettingsMenuController.m */,
+				531E609F168268B200FD64A1 /* SettingsMenuViewController.h */,
+				531E60A0168268B200FD64A1 /* SettingsMenuViewController.m */,
 				5335CF6D1507FBA4007DED61 /* SettingsStoryboard_iPhone.storyboard */,
 				534B6EEE156DAE7900DA9F74 /* SkillsTableViewController.h */,
 				534B6EEF156DAE7900DA9F74 /* SkillsTableViewController.m */,
@@ -1140,6 +1133,8 @@
 				697A686A156C3E8D001BEB35 /* TermsOfServiceViewController.m */,
 				E4CFA0A216878B8600CC335D /* NotificationsTableViewController.h */,
 				E4CFA0A316878B8600CC335D /* NotificationsTableViewController.m */,
+				532C59031682761100B582B8 /* SettingsMenuView.h */,
+				532C59041682761100B582B8 /* SettingsMenuView.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -2042,15 +2037,12 @@
 				5328937515548A2D007B0157 /* OneOnOneChatViewController.m in Sources */,
 				5328938B15548D6D007B0157 /* CheckInDetailsViewController.m in Sources */,
 				5328938F15548D90007B0157 /* MapTabController.m in Sources */,
-				5328939815548E63007B0157 /* SettingsMenuController.m in Sources */,
 				5328939F15548EB6007B0157 /* UserListTableViewController.m in Sources */,
 				532893A015548EB6007B0157 /* UserProfileViewController.m in Sources */,
 				532893A115548EB6007B0157 /* UserTableViewCell.m in Sources */,
-				E4DFEB4E1554915100AE90F0 /* ProfileNotificationsViewController.m in Sources */,
 				536E1E881554988300052D40 /* ContactListViewController.m in Sources */,
 				328452BF155A0EE800CF32F5 /* AutoCheckinTableViewController.m in Sources */,
 				328452C3155A17CB00CF32F5 /* AutoCheckinCell.m in Sources */,
-				692552E0155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m in Sources */,
 				53AA7A841566CB1500006E85 /* ContactListCell.m in Sources */,
 				537255B4156AEBA800263CFA /* UserLoveViewController.m in Sources */,
 				697A686B156C3E8D001BEB35 /* TermsOfServiceViewController.m in Sources */,
@@ -2105,6 +2097,8 @@
 				533DCA11166956E600A0901E /* SignupController.m in Sources */,
 				53B2B2D4167BBE8500D73096 /* UIImage+FixOrientation.m in Sources */,
 				53F70429167BDA6A00C8B190 /* TutorialViewController.m in Sources */,
+				531E60A1168268B200FD64A1 /* SettingsMenuViewController.m in Sources */,
+				532C59051682761100B582B8 /* SettingsMenuView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,14 +7,11 @@
 //
 
 #import "LinkedAccountsTableViewController.h"
-#import "PushModalViewControllerFromLeftSegue.h"
 
 @interface LinkedAccountsTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UISwitch *postToLinkedInSwitch;
 @property (nonatomic) BOOL postToLinkedIn;
-
--(IBAction)gearPressed:(id)sender;
 
 @end
 
@@ -33,7 +30,7 @@
             [[self postToLinkedInSwitch] setOn:[self postToLinkedIn]];
             [SVProgressHUD dismiss];
         } else {
-            [self dismissPushModalViewControllerFromLeftSegue];
+            [[CPAppDelegate settingsMenuViewController] slideAwayChildViewController];
             NSString *message = [json objectForKey:@"payload"];
             if (!message) {
                 message = @"Oops. Something went wrong.";    
@@ -52,7 +49,7 @@
         [CPapi saveLinkedInPostStatus:[[self postToLinkedInSwitch] isOn]];
     }
     
-    [self dismissPushModalViewControllerFromLeftSegue];
+    [[CPAppDelegate settingsMenuViewController] slideAwayChildViewController];
 }
 
 @end

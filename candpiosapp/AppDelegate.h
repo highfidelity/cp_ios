@@ -10,7 +10,7 @@
 #import "Settings.h"
 #import "UAirship.h"
 #import "UAPush.h"
-#import "SettingsMenuController.h"
+#import "SettingsMenuViewController.h"
 #import "CPTabBarController.h"
 #import <CoreLocation/CoreLocation.h>
 #import "Flurry.h"
@@ -24,7 +24,7 @@
 @property (strong, nonatomic, readonly) Settings *settings;
 @property (strong, nonatomic, readonly) CLLocationManager *locationManager;
 @property (strong, nonatomic, readonly) CLLocation *currentOrDefaultLocation;
-@property (strong, nonatomic) SettingsMenuController *settingsMenuController;
+@property (strong, nonatomic) SettingsMenuViewController *settingsMenuViewController;
 @property (strong, nonatomic) CPTabBarController *tabBarController;
            
 - (void)pushAliasUpdate;

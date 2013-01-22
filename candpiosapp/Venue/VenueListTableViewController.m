@@ -29,7 +29,7 @@
     [super viewDidLoad];
     self.tableView.allowsSelection = YES;
     // our delegate is the map tab controller
-    self.delegate = [[CPAppDelegate settingsMenuController] mapTabController];
+    self.delegate = [[CPAppDelegate settingsMenuViewController] mapTabController];
     
     __block VenueListTableViewController *venueListVC = self;
     

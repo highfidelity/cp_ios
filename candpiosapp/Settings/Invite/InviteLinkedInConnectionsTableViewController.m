@@ -7,11 +7,11 @@
 //
 
 #import "InviteLinkedInConnectionsTableViewController.h"
+#import "SettingsMenuViewController.h"
 #import "OAuthConsumer.h"
 #import "CPLinkedInAPI.h"
 #import "LinkedInConnectionCell.h"
 #import "EditLinkedInInvitationMessageViewController.h"
-#import "PushModalViewControllerFromLeftSegue.h"
 
 @interface InviteLinkedInConnectionsTableViewController ()
 
@@ -196,6 +196,6 @@
 
 - (IBAction)gearPressed:(UIButton *)sender
 {
-    [self dismissPushModalViewControllerFromLeftSegue];
+    [[CPAppDelegate settingsMenuViewController] slideAwayChildViewController];
 }
 @end

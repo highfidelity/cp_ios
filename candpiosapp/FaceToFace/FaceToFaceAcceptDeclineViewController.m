@@ -103,7 +103,7 @@
                 [alert show];
                 
                 // avoid stacking the f2f alerts
-                [CPAppDelegate settingsMenuController].f2fInviteAlert = alert;
+                [CPAppDelegate settingsMenuViewController].f2fInviteAlert = alert;
                 
                 self.f2fAcceptButton.enabled = YES;
             } else {

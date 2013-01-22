@@ -7,7 +7,7 @@
 //
 
 #import "ProfileViewController.h"
-#import "PushModalViewControllerFromLeftSegue.h"
+#import "SettingsMenuViewController.h"
 #import "GRMustacheTemplate.h"
 #import "CPTouchableView.h"
 #import "CPSkill.h"
@@ -100,15 +100,10 @@
     [CPUIHelper addShadowToView:self.detailsView color:[UIColor blackColor] offset:CGSizeMake(2, 2) radius:3 opacity:0.38];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewDidLayoutSubviews
 {
-    [super viewDidAppear:animated];
-    
-    if (self.profileImageToUpload) {
-        [self imagePickedFromSettingsMenuImagePicker:self.profileImageToUpload];
-    } else {
-        [self syncWithWebData];
-    }
+    [super viewDidLayoutSubviews];
+    [self syncWithWebData];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -288,10 +283,14 @@
 }
 
 
-#pragma mark - image picker controller handling
+#pragma mark - UIImagePickerControllerDelegate
 
-- (void)imagePickedFromSettingsMenuImagePicker:(UIImage *)image
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    [self dismissModalViewControllerAnimated:YES];
+    
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    
     self.imageUploadPlaceholder.hidden = NO;
     
     // upload the image
@@ -300,20 +299,14 @@
             // response was success ... we uploaded a new profile picture
             [self updateCurrentUserWithNewData:json];
         } else {
-#if DEBUG
             NSLog(@"Error while uploading file. Here's the json: %@", json);
-#endif
-            NSString *message = [json objectForKey:@"message"];
-            if ([message isKindOfClass:[NSNull class]]) {
-                // blank message from server
-                message = @"There was an problem uploading your image.\n Please try again.";
-            }
-
-            [SVProgressHUD dismissWithError:message afterDelay:kDefaultDismissDelay];
         }
-        
-        self.profileImageToUpload = nil;
     }];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 
@@ -368,12 +361,26 @@
 {
     if (kActionSheetChooseNewProfileImageTag == actionSheet.tag) {
         if (buttonIndex == 0 || buttonIndex == 1) {
+            UIImagePickerControllerSourceType chosenSource;
+            
             if (buttonIndex == 0) {
-                [((SettingsMenuController *) self.presentingViewController) showProfilePicturePickerModalForSource:UIImagePickerControllerSourceTypeCamera];
+                chosenSource = UIImagePickerControllerSourceTypeCamera;
             } else if (buttonIndex == 1) {
                 // user wants to pick from photo library
-                [((SettingsMenuController *) self.presentingViewController) showProfilePicturePickerModalForSource:UIImagePickerControllerSourceTypePhotoLibrary];
+                chosenSource = UIImagePickerControllerSourceTypePhotoLibrary;
             }
+            
+            UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+            imagePickerController.delegate = self;
+            imagePickerController.sourceType = chosenSource;
+            
+            if (chosenSource == UIImagePickerControllerSourceTypeCamera) {
+                if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerCameraDeviceFront]) {
+                    imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+                }
+            }
+            
+            [self presentViewController:imagePickerController animated:YES completion:nil];
         }
     }
 }
@@ -468,12 +475,17 @@
 
 -(IBAction)gearPressed:(id)sender
 {
-    [self dismissPushModalViewControllerFromLeftSegue];
+    [[CPAppDelegate settingsMenuViewController] slideAwayChildViewController];
 }
 
 -(IBAction)chooseNewProfileImage:(id)sender
 {
-    UIActionSheet *cameraSheet = [[UIActionSheet alloc] initWithTitle:@"Image Source" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera", @"Photo Library", nil];
+    UIActionSheet *cameraSheet = [[UIActionSheet alloc] initWithTitle:@"Image Source"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Camera", @"Photo Library", nil];
+    
     cameraSheet.tag = kActionSheetChooseNewProfileImageTag;
     [cameraSheet showInView:self.view];
 }
@@ -527,15 +539,17 @@
              }
 
 
-             SettingsMenuController *presentingViewController = (SettingsMenuController *)self.presentingViewController;
-             if (presentingViewController.isMenuShowing) {
-                 [presentingViewController showMenu:NO];
+             SettingsMenuViewController *settingsVC = [CPAppDelegate settingsMenuViewController];
+             
+             if (settingsVC.isMenuShowing) {
+                 [settingsVC showMenu:NO];
              }
-
-             [self dismissModalViewControllerAnimated:NO];
-
-             [CPUserSessionHandler showSignupModalFromViewController:presentingViewController
+             
+             [settingsVC slideAwayChildViewController];
+             
+             [CPUserSessionHandler showSignupModalFromViewController:settingsVC
                                                             animated:YES];
+             
 
              [SVProgressHUD dismissWithSuccess:@"Thanks for spending time on Workclub. We hope to see you again soon."
                                     afterDelay:kDefaultDismissDelay];
