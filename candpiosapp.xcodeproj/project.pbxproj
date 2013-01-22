@@ -25,6 +25,7 @@
 		5317F262162F804E00D40405 /* ChangeHeadlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5317F261162F804E00D40405 /* ChangeHeadlineViewController.m */; };
 		531ADE951652E3EE00FB8BF0 /* map-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 531ADE931652E3EE00FB8BF0 /* map-marker.png */; };
 		531ADE961652E3EE00FB8BF0 /* map-marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 531ADE941652E3EE00FB8BF0 /* map-marker@2x.png */; };
+		531E60A1168268B200FD64A1 /* SettingsMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531E60A0168268B200FD64A1 /* SettingsMenuViewController.m */; };
 		531E028E168008CF00800D47 /* AutoCheckinCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531E0289168008CF00800D47 /* AutoCheckinCell.m */; };
 		531E028F168008CF00800D47 /* AutoCheckinTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531E028B168008CF00800D47 /* AutoCheckinTableViewController.m */; };
 		531E0290168008CF00800D47 /* CPGeofenceHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 531E028D168008CF00800D47 /* CPGeofenceHandler.m */; };
@@ -404,6 +405,9 @@
 		531ADE931652E3EE00FB8BF0 /* map-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-marker.png"; sourceTree = "<group>"; };
 		531ADE941652E3EE00FB8BF0 /* map-marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-marker@2x.png"; sourceTree = "<group>"; };
 		531E0288168008CF00800D47 /* AutoCheckinCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoCheckinCell.h; sourceTree = "<group>"; };
+		531E609F168268B200FD64A1 /* SettingsMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsMenuViewController.h; path = Settings/SettingsMenuViewController.h; sourceTree = "<group>"; };
+		531E60A0168268B200FD64A1 /* SettingsMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsMenuViewController.m; path = Settings/SettingsMenuViewController.m; sourceTree = "<group>"; };
+		531E0288168008CF00800D47 /* AutoCheckinCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoCheckinCell.h; sourceTree = "<group>"; };
 		531E0289168008CF00800D47 /* AutoCheckinCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoCheckinCell.m; sourceTree = "<group>"; };
 		531E028A168008CF00800D47 /* AutoCheckinTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoCheckinTableViewController.h; sourceTree = "<group>"; };
 		531E028B168008CF00800D47 /* AutoCheckinTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoCheckinTableViewController.m; sourceTree = "<group>"; };
@@ -413,7 +417,6 @@
 		531E0292168008EB00800D47 /* GeofenceLogEntryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeofenceLogEntryCell.m; sourceTree = "<group>"; };
 		531E02941680095700800D47 /* GeofenceLogTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeofenceLogTableViewController.h; sourceTree = "<group>"; };
 		531E02951680095700800D47 /* GeofenceLogTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeofenceLogTableViewController.m; sourceTree = "<group>"; };
-		53217F8A156FF89B006258F0 /* LoveSkillTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = LoveSkillTableViewCell.h; path = User/LoveSkillTableViewCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		53217F8B156FF89B006258F0 /* LoveSkillTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoveSkillTableViewCell.m; path = User/LoveSkillTableViewCell.m; sourceTree = "<group>"; };
 		5328935D15548902007B0157 /* CheckInDetailsFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckInDetailsFrame.h; path = CheckIn/CheckInDetailsFrame.h; sourceTree = "<group>"; };
 		5328935E15548902007B0157 /* CheckInDetailsFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckInDetailsFrame.m; path = CheckIn/CheckInDetailsFrame.m; sourceTree = "<group>"; };
@@ -2083,7 +2086,9 @@
 				692552E0155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m in Sources */,
 				53AA7A841566CB1500006E85 /* ContactListCell.m in Sources */,
 				537255B4156AEBA800263CFA /* UserLoveViewController.m in Sources */,
-				697A686B156C3E8D001BEB35 /* TermsOfServiceViewController.m in Sources */,
+				328452BF155A0EE800CF32F5 /* AutoCheckinTableViewController.m in Sources */,
+				328452C3155A17CB00CF32F5 /* AutoCheckinCell.m in Sources */,
+				692552E0155BE46200FA9B22 /* PushModalViewControllerFromLeftSegue.m in Sources */,
 				534B6EF0156DAE7900DA9F74 /* SkillsTableViewController.m in Sources */,
 				5361F8C3156EBBEC0099D303 /* CPSkill.m in Sources */,
 				53217F8C156FF89B006258F0 /* LoveSkillTableViewCell.m in Sources */,
@@ -2139,11 +2144,11 @@
 				531E0290168008CF00800D47 /* CPGeofenceHandler.m in Sources */,
 				531E0293168008EB00800D47 /* GeofenceLogEntryCell.m in Sources */,
 				531E02961680095700800D47 /* GeofenceLogTableViewController.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
+				531E60A1168268B200FD64A1 /* SettingsMenuViewController.m in Sources */,
+				532C59051682761100B582B8 /* SettingsMenuView.m in Sources */,
+                );
+                runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXSourcesBuildPhase section */
-
 /* Begin PBXVariantGroup section */
 		53E2062A150596180000FA8D /* MainStoryboard_iPhone.storyboard */ = {
 			isa = PBXVariantGroup;
