@@ -35,7 +35,7 @@
 {
     if (!_entryDateFormatter) {
         _entryDateFormatter = [[NSDateFormatter alloc] init];
-        _entryDateFormatter.dateFormat = @"MMMM d - h:mma";
+        _entryDateFormatter.dateFormat = @"MMMM d - h:mm:ss a";
     }
     
     return _entryDateFormatter;
