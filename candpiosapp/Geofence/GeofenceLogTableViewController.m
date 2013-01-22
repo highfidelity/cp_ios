@@ -24,6 +24,11 @@
     [super viewDidLoad];
     
     self.logEntries = [CPUserDefaultsHandler geofenceRequestLog];
+    
+    if (![MFMailComposeViewController canSendMail] || self.logEntries.count == 0) {
+        // hide the email button
+        self.navigationItem.rightBarButtonItem = nil;
+    }
 }
 
 - (NSDateFormatter *)entryDateFormatter
@@ -63,15 +68,26 @@
 #pragma mark - IBActions
 - (IBAction)emailLogButtonPressed:(id)sender
 {
-    if ([MFMailComposeViewController canSendMail]) {
-        MFMailComposeViewController *composeVC = [[MFMailComposeViewController alloc] init];
-        composeVC.mailComposeDelegate = self;
-        [composeVC setSubject:@"Geofence Log"];
-        [composeVC setMessageBody:@"Hello World!" isHTML:NO];
-        [self presentModalViewController:composeVC animated:YES];
-    } else {
-        
+    MFMailComposeViewController *composeVC = [[MFMailComposeViewController alloc] init];
+    composeVC.mailComposeDelegate = self;
+    [composeVC setSubject:[NSString stringWithFormat:@"Geofence log for %@ (%@)",
+                           [CPUserDefaultsHandler currentUser].nickname,
+                           [CPUserDefaultsHandler currentUser].userID]];
+    
+    NSMutableString *emailBody;
+    
+    for (NSDictionary *logEntryDict in self.logEntries) {
+        [emailBody appendString:[NSString stringWithFormat:@"%@, %@, %@, %@, %@\n",
+                                logEntryDict[@"venueID"],
+                                logEntryDict[@"lat"],
+                                logEntryDict[@"lng"],
+                                [self.entryDateFormatter stringFromDate:logEntryDict[@"date"]],
+                                logEntryDict[@"type"]]];
     }
+    
+    
+    [composeVC setMessageBody:emailBody isHTML:NO];
+    [self presentModalViewController:composeVC animated:YES];
 }
 
 #pragma mark - MFMailComposeViewControllerDelegate
