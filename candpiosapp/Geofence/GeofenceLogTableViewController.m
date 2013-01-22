@@ -74,7 +74,7 @@
                            [CPUserDefaultsHandler currentUser].nickname,
                            [CPUserDefaultsHandler currentUser].userID]];
     
-    NSMutableString *emailBody;
+    NSMutableString *emailBody = [NSMutableString stringWithString:@""];
     
     for (NSDictionary *logEntryDict in self.logEntries) {
         [emailBody appendString:[NSString stringWithFormat:@"%@, %@, %@, %@, %@\n",
@@ -85,8 +85,8 @@
                                 logEntryDict[@"type"]]];
     }
     
-    
     [composeVC setMessageBody:emailBody isHTML:NO];
+    [composeVC setToRecipients:@[@"support@coffeeandpower.com"]];
     [self presentModalViewController:composeVC animated:YES];
 }
 
