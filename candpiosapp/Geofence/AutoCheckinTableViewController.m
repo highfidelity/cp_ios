@@ -108,6 +108,16 @@
     return cell;
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // we're heading to the geofence log
+    // The original text on the back button is too long, just make it "Back"
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                             style:UIBarButtonItemStyleBordered
+                                                                            target:nil
+                                                                            action:nil];
+}
+
 - (IBAction)globalCheckinChanged:(UISwitch *)sender {
     // Store the choice in NSUserDefaults
     [CPUserDefaultsHandler setAutomaticCheckins:sender.on];
