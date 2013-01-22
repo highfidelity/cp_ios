@@ -1,5 +1,5 @@
 //
-//  SettingsMenuController.h
+//  SettingsMenuViewController.h
 //  candpiosapp
 //
 //  Created by Andrew Hammond on 2/23/12.
@@ -17,11 +17,9 @@ typedef enum {
     CPAfterLoginActionShowMap
 } CPAfterLoginAction;
 
-@interface SettingsMenuController : UIViewController <UITableViewDelegate,
+@interface SettingsMenuViewController : UIViewController <UITableViewDelegate,
                                                       UITableViewDataSource,
-                                                      UIAlertViewDelegate,
-                                                      UINavigationControllerDelegate,
-                                                      UIImagePickerControllerDelegate>
+                                                      UIAlertViewDelegate>
 
 @property (strong, nonatomic) CPTabBarController *cpTabBarController;
 @property (strong, nonatomic) MapTabController *mapTabController;
@@ -43,6 +41,6 @@ typedef enum {
 - (void)showMenu:(BOOL)shouldReveal;
 - (void)closeMenu;
 
-- (void)showProfilePicturePickerModalForSource:(UIImagePickerControllerSourceType)imagePickerSource;
+- (void)slideAwayChildViewController;
 
 @end

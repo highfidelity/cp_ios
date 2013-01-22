@@ -304,7 +304,7 @@
              [alert show];
              
              // avoid stacking the f2f alerts
-             [CPAppDelegate settingsMenuController].f2fInviteAlert = alert;
+             [CPAppDelegate settingsMenuViewController].f2fInviteAlert = alert;
          }
          
          [Flurry logEvent:@"contactRequestSent"];

@@ -26,7 +26,6 @@ examle json:
 */
 
 #import "TutorialViewController.h"
-#import "PushModalViewControllerFromLeftSegue.h"
 #import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
 #import "CPPageControl.h"
@@ -79,7 +78,7 @@ examle json:
 - (IBAction)dismissAction
 {
     if (self.isShownFromLeft) {
-        [self dismissPushModalViewControllerFromLeftSegue];
+        [[CPAppDelegate settingsMenuViewController] slideAwayChildViewController];
     } else {
         [self dismissModalViewControllerAnimated:YES];
     }

@@ -8,7 +8,6 @@
 
 #import "NotificationsTableViewController.h"
 #import "ActionSheetDatePicker.h"
-#import "PushModalViewControllerFromLeftSegue.h"
 #import "CPCheckedLabel.h"
 #import "CPSwitch.h"
 
@@ -248,7 +247,7 @@
 
 - (IBAction)gearPressed:(UIButton *)sender
 {
-    [self dismissPushModalViewControllerFromLeftSegue];
+    [[CPAppDelegate settingsMenuViewController] slideAwayChildViewController];
 }
 
 - (IBAction)contactsOnlyChatSwitchChanged:(id)sender

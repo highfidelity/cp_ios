@@ -30,7 +30,7 @@
                                                                                  action:@selector(mapListTogglePressed:)]];
 
     // grab both view controllers from the storyboard
-    self.venueMapController = [CPAppDelegate settingsMenuController].mapTabController;
+    self.venueMapController = [CPAppDelegate settingsMenuViewController].mapTabController;
     self.venueListController = [self.storyboard instantiateViewControllerWithIdentifier:@"venueListController"];
     
     // add both of the view controllers as our child view controllers

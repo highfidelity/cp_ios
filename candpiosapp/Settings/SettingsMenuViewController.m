@@ -1,43 +1,42 @@
 //
-//  SettingsMenuController.m
+//  SettingsMenuViewController.m
 //  candpiosapp
 //
 //  Created by Andrew Hammond on 2/23/12.
 //  Copyright (c) 2012 Coffee and Power Inc. All rights reserved.
 //
 
+#import "SettingsMenuViewController.h"
+#import "SettingsMenuView.h"
 #import "CPCheckinHandler.h"
 #import "CPGeofenceHandler.h"
 #import "CPUserSessionHandler.h"
 #import "UserVoice.h"
 #import "AppDelegate.h"
-#import "PushModalViewControllerFromLeftSegue.h"
 #import "TutorialViewController.h"
 #import "ProfileViewController.h"
 
 #define menuWidthPercentage 0.8
 #define kFeedbackSegueID @"ShowFeedbackFromMenu"
 #define kTutorialSegueID @"ShowTutorialFromMenu"
-#define kProfileSegueID @"ShowUserSettingsFromMenu"
-#define kProfilePickedImageSegueID @"ShowUserSettingsFromMenuForPickedImage"
 
-@interface SettingsMenuController() <UITabBarControllerDelegate>
+@interface SettingsMenuViewController() <UITabBarControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *versionNumberLabel;
 @property (weak, nonatomic) IBOutlet UIButton *termsOfServiceButton;
 @property (strong, nonatomic) NSArray *menuStringsArray;
-@property (strong, nonatomic) NSArray *menuSegueIdentifiersArray;
+@property (strong, nonatomic) NSArray *menuAssociatedIdentifiersArray;
 @property (strong, nonatomic) UITapGestureRecognizer *menuCloseGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanGestureRecognizer;
 @property (strong, nonatomic) UIPanGestureRecognizer *menuClosePanFromNavbarGestureRecognizer;
-@property (strong, nonatomic) UIImage *pickedImage;
+@property (strong, nonatomic) UIViewController *currentChildViewController;
 @property (nonatomic) CGPoint panStartLocation;
 
 - (void)setMapAndButtonsViewXOffset:(CGFloat)xOffset;
 
 @end
 
-@implementation SettingsMenuController
+@implementation SettingsMenuViewController
 
 - (void)initMenu 
 {
@@ -53,15 +52,15 @@
                              @"Logout",
                              nil];
     
-    self.menuSegueIdentifiersArray = [NSArray arrayWithObjects:
-                                      @"ShowInvitationCodeMenu",
-                                      @"ShowUserSettingsFromMenu",
-                                      @"ShowFederationFromMenu",
-                                      @"ShowNotificationsFromMenu",
-                                      @"ShowAutoCheckInsFromMenu",
+    self.menuAssociatedIdentifiersArray = [NSArray arrayWithObjects:
+                                      @"LinkedInConnectionsNC",
+                                      @"ProfileViewControllerNC",
+                                      @"LinkedAccountsNC",
+                                      @"NotificationSettingsNC",
+                                      @"GeofenceSettingsNC",
                                       kFeedbackSegueID,
                                       kTutorialSegueID,
-                                      @"ShowLogoutFromMenu",
+                                      @"PerformLogoutFromMenu",
                                       nil];
     
     [self.tableView reloadData];
@@ -106,6 +105,42 @@
     
     [self initMenu];
 }
+
+#pragma mark - Child View Controller Handling
+
+#define PUSH_LEFT_AND_POP_ANIMATION_DURATION 0.35
+
+- (void)setCurrentChildViewController:(UIViewController *)currentChildViewController
+{
+    if (currentChildViewController) {
+        [self addChildViewController:currentChildViewController];
+        currentChildViewController.view.frame = CGRectOffset(self.view.bounds, -currentChildViewController.view.frame.size.width, 0);
+        [self.view addSubview:currentChildViewController.view];
+    }
+    
+    float shift = [UIScreen mainScreen].bounds.size.width * (!!currentChildViewController ? 1 : -1);
+    
+    [UIView animateWithDuration:PUSH_LEFT_AND_POP_ANIMATION_DURATION animations:^{
+        for (UIView *subview in self.view.subviews) {
+            subview.frame = CGRectOffset(subview.frame, shift, 0);
+        }
+    }];
+    
+    if (currentChildViewController) {
+        ((SettingsMenuView *) self.view).menuChildViewControllerView = currentChildViewController.view;
+    } else {
+        [currentChildViewController removeFromParentViewController];
+    }    
+    
+    _currentChildViewController = currentChildViewController;
+}
+
+- (void)slideAwayChildViewController
+{
+    self.currentChildViewController = nil;
+}
+
+#pragma mark - Menu Movement
 
 - (void)menuClosePan:(UIPanGestureRecognizer*) sender {
     if (sender.state == UIGestureRecognizerStateBegan) {
@@ -334,8 +369,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Handle the selected menu item, closing the menu for when we return
     NSInteger logoutRowIndex = [self.menuStringsArray indexOfObject:@"Logout"];
+    
     if (indexPath.row == logoutRowIndex) { 
-        //TODO: Merge logout xib with storyboard, adding segue for logout
         if (self.isMenuShowing) { 
             [self showMenu:NO]; 
         }
@@ -344,27 +379,27 @@
         [CPUserSessionHandler showSignupModalFromViewController:self animated:YES];
 
     } else {
-        NSString *segueID = [self.menuSegueIdentifiersArray objectAtIndex:indexPath.row];
-        if ([segueID isEqualToString:kFeedbackSegueID]) {
+        NSString *identifierID = [self.menuAssociatedIdentifiersArray objectAtIndex:indexPath.row];
+        
+        if ([identifierID isEqualToString:kFeedbackSegueID]) {
             UVConfig *config = [UVConfig configWithSite:kUserVoiceSite
                                                  andKey:kUserVoiceKey
                                               andSecret:kUserVoiceSecret];
             [UserVoice presentUserVoiceForumForParentViewController:self andConfig:config];
-        } else if ([segueID isEqualToString:kTutorialSegueID]) {
-            UIStoryboard *signupStoryboard = [UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil];
-            UINavigationController *navigationViewController = [signupStoryboard instantiateViewControllerWithIdentifier:@"TutorialViewControllerNavigationViewController"];
-
-            TutorialViewController *viewController = (TutorialViewController *)navigationViewController.topViewController;
-            viewController.isShownFromLeft = YES;
-
-            PushModalViewControllerFromLeftSegue *segue = [[PushModalViewControllerFromLeftSegue alloc] initWithIdentifier:kTutorialSegueID
-                                                                                                                    source:self
-                                                                                                               destination:navigationViewController];
-            [segue perform];
+        } else if ([identifierID isEqualToString:kTutorialSegueID]) {
+            UINavigationController *tutorialNC = [[UIStoryboard storyboardWithName:@"SignupStoryboard_iPhone" bundle:nil]
+                                                  instantiateViewControllerWithIdentifier:@"TutorialViewControllerNavigationViewController"];
+            
+            ((TutorialViewController *) tutorialNC.topViewController).isShownFromLeft = YES;
+            
+            self.currentChildViewController = tutorialNC;
         } else {
-            [self performSegueWithIdentifier:segueID sender:self];
+            UINavigationController *childNC = [self.storyboard instantiateViewControllerWithIdentifier:identifierID];
+            self.currentChildViewController = childNC;
         }
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -457,54 +492,6 @@
                 break;
         }
     }
-}
-
-#pragma mark - prepareForSegue
--(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
-{
-    return [CPUserDefaultsHandler currentUser] ? YES : NO;
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:kProfilePickedImageSegueID]) {
-        ((ProfileViewController *) [segue.destinationViewController topViewController]).profileImageToUpload = self.pickedImage;
-    }
-}
-
-#pragma mark - UIImagePickerController
-- (void)showProfilePicturePickerModalForSource:(UIImagePickerControllerSourceType)imagePickerSource
-{
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-    imagePickerController.delegate = self;
-    imagePickerController.sourceType = imagePickerSource;
-    
-    if (imagePickerSource == UIImagePickerControllerSourceTypeCamera) {
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerCameraDeviceFront]) {
-            imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;
-        }
-    }
-    
-    [self.presentedViewController dismissPushModalViewControllerFromLeftSegueWithCompletion:^{
-        [self presentViewController:imagePickerController animated:YES completion:nil];
-    }];
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    self.pickedImage = info[UIImagePickerControllerOriginalImage];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self performSegueWithIdentifier:kProfilePickedImageSegueID sender:self];
-    }];
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self performSegueWithIdentifier:kProfileSegueID sender:self];
-    }];
-    
 }
 
 @end
