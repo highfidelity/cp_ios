@@ -19,6 +19,10 @@
 + (void)setNumberOfContactRequests:(NSInteger)numberOfContactRequests;
 + (NSInteger)numberOfContactRequests;
 
++ (void)addGeofenceRequest:(NSDictionary *)geofenceREquestDictionary;
++ (NSArray *)geofenceRequestLog;
++ (void)cleanGeofenceRequestLog;
+
 + (void)setPastVenues:(NSArray *)pastVenues;
 + (NSArray *)pastVenues;
 

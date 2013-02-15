@@ -1191,31 +1191,61 @@ photo?</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="separatorColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="GRe-3G-zeo">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Auto Check In At Venues" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="zB7-r7-vsi">
-                                    <rect key="frame" x="20" y="6" width="151" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="8Es-t0-lcY">
-                                    <rect key="frame" x="221" y="14" width="79" height="27"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
-                                    <connections>
-                                        <action selector="globalCheckinChanged:" destination="Zks-3J-HVT" eventType="valueChanged" id="P1v-Xd-rxr"/>
-                                    </connections>
-                                </switch>
-                            </subviews>
-                            <color key="backgroundColor" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="calibratedRGB"/>
-                        </view>
                         <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="GeofenceLogButtonCell" rowHeight="48" id="B2w-wd-ihN">
+                                <rect key="frame" x="0.0" y="22" width="320" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Geofence Log" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="iSD-YA-HId">
+                                            <rect key="frame" x="21" y="0.0" width="160" height="47"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="list-arrow-dark-grey.png" id="Vev-5c-UVk">
+                                            <rect key="frame" x="289" y="16" width="11" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <connections>
+                                    <segue destination="eCb-Hi-nsC" kind="push" id="ITr-kX-qbW"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AutoCheckInToggleCell" rowHeight="60" id="Odf-1t-Pef">
+                                <rect key="frame" x="0.0" y="70" width="320" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Auto Check In At Venues" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="zEo-yR-Tu1">
+                                            <rect key="frame" x="20" y="8" width="151" height="44"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="Jbw-ei-09J">
+                                            <rect key="frame" x="221" y="16" width="79" height="27"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="onTintColor" red="0.21960784310000001" green="0.56862745100000001" blue="0.56078431370000004" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <action selector="globalCheckinChanged:" destination="Zks-3J-HVT" eventType="valueChanged" id="gY6-4N-s92"/>
+                                            </connections>
+                                        </switch>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <color key="backgroundColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AutoCheckinCell" rowHeight="69" id="0ow-hv-GJ7" customClass="AutoCheckinCell">
-                                <rect key="frame" x="0.0" y="77" width="320" height="69"/>
+                                <rect key="frame" x="0.0" y="130" width="320" height="69"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="68"/>
@@ -1281,13 +1311,85 @@ photo?</string>
                             </button>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="globalCheckinSwitch" destination="8Es-t0-lcY" id="JL7-Ug-Ix2"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cTh-Zc-cxR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1059" y="1628"/>
+        </scene>
+        <!--Geofence Log Table View Controller - Geofence Log-->
+        <scene sceneID="ech-hx-NaJ">
+            <objects>
+                <tableViewController id="eCb-Hi-nsC" customClass="GeofenceLogTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="EK6-RW-8Zb">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="separatorColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="0.0" colorSpace="calibratedRGB"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GeofenceLogEntryCell" rowHeight="45" id="gd7-hp-CdC" customClass="GeofenceLogEntryCell">
+                                <rect key="frame" x="0.0" y="22" width="320" height="45"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view tag="939" contentMode="scaleToFill" id="ANm-1f-JUa">
+                                            <rect key="frame" x="64" y="0.0" width="1" height="45"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        </view>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="December 20th - 10:00AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" id="GLG-av-yoh">
+                                            <rect key="frame" x="79" y="18" width="222" height="24"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Coffee &amp; Power" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" id="Key-hg-Shf">
+                                            <rect key="frame" x="79" y="3" width="206" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                            <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" id="08h-fS-4Ds">
+                                            <rect key="frame" x="0.0" y="44" width="320" height="1"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                        </view>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="check-in-for-list.png" id="h2d-EG-SQu">
+                                            <rect key="frame" x="20" y="9" width="25" height="25"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="entryDateLabel" destination="GLG-av-yoh" id="Vrk-EC-Cgo"/>
+                                    <outlet property="iconImageView" destination="h2d-EG-SQu" id="ySF-cp-jjY"/>
+                                    <outlet property="venueNameLabel" destination="Key-hg-Shf" id="hTN-ly-T0k"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="eCb-Hi-nsC" id="U5h-Xl-yP4"/>
+                            <outlet property="delegate" destination="eCb-Hi-nsC" id="h74-Ta-jaL"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Geofence Log" id="fKg-Yd-8IP">
+                        <barButtonItem key="rightBarButtonItem" title="Email" id="szs-O5-fM9">
+                            <connections>
+                                <action selector="emailLogButtonPressed:" destination="eCb-Hi-nsC" id="EtI-XP-wSZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="z1d-yE-mcR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-341" y="1720"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ouw-gO-OVS">
@@ -1353,6 +1455,7 @@ photo?</string>
         </scene>
     </scenes>
     <resources>
+        <image name="check-in-for-list.png" width="25" height="25"/>
         <image name="default-avatar-256.png" width="256" height="256"/>
         <image name="drop-down.png" width="196" height="27"/>
         <image name="list-arrow-dark-grey.png" width="11" height="16"/>
@@ -1360,6 +1463,160 @@ photo?</string>
         <image name="settings-button-3.png" width="42" height="29"/>
         <image name="settings-menu-shadow.png" width="9" height="1"/>
     </resources>
+    <classes>
+        <class className="AutoCheckinCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AutoCheckinCell.h"/>
+            <relationships>
+                <relationship kind="action" name="venueSwitchChanged:"/>
+                <relationship kind="outlet" name="venueAddress" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="venueSwitch" candidateClass="UISwitch"/>
+            </relationships>
+        </class>
+        <class className="AutoCheckinTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AutoCheckinTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="globalCheckinChanged:"/>
+                <relationship kind="outlet" name="globalCheckinSwitch" candidateClass="UISwitch"/>
+            </relationships>
+        </class>
+        <class className="CPCheckedLabel" superclassName="UILabel">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPCheckedLabel.h"/>
+        </class>
+        <class className="CPSwitch" superclassName="UISlider">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPSwitch.h"/>
+        </class>
+        <class className="CPTouchableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CPTouchableView.h"/>
+        </class>
+        <class className="EditLinkedInInvitationMessageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EditLinkedInInvitationMessageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="sendAction"/>
+                <relationship kind="outlet" name="bodyTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="subjectTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="GeofenceLogEntryCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GeofenceLogEntryCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="entryDateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="iconImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="venueNameLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="GeofenceLogTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GeofenceLogTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="emailLogButtonPressed:"/>
+                <relationship kind="outlet" name="emailBarButtonItem" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="InviteLinkedInConnectionsTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/InviteLinkedInConnectionsTableViewController.h"/>
+        </class>
+        <class className="JobCategoryViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/JobCategoryViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="majorCategoryButtonClick:"/>
+                <relationship kind="action" name="minorCategoryButtonClick:"/>
+                <relationship kind="outlet" name="majorCategoryButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="minorCategoryButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="LinkedAccountsTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedAccountsTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="gearPressed:"/>
+                <relationship kind="outlet" name="postToLinkedInSwitch" candidateClass="UISwitch"/>
+            </relationships>
+        </class>
+        <class className="LinkedInConnectionCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkedInConnectionCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="linkedInName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="linkedInProfileImage" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="NotificationsTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NotificationsTableViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="chatNotificationLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="checkedInCityLabel" candidateClass="CPCheckedLabel"/>
+                <relationship kind="outlet" name="checkedInContactsLabel" candidateClass="CPCheckedLabel"/>
+                <relationship kind="outlet" name="checkedInOnlySwitch" candidateClass="CPSwitch"/>
+                <relationship kind="outlet" name="checkedInVenueLabel" candidateClass="CPCheckedLabel"/>
+                <relationship kind="outlet" name="contactsOnlyChatSwitch" candidateClass="CPSwitch"/>
+                <relationship kind="outlet" name="notificationsSwitch" candidateClass="CPSwitch"/>
+                <relationship kind="outlet" name="notifyHeadlineChangesSwitch" candidateClass="CPSwitch"/>
+                <relationship kind="outlet" name="notifyOnEndorsementSwitch" candidateClass="CPSwitch"/>
+                <relationship kind="outlet" name="quietTimeFromButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="quietTimeSwitch" candidateClass="CPSwitch"/>
+                <relationship kind="outlet" name="quietTimeToButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="timeFrameCell" candidateClass="UITableViewCell"/>
+            </relationships>
+        </class>
+        <class className="ProfileViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ProfileViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="chooseNewProfileImage:"/>
+                <relationship kind="action" name="gearPressed:"/>
+                <relationship kind="outlet" name="arrowImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="categoriesLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="categoryView" candidateClass="CPTouchableView"/>
+                <relationship kind="outlet" name="changePhotoLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="deleteTouchable" candidateClass="CPTouchableView"/>
+                <relationship kind="outlet" name="detailsView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="emailTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="emailValidationMsg" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="emailView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="floatView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="imageUploadPlaceholder" candidateClass="UIView"/>
+                <relationship kind="outlet" name="nicknameTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="profileHeaderView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="profileImageButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="profileImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="skillsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="skillsTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="skillsView" candidateClass="CPTouchableView"/>
+                <relationship kind="outlet" name="visibilityLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="visibilityView" candidateClass="CPTouchableView"/>
+            </relationships>
+        </class>
+        <class className="ResumeVisibilityViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ResumeVisibilityViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="resumeVisibilityButtonClick:"/>
+                <relationship kind="outlet" name="resumeVisibilityButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="SettingsMenuController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsMenuController.h"/>
+            <relationships>
+                <relationship kind="action" name="blockUIButtonClick:"/>
+                <relationship kind="action" name="loginButtonClick:"/>
+                <relationship kind="action" name="showTermsOfServiceModal:"/>
+                <relationship kind="outlet" name="blockUIButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="edgeShadow" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="loginBanner" candidateClass="UIView"/>
+                <relationship kind="outlet" name="loginButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="termsOfServiceButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="versionNumberLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="SkillsTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SkillsTableViewController.h"/>
+        </class>
+        <class className="TermsOfServiceViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TermsOfServiceViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="dismissTermsOfService:"/>
+                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

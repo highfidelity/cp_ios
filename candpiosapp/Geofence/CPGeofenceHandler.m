@@ -62,6 +62,20 @@ static CPGeofenceHandler *sharedHandler;
     [Flurry logEvent:@"automaticCheckinLocationDisabled"];
 }
 
+- (NSDictionary *)geofenceRequestDictionaryForVenue:(CPVenue *)venue isCheckin:(BOOL)isCheckin
+{
+    CLLocationCoordinate2D currentCoordinate = [CPAppDelegate locationManager].location.coordinate;
+    
+    return @{
+        @"venueName" : venue.name,
+        @"venueID" : venue.venueID,
+        @"lat" : @(currentCoordinate.latitude),
+        @"lng" : @(currentCoordinate.longitude),
+        @"date": [NSDate date],
+        @"type": isCheckin ? @"checkIn" : @"checkOut"
+    };
+}
+
 - (void)autoCheckInForVenue:(CPVenue *)venue
 {
     // use CPapi to checkin
@@ -72,6 +86,8 @@ static CPGeofenceHandler *sharedHandler;
              [Flurry logEvent:@"autoCheckInRequest" withParameters:json timed:YES];
          }
     }];
+    
+    [CPUserDefaultsHandler addGeofenceRequest:[self geofenceRequestDictionaryForVenue:venue isCheckin:YES]];
 }
 
 - (void)autoCheckOutForVenue:(CPVenue *)venue
@@ -79,9 +95,9 @@ static CPGeofenceHandler *sharedHandler;
     CLLocationCoordinate2D currentCoordinate = [CPAppDelegate locationManager].location.coordinate;
     
     NSDictionary *requestObject = @{
-        @"venueID": venue.venueID,
-        @"lat": @(currentCoordinate.latitude),
-        @"lng": @(currentCoordinate.longitude)
+        @"venueID" : venue.venueID,
+        @"lat" : @(currentCoordinate.latitude),
+        @"lng" : @(currentCoordinate.longitude)
     };
     
     [[CPObjectManager sharedManager] getObjectsAtPathForRouteNamed:kRouteGeofenceCheckout
@@ -96,6 +112,8 @@ static CPGeofenceHandler *sharedHandler;
     {
         // geofence checkout failed, nothing to do here
     }];
+    
+    [CPUserDefaultsHandler addGeofenceRequest:[self geofenceRequestDictionaryForVenue:venue isCheckin:NO]];
 }
 
 -(void)handleGeofenceNotification:(NSString *)message userInfo:(NSDictionary *)userInfo

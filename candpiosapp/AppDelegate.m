@@ -92,6 +92,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
      
     [CPUserSessionHandler hideLoginBannerWithCompletion:nil];
     
+    [CPUserDefaultsHandler cleanGeofenceRequestLog];
+    
     return YES;
 }
      

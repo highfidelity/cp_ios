@@ -97,6 +97,49 @@ NSString* const kUDCurrentVenue = @"currentCheckIn";
     }
 }
 
+NSString* const kUDGeofenceRequestLog = @"geofenceRequestLog";
+
++ (void)addGeofenceRequest:(NSDictionary *)geofenceRequestDictionary
+{
+    NSMutableArray *geofenceRequestLog = [[self geofenceRequestLog] mutableCopy];
+    
+    if (!geofenceRequestLog) {
+        geofenceRequestLog = [NSMutableArray array];
+    }
+    
+    [geofenceRequestLog addObject:geofenceRequestDictionary];
+    
+    SET_DEFAULTS(Object, kUDGeofenceRequestLog, [NSArray arrayWithArray:geofenceRequestLog]);
+}
+
++ (NSArray *)geofenceRequestLog
+{
+    return DEFAULTS(object, kUDGeofenceRequestLog);
+}
+
+#define GEOFENCE_REQUEST_DAYS_TO_KEEP 7
+
++ (void)cleanGeofenceRequestLog
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSMutableArray *geofenceRequestLog = [[self geofenceRequestLog] mutableCopy];
+       
+        NSTimeInterval secondsToLimit = -GEOFENCE_REQUEST_DAYS_TO_KEEP * 24 * 60 * 60;
+        
+        for (NSDictionary *geofenceLogDict in [geofenceRequestLog mutableCopy]) {
+            NSDate *requestDate = geofenceLogDict[@"date"];
+            
+            if ([requestDate compare:[NSDate dateWithTimeIntervalSinceNow:secondsToLimit]] == NSOrderedAscending) {
+                [geofenceRequestLog removeObject:geofenceLogDict];
+            } else {
+                break;
+            }
+        }
+       
+        SET_DEFAULTS(Object, kUDGeofenceRequestLog, [NSArray arrayWithArray:geofenceRequestLog]);
+    });   
+}
+
 
 NSString* const kUDPastVenues = @"pastVenues";
 + (void)setPastVenues:(NSArray *)pastVenues

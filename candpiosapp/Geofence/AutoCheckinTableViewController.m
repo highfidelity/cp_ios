@@ -63,42 +63,59 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.placesArray.count > 0) {
-        return 1;
-    }
-    else {
-        return 0;
+    switch (indexPath.row) {
+        case 0:
+            return 48;
+        case 1:
+            return 60;
+        default:
+            return 69;
     }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.placesArray.count > 0) {
-        return self.placesArray.count;
-    }
-    else {
-        return 0;
-    }
+    return self.placesArray.count + 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"AutoCheckinCell";
-    AutoCheckinCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-
-    CPVenue *venue = [self.placesArray objectAtIndex:indexPath.row];
+    UITableViewCell *cell;
     
-    if (venue) {
-        cell.venueName.text = venue.name;
-        cell.venueAddress.text = venue.address;
-        cell.venue = venue;
+    if (indexPath.row < 2) {
+        NSString *topCellIdentifier = indexPath.row == 0 ? @"GeofenceLogButtonCell" : @"AutoCheckInToggleCell";
+        cell = [tableView dequeueReusableCellWithIdentifier:topCellIdentifier];
+        cell.contentView.backgroundColor = [UIColor colorWithR:40 G:40 B:40 A:1];
+    } else {
+        static NSString *VenueCellIdentifier = @"AutoCheckinCell";
+        AutoCheckinCell *autoCell = [tableView dequeueReusableCellWithIdentifier:VenueCellIdentifier];
         
-        cell.venueSwitch.on = venue.autoCheckin;
+        CPVenue *venue = [self.placesArray objectAtIndex:(indexPath.row - 2)];
+        
+        if (venue) {
+            autoCell.venueName.text = venue.name;
+            autoCell.venueAddress.text = venue.address;
+            autoCell.venue = venue;
+            
+            autoCell.venueSwitch.on = venue.autoCheckin;
+        }
+        
+        cell = autoCell;
     }
     
     return cell;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // we're heading to the geofence log
+    // The original text on the back button is too long, just make it "Back"
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                             style:UIBarButtonItemStyleBordered
+                                                                            target:nil
+                                                                            action:nil];
 }
 
 - (IBAction)globalCheckinChanged:(UISwitch *)sender {
